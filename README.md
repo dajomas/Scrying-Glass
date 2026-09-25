@@ -4,6 +4,8 @@ Monster Display is a self-hosted, real-time tabletop battle display for game mas
 
 The admin can manage monsters and characters, hit points, initiative, turn order, display visibility, reusable battle setups, and live battle changes. Connected client displays update in real time through WebSockets.
 
+> The tool and the documentation in this repository hav been created using Perplexity.AI
+
 > Current documented implementation: **v4.14** (with the current working source’s post-v4.14 additions: batch monster creation, import from setup, random monster initiatives, and active-combatant battle-order insertion).
 
 ## Features
