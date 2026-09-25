@@ -115,6 +115,62 @@ def clear_turns()->None:
     for x in entities():x["in_turn"]=False
 def clean_order()->None:
     known={x["id"]for x in entities()};STATE["battle_order"]=[x for x in STATE["battle_order"]if x in known]
+def insert_into_battle_order(combatant: dict[str, Any]) -> None:
+    """Insert a newly activated living combatant into an existing battle order.
+
+    Higher numeric initiative acts first. On equal initiative, the newly added
+    combatant is placed after all existing combatants with that same initiative.
+    Combatants without initiative are placed after numeric initiatives.
+    """
+
+    if not STATE["battle_order"]:
+        return
+
+    if not combatant.get("active") or not combatant.get("alive", True):
+        return
+
+    combatant_id = combatant["id"]
+
+    if combatant_id in STATE["battle_order"]:
+        return
+
+    combatant_initiative = combatant.get("initiative")
+    has_numeric_initiative = (
+        isinstance(combatant_initiative, int)
+        and not isinstance(combatant_initiative, bool)
+    )
+
+    insert_at = len(STATE["battle_order"])
+
+    for index, existing_id in enumerate(STATE["battle_order"]):
+        existing = entity(existing_id)
+
+        if existing is None:
+            continue
+
+        existing_initiative = existing.get("initiative")
+        existing_has_numeric_initiative = (
+            isinstance(existing_initiative, int)
+            and not isinstance(existing_initiative, bool)
+        )
+
+        # A combatant without initiative is always after numeric initiatives.
+        if not has_numeric_initiative:
+            continue
+
+        # A numeric initiative is before all initiative-less combatants.
+        if not existing_has_numeric_initiative:
+            insert_at = index
+            break
+
+        # Descending initiative: insert before the first lower initiative.
+        # Equal values are deliberately skipped, so the new combatant ends up
+        # after existing combatants with the same initiative.
+        if existing_initiative < combatant_initiative:
+            insert_at = index
+            break
+
+    STATE["battle_order"].insert(insert_at, combatant_id)
 def reset_entity(x:dict[str,Any])->None:
     x["active"]=False;x["alive"]=True;x["visible"]=False;x["in_turn"]=False;x["initiative"]=x.get("original_initiative")
     if"monster_type"in x:x["hp"]=x["original_hp"];x["max_hp"]=x["original_hp"];x["show_ac"]=False;x["show_hp"]=False;x["show_initiative"]=False
@@ -245,6 +301,8 @@ async def update_monster(ident:str,update:MonsterUpdate,_:dict[str,str]=Depends(
     if'hp_delta'in values:m['hp']+=values.pop('hp_delta')
     for k,v in values.items():
         if k!='in_turn':m[k]=v
+    if values.get("active") is True:
+        insert_into_battle_order(m)
     if m['hp']<0:m['alive']=False;m['visible']=True;m['in_turn']=False
     if values.get('active')is False:m['in_turn']=False
     set_turn(m,values.get('in_turn'));clean_order();await changed();return m
@@ -260,6 +318,8 @@ async def update_character(ident:str,update:CharacterUpdate,_:dict[str,str]=Depe
     if'max_hp'in values:c['original_hp']=values['max_hp']
     for k,v in values.items():
         if k!='in_turn':c[k]=v
+    if values.get("active") is True:
+        insert_into_battle_order(c)
     if c['hp']<0:c['alive']=False;c['visible']=True;c['in_turn']=False
     if values.get('alive')is False:c['visible']=True;c['in_turn']=False
     if values.get('active')is False:c['in_turn']=False
