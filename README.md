@@ -1,47 +1,44 @@
 # Monster Display
 
-A real-time, browser-based tabletop battle display for game masters. Run a private **admin interface** for encounter management and a separate **client display** for players, a TV, or a projector.
+Monster Display is a self-hosted, real-time tabletop battle display for game masters. It provides a private **admin interface** for encounter preparation and control, plus a separate **client display** for players, a TV, or a projector.
 
-Monster Display tracks monsters and characters, HP, initiative, turns, death, visibility, and reusable battle setups. Admin changes are broadcast to connected client displays in real time using WebSockets.
+The admin can manage monsters and characters, hit points, initiative, turn order, display visibility, reusable battle setups, and live battle changes. Connected client displays update in real time through WebSockets.
 
-> Current documented implementation: **v4.3.1**
+> Current documented implementation: **v4.14** (with the current working source’s post-v4.14 additions: batch monster creation, import from setup, random monster initiatives, and active-combatant battle-order insertion).
 
 ## Features
 
-- Separate admin and player/client applications on different TCP ports.
-- Username/password accounts with `admin` and `client` roles.
-- Real-time client updates through WebSockets.
-- Manual monster creation and `.monster` JSON-file import.
-- Optional image upload for monsters.
-- Best-effort public D&D Beyond image lookup when no monster image is uploaded.
-- Characters with editable current HP, Max HP, initiative, life state, color, and visibility.
-- Monsters with AC, HP, initiative, ally classification, stat visibility controls, and image support.
-- Damage and healing controls for both monsters and characters.
-- Automatic death when HP drops below 0.
-- Initiative bar with automatic readable text contrast.
-- Red border for current turn, black border for dead combatants, and white border for other visible combatants.
-- Current-turn and dead combatants automatically become visible in the initiative bar.
-- Battle start, Next-turn, individual reset, and Reset All controls.
-- Named New/Save/Load battle setups.
-- JSON persistence of current state, setups, and uploaded media references.
-- Configurable client background, animation direction, ports, bind address, storage path, and remote image lookup.
-
-## Screenshots
-
-The project currently does not ship with screenshots. The two interfaces are:
-
-| Interface | Default URL | Purpose |
-|---|---|---|
-| Admin | `http://SERVER:3000/` | Encounter setup and real-time GM controls |
-| Client display | `http://SERVER:4000/display` | Player-facing initiative bar and monster stage |
+- Separate admin and client applications on configurable TCP ports.
+- Role-based accounts: `admin` and `client`.
+- Real-time display updates over WebSockets.
+- Manual monster creation and compatible `.monster` JSON-file import.
+- Batch monster creation/import with a configurable quantity, default `1`.
+- Optional monster image upload and best-effort D&D Beyond image lookup.
+- Monster editing: name, type, AC, current/max/reset HP, color, initiative, Ally state, and image.
+- Character editing: name, color, current HP, Max HP, and initiative.
+- Editable character current HP and Max HP.
+- Damage and healing controls for monsters and characters.
+- Automatic death when HP drops below `0`.
+- Manual character Alive/Dead toggle.
+- Monster Ally flag.
+- Initiative bar visibility controls.
+- Automatic initiative visibility when a combatant takes a turn or dies.
+- Initiative bar with high-contrast text, white normal borders, red current-turn borders, and black dead borders.
+- Battle start, Next, individual Reset, and Reset All controls.
+- Tie-resolution UI supporting complete ordering of any number of combatants tied at the same initiative.
+- Random d20 initiative rolls for all monsters.
+- Named New, Save, Load, and Import-from-setup workflows.
+- Import characters, monsters, or both from saved setups as new reset-state copies.
+- Adaptive client monster grid with explicit left-to-right, top-to-bottom placement.
+- Persistent JSON state, named setups, and uploaded media references.
 
 ## Requirements
 
 - Python **3.14** or newer.
 - A modern browser.
-- Network access between the host and client-display device(s), if using a TV/projector/tablet on the LAN.
+- LAN connectivity between the server and player-display device(s), if applicable.
 
-### Python packages
+### Python dependencies
 
 ```text
 fastapi
@@ -51,8 +48,6 @@ python-multipart
 ```
 
 ## Installation
-
-Clone the repository and create a virtual environment:
 
 ```bash
 git clone https://github.com/YOUR-ACCOUNT/monster-display.git
@@ -65,19 +60,15 @@ python3.14 -m pip install --upgrade pip
 python3.14 -m pip install "fastapi>=0.115" "uvicorn[standard]>=0.30" "PyYAML>=6.0" python-multipart
 ```
 
-Place the application source at a predictable path, for example:
+Place the current source file at a stable repository path, for example:
 
 ```text
 monster_display_server.py
 ```
 
-> The implementation has been delivered in versioned filenames during development. For normal repository use, choose the current versioned source and rename/copy it to `monster_display_server.py`.
-
 ## Quick start
 
-### 1. Create configuration
-
-Create `config.yaml`:
+### 1. Create `config.yaml`
 
 ```yaml
 network:
@@ -104,123 +95,161 @@ display:
   dndbeyond_image_lookup: true
 ```
 
-### 2. Start the server
+### 2. Validate and start
 
 ```bash
+python3.14 -m py_compile monster_display_server.py
 python3.14 monster_display_server.py --config config.yaml
 ```
 
-### 3. Open the applications
+### 3. Open the screens
 
-| Role | URL |
-|---|---|
-| Game master/admin | `http://SERVER:3000/` |
-| Player/client display | `http://SERVER:4000/display` |
+| Screen | Default URL | Purpose |
+|---|---|---|
+| Admin | `http://SERVER:3000/` | GM encounter management |
+| Client display | `http://SERVER:4000/display` | Player-facing display |
 
-Replace `SERVER` with the hostname or IP address of the system running Monster Display. For local testing, use `localhost`.
+For local testing:
 
 ```text
 http://localhost:3000/
 http://localhost:4000/display
 ```
 
-## Usage
+Replace `SERVER` with the server hostname or IP address for LAN use.
 
-### Setup workflow
+## Encounter workflow
 
-1. Log in to the admin interface with an account whose role is `admin`.
-2. Click **New** to start a blank encounter, or **Load** a previously saved setup.
-3. Add monsters manually or import compatible `.monster` files.
-4. Add characters with name, color, HP, and optional initiative.
-5. Set initiatives and enable **Active** for participating combatants.
-6. Enter a battle-setup name and click **Save** to preserve the encounter.
-7. Open the client display on the player-facing device.
-8. Click **Start battle**. Resolve real duplicate initiative values when prompted.
-9. Use **Next** to advance turns and use Damage/Heal controls as the encounter progresses.
+1. Log in to the admin interface using an `admin` account.
+2. Click **New**, **Load**, or **Import from setup**.
+3. Add monsters manually, import `.monster` files, or import combatants from saved setups.
+4. Add characters and set HP, Max HP, colors, and initiatives.
+5. Save the setup with a descriptive name.
+6. Mark encounter participants **Active**.
+7. Use **Roll monster initiatives (d20)** if desired. This overwrites every monster initiative.
+8. Click **Start battle** and resolve numeric initiative ties.
+9. Use **Next** to advance turns.
+10. Use Damage, Heal, Active, Alive/Dead, Visible, Turn, and Edit controls during play.
 
-### Monsters
+## Battle setup management
 
-A monster has:
+| Control | Behavior |
+|---|---|
+| New | Replaces the working encounter with an empty setup after confirmation |
+| Save | Saves the full working state under a normalized name |
+| Load | Replaces the working encounter with a selected saved setup |
+| Import from setup | Appends reset-state copies of selected saved characters, monsters, or both |
 
-- Name and monster type.
-- Armor Class and HP.
-- A configured color.
-- Optional uploaded image.
-- Optional D&D Beyond image lookup when no image is uploaded.
-- Active, Ally, Visible, and Turn controls.
-- Individual AC, HP, and initiative display toggles.
-- Damage, Heal, and Reset controls.
+### Import from setup
 
-Monsters become dead when HP is below 0. A dead monster is removed from the main client stage, becomes visible in the initiative bar, and cannot take a battle turn until reset.
+Imported combatants receive fresh IDs and do not alter the current battle order.
 
-### Characters
+| Property | Imported monster | Imported character |
+|---|---|---|
+| Active | Off | Off |
+| Alive | Yes | Yes |
+| Visible | Off | Off |
+| In turn | Off | Off |
+| Current HP | Original/reset HP | Current Max HP |
+| Max HP | Original/reset HP | Preserved current Max HP |
+| Initiative | Original/reset initiative | Original/reset initiative |
 
-A character has:
+## Monsters
 
-- Name and color.
-- Editable current HP and Max HP.
-- Optional initiative.
-- Active, Alive/Dead, Visible, and Turn controls.
-- Damage, Heal, and Reset controls.
+Monsters support:
 
-Changing a character’s Max HP changes the HP amount restored by reset. A character Reset keeps the current Max HP and restores current HP to that value.
+- Name, type, AC, current HP, Max HP, and reset HP.
+- Color, optional image, initiative, and Ally state.
+- Active, Visible, Turn, Edit, Reset, Damage, and Heal controls.
+- Independent toggles for displaying AC, HP, and initiative on the client monster card.
+- Manual creation or `.monster` import.
+- Batch quantity from 1 to 50, defaulting to 1.
+
+A monster becomes dead when HP falls below `0`. Dead monsters leave the main stage, cannot receive the battle turn, and automatically become visible in the initiative bar.
+
+## Characters
+
+Characters support:
+
+- Name, color, HP, Max HP, and optional initiative.
+- Active, Alive/Dead, Visible, Turn, Edit, Reset, Damage, and Heal controls.
+
+When character Max HP changes, it becomes the reset baseline. Reset restores current HP to the active Max HP without changing that Max HP value.
+
+## Initiative and battle flow
+
+### Start battle
+
+- Includes active, living combatants.
+- Orders combatants by initiative descending.
+- Places combatants without initiative after numeric initiatives.
+- Opens a tie dialog only for equal numeric initiative values.
+- Supports a complete, unique relative order for every combatant in a tied initiative group.
+- Keeps tied combatants inside their correct initiative bucket; a selected tied combatant never moves ahead of a higher initiative.
+
+### Activating a combatant mid-battle
+
+If `battle_order` already exists, changing an inactive, living combatant to **Active** adds it to the existing order:
+
+- Before lower initiatives.
+- After all existing combatants with the same initiative.
+- Before initiative-less combatants when it has a numeric initiative.
+- At the end when it has no initiative.
+
+The current combatant keeps its turn; activating a new combatant does not steal it.
 
 ### Initiative bar
 
-The client initiative bar displays names only.
+The client initiative bar shows names only.
 
-| State | Border color |
+| State | Border |
 |---|---|
 | Current battle turn | Red |
-| Dead combatant | Black |
+| Dead | Black |
 | Other visible combatant | White |
 
-The application calculates whether black or white text provides better contrast against each combatant’s configured hex color.
+Text is selected as black or white from the combatant’s configured hex color for readability.
 
-### Visibility rules
+## Client monster grid
 
-- Combatants start with initiative-bar visibility off.
-- Setting a combatant as the current turn automatically enables visibility.
-- Death automatically enables visibility.
-- Individual Reset and Reset All return visibility to off.
+All active, living monsters appear together in an adaptive grid. The grid fills top-to-bottom by rows, and left-to-right within each row.
 
-### Battle setup controls
+| Monster count | Grid |
+|---:|---|
+| 1 | 1 × 1 |
+| 2 | 1 × 2 |
+| 3–4 | 2 × 2 |
+| 5–6 | 2 × 3 |
+| 7–9 | 3 × 3 |
+| 10–12 | 3 × 4 |
+| 13–16 | 4 × 4 |
 
-| Control | Result |
-|---|---|
-| New | Replaces the working encounter with an empty one after confirmation |
-| Save | Saves the current full state under a normalized name |
-| Load | Replaces the working encounter with a selected saved setup |
-| Start battle | Applies the initiative order and sets the first living active combatant to current turn |
-| Next | Advances to the next active, living combatant |
-| Reset All | Resets all combatants, clears battle order, and sorts admin tables by Max HP |
+After that, the grid alternates adding a column then a row: 4×5, 5×5, 5×6, and so on.
 
-## Data storage
+## Storage
 
-The configured `storage_dir` contains all persistent application data:
+All persistent data lives below `storage_dir`:
 
 ```text
 monster-display-data/
 ├── state.json
 ├── uploads/
-│   ├── <uuid>.png
-│   └── <uuid>.webp
+│   └── <uuid>.<image-extension>
 └── setups/
-    ├── goblin-ambush.json
-    └── throne-room-lytharia.json
+    └── <setup-name>.json
 ```
 
-| Path | Description |
+| Location | Purpose |
 |---|---|
-| `state.json` | The active working encounter; persisted after mutations |
+| `state.json` | Current working encounter, saved after mutations |
 | `setups/*.json` | Named reusable battle setups |
 | `uploads/` | Uploaded monster images |
 
-Back up the complete `storage_dir`, rather than only `state.json`, so saved setup image references remain valid.
+Back up the entire storage directory, not only `state.json`, so saved setup image references remain usable.
 
-## Configuration
+## Configuration and CLI
 
-Command-line options override the configuration file:
+Command-line options override values in `config.yaml`:
 
 ```bash
 python3.14 monster_display_server.py \
@@ -236,35 +265,45 @@ python3.14 monster_display_server.py \
 | `--config PATH` | YAML or JSON configuration file |
 | `--bind ADDRESS` | Bind address for both applications |
 | `--admin-port PORT` | Admin application port |
-| `--client-port PORT` | Client-display application port |
-| `--storage-dir PATH` | Persistent state/media/setup directory |
+| `--client-port PORT` | Client display port |
+| `--storage-dir PATH` | State, setup, and image directory |
 
 ## Passwords and security
 
-The example configuration supports plaintext passwords for trusted local/LAN use. Change the sample passwords before use.
+The supplied configuration format supports plaintext passwords for trusted LAN use. Change example passwords before use.
 
-The application also supports scrypt password hashes. Generate one with:
+Scrypt hashes are supported:
 
 ```bash
 python3.14 -c 'from monster_display_server import password_hash; print(password_hash("replace-me"))'
 ```
 
-Use the returned `scrypt$...` value as the configured password.
+Use the resulting `scrypt$...` string in the configuration.
 
-### Important security notes
+### Internet exposure warning
 
-Monster Display is designed primarily for a trusted local network. Before exposing it to the Internet:
+Monster Display is designed for a trusted local network. Before exposing it beyond that:
 
-1. Put it behind an HTTPS reverse proxy.
-2. Restrict admin-port access by firewall, VPN, or trusted IP ranges.
-3. Use scrypt-hashed passwords.
-4. Run it as a dedicated non-root user.
-5. Set restrictive filesystem permissions on `config.yaml` and the storage directory.
-6. Consider disabling D&D Beyond image lookup if outbound lookup requests are undesirable.
+1. Use an HTTPS reverse proxy.
+2. Restrict admin access with firewall rules, VPN, or trusted source IPs.
+3. Use scrypt password hashes.
+4. Run the service as a dedicated non-root user.
+5. Protect `config.yaml` and the persistent storage directory.
 
-## Systemd service example
+## Clean Ctrl-C shutdown
 
-Create `/etc/systemd/system/monster-display.service`:
+To suppress normal asyncio `CancelledError` / `KeyboardInterrupt` tracebacks on `Ctrl-C`, wrap the final `asyncio.run(serve())` call:
+
+```python
+try:
+    asyncio.run(serve())
+except KeyboardInterrupt:
+    pass
+```
+
+For more controlled Uvicorn shutdown, retain the server objects, set `should_exit = True`, and await the Uvicorn tasks during cancellation cleanup.
+
+## systemd example
 
 ```ini
 [Unit]
@@ -284,7 +323,7 @@ RestartSec=3
 WantedBy=multi-user.target
 ```
 
-Enable and start it:
+Enable it:
 
 ```bash
 sudo systemctl daemon-reload
@@ -292,99 +331,73 @@ sudo systemctl enable --now monster-display
 sudo systemctl status monster-display
 ```
 
-## Verification and troubleshooting
+## Troubleshooting
 
-### Validate Python syntax
+### Verify syntax
 
 ```bash
 python3.14 -m py_compile monster_display_server.py
 ```
 
-No output means compilation succeeded.
+No output indicates valid syntax.
 
-### Confirm listening ports
+### Verify listeners
 
 ```bash
 sudo ss -lptn 'sport = :3000'
 sudo ss -lptn 'sport = :4000'
 ```
 
-### Confirm the current admin UI is served
+### Old browser UI after upgrade
 
-For the current setup-enabled build:
+Hard-refresh:
 
-```bash
-curl -s http://127.0.0.1:3000/ | grep -o 'setupName'
-```
+- Linux/Windows: `Ctrl+Shift+R`
+- macOS: `Cmd+Shift+R`
 
-Expected output:
+### `Sign in required`
 
-```text
-setupName
-```
+- Use an admin account at port 3000 for mutation actions.
+- Clear cookies for the server host if upgrading across versions.
+- Use the same hostname/IP consistently.
 
-### Common issues
+### Client is not updating
 
-| Symptom | Likely cause | Resolution |
-|---|---|---|
-| `Sign in required` from admin action | Logged into client app/port or stale cookies | Log in as an admin at port 3000; clear site cookies if upgrading from older versions |
-| Old UI after upgrade | Browser retains an old page | Use `Ctrl+Shift+R` or `Cmd+Shift+R`; restart the correct process |
-| Client display does not update | Firewall, wrong URL, lost WebSocket | Verify port 4000 access, refresh client page, inspect listener with `ss` |
-| Monster image is missing | Remote lookup failed or upload file removed | Upload an image manually; preserve `uploads/` when backing up/migrating |
-| Saved setup has no image | Referenced upload is absent | Restore the relevant file from `uploads/` |
-| Setup list empty | No setup has been saved yet or wrong storage directory | Save a named setup and verify `<storage_dir>/setups/` |
+- Verify port 4000 is reachable.
+- Refresh the client page to reconnect its WebSocket.
+- Confirm firewalls permit TCP port 4000.
 
-## Architecture summary
+### D&D Beyond image missing
 
-Monster Display starts two FastAPI applications inside one Python process:
+Remote lookup is best effort. Upload an image manually for reliable results.
+
+## Architecture
+
+The service starts two FastAPI applications in one Python process:
 
 ```text
-Admin browser  -> Admin FastAPI app  -> TCP 3000
-Client browser -> Client FastAPI app -> TCP 4000 + WebSocket
+Admin browser  -> FastAPI admin app  -> TCP 3000
+Client browser -> FastAPI client app -> TCP 4000 + WebSocket
 ```
 
-They share one in-memory state store and persist changes to JSON. This design is intentionally simple for a single-host tabletop deployment. Run one process/worker; multiple Uvicorn workers or multiple replicas require external shared state and session infrastructure.
+Both applications share in-memory state, sessions, JSON persistence, image storage, and connected display sockets. Run a single process/worker; multiple workers require external shared state/session infrastructure.
 
 ## Limitations
 
-- Intended for a single process and one Uvicorn worker.
-- Sessions are stored in memory and disappear on restart.
-- No individual combatant deletion UI yet.
-- No saved-setup deletion UI yet.
-- Monster Max HP is not editable through the admin UI.
-- Ally is currently a persisted classification flag without display/gameplay effects.
-- Characters appear in the initiative bar but not as full main-stage cards.
-- D&D Beyond image lookup is best effort and may fail if the remote website changes or blocks requests.
-- Client state contains full encounter information; hiding monster stats is currently a rendering feature, not a data-redaction boundary.
-
-## Development
-
-The source currently embeds the HTML, CSS, and JavaScript in one Python module for easy deployment. For larger feature work, consider separating static assets, adding automated tests, and moving persistent state to SQLite or another database.
-
-High-value test areas include:
-
-- `.monster` JSON parsing.
-- Setup save/load and malformed setup rejection.
-- State migration/default handling.
-- Death, visibility, and current-turn invariants.
-- Character Max HP and reset semantics.
-- Battle-order validation.
-- Admin-table sorting without battle-order mutation.
+- Single-process design; no multi-worker synchronization.
+- Sessions are in-memory and disappear on restart.
+- No combatant deletion UI.
+- No saved-setup deletion UI.
+- Monster Max HP has no inline table editor, but it is editable in the Monster Edit dialog.
+- Ally is persisted but does not yet alter gameplay logic or client styling.
+- Characters render in the initiative bar but not as full stage cards.
+- D&D Beyond image lookup may fail due to remote site changes or request blocking.
+- Hidden monster information is visually hidden but remains in the client state payload.
 
 ## License
 
-Add the license for your repository here, for example:
+Add your chosen license, for example:
 
 ```text
 MIT License
 ```
-
-## Contributing
-
-Contributions should preserve the core operational model:
-
-- Keep the admin and client ports separated.
-- Maintain the single-current-turn invariant.
-- Persist state changes through the existing mutation flow.
-- Broadcast relevant state changes to client displays.
-- Include migration defaults when adding fields to saved state.

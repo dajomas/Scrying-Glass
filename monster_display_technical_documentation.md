@@ -2,98 +2,44 @@
 
 ## Scope
 
-This document describes the architecture, data model, HTTP/WebSocket interfaces, persistence model, configuration, deployment considerations, operational constraints, and extension points of **Monster Display v4.3.1**.
-
-The application is a single Python process that starts two FastAPI/ASGI applications:
-
-- An **admin application** on the configured admin TCP port, default `3000`.
-- A **client-display application** on the configured client TCP port, default `4000`.
-
-The applications share one in-process encounter state, session store, persistent JSON state file, uploaded media directory, and WebSocket connection set.
+This document describes the current Monster Display implementation as represented by the latest working source: a single-process Python/FastAPI application with separate admin and client-display applications, JSON persistence, WebSocket state broadcasting, saved setup management, combatant editing, batch monster creation, setup import, random monster initiative generation, adaptive client grid rendering, and battle-order maintenance.
 
 ---
 
-## Contents
+## Architecture
 
-1. [System architecture](#system-architecture)
-2. [Runtime components](#runtime-components)
-3. [Network model](#network-model)
-4. [Configuration](#configuration)
-5. [Authentication and authorization](#authentication-and-authorization)
-6. [State model](#state-model)
-7. [Persistence](#persistence)
-8. [Battle setup lifecycle](#battle-setup-lifecycle)
-9. [API reference](#api-reference)
-10. [WebSocket protocol](#websocket-protocol)
-11. [Admin UI implementation](#admin-ui-implementation)
-12. [Client display implementation](#client-display-implementation)
-13. [Battle and reset algorithms](#battle-and-reset-algorithms)
-14. [Monster-file import](#monster-file-import)
-15. [Image handling](#image-handling)
-16. [Deployment](#deployment)
-17. [Operations and diagnostics](#operations-and-diagnostics)
-18. [Security considerations](#security-considerations)
-19. [Known limitations](#known-limitations)
-20. [Extension guidance](#extension-guidance)
+### Process model
 
----
-
-## System architecture
-
-### Process topology
-
-The implementation runs both applications in the same interpreter and event loop:
+One Python process starts two Uvicorn servers over two independent FastAPI application objects:
 
 ```text
-                         ┌──────────────────────────────────────┐
-                         │        Python 3.14 process           │
-                         │                                      │
-Admin browser ── HTTP ──►│  FastAPI admin app :3000             │
-                         │      │                               │
-                         │      ├── Shared STATE                │
-                         │      ├── Shared SESSIONS             │
-                         │      ├── state.json                  │
-                         │      ├── setups/*.json               │
-                         │      └── uploads/*                   │
-                         │                                      │
-Client browser ─ HTTP ──►│  FastAPI client app :4000            │
-Client browser ── WS ───►│      │                               │
-                         │      └── WebSocket broadcast set     │
-                         └──────────────────────────────────────┘
+                         ┌───────────────────────────────────────┐
+                         │          Python process               │
+                         │                                       │
+Admin browser ─ HTTP ───►│ admin FastAPI app                     │
+                         │ default TCP 3000                      │
+                         │                                       │
+Client browser ─ HTTP ──►│ client FastAPI app                    │
+Client browser ─ WS ────►│ default TCP 4000                      │
+                         │                                       │
+                         │ Shared in-process objects:            │
+                         │ - STATE                               │
+                         │ - SESSIONS                            │
+                         │ - SOCKETS                             │
+                         │ - state.json / setups / uploads       │
+                         └───────────────────────────────────────┘
 ```
 
-### Why two FastAPI applications
+### Design implications
 
-The service exposes different capabilities on separate ports.
-
-| Application | Default port | Intended audience | Mutation endpoints |
-|---|---:|---|---|
-| `admin` | 3000 | Game master/admin | Yes |
-| `client` | 4000 | Table/player display | No |
-
-This separation prevents the client port from exposing administrative combatant-mutation routes. Both applications share memory because they run in a single process.
-
-### Consequence for scaling
-
-The current design is deliberately **single-process** and should run with one worker. Running multiple worker processes or multiple container replicas would create independent in-memory `STATE`, `SESSIONS`, and WebSocket sets. A multi-worker deployment requires a shared backend such as Redis plus a database or durable shared state layer.
+- Use **one process and one worker**.
+- Multiple Uvicorn workers or replicas are unsupported without a shared state/session backend.
+- Admin and client applications share encounter state only because they reside in the same interpreter.
+- The client application does not expose admin mutation routes.
 
 ---
 
-## Runtime components
-
-| Component | Implementation | Responsibility |
-|---|---|---|
-| HTTP/ASGI framework | FastAPI | Routes, form/file handling, JSON validation, dependencies |
-| ASGI server | Uvicorn | Runs each FastAPI app on a TCP listener |
-| Configuration parser | PyYAML or `json` | Loads YAML/JSON runtime configuration |
-| Validation | Pydantic | Validates JSON API request bodies |
-| Persistence | Standard-library JSON | Saves current state and named setups |
-| Authentication | In-memory signed-random session token | Role-aware cookie sessions |
-| Password validation | `hashlib.scrypt` or constant-time plaintext comparison | Supports scrypt password hashes and simple plaintext configuration values |
-| Client synchronization | FastAPI WebSockets | Pushes full encounter state after every mutation |
-| Static media | FastAPI `StaticFiles` | Serves uploaded images from `/media/` |
-
-### Python dependencies
+## Dependencies
 
 ```text
 fastapi
@@ -102,72 +48,19 @@ PyYAML
 python-multipart
 ```
 
-The remaining imports are Python standard library modules.
+The rest of the application uses Python standard-library modules such as `asyncio`, `json`, `random`, `hashlib`, `secrets`, `uuid`, and `pathlib`.
 
----
+Install:
 
-## Network model
-
-### Default listeners
-
-```text
-Admin:  0.0.0.0:3000
-Client: 0.0.0.0:4000
+```bash
+python3.14 -m pip install "fastapi>=0.115" "uvicorn[standard]>=0.30" "PyYAML>=6.0" python-multipart
 ```
-
-Use `127.0.0.1` for local-only deployments, or a specific LAN address to constrain exposure.
-
-### Administrative routes
-
-The following paths are bound only to the admin app unless otherwise noted:
-
-```text
-GET/POST  /login
-GET       /
-GET       /api/state
-GET       /api/setups
-POST      /api/setups/new
-POST      /api/setups/save
-POST      /api/setups/load
-POST      /api/monsters
-POST      /api/monsters/import
-PATCH     /api/monsters/{id}
-POST      /api/characters
-PATCH     /api/characters/{id}
-POST      /api/combatants/{id}/reset
-POST      /api/battle/reset-all
-POST      /api/battle/start
-POST      /api/battle/next
-```
-
-### Client routes
-
-```text
-GET/POST  /login
-GET       /display
-GET       /api/state
-WS        /ws
-GET       /media/{filename}
-```
-
-Both applications mount `/media/` from the same upload directory. This allows generated image URLs such as `/media/<uuid>.png` to resolve from either port.
-
-### Reverse-proxy notes
-
-For production-style deployment, place a TLS-aware reverse proxy in front of the application. Typical arrangements include:
-
-```text
-https://dm.example.net/       -> 127.0.0.1:3000
-https://display.example.net/  -> 127.0.0.1:4000
-```
-
-The reverse proxy must support WebSocket upgrade forwarding for the client display path `/ws`.
 
 ---
 
 ## Configuration
 
-### YAML configuration schema
+Example YAML configuration:
 
 ```yaml
 network:
@@ -181,41 +74,37 @@ security:
   users:
     - username: "dm"
       role: "admin"
-      password: "replace-this-admin-password"
+      password: "change-me"
     - username: "table"
       role: "client"
-      password: "replace-this-client-password"
+      password: "change-me"
 
 display:
-  background: "radial-gradient(circle at 50% 15%, #16273d, #080b14 70%)"
+  background: "#080b14"
   entry_direction: "from_bottom"
   exit_direction: "to_bottom"
   monster_width_percent: 45
   dndbeyond_image_lookup: true
 ```
 
-### Configuration fields
+| Configuration path | Type | Description |
+|---|---|---|
+| `network.bind` | string | Bind address for both Uvicorn servers |
+| `network.admin_port` | integer | Admin listener; default 3000 |
+| `network.client_port` | integer | Client listener; default 4000 |
+| `storage_dir` | string | Parent directory for state, setups, and images |
+| `security.users` | list | Configured login accounts |
+| `security.users[].role` | enum | `admin` or `client` |
+| `display.background` | CSS value | Client background |
+| `display.entry_direction` | enum | `from_bottom` or `from_top` |
+| `display.exit_direction` | enum | `to_bottom` or `to_top` |
+| `display.monster_width_percent` | integer | Legacy/configurable display sizing value |
+| `display.dndbeyond_image_lookup` | boolean | Enables optional remote image lookup |
 
-| Path | Type | Default | Description |
-|---|---|---|---|
-| `network.bind` | string | `0.0.0.0` | Listen address for both Uvicorn servers |
-| `network.admin_port` | integer | `3000` | Admin listener TCP port |
-| `network.client_port` | integer | `4000` | Client listener TCP port |
-| `storage_dir` | string | `./monster-display-data` | State, setup, and upload parent directory |
-| `security.users` | list | Default admin/client examples | User accounts |
-| `security.users[].username` | string | — | Login name |
-| `security.users[].role` | string | — | `admin` or `client` |
-| `security.users[].password` | string | — | Plaintext or `scrypt$...` password value |
-| `display.background` | CSS value | `#080b14` | Client display background |
-| `display.entry_direction` | enum | `from_bottom` | `from_bottom` or `from_top` |
-| `display.exit_direction` | enum | `to_bottom` | `to_bottom` or `to_top` |
-| `display.monster_width_percent` | integer | `45` | Client monster-card width in viewport-width units |
-| `display.dndbeyond_image_lookup` | boolean | `true` | Enables optional best-effort remote image lookup |
-
-### Command-line overrides
+Command-line values override configuration values:
 
 ```bash
-python3.14 monster_display_server_v4_3_1.py \
+python3.14 monster_display_server.py \
   --config config.yaml \
   --bind 0.0.0.0 \
   --admin-port 3000 \
@@ -223,65 +112,99 @@ python3.14 monster_display_server_v4_3_1.py \
   --storage-dir /var/lib/monster-display
 ```
 
-The application loads the configuration file first, then applies command-line values.
-
 ---
 
-## Authentication and authorization
+## Authentication
 
-### Session design
+### Sessions
 
-Upon successful login, the relevant application creates a random session ID:
+Successful login creates an in-memory random session token:
 
 ```python
 token = secrets.token_urlsafe(32)
-SESSIONS[token] = {"username": username, "role": role}
+SESSIONS[token] = {
+    "username": username,
+    "role": role,
+}
 ```
 
-It sets a cookie named `monster_session`:
+The application sets an `HttpOnly`, `SameSite=Lax` cookie named `monster_session`.
 
-```text
-HttpOnly: true
-SameSite: Lax
-Secure: false
-```
+### Authorization
 
-The `Secure` setting is false to support plain HTTP LAN use. It should be made true when deployment is HTTPS-only.
-
-### Role enforcement
-
-Administrative mutation handlers use a FastAPI dependency equivalent to:
+Admin mutation routes use a FastAPI dependency such as:
 
 ```python
 Depends(require("admin"))
 ```
 
-The dependency looks up the `monster_session` cookie in the in-memory `SESSIONS` map and verifies the requested role.
+The dependency validates the session cookie and role against the in-memory session map.
 
-### Password modes
+### Password formats
 
-The application accepts two password formats:
+The configuration accepts:
 
-| Format | Example | Behavior |
-|---|---|---|
-| Plaintext | `my-password` | Constant-time direct comparison |
-| Scrypt | `scrypt$<salt_hex>$<digest_hex>` | Derives scrypt digest and performs constant-time comparison |
+| Format | Example |
+|---|---|
+| Plaintext | `my-local-password` |
+| Scrypt | `scrypt$<salt_hex>$<digest_hex>` |
 
-Generate a scrypt password hash with:
+Scrypt hashes can be generated with:
 
 ```bash
-python3.14 -c 'from monster_display_server_v4_3_1 import password_hash; print(password_hash("replace-me"))'
+python3.14 -c 'from monster_display_server import password_hash; print(password_hash("replace-me"))'
 ```
 
-### Session limitations
+### Limitations
 
-Sessions are intentionally in-memory. They are lost after process restart, deployment replacement, or crash. Users must log in again.
+Sessions are lost after process restart. This is expected in the current in-memory design.
+
+---
+
+## Persistent storage
+
+For `storage_dir: /var/lib/monster-display`:
+
+```text
+/var/lib/monster-display/
+├── state.json
+├── uploads/
+│   └── <uuid>.<extension>
+└── setups/
+    └── <normalized-setup-name>.json
+```
+
+| Item | Meaning |
+|---|---|
+| `state.json` | Current working encounter state |
+| `uploads/` | Uploaded monster images |
+| `setups/` | Named reusable setup snapshots |
+
+### Atomic active-state writes
+
+Current state writes use a temporary file followed by replace:
+
+```python
+temp = STATE_FILE.with_suffix(".tmp")
+temp.write_text(json.dumps(STATE, indent=2), encoding="utf-8")
+temp.replace(STATE_FILE)
+```
+
+### Setup naming
+
+Names are normalized to a restricted slug:
+
+```python
+slug = re.sub(r"[^a-z0-9]+", "-", name.strip().lower()).strip("-")
+```
+
+The normalized value is limited to 80 characters and used as the setup filename stem. This prevents path traversal.
 
 ---
 
 ## State model
 
-### Root structure
+### Root state
 
 ```json
 {
@@ -291,7 +214,7 @@ Sessions are intentionally in-memory. They are lost after process restart, deplo
 }
 ```
 
-### Monster object
+### Monster model
 
 ```json
 {
@@ -303,7 +226,7 @@ Sessions are intentionally in-memory. They are lost after process restart, deplo
   "max_hp": 285,
   "original_hp": 285,
   "color": "#842029",
-  "image_url": "/media/abc123.png",
+  "image_url": "/media/abc.png",
   "active": false,
   "alive": true,
   "visible": false,
@@ -317,27 +240,7 @@ Sessions are intentionally in-memory. They are lost after process restart, deplo
 }
 ```
 
-| Field | Semantics |
-|---|---|
-| `id` | Stable internal UUID-like identifier used in API paths and battle order |
-| `name` | Displayed monster name |
-| `monster_type` | Displayed type and remote-image lookup key |
-| `ac` | Armor Class |
-| `hp` | Current hit points |
-| `max_hp` | Current maximum hit points; monsters reset to original value |
-| `original_hp` | Imported/manual starting HP reset baseline |
-| `color` | CSS color for display and initiative token |
-| `image_url` | Optional local or remote image reference |
-| `active` | Enables stage display and battle eligibility |
-| `alive` | Death state; false when HP is below zero |
-| `visible` | Controls initiative-bar inclusion |
-| `ally` | Persisted monster classification flag |
-| `initiative` | Current initiative, nullable |
-| `original_initiative` | Reset initiative baseline |
-| `show_ac`, `show_hp`, `show_initiative` | Per-stat monster-card visibility flags |
-| `in_turn` | Current battle-turn marker; globally exclusive |
-
-### Character object
+### Character model
 
 ```json
 {
@@ -356,240 +259,107 @@ Sessions are intentionally in-memory. They are lost after process restart, deplo
 }
 ```
 
-### Character Max HP rule
+### Key semantics
 
-When `max_hp` is changed through the API, the application also updates `original_hp`. Character reset then preserves the edited current `max_hp` and sets `hp` equal to it.
+| Field | Meaning |
+|---|---|
+| `active` | Monster renders on client stage; combatant is eligible for battle progression if alive |
+| `alive` | Life state; HP below zero forces false |
+| `visible` | Controls initiative-bar inclusion |
+| `in_turn` | Current combatant; exclusive across all entities |
+| `original_hp` | Monster reset baseline; character baseline follows edited Max HP semantics |
+| `original_initiative` | Initiative restored by reset |
+| `battle_order` | Ordered list of combatant IDs, independent of list order |
 
-Conceptually:
+### Normalization and migration
 
-```python
-if "max_hp" in values:
-    character["original_hp"] = values["max_hp"]
-
-# On reset:
-character["hp"] = character["max_hp"]
-```
-
-### Battle order
-
-`battle_order` contains IDs, not embedded combatant copies:
-
-```json
-{
-  "battle_order": [
-    "5c713...",
-    "8ca40...",
-    "20f61..."
-  ]
-}
-```
-
-This maintains turn sequence independent of the ordering of `monsters` and `characters` arrays. The application filters invalid IDs on state/setup normalization.
+`normalize_state()` fills missing fields when loading prior state or setup files. It allows old saved setups to acquire later fields such as HP, visibility, ally, display toggles, and reset values.
 
 ---
 
-## Persistence
+## HTTP API
 
-### Directory layout
+Unless noted, mutation endpoints require an authenticated admin session.
 
-Given `storage_dir: /var/lib/monster-display`:
+### Shared state
 
-```text
-/var/lib/monster-display/
-├── state.json
-├── uploads/
-│   ├── 254b117f....png
-│   └── 8cb1e11d....webp
-└── setups/
-    ├── throne-room-lytharia.json
-    └── goblin-ambush.json
-```
+| Method | Path | Description |
+|---|---|---|
+| GET | `/api/state` | Returns the public state snapshot; available on admin and client applications to authenticated users |
 
-### Current state
+### Authentication/UI routes
 
-`state.json` persists the live encounter state after mutations. State writes are atomic at the filesystem level by writing to a temporary file then replacing the target:
-
-```python
-temp = STATE_FILE.with_suffix(".tmp")
-temp.write_text(json.dumps(STATE, indent=2), encoding="utf-8")
-temp.replace(STATE_FILE)
-```
-
-### Named setups
-
-Named setups are serialized copies of `STATE` and saved under `setups/`. Setup names are normalized to a restricted slug:
-
-```python
-slug = re.sub(r"[^a-z0-9]+", "-", name.strip().lower()).strip("-")
-```
-
-This prevents path traversal and creates predictable filenames.
-
-### State normalization/migration
-
-At startup and setup load, `normalize_state()` supplies defaults for earlier state files. It adds fields introduced across versions, including:
-
-- Monster `ally` and `visible`
-- Character HP, Max HP, and reset baseline
-- Initiative display settings
-- Active/alive/in-turn flags
-
-This is forward-tolerant for missing fields, but it is not a formal schema-version migration system.
-
----
-
-## Battle setup lifecycle
-
-### New setup
-
-`POST /api/setups/new` resets the in-memory root state to:
-
-```json
-{
-  "monsters": [],
-  "characters": [],
-  "battle_order": []
-}
-```
-
-The endpoint persists the result to `state.json` and broadcasts it to connected client WebSockets.
-
-### Save setup
-
-`POST /api/setups/save` writes the full current `STATE` to:
-
-```text
-<storage_dir>/setups/<normalized-name>.json
-```
-
-Saving an existing name replaces it.
-
-### Load setup
-
-`POST /api/setups/load` reads, validates, normalizes, installs, persists, and broadcasts a named setup. The active `state.json` is therefore always the most recently loaded or modified working setup.
-
-### Image references
-
-Setups store image URL strings only. Local uploads refer to `/media/<uuid>.<extension>`, which requires that the referenced file remain present in `uploads/`.
-
----
-
-## API reference
-
-All JSON mutation routes require an admin role. The server returns `401` when the session is missing or insufficient and `404` for unknown combatants/setups.
-
-### Common state route
-
-#### `GET /api/state`
-
-Available on both applications to an authenticated session.
-
-Response:
-
-```json
-{
-  "monsters": [],
-  "characters": [],
-  "battle_order": [],
-  "display": {
-    "background": "#080b14",
-    "entry_direction": "from_bottom",
-    "exit_direction": "to_bottom",
-    "monster_width_percent": 45
-  }
-}
-```
+| Application | Method | Path |
+|---|---|---|
+| Admin | GET/POST | `/login` |
+| Admin | GET | `/` |
+| Client | GET/POST | `/login` |
+| Client | GET | `/display` |
 
 ### Setup routes
 
-#### `GET /api/setups`
+| Method | Path | Description |
+|---|---|---|
+| GET | `/api/setups` | Lists saved setup names |
+| POST | `/api/setups/new` | Replaces current state with empty state |
+| POST | `/api/setups/save` | Saves full current state under a name |
+| POST | `/api/setups/load` | Replaces current state from saved setup |
+| POST | `/api/setups/import` | Appends reset-state copies from a saved setup |
 
-Response:
+#### Import payload
 
 ```json
 {
-  "names": ["goblin-ambush", "throne-room-lytharia"]
+  "name": "throne-room-lytharia",
+  "kind": "both"
 }
 ```
 
-#### `POST /api/setups/new`
+`kind` must be one of:
 
-No request body.
-
-Response: full public state.
-
-#### `POST /api/setups/save`
-
-Request:
-
-```json
-{
-  "name": "Throne Room Lytharia"
-}
-```
-
-Response:
-
-```json
-{
-  "name": "throne-room-lytharia"
-}
-```
-
-#### `POST /api/setups/load`
-
-Request:
-
-```json
-{
-  "name": "throne-room-lytharia"
-}
-```
-
-Response:
-
-```json
-{
-  "name": "throne-room-lytharia"
-}
+```text
+characters
+monsters
+both
 ```
 
 ### Monster routes
 
-#### `POST /api/monsters`
+| Method | Path | Description |
+|---|---|---|
+| POST | `/api/monsters` | Add one or more manual monsters via multipart form |
+| POST | `/api/monsters/import` | Import one or more monsters from `.monster` file |
+| POST | `/api/monsters/roll-initiative` | Overwrite every monster initiative with random d20 values |
+| POST | `/api/monsters/{id}/edit` | Multipart complete monster edit, including image replacement |
+| PATCH | `/api/monsters/{id}` | JSON partial monster update |
 
-Multipart form fields:
+#### Manual monster multipart fields
 
-| Field | Required | Type |
-|---|---:|---|
-| `name` | Yes | string |
-| `monster_type` | Yes | string |
-| `ac` | Yes | integer |
-| `hp` | Yes | integer |
-| `color` | Yes | string/CSS color |
-| `image` | No | image upload |
+```text
+name          required
+monster_type  required
+ac            required
+hp            required
+color         required
+quantity      optional, integer 1..50, default 1
+image         optional image upload
+```
 
-#### `POST /api/monsters/import`
-
-Multipart form fields:
-
-| Field | Required | Type |
-|---|---:|---|
-| `monster_file` | Yes | `.monster` upload |
-| `color` | Yes | string/CSS color |
-| `image` | No | image upload |
-
-#### `PATCH /api/monsters/{id}`
-
-Supported JSON fields:
+#### Partial monster update fields
 
 ```json
 {
+  "name": "Ogre",
+  "monster_type": "giant",
+  "ac": 11,
+  "hp": 52,
+  "max_hp": 59,
+  "original_hp": 59,
+  "color": "#842029",
   "active": true,
   "ally": false,
   "visible": true,
   "initiative": 14,
-  "hp": 23,
   "hp_delta": -7,
   "show_ac": true,
   "show_hp": true,
@@ -598,13 +368,14 @@ Supported JSON fields:
 }
 ```
 
-Only supplied, non-null fields are processed. This is important: button clicks that send only one property do not clear initiative or HP.
-
 ### Character routes
 
-#### `POST /api/characters`
+| Method | Path | Description |
+|---|---|---|
+| POST | `/api/characters` | Add character |
+| PATCH | `/api/characters/{id}` | Partial character update |
 
-Request body:
+Example creation body:
 
 ```json
 {
@@ -615,50 +386,14 @@ Request body:
 }
 ```
 
-`hp` defaults to `1` if omitted by an API caller, although the UI always supplies a value.
+### Battle routes
 
-#### `PATCH /api/characters/{id}`
-
-Supported JSON fields:
-
-```json
-{
-  "active": true,
-  "alive": true,
-  "visible": true,
-  "initiative": 16,
-  "hp": 18,
-  "max_hp": 24,
-  "hp_delta": -6,
-  "in_turn": true
-}
-```
-
-### Reset and battle routes
-
-#### `POST /api/combatants/{id}/reset`
-
-Resets a single combatant.
-
-#### `POST /api/battle/reset-all`
-
-Resets all combatants, sorts separate admin arrays by Max HP descending, and clears `battle_order`.
-
-#### `POST /api/battle/start`
-
-Request:
-
-```json
-{
-  "order": ["combatant-id-1", "combatant-id-2"]
-}
-```
-
-The provided list must contain every active, living combatant exactly once. The endpoint saves this order, sets the first combatant as current turn, enables visibility for it, sorts the admin data arrays by initiative, and broadcasts the new state.
-
-#### `POST /api/battle/next`
-
-No body. Moves the battle turn to the next active, living combatant. If required, new eligible combatants absent from the existing battle order are appended by descending initiative.
+| Method | Path | Description |
+|---|---|---|
+| POST | `/api/combatants/{id}/reset` | Reset an individual combatant |
+| POST | `/api/battle/reset-all` | Reset all combatants and clear battle order |
+| POST | `/api/battle/start` | Validate and set supplied battle order |
+| POST | `/api/battle/next` | Advance current turn |
 
 ---
 
@@ -670,11 +405,9 @@ No body. Moves the battle turn to the next active, living combatant. If required
 ws://SERVER:4000/ws
 ```
 
-Use `wss://` when a TLS reverse proxy serves the client application through HTTPS.
+### Message format
 
-### Initial message
-
-Immediately after connecting, the server sends a complete state message:
+The server sends a complete state snapshot immediately after connection and after every mutation:
 
 ```json
 {
@@ -683,138 +416,66 @@ Immediately after connecting, the server sends a complete state message:
     "monsters": [],
     "characters": [],
     "battle_order": [],
-    "display": {}
+    "display": {
+      "background": "#080b14",
+      "entry_direction": "from_bottom",
+      "exit_direction": "to_bottom",
+      "monster_width_percent": 45
+    }
   }
 }
 ```
 
-### Update messages
-
-Every successful state mutation invokes `changed()`, which:
-
-1. Writes `state.json`.
-2. Broadcasts the full public state to every active WebSocket connection.
-
-The protocol currently sends full snapshots rather than diffs. This favors simple, robust client rendering over bandwidth efficiency.
-
-### Connection lifecycle
-
-The client display reconnects by reloading itself after a WebSocket close. Failed send operations cause the server to remove stale WebSocket objects from its set.
+The protocol intentionally sends full snapshots rather than diffs. This simplifies client rendering and recovery.
 
 ---
 
-## Admin UI implementation
+## Battle logic
 
-The admin interface is embedded as `ADMIN_HTML` in the Python file. It contains no external JavaScript or CSS build pipeline.
+### Eligibility
 
-### Rendering
-
-The browser calls:
-
-```text
-GET /api/state
-```
-
-and renders the Monster and Character tables from the received JSON state.
-
-### Mutations
-
-Most control actions issue `PATCH` requests such as:
-
-```javascript
-fetch('/api/characters/' + id, {
-  method: 'PATCH',
-  headers: {'Content-Type': 'application/json'},
-  body: JSON.stringify({hp_delta: -5})
-})
-```
-
-The UI reloads state after each mutation.
-
-### Tie modal
-
-The modal starts with the `hidden` attribute:
-
-```html
-<div id="tieModal" class="modal" hidden>
-```
-
-The associated CSS must retain this rule:
-
-```css
-.modal[hidden] {
-  display: none !important;
-}
-```
-
-Without it, `.modal { display: grid; }` may override the browser’s default hidden behavior and cause the modal to appear unexpectedly.
-
-### Setup controls
-
-- **New** calls `POST /api/setups/new` after confirmation.
-- **Save** calls `POST /api/setups/save` with the entered name.
-- **Load** calls `POST /api/setups/load` using the selected setup after confirmation.
-
----
-
-## Client display implementation
-
-The client UI is embedded as `CLIENT_HTML`.
-
-### Rendering path
-
-1. Fetch `GET /api/state` for initial state.
-2. Connect to `/ws`.
-3. Render full state snapshots received from WebSocket.
-
-### Initiative bar selection
-
-The client includes:
-
-- Combatants in `battle_order` only if `visible` is true.
-- Other active and visible combatants as initiative-sorted extras.
-
-The bar displays only name text. Initiative itself is not displayed.
-
-### Token state styling
-
-| State | CSS class/effect |
-|---|---|
-| Default visible | White border |
-| Dead | `dead`, black border, grayscale/reduced opacity |
-| Current turn | `turn`, red border and red glow |
-
-### Text contrast
-
-The display calculates an approximate RGB luminance from six-digit hex colors and chooses dark or light foreground text:
-
-```javascript
-(0.2126 * r + 0.7152 * g + 0.0722 * b) / 255
-```
-
-Colors above the threshold use dark text; others use white text. Non-hex CSS colors fall back to white text.
-
-### Main stage
-
-Only active and alive monsters render on the full-height main stage. Characters are represented in the initiative bar only.
-
----
-
-## Battle and reset algorithms
-
-### Combatant eligibility
-
-A combatant is eligible for automated battle order and Next progression when:
+A combatant is eligible for automated battle behavior when:
 
 ```python
-entity["active"] is True and entity["alive"] is True
+combatant["active"] is True and combatant["alive"] is True
 ```
 
-### Death behavior
+### Start Battle
 
-A monster or character dies when its HP falls below zero.
+The browser creates the order and sends it to `POST /api/battle/start`. The server validates that every active living combatant appears exactly once.
 
-On death:
+The admin UI groups combatants by numeric initiative descending. Blank initiative values are ordered after numeric values.
+
+### Tie resolution
+
+Every tied numeric-initiative group gets a full ordering UI. Each member receives a unique position 1 through group size. The client validates uniqueness and reconstructs the full battle order by replacing only that tie bucket.
+
+Higher initiative buckets remain before lower initiative buckets.
+
+### Mid-battle activation insertion
+
+The current source includes `insert_into_battle_order(combatant)`. On activation of a living combatant during an existing battle:
+
+1. It is ignored if no battle order exists.
+2. It is ignored if already present.
+3. Numeric initiative is inserted before the first lower numeric initiative.
+4. Equal initiative values are skipped, so the newly activated combatant goes after existing equal initiatives.
+5. Numeric initiative goes before initiative-less entries.
+6. Initiative-less combatants append at the end.
+
+This preserves the current battle turn.
+
+### Next turn
+
+`advance_turn()` filters to active living combatants, preserves existing battle order where valid, appends newly eligible missing combatants by descending initiative, then advances to the next combatant cyclically.
+
+---
+
+## Death, visibility, and reset logic
+
+### Death
+
+When HP is below zero:
 
 ```python
 entity["alive"] = False
@@ -822,15 +483,9 @@ entity["visible"] = True
 entity["in_turn"] = False
 ```
 
-A manually dead character follows the same visible/in-turn behavior.
+### Turn assignment
 
-### Current turn invariant
-
-At most one combatant may have `in_turn: true`. The helper clears all combatants before assigning a requested new turn.
-
-### Visibility invariant
-
-Assigning a battle turn always enables visibility:
+`set_turn()` clears every entity’s `in_turn`, then sets the target to:
 
 ```python
 entity["in_turn"] = True
@@ -839,7 +494,7 @@ entity["visible"] = True
 
 ### Individual reset
 
-Common reset fields:
+Common reset values:
 
 ```python
 active = False
@@ -849,7 +504,7 @@ in_turn = False
 initiative = original_initiative
 ```
 
-Monster-specific reset:
+Monster reset additionally restores:
 
 ```python
 hp = original_hp
@@ -859,63 +514,171 @@ show_hp = False
 show_initiative = False
 ```
 
-Character-specific reset:
+Character reset restores:
 
 ```python
 hp = max_hp
 ```
 
-Character Max HP remains as currently edited.
+Character Max HP is preserved; a changed Max HP becomes the active character reset value.
 
 ### Reset All
 
-Reset All applies individual reset behavior to every combatant, sorts separate admin arrays by Max HP descending, clears `battle_order`, persists, and broadcasts state.
-
-### Start Battle
-
-The browser derives a proposed descending-initiative order and resolves duplicate numeric initiatives through an admin modal. The backend validates that the final order contains each active, living combatant exactly once.
-
-After validation, Start Battle:
-
-1. Assigns the provided order to `battle_order`.
-2. Clears old turns.
-3. Marks the first combatant as in turn and visible.
-4. Sorts admin monster and character arrays independently by initiative descending.
-5. Persists and broadcasts state.
-
-Critically, sorting the arrays is not a rewrite of `battle_order`.
+Reset All resets every entity, sorts Monster and Character arrays independently by Max HP descending, clears `battle_order`, writes state, and broadcasts the result.
 
 ---
 
-## Monster-file import
+## Setup import
 
-`.monster` files are expected to be UTF-8 JSON. The parser accepts common properties from the supplied format:
+Setup import loads and normalizes the named source setup, then deep-copies selected entity types.
 
-| Required application field | Source candidates |
+### Imported monsters
+
+```python
+id = new UUID
+hp = original_hp
+max_hp = original_hp
+initiative = original_initiative
+active = False
+alive = True
+visible = False
+in_turn = False
+show_ac = False
+show_hp = False
+show_initiative = False
+```
+
+### Imported characters
+
+```python
+id = new UUID
+hp = max_hp
+initiative = original_initiative
+active = False
+alive = True
+visible = False
+in_turn = False
+```
+
+The importer deliberately does not modify `STATE["battle_order"]`.
+
+---
+
+## Batch monster creation
+
+The manual and file-import monster routes accept `quantity`, constrained to 1 through 50.
+
+Image behavior for a batch:
+
+- A supplied upload is written once.
+- Remote image lookup runs once when no upload is supplied.
+- Each created monster gets a unique ID but uses the same image URL.
+
+---
+
+## Random monster initiatives
+
+Endpoint:
+
+```text
+POST /api/monsters/roll-initiative
+```
+
+Implementation:
+
+```python
+for monster in STATE["monsters"]:
+    monster["initiative"] = random.randint(1, 20)
+```
+
+This intentionally overwrites every monster’s current initiative regardless of activity or life state.
+
+The required module import is:
+
+```python
+import random
+```
+
+---
+
+## Client display
+
+### Initiative bar
+
+The client receives full state and renders visible combatants. It displays names only.
+
+| State | CSS effect |
 |---|---|
-| Name | `name` |
-| Monster type | `type` |
-| HP | `hpText`, then `hp` |
-| AC | `ac`, `armorClass`, `otherArmorDesc`, then `natArmorBonus` |
+| Normal visible | White border |
+| Dead | Black border, grayscale/reduced opacity |
+| Current turn | Red border and glow |
 
-The parser finds the first integer in string-formatted HP or AC fields. For example:
+Text color is chosen from approximate RGB luminance of six-digit hex combatant colors.
 
-```json
-{
-  "otherArmorDesc": "17 Ice bound robes (reinforced by magical ward)",
-  "hpText": "285"
+### Monster grid
+
+Active living monsters render in an adaptive CSS Grid. Grid dimensions follow:
+
+```text
+1 -> 1x1
+2 -> 1x2
+3-4 -> 2x2
+5-6 -> 2x3
+7-9 -> 3x3
+10-12 -> 3x4
+13-16 -> 4x4
+```
+
+The algorithm alternates column growth and row growth:
+
+```javascript
+function gridSize(n) {
+  if (n <= 1) return [1, 1];
+
+  let rows = 1;
+  let cols = 1;
+
+  while (rows * cols < n) {
+    if (cols === rows) cols++;
+    else rows++;
+  }
+
+  return [rows, cols];
 }
 ```
 
-parses as AC 17 and HP 285.
+Every render assigns explicit positions:
+
+```javascript
+const row = Math.floor(index / cols) + 1;
+const col = (index % cols) + 1;
+
+card.style.gridRow = String(row);
+card.style.gridColumn = String(col);
+```
+
+This guarantees top-row-first, left-to-right placement even after dynamic grid reflow.
+
+---
+
+## Monster file parser
+
+`.monster` files must be UTF-8 JSON. The parser extracts:
+
+| Application field | Candidate source fields |
+|---|---|
+| Name | `name` |
+| Type | `type` |
+| HP | `hpText`, then `hp` |
+| AC | `ac`, `armorClass`, `otherArmorDesc`, then `natArmorBonus` |
+
+The parser extracts the first integer from string-formatted AC and HP values.
 
 ---
 
 ## Image handling
 
-### Manual uploads
-
-Allowed image extensions:
+Allowed upload extensions:
 
 ```text
 .png
@@ -925,31 +688,34 @@ Allowed image extensions:
 .webp
 ```
 
-Uploaded files receive a UUID-derived filename and are stored under `uploads/`. The combatant stores the URL:
+Uploaded images receive UUID-derived filenames under `uploads/` and are served at:
 
 ```text
 /media/<uuid>.<extension>
 ```
 
-### Remote lookup
+If no upload is supplied, optional best-effort D&D Beyond lookup fetches a monster search page and attempts to read `og:image` metadata. This is not a guaranteed integration.
 
-If no upload is supplied and `dndbeyond_image_lookup` is enabled, the server makes a best-effort request to a public D&D Beyond monster-search page. It attempts to extract an `og:image` metadata value.
+---
 
-This path must be treated as opportunistic rather than a guaranteed or stable integration. It can fail due to remote site changes, bot mitigation, connectivity, or missing metadata.
+## Clean shutdown
+
+`Ctrl-C` can trigger normal asyncio cancellation followed by `KeyboardInterrupt`. To avoid a traceback while allowing cleanup, use:
+
+```python
+try:
+    asyncio.run(serve())
+except KeyboardInterrupt:
+    pass
+```
+
+For graceful embedded-Uvicorn shutdown, retain references to both `uvicorn.Server` objects, set `should_exit = True` on cancellation, and await both server tasks with `return_exceptions=True`.
 
 ---
 
 ## Deployment
 
-### Local/LAN foreground run
-
-```bash
-python3.14 monster_display_server_v4_3_1.py --config /etc/monster-display/config.yaml
-```
-
 ### Basic systemd unit
-
-Create `/etc/systemd/system/monster-display.service`:
 
 ```ini
 [Unit]
@@ -961,7 +727,7 @@ Type=simple
 User=monsterdisplay
 Group=monsterdisplay
 WorkingDirectory=/opt/monster-display
-ExecStart=/opt/monster-display/.venv/bin/python /opt/monster-display/monster_display_server_v4_3_1.py --config /etc/monster-display/config.yaml
+ExecStart=/opt/monster-display/.venv/bin/python /opt/monster-display/monster_display_server.py --config /etc/monster-display/config.yaml
 Restart=on-failure
 RestartSec=3
 
@@ -969,216 +735,56 @@ RestartSec=3
 WantedBy=multi-user.target
 ```
 
-Then:
+### Operational commands
 
 ```bash
-sudo systemctl daemon-reload
-sudo systemctl enable --now monster-display
-sudo systemctl status monster-display
+python3.14 -m py_compile monster_display_server.py
+sudo ss -lptn 'sport = :3000'
+sudo ss -lptn 'sport = :4000'
 ```
 
-### Firewall example
+### Backup
 
-For a trusted LAN using UFW:
-
-```bash
-sudo ufw allow from 192.168.1.0/24 to any port 3000 proto tcp
-sudo ufw allow from 192.168.1.0/24 to any port 4000 proto tcp
-```
-
-Restrict the admin port more tightly if possible.
-
-### Backups
-
-Back up the entire configured storage directory:
+Back up the complete storage directory:
 
 ```bash
 tar -C /var/lib -czf monster-display-backup.tgz monster-display
 ```
 
-This preserves current state, named setups, and uploaded images together.
-
----
-
-## Operations and diagnostics
-
-### Syntax validation
-
-```bash
-python3.14 -m py_compile monster_display_server_v4_3_1.py
-```
-
-No output indicates successful compilation.
-
-### Confirm listeners
-
-```bash
-sudo ss -lptn 'sport = :3000'
-sudo ss -lptn 'sport = :4000'
-```
-
-### Check the running command
-
-```bash
-ps -fp <PID>
-tr '\0' ' ' < /proc/<PID>/cmdline
-```
-
-### Confirm served version markers
-
-The admin page can be checked from the local host:
-
-```bash
-curl -s http://127.0.0.1:3000/ | grep -o 'setupName'
-```
-
-Expected output:
-
-```text
-setupName
-```
-
-### Inspect persistent data
-
-```bash
-jq . /var/lib/monster-display/state.json
-find /var/lib/monster-display/setups -maxdepth 1 -type f -name '*.json' -printf '%f\n'
-```
-
-### API test with an authenticated browser session
-
-For normal operation, use browser developer tools rather than manually replaying cookie-authenticated requests. The admin page uses relative URLs and same-origin cookies automatically.
-
 ---
 
 ## Security considerations
 
-### Current security posture
+The current design is intended for trusted local/LAN use.
 
-The application is suitable for trusted local/LAN tabletop use. It is not a hardened Internet-facing service by default.
+Current limitations include:
 
-Notable properties:
+- In-memory sessions.
+- Cookie `secure=False` for HTTP LAN compatibility.
+- No CSRF protection.
+- No login rate limiting.
+- Extension-based image validation rather than content inspection.
+- Direct outbound request attempt for remote image lookup.
+- Client WebSocket route does not separately validate an authenticated cookie.
+- Client receives full combatant state, including fields hidden only by UI logic.
 
-- Session data is in memory.
-- No CSRF token is implemented.
-- Default cookie uses `secure=False` for HTTP LAN compatibility.
-- Plaintext configuration passwords are supported.
-- No rate limiting or login lockout is present.
-- Uploaded images are extension-validated, not content-sniffed.
-- The D&D Beyond lookup makes outbound HTTP requests when enabled.
+For Internet exposure:
 
-### Recommended hardening
-
-For anything beyond a trusted LAN:
-
-1. Terminate TLS at a reverse proxy.
-2. Change the cookie to `secure=True`.
-3. Use scrypt password hashes rather than plaintext passwords.
-4. Restrict admin access by IP/VPN/firewall.
-5. Run under a dedicated non-root system account.
-6. Set restrictive filesystem permissions on configuration and storage directories.
-7. Add CSRF protections if exposing browser sessions across untrusted origins.
-8. Add upload content validation and file size limits.
-9. Disable remote image lookup or route it through a controlled proxy if privacy is a concern.
+1. Add TLS through a reverse proxy.
+2. Set secure cookies.
+3. Restrict admin access with firewall/VPN/IP allow lists.
+4. Use scrypt password hashes.
+5. Run as a non-root service account.
+6. Add CSRF protection and rate limiting.
+7. Consider a separate redacted client state projection.
 
 ---
 
-## Known limitations
+## Recommended future refactors
 
-- One process/worker only; no multi-worker synchronization.
-- No database or concurrent edit conflict handling.
-- Sessions disappear after restart.
-- No deletion UI for individual combatants or saved setups.
-- Monster Max HP is not editable through the admin UI.
-- Ally state is stored but does not change client styling or game mechanics.
-- Character cards are not rendered on the main display stage.
-- Client WebSocket endpoint accepts connections without cookie/session validation; the display page itself requires login, but direct WebSocket access is not separately authenticated.
-- The state broadcast contains all current combatant data, including hidden monster stat values. The client JavaScript hides fields visually but receives full state.
-- Remote D&D Beyond image lookup is fragile by design and may fail.
-- The interface is embedded HTML/CSS/JS in one Python source file, which is convenient for deployment but less maintainable than separate static assets.
-
----
-
-## Extension guidance
-
-### Add entity deletion
-
-Add an admin-only route:
-
-```text
-DELETE /api/monsters/{id}
-DELETE /api/characters/{id}
-```
-
-The handler should:
-
-1. Remove the object from the relevant list.
-2. Remove its ID from `battle_order`.
-3. Clear it as current turn if applicable.
-4. Persist and broadcast via `changed()`.
-
-### Add a database backend
-
-Replace global `STATE` and JSON writes with a repository layer. A minimal interface could include:
-
-```python
-class EncounterRepository:
-    def load_current(self) -> dict: ...
-    def save_current(self, state: dict) -> None: ...
-    def list_setups(self) -> list[str]: ...
-    def load_setup(self, name: str) -> dict: ...
-    def save_setup(self, name: str, state: dict) -> None: ...
-```
-
-SQLite is a reasonable first step for single-host durability and queryability.
-
-### Scale to multiple workers
-
-Required changes:
-
-- Move sessions to Redis or signed/stateless cookies.
-- Move state/setup persistence to a shared database.
-- Broadcast mutations through Redis Pub/Sub or another message bus.
-- Add optimistic concurrency/versioning to avoid lost updates.
-
-### Use API tokens for displays
-
-To avoid client login UI for player screens, add a display-specific signed token to the display URL and validate it in both `GET /display` and `/ws`.
-
-### Separate static assets
-
-Move `ADMIN_HTML`, `CLIENT_HTML`, CSS, and JavaScript into versioned files served via `StaticFiles`, or use templates. This supports browser cache-control, testability, linting, and easier UI iteration.
-
-### Improve client-data privacy
-
-Expose a dedicated client state projection that includes only fields allowed on the player display. For example, omit hidden HP, AC, initiative, and unrevealed monsters from the WebSocket payload rather than merely hiding them in CSS/DOM rendering.
-
-### Add automated tests
-
-High-value test targets include:
-
-- `.monster` parsing variants.
-- State normalization/migration.
-- Death and visibility invariants.
-- Character Max HP/reset behavior.
-- Turn exclusivity.
-- Battle-order validation.
-- Setup save/load behavior.
-- Setup-name path traversal prevention.
-- Admin sorting without battle-order mutation.
-
----
-
-## Version history summary
-
-| Version | Major additions |
-|---|---|
-| v1 | Base two-port admin/client display, monsters, characters, WebSocket updates |
-| v2 | Alive/dead behavior, battle turn, reset operations, battle controls |
-| v3 | Initiative visibility control and readable token text |
-| v4 | Monster Ally flag, character HP, character damage/heal |
-| v4.1 | Editable character Max HP |
-| v4.2 | Character reset preserves active Max HP and heals to it |
-| v4.2.1 | Admin-table sorting after Start Battle and Reset All without changing battle order |
-| v4.3 | Named New/Save/Load battle setups |
-| v4.3.1 | Syntax correction for setup-list sorting |
+- Separate embedded HTML/CSS/JavaScript into static versioned assets.
+- Add automated tests for parser behavior, setup migration, tie ordering, mid-battle insertion, reset behavior, and client grid placement.
+- Add explicit combatant and setup deletion endpoints/UI.
+- Introduce SQLite or another database.
+- Use Redis/database state plus Pub/Sub before attempting multi-worker deployment.
+- Add API/display token authentication for player displays.

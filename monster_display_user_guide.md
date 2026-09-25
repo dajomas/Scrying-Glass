@@ -1,207 +1,128 @@
 # Monster Display User Guide
 
-## Purpose
+## Introduction
 
-Monster Display is a browser-based battle display tool for tabletop encounters. A game master operates an **admin screen** while players view a separate **client display**. Changes made by the administrator—combatants, hit points, initiative, visibility, and turns—are sent to connected client screens in real time.
+Monster Display is a game-master-controlled battle display for tabletop encounters. You work in the **admin screen** while players watch the separate **client display**. Changes to combatants, HP, initiative, visibility, and battle turn appear on the client display in real time.
 
-The current application version documented here is **v4.3.1**.
-
----
-
-## Contents
-
-1. [What you need](#what-you-need)
-2. [Starting the application](#starting-the-application)
-3. [Opening the admin and client screens](#opening-the-admin-and-client-screens)
-4. [Logging in](#logging-in)
-5. [Admin screen overview](#admin-screen-overview)
-6. [Managing battle setups](#managing-battle-setups)
-7. [Adding monsters](#adding-monsters)
-8. [Adding characters](#adding-characters)
-9. [Combatant controls](#combatant-controls)
-10. [Initiative and battle flow](#initiative-and-battle-flow)
-11. [Client display behavior](#client-display-behavior)
-12. [Saving and loading data](#saving-and-loading-data)
-13. [Configuration](#configuration)
-14. [Operational notes and troubleshooting](#operational-notes-and-troubleshooting)
+This guide documents the current working tool, including batch monster creation, setup import, random monster initiative rolls, editable combatants, tied-initiative ordering, and the adaptive monster grid.
 
 ---
 
-## What you need
+## Starting the tool
 
-- Python 3.14 or later.
-- A browser for the admin screen.
-- One or more browsers, a TV, projector, or tablet for the client display.
-- Network connectivity between the server and the devices viewing the display.
-
-### Python dependencies
-
-Install the required packages in a virtual environment if practical:
-
-```bash
-python3.14 -m venv .venv
-. .venv/bin/activate
-python3.14 -m pip install --upgrade pip
-python3.14 -m pip install "fastapi>=0.115" "uvicorn[standard]>=0.30" "PyYAML>=6.0" python-multipart
-```
-
----
-
-## Starting the application
-
-Start the server with a YAML or JSON configuration file:
+Start the application with its configuration file:
 
 ```bash
 python3.14 monster_display_server.py --config config.yaml
 ```
 
-The example configuration uses these default ports:
-
-| Service | Default port | Purpose |
-|---|---:|---|
-| Admin | 3000 | Create and manage combatants, battle controls, save/load setups |
-| Client display | 4000 | Player-facing initiative bar and active monster display |
-
-You can override network values on the command line:
-
-```bash
-python3.14 monster_display_server.py \
-  --config config.yaml \
-  --bind 0.0.0.0 \
-  --admin-port 3000 \
-  --client-port 4000 \
-  --storage-dir /var/lib/monster-display
-```
-
-Command-line arguments override the corresponding configuration-file values.
-
----
-
-## Opening the admin and client screens
-
-Replace `SERVER` below with the server hostname or IP address.
+Default addresses:
 
 | Screen | Address |
 |---|---|
-| Admin login | `http://SERVER:3000/login` |
-| Admin home | `http://SERVER:3000/` |
-| Client login | `http://SERVER:4000/login` |
+| Admin | `http://SERVER:3000/` |
 | Client display | `http://SERVER:4000/display` |
 
-For a local test on the same machine, use `localhost`:
+Replace `SERVER` with the server’s hostname or IP address. For local testing, use `localhost`.
 
 ```text
 http://localhost:3000/
 http://localhost:4000/display
 ```
 
-Use the same hostname consistently. For example, avoid using `localhost` in one tab and a LAN IP address in another unless you intend to keep browser sessions separate.
-
 ---
 
 ## Logging in
 
-Accounts are configured in `config.yaml` under `security.users`. Each account has:
+Use an account configured with the correct role:
 
-- `username`
-- `role`: `admin` or `client`
-- `password`
+| Role | Use | Typical port |
+|---|---|---:|
+| Admin | Build encounters and control combat | 3000 |
+| Client | View player-facing battle display | 4000 |
 
-Example:
-
-```yaml
-security:
-  users:
-    - username: "dm"
-      role: "admin"
-      password: "replace-this-admin-password"
-    - username: "table"
-      role: "client"
-      password: "replace-this-client-password"
-```
-
-### Roles
-
-| Role | Can do |
-|---|---|
-| Admin | Manage setups, add and update combatants, control turns, start/reset battles |
-| Client | Open the player-facing display and receive live updates |
-
-Use the admin account on port 3000. Use a client account on port 4000 for a player screen. The two ports host separate applications, so a client login cannot be used for admin actions.
+Log in as an admin before using creation, update, save, load, import, battle, or reset controls.
 
 ---
 
 ## Admin screen overview
 
-The admin screen has five practical areas:
+The admin page has these areas:
 
-1. **Setup controls** — New, Save, and Load named battle setups.
-2. **Battle controls** — Start battle, Next, and Reset All.
-3. **Add monster** — Add manually or import a `.monster` file.
-4. **Add character** — Add player characters, allies, or other named combatants.
-5. **Monster and character tables** — Update every combatant during play.
+1. **Setup management** — New, Save, Load, and Import from setup.
+2. **Battle controls** — Start battle, Next, Reset All.
+3. **Add monster** — Manual monster form and `.monster` import form.
+4. **Add character** — Character form.
+5. **Monsters** — Roll initiatives plus monster records and controls.
+6. **Characters** — Character records and controls.
 
-### Button appearance
-
-Buttons that are currently enabled commonly appear green. A normal blue button is usually off or inactive. Red buttons are typically damage actions; purple buttons are reset actions.
+A green button normally indicates that a setting is on. Blue buttons are normal controls. Purple controls are setup import/reset-related; orange is used for the bulk monster initiative roll.
 
 ---
 
-## Managing battle setups
+## Managing setups
 
-A battle setup is a named saved collection of monsters, characters, HP values, initiatives, visibility settings, colors, and the current battle order.
+A saved setup stores the monster list, character list, HP, initiative, colors, images, visibility, battle state, and battle order at the time you save it.
 
-### Create a new setup
+### New
 
-1. Click **New**.
-2. Confirm the warning.
-3. The current working encounter becomes empty.
-4. Add monsters and characters for the new encounter.
-5. Enter a setup name and click **Save**.
+Click **New** to clear the working encounter after confirmation.
 
-New does not delete existing saved setups. Save your current work first if you need it later.
+- Existing saved setups are not deleted.
+- The client display updates to background-only mode when no active monsters remain.
+- Save first if you need the current working encounter later.
 
-### Save a setup
+### Save
 
-1. Type a name into **Battle setup name**.
+1. Enter a name in **Battle setup name**.
 2. Click **Save**.
-3. A name such as `Throne Room — Lytharia` is stored using a safe normalized filename, for example:
 
-   ```text
-   throne-room-lytharia.json
-   ```
+The name is normalized for storage. For example:
 
-4. Saving an existing name overwrites that saved setup.
+```text
+Throne Room — Lytharia
+```
 
-### Load a setup
+becomes approximately:
 
-1. Select a setup from the **Load saved setup** dropdown.
+```text
+throne-room-lytharia
+```
+
+Saving the same name again overwrites the saved setup.
+
+### Load
+
+1. Select a saved setup from the dropdown.
 2. Click **Load**.
-3. Confirm replacement of the currently active setup.
+3. Confirm the replacement.
 
-Loading immediately updates the admin page and all client displays.
+Load replaces the complete current working encounter.
 
-### Where setups are stored
+### Import from setup
 
-Setups are JSON files stored in:
+Use **Import from setup** when you want to add combatants from a saved setup without replacing the encounter currently being prepared or played.
 
-```text
-<storage_dir>/setups/
-```
+1. Click **Import from setup**.
+2. Select the source saved setup.
+3. Choose one of:
+   - Characters only
+   - Monsters only
+   - Characters and monsters
+4. Click **Import**.
+5. Confirm the operation.
 
-For the default configuration, this is:
+Imported combatants are independent copies with new IDs. They are reset and do not alter the active battle order.
 
-```text
-./monster-display-data/setups/
-```
-
-Uploaded monster images are stored separately in:
-
-```text
-<storage_dir>/uploads/
-```
-
-Do not remove the upload directory if you want saved setups to retain their uploaded images.
+| Imported property | Monsters | Characters |
+|---|---|---|
+| Active | Off | Off |
+| Alive | Yes | Yes |
+| Visible | Off | Off |
+| Current turn | Off | Off |
+| Current HP | Original/reset HP | Max HP |
+| Max HP | Original/reset HP | Kept from saved setup |
+| Initiative | Original/reset initiative | Original/reset initiative |
 
 ---
 
@@ -209,368 +130,380 @@ Do not remove the upload directory if you want saved setups to retain their uplo
 
 ### Add a monster manually
 
-In **Add monster**, enter:
+Complete the manual monster form:
 
-| Field | Required | Description |
-|---|---|---|
-| Name | Yes | Display name, such as `Ice Queen` |
-| Monster type | Yes | Monster type, such as `humanoid`, `dragon`, or `goblin` |
-| AC | Yes | Armor Class |
-| HP | Yes | Starting and initial maximum HP |
-| Color | Yes | Color used on the client display and initiative token |
-| Image | No | PNG, JPG, GIF, or WebP image |
+| Field | Meaning |
+|---|---|
+| Name | Monster display name |
+| Monster type | Type such as `dragon`, `humanoid`, or `undead` |
+| AC | Armor Class |
+| HP | Starting HP and initial reset/max HP |
+| Quantity | Number of copies to create; defaults to 1 |
+| Color | Client card and initiative-token color |
+| Image | Optional PNG, JPG, GIF, or WebP image |
 
-Click **Add manually**. The new monster is inactive, alive, and not visible in the initiative bar by default.
+Click **Add manually**.
+
+### Add multiple copies
+
+Set Quantity to a number from 1 to 50. Every copy:
+
+- Has a unique internal ID.
+- Starts inactive.
+- Starts alive.
+- Starts hidden from the initiative bar.
+- Has its own HP, initiative, active status, and battle controls.
+- Uses the same configured name, type, AC, HP, color, and image reference.
 
 ### Import a `.monster` file
 
-1. Use the **Import .monster** form.
-2. Choose a compatible `.monster` file.
-3. Select a display color.
-4. Optionally select an image.
+Use the lower monster import form:
+
+1. Choose a compatible JSON `.monster` file.
+2. Set Quantity, default 1.
+3. Choose a color.
+4. Optionally choose an image.
 5. Click **Import .monster**.
 
-The importer reads JSON-formatted `.monster` files and extracts:
+The importer uses name, type, AC, and HP from the file. It supports the supplied format where AC may be embedded in text such as:
 
-- Name
-- Monster type
-- AC
-- HP
+```text
+17 Ice bound robes (reinforced by magical ward)
+```
 
-If no image is uploaded, the tool can attempt a best-effort public D&D Beyond image lookup based on monster type. A manual image upload is more reliable and always takes priority.
+### Monster image behavior
 
-### Monster display controls
-
-| Control | Meaning |
-|---|---|
-| Active / Off | Shows or removes the monster from the main client monster stage. Active living monsters are eligible for battle turns |
-| Ally | Marks the monster as an ally. This is currently a saved classification flag; it does not change turn logic or visual styling |
-| Visible | Shows or hides the monster in the client initiative bar |
-| Turn | Makes the monster the current combatant, if it is active and alive |
-| Reset | Restores original monster HP/max HP and initial combat/display state |
-| AC on/off | Shows or hides AC on the main monster card |
-| HP on/off | Shows or hides HP on the main monster card |
-| Init on/off | Shows or hides initiative on the main monster card |
-| Damage | Subtracts a chosen HP amount |
-| Heal | Adds a chosen HP amount |
-
-### Monster death
-
-If monster HP drops below 0:
-
-- The monster becomes dead.
-- It leaves the main client monster stage with the configured exit animation.
-- It cannot be assigned the battle turn.
-- It is forced visible in the initiative bar.
-- Its initiative token gets a black border.
-
-Use **Reset** to restore a dead monster to its original alive state and original HP.
+- A manually uploaded image is used first.
+- If no image is uploaded, the tool can attempt a public D&D Beyond lookup based on monster type.
+- Remote image lookup is best effort; use manual image upload for reliable results.
 
 ---
 
 ## Adding characters
 
-In **Add character**, enter:
+Add a character with:
 
-| Field | Required | Description |
-|---|---|---|
-| Name | Yes | Character or NPC name |
-| Color | Yes | Initiative-bar token color |
-| HP | Yes | Starting HP; prefilled with `1` |
-| Initiative | No | Initiative value; can be entered or changed later |
-
-Characters are created inactive, alive, and not visible in the initiative bar.
-
-### Character controls
-
-| Control | Meaning |
+| Field | Meaning |
 |---|---|
-| Current HP | Editable current hit points |
-| Max HP | Editable maximum hit points |
-| Initiative | Editable initiative value |
-| Active / Off | Makes the character eligible or ineligible for battle progression |
-| Alive / Dead | Manually changes life state |
-| Visible | Shows or hides the name from the initiative bar |
-| Turn | Makes the character the current combatant, if active and alive |
-| Reset | Restores combat state and heals the character to current Max HP |
-| Damage | Subtracts a chosen HP amount |
-| Heal | Adds a chosen HP amount |
+| Name | Character/NPC name |
+| Color | Initiative-bar color |
+| HP | Starting and initial Max HP; defaults to 1 |
+| Initiative | Optional; may be changed later |
 
-### Character Max HP and reset behavior
-
-Changing a character’s **Max HP** establishes the character’s new reset baseline.
-
-For example:
-
-1. Create a character with HP 10.
-2. Change Max HP to 25.
-3. Apply Damage until the character has 8 HP.
-4. Click Reset.
-
-The result is 25 current HP out of 25 Max HP. Reset does not restore the original creation-time Max HP.
-
-### Character death
-
-A character becomes dead when:
-
-- HP falls below 0, or
-- You press the Alive/Dead toggle to set the character to Dead.
-
-When dead, the character:
-
-- Cannot be assigned a battle turn.
-- Becomes visible in the initiative bar automatically.
-- Uses a black initiative-token border.
+Characters begin inactive, alive, and hidden from the initiative bar.
 
 ---
 
-## Combatant visibility
+## Edit combatants
 
-**Visible** controls whether a combatant name appears in the initiative bar. It is independent from **Active**.
+Every monster and character has an **Edit** button.
 
-| Setting | Active | Visible | Result |
+### Edit a monster
+
+The Monster Edit dialog supports:
+
+- Name
+- Monster type
+- AC
+- Current HP
+- Max HP
+- Reset HP
+- Color
+- Initiative
+- Ally status
+- Optional replacement image
+
+**Reset HP** is what the monster’s individual Reset and Reset All restore for both current HP and Max HP.
+
+### Edit a character
+
+The Character Edit dialog supports:
+
+- Name
+- Color
+- Current HP
+- Max HP
+- Initiative
+
+Changing a character’s Max HP changes the amount restored by reset. For example, if Max HP changes from 12 to 30, a later Reset restores the character to 30/30.
+
+### Close the Edit dialog
+
+You can close Edit without saving by:
+
+- Clicking **Cancel**.
+- Pressing `Escape`.
+- Clicking outside the dialog on the dark overlay.
+
+---
+
+## Monster controls
+
+| Control | Action |
+|---|---|
+| Edit | Opens the complete monster editor |
+| Active / Off | Adds/removes the monster from the client stage and battle eligibility |
+| Ally | Marks the monster as an ally; this is currently classification only |
+| Visible | Shows/hides the monster in the initiative bar |
+| Turn | Makes the monster the current battle turn, if active and alive |
+| Reset | Restores reset HP, reset initiative, and initial display/battle state |
+| AC on/off | Shows/hides AC on the client monster card |
+| HP on/off | Shows/hides HP on the client monster card |
+| Init on/off | Shows/hides initiative on the client monster card |
+| Damage | Subtracts entered damage from current HP |
+| Heal | Adds entered healing to current HP |
+
+### Monster death
+
+When monster HP drops below 0:
+
+- The monster becomes dead.
+- It leaves the main client display stage.
+- It cannot be set to Turn.
+- It becomes Visible in the initiative bar automatically.
+- Its initiative-bar token has a black border.
+
+Use Reset to restore it to alive state and its configured Reset HP.
+
+---
+
+## Character controls
+
+| Control | Action |
+|---|---|
+| Edit | Opens the character editor |
+| Current HP | Inline editable current HP |
+| Max HP | Inline editable Max HP; becomes reset baseline |
+| Initiative | Inline editable initiative |
+| Active / Off | Enables/disables battle eligibility |
+| Alive / Dead | Manually changes life state |
+| Visible | Shows/hides the character from initiative bar |
+| Turn | Makes the character the current battle turn, if active and alive |
+| Reset | Restores current HP to Max HP and initial battle/display state |
+| Damage | Subtracts entered damage |
+| Heal | Adds entered healing |
+
+A character becomes dead when HP drops below 0 or when you set Alive/Dead to Dead.
+
+---
+
+## Roll monster initiatives
+
+At the top of the Monster section, click:
+
+```text
+Roll monster initiatives (d20)
+```
+
+After confirmation, the tool overwrites the initiative of **every monster** with an independent random d20 result from 1 through 20.
+
+This applies to active and inactive monsters, living and dead monsters. Existing initiative values are intentionally replaced.
+
+---
+
+## Visibility rules
+
+Visible controls initiative-bar inclusion, not whether a monster card appears on the client stage.
+
+| State | Active | Visible | Result |
 |---|---|---|---|
-| Inactive, hidden | Off | Off | Not participating and absent from initiative bar |
-| Active, hidden | On | Off | Participates in encounter but is not shown in initiative bar until made visible or given a turn |
-| Active, visible | On | On | Participates and appears in initiative bar |
-| Dead | Either | Automatically on | Appears in initiative bar with black border |
+| Inactive, hidden | Off | Off | Not in battle and absent from initiative bar |
+| Active, hidden | On | Off | In battle but not currently shown in initiative bar |
+| Active, visible | On | On | In battle and displayed in initiative bar |
+| Dead | Either | Automatically on | Displayed in initiative bar with black border |
 
-A combatant automatically has Visible enabled when:
+Visibility is turned on automatically when a combatant:
 
-- It is made the current battle turn.
-- It dies.
+- Receives the current Turn.
+- Dies.
 
-Individual Reset and Reset All return Visible to off.
+Reset returns visibility to off.
 
 ---
 
 ## Initiative and battle flow
 
-### Enter initiative
+### Set initiative
 
-Enter initiative directly in each combatant’s Initiative input. Press Enter or click elsewhere to save it.
+Enter initiatives in the row inputs, edit dialogs, or use the monster d20 roll button. Click outside the input or press Enter to save an inline value.
 
 ### Start battle
 
-1. Mark the required living combatants as **Active**.
-2. Set their initiatives.
-3. Click **Start battle**.
+1. Set desired combatants to **Active**.
+2. Ensure they are alive.
+3. Set initiatives.
+4. Click **Start battle**.
 
-The tool builds a battle order from active, living combatants, sorted by initiative descending. Combatants without initiative are placed after numeric initiatives.
+The tool orders active living combatants by initiative descending. Combatants with blank initiative appear after combatants with numeric initiatives.
 
-If two or more active living combatants have the same numeric initiative, the **Resolve tied initiative** dialog opens. Select which combatant acts first within each tied group, then click **Start battle** in the dialog.
+### Resolve ties
 
-The first combatant receives the battle turn and becomes visible automatically.
+When two or more active living combatants have the same numeric initiative, a tie dialog appears.
+
+For every tied combatant, choose a unique position:
+
+```text
+Initiative 18
+
+Ogre       [ 2 ]
+Ranger     [ 3 ]
+Skeleton   [ 1 ]
+```
+
+Position 1 acts first inside that tied group.
+
+Tie order never moves a combatant outside its initiative value. Given:
+
+```text
+Dragon 22
+Ogre 18
+Ranger 18
+Skeleton 18
+Goblin 14
+```
+
+and the selection Skeleton 1, Ogre 2, Ranger 3, the final order is:
+
+```text
+Dragon → Skeleton → Ogre → Ranger → Goblin
+```
 
 ### Next
 
-Click **Next** to:
+Click **Next** to remove the current turn and select the next active, living combatant. The order wraps back to the beginning after the last eligible combatant.
 
-1. Remove the battle turn from the current combatant.
-2. Move it to the next active, living combatant in battle order.
-3. Wrap back to the first living combatant after the final combatant.
+Dead and inactive combatants are skipped.
 
-Dead or inactive combatants are skipped.
+### Activate a combatant during battle
 
-### Manual turn control
+When a battle has already started and an Off, living combatant is changed to Active, it joins the existing battle order by initiative:
 
-You can use an individual combatant’s **Turn** button at any time. Only one combatant can have the battle turn. Setting a new combatant to Turn clears Turn from every other combatant.
+- Higher initiative before lower initiative.
+- After existing combatants with the same initiative.
+- Numeric initiatives before initiative-less combatants.
+- Initiative-less combatants appended after numeric initiatives.
 
-### Initiative bar borders
+The currently active turn does not change.
 
-| Initiative-token status | Border |
+Example existing order:
+
+```text
+Dragon 22 → Ranger 18 → Ogre 18 → Goblin 14
+```
+
+Activating Skeleton with initiative 18 results in:
+
+```text
+Dragon 22 → Ranger 18 → Ogre 18 → Skeleton 18 → Goblin 14
+```
+
+---
+
+## Initiative bar
+
+The client initiative bar displays names only.
+
+| Combatant status | Border |
 |---|---|
-| Current battle turn | Red |
+| Current Turn | Red |
 | Dead | Black |
 | Other visible combatant | White |
 
-The initiative bar displays only combatant names, not initiative values. Text color is selected automatically as black or white according to the combatant’s configured background color.
+The text color is calculated as black or white based on the configured combatant color.
 
-### Start Battle table sorting
+---
 
-After Start battle, the admin tables are sorted separately by initiative:
+## Client monster display
 
-- Monster table: highest initiative first.
-- Character table: highest initiative first.
+Active, living monsters appear on the client stage in an adaptive grid.
 
-This sorting changes the admin-table presentation only. It does not alter the battle order that was just created.
+| Active living monsters | Grid |
+|---:|---|
+| 1 | 1 row × 1 column |
+| 2 | 1 row × 2 columns |
+| 3–4 | 2 rows × 2 columns |
+| 5–6 | 2 rows × 3 columns |
+| 7–9 | 3 rows × 3 columns |
+| 10–12 | 3 rows × 4 columns |
+| 13–16 | 4 rows × 4 columns |
 
-### Reset All table sorting
+The grid continues by adding a column when full, then adding a row when full again.
 
-After Reset All, the admin tables are sorted separately by Max HP:
+Cards fill rows from left to right:
+
+```text
+Five monsters: 2 rows × 3 columns
+
+Monster 1 | Monster 2 | Monster 3
+Monster 4 | Monster 5 | empty
+```
+
+A monster card displays name and type by default. AC, HP, and initiative appear only if enabled by the associated monster controls.
+
+---
+
+## Reset behavior
+
+### Individual Reset
+
+| Entity | Result |
+|---|---|
+| Monster | Restores current HP and Max HP to Reset HP; clears Active, Visible, Turn, and monster stat display flags |
+| Character | Restores current HP to current Max HP; clears Active, Visible, and Turn |
+
+Both become alive and restore reset/original initiative.
+
+### Reset All
+
+Reset All resets every combatant, clears battle order, and sorts the admin tables separately by Max HP descending.
 
 - Monster table: highest Max HP first.
 - Character table: highest Max HP first.
 
 ---
 
-## Client display behavior
+## Persistence and backups
 
-The client display is intended for players, a TV, or a projector.
+The configured storage directory contains:
 
-### Empty state
-
-When no monsters are active, the client shows only the configured background plus any visible initiative tokens.
-
-### Active monster card
-
-When a living monster is active, the client displays a full-height monster card with:
-
-- Monster name
-- Monster type
-- Optional image
-- Optional AC
-- Optional HP
-- Optional initiative
-- A turn indicator when it is the current combatant
-
-The admin determines whether AC, HP, and initiative appear by using the three monster stat toggle buttons.
-
-### Entry and exit animation
-
-Monster entry and exit direction are configured in `config.yaml`:
-
-```yaml
-display:
-  entry_direction: "from_bottom"
-  exit_direction: "to_bottom"
+```text
+monster-display-data/
+├── state.json
+├── uploads/
+└── setups/
 ```
 
-Supported values are:
-
-| Setting | Values |
+| Path | Purpose |
 |---|---|
-| `entry_direction` | `from_bottom`, `from_top` |
-| `exit_direction` | `to_bottom`, `to_top` |
+| `state.json` | Active current encounter |
+| `setups/*.json` | Named setups |
+| `uploads/` | Uploaded images |
 
-Client screens receive updates through WebSocket. A reload is normally unnecessary.
-
----
-
-## Saving and loading data
-
-The application has two different persistent data concepts:
-
-| Data | Location | Meaning |
-|---|---|---|
-| Current working state | `<storage_dir>/state.json` | The encounter that remains active after a server restart |
-| Named setup | `<storage_dir>/setups/<name>.json` | A manually saved, reusable battle setup |
-| Uploaded images | `<storage_dir>/uploads/` | Image files referenced by combatants |
-
-### Recommended workflow
-
-1. Click **New**.
-2. Create an encounter.
-3. Save it with a descriptive name before running it.
-4. Run the encounter and track damage/turns.
-5. Save again if you want to preserve its current in-progress state.
-6. Load the saved setup later for a replay or continuation.
+Back up the whole storage directory to preserve setups and their image references.
 
 ---
 
-## Configuration
+## Troubleshooting
 
-A YAML configuration file can look like this:
+### The page is an old version
 
-```yaml
-network:
-  bind: "0.0.0.0"
-  admin_port: 3000
-  client_port: 4000
+Use a hard refresh:
 
-storage_dir: "./monster-display-data"
+- `Ctrl+Shift+R` on Linux/Windows.
+- `Cmd+Shift+R` on macOS.
 
-security:
-  users:
-    - username: "dm"
-      role: "admin"
-      password: "replace-this-admin-password"
-    - username: "table"
-      role: "client"
-      password: "replace-this-client-password"
+### Admin buttons do not work
 
-display:
-  background: "radial-gradient(circle at 50% 15%, #16273d, #080b14 70%)"
-  entry_direction: "from_bottom"
-  exit_direction: "to_bottom"
-  monster_width_percent: 45
-  dndbeyond_image_lookup: true
-```
+Open browser developer tools with `F12`, select Console, and reload. A JavaScript error can stop later button handlers from registering.
 
-### Security note
+### `Sign in required`
 
-The example supports plain-text passwords for simple local/LAN usage. If the admin interface is reachable beyond a trusted local network, use HTTPS through a reverse proxy, restrict access to the admin port, and use password hashes instead of plain-text values.
+Use an admin-role account at the admin port. Clear cookies for the server hostname if moving between older versions.
 
-Generate an scrypt password hash with:
+### Client display does not update
 
-```bash
-python3.14 -c 'from monster_display_server import password_hash; print(password_hash("replace-me"))'
-```
-
-Then use the returned `scrypt$...` value as the configured password.
-
----
-
-## Operational notes and troubleshooting
-
-### Admin action says “Sign in required”
-
-- Confirm you opened the admin UI on port 3000 and logged in using an `admin` role account.
-- Clear cookies for the server host if you previously tested older application versions.
-- Do not use a client-only account for admin operations.
-- Use a consistent hostname or IP address for the admin screen.
-
-### The page looks like an old version
-
-Hard-refresh the browser:
-
-- Linux/Windows: `Ctrl+Shift+R`
-- macOS: `Cmd+Shift+R`
-
-Then verify the server process and its listening ports:
-
-```bash
-sudo ss -lptn 'sport = :3000'
-sudo ss -lptn 'sport = :4000'
-```
-
-### Verify the Python source before starting
-
-Check syntax without starting the server:
-
-```bash
-python3.14 -m py_compile monster_display_server.py
-```
-
-No output means the syntax check passed.
-
-### Client display is not updating
-
-- Confirm the client is connected to port 4000.
-- Refresh the client display page once.
-- Confirm the firewall permits TCP port 4000 from client devices.
-- Check that the Python process is listening on the configured bind address, typically `0.0.0.0` for LAN access.
+Confirm port 4000 is accessible and refresh the client page to reconnect WebSocket updates.
 
 ### D&D Beyond image is missing
 
-The lookup is best effort. It can fail if the remote site changes its HTML or refuses the request. Upload an image manually for reliable display.
-
-### Saved setup has no image
-
-The setup file stores an image reference, while the actual uploaded file remains in `<storage_dir>/uploads/`. Restore both the setup JSON and its referenced upload file if moving data between servers.
-
----
-
-## Quick-reference encounter workflow
-
-1. Open the admin page on port 3000 and log in.
-2. Click **New** or **Load** an existing named setup.
-3. Add/import monsters and add characters.
-4. Set HP, Max HP, initiative, colors, Ally flags, and display preferences.
-5. Save the setup.
-6. Open the client display on port 4000.
-7. Mark battle participants **Active**.
-8. Click **Start battle** and resolve actual initiative ties if prompted.
-9. Use **Next** to progress through turns.
-10. Use Damage, Heal, alive/dead, and visibility controls during play.
-11. Use **Reset All** to restore combatants for another encounter run, or save the current state as a named setup.
+The lookup is best effort. Upload a monster image manually for reliable display.
