@@ -19,9 +19,9 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 import uvicorn
 import random
-from LOGIN import LOGIN
-from ADMIN_HTML import ADMIN_HTML
-from CLIENT_HTML import CLIENT_HTML
+from login_html import LOGIN
+from admin_html import ADMIN_HTML
+from client_html import CLIENT_HTML
 
 DEFAULT_CONFIG = {'network': {'bind': '0.0.0.0', 'admin_port': 3000, 'client_port': 4000}, 'storage_dir': './monster-display-data', 'security': {'users': [{'username': 'admin', 'role': 'admin', 'password': 'CHANGE-ME'}, {'username': 'client', 'role': 'client', 'password': 'CHANGE-ME'}]}, 'display': {'background': '#080b14', 'entry_direction': 'from_bottom', 'exit_direction': 'to_bottom', 'monster_width_percent': 45, 'dndbeyond_image_lookup': True}}
 CONFIG: dict[str, Any] = {}
