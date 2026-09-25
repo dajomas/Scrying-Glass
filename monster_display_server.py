@@ -85,7 +85,7 @@ def normalize_state(raw: dict[str, Any]) -> dict[str, Any]:
         m.setdefault('max_hp', m['original_hp'])
         m.setdefault('color', '#842029')
         m.setdefault('image_url', None)
-        m.setdefault('alive', m['hp'] >= 0)
+        m.setdefault('alive', m['hp'] > 0)
         m.setdefault('active', False)
         m.setdefault('visible', False)
         m.setdefault('ally', False)
@@ -105,7 +105,7 @@ def normalize_state(raw: dict[str, Any]) -> dict[str, Any]:
         c.setdefault('max_hp', c['hp'])
         c.setdefault('original_hp', c['max_hp'])
         c.setdefault('original_initiative', c.get('initiative'))
-        c.setdefault('alive', c['hp'] >= 0)
+        c.setdefault('alive', c['hp'] > 0)
         c.setdefault('active', False)
         c.setdefault('visible', False)
         c.setdefault('in_turn', False)
@@ -545,7 +545,7 @@ async def edit_monster(ident: str, name: str=Form(...), monster_type: str=Form(.
     m.update({'name': name.strip(), 'monster_type': monster_type.strip(), 'ac': ac, 'hp': hp, 'max_hp': max_hp, 'original_hp': original_hp, 'color': color, 'initiative': parsed_initiative, 'ally': ally.lower() == 'true'})
     if image and image.filename:
         m['image_url'] = save_image(image)
-    if m['hp'] < 0:
+    if m['hp'] <= 0:
         m['alive'] = False
         m['visible'] = True
         m['in_turn'] = False
@@ -566,7 +566,7 @@ async def update_monster(ident: str, update: MonsterUpdate, _: dict[str, str]=De
             m[k] = v
     if values.get('active') is True:
         insert_into_battle_order(m)
-    if m['hp'] < 0:
+    if m['hp'] <= 0:
         m['alive'] = False
         m['visible'] = True
         m['in_turn'] = False
@@ -599,7 +599,7 @@ async def update_character(ident: str, update: CharacterUpdate, _: dict[str, str
             c[k] = v
     if values.get('active') is True:
         insert_into_battle_order(c)
-    if c['hp'] < 0:
+    if c['hp'] <= 0:
         c['alive'] = False
         c['visible'] = True
         c['in_turn'] = False
