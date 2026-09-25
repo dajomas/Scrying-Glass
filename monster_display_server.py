@@ -676,4 +676,7 @@ if __name__ == '__main__':
     async def serve():
         common = {'host': CONFIG['network']['bind'], 'log_level': 'info', 'access_log': False}
         await asyncio.gather(uvicorn.Server(uvicorn.Config(admin, port=CONFIG['network']['admin_port'], **common)).serve(), uvicorn.Server(uvicorn.Config(client, port=CONFIG['network']['client_port'], **common)).serve())
-    asyncio.run(serve())
+    try:
+        asyncio.run(serve())
+    except KeyboardInterrupt:
+        pass
