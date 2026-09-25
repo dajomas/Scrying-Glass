@@ -1,0 +1,263 @@
+#!/usr/bin/env python3
+"""Monster Display v4.3.1 (Python 3.14+).
+
+Dependencies:
+  python3.14 -m pip install 'fastapi>=0.115' 'uvicorn[standard]>=0.30' 'PyYAML>=6.0' python-multipart
+
+Run:
+  python3.14 monster_display_server_v4_3_1.py --config config.yaml
+
+Battle setups are saved as JSON under: <storage_dir>/setups/
+"""
+from __future__ import annotations
+import argparse, asyncio, hashlib, hmac, json, re, secrets, shutil, sys, uuid
+from pathlib import Path
+from typing import Any, Literal
+from urllib.parse import quote
+from urllib.request import Request, urlopen
+import yaml
+from fastapi import Depends, FastAPI, File, Form, HTTPException, Request as FastAPIRequest, UploadFile, WebSocket
+from fastapi.responses import HTMLResponse, RedirectResponse, Response
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel, Field
+import uvicorn
+
+DEFAULT_CONFIG={"network":{"bind":"0.0.0.0","admin_port":3000,"client_port":4000},"storage_dir":"./monster-display-data","security":{"users":[{"username":"admin","role":"admin","password":"CHANGE-ME"},{"username":"client","role":"client","password":"CHANGE-ME"}]},"display":{"background":"#080b14","entry_direction":"from_bottom","exit_direction":"to_bottom","monster_width_percent":45,"dndbeyond_image_lookup":True}}
+CONFIG:dict[str,Any]={}; STATE:dict[str,Any]={"monsters":[],"characters":[],"battle_order":[]}; LOCK=asyncio.Lock(); SESSIONS:dict[str,dict[str,str]]={}; SOCKETS:set[WebSocket]=set(); DATA_DIR:Path; STATE_FILE:Path; UPLOAD_DIR:Path; SETUPS_DIR:Path
+
+def merge(a:dict[str,Any],b:dict[str,Any])->dict[str,Any]:
+    out=dict(a)
+    for k,v in b.items(): out[k]=merge(out[k],v) if isinstance(v,dict) and isinstance(out.get(k),dict) else v
+    return out
+
+def load_config(p:Path|None)->dict[str,Any]:
+    if p is None:return DEFAULT_CONFIG
+    raw=p.read_text(encoding="utf-8"); x=json.loads(raw) if p.suffix.lower()==".json" else yaml.safe_load(raw)
+    if not isinstance(x,dict):raise ValueError("Configuration root must be a mapping/object")
+    return merge(DEFAULT_CONFIG,x)
+
+def password_hash(password:str,salt:bytes|None=None)->str:
+    salt=salt or secrets.token_bytes(16); digest=hashlib.scrypt(password.encode(),salt=salt,n=2**14,r=8,p=1); return f"scrypt${salt.hex()}${digest.hex()}"
+def password_ok(password:str,stored:str)->bool:
+    if stored.startswith("scrypt$"):
+        _,salt,digest=stored.split("$",2); return hmac.compare_digest(password_hash(password,bytes.fromhex(salt)).split("$",2)[2],digest)
+    return hmac.compare_digest(password,stored)
+def user(name:str)->dict[str,Any]|None:return next((x for x in CONFIG["security"]["users"] if x.get("username")==name),None)
+def entities()->list[dict[str,Any]]:return [*STATE["monsters"],*STATE["characters"]]
+def entity(ident:str)->dict[str,Any]|None:return next((x for x in entities() if x["id"]==ident),None)
+def normalize_state(raw:dict[str,Any])->dict[str,Any]:
+    state={"monsters":raw.get("monsters",[]),"characters":raw.get("characters",[]),"battle_order":raw.get("battle_order",[])}
+    if not isinstance(state["monsters"],list)or not isinstance(state["characters"],list)or not isinstance(state["battle_order"],list):raise ValueError("Setup has invalid monsters, characters, or battle_order data")
+    for m in state["monsters"]:
+        if not isinstance(m,dict):raise ValueError("Setup contains an invalid monster")
+        m.setdefault("id",uuid.uuid4().hex);m.setdefault("name","Unnamed Monster");m.setdefault("monster_type","unknown");m.setdefault("ac",0);m.setdefault("hp",1);m.setdefault("original_hp",m.get("max_hp",m["hp"]));m.setdefault("max_hp",m["original_hp"]);m.setdefault("color","#842029");m.setdefault("image_url",None);m.setdefault("alive",m["hp"]>=0);m.setdefault("active",False);m.setdefault("visible",False);m.setdefault("ally",False);m.setdefault("initiative",None);m.setdefault("original_initiative",m.get("initiative"));m.setdefault("show_ac",False);m.setdefault("show_hp",False);m.setdefault("show_initiative",False);m.setdefault("in_turn",False)
+    for c in state["characters"]:
+        if not isinstance(c,dict):raise ValueError("Setup contains an invalid character")
+        c.setdefault("id",uuid.uuid4().hex);c.setdefault("name","Unnamed Character");c.setdefault("color","#1f4e79");c.setdefault("hp",1);c.setdefault("max_hp",c["hp"]);c.setdefault("original_hp",c["max_hp"]);c.setdefault("original_initiative",c.get("initiative"));c.setdefault("alive",c["hp"]>=0);c.setdefault("active",False);c.setdefault("visible",False);c.setdefault("in_turn",False)
+    known={x["id"]for x in [*state["monsters"],*state["characters"]]};state["battle_order"]=[x for x in state["battle_order"]if x in known]
+    return state
+def load_state()->None:
+    global STATE
+    if STATE_FILE.exists():STATE=normalize_state(json.loads(STATE_FILE.read_text(encoding="utf-8")))
+    else:STATE=normalize_state(STATE)
+def save_state()->None:
+    temp=STATE_FILE.with_suffix(".tmp");temp.write_text(json.dumps(STATE,indent=2),encoding="utf-8");temp.replace(STATE_FILE)
+def public_state()->dict[str,Any]:
+    d=CONFIG["display"];return {"monsters":STATE["monsters"],"characters":STATE["characters"],"battle_order":STATE["battle_order"],"display":{"background":d["background"],"entry_direction":d["entry_direction"],"exit_direction":d["exit_direction"],"monster_width_percent":d["monster_width_percent"]}}
+def setup_slug(name:str)->str:
+    slug=re.sub(r"[^a-z0-9]+","-",name.strip().lower()).strip("-")
+    if not slug:raise HTTPException(400,"Setup name must contain letters or numbers")
+    return slug[:80]
+def setup_path(name:str)->Path:return SETUPS_DIR/(setup_slug(name)+".json")
+def list_setups()->list[str]:
+    return sorted((path.stem for path in SETUPS_DIR.glob("*.json")),key=str.casefold)
+async def broadcast()->None:
+    message=json.dumps({"type":"state","state":public_state()});stale=[]
+    for ws in SOCKETS:
+        try:await ws.send_text(message)
+        except Exception:stale.append(ws)
+    for ws in stale:SOCKETS.discard(ws)
+async def changed()->None:
+    async with LOCK:save_state()
+    await broadcast()
+def require(role:Literal["admin","client"]):
+    async def dependency(request:FastAPIRequest)->dict[str,str]:
+        session=SESSIONS.get(request.cookies.get("monster_session",""))
+        if not session or(role=="admin" and session["role"]!="admin"):raise HTTPException(401,"Sign in required")
+        return session
+    return dependency
+def parse_monster(raw:bytes)->dict[str,Any]:
+    try:x=json.loads(raw.decode("utf-8"))
+    except Exception as exc:raise HTTPException(400,".monster must contain UTF-8 JSON") from exc
+    name=str(x.get("name","")).strip();kind=str(x.get("type","")).strip();hp=re.search(r"-?\d+",str(x.get("hpText",x.get("hp",""))));acraw=x.get("ac")or x.get("armorClass")or x.get("otherArmorDesc")or x.get("natArmorBonus");ac=re.search(r"\d+",str(acraw))if acraw is not None else None
+    if not name or not kind or not hp or not ac:raise HTTPException(400,".monster needs usable name, type, AC, and HP")
+    return {"name":name,"monster_type":kind,"ac":int(ac.group()),"hp":int(hp.group())}
+def save_image(upload:UploadFile)->str:
+    ext=Path(upload.filename or "").suffix.lower()
+    if ext not in {".png",".jpg",".jpeg",".gif",".webp"}:raise HTTPException(400,"Image must be PNG, JPG, GIF, or WebP")
+    dst=UPLOAD_DIR/f"{uuid.uuid4().hex}{ext}"
+    with dst.open("wb")as f:shutil.copyfileobj(upload.file,f)
+    return "/media/"+dst.name
+def dnd_image(kind:str)->str|None:
+    if not CONFIG["display"].get("dndbeyond_image_lookup",True):return None
+    try:
+        q=Request("https://www.dndbeyond.com/monsters?filter-search="+quote(kind),headers={"User-Agent":"MonsterDisplay/1.0"})
+        with urlopen(q,timeout=5)as r:html=r.read(1_000_000).decode("utf-8","replace")
+        found=re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)',html,re.I);return found.group(1)if found else None
+    except Exception:return None
+def make_monster(fields:dict[str,Any],color:str,upload:UploadFile|None)->dict[str,Any]:
+    hp=fields["hp"];return {"id":uuid.uuid4().hex,**fields,"max_hp":hp,"original_hp":hp,"color":color,"image_url":save_image(upload)if upload and upload.filename else dnd_image(fields["monster_type"]),"active":False,"alive":True,"visible":False,"ally":False,"initiative":None,"original_initiative":None,"show_ac":False,"show_hp":False,"show_initiative":False,"in_turn":False}
+def clear_turns()->None:
+    for x in entities():x["in_turn"]=False
+def clean_order()->None:
+    known={x["id"]for x in entities()};STATE["battle_order"]=[x for x in STATE["battle_order"]if x in known]
+def reset_entity(x:dict[str,Any])->None:
+    x["active"]=False;x["alive"]=True;x["visible"]=False;x["in_turn"]=False;x["initiative"]=x.get("original_initiative")
+    if "monster_type" in x:x["hp"]=x["original_hp"];x["max_hp"]=x["original_hp"];x["show_ac"]=False;x["show_hp"]=False;x["show_initiative"]=False
+    else:x["hp"]=x["max_hp"]
+def admin_initiative_key(x:dict[str,Any])->tuple[int,str]:
+    value=x.get("initiative");initiative=value if isinstance(value,int)and not isinstance(value,bool)else-999
+    return(-initiative,str(x.get("name","")).casefold())
+def admin_max_hp_key(x:dict[str,Any])->tuple[int,str]:return(-int(x.get("max_hp",0)),str(x.get("name","")).casefold())
+def sort_admin_by_initiative()->None:STATE["monsters"].sort(key=admin_initiative_key);STATE["characters"].sort(key=admin_initiative_key)
+def sort_admin_by_max_hp()->None:STATE["monsters"].sort(key=admin_max_hp_key);STATE["characters"].sort(key=admin_max_hp_key)
+def set_turn(x:dict[str,Any],requested:bool|None)->None:
+    if requested is False:x["in_turn"]=False;return
+    if requested is not True:return
+    if not x.get("active")or not x.get("alive",True):raise HTTPException(400,"Only an active living combatant may have the battle turn")
+    clear_turns();x["in_turn"]=True;x["visible"]=True
+def numeric_initiative(x:dict[str,Any])->int:
+    v=x.get("initiative");return v if isinstance(v,int)and not isinstance(v,bool)else -999
+def eligible()->list[dict[str,Any]]:return[x for x in entities()if x.get("active")and x.get("alive",True)]
+def begin_battle(order:list[str])->None:
+    wanted={x["id"]for x in eligible()}
+    if len(order)!=len(wanted)or set(order)!=wanted:raise HTTPException(400,"Battle order must include every active living combatant exactly once")
+    STATE["battle_order"]=order;clear_turns()
+    if order:entity(order[0])["in_turn"]=True;entity(order[0])["visible"]=True
+def advance_turn()->dict[str,Any]|None:
+    ids={x["id"]for x in eligible()}
+    if not ids:clear_turns();STATE["battle_order"]=[];return None
+    order=[i for i in STATE["battle_order"]if i in ids];order += [x["id"]for x in sorted(eligible(),key=lambda z:(-numeric_initiative(z),z["name"].lower()))if x["id"]not in order];STATE["battle_order"]=order
+    pos=next((n for n,i in enumerate(order)if entity(i).get("in_turn")),-1);clear_turns();target=entity(order[(pos+1)%len(order)]);target["in_turn"]=True;target["visible"]=True;return target
+
+class MonsterUpdate(BaseModel):
+    active:bool|None=None;ally:bool|None=None;visible:bool|None=None;initiative:int|None=Field(default=None,ge=-100,le=100);hp:int|None=Field(default=None,ge=-99999,le=99999);hp_delta:int|None=Field(default=None,ge=-99999,le=99999);show_ac:bool|None=None;show_hp:bool|None=None;show_initiative:bool|None=None;in_turn:bool|None=None
+class CharacterCreate(BaseModel):
+    name:str=Field(min_length=1,max_length=100);color:str=Field(min_length=1,max_length=40);hp:int=Field(default=1,ge=0,le=99999);initiative:int|None=Field(default=None,ge=-100,le=100)
+class CharacterUpdate(BaseModel):
+    active:bool|None=None;alive:bool|None=None;visible:bool|None=None;initiative:int|None=Field(default=None,ge=-100,le=100);hp:int|None=Field(default=None,ge=-99999,le=99999);max_hp:int|None=Field(default=None,ge=0,le=99999);hp_delta:int|None=Field(default=None,ge=-99999,le=99999);in_turn:bool|None=None
+class BattleStart(BaseModel):order:list[str]
+class SetupName(BaseModel):name:str=Field(min_length=1,max_length=100)
+
+admin=FastAPI(title="Monster Display Admin");client=FastAPI(title="Monster Display Client")
+LOGIN='''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sign in</title><style>body{font-family:system-ui;background:#111827;color:#eef2ff;display:grid;place-items:center;height:100vh;margin:0}form{background:#1f2937;padding:2rem;border-radius:12px;display:grid;gap:.7rem;width:min(360px,90vw)}input,button{padding:.7rem;border-radius:6px;border:0}button{background:#2563eb;color:#fff}.error{color:#fca5a5}</style></head><body><form method="post"><h1>Monster Display</h1><input name="username" placeholder="Username" required autofocus><input name="password" type="password" placeholder="Password" required><button>Sign in</button>{error}</form></body></html>'''
+def login(error:str="")->HTMLResponse:return HTMLResponse(LOGIN.replace("{error}",f'<p class="error">{error}</p>'if error else ""))
+ADMIN_HTML=r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Monster Display Admin</title><style>body{font-family:system-ui,sans-serif;background:#111827;color:#eef2ff;margin:0;padding:1rem}main{max-width:1260px;margin:auto}section{background:#1f2937;border-radius:10px;padding:1rem;margin:1rem 0}input,button,select{padding:.55rem;margin:.18rem;border-radius:6px;border:1px solid #64748b}button{cursor:pointer;background:#2563eb;color:#fff}.danger{background:#b91c1c}.on{background:#047857}.battle{background:#7f1d1d}.reset{background:#4c1d95}table{width:100%;border-collapse:collapse}th,td{padding:.45rem;border-bottom:1px solid #475569;text-align:left;vertical-align:top}.row{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}.message{min-height:1.4rem;color:#fbbf24}.dead{opacity:.55;text-decoration:line-through}.modal{position:fixed;inset:0;background:#000a;display:grid;place-items:center;z-index:10}.modal[hidden]{display:none!important}.modal>div{background:#1f2937;padding:1.25rem;border-radius:10px;width:min(640px,94vw)}.tie{display:flex;gap:.5rem;align-items:center;margin:.35rem 0}.tie select{flex:1}.hp-edit{width:5.5rem}.setup-name{min-width:14rem}</style></head><body><main><h1>Monster Display — Admin</h1><p id="message" class="message"></p><section class="row"><input id="setupName" class="setup-name" placeholder="Battle setup name"><button id="newSetup" class="reset">New</button><button id="saveSetup">Save</button><select id="setupSelect"><option value="">Load saved setup…</option></select><button id="loadSetup">Load</button></section><section class="row"><button id="startBattle" class="battle">Start battle</button><button id="nextBattle" class="battle">Next</button><button id="resetAll" class="reset">Reset All</button><span id="battleInfo"></span></section><section><h2>Add monster</h2><form id="monsterForm" class="row"><input name="name" placeholder="Name" required><input name="monster_type" placeholder="Monster type" required><input name="ac" type="number" placeholder="AC" required><input name="hp" type="number" placeholder="HP" required><input name="color" type="color" value="#842029"><input name="image" type="file" accept="image/*"><button>Add manually</button></form><p>Or import a JSON <code>.monster</code> file:</p><form id="monsterUpload" class="row"><input name="monster_file" type="file" accept=".monster,application/json" required><input name="color" type="color" value="#842029"><input name="image" type="file" accept="image/*"><button>Import .monster</button></form></section><section><h2>Add character</h2><form id="characterForm" class="row"><input name="name" placeholder="Name" required><input name="color" type="color" value="#1f4e79"><input name="hp" type="number" min="0" value="1" required><input name="initiative" type="number" placeholder="Initiative (optional)"><button>Add character</button></form></section><section><h2>Monsters</h2><div id="monsters"></div></section><section><h2>Characters</h2><div id="characters"></div></section></main><div id="tieModal" class="modal" hidden><div><h2>Resolve tied initiative</h2><p>Choose which combatant acts first in each tied initiative group.</p><div id="tieGroups"></div><button id="confirmOrder">Start battle</button><button id="cancelOrder">Cancel</button></div></div><script>let latest;const message=t=>document.querySelector('#message').textContent=t;const all=()=>[...latest.monsters,...latest.characters];async function request(url,opt={}){const r=await fetch(url,opt);if(!r.ok)throw new Error((await r.json().catch(()=>({detail:r.statusText}))).detail);return r.json().catch(()=>null)}function esc(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}async function patch(kind,id,data){try{await request('/api/'+kind+'/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});await load()}catch(e){message(e.message)}}function monsterRow(x){return `<tr class="${x.alive?'':'dead'}"><td>${esc(x.name)}<br><small>${esc(x.monster_type)}</small></td><td>${x.ac}</td><td>${x.hp}/${x.max_hp}</td><td><input data-mi="${x.id}" type="number" value="${x.initiative??''}" placeholder="init"></td><td><button class="${x.active?'on':''}" data-ma="${x.id}">${x.active?'Active':'Off'}</button><button class="${x.ally?'on':''}" data-mally="${x.id}">Ally</button><button class="${x.visible?'on':''}" data-mv="${x.id}">Visible</button><button data-mt="${x.id}" class="${x.in_turn?'on':''}">Turn</button><button data-r="${x.id}" class="reset">Reset</button><button data-t="${x.id}" data-f="show_ac">AC ${x.show_ac?'on':'off'}</button><button data-t="${x.id}" data-f="show_hp">HP ${x.show_hp?'on':'off'}</button><button data-t="${x.id}" data-f="show_initiative">Init ${x.show_initiative?'on':'off'}</button></td><td><button data-d="${x.id}" class="danger">Damage</button><button data-h="${x.id}">Heal</button></td></tr>`}function characterRow(x){return `<tr class="${x.alive?'':'dead'}"><td>${esc(x.name)}</td><td><input class="hp-edit" data-chp="${x.id}" type="number" min="0" value="${x.hp}"> / <input class="hp-edit" data-cmaxhp="${x.id}" type="number" min="0" value="${x.max_hp}"></td><td><input data-ci="${x.id}" type="number" value="${x.initiative??''}" placeholder="init"></td><td><button class="${x.active?'on':''}" data-ca="${x.id}">${x.active?'Active':'Off'}</button><button class="${x.alive?'on':''}" data-cl="${x.id}">${x.alive?'Alive':'Dead'}</button><button class="${x.visible?'on':''}" data-cv="${x.id}">Visible</button><button data-ct="${x.id}" class="${x.in_turn?'on':''}">Turn</button><button data-cr="${x.id}" class="reset">Reset</button></td><td><button data-cd="${x.id}" class="danger">Damage</button><button data-ch="${x.id}">Heal</button></td></tr>`}async function setups(){try{let s=await request('/api/setups');let select=document.querySelector('#setupSelect'),old=select.value;select.innerHTML='<option value="">Load saved setup…</option>'+s.names.map(n=>'<option value="'+esc(n)+'">'+esc(n)+'</option>').join('');if(s.names.includes(old))select.value=old}catch(e){message(e.message)}}async function load(){try{latest=await request('/api/state');document.querySelector('#monsters').innerHTML='<table><tr><th>Monster</th><th>AC</th><th>HP</th><th>Initiative</th><th>Display/status</th><th>HP change</th></tr>'+latest.monsters.map(monsterRow).join('')+'</table>';document.querySelector('#characters').innerHTML='<table><tr><th>Character</th><th>Current / Max HP</th><th>Initiative</th><th>Display/status</th><th>HP change</th></tr>'+latest.characters.map(characterRow).join('')+'</table>';document.querySelector('#battleInfo').textContent=latest.battle_order.length?'Order: '+latest.battle_order.map(id=>all().find(x=>x.id===id)?.name).filter(Boolean).join(' → '):'No battle order set'}catch(e){message(e.message)}}document.querySelector('#newSetup').onclick=async()=>{if(!confirm('Discard the current battle setup and create a new blank setup?'))return;try{await request('/api/setups/new',{method:'POST'});document.querySelector('#setupName').value='';document.querySelector('#setupSelect').value='';await load()}catch(e){message(e.message)}};document.querySelector('#saveSetup').onclick=async()=>{let name=document.querySelector('#setupName').value.trim();if(!name){message('Enter a battle setup name before saving');return}try{let result=await request('/api/setups/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name})});document.querySelector('#setupName').value=result.name;await setups();document.querySelector('#setupSelect').value=result.name;message('Saved setup: '+result.name)}catch(e){message(e.message)}};document.querySelector('#loadSetup').onclick=async()=>{let name=document.querySelector('#setupSelect').value;if(!name){message('Choose a saved setup to load');return}if(!confirm('Load '+name+' and replace the current battle setup?'))return;try{let result=await request('/api/setups/load',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name})});document.querySelector('#setupName').value=result.name;await load();message('Loaded setup: '+result.name)}catch(e){message(e.message)}};document.querySelector('#monsterForm').onsubmit=async e=>{e.preventDefault();try{await request('/api/monsters',{method:'POST',body:new FormData(e.target)});e.target.reset();await load()}catch(x){message(x.message)}};document.querySelector('#monsterUpload').onsubmit=async e=>{e.preventDefault();try{await request('/api/monsters/import',{method:'POST',body:new FormData(e.target)});e.target.reset();await load()}catch(x){message(x.message)}};document.querySelector('#characterForm').onsubmit=async e=>{e.preventDefault();let f=new FormData(e.target);try{await request('/api/characters',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:f.get('name'),color:f.get('color'),hp:+f.get('hp'),initiative:f.get('initiative')===''?null:+f.get('initiative')})});e.target.reset();await load()}catch(x){message(x.message)}};document.addEventListener('click',e=>{let b=e.target,id=b.dataset.ma||b.dataset.mally||b.dataset.mv||b.dataset.mt||b.dataset.t||b.dataset.d||b.dataset.h||b.dataset.r||b.dataset.ca||b.dataset.cl||b.dataset.cv||b.dataset.ct||b.dataset.cd||b.dataset.ch||b.dataset.cr;if(!id)return;if(b.dataset.ma)return patch('monsters',id,{active:!b.classList.contains('on')});if(b.dataset.mally)return patch('monsters',id,{ally:!b.classList.contains('on')});if(b.dataset.mv)return patch('monsters',id,{visible:!b.classList.contains('on')});if(b.dataset.mt)return patch('monsters',id,{in_turn:!b.classList.contains('on')});if(b.dataset.r)return request('/api/combatants/'+id+'/reset',{method:'POST'}).then(load).catch(x=>message(x.message));if(b.dataset.t)return patch('monsters',id,{[b.dataset.f]:!b.textContent.endsWith('on')});if(b.dataset.d){let v=+prompt('Damage to remove:','1');if(Number.isFinite(v))return patch('monsters',id,{hp_delta:-Math.abs(v)})}if(b.dataset.h){let v=+prompt('Healing to add:','1');if(Number.isFinite(v))return patch('monsters',id,{hp_delta:Math.abs(v)})}if(b.dataset.ca)return patch('characters',id,{active:!b.classList.contains('on')});if(b.dataset.cl)return patch('characters',id,{alive:!b.classList.contains('on')});if(b.dataset.cv)return patch('characters',id,{visible:!b.classList.contains('on')});if(b.dataset.ct)return patch('characters',id,{in_turn:!b.classList.contains('on')});if(b.dataset.cd){let v=+prompt('Damage to remove:','1');if(Number.isFinite(v))return patch('characters',id,{hp_delta:-Math.abs(v)})}if(b.dataset.ch){let v=+prompt('Healing to add:','1');if(Number.isFinite(v))return patch('characters',id,{hp_delta:Math.abs(v)})}if(b.dataset.cr)return request('/api/combatants/'+id+'/reset',{method:'POST'}).then(load).catch(x=>message(x.message))});document.addEventListener('change',e=>{if(e.target.dataset.mi&&e.target.value!=='')patch('monsters',e.target.dataset.mi,{initiative:+e.target.value});if(e.target.dataset.ci&&e.target.value!=='')patch('characters',e.target.dataset.ci,{initiative:+e.target.value});if(e.target.dataset.chp&&e.target.value!=='')patch('characters',e.target.dataset.chp,{hp:+e.target.value});if(e.target.dataset.cmaxhp&&e.target.value!=='')patch('characters',e.target.dataset.cmaxhp,{max_hp:+e.target.value})});function living(){return all().filter(x=>x.active&&x.alive)}function initiativeOf(x){return typeof x.initiative==='number'&&Number.isFinite(x.initiative)?x.initiative:null}function orderedCombatants(){return living().slice().sort((a,b)=>{let ai=initiativeOf(a),bi=initiativeOf(b);if(ai===null&&bi===null)return 0;if(ai===null)return 1;if(bi===null)return-1;return bi-ai})}function realTieGroups(){let g=new Map();for(const x of living()){const i=initiativeOf(x);if(i===null)continue;const members=g.get(i)||[];members.push(x);g.set(i,members)}return[...g.entries()].filter(([,members])=>members.length>1).sort((a,b)=>b[0]-a[0])}async function startBattle(order){try{await request('/api/battle/start',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({order})});await load()}catch(e){message(e.message)}}document.querySelector('#startBattle').onclick=()=>{const candidates=living();if(!candidates.length){message('Activate at least one living combatant first');return}const ties=realTieGroups();if(!ties.length){startBattle(orderedCombatants().map(x=>x.id));return}document.querySelector('#tieGroups').innerHTML=ties.map(([i,members])=>`<div class="tie"><label>Initiative ${i}</label><select data-tie="${i}">${members.map(x=>'<option value="'+x.id+'">'+esc(x.name)+'</option>').join('')}</select></div>`).join('');document.querySelector('#tieModal').hidden=false};document.querySelector('#confirmOrder').onclick=()=>{const first={};document.querySelectorAll('[data-tie]').forEach(s=>first[s.dataset.tie]=s.value);const order=[];for(const c of orderedCombatants()){const i=initiativeOf(c),p=i===null?null:first[String(i)];if(p===c.id)order.push(c.id)}for(const c of orderedCombatants())if(!order.includes(c.id))order.push(c.id);document.querySelector('#tieModal').hidden=true;startBattle(order)};document.querySelector('#cancelOrder').onclick=()=>document.querySelector('#tieModal').hidden=true;document.querySelector('#nextBattle').onclick=async()=>{try{await request('/api/battle/next',{method:'POST'});await load()}catch(e){message(e.message)}};document.querySelector('#resetAll').onclick=async()=>{if(!confirm('Reset every monster and character?'))return;try{await request('/api/battle/reset-all',{method:'POST'});await load()}catch(e){message(e.message)}};load();setups();</script></body></html>'''
+CLIENT_HTML=r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Battle Display</title><style>*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#080b14;color:#fff;font-family:system-ui,sans-serif;overflow:hidden}#initiative{height:10vh;min-height:54px;background:#111827e8;display:flex;align-items:center;gap:.6rem;padding:.5rem 1vw;overflow-x:auto;position:relative;z-index:5}.token{white-space:nowrap;border-radius:999px;padding:.45rem .75rem;border:3px solid #fff;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.55)}.token.dead{border-color:#000;filter:grayscale(1);opacity:.6}.token.turn{border-color:#ef4444;box-shadow:0 0 15px #ef4444}#stage{height:90vh;position:relative;overflow:hidden}.monster{width:45vw;min-width:360px;max-width:90vw;height:100%;position:absolute;top:0;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:3vh 3vw;background:linear-gradient(90deg,transparent,rgba(0,0,0,.45),transparent);transition:transform 1.2s ease,opacity 1.2s ease}.monster img{max-height:57vh;max-width:90%;object-fit:contain;border-radius:16px;filter:drop-shadow(0 10px 25px #000)}h1{font-size:clamp(2rem,5vw,5.7rem);margin:.3rem;text-shadow:0 3px 8px #000}.type{font-size:clamp(1.2rem,2.5vw,2.5rem)}.stats{font-size:clamp(1.2rem,2.2vw,2.5rem);margin-top:1rem}.enter-bottom{transform:translate(-50%,110%)}.enter-top{transform:translate(-50%,-110%)}.exit-bottom{transform:translate(-50%,110%);opacity:0}.exit-top{transform:translate(-50%,-110%);opacity:0}.empty{height:100%;display:flex;align-items:center;justify-content:center}</style></head><body><div id="initiative"></div><div id="stage"></div><script>let previous=new Map();function esc(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function readableText(hex){const z=String(hex||'').replace('#','');if(!/^[0-9a-fA-F]{6}$/.test(z))return'#fff';const r=parseInt(z.slice(0,2),16),g=parseInt(z.slice(2,4),16),b=parseInt(z.slice(4,6),16);return(0.2126*r+0.7152*g+0.0722*b)/255>.55?'#111827':'#fff'}function ent(d){return d.entry_direction==='from_top'?'enter-top':'enter-bottom'}function ext(d){return d.exit_direction==='to_top'?'exit-top':'exit-bottom'}function render(s){document.body.style.background=s.display.background;const map=new Map([...s.characters,...s.monsters].map(x=>[x.id,x]));const ordered=s.battle_order.map(id=>map.get(id)).filter(Boolean);const extras=[...map.values()].filter(x=>x.active&&x.visible&&!ordered.some(y=>y.id===x.id)).sort((a,b)=>(b.initiative??-999)-(a.initiative??-999));const bar=[...ordered.filter(x=>x.visible),...extras];document.querySelector('#initiative').innerHTML=bar.map(x=>`<span class="token ${x.alive?'':'dead'} ${x.in_turn?'turn':''}" style="background:${esc(x.color)};color:${readableText(x.color)}">${esc(x.name)}</span>`).join('');const active=s.monsters.filter(x=>x.active&&x.alive),stage=document.querySelector('#stage');if(!active.length){stage.innerHTML='<div class="empty"></div>';previous.clear();return}const now=new Map(active.map(x=>[x.id,x]));for(const[id]of previous)if(!now.has(id)){const old=document.getElementById('m-'+id);if(old){old.classList.add(ext(s.display));setTimeout(()=>old.remove(),1300)}}for(const m of active){let e=document.getElementById('m-'+m.id);if(!e){e=document.createElement('article');e.id='m-'+m.id;e.className='monster '+ent(s.display);stage.appendChild(e);requestAnimationFrame(()=>e.classList.remove('enter-bottom','enter-top'))}e.style.width=s.display.monster_width_percent+'vw';e.style.color=m.color;const st=[];if(m.show_ac)st.push('AC '+m.ac);if(m.show_hp)st.push('HP '+m.hp+'/'+m.max_hp);if(m.show_initiative&&m.initiative!==null)st.push('Initiative '+m.initiative);e.innerHTML=`${m.image_url?'<img src="'+esc(m.image_url)+'" alt="">':''}<h1>${esc(m.name)}${m.in_turn?' ◀':''}</h1><div class="type">${esc(m.monster_type)}</div><div class="stats">${st.join(' · ')}</div>`}previous=now}async function initial(){const r=await fetch('/api/state');if(r.ok)render(await r.json())}initial();const ws=new WebSocket((location.protocol==='https:'?'wss://':'ws://')+location.host+'/ws');ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.type==='state')render(m.state)};ws.onclose=()=>setTimeout(()=>location.reload(),1500);</script></body></html>'''
+
+@admin.get('/login')
+def admin_login_get():return login()
+@admin.post('/login')
+def admin_login_post(username:str=Form(...),password:str=Form(...)):
+    u=user(username)
+    if not u or u.get('role')!='admin' or not password_ok(password,str(u.get('password',''))):return login('Invalid admin credentials')
+    token=secrets.token_urlsafe(32);SESSIONS[token]={'username':username,'role':'admin'};r=RedirectResponse('/',303);r.set_cookie('monster_session',token,httponly=True,samesite='lax',secure=False);return r
+@admin.get('/')
+def admin_home(request:FastAPIRequest):return HTMLResponse(ADMIN_HTML)if SESSIONS.get(request.cookies.get('monster_session',''),{}).get('role')=='admin' else RedirectResponse('/login',303)
+@client.get('/login')
+def client_login_get():return login()
+@client.post('/login')
+def client_login_post(username:str=Form(...),password:str=Form(...)):
+    u=user(username)
+    if not u or u.get('role')not in{'admin','client'}or not password_ok(password,str(u.get('password',''))):return login('Invalid credentials')
+    token=secrets.token_urlsafe(32);SESSIONS[token]={'username':username,'role':u['role']};r=RedirectResponse('/display',303);r.set_cookie('monster_session',token,httponly=True,samesite='lax',secure=False);return r
+@client.get('/display')
+def client_home(request:FastAPIRequest):return HTMLResponse(CLIENT_HTML)if SESSIONS.get(request.cookies.get('monster_session',''))else RedirectResponse('/login',303)
+@admin.get('/api/state')
+@client.get('/api/state')
+def get_state(request:FastAPIRequest):
+    if not SESSIONS.get(request.cookies.get('monster_session','')):raise HTTPException(401,'Sign in required')
+    return public_state()
+@client.websocket('/ws')
+async def ws(websocket:WebSocket):
+    await websocket.accept();SOCKETS.add(websocket);await websocket.send_text(json.dumps({'type':'state','state':public_state()}))
+    try:
+        while True:await websocket.receive_text()
+    except Exception:SOCKETS.discard(websocket)
+@admin.get('/api/setups')
+def get_setups(_:dict[str,str]=Depends(require('admin'))):return {'names':list_setups()}
+@admin.post('/api/setups/new')
+async def new_setup(_:dict[str,str]=Depends(require('admin'))):
+    global STATE
+    STATE=normalize_state({'monsters':[],'characters':[],'battle_order':[]});await changed();return public_state()
+@admin.post('/api/setups/save')
+async def save_setup(payload:SetupName,_:dict[str,str]=Depends(require('admin'))):
+    name=setup_slug(payload.name);path=setup_path(name);temp=path.with_suffix('.tmp');temp.write_text(json.dumps(STATE,indent=2),encoding='utf-8');temp.replace(path);return {'name':name}
+@admin.post('/api/setups/load')
+async def load_setup(payload:SetupName,_:dict[str,str]=Depends(require('admin'))):
+    global STATE
+    name=setup_slug(payload.name);path=setup_path(name)
+    if not path.exists():raise HTTPException(404,'Saved setup not found')
+    try:STATE=normalize_state(json.loads(path.read_text(encoding='utf-8')))
+    except (OSError,json.JSONDecodeError,ValueError)as exc:raise HTTPException(400,f'Unable to load setup: {exc}')from exc
+    await changed();return {'name':name}
+@admin.post('/api/monsters')
+async def create_monster(name:str=Form(...),monster_type:str=Form(...),ac:int=Form(...),hp:int=Form(...),color:str=Form(...),image:UploadFile|None=File(None),_:dict[str,str]=Depends(require('admin'))):
+    m=make_monster({'name':name.strip(),'monster_type':monster_type.strip(),'ac':ac,'hp':hp},color,image);STATE['monsters'].append(m);await changed();return m
+@admin.post('/api/monsters/import')
+async def import_monster(monster_file:UploadFile=File(...),color:str=Form(...),image:UploadFile|None=File(None),_:dict[str,str]=Depends(require('admin'))):
+    if not(monster_file.filename or '').lower().endswith('.monster'):raise HTTPException(400,'Upload a .monster file')
+    m=make_monster(parse_monster(await monster_file.read()),color,image);STATE['monsters'].append(m);await changed();return m
+@admin.patch('/api/monsters/{ident}')
+async def update_monster(ident:str,update:MonsterUpdate,_:dict[str,str]=Depends(require('admin'))):
+    m=next((x for x in STATE['monsters']if x['id']==ident),None)
+    if not m:raise HTTPException(404,'Monster not found')
+    values=update.model_dump(exclude_unset=True,exclude_none=True)
+    if'hp_delta'in values:m['hp']+=values.pop('hp_delta')
+    for k,v in values.items():
+        if k!='in_turn':m[k]=v
+    if m['hp']<0:m['alive']=False;m['visible']=True;m['in_turn']=False
+    if values.get('active')is False:m['in_turn']=False
+    set_turn(m,values.get('in_turn'));clean_order();await changed();return m
+@admin.post('/api/characters')
+async def create_character(character:CharacterCreate,_:dict[str,str]=Depends(require('admin'))):
+    c={'id':uuid.uuid4().hex,**character.model_dump(),'max_hp':character.hp,'original_hp':character.hp,'original_initiative':character.initiative,'active':False,'alive':character.hp>=0,'visible':False,'in_turn':False};STATE['characters'].append(c);await changed();return c
+@admin.patch('/api/characters/{ident}')
+async def update_character(ident:str,update:CharacterUpdate,_:dict[str,str]=Depends(require('admin'))):
+    c=next((x for x in STATE['characters']if x['id']==ident),None)
+    if not c:raise HTTPException(404,'Character not found')
+    values=update.model_dump(exclude_unset=True,exclude_none=True)
+    if'hp_delta'in values:c['hp']+=values.pop('hp_delta')
+    if'max_hp'in values:c['original_hp']=values['max_hp']
+    for k,v in values.items():
+        if k!='in_turn':c[k]=v
+    if c['hp']<0:c['alive']=False;c['visible']=True;c['in_turn']=False
+    if values.get('alive')is False:c['visible']=True;c['in_turn']=False
+    if values.get('active')is False:c['in_turn']=False
+    set_turn(c,values.get('in_turn'));clean_order();await changed();return c
+@admin.post('/api/combatants/{ident}/reset')
+async def reset_one(ident:str,_:dict[str,str]=Depends(require('admin'))):
+    x=entity(ident)
+    if not x:raise HTTPException(404,'Combatant not found')
+    reset_entity(x);clean_order();await changed();return x
+@admin.post('/api/battle/reset-all')
+async def reset_all(_:dict[str,str]=Depends(require('admin'))):
+    for x in entities():reset_entity(x)
+    sort_admin_by_max_hp();STATE['battle_order']=[];await changed();return {'status':'reset'}
+@admin.post('/api/battle/start')
+async def battle_start(payload:BattleStart,_:dict[str,str]=Depends(require('admin'))):begin_battle(payload.order);sort_admin_by_initiative();await changed();return public_state()
+@admin.post('/api/battle/next')
+async def battle_next(_:dict[str,str]=Depends(require('admin'))):x=advance_turn();await changed();return {'current':x}
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description='GM-controlled real-time battle display');parser.add_argument('--config',type=Path);parser.add_argument('--bind');parser.add_argument('--admin-port',type=int);parser.add_argument('--client-port',type=int);parser.add_argument('--storage-dir',type=Path);args=parser.parse_args()
+    try:CONFIG=load_config(args.config)
+    except Exception as exc:sys.exit(f'Invalid configuration: {exc}')
+    if args.bind:CONFIG['network']['bind']=args.bind
+    if args.admin_port:CONFIG['network']['admin_port']=args.admin_port
+    if args.client_port:CONFIG['network']['client_port']=args.client_port
+    if args.storage_dir:CONFIG['storage_dir']=str(args.storage_dir)
+    DATA_DIR=Path(CONFIG['storage_dir']).expanduser().resolve();UPLOAD_DIR=DATA_DIR/'uploads';SETUPS_DIR=DATA_DIR/'setups';UPLOAD_DIR.mkdir(parents=True,exist_ok=True);SETUPS_DIR.mkdir(parents=True,exist_ok=True);STATE_FILE=DATA_DIR/'state.json';load_state();admin.mount('/media',StaticFiles(directory=str(UPLOAD_DIR)),name='admin-media');client.mount('/media',StaticFiles(directory=str(UPLOAD_DIR)),name='client-media')
+    async def serve():
+        common={'host':CONFIG['network']['bind'],'log_level':'info','access_log':False};await asyncio.gather(uvicorn.Server(uvicorn.Config(admin,port=CONFIG['network']['admin_port'],**common)).serve(),uvicorn.Server(uvicorn.Config(client,port=CONFIG['network']['client_port'],**common)).serve())
+    asyncio.run(serve())
