@@ -4,6 +4,7 @@ ADMIN_HTML = r'''<!doctype html>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Monster Display Admin</title>
+
   <style>
     body {
       font-family: system-ui, sans-serif;
@@ -76,6 +77,17 @@ ADMIN_HTML = r'''<!doctype html>
     .dead {
       opacity: .55;
       text-decoration: line-through;
+    }
+
+    .turn-marker {
+      display: inline-block;
+      width: .85em;
+      height: .85em;
+      margin-right: .35em;
+      border: 1px solid #ffffff99;
+      border-radius: 50%;
+      vertical-align: -.05em;
+      box-shadow: 0 0 5px currentColor;
     }
 
     .modal {
@@ -597,9 +609,22 @@ ADMIN_HTML = r'''<!doctype html>
             .map(combatant => {
               const name = esc(combatant.name);
 
-              return combatant.in_turn
-                ? `<strong><u>${name}</u></strong>`
-                : name;
+              if (!combatant.in_turn) {
+                return name;
+              }
+
+              const color = esc(combatant.color || '#ffffff');
+
+              return `
+                <strong><u>
+                  <span
+                    class="turn-marker"
+                    style="background:${color};color:${color}"
+                    aria-label="Current turn"
+                    title="Current turn"
+                  ></span>${name}
+                </u></strong>
+              `;
             })
             .join(' → ');
       } catch (error) {
