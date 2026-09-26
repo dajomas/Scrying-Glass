@@ -363,6 +363,9 @@ class MonsterUpdate(BaseModel):
     show_initiative: bool | None = None
     in_turn: bool | None = None
 
+class MonsterBulkUpdate(BaseModel):
+    field: Literal["active", "ally", "show_ac", "show_hp", "show_initiative"]
+
 class CharacterCreate(BaseModel):
     name: str = Field(min_length=1, max_length=100)
     color: str = Field(min_length=1, max_length=40)
@@ -552,6 +555,41 @@ async def edit_monster(ident: str, name: str=Form(...), monster_type: str=Form(.
     clean_order()
     await changed()
     return m
+
+@admin.post("/api/monsters/bulk-toggle")
+async def bulk_toggle_monsters(update: MonsterBulkUpdate, _: dict[str, str] = Depends(require("admin"))) -> dict[str, Any]:
+    field = update.field
+    monsters = STATE["monsters"]
+
+    # Vacuously treating an empty group as disabled is harmless and provides a
+    # stable response to the UI when no monsters exist.
+    enable = not bool(monsters) or not all(bool(monster.get(field, False)) for monster in monsters)
+
+    if field == "active":
+        for monster in monsters:
+            # Dead monsters cannot be activated. They are always off after a
+            # bulk activation, which matches the existing single-monster rule.
+            desired = enable and bool(monster.get("alive", True))
+            was_active = bool(monster.get("active", False))
+            monster["active"] = desired
+
+            if desired and not was_active:
+                insert_into_battle_order(monster)
+
+            if not desired:
+                monster["in_turn"] = False
+
+        # If bulk deactivation removed the current turn, clear it. The existing
+        # Next action will select the next eligible combatant as usual.
+        current_turn = next((x for x in entities() if x.get("in_turn")), None)
+        if current_turn is not None and not current_turn.get("active"):
+            clear_turns()
+    else:
+        for monster in monsters:
+            monster[field] = enable
+
+    await changed()
+    return {"field": field, "enabled": enable, "count": len(monsters)}
 
 @admin.patch('/api/monsters/{ident}')
 async def update_monster(ident: str, update: MonsterUpdate, _: dict[str, str]=Depends(require('admin'))):

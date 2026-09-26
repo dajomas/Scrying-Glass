@@ -137,6 +137,23 @@ ADMIN_HTML = r'''<!doctype html>
       margin-top: .85rem;
     }
 
+    .monster-bulk-controls {
+      margin: 0.5rem 0 1rem;
+    }
+
+    .bulk-label {
+      color: #cbd5e1;
+      font-weight: 700;
+    }
+
+    .bulk-monster-toggle {
+      background: #3b556f;
+    }
+
+    .bulk-monster-toggle:hover {
+      background: #4b6680;
+    }
+
     .hp-edit { width: 5.5rem; }
     .setup-name { min-width: 14rem; }
 
@@ -269,6 +286,14 @@ ADMIN_HTML = r'''<!doctype html>
       <div class="row">
         <h2>Monsters</h2>
         <button id="rollMonsterInitiative" class="roll">Roll monster initiatives (d20)</button>
+      </div>
+      <div class="row monster-bulk-controls" aria-label="Bulk monster controls">
+        <span class="bulk-label">All monsters:</span>
+        <button type="button" class="bulk-monster-toggle" data-bulk-field="active">Active all</button>
+        <button type="button" class="bulk-monster-toggle" data-bulk-field="ally">Ally all</button>
+        <button type="button" class="bulk-monster-toggle" data-bulk-field="show_ac">AC all</button>
+        <button type="button" class="bulk-monster-toggle" data-bulk-field="show_hp">HP all</button>
+        <button type="button" class="bulk-monster-toggle" data-bulk-field="show_initiative">Init all</button>
       </div>
       <div id="monsters"></div>
     </section>
@@ -691,7 +716,7 @@ ADMIN_HTML = r'''<!doctype html>
       'Hide character input',
       'Show character input',
     );
-    
+
     document.querySelector('#editForm').onsubmit = async event => {
       event.preventDefault();
 
@@ -1005,6 +1030,36 @@ ADMIN_HTML = r'''<!doctype html>
         message(error.message);
       }
     };
+
+    async function bulkToggleMonsters(field) {
+      const response = await fetch('/api/monsters/bulk-toggle', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({field}),
+      });
+
+      if (!response.ok) {
+        const detail = await response.text();
+        throw new Error(detail || 'Could not update all monsters');
+      }
+
+      return response.json();
+    }
+
+    document.querySelectorAll('.bulk-monster-toggle').forEach(button => {
+      button.addEventListener('click', async () => {
+        button.disabled = true;
+        try {
+          await bulkToggleMonsters(button.dataset.bulkField);
+          // The existing WebSocket state broadcast refreshes the monster cards.
+        } catch (error) {
+          console.error(error);
+          alert('Could not update all monsters. Please try again.');
+        } finally {
+          button.disabled = false;
+        }
+      });
+    });
 
     document.addEventListener('click', event => {
       const button = event.target;
