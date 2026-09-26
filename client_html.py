@@ -220,8 +220,24 @@ CLIENT_HTML = r'''<!doctype html>
     }
 
     function render(state) {
-      document.body.style.background = state.display.background;
+      const background = String(state.display.background || '').trim();
 
+      if (background.startsWith('url(')) {
+        document.body.style.backgroundImage = background;
+        document.body.style.backgroundPosition = 'center center';
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundRepeat = 'no-repeat';
+        document.body.style.backgroundAttachment = 'fixed';
+        document.body.style.backgroundColor = '#080b14';
+      } else {
+        document.body.style.background = background || '#080b14';
+        document.body.style.backgroundImage = '';
+        document.body.style.backgroundPosition = '';
+        document.body.style.backgroundSize = '';
+        document.body.style.backgroundRepeat = '';
+        document.body.style.backgroundAttachment = '';
+      }
+      
       const combatantsById = new Map(
         [...state.characters, ...state.monsters]
           .map(combatant => [combatant.id, combatant]),
