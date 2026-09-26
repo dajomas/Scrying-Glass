@@ -79,6 +79,14 @@ ADMIN_HTML = r'''<!doctype html>
       text-decoration: line-through;
     }
 
+    .pane-toggle {
+      background: #334155;
+    }
+
+    .pane[hidden] {
+      display: none;
+    }
+
     .turn-marker {
       display: inline-block;
       width: .85em;
@@ -194,41 +202,68 @@ ADMIN_HTML = r'''<!doctype html>
     </section>
 
     <section>
-      <h2>Add monster</h2>
+      <div class="row">
+        <h2>Add monster</h2>
+        <button
+          id="toggleMonsterPane"
+          class="pane-toggle"
+          type="button"
+          aria-controls="monsterInputPane"
+          aria-expanded="true"
+        >
+          Hide monster input
+        </button>
+      </div>
 
-      <form id="monsterForm" class="row">
-        <input name="name" placeholder="Name" required>
-        <input name="monster_type" placeholder="Monster type" required>
-        <input name="ac" type="number" placeholder="AC" required>
-        <input name="hp" type="number" placeholder="HP" required>
-        <input name="quantity" type="number" min="1" max="50" value="1" title="Number of monsters">
-        <input name="color" type="color" value="#842029">
-        <input name="image" type="file" accept="image/*">
-        <button>Add manually</button>
-      </form>
+      <div id="monsterInputPane" class="pane">
+        <form id="monsterForm" class="row">
+          <input name="name" placeholder="Name" required>
+          <input name="monster_type" placeholder="Monster type" required>
+          <input name="ac" type="number" placeholder="AC" required>
+          <input name="hp" type="number" placeholder="HP" required>
+          <input name="quantity" type="number" min="1" max="50" value="1" title="Number of monsters">
+          <input name="color" type="color" value="#842029">
+          <input name="image" type="file" accept="image/*">
+          <button>Add manually</button>
+        </form>
 
-      <p>Or import a JSON <code>.monster</code> file:</p>
+        <p>Or import a JSON <code>.monster</code> file:</p>
 
-      <form id="monsterUpload" class="row">
-        <input name="monster_file" type="file" accept=".monster,application/json" required>
-        <input name="quantity" type="number" min="1" max="50" value="1" title="Number of monsters">
-        <input name="color" type="color" value="#842029">
-        <input name="image" type="file" accept="image/*">
-        <button>Import .monster</button>
-      </form>
+        <form id="monsterUpload" class="row">
+          <input name="monster_file" type="file" accept=".monster,application/json" required>
+          <input name="quantity" type="number" min="1" max="50" value="1" title="Number of monsters">
+          <input name="color" type="color" value="#842029">
+          <input name="image" type="file" accept="image/*">
+          <button>Import .monster</button>
+        </form>
+      </div>
     </section>
 
     <section>
-      <h2>Add character</h2>
+      <div class="row">
+        <h2>Add character</h2>
+        <button
+          id="toggleCharacterPane"
+          class="pane-toggle"
+          type="button"
+          aria-controls="characterInputPane"
+          aria-expanded="true"
+        >
+          Hide character input
+        </button>
+      </div>
 
-      <form id="characterForm" class="row">
-        <input name="name" placeholder="Name" required>
-        <input name="color" type="color" value="#1f4e79">
-        <input name="hp" type="number" min="0" value="1" required>
-        <input name="initiative" type="number" placeholder="Initiative (optional)">
-        <button>Add character</button>
-      </form>
+      <div id="characterInputPane" class="pane">
+        <form id="characterForm" class="row">
+          <input name="name" placeholder="Name" required>
+          <input name="color" type="color" value="#1f4e79">
+          <input name="hp" type="number" min="0" value="1" required>
+          <input name="initiative" type="number" placeholder="Initiative (optional)">
+          <button>Add character</button>
+        </form>
+      </div>
     </section>
+
 
     <section>
       <div class="row">
@@ -632,6 +667,31 @@ ADMIN_HTML = r'''<!doctype html>
       }
     }
 
+    function configurePaneToggle(buttonId, paneId, hiddenLabel, visibleLabel) {
+      const button = document.querySelector(buttonId);
+      const pane = document.querySelector(paneId);
+
+      button.onclick = () => {
+        pane.hidden = !pane.hidden;
+        button.textContent = pane.hidden ? visibleLabel : hiddenLabel;
+        button.setAttribute('aria-expanded', String(!pane.hidden));
+      };
+    }
+
+    configurePaneToggle(
+      '#toggleMonsterPane',
+      '#monsterInputPane',
+      'Hide monster input',
+      'Show monster input',
+    );
+
+    configurePaneToggle(
+      '#toggleCharacterPane',
+      '#characterInputPane',
+      'Hide character input',
+      'Show character input',
+    );
+    
     document.querySelector('#editForm').onsubmit = async event => {
       event.preventDefault();
 
