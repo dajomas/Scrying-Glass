@@ -65,6 +65,14 @@ CLIENT_HTML = r'''<!doctype html>
       align-content: start;
     }
 
+    #initiative[hidden] {
+      display: none;
+    }
+
+    body:has(#initiative[hidden]) #stage {
+      height: 100vh;
+    }
+
     .monster {
       min-width: 0;
       min-height: 0;
@@ -262,16 +270,16 @@ CLIENT_HTML = r'''<!doctype html>
         ...additionalVisibleCombatants,
       ];
 
-      document.querySelector('#initiative').innerHTML = initiativeCombatants
-        .map(combatant => `
-          <span
-            class="token ${combatant.alive ? '' : 'dead'} ${combatant.in_turn ? 'turn' : ''}"
-            style="background:${esc(combatant.color)};color:${readableText(combatant.color)}"
-          >
-            ${esc(combatant.name)}
-          </span>
-        `)
-        .join('');
+      const initiative = document.querySelector('#initiative');
+
+      initiative.hidden = initiativeCombatants.length === 0;
+
+      initiative.innerHTML = initiativeCombatants.map(combatant =>
+        `<span class="token ${combatant.alive ? '' : 'dead'} ${combatant.in_turn ? 'turn' : ''}"
+          style="background:${esc(combatant.color)};color:${readableText(combatant.color)}">
+          ${esc(combatant.name)}
+        </span>`
+      ).join('');
 
       const activeMonsters = state.monsters.filter(monster =>
         monster.active && monster.alive,
