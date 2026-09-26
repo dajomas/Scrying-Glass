@@ -1032,29 +1032,23 @@ ADMIN_HTML = r'''<!doctype html>
     };
 
     async function bulkToggleMonsters(field) {
-      const response = await fetch('/api/monsters/bulk-toggle', {
+      return request('/api/monsters/bulk-toggle', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({field}),
       });
-
-      if (!response.ok) {
-        const detail = await response.text();
-        throw new Error(detail || 'Could not update all monsters');
-      }
-
-      return response.json();
     }
 
     document.querySelectorAll('.bulk-monster-toggle').forEach(button => {
       button.addEventListener('click', async () => {
         button.disabled = true;
+
         try {
           await bulkToggleMonsters(button.dataset.bulkField);
-          // The existing WebSocket state broadcast refreshes the monster cards.
+          await load();
         } catch (error) {
           console.error(error);
-          alert('Could not update all monsters. Please try again.');
+          message(error.message || 'Could not update all monsters.');
         } finally {
           button.disabled = false;
         }
