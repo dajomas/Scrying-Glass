@@ -225,6 +225,11 @@ ADMIN_HTML = r'''<!doctype html>
       background: #4b6680;
     }
 
+    .initiative-edit {
+      width: 5ch;
+      min-width: 5ch;
+    }
+
     .hp-edit { width: 5.5rem; }
     .setup-name { min-width: 14rem; }
 
@@ -674,6 +679,7 @@ ADMIN_HTML = r'''<!doctype html>
           <td>${monster.hp}/${monster.max_hp}</td>
           <td>
             <input
+              class="initiative-edit"
               data-mi="${monster.id}"
               type="number"
               value="${monster.initiative ?? ''}"
@@ -686,11 +692,11 @@ ADMIN_HTML = r'''<!doctype html>
             <button class="${monster.ally ? 'on' : ''}" data-mally="${monster.id}">Ally</button>
             <button class="${monster.visible ? 'on' : ''}" data-mv="${monster.id}">Visible</button>
             <button data-mt="${monster.id}" class="${monster.in_turn ? 'on' : ''}">Turn</button>
-            <button data-r="${monster.id}" class="reset">Reset</button>
-            <button type="button" class="danger" data-remove="${monster.id}" data-remove-kind="monster">Remove</button>
             <button data-t="${monster.id}" data-f="show_ac">AC ${monster.show_ac ? 'on' : 'off'}</button>
             <button data-t="${monster.id}" data-f="show_hp">HP ${monster.show_hp ? 'on' : 'off'}</button>
             <button data-t="${monster.id}" data-f="show_initiative">Init ${monster.show_initiative ? 'on' : 'off'}</button>
+            <button data-r="${monster.id}" class="reset">Reset</button>
+            <button type="button" class="danger" data-remove="${monster.id}" data-remove-kind="monster">Remove</button>
           </td>
           <td>
             <button data-d="${monster.id}" class="danger">Damage</button>
@@ -711,6 +717,7 @@ ADMIN_HTML = r'''<!doctype html>
           </td>
           <td>
             <input
+              class="initiative-edit"
               data-ci="${character.id}"
               type="number"
               value="${character.initiative ?? ''}"
