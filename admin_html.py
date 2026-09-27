@@ -276,14 +276,21 @@ ADMIN_HTML = r'''<!doctype html>
       </div>
     </section>
 
-    <section class="row">
+    <section>
       <div class="row">
         <h2>Battle</h2>
       </div>
-      <button id="startBattle" class="battle">Start battle</button>
-      <button id="nextBattle" class="battle">Next</button>
-      <button id="resetAll" class="reset">Reset All</button>
-      <span id="battleInfo"></span>
+      <div class="row">
+        <button id="startBattle" class="battle">Start battle</button>
+        <button id="nextBattle" class="battle">Next</button>
+        <button id="resetAll" class="reset">Reset All</button>
+      </div>
+      <div class="row">
+        &nbsp;
+      </div>
+      <div class="row">
+        <span id="battleInfo"></span>
+      </div>
     </section>
 
     <section>
