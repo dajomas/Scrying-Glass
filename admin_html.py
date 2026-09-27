@@ -213,13 +213,6 @@ ADMIN_HTML = r'''<!doctype html>
       <button id="openCharacterCsvImport" class="import">Import characters CSV</button>
     </section>
 
-    <section class="row">
-      <button id="startBattle" class="battle">Start battle</button>
-      <button id="nextBattle" class="battle">Next</button>
-      <button id="resetAll" class="reset">Reset All</button>
-      <span id="battleInfo"></span>
-    </section>
-
     <section>
       <div class="row">
         <h2>Add monster</h2>
@@ -283,6 +276,15 @@ ADMIN_HTML = r'''<!doctype html>
       </div>
     </section>
 
+    <section class="row">
+      <div class="row">
+        <h2>Battle</h2>
+      </div>
+      <button id="startBattle" class="battle">Start battle</button>
+      <button id="nextBattle" class="battle">Next</button>
+      <button id="resetAll" class="reset">Reset All</button>
+      <span id="battleInfo"></span>
+    </section>
 
     <section>
       <div class="row">
