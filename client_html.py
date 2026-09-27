@@ -324,10 +324,16 @@ CLIENT_HTML = r'''<!doctype html>
 
       initiative.hidden = initiativeCombatants.length === 0;
 
+      function displayCombatantName(combatant) {
+        return combatant.monster_type && combatant.ally
+          ? `${combatant.name} - Ally`
+          : combatant.name;
+      }
+
       initiative.innerHTML = initiativeCombatants.map(combatant =>
         `<span class="token ${combatant.alive ? '' : 'dead'} ${combatant.in_turn ? 'turn' : ''}"
           style="background:${esc(combatant.color)};color:${readableText(combatant.color)}">
-          ${esc(combatant.name)}
+          ${esc(displayCombatantName(combatant))}
         </span>`
       ).join('');
 
@@ -416,7 +422,7 @@ CLIENT_HTML = r'''<!doctype html>
         card.innerHTML = `
           ${monster.image_url ? `<img src="${esc(monster.image_url)}" alt="">` : ''}
           <div class="text-panel">
-            <h1>${esc(monster.name)}${monster.in_turn ? ' ◀' : ''}</h1>
+            <h1>${esc(displayCombatantName(monster))}${monster.in_turn ? ' ◀' : ''}</h1>
             <div class="type">${esc(monster.monster_type)}</div>
             <div class="stats">${stats.join(' · ')}</div>
           </div>

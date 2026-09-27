@@ -668,10 +668,14 @@ ADMIN_HTML = r'''<!doctype html>
     }
 
     function monsterRow(monster) {
+      const displayName = monster.ally
+        ? `${monster.name} - Ally`
+        : monster.name;
+
       return `
         <tr class="${monster.alive ? '' : 'dead'}">
           <td>
-            ${esc(monster.name)}
+            ${esc(displayName)}
             <br>
             <small>${esc(monster.monster_type)}</small>
           </td>
@@ -1019,7 +1023,11 @@ ADMIN_HTML = r'''<!doctype html>
             .map(id => all().find(combatant => combatant.id === id))
             .filter(Boolean)
             .map(combatant => {
-              const name = esc(combatant.name);
+              const displayName = combatant.monster_type && combatant.ally
+                ? `${combatant.name} - Ally`
+                : combatant.name;
+
+              const name = esc(displayName);
 
               if (!combatant.in_turn) {
                 return name;
@@ -1650,7 +1658,9 @@ ADMIN_HTML = r'''<!doctype html>
           Target
           <select data-action-target required>
             ${targets.map(target => `
-              <option value="${esc(target.id)}">${esc(target.name)}</option>
+              <option value="${esc(target.id)}">
+                ${esc(target.monster_type && target.ally ? `${target.name} - Ally` : (!target.monster_type) ? `${target.name} - Character` : `${target.name} - Monster`)}
+              </option>
             `).join('')}
           </select>
         </label>
