@@ -32,6 +32,9 @@ STATE_FILE: Path
 UPLOAD_DIR: Path
 SETUPS_DIR: Path
 
+ADMIN_SESSION_COOKIE = "monster_admin_session"
+CLIENT_SESSION_COOKIE = "monster_client_session"
+
 def merge(a: dict[str, Any], b: dict[str, Any]) -> dict[str, Any]:
     out = dict(a)
     for k, v in b.items():
@@ -267,13 +270,22 @@ async def changed() -> None:
         save_state()
     await broadcast()
 
-def require(role: Literal['admin', 'client']):
-
+def require(
+    role: Literal["admin", "client"],
+    cookie_name: str,
+):
     async def dependency(request: FastAPIRequest) -> dict[str, str]:
-        session = SESSIONS.get(request.cookies.get('monster_session', ''))
-        if not session or (role == 'admin' and session['role'] != 'admin'):
-            raise HTTPException(401, 'Sign in required')
+        session = SESSIONS.get(
+            request.cookies.get(cookie_name, "")
+        )
+
+        if not session or (
+            role == "admin" and session["role"] != "admin"
+        ):
+            raise HTTPException(401, "Sign in required")
+
         return session
+
     return dependency
 
 def parse_monster(raw: bytes) -> dict[str, Any]:
@@ -774,12 +786,13 @@ def admin_login_post(username: str=Form(...), password: str=Form(...)):
     token = secrets.token_urlsafe(32)
     SESSIONS[token] = {'username': username, 'role': 'admin'}
     r = RedirectResponse('/', 303)
-    r.set_cookie('monster_session', token, httponly=True, samesite='lax', secure=False)
+    r.set_cookie(ADMIN_SESSION_COOKIE, token, httponly=True, samesite='lax', secure=False)
+    r.delete_cookie("monster_session")
     return r
 
 @admin.get('/')
 def admin_home(request: FastAPIRequest):
-    return HTMLResponse(ADMIN_HTML) if SESSIONS.get(request.cookies.get('monster_session', ''), {}).get('role') == 'admin' else RedirectResponse('/login', 303)
+    return HTMLResponse(ADMIN_HTML) if SESSIONS.get(request.cookies.get(ADMIN_SESSION_COOKIE, ''), {}).get('role') == 'admin' else RedirectResponse('/login', 303)
 
 @client.get('/login')
 def client_login_get():
@@ -793,25 +806,46 @@ def client_login_post(username: str=Form(...), password: str=Form(...)):
     token = secrets.token_urlsafe(32)
     SESSIONS[token] = {'username': username, 'role': u['role']}
     r = RedirectResponse('/display', 303)
-    r.set_cookie('monster_session', token, httponly=True, samesite='lax', secure=False)
+    r.set_cookie(CLIENT_SESSION_COOKIE, token, httponly=True, samesite='lax', secure=False)
+    r.delete_cookie("monster_session")
     return r
 
 @client.get('/display')
 def client_home(request: FastAPIRequest):
-    return HTMLResponse(CLIENT_HTML) if SESSIONS.get(request.cookies.get('monster_session', '')) else RedirectResponse('/login', 303)
+    return HTMLResponse(CLIENT_HTML) if SESSIONS.get(request.cookies.get(CLIENT_SESSION_COOKIE, '')) else RedirectResponse('/login', 303)
 
-@admin.get('/api/state')
-@client.get('/api/state')
-def get_state(request: FastAPIRequest):
-    if not SESSIONS.get(request.cookies.get('monster_session', '')):
-        raise HTTPException(401, 'Sign in required')
+@admin.get("/api/state")
+def admin_get_state(
+    _: dict[str, str] = Depends(
+        require("admin", ADMIN_SESSION_COOKIE)
+    ),
+):
     return public_state()
 
-@client.websocket('/ws')
+@client.get("/api/state")
+def client_get_state(
+    _: dict[str, str] = Depends(
+        require("client", CLIENT_SESSION_COOKIE)
+    ),
+):
+    return public_state()
+
+@client.websocket("/ws")
 async def ws(websocket: WebSocket):
+    token = websocket.cookies.get(CLIENT_SESSION_COOKIE, "")
+    session = SESSIONS.get(token)
+
+    if not session:
+        await websocket.close(code=1008)
+        return
+
     await websocket.accept()
     SOCKETS.add(websocket)
-    await websocket.send_text(json.dumps({'type': 'state', 'state': public_state()}))
+
+    await websocket.send_text(
+        json.dumps({"type": "state", "state": public_state()})
+    )
+
     try:
         while True:
             await websocket.receive_text()
@@ -819,18 +853,18 @@ async def ws(websocket: WebSocket):
         SOCKETS.discard(websocket)
 
 @admin.get('/api/setups')
-def get_setups(_: dict[str, str]=Depends(require('admin'))):
+def get_setups(_: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     return {'names': list_setups()}
 
 @admin.post('/api/setups/new')
-async def new_setup(_: dict[str, str]=Depends(require('admin'))):
+async def new_setup(_: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     global STATE
     STATE = normalize_state({'monsters': [], 'characters': [], 'battle_order': [], 'activity_log': []})
     await changed()
     return public_state()
 
 @admin.post('/api/setups/save')
-async def save_setup(payload: SetupName, _: dict[str, str]=Depends(require('admin'))):
+async def save_setup(payload: SetupName, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     name = setup_slug(payload.name)
     path = setup_path(name)
     temp = path.with_suffix('.tmp')
@@ -839,7 +873,7 @@ async def save_setup(payload: SetupName, _: dict[str, str]=Depends(require('admi
     return {'name': name}
 
 @admin.post('/api/setups/load')
-async def load_setup(payload: SetupName, _: dict[str, str]=Depends(require('admin'))):
+async def load_setup(payload: SetupName, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     global STATE
     name = setup_slug(payload.name)
     path = setup_path(name)
@@ -853,7 +887,7 @@ async def load_setup(payload: SetupName, _: dict[str, str]=Depends(require('admi
     return {'name': name}
 
 @admin.post('/api/setups/import')
-async def import_setup(payload: SetupImport, _: dict[str, str]=Depends(require('admin'))):
+async def import_setup(payload: SetupImport, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     name = setup_slug(payload.name)
     path = setup_path(name)
     if not path.exists():
@@ -874,14 +908,14 @@ async def import_setup(payload: SetupImport, _: dict[str, str]=Depends(require('
     return {'name': name, 'characters': len(imported_characters), 'monsters': len(imported_monsters)}
 
 @admin.post('/api/monsters/roll-initiative')
-async def roll_monster_initiative(_: dict[str, str]=Depends(require('admin'))):
+async def roll_monster_initiative(_: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     for monster in STATE['monsters']:
         monster['initiative'] = random.randint(1, 20)
     await changed()
     return {'count': len(STATE['monsters'])}
 
 @admin.post('/api/monsters')
-async def create_monster(name: str=Form(...), monster_type: str=Form(...), ac: int=Form(...), hp: int=Form(...), color: str=Form(...), quantity: int=Form(1, ge=1, le=50), image: UploadFile | None=File(None), _: dict[str, str]=Depends(require('admin'))):
+async def create_monster(name: str=Form(...), monster_type: str=Form(...), ac: int=Form(...), hp: int=Form(...), color: str=Form(...), quantity: int=Form(1, ge=1, le=50), image: UploadFile | None=File(None), _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     fields = {'name': name.strip(), 'monster_type': monster_type.strip(), 'ac': ac, 'hp': hp}
     image_url = save_image(image) if image and image.filename else dnd_image(fields['monster_type'])
     created = [make_monster(fields, color, None, image_url) for _ in range(quantity)]
@@ -890,7 +924,7 @@ async def create_monster(name: str=Form(...), monster_type: str=Form(...), ac: i
     return created
 
 @admin.post('/api/monsters/import')
-async def import_monster(monster_file: UploadFile=File(...), color: str=Form(...), quantity: int=Form(1, ge=1, le=50), image: UploadFile | None=File(None), _: dict[str, str]=Depends(require('admin'))):
+async def import_monster(monster_file: UploadFile=File(...), color: str=Form(...), quantity: int=Form(1, ge=1, le=50), image: UploadFile | None=File(None), _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     if not (monster_file.filename or '').lower().endswith('.monster'):
         raise HTTPException(400, 'Upload a .monster file')
     fields = parse_monster(await monster_file.read())
@@ -903,7 +937,7 @@ async def import_monster(monster_file: UploadFile=File(...), color: str=Form(...
 @admin.post("/api/monsters/import-csv")
 async def import_monsters_csv(
     csv_file: UploadFile = File(...),
-    _: dict[str, str] = Depends(require("admin")),
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
 ) -> dict[str, int]:
     if not (csv_file.filename or "").lower().endswith(".csv"):
         raise HTTPException(400, "Upload a .csv file")
@@ -937,7 +971,7 @@ async def import_monsters_csv(
 @admin.post("/api/characters/import-csv")
 async def import_characters_csv(
     csv_file: UploadFile = File(...),
-    _: dict[str, str] = Depends(require("admin")),
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
 ) -> dict[str, int]:
     if not (csv_file.filename or "").lower().endswith(".csv"):
         raise HTTPException(400, "Upload a .csv file")
@@ -969,7 +1003,7 @@ async def import_characters_csv(
     return {"count": len(imported)}
     
 @admin.post('/api/monsters/{ident}/edit')
-async def edit_monster(ident: str, name: str=Form(...), monster_type: str=Form(...), ac: int=Form(...), hp: int=Form(...), max_hp: int=Form(...), original_hp: int=Form(...), color: str=Form(...), initiative: str=Form(''), ally: str=Form('false'), image: UploadFile | None=File(None), _: dict[str, str]=Depends(require('admin'))):
+async def edit_monster(ident: str, name: str=Form(...), monster_type: str=Form(...), ac: int=Form(...), hp: int=Form(...), max_hp: int=Form(...), original_hp: int=Form(...), color: str=Form(...), initiative: str=Form(''), ally: str=Form('false'), image: UploadFile | None=File(None), _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     m = next((x for x in STATE['monsters'] if x['id'] == ident), None)
     if not m:
         raise HTTPException(404, 'Monster not found')
@@ -988,7 +1022,7 @@ async def edit_monster(ident: str, name: str=Form(...), monster_type: str=Form(.
     return m
 
 @admin.post("/api/monsters/bulk-toggle")
-async def bulk_toggle_monsters(update: MonsterBulkUpdate, _: dict[str, str] = Depends(require("admin"))) -> dict[str, Any]:
+async def bulk_toggle_monsters(update: MonsterBulkUpdate, _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE))) -> dict[str, Any]:
     field = update.field
     monsters = STATE["monsters"]
 
@@ -1026,7 +1060,7 @@ async def bulk_toggle_monsters(update: MonsterBulkUpdate, _: dict[str, str] = De
 async def update_monster(
     ident: str,
     update: MonsterUpdate,
-    _: dict[str, str] = Depends(require("admin")),
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
 ) -> dict[str, Any]:
     monster = next(
         (item for item in STATE["monsters"] if item["id"] == ident),
@@ -1073,7 +1107,7 @@ async def update_monster(
     return monster
 
 @admin.post('/api/characters')
-async def create_character(character: CharacterCreate, _: dict[str, str]=Depends(require('admin'))):
+async def create_character(character: CharacterCreate, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     c = {'id': uuid.uuid4().hex, **character.model_dump(), 'max_hp': character.hp, 'original_hp': character.hp, 'original_initiative': character.initiative, 'active': False, 'alive': character.hp >= 0, 'visible': False, 'in_turn': False}
     STATE['characters'].append(c)
     await changed()
@@ -1083,7 +1117,7 @@ async def create_character(character: CharacterCreate, _: dict[str, str]=Depends
 async def update_character(
     ident: str,
     update: CharacterUpdate,
-    _: dict[str, str] = Depends(require("admin")),
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
 ) -> dict[str, Any]:
     character = next(
         (item for item in STATE["characters"] if item["id"] == ident),
@@ -1137,7 +1171,7 @@ async def update_character(
     return character
 
 @admin.post('/api/combatants/{ident}/reset')
-async def reset_one(ident: str, _: dict[str, str]=Depends(require('admin'))):
+async def reset_one(ident: str, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     x = entity(ident)
     if not x:
         raise HTTPException(404, 'Combatant not found')
@@ -1147,7 +1181,7 @@ async def reset_one(ident: str, _: dict[str, str]=Depends(require('admin'))):
     return x
 
 @admin.post('/api/battle/reset-all')
-async def reset_all(_: dict[str, str]=Depends(require('admin'))):
+async def reset_all(_: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     for x in entities():
         reset_entity(x)
     sort_admin_by_max_hp()
@@ -1156,14 +1190,14 @@ async def reset_all(_: dict[str, str]=Depends(require('admin'))):
     return {'status': 'reset'}
 
 @admin.post('/api/battle/start')
-async def battle_start(payload: BattleStart, _: dict[str, str]=Depends(require('admin'))):
+async def battle_start(payload: BattleStart, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     begin_battle(payload.order)
     sort_admin_by_initiative()
     await changed()
     return public_state()
 
 @admin.post('/api/battle/next')
-async def battle_next(_: dict[str, str]=Depends(require('admin'))):
+async def battle_next(_: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     x = advance_turn()
     await changed()
     return {'current': x}
@@ -1171,7 +1205,7 @@ async def battle_next(_: dict[str, str]=Depends(require('admin'))):
 @admin.post("/api/battle/actions")
 async def apply_battle_actions(
     payload: BattleActions,
-    _: dict[str, str] = Depends(require("admin")),
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
 ) -> dict[str, Any]:
     actor = entity(payload.actor_id)
 
@@ -1245,7 +1279,7 @@ async def apply_battle_actions(
 
 @admin.get("/api/activity-log.json")
 async def export_activity_log_json(
-    _: dict[str, str] = Depends(require("admin")),
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
 ) -> Response:
     content = json.dumps(
         STATE["activity_log"],
@@ -1264,7 +1298,7 @@ async def export_activity_log_json(
 
 @admin.get("/api/activity-log.csv")
 async def export_activity_log_csv(
-    _: dict[str, str] = Depends(require("admin")),
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
 ) -> Response:
     fieldnames = [
         "id",
@@ -1302,7 +1336,7 @@ async def export_activity_log_csv(
 
 @admin.post("/api/activity-log/clear")
 async def clear_activity_log(
-    _: dict[str, str] = Depends(require("admin")),
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
 ) -> dict[str, int]:
     cleared = len(STATE["activity_log"])
     STATE["activity_log"] = []
