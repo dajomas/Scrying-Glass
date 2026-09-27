@@ -972,46 +972,110 @@ ADMIN_HTML = r'''<!doctype html>
     }
 
     function sortedMonstersForAdmin() {
+      const battleOrder = Array.isArray(latest.battle_order)
+        ? latest.battle_order
+        : [];
+
+      const battleActive = battleOrder.length > 0;
+
       const battleOrderIndex = new Map(
-        (latest.battle_order || []).map((id, index) => [id, index]),
+        battleOrder.map((id, index) => [id, index]),
       );
 
-      return [...latest.monsters].sort((left, right) => {
-        // 1. Active monsters before inactive monsters.
-        if (Boolean(left.active) !== Boolean(right.active)) {
-          return left.active ? -1 : 1;
-        }
+      function maxHp(monster) {
+        const value = Number(monster.max_hp);
 
-        // 2. Within an Active/Inactive group, entries that occur in the current
-        // battle order come first and retain that exact order.
-        const leftOrder = battleOrderIndex.get(left.id);
-        const rightOrder = battleOrderIndex.get(right.id);
-        const leftInOrder = leftOrder !== undefined;
-        const rightInOrder = rightOrder !== undefined;
+        return Number.isFinite(value)
+          ? value
+          : -Infinity;
+      }
 
-        if (leftInOrder !== rightInOrder) {
-          return leftInOrder ? -1 : 1;
-        }
+      function initiative(monster) {
+        const value = monster.initiative;
 
-        if (leftInOrder && rightInOrder && leftOrder !== rightOrder) {
-          return leftOrder - rightOrder;
-        }
+        return typeof value === 'number' && Number.isFinite(value)
+          ? value
+          : null;
+      }
 
-        // 3. Current HP descending. Values are normalized defensively so imported
-        // or legacy records without a numeric HP value still render consistently.
-        const leftHp = Number.isFinite(Number(left.hp)) ? Number(left.hp) : -Infinity;
-        const rightHp = Number.isFinite(Number(right.hp)) ? Number(right.hp) : -Infinity;
-
-        if (leftHp !== rightHp) {
-          return rightHp - leftHp;
-        }
-
-        // 4. Deterministic final ordering.
+      function byName(left, right) {
         return String(left.name || '').localeCompare(
           String(right.name || ''),
           undefined,
           {sensitivity: 'base'},
         );
+      }
+
+      return [...latest.monsters].sort((left, right) => {
+        /*
+        * Group 1: Active monsters.
+        * Group 2: Inactive monsters.
+        */
+        if (Boolean(left.active) !== Boolean(right.active)) {
+          return left.active ? -1 : 1;
+        }
+
+        if (left.active) {
+          /*
+          * While a battle is active, retain the actual battle order for entries
+          * included in it. Active monsters not yet in that order follow.
+          */
+          if (battleActive) {
+            const leftOrder = battleOrderIndex.get(left.id);
+            const rightOrder = battleOrderIndex.get(right.id);
+
+            const leftInOrder = leftOrder !== undefined;
+            const rightInOrder = rightOrder !== undefined;
+
+            if (leftInOrder !== rightInOrder) {
+              return leftInOrder ? -1 : 1;
+            }
+
+            if (leftInOrder && rightInOrder && leftOrder !== rightOrder) {
+              return leftOrder - rightOrder;
+            }
+          }
+
+          /*
+          * Outside battle—or for active entries not present in an existing
+          * battle order—sort by Max HP descending.
+          */
+          if (maxHp(left) !== maxHp(right)) {
+            return maxHp(right) - maxHp(left);
+          }
+
+          return byName(left, right);
+        }
+
+        /*
+        * Inactive monsters:
+        * numeric initiative first, descending;
+        * null/blank initiative after numeric values;
+        * then Max HP descending.
+        */
+        const leftInitiative = initiative(left);
+        const rightInitiative = initiative(right);
+
+        const leftHasInitiative = leftInitiative !== null;
+        const rightHasInitiative = rightInitiative !== null;
+
+        if (leftHasInitiative !== rightHasInitiative) {
+          return leftHasInitiative ? -1 : 1;
+        }
+
+        if (
+          leftHasInitiative &&
+          rightHasInitiative &&
+          leftInitiative !== rightInitiative
+        ) {
+          return rightInitiative - leftInitiative;
+        }
+
+        if (maxHp(left) !== maxHp(right)) {
+          return maxHp(right) - maxHp(left);
+        }
+
+        return byName(left, right);
       });
     }
 
