@@ -200,17 +200,31 @@ ADMIN_HTML = r'''<!doctype html>
     <h1>Monster Display — Admin</h1>
     <p id="message" class="message"></p>
 
-    <section class="row">
-      <input id="setupName" class="setup-name" placeholder="Battle setup name">
-      <button id="newSetup" class="reset">New</button>
-      <button id="saveSetup">Save</button>
-      <select id="setupSelect">
-        <option value="">Load saved setup…</option>
-      </select>
-      <button id="loadSetup">Load</button>
-      <button id="openImport" class="import">Import from setup</button>
-      <button id="openMonsterCsvImport" class="import">Import monsters CSV</button>
-      <button id="openCharacterCsvImport" class="import">Import characters CSV</button>
+    <section>
+      <div class="row">
+        <h2>Battle setups</h2>
+        <button
+          id="toggleSetupPane"
+          class="pane-toggle"
+          type="button"
+          aria-controls="setupInputPane"
+          aria-expanded="true"
+        >
+          Hide Setup input
+        </button>
+      </div>
+      <div id="setupInputPane" class="pane">
+        <input id="setupName" class="setup-name" placeholder="Battle setup name">
+        <button id="newSetup" class="reset">New</button>
+        <button id="saveSetup">Save</button>
+        <select id="setupSelect">
+          <option value="">Load saved setup…</option>
+        </select>
+        <button id="loadSetup">Load</button>
+        <button id="openImport" class="import">Import from setup</button>
+        <button id="openMonsterCsvImport" class="import">Import monsters CSV</button>
+        <button id="openCharacterCsvImport" class="import">Import characters CSV</button>
+      </div>
     </section>
 
     <section>
@@ -744,6 +758,13 @@ ADMIN_HTML = r'''<!doctype html>
         button.setAttribute('aria-expanded', String(!pane.hidden));
       };
     }
+
+    configurePaneToggle(
+      '#toggleSetupPane',
+      '#setupInputPane',
+      'Hide setup input',
+      'Show setup input',
+    );
 
     configurePaneToggle(
       '#toggleMonsterPane',
