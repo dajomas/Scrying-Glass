@@ -209,6 +209,8 @@ ADMIN_HTML = r'''<!doctype html>
       </select>
       <button id="loadSetup">Load</button>
       <button id="openImport" class="import">Import from setup</button>
+      <button id="openMonsterCsvImport" class="import">Import monsters CSV</button>
+      <button id="openCharacterCsvImport" class="import">Import characters CSV</button>
     </section>
 
     <section class="row">
@@ -349,6 +351,34 @@ ADMIN_HTML = r'''<!doctype html>
     </div>
   </div>
 
+  <div id="csvImportModal" class="modal" hidden>
+    <div>
+      <h2 id="csvImportTitle">Import CSV</h2>
+
+      <p id="csvImportHelp">
+        Select a CSV file to add records to the current setup.
+      </p>
+
+      <form id="csvImportForm" class="import-form">
+        <label>
+          CSV file
+          <input
+            id="csvImportFile"
+            name="csv_file"
+            type="file"
+            accept=".csv,text/csv"
+            required
+          >
+        </label>
+
+        <div class="actions">
+          <button class="import">Import CSV</button>
+          <button type="button" id="cancelCsvImport">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
     let latest;
     let editing = null;
@@ -364,6 +394,9 @@ ADMIN_HTML = r'''<!doctype html>
 
     const editModal = document.querySelector('#editModal');
     const importModal = document.querySelector('#importModal');
+    const csvImportModal = document.querySelector('#csvImportModal');
+
+    let csvImportKind = null;
 
     function closeEdit() {
       editModal.hidden = true;
@@ -848,6 +881,81 @@ ADMIN_HTML = r'''<!doctype html>
       }
     };
 
+    function closeCsvImport() {
+      csvImportModal.hidden = true;
+      csvImportKind = null;
+      document.querySelector('#csvImportForm').reset();
+    }
+
+    function openCsvImport(kind) {
+      csvImportKind = kind;
+
+      const isMonster = kind === 'monsters';
+
+      document.querySelector('#csvImportTitle').textContent =
+        isMonster ? 'Import monsters from CSV' : 'Import characters from CSV';
+
+      document.querySelector('#csvImportHelp').textContent = isMonster
+        ? 'Required columns: name, monster_type (or type), ac, hp. '
+          + 'Optional id values are preserved; blank or missing IDs are generated automatically.'
+        : 'Required column: name. Optional id values are preserved; blank or missing IDs are generated automatically.';
+
+      csvImportModal.hidden = false;
+    }
+
+    document.querySelector('#openMonsterCsvImport').onclick = () => {
+      openCsvImport('monsters');
+    };
+
+    document.querySelector('#openCharacterCsvImport').onclick = () => {
+      openCsvImport('characters');
+    };
+
+    document.querySelector('#cancelCsvImport').onclick = closeCsvImport;
+
+    document.querySelector('#csvImportForm').onsubmit = async event => {
+      event.preventDefault();
+
+      if (!csvImportKind) {
+        return;
+      }
+
+      const form = event.target;
+      const submit = form.querySelector('button[type="submit"], button.import');
+
+      submit.disabled = true;
+
+      try {
+        const endpoint = csvImportKind === 'monsters'
+          ? '/api/monsters/import-csv'
+          : '/api/characters/import-csv';
+
+        const result = await request(endpoint, {
+          method: 'POST',
+          body: new FormData(form),
+        });
+
+        closeCsvImport();
+        await load();
+
+        message(
+          `Imported ${result.count} ${
+            csvImportKind === 'monsters' ? 'monster' : 'character'
+          }${result.count === 1 ? '' : 's'} from CSV.`,
+        );
+      } catch (error) {
+        message(error.message);
+      } finally {
+        submit.disabled = false;
+      }
+    };
+
+    csvImportModal.addEventListener('click', event => {
+      if (event.target === csvImportModal) {
+        closeCsvImport();
+      }
+    });
+
     document.querySelector('#rollMonsterInitiative').onclick = async () => {
       if (!latest.monsters.length) {
         message('There are no monsters to roll initiative for');
@@ -894,6 +1002,11 @@ ADMIN_HTML = r'''<!doctype html>
       if (!importModal.hidden) {
         closeImport();
       }
+
+      if (!csvImportModal.hidden) {
+        closeCsvImport();
+      }
+
     });
 
     document.querySelector('#newSetup').onclick = async () => {
