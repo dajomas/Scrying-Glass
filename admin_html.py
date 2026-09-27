@@ -202,7 +202,6 @@ ADMIN_HTML = r'''<!doctype html>
 
     <section>
       <div class="row">
-        <h2>Battle setups</h2>
         <button
           id="toggleSetupPane"
           class="pane-toggle"
@@ -212,8 +211,32 @@ ADMIN_HTML = r'''<!doctype html>
         >
           Hide Setup input
         </button>
+        <button
+          id="toggleMonsterPane"
+          class="pane-toggle"
+          type="button"
+          aria-controls="monsterInputPane"
+          aria-expanded="true"
+        >
+          Hide monster input
+        </button>
+        <button
+          id="toggleCharacterPane"
+          class="pane-toggle"
+          type="button"
+          aria-controls="characterInputPane"
+          aria-expanded="true"
+        >
+          Hide character input
+        </button>
       </div>
-      <div id="setupInputPane" class="pane">
+    </section>
+
+    <section id="setupInputPane" class="pane">
+      <div>
+        <div class="row">
+          <h2>Battle setups</h2>
+        </div>
         <input id="setupName" class="setup-name" placeholder="Battle setup name">
         <button id="newSetup" class="reset">New</button>
         <button id="saveSetup">Save</button>
@@ -227,21 +250,12 @@ ADMIN_HTML = r'''<!doctype html>
       </div>
     </section>
 
-    <section>
+    <section id="monsterInputPane" class="pane">
       <div class="row">
         <h2>Add monster</h2>
-        <button
-          id="toggleMonsterPane"
-          class="pane-toggle"
-          type="button"
-          aria-controls="monsterInputPane"
-          aria-expanded="true"
-        >
-          Hide monster input
-        </button>
       </div>
 
-      <div id="monsterInputPane" class="pane">
+      <div>
         <form id="monsterForm" class="row">
           <input name="name" placeholder="Name" required>
           <input name="monster_type" placeholder="Monster type" required>
@@ -265,21 +279,12 @@ ADMIN_HTML = r'''<!doctype html>
       </div>
     </section>
 
-    <section>
+    <section id="characterInputPane" class="pane">
       <div class="row">
         <h2>Add character</h2>
-        <button
-          id="toggleCharacterPane"
-          class="pane-toggle"
-          type="button"
-          aria-controls="characterInputPane"
-          aria-expanded="true"
-        >
-          Hide character input
-        </button>
       </div>
 
-      <div id="characterInputPane" class="pane">
+      <div>
         <form id="characterForm" class="row">
           <input name="name" placeholder="Name" required>
           <input name="color" type="color" value="#1f4e79">
@@ -684,6 +689,7 @@ ADMIN_HTML = r'''<!doctype html>
     async function load() {
       try {
         latest = await request('/api/state');
+        updatePaneVisibilityForBattle();
 
         document.querySelector('#monsters').innerHTML =
           '<table>' +
@@ -748,37 +754,78 @@ ADMIN_HTML = r'''<!doctype html>
       }
     }
 
-    function configurePaneToggle(buttonId, paneId, hiddenLabel, visibleLabel) {
-      const button = document.querySelector(buttonId);
-      const pane = document.querySelector(paneId);
+    const hideablePanes = [
+      {
+        button: document.querySelector('#toggleSetupPane'),
+        pane: document.querySelector('#setupInputPane'),
+        hiddenLabel: 'Hide setup input',
+        visibleLabel: 'Show setup input',
+      },
+      {
+        button: document.querySelector('#toggleMonsterPane'),
+        pane: document.querySelector('#monsterInputPane'),
+        hiddenLabel: 'Hide monster input',
+        visibleLabel: 'Show monster input',
+      },
+      {
+        button: document.querySelector('#toggleCharacterPane'),
+        pane: document.querySelector('#characterInputPane'),
+        hiddenLabel: 'Hide character input',
+        visibleLabel: 'Show character input',
+      },
+    ];
 
-      button.onclick = () => {
-        pane.hidden = !pane.hidden;
-        button.textContent = pane.hidden ? visibleLabel : hiddenLabel;
-        button.setAttribute('aria-expanded', String(!pane.hidden));
-      };
+    // Tracks whether this page has already performed the automatic collapse for
+    // the current battle. Once set, a manually opened pane remains untouched.
+    let collapsedForBattle = false;
+
+    function setPaneHidden(control, hidden) {
+      control.pane.hidden = hidden;
+      control.button.textContent = hidden
+        ? control.visibleLabel
+        : control.hiddenLabel;
+      control.button.setAttribute('aria-expanded', String(!hidden));
     }
 
-    configurePaneToggle(
-      '#toggleSetupPane',
-      '#setupInputPane',
-      'Hide setup input',
-      'Show setup input',
-    );
+    function setAllHideablePanesHidden(hidden) {
+      hideablePanes.forEach(control => setPaneHidden(control, hidden));
+    }
 
-    configurePaneToggle(
-      '#toggleMonsterPane',
-      '#monsterInputPane',
-      'Hide monster input',
-      'Show monster input',
-    );
+    hideablePanes.forEach(control => {
+      control.button.onclick = () => {
+        // This is intentionally only a direct UI change. It does not modify
+        // collapsedForBattle, so battle-state refreshes cannot re-hide a pane that
+        // the GM manually opened during the battle.
+        setPaneHidden(control, !control.pane.hidden);
+      };
+    });
 
-    configurePaneToggle(
-      '#toggleCharacterPane',
-      '#characterInputPane',
-      'Hide character input',
-      'Show character input',
-    );
+    function updatePaneVisibilityForBattle() {
+      const battleActive = Boolean(
+        latest &&
+        Array.isArray(latest.battle_order) &&
+        latest.battle_order.length,
+      );
+
+      if (battleActive) {
+        // Collapse once when a battle begins or an active setup is loaded.
+        // Subsequent load() calls from Next, edits, bulk actions, etc. do nothing.
+        if (!collapsedForBattle) {
+          setAllHideablePanesHidden(true);
+          collapsedForBattle = true;
+        }
+
+        return;
+      }
+
+      // A non-battle setup, a new setup, or Reset All restores the normal admin
+      // layout and prepares automatic collapse for the next battle.
+      if (collapsedForBattle) {
+        setAllHideablePanesHidden(false);
+      }
+
+      collapsedForBattle = false;
+    }
 
     document.querySelector('#editForm').onsubmit = async event => {
       event.preventDefault();
