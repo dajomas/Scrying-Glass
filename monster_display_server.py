@@ -1190,6 +1190,17 @@ async def export_activity_log_csv(
         },
     )
 
+@admin.post("/api/activity-log/clear")
+async def clear_activity_log(
+    _: dict[str, str] = Depends(require("admin")),
+) -> dict[str, int]:
+    cleared = len(STATE["activity_log"])
+    STATE["activity_log"] = []
+
+    await changed()
+
+    return {"cleared": cleared}
+    
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='GM-controlled real-time battle display')
     parser.add_argument('--config', type=Path)

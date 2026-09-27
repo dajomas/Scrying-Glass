@@ -424,6 +424,13 @@ ADMIN_HTML = r'''<!doctype html>
       >
         Export JSON
       </button>
+      <button
+        id="clearActivityLog"
+        type="button"
+        class="danger"
+      >
+        Clear log
+      </button>
     </div>
 
     <div id="activityLog" class="activity-log">
@@ -1237,6 +1244,37 @@ ADMIN_HTML = r'''<!doctype html>
 
     document.querySelector('#exportActivityLogJson').onclick = () => {
       window.location.href = '/api/activity-log.json';
+    };
+
+    document.querySelector('#clearActivityLog').onclick = async () => {
+      const currentCount = Array.isArray(latest?.activity_log)
+        ? latest.activity_log.length
+        : 0;
+
+      if (!currentCount) {
+        message('The activity log is already empty.');
+        return;
+      }
+
+      if (!confirm(`Clear all ${currentCount} activity log entries?`)) {
+        return;
+      }
+
+      try {
+        const result = await request('/api/activity-log/clear', {
+          method: 'POST',
+        });
+
+        await load();
+
+        message(
+          `Cleared ${result.cleared} activity log ${
+            result.cleared === 1 ? 'entry' : 'entries'
+          }.`,
+        );
+      } catch (error) {
+        message(error.message);
+      }
     };
 
     csvImportModal.addEventListener('click', event => {
