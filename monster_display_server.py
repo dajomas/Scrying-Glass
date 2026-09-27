@@ -231,11 +231,13 @@ def list_setups() -> list[str]:
 def reset_imported_monster(source: dict[str, Any]) -> dict[str, Any]:
     item = copy.deepcopy(source)
     item['id'] = uuid.uuid4().hex
-    item['hp'] = item['original_hp']
-    item['max_hp'] = item['original_hp']
+
+    # Keep the source setup's current HP and current Max HP.
+    # Do not overwrite hp with original_hp during setup import.
+    item['alive'] = item.get('hp', 0) > 0
+
     item['initiative'] = item.get('original_initiative')
     item['active'] = False
-    item['alive'] = True
     item['visible'] = False
     item['in_turn'] = False
     item['show_ac'] = False
@@ -246,10 +248,12 @@ def reset_imported_monster(source: dict[str, Any]) -> dict[str, Any]:
 def reset_imported_character(source: dict[str, Any]) -> dict[str, Any]:
     item = copy.deepcopy(source)
     item['id'] = uuid.uuid4().hex
-    item['hp'] = item['max_hp']
+
+    # Keep the source setup's current HP and current Max HP.
+    item['alive'] = item.get('hp', 0) > 0
+
     item['initiative'] = item.get('original_initiative')
     item['active'] = False
-    item['alive'] = True
     item['visible'] = False
     item['in_turn'] = False
     return item
