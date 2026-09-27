@@ -79,6 +79,32 @@ def active_combatant() -> dict[str, Any] | None:
         None,
     )
 
+def log_battle_action(
+    actor: dict[str, Any],
+    target: dict[str, Any],
+    action: Literal["damage", "heal", "buff", "debuff"],
+    amount: int | None,
+) -> None:
+    STATE["activity_log"].append({
+        "id": uuid.uuid4().hex,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "active_combatant_id": actor["id"],
+        "active_combatant": actor["name"],
+        "active_combatant_state": combatant_state(actor),
+        "target_combatant_id": target["id"],
+        "target_combatant": target["name"],
+        "target_combatant_state": combatant_state(target),
+        "action": action,
+        "amount": amount,
+    })
+
+def update_alive_state(combatant: dict[str, Any]) -> None:
+    combatant["alive"] = combatant.get("hp", 0) > 0
+
+    if not combatant["alive"]:
+        combatant["visible"] = True
+        combatant["in_turn"] = False
+
 def log_hp_change(
     target: dict[str, Any],
     hp_delta: int,
@@ -724,6 +750,15 @@ class SetupImport(BaseModel):
 admin = FastAPI(title='Monster Display Admin')
 client = FastAPI(title='Monster Display Client')
 
+class BattleActionRow(BaseModel):
+    target_id: str = Field(min_length=1, max_length=100)
+    action: Literal["damage", "heal", "buff", "debuff"]
+    amount: int | None = Field(default=None, ge=1, le=99999)
+
+class BattleActions(BaseModel):
+    actor_id: str = Field(min_length=1, max_length=100)
+    actions: list[BattleActionRow] = Field(min_length=1, max_length=100)
+
 def login(error: str='') -> HTMLResponse:
     return HTMLResponse(LOGIN.replace('{error}', f'<p class="error">{error}</p>' if error else ''))
 
@@ -1133,6 +1168,81 @@ async def battle_next(_: dict[str, str]=Depends(require('admin'))):
     await changed()
     return {'current': x}
 
+@admin.post("/api/battle/actions")
+async def apply_battle_actions(
+    payload: BattleActions,
+    _: dict[str, str] = Depends(require("admin")),
+) -> dict[str, Any]:
+    actor = entity(payload.actor_id)
+
+    if actor is None:
+        raise HTTPException(404, "Active combatant was not found")
+
+    if not actor.get("active") or not actor.get("alive", True):
+        raise HTTPException(400, "The acting combatant must be active and alive")
+
+    if not actor.get("in_turn"):
+        raise HTTPException(
+            400,
+            "Only the current active combatant may apply battle actions",
+        )
+
+    valid_actions = {"damage", "heal", "buff", "debuff"}
+    prepared: list[tuple[dict[str, Any], str, int | None]] = []
+
+    # Validate all rows before changing state, so a malformed row cannot leave
+    # prior rows partially applied.
+    for row in payload.actions:
+        if row.action not in valid_actions:
+            raise HTTPException(400, "Unsupported battle action")
+
+        target = entity(row.target_id)
+
+        if target is None:
+            raise HTTPException(404, "Target combatant was not found")
+
+        if not target.get("active") or not target.get("alive", True):
+            raise HTTPException(
+                400,
+                f"Target {target['name']} must be active and alive",
+            )
+
+        if row.action in {"damage", "heal"}:
+            if row.amount is None or row.amount <= 0:
+                raise HTTPException(
+                    400,
+                    f"{row.action.title()} requires an amount greater than zero",
+                )
+            amount: int | None = row.amount
+        else:
+            if row.amount is not None:
+                raise HTTPException(
+                    400,
+                    f"{row.action.title()} must not include an amount",
+                )
+            amount = None
+
+        prepared.append((target, row.action, amount))
+
+    # Apply only after every row passed validation.
+    for target, action, amount in prepared:
+        if action == "damage":
+            target["hp"] -= amount
+            update_alive_state(target)
+        elif action == "heal":
+            target["hp"] += amount
+            update_alive_state(target)
+
+        log_battle_action(actor, target, action, amount)
+
+    clean_order()
+    await changed()
+
+    return {
+        "applied": len(prepared),
+        "activity_log": STATE["activity_log"],
+    }
+
 @admin.get("/api/activity-log.json")
 async def export_activity_log_json(
     _: dict[str, str] = Depends(require("admin")),
@@ -1200,7 +1310,7 @@ async def clear_activity_log(
     await changed()
 
     return {"cleared": cleared}
-    
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='GM-controlled real-time battle display')
     parser.add_argument('--config', type=Path)

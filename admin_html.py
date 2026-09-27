@@ -118,6 +118,57 @@ ADMIN_HTML = r'''<!doctype html>
       box-shadow: 0 0 5px currentColor;
     }
 
+    .battle-order-combatant {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      line-height: inherit;
+    }
+
+    .battle-order-combatant.active-turn {
+      cursor: pointer;
+    }
+
+    .battle-order-combatant.active-turn:hover,
+    .battle-order-combatant.active-turn:focus-visible {
+      outline: 2px solid #fbbf24;
+      outline-offset: 3px;
+      border-radius: 3px;
+    }
+
+    .battle-action-form {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .battle-action-row {
+      display: grid;
+      grid-template-columns: minmax(10rem, 1fr) minmax(8rem, 10rem) minmax(7rem, 8rem) auto;
+      gap: 0.5rem;
+      align-items: end;
+      border: 1px solid #475569;
+      border-radius: 8px;
+      padding: 0.65rem;
+    }
+
+    .battle-action-row label {
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    .battle-action-row .amount-field[hidden] {
+      display: none;
+    }
+
+    @media (max-width: 700px) {
+      .battle-action-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .modal {
       position: fixed;
       inset: 0;
@@ -235,12 +286,12 @@ ADMIN_HTML = r'''<!doctype html>
       font-weight: 800;
     }
 
-    .activity-action-damage {
+    .activity-action-negative {
       color: #fca5a5;
       font-weight: 800;
     }
 
-    .activity-action-heal {
+    .activity-action-positive {
       color: #86efac;
       font-weight: 800;
     }
@@ -506,6 +557,32 @@ ADMIN_HTML = r'''<!doctype html>
         <div class="actions">
           <button class="import">Import CSV</button>
           <button type="button" id="cancelCsvImport">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="battleActionModal" class="modal" hidden>
+    <div>
+      <h2 id="battleActionTitle">Battle actions</h2>
+
+      <p id="battleActionHelp">
+        Choose one or more targets and actions for the current combatant.
+      </p>
+
+      <form id="battleActionForm" class="battle-action-form">
+        <div id="battleActionRows"></div>
+
+        <div class="actions">
+          <button type="button" id="addBattleActionTarget">
+            Add target
+          </button>
+          <button type="submit" class="battle">
+            Apply
+          </button>
+          <button type="button" id="cancelBattleActions">
+            Cancel
+          </button>
         </div>
       </form>
     </div>
@@ -817,9 +894,15 @@ ADMIN_HTML = r'''<!doctype html>
     }
 
     function activityActionClass(action) {
-      return action === 'heal'
-        ? 'activity-action-heal'
-        : 'activity-action-damage';
+      if (action === 'heal' || action === 'buff') {
+        return 'activity-action-positive';
+      }
+
+      if (action === 'damage' || action === 'debuff') {
+        return 'activity-action-negative';
+      }
+
+      return '';
     }
 
     function activityTime(value) {
@@ -934,16 +1017,24 @@ ADMIN_HTML = r'''<!doctype html>
               }
 
               const color = esc(combatant.color || '#ffffff');
+              const combatantId = esc(combatant.id);
 
               return `
-                <strong><u>
-                  <span
-                    class="turn-marker"
-                    style="background:${color};color:${color}"
-                    aria-label="Current turn"
-                    title="Current turn"
-                  ></span>${name}
-                </u></strong>
+                <button
+                  type="button"
+                  class="battle-order-combatant active-turn"
+                  data-battle-actor="${combatantId}"
+                  title="Apply an action as ${name}"
+                >
+                  <strong><u>
+                    <span
+                      class="turn-marker"
+                      style="background:${color};color:${color}"
+                      aria-label="Current turn"
+                      title="Current turn"
+                    ></span>${name}
+                  </u></strong>
+                </button>
               `;
             })
             .join(' → ');
@@ -1495,8 +1586,182 @@ ADMIN_HTML = r'''<!doctype html>
       });
     });
 
+    const battleActionModal = document.querySelector('#battleActionModal');
+    const battleActionForm = document.querySelector('#battleActionForm');
+    const battleActionRows = document.querySelector('#battleActionRows');
+    let battleActionActorId = null;
+
+    function activeBattleTargets() {
+      if (!latest) {
+        return [];
+      }
+
+      return [...latest.monsters, ...latest.characters]
+        .filter(combatant => combatant.active && combatant.alive)
+        .sort((left, right) => left.name.localeCompare(right.name));
+    }
+
+    function closeBattleActions() {
+      battleActionModal.hidden = true;
+      battleActionActorId = null;
+      battleActionRows.innerHTML = '';
+    }
+
+    function actionAmountRequired(action) {
+      return action === 'damage' || action === 'heal';
+    }
+
+    function updateActionRowAmount(row) {
+      const action = row.querySelector('[data-action-kind]').value;
+      const amountField = row.querySelector('.amount-field');
+      const amountInput = row.querySelector('[data-action-amount]');
+      const required = actionAmountRequired(action);
+
+      amountField.hidden = !required;
+      amountInput.required = required;
+
+      if (!required) {
+        amountInput.value = '';
+      }
+    }
+
+    function addBattleActionRow() {
+      const targets = activeBattleTargets();
+
+      if (!targets.length) {
+        message('There are no active living combatants available as targets.');
+        return;
+      }
+
+      const row = document.createElement('div');
+      row.className = 'battle-action-row';
+
+      row.innerHTML = `
+        <label>
+          Target
+          <select data-action-target required>
+            ${targets.map(target => `
+              <option value="${esc(target.id)}">${esc(target.name)}</option>
+            `).join('')}
+          </select>
+        </label>
+
+        <label>
+          Action
+          <select data-action-kind required>
+            <option value="damage">Damage</option>
+            <option value="heal">Heal</option>
+            <option value="buff">Buff</option>
+            <option value="debuff">Debuff</option>
+          </select>
+        </label>
+
+        <label class="amount-field">
+          Amount
+          <input data-action-amount type="number" min="1" max="99999" value="1">
+        </label>
+
+        <button type="button" class="danger" data-remove-action-row>
+          Remove
+        </button>
+      `;
+
+      row.querySelector('[data-action-kind]').addEventListener('change', () => {
+        updateActionRowAmount(row);
+      });
+
+      row.querySelector('[data-remove-action-row]').addEventListener('click', () => {
+        row.remove();
+
+        if (!battleActionRows.children.length) {
+          addBattleActionRow();
+        }
+      });
+
+      battleActionRows.appendChild(row);
+      updateActionRowAmount(row);
+    }
+
+    function openBattleActions(actorId) {
+      const actor = [...latest.monsters, ...latest.characters]
+        .find(combatant => combatant.id === actorId);
+
+      if (!actor || !actor.active || !actor.alive || !actor.in_turn) {
+        message('Only the current active combatant can perform battle actions.');
+        return;
+      }
+
+      battleActionActorId = actorId;
+      document.querySelector('#battleActionTitle').textContent =
+        `Battle actions: ${actor.name}`;
+
+      battleActionRows.innerHTML = '';
+      addBattleActionRow();
+      battleActionModal.hidden = false;
+    }
+
+    document.querySelector('#addBattleActionTarget').onclick = () => {
+      addBattleActionRow();
+    };
+
+    document.querySelector('#cancelBattleActions').onclick = closeBattleActions;
+
+    battleActionModal.addEventListener('click', event => {
+      if (event.target === battleActionModal) {
+        closeBattleActions();
+      }
+    });
+
+    battleActionForm.onsubmit = async event => {
+      event.preventDefault();
+
+      if (!battleActionActorId) {
+        return;
+      }
+
+      const rows = [...battleActionRows.querySelectorAll('.battle-action-row')];
+
+      const actions = rows.map(row => {
+        const action = row.querySelector('[data-action-kind]').value;
+        const rawAmount = row.querySelector('[data-action-amount]').value;
+
+        return {
+          target_id: row.querySelector('[data-action-target]').value,
+          action,
+          amount: actionAmountRequired(action) ? Number(rawAmount) : null,
+        };
+      });
+
+      const applyButton = battleActionForm.querySelector('button[type="submit"]');
+      applyButton.disabled = true;
+
+      try {
+        const result = await request('/api/battle/actions', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            actor_id: battleActionActorId,
+            actions,
+          }),
+        });
+
+        closeBattleActions();
+        await load();
+        message(`Applied ${result.applied} battle action${result.applied === 1 ? '' : 's'}.`);
+      } catch (error) {
+        message(error.message);
+      } finally {
+        applyButton.disabled = false;
+      }
+    };
+
     document.addEventListener('click', event => {
-      const button = event.target;
+      const button = event.target.closest('button');
+
+      if (button.dataset.battleActor) {
+        openBattleActions(button.dataset.battleActor);
+        return;
+      }
 
       if (button.dataset.edit) {
         openEdit(button.dataset.kind, button.dataset.edit);
