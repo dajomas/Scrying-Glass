@@ -1170,6 +1170,56 @@ async def update_character(
     await changed()
     return character
 
+@admin.delete("/api/combatants/{ident}")
+async def delete_combatant(
+    ident: str,
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+) -> dict[str, str]:
+    monster_index = next(
+        (
+            index
+            for index, monster in enumerate(STATE["monsters"])
+            if monster["id"] == ident
+        ),
+        None,
+    )
+
+    if monster_index is not None:
+        removed = STATE["monsters"].pop(monster_index)
+    else:
+        character_index = next(
+            (
+                index
+                for index, character in enumerate(STATE["characters"])
+                if character["id"] == ident
+            ),
+            None,
+        )
+
+        if character_index is None:
+            raise HTTPException(404, "Combatant not found")
+
+        removed = STATE["characters"].pop(character_index)
+
+    # The entity has already been removed from the lists, so ensure its ID no
+    # longer appears in the persisted turn order. This also covers deleting a
+    # current-turn combatant.
+    STATE["battle_order"] = [
+        combatant_id
+        for combatant_id in STATE["battle_order"]
+        if combatant_id != ident
+    ]
+
+    # Other combatants retain their state. If the deleted combatant had the
+    # current turn, no combatant has in_turn=True; the existing Next action
+    # will select an eligible combatant normally.
+    await changed()
+
+    return {
+        "id": ident,
+        "name": str(removed.get("name", "Combatant")),
+    }
+
 @admin.post('/api/combatants/{ident}/reset')
 async def reset_one(ident: str, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     x = entity(ident)

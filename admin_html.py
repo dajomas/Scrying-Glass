@@ -687,6 +687,7 @@ ADMIN_HTML = r'''<!doctype html>
             <button class="${monster.visible ? 'on' : ''}" data-mv="${monster.id}">Visible</button>
             <button data-mt="${monster.id}" class="${monster.in_turn ? 'on' : ''}">Turn</button>
             <button data-r="${monster.id}" class="reset">Reset</button>
+            <button type="button" class="danger" data-remove="${monster.id}" data-remove-kind="monster">Remove</button>
             <button data-t="${monster.id}" data-f="show_ac">AC ${monster.show_ac ? 'on' : 'off'}</button>
             <button data-t="${monster.id}" data-f="show_hp">HP ${monster.show_hp ? 'on' : 'off'}</button>
             <button data-t="${monster.id}" data-f="show_initiative">Init ${monster.show_initiative ? 'on' : 'off'}</button>
@@ -723,6 +724,7 @@ ADMIN_HTML = r'''<!doctype html>
             <button class="${character.visible ? 'on' : ''}" data-cv="${character.id}">Visible</button>
             <button data-ct="${character.id}" class="${character.in_turn ? 'on' : ''}">Turn</button>
             <button data-cr="${character.id}" class="reset">Reset</button>
+            <button type="button" class="danger" data-remove="${character.id}" data-remove-kind="character">Remove</button>
           </td>
           <td>
             <button data-cd="${character.id}" class="danger">Damage</button>
@@ -1755,8 +1757,39 @@ ADMIN_HTML = r'''<!doctype html>
       }
     };
 
-    document.addEventListener('click', event => {
+    document.addEventListener('click', async event => {
       const button = event.target.closest('button');
+
+      if (!button) {
+        return;
+      }
+
+      if (button.dataset.remove) {
+        const id = button.dataset.remove;
+        const kind = button.dataset.removeKind || 'combatant';
+        const row = button.closest('tr');
+        const name = row?.querySelector('td')?.textContent.trim() || kind;
+
+        if (!confirm(`Remove ${kind} “${name}” from the current encounter?`)) {
+          return;
+        }
+
+        button.disabled = true;
+
+        try {
+          const result = await request(`/api/combatants/${encodeURIComponent(id)}`, {
+            method: 'DELETE',
+          });
+
+          await load();
+          message(`Removed ${result.name}.`);
+        } catch (error) {
+          message(error.message);
+          button.disabled = false;
+        }
+
+        return;
+      }
 
       if (button.dataset.battleActor) {
         openBattleActions(button.dataset.battleActor);
