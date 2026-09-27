@@ -7,7 +7,7 @@ Run:
   python3.14 monster_display_server.py --config config.yaml
 """
 from __future__ import annotations
-import argparse, asyncio, copy, csv, hashlib, hmac, json, random, re, secrets, shutil, sys, uuid, uvicorn, yaml
+import argparse, asyncio, copy, csv, hashlib, hmac, io, json, random, re, secrets, shutil, sys, uuid, uvicorn, yaml
 from pathlib import Path
 from typing import Any, Literal
 from urllib.parse import quote
@@ -19,10 +19,11 @@ from pydantic import BaseModel, Field
 from login_html import LOGIN
 from admin_html import ADMIN_HTML
 from client_html import CLIENT_HTML
+from datetime import datetime, timezone
 
 DEFAULT_CONFIG = {'network': {'bind': '0.0.0.0', 'admin_port': 3000, 'client_port': 4000}, 'storage_dir': './monster-display-data', 'security': {'users': [{'username': 'admin', 'role': 'admin', 'password': 'CHANGE-ME'}, {'username': 'client', 'role': 'client', 'password': 'CHANGE-ME'}]}, 'display': {'background': '#080b14', 'entry_direction': 'from_bottom', 'exit_direction': 'to_bottom', 'monster_width_percent': 45, 'dndbeyond_image_lookup': True}}
 CONFIG: dict[str, Any] = {}
-STATE: dict[str, Any] = {'monsters': [], 'characters': [], 'battle_order': []}
+STATE: dict[str, Any] = {'monsters': [], 'characters': [], 'battle_order': [], "activity_log": []}
 LOCK = asyncio.Lock()
 SESSIONS: dict[str, dict[str, str]] = {}
 SOCKETS: set[WebSocket] = set()
@@ -66,10 +67,62 @@ def entities() -> list[dict[str, Any]]:
 def entity(ident: str) -> dict[str, Any] | None:
     return next((x for x in entities() if x['id'] == ident), None)
 
+def combatant_state(combatant: dict[str, Any] | None) -> str:
+    if combatant is None:
+        return "unknown"
+
+    return "alive" if combatant.get("alive", True) else "dead"
+
+def active_combatant() -> dict[str, Any] | None:
+    return next(
+        (combatant for combatant in entities() if combatant.get("in_turn")),
+        None,
+    )
+
+def log_hp_change(
+    target: dict[str, Any],
+    hp_delta: int,
+) -> None:
+    if hp_delta == 0:
+        return
+
+    actor = active_combatant()
+    action = "heal" if hp_delta > 0 else "damage"
+
+    STATE["activity_log"].append({
+        "id": uuid.uuid4().hex,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "active_combatant_id": actor["id"] if actor else None,
+        "active_combatant": actor["name"] if actor else "System",
+        "active_combatant_state": combatant_state(actor),
+        "target_combatant_id": target["id"],
+        "target_combatant": target["name"],
+        "target_combatant_state": combatant_state(target),
+        "action": action,
+        "amount": abs(hp_delta),
+    })
+
 def normalize_state(raw: dict[str, Any]) -> dict[str, Any]:
-    state = {'monsters': raw.get('monsters', []), 'characters': raw.get('characters', []), 'battle_order': raw.get('battle_order', [])}
-    if not isinstance(state['monsters'], list) or not isinstance(state['characters'], list) or (not isinstance(state['battle_order'], list)):
-        raise ValueError('Setup has invalid monsters, characters, or battle_order data')
+    state = {
+        "monsters": raw.get("monsters", []),
+        "characters": raw.get("characters", []),
+        "battle_order": raw.get("battle_order", []),
+        "activity_log": raw.get("activity_log", []),
+    }
+    if (
+        not isinstance(state["monsters"], list)
+        or not isinstance(state["characters"], list)
+        or not isinstance(state["battle_order"], list)
+        or not isinstance(state["activity_log"], list)
+    ):
+        raise ValueError('Setup has invalid monsters, characters, battle_order, or activity_log data')
+
+    state["activity_log"] = [
+        entry
+        for entry in state["activity_log"]
+        if isinstance(entry, dict)
+    ]
+
     for m in state['monsters']:
         if not isinstance(m, dict):
             raise ValueError('Setup contains an invalid monster')
@@ -121,7 +174,18 @@ def save_state() -> None:
 
 def public_state() -> dict[str, Any]:
     d = CONFIG['display']
-    return {'monsters': STATE['monsters'], 'characters': STATE['characters'], 'battle_order': STATE['battle_order'], 'display': {'background': d['background'], 'entry_direction': d['entry_direction'], 'exit_direction': d['exit_direction'], 'monster_width_percent': d['monster_width_percent']}}
+    return {
+        "monsters": STATE["monsters"],
+        "characters": STATE["characters"],
+        "battle_order": STATE["battle_order"],
+        "activity_log": STATE["activity_log"],
+        "display": {
+            "background": d["background"],
+            "entry_direction": d["entry_direction"],
+            "exit_direction": d["exit_direction"],
+            "monster_width_percent": d["monster_width_percent"],
+        },
+    }
 
 def setup_slug(name: str) -> str:
     slug = re.sub('[^a-z0-9]+', '-', name.strip().lower()).strip('-')
@@ -726,7 +790,7 @@ def get_setups(_: dict[str, str]=Depends(require('admin'))):
 @admin.post('/api/setups/new')
 async def new_setup(_: dict[str, str]=Depends(require('admin'))):
     global STATE
-    STATE = normalize_state({'monsters': [], 'characters': [], 'battle_order': []})
+    STATE = normalize_state({'monsters': [], 'characters': [], 'battle_order': [], 'activity_log': []})
     await changed()
     return public_state()
 
@@ -923,29 +987,55 @@ async def bulk_toggle_monsters(update: MonsterBulkUpdate, _: dict[str, str] = De
     await changed()
     return {"field": field, "enabled": enable, "count": len(monsters)}
 
-@admin.patch('/api/monsters/{ident}')
-async def update_monster(ident: str, update: MonsterUpdate, _: dict[str, str]=Depends(require('admin'))):
-    m = next((x for x in STATE['monsters'] if x['id'] == ident), None)
-    if not m:
-        raise HTTPException(404, 'Monster not found')
-    values = update.model_dump(exclude_unset=True, exclude_none=True)
-    if 'hp_delta' in values:
-        m['hp'] += values.pop('hp_delta')
-    for k, v in values.items():
-        if k != 'in_turn':
-            m[k] = v
-    if values.get('active') is True:
-        insert_into_battle_order(m)
-    if m['hp'] <= 0:
-        m['alive'] = False
-        m['visible'] = True
-        m['in_turn'] = False
-    if values.get('active') is False:
-        m['in_turn'] = False
-    set_turn(m, values.get('in_turn'))
+@admin.patch("/api/monsters/{ident}")
+async def update_monster(
+    ident: str,
+    update: MonsterUpdate,
+    _: dict[str, str] = Depends(require("admin")),
+) -> dict[str, Any]:
+    monster = next(
+        (item for item in STATE["monsters"] if item["id"] == ident),
+        None,
+    )
+
+    if not monster:
+        raise HTTPException(404, "Monster not found")
+
+    values = update.model_dump(
+        exclude_unset=True,
+        exclude_none=True,
+    )
+
+    hp_delta = values.pop("hp_delta", None)
+
+    for key, value in values.items():
+        if key != "in_turn":
+            monster[key] = value
+
+    if hp_delta is not None:
+        monster["hp"] += hp_delta
+
+    if monster["hp"] <= 0:
+        monster["alive"] = False
+        monster["visible"] = True
+        monster["in_turn"] = False
+    else:
+        monster["alive"] = True
+
+    if hp_delta is not None:
+        log_hp_change(monster, hp_delta)
+
+    if values.get("active") is True:
+        insert_into_battle_order(monster)
+
+    if values.get("active") is False:
+        monster["in_turn"] = False
+
+    set_turn(monster, values.get("in_turn"))
     clean_order()
+
     await changed()
-    return m
+    return monster
 
 @admin.post('/api/characters')
 async def create_character(character: CharacterCreate, _: dict[str, str]=Depends(require('admin'))):
@@ -954,34 +1044,62 @@ async def create_character(character: CharacterCreate, _: dict[str, str]=Depends
     await changed()
     return c
 
-@admin.patch('/api/characters/{ident}')
-async def update_character(ident: str, update: CharacterUpdate, _: dict[str, str]=Depends(require('admin'))):
-    c = next((x for x in STATE['characters'] if x['id'] == ident), None)
-    if not c:
-        raise HTTPException(404, 'Character not found')
-    values = update.model_dump(exclude_unset=True, exclude_none=True)
-    if 'hp_delta' in values:
-        c['hp'] += values.pop('hp_delta')
-    if 'max_hp' in values:
-        c['original_hp'] = values['max_hp']
-    for k, v in values.items():
-        if k != 'in_turn':
-            c[k] = v
-    if values.get('active') is True:
-        insert_into_battle_order(c)
-    if c['hp'] <= 0:
-        c['alive'] = False
-        c['visible'] = True
-        c['in_turn'] = False
-    if values.get('alive') is False:
-        c['visible'] = True
-        c['in_turn'] = False
-    if values.get('active') is False:
-        c['in_turn'] = False
-    set_turn(c, values.get('in_turn'))
+@admin.patch("/api/characters/{ident}")
+async def update_character(
+    ident: str,
+    update: CharacterUpdate,
+    _: dict[str, str] = Depends(require("admin")),
+) -> dict[str, Any]:
+    character = next(
+        (item for item in STATE["characters"] if item["id"] == ident),
+        None,
+    )
+
+    if not character:
+        raise HTTPException(404, "Character not found")
+
+    values = update.model_dump(
+        exclude_unset=True,
+        exclude_none=True,
+    )
+
+    hp_delta = values.pop("hp_delta", None)
+
+    for key, value in values.items():
+        if key != "in_turn":
+            character[key] = value
+
+    if hp_delta is not None:
+        character["hp"] += hp_delta
+
+    if "max_hp" in values:
+        character["original_hp"] = values["max_hp"]
+
+    if character["hp"] <= 0:
+        character["alive"] = False
+        character["visible"] = True
+        character["in_turn"] = False
+    else:
+        character["alive"] = True
+
+    if hp_delta is not None:
+        log_hp_change(character, hp_delta)
+
+    if values.get("active") is True:
+        insert_into_battle_order(character)
+
+    if values.get("alive") is False:
+        character["visible"] = True
+        character["in_turn"] = False
+
+    if values.get("active") is False:
+        character["in_turn"] = False
+
+    set_turn(character, values.get("in_turn"))
     clean_order()
+
     await changed()
-    return c
+    return character
 
 @admin.post('/api/combatants/{ident}/reset')
 async def reset_one(ident: str, _: dict[str, str]=Depends(require('admin'))):
@@ -1014,6 +1132,64 @@ async def battle_next(_: dict[str, str]=Depends(require('admin'))):
     x = advance_turn()
     await changed()
     return {'current': x}
+
+@admin.get("/api/activity-log.json")
+async def export_activity_log_json(
+    _: dict[str, str] = Depends(require("admin")),
+) -> Response:
+    content = json.dumps(
+        STATE["activity_log"],
+        indent=2,
+        ensure_ascii=False,
+    )
+
+    return Response(
+        content=content,
+        media_type="application/json",
+        headers={
+            "Content-Disposition":
+                'attachment; filename="activity-log.json"',
+        },
+    )
+
+@admin.get("/api/activity-log.csv")
+async def export_activity_log_csv(
+    _: dict[str, str] = Depends(require("admin")),
+) -> Response:
+    fieldnames = [
+        "id",
+        "timestamp",
+        "active_combatant_id",
+        "active_combatant",
+        "active_combatant_state",
+        "target_combatant_id",
+        "target_combatant",
+        "target_combatant_state",
+        "action",
+        "amount",
+    ]
+
+    output = io.StringIO(newline="")
+    writer = csv.DictWriter(
+        output,
+        fieldnames=fieldnames,
+        extrasaction="ignore",
+    )
+
+    writer.writeheader()
+
+    for entry in STATE["activity_log"]:
+        writer.writerow(entry)
+
+    return Response(
+        content=output.getvalue(),
+        media_type="text/csv; charset=utf-8",
+        headers={
+            "Content-Disposition":
+                'attachment; filename="activity-log.csv"',
+        },
+    )
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='GM-controlled real-time battle display')
     parser.add_argument('--config', type=Path)

@@ -213,6 +213,38 @@ ADMIN_HTML = r'''<!doctype html>
       display: flex;
       gap: .5rem;
     }
+
+    .activity-log {
+      max-height: 24rem;
+      overflow: auto;
+      border: 1px solid #475569;
+      border-radius: 8px;
+    }
+
+    .activity-log table {
+      min-width: 54rem;
+    }
+
+    .activity-state-alive {
+      color: #86efac;
+      font-weight: 800;
+    }
+
+    .activity-state-dead {
+      color: #fca5a5;
+      font-weight: 800;
+    }
+
+    .activity-action-damage {
+      color: #fca5a5;
+      font-weight: 800;
+    }
+
+    .activity-action-heal {
+      color: #86efac;
+      font-weight: 800;
+    }
+
   </style>
 </head>
 <body>
@@ -249,6 +281,42 @@ ADMIN_HTML = r'''<!doctype html>
         >
           Hide character input
         </button>
+        <button
+          id="toggleMonsterDisplayPane"
+          class="pane-toggle"
+          type="button"
+          aria-controls="monsterDisplayPane"
+          aria-expanded="true"
+        >
+          Hide monster display
+        </button>
+        <button
+          id="toggleCharacterDisplayPane"
+          class="pane-toggle"
+          type="button"
+          aria-controls="characterDisplayPane"
+          aria-expanded="true"
+        >
+          Hide character display
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <div class="row">
+        <h2>Battle</h2>
+        <span id="battleState" class="battle-state inactive">
+          Inactive
+        </span>
+      </div>
+      <div class="row">
+        <button id="startBattle" class="battle">Start battle</button>
+        <button id="nextBattle" class="battle">Next</button>
+        <button id="resetAll" class="reset">Reset All</button>
+      </div>
+      <div class="row">&nbsp;</div>
+      <div class="row">
+        <span id="battleInfo"></span>
       </div>
     </section>
 
@@ -315,24 +383,7 @@ ADMIN_HTML = r'''<!doctype html>
       </div>
     </section>
 
-    <section>
-      <div class="row">
-        <h2>Battle</h2>
-      </div>
-      <div class="row">
-        <button id="startBattle" class="battle">Start battle</button>
-        <button id="nextBattle" class="battle">Next</button>
-        <button id="resetAll" class="reset">Reset All</button>
-      </div>
-      <span id="battleState" class="battle-state inactive">
-        Inactive
-      </span>
-      <div class="row">
-        <span id="battleInfo"></span>
-      </div>
-    </section>
-
-    <section>
+    <section id="monsterDisplayPane" class="pane">
       <div class="row">
         <h2>Monsters</h2>
         <button id="rollMonsterInitiative" class="roll">Roll monster initiatives (d20)</button>
@@ -348,11 +399,37 @@ ADMIN_HTML = r'''<!doctype html>
       <div id="monsters"></div>
     </section>
 
-    <section>
+    <section id="characterDisplayPane" class="pane">
       <h2>Characters</h2>
       <div id="characters"></div>
     </section>
   </main>
+
+  <section>
+    <div class="row">
+      <h2>Activity log</h2>
+
+      <button
+        id="exportActivityLogCsv"
+        type="button"
+        class="import"
+      >
+        Export CSV
+      </button>
+
+      <button
+        id="exportActivityLogJson"
+        type="button"
+        class="import"
+      >
+        Export JSON
+      </button>
+    </div>
+
+    <div id="activityLog" class="activity-log">
+      No activity recorded.
+    </div>
+  </section>
 
   <div id="tieModal" class="modal" hidden>
     <div>
@@ -724,9 +801,82 @@ ADMIN_HTML = r'''<!doctype html>
       battleState.classList.toggle('inactive', !battleActive);
     }
 
+    function activityStateClass(state) {
+      return state === 'alive'
+        ? 'activity-state-alive'
+        : state === 'dead'
+          ? 'activity-state-dead'
+          : '';
+    }
+
+    function activityActionClass(action) {
+      return action === 'heal'
+        ? 'activity-action-heal'
+        : 'activity-action-damage';
+    }
+
+    function activityTime(value) {
+      const date = new Date(value);
+
+      return Number.isNaN(date.getTime())
+        ? esc(value || '')
+        : esc(date.toLocaleString());
+    }
+
+    function renderActivityLog(entries) {
+      const container = document.querySelector('#activityLog');
+
+      if (!entries.length) {
+        container.textContent = 'No activity recorded.';
+        return;
+      }
+
+      const rows = [...entries]
+        .reverse()
+        .map(entry => `
+          <tr>
+            <td>${activityTime(entry.timestamp)}</td>
+            <td>${esc(entry.active_combatant || 'System')}</td>
+            <td class="${activityStateClass(entry.active_combatant_state)}">
+              ${esc(entry.active_combatant_state || 'unknown')}
+            </td>
+            <td>${esc(entry.target_combatant || '')}</td>
+            <td class="${activityStateClass(entry.target_combatant_state)}">
+              ${esc(entry.target_combatant_state || 'unknown')}
+            </td>
+            <td class="${activityActionClass(entry.action)}">
+              ${esc(entry.action || '')}
+            </td>
+            <td>${esc(entry.amount ?? '')}</td>
+          </tr>
+        `)
+        .join('');
+
+      container.innerHTML = `
+        <table>
+          <tr>
+            <th>Time</th>
+            <th>Active combatant</th>
+            <th>Active state</th>
+            <th>Target</th>
+            <th>Target state</th>
+            <th>Action</th>
+            <th>Amount</th>
+          </tr>
+          ${rows}
+        </table>
+      `;
+    }
+
     async function load() {
       try {
         latest = await request('/api/state');
+
+        renderActivityLog(
+          Array.isArray(latest.activity_log)
+            ? latest.activity_log
+            : [],
+        );
 
         updateBattleState(latest);
 
@@ -814,6 +964,18 @@ ADMIN_HTML = r'''<!doctype html>
         pane: document.querySelector('#characterInputPane'),
         hiddenLabel: 'Hide character input',
         visibleLabel: 'Show character input',
+      },
+      {
+        button: document.querySelector('#toggleMonsterDisplayPane'),
+        pane: document.querySelector('#monsterDisplayPane'),
+        hiddenLabel: 'Hide monster display',
+        visibleLabel: 'Show monster display',
+      },
+      {
+        button: document.querySelector('#toggleCharacterDisplayPane'),
+        pane: document.querySelector('#characterDisplayPane'),
+        hiddenLabel: 'Hide character display',
+        visibleLabel: 'Show character display',
       },
     ];
 
@@ -1067,6 +1229,14 @@ ADMIN_HTML = r'''<!doctype html>
       } finally {
         submit.disabled = false;
       }
+    };
+
+    document.querySelector('#exportActivityLogCsv').onclick = () => {
+      window.location.href = '/api/activity-log.csv';
+    };
+
+    document.querySelector('#exportActivityLogJson').onclick = () => {
+      window.location.href = '/api/activity-log.json';
     };
 
     csvImportModal.addEventListener('click', event => {
