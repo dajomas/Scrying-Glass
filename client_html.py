@@ -83,13 +83,13 @@ CLIENT_HTML = r'''<!doctype html>
       align-items: center;
       text-align: center;
       padding: 1vh 1vw;
-      border-radius: 12px;
+      border-radius: 25px;
       background: linear-gradient(
         135deg,
         rgba(0, 0, 0, .58),
         rgba(0, 0, 0, .2)
       );
-      border: 2px solid currentColor;
+      border: 15px solid currentColor;
       box-shadow: 0 6px 18px rgba(0, 0, 0, .45);
       overflow: hidden;
       transition: transform .7s ease, opacity .7s ease;
