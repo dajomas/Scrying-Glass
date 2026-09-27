@@ -49,6 +49,26 @@ ADMIN_HTML = r'''<!doctype html>
     .import { background: #7c3aed; }
     .roll { background: #b45309; }
 
+    .battle-state {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.2rem;
+      padding: 0 0.75rem;
+      border-radius: 999px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    .battle-state.active {
+      background: #047857;
+      color: #ecfdf5;
+    }
+
+    .battle-state.inactive {
+      background: #475569;
+      color: #e2e8f0;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -304,9 +324,9 @@ ADMIN_HTML = r'''<!doctype html>
         <button id="nextBattle" class="battle">Next</button>
         <button id="resetAll" class="reset">Reset All</button>
       </div>
-      <div class="row">
-        &nbsp;
-      </div>
+      <span id="battleState" class="battle-state inactive">
+        Inactive
+      </span>
       <div class="row">
         <span id="battleInfo"></span>
       </div>
@@ -686,9 +706,30 @@ ADMIN_HTML = r'''<!doctype html>
       }
     }
 
+    function updateBattleState(state) {
+      const battleState = document.querySelector('#battleState');
+
+      if (!battleState) {
+        return;
+      }
+
+      const battleOrder = Array.isArray(state?.battle_order)
+        ? state.battle_order
+        : [];
+
+      const battleActive = battleOrder.length > 0;
+
+      battleState.textContent = battleActive ? 'Active' : 'Inactive';
+      battleState.classList.toggle('active', battleActive);
+      battleState.classList.toggle('inactive', !battleActive);
+    }
+
     async function load() {
       try {
         latest = await request('/api/state');
+
+        updateBattleState(latest);
+
         updatePaneVisibilityForBattle();
 
         document.querySelector('#monsters').innerHTML =
@@ -749,6 +790,7 @@ ADMIN_HTML = r'''<!doctype html>
               `;
             })
             .join(' → ');
+
       } catch (error) {
         message(error.message);
       }
