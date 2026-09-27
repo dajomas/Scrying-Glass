@@ -971,6 +971,50 @@ ADMIN_HTML = r'''<!doctype html>
       `;
     }
 
+    function sortedMonstersForAdmin() {
+      const battleOrderIndex = new Map(
+        (latest.battle_order || []).map((id, index) => [id, index]),
+      );
+
+      return [...latest.monsters].sort((left, right) => {
+        // 1. Active monsters before inactive monsters.
+        if (Boolean(left.active) !== Boolean(right.active)) {
+          return left.active ? -1 : 1;
+        }
+
+        // 2. Within an Active/Inactive group, entries that occur in the current
+        // battle order come first and retain that exact order.
+        const leftOrder = battleOrderIndex.get(left.id);
+        const rightOrder = battleOrderIndex.get(right.id);
+        const leftInOrder = leftOrder !== undefined;
+        const rightInOrder = rightOrder !== undefined;
+
+        if (leftInOrder !== rightInOrder) {
+          return leftInOrder ? -1 : 1;
+        }
+
+        if (leftInOrder && rightInOrder && leftOrder !== rightOrder) {
+          return leftOrder - rightOrder;
+        }
+
+        // 3. Current HP descending. Values are normalized defensively so imported
+        // or legacy records without a numeric HP value still render consistently.
+        const leftHp = Number.isFinite(Number(left.hp)) ? Number(left.hp) : -Infinity;
+        const rightHp = Number.isFinite(Number(right.hp)) ? Number(right.hp) : -Infinity;
+
+        if (leftHp !== rightHp) {
+          return rightHp - leftHp;
+        }
+
+        // 4. Deterministic final ordering.
+        return String(left.name || '').localeCompare(
+          String(right.name || ''),
+          undefined,
+          {sensitivity: 'base'},
+        );
+      });
+    }
+
     async function load() {
       try {
         latest = await request('/api/state');
@@ -995,7 +1039,7 @@ ADMIN_HTML = r'''<!doctype html>
           '<th>Display/status</th>' +
           '<th>HP change</th>' +
           '</tr>' +
-          latest.monsters.map(monsterRow).join('') +
+          sortedMonstersForAdmin().map(monsterRow).join('') +
           '</table>';
 
         document.querySelector('#characters').innerHTML =
