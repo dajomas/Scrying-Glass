@@ -4,6 +4,8 @@ Monster Display is a self-hosted, real-time tabletop encounter display for game 
 
 The application runs two FastAPI services from one Python process, persists encounters as JSON, serves uploaded monster images, and pushes live display updates over WebSockets.
 
+This project is for 98% Vibe-coded using Perplexity.ai
+
 ## Documentation
 
 - [User Guide](docs/User-Guide.md) — GM workflow, encounter controls, imports, battle actions, and troubleshooting.
