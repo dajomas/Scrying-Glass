@@ -1234,6 +1234,16 @@ async def reset_one(ident: str, _: dict[str, str]=Depends(require("admin", ADMIN
     await changed()
     return x
 
+@admin.post("/api/battle/end")
+async def battle_end(
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+) -> dict[str, str]:
+    clear_turns()
+    STATE["battle_order"] = []
+
+    await changed()
+    return {"status": "ended"}
+
 @admin.post('/api/battle/reset-all')
 async def reset_all(_: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     for x in entities():

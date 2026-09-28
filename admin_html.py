@@ -368,6 +368,7 @@ ADMIN_HTML = r'''<!doctype html>
       <div class="row">
         <button id="startBattle" class="battle">Start battle</button>
         <button id="nextBattle" class="battle">Next</button>
+        <button id="endBattle" class="danger">End battle</button>
         <button id="resetAll" class="reset">Reset All</button>
       </div>
       <div class="row">&nbsp;</div>
@@ -1135,8 +1136,8 @@ ADMIN_HTML = r'''<!doctype html>
                 ? `${combatant.name} - Ally`
                 : combatant.name;
 
-              const name = esc(displayName);
-
+              const name = '<span style="white-space: nowrap">' + esc(displayName) + '</span>';
+              
               if (!combatant.in_turn) {
                 return name;
               }
@@ -1149,7 +1150,7 @@ ADMIN_HTML = r'''<!doctype html>
                   type="button"
                   class="battle-order-combatant active-turn"
                   data-battle-actor="${combatantId}"
-                  title="Apply an action as ${name}"
+                  title="Apply an action as ${esc(displayName)}"
                 >
                   <strong><u>
                     <span
@@ -1162,7 +1163,7 @@ ADMIN_HTML = r'''<!doctype html>
                 </button>
               `;
             })
-            .join(' → ');
+            .join(' ⇒ ');
 
       } catch (error) {
         message(error.message);
@@ -2250,6 +2251,28 @@ ADMIN_HTML = r'''<!doctype html>
         });
 
         await load();
+      } catch (error) {
+        message(error.message);
+      }
+    };
+
+    document.querySelector('#endBattle').onclick = async () => {
+      if (!latest?.battle_order?.length) {
+        message('There is no active battle to end.');
+        return;
+      }
+
+      if (!confirm('End the battle without resetting combatants?')) {
+        return;
+      }
+
+      try {
+        await request('/api/battle/end', {
+          method: 'POST',
+        });
+
+        await load();
+        message('Battle ended. Combatants were not reset.');
       } catch (error) {
         message(error.message);
       }
