@@ -331,6 +331,17 @@ Monster CSV requires `name`, `monster_type` or `type`, `ac`, and `hp`. Character
 
 Setup import deep-copies selected combatants, generates fresh IDs, preserves source `hp` and `max_hp`, derives `alive` from current HP, restores `initiative` from `original_initiative`, clears active/visible/turn flags, and does not modify the current battle order.
 
+### `.monster` files
+
+The `.monster` import route accepts a UTF-8 JSON file and extracts usable values for:
+
+- `name`
+- `type`
+- Armor Class from supported AC-related fields
+- Hit Points from the supported HP text/value fields
+
+The [Tetra-cube D&D 5e Statblock Generator](https://tetra-cube.com/dnd/dnd-statblock.html) is a recommended external authoring tool for compatible monster statblocks. Monster Display does not bundle, control, or depend on the Tetra-cube site at runtime; it only accepts an uploaded `.monster` file.
+
 ## Combat rules
 
 ### Battle start and ties

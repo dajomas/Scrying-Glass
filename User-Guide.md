@@ -92,7 +92,18 @@ Each copy receives a unique ID and independent runtime values. Uploaded images t
 
 ### Import `.monster`
 
-Choose a compatible JSON `.monster` file, optionally choose quantity, color, and image, then click **Import .monster**. The importer reads name, type, AC, and HP from the source file.
+Monster Display imports compatible JSON `.monster` files. A recommended tool for creating or editing these files is the [Tetra-cube D&D 5e Statblock Generator](https://tetra-cube.com/dnd/dnd-statblock.html).
+
+1. Open the Tetra-cube generator.
+2. Create or edit the monster statblock.
+3. Save or export the compatible `.monster` JSON file.
+4. In Monster Display, choose the file in the Add monster pane.
+5. Optionally select quantity, color, and an image.
+6. Click **Import .monster**.
+
+Monster Display reads the monster name, type, Armor Class, and Hit Points from the imported file. A manually selected image takes precedence over the optional D&D Beyond image lookup.
+
+> The Tetra-cube generator is an external website and is not affiliated with Monster Display. Its availability and file-export behavior are controlled by that site.
 
 ### Add character
 

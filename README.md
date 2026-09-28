@@ -17,6 +17,7 @@ The application runs two FastAPI services from one Python process, persists enco
 - Real-time Client Display updates using WebSockets.
 - Manual creation of monsters and characters.
 - `.monster` JSON import and quantity-based creation of up to 50 monster copies per submission.
+- Recommended `.monster` file authoring with the [Tetra-cube D&D 5e Statblock Generator](https://tetra-cube.com/dnd/dnd-statblock.html).
 - Monster and character CSV import, with generated IDs for rows without an ID.
 - Monster images by upload or optional best-effort D&D Beyond lookup.
 - Saved encounter setups: New, Save, Load, and selective Import from setup.
@@ -149,6 +150,19 @@ The Client Display centers image backgrounds, prevents tiling, and scales them w
 8. Use **Next** to advance turns.
 9. Export the Activity Log if needed.
 10. Use **Reset All** to reset combatants and clear the battle order.
+
+## Creating `.monster` files
+
+Monster Display can import compatible `.monster` JSON files. A practical way to create or edit them is the [Tetra-cube D&D 5e Statblock Generator](https://tetra-cube.com/dnd/dnd-statblock.html).
+
+When preparing a monster for import, ensure its statblock contains usable values for:
+
+- Name
+- Type
+- Armor Class
+- Hit Points
+
+Monster Display uses those values when it creates the encounter entry. Add a color, quantity, and optional image in the Admin import form.
 
 ## Data storage
 
