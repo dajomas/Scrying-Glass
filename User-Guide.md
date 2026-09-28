@@ -1,114 +1,114 @@
 # Monster Display User Guide
 
-Monster Display lets a game master prepare and control a tabletop encounter from the **Admin** screen while players view a separate, live **Client Display**. The display updates after encounter changes through a WebSocket connection.
+Monster Display lets a game master prepare and run an encounter from the **Admin** screen while players watch a separate, live **Client Display**. The Client Display receives encounter changes through a WebSocket connection.
 
-For installation and initial configuration, see the repository [README](../README.md). For implementation details and HTTP routes, see [Technical Documentation](Technical-Documentation.md).
+For installation and configuration, see the repository [README](../README.md). For architecture and API details, see [Technical Documentation](Technical-Documentation.md).
 
 ## Start and sign in
 
-Start the application with your configuration file:
+Start the application with a configuration file:
 
 ```bash
 python3.14 monster_display_server.py --config config.yaml
 ```
 
-Open these default addresses:
-
-| Screen | Address | Role required |
+| Screen | Address | Login role |
 |---|---|---|
 | Admin | `http://SERVER:3000/` | `admin` |
-| Client Display | `http://SERVER:4000/display` | `admin` or `client` |
+| Client Display | `http://SERVER:4000/display` | `client` or `admin` |
 
-Replace `SERVER` with the hostname or IP address of the computer running Monster Display. Use `localhost` when both browser windows run on that computer.
+Replace `SERVER` with the server hostname or IP address. For local testing, use `localhost`.
 
-## Admin screen
+Admin and Client Display logins use separate session cookies, so both pages can remain open in different tabs or windows of the same browser.
 
-The Admin screen is organized into panes. The top pane has controls for showing or hiding the other hideable panes. During battle, those panes automatically collapse once; if you manually show one while the battle remains active, it stays visible until you hide it or the battle ends.
+## Admin panes
+
+The Admin page is organized into panes. The top controls can show or hide the setup, add-monster, add-character, Monster list, and Character list panes.
+
+When a battle starts, or when you load a setup with a battle order, hideable panes automatically collapse once. If you manually reopen a pane during that battle, it remains open until you hide it or the battle ends. **Reset All** restores the normal visible-pane layout.
 
 | Pane | Purpose |
 |---|---|
-| Battle | Shows battle state, starts/advances/resets combat, and displays the current order |
-| Battle setups | New, save, load, import a saved setup, and import monster/character CSV files |
-| Add monster | Manual monster creation and `.monster` JSON import |
-| Add character | Manual character creation |
-| Monsters | Monster list, individual controls, d20 initiative roll, and bulk controls |
-| Characters | Character list and individual controls |
-| Activity log | Review actions and export or clear the log |
+| Battle | Shows Active/Inactive status, battle controls, and battle order |
+| Battle setups | New, Save, Load, setup import, and CSV imports |
+| Add monster | Manual monster entry and `.monster` import |
+| Add character | Manual character entry |
+| Monsters | Monster controls, d20 initiative roll, and bulk controls |
+| Characters | Character controls |
+| Activity log | View, export, and clear recorded actions |
 
-A green control generally means enabled. The Battle pane shows **Active** when a battle order exists and **Inactive** when it does not.
+## Battle setups
 
-## Manage setups
+### New
 
-### New setup
+Click **New** and confirm to discard the working encounter. Existing named setups remain unchanged.
 
-Click **New** and confirm to replace the working encounter with an empty one. This does not delete saved setups. Save the current encounter first if it must be retained.
+### Save
 
-### Save setup
+Enter a setup name and click **Save**. Names are normalized for storage; for example, `Throne Room — Lytharia` is stored under a slug similar to `throne-room-lytharia`.
 
-1. Enter a name in **Battle setup name**.
-2. Click **Save**.
+Saving the same normalized name overwrites that saved setup.
 
-The name is normalized for storage. For example, `Throne Room — Lytharia` becomes a filename similar to `throne-room-lytharia.json`. Saving the same normalized name overwrites that setup.
+### Load
 
-### Load setup
-
-1. Select a setup from the load list.
-2. Click **Load** and confirm.
-
-Loading replaces the complete working state, including combatants, current HP, battle order, and activity log. If the loaded setup has an active battle, the hideable panes collapse once.
+Select a setup, click **Load**, and confirm. Loading replaces the complete working state: monsters, characters, HP, battle order, and activity log.
 
 ### Import from setup
 
-Import adds reset-state copies of saved combatants without replacing the working encounter.
+**Import from setup** appends copies of monsters, characters, or both from another setup without replacing the current encounter.
 
-1. Click **Import from setup**.
-2. Choose the source setup.
-3. Choose Characters, Monsters, or Both.
-4. Click **Import** and confirm.
+Imported entries:
 
-Imported combatants receive fresh IDs. They start inactive, alive, hidden from the initiative bar, and out of turn. Imported monsters restore to their reset HP; imported characters restore to their current maximum HP. The current battle order is not changed.
+| Property | Monsters | Characters |
+|---|---|---|
+| ID | New unique ID | New unique ID |
+| Current HP | Retained from source setup | Retained from source setup |
+| Max HP | Retained from source setup | Retained from source setup |
+| Initiative | Restored to original initiative | Restored to original initiative |
+| Active | Off | Off |
+| Visible | Off | Off |
+| In turn | Off | Off |
+| Alive | Derived from retained current HP | Derived from retained current HP |
+| Monster AC/HP/Init display flags | Off | Not applicable |
+| Current battle order | Unchanged | Unchanged |
 
-## Add combatants
+The source setup is not changed.
 
-### Add a monster manually
+## Add and import combatants
 
-Use the Add monster form:
+### Add monster manually
 
 | Field | Meaning |
 |---|---|
 | Name | Display name |
 | Monster type | Creature type or description |
 | AC | Armor Class |
-| HP | Initial current, max, and reset HP |
-| Quantity | Number of identical independent entries, 1–50 |
+| HP | Initial current, maximum, and reset HP |
+| Quantity | Number of independent copies, from 1 to 50 |
 | Color | Card outline and initiative-token color |
 | Image | Optional PNG, JPG, JPEG, GIF, or WebP image |
 
-Each created copy has its own ID, HP, initiative, and controls. A manually uploaded image takes precedence over optional remote image lookup.
+Each copy receives a unique ID and independent runtime values. Uploaded images take precedence over remote lookup.
 
-### Import a `.monster` file
+### Import `.monster`
 
-Choose a compatible JSON `.monster` file, then optionally choose quantity, color, and an image. The importer reads the file’s name, type, AC, and HP.
+Choose a compatible JSON `.monster` file, optionally choose quantity, color, and image, then click **Import .monster**. The importer reads name, type, AC, and HP from the source file.
 
-### Add a character
+### Add character
 
-Characters need a name, color, and HP. Initiative is optional. A new character starts inactive, alive, and hidden from the initiative bar.
+Characters require a name, color, and HP. Initiative is optional. New characters begin inactive, alive, hidden from the initiative bar, and out of turn.
 
-## Import CSV files
+### Import monster CSV
 
-Use **Import monsters CSV** or **Import characters CSV** in the Battle setups pane. Imported entries are appended to the current encounter.
-
-If the file contains an `id` column, non-empty IDs are preserved. If the column is absent or a row has an empty ID, Monster Display generates a unique ID. Duplicate IDs in the CSV or conflicts with the current encounter are rejected.
-
-### Monster CSV
-
-Required fields:
+Use **Import monsters CSV**. Required fields are:
 
 ```text
 name,monster_type,ac,hp
 ```
 
-`type` can be used instead of `monster_type`. Example:
+`type` may be used instead of `monster_type`.
+
+Example:
 
 ```csv
 id,name,monster_type,ac,hp,max_hp,initiative,color,ally,show_ac,show_hp,show_initiative
@@ -116,11 +116,17 @@ id,name,monster_type,ac,hp,max_hp,initiative,color,ally,show_ac,show_hp,show_ini
 ice-mage-1,Ice Mage,humanoid,13,52,52,17,#4c1d95,false,true,true,true
 ```
 
-Optional monster columns include `id`, `max_hp`, `original_hp`, `color`, `image_url`, `active`, `alive`, `visible`, `ally`, `initiative`, `original_initiative`, `show_ac`, `show_hp`, and `show_initiative`.
+Optional fields include `id`, `max_hp`, `original_hp`, `color`, `image_url`, `active`, `alive`, `visible`, `ally`, `initiative`, `original_initiative`, `show_ac`, `show_hp`, and `show_initiative`.
 
-### Character CSV
+### Import character CSV
 
-Only `name` is required. Example:
+Use **Import characters CSV**. The only required field is:
+
+```text
+name
+```
+
+Example:
 
 ```csv
 id,name,hp,max_hp,initiative,color,active,visible
@@ -128,168 +134,143 @@ id,name,hp,max_hp,initiative,color,active,visible
 brom-1,Brom,48,48,11,#0f766e,false,false
 ```
 
-Optional character columns include `id`, `hp`, `max_hp`, `original_hp`, `initiative`, `original_initiative`, `color`, `active`, `alive`, and `visible`.
+Optional fields include `id`, `hp`, `max_hp`, `original_hp`, `initiative`, `original_initiative`, `color`, `active`, `alive`, and `visible`.
 
-Boolean fields accept `true`/`false`, `yes`/`no`, `on`/`off`, or `1`/`0`.
+For either CSV type, a provided non-empty ID is retained. If the `id` field is absent or blank, Monster Display generates a unique ID. Duplicate IDs in the CSV or conflicts with the active encounter are rejected. Boolean values accept `true`/`false`, `yes`/`no`, `on`/`off`, or `1`/`0`.
 
 ## Monster controls
 
 | Control | Result |
 |---|---|
-| Edit | Edit name, type, AC, HP, max/reset HP, color, initiative, Ally, and image |
-| Active / Off | Includes or removes the monster from active battle eligibility and the client stage |
-| Ally | Records ally classification |
-| Visible | Shows or hides the monster in the initiative bar |
-| Turn | Makes the monster the current turn when it is active and alive |
-| Reset | Restores the monster’s reset HP, initiative, and default runtime state |
-| AC, HP, Init | Shows or hides that stat on the client monster card |
-| Damage / Heal | Prompts for and applies an HP change; records activity-log entries |
+| Edit | Edit name, type, AC, current/max/reset HP, color, initiative, Ally, and image |
+| Active / Off | Enables/disables active battle eligibility and Client card visibility |
+| Ally | Sets ally classification; ally monsters display as `Name - Ally` |
+| Visible | Shows/hides the monster in the initiative bar |
+| Turn | Sets the monster as current turn when active and alive |
+| AC / HP / Init | Shows/hides each stat on the Client monster card |
+| Reset | Restores reset HP, reset initiative, and default runtime state |
+| Remove | Permanently removes the monster from the current encounter after confirmation |
+| Damage / Heal | Prompts for HP change and writes an activity-log entry |
 
-Dead monsters leave the main stage, become visible in the initiative bar, and cannot receive a turn. Monster Display treats HP of zero or lower as dead.
+A monster at zero or lower HP is dead, leaves the Client stage, becomes visible in the initiative bar, and cannot receive the turn.
 
-### Bulk monster controls
+### Bulk controls
 
-The Monster pane includes five bulk controls:
+The Monster pane provides **Active all**, **Ally all**, **AC all**, **HP all**, and **Init all**.
 
-- **Active all**
-- **Ally all**
-- **AC all**
-- **HP all**
-- **Init all**
+A control enables its property for all monsters when any monster does not have it enabled. When every monster already has it enabled, it disables the property for all monsters. **Active all** activates living monsters only and inserts newly activated monsters into an active battle order according to initiative.
 
-A bulk control enables the field for all monsters when any monster does not have it enabled. If all monsters already have it enabled, it disables the field for all monsters. Bulk activation activates only living monsters. Newly activated monsters are inserted into an existing battle order by initiative.
+### Monster display order in Admin
 
-### Roll initiatives
+The Admin Monster table is presentation-sorted as follows:
 
-**Roll monster initiatives d20** assigns an independent random value from 1 through 20 to every monster. It overwrites existing monster initiatives.
+1. Active monsters first.
+2. When a battle is active, active monsters in the battle order’s exact sequence.
+3. Outside a battle, active monsters by Max HP descending.
+4. Inactive monsters with numeric initiative first, highest initiative first.
+5. Inactive monsters with no initiative after that, with Max HP as the secondary order.
+6. Name as the final tie-breaker.
+
+This does not modify the actual server monster list or stored battle order.
 
 ## Character controls
 
 | Control | Result |
 |---|---|
-| Edit | Edit name, color, current HP, max HP, and initiative |
-| Current HP | Direct inline HP edit |
-| Max HP | Direct inline maximum-HP edit; becomes the reset baseline |
-| Initiative | Direct inline initiative edit |
-| Active / Off | Enables or disables battle eligibility |
-| Alive / Dead | Changes character life state |
-| Visible | Shows or hides the character in the initiative bar |
-| Turn | Makes the character the current turn when active and alive |
-| Reset | Restores current HP to max HP, reset initiative, and default runtime state |
-| Damage / Heal | Prompts for an HP change and creates an activity-log entry |
+| Edit | Edit name, color, HP, max HP, and initiative |
+| Current HP / Max HP | Inline edits; a Max HP update becomes the reset baseline |
+| Initiative | Inline initiative edit |
+| Active / Off | Enables/disables battle eligibility |
+| Alive / Dead | Changes life state |
+| Visible | Shows/hides the character in the initiative bar |
+| Turn | Sets current turn when active and alive |
+| Reset | Restores current HP, initiative, and default runtime state |
+| Remove | Permanently removes the character from the current encounter after confirmation |
+| Damage / Heal | Prompts for HP change and writes an activity-log entry |
+
+Removing any combatant removes its ID from the current battle order. Saved setups are not affected until you explicitly save the edited working encounter.
 
 ## Run a battle
 
-### Prepare combatants
+### Prepare and start
 
-1. Add or load the desired monsters and characters.
-2. Set initiatives.
-3. Mark participating living combatants **Active**.
-4. Optionally use Visible controls to show initiative tokens before the first turn.
+1. Add/load combatants and set initiatives.
+2. Mark participating living combatants **Active**.
+3. Click **Start battle**.
+4. Resolve ties when prompted.
 
-### Start battle and ties
+Active living combatants are ordered by descending numeric initiative. Combatants with no initiative are placed after numeric initiatives. Within an equal numeric initiative group, the tie dialog requires a unique order for every member.
 
-Click **Start battle**. Active living combatants are ordered by descending numeric initiative. Entries without initiative are placed after numeric entries.
+### Activate during battle
 
-If multiple active living combatants have the same numeric initiative, a tie-resolution dialog appears. Choose a unique position for each member of the tied group. The selected ordering affects only that initiative group.
+Activating a living inactive combatant after battle start inserts it into the existing order:
 
-### Mid-battle activation
-
-When a battle order already exists, activating an inactive living combatant adds it to the order:
-
-- Before lower initiative entries.
-- After existing entries with the same initiative.
-- Before initiative-less entries when it has a numeric initiative.
-- After numeric entries when it has no initiative.
+- Before lower numeric initiatives.
+- After existing combatants with equal initiative.
+- Before initiative-less combatants when it has a numeric initiative.
+- After numeric initiatives when it has no initiative.
 
 The current turn does not change.
 
-### Advance turn
+### Advance and reset
 
-Click **Next**. Monster Display advances to the next active living combatant and wraps to the first eligible entry after the last. Dead and inactive combatants are skipped.
+**Next** advances cyclically to the next active living combatant. Dead and inactive entries are skipped.
 
-### Current-turn action popup
+**Reset All** resets all combatants, clears `battle_order`, changes the status marker to **Inactive**, and restores panes that were automatically hidden at battle start.
 
-The current combatant in the Battle order is underlined and marked. Click that combatant to open **Battle actions**.
+## Current-turn actions
 
-Each action row contains:
+The current combatant in the Battle order is underlined and marked. Click that entry to open the action popup.
 
-- Target: any currently active, living monster or character.
-- Action: Damage, Heal, Buff, or Debuff.
-- Amount: required for Damage and Heal; not used for Buff or Debuff.
+Every row contains:
 
-Click **Add target** to add more rows. Click **Apply** to validate and apply every row. Damage and Heal change HP; Buff and Debuff do not change HP. Every row creates an activity-log entry. The modal closes after successful application.
+- A target selector containing active living monsters and characters.
+- An action selector: Damage, Heal, Buff, or Debuff.
+- An amount field required for Damage and Heal.
 
-### Reset all
+Click **Add target** to add more action rows. Click **Apply** to validate every row and apply them together:
 
-**Reset All** restores every combatant to its reset state, clears the battle order, returns the Battle marker to Inactive, and reopens panes that were automatically hidden for combat.
+- Damage subtracts HP.
+- Heal adds HP.
+- Buff and Debuff do not alter HP and do not record an amount.
+- Every row is added to the Activity Log.
+
+The popup closes after successful application.
 
 ## Activity log
 
-The Activity log records actions with these fields:
+The Activity Log contains timestamp, active combatant, active state, target, target state after the action, action, and amount.
 
-- Timestamp
-- Active combatant
-- Active combatant state: alive, dead, or unknown
-- Target combatant
-- Target combatant state after the action
-- Action: damage, heal, buff, or debuff
-- Amount for damage/heal; blank for buff/debuff
+Actions are `damage`, `heal`, `buff`, or `debuff`. The amount is blank for Buff/Debuff. Direct HP changes outside a current turn are recorded with `System` as the acting combatant.
 
-The active combatant is the current-turn combatant. If a direct damage/heal action happens outside an assigned turn, the log records `System` as the actor.
-
-Use **Export CSV** or **Export JSON** to download the full persisted log. Use **Clear log** to permanently remove all entries after confirmation.
+Use **Export CSV**, **Export JSON**, or **Clear log**. Clearing is permanent after confirmation.
 
 ## Client Display
 
-The Client Display shows active, living monsters as cards in an adaptive grid. Characters appear in the initiative bar but do not receive full monster-style cards.
+Active living monsters appear as cards in an adaptive grid. Characters appear in the initiative bar but do not render as full monster cards.
 
-Monster cards show name and type. AC, HP, and initiative appear only when the corresponding monster display toggles are enabled. Text sits on a solid contrast-aware panel for readability over images.
+Monster cards show name and type by default. AC, HP, and initiative appear only when the corresponding Monster controls are enabled. Ally monsters use the display name `Name - Ally`. Text is placed on a solid contrast-aware panel for readability over images.
 
-The initiative bar:
+The initiative bar uses:
 
-- Shows visible combatants from the battle order and additional active, visible combatants.
-- Uses red borders for the current turn.
-- Uses black borders for dead combatants.
-- Uses white borders for other visible combatants.
-- Hides completely when it contains no tokens, allowing the stage to use the full screen.
+| State | Border |
+|---|---|
+| Current turn | Red |
+| Dead | Black |
+| Other visible combatant | White |
 
-The client background accepts a CSS color, gradient, or image URL. Image backgrounds are centered, do not repeat, and cover the viewport.
+The initiative bar automatically hides when empty, giving the monster stage the full browser viewport.
 
-## Save data and backups
+Client backgrounds accept CSS colors, gradients, and image URLs. Image URLs are centered, do not repeat, and cover the viewport.
 
-Persistent files live under `storage_dir`:
+## Backups and troubleshooting
 
-```text
-monster-display-data/
-├── state.json
-├── uploads/
-└── setups/
-```
+Back up the whole configured `storage_dir`, including `uploads/`.
 
-Back up the full directory, including `uploads/`, not only the JSON files.
-
-## Troubleshooting
-
-### Browser shows an older UI
-
-Hard-refresh after updating the server because HTML, CSS, and JavaScript are served from the Python modules:
-
-- Linux/Windows: `Ctrl+Shift+R`
-- macOS: `Cmd+Shift+R`
-
-### Client does not update
-
-Confirm that port 4000 is reachable, then refresh the Client Display to reconnect the WebSocket.
-
-### Admin action says sign-in is required
-
-Use an `admin` account on the Admin port. Clear browser cookies for the server host if sessions became stale after a restart or hostname change.
-
-### CSV import fails
-
-Confirm the file is UTF-8 CSV with a header row, required fields are present, numeric fields are whole numbers, and IDs do not duplicate existing encounter IDs.
-
-### An image is missing
-
-Remote D&D Beyond lookup is best effort. Upload an image manually for predictable results.
+| Issue | What to check |
+|---|---|
+| Old Admin/Client page after an update | Hard-refresh: `Ctrl+Shift+R` on Linux/Windows or `Cmd+Shift+R` on macOS |
+| Client Display does not update | Confirm port 4000 is reachable; refresh to reconnect the WebSocket |
+| Sign-in failure | Use the correct role and port; log in again after a server restart |
+| CSV import error | Verify UTF-8 encoding, header row, required fields, valid numbers, and unique IDs |
+| Missing remote image | D&D Beyond lookup is best effort; upload an image manually |

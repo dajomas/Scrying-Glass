@@ -1,53 +1,48 @@
 # Monster Display Technical Documentation
 
-Monster Display is a single-process Python/FastAPI application for running a GM-controlled tabletop battle display. It exposes separate Admin and Client FastAPI applications, stores the encounter in JSON, synchronizes client screens through WebSockets, and serves its UI from Python string modules.
+Monster Display is a single-process Python/FastAPI application for a GM-controlled tabletop battle display. It runs distinct Admin and Client FastAPI applications, keeps their encounter state in shared process memory, persists the state as JSON, and sends Client Display updates through WebSockets.
 
-For installation and a concise overview, see the [README](../README.md). For operational use, see the [User Guide](User-Guide.md).
+See the [README](../README.md) for installation and [User Guide](User-Guide.md) for feature use.
 
-## Architecture
+## Source layout
 
-### Process model
-
-One Python process runs two Uvicorn servers concurrently. The Admin and Client applications share memory, persistent storage paths, sessions, and WebSocket connections.
+The current project keeps server logic in one primary module and separates the embedded browser UIs into Python modules:
 
 ```text
-Admin browser ── HTTP ──► Admin FastAPI app  ── TCP 3000 by default
+monster_display_server.py  # FastAPI apps, state, models, rules, routes, startup
+admin_html.py              # ADMIN_HTML: Admin HTML, CSS, JavaScript
+client_html.py             # CLIENT_HTML: Client HTML, CSS, JavaScript
+login_html.py              # LOGIN: shared login form
+config.example.yaml        # Example deployment configuration
+```
+
+## Runtime architecture
+
+```text
+Admin browser ── HTTP ──► Admin FastAPI app ── TCP 3000 by default
                                   │
                                   ├── shared STATE
                                   ├── shared SESSIONS
                                   ├── shared SOCKETS
+                                  ├── async save lock
                                   └── state.json, setups/, uploads/
                                   │
-Client browser ─ HTTP/WS ─► Client FastAPI app ─ TCP 4000 by default
+Client browser ── HTTP/WS ► Client FastAPI app ── TCP 4000 by default
 ```
 
-The UI source is split into Python modules:
-
-```text
-monster_display_server.py  # application, models, state, routes, startup
-admin_html.py              # ADMIN_HTML: Admin markup, CSS, JavaScript
-client_html.py             # CLIENT_HTML: player display markup, CSS, JavaScript
-login_html.py              # LOGIN: shared login markup
-config.example.yaml        # configuration template
-```
-
-### Operational implication
-
-Run one process and one worker. The implementation relies on in-memory `STATE`, `SESSIONS`, and `SOCKETS`; multiple workers or replicas would need a shared persistence, session, locking, and pub/sub design before they can synchronize safely.
+Both apps run in one interpreter and therefore share in-memory data. Run the service as **one process with one worker**. Multi-worker or multi-replica deployments require externally shared state, sessions, locks, and pub/sub synchronization before they are safe.
 
 ## Dependencies
-
-Install the runtime dependencies:
 
 ```bash
 python3.14 -m pip install "fastapi>=0.115" "uvicorn[standard]>=0.30" "PyYAML>=6.0" python-multipart
 ```
 
-The remainder uses Python standard library modules, including `asyncio`, `copy`, `csv`, `datetime`, `hashlib`, `hmac`, `io`, `json`, `random`, `re`, `secrets`, `shutil`, `uuid`, and `pathlib`.
+The implementation also uses standard-library modules such as `asyncio`, `copy`, `csv`, `datetime`, `hashlib`, `hmac`, `io`, `json`, `random`, `re`, `secrets`, `shutil`, `uuid`, and `pathlib`.
 
 ## Configuration
 
-Configuration loads from YAML or JSON. Command-line values override matching configuration values.
+Configuration may be YAML or JSON. CLI values override matching configuration values.
 
 ```yaml
 network:
@@ -76,22 +71,20 @@ display:
   dndbeyond_image_lookup: true
 ```
 
-| Setting | Description |
+| Key | Purpose |
 |---|---|
-| `network.bind` | Interface/address for both Uvicorn services |
-| `network.admin_port` | Admin listener; default 3000 |
-| `network.client_port` | Client listener; default 4000 |
-| `storage_dir` | Parent directory for state, setups, and uploaded media |
-| `security.users` | User records with username, role, and password/hash |
-| `display.background` | CSS color, gradient, or image URL used by Client Display |
-| `display.entry_direction` | `from_bottom` or `from_top` card entry animation |
-| `display.exit_direction` | `to_bottom` or `to_top` card exit animation |
-| `display.monster_width_percent` | Retained display configuration value |
-| `display.default_monster_color` | Default monster color in the example configuration |
-| `display.default_character_color` | Default character color in the example configuration |
-| `display.dndbeyond_image_lookup` | Enables best-effort remote monster-image lookup |
+| `network.bind` | Host/interface used by both services |
+| `network.admin_port` | Admin listener, default 3000 |
+| `network.client_port` | Client listener, default 4000 |
+| `storage_dir` | Parent directory for state, setup snapshots, and uploads |
+| `security.users` | Username, role, and plaintext/scrypt password records |
+| `display.background` | CSS color, gradient, or image URL |
+| `display.entry_direction` | `from_bottom` or `from_top` |
+| `display.exit_direction` | `to_bottom` or `to_top` |
+| `display.monster_width_percent` | Retained display sizing configuration |
+| `display.dndbeyond_image_lookup` | Enables optional remote image lookup |
 
-Example command line:
+Example CLI:
 
 ```bash
 python3.14 monster_display_server.py \
@@ -102,18 +95,28 @@ python3.14 monster_display_server.py \
   --storage-dir /var/lib/monster-display
 ```
 
-## Authentication and authorization
+## Authentication
 
-Successful login creates an in-memory session token:
+Login generates an in-memory session token using `secrets.token_urlsafe(32)`. Session records hold the username and role.
+
+The two applications use different cookie names:
+
+| Application | Cookie |
+|---|---|
+| Admin | `monster_admin_session` |
+| Client Display | `monster_client_session` |
+
+Cookies are scoped by hostname rather than port, so the separate names allow both applications to be signed into in the same browser. The legacy `monster_session` cookie is deleted on successful login.
+
+Admin-only mutation routes use:
 
 ```python
-token = secrets.token_urlsafe(32)
-SESSIONS[token] = {"username": username, "role": role}
+Depends(require("admin", ADMIN_SESSION_COOKIE))
 ```
 
-The browser receives a `monster_session` cookie configured as `HttpOnly` and `SameSite=Lax`. Admin routes use `Depends(require("admin"))`; the Client Display accepts authenticated `admin` or `client` users.
+Client state routes and WebSocket connections validate the Client cookie. The Client login accepts both `client` and `admin` users.
 
-Passwords may be plaintext or scrypt values in this format:
+Passwords may be plaintext or scrypt values:
 
 ```text
 scrypt$<salt_hex>$<digest_hex>
@@ -125,7 +128,7 @@ Generate a hash with:
 python3.14 -c 'from monster_display_server import password_hash; print(password_hash("replace-me"))'
 ```
 
-Sessions are intentionally ephemeral and disappear when the process restarts.
+Sessions are lost at process restart.
 
 ## Persistence
 
@@ -140,13 +143,13 @@ For `storage_dir: /var/lib/monster-display`:
     └── <normalized-setup-name>.json
 ```
 
-| Path | Purpose |
+| Location | Purpose |
 |---|---|
-| `state.json` | Current working encounter, battle state, and activity log |
-| `uploads/` | Uploaded monster images served under `/media/` |
+| `state.json` | Working encounter, battle order, and activity log |
+| `uploads/` | Uploaded monster images, mounted at `/media/` |
 | `setups/` | Named full-state JSON snapshots |
 
-Current state saves use a temporary file and atomic replace:
+State writes use a temporary file followed by replacement:
 
 ```python
 temp = STATE_FILE.with_suffix(".tmp")
@@ -154,7 +157,7 @@ temp.write_text(json.dumps(STATE, indent=2), encoding="utf-8")
 temp.replace(STATE_FILE)
 ```
 
-Setup names are normalized to lower-case, hyphenated slugs and limited to 80 characters. This avoids path traversal in setup filenames.
+Setup names are normalized to safe lower-case slugs limited to 80 characters.
 
 ## State model
 
@@ -169,9 +172,9 @@ Setup names are normalized to lower-case, hyphenated slugs and limited to 80 cha
 }
 ```
 
-`normalize_state()` fills missing fields when loading an older state or setup. It also removes battle-order IDs that no longer refer to a loaded monster or character.
+`normalize_state()` fills missing fields in older states/setups and discards battle-order IDs that do not identify a loaded entity.
 
-### Monster record
+### Monster
 
 ```json
 {
@@ -197,7 +200,7 @@ Setup names are normalized to lower-case, hyphenated slugs and limited to 80 cha
 }
 ```
 
-### Character record
+### Character
 
 ```json
 {
@@ -216,16 +219,16 @@ Setup names are normalized to lower-case, hyphenated slugs and limited to 80 cha
 }
 ```
 
-### Activity-log record
+### Activity log entry
 
 ```json
 {
   "id": "uuid-hex",
-  "timestamp": "2026-09-27T10:00:00+00:00",
-  "active_combatant_id": "uuid-hex-or-null",
+  "timestamp": "2026-09-28T00:00:00+00:00",
+  "active_combatant_id": "uuid-or-null",
   "active_combatant": "Ice Guard",
   "active_combatant_state": "alive",
-  "target_combatant_id": "uuid-hex",
+  "target_combatant_id": "uuid",
   "target_combatant": "Aelwyn",
   "target_combatant_state": "alive",
   "action": "damage",
@@ -233,23 +236,11 @@ Setup names are normalized to lower-case, hyphenated slugs and limited to 80 cha
 }
 ```
 
-`action` is one of `damage`, `heal`, `buff`, or `debuff`. `amount` is an integer for Damage and Heal and `null` for Buff and Debuff. Direct HP controls identify the actor as the current-turn combatant or `System` when no turn is assigned.
+Actions are `damage`, `heal`, `buff`, and `debuff`. Buff/Debuff actions store `null` for `amount`.
 
-### Important semantics
+## State changes and synchronization
 
-| Field | Meaning |
-|---|---|
-| `active` | Eligible for battle behavior when alive; active monsters render as client cards |
-| `alive` | Current life state; zero or lower HP is dead in current runtime logic |
-| `visible` | Inclusion in the Client initiative bar |
-| `in_turn` | Exclusive current turn indicator across all combatants |
-| `original_hp` | Monster reset baseline; character reset baseline follows max HP updates |
-| `original_initiative` | Initiative restored by reset |
-| `battle_order` | Ordered IDs independent of list/table ordering |
-
-## State synchronization
-
-Every state-changing route calls `changed()`:
+Mutation handlers call `changed()` to save and broadcast the public state:
 
 ```python
 async def changed() -> None:
@@ -258,7 +249,7 @@ async def changed() -> None:
     await broadcast()
 ```
 
-`broadcast()` sends a message like the following to connected Client WebSockets:
+`broadcast()` sends a JSON message of the form:
 
 ```json
 {
@@ -273,139 +264,132 @@ async def changed() -> None:
 }
 ```
 
-Client JavaScript fetches `/api/state` initially, then renders received WebSocket state messages. Admin JavaScript refreshes its own table and pane state by calling `load()` after mutation requests.
+The Client Display fetches `/api/state` at startup and then renders WebSocket state messages. The Admin UI refreshes from `/api/state` after mutations.
 
-## HTTP routes
+## Route inventory
 
-All mutation routes below require an authenticated Admin session unless stated otherwise.
+Unless stated otherwise, Admin mutation routes require the Admin session cookie and Admin role.
 
-### Pages and authentication
+### Pages, state, and socket
 
 | App | Method | Path | Purpose |
 |---|---|---|---|
 | Admin | GET/POST | `/login` | Admin login |
-| Admin | GET | `/` | Admin page |
+| Admin | GET | `/` | Admin UI |
 | Client | GET/POST | `/login` | Client/admin login |
-| Client | GET | `/display` | Player-facing display |
-| Both | GET | `/api/state` | Authenticated public state snapshot |
-| Client | WebSocket | `/ws` | Real-time state updates |
+| Client | GET | `/display` | Client Display UI |
+| Admin | GET | `/api/state` | State for Admin session |
+| Client | GET | `/api/state` | State for Client session |
+| Client | WebSocket | `/ws` | Authenticated live Client updates |
 
 ### Setup routes
 
 | Method | Path | Purpose |
 |---|---|---|
-| GET | `/api/setups` | List saved setup names |
-| POST | `/api/setups/new` | Replace working state with a blank state |
-| POST | `/api/setups/save` | Save current state under a normalized name |
-| POST | `/api/setups/load` | Replace working state from a saved setup |
-| POST | `/api/setups/import` | Append reset-state copies from a saved setup |
+| GET | `/api/setups` | List setup names |
+| POST | `/api/setups/new` | Replace working state with blank state |
+| POST | `/api/setups/save` | Save complete state under a normalized name |
+| POST | `/api/setups/load` | Replace working state with saved state |
+| POST | `/api/setups/import` | Append setup combatants as new runtime-reset copies retaining current HP/max HP |
 
-### Monster routes
-
-| Method | Path | Purpose |
-|---|---|---|
-| POST | `/api/monsters` | Create one or more manual monsters via multipart form |
-| POST | `/api/monsters/import` | Import a `.monster` JSON file |
-| POST | `/api/monsters/import-csv` | Import monster CSV rows |
-| POST | `/api/monsters/roll-initiative` | Assign d20 initiatives to all monsters |
-| POST | `/api/monsters/bulk-toggle` | Toggle a monster field across all monsters |
-| POST | `/api/monsters/{id}/edit` | Save a multipart monster edit, optionally including an image |
-| PATCH | `/api/monsters/{id}` | Update a monster JSON fields / HP delta |
-
-The bulk-toggle field is one of `active`, `ally`, `show_ac`, `show_hp`, or `show_initiative`.
-
-### Character routes
+### Monster and character routes
 
 | Method | Path | Purpose |
 |---|---|---|
-| POST | `/api/characters` | Create a character |
-| POST | `/api/characters/import-csv` | Import character CSV rows |
-| PATCH | `/api/characters/{id}` | Update character fields / HP delta |
-
-### Combat and log routes
-
-| Method | Path | Purpose |
-|---|---|---|
+| POST | `/api/monsters` | Create one or more monsters by multipart form |
+| POST | `/api/monsters/import` | Import a `.monster` file |
+| POST | `/api/monsters/import-csv` | Import monster CSV |
+| POST | `/api/monsters/roll-initiative` | Assign d20 initiative to every monster |
+| POST | `/api/monsters/bulk-toggle` | Toggle a supported monster field across all monsters |
+| POST | `/api/monsters/{id}/edit` | Multipart monster edit with optional replacement image |
+| PATCH | `/api/monsters/{id}` | JSON monster field update / HP delta |
+| POST | `/api/characters` | Create character |
+| POST | `/api/characters/import-csv` | Import character CSV |
+| PATCH | `/api/characters/{id}` | JSON character field update / HP delta |
+| DELETE | `/api/combatants/{id}` | Permanently remove monster or character from current encounter |
 | POST | `/api/combatants/{id}/reset` | Reset one combatant |
-| POST | `/api/battle/reset-all` | Reset all combatants and clear battle order |
-| POST | `/api/battle/start` | Begin a battle using a complete ordered ID list |
-| POST | `/api/battle/next` | Advance to the next eligible combatant |
-| POST | `/api/battle/actions` | Apply one or more current-turn target actions atomically |
-| GET | `/api/activity-log.json` | Download activity log JSON |
-| GET | `/api/activity-log.csv` | Download activity log CSV |
-| POST | `/api/activity-log/clear` | Clear persisted activity-log records |
 
-### Battle actions payload
+The Monster bulk field must be one of `active`, `ally`, `show_ac`, `show_hp`, or `show_initiative`.
 
-```json
-{
-  "actor_id": "current-turn-combatant-id",
-  "actions": [
-    {
-      "target_id": "target-id",
-      "action": "damage",
-      "amount": 7
-    },
-    {
-      "target_id": "another-target-id",
-      "action": "buff",
-      "amount": null
-    }
-  ]
-}
-```
+### Battle and activity-log routes
 
-The server requires that the actor is active, alive, and currently in turn. Targets must be active and alive at validation time. Damage and Heal require a positive amount; Buff and Debuff reject an amount. Validation occurs before any listed action is applied, preventing partial application caused by malformed input.
+| Method | Path | Purpose |
+|---|---|---|
+| POST | `/api/battle/reset-all` | Reset every combatant and clear `battle_order` |
+| POST | `/api/battle/start` | Start a battle using validated full ordered IDs |
+| POST | `/api/battle/next` | Advance to next eligible combatant |
+| POST | `/api/battle/actions` | Atomically apply current-turn multi-target actions |
+| GET | `/api/activity-log.json` | Download full log as JSON |
+| GET | `/api/activity-log.csv` | Download full log as CSV |
+| POST | `/api/activity-log/clear` | Clear all log records |
 
-## CSV contracts
+## Import contracts
 
-CSV must be UTF-8 (BOM accepted), contain a header row, and contain at least one nonblank data row. Header names are trimmed and case-folded. Boolean values accept `true`/`false`, `yes`/`no`, `on`/`off`, or `1`/`0`.
+CSV data must be UTF-8, with BOM accepted, must include a header row, and must contain at least one nonblank row. Headers are trimmed and case-folded. Boolean fields accept `true`/`false`, `yes`/`no`, `on`/`off`, and `1`/`0`.
 
-Monster import requires `name`, `monster_type` or `type`, `ac`, and `hp`. Character import requires `name`. A missing or blank `id` is replaced by a generated UUID hex string. Duplicate IDs inside an upload or conflicts with existing monster/character IDs return HTTP 400.
+Monster CSV requires `name`, `monster_type` or `type`, `ac`, and `hp`. Character CSV requires `name`. Missing or blank IDs receive a generated UUID hex value. Duplicate CSV IDs and IDs already present in the working encounter return HTTP 400.
 
-## Battle-order algorithms
+Setup import deep-copies selected combatants, generates fresh IDs, preserves source `hp` and `max_hp`, derives `alive` from current HP, restores `initiative` from `original_initiative`, clears active/visible/turn flags, and does not modify the current battle order.
 
-`begin_battle()` validates that the submitted order contains each active living combatant exactly once. Admin JavaScript builds this list in descending initiative order and requests explicit ordering inside tied numeric-initiative groups.
+## Combat rules
 
-`insert_into_battle_order()` handles newly activated living combatants when a battle order exists:
+### Battle start and ties
 
-- Numeric initiative is inserted before lower numeric initiative.
-- An equal initiative is inserted after existing entries at that value.
-- Numeric initiative is inserted before initiative-less entries.
-- Initiative-less entries are appended after numeric entries.
+`begin_battle()` requires the supplied order to contain each active living combatant exactly once. Admin-side code builds the order by descending initiative and opens a tie dialog for equal numeric initiatives.
 
-`advance_turn()` discards inactive/dead IDs from the active sequence, adds newly eligible missing combatants in initiative order, then advances cyclically.
+### Activation during battle
+
+`insert_into_battle_order()` places a newly active living combatant in an existing order:
+
+- Before lower numeric initiatives.
+- After current entries at the same initiative.
+- Before initiative-less entries when numeric.
+- After numeric entries when initiative-less.
+
+### Turn advancement
+
+`advance_turn()` filters inactive/dead entries, adds omitted eligible combatants in initiative order, then advances cyclically. When no eligible combatants remain, it clears both turn state and `battle_order`.
+
+### Current-turn actions
+
+`/api/battle/actions` validates all requested rows before applying any changes. It requires an active, living actor currently marked `in_turn` and active/living targets. Damage and Heal require a positive integer amount; Buff and Debuff must not carry one. Every applied row produces an activity-log entry.
+
+### Deletion
+
+`DELETE /api/combatants/{id}` removes the entity from its list and removes its ID from `battle_order`. It does not delete uploads, because uploaded images may be referenced by saved setups or other entries.
 
 ## Client rendering
 
-The Client Display renders:
+The Client Display renders visible initiative tokens and active living Monster cards. Character entries participate in the initiative bar but not in full card rendering.
 
-- An initiative bar for visible battle-order combatants plus additional active/visible combatants.
-- Active, living monster cards in an adaptive grid.
-- A contrast-aware opaque text panel on each monster card.
-- CSS background colors, gradients, or centered cover-sized image backgrounds.
+- Cards use an adaptive grid.
+- Enabled AC, HP, and initiative values are placed in card text.
+- Text sits on an opaque contrast-aware panel so it remains readable over images.
+- Ally monsters are displayed with the ` - Ally` suffix without changing stored `name`.
+- The initiative bar becomes `hidden` when empty and CSS expands the stage to full viewport height.
+- Image backgrounds are assigned as background images centered with `cover`, no repetition, and fixed attachment.
 
-When no initiative tokens exist, JavaScript sets the initiative bar’s `hidden` state. CSS removes the bar and expands the stage to the full viewport.
+The Admin Monster table uses a presentation-only sort: active first; active battle order when battle is active; active Max HP outside battle; then inactive numeric initiative and Max HP ordering. This does not change persisted list order or battle order.
 
 ## Security and limitations
 
-- Cookies use `secure=False`; run behind HTTPS and set appropriate proxy/cookie configuration before public deployment.
-- Sessions are in-memory and vanish at restart.
-- There is no built-in CSRF protection, rate limiting, audit identity beyond the action names stored in logs, or multi-user conflict resolution.
-- Uploaded images are extension-checked but otherwise served as static files; restrict deployment access and storage permissions appropriately.
-- D&D Beyond image lookup is best effort and may fail when remote markup or access rules change.
-- The Client state payload includes information that may be hidden visually. Treat access to the Client service as access to encounter state.
-- Combatants and saved setups do not currently have a dedicated deletion UI.
+- Cookies currently use `secure=False`; terminate TLS at a reverse proxy and revise cookie settings before internet exposure.
+- Sessions exist only in memory and disappear at restart.
+- No built-in CSRF protection, rate limiting, authorization audit trail, or multi-user concurrency coordination exists.
+- Client state contains encounter data even when some details are not visually rendered; Client access should be treated as access to encounter state.
+- Uploaded images are extension-checked and statically served. Restrict filesystem permissions and deployment reachability.
+- D&D Beyond image lookup is best effort and dependent on external site behavior.
+- There is no dedicated saved-setup deletion interface.
 
 ## Operations
 
-Validate syntax before deployment:
+Validate syntax after updates:
 
 ```bash
 python3.14 -m py_compile monster_display_server.py admin_html.py client_html.py login_html.py
 ```
 
-A basic `systemd` service:
+Minimal `systemd` unit:
 
 ```ini
 [Unit]
@@ -425,15 +409,15 @@ RestartSec=3
 WantedBy=multi-user.target
 ```
 
-Run the service as a non-root user and ensure that user can read the configuration and write the configured storage directory.
+Run as a non-root account that can read configuration and write `storage_dir`.
 
 ## Troubleshooting
 
 | Symptom | Check |
 |---|---|
-| Admin page is stale | Hard-refresh after updating embedded HTML modules |
-| `Sign in required` | Correct role, same hostname, valid session cookie, fresh login after restart |
-| Client does not update | Port 4000 reachability and WebSocket reconnection after refresh |
-| CSV import fails | UTF-8/header/required field/numeric and duplicate-ID requirements |
-| Background image fails | Confirm image exists under `/media/` and CSS URL is valid |
-| Image lookup fails | Upload a local image instead of depending on remote lookup |
+| UI appears outdated | Hard-refresh after embedded HTML changes |
+| Cannot keep Admin and Client logged in | Confirm the new separate cookie names are in use; clear old cookies and log in again |
+| Client does not update | Verify port 4000 and reconnect the WebSocket by refreshing |
+| CSV import fails | Check encoding, header, required fields, numeric values, and ID uniqueness |
+| Setup import HP looks wrong | Confirm source saved state contains the expected current HP; current HP/max HP are preserved on import |
+| Image lookup fails | Upload an image directly |
