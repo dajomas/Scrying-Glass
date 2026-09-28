@@ -1136,8 +1136,8 @@ ADMIN_HTML = r'''<!doctype html>
                 ? `${combatant.name} - Ally`
                 : combatant.name;
 
-              const name = esc(displayName);
-
+              const name = '<span style="white-space: nowrap">' + esc(displayName) + '</span>';
+              
               if (!combatant.in_turn) {
                 return name;
               }
@@ -1150,7 +1150,7 @@ ADMIN_HTML = r'''<!doctype html>
                   type="button"
                   class="battle-order-combatant active-turn"
                   data-battle-actor="${combatantId}"
-                  title="Apply an action as ${name}"
+                  title="Apply an action as ${esc(displayName)}"
                 >
                   <strong><u>
                     <span
@@ -1163,7 +1163,7 @@ ADMIN_HTML = r'''<!doctype html>
                 </button>
               `;
             })
-            .join(' → ');
+            .join(' ⇒ ');
 
       } catch (error) {
         message(error.message);
