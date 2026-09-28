@@ -138,7 +138,7 @@ display:
   background: "url('/media/bgimage.png')"
 ```
 
-The Client Display centers image backgrounds, prevents tiling, and scales them with `cover`.
+The Client Display centers image backgrounds, prevents tiling, and scales them with `cover`. Store the file `bgimage.png` in the `monster-display-data/uploads` directory (See below under [Data storage](#data-storage))
 
 ## Typical encounter workflow
 
