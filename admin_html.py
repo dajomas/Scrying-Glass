@@ -49,6 +49,26 @@ ADMIN_HTML = r'''<!doctype html>
     .import { background: #7c3aed; }
     .roll { background: #b45309; }
 
+    .battle-state {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.2rem;
+      padding: 0 0.75rem;
+      border-radius: 999px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    .battle-state.active {
+      background: #047857;
+      color: #ecfdf5;
+    }
+
+    .battle-state.inactive {
+      background: #475569;
+      color: #e2e8f0;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -96,6 +116,57 @@ ADMIN_HTML = r'''<!doctype html>
       border-radius: 50%;
       vertical-align: -.05em;
       box-shadow: 0 0 5px currentColor;
+    }
+
+    .battle-order-combatant {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      line-height: inherit;
+    }
+
+    .battle-order-combatant.active-turn {
+      cursor: pointer;
+    }
+
+    .battle-order-combatant.active-turn:hover,
+    .battle-order-combatant.active-turn:focus-visible {
+      outline: 2px solid #fbbf24;
+      outline-offset: 3px;
+      border-radius: 3px;
+    }
+
+    .battle-action-form {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .battle-action-row {
+      display: grid;
+      grid-template-columns: minmax(10rem, 1fr) minmax(8rem, 10rem) minmax(7rem, 8rem) auto;
+      gap: 0.5rem;
+      align-items: end;
+      border: 1px solid #475569;
+      border-radius: 8px;
+      padding: 0.65rem;
+    }
+
+    .battle-action-row label {
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    .battle-action-row .amount-field[hidden] {
+      display: none;
+    }
+
+    @media (max-width: 700px) {
+      .battle-action-row {
+        grid-template-columns: 1fr;
+      }
     }
 
     .modal {
@@ -154,6 +225,11 @@ ADMIN_HTML = r'''<!doctype html>
       background: #4b6680;
     }
 
+    .initiative-edit {
+      width: 5ch;
+      min-width: 5ch;
+    }
+
     .hp-edit { width: 5.5rem; }
     .setup-name { min-width: 14rem; }
 
@@ -193,6 +269,38 @@ ADMIN_HTML = r'''<!doctype html>
       display: flex;
       gap: .5rem;
     }
+
+    .activity-log {
+      max-height: 24rem;
+      overflow: auto;
+      border: 1px solid #475569;
+      border-radius: 8px;
+    }
+
+    .activity-log table {
+      min-width: 54rem;
+    }
+
+    .activity-state-alive {
+      color: #86efac;
+      font-weight: 800;
+    }
+
+    .activity-state-dead {
+      color: #fca5a5;
+      font-weight: 800;
+    }
+
+    .activity-action-negative {
+      color: #fca5a5;
+      font-weight: 800;
+    }
+
+    .activity-action-positive {
+      color: #86efac;
+      font-weight: 800;
+    }
+
   </style>
 </head>
 <body>
@@ -200,29 +308,17 @@ ADMIN_HTML = r'''<!doctype html>
     <h1>Monster Display — Admin</h1>
     <p id="message" class="message"></p>
 
-    <section class="row">
-      <input id="setupName" class="setup-name" placeholder="Battle setup name">
-      <button id="newSetup" class="reset">New</button>
-      <button id="saveSetup">Save</button>
-      <select id="setupSelect">
-        <option value="">Load saved setup…</option>
-      </select>
-      <button id="loadSetup">Load</button>
-      <button id="openImport" class="import">Import from setup</button>
-      <button id="openMonsterCsvImport" class="import">Import monsters CSV</button>
-      <button id="openCharacterCsvImport" class="import">Import characters CSV</button>
-    </section>
-
-    <section class="row">
-      <button id="startBattle" class="battle">Start battle</button>
-      <button id="nextBattle" class="battle">Next</button>
-      <button id="resetAll" class="reset">Reset All</button>
-      <span id="battleInfo"></span>
-    </section>
-
     <section>
       <div class="row">
-        <h2>Add monster</h2>
+        <button
+          id="toggleSetupPane"
+          class="pane-toggle"
+          type="button"
+          aria-controls="setupInputPane"
+          aria-expanded="true"
+        >
+          Hide Setup input
+        </button>
         <button
           id="toggleMonsterPane"
           class="pane-toggle"
@@ -232,9 +328,78 @@ ADMIN_HTML = r'''<!doctype html>
         >
           Hide monster input
         </button>
+        <button
+          id="toggleCharacterPane"
+          class="pane-toggle"
+          type="button"
+          aria-controls="characterInputPane"
+          aria-expanded="true"
+        >
+          Hide character input
+        </button>
+        <button
+          id="toggleMonsterDisplayPane"
+          class="pane-toggle"
+          type="button"
+          aria-controls="monsterDisplayPane"
+          aria-expanded="true"
+        >
+          Hide monster display
+        </button>
+        <button
+          id="toggleCharacterDisplayPane"
+          class="pane-toggle"
+          type="button"
+          aria-controls="characterDisplayPane"
+          aria-expanded="true"
+        >
+          Hide character display
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <div class="row">
+        <h2>Battle</h2>
+        <span id="battleState" class="battle-state inactive">
+          Inactive
+        </span>
+      </div>
+      <div class="row">
+        <button id="startBattle" class="battle">Start battle</button>
+        <button id="nextBattle" class="battle">Next</button>
+        <button id="resetAll" class="reset">Reset All</button>
+      </div>
+      <div class="row">&nbsp;</div>
+      <div class="row">
+        <span id="battleInfo"></span>
+      </div>
+    </section>
+
+    <section id="setupInputPane" class="pane">
+      <div>
+        <div class="row">
+          <h2>Battle setups</h2>
+        </div>
+        <input id="setupName" class="setup-name" placeholder="Battle setup name">
+        <button id="newSetup" class="reset">New</button>
+        <button id="saveSetup">Save</button>
+        <select id="setupSelect">
+          <option value="">Load saved setup…</option>
+        </select>
+        <button id="loadSetup">Load</button>
+        <button id="openImport" class="import">Import from setup</button>
+        <button id="openMonsterCsvImport" class="import">Import monsters CSV</button>
+        <button id="openCharacterCsvImport" class="import">Import characters CSV</button>
+      </div>
+    </section>
+
+    <section id="monsterInputPane" class="pane">
+      <div class="row">
+        <h2>Add monster</h2>
       </div>
 
-      <div id="monsterInputPane" class="pane">
+      <div>
         <form id="monsterForm" class="row">
           <input name="name" placeholder="Name" required>
           <input name="monster_type" placeholder="Monster type" required>
@@ -258,21 +423,12 @@ ADMIN_HTML = r'''<!doctype html>
       </div>
     </section>
 
-    <section>
+    <section id="characterInputPane" class="pane">
       <div class="row">
         <h2>Add character</h2>
-        <button
-          id="toggleCharacterPane"
-          class="pane-toggle"
-          type="button"
-          aria-controls="characterInputPane"
-          aria-expanded="true"
-        >
-          Hide character input
-        </button>
       </div>
 
-      <div id="characterInputPane" class="pane">
+      <div>
         <form id="characterForm" class="row">
           <input name="name" placeholder="Name" required>
           <input name="color" type="color" value="#1f4e79">
@@ -283,8 +439,7 @@ ADMIN_HTML = r'''<!doctype html>
       </div>
     </section>
 
-
-    <section>
+    <section id="monsterDisplayPane" class="pane">
       <div class="row">
         <h2>Monsters</h2>
         <button id="rollMonsterInitiative" class="roll">Roll monster initiatives (d20)</button>
@@ -300,11 +455,44 @@ ADMIN_HTML = r'''<!doctype html>
       <div id="monsters"></div>
     </section>
 
-    <section>
+    <section id="characterDisplayPane" class="pane">
       <h2>Characters</h2>
       <div id="characters"></div>
     </section>
   </main>
+
+  <section>
+    <div class="row">
+      <h2>Activity log</h2>
+
+      <button
+        id="exportActivityLogCsv"
+        type="button"
+        class="import"
+      >
+        Export CSV
+      </button>
+
+      <button
+        id="exportActivityLogJson"
+        type="button"
+        class="import"
+      >
+        Export JSON
+      </button>
+      <button
+        id="clearActivityLog"
+        type="button"
+        class="danger"
+      >
+        Clear log
+      </button>
+    </div>
+
+    <div id="activityLog" class="activity-log">
+      No activity recorded.
+    </div>
+  </section>
 
   <div id="tieModal" class="modal" hidden>
     <div>
@@ -374,6 +562,32 @@ ADMIN_HTML = r'''<!doctype html>
         <div class="actions">
           <button class="import">Import CSV</button>
           <button type="button" id="cancelCsvImport">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="battleActionModal" class="modal" hidden>
+    <div>
+      <h2 id="battleActionTitle">Battle actions</h2>
+
+      <p id="battleActionHelp">
+        Choose one or more targets and actions for the current combatant.
+      </p>
+
+      <form id="battleActionForm" class="battle-action-form">
+        <div id="battleActionRows"></div>
+
+        <div class="actions">
+          <button type="button" id="addBattleActionTarget">
+            Add target
+          </button>
+          <button type="submit" class="battle">
+            Apply
+          </button>
+          <button type="button" id="cancelBattleActions">
+            Cancel
+          </button>
         </div>
       </form>
     </div>
@@ -454,10 +668,14 @@ ADMIN_HTML = r'''<!doctype html>
     }
 
     function monsterRow(monster) {
+      const displayName = monster.ally
+        ? `${monster.name} - Ally`
+        : monster.name;
+
       return `
         <tr class="${monster.alive ? '' : 'dead'}">
           <td>
-            ${esc(monster.name)}
+            ${esc(displayName)}
             <br>
             <small>${esc(monster.monster_type)}</small>
           </td>
@@ -465,6 +683,7 @@ ADMIN_HTML = r'''<!doctype html>
           <td>${monster.hp}/${monster.max_hp}</td>
           <td>
             <input
+              class="initiative-edit"
               data-mi="${monster.id}"
               type="number"
               value="${monster.initiative ?? ''}"
@@ -477,10 +696,11 @@ ADMIN_HTML = r'''<!doctype html>
             <button class="${monster.ally ? 'on' : ''}" data-mally="${monster.id}">Ally</button>
             <button class="${monster.visible ? 'on' : ''}" data-mv="${monster.id}">Visible</button>
             <button data-mt="${monster.id}" class="${monster.in_turn ? 'on' : ''}">Turn</button>
-            <button data-r="${monster.id}" class="reset">Reset</button>
             <button data-t="${monster.id}" data-f="show_ac">AC ${monster.show_ac ? 'on' : 'off'}</button>
             <button data-t="${monster.id}" data-f="show_hp">HP ${monster.show_hp ? 'on' : 'off'}</button>
             <button data-t="${monster.id}" data-f="show_initiative">Init ${monster.show_initiative ? 'on' : 'off'}</button>
+            <button data-r="${monster.id}" class="reset">Reset</button>
+            <button type="button" class="danger" data-remove="${monster.id}" data-remove-kind="monster">Remove</button>
           </td>
           <td>
             <button data-d="${monster.id}" class="danger">Damage</button>
@@ -501,6 +721,7 @@ ADMIN_HTML = r'''<!doctype html>
           </td>
           <td>
             <input
+              class="initiative-edit"
               data-ci="${character.id}"
               type="number"
               value="${character.initiative ?? ''}"
@@ -514,6 +735,7 @@ ADMIN_HTML = r'''<!doctype html>
             <button class="${character.visible ? 'on' : ''}" data-cv="${character.id}">Visible</button>
             <button data-ct="${character.id}" class="${character.in_turn ? 'on' : ''}">Turn</button>
             <button data-cr="${character.id}" class="reset">Reset</button>
+            <button type="button" class="danger" data-remove="${character.id}" data-remove-kind="character">Remove</button>
           </td>
           <td>
             <button data-cd="${character.id}" class="danger">Damage</button>
@@ -658,9 +880,218 @@ ADMIN_HTML = r'''<!doctype html>
       }
     }
 
+    function updateBattleState(state) {
+      const battleState = document.querySelector('#battleState');
+
+      if (!battleState) {
+        return;
+      }
+
+      const battleOrder = Array.isArray(state?.battle_order)
+        ? state.battle_order
+        : [];
+
+      const battleActive = battleOrder.length > 0;
+
+      battleState.textContent = battleActive ? 'Active' : 'Inactive';
+      battleState.classList.toggle('active', battleActive);
+      battleState.classList.toggle('inactive', !battleActive);
+    }
+
+    function activityStateClass(state) {
+      return state === 'alive'
+        ? 'activity-state-alive'
+        : state === 'dead'
+          ? 'activity-state-dead'
+          : '';
+    }
+
+    function activityActionClass(action) {
+      if (action === 'heal' || action === 'buff') {
+        return 'activity-action-positive';
+      }
+
+      if (action === 'damage' || action === 'debuff') {
+        return 'activity-action-negative';
+      }
+
+      return '';
+    }
+
+    function activityTime(value) {
+      const date = new Date(value);
+
+      return Number.isNaN(date.getTime())
+        ? esc(value || '')
+        : esc(date.toLocaleString());
+    }
+
+    function renderActivityLog(entries) {
+      const container = document.querySelector('#activityLog');
+
+      if (!entries.length) {
+        container.textContent = 'No activity recorded.';
+        return;
+      }
+
+      const rows = [...entries]
+        .reverse()
+        .map(entry => `
+          <tr>
+            <td>${activityTime(entry.timestamp)}</td>
+            <td>${esc(entry.active_combatant || 'System')}</td>
+            <td class="${activityStateClass(entry.active_combatant_state)}">
+              ${esc(entry.active_combatant_state || 'unknown')}
+            </td>
+            <td>${esc(entry.target_combatant || '')}</td>
+            <td class="${activityStateClass(entry.target_combatant_state)}">
+              ${esc(entry.target_combatant_state || 'unknown')}
+            </td>
+            <td class="${activityActionClass(entry.action)}">
+              ${esc(entry.action || '')}
+            </td>
+            <td>${esc(entry.amount ?? '')}</td>
+          </tr>
+        `)
+        .join('');
+
+      container.innerHTML = `
+        <table>
+          <tr>
+            <th>Time</th>
+            <th>Active combatant</th>
+            <th>Active state</th>
+            <th>Target</th>
+            <th>Target state</th>
+            <th>Action</th>
+            <th>Amount</th>
+          </tr>
+          ${rows}
+        </table>
+      `;
+    }
+
+    function sortedMonstersForAdmin() {
+      const battleOrder = Array.isArray(latest.battle_order)
+        ? latest.battle_order
+        : [];
+
+      const battleActive = battleOrder.length > 0;
+
+      const battleOrderIndex = new Map(
+        battleOrder.map((id, index) => [id, index]),
+      );
+
+      function maxHp(monster) {
+        const value = Number(monster.max_hp);
+
+        return Number.isFinite(value)
+          ? value
+          : -Infinity;
+      }
+
+      function initiative(monster) {
+        const value = monster.initiative;
+
+        return typeof value === 'number' && Number.isFinite(value)
+          ? value
+          : null;
+      }
+
+      function byName(left, right) {
+        return String(left.name || '').localeCompare(
+          String(right.name || ''),
+          undefined,
+          {sensitivity: 'base'},
+        );
+      }
+
+      return [...latest.monsters].sort((left, right) => {
+        /*
+        * Group 1: Active monsters.
+        * Group 2: Inactive monsters.
+        */
+        if (Boolean(left.active) !== Boolean(right.active)) {
+          return left.active ? -1 : 1;
+        }
+
+        if (left.active) {
+          /*
+          * While a battle is active, retain the actual battle order for entries
+          * included in it. Active monsters not yet in that order follow.
+          */
+          if (battleActive) {
+            const leftOrder = battleOrderIndex.get(left.id);
+            const rightOrder = battleOrderIndex.get(right.id);
+
+            const leftInOrder = leftOrder !== undefined;
+            const rightInOrder = rightOrder !== undefined;
+
+            if (leftInOrder !== rightInOrder) {
+              return leftInOrder ? -1 : 1;
+            }
+
+            if (leftInOrder && rightInOrder && leftOrder !== rightOrder) {
+              return leftOrder - rightOrder;
+            }
+          }
+
+          /*
+          * Outside battle—or for active entries not present in an existing
+          * battle order—sort by Max HP descending.
+          */
+          if (maxHp(left) !== maxHp(right)) {
+            return maxHp(right) - maxHp(left);
+          }
+
+          return byName(left, right);
+        }
+
+        /*
+        * Inactive monsters:
+        * numeric initiative first, descending;
+        * null/blank initiative after numeric values;
+        * then Max HP descending.
+        */
+        const leftInitiative = initiative(left);
+        const rightInitiative = initiative(right);
+
+        const leftHasInitiative = leftInitiative !== null;
+        const rightHasInitiative = rightInitiative !== null;
+
+        if (leftHasInitiative !== rightHasInitiative) {
+          return leftHasInitiative ? -1 : 1;
+        }
+
+        if (
+          leftHasInitiative &&
+          rightHasInitiative &&
+          leftInitiative !== rightInitiative
+        ) {
+          return rightInitiative - leftInitiative;
+        }
+
+        if (maxHp(left) !== maxHp(right)) {
+          return maxHp(right) - maxHp(left);
+        }
+
+        return byName(left, right);
+      });
+    }
+
     async function load() {
       try {
         latest = await request('/api/state');
+
+        renderActivityLog(
+          Array.isArray(latest.activity_log)
+            ? latest.activity_log
+            : [],
+        );
+
+        updateBattleState(latest);
+
+        updatePaneVisibilityForBattle();
 
         document.querySelector('#monsters').innerHTML =
           '<table>' +
@@ -672,7 +1103,7 @@ ADMIN_HTML = r'''<!doctype html>
           '<th>Display/status</th>' +
           '<th>HP change</th>' +
           '</tr>' +
-          latest.monsters.map(monsterRow).join('') +
+          sortedMonstersForAdmin().map(monsterRow).join('') +
           '</table>';
 
         document.querySelector('#characters').innerHTML =
@@ -700,55 +1131,128 @@ ADMIN_HTML = r'''<!doctype html>
             .map(id => all().find(combatant => combatant.id === id))
             .filter(Boolean)
             .map(combatant => {
-              const name = esc(combatant.name);
+              const displayName = combatant.monster_type && combatant.ally
+                ? `${combatant.name} - Ally`
+                : combatant.name;
+
+              const name = esc(displayName);
 
               if (!combatant.in_turn) {
                 return name;
               }
 
               const color = esc(combatant.color || '#ffffff');
+              const combatantId = esc(combatant.id);
 
               return `
-                <strong><u>
-                  <span
-                    class="turn-marker"
-                    style="background:${color};color:${color}"
-                    aria-label="Current turn"
-                    title="Current turn"
-                  ></span>${name}
-                </u></strong>
+                <button
+                  type="button"
+                  class="battle-order-combatant active-turn"
+                  data-battle-actor="${combatantId}"
+                  title="Apply an action as ${name}"
+                >
+                  <strong><u>
+                    <span
+                      class="turn-marker"
+                      style="background:${color};color:${color}"
+                      aria-label="Current turn"
+                      title="Current turn"
+                    ></span>${name}
+                  </u></strong>
+                </button>
               `;
             })
             .join(' → ');
+
       } catch (error) {
         message(error.message);
       }
     }
 
-    function configurePaneToggle(buttonId, paneId, hiddenLabel, visibleLabel) {
-      const button = document.querySelector(buttonId);
-      const pane = document.querySelector(paneId);
+    const hideablePanes = [
+      {
+        button: document.querySelector('#toggleSetupPane'),
+        pane: document.querySelector('#setupInputPane'),
+        hiddenLabel: 'Hide setup input',
+        visibleLabel: 'Show setup input',
+      },
+      {
+        button: document.querySelector('#toggleMonsterPane'),
+        pane: document.querySelector('#monsterInputPane'),
+        hiddenLabel: 'Hide monster input',
+        visibleLabel: 'Show monster input',
+      },
+      {
+        button: document.querySelector('#toggleCharacterPane'),
+        pane: document.querySelector('#characterInputPane'),
+        hiddenLabel: 'Hide character input',
+        visibleLabel: 'Show character input',
+      },
+      {
+        button: document.querySelector('#toggleMonsterDisplayPane'),
+        pane: document.querySelector('#monsterDisplayPane'),
+        hiddenLabel: 'Hide monster display',
+        visibleLabel: 'Show monster display',
+      },
+      {
+        button: document.querySelector('#toggleCharacterDisplayPane'),
+        pane: document.querySelector('#characterDisplayPane'),
+        hiddenLabel: 'Hide character display',
+        visibleLabel: 'Show character display',
+      },
+    ];
 
-      button.onclick = () => {
-        pane.hidden = !pane.hidden;
-        button.textContent = pane.hidden ? visibleLabel : hiddenLabel;
-        button.setAttribute('aria-expanded', String(!pane.hidden));
-      };
+    // Tracks whether this page has already performed the automatic collapse for
+    // the current battle. Once set, a manually opened pane remains untouched.
+    let collapsedForBattle = false;
+
+    function setPaneHidden(control, hidden) {
+      control.pane.hidden = hidden;
+      control.button.textContent = hidden
+        ? control.visibleLabel
+        : control.hiddenLabel;
+      control.button.setAttribute('aria-expanded', String(!hidden));
     }
 
-    configurePaneToggle(
-      '#toggleMonsterPane',
-      '#monsterInputPane',
-      'Hide monster input',
-      'Show monster input',
-    );
+    function setAllHideablePanesHidden(hidden) {
+      hideablePanes.forEach(control => setPaneHidden(control, hidden));
+    }
 
-    configurePaneToggle(
-      '#toggleCharacterPane',
-      '#characterInputPane',
-      'Hide character input',
-      'Show character input',
-    );
+    hideablePanes.forEach(control => {
+      control.button.onclick = () => {
+        // This is intentionally only a direct UI change. It does not modify
+        // collapsedForBattle, so battle-state refreshes cannot re-hide a pane that
+        // the GM manually opened during the battle.
+        setPaneHidden(control, !control.pane.hidden);
+      };
+    });
+
+    function updatePaneVisibilityForBattle() {
+      const battleActive = Boolean(
+        latest &&
+        Array.isArray(latest.battle_order) &&
+        latest.battle_order.length,
+      );
+
+      if (battleActive) {
+        // Collapse once when a battle begins or an active setup is loaded.
+        // Subsequent load() calls from Next, edits, bulk actions, etc. do nothing.
+        if (!collapsedForBattle) {
+          setAllHideablePanesHidden(true);
+          collapsedForBattle = true;
+        }
+
+        return;
+      }
+
+      // A non-battle setup, a new setup, or Reset All restores the normal admin
+      // layout and prepares automatic collapse for the next battle.
+      if (collapsedForBattle) {
+        setAllHideablePanesHidden(false);
+      }
+
+      collapsedForBattle = false;
+    }
 
     document.querySelector('#editForm').onsubmit = async event => {
       event.preventDefault();
@@ -947,6 +1451,45 @@ ADMIN_HTML = r'''<!doctype html>
         message(error.message);
       } finally {
         submit.disabled = false;
+      }
+    };
+
+    document.querySelector('#exportActivityLogCsv').onclick = () => {
+      window.location.href = '/api/activity-log.csv';
+    };
+
+    document.querySelector('#exportActivityLogJson').onclick = () => {
+      window.location.href = '/api/activity-log.json';
+    };
+
+    document.querySelector('#clearActivityLog').onclick = async () => {
+      const currentCount = Array.isArray(latest?.activity_log)
+        ? latest.activity_log.length
+        : 0;
+
+      if (!currentCount) {
+        message('The activity log is already empty.');
+        return;
+      }
+
+      if (!confirm(`Clear all ${currentCount} activity log entries?`)) {
+        return;
+      }
+
+      try {
+        const result = await request('/api/activity-log/clear', {
+          method: 'POST',
+        });
+
+        await load();
+
+        message(
+          `Cleared ${result.cleared} activity log ${
+            result.cleared === 1 ? 'entry' : 'entries'
+          }.`,
+        );
+      } catch (error) {
+        message(error.message);
       }
     };
 
@@ -1168,8 +1711,215 @@ ADMIN_HTML = r'''<!doctype html>
       });
     });
 
-    document.addEventListener('click', event => {
-      const button = event.target;
+    const battleActionModal = document.querySelector('#battleActionModal');
+    const battleActionForm = document.querySelector('#battleActionForm');
+    const battleActionRows = document.querySelector('#battleActionRows');
+    let battleActionActorId = null;
+
+    function activeBattleTargets() {
+      if (!latest) {
+        return [];
+      }
+
+      return [...latest.monsters, ...latest.characters]
+        .filter(combatant => combatant.active && combatant.alive)
+        .sort((left, right) => left.name.localeCompare(right.name));
+    }
+
+    function closeBattleActions() {
+      battleActionModal.hidden = true;
+      battleActionActorId = null;
+      battleActionRows.innerHTML = '';
+    }
+
+    function actionAmountRequired(action) {
+      return action === 'damage' || action === 'heal';
+    }
+
+    function updateActionRowAmount(row) {
+      const action = row.querySelector('[data-action-kind]').value;
+      const amountField = row.querySelector('.amount-field');
+      const amountInput = row.querySelector('[data-action-amount]');
+      const required = actionAmountRequired(action);
+
+      amountField.hidden = !required;
+      amountInput.required = required;
+
+      if (!required) {
+        amountInput.value = '';
+      }
+    }
+
+    function addBattleActionRow() {
+      const targets = activeBattleTargets();
+
+      if (!targets.length) {
+        message('There are no active living combatants available as targets.');
+        return;
+      }
+
+      const row = document.createElement('div');
+      row.className = 'battle-action-row';
+
+      row.innerHTML = `
+        <label>
+          Target
+          <select data-action-target required>
+            ${targets.map(target => `
+              <option value="${esc(target.id)}">
+                ${esc(target.monster_type && target.ally ? `${target.name} - Ally` : (!target.monster_type) ? `${target.name} - Character` : `${target.name} - Monster`)}
+              </option>
+            `).join('')}
+          </select>
+        </label>
+
+        <label>
+          Action
+          <select data-action-kind required>
+            <option value="damage">Damage</option>
+            <option value="heal">Heal</option>
+            <option value="buff">Buff</option>
+            <option value="debuff">Debuff</option>
+          </select>
+        </label>
+
+        <label class="amount-field">
+          Amount
+          <input data-action-amount type="number" min="1" max="99999" value="1">
+        </label>
+
+        <button type="button" class="danger" data-remove-action-row>
+          Remove
+        </button>
+      `;
+
+      row.querySelector('[data-action-kind]').addEventListener('change', () => {
+        updateActionRowAmount(row);
+      });
+
+      row.querySelector('[data-remove-action-row]').addEventListener('click', () => {
+        row.remove();
+
+        if (!battleActionRows.children.length) {
+          addBattleActionRow();
+        }
+      });
+
+      battleActionRows.appendChild(row);
+      updateActionRowAmount(row);
+    }
+
+    function openBattleActions(actorId) {
+      const actor = [...latest.monsters, ...latest.characters]
+        .find(combatant => combatant.id === actorId);
+
+      if (!actor || !actor.active || !actor.alive || !actor.in_turn) {
+        message('Only the current active combatant can perform battle actions.');
+        return;
+      }
+
+      battleActionActorId = actorId;
+      document.querySelector('#battleActionTitle').textContent =
+        `Battle actions: ${actor.name}`;
+
+      battleActionRows.innerHTML = '';
+      addBattleActionRow();
+      battleActionModal.hidden = false;
+    }
+
+    document.querySelector('#addBattleActionTarget').onclick = () => {
+      addBattleActionRow();
+    };
+
+    document.querySelector('#cancelBattleActions').onclick = closeBattleActions;
+
+    battleActionModal.addEventListener('click', event => {
+      if (event.target === battleActionModal) {
+        closeBattleActions();
+      }
+    });
+
+    battleActionForm.onsubmit = async event => {
+      event.preventDefault();
+
+      if (!battleActionActorId) {
+        return;
+      }
+
+      const rows = [...battleActionRows.querySelectorAll('.battle-action-row')];
+
+      const actions = rows.map(row => {
+        const action = row.querySelector('[data-action-kind]').value;
+        const rawAmount = row.querySelector('[data-action-amount]').value;
+
+        return {
+          target_id: row.querySelector('[data-action-target]').value,
+          action,
+          amount: actionAmountRequired(action) ? Number(rawAmount) : null,
+        };
+      });
+
+      const applyButton = battleActionForm.querySelector('button[type="submit"]');
+      applyButton.disabled = true;
+
+      try {
+        const result = await request('/api/battle/actions', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            actor_id: battleActionActorId,
+            actions,
+          }),
+        });
+
+        closeBattleActions();
+        await load();
+        message(`Applied ${result.applied} battle action${result.applied === 1 ? '' : 's'}.`);
+      } catch (error) {
+        message(error.message);
+      } finally {
+        applyButton.disabled = false;
+      }
+    };
+
+    document.addEventListener('click', async event => {
+      const button = event.target.closest('button');
+
+      if (!button) {
+        return;
+      }
+
+      if (button.dataset.remove) {
+        const id = button.dataset.remove;
+        const kind = button.dataset.removeKind || 'combatant';
+        const row = button.closest('tr');
+        const name = row?.querySelector('td')?.textContent.trim() || kind;
+
+        if (!confirm(`Remove ${kind} “${name}” from the current encounter?`)) {
+          return;
+        }
+
+        button.disabled = true;
+
+        try {
+          const result = await request(`/api/combatants/${encodeURIComponent(id)}`, {
+            method: 'DELETE',
+          });
+
+          await load();
+          message(`Removed ${result.name}.`);
+        } catch (error) {
+          message(error.message);
+          button.disabled = false;
+        }
+
+        return;
+      }
+
+      if (button.dataset.battleActor) {
+        openBattleActions(button.dataset.battleActor);
+        return;
+      }
 
       if (button.dataset.edit) {
         openEdit(button.dataset.kind, button.dataset.edit);

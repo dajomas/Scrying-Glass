@@ -83,13 +83,13 @@ CLIENT_HTML = r'''<!doctype html>
       align-items: center;
       text-align: center;
       padding: 1vh 1vw;
-      border-radius: 12px;
+      border-radius: 25px;
       background: linear-gradient(
         135deg,
         rgba(0, 0, 0, .58),
         rgba(0, 0, 0, .2)
       );
-      border: 2px solid currentColor;
+      border: 15px solid currentColor;
       box-shadow: 0 6px 18px rgba(0, 0, 0, .45);
       overflow: hidden;
       transition: transform .7s ease, opacity .7s ease;
@@ -101,6 +101,31 @@ CLIENT_HTML = r'''<!doctype html>
       object-fit: contain;
       border-radius: 12px;
       filter: drop-shadow(0 7px 14px #000);
+    }
+
+    .monster .text-panel {
+      max-width: 94%;
+      padding: 0.45em 0.7em 0.55em;
+      border-radius: 10px;
+      background: var(--text-panel-background, #111827);
+      color: var(--text-panel-color, #ffffff);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.55);
+    }
+
+    .monster .text-panel h1 {
+      color: inherit;
+      margin: 0;
+      text-shadow: none;
+    }
+
+    .monster .text-panel .type {
+      color: inherit;
+      margin-top: 0.22em;
+    }
+
+    .monster .text-panel .stats {
+      color: inherit;
+      margin-top: 0.38em;
     }
 
     h1 {
@@ -196,6 +221,31 @@ CLIENT_HTML = r'''<!doctype html>
       return luminance > .55 ? '#111827' : '#fff';
     }
 
+    function textPanelStyle(hex) {
+      const value = String(hex || '').replace('#', '');
+
+      if (!/^[0-9a-fA-F]{6}$/.test(value)) {
+        return {
+          background: '#111827',
+          color: '#ffffff',
+        };
+      }
+
+      const red = parseInt(value.slice(0, 2), 16);
+      const green = parseInt(value.slice(2, 4), 16);
+      const blue = parseInt(value.slice(4, 6), 16);
+
+      const brightness = (
+        0.2126 * red +
+        0.7152 * green +
+        0.0722 * blue
+      );
+
+      return brightness > 150
+        ? {background: '#111827', color: '#ffffff'}
+        : {background: '#f8fafc', color: '#111827'};
+    }
+
     function entryClass(display) {
       return display.entry_direction === 'from_top'
         ? 'enter-top'
@@ -274,10 +324,16 @@ CLIENT_HTML = r'''<!doctype html>
 
       initiative.hidden = initiativeCombatants.length === 0;
 
+      function displayCombatantName(combatant) {
+        return combatant.monster_type && combatant.ally
+          ? `${combatant.name} - Ally`
+          : combatant.name;
+      }
+
       initiative.innerHTML = initiativeCombatants.map(combatant =>
         `<span class="token ${combatant.alive ? '' : 'dead'} ${combatant.in_turn ? 'turn' : ''}"
           style="background:${esc(combatant.color)};color:${readableText(combatant.color)}">
-          ${esc(combatant.name)}
+          ${esc(displayCombatantName(combatant))}
         </span>`
       ).join('');
 
@@ -345,6 +401,10 @@ CLIENT_HTML = r'''<!doctype html>
         card.style.gridColumn = String(column);
         card.style.color = monster.color;
 
+        const panel = textPanelStyle(monster.color);
+        card.style.setProperty('--text-panel-background', panel.background);
+        card.style.setProperty('--text-panel-color', panel.color);
+
         const stats = [];
 
         if (monster.show_ac) {
@@ -355,21 +415,19 @@ CLIENT_HTML = r'''<!doctype html>
           stats.push(`HP ${monster.hp}/${monster.max_hp}`);
         }
 
-        if (
-          monster.show_initiative &&
-          monster.initiative !== null
-        ) {
+        if (monster.show_initiative && monster.initiative !== null) {
           stats.push(`Initiative ${monster.initiative}`);
         }
 
         card.innerHTML = `
-          ${monster.image_url
-            ? `<img src="${esc(monster.image_url)}" alt="">`
-            : ''}
-          <h1>${esc(monster.name)}${monster.in_turn ? ' ◀' : ''}</h1>
-          <div class="type">${esc(monster.monster_type)}</div>
-          <div class="stats">${stats.join(' · ')}</div>
+          ${monster.image_url ? `<img src="${esc(monster.image_url)}" alt="">` : ''}
+          <div class="text-panel">
+            <h1>${esc(displayCombatantName(monster))}${monster.in_turn ? ' ◀' : ''}</h1>
+            <div class="type">${esc(monster.monster_type)}</div>
+            <div class="stats">${stats.join(' · ')}</div>
+          </div>
         `;
+        
       });
 
       previous = current;
