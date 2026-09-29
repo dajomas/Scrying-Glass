@@ -1822,9 +1822,13 @@ ADMIN_HTML = r'''<!doctype html>
       }
     };
 
-    document.querySelector('#switchCampaign').onclick = async () => {
-      const slug = document.querySelector('#campaignSelect').value;
+    async function switchCampaign() {
+      const campaignSelect = document.querySelector('#campaignSelect');
+      const slug = campaignSelect.value;
+      // Put the dropdown back on the active campaign when the switch does not happen.
+      const revert = () => { campaignSelect.value = campaignData.active || ''; };
       if (!slug) {
+        revert();
         message('Choose a campaign to switch to');
         return;
       }
@@ -1834,6 +1838,7 @@ ADMIN_HTML = r'''<!doctype html>
       }
       const target = campaignBySlug(slug);
       if (!confirm(`Switch to campaign ${target ? target.name : slug}?\n\n${REPLACE_WARNING}`)) {
+        revert();
         return;
       }
       try {
@@ -1844,9 +1849,14 @@ ADMIN_HTML = r'''<!doctype html>
         const opened = await applyOpenedSetup(campaignData);
         message(`Switched to campaign: ${activeCampaign()?.name || slug}${opened}`);
       } catch (error) {
+        revert();
         message(error.message);
       }
-    };
+    }
+
+    document.querySelector('#switchCampaign').onclick = switchCampaign;
+    // Selecting another campaign in the dropdown switches to it immediately.
+    document.querySelector('#campaignSelect').onchange = switchCampaign;
 
     document.querySelector('#deleteCampaign').onclick = () => {
       const campaign = campaignBySlug(document.querySelector('#campaignSelect').value);
@@ -2001,15 +2011,25 @@ ADMIN_HTML = r'''<!doctype html>
       }
     };
 
-    document.querySelector('#loadSetup').onclick = async () => {
-      const name = document.querySelector('#setupSelect').value;
+    async function loadSelectedSetup(event) {
+      const setupSelect = document.querySelector('#setupSelect');
+      const name = setupSelect.value;
+      const fromDropdown = event && event.type === 'change';
+      // Put the dropdown back on the currently loaded setup when the load does not happen.
+      const revert = () => {
+        const current = document.querySelector('#setupName').value;
+        setupSelect.value = [...setupSelect.options].some(option => option.value === current) ? current : '';
+      };
 
       if (!name) {
-        message('Choose a saved setup to load');
+        if (!fromDropdown) {
+          message('Choose a saved setup to load');
+        }
         return;
       }
 
       if (!confirm(`Load ${name} and replace the current battle setup?`)) {
+        revert();
         return;
       }
 
@@ -2026,9 +2046,14 @@ ADMIN_HTML = r'''<!doctype html>
         await load();
         message(`Loaded setup: ${result.name} (campaign: ${campaignBySlug(result.campaign)?.name || result.campaign})`);
       } catch (error) {
+        revert();
         message(error.message);
       }
-    };
+    }
+
+    document.querySelector('#loadSetup').onclick = loadSelectedSetup;
+    // Selecting another battle setup in the dropdown loads it immediately.
+    document.querySelector('#setupSelect').onchange = loadSelectedSetup;
 
     document.querySelector('#monsterForm').onsubmit = async event => {
       event.preventDefault();
