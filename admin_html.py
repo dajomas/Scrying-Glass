@@ -794,6 +794,14 @@ ADMIN_HTML = r'''<!doctype html>
       }
     }
 
+    // Colored dot in front of a combatant's name, styled like the battle-order
+    // turn marker, showing the color chosen for that combatant.
+    function colorMarker(combatant, fallback) {
+      const color = esc(combatant.color || fallback);
+      return `<span class="turn-marker" style="background:${color};color:${color}"` +
+        ` title="Color: ${color}" aria-hidden="true"></span>`;
+    }
+
     function monsterRow(monster) {
       const displayName = monster.ally
         ? `${monster.name} - Ally`
@@ -802,7 +810,7 @@ ADMIN_HTML = r'''<!doctype html>
       return `
         <tr class="${monster.alive ? '' : 'dead'}">
           <td>
-            ${esc(displayName)}
+            ${colorMarker(monster, '#842029')}${esc(displayName)}
             <br>
             <small>${esc(monster.monster_type)}</small>
           </td>
@@ -840,7 +848,7 @@ ADMIN_HTML = r'''<!doctype html>
     function characterRow(character) {
       return `
         <tr class="${character.alive ? '' : 'dead'}">
-          <td>${esc(character.name)}</td>
+          <td>${colorMarker(character, '#1f4e79')}${esc(character.name)}</td>
           <td>
             <input class="hp-edit" data-chp="${character.id}" type="number" min="0" value="${character.hp}">
             /
