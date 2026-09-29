@@ -1765,6 +1765,23 @@ ADMIN_HTML = r'''<!doctype html>
       openCampaignModal(campaign);
     };
 
+    // After a campaign is activated the server opens its most recently worked on
+    // (or newest) battle setup. Reflect that in the setup controls and reload state.
+    async function applyOpenedSetup(result) {
+      renderCampaigns();
+      if (!result || !result.opened_setup) {
+        return '';
+      }
+      document.querySelector('#setupName').value = result.opened_setup;
+      document.querySelector('#setupSelect').value = result.opened_setup;
+      await load();
+      return ` — opened battle setup: ${result.opened_setup}`;
+    }
+
+    const REPLACE_WARNING =
+      'The current battle will be replaced by the campaign\'s most recently used battle setup. ' +
+      'Unsaved changes will be lost.';
+
     document.querySelector('#campaignForm').onsubmit = async event => {
       event.preventDefault();
       const form = event.target;
@@ -1785,13 +1802,18 @@ ADMIN_HTML = r'''<!doctype html>
           });
           message(`Updated campaign: ${name}`);
         } else {
+          if (!confirm(`Create and switch to campaign ${name}?\n\n${REPLACE_WARNING}`)) {
+            return;
+          }
           campaignData = await request('/api/campaigns', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({name, description, activate: true}),
           });
-          document.querySelector('#setupSelect').value = '';
-          message(`Created and switched to campaign: ${name}`);
+          closeCampaignModal();
+          const opened = await applyOpenedSetup(campaignData);
+          message(`Created and switched to campaign: ${name}${opened}`);
+          return;
         }
         closeCampaignModal();
         renderCampaigns();
@@ -1810,13 +1832,17 @@ ADMIN_HTML = r'''<!doctype html>
         message(`${activeCampaign()?.name || slug} is already the active campaign`);
         return;
       }
+      const target = campaignBySlug(slug);
+      if (!confirm(`Switch to campaign ${target ? target.name : slug}?\n\n${REPLACE_WARNING}`)) {
+        return;
+      }
       try {
         campaignData = await request(`/api/campaigns/${encodeURIComponent(slug)}/activate`, {
           method: 'POST',
         });
         document.querySelector('#setupSelect').value = '';
-        renderCampaigns();
-        message(`Switched to campaign: ${activeCampaign()?.name || slug}`);
+        const opened = await applyOpenedSetup(campaignData);
+        message(`Switched to campaign: ${activeCampaign()?.name || slug}${opened}`);
       } catch (error) {
         message(error.message);
       }
@@ -1854,6 +1880,12 @@ ADMIN_HTML = r'''<!doctype html>
       const campaign = campaignBySlug(slug);
       const moveTo = document.querySelector('#campaignDeleteMoveTo').value;
       const query = campaign && campaign.setups.length ? `?move_to=${encodeURIComponent(moveTo)}` : '';
+      if (slug === campaignData.active && !confirm(
+        `${campaign ? campaign.name : slug} is the active campaign. After deleting it another campaign ` +
+        `becomes active.\n\n${REPLACE_WARNING}`,
+      )) {
+        return;
+      }
       try {
         const result = await request(`/api/campaigns/${encodeURIComponent(slug)}${query}`, {
           method: 'DELETE',
@@ -1861,10 +1893,11 @@ ADMIN_HTML = r'''<!doctype html>
         campaignData = result;
         campaignDeleteModal.hidden = true;
         document.querySelector('#setupSelect').value = '';
-        renderCampaigns();
+        const opened = await applyOpenedSetup(result);
         message(
           `Deleted campaign: ${campaign ? campaign.name : slug}` +
-          (result.moved && result.moved.length ? ` (moved ${result.moved.length} setup(s))` : ''),
+          (result.moved && result.moved.length ? ` (moved ${result.moved.length} setup(s))` : '') +
+          opened,
         );
       } catch (error) {
         message(error.message);
