@@ -256,7 +256,7 @@ The configuration-level `display.background` is not the active setup's backgroun
 {
   "id": "uuid-hex",
   "name": "Ice Guard",
-  "monster_type": "humanoid",
+  "monster_species": "humanoid",
   "ac": 16,
   "hp": 45,
   "max_hp": 45,
@@ -432,7 +432,7 @@ The Monster bulk field must be one of `active`, `ally`, `show_ac`, `show_hp`, or
 
 CSV data must be UTF-8, with BOM accepted, must include a header row, and must contain at least one nonblank row. Headers are trimmed and case-folded. Boolean fields accept `true`/`false`, `yes`/`no`, `on`/`off`, and `1`/`0`.
 
-Monster CSV requires `name`, `monster_type` or `type`, `ac`, and `hp`. Character CSV requires `name`. Missing or blank IDs receive a generated UUID hex value. Duplicate CSV IDs and IDs already present in the working encounter return HTTP 400.
+Monster CSV requires `name`, `monster_species` or `type`, `ac`, and `hp`. Character CSV requires `name`. Missing or blank IDs receive a generated UUID hex value. Duplicate CSV IDs and IDs already present in the working encounter return HTTP 400.
 
 Setup import deep-copies selected combatants, generates fresh IDs, preserves source `hp` and `max_hp`, derives `alive` from current HP, restores `initiative` from `original_initiative`, clears active/visible/turn flags, and does not modify the current battle order.
 
