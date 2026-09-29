@@ -3,7 +3,7 @@ ADMIN_HTML = r'''<!doctype html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Monster Display Admin</title>
+  <title>Scrying Glass Admin</title>
 
   <style>
     body {
@@ -312,7 +312,7 @@ ADMIN_HTML = r'''<!doctype html>
 </head>
 <body>
   <main>
-    <h1>Monster Display — Admin</h1>
+    <h1>Scrying Glass — Admin</h1>
     <p id="message" class="message"></p>
 
     <section>

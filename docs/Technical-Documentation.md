@@ -1,6 +1,6 @@
-# Monster Display Technical Documentation
+# Scrying Glass Technical Documentation
 
-Monster Display is a single-process Python/FastAPI application for a GM-controlled tabletop battle display. It runs distinct Admin and Client FastAPI applications, keeps their encounter state in shared process memory, persists the state as JSON, and sends Client Display updates through WebSockets.
+Scrying Glass is a single-process Python/FastAPI application for a GM-controlled tabletop battle display. It runs distinct Admin and Client FastAPI applications, keeps their encounter state in shared process memory, persists the state as JSON, and sends Client Display updates through WebSockets.
 
 See the [README](../README.md) for installation and [User Guide](User-Guide.md) for feature use.
 
@@ -9,7 +9,7 @@ See the [README](../README.md) for installation and [User Guide](User-Guide.md) 
 The current project keeps server logic in one primary module and separates the embedded browser UIs into Python modules:
 
 ```text
-monster_display_server.py  # FastAPI apps, state, models, rules, routes, startup
+scrying_glass_server.py  # FastAPI apps, state, models, rules, routes, startup
 admin_html.py              # ADMIN_HTML: Admin HTML, CSS, JavaScript
 client_html.py             # CLIENT_HTML: Client HTML, CSS, JavaScript
 login_html.py              # LOGIN: shared login form
@@ -50,7 +50,7 @@ network:
   admin_port: 3000
   client_port: 4000
 
-storage_dir: "./monster-display-data"
+storage_dir: "./scrying-glass-data"
 
 security:
   users:
@@ -87,12 +87,12 @@ display:
 Example CLI:
 
 ```bash
-python3.14 monster_display_server.py \
-  --config /etc/monster-display/config.yaml \
+python3.14 scrying_glass_server.py \
+  --config /etc/scrying-glass/config.yaml \
   --bind 0.0.0.0 \
   --admin-port 3000 \
   --client-port 4000 \
-  --storage-dir /var/lib/monster-display
+  --storage-dir /var/lib/scrying-glass
 ```
 
 ## Authentication
@@ -103,10 +103,10 @@ The two applications use different cookie names:
 
 | Application | Cookie |
 |---|---|
-| Admin | `monster_admin_session` |
-| Client Display | `monster_client_session` |
+| Admin | `scrying_glass_admin_session` |
+| Client Display | `scrying_glass_client_session` |
 
-Cookies are scoped by hostname rather than port, so the separate names allow both applications to be signed into in the same browser. The legacy `monster_session` cookie is deleted on successful login.
+Cookies are scoped by hostname rather than port, so the separate names allow both applications to be signed into in the same browser. The legacy cookies from before the rename (`monster_session`, `monster_admin_session`, `monster_client_session`) are deleted on successful login.
 
 Admin-only mutation routes use:
 
@@ -125,17 +125,17 @@ scrypt$<salt_hex>$<digest_hex>
 Generate a hash with:
 
 ```bash
-python3.14 -c 'from monster_display_server import password_hash; print(password_hash("replace-me"))'
+python3.14 -c 'from scrying_glass_server import password_hash; print(password_hash("replace-me"))'
 ```
 
 Sessions are lost at process restart.
 
 ## Persistence
 
-For `storage_dir: /var/lib/monster-display`:
+For `storage_dir: /var/lib/scrying-glass`:
 
 ```text
-/var/lib/monster-display/
+/var/lib/scrying-glass/
 ├── state.json
 ├── campaigns.json
 ├── uploads/
@@ -415,7 +415,7 @@ The `.monster` import route accepts a UTF-8 JSON file and extracts usable values
 - Armor Class from supported AC-related fields
 - Hit Points from the supported HP text/value fields
 
-The [Tetra-cube D&D 5e Statblock Generator](https://tetra-cube.com/dnd/dnd-statblock.html) is a recommended external authoring tool for compatible monster statblocks. Monster Display does not bundle, control, or depend on the Tetra-cube site at runtime; it only accepts an uploaded `.monster` file.
+The [Tetra-cube D&D 5e Statblock Generator](https://tetra-cube.com/dnd/dnd-statblock.html) is a recommended external authoring tool for compatible monster statblocks. Scrying Glass does not bundle, control, or depend on the Tetra-cube site at runtime; it only accepts an uploaded `.monster` file.
 
 ## Combat rules
 
@@ -475,22 +475,22 @@ The Admin Monster table uses a presentation-only sort: active first; active batt
 Validate syntax after updates:
 
 ```bash
-python3.14 -m py_compile monster_display_server.py admin_html.py client_html.py login_html.py
+python3.14 -m py_compile scrying_glass_server.py admin_html.py client_html.py login_html.py
 ```
 
 Minimal `systemd` unit:
 
 ```ini
 [Unit]
-Description=Monster Display
+Description=Scrying Glass
 After=network.target
 
 [Service]
 Type=simple
-User=monsterdisplay
-Group=monsterdisplay
-WorkingDirectory=/opt/monster-display
-ExecStart=/opt/monster-display/.venv/bin/python /opt/monster-display/monster_display_server.py --config /etc/monster-display/config.yaml
+User=scryingglass
+Group=scryingglass
+WorkingDirectory=/opt/scrying-glass
+ExecStart=/opt/scrying-glass/.venv/bin/python /opt/scrying-glass/scrying_glass_server.py --config /etc/scrying-glass/config.yaml
 Restart=on-failure
 RestartSec=3
 

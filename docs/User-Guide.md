@@ -1,6 +1,6 @@
-# Monster Display User Guide
+# Scrying Glass User Guide
 
-Monster Display lets a game master prepare and run an encounter from the **Admin** screen while players watch a separate, live **Client Display**. The Client Display receives encounter changes through a WebSocket connection.
+Scrying Glass lets a game master prepare and run an encounter from the **Admin** screen while players watch a separate, live **Client Display**. The Client Display receives encounter changes through a WebSocket connection.
 
 For installation and configuration, see the repository [README](../README.md). For architecture and API details, see [Technical Documentation](Technical-Documentation.md).
 
@@ -9,7 +9,7 @@ For installation and configuration, see the repository [README](../README.md). F
 Start the application with a configuration file:
 
 ```bash
-python3.14 monster_display_server.py --config config.yaml
+python3.14 scrying_glass_server.py --config config.yaml
 ```
 
 | Screen | Address | Login role |
@@ -46,7 +46,7 @@ Save, Load, Rename, and Delete in the Battle setups row always work on the activ
 
 ### The Default campaign
 
-At startup, and whenever the Admin page refreshes the campaign list, Monster Display checks for battle setups that are not connected to a campaign. These are setups saved by a version before campaigns existed. If any are found:
+At startup, and whenever the Admin page refreshes the campaign list, Scrying Glass checks for battle setups that are not connected to a campaign. These are setups saved by a version before campaigns existed. If any are found:
 
 1. A campaign named **Default** is created, if it does not exist yet.
 2. The unconnected setups are moved into **Default**. If a name is already taken, the moved setup gets a `-2`, `-3`, … suffix.
@@ -172,18 +172,18 @@ Each copy receives a unique ID and independent runtime values. Uploaded images t
 
 ### Import `.monster`
 
-Monster Display imports compatible JSON `.monster` files. A recommended tool for creating or editing these files is the [Tetra-cube D&D 5e Statblock Generator](https://tetra-cube.com/dnd/dnd-statblock.html).
+Scrying Glass imports compatible JSON `.monster` files. A recommended tool for creating or editing these files is the [Tetra-cube D&D 5e Statblock Generator](https://tetra-cube.com/dnd/dnd-statblock.html).
 
 1. Open the Tetra-cube generator.
 2. Create or edit the monster statblock.
 3. Save or export the compatible `.monster` JSON file.
-4. In Monster Display, choose the file in the Add monster pane.
+4. In Scrying Glass, choose the file in the Add monster pane.
 5. Optionally select quantity, color, and an image.
 6. Click **Import .monster**.
 
-Monster Display reads the monster name, type, Armor Class, and Hit Points from the imported file. A manually selected image takes precedence over the optional D&D Beyond image lookup.
+Scrying Glass reads the monster name, type, Armor Class, and Hit Points from the imported file. A manually selected image takes precedence over the optional D&D Beyond image lookup.
 
-> The Tetra-cube generator is an external website and is not affiliated with Monster Display. Its availability and file-export behavior are controlled by that site.
+> The Tetra-cube generator is an external website and is not affiliated with Scrying Glass. Its availability and file-export behavior are controlled by that site.
 
 ### Add character
 
@@ -227,7 +227,7 @@ brom-1,Brom,48,48,11,#0f766e,false,false
 
 Optional fields include `id`, `hp`, `max_hp`, `original_hp`, `initiative`, `original_initiative`, `color`, `active`, `alive`, and `visible`.
 
-For either CSV type, a provided non-empty ID is retained. If the `id` field is absent or blank, Monster Display generates a unique ID. Duplicate IDs in the CSV or conflicts with the active encounter are rejected. Boolean values accept `true`/`false`, `yes`/`no`, `on`/`off`, or `1`/`0`.
+For either CSV type, a provided non-empty ID is retained. If the `id` field is absent or blank, Scrying Glass generates a unique ID. Duplicate IDs in the CSV or conflicts with the active encounter are rejected. Boolean values accept `true`/`false`, `yes`/`no`, `on`/`off`, or `1`/`0`.
 
 ## Color markers
 

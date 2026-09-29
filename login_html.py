@@ -3,7 +3,7 @@ LOGIN = '''<!doctype html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Sign in</title>
+  <title>Sign in — Scrying Glass</title>
 
   <style>
     body {
@@ -45,7 +45,7 @@ LOGIN = '''<!doctype html>
 </head>
 <body>
   <form method="post">
-    <h1>Monster Display</h1>
+    <h1>Scrying Glass</h1>
 
     <input
       name="username"

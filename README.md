@@ -1,6 +1,8 @@
-# Monster Display
+# Scrying Glass
 
-Monster Display is a self-hosted, real-time tabletop encounter display for game masters. It provides a private **Admin** interface for preparing and running encounters and a separate **Client Display** for players, a TV, or a projector.
+> Formerly **Monster Display** (`monster_display_server`). Upgrading an existing installation? See [Renaming from Monster Display](#renaming-from-monster-display).
+
+Scrying Glass is a self-hosted, real-time tabletop encounter display for game masters. It provides a private **Admin** interface for preparing and running encounters and a separate **Client Display** for players, a TV, or a projector.
 
 The application runs two FastAPI services from one Python process, persists encounters as JSON, serves uploaded monster images, and pushes live display updates over WebSockets.
 
@@ -10,7 +12,7 @@ This project is for 98% Vibe-coded using Perplexity.ai
 
 - [User Guide](docs/User-Guide.md) — GM workflow, campaigns, battle setups, encounter controls, imports, battle actions, and troubleshooting.
 - [Technical Documentation](docs/Technical-Documentation.md) — architecture, state model, campaign registry, API routes, persistence, and operations.
-- [Systemd Deployment](docs/Systemd-Deployment.md) — running Monster Display as a hardened `systemd` service, including upgrades.
+- [Systemd Deployment](docs/Systemd-Deployment.md) — running Scrying Glass as a hardened `systemd` service, including upgrades.
 - For a GitHub Wiki, add these documents as `Home.md`, `User-Guide.md`, `Technical-Documentation.md`, and `Systemd-Deployment.md`.
 
 ### Campaign documentation
@@ -67,8 +69,8 @@ python-multipart
 ## Installation
 
 ```bash
-git clone https://github.com/dajomas/monster_display_server.git
-cd monster_display_server
+git clone https://github.com/dajomas/scrying-glass.git
+cd scrying-glass
 
 git checkout features/development
 
@@ -81,7 +83,7 @@ python3.14 -m pip install "fastapi>=0.115" "uvicorn[standard]>=0.30" "PyYAML>=6.
 The current split UI/source layout uses these modules in the same directory:
 
 ```text
-monster_display_server.py
+scrying_glass_server.py
 admin_html.py
 client_html.py
 login_html.py
@@ -101,8 +103,8 @@ Replace the example passwords before starting the service.
 Validate and start the application:
 
 ```bash
-python3.14 -m py_compile monster_display_server.py admin_html.py client_html.py login_html.py
-python3.14 monster_display_server.py --config config.yaml
+python3.14 -m py_compile scrying_glass_server.py admin_html.py client_html.py login_html.py
+python3.14 scrying_glass_server.py --config config.yaml
 ```
 
 Open the following pages, replacing `SERVER` with the server hostname or IP address:
@@ -127,7 +129,7 @@ network:
   admin_port: 3000
   client_port: 4000
 
-storage_dir: "./monster-display-data"
+storage_dir: "./scrying-glass-data"
 
 security:
   users:
@@ -155,7 +157,7 @@ display:
   background: "url('/media/bgimage.png')"
 ```
 
-The Client Display centers image backgrounds, prevents tiling, and scales them with `cover`. Store the file `bgimage.png` in the `monster-display-data/uploads` directory (See below under [Data storage](#data-storage))
+The Client Display centers image backgrounds, prevents tiling, and scales them with `cover`. Store the file `bgimage.png` in the `scrying-glass-data/uploads` directory (See below under [Data storage](#data-storage))
 
 ## Typical encounter workflow
 
@@ -173,7 +175,7 @@ The Client Display centers image backgrounds, prevents tiling, and scales them w
 
 ## Creating `.monster` files
 
-Monster Display can import compatible `.monster` JSON files. A practical way to create or edit them is the [Tetra-cube D&D 5e Statblock Generator](https://tetra-cube.com/dnd/dnd-statblock.html).
+Scrying Glass can import compatible `.monster` JSON files. A practical way to create or edit them is the [Tetra-cube D&D 5e Statblock Generator](https://tetra-cube.com/dnd/dnd-statblock.html).
 
 When preparing a monster for import, ensure its statblock contains usable values for:
 
@@ -182,14 +184,14 @@ When preparing a monster for import, ensure its statblock contains usable values
 - Armor Class
 - Hit Points
 
-Monster Display uses those values when it creates the encounter entry. Add a color, quantity, and optional image in the Admin import form.
+Scrying Glass uses those values when it creates the encounter entry. Add a color, quantity, and optional image in the Admin import form.
 
 ## Data storage
 
 All persistent runtime data is stored under `storage_dir`:
 
 ```text
-monster-display-data/
+scrying-glass-data/
 ├── state.json
 ├── campaigns.json
 ├── uploads/
@@ -203,9 +205,24 @@ monster-display-data/
 
 Back up the complete directory, including `campaigns.json` and `uploads/`, because state/setup files can reference uploaded images.
 
+## Renaming from Monster Display
+
+Version 4.16 renames the project from Monster Display to Scrying Glass:
+
+| Before | After |
+|---|---|
+| `monster_display_server.py` | `scrying_glass_server.py` |
+| `./monster-display-data` (default `storage_dir`) | `./scrying-glass-data` |
+| Cookies `monster_admin_session` / `monster_client_session` | `scrying_glass_admin_session` / `scrying_glass_client_session` |
+
+- **Start command:** update scripts such as `run.sh` to start `scrying_glass_server.py`.
+- **Data:** if your configuration sets `storage_dir` explicitly, nothing changes. If you rely on the default and `./scrying-glass-data` does not exist yet, the existing `./monster-display-data` folder is used automatically and a startup message suggests renaming it. To switch for good, stop the application and run `mv monster-display-data scrying-glass-data`.
+- **Sign-in:** everyone signs in once after the upgrade. Sessions are in memory only, so a restart already requires this. The old cookies are removed at sign-in.
+- **systemd installations:** see [Systemd Deployment — Migrating from Monster Display](docs/Systemd-Deployment.md#migrating-from-monster-display).
+
 ## Security
 
-Monster Display is designed for trusted local-network use. Do not directly expose its default HTTP listeners to the public internet. For broader deployment, use an HTTPS reverse proxy, network restrictions such as a firewall or VPN, strong passwords or scrypt hashes, and a dedicated non-root service account.
+Scrying Glass is designed for trusted local-network use. Do not directly expose its default HTTP listeners to the public internet. For broader deployment, use an HTTPS reverse proxy, network restrictions such as a firewall or VPN, strong passwords or scrypt hashes, and a dedicated non-root service account.
 
 ## License
 

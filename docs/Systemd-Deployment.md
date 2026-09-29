@@ -1,16 +1,16 @@
-# Deploy Monster Display with systemd
+# Deploy Scrying Glass with systemd
 
-This page explains how to run Monster Display as a persistent `systemd` service under a dedicated non-root Linux account. The deployment separates application code, credentials/configuration, and writable encounter data so that upgrades do not overwrite saved setups or uploaded images.
+This page explains how to run Scrying Glass as a persistent `systemd` service under a dedicated non-root Linux account. The deployment separates application code, credentials/configuration, and writable encounter data so that upgrades do not overwrite saved setups or uploaded images.
 
 See [[Home]] for the project overview, [[User Guide]] for using the Admin and Client Display screens, and [[Technical Documentation]] for architecture and API details.
 
 ## What this deployment provides
 
-- Starts Monster Display automatically at boot.
-- Runs the application as a dedicated non-root user named `monsterdisplay`.
+- Starts Scrying Glass automatically at boot.
+- Runs the application as a dedicated non-root user named `scryingglass`.
 - Restarts the service after an unexpected failure.
-- Keeps configuration in `/etc/monster-display`.
-- Keeps current state, campaigns, saved setups, and image uploads in `/var/lib/monster-display`.
+- Keeps configuration in `/etc/scrying-glass`.
+- Keeps current state, campaigns, saved setups, and image uploads in `/var/lib/scrying-glass`.
 - Applies basic `systemd` filesystem and privilege hardening.
 
 The application runs two HTTP services from one Python process:
@@ -28,7 +28,7 @@ The application runs two HTTP services from one Python process:
 - Network/firewall access to TCP ports 3000 and 4000 for intended users.
 - An Administrator account with `sudo` access.
 
-Monster Display requires:
+Scrying Glass requires:
 
 ```text
 fastapi
@@ -42,18 +42,18 @@ python-multipart
 This guide uses the following paths:
 
 ```text
-/opt/monster-display/                 Application code and virtual environment
+/opt/scrying-glass/                 Application code and virtual environment
 ├── .venv/
-├── monster_display_server.py
+├── scrying_glass_server.py
 ├── admin_html.py
 ├── client_html.py
 ├── login_html.py
 └── config.example.yaml
 
-/etc/monster-display/                 Protected configuration
+/etc/scrying-glass/                 Protected configuration
 └── config.yaml
 
-/var/lib/monster-display/             Writable persistent encounter data
+/var/lib/scrying-glass/             Writable persistent encounter data
 ├── state.json
 ├── campaigns.json                    Campaign registry (active campaign, names)
 ├── uploads/
@@ -72,20 +72,20 @@ Create a system account without an interactive shell:
 sudo useradd \
   --system \
   --user-group \
-  --home-dir /var/lib/monster-display \
+  --home-dir /var/lib/scrying-glass \
   --create-home \
   --shell /usr/sbin/nologin \
-  monsterdisplay
+  scryingglass
 ```
 
 Create writable persistent storage for the application:
 
 ```bash
 sudo install -d \
-  -o monsterdisplay \
-  -g monsterdisplay \
+  -o scryingglass \
+  -g scryingglass \
   -m 0750 \
-  /var/lib/monster-display
+  /var/lib/scrying-glass
 ```
 
 Create a protected configuration directory:
@@ -93,9 +93,9 @@ Create a protected configuration directory:
 ```bash
 sudo install -d \
   -o root \
-  -g monsterdisplay \
+  -g scryingglass \
   -m 0750 \
-  /etc/monster-display
+  /etc/scrying-glass
 ```
 
 ## Install the application
@@ -103,20 +103,20 @@ sudo install -d \
 Clone the project into `/opt`:
 
 ```bash
-sudo git clone https://github.com/dajomas/monster_display_server.git \
-  /opt/monster-display
+sudo git clone https://github.com/dajomas/scrying-glass.git \
+  /opt/scrying-glass
 
-cd /opt/monster-display
+cd /opt/scrying-glass
 sudo git checkout features/development
 ```
 
 Create a virtual environment and install dependencies:
 
 ```bash
-sudo python3.14 -m venv /opt/monster-display/.venv
+sudo python3.14 -m venv /opt/scrying-glass/.venv
 
-sudo /opt/monster-display/.venv/bin/python -m pip install --upgrade pip
-sudo /opt/monster-display/.venv/bin/python -m pip install \
+sudo /opt/scrying-glass/.venv/bin/python -m pip install --upgrade pip
+sudo /opt/scrying-glass/.venv/bin/python -m pip install \
   "fastapi>=0.115" \
   "uvicorn[standard]>=0.30" \
   "PyYAML>=6.0" \
@@ -126,8 +126,8 @@ sudo /opt/monster-display/.venv/bin/python -m pip install \
 Make the application checkout owned by root so the service account cannot modify executable code:
 
 ```bash
-sudo chown -R root:root /opt/monster-display
-sudo chmod -R a=rX,u+w /opt/monster-display
+sudo chown -R root:root /opt/scrying-glass
+sudo chmod -R a=rX,u+w /opt/scrying-glass
 ```
 
 ## Create the configuration
@@ -135,14 +135,14 @@ sudo chmod -R a=rX,u+w /opt/monster-display
 Copy the example configuration:
 
 ```bash
-sudo cp /opt/monster-display/config.example.yaml \
-  /etc/monster-display/config.yaml
+sudo cp /opt/scrying-glass/config.example.yaml \
+  /etc/scrying-glass/config.yaml
 ```
 
 Edit the configuration:
 
 ```bash
-sudo editor /etc/monster-display/config.yaml
+sudo editor /etc/scrying-glass/config.yaml
 ```
 
 Use this as a starting point:
@@ -153,7 +153,7 @@ network:
   admin_port: 3000
   client_port: 4000
 
-storage_dir: "/var/lib/monster-display"
+storage_dir: "/var/lib/scrying-glass"
 
 security:
   users:
@@ -177,20 +177,20 @@ display:
 Restrict the configuration because it contains login credentials:
 
 ```bash
-sudo chown root:monsterdisplay /etc/monster-display/config.yaml
-sudo chmod 0640 /etc/monster-display/config.yaml
+sudo chown root:scryingglass /etc/scrying-glass/config.yaml
+sudo chmod 0640 /etc/scrying-glass/config.yaml
 ```
 
-The service can read the file through the `monsterdisplay` group but cannot modify it.
+The service can read the file through the `scryingglass` group but cannot modify it.
 
 ### Use scrypt password hashes
 
 Plaintext passwords work, but scrypt hashes are preferable. Generate one from the application directory:
 
 ```bash
-cd /opt/monster-display
-sudo /opt/monster-display/.venv/bin/python -c \
-  'from monster_display_server import password_hash; print(password_hash("replace-me"))'
+cd /opt/scrying-glass
+sudo /opt/scrying-glass/.venv/bin/python -c \
+  'from scrying_glass_server import password_hash; print(password_hash("replace-me"))'
 ```
 
 Use the emitted `scrypt$...` value as the configured password.
@@ -200,9 +200,9 @@ Use the emitted `scrypt$...` value as the configured password.
 Check that the Python source compiles:
 
 ```bash
-cd /opt/monster-display
-sudo /opt/monster-display/.venv/bin/python -m py_compile \
-  monster_display_server.py \
+cd /opt/scrying-glass
+sudo /opt/scrying-glass/.venv/bin/python -m py_compile \
+  scrying_glass_server.py \
   admin_html.py \
   client_html.py \
   login_html.py
@@ -213,31 +213,31 @@ No output means compilation succeeded.
 You may also test-run it temporarily:
 
 ```bash
-sudo -u monsterdisplay \
-  /opt/monster-display/.venv/bin/python \
-  /opt/monster-display/monster_display_server.py \
-  --config /etc/monster-display/config.yaml
+sudo -u scryingglass \
+  /opt/scrying-glass/.venv/bin/python \
+  /opt/scrying-glass/scrying_glass_server.py \
+  --config /etc/scrying-glass/config.yaml
 ```
 
 Stop the test with `Ctrl+C` after confirming both ports are listening.
 
 ## Create the systemd service
 
-Create `/etc/systemd/system/monster-display.service`:
+Create `/etc/systemd/system/scrying-glass.service`:
 
 ```ini
 [Unit]
-Description=Monster Display tabletop battle display
+Description=Scrying Glass tabletop battle display
 Wants=network-online.target
 After=network-online.target
 
 [Service]
 Type=simple
-User=monsterdisplay
-Group=monsterdisplay
-WorkingDirectory=/opt/monster-display
+User=scryingglass
+Group=scryingglass
+WorkingDirectory=/opt/scrying-glass
 
-ExecStart=/opt/monster-display/.venv/bin/python /opt/monster-display/monster_display_server.py --config /etc/monster-display/config.yaml
+ExecStart=/opt/scrying-glass/.venv/bin/python /opt/scrying-glass/scrying_glass_server.py --config /etc/scrying-glass/config.yaml
 
 Restart=on-failure
 RestartSec=5
@@ -248,7 +248,7 @@ NoNewPrivileges=true
 PrivateTmp=true
 ProtectHome=true
 ProtectSystem=strict
-ReadWritePaths=/var/lib/monster-display
+ReadWritePaths=/var/lib/scrying-glass
 
 RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
 CapabilityBoundingSet=
@@ -268,7 +268,7 @@ WantedBy=multi-user.target
 | `PrivateTmp=true` | Gives the service an isolated temporary directory |
 | `ProtectHome=true` | Blocks access to normal user home directories |
 | `ProtectSystem=strict` | Makes most host paths read-only to the service |
-| `ReadWritePaths=/var/lib/monster-display` | Allows only the expected persistent data location to be written |
+| `ReadWritePaths=/var/lib/scrying-glass` | Allows only the expected persistent data location to be written |
 | `CapabilityBoundingSet=` | Removes Linux capabilities not needed by the service |
 
 The service retains network access for Admin/Client HTTP traffic, WebSockets, and optional D&D Beyond image lookup.
@@ -279,19 +279,19 @@ Load the new unit and start it now and at future boots:
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable --now monster-display.service
+sudo systemctl enable --now scrying-glass.service
 ```
 
 Check status:
 
 ```bash
-sudo systemctl status monster-display.service
+sudo systemctl status scrying-glass.service
 ```
 
 View live logs:
 
 ```bash
-sudo journalctl -u monster-display.service -f
+sudo journalctl -u scrying-glass.service -f
 ```
 
 Open:
@@ -320,16 +320,16 @@ Do not expose the default HTTP ports to the public internet without a reverse pr
 Confirm that the process runs as the non-root account:
 
 ```bash
-ps -eo user,pid,cmd | grep monster_display_server.py
+ps -eo user,pid,cmd | grep scrying_glass_server.py
 ```
 
 Confirm persistent directories are writable by that account:
 
 ```bash
-sudo ls -la /var/lib/monster-display
-sudo ls -la /var/lib/monster-display/uploads
-sudo ls -la /var/lib/monster-display/setups
-sudo ls -la /var/lib/monster-display/campaigns.json
+sudo ls -la /var/lib/scrying-glass
+sudo ls -la /var/lib/scrying-glass/uploads
+sudo ls -la /var/lib/scrying-glass/setups
+sudo ls -la /var/lib/scrying-glass/campaigns.json
 ```
 
 Each campaign has its own folder under `setups/`. The first start creates `campaigns.json` and a `default` campaign folder.
@@ -337,9 +337,9 @@ Each campaign has its own folder under `setups/`. The first start creates `campa
 If saving setups or uploading images fails with a permission error:
 
 ```bash
-sudo chown -R monsterdisplay:monsterdisplay /var/lib/monster-display
-sudo chmod -R u=rwX,g=rX,o= /var/lib/monster-display
-sudo systemctl restart monster-display.service
+sudo chown -R scryingglass:scryingglass /var/lib/scrying-glass
+sudo chmod -R u=rwX,g=rX,o= /var/lib/scrying-glass
+sudo systemctl restart scrying-glass.service
 ```
 
 ## Upgrade procedure
@@ -348,67 +348,118 @@ Back up persistent data before upgrading:
 
 ```bash
 sudo tar -C /var/lib -czf \
-  /root/monster-display-backup-$(date +%F).tar.gz \
-  monster-display
+  /root/scrying-glass-backup-$(date +%F).tar.gz \
+  scrying-glass
 ```
 
 Update code and dependencies:
 
 ```bash
-cd /opt/monster-display
+cd /opt/scrying-glass
 sudo git fetch --all --prune
 sudo git checkout features/development
 sudo git pull --ff-only
 
-sudo /opt/monster-display/.venv/bin/python -m pip install \
+sudo /opt/scrying-glass/.venv/bin/python -m pip install \
   "fastapi>=0.115" \
   "uvicorn[standard]>=0.30" \
   "PyYAML>=6.0" \
   python-multipart
 
-sudo /opt/monster-display/.venv/bin/python -m py_compile \
-  monster_display_server.py \
+sudo /opt/scrying-glass/.venv/bin/python -m py_compile \
+  scrying_glass_server.py \
   admin_html.py \
   client_html.py \
   login_html.py
 
-sudo systemctl restart monster-display.service
-sudo systemctl status monster-display.service
+sudo systemctl restart scrying-glass.service
+sudo systemctl status scrying-glass.service
 ```
 
-The working encounter, campaigns, saved setups, Activity Log, and uploads remain intact because they live in `/var/lib/monster-display`, outside the Git checkout.
+The working encounter, campaigns, saved setups, Activity Log, and uploads remain intact because they live in `/var/lib/scrying-glass`, outside the Git checkout.
 
 ### Upgrading to the campaign version
 
 The first start after upgrading from a version without campaigns migrates existing data automatically:
 
-- Every setup in `/var/lib/monster-display/setups/*.json` is moved into `/var/lib/monster-display/setups/default/`.
-- A `Default` campaign is registered in `/var/lib/monster-display/campaigns.json`.
+- Every setup in `/var/lib/scrying-glass/setups/*.json` is moved into `/var/lib/scrying-glass/setups/default/`.
+- A `Default` campaign is registered in `/var/lib/scrying-glass/campaigns.json`.
 
 The journal shows which setups were moved:
 
 ```bash
-sudo journalctl -u monster-display.service -b | grep 'unassigned battle setup'
+sudo journalctl -u scrying-glass.service -b | grep 'unassigned battle setup'
 ```
 
-The migration only needs write access to `/var/lib/monster-display`, which `ReadWritePaths` already grants. Make the backup above before the first start. To roll back to a version without campaigns, restore that backup; the old version does not read `setups/<campaign>/` folders.
+The migration only needs write access to `/var/lib/scrying-glass`, which `ReadWritePaths` already grants. Make the backup above before the first start. To roll back to a version without campaigns, restore that backup; the old version does not read `setups/<campaign>/` folders.
+
+## Migrating from Monster Display
+
+Earlier versions of this guide installed the application as Monster Display, with `/opt/monster-display`, `/etc/monster-display`, `/var/lib/monster-display`, the `monsterdisplay` account, and `monster-display.service`. Follow these steps once to move such an installation to the Scrying Glass names used in this guide.
+
+1. Stop and disable the old service, and make a backup:
+
+   ```bash
+   sudo systemctl disable --now monster-display.service
+   sudo tar -C /var/lib -czf /root/monster-display-backup-$(date +%F).tar.gz monster-display
+   ```
+
+2. Rename the service account and its group. This keeps the same UID/GID, so file ownership stays valid:
+
+   ```bash
+   sudo usermod -l scryingglass -d /var/lib/scrying-glass monsterdisplay
+   sudo groupmod -n scryingglass monsterdisplay
+   ```
+
+3. Move the directories:
+
+   ```bash
+   sudo mv /opt/monster-display /opt/scrying-glass
+   sudo mv /etc/monster-display /etc/scrying-glass
+   sudo mv /var/lib/monster-display /var/lib/scrying-glass
+   ```
+
+4. Point the checkout at the renamed repository and update the code, as in [Upgrade procedure](#upgrade-procedure):
+
+   ```bash
+   cd /opt/scrying-glass
+   sudo git remote set-url origin https://github.com/dajomas/scrying-glass.git
+   sudo git pull --ff-only
+   ```
+
+5. In `/etc/scrying-glass/config.yaml`, change `storage_dir` to `/var/lib/scrying-glass`:
+
+   ```bash
+   sudo sed -i 's#/var/lib/monster-display#/var/lib/scrying-glass#' /etc/scrying-glass/config.yaml
+   ```
+
+6. Create `/etc/systemd/system/scrying-glass.service` as shown in [Create the systemd service](#create-the-systemd-service), then remove the old unit and start the new one:
+
+   ```bash
+   sudo rm /etc/systemd/system/monster-display.service
+   sudo systemctl daemon-reload
+   sudo systemctl enable --now scrying-glass.service
+   sudo systemctl status scrying-glass.service
+   ```
+
+Campaigns, setups, uploads, and the working encounter move with `/var/lib/scrying-glass`. Everyone signs in again once, because the session cookie names changed.
 
 ## Routine commands
 
 ```bash
 # Service state
-sudo systemctl status monster-display.service
+sudo systemctl status scrying-glass.service
 
 # Start, stop, restart
-sudo systemctl start monster-display.service
-sudo systemctl stop monster-display.service
-sudo systemctl restart monster-display.service
+sudo systemctl start scrying-glass.service
+sudo systemctl stop scrying-glass.service
+sudo systemctl restart scrying-glass.service
 
 # Follow logs
-sudo journalctl -u monster-display.service -f
+sudo journalctl -u scrying-glass.service -f
 
 # Logs from the current boot
-sudo journalctl -u monster-display.service -b
+sudo journalctl -u scrying-glass.service -b
 
 # Verify listening sockets
 sudo ss -lptn 'sport = :3000'
@@ -422,24 +473,24 @@ sudo ss -lptn 'sport = :4000'
 Review the last logs:
 
 ```bash
-sudo journalctl -u monster-display.service -n 100 --no-pager
+sudo journalctl -u scrying-glass.service -n 100 --no-pager
 ```
 
 Common causes:
 
 - Python 3.14 is absent or the virtual-environment path is incorrect.
-- A dependency was not installed in `/opt/monster-display/.venv`.
+- A dependency was not installed in `/opt/scrying-glass/.venv`.
 - `config.yaml` has invalid YAML.
-- `/var/lib/monster-display/setups/` or `campaigns.json` is not writable, so the startup campaign migration fails.
-- The service account cannot read `/etc/monster-display/config.yaml`.
+- `/var/lib/scrying-glass/setups/` or `campaigns.json` is not writable, so the startup campaign migration fails.
+- The service account cannot read `/etc/scrying-glass/config.yaml`.
 - Port 3000 or 4000 is already in use.
 
 ### Service cannot write state, campaigns, or uploads
 
-The service must own `/var/lib/monster-display`:
+The service must own `/var/lib/scrying-glass`:
 
 ```bash
-sudo chown -R monsterdisplay:monsterdisplay /var/lib/monster-display
+sudo chown -R scryingglass:scryingglass /var/lib/scrying-glass
 ```
 
 Do not set `storage_dir` to a location outside `ReadWritePaths` unless you also update the systemd unit.
@@ -457,10 +508,10 @@ Confirm the configured users and passwords. After a service restart, sessions ar
 
 ## Internet-exposure warning
 
-Monster Display is designed for a trusted local network. If remote access is necessary:
+Scrying Glass is designed for a trusted local network. If remote access is necessary:
 
 1. Put an HTTPS reverse proxy in front of the application.
 2. Bind application ports to localhost or restrict them using firewall rules.
 3. Use a VPN or strong network access controls for the Admin service.
-4. Use scrypt password hashes and protect `/etc/monster-display/config.yaml`.
-5. Run only one Monster Display service instance per storage directory.
+4. Use scrypt password hashes and protect `/etc/scrying-glass/config.yaml`.
+5. Run only one Scrying Glass service instance per storage directory.
