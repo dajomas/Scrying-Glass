@@ -25,7 +25,7 @@ Admin browser ── HTTP ──► Admin FastAPI app ── TCP 3000 by default
                                   ├── shared SESSIONS
                                   ├── shared SOCKETS
                                   ├── async save lock
-                                  └── state.json, setups/, uploads/
+                                  └── state.json, campaigns.json, setups/<campaign>/, uploads/
                                   │
 Client browser ── HTTP/WS ► Client FastAPI app ── TCP 4000 by default
 ```
@@ -76,7 +76,7 @@ display:
 | `network.bind` | Host/interface used by both services |
 | `network.admin_port` | Admin listener, default 3000 |
 | `network.client_port` | Client listener, default 4000 |
-| `storage_dir` | Parent directory for state, setup snapshots, and uploads |
+| `storage_dir` | Parent directory for state, the campaign registry, setup snapshots, and uploads |
 | `security.users` | Username, role, and plaintext/scrypt password records |
 | `display.background` | CSS color, gradient, or image URL |
 | `display.entry_direction` | `from_bottom` or `from_top` |
@@ -137,17 +137,20 @@ For `storage_dir: /var/lib/monster-display`:
 ```text
 /var/lib/monster-display/
 ├── state.json
+├── campaigns.json
 ├── uploads/
 │   └── <uuid>.<extension>
 └── setups/
-    └── <normalized-setup-name>.json
+    └── <campaign-slug>/
+        └── <normalized-setup-name>.json
 ```
 
 | Location | Purpose |
 |---|---|
 | `state.json` | Working encounter, battle order, and activity log |
+| `campaigns.json` | Campaign registry: active campaign, names, descriptions, most recently worked on setup |
 | `uploads/` | Uploaded monster images, mounted at `/media/` |
-| `setups/` | Named full-state JSON snapshots |
+| `setups/<campaign-slug>/` | Named full-state JSON snapshots belonging to one campaign |
 
 State writes use a temporary file followed by replacement:
 
@@ -157,7 +160,64 @@ temp.write_text(json.dumps(STATE, indent=2), encoding="utf-8")
 temp.replace(STATE_FILE)
 ```
 
-Setup names are normalized to safe lower-case slugs limited to 80 characters.
+Setup and campaign names are normalized to safe lower-case slugs limited to 80 characters. A campaign slug is also its folder name under `setups/`.
+
+## Campaigns
+
+### Registry
+
+`campaigns.json` is written atomically in the same way as `state.json`:
+
+```json
+{
+  "active": "curse-of-strahd",
+  "campaigns": {
+    "default": {
+      "name": "Default",
+      "description": "Battle setups that were not connected to a campaign",
+      "created": "2026-09-29T06:00:05+00:00",
+      "last_setup": "goblin-ambush",
+      "last_setup_at": "2026-09-29T08:12:44+00:00"
+    },
+    "curse-of-strahd": {
+      "name": "Curse of Strahd",
+      "description": "Barovia",
+      "created": "2026-09-29T06:10:00+00:00"
+    }
+  }
+}
+```
+
+| Field | Meaning |
+|---|---|
+| `active` | Slug of the active campaign; setup routes without a `campaign` value use it |
+| `name` / `description` | Display name and optional description |
+| `created` | Creation timestamp (UTC, ISO 8601) |
+| `last_setup` / `last_setup_at` | Most recently worked on setup, updated on save, load, and automatic opening |
+
+### Migration of unconnected setups
+
+`migrate_unassigned_setups()` runs at startup, on `GET /api/campaigns` and `GET /api/setups`, and before every campaign mutation. It:
+
+1. Moves every `*.json` file found directly in `setups/` (the pre-campaign layout) into `setups/default/`, creating the **Default** campaign when needed. Name clashes get `-2`, `-3`, … suffixes. Moved setups are logged and returned as `moved`.
+2. Registers campaign folders that have no registry entry, and recreates folders for registry entries without one.
+3. Guarantees that at least one campaign exists and that `active` names an existing campaign.
+
+When the migration creates **Default**, it also writes an empty `default` setup, unless a moved setup already uses that name, and records the most recently modified moved setup as `last_setup`.
+
+### New campaigns and the empty default setup
+
+`create_default_setup(slug)` writes an empty normalized state as `default.json` into a campaign folder when that file does not exist. It is called for every newly created campaign.
+
+### Opening a setup on activation
+
+`open_campaign_setup(slug)` loads a setup into `STATE`, records it with `remember_setup()`, and calls `changed()`. The setup is chosen by `pick_campaign_setup()`:
+
+1. `last_setup`, if the file still exists.
+2. Otherwise the setup file with the newest modification time.
+3. `None` when the campaign has no setups; the working state is left unchanged.
+
+It runs when a campaign is created with `activate: true`, when a campaign is activated, and when the active campaign is deleted. The responses of those routes include `opened_setup`.
 
 ## State model
 
@@ -282,15 +342,30 @@ Unless stated otherwise, Admin mutation routes require the Admin session cookie 
 | Client | GET | `/api/state` | State for Client session |
 | Client | WebSocket | `/ws` | Authenticated live Client updates |
 
+### Campaign routes
+
+| Method | Path | Body / query | Purpose |
+|---|---|---|---|
+| GET | `/api/campaigns` | – | Run the migration; return `active`, `campaigns` (slug, name, description, created, setups, last_setup), and `moved` |
+| POST | `/api/campaigns` | `{name, description?, activate?=true}` | Create a campaign with an empty `default` setup; when activated, open it and return `opened_setup`. HTTP 409 if the slug exists |
+| PATCH | `/api/campaigns/{slug}` | `{name?, description?}` | Rename or edit; a changed slug renames the folder. HTTP 409 if the new slug exists |
+| DELETE | `/api/campaigns/{slug}` | `?move_to=<slug>` or `?delete_setups=true` | Delete a campaign. If it has setups, exactly one of the two options is required (HTTP 409 when missing, 400 when both). Returns `moved`, `deleted_setups`, and `opened_setup` when the active campaign was deleted. The last campaign cannot be deleted (HTTP 400) |
+| POST | `/api/campaigns/{slug}/activate` | – | Make the campaign active and open its most recently worked on setup (`opened_setup`) |
+| POST | `/api/campaigns/{slug}/setups` | `{setup, from_campaign, mode: "move" or "copy"}` | Add a setup from another campaign; name clashes get a numeric suffix. Returns `setup` and `campaign` |
+
 ### Setup routes
 
-| Method | Path | Purpose |
-|---|---|---|
-| GET | `/api/setups` | List setup names |
-| POST | `/api/setups/new` | Replace working state with blank state |
-| POST | `/api/setups/save` | Save complete state under a normalized name |
-| POST | `/api/setups/load` | Replace working state with saved state |
-| POST | `/api/setups/import` | Append setup combatants as new runtime-reset copies retaining current HP/max HP |
+Every setup route accepts an optional `campaign` (slug). When omitted, the active campaign is used. An unknown campaign returns HTTP 404.
+
+| Method | Path | Body / query | Purpose |
+|---|---|---|---|
+| GET | `/api/setups` | `?campaign=` | List setup names of a campaign; returns `{campaign, names}` |
+| POST | `/api/setups/new` | – | Replace working state with blank state |
+| POST | `/api/setups/save` | `{name, campaign?}` | Save complete state under a normalized name; records `last_setup` |
+| POST | `/api/setups/load` | `{name, campaign?}` | Replace working state with saved state; records `last_setup` |
+| POST | `/api/setups/rename` | `{name, new_name, campaign?}` | Rename a setup; HTTP 409 if the new name exists. `last_setup` follows the rename |
+| DELETE | `/api/setups/{name}` | `?campaign=` | Delete a setup and open the next one alphabetically (wrapping to the first); when none remain, create and open an empty `default`. Returns `deleted`, `opened_setup`, `created_default` |
+| POST | `/api/setups/import` | `{name, kind, campaign?}` | Append setup combatants as new runtime-reset copies retaining current HP/max HP |
 
 ### Monster and character routes
 
@@ -380,6 +455,8 @@ The Client Display renders visible initiative tokens and active living Monster c
 - The initiative bar becomes `hidden` when empty and CSS expands the stage to full viewport height.
 - Image backgrounds are assigned as background images centered with `cover`, no repetition, and fixed attachment.
 
+The Admin Monster and Character tables show a colored dot in front of each name. `colorMarker(combatant, fallback)` in `admin_html.py` renders it with the `.turn-marker` class also used for the current turn in the battle order line. It falls back to `#842029` for monsters and `#1f4e79` for characters when no color is stored.
+
 The Admin Monster table uses a presentation-only sort: active first; active battle order when battle is active; active Max HP outside battle; then inactive numeric initiative and Max HP ordering. This does not change persisted list order or battle order.
 
 ## Security and limitations
@@ -390,7 +467,8 @@ The Admin Monster table uses a presentation-only sort: active first; active batt
 - Client state contains encounter data even when some details are not visually rendered; Client access should be treated as access to encounter state.
 - Uploaded images are extension-checked and statically served. Restrict filesystem permissions and deployment reachability.
 - D&D Beyond image lookup is best effort and dependent on external site behavior.
-- There is no dedicated saved-setup deletion interface.
+- Deleting a saved setup or a campaign with `delete_setups=true` is permanent; there is no recycle bin. Back up `storage_dir` regularly.
+- Campaign and setup operations are not coordinated between several Admin browsers; the last action wins.
 
 ## Operations
 
@@ -432,3 +510,5 @@ Run as a non-root account that can read configuration and write `storage_dir`.
 | CSV import fails | Check encoding, header, required fields, numeric values, and ID uniqueness |
 | Setup import HP looks wrong | Confirm source saved state contains the expected current HP; current HP/max HP are preserved on import |
 | Image lookup fails | Upload an image directly |
+| Saved setups missing after upgrading | Setups from the pre-campaign layout were moved to `setups/default/`; check the startup log line `Moved N unassigned battle setup(s)…` |
+| Campaign missing from the list | Check `campaigns.json`; folders under `setups/` without a registry entry are registered automatically on the next list request |

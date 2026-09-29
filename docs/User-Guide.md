@@ -23,21 +23,87 @@ Admin and Client Display logins use separate session cookies, so both pages can 
 
 ## Admin panes
 
-The Admin page is organized into panes. The top controls can show or hide the setup, add-monster, add-character, Monster list, and Character list panes.
+The Admin page is organized into panes. The top controls can show or hide the setup pane (Campaign and Battle setups), add-monster, add-character, Monster list, and Character list panes.
 
 When a battle starts, or when you load a setup with a battle order, hideable panes automatically collapse once. If you manually reopen a pane during that battle, it remains open until you hide it or the battle ends. **Reset All** restores the normal visible-pane layout.
 
 | Pane | Purpose |
 |---|---|
 | Battle | Shows Active/Inactive status, battle controls, and battle order |
-| Battle setups | New, Save, Load, setup import, and CSV imports |
+| Campaign | Select, switch, create, edit, and delete campaigns; add setups to a campaign |
+| Battle setups | New, Save, Load, Rename, Delete, setup import, and CSV imports |
 | Add monster | Manual monster entry and `.monster` import |
 | Add character | Manual character entry |
 | Monsters | Monster controls, d20 initiative roll, and bulk controls |
 | Characters | Character controls |
 | Activity log | View, export, and clear recorded actions |
 
+## Campaigns
+
+A campaign groups related battle setups, for example all encounters of one adventure. Every battle setup belongs to exactly one campaign, and exactly one campaign is **active** at a time. The active campaign's name and description are shown next to the **Campaign** heading.
+
+Save, Load, Rename, and Delete in the Battle setups row always work on the active campaign. The working encounter (the battle on screen) is not stored per campaign; it is replaced when a campaign is activated, as described below.
+
+### The Default campaign
+
+At startup, and whenever the Admin page refreshes the campaign list, Monster Display checks for battle setups that are not connected to a campaign. These are setups saved by a version before campaigns existed. If any are found:
+
+1. A campaign named **Default** is created, if it does not exist yet.
+2. The unconnected setups are moved into **Default**. If a name is already taken, the moved setup gets a `-2`, `-3`, … suffix.
+3. The Admin page shows a message listing the moved setups.
+
+A fresh installation also starts with a **Default** campaign.
+
+### Switch campaign
+
+Select a campaign in the **Campaign** dropdown. The switch happens immediately after you confirm; the **Switch** button does the same for the selected campaign.
+
+When a campaign becomes active, one of its battle setups is opened automatically and replaces the working encounter:
+
+1. The campaign's **most recently worked on** setup, which is the setup last saved, loaded, or opened in that campaign.
+2. If none is recorded, the setup file that was changed most recently.
+3. If the campaign has no setups, nothing is loaded and the working encounter stays.
+
+Because the working encounter is replaced, the confirmation warns that unsaved changes are lost. Save first if you want to keep them. If you cancel, the dropdown returns to the active campaign.
+
+### New campaign
+
+Click **New campaign**, enter a name and an optional description, and click **Create**. Campaign names are normalized for storage in the same way as setup names. Two campaigns cannot share a normalized name.
+
+A new campaign automatically contains an empty battle setup called **default**. The new campaign becomes active, and its empty **default** setup is opened.
+
+### Edit campaign
+
+Click **Edit campaign** to change the name or description of the active campaign. Its battle setups stay with the campaign, and the working encounter is not changed.
+
+### Delete campaign
+
+Click **Delete campaign**. In the dialog:
+
+1. Choose the **Campaign to delete**. The first campaign that is not active is preselected; the active campaign is marked **(active)** and can be chosen explicitly.
+2. If that campaign contains battle setups, choose what happens to them:
+   - **Move them to another campaign**, then choose the target campaign. The campaign being deleted is never offered as a target.
+   - **Delete them**. The setups are permanently deleted.
+3. Click **Delete** and confirm. The confirmation lists what happens to the setups.
+
+Deleting a campaign that is not active does not change the working encounter. Deleting the active campaign makes another campaign active and opens its most recently worked on setup. The last remaining campaign cannot be deleted.
+
+### Add setup to campaign
+
+Click **Add setup to campaign** to copy or move a saved battle setup from one campaign into another:
+
+| Field | Meaning |
+|---|---|
+| From campaign | Campaign that currently holds the setup |
+| Saved setup | Setup to add |
+| To campaign | Campaign that receives the setup |
+| Mode | **Move** removes it from the source campaign; **Copy** keeps it in both |
+
+If the name already exists in the target campaign, the added setup gets a `-2`, `-3`, … suffix.
+
 ## Battle setups
+
+All actions in this section work on setups of the **active** campaign.
 
 ### New
 
@@ -45,17 +111,31 @@ Click **New** and confirm to discard the working encounter. Existing named setup
 
 ### Save
 
-Enter a setup name and click **Save**. Names are normalized for storage; for example, `Throne Room — Lytharia` is stored under a slug similar to `throne-room-lytharia`.
+Enter a setup name and click **Save**. The setup is saved in the active campaign. Names are normalized for storage; for example, `Throne Room — Lytharia` is stored under a slug similar to `throne-room-lytharia`.
 
-Saving the same normalized name overwrites that saved setup.
+Saving the same normalized name in the same campaign overwrites that saved setup. Setups in different campaigns may share a name.
 
 ### Load
 
-Select a setup, click **Load**, and confirm. Loading replaces the complete working state: monsters, characters, HP, battle order, and activity log.
+Select a setup in the dropdown and confirm. The setup loads as soon as you select it; the **Load** button does the same and can be used to reload the selected setup. If you cancel, the dropdown returns to the setup that is currently loaded.
+
+Loading replaces the complete working state: monsters, characters, HP, battle order, and activity log.
+
+### Rename
+
+Select a setup and click **Rename**, then enter the new name. The rename is refused if the new normalized name already exists in the active campaign. Renaming does not change the working encounter.
+
+### Delete
+
+Select a setup, click **Delete**, and confirm. The setup file is permanently removed, and the next setup in alphabetical order is opened; after the last setup, the first one is opened. If you delete the only setup in the campaign, an empty **default** setup is created and opened.
+
+Opening the next setup replaces the working encounter, so save unsaved changes first.
 
 ### Import from setup
 
-**Import from setup** appends copies of monsters, characters, or both from another setup without replacing the current encounter.
+The import buttons (**Import from setup**, **Import monsters CSV**, **Import characters CSV**) are on their own row below the setup controls.
+
+**Import from setup** appends copies of monsters, characters, or both from another setup without replacing the current encounter. Choose the **Campaign** first; it defaults to the active campaign, so you can also import combatants from a setup in another campaign.
 
 Imported entries:
 
@@ -85,7 +165,7 @@ The source setup is not changed.
 | AC | Armor Class |
 | HP | Initial current, maximum, and reset HP |
 | Quantity | Number of independent copies, from 1 to 50 |
-| Color | Card outline and initiative-token color |
+| Color | Card outline, initiative-token color, and the color marker in the Admin Monster list |
 | Image | Optional PNG, JPG, JPEG, GIF, or WebP image |
 
 Each copy receives a unique ID and independent runtime values. Uploaded images take precedence over remote lookup.
@@ -148,6 +228,10 @@ brom-1,Brom,48,48,11,#0f766e,false,false
 Optional fields include `id`, `hp`, `max_hp`, `original_hp`, `initiative`, `original_initiative`, `color`, `active`, `alive`, and `visible`.
 
 For either CSV type, a provided non-empty ID is retained. If the `id` field is absent or blank, Monster Display generates a unique ID. Duplicate IDs in the CSV or conflicts with the active encounter are rejected. Boolean values accept `true`/`false`, `yes`/`no`, `on`/`off`, or `1`/`0`.
+
+## Color markers
+
+In the Monsters and Characters panes, each name has a small colored dot in front of it. It shows the color chosen for that combatant and uses the same style as the current-turn marker in the battle order line. Hover over the dot to see the color code. The marker updates as soon as you change the color with **Edit**.
 
 ## Monster controls
 
@@ -276,7 +360,7 @@ Client backgrounds accept CSS colors, gradients, and image URLs. Image URLs are 
 
 ## Backups and troubleshooting
 
-Back up the whole configured `storage_dir`, including `uploads/`.
+Back up the whole configured `storage_dir`, including `campaigns.json`, `setups/` (one folder per campaign), and `uploads/`.
 
 | Issue | What to check |
 |---|---|
@@ -285,3 +369,6 @@ Back up the whole configured `storage_dir`, including `uploads/`.
 | Sign-in failure | Use the correct role and port; log in again after a server restart |
 | CSV import error | Verify UTF-8 encoding, header row, required fields, valid numbers, and unique IDs |
 | Missing remote image | D&D Beyond lookup is best effort; upload an image manually |
+| Saved setups missing after an update | Setups saved before campaigns existed were moved into the **Default** campaign; switch to it |
+| Working encounter changed unexpectedly | Switching, creating, or deleting the active campaign, and deleting a setup, open another setup; save before doing so |
+| Cannot delete a campaign | The last remaining campaign cannot be deleted; if it has setups, choose to move or delete them |
