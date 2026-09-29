@@ -31,7 +31,7 @@ When a battle starts, or when you load a setup with a battle order, hideable pan
 |---|---|
 | Battle | Shows Active/Inactive status, battle controls, and battle order |
 | Campaign | Select, switch, create, edit, and delete campaigns; add setups to a campaign |
-| Battle setups | New, Save, Load, Rename, Delete, setup import, and CSV imports |
+| Battle setups | New, Save, Load, Rename, Delete, setup import, and CSV imports, per-setup View screen background controls |
 | Add monster | Manual monster entry and `.monster` import |
 | Add character | Manual character entry |
 | Monsters | Monster controls, d20 initiative roll, and bulk controls |
@@ -101,6 +101,8 @@ Click **Add setup to campaign** to copy or move a saved battle setup from one ca
 
 If the name already exists in the target campaign, the added setup gets a `-2`, `-3`, … suffix.
 
+A copied setup remains a complete snapshot, including its saved View screen background. Moving a setup preserves that background as well.
+
 ## Battle setups
 
 All actions in this section work on setups of the **active** campaign.
@@ -119,7 +121,7 @@ Saving the same normalized name in the same campaign overwrites that saved setup
 
 Select a setup in the dropdown and confirm. The setup loads as soon as you select it; the **Load** button does the same and can be used to reload the selected setup. If you cancel, the dropdown returns to the setup that is currently loaded.
 
-Loading replaces the complete working state: monsters, characters, HP, battle order, and activity log.
+Loading replaces the complete working state: monsters, characters, HP, battle order, activity log, and the View screen background.
 
 ### Rename
 
@@ -153,6 +155,24 @@ Imported entries:
 | Current battle order | Unchanged | Unchanged |
 
 The source setup is not changed.
+
+### View screen background
+
+The **View screen background** controls belong to the working battle setup. Use them to select a background color, enter a CSS background value such as a gradient, or upload a PNG, JPG/JPEG, GIF, or WebP image.
+
+| Control | Result |
+|---|---|
+| Color | Selects a plain background color |
+| Background value | Accepts a CSS color, gradient, or image value |
+| Background image | Uploads an image and makes it the current setup's background |
+| Apply background | Sends the chosen value to the Client Display immediately |
+| Use color | Removes the current image selection from the working setup and uses the selected color |
+
+The Client Display updates immediately when you apply a background. Click **Save** to store it in the named battle setup. The background is loaded with the rest of that setup whenever you load it, switch to a campaign that opens it, or copy the setup to another campaign.
+
+A new setup starts with the configured default background. Setups saved by versions before per-setup backgrounds use the configuration default until you save them; saving adds the setup-specific background without changing their existing combatants or battle state.
+
+Background images are stored in the configured `storage_dir/uploads/` directory. They are not deleted automatically when a setup changes background or is deleted, because another saved setup may still reference the same upload.
 
 ## Add and import combatants
 
@@ -356,11 +376,11 @@ The initiative bar uses:
 
 The initiative bar automatically hides when empty, giving the monster stage the full browser viewport.
 
-Client backgrounds accept CSS colors, gradients, and image URLs. Image URLs are centered, do not repeat, and cover the viewport.
+Each battle setup has its own Client Display background. In the Admin **View screen background** controls, choose a color, enter a CSS gradient/value, or upload an image. Apply the background for an immediate Client Display update, then save the setup to retain it. Image backgrounds are centered, do not repeat, and cover the viewport.
 
 ## Backups and troubleshooting
 
-Back up the whole configured `storage_dir`, including `campaigns.json`, `setups/` (one folder per campaign), and `uploads/`.
+Back up the whole configured `storage_dir`, including `campaigns.json`, `setups/` (one folder per campaign), and `uploads/`. Setup files store per-setup background choices and may reference uploaded background images.
 
 | Issue | What to check |
 |---|---|

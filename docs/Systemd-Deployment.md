@@ -1,6 +1,6 @@
 # Deploy Scrying Glass with systemd
 
-This page explains how to run Scrying Glass as a persistent `systemd` service under a dedicated non-root Linux account. The deployment separates application code, credentials/configuration, and writable encounter data so that upgrades do not overwrite saved setups or uploaded images.
+This page explains how to run Scrying Glass as a persistent `systemd` service under a dedicated non-root Linux account. The deployment separates application code, credentials/configuration, and writable encounter data so that upgrades do not overwrite saved setups, uploaded monster images, or uploaded per-setup background images.
 
 See [[Home]] for the project overview, [[User Guide]] for using the Admin and Client Display screens, and [[Technical Documentation]] for architecture and API details.
 
@@ -165,7 +165,8 @@ security:
       password: "replace-with-a-strong-client-password"
 
 display:
-  background: "radial-gradient(circle at 50% 15%, #16273d, #080b14 70%)"
+  # Fallback for legacy setups and initial value for new battle setups.
+  background: "#080b14"
   entry_direction: "from_bottom"
   exit_direction: "to_bottom"
   monster_width_percent: 45
@@ -182,6 +183,8 @@ sudo chmod 0640 /etc/scrying-glass/config.yaml
 ```
 
 The service can read the file through the `scryingglass` group but cannot modify it.
+
+The Client Display background is configured per battle setup from the Admin UI, not by editing `config.yaml`. The `display.background` value above is only the fallback for older setup files without a stored background and the initial value for newly created setups. Background images uploaded through the Admin UI are stored below `/var/lib/scrying-glass/uploads/`, so the service must retain write access to that directory through its writable `storage_dir`.
 
 ### Use scrypt password hashes
 
@@ -334,7 +337,7 @@ sudo ls -la /var/lib/scrying-glass/campaigns.json
 
 Each campaign has its own folder under `setups/`. The first start creates `campaigns.json` and a `default` campaign folder.
 
-If saving setups or uploading images fails with a permission error:
+If saving setups or uploading monster/background images fails with a permission error:
 
 ```bash
 sudo chown -R scryingglass:scryingglass /var/lib/scrying-glass
@@ -376,7 +379,9 @@ sudo systemctl restart scrying-glass.service
 sudo systemctl status scrying-glass.service
 ```
 
-The working encounter, campaigns, saved setups, Activity Log, and uploads remain intact because they live in `/var/lib/scrying-glass`, outside the Git checkout.
+The working encounter, campaigns, saved setups, Activity Log, per-setup background choices, and uploaded monster/background images remain intact because they live in `/var/lib/scrying-glass`, outside the Git checkout.
+
+When upgrading to a version that stores the Client Display background in each battle setup, existing setup files remain usable. A setup with no stored `display.background` continues to use the fallback value from `config.yaml` until it is loaded and saved. After saving, the setup has an independent background and no longer changes if the configuration fallback is edited.
 
 ### Upgrading to the campaign version
 
@@ -492,6 +497,8 @@ The service must own `/var/lib/scrying-glass`:
 ```bash
 sudo chown -R scryingglass:scryingglass /var/lib/scrying-glass
 ```
+
+This permission also covers uploaded background images and the setup JSON files that reference them.
 
 Do not set `storage_dir` to a location outside `ReadWritePaths` unless you also update the systemd unit.
 

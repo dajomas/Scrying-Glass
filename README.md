@@ -55,7 +55,8 @@ The project began as *Monster Display*, a name that described its first feature,
 - Activity log with CSV/JSON export and clearing.
 - Bulk Monster controls for Active, Ally, AC, HP, and Init display flags.
 - Ally monster labels rendered as `Name - Ally` without changing stored names.
-- Adaptive monster-card grid, contrast-aware text panels, initiative bar auto-hide, and color/gradient/image client backgrounds.
+- Adaptive monster-card grid, contrast-aware text panels, initiative bar auto-hide, and per-battle-setup color, gradient, or image backgrounds.
+
 
 ## Requirements
 
@@ -147,7 +148,9 @@ security:
       password: "change-this-client-password"
 
 display:
-  background: "radial-gradient(circle at 50% 15%, #16273d, #080b14 70%)"
+  # Optional fallback used by legacy setups without their own background,
+  # and as the initial background for a newly created setup.
+  background: "#080b14"
   entry_direction: "from_bottom"
   exit_direction: "to_bottom"
   monster_width_percent: 45
@@ -156,28 +159,30 @@ display:
   dndbeyond_image_lookup: true
 ```
 
-`display.background` accepts a CSS color, gradient, or image URL. For example:
+## Per-setup view backgrounds
 
-```yaml
-display:
-  background: "url('/media/bgimage.png')"
-```
+The Client Display background belongs to the active **battle setup**, not to the server-wide configuration. In the Admin page, use the **View screen background** controls in the Battle setups pane to choose a color, enter a CSS background value such as a gradient, or upload an image.
 
-The Client Display centers image backgrounds, prevents tiling, and scales them with `cover`. Store the file `bgimage.png` in the `scrying-glass-data/uploads` directory (See below under [Data storage](#data-storage))
+The change is applied to the Client Display immediately. Click **Save** for the battle setup to keep it. Loading or switching to another setup loads that setup's own background.
+
+A newly created setup starts with `display.background` from `config.yaml`. Existing setup files that do not yet contain a saved background also use this value as a backward-compatible fallback. Once saved, each setup stores its own background independently.
+
+Uploaded background images are saved in `storage_dir/uploads/` and referenced by the setup, so include `uploads/` when backing up or moving the installation. The Client Display centers image backgrounds, prevents tiling, and scales them with `cover`.
 
 ## Typical encounter workflow
 
 1. Sign in to the Admin page with an `admin` account.
-2. Select or create the campaign for this session in the **Campaign** dropdown. Its most recently worked on setup opens automatically.
-3. Create a new encounter, load a setup, or import combatants from a saved setup.
-4. Add monsters and characters manually, from `.monster` files, or from CSV.
-5. Set initiatives and activate the participants.
-6. Save the setup in the active campaign if it will be reused.
-7. Start the battle and resolve initiative ties.
-8. Click the underlined active combatant in Battle order to apply one or more target actions.
-9. Use **Next** to advance turns.
-10. Export the Activity Log if needed.
-11. Use **Reset All** to reset combatants and clear the battle order.
+1. Select or create the campaign for this session in the **Campaign** dropdown. Its most recently worked on setup opens automatically.
+1. Create a new encounter, load a setup, or import combatants from a saved setup.
+1. In **View screen background**, choose the setup's color, CSS gradient, or uploaded background image.
+1. Add monsters and characters manually, from `.monster` files, or from CSV.
+1. Set initiatives and activate the participants.
+1. Save the setup in the active campaign to retain combatants, battle state, Activity Log, and its view background.
+1. Start the battle and resolve initiative ties.
+1. Click the underlined active combatant in Battle order to apply one or more target actions.
+1. Use **Next** to advance turns.
+1. Export the Activity Log if needed.
+1. Use **Reset All** to reset combatants and clear the battle order.
 
 ## Creating `.monster` files
 
@@ -209,7 +214,7 @@ scrying-glass-data/
 
 `campaigns.json` records the campaigns, their descriptions, the active campaign, and each campaign's most recently worked on setup. Each campaign has its own folder under `setups/`. When upgrading from a version without campaigns, setups found directly in `setups/` are moved into `setups/default/` at the first start; see [Technical Documentation — Campaigns](docs/Technical-Documentation.md#campaigns).
 
-Back up the complete directory, including `campaigns.json` and `uploads/`, because state/setup files can reference uploaded images.
+Back up the complete directory, including `campaigns.json` and `uploads/`, because monster images and per-setup background images are referenced from state/setup files. Each saved setup includes its own `display.background` value.
 
 ## Renaming from Monster Display
 
