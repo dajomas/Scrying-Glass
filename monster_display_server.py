@@ -974,6 +974,11 @@ class SetupName(BaseModel):
     name: str = Field(min_length=1, max_length=100)
     campaign: str | None = Field(default=None, max_length=100)
 
+class SetupRename(BaseModel):
+    name: str = Field(min_length=1, max_length=100)
+    new_name: str = Field(min_length=1, max_length=100)
+    campaign: str | None = Field(default=None, max_length=100)
+
 class SetupImport(BaseModel):
     name: str = Field(min_length=1, max_length=100)
     kind: Literal['characters', 'monsters', 'both']
@@ -1139,7 +1144,7 @@ async def update_campaign(slug: str, payload: CampaignUpdate, _: dict[str, str]=
     return campaigns_payload()
 
 @admin.delete('/api/campaigns/{slug}')
-async def delete_campaign(slug: str, move_to: str | None = None, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+async def delete_campaign(slug: str, move_to: str | None = None, delete_setups: bool = False, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     migrate_unassigned_setups()
     slug = require_campaign(slug)
     data = read_campaigns()
@@ -1148,12 +1153,15 @@ async def delete_campaign(slug: str, move_to: str | None = None, _: dict[str, st
     source = campaign_dir(slug)
     setups = sorted(source.glob('*.json'))
     target_slug = None
+    if move_to and delete_setups:
+        raise HTTPException(400, 'Choose either move_to or delete_setups, not both')
     if move_to:
         target_slug = require_campaign(move_to)
         if target_slug == slug:
             raise HTTPException(400, 'Cannot move setups into the campaign being deleted')
-    if setups and target_slug is None:
-        raise HTTPException(409, f'Campaign still contains {len(setups)} setup(s); choose a campaign to move them to')
+    if setups and target_slug is None and not delete_setups:
+        raise HTTPException(409, f'Campaign still contains {len(setups)} setup(s); choose a campaign to move them to, or delete them')
+    deleted_setups = [src.stem for src in setups] if delete_setups else []
     moved = []
     if target_slug is not None:
         for src in setups:
@@ -1167,7 +1175,7 @@ async def delete_campaign(slug: str, move_to: str | None = None, _: dict[str, st
         data['active'] = target_slug or sorted(data['campaigns'], key=str.casefold)[0]
     write_campaigns(data)
     opened = await open_campaign_setup(data['active']) if reactivated else None
-    return {**campaigns_payload(), 'moved': moved, 'opened_setup': opened}
+    return {**campaigns_payload(), 'moved': moved, 'deleted_setups': deleted_setups, 'opened_setup': opened}
 
 @admin.post('/api/campaigns/{slug}/activate')
 async def activate_campaign(slug: str, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
@@ -1229,6 +1237,59 @@ async def load_setup(payload: SetupName, _: dict[str, str]=Depends(require("admi
     remember_setup(campaign, name)
     await changed()
     return {'name': name, 'campaign': campaign}
+
+@admin.post('/api/setups/rename')
+async def rename_setup(payload: SetupRename, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+    campaign = require_campaign(payload.campaign)
+    old = setup_slug(payload.name)
+    new = setup_slug(payload.new_name)
+    src = setup_path(old, campaign)
+    if not src.exists():
+        raise HTTPException(404, 'Saved setup not found')
+    if new == old:
+        return {'name': new, 'old_name': old, 'campaign': campaign}
+    dst = setup_path(new, campaign)
+    if dst.exists():
+        raise HTTPException(409, f'A battle setup called {new} already exists in this campaign')
+    src.rename(dst)
+    data = read_campaigns()
+    meta = data['campaigns'].get(campaign)
+    if meta is not None and meta.get('last_setup') == old:
+        meta['last_setup'] = new
+        write_campaigns(data)
+    return {'name': new, 'old_name': old, 'campaign': campaign}
+
+@admin.delete('/api/setups/{name}')
+async def delete_setup(name: str, campaign: str | None = None, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+    """Delete a battle setup, then open the next one in the campaign.
+
+    "Next" is the setup that follows the deleted one alphabetically (wrapping
+    around to the first). When the campaign has no setups left, an empty
+    "Default" setup is created and opened.
+    """
+    global STATE
+    campaign = require_campaign(campaign)
+    name = setup_slug(name)
+    path = setup_path(name, campaign)
+    if not path.exists():
+        raise HTTPException(404, 'Saved setup not found')
+    path.unlink()
+    remaining = list_setups(campaign)
+    created_default = False
+    if remaining:
+        following = [x for x in remaining if x.casefold() > name.casefold()]
+        next_name = following[0] if following else remaining[0]
+    else:
+        create_default_setup(campaign)
+        next_name = DEFAULT_SETUP_NAME
+        created_default = True
+    try:
+        STATE = normalize_state(json.loads(setup_path(next_name, campaign).read_text(encoding='utf-8')))
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
+        raise HTTPException(400, f'Setup {name} was deleted, but {next_name} could not be opened: {exc}') from exc
+    remember_setup(campaign, next_name)
+    await changed()
+    return {'deleted': name, 'opened_setup': next_name, 'created_default': created_default, 'campaign': campaign}
 
 @admin.post('/api/setups/import')
 async def import_setup(payload: SetupImport, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):

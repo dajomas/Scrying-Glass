@@ -409,9 +409,13 @@ ADMIN_HTML = r'''<!doctype html>
           <option value="">Load saved setup…</option>
         </select>
         <button id="loadSetup">Load</button>
-        <button id="openImport" class="import">Import from setup</button>
-        <button id="openMonsterCsvImport" class="import">Import monsters CSV</button>
-        <button id="openCharacterCsvImport" class="import">Import characters CSV</button>
+        <button id="renameSetup">Rename</button>
+        <button id="deleteSetup" class="danger">Delete</button>
+        <div class="row">
+          <button id="openImport" class="import">Import from setup</button>
+          <button id="openMonsterCsvImport" class="import">Import monsters CSV</button>
+          <button id="openCharacterCsvImport" class="import">Import characters CSV</button>
+        </div>
       </div>
     </section>
 
@@ -628,6 +632,19 @@ ADMIN_HTML = r'''<!doctype html>
       <h2 id="campaignDeleteTitle">Delete campaign</h2>
       <p id="campaignDeleteText"></p>
       <form id="campaignDeleteForm" class="import-form">
+        <label>
+          Campaign to delete
+          <select id="campaignDeleteTarget" name="campaign"></select>
+        </label>
+
+        <label id="campaignDeleteActionLabel">
+          Its battle setups
+          <select id="campaignDeleteAction" name="setup_action">
+            <option value="move">Move them to another campaign</option>
+            <option value="delete">Delete them</option>
+          </select>
+        </label>
+
         <label id="campaignDeleteMoveLabel">
           Move its battle setups to
           <select id="campaignDeleteMoveTo" name="move_to"></select>
@@ -1858,42 +1875,94 @@ ADMIN_HTML = r'''<!doctype html>
     // Selecting another campaign in the dropdown switches to it immediately.
     document.querySelector('#campaignSelect').onchange = switchCampaign;
 
-    document.querySelector('#deleteCampaign').onclick = () => {
-      const campaign = campaignBySlug(document.querySelector('#campaignSelect').value);
+    // The delete dialog lets the admin choose WHICH campaign to delete. The
+    // "move setups to" list always excludes the campaign chosen for deletion.
+    function renderCampaignDeleteDialog() {
+      const campaign = campaignBySlug(document.querySelector('#campaignDeleteTarget').value);
       if (!campaign) {
-        message('Choose a campaign to delete');
-        return;
-      }
-      if (campaignData.campaigns.length <= 1) {
-        message('The last remaining campaign cannot be deleted');
         return;
       }
       const others = campaignData.campaigns.filter(item => item.slug !== campaign.slug);
       const hasSetups = campaign.setups.length > 0;
+      const isActive = campaign.slug === campaignData.active;
       document.querySelector('#campaignDeleteTitle').textContent = `Delete campaign: ${campaign.name}`;
-      document.querySelector('#campaignDeleteText').textContent = hasSetups
-        ? `This campaign contains ${campaign.setups.length} battle setup(s). They will be moved to the campaign you choose below.`
-        : 'This campaign contains no battle setups.';
-      document.querySelector('#campaignDeleteMoveLabel').hidden = !hasSetups;
-      const preferred = others.find(item => item.slug === 'default') || others[0];
-      document.querySelector('#campaignDeleteMoveTo').innerHTML = others
+      document.querySelector('#campaignDeleteText').textContent =
+        (hasSetups
+          ? `${campaign.name} contains ${campaign.setups.length} battle setup(s): ${campaign.setups.join(', ')}. ` +
+            'Choose below whether to move them to another campaign or delete them.'
+          : `${campaign.name} contains no battle setups.`) +
+        (isActive ? ' This is the active campaign; another campaign becomes active after deleting it.' : '');
+      const deleteSetups = document.querySelector('#campaignDeleteAction').value === 'delete';
+      document.querySelector('#campaignDeleteActionLabel').hidden = !hasSetups;
+      document.querySelector('#campaignDeleteMoveLabel').hidden = !hasSetups || deleteSetups;
+      const moveTo = document.querySelector('#campaignDeleteMoveTo');
+      const previous = moveTo.value;
+      const preferred =
+        others.find(item => item.slug === previous) ||
+        others.find(item => item.slug === campaignData.active) ||
+        others.find(item => item.slug === 'default') ||
+        others[0];
+      moveTo.innerHTML = others
         .map(item =>
           `<option value="${esc(item.slug)}"${item.slug === preferred.slug ? ' selected' : ''}>${esc(item.name)}</option>`)
         .join('');
-      campaignDeleteModal.dataset.slug = campaign.slug;
+    }
+
+    document.querySelector('#deleteCampaign').onclick = () => {
+      if (campaignData.campaigns.length <= 1) {
+        message('The last remaining campaign cannot be deleted');
+        return;
+      }
+      // Preselect the first campaign that is NOT active, so the active campaign is
+      // never deleted by accident; it can still be chosen explicitly.
+      const initial =
+        campaignData.campaigns.find(item => item.slug !== campaignData.active) ||
+        campaignData.campaigns[0];
+      document.querySelector('#campaignDeleteTarget').innerHTML = campaignData.campaigns
+        .map(item =>
+          `<option value="${esc(item.slug)}"${item.slug === initial.slug ? ' selected' : ''}>` +
+          `${esc(item.name)}${item.slug === campaignData.active ? ' (active)' : ''}</option>`)
+        .join('');
+      document.querySelector('#campaignDeleteMoveTo').innerHTML = '';
+      document.querySelector('#campaignDeleteAction').value = 'move';
+      renderCampaignDeleteDialog();
       campaignDeleteModal.hidden = false;
     };
 
+    document.querySelector('#campaignDeleteTarget').onchange = renderCampaignDeleteDialog;
+    document.querySelector('#campaignDeleteAction').onchange = renderCampaignDeleteDialog;
+
     document.querySelector('#campaignDeleteForm').onsubmit = async event => {
       event.preventDefault();
-      const slug = campaignDeleteModal.dataset.slug;
+      const slug = document.querySelector('#campaignDeleteTarget').value;
       const campaign = campaignBySlug(slug);
+      if (!campaign) {
+        message('Choose a campaign to delete');
+        return;
+      }
       const moveTo = document.querySelector('#campaignDeleteMoveTo').value;
-      const query = campaign && campaign.setups.length ? `?move_to=${encodeURIComponent(moveTo)}` : '';
-      if (slug === campaignData.active && !confirm(
-        `${campaign ? campaign.name : slug} is the active campaign. After deleting it another campaign ` +
-        `becomes active.\n\n${REPLACE_WARNING}`,
-      )) {
+      const hasSetups = campaign.setups.length > 0;
+      const deleteSetups = hasSetups && document.querySelector('#campaignDeleteAction').value === 'delete';
+      if (hasSetups && !deleteSetups && (!moveTo || moveTo === slug)) {
+        message('Choose another campaign to move the battle setups to');
+        return;
+      }
+      const query = !hasSetups
+        ? ''
+        : deleteSetups
+          ? '?delete_setups=true'
+          : `?move_to=${encodeURIComponent(moveTo)}`;
+      const setupNote = !hasSetups
+        ? ''
+        : deleteSetups
+          ? `\n\nIts ${campaign.setups.length} battle setup(s) will be PERMANENTLY DELETED: ${campaign.setups.join(', ')}`
+          : `\n\nIts ${campaign.setups.length} battle setup(s) will be moved to ${campaignBySlug(moveTo)?.name || moveTo}.`;
+      if (slug === campaignData.active
+        ? !confirm(
+          `${campaign.name} is the active campaign. After deleting it another campaign ` +
+          `becomes active.${setupNote}\n\n${REPLACE_WARNING}`,
+        )
+        : !confirm(`Delete campaign ${campaign.name}?${setupNote}`)) {
         return;
       }
       try {
@@ -1907,6 +1976,7 @@ ADMIN_HTML = r'''<!doctype html>
         message(
           `Deleted campaign: ${campaign ? campaign.name : slug}` +
           (result.moved && result.moved.length ? ` (moved ${result.moved.length} setup(s))` : '') +
+          (result.deleted_setups && result.deleted_setups.length ? ` (deleted ${result.deleted_setups.length} setup(s))` : '') +
           opened,
         );
       } catch (error) {
@@ -2054,6 +2124,64 @@ ADMIN_HTML = r'''<!doctype html>
     document.querySelector('#loadSetup').onclick = loadSelectedSetup;
     // Selecting another battle setup in the dropdown loads it immediately.
     document.querySelector('#setupSelect').onchange = loadSelectedSetup;
+
+    document.querySelector('#renameSetup').onclick = async () => {
+      const name = document.querySelector('#setupSelect').value;
+      if (!name) {
+        message('Choose a saved setup to rename');
+        return;
+      }
+      const newName = prompt(`Rename battle setup ${name} to:`, name);
+      if (newName === null || !newName.trim() || newName.trim() === name) {
+        return;
+      }
+      try {
+        const result = await request('/api/setups/rename', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({name, new_name: newName.trim(), campaign: campaignData.active}),
+        });
+        if (document.querySelector('#setupName').value.trim() === name) {
+          document.querySelector('#setupName').value = result.name;
+        }
+        await setups();
+        document.querySelector('#setupSelect').value = result.name;
+        message(`Renamed battle setup ${result.old_name} to ${result.name}`);
+      } catch (error) {
+        message(error.message);
+      }
+    };
+
+    document.querySelector('#deleteSetup').onclick = async () => {
+      const name = document.querySelector('#setupSelect').value;
+      if (!name) {
+        message('Choose a saved setup to delete');
+        return;
+      }
+      if (!confirm(
+        `Delete battle setup ${name} from campaign ${activeCampaign()?.name || campaignData.active}?\n\n` +
+        'The next battle setup is opened afterwards (an empty "default" setup is created if this was the last one). ' +
+        'Unsaved changes to the current battle will be lost.',
+      )) {
+        return;
+      }
+      try {
+        const result = await request(
+          `/api/setups/${encodeURIComponent(name)}?campaign=${encodeURIComponent(campaignData.active || '')}`,
+          {method: 'DELETE'},
+        );
+        await setups();
+        document.querySelector('#setupName').value = result.opened_setup;
+        document.querySelector('#setupSelect').value = result.opened_setup;
+        await load();
+        message(
+          `Deleted battle setup ${result.deleted} — opened ` +
+          (result.created_default ? `new empty setup ${result.opened_setup}` : result.opened_setup),
+        );
+      } catch (error) {
+        message(error.message);
+      }
+    };
 
     document.querySelector('#monsterForm').onsubmit = async event => {
       event.preventDefault();
