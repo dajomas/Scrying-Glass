@@ -5,12 +5,12 @@ network:
   client_port: 4000
 
 # Persistent JSON state and uploaded monster images are stored below this path.
-storage_dir: "./monster-display-data"
+storage_dir: "./scrying-glass-data"
 
 security:
   # Passwords may be plaintext for a first setup, but use scrypt hashes in production.
   # Generate one with:
-  # python3.14 -c 'from monster_display_server import password_hash; print(password_hash("replace-me"))'
+  # python3.14 -c 'from scrying_glass_server import password_hash; print(password_hash("replace-me"))'
   users:
     - username: "dm"
       role: "admin"
