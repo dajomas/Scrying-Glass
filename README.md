@@ -8,6 +8,12 @@ The application runs two FastAPI services from one Python process, persists enco
 
 This project is for 98% Vibe-coded using Perplexity.ai
 
+## Why "Scrying Glass"?
+
+In fantasy stories, a scrying glass is a crystal ball or magic mirror that lets you watch events unfold from afar. That is exactly what this tool does at the table. The game master works behind the screen in the private **Admin** view, preparing encounters and running the battle. The players look into the glass, the **Client Display** on a TV or projector, and watch the fight appear as it happens: monsters entering and leaving the scene, turns passing, wounds and victories showing in real time. The glass only shows what the game master chooses to reveal, which suits a display the players watch but never control.
+
+The project began as *Monster Display*, a name that described its first feature, showing monsters on a screen. Once it grew to include characters, campaigns, battle setups, and full turn-by-turn combat, that name no longer fit, and *Scrying Glass* describes what the players see.
+
 ## Documentation
 
 - [User Guide](docs/User-Guide.md) — GM workflow, campaigns, battle setups, encounter controls, imports, battle actions, and troubleshooting.
