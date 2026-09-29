@@ -8,9 +8,21 @@ This project is for 98% Vibe-coded using Perplexity.ai
 
 ## Documentation
 
-- [User Guide](docs/User-Guide.md) — GM workflow, encounter controls, imports, battle actions, and troubleshooting.
-- [Technical Documentation](docs/Technical-Documentation.md) — architecture, state model, API routes, persistence, and operations.
-- For a GitHub Wiki, add these documents as `Home.md`, `User-Guide.md`, and `Technical-Documentation.md`.
+- [User Guide](docs/User-Guide.md) — GM workflow, campaigns, battle setups, encounter controls, imports, battle actions, and troubleshooting.
+- [Technical Documentation](docs/Technical-Documentation.md) — architecture, state model, campaign registry, API routes, persistence, and operations.
+- [Systemd Deployment](docs/Systemd-Deployment.md) — running Monster Display as a hardened `systemd` service, including upgrades.
+- For a GitHub Wiki, add these documents as `Home.md`, `User-Guide.md`, `Technical-Documentation.md`, and `Systemd-Deployment.md`.
+
+### Campaign documentation
+
+| Topic | Where to read |
+|---|---|
+| Using campaigns: switch, create, edit, delete, add setups to a campaign | [User Guide — Campaigns](docs/User-Guide.md#campaigns) |
+| Battle setups within a campaign: Save, Load, Rename, Delete | [User Guide — Battle setups](docs/User-Guide.md#battle-setups) |
+| The automatic **Default** campaign for setups from older versions | [User Guide — The Default campaign](docs/User-Guide.md#the-default-campaign) |
+| `campaigns.json`, migration, and which setup opens on activation | [Technical Documentation — Campaigns](docs/Technical-Documentation.md#campaigns) |
+| Campaign and setup API routes | [Technical Documentation — Campaign routes](docs/Technical-Documentation.md#campaign-routes) |
+| Upgrading an existing installation to the campaign version | [Systemd Deployment — Upgrading to the campaign version](docs/Systemd-Deployment.md#upgrading-to-the-campaign-version) |
 
 ## Features
 
@@ -22,9 +34,14 @@ This project is for 98% Vibe-coded using Perplexity.ai
 - Recommended `.monster` file authoring with the [Tetra-cube D&D 5e Statblock Generator](https://tetra-cube.com/dnd/dnd-statblock.html).
 - Monster and character CSV import, with generated IDs for rows without an ID.
 - Monster images by upload or optional best-effort D&D Beyond lookup.
-- Saved encounter setups: New, Save, Load, and selective Import from setup.
+- **Campaigns** that group battle setups: create, edit, delete (moving or deleting their setups), switch, and move or copy setups between campaigns. See [Campaigns](docs/User-Guide.md#campaigns).
+- Switching to a campaign automatically opens its most recently worked on battle setup. New campaigns start with an empty `default` setup.
+- Setups saved before campaigns existed are moved into a **Default** campaign automatically.
+- Saved encounter setups per campaign: New, Save, Load, Rename, Delete, and selective Import from setup (also from other campaigns).
+- Campaign and battle setup dropdowns act immediately: selecting an entry switches campaign or loads the setup.
 - Setup imports preserve source current HP and Max HP while creating new IDs and clearing active/visible/turn runtime state.
 - Monster/character editing, individual reset, and permanent removal from the current encounter.
+- Color markers in front of each monster and character name in the Admin lists, matching the battle order marker.
 - Battle start, tie resolution, turn progression, active/inactive status, and battle-order-aware activation.
 - Multi-target current-turn actions: Damage, Heal, Buff, and Debuff.
 - Activity log with CSV/JSON export and clearing.
@@ -143,15 +160,16 @@ The Client Display centers image backgrounds, prevents tiling, and scales them w
 ## Typical encounter workflow
 
 1. Sign in to the Admin page with an `admin` account.
-2. Create a new encounter, load a setup, or import combatants from a saved setup.
-3. Add monsters and characters manually, from `.monster` files, or from CSV.
-4. Set initiatives and activate the participants.
-5. Save the setup if it will be reused.
-6. Start the battle and resolve initiative ties.
-7. Click the underlined active combatant in Battle order to apply one or more target actions.
-8. Use **Next** to advance turns.
-9. Export the Activity Log if needed.
-10. Use **Reset All** to reset combatants and clear the battle order.
+2. Select or create the campaign for this session in the **Campaign** dropdown. Its most recently worked on setup opens automatically.
+3. Create a new encounter, load a setup, or import combatants from a saved setup.
+4. Add monsters and characters manually, from `.monster` files, or from CSV.
+5. Set initiatives and activate the participants.
+6. Save the setup in the active campaign if it will be reused.
+7. Start the battle and resolve initiative ties.
+8. Click the underlined active combatant in Battle order to apply one or more target actions.
+9. Use **Next** to advance turns.
+10. Export the Activity Log if needed.
+11. Use **Reset All** to reset combatants and clear the battle order.
 
 ## Creating `.monster` files
 
@@ -173,13 +191,17 @@ All persistent runtime data is stored under `storage_dir`:
 ```text
 monster-display-data/
 ├── state.json
+├── campaigns.json
 ├── uploads/
 │   └── <uuid>.<image-extension>
 └── setups/
-    └── <normalized-setup-name>.json
+    └── <campaign-slug>/
+        └── <normalized-setup-name>.json
 ```
 
-Back up the complete directory, including `uploads/`, because state/setup files can reference uploaded images.
+`campaigns.json` records the campaigns, their descriptions, the active campaign, and each campaign's most recently worked on setup. Each campaign has its own folder under `setups/`. When upgrading from a version without campaigns, setups found directly in `setups/` are moved into `setups/default/` at the first start; see [Technical Documentation — Campaigns](docs/Technical-Documentation.md#campaigns).
+
+Back up the complete directory, including `campaigns.json` and `uploads/`, because state/setup files can reference uploaded images.
 
 ## Security
 
