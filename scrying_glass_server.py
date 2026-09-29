@@ -27,7 +27,7 @@ DEFAULT_STORAGE_DIR = './scrying-glass-data'
 LEGACY_STORAGE_DIR = './monster-display-data'
 DEFAULT_CONFIG = {'network': {'bind': '0.0.0.0', 'admin_port': 3000, 'client_port': 4000}, 'storage_dir': DEFAULT_STORAGE_DIR, 'security': {'users': [{'username': 'admin', 'role': 'admin', 'password': 'CHANGE-ME'}, {'username': 'client', 'role': 'client', 'password': 'CHANGE-ME'}]}, 'display': {'background': '#080b14', 'entry_direction': 'from_bottom', 'exit_direction': 'to_bottom', 'monster_width_percent': 45, 'dndbeyond_image_lookup': True}}
 CONFIG: dict[str, Any] = {}
-STATE: dict[str, Any] = {'monsters': [], 'characters': [], 'battle_order': [], "activity_log": []}
+STATE: dict[str, Any] = {'monsters': [], 'characters': [], 'battle_order': [], "activity_log": [], 'display': {},}
 LOCK = asyncio.Lock()
 SESSIONS: dict[str, dict[str, str]] = {}
 SOCKETS: set[WebSocket] = set()
@@ -37,8 +37,10 @@ UPLOAD_DIR: Path
 SETUPS_DIR: Path
 CAMPAIGNS_FILE: Path
 
+DEFAULT_SETUP_NAME = 'default'
 DEFAULT_CAMPAIGN_SLUG = 'default'
 DEFAULT_CAMPAIGN_NAME = 'Default'
+DEFAULT_VIEW_BACKGROUND = '#080b14'
 
 ADMIN_SESSION_COOKIE = "scrying_glass_admin_session"
 CLIENT_SESSION_COOKIE = "scrying_glass_client_session"
@@ -141,12 +143,28 @@ def log_hp_change(
         "amount": abs(hp_delta),
     })
 
+def configured_background() -> str:
+    return str(
+        CONFIG.get('display', {}).get('background', DEFAULT_VIEW_BACKGROUND)
+    ).strip() or DEFAULT_VIEW_BACKGROUND
+
+def normalize_display(raw: Any) -> dict[str, str]:
+    display = raw if isinstance(raw, dict) else {}
+    background = str(
+        display.get('background', configured_background())
+    ).strip()
+
+    return {
+        'background': background or configured_background(),
+    }
+
 def normalize_state(raw: dict[str, Any]) -> dict[str, Any]:
     state = {
         "monsters": raw.get("monsters", []),
         "characters": raw.get("characters", []),
         "battle_order": raw.get("battle_order", []),
         "activity_log": raw.get("activity_log", []),
+        "display": normalize_display(raw.get("display")),
     }
     if (
         not isinstance(state["monsters"], list)
@@ -219,7 +237,7 @@ def public_state() -> dict[str, Any]:
         "battle_order": STATE["battle_order"],
         "activity_log": STATE["activity_log"],
         "display": {
-            "background": d["background"],
+            "background": STATE["display"]["background"],
             "entry_direction": d["entry_direction"],
             "exit_direction": d["exit_direction"],
             "monster_width_percent": d["monster_width_percent"],
@@ -295,8 +313,6 @@ def unique_setup_path(directory: Path, stem: str) -> Path:
         counter += 1
     return dst
 
-DEFAULT_SETUP_NAME = 'default'
-
 def create_default_setup(slug: str) -> str | None:
     """Create an empty battle setup called "Default" in a newly created campaign.
 
@@ -307,7 +323,7 @@ def create_default_setup(slug: str) -> str | None:
     path = directory / f'{DEFAULT_SETUP_NAME}.json'
     if path.exists():
         return None
-    empty = normalize_state({'monsters': [], 'characters': [], 'battle_order': [], 'activity_log': []})
+    empty = normalize_state({'monsters': [], 'characters': [], 'battle_order': [], 'activity_log': [], 'display': {'background': configured_background(),}})
     temp = path.with_suffix('.tmp')
     temp.write_text(json.dumps(empty, indent=2), encoding='utf-8')
     temp.replace(path)
@@ -934,6 +950,9 @@ def advance_turn() -> dict[str, Any] | None:
     target['visible'] = True
     return target
 
+class DisplayBackgroundUpdate(BaseModel):
+    background: str = Field(min_length=1, max_length=4096)
+
 class MonsterUpdate(BaseModel):
     name: str | None = Field(default=None, min_length=1, max_length=100)
     monster_type: str | None = Field(default=None, min_length=1, max_length=100)
@@ -1003,8 +1022,6 @@ class CampaignSetupAdd(BaseModel):
     setup: str = Field(min_length=1, max_length=100)
     from_campaign: str = Field(min_length=1, max_length=100)
     mode: Literal['move', 'copy'] = 'move'
-admin = FastAPI(title='Scrying Glass Admin')
-client = FastAPI(title='Scrying Glass Client')
 
 class BattleActionRow(BaseModel):
     target_id: str = Field(min_length=1, max_length=100)
@@ -1017,6 +1034,9 @@ class BattleActions(BaseModel):
 
 def login(error: str='') -> HTMLResponse:
     return HTMLResponse(LOGIN.replace('{error}', f'<p class="error">{error}</p>' if error else ''))
+
+admin = FastAPI(title='Scrying Glass Admin')
+client = FastAPI(title='Scrying Glass Client')
 
 @admin.get('/login')
 def admin_login_get():
@@ -1067,6 +1087,34 @@ def admin_get_state(
     ),
 ):
     return public_state()
+
+@admin.patch('/api/display/background')
+async def update_display_background(
+    payload: DisplayBackgroundUpdate,
+    _: dict[str, str] = Depends(require('admin', ADMIN_SESSION_COOKIE)),
+) -> dict[str, Any]:
+    background = payload.background.strip()
+
+    if not background:
+        raise HTTPException(400, 'Background is required')
+
+    STATE['display']['background'] = background
+    await changed()
+    return public_state()
+
+@admin.post('/api/display/background-image')
+async def upload_display_background_image(
+    image: UploadFile = File(...),
+    _: dict[str, str] = Depends(require('admin', ADMIN_SESSION_COOKIE)),
+) -> dict[str, Any]:
+    image_url = save_image(image)
+    STATE['display']['background'] = f'url("{image_url}")'
+    await changed()
+
+    return {
+        'background': STATE['display']['background'],
+        'image_url': image_url,
+    }
 
 @client.get("/api/state")
 def client_get_state(

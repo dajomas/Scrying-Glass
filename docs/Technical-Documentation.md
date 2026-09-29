@@ -62,7 +62,8 @@ security:
       password: "replace-this-client-password"
 
 display:
-  background: "radial-gradient(circle at 50% 15%, #16273d, #080b14 70%)"
+  # Fallback for legacy setups and initial value for a new setup.
+  background: "#080b14"
   entry_direction: "from_bottom"
   exit_direction: "to_bottom"
   monster_width_percent: 45
@@ -78,7 +79,7 @@ display:
 | `network.client_port` | Client listener, default 4000 |
 | `storage_dir` | Parent directory for state, the campaign registry, setup snapshots, and uploads |
 | `security.users` | Username, role, and plaintext/scrypt password records |
-| `display.background` | CSS color, gradient, or image URL |
+| `display.background` | Default/fallback background for legacy setup files and the initial background of new setups. A saved battle setup stores its own `display.background`. |
 | `display.entry_direction` | `from_bottom` or `from_top` |
 | `display.exit_direction` | `to_bottom` or `to_top` |
 | `display.monster_width_percent` | Retained display sizing configuration |
@@ -147,10 +148,10 @@ For `storage_dir: /var/lib/scrying-glass`:
 
 | Location | Purpose |
 |---|---|
-| `state.json` | Working encounter, battle order, and activity log |
+| `state.json` | Working encounter, battle order, activity log, and the working setup's `display.background` |
 | `campaigns.json` | Campaign registry: active campaign, names, descriptions, most recently worked on setup |
-| `uploads/` | Uploaded monster images, mounted at `/media/` |
-| `setups/<campaign-slug>/` | Named full-state JSON snapshots belonging to one campaign |
+| `uploads/` | Uploaded monster and setup-background images, mounted at `/media/` |
+| `setups/<campaign-slug>/` | Named full-state JSON snapshots, including each setup's `display.background`, belonging to one campaign |
 
 State writes use a temporary file followed by replacement:
 
@@ -228,11 +229,26 @@ It runs when a campaign is created with `activate: true`, when a campaign is act
   "monsters": [],
   "characters": [],
   "battle_order": [],
-  "activity_log": []
+  "activity_log": [],
+  "display": {
+    "background": "#080b14"
+  }
 }
 ```
 
-`normalize_state()` fills missing fields in older states/setups and discards battle-order IDs that do not identify a loaded entity.
+`normalize_state()` fills missing fields in older states/setups, including `display.background`, and discards battle-order IDs that do not identify a loaded entity. If an older saved setup has no `display` object, its background is initialized from the configured `display.background` fallback.
+
+### Display
+
+```json
+{
+  "background": "#080b14"
+}
+```
+
+`STATE.display.background` is the Client Display background for the current working encounter and is persisted inside every saved battle setup. It accepts the CSS values supported by the Client renderer, including colors and gradients. An uploaded background image is stored as a `url("/media/<uuid>.<extension>")` value.
+
+The configuration-level `display.background` is not the active setup's background after migration. It is retained as a fallback for setup files created by older versions and as the initial value for blank/new setups.
 
 ### Monster
 
@@ -319,7 +335,12 @@ async def changed() -> None:
     "characters": [],
     "battle_order": [],
     "activity_log": [],
-    "display": {}
+    "display": {
+      "background": "#080b14",
+      "entry_direction": "from_bottom",
+      "exit_direction": "to_bottom",
+      "monster_width_percent": 45
+    }
   }
 }
 ```
@@ -366,6 +387,15 @@ Every setup route accepts an optional `campaign` (slug). When omitted, the activ
 | POST | `/api/setups/rename` | `{name, new_name, campaign?}` | Rename a setup; HTTP 409 if the new name exists. `last_setup` follows the rename |
 | DELETE | `/api/setups/{name}` | `?campaign=` | Delete a setup and open the next one alphabetically (wrapping to the first); when none remain, create and open an empty `default`. Returns `deleted`, `opened_setup`, `created_default` |
 | POST | `/api/setups/import` | `{name, kind, campaign?}` | Append setup combatants as new runtime-reset copies retaining current HP/max HP |
+
+### Display routes
+
+| Method | Path | Body / form | Purpose |
+|---|---|---|---|
+| PATCH | `/api/display/background` | `{background}` | Set the working setup's background and immediately save/broadcast the working state |
+| POST | `/api/display/background-image` | Multipart `image` | Store an allowed image in `uploads/`, set `display.background` to its `/media/` URL wrapped in `url(...)`, and immediately save/broadcast the working state |
+
+Both routes require the Admin session. The background becomes part of a named battle setup when that working state is saved with `/api/setups/save`.
 
 ### Monster and character routes
 
@@ -453,6 +483,7 @@ The Client Display renders visible initiative tokens and active living Monster c
 - Text sits on an opaque contrast-aware panel so it remains readable over images.
 - Ally monsters are displayed with the ` - Ally` suffix without changing stored `name`.
 - The initiative bar becomes `hidden` when empty and CSS expands the stage to full viewport height.
+- The Client reads `state.display.background`, which belongs to the loaded battle setup rather than global runtime configuration.
 - Image backgrounds are assigned as background images centered with `cover`, no repetition, and fixed attachment.
 
 The Admin Monster and Character tables show a colored dot in front of each name. `colorMarker(combatant, fallback)` in `admin_html.py` renders it with the `.turn-marker` class also used for the current turn in the battle order line. It falls back to `#842029` for monsters and `#1f4e79` for characters when no color is stored.
@@ -469,6 +500,7 @@ The Admin Monster table uses a presentation-only sort: active first; active batt
 - D&D Beyond image lookup is best effort and dependent on external site behavior.
 - Deleting a saved setup or a campaign with `delete_setups=true` is permanent; there is no recycle bin. Back up `storage_dir` regularly.
 - Campaign and setup operations are not coordinated between several Admin browsers; the last action wins.
+- Background-image uploads use the same extension allowlist and static `/media/` serving as monster images. Uploads are not automatically garbage-collected because saved states or setups can reference them.
 
 ## Operations
 

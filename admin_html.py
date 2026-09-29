@@ -416,6 +416,33 @@ ADMIN_HTML = r'''<!doctype html>
           <button id="openMonsterCsvImport" class="import">Import monsters CSV</button>
           <button id="openCharacterCsvImport" class="import">Import characters CSV</button>
         </div>
+        <div class="row">
+          <h3>View screen background</h3>
+        </div>
+        <div class="row">
+          <input
+            id="backgroundColor"
+            type="color"
+            value="#080b14"
+            title="Background color"
+          >
+          <input
+            id="backgroundValue"
+            class="setup-name"
+            placeholder="Color, CSS gradient, or image URL"
+          >
+          <input
+            id="backgroundImage"
+            type="file"
+            accept="image/png,image/jpeg,image/gif,image/webp"
+          >
+          <button id="applyBackground" type="button">Apply background</button>
+          <button id="clearBackgroundImage" type="button">Use color</button>
+        </div>
+        <p class="campaign-info">
+          Choose a color, enter a CSS background value, or upload a background image.
+          Save the battle setup to retain it.
+        </p>
       </div>
     </section>
 
@@ -1270,6 +1297,8 @@ ADMIN_HTML = r'''<!doctype html>
       try {
         latest = await request('/api/state');
 
+        setBackgroundInputs();
+
         renderActivityLog(
           Array.isArray(latest.activity_log)
             ? latest.activity_log
@@ -1279,6 +1308,60 @@ ADMIN_HTML = r'''<!doctype html>
         updateBattleState(latest);
 
         updatePaneVisibilityForBattle();
+
+        document.querySelector('#backgroundColor').onclick = () => {
+          document.querySelector('#backgroundColor').showPicker?.();
+        };
+
+        document.querySelector('#backgroundColor').oninput = event => {
+          document.querySelector('#backgroundValue').value = event.target.value;
+        };
+
+        document.querySelector('#applyBackground').onclick = async () => {
+          try {
+            await applyBackground(
+              document.querySelector('#backgroundValue').value.trim() || '#080b14',
+            );
+            message('View screen background updated. Save the setup to keep it.');
+          } catch (error) {
+            message(error.message);
+          }
+        };
+
+        document.querySelector('#clearBackgroundImage').onclick = async () => {
+          try {
+            await applyBackground(document.querySelector('#backgroundColor').value);
+            message('View screen now uses the selected background color.');
+          } catch (error) {
+            message(error.message);
+          }
+        };
+
+        document.querySelector('#backgroundImage').onchange = async event => {
+          const [image] = event.target.files;
+
+          if (!image) {
+            return;
+          }
+
+          try {
+            const form = new FormData();
+            form.append('image', image);
+
+            const result = await request('/api/display/background-image', {
+              method: 'POST',
+              body: form,
+            });
+
+            document.querySelector('#backgroundValue').value = result.background;
+            await load();
+            message('Background image uploaded. Save the setup to keep it.');
+          } catch (error) {
+            message(error.message);
+          } finally {
+            event.target.value = '';
+          }
+        };
 
         document.querySelector('#monsters').innerHTML =
           '<table>' +
@@ -2190,6 +2273,31 @@ ADMIN_HTML = r'''<!doctype html>
         message(error.message);
       }
     };
+
+    function currentBackground() {
+      return String(latest?.display?.background || '#080b14').trim();
+    }
+
+    function setBackgroundInputs(background = currentBackground()) {
+      const color = document.querySelector('#backgroundColor');
+      const value = document.querySelector('#backgroundValue');
+
+      value.value = background;
+
+      if (/^#[0-9a-fA-F]{6}$/.test(background)) {
+        color.value = background;
+      }
+    }
+
+    async function applyBackground(background) {
+      await request('/api/display/background', {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({background}),
+      });
+
+      await load();
+    }
 
     document.querySelector('#monsterForm').onsubmit = async event => {
       event.preventDefault();
