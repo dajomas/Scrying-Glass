@@ -817,15 +817,84 @@ def save_image(upload: UploadFile) -> str:
         shutil.copyfileobj(upload.file, f)
     return '/media/' + dst.name
 
-def dnd_image(kind: str) -> str | None:
+def dnd_image(monster_name: str) -> str | None:
     if not CONFIG['display'].get('dndbeyond_image_lookup', True):
         return None
+
+    requested_name = re.sub(
+        r'[^a-z0-9]+',
+        ' ',
+        monster_name.casefold(),
+    ).strip()
+
+    if not requested_name:
+        return None
+
     try:
-        q = Request('https://www.dndbeyond.com/monsters?filter-search=' + quote(kind), headers={'User-Agent': 'ScryingGlass/1.0'})
-        with urlopen(q, timeout=5) as r:
-            html = r.read(1000000).decode('utf-8', 'replace')
-        found = re.search('<meta[^>]+property=["\\\']og:image["\\\'][^>]+content=["\\\']([^"\\\']+)', html, re.I)
-        return found.group(1) if found else None
+        request = Request(
+            'https://www.dndbeyond.com/monsters'
+            '?filter-search=' + quote(monster_name),
+            headers={
+                'User-Agent': 'Mozilla/5.0 '
+                '(compatible; ScryingGlass/1.0)',
+                'Accept': 'text/html,application/xhtml+xml',
+            },
+        )
+
+        with urlopen(request, timeout=5) as response:
+            html = response.read(1_000_000).decode('utf-8', 'replace')
+
+        # D&D Beyond result cards generally contain a monster page link and title.
+        # Only accept an exact normalized result title.
+        results = re.finditer(
+            r'<a[^>]+href=["\'](?P<href>/monsters/[^"\']+)["\'][^>]*>'
+            r'(?P<content>.*?)</a>',
+            html,
+            re.IGNORECASE | re.DOTALL,
+        )
+
+        for result in results:
+            title = re.sub(r'<[^>]+>', ' ', result.group('content'))
+            title = re.sub(r'\s+', ' ', title).strip()
+            normalized_title = re.sub(
+                r'[^a-z0-9]+',
+                ' ',
+                title.casefold(),
+            ).strip()
+
+            if normalized_title != requested_name:
+                continue
+
+            monster_url = (
+                'https://www.dndbeyond.com' + result.group('href')
+            )
+
+            monster_request = Request(
+                monster_url,
+                headers={
+                    'User-Agent': 'Mozilla/5.0 '
+                    '(compatible; ScryingGlass/1.0)',
+                    'Accept': 'text/html,application/xhtml+xml',
+                },
+            )
+
+            with urlopen(monster_request, timeout=5) as response:
+                monster_html = response.read(1_000_000).decode(
+                    'utf-8',
+                    'replace',
+                )
+
+            image = re.search(
+                r'<meta[^>]+property=["\']og:image["\'][^>]+'
+                r'content=["\'](?P<url>[^"\']+)',
+                monster_html,
+                re.IGNORECASE,
+            )
+
+            if image:
+                return image.group('url')
+
+        return None
     except Exception:
         return None
 
