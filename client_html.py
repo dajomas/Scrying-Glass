@@ -325,7 +325,7 @@ CLIENT_HTML = r'''<!doctype html>
       initiative.hidden = initiativeCombatants.length === 0;
 
       function displayCombatantName(combatant) {
-        return combatant.monster_type && combatant.ally
+        return combatant.mosnter_species && combatant.ally
           ? `${combatant.name} - Ally`
           : combatant.name;
       }
@@ -423,7 +423,7 @@ CLIENT_HTML = r'''<!doctype html>
           ${monster.image_url ? `<img src="${esc(monster.image_url)}" alt="">` : ''}
           <div class="text-panel">
             <h1>${esc(displayCombatantName(monster))}${monster.in_turn ? ' ◀' : ''}</h1>
-            <div class="type">${esc(monster.monster_type)}</div>
+            <div class="type">${esc(monster.mosnter_species)}</div>
             <div class="stats">${stats.join(' · ')}</div>
           </div>
         `;
