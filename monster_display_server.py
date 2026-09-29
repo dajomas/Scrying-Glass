@@ -1,4 +1,4 @@
-"""Monster Display v4.14 (Python 3.14+).
+"""Monster Display v4.15 (Python 3.14+).
 
 Dependencies:
   python3.14 -m pip install 'fastapi>=0.115' 'uvicorn[standard]>=0.30' 'PyYAML>=6.0' python-multipart
@@ -31,6 +31,10 @@ DATA_DIR: Path
 STATE_FILE: Path
 UPLOAD_DIR: Path
 SETUPS_DIR: Path
+CAMPAIGNS_FILE: Path
+
+DEFAULT_CAMPAIGN_SLUG = 'default'
+DEFAULT_CAMPAIGN_NAME = 'Default'
 
 ADMIN_SESSION_COOKIE = "monster_admin_session"
 CLIENT_SESSION_COOKIE = "monster_client_session"
@@ -222,11 +226,220 @@ def setup_slug(name: str) -> str:
         raise HTTPException(400, 'Setup name must contain letters or numbers')
     return slug[:80]
 
-def setup_path(name: str) -> Path:
-    return SETUPS_DIR / (setup_slug(name) + '.json')
+def setup_path(name: str, campaign: str | None = None) -> Path:
+    return campaign_dir(require_campaign(campaign)) / (setup_slug(name) + '.json')
 
-def list_setups() -> list[str]:
-    return sorted((p.stem for p in SETUPS_DIR.glob('*.json')), key=str.casefold)
+def list_setups(campaign: str | None = None) -> list[str]:
+    return sorted((p.stem for p in campaign_dir(require_campaign(campaign)).glob('*.json')), key=str.casefold)
+
+# ---------------------------------------------------------------------------
+# Campaigns
+#
+# Layout on disk:
+#   <storage_dir>/campaigns.json               registry: active campaign + metadata
+#   <storage_dir>/setups/<campaign-slug>/*.json battle setups of that campaign
+#
+# Battle setups stored directly in <storage_dir>/setups/*.json (pre-campaign
+# layout) are "not connected to a campaign" and are moved into the "Default"
+# campaign by migrate_unassigned_setups().
+# ---------------------------------------------------------------------------
+
+def campaign_slug(name: str) -> str:
+    slug = re.sub('[^a-z0-9]+', '-', name.strip().lower()).strip('-')
+    if not slug:
+        raise HTTPException(400, 'Campaign name must contain letters or numbers')
+    return slug[:80]
+
+def campaign_dir(slug: str) -> Path:
+    return SETUPS_DIR / slug
+
+def now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+def read_campaigns() -> dict[str, Any]:
+    data: dict[str, Any] = {'active': None, 'campaigns': {}}
+    if CAMPAIGNS_FILE.exists():
+        try:
+            raw = json.loads(CAMPAIGNS_FILE.read_text(encoding='utf-8'))
+        except (OSError, json.JSONDecodeError):
+            raw = {}
+        if isinstance(raw, dict):
+            if isinstance(raw.get('campaigns'), dict):
+                data['campaigns'] = {
+                    str(k): v for k, v in raw['campaigns'].items() if isinstance(v, dict)
+                }
+            if isinstance(raw.get('active'), str):
+                data['active'] = raw['active']
+    for slug, meta in data['campaigns'].items():
+        meta.setdefault('name', slug)
+        meta.setdefault('description', '')
+        meta.setdefault('created', now_iso())
+    return data
+
+def write_campaigns(data: dict[str, Any]) -> None:
+    temp = CAMPAIGNS_FILE.with_suffix('.tmp')
+    temp.write_text(json.dumps(data, indent=2), encoding='utf-8')
+    temp.replace(CAMPAIGNS_FILE)
+
+def unique_setup_path(directory: Path, stem: str) -> Path:
+    dst = directory / f'{stem}.json'
+    counter = 2
+    while dst.exists():
+        dst = directory / f'{stem}-{counter}.json'
+        counter += 1
+    return dst
+
+DEFAULT_SETUP_NAME = 'default'
+
+def create_default_setup(slug: str) -> str | None:
+    """Create an empty battle setup called "Default" in a newly created campaign.
+
+    Does nothing (returns None) if the campaign already has a setup with that name.
+    """
+    directory = campaign_dir(slug)
+    directory.mkdir(parents=True, exist_ok=True)
+    path = directory / f'{DEFAULT_SETUP_NAME}.json'
+    if path.exists():
+        return None
+    empty = normalize_state({'monsters': [], 'characters': [], 'battle_order': [], 'activity_log': []})
+    temp = path.with_suffix('.tmp')
+    temp.write_text(json.dumps(empty, indent=2), encoding='utf-8')
+    temp.replace(path)
+    return DEFAULT_SETUP_NAME
+
+def migrate_unassigned_setups() -> list[str]:
+    """Move battle setups that are not connected to a campaign into "Default".
+
+    Also keeps the registry and the directories consistent:
+      * campaign directories without a registry entry are registered;
+      * registry entries without a directory get their directory recreated;
+      * there is always at least one campaign and a valid active campaign.
+    Returns the names of the setups that were moved.
+    """
+    data = read_campaigns()
+    dirty = not CAMPAIGNS_FILE.exists()
+    campaigns = data['campaigns']
+
+    for directory in SETUPS_DIR.iterdir():
+        if directory.is_dir() and directory.name not in campaigns:
+            campaigns[directory.name] = {
+                'name': directory.name.replace('-', ' ').title(),
+                'description': '',
+                'created': now_iso(),
+            }
+            dirty = True
+
+    for slug in campaigns:
+        campaign_dir(slug).mkdir(parents=True, exist_ok=True)
+
+    moved: list[str] = []
+    loose = sorted(SETUPS_DIR.glob('*.json'), key=lambda p: p.name.casefold())
+    if loose or not campaigns:
+        created_default = DEFAULT_CAMPAIGN_SLUG not in campaigns
+        if created_default:
+            campaigns[DEFAULT_CAMPAIGN_SLUG] = {
+                'name': DEFAULT_CAMPAIGN_NAME,
+                'description': 'Battle setups that were not connected to a campaign',
+                'created': now_iso(),
+            }
+            dirty = True
+        target = campaign_dir(DEFAULT_CAMPAIGN_SLUG)
+        target.mkdir(parents=True, exist_ok=True)
+        newest: tuple[float, str] | None = None
+        for src in loose:
+            mtime = src.stat().st_mtime
+            dst = unique_setup_path(target, src.stem)
+            src.replace(dst)
+            moved.append(dst.stem)
+            if newest is None or mtime > newest[0]:
+                newest = (mtime, dst.stem)
+        if created_default:
+            # New campaign: add the empty "Default" battle setup (skipped if a
+            # moved setup already uses that name).
+            create_default_setup(DEFAULT_CAMPAIGN_SLUG)
+            if newest is not None:
+                # The most recently modified moved setup counts as "most recently
+                # worked on", so activating Default opens it instead of the empty one.
+                campaigns[DEFAULT_CAMPAIGN_SLUG]['last_setup'] = newest[1]
+
+    if data['active'] not in campaigns:
+        data['active'] = DEFAULT_CAMPAIGN_SLUG if DEFAULT_CAMPAIGN_SLUG in campaigns else sorted(campaigns, key=str.casefold)[0]
+        dirty = True
+
+    if dirty or moved:
+        write_campaigns(data)
+    if moved:
+        print(f'Moved {len(moved)} unassigned battle setup(s) into campaign "{campaigns[DEFAULT_CAMPAIGN_SLUG]["name"]}": {", ".join(moved)}')
+    return moved
+
+def active_campaign() -> str:
+    return read_campaigns()['active'] or DEFAULT_CAMPAIGN_SLUG
+
+def require_campaign(campaign: str | None) -> str:
+    """Resolve an optional campaign slug/name to an existing campaign slug."""
+    if campaign is None or not str(campaign).strip():
+        slug = active_campaign()
+    else:
+        slug = campaign_slug(str(campaign))
+    if slug not in read_campaigns()['campaigns']:
+        raise HTTPException(404, f'Campaign not found: {slug}')
+    campaign_dir(slug).mkdir(parents=True, exist_ok=True)
+    return slug
+
+def remember_setup(campaign: str, name: str) -> None:
+    """Record the battle setup most recently worked on (saved/loaded) in a campaign."""
+    data = read_campaigns()
+    meta = data['campaigns'].get(campaign)
+    if meta is None:
+        return
+    meta['last_setup'] = name
+    meta['last_setup_at'] = now_iso()
+    write_campaigns(data)
+
+def pick_campaign_setup(campaign: str) -> str | None:
+    """Setup to open when a campaign is activated.
+
+    1. the most recently worked on setup recorded in campaigns.json (if it still exists);
+    2. otherwise the setup file modified most recently;
+    3. None when the campaign has no setups.
+    """
+    directory = campaign_dir(campaign)
+    last = read_campaigns()['campaigns'].get(campaign, {}).get('last_setup')
+    if isinstance(last, str) and (directory / f'{last}.json').exists():
+        return last
+    files = sorted(directory.glob('*.json'), key=lambda p: (-p.stat().st_mtime, p.stem.casefold()))
+    return files[0].stem if files else None
+
+async def open_campaign_setup(campaign: str) -> str | None:
+    """Load the campaign's most recent (or first) setup into the live battle state."""
+    global STATE
+    name = pick_campaign_setup(campaign)
+    if name is None:
+        return None
+    path = campaign_dir(campaign) / f'{name}.json'
+    try:
+        STATE = normalize_state(json.loads(path.read_text(encoding='utf-8')))
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
+        raise HTTPException(400, f'Campaign activated, but setup {name} could not be opened: {exc}') from exc
+    remember_setup(campaign, name)
+    await changed()
+    return name
+
+def campaigns_payload(moved: list[str] | None = None) -> dict[str, Any]:
+    data = read_campaigns()
+    items = []
+    for slug, meta in data['campaigns'].items():
+        setups = sorted((p.stem for p in campaign_dir(slug).glob('*.json')), key=str.casefold)
+        items.append({
+            'slug': slug,
+            'name': meta.get('name', slug),
+            'description': meta.get('description', ''),
+            'created': meta.get('created'),
+            'setups': setups,
+            'last_setup': meta.get('last_setup') if meta.get('last_setup') in setups else None,
+        })
+    items.sort(key=lambda x: str(x['name']).casefold())
+    return {'active': data['active'], 'campaigns': items, 'moved': moved or []}
 
 def reset_imported_monster(source: dict[str, Any]) -> dict[str, Any]:
     item = copy.deepcopy(source)
@@ -759,10 +972,31 @@ class BattleStart(BaseModel):
 
 class SetupName(BaseModel):
     name: str = Field(min_length=1, max_length=100)
+    campaign: str | None = Field(default=None, max_length=100)
+
+class SetupRename(BaseModel):
+    name: str = Field(min_length=1, max_length=100)
+    new_name: str = Field(min_length=1, max_length=100)
+    campaign: str | None = Field(default=None, max_length=100)
 
 class SetupImport(BaseModel):
     name: str = Field(min_length=1, max_length=100)
     kind: Literal['characters', 'monsters', 'both']
+    campaign: str | None = Field(default=None, max_length=100)
+
+class CampaignCreate(BaseModel):
+    name: str = Field(min_length=1, max_length=100)
+    description: str = Field(default='', max_length=2000)
+    activate: bool = True
+
+class CampaignUpdate(BaseModel):
+    name: str | None = Field(default=None, min_length=1, max_length=100)
+    description: str | None = Field(default=None, max_length=2000)
+
+class CampaignSetupAdd(BaseModel):
+    setup: str = Field(min_length=1, max_length=100)
+    from_campaign: str = Field(min_length=1, max_length=100)
+    mode: Literal['move', 'copy'] = 'move'
 admin = FastAPI(title='Monster Display Admin')
 client = FastAPI(title='Monster Display Client')
 
@@ -857,8 +1091,118 @@ async def ws(websocket: WebSocket):
         SOCKETS.discard(websocket)
 
 @admin.get('/api/setups')
-def get_setups(_: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
-    return {'names': list_setups()}
+async def get_setups(campaign: str | None = None, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+    migrate_unassigned_setups()
+    slug = require_campaign(campaign)
+    return {'campaign': slug, 'names': list_setups(slug)}
+
+@admin.get('/api/campaigns')
+async def get_campaigns(_: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+    moved = migrate_unassigned_setups()
+    return campaigns_payload(moved)
+
+@admin.post('/api/campaigns')
+async def create_campaign(payload: CampaignCreate, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+    migrate_unassigned_setups()
+    slug = campaign_slug(payload.name)
+    data = read_campaigns()
+    if slug in data['campaigns'] or campaign_dir(slug).exists():
+        raise HTTPException(409, f'Campaign already exists: {slug}')
+    campaign_dir(slug).mkdir(parents=True, exist_ok=False)
+    create_default_setup(slug)
+    data['campaigns'][slug] = {
+        'name': payload.name.strip(),
+        'description': payload.description.strip(),
+        'created': now_iso(),
+    }
+    if payload.activate:
+        data['active'] = slug
+    write_campaigns(data)
+    opened = await open_campaign_setup(slug) if payload.activate else None
+    return {**campaigns_payload(), 'opened_setup': opened}
+
+@admin.patch('/api/campaigns/{slug}')
+async def update_campaign(slug: str, payload: CampaignUpdate, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+    migrate_unassigned_setups()
+    slug = require_campaign(slug)
+    data = read_campaigns()
+    meta = data['campaigns'][slug]
+    if payload.description is not None:
+        meta['description'] = payload.description.strip()
+    if payload.name is not None:
+        new_slug = campaign_slug(payload.name)
+        if new_slug != slug:
+            if new_slug in data['campaigns'] or campaign_dir(new_slug).exists():
+                raise HTTPException(409, f'Campaign already exists: {new_slug}')
+            campaign_dir(slug).rename(campaign_dir(new_slug))
+            data['campaigns'][new_slug] = data['campaigns'].pop(slug)
+            if data['active'] == slug:
+                data['active'] = new_slug
+            meta = data['campaigns'][new_slug]
+        meta['name'] = payload.name.strip()
+    write_campaigns(data)
+    return campaigns_payload()
+
+@admin.delete('/api/campaigns/{slug}')
+async def delete_campaign(slug: str, move_to: str | None = None, delete_setups: bool = False, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+    migrate_unassigned_setups()
+    slug = require_campaign(slug)
+    data = read_campaigns()
+    if len(data['campaigns']) <= 1:
+        raise HTTPException(400, 'The last remaining campaign cannot be deleted')
+    source = campaign_dir(slug)
+    setups = sorted(source.glob('*.json'))
+    target_slug = None
+    if move_to and delete_setups:
+        raise HTTPException(400, 'Choose either move_to or delete_setups, not both')
+    if move_to:
+        target_slug = require_campaign(move_to)
+        if target_slug == slug:
+            raise HTTPException(400, 'Cannot move setups into the campaign being deleted')
+    if setups and target_slug is None and not delete_setups:
+        raise HTTPException(409, f'Campaign still contains {len(setups)} setup(s); choose a campaign to move them to, or delete them')
+    deleted_setups = [src.stem for src in setups] if delete_setups else []
+    moved = []
+    if target_slug is not None:
+        for src in setups:
+            dst = unique_setup_path(campaign_dir(target_slug), src.stem)
+            src.replace(dst)
+            moved.append(dst.stem)
+    shutil.rmtree(source, ignore_errors=True)
+    del data['campaigns'][slug]
+    reactivated = data['active'] == slug
+    if reactivated:
+        data['active'] = target_slug or sorted(data['campaigns'], key=str.casefold)[0]
+    write_campaigns(data)
+    opened = await open_campaign_setup(data['active']) if reactivated else None
+    return {**campaigns_payload(), 'moved': moved, 'deleted_setups': deleted_setups, 'opened_setup': opened}
+
+@admin.post('/api/campaigns/{slug}/activate')
+async def activate_campaign(slug: str, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+    migrate_unassigned_setups()
+    slug = require_campaign(slug)
+    data = read_campaigns()
+    data['active'] = slug
+    write_campaigns(data)
+    opened = await open_campaign_setup(slug)
+    return {**campaigns_payload(), 'opened_setup': opened}
+
+@admin.post('/api/campaigns/{slug}/setups')
+async def add_setup_to_campaign(slug: str, payload: CampaignSetupAdd, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+    migrate_unassigned_setups()
+    target_slug = require_campaign(slug)
+    source_slug = require_campaign(payload.from_campaign)
+    src = setup_path(payload.setup, source_slug)
+    if not src.exists():
+        raise HTTPException(404, 'Saved setup not found')
+    if source_slug == target_slug:
+        raise HTTPException(400, 'Setup is already in this campaign')
+    dst = unique_setup_path(campaign_dir(target_slug), src.stem)
+    if payload.mode == 'copy':
+        shutil.copy2(src, dst)
+    else:
+        src.replace(dst)
+    return {**campaigns_payload(), 'setup': dst.stem, 'campaign': target_slug, 'mode': payload.mode}
 
 @admin.post('/api/setups/new')
 async def new_setup(_: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
@@ -870,30 +1214,88 @@ async def new_setup(_: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COO
 @admin.post('/api/setups/save')
 async def save_setup(payload: SetupName, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     name = setup_slug(payload.name)
-    path = setup_path(name)
+    campaign = require_campaign(payload.campaign)
+    path = setup_path(name, campaign)
     temp = path.with_suffix('.tmp')
     temp.write_text(json.dumps(STATE, indent=2), encoding='utf-8')
     temp.replace(path)
-    return {'name': name}
+    remember_setup(campaign, name)
+    return {'name': name, 'campaign': campaign}
 
 @admin.post('/api/setups/load')
 async def load_setup(payload: SetupName, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     global STATE
     name = setup_slug(payload.name)
-    path = setup_path(name)
+    campaign = require_campaign(payload.campaign)
+    path = setup_path(name, campaign)
     if not path.exists():
         raise HTTPException(404, 'Saved setup not found')
     try:
         STATE = normalize_state(json.loads(path.read_text(encoding='utf-8')))
     except (OSError, json.JSONDecodeError, ValueError) as exc:
         raise HTTPException(400, f'Unable to load setup: {exc}') from exc
+    remember_setup(campaign, name)
     await changed()
-    return {'name': name}
+    return {'name': name, 'campaign': campaign}
+
+@admin.post('/api/setups/rename')
+async def rename_setup(payload: SetupRename, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+    campaign = require_campaign(payload.campaign)
+    old = setup_slug(payload.name)
+    new = setup_slug(payload.new_name)
+    src = setup_path(old, campaign)
+    if not src.exists():
+        raise HTTPException(404, 'Saved setup not found')
+    if new == old:
+        return {'name': new, 'old_name': old, 'campaign': campaign}
+    dst = setup_path(new, campaign)
+    if dst.exists():
+        raise HTTPException(409, f'A battle setup called {new} already exists in this campaign')
+    src.rename(dst)
+    data = read_campaigns()
+    meta = data['campaigns'].get(campaign)
+    if meta is not None and meta.get('last_setup') == old:
+        meta['last_setup'] = new
+        write_campaigns(data)
+    return {'name': new, 'old_name': old, 'campaign': campaign}
+
+@admin.delete('/api/setups/{name}')
+async def delete_setup(name: str, campaign: str | None = None, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+    """Delete a battle setup, then open the next one in the campaign.
+
+    "Next" is the setup that follows the deleted one alphabetically (wrapping
+    around to the first). When the campaign has no setups left, an empty
+    "Default" setup is created and opened.
+    """
+    global STATE
+    campaign = require_campaign(campaign)
+    name = setup_slug(name)
+    path = setup_path(name, campaign)
+    if not path.exists():
+        raise HTTPException(404, 'Saved setup not found')
+    path.unlink()
+    remaining = list_setups(campaign)
+    created_default = False
+    if remaining:
+        following = [x for x in remaining if x.casefold() > name.casefold()]
+        next_name = following[0] if following else remaining[0]
+    else:
+        create_default_setup(campaign)
+        next_name = DEFAULT_SETUP_NAME
+        created_default = True
+    try:
+        STATE = normalize_state(json.loads(setup_path(next_name, campaign).read_text(encoding='utf-8')))
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
+        raise HTTPException(400, f'Setup {name} was deleted, but {next_name} could not be opened: {exc}') from exc
+    remember_setup(campaign, next_name)
+    await changed()
+    return {'deleted': name, 'opened_setup': next_name, 'created_default': created_default, 'campaign': campaign}
 
 @admin.post('/api/setups/import')
 async def import_setup(payload: SetupImport, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     name = setup_slug(payload.name)
-    path = setup_path(name)
+    campaign = require_campaign(payload.campaign)
+    path = setup_path(name, campaign)
     if not path.exists():
         raise HTTPException(404, 'Saved setup not found')
     try:
@@ -909,7 +1311,7 @@ async def import_setup(payload: SetupImport, _: dict[str, str]=Depends(require("
     STATE['characters'].extend(imported_characters)
     STATE['monsters'].extend(imported_monsters)
     await changed()
-    return {'name': name, 'characters': len(imported_characters), 'monsters': len(imported_monsters)}
+    return {'name': name, 'campaign': campaign, 'characters': len(imported_characters), 'monsters': len(imported_monsters)}
 
 @admin.post('/api/monsters/roll-initiative')
 async def roll_monster_initiative(_: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
@@ -1435,6 +1837,8 @@ if __name__ == '__main__':
     UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
     SETUPS_DIR.mkdir(parents=True, exist_ok=True)
     STATE_FILE = DATA_DIR / 'state.json'
+    CAMPAIGNS_FILE = DATA_DIR / 'campaigns.json'
+    migrate_unassigned_setups()
     load_state()
     admin.mount('/media', StaticFiles(directory=str(UPLOAD_DIR)), name='admin-media')
     client.mount('/media', StaticFiles(directory=str(UPLOAD_DIR)), name='client-media')

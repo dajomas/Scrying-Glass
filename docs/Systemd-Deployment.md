@@ -10,7 +10,7 @@ See [[Home]] for the project overview, [[User Guide]] for using the Admin and Cl
 - Runs the application as a dedicated non-root user named `monsterdisplay`.
 - Restarts the service after an unexpected failure.
 - Keeps configuration in `/etc/monster-display`.
-- Keeps current state, saved setups, and image uploads in `/var/lib/monster-display`.
+- Keeps current state, campaigns, saved setups, and image uploads in `/var/lib/monster-display`.
 - Applies basic `systemd` filesystem and privilege hardening.
 
 The application runs two HTTP services from one Python process:
@@ -55,8 +55,11 @@ This guide uses the following paths:
 
 /var/lib/monster-display/             Writable persistent encounter data
 ├── state.json
+├── campaigns.json                    Campaign registry (active campaign, names)
 ├── uploads/
 └── setups/
+    └── <campaign>/                   One folder per campaign
+        └── <setup>.json
 ```
 
 Do not put the live `storage_dir` inside the Git checkout. The persistent directory must survive Git pulls, release replacements, and application upgrades.
@@ -326,7 +329,10 @@ Confirm persistent directories are writable by that account:
 sudo ls -la /var/lib/monster-display
 sudo ls -la /var/lib/monster-display/uploads
 sudo ls -la /var/lib/monster-display/setups
+sudo ls -la /var/lib/monster-display/campaigns.json
 ```
+
+Each campaign has its own folder under `setups/`. The first start creates `campaigns.json` and a `default` campaign folder.
 
 If saving setups or uploading images fails with a permission error:
 
@@ -370,7 +376,22 @@ sudo systemctl restart monster-display.service
 sudo systemctl status monster-display.service
 ```
 
-The working encounter, saved setups, Activity Log, and uploads remain intact because they live in `/var/lib/monster-display`, outside the Git checkout.
+The working encounter, campaigns, saved setups, Activity Log, and uploads remain intact because they live in `/var/lib/monster-display`, outside the Git checkout.
+
+### Upgrading to the campaign version
+
+The first start after upgrading from a version without campaigns migrates existing data automatically:
+
+- Every setup in `/var/lib/monster-display/setups/*.json` is moved into `/var/lib/monster-display/setups/default/`.
+- A `Default` campaign is registered in `/var/lib/monster-display/campaigns.json`.
+
+The journal shows which setups were moved:
+
+```bash
+sudo journalctl -u monster-display.service -b | grep 'unassigned battle setup'
+```
+
+The migration only needs write access to `/var/lib/monster-display`, which `ReadWritePaths` already grants. Make the backup above before the first start. To roll back to a version without campaigns, restore that backup; the old version does not read `setups/<campaign>/` folders.
 
 ## Routine commands
 
@@ -409,10 +430,11 @@ Common causes:
 - Python 3.14 is absent or the virtual-environment path is incorrect.
 - A dependency was not installed in `/opt/monster-display/.venv`.
 - `config.yaml` has invalid YAML.
+- `/var/lib/monster-display/setups/` or `campaigns.json` is not writable, so the startup campaign migration fails.
 - The service account cannot read `/etc/monster-display/config.yaml`.
 - Port 3000 or 4000 is already in use.
 
-### Service cannot write state or uploads
+### Service cannot write state, campaigns, or uploads
 
 The service must own `/var/lib/monster-display`:
 

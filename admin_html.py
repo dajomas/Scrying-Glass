@@ -232,6 +232,9 @@ ADMIN_HTML = r'''<!doctype html>
 
     .hp-edit { width: 5.5rem; }
     .setup-name { min-width: 14rem; }
+    .campaign-select { min-width: 14rem; }
+    .campaign-info { opacity: .8; }
+    .campaign-info strong { opacity: 1; }
 
     .edit-form {
       display: grid;
@@ -263,6 +266,10 @@ ADMIN_HTML = r'''<!doctype html>
     .import-form label {
       display: grid;
       gap: .25rem;
+    }
+
+    .import-form label[hidden] {
+      display: none;
     }
 
     .import-form .actions {
@@ -380,6 +387,19 @@ ADMIN_HTML = r'''<!doctype html>
     <section id="setupInputPane" class="pane">
       <div>
         <div class="row">
+          <h2>Campaign</h2>
+          <span id="activeCampaignInfo" class="campaign-info"></span>
+        </div>
+        <div class="row">
+          <select id="campaignSelect" class="campaign-select"></select>
+          <button id="switchCampaign">Switch</button>
+          <button id="newCampaign">New campaign</button>
+          <button id="editCampaign">Edit campaign</button>
+          <button id="deleteCampaign" class="danger">Delete campaign</button>
+          <button id="openCampaignSetup" class="import">Add setup to campaign</button>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
           <h2>Battle setups</h2>
         </div>
         <input id="setupName" class="setup-name" placeholder="Battle setup name">
@@ -389,9 +409,13 @@ ADMIN_HTML = r'''<!doctype html>
           <option value="">Load saved setup…</option>
         </select>
         <button id="loadSetup">Load</button>
-        <button id="openImport" class="import">Import from setup</button>
-        <button id="openMonsterCsvImport" class="import">Import monsters CSV</button>
-        <button id="openCharacterCsvImport" class="import">Import characters CSV</button>
+        <button id="renameSetup">Rename</button>
+        <button id="deleteSetup" class="danger">Delete</button>
+        <div class="row">
+          <button id="openImport" class="import">Import from setup</button>
+          <button id="openMonsterCsvImport" class="import">Import monsters CSV</button>
+          <button id="openCharacterCsvImport" class="import">Import characters CSV</button>
+        </div>
       </div>
     </section>
 
@@ -519,6 +543,11 @@ ADMIN_HTML = r'''<!doctype html>
 
       <form id="importForm" class="import-form">
         <label>
+          Campaign
+          <select id="importCampaign" name="campaign"></select>
+        </label>
+
+        <label>
           Saved setup
           <select id="importSetup" name="name" required></select>
         </label>
@@ -535,6 +564,95 @@ ADMIN_HTML = r'''<!doctype html>
         <div class="actions">
           <button class="import">Import</button>
           <button type="button" id="cancelImport">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="campaignModal" class="modal" hidden>
+    <div>
+      <h2 id="campaignModalTitle">New campaign</h2>
+      <form id="campaignForm" class="import-form">
+        <label>
+          Name
+          <input name="name" maxlength="100" required>
+        </label>
+
+        <label>
+          Description
+          <input name="description" maxlength="2000">
+        </label>
+
+        <div class="actions">
+          <button id="campaignSubmit" class="import">Create</button>
+          <button type="button" id="cancelCampaign">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="campaignSetupModal" class="modal" hidden>
+    <div>
+      <h2>Add battle setup to campaign</h2>
+      <p>Move or copy a saved battle setup from one campaign into another.</p>
+      <form id="campaignSetupForm" class="import-form">
+        <label>
+          From campaign
+          <select id="campaignSetupFrom" name="from_campaign" required></select>
+        </label>
+
+        <label>
+          Saved setup
+          <select id="campaignSetupName" name="setup" required></select>
+        </label>
+
+        <label>
+          To campaign
+          <select id="campaignSetupTo" name="to_campaign" required></select>
+        </label>
+
+        <label>
+          Mode
+          <select name="mode">
+            <option value="move">Move</option>
+            <option value="copy">Copy</option>
+          </select>
+        </label>
+
+        <div class="actions">
+          <button class="import">Add</button>
+          <button type="button" id="cancelCampaignSetup">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="campaignDeleteModal" class="modal" hidden>
+    <div>
+      <h2 id="campaignDeleteTitle">Delete campaign</h2>
+      <p id="campaignDeleteText"></p>
+      <form id="campaignDeleteForm" class="import-form">
+        <label>
+          Campaign to delete
+          <select id="campaignDeleteTarget" name="campaign"></select>
+        </label>
+
+        <label id="campaignDeleteActionLabel">
+          Its battle setups
+          <select id="campaignDeleteAction" name="setup_action">
+            <option value="move">Move them to another campaign</option>
+            <option value="delete">Delete them</option>
+          </select>
+        </label>
+
+        <label id="campaignDeleteMoveLabel">
+          Move its battle setups to
+          <select id="campaignDeleteMoveTo" name="move_to"></select>
+        </label>
+
+        <div class="actions">
+          <button class="danger">Delete</button>
+          <button type="button" id="cancelCampaignDelete">Cancel</button>
         </div>
       </form>
     </div>
@@ -610,6 +728,14 @@ ADMIN_HTML = r'''<!doctype html>
     const editModal = document.querySelector('#editModal');
     const importModal = document.querySelector('#importModal');
     const csvImportModal = document.querySelector('#csvImportModal');
+    const campaignModal = document.querySelector('#campaignModal');
+    const campaignSetupModal = document.querySelector('#campaignSetupModal');
+    const campaignDeleteModal = document.querySelector('#campaignDeleteModal');
+
+    // Campaign registry as returned by GET /api/campaigns:
+    // {active: slug, campaigns: [{slug, name, description, setups: [...]}], moved: [...]}
+    let campaignData = {active: null, campaigns: [], moved: []};
+    let campaignEditing = null;
 
     let csvImportKind = null;
 
@@ -847,34 +973,86 @@ ADMIN_HTML = r'''<!doctype html>
       editModal.hidden = false;
     }
 
+    function campaignBySlug(slug) {
+      return campaignData.campaigns.find(item => item.slug === slug) || null;
+    }
+
+    function activeCampaign() {
+      return campaignBySlug(campaignData.active);
+    }
+
+    function campaignOptions(selected, placeholder = '') {
+      return (placeholder ? `<option value="">${esc(placeholder)}</option>` : '') +
+        campaignData.campaigns
+          .map(item =>
+            `<option value="${esc(item.slug)}"${item.slug === selected ? ' selected' : ''}>` +
+            `${esc(item.name)} (${item.setups.length})</option>`)
+          .join('');
+    }
+
+    function setupOptions(names, placeholder, selected = '') {
+      return `<option value="">${esc(placeholder)}</option>` +
+        names
+          .map(name =>
+            `<option value="${esc(name)}"${name === selected ? ' selected' : ''}>${esc(name)}</option>`)
+          .join('');
+    }
+
+    function renderImportSetups() {
+      const importCampaign = document.querySelector('#importCampaign');
+      const importSelect = document.querySelector('#importSetup');
+      const campaign = campaignBySlug(importCampaign.value) || activeCampaign();
+      const names = campaign ? campaign.setups : [];
+      const oldValue = importSelect.value;
+      importSelect.innerHTML = setupOptions(names, 'Choose setup…', names.includes(oldValue) ? oldValue : '');
+    }
+
+    function renderCampaignSetupNames() {
+      const from = campaignBySlug(document.querySelector('#campaignSetupFrom').value);
+      const select = document.querySelector('#campaignSetupName');
+      const names = from ? from.setups : [];
+      const oldValue = select.value;
+      select.innerHTML = setupOptions(names, 'Choose setup…', names.includes(oldValue) ? oldValue : '');
+    }
+
+    function renderCampaigns() {
+      const active = activeCampaign();
+
+      document.querySelector('#activeCampaignInfo').innerHTML = active
+        ? `Active: <strong>${esc(active.name)}</strong>` +
+          (active.description ? ` — ${esc(active.description)}` : '')
+        : 'No active campaign';
+
+      document.querySelector('#campaignSelect').innerHTML =
+        campaignOptions(campaignData.active);
+
+      const setupSelect = document.querySelector('#setupSelect');
+      const oldSetupValue = setupSelect.value;
+      const names = active ? active.setups : [];
+      setupSelect.innerHTML = setupOptions(
+        names,
+        active ? `Load saved setup from ${active.name}…` : 'Load saved setup…',
+        names.includes(oldSetupValue) ? oldSetupValue : '',
+      );
+
+      const importCampaign = document.querySelector('#importCampaign');
+      const oldImportCampaign = importCampaign.value;
+      importCampaign.innerHTML = campaignOptions(
+        campaignBySlug(oldImportCampaign) ? oldImportCampaign : campaignData.active,
+      );
+      renderImportSetups();
+    }
+
     async function setups() {
       try {
-        const result = await request('/api/setups');
+        campaignData = await request('/api/campaigns');
+        renderCampaigns();
 
-        const setupSelect = document.querySelector('#setupSelect');
-        const oldSetupValue = setupSelect.value;
-
-        setupSelect.innerHTML =
-          '<option value="">Load saved setup…</option>' +
-          result.names
-            .map(name => `<option value="${esc(name)}">${esc(name)}</option>`)
-            .join('');
-
-        if (result.names.includes(oldSetupValue)) {
-          setupSelect.value = oldSetupValue;
-        }
-
-        const importSelect = document.querySelector('#importSetup');
-        const oldImportValue = importSelect.value;
-
-        importSelect.innerHTML =
-          '<option value="">Choose setup…</option>' +
-          result.names
-            .map(name => `<option value="${esc(name)}">${esc(name)}</option>`)
-            .join('');
-
-        if (result.names.includes(oldImportValue)) {
-          importSelect.value = oldImportValue;
+        if (campaignData.moved && campaignData.moved.length) {
+          message(
+            `Moved ${campaignData.moved.length} unassigned setup(s) into campaign Default: ` +
+            campaignData.moved.join(', '),
+          );
         }
       } catch (error) {
         message(error.message);
@@ -1344,8 +1522,12 @@ ADMIN_HTML = r'''<!doctype html>
 
     document.querySelector('#openImport').onclick = async () => {
       await setups();
+      document.querySelector('#importCampaign').value = campaignData.active || '';
+      renderImportSetups();
       importModal.hidden = false;
     };
+
+    document.querySelector('#importCampaign').onchange = renderImportSetups;
 
     document.querySelector('#cancelImport').onclick = closeImport;
 
@@ -1355,6 +1537,7 @@ ADMIN_HTML = r'''<!doctype html>
       const formData = new FormData(event.target);
       const name = formData.get('name');
       const kind = formData.get('kind');
+      const campaign = formData.get('campaign') || campaignData.active;
 
       if (!name) {
         message('Choose a saved setup to import from');
@@ -1371,7 +1554,7 @@ ADMIN_HTML = r'''<!doctype html>
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({name, kind}),
+          body: JSON.stringify({name, kind, campaign}),
         });
 
         closeImport();
@@ -1551,7 +1734,308 @@ ADMIN_HTML = r'''<!doctype html>
         closeCsvImport();
       }
 
+      if (!campaignModal.hidden) {
+        closeCampaignModal();
+      }
+
+      if (!campaignSetupModal.hidden) {
+        campaignSetupModal.hidden = true;
+      }
+
+      if (!campaignDeleteModal.hidden) {
+        campaignDeleteModal.hidden = true;
+      }
+
     });
+
+    // ---- Campaigns --------------------------------------------------------
+
+    function closeCampaignModal() {
+      campaignModal.hidden = true;
+      campaignEditing = null;
+    }
+
+    function openCampaignModal(campaign = null) {
+      const form = document.querySelector('#campaignForm');
+      campaignEditing = campaign ? campaign.slug : null;
+      document.querySelector('#campaignModalTitle').textContent =
+        campaign ? `Edit campaign: ${campaign.name}` : 'New campaign';
+      document.querySelector('#campaignSubmit').textContent = campaign ? 'Save' : 'Create';
+      form.elements.name.value = campaign ? campaign.name : '';
+      form.elements.description.value = campaign ? (campaign.description || '') : '';
+      campaignModal.hidden = false;
+      form.elements.name.focus();
+    }
+
+    document.querySelector('#cancelCampaign').onclick = closeCampaignModal;
+    document.querySelector('#cancelCampaignSetup').onclick = () => { campaignSetupModal.hidden = true; };
+    document.querySelector('#cancelCampaignDelete').onclick = () => { campaignDeleteModal.hidden = true; };
+
+    document.querySelector('#newCampaign').onclick = () => openCampaignModal();
+
+    document.querySelector('#editCampaign').onclick = () => {
+      const campaign = campaignBySlug(document.querySelector('#campaignSelect').value);
+      if (!campaign) {
+        message('Choose a campaign to edit');
+        return;
+      }
+      openCampaignModal(campaign);
+    };
+
+    // After a campaign is activated the server opens its most recently worked on
+    // (or newest) battle setup. Reflect that in the setup controls and reload state.
+    async function applyOpenedSetup(result) {
+      renderCampaigns();
+      if (!result || !result.opened_setup) {
+        return '';
+      }
+      document.querySelector('#setupName').value = result.opened_setup;
+      document.querySelector('#setupSelect').value = result.opened_setup;
+      await load();
+      return ` — opened battle setup: ${result.opened_setup}`;
+    }
+
+    const REPLACE_WARNING =
+      'The current battle will be replaced by the campaign\'s most recently used battle setup. ' +
+      'Unsaved changes will be lost.';
+
+    document.querySelector('#campaignForm').onsubmit = async event => {
+      event.preventDefault();
+      const form = event.target;
+      const name = form.elements.name.value.trim();
+      const description = form.elements.description.value.trim();
+
+      if (!name) {
+        message('Enter a campaign name');
+        return;
+      }
+
+      try {
+        if (campaignEditing) {
+          campaignData = await request(`/api/campaigns/${encodeURIComponent(campaignEditing)}`, {
+            method: 'PATCH',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({name, description}),
+          });
+          message(`Updated campaign: ${name}`);
+        } else {
+          if (!confirm(`Create and switch to campaign ${name}?\n\n${REPLACE_WARNING}`)) {
+            return;
+          }
+          campaignData = await request('/api/campaigns', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({name, description, activate: true}),
+          });
+          closeCampaignModal();
+          const opened = await applyOpenedSetup(campaignData);
+          message(`Created and switched to campaign: ${name}${opened}`);
+          return;
+        }
+        closeCampaignModal();
+        renderCampaigns();
+      } catch (error) {
+        message(error.message);
+      }
+    };
+
+    async function switchCampaign() {
+      const campaignSelect = document.querySelector('#campaignSelect');
+      const slug = campaignSelect.value;
+      // Put the dropdown back on the active campaign when the switch does not happen.
+      const revert = () => { campaignSelect.value = campaignData.active || ''; };
+      if (!slug) {
+        revert();
+        message('Choose a campaign to switch to');
+        return;
+      }
+      if (slug === campaignData.active) {
+        message(`${activeCampaign()?.name || slug} is already the active campaign`);
+        return;
+      }
+      const target = campaignBySlug(slug);
+      if (!confirm(`Switch to campaign ${target ? target.name : slug}?\n\n${REPLACE_WARNING}`)) {
+        revert();
+        return;
+      }
+      try {
+        campaignData = await request(`/api/campaigns/${encodeURIComponent(slug)}/activate`, {
+          method: 'POST',
+        });
+        document.querySelector('#setupSelect').value = '';
+        const opened = await applyOpenedSetup(campaignData);
+        message(`Switched to campaign: ${activeCampaign()?.name || slug}${opened}`);
+      } catch (error) {
+        revert();
+        message(error.message);
+      }
+    }
+
+    document.querySelector('#switchCampaign').onclick = switchCampaign;
+    // Selecting another campaign in the dropdown switches to it immediately.
+    document.querySelector('#campaignSelect').onchange = switchCampaign;
+
+    // The delete dialog lets the admin choose WHICH campaign to delete. The
+    // "move setups to" list always excludes the campaign chosen for deletion.
+    function renderCampaignDeleteDialog() {
+      const campaign = campaignBySlug(document.querySelector('#campaignDeleteTarget').value);
+      if (!campaign) {
+        return;
+      }
+      const others = campaignData.campaigns.filter(item => item.slug !== campaign.slug);
+      const hasSetups = campaign.setups.length > 0;
+      const isActive = campaign.slug === campaignData.active;
+      document.querySelector('#campaignDeleteTitle').textContent = `Delete campaign: ${campaign.name}`;
+      document.querySelector('#campaignDeleteText').textContent =
+        (hasSetups
+          ? `${campaign.name} contains ${campaign.setups.length} battle setup(s): ${campaign.setups.join(', ')}. ` +
+            'Choose below whether to move them to another campaign or delete them.'
+          : `${campaign.name} contains no battle setups.`) +
+        (isActive ? ' This is the active campaign; another campaign becomes active after deleting it.' : '');
+      const deleteSetups = document.querySelector('#campaignDeleteAction').value === 'delete';
+      document.querySelector('#campaignDeleteActionLabel').hidden = !hasSetups;
+      document.querySelector('#campaignDeleteMoveLabel').hidden = !hasSetups || deleteSetups;
+      const moveTo = document.querySelector('#campaignDeleteMoveTo');
+      const previous = moveTo.value;
+      const preferred =
+        others.find(item => item.slug === previous) ||
+        others.find(item => item.slug === campaignData.active) ||
+        others.find(item => item.slug === 'default') ||
+        others[0];
+      moveTo.innerHTML = others
+        .map(item =>
+          `<option value="${esc(item.slug)}"${item.slug === preferred.slug ? ' selected' : ''}>${esc(item.name)}</option>`)
+        .join('');
+    }
+
+    document.querySelector('#deleteCampaign').onclick = () => {
+      if (campaignData.campaigns.length <= 1) {
+        message('The last remaining campaign cannot be deleted');
+        return;
+      }
+      // Preselect the first campaign that is NOT active, so the active campaign is
+      // never deleted by accident; it can still be chosen explicitly.
+      const initial =
+        campaignData.campaigns.find(item => item.slug !== campaignData.active) ||
+        campaignData.campaigns[0];
+      document.querySelector('#campaignDeleteTarget').innerHTML = campaignData.campaigns
+        .map(item =>
+          `<option value="${esc(item.slug)}"${item.slug === initial.slug ? ' selected' : ''}>` +
+          `${esc(item.name)}${item.slug === campaignData.active ? ' (active)' : ''}</option>`)
+        .join('');
+      document.querySelector('#campaignDeleteMoveTo').innerHTML = '';
+      document.querySelector('#campaignDeleteAction').value = 'move';
+      renderCampaignDeleteDialog();
+      campaignDeleteModal.hidden = false;
+    };
+
+    document.querySelector('#campaignDeleteTarget').onchange = renderCampaignDeleteDialog;
+    document.querySelector('#campaignDeleteAction').onchange = renderCampaignDeleteDialog;
+
+    document.querySelector('#campaignDeleteForm').onsubmit = async event => {
+      event.preventDefault();
+      const slug = document.querySelector('#campaignDeleteTarget').value;
+      const campaign = campaignBySlug(slug);
+      if (!campaign) {
+        message('Choose a campaign to delete');
+        return;
+      }
+      const moveTo = document.querySelector('#campaignDeleteMoveTo').value;
+      const hasSetups = campaign.setups.length > 0;
+      const deleteSetups = hasSetups && document.querySelector('#campaignDeleteAction').value === 'delete';
+      if (hasSetups && !deleteSetups && (!moveTo || moveTo === slug)) {
+        message('Choose another campaign to move the battle setups to');
+        return;
+      }
+      const query = !hasSetups
+        ? ''
+        : deleteSetups
+          ? '?delete_setups=true'
+          : `?move_to=${encodeURIComponent(moveTo)}`;
+      const setupNote = !hasSetups
+        ? ''
+        : deleteSetups
+          ? `\n\nIts ${campaign.setups.length} battle setup(s) will be PERMANENTLY DELETED: ${campaign.setups.join(', ')}`
+          : `\n\nIts ${campaign.setups.length} battle setup(s) will be moved to ${campaignBySlug(moveTo)?.name || moveTo}.`;
+      if (slug === campaignData.active
+        ? !confirm(
+          `${campaign.name} is the active campaign. After deleting it another campaign ` +
+          `becomes active.${setupNote}\n\n${REPLACE_WARNING}`,
+        )
+        : !confirm(`Delete campaign ${campaign.name}?${setupNote}`)) {
+        return;
+      }
+      try {
+        const result = await request(`/api/campaigns/${encodeURIComponent(slug)}${query}`, {
+          method: 'DELETE',
+        });
+        campaignData = result;
+        campaignDeleteModal.hidden = true;
+        document.querySelector('#setupSelect').value = '';
+        const opened = await applyOpenedSetup(result);
+        message(
+          `Deleted campaign: ${campaign ? campaign.name : slug}` +
+          (result.moved && result.moved.length ? ` (moved ${result.moved.length} setup(s))` : '') +
+          (result.deleted_setups && result.deleted_setups.length ? ` (deleted ${result.deleted_setups.length} setup(s))` : '') +
+          opened,
+        );
+      } catch (error) {
+        message(error.message);
+      }
+    };
+
+    document.querySelector('#openCampaignSetup').onclick = async () => {
+      await setups();
+      if (campaignData.campaigns.length < 2) {
+        message('Create a second campaign first; setups can only be added from another campaign');
+        return;
+      }
+      const target = document.querySelector('#campaignSelect').value || campaignData.active;
+      const source = campaignData.campaigns.find(item => item.slug !== target && item.setups.length)
+        || campaignData.campaigns.find(item => item.slug !== target);
+      document.querySelector('#campaignSetupFrom').innerHTML = campaignOptions(source.slug);
+      document.querySelector('#campaignSetupTo').innerHTML = campaignOptions(target);
+      renderCampaignSetupNames();
+      campaignSetupModal.hidden = false;
+    };
+
+    document.querySelector('#campaignSetupFrom').onchange = renderCampaignSetupNames;
+
+    document.querySelector('#campaignSetupForm').onsubmit = async event => {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const from_campaign = formData.get('from_campaign');
+      const setup = formData.get('setup');
+      const to = formData.get('to_campaign');
+      const mode = formData.get('mode');
+
+      if (!setup) {
+        message('Choose a battle setup');
+        return;
+      }
+      if (from_campaign === to) {
+        message('Source and target campaign are the same');
+        return;
+      }
+
+      try {
+        const result = await request(`/api/campaigns/${encodeURIComponent(to)}/setups`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({setup, from_campaign, mode}),
+        });
+        campaignData = result;
+        campaignSetupModal.hidden = true;
+        renderCampaigns();
+        message(
+          `${mode === 'copy' ? 'Copied' : 'Moved'} setup ${setup} to campaign ` +
+          `${campaignBySlug(result.campaign)?.name || result.campaign}` +
+          (result.setup !== setup ? ` as ${result.setup}` : ''),
+        );
+      } catch (error) {
+        message(error.message);
+      }
+    };
 
     document.querySelector('#newSetup').onclick = async () => {
       if (!confirm('Discard the current battle setup and create a new blank setup?')) {
@@ -1585,27 +2069,37 @@ ADMIN_HTML = r'''<!doctype html>
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({name}),
+          body: JSON.stringify({name, campaign: campaignData.active}),
         });
 
         document.querySelector('#setupName').value = result.name;
         await setups();
         document.querySelector('#setupSelect').value = result.name;
-        message(`Saved setup: ${result.name}`);
+        message(`Saved setup: ${result.name} (campaign: ${campaignBySlug(result.campaign)?.name || result.campaign})`);
       } catch (error) {
         message(error.message);
       }
     };
 
-    document.querySelector('#loadSetup').onclick = async () => {
-      const name = document.querySelector('#setupSelect').value;
+    async function loadSelectedSetup(event) {
+      const setupSelect = document.querySelector('#setupSelect');
+      const name = setupSelect.value;
+      const fromDropdown = event && event.type === 'change';
+      // Put the dropdown back on the currently loaded setup when the load does not happen.
+      const revert = () => {
+        const current = document.querySelector('#setupName').value;
+        setupSelect.value = [...setupSelect.options].some(option => option.value === current) ? current : '';
+      };
 
       if (!name) {
-        message('Choose a saved setup to load');
+        if (!fromDropdown) {
+          message('Choose a saved setup to load');
+        }
         return;
       }
 
       if (!confirm(`Load ${name} and replace the current battle setup?`)) {
+        revert();
         return;
       }
 
@@ -1615,12 +2109,75 @@ ADMIN_HTML = r'''<!doctype html>
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({name}),
+          body: JSON.stringify({name, campaign: campaignData.active}),
         });
 
         document.querySelector('#setupName').value = result.name;
         await load();
-        message(`Loaded setup: ${result.name}`);
+        message(`Loaded setup: ${result.name} (campaign: ${campaignBySlug(result.campaign)?.name || result.campaign})`);
+      } catch (error) {
+        revert();
+        message(error.message);
+      }
+    }
+
+    document.querySelector('#loadSetup').onclick = loadSelectedSetup;
+    // Selecting another battle setup in the dropdown loads it immediately.
+    document.querySelector('#setupSelect').onchange = loadSelectedSetup;
+
+    document.querySelector('#renameSetup').onclick = async () => {
+      const name = document.querySelector('#setupSelect').value;
+      if (!name) {
+        message('Choose a saved setup to rename');
+        return;
+      }
+      const newName = prompt(`Rename battle setup ${name} to:`, name);
+      if (newName === null || !newName.trim() || newName.trim() === name) {
+        return;
+      }
+      try {
+        const result = await request('/api/setups/rename', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({name, new_name: newName.trim(), campaign: campaignData.active}),
+        });
+        if (document.querySelector('#setupName').value.trim() === name) {
+          document.querySelector('#setupName').value = result.name;
+        }
+        await setups();
+        document.querySelector('#setupSelect').value = result.name;
+        message(`Renamed battle setup ${result.old_name} to ${result.name}`);
+      } catch (error) {
+        message(error.message);
+      }
+    };
+
+    document.querySelector('#deleteSetup').onclick = async () => {
+      const name = document.querySelector('#setupSelect').value;
+      if (!name) {
+        message('Choose a saved setup to delete');
+        return;
+      }
+      if (!confirm(
+        `Delete battle setup ${name} from campaign ${activeCampaign()?.name || campaignData.active}?\n\n` +
+        'The next battle setup is opened afterwards (an empty "default" setup is created if this was the last one). ' +
+        'Unsaved changes to the current battle will be lost.',
+      )) {
+        return;
+      }
+      try {
+        const result = await request(
+          `/api/setups/${encodeURIComponent(name)}?campaign=${encodeURIComponent(campaignData.active || '')}`,
+          {method: 'DELETE'},
+        );
+        await setups();
+        document.querySelector('#setupName').value = result.opened_setup;
+        document.querySelector('#setupSelect').value = result.opened_setup;
+        await load();
+        message(
+          `Deleted battle setup ${result.deleted} — opened ` +
+          (result.created_default ? `new empty setup ${result.opened_setup}` : result.opened_setup),
+        );
       } catch (error) {
         message(error.message);
       }
