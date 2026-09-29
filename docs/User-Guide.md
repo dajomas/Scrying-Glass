@@ -214,15 +214,15 @@ Characters require a name, color, and HP. Initiative is optional. New characters
 Use **Import monsters CSV**. Required fields are:
 
 ```text
-name,monster_type,ac,hp
+name,monster_species,ac,hp
 ```
 
-`type` may be used instead of `monster_type`.
+`type` may be used instead of `monster_species`.
 
 Example:
 
 ```csv
-id,name,monster_type,ac,hp,max_hp,initiative,color,ally,show_ac,show_hp,show_initiative
+id,name,monster_species,ac,hp,max_hp,initiative,color,ally,show_ac,show_hp,show_initiative
 ,Ice Guard,humanoid,16,45,45,14,#842029,false,true,true,true
 ice-mage-1,Ice Mage,humanoid,13,52,52,17,#4c1d95,false,true,true,true
 ```

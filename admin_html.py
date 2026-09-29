@@ -454,7 +454,7 @@ ADMIN_HTML = r'''<!doctype html>
       <div>
         <form id="monsterForm" class="row">
           <input name="name" placeholder="Name" required>
-          <input name="monster_type" placeholder="Monster type" required>
+          <input name="monster_species" placeholder="Monster type" required>
           <input name="ac" type="number" placeholder="AC" required>
           <input name="hp" type="number" placeholder="HP" required>
           <input name="quantity" type="number" min="1" max="50" value="1" title="Number of monsters">
@@ -839,7 +839,7 @@ ADMIN_HTML = r'''<!doctype html>
           <td>
             ${colorMarker(monster, '#842029')}${esc(displayName)}
             <br>
-            <small>${esc(monster.monster_type)}</small>
+            <small>${esc(monster.monster_species)}</small>
           </td>
           <td>${monster.ac}</td>
           <td>${monster.hp}/${monster.max_hp}</td>
@@ -915,7 +915,7 @@ ADMIN_HTML = r'''<!doctype html>
         </label>
         <label>
           Monster type
-          <input name="monster_type" required value="${esc(monster.monster_type)}">
+          <input name="monster_species" required value="${esc(monster.monster_species)}">
         </label>
         <label>
           AC
@@ -1401,7 +1401,7 @@ ADMIN_HTML = r'''<!doctype html>
             .map(id => all().find(combatant => combatant.id === id))
             .filter(Boolean)
             .map(combatant => {
-              const displayName = combatant.monster_type && combatant.ally
+              const displayName = combatant.monster_species && combatant.ally
                 ? `${combatant.name} - Ally`
                 : combatant.name;
 
@@ -1543,7 +1543,7 @@ ADMIN_HTML = r'''<!doctype html>
       };
 
       if (editing.kind === 'monsters') {
-        data.monster_type = form.elements.monster_type.value.trim();
+        data.monster_species = form.elements.monster_species.value.trim();
         data.ac = numberValue(form, 'ac', 0);
         data.original_hp = numberValue(form, 'original_hp', 0);
         data.ally = form.elements.ally.value === 'true';
@@ -1675,7 +1675,7 @@ ADMIN_HTML = r'''<!doctype html>
         isMonster ? 'Import monsters from CSV' : 'Import characters from CSV';
 
       document.querySelector('#csvImportHelp').textContent = isMonster
-        ? 'Required columns: name, monster_type (or type), ac, hp. '
+        ? 'Required columns: name, monster_species (or type), ac, hp. '
           + 'Optional id values are preserved; blank or missing IDs are generated automatically.'
         : 'Required column: name. Optional id values are preserved; blank or missing IDs are generated automatically.';
 
@@ -2441,7 +2441,7 @@ ADMIN_HTML = r'''<!doctype html>
           <select data-action-target required>
             ${targets.map(target => `
               <option value="${esc(target.id)}">
-                ${esc(target.monster_type && target.ally ? `${target.name} - Ally` : (!target.monster_type) ? `${target.name} - Character` : `${target.name} - Monster`)}
+                ${esc(target.monster_species && target.ally ? `${target.name} - Ally` : (!target.monster_species) ? `${target.name} - Character` : `${target.name} - Monster`)}
               </option>
             `).join('')}
           </select>
