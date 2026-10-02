@@ -519,7 +519,7 @@ ADMIN_HTML = r'''<!doctype html>
 
     <section id="monsterInputPane" class="pane">
       <div class="row">
-        <h2>Add monster to battle setup</h2>
+        <h2>Add monster to Battle setup</h2>
       </div>
 
       <div>
@@ -1073,6 +1073,41 @@ ADMIN_HTML = r'''<!doctype html>
       return campaignBySlug(campaignData.active);
     }
 
+    function syncActiveBattleSetupControls() {
+      const activeSetup = latest?.active_setup;
+
+      if (
+        !activeSetup
+        || typeof activeSetup.campaign !== 'string'
+        || typeof activeSetup.name !== 'string'
+      ) {
+        return;
+      }
+
+      const activeCampaignEntry = activeCampaign();
+
+      if (
+        !activeCampaignEntry
+        || activeCampaignEntry.slug !== activeSetup.campaign
+      ) {
+        return;
+      }
+
+      const setupName = activeSetup.name.trim();
+
+      if (!setupName) {
+        return;
+      }
+
+      document.querySelector('#setupName').value = setupName;
+
+      const setupSelect = document.querySelector('#setupSelect');
+
+      if ([...setupSelect.options].some(option => option.value === setupName)) {
+        setupSelect.value = setupName;
+      }
+    }
+
     function renderActiveBattleSetup() {
       const info = document.querySelector('#activeBattleSetupInfo');
 
@@ -1080,26 +1115,36 @@ ADMIN_HTML = r'''<!doctype html>
         return;
       }
 
-      const active = activeCampaign();
-      const setupName = document.querySelector('#setupName').value.trim();
+      const activeSetup = latest?.active_setup;
 
-      if (!setupName) {
+      if (
+        !activeSetup
+        || typeof activeSetup.campaign !== 'string'
+        || typeof activeSetup.name !== 'string'
+        || !activeSetup.campaign.trim()
+        || !activeSetup.name.trim()
+      ) {
         info.textContent = 'No saved battle setup loaded';
         return;
       }
 
+      const activeCampaignEntry = activeCampaign();
+      const sameCampaign = activeCampaignEntry
+        && activeCampaignEntry.slug === activeSetup.campaign;
+
       const isKnownSetup = Boolean(
-        active
-        && Array.isArray(active.setups)
-        && active.setups.includes(setupName),
+        sameCampaign
+        && Array.isArray(activeCampaignEntry.setups)
+        && activeCampaignEntry.setups.includes(activeSetup.name),
       );
 
       if (!isKnownSetup) {
-        info.textContent = 'Unsaved battle setup';
+        info.textContent = 'Saved battle setup is no longer available';
         return;
       }
 
-      info.innerHTML = `Active: <strong>${esc(setupName)}</strong>`;
+      info.innerHTML =
+        `Active: <strong>${esc(activeSetup.name)}</strong>`;
     }
 
     function campaignOptions(selected, placeholder = '') {
@@ -1162,6 +1207,8 @@ ADMIN_HTML = r'''<!doctype html>
         campaignBySlug(oldImportCampaign) ? oldImportCampaign : campaignData.active,
       );
       renderImportSetups();
+
+      syncActiveBattleSetupControls();
       renderActiveBattleSetup();
     }
 
@@ -1383,6 +1430,9 @@ ADMIN_HTML = r'''<!doctype html>
     async function load() {
       try {
         latest = await request('/api/state');
+
+        syncActiveBattleSetupControls();
+        renderActiveBattleSetup();
 
         setBackgroundInputs();
 
@@ -1978,6 +2028,7 @@ ADMIN_HTML = r'''<!doctype html>
       document.querySelector('#setupName').value = result.opened_setup;
       document.querySelector('#setupSelect').value = result.opened_setup;
 
+      syncActiveBattleSetupControls();
       renderActiveBattleSetup();
 
       await load();
@@ -2269,6 +2320,7 @@ ADMIN_HTML = r'''<!doctype html>
         await setups();
         document.querySelector('#setupSelect').value = result.name;
 
+        syncActiveBattleSetupControls();
         renderActiveBattleSetup();
 
         message(`Saved setup: ${result.name} (campaign: ${campaignBySlug(result.campaign)?.name || result.campaign})`);
@@ -2314,6 +2366,7 @@ ADMIN_HTML = r'''<!doctype html>
         document.querySelector('#setupName').value = result.name;
         document.querySelector('#setupSelect').value = result.name;
 
+        syncActiveBattleSetupControls();
         renderActiveBattleSetup();
 
         await load();
@@ -2355,6 +2408,7 @@ ADMIN_HTML = r'''<!doctype html>
         await setups();
         document.querySelector('#setupSelect').value = result.name;
 
+        syncActiveBattleSetupControls();
         renderActiveBattleSetup();
 
         message(`Renamed battle setup ${result.old_name} to ${result.name}`);
@@ -2386,6 +2440,7 @@ ADMIN_HTML = r'''<!doctype html>
         document.querySelector('#setupName').value = result.opened_setup;
         document.querySelector('#setupSelect').value = result.opened_setup;
 
+        syncActiveBattleSetupControls();
         renderActiveBattleSetup();
 
         await load();

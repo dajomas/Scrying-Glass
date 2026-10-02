@@ -27,7 +27,14 @@ DEFAULT_STORAGE_DIR = './scrying-glass-data'
 LEGACY_STORAGE_DIR = './monster-display-data'
 DEFAULT_CONFIG = {'network': {'bind': '0.0.0.0', 'admin_port': 3000, 'client_port': 4000}, 'storage_dir': DEFAULT_STORAGE_DIR, 'security': {'users': [{'username': 'admin', 'role': 'admin', 'password': 'CHANGE-ME'}, {'username': 'client', 'role': 'client', 'password': 'CHANGE-ME'}]}, 'display': {'background': '#080b14', 'entry_direction': 'from_bottom', 'exit_direction': 'to_bottom', 'monster_width_percent': 45, 'dndbeyond_image_lookup': True}}
 CONFIG: dict[str, Any] = {}
-STATE: dict[str, Any] = {'monsters': [], 'characters': [], 'battle_order': [], "activity_log": [], 'display': {},}
+STATE: dict[str, Any] = {
+    "monsters": [],
+    "characters": [],
+    "battle_order": [],
+    "activity_log": [],
+    "display": {},
+    "active_setup": None,
+}
 LOCK = asyncio.Lock()
 SESSIONS: dict[str, dict[str, str]] = {}
 SOCKETS: set[WebSocket] = set()
@@ -160,13 +167,36 @@ def normalize_display(raw: Any) -> dict[str, str]:
     }
 
 def normalize_state(raw: dict[str, Any]) -> dict[str, Any]:
+    raw_active_setup = raw.get("active_setup")
+
+    if isinstance(raw_active_setup, dict):
+        raw_campaign = raw_active_setup.get("campaign")
+        raw_name = raw_active_setup.get("name")
+
+        if (
+            isinstance(raw_campaign, str)
+            and raw_campaign.strip()
+            and isinstance(raw_name, str)
+            and raw_name.strip()
+        ):
+            active_setup: dict[str, str] | None = {
+                "campaign": raw_campaign.strip(),
+                "name": raw_name.strip(),
+            }
+        else:
+            active_setup = None
+    else:
+        active_setup = None
+
     state = {
         "monsters": raw.get("monsters", []),
         "characters": raw.get("characters", []),
         "battle_order": raw.get("battle_order", []),
         "activity_log": raw.get("activity_log", []),
         "display": normalize_display(raw.get("display")),
+        "active_setup": active_setup,
     }
+
     if (
         not isinstance(state["monsters"], list)
         or not isinstance(state["characters"], list)
@@ -303,11 +333,75 @@ def load_setup_state(name: str, campaign: str) -> dict[str, Any]:
 
 def load_state() -> None:
     global STATE
-    STATE = normalize_state(json.loads(STATE_FILE.read_text(encoding='utf-8'))) if STATE_FILE.exists() else normalize_state(STATE)
+
+    if not STATE_FILE.exists():
+        STATE = normalize_state(STATE)
+        return
+
+    try:
+        saved = json.loads(STATE_FILE.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError(f"Unable to load state.json: {exc}") from exc
+
+    saved_state = normalize_state(saved)
+    reference = saved_state.get("active_setup")
+
+    if isinstance(reference, dict):
+        campaign = reference.get("campaign")
+        name = reference.get("name")
+
+        if isinstance(campaign, str) and isinstance(name, str):
+            try:
+                # This obtains the saved setup's monster list, then restores
+                # campaign characters through the canonical setup loader.
+                restored = load_setup_state(name, campaign)
+
+                # Runtime working-state fields still come from state.json.
+                restored["battle_order"] = saved_state["battle_order"]
+                restored["activity_log"] = saved_state["activity_log"]
+                restored["display"] = saved_state["display"]
+                restored["active_setup"] = {
+                    "campaign": campaign,
+                    "name": name,
+                }
+
+                # If state.json is intentionally not storing monsters, use the
+                # monsters from the saved setup. If a transitional/older file
+                # does contain monsters, its data wins as working runtime data.
+                if saved_state["monsters"]:
+                    restored["monsters"] = saved_state["monsters"]
+
+                STATE = normalize_state(restored)
+                return
+            except HTTPException:
+                # The referenced campaign/setup no longer exists or is unreadable.
+                # Continue below and preserve state.json as an unsaved encounter.
+                pass
+
+    # No valid setup association: state.json owns the working monsters.
+    saved_state["active_setup"] = None
+    STATE = normalize_state(saved_state)
 
 def save_state() -> None:
-    temp = STATE_FILE.with_suffix('.tmp')
-    temp.write_text(json.dumps(STATE, indent=2), encoding='utf-8')
+    persisted = copy.deepcopy(STATE)
+
+    # Characters are campaign-owned and must not be duplicated in state.json.
+    persisted["characters"] = []
+
+    # When the working monsters come from a valid saved battle setup, the setup
+    # file is authoritative. state.json stores only the setup reference.
+    if active_setup_path() is not None:
+        persisted["monsters"] = []
+    else:
+        # If the referenced setup disappeared, was renamed, or was deleted,
+        # preserve the working monsters as an unsaved encounter.
+        persisted["active_setup"] = None
+
+    temp = STATE_FILE.with_suffix(".tmp")
+    temp.write_text(
+        json.dumps(persisted, indent=2),
+        encoding="utf-8",
+    )
     temp.replace(STATE_FILE)
 
 def public_state() -> dict[str, Any]:
@@ -317,6 +411,7 @@ def public_state() -> dict[str, Any]:
         "characters": STATE["characters"],
         "battle_order": STATE["battle_order"],
         "activity_log": STATE["activity_log"],
+        "active_setup": STATE.get("active_setup"),
         "display": {
             "background": STATE["display"]["background"],
             "entry_direction": d["entry_direction"],
@@ -339,6 +434,58 @@ def campaign_characters_path(slug: str) -> Path:
 
 def list_setups(campaign: str | None = None) -> list[str]:
     return sorted((p.stem for p in campaign_dir(require_campaign(campaign)).glob('*.json')), key=str.casefold)
+
+def active_setup_reference() -> dict[str, str] | None:
+    """Return the current saved battle setup reference, when valid."""
+    value = STATE.get("active_setup")
+
+    if not isinstance(value, dict):
+        return None
+
+    campaign = value.get("campaign")
+    name = value.get("name")
+
+    if not isinstance(campaign, str) or not campaign.strip():
+        return None
+
+    if not isinstance(name, str) or not name.strip():
+        return None
+
+    return {
+        "campaign": campaign,
+        "name": name,
+    }
+
+
+def set_active_setup(campaign: str, name: str) -> None:
+    """Mark the named saved setup as the source of the working monsters."""
+    STATE["active_setup"] = {
+        "campaign": campaign,
+        "name": name,
+    }
+
+
+def clear_active_setup() -> None:
+    """Mark the current monster encounter as unsaved."""
+    STATE["active_setup"] = None
+
+
+def active_setup_path() -> Path | None:
+    """Return the referenced setup path only when it still exists."""
+    reference = active_setup_reference()
+
+    if reference is None:
+        return None
+
+    try:
+        campaign = require_campaign(reference["campaign"])
+        name = setup_slug(reference["name"])
+    except HTTPException:
+        return None
+
+    path = setup_path(name, campaign)
+
+    return path if path.exists() else None
 
 # ---------------------------------------------------------------------------
 # Campaigns
@@ -571,6 +718,7 @@ async def open_campaign_setup(campaign: str) -> str | None:
             exc.status_code,
             f"Campaign activated, but setup {name} could not be opened: {exc.detail}",
         ) from exc
+    set_active_setup(campaign, name)
     remember_setup(campaign, name)
     await changed()
     return name
@@ -1348,8 +1496,14 @@ async def delete_campaign(slug: str, move_to: str | None = None, delete_setups: 
             dst = unique_setup_path(campaign_dir(target_slug), src.stem)
             src.replace(dst)
             moved.append(dst.stem)
+    reference = active_setup_reference()
+
+    if reference is not None and reference["campaign"] == slug:
+        clear_active_setup()
+
     shutil.rmtree(source, ignore_errors=True)
     campaign_characters_path(slug).unlink(missing_ok=True)
+
     del data["campaigns"][slug]
     reactivated = data['active'] == slug
     if reactivated:
@@ -1403,6 +1557,8 @@ async def new_setup(
         },
     })
 
+    clear_active_setup()
+
     await changed()
 
     return public_state()
@@ -1426,7 +1582,10 @@ async def save_setup(
     # Characters are campaign-owned, so save their current state separately.
     save_campaign_characters(campaign, STATE["characters"])
 
+    set_active_setup(campaign, name)
     remember_setup(campaign, name)
+
+    await changed()
 
     return {
         "name": name,
@@ -1439,30 +1598,65 @@ async def load_setup(payload: SetupName, _: dict[str, str]=Depends(require("admi
     name = setup_slug(payload.name)
     campaign = require_campaign(payload.campaign)
     STATE = load_setup_state(name, campaign)
+    set_active_setup(campaign, name)
     remember_setup(campaign, name)
     await changed()
     return {'name': name, 'campaign': campaign}
 
-@admin.post('/api/setups/rename')
-async def rename_setup(payload: SetupRename, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+@admin.post("/api/setups/rename")
+async def rename_setup(
+    payload: SetupRename,
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+):
     campaign = require_campaign(payload.campaign)
     old = setup_slug(payload.name)
     new = setup_slug(payload.new_name)
+
     src = setup_path(old, campaign)
+
     if not src.exists():
-        raise HTTPException(404, 'Saved setup not found')
+        raise HTTPException(404, "Saved setup not found")
+
     if new == old:
-        return {'name': new, 'old_name': old, 'campaign': campaign}
+        return {
+            "name": new,
+            "old_name": old,
+            "campaign": campaign,
+        }
+
     dst = setup_path(new, campaign)
+
     if dst.exists():
-        raise HTTPException(409, f'A battle setup called {new} already exists in this campaign')
+        raise HTTPException(
+            409,
+            f"A battle setup called {new} already exists in this campaign",
+        )
+
     src.rename(dst)
+
     data = read_campaigns()
-    meta = data['campaigns'].get(campaign)
-    if meta is not None and meta.get('last_setup') == old:
-        meta['last_setup'] = new
-        write_campaigns(data)
-    return {'name': new, 'old_name': old, 'campaign': campaign}
+    meta = data["campaigns"].get(campaign)
+
+    if meta is not None and meta.get("last_setup") == old:
+        meta["last_setup"] = new
+
+    write_campaigns(data)
+
+    reference = active_setup_reference()
+
+    if (
+        reference is not None
+        and reference["campaign"] == campaign
+        and reference["name"] == old
+    ):
+        set_active_setup(campaign, new)
+        await changed()
+
+    return {
+        "name": new,
+        "old_name": old,
+        "campaign": campaign,
+    }
 
 @admin.delete('/api/setups/{name}')
 async def delete_setup(name: str, campaign: str | None = None, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
@@ -1478,6 +1672,15 @@ async def delete_setup(name: str, campaign: str | None = None, _: dict[str, str]
     path = setup_path(name, campaign)
     if not path.exists():
         raise HTTPException(404, 'Saved setup not found')
+    reference = active_setup_reference()
+
+    if (
+        reference is not None
+        and reference["campaign"] == campaign
+        and reference["name"] == name
+    ):
+        clear_active_setup()
+
     path.unlink()
     remaining = list_setups(campaign)
     created_default = False
@@ -1496,6 +1699,7 @@ async def delete_setup(name: str, campaign: str | None = None, _: dict[str, str]
             f"Setup {name} was deleted, but {next_name} could not be opened: "
             f"{exc.detail}",
         ) from exc
+    set_active_setup(campaign, name)
     remember_setup(campaign, next_name)
     await changed()
     return {'deleted': name, 'opened_setup': next_name, 'created_default': created_default, 'campaign': campaign}
