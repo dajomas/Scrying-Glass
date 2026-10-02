@@ -144,6 +144,42 @@ ADMIN_HTML = r'''<!doctype html>
       align-items: center;
     }
 
+    .field {
+      display: grid;
+      gap: .25rem;
+      align-content: start;
+    }
+
+    .field-inline {
+      display: inline-grid;
+      width: fit-content;
+    }
+
+    .field-label {
+      color: #cbd5e1;
+      font-size: .8rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .required-marker {
+      color: #fca5a5;
+      font-weight: 900;
+    }
+
+    .field input,
+    .field select {
+      margin: 0;
+    }
+
+    .field-compact input[type="number"] {
+      min-width: 5.5rem;
+    }
+
+    .field-color input[type="color"] {
+      min-width: 4rem;
+    }
+
     .message {
       min-height: 1.4rem;
       color: #fbbf24;
@@ -464,12 +500,18 @@ ADMIN_HTML = r'''<!doctype html>
         </div>
 
         <div class="row">
-          <select id="campaignSelect" class="campaign-select"></select>
-          <button id="switchCampaign">Switch</button>
-          <button id="newCampaign">New campaign</button>
-          <button id="editCampaign">Edit campaign</button>
-          <button id="deleteCampaign" class="danger">Delete campaign</button>
-          <button id="openCampaignSetup" class="import">
+          <label class="field">
+            <span class="field-label">Active campaign</span>
+            <select
+              id="campaignSelect"
+              class="campaign-select"
+            ></select>
+          </label>
+          <label class="field"><span class="field-label">&nbsp;</span><button id="switchCampaign">Switch</button></label>
+          <label class="field"><span class="field-label">&nbsp;</span><button id="newCampaign">New campaign</button></label>
+          <label class="field"><span class="field-label">&nbsp;</span><button id="editCampaign">Edit campaign</button></label>
+          <label class="field"><span class="field-label">&nbsp;</span><button id="deleteCampaign" class="danger">Delete campaign</button></label>
+          <label class="field"><span class="field-label">&nbsp;</span><button id="openCampaignSetup" class="import">
             Add setup to campaign
           </button>
         </div>
@@ -483,11 +525,53 @@ ADMIN_HTML = r'''<!doctype html>
 
       <div>
         <form id="characterForm" class="row">
-          <input name="name" placeholder="Name" required>
-          <input name="color" type="color" value="#1f4e79">
-          <input name="hp" type="number" min="0" value="1" required>
-          <input name="initiative" type="number" placeholder="Initiative (optional)">
-          <button>Add character</button>
+          <label class="field">
+            <span class="field-label">
+              Character name <span class="required-marker" aria-hidden="true">*</span>
+            </span>
+            <input
+              id="characterName"
+              name="name"
+              placeholder="For example: Aelwyn"
+              required
+            >
+          </label>
+
+          <label class="field field-color">
+            <span class="field-label">Color</span>
+            <input
+              id="characterColor"
+              name="color"
+              type="color"
+              value="#1f4e79"
+            >
+          </label>
+
+          <label class="field field-compact">
+            <span class="field-label">
+              Starting HP <span class="required-marker" aria-hidden="true">*</span>
+            </span>
+            <input
+              id="characterHp"
+              name="hp"
+              type="number"
+              min="0"
+              value="1"
+              required
+            >
+          </label>
+
+          <label class="field field-compact">
+            <span class="field-label">Initiative</span>
+            <input
+              id="characterInitiative"
+              name="initiative"
+              type="number"
+              placeholder="Optional"
+            >
+          </label>
+
+          <label class="field"><span class="field-label">&nbsp;</span><button>Add character</button></label>
         </form>
       </div>
     </section>
@@ -505,22 +589,28 @@ ADMIN_HTML = r'''<!doctype html>
           </span>
         </div>
 
-        <input
-          id="setupName"
-          class="setup-name"
-          placeholder="Battle setup name"
-        >
+        <label class="field field-inline">
+          <span class="field-label">Battle setup name</span>
+          <input
+            id="setupName"
+            class="setup-name"
+            placeholder="For example: goblin-ambush"
+          >
+        </label>
 
-        <button id="newSetup" class="reset">New</button>
-        <button id="saveSetup">Save</button>
+        <label class="field field-inline"><span class="field-label">&nbsp;</span><button id="newSetup" class="reset">New</button></label>
+        <label class="field field-inline"><span class="field-label">&nbsp;</span><button id="saveSetup">Save</button></label>
 
-        <select id="setupSelect">
-          <option value="">Load saved setup…</option>
-        </select>
+        <label class="field field-inline">
+          <span class="field-label">Battle setup name</span>
+          <select id="setupSelect">
+            <option value="">Load saved setup…</option>
+          </select>
+        </label>
 
-        <button id="loadSetup">Load</button>
-        <button id="renameSetup">Rename</button>
-        <button id="deleteSetup" class="danger">Delete</button>
+        <label class="field field-inline"><span class="field-label">&nbsp;</span><button id="loadSetup">Load</button></label>
+        <label class="field field-inline"><span class="field-label">&nbsp;</span><button id="renameSetup">Rename</button></label>
+        <label class="field field-inline"><span class="field-label">&nbsp;</span><button id="deleteSetup" class="danger">Delete</button></label>
 
         <div class="row">
           <button id="openImport" class="import">Import from setup</button>
@@ -537,32 +627,36 @@ ADMIN_HTML = r'''<!doctype html>
         </div>
 
         <div class="row">
-          <input
-            id="backgroundColor"
-            type="color"
-            value="#080b14"
-            title="Background color"
-          >
+          <label class="field field-color">
+            <span class="field-label">Background color</span>
+            <input
+              id="backgroundColor"
+              type="color"
+              value="#080b14"
+              title="Background color"
+            >
+          </label>
 
-          <input
-            id="backgroundValue"
-            class="setup-name"
-            placeholder="Color, CSS gradient, or image URL"
-          >
+          <label class="field field-inline">
+            <span class="field-label">Background value</span>
+            <input
+              id="backgroundValue"
+              class="setup-name"
+              placeholder="Color, CSS gradient, or image URL"
+            >
+          </label>
 
-          <input
-            id="backgroundImage"
-            type="file"
-            accept="image/png,image/jpeg,image/gif,image/webp"
-          >
+          <label class="field field-inline">
+            <span class="field-label">Background image</span>
+            <input
+              id="backgroundImage"
+              type="file"
+              accept="image/png,image/jpeg,image/gif,image/webp"
+            >
+          </label>
 
-          <button id="applyBackground" type="button">
-            Apply background
-          </button>
-
-          <button id="clearBackgroundImage" type="button">
-            Use color
-          </button>
+          <label class="field"><span class="field-label">&nbsp;</span><button id="applyBackground" type="button">Apply background</button></label>
+          <label class="field"><span class="field-label">&nbsp;</span><button id="clearBackgroundImage" type="button">Use color</button></label>
         </div>
 
         <p class="campaign-info">
@@ -579,25 +673,145 @@ ADMIN_HTML = r'''<!doctype html>
 
       <div>
         <form id="monsterForm" class="row">
-          <input name="name" placeholder="Name" required>
-          <input name="monster_type" placeholder="Monster type" required>
-          <input name="ac" type="number" placeholder="AC" required>
-          <input name="hp" type="number" placeholder="HP" required>
-          <input name="quantity" type="number" min="1" max="50" value="1" title="Number of monsters">
-          <input name="color" type="color" value="#842029">
-          <input name="image" type="file" accept="image/*">
+          <label class="field">
+            <span class="field-label">
+              Monster name <span class="required-marker" aria-hidden="true">*</span>
+            </span>
+            <input
+              id="monsterName"
+              name="name"
+              placeholder="For example: Goblin"
+              required
+            >
+          </label>
+
+          <label class="field">
+            <span class="field-label">
+              Monster type <span class="required-marker" aria-hidden="true">*</span>
+            </span>
+            <input
+              id="monsterType"
+              name="monster_type"
+              placeholder="For example: humanoid"
+              required
+            >
+          </label>
+
+          <label class="field field-compact">
+            <span class="field-label">
+              Armor Class <span class="required-marker" aria-hidden="true">*</span>
+            </span>
+            <input
+              id="monsterAc"
+              name="ac"
+              type="number"
+              min="0"
+              placeholder="AC"
+              required
+            >
+          </label>
+
+          <label class="field field-compact">
+            <span class="field-label">
+              Hit points <span class="required-marker" aria-hidden="true">*</span>
+            </span>
+            <input
+              id="monsterHp"
+              name="hp"
+              type="number"
+              placeholder="HP"
+              required
+            >
+          </label>
+
+          <label class="field field-compact">
+            <span class="field-label">Quantity</span>
+            <input
+              id="monsterQuantity"
+              name="quantity"
+              type="number"
+              min="1"
+              max="50"
+              value="1"
+              title="Number of monsters"
+            >
+          </label>
+
+          <label class="field field-color">
+            <span class="field-label">Color</span>
+            <input
+              id="monsterColor"
+              name="color"
+              type="color"
+              value="#842029"
+            >
+          </label>
+
+          <label class="field">
+            <span class="field-label">Image</span>
+            <input
+              id="monsterImage"
+              name="image"
+              type="file"
+              accept="image/*"
+            >
+          </label>
+
           <button>Add manually</button>
         </form>
 
         <p>Or import a JSON <code>.monster</code> file:</p>
 
         <form id="monsterUpload" class="row">
-          <input name="monster_file" type="file" accept=".monster,application/json" required>
-          <input name="quantity" type="number" min="1" max="50" value="1" title="Number of monsters">
-          <input name="color" type="color" value="#842029">
-          <input name="image" type="file" accept="image/*">
+          <label class="field">
+            <span class="field-label">
+              Monster file <span class="required-marker" aria-hidden="true">*</span>
+            </span>
+            <input
+              id="monsterFile"
+              name="monster_file"
+              type="file"
+              accept=".monster,application/json"
+              required
+            >
+          </label>
+
+          <label class="field field-compact">
+            <span class="field-label">Quantity</span>
+            <input
+              id="monsterFileQuantity"
+              name="quantity"
+              type="number"
+              min="1"
+              max="50"
+              value="1"
+              title="Number of monsters"
+            >
+          </label>
+
+          <label class="field field-color">
+            <span class="field-label">Color</span>
+            <input
+              id="monsterFileColor"
+              name="color"
+              type="color"
+              value="#842029"
+            >
+          </label>
+
+          <label class="field">
+            <span class="field-label">Replace image</span>
+            <input
+              id="monsterFileImage"
+              name="image"
+              type="file"
+              accept="image/*"
+            >
+          </label>
+
           <button>Import .monster</button>
         </form>
+
       </div>
     </section>
 
@@ -689,7 +903,7 @@ ADMIN_HTML = r'''<!doctype html>
         </label>
 
         <label>
-          Saved setup
+          Saved setup <span class="required-marker" aria-hidden="true">*</span>
           <select id="importSetup" name="name" required></select>
         </label>
 
@@ -713,7 +927,7 @@ ADMIN_HTML = r'''<!doctype html>
       <h2 id="campaignModalTitle">New campaign</h2>
       <form id="campaignForm" class="import-form">
         <label>
-          Name
+          Name <span class="required-marker" aria-hidden="true">*</span>
           <input name="name" maxlength="100" required>
         </label>
 
@@ -736,17 +950,17 @@ ADMIN_HTML = r'''<!doctype html>
       <p>Move or copy a saved battle setup from one campaign into another.</p>
       <form id="campaignSetupForm" class="import-form">
         <label>
-          From campaign
+          From campaign <span class="required-marker" aria-hidden="true">*</span>
           <select id="campaignSetupFrom" name="from_campaign" required></select>
         </label>
 
         <label>
-          Saved setup
+          Saved setup <span class="required-marker" aria-hidden="true">*</span>
           <select id="campaignSetupName" name="setup" required></select>
         </label>
 
         <label>
-          To campaign
+          To campaign <span class="required-marker" aria-hidden="true">*</span>
           <select id="campaignSetupTo" name="to_campaign" required></select>
         </label>
 
@@ -807,7 +1021,7 @@ ADMIN_HTML = r'''<!doctype html>
 
       <form id="csvImportForm" class="import-form">
         <label>
-          CSV file
+          CSV file <span class="required-marker" aria-hidden="true">*</span>
           <input
             id="csvImportFile"
             name="csv_file"
@@ -1022,15 +1236,15 @@ ADMIN_HTML = r'''<!doctype html>
     function monsterEdit(monster) {
       return `
         <label>
-          Name
+          Name <span class="required-marker" aria-hidden="true">*</span>
           <input name="name" required value="${esc(monster.name)}">
         </label>
         <label>
-          Monster type
+          Monster type <span class="required-marker" aria-hidden="true">*</span>
           <input name="monster_type" required value="${esc(monster.monster_type)}">
         </label>
         <label>
-          AC
+          AC <span class="required-marker" aria-hidden="true">*</span>
           <input name="ac" type="number" min="0" value="${monster.ac}">
         </label>
         <label>
@@ -1038,15 +1252,15 @@ ADMIN_HTML = r'''<!doctype html>
           <input name="color" type="color" value="${esc(monster.color)}">
         </label>
         <label>
-          Current HP
+          Current HP <span class="required-marker" aria-hidden="true">*</span>
           <input name="hp" type="number" value="${monster.hp}">
         </label>
         <label>
-          Max HP
+          Max HP <span class="required-marker" aria-hidden="true">*</span>  
           <input name="max_hp" type="number" min="0" value="${monster.max_hp}">
         </label>
         <label>
-          Reset HP
+          Reset HP <span class="required-marker" aria-hidden="true">*</span>
           <input name="original_hp" type="number" min="0" value="${monster.original_hp}">
         </label>
         <label>
@@ -1074,7 +1288,7 @@ ADMIN_HTML = r'''<!doctype html>
     function characterEdit(character) {
       return `
         <label>
-          Name
+          Name <span class="required-marker" aria-hidden="true">*</span>
           <input name="name" required value="${esc(character.name)}">
         </label>
         <label>
@@ -1082,11 +1296,11 @@ ADMIN_HTML = r'''<!doctype html>
           <input name="color" type="color" value="${esc(character.color)}">
         </label>
         <label>
-          Current HP
+          Current HP <span class="required-marker" aria-hidden="true">*</span>
           <input name="hp" type="number" value="${character.hp}">
         </label>
         <label>
-          Max HP
+          Max HP <span class="required-marker" aria-hidden="true">*</span>
           <input name="max_hp" type="number" min="0" value="${character.max_hp}">
         </label>
         <label>
