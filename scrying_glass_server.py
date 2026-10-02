@@ -27,7 +27,14 @@ DEFAULT_STORAGE_DIR = './scrying-glass-data'
 LEGACY_STORAGE_DIR = './monster-display-data'
 DEFAULT_CONFIG = {'network': {'bind': '0.0.0.0', 'admin_port': 3000, 'client_port': 4000}, 'storage_dir': DEFAULT_STORAGE_DIR, 'security': {'users': [{'username': 'admin', 'role': 'admin', 'password': 'CHANGE-ME'}, {'username': 'client', 'role': 'client', 'password': 'CHANGE-ME'}]}, 'display': {'background': '#080b14', 'entry_direction': 'from_bottom', 'exit_direction': 'to_bottom', 'monster_width_percent': 45, 'dndbeyond_image_lookup': True}}
 CONFIG: dict[str, Any] = {}
-STATE: dict[str, Any] = {'monsters': [], 'characters': [], 'battle_order': [], "activity_log": [], 'display': {},}
+STATE: dict[str, Any] = {
+    "monsters": [],
+    "characters": [],
+    "battle_order": [],
+    "activity_log": [],
+    "display": {},
+    "active_setup": None,
+}
 LOCK = asyncio.Lock()
 SESSIONS: dict[str, dict[str, str]] = {}
 SOCKETS: set[WebSocket] = set()
@@ -36,6 +43,8 @@ STATE_FILE: Path
 UPLOAD_DIR: Path
 SETUPS_DIR: Path
 CAMPAIGNS_FILE: Path
+CHARACTERS_DIR: Path
+STATIC_DIR: Path
 
 DEFAULT_SETUP_NAME = 'default'
 DEFAULT_CAMPAIGN_SLUG = 'default'
@@ -159,13 +168,36 @@ def normalize_display(raw: Any) -> dict[str, str]:
     }
 
 def normalize_state(raw: dict[str, Any]) -> dict[str, Any]:
+    raw_active_setup = raw.get("active_setup")
+
+    if isinstance(raw_active_setup, dict):
+        raw_campaign = raw_active_setup.get("campaign")
+        raw_name = raw_active_setup.get("name")
+
+        if (
+            isinstance(raw_campaign, str)
+            and raw_campaign.strip()
+            and isinstance(raw_name, str)
+            and raw_name.strip()
+        ):
+            active_setup: dict[str, str] | None = {
+                "campaign": raw_campaign.strip(),
+                "name": raw_name.strip(),
+            }
+        else:
+            active_setup = None
+    else:
+        active_setup = None
+
     state = {
         "monsters": raw.get("monsters", []),
         "characters": raw.get("characters", []),
         "battle_order": raw.get("battle_order", []),
         "activity_log": raw.get("activity_log", []),
         "display": normalize_display(raw.get("display")),
+        "active_setup": active_setup,
     }
+
     if (
         not isinstance(state["monsters"], list)
         or not isinstance(state["characters"], list)
@@ -225,13 +257,157 @@ def normalize_state(raw: dict[str, Any]) -> dict[str, Any]:
     state['battle_order'] = [x for x in state['battle_order'] if x in known]
     return state
 
+def load_campaign_characters(slug: str) -> list[dict[str, Any]]:
+    path = campaign_characters_path(slug)
+
+    if not path.exists():
+        return []
+
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise HTTPException(
+            400,
+            f"Unable to load campaign characters: {exc}",
+        ) from exc
+
+    characters = raw.get("characters", raw) if isinstance(raw, dict) else raw
+
+    if not isinstance(characters, list):
+        raise HTTPException(400, "Campaign character roster is invalid")
+
+    return normalize_state({"characters": characters})["characters"]
+
+def save_campaign_characters(
+    slug: str,
+    characters: list[dict[str, Any]],
+) -> None:
+    CHARACTERS_DIR.mkdir(parents=True, exist_ok=True)
+
+    path = campaign_characters_path(slug)
+    temp = path.with_suffix(".tmp")
+
+    temp.write_text(
+        json.dumps({"characters": characters}, indent=2),
+        encoding="utf-8",
+    )
+    temp.replace(path)
+
+def save_active_campaign_characters() -> None:
+    save_campaign_characters(
+        require_campaign(None),
+        STATE["characters"],
+    )
+
+def setup_snapshot(state: dict[str, Any]) -> dict[str, Any]:
+    snapshot = copy.deepcopy(state)
+    snapshot["characters"] = []
+
+    monster_ids = {
+        monster["id"]
+        for monster in snapshot["monsters"]
+    }
+
+    snapshot["battle_order"] = [
+        combatant_id
+        for combatant_id in snapshot["battle_order"]
+        if combatant_id in monster_ids
+    ]
+
+    return snapshot
+
+def load_setup_state(name: str, campaign: str) -> dict[str, Any]:
+    path = setup_path(name, campaign)
+
+    if not path.exists():
+        raise HTTPException(404, "Saved setup not found")
+
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise HTTPException(400, f"Unable to load setup: {exc}") from exc
+
+    if not isinstance(raw, dict):
+        raise HTTPException(400, "Saved setup must contain a JSON object")
+
+    raw["characters"] = load_campaign_characters(campaign)
+
+    try:
+        return normalize_state(raw)
+    except ValueError as exc:
+        raise HTTPException(400, f"Unable to load setup: {exc}") from exc
+
 def load_state() -> None:
     global STATE
-    STATE = normalize_state(json.loads(STATE_FILE.read_text(encoding='utf-8'))) if STATE_FILE.exists() else normalize_state(STATE)
+
+    if not STATE_FILE.exists():
+        STATE = normalize_state(STATE)
+        return
+
+    try:
+        saved = json.loads(STATE_FILE.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError(f"Unable to load state.json: {exc}") from exc
+
+    saved_state = normalize_state(saved)
+    reference = saved_state.get("active_setup")
+
+    if isinstance(reference, dict):
+        campaign = reference.get("campaign")
+        name = reference.get("name")
+
+        if isinstance(campaign, str) and isinstance(name, str):
+            try:
+                # This obtains the saved setup's monster list, then restores
+                # campaign characters through the canonical setup loader.
+                restored = load_setup_state(name, campaign)
+
+                # Runtime working-state fields still come from state.json.
+                restored["battle_order"] = saved_state["battle_order"]
+                restored["activity_log"] = saved_state["activity_log"]
+                restored["display"] = saved_state["display"]
+                restored["active_setup"] = {
+                    "campaign": campaign,
+                    "name": name,
+                }
+
+                # If state.json is intentionally not storing monsters, use the
+                # monsters from the saved setup. If a transitional/older file
+                # does contain monsters, its data wins as working runtime data.
+                if saved_state["monsters"]:
+                    restored["monsters"] = saved_state["monsters"]
+
+                STATE = normalize_state(restored)
+                return
+            except HTTPException:
+                # The referenced campaign/setup no longer exists or is unreadable.
+                # Continue below and preserve state.json as an unsaved encounter.
+                pass
+
+    # No valid setup association: state.json owns the working monsters.
+    saved_state["active_setup"] = None
+    STATE = normalize_state(saved_state)
 
 def save_state() -> None:
-    temp = STATE_FILE.with_suffix('.tmp')
-    temp.write_text(json.dumps(STATE, indent=2), encoding='utf-8')
+    persisted = copy.deepcopy(STATE)
+
+    # Characters are campaign-owned and must not be duplicated in state.json.
+    persisted["characters"] = []
+
+    # When the working monsters come from a valid saved battle setup, the setup
+    # file is authoritative. state.json stores only the setup reference.
+    if active_setup_path() is not None:
+        persisted["monsters"] = []
+    else:
+        # If the referenced setup disappeared, was renamed, or was deleted,
+        # preserve the working monsters as an unsaved encounter.
+        persisted["active_setup"] = None
+
+    temp = STATE_FILE.with_suffix(".tmp")
+    temp.write_text(
+        json.dumps(persisted, indent=2),
+        encoding="utf-8",
+    )
     temp.replace(STATE_FILE)
 
 def public_state() -> dict[str, Any]:
@@ -241,6 +417,7 @@ def public_state() -> dict[str, Any]:
         "characters": STATE["characters"],
         "battle_order": STATE["battle_order"],
         "activity_log": STATE["activity_log"],
+        "active_setup": STATE.get("active_setup"),
         "display": {
             "background": STATE["display"]["background"],
             "entry_direction": d["entry_direction"],
@@ -258,8 +435,63 @@ def setup_slug(name: str) -> str:
 def setup_path(name: str, campaign: str | None = None) -> Path:
     return campaign_dir(require_campaign(campaign)) / (setup_slug(name) + '.json')
 
+def campaign_characters_path(slug: str) -> Path:
+    return CHARACTERS_DIR / f"{slug}.json"
+
 def list_setups(campaign: str | None = None) -> list[str]:
     return sorted((p.stem for p in campaign_dir(require_campaign(campaign)).glob('*.json')), key=str.casefold)
+
+def active_setup_reference() -> dict[str, str] | None:
+    """Return the current saved battle setup reference, when valid."""
+    value = STATE.get("active_setup")
+
+    if not isinstance(value, dict):
+        return None
+
+    campaign = value.get("campaign")
+    name = value.get("name")
+
+    if not isinstance(campaign, str) or not campaign.strip():
+        return None
+
+    if not isinstance(name, str) or not name.strip():
+        return None
+
+    return {
+        "campaign": campaign,
+        "name": name,
+    }
+
+
+def set_active_setup(campaign: str, name: str) -> None:
+    """Mark the named saved setup as the source of the working monsters."""
+    STATE["active_setup"] = {
+        "campaign": campaign,
+        "name": name,
+    }
+
+
+def clear_active_setup() -> None:
+    """Mark the current monster encounter as unsaved."""
+    STATE["active_setup"] = None
+
+
+def active_setup_path() -> Path | None:
+    """Return the referenced setup path only when it still exists."""
+    reference = active_setup_reference()
+
+    if reference is None:
+        return None
+
+    try:
+        campaign = require_campaign(reference["campaign"])
+        name = setup_slug(reference["name"])
+    except HTTPException:
+        return None
+
+    path = setup_path(name, campaign)
+
+    return path if path.exists() else None
 
 # ---------------------------------------------------------------------------
 # Campaigns
@@ -330,7 +562,10 @@ def create_default_setup(slug: str) -> str | None:
         return None
     empty = normalize_state({'monsters': [], 'characters': [], 'battle_order': [], 'activity_log': [], 'display': {'background': configured_background(),}})
     temp = path.with_suffix('.tmp')
-    temp.write_text(json.dumps(empty, indent=2), encoding='utf-8')
+    temp.write_text(
+        json.dumps(setup_snapshot(empty), indent=2),
+        encoding="utf-8",
+    )
     temp.replace(path)
     return DEFAULT_SETUP_NAME
 
@@ -399,6 +634,44 @@ def migrate_unassigned_setups() -> list[str]:
         print(f'Moved {len(moved)} unassigned battle setup(s) into campaign "{campaigns[DEFAULT_CAMPAIGN_SLUG]["name"]}": {", ".join(moved)}')
     return moved
 
+def migrate_campaign_characters() -> None:
+    """Create missing campaign character rosters from existing setup snapshots."""
+    CHARACTERS_DIR.mkdir(parents=True, exist_ok=True)
+
+    data = read_campaigns()
+
+    for slug, metadata in data["campaigns"].items():
+        roster_path = campaign_characters_path(slug)
+
+        if roster_path.exists():
+            continue
+
+        names = list_setups(slug)
+        preferred = metadata.get("last_setup")
+
+        if preferred in names:
+            source_name = preferred
+        elif names:
+            source_name = max(
+                names,
+                key=lambda name: setup_path(name, slug).stat().st_mtime,
+            )
+        else:
+            source_name = None
+
+        characters: list[dict[str, Any]] = []
+
+        if source_name is not None:
+            try:
+                raw = json.loads(
+                    setup_path(source_name, slug).read_text(encoding="utf-8")
+                )
+                characters = normalize_state(raw)["characters"]
+            except (OSError, json.JSONDecodeError, ValueError):
+                characters = []
+
+        save_campaign_characters(slug, characters)
+
 def active_campaign() -> str:
     return read_campaigns()['active'] or DEFAULT_CAMPAIGN_SLUG
 
@@ -445,9 +718,13 @@ async def open_campaign_setup(campaign: str) -> str | None:
         return None
     path = campaign_dir(campaign) / f'{name}.json'
     try:
-        STATE = normalize_state(json.loads(path.read_text(encoding='utf-8')))
-    except (OSError, json.JSONDecodeError, ValueError) as exc:
-        raise HTTPException(400, f'Campaign activated, but setup {name} could not be opened: {exc}') from exc
+        STATE = load_setup_state(name, campaign)
+    except HTTPException as exc:
+        raise HTTPException(
+            exc.status_code,
+            f"Campaign activated, but setup {name} could not be opened: {exc.detail}",
+        ) from exc
+    set_active_setup(campaign, name)
     remember_setup(campaign, name)
     await changed()
     return name
@@ -483,19 +760,6 @@ def reset_imported_monster(source: dict[str, Any]) -> dict[str, Any]:
     item['show_ac'] = False
     item['show_hp'] = False
     item['show_initiative'] = False
-    return item
-
-def reset_imported_character(source: dict[str, Any]) -> dict[str, Any]:
-    item = copy.deepcopy(source)
-    item['id'] = uuid.uuid4().hex
-
-    # Keep the source setup's current HP and current Max HP.
-    item['alive'] = item.get('hp', 0) > 0
-
-    item['initiative'] = item.get('original_initiative')
-    item['active'] = False
-    item['visible'] = False
-    item['in_turn'] = False
     return item
 
 async def broadcast() -> None:
@@ -1024,8 +1288,43 @@ def advance_turn() -> dict[str, Any] | None:
     target['visible'] = True
     return target
 
+def unique_ids(ids: list[str]) -> list[str]:
+    unique: list[str] = []
+    seen: set[str] = set()
+
+    for ident in ids:
+        if not isinstance(ident, str) or not ident.strip():
+            raise HTTPException(400, "Bulk action contains an invalid combatant ID")
+        if ident not in seen:
+            seen.add(ident)
+            unique.append(ident)
+
+    if not unique:
+        raise HTTPException(400, "Bulk action requires at least one combatant ID")
+
+    return unique
+
+
+def selected_entities(
+    kind: Literal["characters", "monsters"],
+    ids: list[str],
+) -> list[dict[str, Any]]:
+    selected_ids = unique_ids(ids)
+    items = STATE[kind]
+    by_id = {item["id"]: item for item in items}
+    missing = [ident for ident in selected_ids if ident not in by_id]
+
+    if missing:
+        raise HTTPException(404, f"Selected {kind[:-1]} no longer exists")
+
+    return [by_id[ident] for ident in selected_ids]
+
 class DisplayBackgroundUpdate(BaseModel):
     background: str = Field(min_length=1, max_length=4096)
+
+class BulkCombatantAction(BaseModel):
+    action: str
+    ids: list[str] = Field(min_length=1, max_length=500)
 
 class MonsterUpdate(BaseModel):
     name: str | None = Field(default=None, min_length=1, max_length=100)
@@ -1080,7 +1379,7 @@ class SetupRename(BaseModel):
 
 class SetupImport(BaseModel):
     name: str = Field(min_length=1, max_length=100)
-    kind: Literal['characters', 'monsters', 'both']
+    kind: Literal["monsters"]
     campaign: str | None = Field(default=None, max_length=100)
 
 class CampaignCreate(BaseModel):
@@ -1238,9 +1537,12 @@ async def create_campaign(payload: CampaignCreate, _: dict[str, str]=Depends(req
     data = read_campaigns()
     if slug in data['campaigns'] or campaign_dir(slug).exists():
         raise HTTPException(409, f'Campaign already exists: {slug}')
+    
     campaign_dir(slug).mkdir(parents=True, exist_ok=False)
     create_default_setup(slug)
-    data['campaigns'][slug] = {
+    save_campaign_characters(slug, [])
+
+    data["campaigns"][slug] = {
         'name': payload.name.strip(),
         'description': payload.description.strip(),
         'created': now_iso(),
@@ -1265,7 +1567,13 @@ async def update_campaign(slug: str, payload: CampaignUpdate, _: dict[str, str]=
             if new_slug in data['campaigns'] or campaign_dir(new_slug).exists():
                 raise HTTPException(409, f'Campaign already exists: {new_slug}')
             campaign_dir(slug).rename(campaign_dir(new_slug))
-            data['campaigns'][new_slug] = data['campaigns'].pop(slug)
+            old_characters_path = campaign_characters_path(slug)
+            new_characters_path = campaign_characters_path(new_slug)
+            if old_characters_path.exists():
+                old_characters_path.rename(new_characters_path)
+            else:
+                save_campaign_characters(new_slug, [])
+            data["campaigns"][new_slug] = data["campaigns"].pop(slug)
             if data['active'] == slug:
                 data['active'] = new_slug
             meta = data['campaigns'][new_slug]
@@ -1298,8 +1606,15 @@ async def delete_campaign(slug: str, move_to: str | None = None, delete_setups: 
             dst = unique_setup_path(campaign_dir(target_slug), src.stem)
             src.replace(dst)
             moved.append(dst.stem)
+    reference = active_setup_reference()
+
+    if reference is not None and reference["campaign"] == slug:
+        clear_active_setup()
+
     shutil.rmtree(source, ignore_errors=True)
-    del data['campaigns'][slug]
+    campaign_characters_path(slug).unlink(missing_ok=True)
+
+    del data["campaigns"][slug]
     reactivated = data['active'] == slug
     if reactivated:
         data['active'] = target_slug or sorted(data['campaigns'], key=str.casefold)[0]
@@ -1334,60 +1649,124 @@ async def add_setup_to_campaign(slug: str, payload: CampaignSetupAdd, _: dict[st
         src.replace(dst)
     return {**campaigns_payload(), 'setup': dst.stem, 'campaign': target_slug, 'mode': payload.mode}
 
-@admin.post('/api/setups/new')
-async def new_setup(_: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+@admin.post("/api/setups/new")
+async def new_setup(
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+):
     global STATE
-    STATE = normalize_state({'monsters': [], 'characters': [], 'battle_order': [], 'activity_log': []})
+
+    campaign = require_campaign(None)
+
+    STATE = normalize_state({
+        "monsters": [],
+        "characters": load_campaign_characters(campaign),
+        "battle_order": [],
+        "activity_log": [],
+        "display": {
+            "background": configured_background(),
+        },
+    })
+
+    clear_active_setup()
+
     await changed()
+
     return public_state()
 
-@admin.post('/api/setups/save')
-async def save_setup(payload: SetupName, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+@admin.post("/api/setups/save")
+async def save_setup(
+    payload: SetupName,
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+):
     name = setup_slug(payload.name)
     campaign = require_campaign(payload.campaign)
     path = setup_path(name, campaign)
-    temp = path.with_suffix('.tmp')
-    temp.write_text(json.dumps(STATE, indent=2), encoding='utf-8')
+
+    temp = path.with_suffix(".tmp")
+    temp.write_text(
+        json.dumps(setup_snapshot(STATE), indent=2),
+        encoding="utf-8",
+    )
     temp.replace(path)
+
+    # Characters are campaign-owned, so save their current state separately.
+    save_campaign_characters(campaign, STATE["characters"])
+
+    set_active_setup(campaign, name)
     remember_setup(campaign, name)
-    return {'name': name, 'campaign': campaign}
+
+    await changed()
+
+    return {
+        "name": name,
+        "campaign": campaign,
+    }
 
 @admin.post('/api/setups/load')
 async def load_setup(payload: SetupName, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     global STATE
     name = setup_slug(payload.name)
     campaign = require_campaign(payload.campaign)
-    path = setup_path(name, campaign)
-    if not path.exists():
-        raise HTTPException(404, 'Saved setup not found')
-    try:
-        STATE = normalize_state(json.loads(path.read_text(encoding='utf-8')))
-    except (OSError, json.JSONDecodeError, ValueError) as exc:
-        raise HTTPException(400, f'Unable to load setup: {exc}') from exc
+    STATE = load_setup_state(name, campaign)
+    set_active_setup(campaign, name)
     remember_setup(campaign, name)
     await changed()
     return {'name': name, 'campaign': campaign}
 
-@admin.post('/api/setups/rename')
-async def rename_setup(payload: SetupRename, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+@admin.post("/api/setups/rename")
+async def rename_setup(
+    payload: SetupRename,
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+):
     campaign = require_campaign(payload.campaign)
     old = setup_slug(payload.name)
     new = setup_slug(payload.new_name)
+
     src = setup_path(old, campaign)
+
     if not src.exists():
-        raise HTTPException(404, 'Saved setup not found')
+        raise HTTPException(404, "Saved setup not found")
+
     if new == old:
-        return {'name': new, 'old_name': old, 'campaign': campaign}
+        return {
+            "name": new,
+            "old_name": old,
+            "campaign": campaign,
+        }
+
     dst = setup_path(new, campaign)
+
     if dst.exists():
-        raise HTTPException(409, f'A battle setup called {new} already exists in this campaign')
+        raise HTTPException(
+            409,
+            f"A battle setup called {new} already exists in this campaign",
+        )
+
     src.rename(dst)
+
     data = read_campaigns()
-    meta = data['campaigns'].get(campaign)
-    if meta is not None and meta.get('last_setup') == old:
-        meta['last_setup'] = new
-        write_campaigns(data)
-    return {'name': new, 'old_name': old, 'campaign': campaign}
+    meta = data["campaigns"].get(campaign)
+
+    if meta is not None and meta.get("last_setup") == old:
+        meta["last_setup"] = new
+
+    write_campaigns(data)
+
+    reference = active_setup_reference()
+
+    if (
+        reference is not None
+        and reference["campaign"] == campaign
+        and reference["name"] == old
+    ):
+        set_active_setup(campaign, new)
+        await changed()
+
+    return {
+        "name": new,
+        "old_name": old,
+        "campaign": campaign,
+    }
 
 @admin.delete('/api/setups/{name}')
 async def delete_setup(name: str, campaign: str | None = None, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
@@ -1403,6 +1782,15 @@ async def delete_setup(name: str, campaign: str | None = None, _: dict[str, str]
     path = setup_path(name, campaign)
     if not path.exists():
         raise HTTPException(404, 'Saved setup not found')
+    reference = active_setup_reference()
+
+    if (
+        reference is not None
+        and reference["campaign"] == campaign
+        and reference["name"] == name
+    ):
+        clear_active_setup()
+
     path.unlink()
     remaining = list_setups(campaign)
     created_default = False
@@ -1414,34 +1802,49 @@ async def delete_setup(name: str, campaign: str | None = None, _: dict[str, str]
         next_name = DEFAULT_SETUP_NAME
         created_default = True
     try:
-        STATE = normalize_state(json.loads(setup_path(next_name, campaign).read_text(encoding='utf-8')))
-    except (OSError, json.JSONDecodeError, ValueError) as exc:
-        raise HTTPException(400, f'Setup {name} was deleted, but {next_name} could not be opened: {exc}') from exc
+        STATE = load_setup_state(next_name, campaign)
+    except HTTPException as exc:
+        raise HTTPException(
+            exc.status_code,
+            f"Setup {name} was deleted, but {next_name} could not be opened: "
+            f"{exc.detail}",
+        ) from exc
+    set_active_setup(campaign, name)
     remember_setup(campaign, next_name)
     await changed()
     return {'deleted': name, 'opened_setup': next_name, 'created_default': created_default, 'campaign': campaign}
 
-@admin.post('/api/setups/import')
-async def import_setup(payload: SetupImport, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+@admin.post("/api/setups/import")
+async def import_setup(
+    payload: SetupImport,
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+):
     name = setup_slug(payload.name)
     campaign = require_campaign(payload.campaign)
-    path = setup_path(name, campaign)
-    if not path.exists():
-        raise HTTPException(404, 'Saved setup not found')
-    try:
-        source = normalize_state(json.loads(path.read_text(encoding='utf-8')))
-    except (OSError, json.JSONDecodeError, ValueError) as exc:
-        raise HTTPException(400, f'Unable to read setup: {exc}') from exc
-    imported_characters = []
-    imported_monsters = []
-    if payload.kind in {'characters', 'both'}:
-        imported_characters = [reset_imported_character(item) for item in source['characters']]
-    if payload.kind in {'monsters', 'both'}:
-        imported_monsters = [reset_imported_monster(item) for item in source['monsters']]
-    STATE['characters'].extend(imported_characters)
-    STATE['monsters'].extend(imported_monsters)
+
+    if payload.kind != "monsters":
+        raise HTTPException(
+            400,
+            "Characters belong to campaigns and cannot be imported "
+            "from a battle setup",
+        )
+
+    source = load_setup_state(name, campaign)
+
+    imported_monsters = [
+        reset_imported_monster(item)
+        for item in source["monsters"]
+    ]
+
+    STATE["monsters"].extend(imported_monsters)
+
     await changed()
-    return {'name': name, 'campaign': campaign, 'characters': len(imported_characters), 'monsters': len(imported_monsters)}
+
+    return {
+        "name": name,
+        "campaign": campaign,
+        "monsters": len(imported_monsters),
+    }
 
 @admin.post('/api/monsters/roll-initiative')
 async def roll_monster_initiative(_: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
@@ -1529,11 +1932,12 @@ async def import_characters_csv(
     if conflicting:
         raise HTTPException(
             400,
-            "CSV ID already exists in the current setup: "
+            "CSV ID already exists in the active campaign encounter: "
             + ", ".join(sorted(conflicting)[:5]),
         )
 
     STATE["characters"].extend(imported)
+    save_active_campaign_characters()
     await changed()
 
     return {"count": len(imported)}
@@ -1556,41 +1960,6 @@ async def edit_monster(ident: str, name: str=Form(...), monster_species: str=For
     clean_order()
     await changed()
     return m
-
-@admin.post("/api/monsters/bulk-toggle")
-async def bulk_toggle_monsters(update: MonsterBulkUpdate, _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE))) -> dict[str, Any]:
-    field = update.field
-    monsters = STATE["monsters"]
-
-    # Vacuously treating an empty group as disabled is harmless and provides a
-    # stable response to the UI when no monsters exist.
-    enable = not bool(monsters) or not all(bool(monster.get(field, False)) for monster in monsters)
-
-    if field == "active":
-        for monster in monsters:
-            # Dead monsters cannot be activated. They are always off after a
-            # bulk activation, which matches the existing single-monster rule.
-            desired = enable and bool(monster.get("alive", True))
-            was_active = bool(monster.get("active", False))
-            monster["active"] = desired
-
-            if desired and not was_active:
-                insert_into_battle_order(monster)
-
-            if not desired:
-                monster["in_turn"] = False
-
-        # If bulk deactivation removed the current turn, clear it. The existing
-        # Next action will select the next eligible combatant as usual.
-        current_turn = next((x for x in entities() if x.get("in_turn")), None)
-        if current_turn is not None and not current_turn.get("active"):
-            clear_turns()
-    else:
-        for monster in monsters:
-            monster[field] = enable
-
-    await changed()
-    return {"field": field, "enabled": enable, "count": len(monsters)}
 
 @admin.patch("/api/monsters/{ident}")
 async def update_monster(
@@ -1642,11 +2011,80 @@ async def update_monster(
     await changed()
     return monster
 
+@admin.post("/api/monsters/bulk")
+async def bulk_monsters(
+    body: BulkCombatantAction,
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+) -> dict[str, int]:
+    fields = {
+        "join-battle": ("active", True),
+        "leave-battle": ("active", False),
+        "set-ally": ("ally", True),
+        "unset-ally": ("ally", False),
+        "show-ac": ("show_ac", True),
+        "hide-ac": ("show_ac", False),
+        "show-hp": ("show_hp", True),
+        "hide-hp": ("show_hp", False),
+        "show-initiative": ("show_initiative", True),
+        "hide-initiative": ("show_initiative", False),
+    }
+    allowed = {*fields, "reset", "remove"}
+
+    if body.action not in allowed:
+        raise HTTPException(400, "Unsupported bulk monster action")
+
+    targets = selected_entities("monsters", body.ids)
+
+    if body.action in fields:
+        field, value = fields[body.action]
+
+        if body.action == "join-battle":
+            for monster in targets:
+                # Prefer the existing activation helper where available.
+                monster[field] = value
+        elif body.action == "leave-battle":
+            removed_ids = {monster["id"] for monster in targets}
+            for monster in targets:
+                monster[field] = value
+                monster["in_turn"] = False
+            STATE["battle_order"] = [
+                ident for ident in STATE["battle_order"]
+                if ident not in removed_ids
+            ]
+        else:
+            for monster in targets:
+                monster[field] = value
+
+    elif body.action == "reset":
+        reset_ids = {monster["id"] for monster in targets}
+        for monster in targets:
+            reset_one_combatant(monster)
+        STATE["battle_order"] = [
+            ident for ident in STATE["battle_order"]
+            if ident not in reset_ids
+        ]
+
+    else:  # remove
+        removed_ids = {monster["id"] for monster in targets}
+        STATE["monsters"] = [
+            monster for monster in STATE["monsters"]
+            if monster["id"] not in removed_ids
+        ]
+        STATE["battle_order"] = [
+            ident for ident in STATE["battle_order"]
+            if ident not in removed_ids
+        ]
+
+    await changed()
+    return {"count": len(targets)}
+
 @admin.post('/api/characters')
 async def create_character(character: CharacterCreate, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     c = {'id': uuid.uuid4().hex, **character.model_dump(), 'max_hp': character.hp, 'original_hp': character.hp, 'original_initiative': character.initiative, 'active': False, 'alive': character.hp >= 0, 'visible': False, 'in_turn': False}
-    STATE['characters'].append(c)
+    STATE["characters"].append(c)
+    save_active_campaign_characters()
     await changed()
+
     return c
 
 @admin.patch("/api/characters/{ident}")
@@ -1702,8 +2140,9 @@ async def update_character(
 
     set_turn(character, values.get("in_turn"))
     clean_order()
-
+    save_active_campaign_characters()
     await changed()
+
     return character
 
 @admin.delete("/api/combatants/{ident}")
@@ -1719,6 +2158,8 @@ async def delete_combatant(
         ),
         None,
     )
+
+    removed_character = False
 
     if monster_index is not None:
         removed = STATE["monsters"].pop(monster_index)
@@ -1736,19 +2177,17 @@ async def delete_combatant(
             raise HTTPException(404, "Combatant not found")
 
         removed = STATE["characters"].pop(character_index)
+        removed_character = True
 
-    # The entity has already been removed from the lists, so ensure its ID no
-    # longer appears in the persisted turn order. This also covers deleting a
-    # current-turn combatant.
     STATE["battle_order"] = [
         combatant_id
         for combatant_id in STATE["battle_order"]
         if combatant_id != ident
     ]
 
-    # Other combatants retain their state. If the deleted combatant had the
-    # current turn, no combatant has in_turn=True; the existing Next action
-    # will select an eligible combatant normally.
+    if removed_character:
+        save_active_campaign_characters()
+
     await changed()
 
     return {
@@ -1756,15 +2195,138 @@ async def delete_combatant(
         "name": str(removed.get("name", "Combatant")),
     }
 
-@admin.post('/api/combatants/{ident}/reset')
-async def reset_one(ident: str, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+@admin.post("/api/combatants/{ident}/reset")
+async def reset_one_combatant(
+    ident: str,
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+):
     x = entity(ident)
+
     if not x:
-        raise HTTPException(404, 'Combatant not found')
+        raise HTTPException(404, "Combatant not found")
+
+    is_character = x in STATE["characters"]
+
     reset_entity(x)
     clean_order()
+
+    if is_character:
+        save_active_campaign_characters()
+
     await changed()
+
     return x
+    
+@admin.post("/api/characters/bulk")
+async def bulk_characters(
+    body: BulkCombatantAction,
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+) -> dict[str, int]:
+    allowed = {"join-battle", "leave-battle", "reset", "remove"}
+
+    if body.action not in allowed:
+        raise HTTPException(400, "Unsupported bulk character action")
+
+    targets = selected_entities("characters", body.ids)
+
+    if body.action == "join-battle":
+        for character in targets:
+            character["active"] = True
+
+    elif body.action == "leave-battle":
+        for character in targets:
+            character["active"] = False
+            character["in_turn"] = False
+        STATE["battle_order"] = [
+            ident for ident in STATE["battle_order"]
+            if ident not in {character["id"] for character in targets}
+        ]
+
+    elif body.action == "reset":
+        for character in targets:
+            reset_entity(character)
+
+        clean_order()
+
+    else:  # remove
+        removed_ids = {character["id"] for character in targets}
+        STATE["characters"] = [
+            character for character in STATE["characters"]
+            if character["id"] not in removed_ids
+        ]
+        STATE["battle_order"] = [
+            ident for ident in STATE["battle_order"]
+            if ident not in removed_ids
+        ]
+
+    # Character records are owned by the active campaign.
+    save_active_campaign_characters()
+    await changed()
+    return {"count": len(targets)}
+
+@admin.post("/api/monsters/bulk")
+async def bulk_monsters(
+    body: BulkCombatantAction,
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+) -> dict[str, int]:
+    fields = {
+        "join-battle": ("active", True),
+        "leave-battle": ("active", False),
+        "set-ally": ("ally", True),
+        "unset-ally": ("ally", False),
+        "show-ac": ("show_ac", True),
+        "hide-ac": ("show_ac", False),
+        "show-hp": ("show_hp", True),
+        "hide-hp": ("show_hp", False),
+        "show-initiative": ("show_initiative", True),
+        "hide-initiative": ("show_initiative", False),
+    }
+    allowed = {*fields, "reset", "remove"}
+
+    if body.action not in allowed:
+        raise HTTPException(400, "Unsupported bulk monster action")
+
+    targets = selected_entities("monsters", body.ids)
+
+    if body.action in fields:
+        field, value = fields[body.action]
+
+        if body.action == "join-battle":
+            for monster in targets:
+                # Prefer the existing activation helper where available.
+                monster[field] = value
+        elif body.action == "leave-battle":
+            removed_ids = {monster["id"] for monster in targets}
+            for monster in targets:
+                monster[field] = value
+                monster["in_turn"] = False
+            STATE["battle_order"] = [
+                ident for ident in STATE["battle_order"]
+                if ident not in removed_ids
+            ]
+        else:
+            for monster in targets:
+                monster[field] = value
+
+    elif body.action == "reset":
+        for monster in targets:
+            reset_entity(monster)
+
+        clean_order()
+
+    else:  # remove
+        removed_ids = {monster["id"] for monster in targets}
+        STATE["monsters"] = [
+            monster for monster in STATE["monsters"]
+            if monster["id"] not in removed_ids
+        ]
+        STATE["battle_order"] = [
+            ident for ident in STATE["battle_order"]
+            if ident not in removed_ids
+        ]
+
+    await changed()
+    return {"count": len(targets)}
 
 @admin.post("/api/battle/end")
 async def battle_end(
@@ -1773,30 +2335,49 @@ async def battle_end(
     clear_turns()
     STATE["battle_order"] = []
 
+    save_active_campaign_characters()
     await changed()
+
     return {"status": "ended"}
 
-@admin.post('/api/battle/reset-all')
-async def reset_all(_: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
-    for x in entities():
-        reset_entity(x)
-    sort_admin_by_max_hp()
-    STATE['battle_order'] = []
-    await changed()
-    return {'status': 'reset'}
+@admin.post("/api/battle/reset-all")
+async def reset_all(
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+):
+    for combatant in entities():
+        reset_entity(combatant)
 
-@admin.post('/api/battle/start')
-async def battle_start(payload: BattleStart, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+    sort_admin_by_max_hp()
+    STATE["battle_order"] = []
+
+    save_active_campaign_characters()
+    await changed()
+
+    return {"status": "reset"}
+
+@admin.post("/api/battle/start")
+async def battle_start(
+    payload: BattleStart,
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+):
     begin_battle(payload.order)
     sort_admin_by_initiative()
+
+    save_active_campaign_characters()
     await changed()
+
     return public_state()
 
-@admin.post('/api/battle/next')
-async def battle_next(_: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
-    x = advance_turn()
+@admin.post("/api/battle/next")
+async def battle_next(
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+):
+    current = advance_turn()
+
+    save_active_campaign_characters()
     await changed()
-    return {'current': x}
+
+    return {"current": current}
 
 @admin.post("/api/battle/actions")
 async def apply_battle_actions(
@@ -1866,6 +2447,7 @@ async def apply_battle_actions(
         log_battle_action(actor, target, action, amount)
 
     clean_order()
+    save_active_campaign_characters()
     await changed()
 
     return {
@@ -1968,15 +2550,33 @@ if __name__ == '__main__':
         print(f'Using existing data directory {legacy_dir} (from before the rename to Scrying Glass). '
               f'Rename it to {DATA_DIR} or set storage_dir in the configuration to silence this message.')
         DATA_DIR = legacy_dir
-    UPLOAD_DIR = DATA_DIR / 'uploads'
-    SETUPS_DIR = DATA_DIR / 'setups'
+
+    STATIC_DIR = Path(__file__).resolve().parent / "static"
+    if not STATIC_DIR.is_dir():
+        sys.exit(f"Static asset directory does not exist: {STATIC_DIR}")
+
+    UPLOAD_DIR = DATA_DIR / "uploads"
+    SETUPS_DIR = DATA_DIR / "setups"
+    CHARACTERS_DIR = DATA_DIR / "characters"
+
     UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
     SETUPS_DIR.mkdir(parents=True, exist_ok=True)
-    STATE_FILE = DATA_DIR / 'state.json'
-    CAMPAIGNS_FILE = DATA_DIR / 'campaigns.json'
+    CHARACTERS_DIR.mkdir(parents=True, exist_ok=True)
+
+    STATE_FILE = DATA_DIR / "state.json"
+    CAMPAIGNS_FILE = DATA_DIR / "campaigns.json"
+
     migrate_unassigned_setups()
+    migrate_campaign_characters()
     load_state()
+
+    # The active campaign roster is authoritative after restart.
+    STATE["characters"] = load_campaign_characters(active_campaign())
+    clean_order()
+    save_state()
+    admin.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="admin-static")   
     admin.mount('/media', StaticFiles(directory=str(UPLOAD_DIR)), name='admin-media')
+    client.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="client-static")   
     client.mount('/media', StaticFiles(directory=str(UPLOAD_DIR)), name='client-media')
 
     async def serve():

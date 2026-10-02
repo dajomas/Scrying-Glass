@@ -1,19 +1,19 @@
 # Deploy Scrying Glass with systemd
 
-This page explains how to run Scrying Glass as a persistent `systemd` service under a dedicated non-root Linux account. The deployment separates application code, credentials/configuration, and writable encounter data so that upgrades do not overwrite saved setups, uploaded monster images, or uploaded per-setup background images.
+This guide deploys Scrying Glass as a persistent `systemd` service under a dedicated non-root Linux account. Application code, configuration, and writable encounter data are separated so upgrades do not overwrite setups, campaigns, working state, or uploaded images.
 
-See [[Home]] for the project overview, [[User Guide]] for using the Admin and Client Display screens, and [[Technical Documentation]] for architecture and API details.
+See the [README](../README.md), [User Guide](User-Guide.md), and [Technical Documentation](Technical-Documentation.md) for application details.
 
-## What this deployment provides
+## Overview
 
-- Starts Scrying Glass automatically at boot.
-- Runs the application as a dedicated non-root user named `scryingglass`.
-- Restarts the service after an unexpected failure.
-- Keeps configuration in `/etc/scrying-glass`.
-- Keeps current state, campaigns, saved setups, and image uploads in `/var/lib/scrying-glass`.
-- Applies basic `systemd` filesystem and privilege hardening.
+The deployment:
 
-The application runs two HTTP services from one Python process:
+- Starts Scrying Glass at boot.
+- Runs it as the non-root `scryingglass` account.
+- Restarts it after unexpected failure.
+- Stores protected configuration in `/etc/scrying-glass`.
+- Stores state, campaigns, setups, and uploads in `/var/lib/scrying-glass`.
+- Uses basic `systemd` privilege and filesystem hardening.
 
 | Service | Default port | URL |
 |---|---:|---|
@@ -24,11 +24,11 @@ The application runs two HTTP services from one Python process:
 
 - A Linux host using `systemd`.
 - Python **3.14** or newer available as `python3.14`.
-- Git, if installing from the repository.
-- Network/firewall access to TCP ports 3000 and 4000 for intended users.
-- An Administrator account with `sudo` access.
+- Git, if cloning from the repository.
+- Firewall access to ports 3000 and 4000 for intended LAN users.
+- An account with `sudo`.
 
-Scrying Glass requires:
+Dependencies:
 
 ```text
 fastapi
@@ -39,8 +39,6 @@ python-multipart
 
 ## Deployment layout
 
-This guide uses the following paths:
-
 ```text
 /opt/scrying-glass/                 Application code and virtual environment
 ├── .venv/
@@ -48,104 +46,69 @@ This guide uses the following paths:
 ├── admin_html.py
 ├── client_html.py
 ├── login_html.py
-└── config.example.yaml
+├── static/
+│   ├── admin.css
+│   ├── admin.js
+│   ├── client.css
+│   ├── client.js
+│   └── login.css
+├── config.example.yaml
+└── run.sh
 
 /etc/scrying-glass/                 Protected configuration
 └── config.yaml
 
 /var/lib/scrying-glass/             Writable persistent encounter data
 ├── state.json
-├── campaigns.json                    Campaign registry (active campaign, names)
+├── campaigns.json
 ├── uploads/
 └── setups/
-    └── <campaign>/                   One folder per campaign
-        └── <setup>.json
+    └── <campaign-slug>/
+        └── <setup-name>.json
 ```
 
-Do not put the live `storage_dir` inside the Git checkout. The persistent directory must survive Git pulls, release replacements, and application upgrades.
+Do not place the live `storage_dir` inside the Git checkout. Persistent data must survive code replacement and Git updates.
 
-## Create the service account
+## Create account and storage
 
-Create a system account without an interactive shell:
+Create a non-login service account:
 
 ```bash
-sudo useradd \
-  --system \
-  --user-group \
-  --home-dir /var/lib/scrying-glass \
-  --create-home \
-  --shell /usr/sbin/nologin \
-  scryingglass
+sudo useradd   --system   --user-group   --home-dir /var/lib/scrying-glass   --create-home   --shell /usr/sbin/nologin   scryingglass
 ```
 
-Create writable persistent storage for the application:
+Create writable persistent storage and protected configuration storage:
 
 ```bash
-sudo install -d \
-  -o scryingglass \
-  -g scryingglass \
-  -m 0750 \
-  /var/lib/scrying-glass
+sudo install -d -o scryingglass -g scryingglass -m 0750 /var/lib/scrying-glass
+sudo install -d -o root -g scryingglass -m 0750 /etc/scrying-glass
 ```
 
-Create a protected configuration directory:
+## Install application
 
 ```bash
-sudo install -d \
-  -o root \
-  -g scryingglass \
-  -m 0750 \
-  /etc/scrying-glass
-```
-
-## Install the application
-
-Clone the project into `/opt`:
-
-```bash
-sudo git clone https://github.com/dajomas/scrying-glass.git \
-  /opt/scrying-glass
-
+sudo git clone https://github.com/dajomas/scrying-glass.git /opt/scrying-glass
 cd /opt/scrying-glass
 sudo git checkout features/development
-```
 
-Create a virtual environment and install dependencies:
-
-```bash
 sudo python3.14 -m venv /opt/scrying-glass/.venv
-
 sudo /opt/scrying-glass/.venv/bin/python -m pip install --upgrade pip
-sudo /opt/scrying-glass/.venv/bin/python -m pip install \
-  "fastapi>=0.115" \
-  "uvicorn[standard]>=0.30" \
-  "PyYAML>=6.0" \
-  python-multipart
-```
+sudo /opt/scrying-glass/.venv/bin/python -m pip install   "fastapi>=0.115"   "uvicorn[standard]>=0.30"   "PyYAML>=6.0"   python-multipart
 
-Make the application checkout owned by root so the service account cannot modify executable code:
-
-```bash
 sudo chown -R root:root /opt/scrying-glass
 sudo chmod -R a=rX,u+w /opt/scrying-glass
 ```
 
-## Create the configuration
+The service account should not be able to change executable code or static browser assets.
 
-Copy the example configuration:
-
-```bash
-sudo cp /opt/scrying-glass/config.example.yaml \
-  /etc/scrying-glass/config.yaml
-```
-
-Edit the configuration:
+## Configure application
 
 ```bash
+sudo cp /opt/scrying-glass/config.example.yaml /etc/scrying-glass/config.yaml
 sudo editor /etc/scrying-glass/config.yaml
 ```
 
-Use this as a starting point:
+Example:
 
 ```yaml
 network:
@@ -165,7 +128,6 @@ security:
       password: "replace-with-a-strong-client-password"
 
 display:
-  # Fallback for legacy setups and initial value for new battle setups.
   background: "#080b14"
   entry_direction: "from_bottom"
   exit_direction: "to_bottom"
@@ -175,56 +137,47 @@ display:
   dndbeyond_image_lookup: true
 ```
 
-Restrict the configuration because it contains login credentials:
+Secure configuration credentials:
 
 ```bash
 sudo chown root:scryingglass /etc/scrying-glass/config.yaml
 sudo chmod 0640 /etc/scrying-glass/config.yaml
 ```
 
-The service can read the file through the `scryingglass` group but cannot modify it.
+`display.background` is the fallback for legacy setup files and the initial background for a new setup. Use the Admin UI to set and save each setup's individual Client Display background. Uploaded image backgrounds are stored below `/var/lib/scrying-glass/uploads/`.
 
-The Client Display background is configured per battle setup from the Admin UI, not by editing `config.yaml`. The `display.background` value above is only the fallback for older setup files without a stored background and the initial value for newly created setups. Background images uploaded through the Admin UI are stored below `/var/lib/scrying-glass/uploads/`, so the service must retain write access to that directory through its writable `storage_dir`.
+### Use scrypt hashes
 
-### Use scrypt password hashes
-
-Plaintext passwords work, but scrypt hashes are preferable. Generate one from the application directory:
+Plaintext passwords work, but scrypt hashes are preferable:
 
 ```bash
 cd /opt/scrying-glass
-sudo /opt/scrying-glass/.venv/bin/python -c \
-  'from scrying_glass_server import password_hash; print(password_hash("replace-me"))'
+sudo /opt/scrying-glass/.venv/bin/python -c   'from scrying_glass_server import password_hash; print(password_hash("replace-me"))'
 ```
 
-Use the emitted `scrypt$...` value as the configured password.
+Use the resulting `scrypt$...` value in the configuration.
 
-## Validate before systemd
-
-Check that the Python source compiles:
+## Validate installation
 
 ```bash
 cd /opt/scrying-glass
-sudo /opt/scrying-glass/.venv/bin/python -m py_compile \
-  scrying_glass_server.py \
-  admin_html.py \
-  client_html.py \
-  login_html.py
+
+sudo /opt/scrying-glass/.venv/bin/python -m py_compile   scrying_glass_server.py   admin_html.py   client_html.py   login_html.py
+
+sudo find static -maxdepth 1 -type f   \( -name '*.js' -o -name '*.css' \)   -printf '%f\n' | sort
 ```
 
-No output means compilation succeeded.
+The Python command should produce no output. The second command should list `admin.css`, `admin.js`, `client.css`, `client.js`, and `login.css`.
 
-You may also test-run it temporarily:
+Optional foreground test:
 
 ```bash
-sudo -u scryingglass \
-  /opt/scrying-glass/.venv/bin/python \
-  /opt/scrying-glass/scrying_glass_server.py \
-  --config /etc/scrying-glass/config.yaml
+sudo -u scryingglass   /opt/scrying-glass/.venv/bin/python   /opt/scrying-glass/scrying_glass_server.py   --config /etc/scrying-glass/config.yaml
 ```
 
-Stop the test with `Ctrl+C` after confirming both ports are listening.
+Stop it with `Ctrl+C` after confirming both ports are listening.
 
-## Create the systemd service
+## Create service
 
 Create `/etc/systemd/system/scrying-glass.service`:
 
@@ -239,12 +192,10 @@ Type=simple
 User=scryingglass
 Group=scryingglass
 WorkingDirectory=/opt/scrying-glass
-
 ExecStart=/opt/scrying-glass/.venv/bin/python /opt/scrying-glass/scrying_glass_server.py --config /etc/scrying-glass/config.yaml
 
 Restart=on-failure
 RestartSec=5
-
 UMask=0027
 
 NoNewPrivileges=true
@@ -252,7 +203,6 @@ PrivateTmp=true
 ProtectHome=true
 ProtectSystem=strict
 ReadWritePaths=/var/lib/scrying-glass
-
 RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
 CapabilityBoundingSet=
 AmbientCapabilities=
@@ -261,72 +211,36 @@ AmbientCapabilities=
 WantedBy=multi-user.target
 ```
 
-### Hardening explanation
-
 | Setting | Effect |
 |---|---|
-| `User` / `Group` | Runs the application without root privileges |
-| `UMask=0027` | New files are not readable by other users by default |
-| `NoNewPrivileges=true` | Prevents gaining extra Linux privileges through execution |
-| `PrivateTmp=true` | Gives the service an isolated temporary directory |
-| `ProtectHome=true` | Blocks access to normal user home directories |
-| `ProtectSystem=strict` | Makes most host paths read-only to the service |
-| `ReadWritePaths=/var/lib/scrying-glass` | Allows only the expected persistent data location to be written |
-| `CapabilityBoundingSet=` | Removes Linux capabilities not needed by the service |
+| `User` / `Group` | Runs without root privileges |
+| `UMask=0027` | Restricts permissions on newly created files |
+| `NoNewPrivileges=true` | Prevents privilege gain through execution |
+| `PrivateTmp=true` | Uses an isolated temporary directory |
+| `ProtectHome=true` | Blocks normal user home directories |
+| `ProtectSystem=strict` | Makes most host paths read-only |
+| `ReadWritePaths=/var/lib/scrying-glass` | Allows writes only to persistent application data |
+| `CapabilityBoundingSet=` | Removes unnecessary Linux capabilities |
 
-The service retains network access for Admin/Client HTTP traffic, WebSockets, and optional D&D Beyond image lookup.
+The service retains network access for Admin and Client traffic, WebSockets, and optional external image lookup.
 
-## Start the service
-
-Load the new unit and start it now and at future boots:
+## Start and verify
 
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl enable --now scrying-glass.service
-```
-
-Check status:
-
-```bash
 sudo systemctl status scrying-glass.service
-```
-
-View live logs:
-
-```bash
 sudo journalctl -u scrying-glass.service -f
 ```
 
-Open:
-
-```text
-http://SERVER:3000/
-http://SERVER:4000/display
-```
-
-## Firewall access
-
-If a firewall is active, allow the application ports on the trusted LAN only.
-
-For firewalld, for example:
+Verify listener sockets:
 
 ```bash
-sudo firewall-cmd --permanent --add-port=3000/tcp
-sudo firewall-cmd --permanent --add-port=4000/tcp
-sudo firewall-cmd --reload
+sudo ss -lptn 'sport = :3000'
+sudo ss -lptn 'sport = :4000'
 ```
 
-Do not expose the default HTTP ports to the public internet without a reverse proxy, HTTPS, and access restrictions.
-
-## Verify the service
-
-Confirm that the process runs as the non-root account:
-
-```bash
-ps -eo user,pid,cmd | grep scrying_glass_server.py
-```
-
-Confirm persistent directories are writable by that account:
+Verify writable persistent storage:
 
 ```bash
 sudo ls -la /var/lib/scrying-glass
@@ -335,9 +249,7 @@ sudo ls -la /var/lib/scrying-glass/setups
 sudo ls -la /var/lib/scrying-glass/campaigns.json
 ```
 
-Each campaign has its own folder under `setups/`. The first start creates `campaigns.json` and a `default` campaign folder.
-
-If saving setups or uploading monster/background images fails with a permission error:
+The first start creates `campaigns.json` and a Default campaign folder. If setup saves or image uploads fail, repair permissions:
 
 ```bash
 sudo chown -R scryingglass:scryingglass /var/lib/scrying-glass
@@ -345,17 +257,27 @@ sudo chmod -R u=rwX,g=rX,o= /var/lib/scrying-glass
 sudo systemctl restart scrying-glass.service
 ```
 
-## Upgrade procedure
+## Firewall and remote access
 
-Back up persistent data before upgrading:
+Allow ports only on trusted networks. Example for firewalld:
 
 ```bash
-sudo tar -C /var/lib -czf \
-  /root/scrying-glass-backup-$(date +%F).tar.gz \
-  scrying-glass
+sudo firewall-cmd --permanent --add-port=3000/tcp
+sudo firewall-cmd --permanent --add-port=4000/tcp
+sudo firewall-cmd --reload
 ```
 
-Update code and dependencies:
+Do not publish the default HTTP ports to the public internet. If remote access is necessary, place an HTTPS reverse proxy in front of the service, bind or firewall the back-end ports appropriately, use a VPN or access controls for Admin access, and use scrypt password hashes.
+
+## Upgrades and backups
+
+Back up persistent data before every upgrade:
+
+```bash
+sudo tar -C /var/lib -czf   /root/scrying-glass-backup-$(date +%F).tar.gz   scrying-glass
+```
+
+Upgrade code and dependencies:
 
 ```bash
 cd /opt/scrying-glass
@@ -363,60 +285,61 @@ sudo git fetch --all --prune
 sudo git checkout features/development
 sudo git pull --ff-only
 
-sudo /opt/scrying-glass/.venv/bin/python -m pip install \
-  "fastapi>=0.115" \
-  "uvicorn[standard]>=0.30" \
-  "PyYAML>=6.0" \
-  python-multipart
+sudo /opt/scrying-glass/.venv/bin/python -m pip install   "fastapi>=0.115"   "uvicorn[standard]>=0.30"   "PyYAML>=6.0"   python-multipart
 
-sudo /opt/scrying-glass/.venv/bin/python -m py_compile \
-  scrying_glass_server.py \
-  admin_html.py \
-  client_html.py \
-  login_html.py
+sudo /opt/scrying-glass/.venv/bin/python -m py_compile   scrying_glass_server.py   admin_html.py   client_html.py   login_html.py
+
+sudo find /opt/scrying-glass/static -maxdepth 1 -type f   \( -name '*.js' -o -name '*.css' \)   -printf '%f\n' | sort
 
 sudo systemctl restart scrying-glass.service
 sudo systemctl status scrying-glass.service
 ```
 
-The working encounter, campaigns, saved setups, Activity Log, per-setup background choices, and uploaded monster/background images remain intact because they live in `/var/lib/scrying-glass`, outside the Git checkout.
+The working encounter, campaigns, setups, activity logs, per-setup backgrounds, and uploads persist because they remain outside the Git checkout in `/var/lib/scrying-glass`.
 
-When upgrading to a version that stores the Client Display background in each battle setup, existing setup files remain usable. A setup with no stored `display.background` continues to use the fallback value from `config.yaml` until it is loaded and saved. After saving, the setup has an independent background and no longer changes if the configuration fallback is edited.
+After an upgrade, hard-refresh both Admin and Client browser pages. Static browser files live in `/opt/scrying-glass/static/`; updating Python files without the corresponding static files can leave the interface loading but behaving like an older release.
 
-### Upgrading to the campaign version
+### Campaign migration
 
-The first start after upgrading from a version without campaigns migrates existing data automatically:
+The first start after upgrading from pre-campaign storage automatically moves:
 
-- Every setup in `/var/lib/scrying-glass/setups/*.json` is moved into `/var/lib/scrying-glass/setups/default/`.
-- A `Default` campaign is registered in `/var/lib/scrying-glass/campaigns.json`.
+```text
+/var/lib/scrying-glass/setups/*.json
+```
 
-The journal shows which setups were moved:
+to:
+
+```text
+/var/lib/scrying-glass/setups/default/
+```
+
+It also registers the Default campaign in `campaigns.json`. Review the migration log with:
 
 ```bash
 sudo journalctl -u scrying-glass.service -b | grep 'unassigned battle setup'
 ```
 
-The migration only needs write access to `/var/lib/scrying-glass`, which `ReadWritePaths` already grants. Make the backup above before the first start. To roll back to a version without campaigns, restore that backup; the old version does not read `setups/<campaign>/` folders.
+Make a backup before the first start. A version without campaign support does not read nested `setups/<campaign>/` folders, so rolling back requires restoring a compatible backup.
 
 ## Migrating from Monster Display
 
-Earlier versions of this guide installed the application as Monster Display, with `/opt/monster-display`, `/etc/monster-display`, `/var/lib/monster-display`, the `monsterdisplay` account, and `monster-display.service`. Follow these steps once to move such an installation to the Scrying Glass names used in this guide.
+Earlier installations may use `/opt/monster-display`, `/etc/monster-display`, `/var/lib/monster-display`, a `monsterdisplay` account, and `monster-display.service`.
 
-1. Stop and disable the old service, and make a backup:
+1. Stop the former service and back up data.
 
    ```bash
    sudo systemctl disable --now monster-display.service
    sudo tar -C /var/lib -czf /root/monster-display-backup-$(date +%F).tar.gz monster-display
    ```
 
-2. Rename the service account and its group. This keeps the same UID/GID, so file ownership stays valid:
+2. Rename account and group while retaining UID/GID.
 
    ```bash
    sudo usermod -l scryingglass -d /var/lib/scrying-glass monsterdisplay
    sudo groupmod -n scryingglass monsterdisplay
    ```
 
-3. Move the directories:
+3. Move directories.
 
    ```bash
    sudo mv /opt/monster-display /opt/scrying-glass
@@ -424,7 +347,7 @@ Earlier versions of this guide installed the application as Monster Display, wit
    sudo mv /var/lib/monster-display /var/lib/scrying-glass
    ```
 
-4. Point the checkout at the renamed repository and update the code, as in [Upgrade procedure](#upgrade-procedure):
+4. Update repository configuration and application code.
 
    ```bash
    cd /opt/scrying-glass
@@ -432,13 +355,13 @@ Earlier versions of this guide installed the application as Monster Display, wit
    sudo git pull --ff-only
    ```
 
-5. In `/etc/scrying-glass/config.yaml`, change `storage_dir` to `/var/lib/scrying-glass`:
+5. Update `storage_dir` in `/etc/scrying-glass/config.yaml`.
 
    ```bash
    sudo sed -i 's#/var/lib/monster-display#/var/lib/scrying-glass#' /etc/scrying-glass/config.yaml
    ```
 
-6. Create `/etc/systemd/system/scrying-glass.service` as shown in [Create the systemd service](#create-the-systemd-service), then remove the old unit and start the new one:
+6. Create the `scrying-glass.service` unit shown above, remove the old unit, and start the new service.
 
    ```bash
    sudo rm /etc/systemd/system/monster-display.service
@@ -447,78 +370,31 @@ Earlier versions of this guide installed the application as Monster Display, wit
    sudo systemctl status scrying-glass.service
    ```
 
-Campaigns, setups, uploads, and the working encounter move with `/var/lib/scrying-glass`. Everyone signs in again once, because the session cookie names changed.
-
-## Routine commands
-
-```bash
-# Service state
-sudo systemctl status scrying-glass.service
-
-# Start, stop, restart
-sudo systemctl start scrying-glass.service
-sudo systemctl stop scrying-glass.service
-sudo systemctl restart scrying-glass.service
-
-# Follow logs
-sudo journalctl -u scrying-glass.service -f
-
-# Logs from the current boot
-sudo journalctl -u scrying-glass.service -b
-
-# Verify listening sockets
-sudo ss -lptn 'sport = :3000'
-sudo ss -lptn 'sport = :4000'
-```
+Campaigns, setups, uploads, and working state move with the persistent directory. Users must sign in again because session cookies changed.
 
 ## Troubleshooting
 
 ### Service will not start
 
-Review the last logs:
-
 ```bash
 sudo journalctl -u scrying-glass.service -n 100 --no-pager
 ```
 
-Common causes:
+Common causes are missing Python 3.14, missing dependencies, invalid YAML, unreadable configuration, unwritable storage/campaign directories, or a port already in use.
 
-- Python 3.14 is absent or the virtual-environment path is incorrect.
-- A dependency was not installed in `/opt/scrying-glass/.venv`.
-- `config.yaml` has invalid YAML.
-- `/var/lib/scrying-glass/setups/` or `campaigns.json` is not writable, so the startup campaign migration fails.
-- The service account cannot read `/etc/scrying-glass/config.yaml`.
-- Port 3000 or 4000 is already in use.
+### Service cannot write state or uploads
 
-### Service cannot write state, campaigns, or uploads
+The `scryingglass` account must own the configured storage directory. If `storage_dir` is moved, update `ReadWritePaths` in the unit too.
 
-The service must own `/var/lib/scrying-glass`:
+### Browser uses old page code
 
-```bash
-sudo chown -R scryingglass:scryingglass /var/lib/scrying-glass
-```
-
-This permission also covers uploaded background images and the setup JSON files that reference them.
-
-Do not set `storage_dir` to a location outside `ReadWritePaths` unless you also update the systemd unit.
-
-### Browser shows old page code
-
-The Admin and Client HTML are loaded from the Python modules. After a service restart, hard-refresh the browser:
+Restart the service, verify that all expected files exist in `/opt/scrying-glass/static/`, then hard-refresh:
 
 - Linux/Windows: `Ctrl+Shift+R`
 - macOS: `Cmd+Shift+R`
 
+For a dedicated kiosk display, fully close and reopen the browser if hard refresh does not clear cached assets.
+
 ### Admin or Client cannot log in
 
-Confirm the configured users and passwords. After a service restart, sessions are cleared and users must sign in again. Admin and Client use different session cookies, so both can be used in the same browser.
-
-## Internet-exposure warning
-
-Scrying Glass is designed for a trusted local network. If remote access is necessary:
-
-1. Put an HTTPS reverse proxy in front of the application.
-2. Bind application ports to localhost or restrict them using firewall rules.
-3. Use a VPN or strong network access controls for the Admin service.
-4. Use scrypt password hashes and protect `/etc/scrying-glass/config.yaml`.
-5. Run only one Scrying Glass service instance per storage directory.
+Confirm the configured account, password, role, and port. Sessions are cleared on restart. Admin and Client use distinct cookies and can be logged in simultaneously in one browser.
