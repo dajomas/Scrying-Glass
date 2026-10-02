@@ -1,6 +1,9 @@
 let latest;
 let editing = null;
 
+const selectedCharacterIds = new Set();
+const selectedMonsterIds = new Set();
+
 const message = text => {
     document.querySelector('#message').textContent = text;
 };
@@ -16,6 +19,9 @@ const csvImportModal = document.querySelector('#csvImportModal');
 const campaignModal = document.querySelector('#campaignModal');
 const campaignSetupModal = document.querySelector('#campaignSetupModal');
 const campaignDeleteModal = document.querySelector('#campaignDeleteModal');
+const characterBulkAction = document.querySelector('#characterBulkAction');
+const monsterBulkAction = document.querySelector('#monsterBulkAction');
+
 
 // Campaign registry as returned by GET /api/campaigns:
 // {active: slug, campaigns: [{slug, name, description, setups: [...]}], moved: [...]}
@@ -63,6 +69,126 @@ function numberValue(form, name, fallback) {
     return value === '' ? fallback : +value;
 }
 
+function selectionFor(kind) {
+    return kind === 'characters'
+        ? selectedCharacterIds
+        : selectedMonsterIds;
+}
+
+function itemsFor(kind) {
+    return kind === 'characters'
+        ? latest.characters
+        : latest.monsters;
+}
+
+function pruneSelection(kind) {
+    const validIds = new Set(itemsFor(kind).map(item => item.id));
+    const selected = selectionFor(kind);
+
+    for (const id of selected) {
+        if (!validIds.has(id)) {
+            selected.delete(id);
+        }
+    }
+}
+
+function selectedIds(kind) {
+    pruneSelection(kind);
+    return [...selectionFor(kind)];
+}
+
+function setAllSelected(kind, selected) {
+    const selection = selectionFor(kind);
+
+    selection.clear();
+
+    if (selected) {
+        for (const item of itemsFor(kind)) {
+            selection.add(item.id);
+        }
+    }
+
+    const selector = kind === 'characters'
+        ? 'input[data-select-kind="characters"][data-select-id]'
+        : 'input[data-select-kind="monsters"][data-select-id]';
+
+    document.querySelectorAll(selector).forEach(checkbox => {
+        checkbox.checked = selected;
+    });
+}
+
+function updateRowSelection(kind, id, checked) {
+    const selection = selectionFor(kind);
+
+    if (checked) {
+        selection.add(id);
+    } else {
+        selection.delete(id);
+    }
+}
+
+async function bulkRequest(kind, action, ids) {
+    return request(`/api/${kind}/bulk`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ action, ids }),
+    });
+}
+
+function selectionMessage(kind) {
+    return kind === 'characters'
+        ? 'Select one or more characters first.'
+        : 'Select one or more monsters first.';
+}
+
+async function runBulkAction(kind, action) {
+    if (action === 'select-all') {
+        setAllSelected(kind, true);
+        return;
+    }
+
+    if (action === 'unselect-all') {
+        setAllSelected(kind, false);
+        return;
+    }
+
+    const ids = selectedIds(kind);
+
+    if (!ids.length) {
+        message(selectionMessage(kind));
+        return;
+    }
+
+    if (action === 'remove') {
+        const noun = kind === 'characters' ? 'character' : 'monster';
+        const destination = kind === 'characters'
+            ? 'the active campaign'
+            : 'the current battle setup';
+        const names = itemsFor(kind)
+            .filter(item => ids.includes(item.id))
+            .map(item => item.name)
+            .join(', ');
+
+        if (!confirm(
+            `Remove ${ids.length} selected ${noun}${ids.length === 1 ? '' : 's'} ` +
+            `from ${destination}?\n\n${names}`,
+        )) {
+            return;
+        }
+    }
+
+    try {
+        const result = await bulkRequest(kind, action, ids);
+        const count = Number(result?.count ?? ids.length);
+        message(`${count} ${kind === 'characters' ? 'character' : 'monster'}${count === 1 ? '' : 's'} updated.`);
+        await load();
+    } catch (error) {
+        message(error.message);
+    }
+}
+
 async function patch(kind, id, data) {
     try {
         await request(`/api/${kind}/${id}`, {
@@ -94,6 +220,16 @@ function monsterRow(monster) {
 
     return `
     <tr class="${monster.alive ? '' : 'dead'}">
+        <td class="bulk-selection-cell">
+            <input
+                type="checkbox"
+                class="bulk-selection-checkbox"
+                data-select-kind="monsters"
+                data-select-id="${monster.id}"
+                aria-label="Select ${esc(monster.name)}"
+                ${selectedMonsterIds.has(monster.id) ? 'checked' : ''}
+            >
+        </td>
         <td>
         ${colorMarker(monster, '#842029')}${esc(displayName)}
         <br>
@@ -120,7 +256,6 @@ function monsterRow(monster) {
         <button data-t="${monster.id}" data-f="show_hp">HP ${monster.show_hp ? 'on' : 'off'}</button>
         <button data-t="${monster.id}" data-f="show_initiative">Init ${monster.show_initiative ? 'on' : 'off'}</button>
         <button data-r="${monster.id}" class="reset">Reset</button>
-        <button type="button" class="danger" data-remove="${monster.id}" data-remove-kind="monster">Remove</button>
         </td>
         <td>
         <button data-d="${monster.id}" class="danger">Damage</button>
@@ -133,6 +268,16 @@ function monsterRow(monster) {
 function characterRow(character) {
     return `
     <tr class="${character.alive ? '' : 'dead'}">
+        <td class="bulk-selection-cell">
+            <input
+                type="checkbox"
+                class="bulk-selection-checkbox"
+                data-select-kind="characters"
+                data-select-id="${character.id}"
+                aria-label="Select ${esc(character.name)}"
+                ${selectedCharacterIds.has(character.id) ? 'checked' : ''}
+            >
+        </td>
         <td>${colorMarker(character, '#1f4e79')}${esc(character.name)}</td>
         <td>
         <input class="hp-edit" data-chp="${character.id}" type="number" min="0" value="${character.hp}">
@@ -155,7 +300,6 @@ function characterRow(character) {
         <button class="${character.visible ? 'on' : ''}" data-cv="${character.id}">Visible</button>
         <button data-ct="${character.id}" class="${character.in_turn ? 'on' : ''}">Turn</button>
         <button data-cr="${character.id}" class="reset">Reset</button>
-        <button type="button" class="danger" data-remove="${character.id}" data-remove-kind="character">Remove</button>
         </td>
         <td>
         <button data-cd="${character.id}" class="danger">Damage</button>
@@ -704,6 +848,7 @@ async function load() {
         document.querySelector('#monsters').innerHTML =
             '<table>' +
             '<tr>' +
+            '<th scope="col" class="bulk-selection-cell">Select</th>' +
             '<th>Monster</th>' +
             '<th>AC</th>' +
             '<th>HP</th>' +
@@ -717,6 +862,7 @@ async function load() {
         document.querySelector('#characters').innerHTML =
             '<table>' +
             '<tr>' +
+            '<th scope="col" class="bulk-selection-cell">Select</th>' +
             '<th>Character</th>' +
             '<th>Current / Max HP</th>' +
             '<th>Initiative</th>' +
@@ -1873,28 +2019,22 @@ document.querySelector('#characterForm').onsubmit = async event => {
     }
 };
 
-async function bulkToggleMonsters(field) {
-    return request('/api/monsters/bulk-toggle', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ field }),
-    });
-}
+characterBulkAction.addEventListener('change', async () => {
+    const action = characterBulkAction.value;
+    characterBulkAction.value = '';
 
-document.querySelectorAll('.bulk-monster-toggle').forEach(button => {
-    button.addEventListener('click', async () => {
-        button.disabled = true;
+    if (action) {
+        await runBulkAction('characters', action);
+    }
+});
 
-        try {
-            await bulkToggleMonsters(button.dataset.bulkField);
-            await load();
-        } catch (error) {
-            console.error(error);
-            message(error.message || 'Could not update all monsters.');
-        } finally {
-            button.disabled = false;
-        }
-    });
+monsterBulkAction.addEventListener('change', async () => {
+    const action = monsterBulkAction.value;
+    monsterBulkAction.value = '';
+
+    if (action) {
+        await runBulkAction('monsters', action);
+    }
 });
 
 const battleActionModal = document.querySelector('#battleActionModal');
@@ -2252,6 +2392,20 @@ document.addEventListener('change', event => {
     if (input.dataset.cmaxhp && input.value !== '') {
         patch('characters', input.dataset.cmaxhp, { max_hp: +input.value });
     }
+});
+
+document.addEventListener('change', event => {
+    const checkbox = event.target.closest('input[data-select-kind][data-select-id]');
+
+    if (!checkbox) {
+        return;
+    }
+
+    updateRowSelection(
+        checkbox.dataset.selectKind,
+        checkbox.dataset.selectId,
+        checkbox.checked,
+    );
 });
 
 function living() {

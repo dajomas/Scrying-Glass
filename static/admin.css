@@ -311,6 +311,40 @@ td {
     margin-top: .85rem;
 }
 
+.display-pane-heading {
+    align-items: center;
+}
+
+.bulk-control {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-left: auto;
+}
+
+.bulk-label {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.bulk-action-select {
+    width: auto;
+    min-width: 11rem;
+}
+
+.bulk-selection-cell {
+    width: 2.25rem;
+    text-align: center;
+}
+
+.bulk-selection-checkbox {
+    width: 1rem;
+    height: 1rem;
+    margin: 0;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
 .monster-bulk-controls {
     margin: 0.5rem 0 1rem;
 }
@@ -318,14 +352,6 @@ td {
 .bulk-label {
     color: #cbd5e1;
     font-weight: 700;
-}
-
-.bulk-monster-toggle {
-    background: #3b556f;
-}
-
-.bulk-monster-toggle:hover {
-    background: #4b6680;
 }
 
 .initiative-edit {

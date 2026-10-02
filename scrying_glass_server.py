@@ -1214,8 +1214,43 @@ def advance_turn() -> dict[str, Any] | None:
     target['visible'] = True
     return target
 
+def unique_ids(ids: list[str]) -> list[str]:
+    unique: list[str] = []
+    seen: set[str] = set()
+
+    for ident in ids:
+        if not isinstance(ident, str) or not ident.strip():
+            raise HTTPException(400, "Bulk action contains an invalid combatant ID")
+        if ident not in seen:
+            seen.add(ident)
+            unique.append(ident)
+
+    if not unique:
+        raise HTTPException(400, "Bulk action requires at least one combatant ID")
+
+    return unique
+
+
+def selected_entities(
+    kind: Literal["characters", "monsters"],
+    ids: list[str],
+) -> list[dict[str, Any]]:
+    selected_ids = unique_ids(ids)
+    items = STATE[kind]
+    by_id = {item["id"]: item for item in items}
+    missing = [ident for ident in selected_ids if ident not in by_id]
+
+    if missing:
+        raise HTTPException(404, f"Selected {kind[:-1]} no longer exists")
+
+    return [by_id[ident] for ident in selected_ids]
+
 class DisplayBackgroundUpdate(BaseModel):
     background: str = Field(min_length=1, max_length=4096)
+
+class BulkCombatantAction(BaseModel):
+    action: str
+    ids: list[str] = Field(min_length=1, max_length=500)
 
 class MonsterUpdate(BaseModel):
     name: str | None = Field(default=None, min_length=1, max_length=100)
@@ -1852,41 +1887,6 @@ async def edit_monster(ident: str, name: str=Form(...), monster_type: str=Form(.
     await changed()
     return m
 
-@admin.post("/api/monsters/bulk-toggle")
-async def bulk_toggle_monsters(update: MonsterBulkUpdate, _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE))) -> dict[str, Any]:
-    field = update.field
-    monsters = STATE["monsters"]
-
-    # Vacuously treating an empty group as disabled is harmless and provides a
-    # stable response to the UI when no monsters exist.
-    enable = not bool(monsters) or not all(bool(monster.get(field, False)) for monster in monsters)
-
-    if field == "active":
-        for monster in monsters:
-            # Dead monsters cannot be activated. They are always off after a
-            # bulk activation, which matches the existing single-monster rule.
-            desired = enable and bool(monster.get("alive", True))
-            was_active = bool(monster.get("active", False))
-            monster["active"] = desired
-
-            if desired and not was_active:
-                insert_into_battle_order(monster)
-
-            if not desired:
-                monster["in_turn"] = False
-
-        # If bulk deactivation removed the current turn, clear it. The existing
-        # Next action will select the next eligible combatant as usual.
-        current_turn = next((x for x in entities() if x.get("in_turn")), None)
-        if current_turn is not None and not current_turn.get("active"):
-            clear_turns()
-    else:
-        for monster in monsters:
-            monster[field] = enable
-
-    await changed()
-    return {"field": field, "enabled": enable, "count": len(monsters)}
-
 @admin.patch("/api/monsters/{ident}")
 async def update_monster(
     ident: str,
@@ -1936,6 +1936,73 @@ async def update_monster(
 
     await changed()
     return monster
+
+@admin.post("/api/monsters/bulk")
+async def bulk_monsters(
+    body: BulkCombatantAction,
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+) -> dict[str, int]:
+    fields = {
+        "join-battle": ("active", True),
+        "leave-battle": ("active", False),
+        "set-ally": ("ally", True),
+        "unset-ally": ("ally", False),
+        "show-ac": ("show_ac", True),
+        "hide-ac": ("show_ac", False),
+        "show-hp": ("show_hp", True),
+        "hide-hp": ("show_hp", False),
+        "show-initiative": ("show_initiative", True),
+        "hide-initiative": ("show_initiative", False),
+    }
+    allowed = {*fields, "reset", "remove"}
+
+    if body.action not in allowed:
+        raise HTTPException(400, "Unsupported bulk monster action")
+
+    targets = selected_entities("monsters", body.ids)
+
+    if body.action in fields:
+        field, value = fields[body.action]
+
+        if body.action == "join-battle":
+            for monster in targets:
+                # Prefer the existing activation helper where available.
+                monster[field] = value
+        elif body.action == "leave-battle":
+            removed_ids = {monster["id"] for monster in targets}
+            for monster in targets:
+                monster[field] = value
+                monster["in_turn"] = False
+            STATE["battle_order"] = [
+                ident for ident in STATE["battle_order"]
+                if ident not in removed_ids
+            ]
+        else:
+            for monster in targets:
+                monster[field] = value
+
+    elif body.action == "reset":
+        reset_ids = {monster["id"] for monster in targets}
+        for monster in targets:
+            reset_one_combatant(monster)
+        STATE["battle_order"] = [
+            ident for ident in STATE["battle_order"]
+            if ident not in reset_ids
+        ]
+
+    else:  # remove
+        removed_ids = {monster["id"] for monster in targets}
+        STATE["monsters"] = [
+            monster for monster in STATE["monsters"]
+            if monster["id"] not in removed_ids
+        ]
+        STATE["battle_order"] = [
+            ident for ident in STATE["battle_order"]
+            if ident not in removed_ids
+        ]
+
+    await changed()
+    return {"count": len(targets)}
 
 @admin.post('/api/characters')
 async def create_character(character: CharacterCreate, _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
@@ -2076,6 +2143,117 @@ async def reset_one_combatant(
 
     return x
     
+@admin.post("/api/characters/bulk")
+async def bulk_characters(
+    body: BulkCombatantAction,
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+) -> dict[str, int]:
+    allowed = {"join-battle", "leave-battle", "reset", "remove"}
+
+    if body.action not in allowed:
+        raise HTTPException(400, "Unsupported bulk character action")
+
+    targets = selected_entities("characters", body.ids)
+
+    if body.action == "join-battle":
+        for character in targets:
+            character["active"] = True
+
+    elif body.action == "leave-battle":
+        for character in targets:
+            character["active"] = False
+            character["in_turn"] = False
+        STATE["battle_order"] = [
+            ident for ident in STATE["battle_order"]
+            if ident not in {character["id"] for character in targets}
+        ]
+
+    elif body.action == "reset":
+        for character in targets:
+            reset_entity(character)
+
+        clean_order()
+
+    else:  # remove
+        removed_ids = {character["id"] for character in targets}
+        STATE["characters"] = [
+            character for character in STATE["characters"]
+            if character["id"] not in removed_ids
+        ]
+        STATE["battle_order"] = [
+            ident for ident in STATE["battle_order"]
+            if ident not in removed_ids
+        ]
+
+    # Character records are owned by the active campaign.
+    save_active_campaign_characters()
+    await changed()
+    return {"count": len(targets)}
+
+@admin.post("/api/monsters/bulk")
+async def bulk_monsters(
+    body: BulkCombatantAction,
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+) -> dict[str, int]:
+    fields = {
+        "join-battle": ("active", True),
+        "leave-battle": ("active", False),
+        "set-ally": ("ally", True),
+        "unset-ally": ("ally", False),
+        "show-ac": ("show_ac", True),
+        "hide-ac": ("show_ac", False),
+        "show-hp": ("show_hp", True),
+        "hide-hp": ("show_hp", False),
+        "show-initiative": ("show_initiative", True),
+        "hide-initiative": ("show_initiative", False),
+    }
+    allowed = {*fields, "reset", "remove"}
+
+    if body.action not in allowed:
+        raise HTTPException(400, "Unsupported bulk monster action")
+
+    targets = selected_entities("monsters", body.ids)
+
+    if body.action in fields:
+        field, value = fields[body.action]
+
+        if body.action == "join-battle":
+            for monster in targets:
+                # Prefer the existing activation helper where available.
+                monster[field] = value
+        elif body.action == "leave-battle":
+            removed_ids = {monster["id"] for monster in targets}
+            for monster in targets:
+                monster[field] = value
+                monster["in_turn"] = False
+            STATE["battle_order"] = [
+                ident for ident in STATE["battle_order"]
+                if ident not in removed_ids
+            ]
+        else:
+            for monster in targets:
+                monster[field] = value
+
+    elif body.action == "reset":
+        for monster in targets:
+            reset_entity(monster)
+
+        clean_order()
+
+    else:  # remove
+        removed_ids = {monster["id"] for monster in targets}
+        STATE["monsters"] = [
+            monster for monster in STATE["monsters"]
+            if monster["id"] not in removed_ids
+        ]
+        STATE["battle_order"] = [
+            ident for ident in STATE["battle_order"]
+            if ident not in removed_ids
+        ]
+
+    await changed()
+    return {"count": len(targets)}
+
 @admin.post("/api/battle/end")
 async def battle_end(
     _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),

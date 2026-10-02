@@ -416,23 +416,53 @@ ADMIN_HTML = r'''<!doctype html>
     </section>
 
     <section id="characterDisplayPane" class="pane">
-      <h2>Characters</h2>
+      <div class="row display-pane-heading">      
+        <h2>Characters</h2>
+
+        <label class="bulk-control" for="characterBulkAction">
+          <span class="bulk-label">Bulk</span>
+          <select id="characterBulkAction" class="bulk-action-select">
+            <option value="">Choose action…</option>
+            <option value="select-all">Select all</option>
+            <option value="unselect-all">Unselect all</option>
+            <option value="join-battle">Join Battle</option>
+            <option value="leave-battle">Leave Battle</option>
+            <option value="reset">Reset</option>
+            <option value="remove">Remove</option>
+          </select>
+        </label>
+      </div>
+
       <div id="characters"></div>
     </section>
 
     <section id="monsterDisplayPane" class="pane">
-      <div class="row">
+      <div class="row display-pane-heading">
         <h2>Monsters</h2>
         <button id="rollMonsterInitiative" class="roll">Roll monster initiatives (d20)</button>
+
+        <label class="bulk-control" for="monsterBulkAction">
+          <span class="bulk-label">Bulk</span>
+          <select id="monsterBulkAction" class="bulk-action-select">
+            <option value="">Choose action…</option>
+            <option value="select-all">Select all</option>
+            <option value="unselect-all">Unselect all</option>
+            <option value="join-battle">Join Battle</option>
+            <option value="leave-battle">Leave Battle</option>
+            <option value="set-ally">Set Ally</option>
+            <option value="unset-ally">Unset Ally</option>
+            <option value="show-ac">Show AC</option>
+            <option value="hide-ac">Hide AC</option>
+            <option value="show-hp">Show HP</option>
+            <option value="hide-hp">Hide HP</option>
+            <option value="show-initiative">Show Initiative</option>
+            <option value="hide-initiative">Hide Initiative</option>
+            <option value="reset">Reset</option>
+            <option value="remove">Remove</option>
+          </select>
+        </label>
       </div>
-      <div class="row monster-bulk-controls" aria-label="Bulk monster controls">
-        <span class="bulk-label">All monsters:</span>
-        <button type="button" class="bulk-monster-toggle" data-bulk-field="active">Join battle all</button>
-        <button type="button" class="bulk-monster-toggle" data-bulk-field="ally">Ally all</button>
-        <button type="button" class="bulk-monster-toggle" data-bulk-field="show_ac">AC all</button>
-        <button type="button" class="bulk-monster-toggle" data-bulk-field="show_hp">HP all</button>
-        <button type="button" class="bulk-monster-toggle" data-bulk-field="show_initiative">Init all</button>
-      </div>
+
       <div id="monsters"></div>
     </section>
   </main>
