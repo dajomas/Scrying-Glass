@@ -301,11 +301,11 @@ ADMIN_HTML = r'''<!doctype html>
 
           <label class="field">
             <span class="field-label">
-              Monster type <span class="required-marker" aria-hidden="true">*</span>
+              Monster species <span class="required-marker" aria-hidden="true">*</span>
             </span>
             <input
-              id="monsterType"
-              name="monster_type"
+              id="monsterSpecies"
+              name="monster_species"
               placeholder="For example: humanoid"
               required
             >
