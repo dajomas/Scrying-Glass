@@ -191,7 +191,7 @@ A Monster includes identity, display, combat, and Client-card fields:
 {
   "id": "uuid-hex",
   "name": "Ice Guard",
-  "monster_type": "humanoid",
+  "monster_species": "humanoid",
   "ac": 16,
   "hp": 45,
   "max_hp": 45,

@@ -217,7 +217,12 @@ def normalize_state(raw: dict[str, Any]) -> dict[str, Any]:
             raise ValueError('Setup contains an invalid monster')
         m.setdefault('id', uuid.uuid4().hex)
         m.setdefault('name', 'Unnamed Monster')
-        m.setdefault('monster_type', 'unknown')
+        if 'monster_species' not in m:
+            m['monster_species'] = m.pop('monster_type', 'unknown')
+        else:
+            m.pop('monster_type', None)
+
+        m['monster_species'] = str(m['monster_species']).strip() or 'unknown'
         m.setdefault('ac', 0)
         m.setdefault('hp', 1)
         m.setdefault('original_hp', m.get('max_hp', m['hp']))
@@ -803,7 +808,7 @@ def parse_monster(raw: bytes) -> dict[str, Any]:
     ac = re.search('\\d+', str(acraw)) if acraw is not None else None
     if not name or not kind or (not hp) or (not ac):
         raise HTTPException(400, '.monster needs usable name, type, AC, and HP')
-    return {'name': name, 'monster_type': kind, 'ac': int(ac.group()), 'hp': int(hp.group())}
+    return {'name': name, 'monster_species': kind, 'ac': int(ac.group()), 'hp': int(hp.group())}
 
 def csv_text(value: Any, default: str = "") -> str:
     if value is None:
@@ -915,17 +920,17 @@ def csv_rows(raw: bytes) -> list[dict[str, str]]:
 
 def csv_monster(row: dict[str, str], row_number: int) -> dict[str, Any]:
     name = csv_text(row.get("name"))
-    monster_type = csv_text(row.get("monster_type") or row.get("type"))
+    monster_species = csv_text(row.get("monster_species") or row.get('monster_type') or row.get("type"))
     ac = csv_int(row, "ac", minimum=0, maximum=999, row_number=row_number)
     hp = csv_int(row, "hp", minimum=-99999, maximum=99999, row_number=row_number)
 
     if not name:
         raise HTTPException(400, f"CSV row {row_number}: name is required")
 
-    if not monster_type:
+    if not monster_species:
         raise HTTPException(
             400,
-            f"CSV row {row_number}: monster_type (or type) is required",
+            f"CSV row {row_number}: monster_species, monster_type or type is required",
         )
 
     if ac is None:
@@ -966,7 +971,7 @@ def csv_monster(row: dict[str, str], row_number: int) -> dict[str, Any]:
     return {
         "id": ident,
         "name": name,
-        "monster_type": monster_type,
+        "monster_species": monster_species,
         "ac": ac,
         "hp": hp,
         "max_hp": maximum_hp,
@@ -1081,21 +1086,90 @@ def save_image(upload: UploadFile) -> str:
         shutil.copyfileobj(upload.file, f)
     return '/media/' + dst.name
 
-def dnd_image(kind: str) -> str | None:
+def dnd_image(monster_name: str) -> str | None:
     if not CONFIG['display'].get('dndbeyond_image_lookup', True):
         return None
+
+    requested_name = re.sub(
+        r'[^a-z0-9]+',
+        ' ',
+        monster_name.casefold(),
+    ).strip()
+
+    if not requested_name:
+        return None
+
     try:
-        q = Request('https://www.dndbeyond.com/monsters?filter-search=' + quote(kind), headers={'User-Agent': 'ScryingGlass/1.0'})
-        with urlopen(q, timeout=5) as r:
-            html = r.read(1000000).decode('utf-8', 'replace')
-        found = re.search('<meta[^>]+property=["\\\']og:image["\\\'][^>]+content=["\\\']([^"\\\']+)', html, re.I)
-        return found.group(1) if found else None
+        request = Request(
+            'https://www.dndbeyond.com/monsters'
+            '?filter-search=' + quote(monster_name),
+            headers={
+                'User-Agent': 'Mozilla/5.0 '
+                '(compatible; ScryingGlass/1.0)',
+                'Accept': 'text/html,application/xhtml+xml',
+            },
+        )
+
+        with urlopen(request, timeout=5) as response:
+            html = response.read(1_000_000).decode('utf-8', 'replace')
+
+        # D&D Beyond result cards generally contain a monster page link and title.
+        # Only accept an exact normalized result title.
+        results = re.finditer(
+            r'<a[^>]+href=["\'](?P<href>/monsters/[^"\']+)["\'][^>]*>'
+            r'(?P<content>.*?)</a>',
+            html,
+            re.IGNORECASE | re.DOTALL,
+        )
+
+        for result in results:
+            title = re.sub(r'<[^>]+>', ' ', result.group('content'))
+            title = re.sub(r'\s+', ' ', title).strip()
+            normalized_title = re.sub(
+                r'[^a-z0-9]+',
+                ' ',
+                title.casefold(),
+            ).strip()
+
+            if normalized_title != requested_name:
+                continue
+
+            monster_url = (
+                'https://www.dndbeyond.com' + result.group('href')
+            )
+
+            monster_request = Request(
+                monster_url,
+                headers={
+                    'User-Agent': 'Mozilla/5.0 '
+                    '(compatible; ScryingGlass/1.0)',
+                    'Accept': 'text/html,application/xhtml+xml',
+                },
+            )
+
+            with urlopen(monster_request, timeout=5) as response:
+                monster_html = response.read(1_000_000).decode(
+                    'utf-8',
+                    'replace',
+                )
+
+            image = re.search(
+                r'<meta[^>]+property=["\']og:image["\'][^>]+'
+                r'content=["\'](?P<url>[^"\']+)',
+                monster_html,
+                re.IGNORECASE,
+            )
+
+            if image:
+                return image.group('url')
+
+        return None
     except Exception:
         return None
 
 def make_monster(fields: dict[str, Any], color: str, upload: UploadFile | None, image_url: str | None=None) -> dict[str, Any]:
     hp = fields['hp']
-    return {'id': uuid.uuid4().hex, **fields, 'max_hp': hp, 'original_hp': hp, 'color': color, 'image_url': image_url if image_url is not None else save_image(upload) if upload and upload.filename else dnd_image(fields['monster_type']), 'active': False, 'alive': True, 'visible': False, 'ally': False, 'initiative': None, 'original_initiative': None, 'show_ac': False, 'show_hp': False, 'show_initiative': False, 'in_turn': False}
+    return {'id': uuid.uuid4().hex, **fields, 'max_hp': hp, 'original_hp': hp, 'color': color, 'image_url': image_url if image_url is not None else save_image(upload) if upload and upload.filename else dnd_image(fields['monster_species']), 'active': False, 'alive': True, 'visible': False, 'ally': False, 'initiative': None, 'original_initiative': None, 'show_ac': False, 'show_hp': False, 'show_initiative': False, 'in_turn': False}
 
 def clear_turns() -> None:
     for x in entities():
@@ -1144,7 +1218,7 @@ def reset_entity(x: dict[str, Any]) -> None:
     x['visible'] = False
     x['in_turn'] = False
     x['initiative'] = x.get('original_initiative')
-    if 'monster_type' in x:
+    if 'monster_species' in x:
         x['hp'] = x['original_hp']
         x['max_hp'] = x['original_hp']
         x['show_ac'] = False
@@ -1254,7 +1328,7 @@ class BulkCombatantAction(BaseModel):
 
 class MonsterUpdate(BaseModel):
     name: str | None = Field(default=None, min_length=1, max_length=100)
-    monster_type: str | None = Field(default=None, min_length=1, max_length=100)
+    monster_species: str | None = Field(default=None, min_length=1, max_length=100)
     ac: int | None = Field(default=None, ge=0, le=999)
     max_hp: int | None = Field(default=None, ge=0, le=99999)
     original_hp: int | None = Field(default=None, ge=0, le=99999)
@@ -1780,9 +1854,9 @@ async def roll_monster_initiative(_: dict[str, str]=Depends(require("admin", ADM
     return {'count': len(STATE['monsters'])}
 
 @admin.post('/api/monsters')
-async def create_monster(name: str=Form(...), monster_type: str=Form(...), ac: int=Form(...), hp: int=Form(...), color: str=Form(...), quantity: int=Form(1, ge=1, le=50), image: UploadFile | None=File(None), _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
-    fields = {'name': name.strip(), 'monster_type': monster_type.strip(), 'ac': ac, 'hp': hp}
-    image_url = save_image(image) if image and image.filename else dnd_image(fields['monster_type'])
+async def create_monster(name: str=Form(...), monster_species: str=Form(...), ac: int=Form(...), hp: int=Form(...), color: str=Form(...), quantity: int=Form(1, ge=1, le=50), image: UploadFile | None=File(None), _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+    fields = {'name': name.strip(), 'monster_species': monster_species.strip(), 'ac': ac, 'hp': hp}
+    image_url = save_image(image) if image and image.filename else dnd_image(fields['monster_species'])
     created = [make_monster(fields, color, None, image_url) for _ in range(quantity)]
     STATE['monsters'].extend(created)
     await changed()
@@ -1793,7 +1867,7 @@ async def import_monster(monster_file: UploadFile=File(...), color: str=Form(...
     if not (monster_file.filename or '').lower().endswith('.monster'):
         raise HTTPException(400, 'Upload a .monster file')
     fields = parse_monster(await monster_file.read())
-    image_url = save_image(image) if image and image.filename else dnd_image(fields['monster_type'])
+    image_url = save_image(image) if image and image.filename else dnd_image(fields['monster_species'])
     created = [make_monster(fields, color, None, image_url) for _ in range(quantity)]
     STATE['monsters'].extend(created)
     await changed()
@@ -1869,14 +1943,14 @@ async def import_characters_csv(
     return {"count": len(imported)}
     
 @admin.post('/api/monsters/{ident}/edit')
-async def edit_monster(ident: str, name: str=Form(...), monster_type: str=Form(...), ac: int=Form(...), hp: int=Form(...), max_hp: int=Form(...), original_hp: int=Form(...), color: str=Form(...), initiative: str=Form(''), ally: str=Form('false'), image: UploadFile | None=File(None), _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
+async def edit_monster(ident: str, name: str=Form(...), monster_species: str=Form(...), ac: int=Form(...), hp: int=Form(...), max_hp: int=Form(...), original_hp: int=Form(...), color: str=Form(...), initiative: str=Form(''), ally: str=Form('false'), image: UploadFile | None=File(None), _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     m = next((x for x in STATE['monsters'] if x['id'] == ident), None)
     if not m:
         raise HTTPException(404, 'Monster not found')
     parsed_initiative = None if initiative.strip() == '' else int(initiative)
     if parsed_initiative is not None and (not -100 <= parsed_initiative <= 100):
         raise HTTPException(400, 'Initiative must be between -100 and 100')
-    m.update({'name': name.strip(), 'monster_type': monster_type.strip(), 'ac': ac, 'hp': hp, 'max_hp': max_hp, 'original_hp': original_hp, 'color': color, 'initiative': parsed_initiative, 'ally': ally.lower() == 'true'})
+    m.update({'name': name.strip(), 'monster_species': monster_species.strip(), 'ac': ac, 'hp': hp, 'max_hp': max_hp, 'original_hp': original_hp, 'color': color, 'initiative': parsed_initiative, 'ally': ally.lower() == 'true'})
     if image and image.filename:
         m['image_url'] = save_image(image)
     if m['hp'] <= 0:
