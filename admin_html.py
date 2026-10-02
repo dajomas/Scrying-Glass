@@ -26,6 +26,61 @@ ADMIN_HTML = r'''<!doctype html>
       margin: 1rem 0;
     }
 
+    /*
+    * Pane color families:
+    *
+    * Campaign setup and character input belong together because characters are
+    * campaign-owned. Battle setup and monster input belong together because
+    * monsters are encounter/setup-owned.
+    */
+    .pane-campaign-group {
+      background: #123b3b;
+      border: 1px solid #1f7777;
+      box-shadow: inset 0 0 0 1px #0d2f2f;
+    }
+
+    .pane-battle-group {
+      background: #3d2920;
+      border: 1px solid #8a4b2d;
+      box-shadow: inset 0 0 0 1px #2a1b15;
+    }
+
+    /*
+    * Give headings a small group-colored marker so the relationship remains
+    * clear even when the user has many open panes.
+    */
+    .pane-campaign-group h2 {
+      color: #99f6e4;
+    }
+
+    .pane-battle-group h2 {
+      color: #fdba74;
+    }
+
+    #toggleCampaignPane,
+    #toggleCharacterPane {
+      background: #176b6b;
+    }
+
+    #toggleCampaignPane:hover,
+    #toggleCampaignPane:focus-visible,
+    #toggleCharacterPane:hover,
+    #toggleCharacterPane:focus-visible {
+      background: #218282;
+    }
+
+    #toggleBattleSetupPane,
+    #toggleMonsterPane {
+      background: #7c4329;
+    }
+
+    #toggleBattleSetupPane:hover,
+    #toggleBattleSetupPane:focus-visible,
+    #toggleMonsterPane:hover,
+    #toggleMonsterPane:focus-visible {
+      background: #965237;
+    }
+
     input,
     button,
     select {
@@ -401,7 +456,7 @@ ADMIN_HTML = r'''<!doctype html>
       </div>
     </section>
 
-    <section id="campaignInputPane" class="pane">
+    <section id="campaignInputPane" class="pane pane-campaign-group">
       <div>
         <div class="row">
           <h2>Campaign Setup</h2>
@@ -421,7 +476,7 @@ ADMIN_HTML = r'''<!doctype html>
       </div>
     </section>
 
-    <section id="characterInputPane" class="pane">
+    <section id="characterInputPane" class="pane pane-campaign-group">
       <div class="row">
         <h2>Add character to active campaign</h2>
       </div>
@@ -437,7 +492,7 @@ ADMIN_HTML = r'''<!doctype html>
       </div>
     </section>
 
-    <section id="battleSetupInputPane" class="pane">
+    <section id="battleSetupInputPane" class="pane pane-battle-group">
       <div>
         <div class="row">
           <h2>Manage active campaign Battle setups</h2>
@@ -517,7 +572,7 @@ ADMIN_HTML = r'''<!doctype html>
       </div>
     </section>
 
-    <section id="monsterInputPane" class="pane">
+    <section id="monsterInputPane" class="pane pane-battle-group">
       <div class="row">
         <h2>Add monster to Battle setup</h2>
       </div>
@@ -1578,42 +1633,77 @@ ADMIN_HTML = r'''<!doctype html>
 
     const hideablePanes = [
       {
+        key: 'campaign',
         button: document.querySelector('#toggleCampaignPane'),
         pane: document.querySelector('#campaignInputPane'),
-        hiddenLabel: 'Hide Campaign input',
-        visibleLabel: 'Show Campaign input',
+        hiddenLabel: 'Hide campaign input',
+        visibleLabel: 'Show campaign input',
       },
       {
+        key: 'characterInput',
         button: document.querySelector('#toggleCharacterPane'),
         pane: document.querySelector('#characterInputPane'),
-        hiddenLabel: 'Hide Character input',
-        visibleLabel: 'Show Character input',
+        hiddenLabel: 'Hide character input',
+        visibleLabel: 'Show character input',
       },
       {
+        key: 'battleSetup',
         button: document.querySelector('#toggleBattleSetupPane'),
         pane: document.querySelector('#battleSetupInputPane'),
-        hiddenLabel: 'Hide Battle setup input',
-        visibleLabel: 'Show Battle setup input',
+        hiddenLabel: 'Hide battle setup input',
+        visibleLabel: 'Show battle setup input',
       },
       {
+        key: 'monsterInput',
         button: document.querySelector('#toggleMonsterPane'),
         pane: document.querySelector('#monsterInputPane'),
-        hiddenLabel: 'Hide Monster input',
-        visibleLabel: 'Show Monster input',
+        hiddenLabel: 'Hide monster input',
+        visibleLabel: 'Show monster input',
       },
       {
+        key: 'characterDisplay',
         button: document.querySelector('#toggleCharacterDisplayPane'),
         pane: document.querySelector('#characterDisplayPane'),
-        hiddenLabel: 'Hide Character display',
-        visibleLabel: 'Show Character display',
+        hiddenLabel: 'Hide character display',
+        visibleLabel: 'Show character display',
       },
       {
+        key: 'monsterDisplay',
         button: document.querySelector('#toggleMonsterDisplayPane'),
         pane: document.querySelector('#monsterDisplayPane'),
-        hiddenLabel: 'Hide Monster display',
-        visibleLabel: 'Show Monster display',
+        hiddenLabel: 'Hide monster display',
+        visibleLabel: 'Show monster display',
       },
     ];
+
+    const paneControlByKey = new Map(
+      hideablePanes.map(control => [control.key, control]),
+    );
+
+    /*
+    * Parent pane -> dependent child pane.
+    *
+    * A child pane has two independent pieces of state:
+    * - whether the pane itself was hidden by its own toggle;
+    * - whether its own toggle button was visible.
+    *
+    * When a parent hides, save both values. When it reopens, restore both values
+    * exactly as they were. This means:
+    *
+    * - Child visible before parent hide -> child and button visible after restore.
+    * - Child hidden before parent hide -> child remains hidden, but its "Show"
+    *   button becomes visible again after parent restore.
+    */
+    const paneDependencies = {
+      campaign: {
+        child: 'characterInput',
+        saved: null,
+      },
+      battleSetup: {
+        child: 'monsterInput',
+        saved: null,
+      },
+    };
 
     // Tracks whether this page has already performed the automatic collapse for
     // the current battle. Once set, a manually opened pane remains untouched.
@@ -1627,16 +1717,106 @@ ADMIN_HTML = r'''<!doctype html>
       control.button.setAttribute('aria-expanded', String(!hidden));
     }
 
+    function hideDependentPane(parentKey) {
+      const dependency = paneDependencies[parentKey];
+
+      if (!dependency) {
+        return;
+      }
+
+      const child = paneControlByKey.get(dependency.child);
+
+      if (!child) {
+        return;
+      }
+
+      /*
+      * Save the child's original state only once per parent-hide cycle.
+      * This prevents repeated page refreshes or repeated calls from overwriting
+      * the original state with the forced-hidden state.
+      */
+      if (dependency.saved === null) {
+        dependency.saved = {
+          paneHidden: child.pane.hidden,
+          buttonHidden: child.button.hidden,
+        };
+      }
+
+      /*
+      * Hide both the child input pane and its individual Show/Hide button.
+      * The button must be hidden too: users must not be able to show a pane
+      * whose parent is hidden.
+      */
+      child.pane.hidden = true;
+      child.button.hidden = true;
+    }
+
+    function restoreDependentPane(parentKey) {
+      const dependency = paneDependencies[parentKey];
+
+      if (!dependency || dependency.saved === null) {
+        return;
+      }
+
+      const child = paneControlByKey.get(dependency.child);
+      const saved = dependency.saved;
+
+      if (!child) {
+        dependency.saved = null;
+        return;
+      }
+
+      /*
+      * Restore the child pane's original hidden state through the standard
+      * function, so button wording and aria-expanded remain correct.
+      */
+      setPaneHidden(child, saved.paneHidden);
+
+      /*
+      * Restore whether the child toggle button itself was visible.
+      * Normally this is false, but storing it makes restoration exact and
+      * avoids coupling to other UI rules.
+      */
+      child.button.hidden = saved.buttonHidden;
+
+      dependency.saved = null;
+    }
+
+    function setParentPaneHidden(parentKey, hidden) {
+      const parent = paneControlByKey.get(parentKey);
+
+      if (!parent) {
+        return;
+      }
+
+      setPaneHidden(parent, hidden);
+
+      if (hidden) {
+        hideDependentPane(parentKey);
+      } else {
+        restoreDependentPane(parentKey);
+      }
+    }
+
     function setAllHideablePanesHidden(hidden) {
       hideablePanes.forEach(control => setPaneHidden(control, hidden));
     }
 
     hideablePanes.forEach(control => {
       control.button.onclick = () => {
-        // This is intentionally only a direct UI change. It does not modify
-        // collapsedForBattle, so battle-state refreshes cannot re-hide a pane that
-        // the GM manually opened during the battle.
-        setPaneHidden(control, !control.pane.hidden);
+        /*
+        * This is intentionally only a direct UI change. It does not modify
+        * collapsedForBattle, so battle-state refreshes cannot re-hide a pane
+        * that the GM manually opened during the battle.
+        */
+        const hidden = !control.pane.hidden;
+
+        if (paneDependencies[control.key]) {
+          setParentPaneHidden(control.key, hidden);
+          return;
+        }
+
+        setPaneHidden(control, hidden);
       };
     });
 
@@ -1662,9 +1842,16 @@ ADMIN_HTML = r'''<!doctype html>
       // layout and prepares automatic collapse for the next battle.
       if (collapsedForBattle) {
         setAllHideablePanesHidden(false);
-      }
+        collapsedForBattle = false;
 
-      collapsedForBattle = false;
+        /*
+        * Battle end/reset restores the standard normal layout. Any temporary
+        * parent-child hiding state from before the battle is no longer applied.
+        */
+        Object.values(paneDependencies).forEach(dependency => {
+          dependency.saved = null;
+        });
+      }
     }
 
     document.querySelector('#editForm').onsubmit = async event => {
