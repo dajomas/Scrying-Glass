@@ -1432,6 +1432,15 @@ def admin_login_post(username: str=Form(...), password: str=Form(...)):
 def admin_home(request: FastAPIRequest):
     return HTMLResponse(ADMIN_HTML) if SESSIONS.get(request.cookies.get(ADMIN_SESSION_COOKIE, ''), {}).get('role') == 'admin' else RedirectResponse('/login', 303)
 
+@client.get("/", include_in_schema=False)
+def client_root(request: FastAPIRequest):
+    session = SESSIONS.get(request.cookies.get(CLIENT_SESSION_COOKIE, ""))
+
+    if not session:
+        return RedirectResponse("/login", status_code=303)
+
+    return RedirectResponse("/display", status_code=303)
+
 @client.get('/login')
 def client_login_get():
     return login()
