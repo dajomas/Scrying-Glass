@@ -233,8 +233,16 @@ ADMIN_HTML = r'''<!doctype html>
     .hp-edit { width: 5.5rem; }
     .setup-name { min-width: 14rem; }
     .campaign-select { min-width: 14rem; }
-    .campaign-info { opacity: .8; }
-    .campaign-info strong { opacity: 1; }
+
+    .campaign-info,
+    .battle-setup-info {
+      opacity: .8;
+    }
+
+    .campaign-info strong,
+    .battle-setup-info strong {
+      opacity: 1;
+    }
 
     .edit-form {
       display: grid;
@@ -318,22 +326,13 @@ ADMIN_HTML = r'''<!doctype html>
     <section>
       <div class="row">
         <button
-          id="toggleSetupPane"
+          id="toggleCampaignPane"
           class="pane-toggle"
           type="button"
-          aria-controls="setupInputPane"
+          aria-controls="campaignInputPane"
           aria-expanded="true"
         >
-          Hide Setup input
-        </button>
-        <button
-          id="toggleMonsterPane"
-          class="pane-toggle"
-          type="button"
-          aria-controls="monsterInputPane"
-          aria-expanded="true"
-        >
-          Hide monster input
+          Hide campaign input
         </button>
         <button
           id="toggleCharacterPane"
@@ -345,13 +344,22 @@ ADMIN_HTML = r'''<!doctype html>
           Hide character input
         </button>
         <button
-          id="toggleMonsterDisplayPane"
+          id="toggleBattleSetupPane"
           class="pane-toggle"
           type="button"
-          aria-controls="monsterDisplayPane"
+          aria-controls="battleSetupInputPane"
           aria-expanded="true"
         >
-          Hide monster display
+          Hide battle setup input
+        </button>
+        <button
+          id="toggleMonsterPane"
+          class="pane-toggle"
+          type="button"
+          aria-controls="monsterInputPane"
+          aria-expanded="true"
+        >
+          Hide monster input
         </button>
         <button
           id="toggleCharacterDisplayPane"
@@ -361,6 +369,15 @@ ADMIN_HTML = r'''<!doctype html>
           aria-expanded="true"
         >
           Hide character display
+        </button>
+        <button
+          id="toggleMonsterDisplayPane"
+          class="pane-toggle"
+          type="button"
+          aria-controls="monsterDisplayPane"
+          aria-expanded="true"
+        >
+          Hide monster display
         </button>
       </div>
     </section>
@@ -384,41 +401,86 @@ ADMIN_HTML = r'''<!doctype html>
       </div>
     </section>
 
-    <section id="setupInputPane" class="pane">
+    <section id="campaignInputPane" class="pane">
       <div>
         <div class="row">
-          <h2>Campaign</h2>
+          <h2>Campaign Setup</h2>
           <span id="activeCampaignInfo" class="campaign-info"></span>
         </div>
+
         <div class="row">
           <select id="campaignSelect" class="campaign-select"></select>
           <button id="switchCampaign">Switch</button>
           <button id="newCampaign">New campaign</button>
           <button id="editCampaign">Edit campaign</button>
           <button id="deleteCampaign" class="danger">Delete campaign</button>
-          <button id="openCampaignSetup" class="import">Add setup to campaign</button>
+          <button id="openCampaignSetup" class="import">
+            Add setup to campaign
+          </button>
         </div>
-        <div class="row">&nbsp;</div>
+      </div>
+    </section>
+
+    <section id="characterInputPane" class="pane">
+      <div class="row">
+        <h2>Add character to active campaign</h2>
+      </div>
+
+      <div>
+        <form id="characterForm" class="row">
+          <input name="name" placeholder="Name" required>
+          <input name="color" type="color" value="#1f4e79">
+          <input name="hp" type="number" min="0" value="1" required>
+          <input name="initiative" type="number" placeholder="Initiative (optional)">
+          <button>Add character</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="battleSetupInputPane" class="pane">
+      <div>
         <div class="row">
-          <h2>Battle setups</h2>
+          <h2>Manage active campaign Battle setups</h2>
+          <span
+            id="activeBattleSetupInfo"
+            class="battle-setup-info"
+            aria-live="polite"
+          >
+            No saved battle setup loaded
+          </span>
         </div>
-        <input id="setupName" class="setup-name" placeholder="Battle setup name">
+
+        <input
+          id="setupName"
+          class="setup-name"
+          placeholder="Battle setup name"
+        >
+
         <button id="newSetup" class="reset">New</button>
         <button id="saveSetup">Save</button>
+
         <select id="setupSelect">
           <option value="">Load saved setup…</option>
         </select>
+
         <button id="loadSetup">Load</button>
         <button id="renameSetup">Rename</button>
         <button id="deleteSetup" class="danger">Delete</button>
+
         <div class="row">
           <button id="openImport" class="import">Import from setup</button>
-          <button id="openMonsterCsvImport" class="import">Import monsters CSV</button>
-          <button id="openCharacterCsvImport" class="import">Import characters CSV</button>
+          <button id="openMonsterCsvImport" class="import">
+            Import monsters CSV
+          </button>
+          <button id="openCharacterCsvImport" class="import">
+            Import characters CSV
+          </button>
         </div>
+
         <div class="row">
           <h3>View screen background</h3>
         </div>
+
         <div class="row">
           <input
             id="backgroundColor"
@@ -426,29 +488,38 @@ ADMIN_HTML = r'''<!doctype html>
             value="#080b14"
             title="Background color"
           >
+
           <input
             id="backgroundValue"
             class="setup-name"
             placeholder="Color, CSS gradient, or image URL"
           >
+
           <input
             id="backgroundImage"
             type="file"
             accept="image/png,image/jpeg,image/gif,image/webp"
           >
-          <button id="applyBackground" type="button">Apply background</button>
-          <button id="clearBackgroundImage" type="button">Use color</button>
+
+          <button id="applyBackground" type="button">
+            Apply background
+          </button>
+
+          <button id="clearBackgroundImage" type="button">
+            Use color
+          </button>
         </div>
+
         <p class="campaign-info">
-          Choose a color, enter a CSS background value, or upload a background image.
-          Save the battle setup to retain it.
+          Choose a color, enter a CSS background value, or upload a background
+          image. Save the battle setup to retain it.
         </p>
       </div>
     </section>
 
     <section id="monsterInputPane" class="pane">
       <div class="row">
-        <h2>Add monster</h2>
+        <h2>Add monster to battle setup</h2>
       </div>
 
       <div>
@@ -475,20 +546,9 @@ ADMIN_HTML = r'''<!doctype html>
       </div>
     </section>
 
-    <section id="characterInputPane" class="pane">
-      <div class="row">
-        <h2>Add character</h2>
-      </div>
-
-      <div>
-        <form id="characterForm" class="row">
-          <input name="name" placeholder="Name" required>
-          <input name="color" type="color" value="#1f4e79">
-          <input name="hp" type="number" min="0" value="1" required>
-          <input name="initiative" type="number" placeholder="Initiative (optional)">
-          <button>Add character</button>
-        </form>
-      </div>
+    <section id="characterDisplayPane" class="pane">
+      <h2>Characters</h2>
+      <div id="characters"></div>
     </section>
 
     <section id="monsterDisplayPane" class="pane">
@@ -505,11 +565,6 @@ ADMIN_HTML = r'''<!doctype html>
         <button type="button" class="bulk-monster-toggle" data-bulk-field="show_initiative">Init all</button>
       </div>
       <div id="monsters"></div>
-    </section>
-
-    <section id="characterDisplayPane" class="pane">
-      <h2>Characters</h2>
-      <div id="characters"></div>
     </section>
   </main>
 
@@ -565,8 +620,12 @@ ADMIN_HTML = r'''<!doctype html>
 
   <div id="importModal" class="modal" hidden>
     <div>
-      <h2>Import combatants from a saved setup</h2>
-      <p>Imported combatants receive new IDs and reset runtime state. The current battle order is not changed.</p>
+      <h2>Import monsters from a saved setup</h2>
+      <p>
+        Imported monsters receive new IDs and reset runtime state.
+        Characters belong to campaigns and are not part of battle setups.
+        The current battle order is not changed.
+      </p>
 
       <form id="importForm" class="import-form">
         <label>
@@ -582,9 +641,7 @@ ADMIN_HTML = r'''<!doctype html>
         <label>
           Import
           <select name="kind">
-            <option value="characters">Characters only</option>
             <option value="monsters">Monsters only</option>
-            <option value="both">Characters and monsters</option>
           </select>
         </label>
 
@@ -854,7 +911,7 @@ ADMIN_HTML = r'''<!doctype html>
           </td>
           <td>
             <button data-edit="${monster.id}" data-kind="monsters" class="edit">Edit</button>
-            <button class="${monster.active ? 'on' : ''}" data-ma="${monster.id}">${monster.active ? 'Active' : 'Off'}</button>
+            <button class="${monster.active ? 'on' : ''}" data-ma="${monster.id}">${monster.active ? 'In Battle' : 'Join Battle'}</button>
             <button class="${monster.ally ? 'on' : ''}" data-mally="${monster.id}">Ally</button>
             <button class="${monster.visible ? 'on' : ''}" data-mv="${monster.id}">Visible</button>
             <button data-mt="${monster.id}" class="${monster.in_turn ? 'on' : ''}">Turn</button>
@@ -892,7 +949,7 @@ ADMIN_HTML = r'''<!doctype html>
           </td>
           <td>
             <button data-edit="${character.id}" data-kind="characters" class="edit">Edit</button>
-            <button class="${character.active ? 'on' : ''}" data-ca="${character.id}">${character.active ? 'Active' : 'Off'}</button>
+            <button class="${character.active ? 'on' : ''}" data-ca="${character.id}">${character.active ? 'In Battle' : 'Join Battle'}</button>
             <button class="${character.alive ? 'on' : ''}" data-cl="${character.id}">${character.alive ? 'Alive' : 'Dead'}</button>
             <button class="${character.visible ? 'on' : ''}" data-cv="${character.id}">Visible</button>
             <button data-ct="${character.id}" class="${character.in_turn ? 'on' : ''}">Turn</button>
@@ -1016,6 +1073,35 @@ ADMIN_HTML = r'''<!doctype html>
       return campaignBySlug(campaignData.active);
     }
 
+    function renderActiveBattleSetup() {
+      const info = document.querySelector('#activeBattleSetupInfo');
+
+      if (!info) {
+        return;
+      }
+
+      const active = activeCampaign();
+      const setupName = document.querySelector('#setupName').value.trim();
+
+      if (!setupName) {
+        info.textContent = 'No saved battle setup loaded';
+        return;
+      }
+
+      const isKnownSetup = Boolean(
+        active
+        && Array.isArray(active.setups)
+        && active.setups.includes(setupName),
+      );
+
+      if (!isKnownSetup) {
+        info.textContent = 'Unsaved battle setup';
+        return;
+      }
+
+      info.innerHTML = `Active: <strong>${esc(setupName)}</strong>`;
+    }
+
     function campaignOptions(selected, placeholder = '') {
       return (placeholder ? `<option value="">${esc(placeholder)}</option>` : '') +
         campaignData.campaigns
@@ -1076,6 +1162,7 @@ ADMIN_HTML = r'''<!doctype html>
         campaignBySlug(oldImportCampaign) ? oldImportCampaign : campaignData.active,
       );
       renderImportSetups();
+      renderActiveBattleSetup();
     }
 
     async function setups() {
@@ -1441,34 +1528,40 @@ ADMIN_HTML = r'''<!doctype html>
 
     const hideablePanes = [
       {
-        button: document.querySelector('#toggleSetupPane'),
-        pane: document.querySelector('#setupInputPane'),
-        hiddenLabel: 'Hide setup input',
-        visibleLabel: 'Show setup input',
-      },
-      {
-        button: document.querySelector('#toggleMonsterPane'),
-        pane: document.querySelector('#monsterInputPane'),
-        hiddenLabel: 'Hide monster input',
-        visibleLabel: 'Show monster input',
+        button: document.querySelector('#toggleCampaignPane'),
+        pane: document.querySelector('#campaignInputPane'),
+        hiddenLabel: 'Hide Campaign input',
+        visibleLabel: 'Show Campaign input',
       },
       {
         button: document.querySelector('#toggleCharacterPane'),
         pane: document.querySelector('#characterInputPane'),
-        hiddenLabel: 'Hide character input',
-        visibleLabel: 'Show character input',
+        hiddenLabel: 'Hide Character input',
+        visibleLabel: 'Show Character input',
       },
       {
-        button: document.querySelector('#toggleMonsterDisplayPane'),
-        pane: document.querySelector('#monsterDisplayPane'),
-        hiddenLabel: 'Hide monster display',
-        visibleLabel: 'Show monster display',
+        button: document.querySelector('#toggleBattleSetupPane'),
+        pane: document.querySelector('#battleSetupInputPane'),
+        hiddenLabel: 'Hide Battle setup input',
+        visibleLabel: 'Show Battle setup input',
+      },
+      {
+        button: document.querySelector('#toggleMonsterPane'),
+        pane: document.querySelector('#monsterInputPane'),
+        hiddenLabel: 'Hide Monster input',
+        visibleLabel: 'Show Monster input',
       },
       {
         button: document.querySelector('#toggleCharacterDisplayPane'),
         pane: document.querySelector('#characterDisplayPane'),
-        hiddenLabel: 'Hide character display',
-        visibleLabel: 'Show character display',
+        hiddenLabel: 'Hide Character display',
+        visibleLabel: 'Show Character display',
+      },
+      {
+        button: document.querySelector('#toggleMonsterDisplayPane'),
+        pane: document.querySelector('#monsterDisplayPane'),
+        hiddenLabel: 'Hide Monster display',
+        visibleLabel: 'Show Monster display',
       },
     ];
 
@@ -1652,8 +1745,7 @@ ADMIN_HTML = r'''<!doctype html>
         await load();
 
         message(
-          `Imported ${result.characters} character(s) and ` +
-          `${result.monsters} monster(s) from ${result.name}`,
+          `Imported ${result.monsters} monster${result.monsters === 1 ? '' : 's'} from ${result.name}`,
         );
       } catch (error) {
         message(error.message);
@@ -1674,10 +1766,10 @@ ADMIN_HTML = r'''<!doctype html>
       document.querySelector('#csvImportTitle').textContent =
         isMonster ? 'Import monsters from CSV' : 'Import characters from CSV';
 
-      document.querySelector('#csvImportHelp').textContent = isMonster
-        ? 'Required columns: name, monster_type (or type), ac, hp. '
-          + 'Optional id values are preserved; blank or missing IDs are generated automatically.'
-        : 'Required column: name. Optional id values are preserved; blank or missing IDs are generated automatically.';
+      document.querySelector('#csvImportHelp').textContent =
+        isMonster
+          ? 'Required columns: name, monster_species or type, ac, hp. Optional id values are preserved; blank or missing IDs are generated automatically.'
+          : 'Required column: name. Imported characters are added to the active campaign. Optional id values are preserved; blank or missing IDs are generated automatically.';
 
       csvImportModal.hidden = false;
     }
@@ -1877,13 +1969,20 @@ ADMIN_HTML = r'''<!doctype html>
     // (or newest) battle setup. Reflect that in the setup controls and reload state.
     async function applyOpenedSetup(result) {
       renderCampaigns();
+
       if (!result || !result.opened_setup) {
+        renderActiveBattleSetup();
         return '';
       }
+
       document.querySelector('#setupName').value = result.opened_setup;
       document.querySelector('#setupSelect').value = result.opened_setup;
+
+      renderActiveBattleSetup();
+
       await load();
-      return ` — opened battle setup: ${result.opened_setup}`;
+
+      return `; opened battle setup ${result.opened_setup}`;
     }
 
     const REPLACE_WARNING =
@@ -2140,6 +2239,9 @@ ADMIN_HTML = r'''<!doctype html>
 
         document.querySelector('#setupName').value = '';
         document.querySelector('#setupSelect').value = '';
+
+        renderActiveBattleSetup();
+
         await load();
       } catch (error) {
         message(error.message);
@@ -2166,6 +2268,9 @@ ADMIN_HTML = r'''<!doctype html>
         document.querySelector('#setupName').value = result.name;
         await setups();
         document.querySelector('#setupSelect').value = result.name;
+
+        renderActiveBattleSetup();
+
         message(`Saved setup: ${result.name} (campaign: ${campaignBySlug(result.campaign)?.name || result.campaign})`);
       } catch (error) {
         message(error.message);
@@ -2200,12 +2305,23 @@ ADMIN_HTML = r'''<!doctype html>
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({name, campaign: campaignData.active}),
+          body: JSON.stringify({
+            name,
+            campaign: campaignData.active,
+          }),
         });
 
         document.querySelector('#setupName').value = result.name;
+        document.querySelector('#setupSelect').value = result.name;
+
+        renderActiveBattleSetup();
+
         await load();
-        message(`Loaded setup: ${result.name} (campaign: ${campaignBySlug(result.campaign)?.name || result.campaign})`);
+
+        message(
+          `Loaded setup ${result.name} in campaign `
+          + `${campaignBySlug(result.campaign)?.name || result.campaign}`,
+        );
       } catch (error) {
         revert();
         message(error.message);
@@ -2235,8 +2351,12 @@ ADMIN_HTML = r'''<!doctype html>
         if (document.querySelector('#setupName').value.trim() === name) {
           document.querySelector('#setupName').value = result.name;
         }
+
         await setups();
         document.querySelector('#setupSelect').value = result.name;
+
+        renderActiveBattleSetup();
+
         message(`Renamed battle setup ${result.old_name} to ${result.name}`);
       } catch (error) {
         message(error.message);
@@ -2262,12 +2382,18 @@ ADMIN_HTML = r'''<!doctype html>
           {method: 'DELETE'},
         );
         await setups();
+
         document.querySelector('#setupName').value = result.opened_setup;
         document.querySelector('#setupSelect').value = result.opened_setup;
+
+        renderActiveBattleSetup();
+
         await load();
+
         message(
-          `Deleted battle setup ${result.deleted} — opened ` +
-          (result.created_default ? `new empty setup ${result.opened_setup}` : result.opened_setup),
+          `Deleted battle setup ${result.deleted}; opened `
+          + `${result.created_default ? 'new empty setup ' : ''}`
+          + `${result.opened_setup}`,
         );
       } catch (error) {
         message(error.message);
