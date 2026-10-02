@@ -427,7 +427,7 @@ ADMIN_HTML = r'''<!doctype html>
       </div>
       <div class="row monster-bulk-controls" aria-label="Bulk monster controls">
         <span class="bulk-label">All monsters:</span>
-        <button type="button" class="bulk-monster-toggle" data-bulk-field="active">Active all</button>
+        <button type="button" class="bulk-monster-toggle" data-bulk-field="active">Join battle all</button>
         <button type="button" class="bulk-monster-toggle" data-bulk-field="ally">Ally all</button>
         <button type="button" class="bulk-monster-toggle" data-bulk-field="show_ac">AC all</button>
         <button type="button" class="bulk-monster-toggle" data-bulk-field="show_hp">HP all</button>
