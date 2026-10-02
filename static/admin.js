@@ -8,6 +8,14 @@ const message = text => {
     document.querySelector('#message').textContent = text;
 };
 
+const paneNotification = (kind, text) => {
+    const id = kind === 'characters'
+        ? '#characterAddNotification'
+        : '#monsterAddNotification';
+
+    document.querySelector(id).textContent = text;
+};
+
 const all = () => [
     ...latest.monsters,
     ...latest.characters,
@@ -1342,6 +1350,15 @@ document.querySelector('#csvImportForm').onsubmit = async event => {
             `Imported ${result.count} ${csvImportKind === 'monsters' ? 'monster' : 'character'
             }${result.count === 1 ? '' : 's'} from CSV.`,
         );
+
+        const count = Number(result?.count ?? 0);
+        const noun = csvImportKind === 'characters' ? 'character' : 'monster';
+        const target = csvImportKind === 'characters' ? 'characters' : 'monsters';
+
+        paneNotification(
+            target,
+            `${count} ${noun}${count === 1 ? '' : 's'} added successfully.`,
+        );
     } catch (error) {
         message(error.message);
     } finally {
@@ -1967,6 +1984,14 @@ document.querySelector('#monsterForm').onsubmit = async event => {
         });
 
         message(`Added ${result.length} monster${result.length === 1 ? '' : 's'}`);
+
+        paneNotification(
+            'monsters',
+            quantity === 1
+                ? `Monster “${name}” added to the battle setup.`
+                : `${quantity} “${name}” monsters added to the battle setup.`,
+        );
+
         event.target.reset();
         await load();
     } catch (error) {
@@ -1984,6 +2009,12 @@ document.querySelector('#monsterUpload').onsubmit = async event => {
         });
 
         message(`Imported ${result.length} monster${result.length === 1 ? '' : 's'}`);
+        paneNotification(
+            'monsters',
+            quantity === 1
+                ? `Monster imported from “${fileName}”.`
+                : `${quantity} monsters imported from “${fileName}”.`,
+        );
         event.target.reset();
         await load();
     } catch (error) {
@@ -2011,6 +2042,11 @@ document.querySelector('#characterForm').onsubmit = async event => {
                     : +formData.get('initiative'),
             }),
         });
+
+        paneNotification(
+            'characters',
+            `Character “${name}” added to the active campaign.`,
+        );
 
         event.target.reset();
         await load();
