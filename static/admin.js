@@ -8,6 +8,14 @@ const message = text => {
     document.querySelector('#message').textContent = text;
 };
 
+const paneNotification = (kind, text) => {
+    const id = kind === 'characters'
+        ? '#characterAddNotification'
+        : '#monsterAddNotification';
+
+    document.querySelector(id).textContent = text;
+};
+
 const all = () => [
     ...latest.monsters,
     ...latest.characters,
@@ -233,7 +241,7 @@ function monsterRow(monster) {
         <td>
         ${colorMarker(monster, '#842029')}${esc(displayName)}
         <br>
-        <small>${esc(monster.monster_type)}</small>
+        <small>${esc(monster.monster_species)}</small>
         </td>
         <td>${monster.ac}</td>
         <td>${monster.hp}/${monster.max_hp}</td>
@@ -316,8 +324,8 @@ function monsterEdit(monster) {
         <input name="name" required value="${esc(monster.name)}">
     </label>
     <label>
-        Monster type <span class="required-marker" aria-hidden="true">*</span>
-        <input name="monster_type" required value="${esc(monster.monster_type)}">
+        Monster species <span class="required-marker" aria-hidden="true">*</span>
+        <input name="monster_species" required value="${esc(monster.monster_species)}">
     </label>
     <label>
         AC <span class="required-marker" aria-hidden="true">*</span>
@@ -885,7 +893,7 @@ async function load() {
                 .map(id => all().find(combatant => combatant.id === id))
                 .filter(Boolean)
                 .map(combatant => {
-                    const displayName = combatant.monster_type && combatant.ally
+                    const displayName = combatant.monster_species && combatant.ally
                         ? `${combatant.name} - Ally`
                         : combatant.name;
 
@@ -1165,7 +1173,7 @@ document.querySelector('#editForm').onsubmit = async event => {
     };
 
     if (editing.kind === 'monsters') {
-        data.monster_type = form.elements.monster_type.value.trim();
+        data.monster_species = form.elements.monster_species.value.trim();
         data.ac = numberValue(form, 'ac', 0);
         data.original_hp = numberValue(form, 'original_hp', 0);
         data.ally = form.elements.ally.value === 'true';
@@ -1341,6 +1349,15 @@ document.querySelector('#csvImportForm').onsubmit = async event => {
         message(
             `Imported ${result.count} ${csvImportKind === 'monsters' ? 'monster' : 'character'
             }${result.count === 1 ? '' : 's'} from CSV.`,
+        );
+
+        const count = Number(result?.count ?? 0);
+        const noun = csvImportKind === 'characters' ? 'character' : 'monster';
+        const target = csvImportKind === 'characters' ? 'characters' : 'monsters';
+
+        paneNotification(
+            target,
+            `${count} ${noun}${count === 1 ? '' : 's'} added successfully.`,
         );
     } catch (error) {
         message(error.message);
@@ -1960,16 +1977,63 @@ async function applyBackground(background) {
 document.querySelector('#monsterForm').onsubmit = async event => {
     event.preventDefault();
 
+    const form = event.target;
+    const formData = new FormData(form);
+
+    console.log(
+        'Submitting monster form:',
+        [...formData.entries()].map(([key, value]) => [
+            key,
+            value instanceof File
+                ? {
+                    name: value.name,
+                    type: value.type,
+                    size: value.size,
+                }
+                : value,
+        ]),
+    );
+
+    const name = String(formData.get('name') || '').trim();
+
     try {
-        const result = await request('/api/monsters', {
+        const response = await fetch('/api/monsters', {
             method: 'POST',
-            body: new FormData(event.target),
+            body: formData,
         });
 
-        message(`Added ${result.length} monster${result.length === 1 ? '' : 's'}`);
-        event.target.reset();
+        const responseBody = await response.json().catch(() => null);
+
+        console.log('Monster API response:', response.status, responseBody);
+
+        if (!response.ok) {
+            const details = Array.isArray(responseBody?.detail)
+                ? responseBody.detail
+                    .map(item =>
+                        `${item.loc?.join(' → ') || 'Unknown field'}: ${item.msg}`,
+                    )
+                    .join('; ')
+                : responseBody?.detail || response.statusText;
+
+            throw new Error(details);
+        }
+
+        const result = responseBody;
+        const count = Array.isArray(result) ? result.length : 0;
+
+        message(`Added ${count} monster${count === 1 ? '' : 's'}`);
+
+        paneNotification(
+            'monsters',
+            count === 1
+                ? `Monster “${name}” added to the battle setup.`
+                : `${count} “${name}” monsters added to the battle setup.`,
+        );
+
+        form.reset();
         await load();
     } catch (error) {
+        console.error('Monster add failed:', error);
         message(error.message);
     }
 };
@@ -1984,6 +2048,14 @@ document.querySelector('#monsterUpload').onsubmit = async event => {
         });
 
         message(`Imported ${result.length} monster${result.length === 1 ? '' : 's'}`);
+        quantity = result.length;
+        fileName = event.target.querySelector('[name="file"]').files[0]?.name || 'unknown file';
+        paneNotification(
+            'monsters',
+            quantity === 1
+                ? `Monster imported from “${fileName}”.`
+                : `${quantity} monsters imported from “${fileName}”.`,
+        );
         event.target.reset();
         await load();
     } catch (error) {
@@ -2011,6 +2083,11 @@ document.querySelector('#characterForm').onsubmit = async event => {
                     : +formData.get('initiative'),
             }),
         });
+
+        paneNotification(
+            'characters',
+            `Character “${formData.get('name')}” added to the active campaign.`,
+        );
 
         event.target.reset();
         await load();
@@ -2093,7 +2170,7 @@ function addBattleActionRow() {
         <select data-action-target required>
         ${targets.map(target => `
             <option value="${esc(target.id)}">
-            ${esc(target.monster_type && target.ally ? `${target.name} - Ally` : (!target.monster_type) ? `${target.name} - Character` : `${target.name} - Monster`)}
+            ${esc(target.monster_species && target.ally ? `${target.name} - Ally` : (!target.monster_species) ? `${target.name} - Character` : `${target.name} - Monster`)}
             </option>
         `).join('')}
         </select>

@@ -120,6 +120,13 @@ ADMIN_HTML = r'''<!doctype html>
         <h2>Add character to active campaign</h2>
       </div>
 
+      <p
+          id="characterAddNotification"
+          class="pane-notification"
+          role="status"
+          aria-live="polite"
+        ></p>
+
       <div>
         <form id="characterForm" class="row">
           <label class="field">
@@ -271,6 +278,13 @@ ADMIN_HTML = r'''<!doctype html>
         <h2>Add monster to Battle setup</h2>
       </div>
 
+      <p
+          id="monsterAddNotification"
+          class="pane-notification"
+          role="status"
+          aria-live="polite"
+        ></p>
+
       <div>
         <form id="monsterForm" class="row">
           <label class="field">
@@ -287,11 +301,11 @@ ADMIN_HTML = r'''<!doctype html>
 
           <label class="field">
             <span class="field-label">
-              Monster type <span class="required-marker" aria-hidden="true">*</span>
+              Monster species <span class="required-marker" aria-hidden="true">*</span>
             </span>
             <input
-              id="monsterType"
-              name="monster_type"
+              id="monsterSpecies"
+              name="monster_species"
               placeholder="For example: humanoid"
               required
             >
