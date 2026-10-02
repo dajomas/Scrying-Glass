@@ -44,6 +44,7 @@ UPLOAD_DIR: Path
 SETUPS_DIR: Path
 CAMPAIGNS_FILE: Path
 CHARACTERS_DIR: Path
+STATIC_DIR: Path
 
 DEFAULT_SETUP_NAME = 'default'
 DEFAULT_CAMPAIGN_SLUG = 'default'
@@ -2297,6 +2298,11 @@ if __name__ == '__main__':
         print(f'Using existing data directory {legacy_dir} (from before the rename to Scrying Glass). '
               f'Rename it to {DATA_DIR} or set storage_dir in the configuration to silence this message.')
         DATA_DIR = legacy_dir
+
+    STATIC_DIR = Path(__file__).resolve().parent / "static"
+    if not STATIC_DIR.is_dir():
+        sys.exit(f"Static asset directory does not exist: {STATIC_DIR}")
+
     UPLOAD_DIR = DATA_DIR / "uploads"
     SETUPS_DIR = DATA_DIR / "setups"
     CHARACTERS_DIR = DATA_DIR / "characters"
@@ -2316,7 +2322,9 @@ if __name__ == '__main__':
     STATE["characters"] = load_campaign_characters(active_campaign())
     clean_order()
     save_state()
+    admin.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="admin-static")   
     admin.mount('/media', StaticFiles(directory=str(UPLOAD_DIR)), name='admin-media')
+    client.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="client-static")   
     client.mount('/media', StaticFiles(directory=str(UPLOAD_DIR)), name='client-media')
 
     async def serve():
