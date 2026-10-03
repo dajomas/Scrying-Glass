@@ -62,6 +62,7 @@ security:
     - username: "dm"
       role: "admin"
       password: "replace-this-admin-password"
+
     - username: "table"
       role: "client"
       password: "replace-this-client-password"
@@ -92,7 +93,12 @@ display:
 Example:
 
 ```bash
-python3.14 scrying_glass_server.py   --config /etc/scrying-glass/config.yaml   --bind 0.0.0.0   --admin-port 3000   --client-port 4000   --storage-dir /var/lib/scrying-glass
+python3.14 scrying_glass_server.py \
+  --config /etc/scrying-glass/config.yaml \
+  --bind 0.0.0.0 \
+  --admin-port 3000 \
+  --client-port 4000 \
+  --storage-dir /var/lib/scrying-glass
 ```
 
 ## Authentication
@@ -211,7 +217,11 @@ A Monster includes identity, display, combat, and Client-card fields:
 }
 ```
 
-A Character uses the corresponding shared combat fields but no Monster image, type, AC, ally, or card-stat visibility fields.
+`monster_species` is the canonical species/type field.
+
+Older saved monster records may contain `monster_type`. During normalization, that legacy value is migrated to `monster_species` when the canonical field is absent. When both fields exist, `monster_species` is retained and the legacy `monster_type` field is discarded.
+
+A Character uses the corresponding shared combat fields but no Monster image, species, AC, ally, or card-stat visibility fields.
 
 `STATE.display.background` applies to the current working encounter and is saved into named setup snapshots. It accepts Client-supported CSS values, including colors and gradients. Uploaded backgrounds are represented as `url("/media/<uuid>.<extension>")`. The configured background is an initial or legacy fallback, not a replacement for an already saved per-setup background.
 
@@ -244,6 +254,19 @@ Selected Monster and Character IDs are different: they are Admin-browser-only st
 
 The browser should prune stale IDs during render. Server-side selected-bulk operations must validate every submitted ID before mutating any combatant, so stale input fails without partially applying an action.
 
+## Admin pane notifications
+
+The Admin UI provides transient, contextual notifications in these panes:
+
+- Add character
+- Add monster
+- Campaign Setup
+- Battle setups
+
+Each notification target maintains an independent timeout. A newer notification in the same pane clears the prior timeout, replaces its text, and remains visible for 15 seconds.
+
+Notifications are browser-only UI feedback. They are not written into `STATE`, saved in `state.json`, saved into setup snapshots, broadcast through WebSockets, or shown to Client Display users.
+
 ## API inventory
 
 Unless stated otherwise, Admin mutation routes require an Admin session.
@@ -253,8 +276,9 @@ Unless stated otherwise, Admin mutation routes require an Admin session.
 | App | Method | Path | Purpose |
 |---|---|---|---|
 | Admin | GET/POST | `/login` | Admin login |
-| Admin | GET | `/` | Admin UI |
+| Admin | GET | `/` | Admin UI; redirects to Admin login without a valid Admin session |
 | Client | GET/POST | `/login` | Client or Admin login |
+| Client | GET | `/` | Redirects to `/login` without a valid Client session; otherwise redirects to `/display` |
 | Client | GET | `/display` | Client Display UI |
 | Admin | GET | `/api/state` | Current state for Admin session |
 | Client | GET | `/api/state` | Current state for Client session |
@@ -264,19 +288,32 @@ Unless stated otherwise, Admin mutation routes require an Admin session.
 
 | Method | Path | Purpose |
 |---|---|---|
-| GET | `/api/campaigns` | Migrates/returns campaigns, active campaign, setup metadata, and moved legacy setups |
+| GET | `/api/campaigns` | Migrates and returns campaigns, active campaign, setup metadata, and moved legacy setups |
 | POST | `/api/campaigns` | Creates campaign and empty `default` setup; may activate and open it |
 | PATCH | `/api/campaigns/{slug}` | Renames or edits campaign metadata |
 | DELETE | `/api/campaigns/{slug}` | Deletes campaign; moves or deletes setups as explicitly requested |
 | POST | `/api/campaigns/{slug}/activate` | Activates campaign and opens selected preferred setup |
 | POST | `/api/campaigns/{slug}/setups` | Moves or copies setup from another campaign |
 | GET | `/api/setups` | Lists setups in active or supplied campaign |
-| POST | `/api/setups/new` | Replaces working state with blank state |
-| POST | `/api/setups/save` | Saves complete state under normalized name |
+| POST | `/api/setups/new` | Replaces working state with a blank unsaved state |
+| POST | `/api/setups/save` | Saves complete working state under normalized name |
 | POST | `/api/setups/load` | Replaces working state with snapshot |
 | POST | `/api/setups/rename` | Renames saved setup |
 | DELETE | `/api/setups/{name}` | Deletes setup and opens next or fresh default setup |
 | POST | `/api/setups/import` | Appends runtime-reset copies from setup |
+
+### Named New setup workflow
+
+The Admin **New** button is a client-side workflow built from two existing setup routes:
+
+1. It reads the name entered in the Battle setup name field.
+2. It rejects an empty or known duplicate name in the active campaign before discarding the current working encounter.
+3. It requests confirmation from the user.
+4. It calls `POST /api/setups/new` to replace the working state with a blank setup.
+5. It immediately calls `POST /api/setups/save` with the entered name and active campaign.
+6. It refreshes the campaign/setup metadata, selects the newly saved setup, and reloads state.
+
+The browser's duplicate-name check provides immediate feedback. The save operation remains the server-side persistence operation; deployments should keep the client and server code synchronized so the New workflow and server save behavior agree.
 
 ### Display and combatant routes
 
@@ -288,16 +325,41 @@ Unless stated otherwise, Admin mutation routes require an Admin session.
 | POST | `/api/monsters/import` | Imports compatible `.monster` JSON |
 | POST | `/api/monsters/import-csv` | Imports Monster CSV |
 | POST | `/api/monsters/roll-initiative` | Assigns d20 initiative to every Monster |
-| POST | `/api/monsters/bulk-toggle` | Legacy whole-list toggle for supported Monster fields |
+| POST | `/api/monsters/bulk` | Applies a supported action to selected Monster IDs |
 | POST | `/api/monsters/{id}/edit` | Edits Monster with optional image replacement |
 | PATCH | `/api/monsters/{id}` | Updates Monster fields or applies HP delta |
 | POST | `/api/characters` | Creates Character |
 | POST | `/api/characters/import-csv` | Imports Character CSV |
+| POST | `/api/characters/bulk` | Applies a supported action to selected Character IDs |
 | PATCH | `/api/characters/{id}` | Updates Character fields or applies HP delta |
 | DELETE | `/api/combatants/{id}` | Removes one Monster or Character from working encounter |
 | POST | `/api/combatants/{id}/reset` | Resets one combatant |
 
-The legacy Monster whole-list bulk toggle accepts `active`, `ally`, `show_ac`, `show_hp`, or `show_initiative`. Selected-combatant bulk actions use the current implementation's bulk endpoint(s) and should retain the atomic all-ID validation rule documented above.
+Monster bulk actions include:
+
+```text
+join-battle
+leave-battle
+set-ally
+unset-ally
+show-ac
+hide-ac
+show-hp
+hide-hp
+show-initiative
+hide-initiative
+reset
+remove
+```
+
+Character bulk actions include:
+
+```text
+join-battle
+leave-battle
+reset
+remove
+```
 
 ### Battle and activity routes
 
@@ -311,11 +373,106 @@ The legacy Monster whole-list bulk toggle accepts `active`, `ally`, `show_ac`, `
 | GET | `/api/activity-log.csv` | Downloads complete log as CSV |
 | POST | `/api/activity-log/clear` | Clears the activity log |
 
-## Imports and combat rules
+## Monster creation and imports
+
+### Manual monster creation
+
+`POST /api/monsters` accepts multipart form data for manual monster creation.
+
+| Form field | Purpose |
+|---|---|
+| `name` | Base Monster display name |
+| `monster_species` | Monster species/type |
+| `ac` | Armor Class |
+| `hp_range_start` | Lowest permitted initial HP |
+| `hp_range_end` | Highest permitted initial HP |
+| `color` | Monster card/list color |
+| `quantity` | Number of copies, from 1 through 50 |
+| `image` | Optional uploaded replacement image |
+
+The server rejects a request when:
+
+```text
+hp_range_start > hp_range_end
+```
+
+For every created Monster, the server independently chooses initial HP using:
+
+```python
+random.randint(hp_range_start, hp_range_end)
+```
+
+`random.randint()` includes both end points. The selected value initializes all three of these fields for that Monster:
+
+```text
+hp
+max_hp
+original_hp
+```
+
+When both range values are equal, every copy receives that number.
+
+For quantity greater than one, the server adds a numeric suffix in creation order:
+
+```text
+Goblin - 1
+Goblin - 2
+Goblin - 3
+```
+
+A quantity of one retains the submitted base name without a suffix.
+
+### CSV imports
 
 CSV imports require UTF-8 data, permit a BOM, require a header and at least one nonblank row, trim and case-fold headers, and accept `true`/`false`, `yes`/`no`, `on`/`off`, or `1`/`0` for booleans.
 
-Monster CSV requires `name`, `monster_species` or `type`, `ac`, and `hp`. Character CSV requires `name`. Missing IDs receive generated UUID hex values; duplicate IDs or conflicts with current encounter IDs return an error.
+Monster CSV requires:
+
+```text
+name,monster_species,ac,hp
+```
+
+The `type` column may be used instead of `monster_species`.
+
+Character CSV requires:
+
+```text
+name
+```
+
+Missing IDs receive generated UUID hex values; duplicate IDs or conflicts with current encounter IDs return an error.
+
+### `.monster` files
+
+The `.monster` import route requires an uploaded filename ending in `.monster` and a UTF-8 JSON body.
+
+| Imported value | JSON field search order |
+|---|---|
+| Name | `name` |
+| Monster species | `type` |
+| HP | `hpText`, then `hp` |
+| AC | `ac`, `armorClass`, `otherArmorDesc`, then `natArmorBonus` |
+
+The parser extracts the first signed integer from the selected HP value and the first usable integer from the selected AC value. Name, species/type, HP, and AC must all be usable or the import fails with HTTP 400.
+
+The `.monster` upload form supplies quantity, color, and an optional replacement image. Quantity-based imports use the same numbered-name behavior as manual Monster creation.
+
+The Admin `.monster` help popup is static client-side documentation. It explains the accepted fields and shows a minimal supported JSON structure without changing the import protocol.
+
+A minimal compatible file can look like:
+
+```json
+{
+  "name": "Goblin",
+  "type": "humanoid",
+  "ac": 15,
+  "hp": 7
+}
+```
+
+The [Tetra-cube D&D 5e Statblock Generator](https://tetra-cube.com/dnd/dnd-statblock.html) is a recommended external authoring tool for compatible monster statblocks. Scrying Glass does not bundle, control, or depend on the Tetra-cube site at runtime; it only accepts an uploaded `.monster` file.
+
+## Setup import and combat rules
 
 Setup import deep-copies selected combatants, generates fresh IDs, preserves current/max HP, derives alive state from HP, restores initiative from original initiative, clears active/visible/turn flags, resets Monster card flags, and leaves the existing battle order unchanged.
 
@@ -348,12 +505,17 @@ Admin color markers use combatant colors with Monster fallback `#842029` and Cha
 - Uploads are extension-checked and statically served. Restrict filesystem permissions and network reachability.
 - D&D Beyond image lookup is best effort and depends on an external website.
 - Setup and campaign deletion is permanent. Uploads are not garbage-collected automatically.
+- Campaign and setup operations are not coordinated between multiple Admin browsers. The last completed mutation wins.
+- The two-step named New workflow is browser-driven. Avoid running mismatched versions of `admin.js` and `scrying_glass_server.py`.
 
 Validate a source update with:
 
 ```bash
 python3.14 -m py_compile scrying_glass_server.py admin_html.py client_html.py login_html.py
-find static -maxdepth 1 -type f \( -name '*.js' -o -name '*.css' \) -printf '%f\n' | sort
+
+find static -maxdepth 1 -type f \
+  \( -name '*.js' -o -name '*.css' \) \
+  -printf '%f\n' | sort
 ```
 
 Hard-refresh Admin and Client pages after a static asset update.

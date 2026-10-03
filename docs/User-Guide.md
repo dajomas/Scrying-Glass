@@ -15,9 +15,11 @@ python3.14 scrying_glass_server.py --config config.yaml
 | Screen | Address | Login role |
 |---|---|---|
 | Admin | `http://SERVER:3000/` | `admin` |
-| Client Display | `http://SERVER:4000/display` | `client` or `admin` |
+| Client Display | `http://SERVER:4000/` or `http://SERVER:4000/display` | `client` or `admin` |
 
 Replace `SERVER` with the server hostname or IP address. For local testing, use `localhost`.
+
+Opening `http://SERVER:4000/` redirects to the Client login page when no valid Client session exists. After a successful Client login, the same root address redirects to the Client Display.
 
 Admin and Client Display logins use separate session cookies, so both screens can remain open in different tabs or windows in the same browser.
 
@@ -30,7 +32,7 @@ When a battle starts, or when you load a setup that already has a battle order, 
 | Pane | Purpose |
 |---|---|
 | Battle | Shows battle status, battle controls, and battle order |
-| Campaign | Selects, creates, edits, activates, and deletes campaigns; moves or copies setups between campaigns |
+| Campaign Setup | Selects, creates, edits, activates, and deletes campaigns; moves or copies setups between campaigns |
 | Battle setups | Creates, saves, loads, renames, deletes, and imports setups; imports CSV; configures the current setup background |
 | Add monster | Adds monsters manually or imports a `.monster` file |
 | Add character | Adds characters manually |
@@ -38,9 +40,18 @@ When a battle starts, or when you load a setup that already has a battle order, 
 | Characters | Lists Characters and provides row selection plus Character bulk actions |
 | Activity log | Displays, exports, and clears logged actions |
 
+### Pane notifications
+
+The **Add character**, **Add monster**, **Campaign Setup**, and **Battle setups** panes display action feedback locally.
+
+- Notifications appear in the pane where the action started.
+- A notification disappears automatically after 15 seconds.
+- A new notification in the same pane replaces the prior timer.
+- Notifications are not stored in battle setups and are not shown on the Client Display.
+
 ## Campaigns
 
-A campaign groups related battle setups. Every setup belongs to exactly one campaign, and exactly one campaign is active at a time. The active campaign name and description appear beside the Campaign heading.
+A campaign groups related battle setups. Every setup belongs to exactly one campaign, and exactly one campaign is active at a time. The active campaign name and description appear beside the Campaign Setup heading.
 
 Save, Load, Rename, and Delete actions in the Battle setups pane work in the active campaign. The working encounter is replaced when a campaign is activated or a setup is loaded.
 
@@ -103,13 +114,44 @@ If the destination already has that name, Scrying Glass adds a `-2`, `-3`, or la
 
 All setup actions operate in the active campaign unless a dialog explicitly lets you choose another campaign.
 
-### New, Save, Load
+### New
 
-- **New** clears the working encounter after confirmation. Existing named setups are unchanged.
-- **Save** writes the complete working state under the supplied setup name. Saving the same normalized name in the same campaign overwrites that saved setup.
-- **Load** replaces the complete working state, including combatants, HP, battle order, activity log, and display background. Selecting a setup from the dropdown can load it immediately; **Load** can also reload the selected setup.
+Enter a unique name in **Battle setup name**, then click **New**.
 
-Setup names are normalized for storage. For example, `Throne Room — Lytharia` becomes a safe slug similar to `throne-room-lytharia`.
+After confirmation, Scrying Glass:
+
+1. Discards the current working encounter.
+2. Creates a new empty working setup.
+3. Immediately saves that empty setup under the entered name in the active campaign.
+4. Selects and loads the newly saved setup.
+
+The New action uses the existing blank-setup and save workflow: it first creates the empty working state, then saves it using the supplied name.
+
+The name is normalized for storage. A setup with the same normalized name cannot be created in the active campaign. Existing named setups remain unchanged.
+
+### Save
+
+Enter a setup name and click **Save**. Save writes the complete working state under that name in the active campaign.
+
+Saving the same normalized name in the same campaign overwrites that saved setup. Setups in different campaigns may share a name.
+
+Setup names are normalized for storage. For example:
+
+```text
+Throne Room — Lytharia
+```
+
+becomes a safe slug similar to:
+
+```text
+throne-room-lytharia
+```
+
+### Load
+
+Load replaces the complete working state, including combatants, HP, battle order, activity log, and display background.
+
+Select a setup from the dropdown and confirm. Selecting a setup can load it immediately; **Load** can also reload the selected setup.
 
 ### Rename and Delete
 
@@ -120,20 +162,20 @@ Deleting a setup can replace the working encounter. Save first if you need to pr
 
 ### Import from setup
 
-**Import from setup** appends copies of Monsters, Characters, or both from a saved setup without replacing the current encounter. Select a source campaign first; it defaults to the active campaign, but can be another campaign.
+**Import from setup** appends copies of Monsters from a saved setup without replacing the current encounter. Select a source campaign first; it defaults to the active campaign, but can be another campaign.
 
-| Property | Imported Monsters | Imported Characters |
-|---|---|---|
-| ID | New unique ID | New unique ID |
-| Current HP | Preserved | Preserved |
-| Maximum HP | Preserved | Preserved |
-| Initiative | Restored from original initiative | Restored from original initiative |
-| Active | Off | Off |
-| Visible | Off | Off |
-| In turn | Off | Off |
-| Alive | Calculated from current HP | Calculated from current HP |
-| Monster AC/HP/Init display flags | Off | Not applicable |
-| Current battle order | Unchanged | Unchanged |
+| Property | Imported Monsters |
+|---|---|
+| ID | New unique ID |
+| Current HP | Preserved |
+| Maximum HP | Preserved |
+| Initiative | Restored from original initiative |
+| Active | Off |
+| Visible | Off |
+| In turn | Off |
+| Alive | Calculated from current HP |
+| Monster AC/HP/Init display flags | Off |
+| Current battle order | Unchanged |
 
 The source setup is not modified.
 
@@ -153,19 +195,39 @@ Apply changes for immediate display output, then click **Save** to retain them i
 
 ## Add and import combatants
 
-### Add monster
+### Add monster manually
 
 | Field | Meaning |
 |---|---|
-| Name | Display name |
-| Monster type | Creature type or description |
+| Name | Base display name |
+| Monster species | Creature type or description |
 | AC | Armor Class |
-| HP | Initial current, maximum, and reset HP |
+| HP Range start | Lowest possible initial HP |
+| HP Range end | Highest possible initial HP; it may not be lower than HP Range start |
 | Quantity | Number of independent copies, from 1 to 50 |
 | Color | Client card outline, initiative token, and Admin color marker |
 | Image | Optional PNG, JPG, JPEG, GIF, or WebP image |
 
-Every copy gets a unique ID and independent state. A manually uploaded image takes precedence over remote image lookup.
+Every copy gets a unique ID and independent state.
+
+For every created Monster, Scrying Glass assigns a random integer HP value between **HP Range start** and **HP Range end**, including both values.
+
+- If start is `7` and end is `7`, every created Monster receives 7 HP.
+- If start is `7` and end is `12`, every created Monster independently receives a value from 7 through 12.
+- The assigned HP initializes current HP, maximum HP, and reset HP.
+- A range start higher than range end is rejected.
+
+When Quantity is greater than one, copies receive a numeric suffix in creation order:
+
+```text
+Goblin - 1
+Goblin - 2
+Goblin - 3
+```
+
+A quantity of one keeps the entered name unchanged.
+
+A manually uploaded image takes precedence over remote image lookup.
 
 ### Import `.monster`
 
@@ -177,7 +239,24 @@ Scrying Glass imports compatible JSON `.monster` files. The [Tetra-cube D&D 5e S
 4. Optionally choose quantity, color, and an image.
 5. Click **Import .monster**.
 
-The import reads usable name, type, Armor Class, and Hit Points values. The external generator is not affiliated with or controlled by Scrying Glass.
+Use the **?** button beside the `.monster` import area to open the in-page help popup. It explains how to obtain a compatible file and which fields are used.
+
+Scrying Glass imports these values:
+
+| Imported value | JSON field search order |
+|---|---|
+| Name | `name` |
+| Monster species | `type` |
+| HP | `hpText`, then `hp` |
+| AC | `ac`, `armorClass`, `otherArmorDesc`, then `natArmorBonus` |
+
+The first usable number in an accepted HP or AC field is used. Name, species/type, HP, and AC must all be usable for the import to succeed.
+
+The import form supplies quantity, color, and an optional replacement image. Other fields in the JSON file are not used by the importer.
+
+When Quantity is greater than one, imported copies receive numbered names in creation order. A quantity of one retains the imported name unchanged.
+
+The external generator is not affiliated with or controlled by Scrying Glass.
 
 ### Add character
 
@@ -225,11 +304,12 @@ A small colored dot appears before every Monster and Character name. It correspo
 
 | Control | Monsters | Characters |
 |---|---|---|
-| Edit | Name, type, AC, HP values, color, initiative, ally state, and image | Name, color, HP values, and initiative |
+| Edit | Name, species, AC, HP values, color, initiative, ally state, and image | Name, color, HP values, and initiative |
 | Active / Off | Enables or disables battle eligibility and Monster card visibility | Enables or disables battle eligibility |
 | Visible | Shows/hides initiative-bar token | Shows/hides initiative-bar token |
 | Turn | Makes an active, living combatant current turn | Makes an active, living combatant current turn |
 | Reset | Restores reset HP, reset initiative, and default runtime state | Restores reset HP, reset initiative, and default runtime state |
+| Remove | Permanently removes the combatant after confirmation | Permanently removes the combatant after confirmation |
 | Damage / Heal | Changes HP and records an activity-log entry | Changes HP and records an activity-log entry |
 | Other | Ally; AC, HP, and Init card-field visibility | Alive / Dead; inline HP, Max HP, and initiative edits |
 
@@ -264,7 +344,6 @@ Each Character row has a checkbox. Character selection is independent from Monst
 | Unselect all | Clears the Character selection |
 | Join Battle | Activates selected living Characters and inserts them into an active battle order by initiative |
 | Leave Battle | Deactivates selected Characters and removes them from battle participation |
-| Show / Hide | Shows or hides selected Characters in the initiative bar |
 | Reset | Restores selected Characters to reset values and default runtime state |
 | Remove | Permanently removes all selected Characters after one confirmation |
 
@@ -336,7 +415,7 @@ Use **Export CSV**, **Export JSON**, or **Clear log**. Clearing is permanent aft
 
 Active living Monsters render as cards in an adaptive grid. Characters appear in the initiative bar but do not receive full Monster cards.
 
-Monster cards always show name and type. AC, HP, and initiative appear only when enabled. Ally Monsters display as `Name - Ally` without changing the stored name. Card text uses an opaque contrast-aware panel for readability over images.
+Monster cards always show name and species. AC, HP, and initiative appear only when enabled. Ally Monsters display as `Name - Ally` without changing the stored name. Card text uses an opaque contrast-aware panel for readability over images.
 
 | Initiative state | Border |
 |---|---|
@@ -353,8 +432,11 @@ Back up the configured `storage_dir`, including `campaigns.json`, all campaign s
 | Issue | What to check |
 |---|---|
 | Old Admin or Client behavior after an update | Restart the service and hard-refresh with `Ctrl+Shift+R` on Linux/Windows or `Cmd+Shift+R` on macOS |
+| Client root returns `Not Found` | Confirm the deployed server includes the Client `GET /` redirect route and restart the service |
 | Client Display does not update | Confirm port 4000 is reachable and refresh the display to reconnect its WebSocket |
 | Sign-in fails | Use the correct role and port; server restarts remove in-memory sessions |
+| Manual monster creation fails | Check that HP Range start is not greater than HP Range end and that the deployed UI/server agree on `monster_species`, `hp_range_start`, and `hp_range_end` |
+| `.monster` import fails | Confirm the filename ends in `.monster` and that usable name, type, AC, and HP fields are present |
 | CSV import fails | Check UTF-8 encoding, a header row, required fields, valid numbers, and ID uniqueness |
 | Remote image lookup fails | D&D Beyond lookup is best effort; upload an image directly |
 | Saved setups seem missing | Switch to the Default campaign; pre-campaign setups are migrated there |

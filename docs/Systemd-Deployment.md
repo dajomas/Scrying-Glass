@@ -18,7 +18,9 @@ The deployment:
 | Service | Default port | URL |
 |---|---:|---|
 | Admin | 3000 | `http://SERVER:3000/` |
-| Client Display | 4000 | `http://SERVER:4000/display` |
+| Client Display | 4000 | `http://SERVER:4000/` or `http://SERVER:4000/display` |
+
+The Client root route at `http://SERVER:4000/` redirects unauthenticated visitors to the Client login page. With a valid Client session, it redirects to the Client Display. The direct `/display` route remains available.
 
 ## Prerequisites
 
@@ -74,26 +76,49 @@ Do not place the live `storage_dir` inside the Git checkout. Persistent data mus
 Create a non-login service account:
 
 ```bash
-sudo useradd   --system   --user-group   --home-dir /var/lib/scrying-glass   --create-home   --shell /usr/sbin/nologin   scryingglass
+sudo useradd \
+  --system \
+  --user-group \
+  --home-dir /var/lib/scrying-glass \
+  --create-home \
+  --shell /usr/sbin/nologin \
+  scryingglass
 ```
 
 Create writable persistent storage and protected configuration storage:
 
 ```bash
-sudo install -d -o scryingglass -g scryingglass -m 0750 /var/lib/scrying-glass
-sudo install -d -o root -g scryingglass -m 0750 /etc/scrying-glass
+sudo install -d \
+  -o scryingglass \
+  -g scryingglass \
+  -m 0750 \
+  /var/lib/scrying-glass
+
+sudo install -d \
+  -o root \
+  -g scryingglass \
+  -m 0750 \
+  /etc/scrying-glass
 ```
 
 ## Install application
 
 ```bash
-sudo git clone https://github.com/dajomas/scrying-glass.git /opt/scrying-glass
+sudo git clone [https://github.com/dajomas/scrying-glass.git](https://github.com/dajomas/scrying-glass.git) \
+  /opt/scrying-glass
+
 cd /opt/scrying-glass
 sudo git checkout features/development
 
 sudo python3.14 -m venv /opt/scrying-glass/.venv
+
 sudo /opt/scrying-glass/.venv/bin/python -m pip install --upgrade pip
-sudo /opt/scrying-glass/.venv/bin/python -m pip install   "fastapi>=0.115"   "uvicorn[standard]>=0.30"   "PyYAML>=6.0"   python-multipart
+
+sudo /opt/scrying-glass/.venv/bin/python -m pip install \
+  "fastapi>=0.115" \
+  "uvicorn[standard]>=0.30" \
+  "PyYAML>=6.0" \
+  python-multipart
 
 sudo chown -R root:root /opt/scrying-glass
 sudo chmod -R a=rX,u+w /opt/scrying-glass
@@ -104,7 +129,9 @@ The service account should not be able to change executable code or static brows
 ## Configure application
 
 ```bash
-sudo cp /opt/scrying-glass/config.example.yaml /etc/scrying-glass/config.yaml
+sudo cp /opt/scrying-glass/config.example.yaml \
+  /etc/scrying-glass/config.yaml
+
 sudo editor /etc/scrying-glass/config.yaml
 ```
 
@@ -123,6 +150,7 @@ security:
     - username: "dm"
       role: "admin"
       password: "replace-with-a-strong-admin-password"
+
     - username: "table"
       role: "client"
       password: "replace-with-a-strong-client-password"
@@ -152,7 +180,9 @@ Plaintext passwords work, but scrypt hashes are preferable:
 
 ```bash
 cd /opt/scrying-glass
-sudo /opt/scrying-glass/.venv/bin/python -c   'from scrying_glass_server import password_hash; print(password_hash("replace-me"))'
+
+sudo /opt/scrying-glass/.venv/bin/python -c \
+  'from scrying_glass_server import password_hash; print(password_hash("replace-me"))'
 ```
 
 Use the resulting `scrypt$...` value in the configuration.
@@ -162,17 +192,34 @@ Use the resulting `scrypt$...` value in the configuration.
 ```bash
 cd /opt/scrying-glass
 
-sudo /opt/scrying-glass/.venv/bin/python -m py_compile   scrying_glass_server.py   admin_html.py   client_html.py   login_html.py
+sudo /opt/scrying-glass/.venv/bin/python -m py_compile \
+  scrying_glass_server.py \
+  admin_html.py \
+  client_html.py \
+  login_html.py
 
-sudo find static -maxdepth 1 -type f   \( -name '*.js' -o -name '*.css' \)   -printf '%f\n' | sort
+sudo find static -maxdepth 1 -type f \
+  \( -name '*.js' -o -name '*.css' \) \
+  -printf '%f\n' | sort
 ```
 
-The Python command should produce no output. The second command should list `admin.css`, `admin.js`, `client.css`, `client.js`, and `login.css`.
+The Python command should produce no output. The second command should list:
+
+```text
+admin.css
+admin.js
+client.css
+client.js
+login.css
+```
 
 Optional foreground test:
 
 ```bash
-sudo -u scryingglass   /opt/scrying-glass/.venv/bin/python   /opt/scrying-glass/scrying_glass_server.py   --config /etc/scrying-glass/config.yaml
+sudo -u scryingglass \
+  /opt/scrying-glass/.venv/bin/python \
+  /opt/scrying-glass/scrying_glass_server.py \
+  --config /etc/scrying-glass/config.yaml
 ```
 
 Stop it with `Ctrl+C` after confirming both ports are listening.
@@ -192,6 +239,7 @@ Type=simple
 User=scryingglass
 Group=scryingglass
 WorkingDirectory=/opt/scrying-glass
+
 ExecStart=/opt/scrying-glass/.venv/bin/python /opt/scrying-glass/scrying_glass_server.py --config /etc/scrying-glass/config.yaml
 
 Restart=on-failure
@@ -203,6 +251,7 @@ PrivateTmp=true
 ProtectHome=true
 ProtectSystem=strict
 ReadWritePaths=/var/lib/scrying-glass
+
 RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
 CapabilityBoundingSet=
 AmbientCapabilities=
@@ -240,6 +289,18 @@ sudo ss -lptn 'sport = :3000'
 sudo ss -lptn 'sport = :4000'
 ```
 
+Verify that the Admin and unauthenticated Client routes answer as expected:
+
+```bash
+curl -I http://127.0.0.1:3000/
+curl -I http://127.0.0.1:4000/
+```
+
+Expected unauthenticated behavior:
+
+- Port 3000 redirects to the Admin login page.
+- Port 4000 redirects to the Client login page.
+
 Verify writable persistent storage:
 
 ```bash
@@ -274,22 +335,35 @@ Do not publish the default HTTP ports to the public internet. If remote access i
 Back up persistent data before every upgrade:
 
 ```bash
-sudo tar -C /var/lib -czf   /root/scrying-glass-backup-$(date +%F).tar.gz   scrying-glass
+sudo tar -C /var/lib -czf \
+  /root/scrying-glass-backup-$(date +%F).tar.gz \
+  scrying-glass
 ```
 
 Upgrade code and dependencies:
 
 ```bash
 cd /opt/scrying-glass
+
 sudo git fetch --all --prune
 sudo git checkout features/development
 sudo git pull --ff-only
 
-sudo /opt/scrying-glass/.venv/bin/python -m pip install   "fastapi>=0.115"   "uvicorn[standard]>=0.30"   "PyYAML>=6.0"   python-multipart
+sudo /opt/scrying-glass/.venv/bin/python -m pip install \
+  "fastapi>=0.115" \
+  "uvicorn[standard]>=0.30" \
+  "PyYAML>=6.0" \
+  python-multipart
 
-sudo /opt/scrying-glass/.venv/bin/python -m py_compile   scrying_glass_server.py   admin_html.py   client_html.py   login_html.py
+sudo /opt/scrying-glass/.venv/bin/python -m py_compile \
+  scrying_glass_server.py \
+  admin_html.py \
+  client_html.py \
+  login_html.py
 
-sudo find /opt/scrying-glass/static -maxdepth 1 -type f   \( -name '*.js' -o -name '*.css' \)   -printf '%f\n' | sort
+sudo find /opt/scrying-glass/static -maxdepth 1 -type f \
+  \( -name '*.js' -o -name '*.css' \) \
+  -printf '%f\n' | sort
 
 sudo systemctl restart scrying-glass.service
 sudo systemctl status scrying-glass.service
@@ -298,6 +372,8 @@ sudo systemctl status scrying-glass.service
 The working encounter, campaigns, setups, activity logs, per-setup backgrounds, and uploads persist because they remain outside the Git checkout in `/var/lib/scrying-glass`.
 
 After an upgrade, hard-refresh both Admin and Client browser pages. Static browser files live in `/opt/scrying-glass/static/`; updating Python files without the corresponding static files can leave the interface loading but behaving like an older release.
+
+The Admin browser assets include the pane-local notification behavior, manual monster HP range controls, `.monster` import help popup, and other UI behavior. Always deploy the matching `static/admin.js` and `static/admin.css` files with the matching server and HTML modules.
 
 ### Campaign migration
 
@@ -320,6 +396,12 @@ sudo journalctl -u scrying-glass.service -b | grep 'unassigned battle setup'
 ```
 
 Make a backup before the first start. A version without campaign support does not read nested `setups/<campaign>/` folders, so rolling back requires restoring a compatible backup.
+
+### Monster species migration
+
+Current Scrying Glass versions use `monster_species` as the canonical monster field. Existing state and setup files that contain the earlier `monster_type` field are migrated when loaded.
+
+Before upgrading, make the normal backup described above. This protects against any local edits, interrupted upgrades, or compatibility issues with older application versions.
 
 ## Migrating from Monster Display
 
@@ -398,3 +480,27 @@ For a dedicated kiosk display, fully close and reopen the browser if hard refres
 ### Admin or Client cannot log in
 
 Confirm the configured account, password, role, and port. Sessions are cleared on restart. Admin and Client use distinct cookies and can be logged in simultaneously in one browser.
+
+### Client root returns unexpected content
+
+Use:
+
+```bash
+curl -I http://127.0.0.1:4000/
+```
+
+Without a Client session, the response should redirect to `/login`. If the service instead returns a JSON `Not Found` response, confirm that the deployed `scrying_glass_server.py` includes the Client `GET /` route and restart the service.
+
+### Manual monster creation fails
+
+Verify that the deployed `admin_html.py`, `static/admin.js`, and `scrying_glass_server.py` are from the same release.
+
+For manual monster creation, the form and endpoint must agree on:
+
+```text
+monster_species
+hp_range_start
+hp_range_end
+```
+
+Also confirm that the HP range start is not greater than the HP range end.
