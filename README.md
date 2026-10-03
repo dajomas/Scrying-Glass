@@ -224,4 +224,70 @@ Scrying Glass accepts compatible `.monster` JSON files. The [Tetra-cube D&D 5e S
 
 The `.monster` importer reads these values:
 
-|
+| Imported value | JSON field search order |
+|---|---|
+| Name | `name` |
+| Monster species | `type` |
+| HP | `hpText`, then `hp` |
+| AC | `ac`, `armorClass`, `otherArmorDesc`, then `natArmorBonus` |
+
+The importer uses the first usable number in the selected HP or AC field. Name, species/type, HP, and AC must all be usable for the import to succeed.
+
+Quantity, color, and an optional replacement image are chosen in the Admin import form. When quantity is greater than one, imported copies receive numbered names in creation order. Use the **?** button beside the `.monster` import area for the same field reference and a supported JSON example.
+
+Monster CSV imports require:
+
+```text
+name,monster_species,ac,hp
+```
+
+The CSV column `type` may be used instead of `monster_species`.
+
+Character CSV imports require:
+
+```text
+name
+```
+
+CSV files must be UTF-8 with a header row. Missing IDs are generated, while duplicate IDs or IDs already used in the active encounter are rejected.
+
+## Data storage
+
+All persistent runtime data is stored below `storage_dir`:
+
+```text
+scrying-glass-data/
+├── state.json
+├── campaigns.json
+├── uploads/
+│   └── <uuid>.<image-extension>
+└── setups/
+    └── <campaign-slug>/
+        └── <normalized-setup-name>.json
+```
+
+Back up the complete directory. `state.json` preserves the working encounter; `campaigns.json` preserves campaign metadata and the active campaign; setup snapshots preserve named encounters; and `uploads/` contains monster and background images referenced by state and setup files.
+
+## Migrating from Monster Display
+
+The project was renamed from Monster Display to Scrying Glass.
+
+| Before | After |
+|---|---|
+| `monster_display_server.py` | `scrying_glass_server.py` |
+| `./monster-display-data` | `./scrying-glass-data` |
+| `monster_admin_session` / `monster_client_session` | `scrying_glass_admin_session` / `scrying_glass_client_session` |
+
+If `storage_dir` is explicitly configured, keep its value or change it deliberately after making a backup. If the default data directory is used and `./scrying-glass-data` does not exist, the application can continue using the legacy `./monster-display-data` directory and logs a migration suggestion.
+
+Users must sign in again after the rename because session cookies changed and sessions are in-memory. See [Migrating from Monster Display](docs/Systemd-Deployment.md#migrating-from-monster-display) for the full systemd procedure.
+
+## Security
+
+Scrying Glass is intended for a trusted local network. Do not expose its default HTTP listeners directly to the public internet.
+
+For remote access, use an HTTPS reverse proxy, firewall or VPN restrictions, strong passwords or scrypt password hashes, and a dedicated non-root service account. The application has in-memory sessions and is designed to run as a single process with one worker per persistent storage directory.
+
+## License
+
+This project is licensed under the MIT License.
