@@ -43,7 +43,7 @@ const campaignSetupModal = document.querySelector('#campaignSetupModal');
 const campaignDeleteModal = document.querySelector('#campaignDeleteModal');
 const characterBulkAction = document.querySelector('#characterBulkAction');
 const monsterBulkAction = document.querySelector('#monsterBulkAction');
-
+const monsterFileHelpModal = document.querySelector('#monsterFileHelpModal');
 
 // Campaign registry as returned by GET /api/campaigns:
 // {active: slug, campaigns: [{slug, name, description, setups: [...]}], moved: [...]}
@@ -1506,6 +1506,25 @@ importModal.addEventListener('click', event => {
     }
 });
 
+function closeMonsterFileHelp() {
+    monsterFileHelpModal.hidden = true;
+    document.querySelector('#openMonsterFileHelp').focus();
+}
+
+document.querySelector('#openMonsterFileHelp').onclick = () => {
+    monsterFileHelpModal.hidden = false;
+    document.querySelector('#closeMonsterFileHelp').focus();
+};
+
+document.querySelector('#closeMonsterFileHelp').onclick = closeMonsterFileHelp;
+document.querySelector('#closeMonsterFileHelpBottom').onclick = closeMonsterFileHelp;
+
+monsterFileHelpModal.addEventListener('click', event => {
+    if (event.target === monsterFileHelpModal) {
+        closeMonsterFileHelp();
+    }
+});
+
 document.addEventListener('keydown', event => {
     if (event.key !== 'Escape') {
         return;
@@ -1535,6 +1554,9 @@ document.addEventListener('keydown', event => {
         campaignDeleteModal.hidden = true;
     }
 
+    if (!monsterFileHelpModal.hidden) {
+        closeMonsterFileHelp();
+    }
 });
 
 // ---- Campaigns --------------------------------------------------------
