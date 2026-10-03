@@ -98,10 +98,10 @@ ADMIN_HTML = r'''<!doctype html>
 
         <p
           id="campaignNotification"
-          class="pane-notification"
+          class="pane-notification-campaign"
           role="status"
           aria-live="polite"
-        ></p>
+        > </p>
 
         <div class="row">
           <label class="field">
@@ -129,10 +129,10 @@ ADMIN_HTML = r'''<!doctype html>
 
       <p
         id="characterAddNotification"
-        class="pane-notification"
+        class="pane-notification-campaign"
         role="status"
         aria-live="polite"
-      ></p>
+      > </p>
 
       <div>
         <form id="characterForm" class="row">
@@ -208,10 +208,10 @@ ADMIN_HTML = r'''<!doctype html>
 
         <p
           id="battleSetupNotification"
-          class="pane-notification"
+          class="pane-notification-battleSetup"
           role="status"
           aria-live="polite"
-        ></p>
+        > </p>
 
         <label class="field field-inline">
           <span class="field-label">Battle setup name</span>
@@ -294,10 +294,10 @@ ADMIN_HTML = r'''<!doctype html>
 
       <p
           id="monsterAddNotification"
-          class="pane-notification"
+          class="pane-notification-battleSetup"
           role="status"
           aria-live="polite"
-        ></p>
+        > </p>
 
       <div>
         <form id="monsterForm" class="row">

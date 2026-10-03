@@ -39,9 +39,9 @@ const paneNotification = (kind, text) => {
     notification.textContent = text;
 
     paneNotificationTimeouts[kind] = setTimeout(() => {
-        notification.textContent = '';
+        notification.textContent = ' ';
         paneNotificationTimeouts[kind] = null;
-    }, 5_000);
+    }, 3_000);
 };
 
 const all = () => [
@@ -1375,7 +1375,7 @@ function openCsvImport(kind) {
 
     document.querySelector('#csvImportHelp').textContent =
         isMonster
-            ? 'Required columns: name, monster_species or type, ac, hp. Optional id values are preserved; blank or missing IDs are generated automatically.'
+            ? 'Required columns: name, monster_species, ac, hp. Optional id values are preserved; blank or missing IDs are generated automatically.'
             : 'Required column: name. Imported characters are added to the active campaign. Optional id values are preserved; blank or missing IDs are generated automatically.';
 
     csvImportModal.hidden = false;
@@ -1878,21 +1878,70 @@ document.querySelector('#campaignSetupForm').onsubmit = async event => {
 };
 
 document.querySelector('#newSetup').onclick = async () => {
-    if (!confirm('Discard the current battle setup and create a new blank setup?')) {
+    const setupNameInput = document.querySelector('#setupName');
+    const name = setupNameInput.value.trim();
+    const activeCampaignName = activeCampaign()?.name || campaignData.active;
+
+    if (!name) {
+        paneNotification(
+            'battleSetup',
+            'Enter a unique battle setup name before creating it.',
+        );
+        setupNameInput.focus();
+        return;
+    }
+
+    const existingNames = (activeCampaign()?.setups || [])
+        .map(setupName => setupName.toLocaleLowerCase());
+
+    if (existingNames.includes(name.toLocaleLowerCase())) {
+        paneNotification(
+            'battleSetup',
+            `A battle setup named “${name}” already exists in ${activeCampaignName}.`,
+        );
+        setupNameInput.focus();
+        return;
+    }
+
+    if (!confirm(
+        `Discard the current battle setup and create a new empty setup named “${name}”?`,
+    )) {
         return;
     }
 
     try {
+        // First replace the current working encounter with an empty one.
         await request('/api/setups/new', {
             method: 'POST',
         });
 
-        document.querySelector('#setupName').value = '';
-        document.querySelector('#setupSelect').value = '';
+        // Then persist it immediately using the requested unique name.
+        const result = await request('/api/setups/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name,
+                campaign: campaignData.active,
+            }),
+        });
 
+        setupNameInput.value = result.name;
+
+        // Refresh the campaign/setup lists, then select the saved setup.
+        await setups();
+        document.querySelector('#setupSelect').value = result.name;
+
+        syncActiveBattleSetupControls();
         renderActiveBattleSetup();
 
         await load();
+
+        paneNotification(
+            'battleSetup',
+            `Created and saved empty battle setup “${result.name}”.`,
+        );
     } catch (error) {
         paneNotification('battleSetup', error.message);
     }
