@@ -1351,11 +1351,12 @@ document.querySelector('#importForm').onsubmit = async event => {
         closeImport();
         await load();
 
-        message(
+        paneNotification(
+            'battleSetup',
             `Imported ${result.monsters} monster${result.monsters === 1 ? '' : 's'} from ${result.name}`,
         );
     } catch (error) {
-        paneNotification('setup', error.message);
+        paneNotification('battleSetup', error.message);
     }
 };
 
@@ -1417,7 +1418,7 @@ document.querySelector('#csvImportForm').onsubmit = async event => {
         await load();
 
         paneNotification(
-            csvImportKind === 'characters' ? 'character' : 'monster',
+            csvImportKind === 'characters' ? 'campaign' : 'battleSetup',
             `Imported ${result.count} ${csvImportKind === 'monsters' ? 'monster' : 'character'
             }${result.count === 1 ? '' : 's'} from CSV.`,
         );
@@ -1431,7 +1432,7 @@ document.querySelector('#csvImportForm').onsubmit = async event => {
             `${count} ${noun}${count === 1 ? '' : 's'} added successfully.`,
         );
     } catch (error) {
-        paneNotification(csvImportKind === 'characters' ? 'character' : 'monster', error.message);
+        paneNotification(csvImportKind === 'characters' ? 'campaign' : 'battleSetup', error.message);
     } finally {
         submit.disabled = false;
     }
@@ -2201,7 +2202,7 @@ document.querySelector('#monsterUpload').onsubmit = async event => {
         });
 
         paneNotification(
-            'monsters',
+            'battleSetup',
             quantity === 1
                 ? `Monster imported from “${fileName}”.`
                 : `${quantity} monsters imported from “${fileName}”.`,
@@ -2209,7 +2210,7 @@ document.querySelector('#monsterUpload').onsubmit = async event => {
         event.target.reset();
         await load();
     } catch (error) {
-        paneNotification('monsters', error.message);
+        paneNotification('battleSetup', error.message);
     }
 };
 
