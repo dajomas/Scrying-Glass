@@ -1171,6 +1171,29 @@ def make_monster(fields: dict[str, Any], color: str, upload: UploadFile | None, 
     hp = fields['hp']
     return {'id': uuid.uuid4().hex, **fields, 'max_hp': hp, 'original_hp': hp, 'color': color, 'image_url': image_url if image_url is not None else save_image(upload) if upload and upload.filename else dnd_image(fields['monster_species']), 'active': False, 'alive': True, 'visible': False, 'ally': False, 'initiative': None, 'original_initiative': None, 'show_ac': False, 'show_hp': False, 'show_initiative': False, 'in_turn': False}
 
+def make_monsters(
+    fields: dict[str, Any],
+    color: str,
+    quantity: int,
+    image_url: str | None,
+) -> list[dict[str, Any]]:
+    return [
+        make_monster(
+            {
+                **fields,
+                'name': (
+                    fields['name']
+                    if quantity == 1
+                    else f"{fields['name']} - {number}"
+                ),
+            },
+            color,
+            None,
+            image_url,
+        )
+        for number in range(1, quantity + 1)
+    ]
+
 def clear_turns() -> None:
     for x in entities():
         x['in_turn'] = False
@@ -1863,10 +1886,53 @@ async def roll_monster_initiative(_: dict[str, str]=Depends(require("admin", ADM
     return {'count': len(STATE['monsters'])}
 
 @admin.post('/api/monsters')
-async def create_monster(name: str=Form(...), monster_species: str=Form(...), ac: int=Form(...), hp: int=Form(...), color: str=Form(...), quantity: int=Form(1, ge=1, le=50), image: UploadFile | None=File(None), _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
-    fields = {'name': name.strip(), 'monster_species': monster_species.strip(), 'ac': ac, 'hp': hp}
-    image_url = save_image(image) if image and image.filename else dnd_image(fields['monster_species'])
-    created = [make_monster(fields, color, None, image_url) for _ in range(quantity)]
+async def create_monster(
+    name: str = Form(...),
+    monster_species: str = Form(...),
+    ac: int = Form(...),
+    hp_range_start: int = Form(...),
+    hp_range_end: int = Form(...),
+    color: str = Form(...),
+    quantity: int = Form(1, ge=1, le=50),
+    image: UploadFile | None = File(None),
+    _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
+):
+    if hp_range_start > hp_range_end:
+        raise HTTPException(
+            400,
+            "HP Range start cannot be higher than HP Range end",
+        )
+
+    fields = {
+        'name': name.strip(),
+        'monster_species': monster_species.strip(),
+        'ac': ac,
+    }
+
+    image_url = (
+        save_image(image)
+        if image and image.filename
+        else dnd_image(fields['monster_species'])
+    )
+
+    created = [
+        make_monster(
+            {
+                **fields,
+                'name': (
+                    fields['name']
+                    if quantity == 1
+                    else f"{fields['name']} - {number}"
+                ),
+                'hp': random.randint(hp_range_start, hp_range_end),
+            },
+            color,
+            None,
+            image_url,
+        )
+        for number in range(1, quantity + 1)
+    ]
+
     STATE['monsters'].extend(created)
     await changed()
     return created
@@ -1876,8 +1942,14 @@ async def import_monster(monster_file: UploadFile=File(...), color: str=Form(...
     if not (monster_file.filename or '').lower().endswith('.monster'):
         raise HTTPException(400, 'Upload a .monster file')
     fields = parse_monster(await monster_file.read())
-    image_url = save_image(image) if image and image.filename else dnd_image(fields['monster_species'])
-    created = [make_monster(fields, color, None, image_url) for _ in range(quantity)]
+    image_url = (
+        save_image(image)
+        if image and image.filename
+        else dnd_image(fields['monster_species'])
+    )
+
+    created = make_monsters(fields, color, quantity, image_url)
+
     STATE['monsters'].extend(created)
     await changed()
     return created

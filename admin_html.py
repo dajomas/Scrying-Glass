@@ -327,13 +327,26 @@ ADMIN_HTML = r'''<!doctype html>
 
           <label class="field field-compact">
             <span class="field-label">
-              Hit points <span class="required-marker" aria-hidden="true">*</span>
+              HP Range start <span class="required-marker" aria-hidden="true">*</span>
             </span>
             <input
-              id="monsterHp"
-              name="hp"
+              id="monsterHpRangeStart"
+              name="hp_range_start"
               type="number"
-              placeholder="HP"
+              placeholder="Start HP"
+              required
+            >
+          </label>
+
+          <label class="field field-compact">
+            <span class="field-label">
+              HP Range end <span class="required-marker" aria-hidden="true">*</span>
+            </span>
+            <input
+              id="monsterHpRangeEnd"
+              name="hp_range_end"
+              type="number"
+              placeholder="End HP"
               required
             >
           </label>

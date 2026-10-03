@@ -1823,6 +1823,16 @@ document.querySelector('#campaignSetupFrom').onchange = renderCampaignSetupNames
 document.querySelector('#campaignSetupForm').onsubmit = async event => {
     event.preventDefault();
     const formData = new FormData(event.target);
+
+    const hpRangeStart = Number(formData.get('hp_range_start'));
+    const hpRangeEnd = Number(formData.get('hp_range_end'));
+
+    if (hpRangeStart > hpRangeEnd) {
+        message('HP Range start cannot be higher than HP Range end.');
+        form.elements.hp_range_start.focus();
+        return;
+    }
+
     const from_campaign = formData.get('from_campaign');
     const setup = formData.get('setup');
     const to = formData.get('to_campaign');
