@@ -96,6 +96,13 @@ ADMIN_HTML = r'''<!doctype html>
           <span id="activeCampaignInfo" class="campaign-info"></span>
         </div>
 
+        <p
+          id="campaignNotification"
+          class="pane-notification"
+          role="status"
+          aria-live="polite"
+        ></p>
+
         <div class="row">
           <label class="field">
             <span class="field-label">Active campaign</span>
@@ -121,11 +128,11 @@ ADMIN_HTML = r'''<!doctype html>
       </div>
 
       <p
-          id="characterAddNotification"
-          class="pane-notification"
-          role="status"
-          aria-live="polite"
-        ></p>
+        id="characterAddNotification"
+        class="pane-notification"
+        role="status"
+        aria-live="polite"
+      ></p>
 
       <div>
         <form id="characterForm" class="row">
@@ -198,6 +205,13 @@ ADMIN_HTML = r'''<!doctype html>
             No saved battle setup loaded
           </span>
         </div>
+
+        <p
+          id="battleSetupNotification"
+          class="pane-notification"
+          role="status"
+          aria-live="polite"
+        ></p>
 
         <label class="field field-inline">
           <span class="field-label">Battle setup name</span>
