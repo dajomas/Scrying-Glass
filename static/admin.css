@@ -184,8 +184,19 @@ td {
     margin: 0;
 }
 
-.field-compact input[type="number"] {
-    min-width: 5.5rem;
+input[type="number"] {
+    box-sizing: border-box;
+    width: 15ch;
+    min-width: 15ch;
+    max-width: 15ch;
+}
+
+.field-compact input[type="number"],
+.initiative-edit,
+.hp-edit {
+    width: 15ch;
+    min-width: 15ch;
+    max-width: 15ch;
 }
 
 .field-color input[type="color"] {
@@ -367,15 +378,6 @@ td {
 .bulk-label {
     color: #cbd5e1;
     font-weight: 700;
-}
-
-.initiative-edit {
-    width: 5ch;
-    min-width: 5ch;
-}
-
-.hp-edit {
-    width: 5.5rem;
 }
 
 .setup-name {
