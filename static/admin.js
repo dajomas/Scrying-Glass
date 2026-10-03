@@ -8,12 +8,26 @@ const message = text => {
     document.querySelector('#message').textContent = text;
 };
 
+const paneNotificationTimeouts = {
+    characters: null,
+    monsters: null,
+};
+
 const paneNotification = (kind, text) => {
     const id = kind === 'characters'
         ? '#characterAddNotification'
         : '#monsterAddNotification';
 
-    document.querySelector(id).textContent = text;
+    const notification = document.querySelector(id);
+
+    clearTimeout(paneNotificationTimeouts[kind]);
+
+    notification.textContent = text;
+
+    paneNotificationTimeouts[kind] = setTimeout(() => {
+        notification.textContent = '';
+        paneNotificationTimeouts[kind] = null;
+    }, 5_000);
 };
 
 const all = () => [
@@ -197,6 +211,38 @@ async function runBulkAction(kind, action) {
     }
 }
 
+async function removeCombatant(kind, id) {
+    const item = itemsFor(kind).find(combatant => combatant.id === id);
+
+    if (!item) {
+        return;
+    }
+
+    const noun = kind === 'characters' ? 'character' : 'monster';
+    const destination = kind === 'characters'
+        ? 'the active campaign'
+        : 'the current battle setup';
+
+    if (!confirm(
+        `Remove ${noun} “${item.name}” from ${destination}?`,
+    )) {
+        return;
+    }
+
+    try {
+        await bulkRequest(kind, 'remove', [id]);
+
+        message(
+            `${noun[0].toUpperCase()}${noun.slice(1)} ` +
+            `“${item.name}” removed.`,
+        );
+
+        await load();
+    } catch (error) {
+        message(error.message);
+    }
+}
+
 async function patch(kind, id, data) {
     try {
         await request(`/api/${kind}/${id}`, {
@@ -264,6 +310,14 @@ function monsterRow(monster) {
         <button data-t="${monster.id}" data-f="show_hp">HP ${monster.show_hp ? 'on' : 'off'}</button>
         <button data-t="${monster.id}" data-f="show_initiative">Init ${monster.show_initiative ? 'on' : 'off'}</button>
         <button data-r="${monster.id}" class="reset">Reset</button>
+        <button
+            class="danger"
+            type="button"
+            data-remove-kind="monsters"
+            data-remove-id="${monster.id}"
+        >
+            Remove
+        </button>
         </td>
         <td>
         <button data-d="${monster.id}" class="danger">Damage</button>
@@ -308,6 +362,14 @@ function characterRow(character) {
         <button class="${character.visible ? 'on' : ''}" data-cv="${character.id}">Visible</button>
         <button data-ct="${character.id}" class="${character.in_turn ? 'on' : ''}">Turn</button>
         <button data-cr="${character.id}" class="reset">Reset</button>
+        <button
+            class="danger"
+            type="button"
+            data-remove-kind="characters"
+            data-remove-id="${character.id}"
+        >
+            Remove
+        </button>
         </td>
         <td>
         <button data-cd="${character.id}" class="danger">Damage</button>
@@ -2289,6 +2351,14 @@ document.addEventListener('click', async event => {
     const button = event.target.closest('button');
 
     if (!button) {
+        return;
+    }
+
+    if (button.dataset.removeKind && button.dataset.removeId) {
+        await removeCombatant(
+            button.dataset.removeKind,
+            button.dataset.removeId,
+        );
         return;
     }
 
