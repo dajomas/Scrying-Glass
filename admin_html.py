@@ -119,6 +119,14 @@ ADMIN_HTML = r'''<!doctype html>
             Add setup to campaign
           </button>
         </div>
+        <div class="row">
+          <label class="field">
+          <div class="row">
+            <button id="openCharacterCsvImport" class="import">
+              Import characters CSV
+            </button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -184,11 +192,6 @@ ADMIN_HTML = r'''<!doctype html>
 
           <label class="field"><span class="field-label">&nbsp;</span><button>Add character</button></label>
         </form>
-        <div class="row">
-          <button id="openCharacterCsvImport" class="import">
-            Import characters CSV
-          </button>
-        </div>
 
       </div>
     </section>
