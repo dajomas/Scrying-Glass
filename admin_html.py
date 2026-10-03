@@ -96,6 +96,13 @@ ADMIN_HTML = r'''<!doctype html>
           <span id="activeCampaignInfo" class="campaign-info"></span>
         </div>
 
+        <p
+          id="campaignNotification"
+          class="pane-notification-campaign"
+          role="status"
+          aria-live="polite"
+        > </p>
+
         <div class="row">
           <label class="field">
             <span class="field-label">Active campaign</span>
@@ -112,6 +119,14 @@ ADMIN_HTML = r'''<!doctype html>
             Add setup to campaign
           </button>
         </div>
+        <div class="row">
+          <label class="field">
+          <div class="row">
+            <button id="openCharacterCsvImport" class="import">
+              Import characters CSV
+            </button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -121,11 +136,11 @@ ADMIN_HTML = r'''<!doctype html>
       </div>
 
       <p
-          id="characterAddNotification"
-          class="pane-notification"
-          role="status"
-          aria-live="polite"
-        ></p>
+        id="characterAddNotification"
+        class="pane-notification-campaign"
+        role="status"
+        aria-live="polite"
+      > </p>
 
       <div>
         <form id="characterForm" class="row">
@@ -177,11 +192,6 @@ ADMIN_HTML = r'''<!doctype html>
 
           <label class="field"><span class="field-label">&nbsp;</span><button>Add character</button></label>
         </form>
-        <div class="row">
-          <button id="openCharacterCsvImport" class="import">
-            Import characters CSV
-          </button>
-        </div>
 
       </div>
     </section>
@@ -198,6 +208,13 @@ ADMIN_HTML = r'''<!doctype html>
             No saved battle setup loaded
           </span>
         </div>
+
+        <p
+          id="battleSetupNotification"
+          class="pane-notification-battleSetup"
+          role="status"
+          aria-live="polite"
+        > </p>
 
         <label class="field field-inline">
           <span class="field-label">Battle setup name</span>
@@ -280,10 +297,10 @@ ADMIN_HTML = r'''<!doctype html>
 
       <p
           id="monsterAddNotification"
-          class="pane-notification"
+          class="pane-notification-battleSetup"
           role="status"
           aria-live="polite"
-        ></p>
+        > </p>
 
       <div>
         <form id="monsterForm" class="row">
@@ -327,13 +344,26 @@ ADMIN_HTML = r'''<!doctype html>
 
           <label class="field field-compact">
             <span class="field-label">
-              Hit points <span class="required-marker" aria-hidden="true">*</span>
+              HP Range start <span class="required-marker" aria-hidden="true">*</span>
             </span>
             <input
-              id="monsterHp"
-              name="hp"
+              id="monsterHpRangeStart"
+              name="hp_range_start"
               type="number"
-              placeholder="HP"
+              placeholder="Start HP"
+              required
+            >
+          </label>
+
+          <label class="field field-compact">
+            <span class="field-label">
+              HP Range end <span class="required-marker" aria-hidden="true">*</span>
+            </span>
+            <input
+              id="monsterHpRangeEnd"
+              name="hp_range_end"
+              type="number"
+              placeholder="End HP"
               required
             >
           </label>
@@ -374,7 +404,21 @@ ADMIN_HTML = r'''<!doctype html>
           <button>Add manually</button>
         </form>
 
-        <p>Or import a JSON <code>.monster</code> file:</p>
+        <div class="row monster-file-help-row">
+          <p>Or import a JSON <code>.monster</code> file:</p>
+
+          <button
+            id="openMonsterFileHelp"
+            class="help-button"
+            type="button"
+            aria-haspopup="dialog"
+            aria-controls="monsterFileHelpModal"
+            title="Help with .monster files"
+          >
+            ?
+            <span class="sr-only">Help with .monster files</span>
+          </button>
+        </div>
 
         <form id="monsterUpload" class="row">
           <label class="field">
@@ -563,6 +607,97 @@ ADMIN_HTML = r'''<!doctype html>
           <button type="button" id="cancelImport">Cancel</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <div
+    id="monsterFileHelpModal"
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="monsterFileHelpTitle"
+    hidden
+  >
+    <div class="monster-file-help-modal">
+      <div class="modal-title-row">
+        <h2 id="monsterFileHelpTitle">Importing .monster files</h2>
+
+        <button
+          id="closeMonsterFileHelp"
+          class="modal-close"
+          type="button"
+          aria-label="Close .monster file help"
+          title="Close"
+        >
+          ×
+        </button>
+      </div>
+
+      <p>
+        A <code>.monster</code> file is a JSON monster-export file. A good place to create a <code>.monster</code> file is at
+        <a href="https://tetra-cube.com/dnd/dnd-statblock.html" target="_blank">Tetra-cube D&D 5e Statblock Generator</a>.
+        Save or download the monster data as a file with the <code>.monster</code>
+        extension, then select it using the <strong>Monster file</strong>
+        chooser and click <strong>Import .monster</strong>.
+      </p>
+
+      <h3>Fields used from the file</h3>
+
+      <table class="help-table">
+        <thead>
+          <tr>
+            <th>Imported value</th>
+            <th>Accepted JSON field</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Monster name</td>
+            <td><code>name</code></td>
+            <td>Required.</td>
+          </tr>
+          <tr>
+            <td>Monster type</td>
+            <td><code>type</code></td>
+            <td>Required.</td>
+          </tr>
+          <tr>
+            <td>Hit points</td>
+            <td><code>hpText</code>, then <code>hp</code></td>
+            <td>The first integer in the value is used.</td>
+          </tr>
+          <tr>
+            <td>Armor Class</td>
+            <td>
+              <code>ac</code>, <code>armorClass</code>,
+              <code>otherArmorDesc</code>, then <code>natArmorBonus</code>
+            </td>
+            <td>The first available value containing a number is used.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Example supported file</h3>
+
+      <pre class="monster-file-example">{
+    "name": "Goblin",
+    "type": "humanoid",
+    "ac": 15,
+    "hp": 7
+  }</pre>
+
+      <p>
+        The import form controls the number of copies, display color, and an
+        optional replacement image. Other JSON fields in the file are not used
+        by this importer.
+      </p>
+
+      <div class="actions">
+        <button id="closeMonsterFileHelpBottom" type="button">
+          Close help
+        </button>
+      </div>
     </div>
   </div>
 

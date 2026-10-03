@@ -11,23 +11,37 @@ const message = text => {
 const paneNotificationTimeouts = {
     characters: null,
     monsters: null,
+    campaign: null,
+    battleSetup: null,
+};
+
+const paneNotificationIds = {
+    characters: '#characterAddNotification',
+    monsters: '#monsterAddNotification',
+    campaign: '#campaignNotification',
+    battleSetup: '#battleSetupNotification',
 };
 
 const paneNotification = (kind, text) => {
-    const id = kind === 'characters'
-        ? '#characterAddNotification'
-        : '#monsterAddNotification';
+    const notification = document.querySelector(
+        paneNotificationIds[kind],
+    );
 
-    const notification = document.querySelector(id);
+    if (!notification) {
+        console.error(
+            `Missing notification element for pane: ${kind}`,
+        );
+        return;
+    }
 
     clearTimeout(paneNotificationTimeouts[kind]);
 
     notification.textContent = text;
 
     paneNotificationTimeouts[kind] = setTimeout(() => {
-        notification.textContent = '';
+        notification.textContent = ' ';
         paneNotificationTimeouts[kind] = null;
-    }, 5_000);
+    }, 3_000);
 };
 
 const all = () => [
@@ -43,7 +57,7 @@ const campaignSetupModal = document.querySelector('#campaignSetupModal');
 const campaignDeleteModal = document.querySelector('#campaignDeleteModal');
 const characterBulkAction = document.querySelector('#characterBulkAction');
 const monsterBulkAction = document.querySelector('#monsterBulkAction');
-
+const monsterFileHelpModal = document.querySelector('#monsterFileHelpModal');
 
 // Campaign registry as returned by GET /api/campaigns:
 // {active: slug, campaigns: [{slug, name, description, setups: [...]}], moved: [...]}
@@ -179,7 +193,7 @@ async function runBulkAction(kind, action) {
     const ids = selectedIds(kind);
 
     if (!ids.length) {
-        message(selectionMessage(kind));
+        paneNotification(kind, selectionMessage(kind));
         return;
     }
 
@@ -204,10 +218,10 @@ async function runBulkAction(kind, action) {
     try {
         const result = await bulkRequest(kind, action, ids);
         const count = Number(result?.count ?? ids.length);
-        message(`${count} ${kind === 'characters' ? 'character' : 'monster'}${count === 1 ? '' : 's'} updated.`);
+        paneNotification(kind, `${count} ${kind === 'characters' ? 'character' : 'monster'}${count === 1 ? '' : 's'} updated.`);
         await load();
     } catch (error) {
-        message(error.message);
+        paneNotification(kind, error.message);
     }
 }
 
@@ -232,14 +246,11 @@ async function removeCombatant(kind, id) {
     try {
         await bulkRequest(kind, 'remove', [id]);
 
-        message(
-            `${noun[0].toUpperCase()}${noun.slice(1)} ` +
-            `“${item.name}” removed.`,
-        );
+        paneNotification(kind, `${noun[0].toUpperCase()}${noun.slice(1)} ` + `“${item.name}” removed.`);
 
         await load();
     } catch (error) {
-        message(error.message);
+        paneNotification(kind, error.message);
     }
 }
 
@@ -255,7 +266,7 @@ async function patch(kind, id, data) {
 
         await load();
     } catch (error) {
-        message(error.message);
+        paneNotification(kind, error.message);
     }
 }
 
@@ -633,13 +644,10 @@ async function setups() {
         renderCampaigns();
 
         if (campaignData.moved && campaignData.moved.length) {
-            message(
-                `Moved ${campaignData.moved.length} unassigned setup(s) into campaign Default: ` +
-                campaignData.moved.join(', '),
-            );
+            paneNotification('campaign', `Moved ${campaignData.moved.length} unassigned setup(s) into campaign Default: ` + campaignData.moved.join(', '));
         }
     } catch (error) {
-        message(error.message);
+        paneNotification('campaign', error.message);
     }
 }
 
@@ -874,18 +882,18 @@ async function load() {
                 await applyBackground(
                     document.querySelector('#backgroundValue').value.trim() || '#080b14',
                 );
-                message('View screen background updated. Save the setup to keep it.');
+                paneNotification('battleSetup', 'View screen background updated. Save the setup to keep it.');
             } catch (error) {
-                message(error.message);
+                paneNotification('battleSetup', error.message);
             }
         };
 
         document.querySelector('#clearBackgroundImage').onclick = async () => {
             try {
                 await applyBackground(document.querySelector('#backgroundColor').value);
-                message('View screen now uses the selected background color.');
+                paneNotification('battleSetup', 'View screen now uses the selected background color.');
             } catch (error) {
-                message(error.message);
+                paneNotification('battleSetup', error.message);
             }
         };
 
@@ -907,9 +915,9 @@ async function load() {
 
                 document.querySelector('#backgroundValue').value = result.background;
                 await load();
-                message('Background image uploaded. Save the setup to keep it.');
+                paneNotification('battleSetup', 'Background image uploaded. Save the setup to keep it.');
             } catch (error) {
-                message(error.message);
+                paneNotification('battleSetup', error.message);
             } finally {
                 event.target.value = '';
             }
@@ -1277,7 +1285,7 @@ document.querySelector('#editForm').onsubmit = async event => {
                 });
             }
         } catch (error) {
-            message(error.message);
+            paneNotification('monster', error.message);
             return;
         }
     } else {
@@ -1294,7 +1302,7 @@ document.querySelector('#editForm').onsubmit = async event => {
                 body: JSON.stringify(data),
             });
         } catch (error) {
-            message(error.message);
+            paneNotification('character', error.message);
             return;
         }
     }
@@ -1323,7 +1331,7 @@ document.querySelector('#importForm').onsubmit = async event => {
     const campaign = formData.get('campaign') || campaignData.active;
 
     if (!name) {
-        message('Choose a saved setup to import from');
+        paneNotification('setup', 'Choose a saved setup to import from');
         return;
     }
 
@@ -1343,11 +1351,12 @@ document.querySelector('#importForm').onsubmit = async event => {
         closeImport();
         await load();
 
-        message(
+        paneNotification(
+            'battleSetup',
             `Imported ${result.monsters} monster${result.monsters === 1 ? '' : 's'} from ${result.name}`,
         );
     } catch (error) {
-        message(error.message);
+        paneNotification('battleSetup', error.message);
     }
 };
 
@@ -1367,7 +1376,7 @@ function openCsvImport(kind) {
 
     document.querySelector('#csvImportHelp').textContent =
         isMonster
-            ? 'Required columns: name, monster_species or type, ac, hp. Optional id values are preserved; blank or missing IDs are generated automatically.'
+            ? 'Required columns: name, monster_species, ac, hp. Optional id values are preserved; blank or missing IDs are generated automatically.'
             : 'Required column: name. Imported characters are added to the active campaign. Optional id values are preserved; blank or missing IDs are generated automatically.';
 
     csvImportModal.hidden = false;
@@ -1408,7 +1417,8 @@ document.querySelector('#csvImportForm').onsubmit = async event => {
         closeCsvImport();
         await load();
 
-        message(
+        paneNotification(
+            csvImportKind === 'characters' ? 'campaign' : 'battleSetup',
             `Imported ${result.count} ${csvImportKind === 'monsters' ? 'monster' : 'character'
             }${result.count === 1 ? '' : 's'} from CSV.`,
         );
@@ -1422,7 +1432,7 @@ document.querySelector('#csvImportForm').onsubmit = async event => {
             `${count} ${noun}${count === 1 ? '' : 's'} added successfully.`,
         );
     } catch (error) {
-        message(error.message);
+        paneNotification(csvImportKind === 'characters' ? 'campaign' : 'battleSetup', error.message);
     } finally {
         submit.disabled = false;
     }
@@ -1474,7 +1484,7 @@ csvImportModal.addEventListener('click', event => {
 
 document.querySelector('#rollMonsterInitiative').onclick = async () => {
     if (!latest.monsters.length) {
-        message('There are no monsters to roll initiative for');
+        paneNotification('monster', 'There are no monsters to roll initiative for');
         return;
     }
 
@@ -1488,9 +1498,9 @@ document.querySelector('#rollMonsterInitiative').onclick = async () => {
         });
 
         await load();
-        message(`Rolled d20 initiative for ${result.count} monster(s)`);
+        paneNotification('monster', `Rolled d20 initiative for ${result.count} monster(s)`);
     } catch (error) {
-        message(error.message);
+        paneNotification('monster', error.message);
     }
 };
 
@@ -1503,6 +1513,25 @@ editModal.addEventListener('click', event => {
 importModal.addEventListener('click', event => {
     if (event.target === importModal) {
         closeImport();
+    }
+});
+
+function closeMonsterFileHelp() {
+    monsterFileHelpModal.hidden = true;
+    document.querySelector('#openMonsterFileHelp').focus();
+}
+
+document.querySelector('#openMonsterFileHelp').onclick = () => {
+    monsterFileHelpModal.hidden = false;
+    document.querySelector('#closeMonsterFileHelp').focus();
+};
+
+document.querySelector('#closeMonsterFileHelp').onclick = closeMonsterFileHelp;
+document.querySelector('#closeMonsterFileHelpBottom').onclick = closeMonsterFileHelp;
+
+monsterFileHelpModal.addEventListener('click', event => {
+    if (event.target === monsterFileHelpModal) {
+        closeMonsterFileHelp();
     }
 });
 
@@ -1535,6 +1564,9 @@ document.addEventListener('keydown', event => {
         campaignDeleteModal.hidden = true;
     }
 
+    if (!monsterFileHelpModal.hidden) {
+        closeMonsterFileHelp();
+    }
 });
 
 // ---- Campaigns --------------------------------------------------------
@@ -1565,7 +1597,7 @@ document.querySelector('#newCampaign').onclick = () => openCampaignModal();
 document.querySelector('#editCampaign').onclick = () => {
     const campaign = campaignBySlug(document.querySelector('#campaignSelect').value);
     if (!campaign) {
-        message('Choose a campaign to edit');
+        paneNotification('campaign', 'Choose a campaign to edit');
         return;
     }
     openCampaignModal(campaign);
@@ -1603,7 +1635,7 @@ document.querySelector('#campaignForm').onsubmit = async event => {
     const description = form.elements.description.value.trim();
 
     if (!name) {
-        message('Enter a campaign name');
+        paneNotification('campaign', 'Enter a campaign name');
         return;
     }
 
@@ -1614,7 +1646,7 @@ document.querySelector('#campaignForm').onsubmit = async event => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, description }),
             });
-            message(`Updated campaign: ${name}`);
+            paneNotification('campaign', `Updated campaign: ${name}`);
         } else {
             if (!confirm(`Create and switch to campaign ${name}?\n\n${REPLACE_WARNING}`)) {
                 return;
@@ -1626,13 +1658,13 @@ document.querySelector('#campaignForm').onsubmit = async event => {
             });
             closeCampaignModal();
             const opened = await applyOpenedSetup(campaignData);
-            message(`Created and switched to campaign: ${name}${opened}`);
+            paneNotification('campaign', `Created and switched to campaign: ${name}${opened}`);
             return;
         }
         closeCampaignModal();
         renderCampaigns();
     } catch (error) {
-        message(error.message);
+        paneNotification('campaign', error.message);
     }
 };
 
@@ -1643,11 +1675,11 @@ async function switchCampaign() {
     const revert = () => { campaignSelect.value = campaignData.active || ''; };
     if (!slug) {
         revert();
-        message('Choose a campaign to switch to');
+        paneNotification('campaign', 'Choose a campaign to switch to');
         return;
     }
     if (slug === campaignData.active) {
-        message(`${activeCampaign()?.name || slug} is already the active campaign`);
+        paneNotification('campaign', `${activeCampaign()?.name || slug} is already the active campaign`);
         return;
     }
     const target = campaignBySlug(slug);
@@ -1661,10 +1693,10 @@ async function switchCampaign() {
         });
         document.querySelector('#setupSelect').value = '';
         const opened = await applyOpenedSetup(campaignData);
-        message(`Switched to campaign: ${activeCampaign()?.name || slug}${opened}`);
+        paneNotification('campaign', `Switched to campaign: ${activeCampaign()?.name || slug}${opened}`);
     } catch (error) {
         revert();
-        message(error.message);
+        paneNotification('campaign', error.message);
     }
 }
 
@@ -1707,7 +1739,7 @@ function renderCampaignDeleteDialog() {
 
 document.querySelector('#deleteCampaign').onclick = () => {
     if (campaignData.campaigns.length <= 1) {
-        message('The last remaining campaign cannot be deleted');
+        paneNotification('campaign', 'The last remaining campaign cannot be deleted');
         return;
     }
     // Preselect the first campaign that is NOT active, so the active campaign is
@@ -1734,14 +1766,14 @@ document.querySelector('#campaignDeleteForm').onsubmit = async event => {
     const slug = document.querySelector('#campaignDeleteTarget').value;
     const campaign = campaignBySlug(slug);
     if (!campaign) {
-        message('Choose a campaign to delete');
+        paneNotification('campaign', 'Choose a campaign to delete');
         return;
     }
     const moveTo = document.querySelector('#campaignDeleteMoveTo').value;
     const hasSetups = campaign.setups.length > 0;
     const deleteSetups = hasSetups && document.querySelector('#campaignDeleteAction').value === 'delete';
     if (hasSetups && !deleteSetups && (!moveTo || moveTo === slug)) {
-        message('Choose another campaign to move the battle setups to');
+        paneNotification('campaign', 'Choose another campaign to move the battle setups to');
         return;
     }
     const query = !hasSetups
@@ -1770,21 +1802,22 @@ document.querySelector('#campaignDeleteForm').onsubmit = async event => {
         campaignDeleteModal.hidden = true;
         document.querySelector('#setupSelect').value = '';
         const opened = await applyOpenedSetup(result);
-        message(
+        paneNotification(
+            'campaign',
             `Deleted campaign: ${campaign ? campaign.name : slug}` +
             (result.moved && result.moved.length ? ` (moved ${result.moved.length} setup(s))` : '') +
             (result.deleted_setups && result.deleted_setups.length ? ` (deleted ${result.deleted_setups.length} setup(s))` : '') +
             opened,
         );
     } catch (error) {
-        message(error.message);
+        paneNotification('campaign', error.message);
     }
 };
 
 document.querySelector('#openCampaignSetup').onclick = async () => {
     await setups();
     if (campaignData.campaigns.length < 2) {
-        message('Create a second campaign first; setups can only be added from another campaign');
+        paneNotification('campaign', 'Create a second campaign first; setups can only be added from another campaign');
         return;
     }
     const target = document.querySelector('#campaignSelect').value || campaignData.active;
@@ -1801,17 +1834,27 @@ document.querySelector('#campaignSetupFrom').onchange = renderCampaignSetupNames
 document.querySelector('#campaignSetupForm').onsubmit = async event => {
     event.preventDefault();
     const formData = new FormData(event.target);
+
+    const hpRangeStart = Number(formData.get('hp_range_start'));
+    const hpRangeEnd = Number(formData.get('hp_range_end'));
+
+    if (hpRangeStart > hpRangeEnd) {
+        paneNotification('monster', 'HP Range start cannot be higher than HP Range end.');
+        form.elements.hp_range_start.focus();
+        return;
+    }
+
     const from_campaign = formData.get('from_campaign');
     const setup = formData.get('setup');
     const to = formData.get('to_campaign');
     const mode = formData.get('mode');
 
     if (!setup) {
-        message('Choose a battle setup');
+        paneNotification('campaign', 'Choose a battle setup');
         return;
     }
     if (from_campaign === to) {
-        message('Source and target campaign are the same');
+        paneNotification('campaign', 'Source and target campaign are the same');
         return;
     }
 
@@ -1824,34 +1867,84 @@ document.querySelector('#campaignSetupForm').onsubmit = async event => {
         campaignData = result;
         campaignSetupModal.hidden = true;
         renderCampaigns();
-        message(
+        paneNotification(
+            'campaign',
             `${mode === 'copy' ? 'Copied' : 'Moved'} setup ${setup} to campaign ` +
             `${campaignBySlug(result.campaign)?.name || result.campaign}` +
             (result.setup !== setup ? ` as ${result.setup}` : ''),
         );
     } catch (error) {
-        message(error.message);
+        paneNotification('campaign', error.message);
     }
 };
 
 document.querySelector('#newSetup').onclick = async () => {
-    if (!confirm('Discard the current battle setup and create a new blank setup?')) {
+    const setupNameInput = document.querySelector('#setupName');
+    const name = setupNameInput.value.trim();
+    const activeCampaignName = activeCampaign()?.name || campaignData.active;
+
+    if (!name) {
+        paneNotification(
+            'battleSetup',
+            'Enter a unique battle setup name before creating it.',
+        );
+        setupNameInput.focus();
+        return;
+    }
+
+    const existingNames = (activeCampaign()?.setups || [])
+        .map(setupName => setupName.toLocaleLowerCase());
+
+    if (existingNames.includes(name.toLocaleLowerCase())) {
+        paneNotification(
+            'battleSetup',
+            `A battle setup named “${name}” already exists in ${activeCampaignName}.`,
+        );
+        setupNameInput.focus();
+        return;
+    }
+
+    if (!confirm(
+        `Discard the current battle setup and create a new empty setup named “${name}”?`,
+    )) {
         return;
     }
 
     try {
+        // First replace the current working encounter with an empty one.
         await request('/api/setups/new', {
             method: 'POST',
         });
 
-        document.querySelector('#setupName').value = '';
-        document.querySelector('#setupSelect').value = '';
+        // Then persist it immediately using the requested unique name.
+        const result = await request('/api/setups/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name,
+                campaign: campaignData.active,
+            }),
+        });
 
+        setupNameInput.value = result.name;
+
+        // Refresh the campaign/setup lists, then select the saved setup.
+        await setups();
+        document.querySelector('#setupSelect').value = result.name;
+
+        syncActiveBattleSetupControls();
         renderActiveBattleSetup();
 
         await load();
+
+        paneNotification(
+            'battleSetup',
+            `Created and saved empty battle setup “${result.name}”.`,
+        );
     } catch (error) {
-        message(error.message);
+        paneNotification('battleSetup', error.message);
     }
 };
 
@@ -1859,7 +1952,7 @@ document.querySelector('#saveSetup').onclick = async () => {
     const name = document.querySelector('#setupName').value.trim();
 
     if (!name) {
-        message('Enter a battle setup name before saving');
+        paneNotification('battleSetup', 'Enter a battle setup name before saving');
         return;
     }
 
@@ -1879,9 +1972,9 @@ document.querySelector('#saveSetup').onclick = async () => {
         syncActiveBattleSetupControls();
         renderActiveBattleSetup();
 
-        message(`Saved setup: ${result.name} (campaign: ${campaignBySlug(result.campaign)?.name || result.campaign})`);
+        paneNotification('battleSetup', `Saved setup: ${result.name} (campaign: ${campaignBySlug(result.campaign)?.name || result.campaign})`);
     } catch (error) {
-        message(error.message);
+        paneNotification('battleSetup', error.message);
     }
 };
 
@@ -1897,7 +1990,7 @@ async function loadSelectedSetup(event) {
 
     if (!name) {
         if (!fromDropdown) {
-            message('Choose a saved setup to load');
+            paneNotification('battleSetup', 'Choose a saved setup to load');
         }
         return;
     }
@@ -1927,13 +2020,13 @@ async function loadSelectedSetup(event) {
 
         await load();
 
-        message(
+        paneNotification('battleSetup',
             `Loaded setup ${result.name} in campaign `
             + `${campaignBySlug(result.campaign)?.name || result.campaign}`,
         );
     } catch (error) {
         revert();
-        message(error.message);
+        paneNotification('battleSetup', error.message);
     }
 }
 
@@ -1944,7 +2037,7 @@ document.querySelector('#setupSelect').onchange = loadSelectedSetup;
 document.querySelector('#renameSetup').onclick = async () => {
     const name = document.querySelector('#setupSelect').value;
     if (!name) {
-        message('Choose a saved setup to rename');
+        paneNotification('battleSetup', 'Choose a saved setup to rename');
         return;
     }
     const newName = prompt(`Rename battle setup ${name} to:`, name);
@@ -1967,16 +2060,16 @@ document.querySelector('#renameSetup').onclick = async () => {
         syncActiveBattleSetupControls();
         renderActiveBattleSetup();
 
-        message(`Renamed battle setup ${result.old_name} to ${result.name}`);
+        paneNotification('battleSetup', `Renamed battle setup ${result.old_name} to ${result.name}`);
     } catch (error) {
-        message(error.message);
+        paneNotification('battleSetup', error.message);
     }
 };
 
 document.querySelector('#deleteSetup').onclick = async () => {
     const name = document.querySelector('#setupSelect').value;
     if (!name) {
-        message('Choose a saved setup to delete');
+        paneNotification('battleSetup', 'Choose a saved setup to delete');
         return;
     }
     if (!confirm(
@@ -2001,13 +2094,14 @@ document.querySelector('#deleteSetup').onclick = async () => {
 
         await load();
 
-        message(
+        paneNotification(
+            'battleSetup',
             `Deleted battle setup ${result.deleted}; opened `
             + `${result.created_default ? 'new empty setup ' : ''}`
             + `${result.opened_setup}`,
         );
     } catch (error) {
-        message(error.message);
+        paneNotification('battleSetup', error.message);
     }
 };
 
@@ -2083,8 +2177,6 @@ document.querySelector('#monsterForm').onsubmit = async event => {
         const result = responseBody;
         const count = Array.isArray(result) ? result.length : 0;
 
-        message(`Added ${count} monster${count === 1 ? '' : 's'}`);
-
         paneNotification(
             'monsters',
             count === 1
@@ -2096,7 +2188,7 @@ document.querySelector('#monsterForm').onsubmit = async event => {
         await load();
     } catch (error) {
         console.error('Monster add failed:', error);
-        message(error.message);
+        paneNotification('monsters', error.message);
     }
 };
 
@@ -2109,11 +2201,8 @@ document.querySelector('#monsterUpload').onsubmit = async event => {
             body: new FormData(event.target),
         });
 
-        message(`Imported ${result.length} monster${result.length === 1 ? '' : 's'}`);
-        quantity = result.length;
-        fileName = event.target.querySelector('[name="file"]').files[0]?.name || 'unknown file';
         paneNotification(
-            'monsters',
+            'battleSetup',
             quantity === 1
                 ? `Monster imported from “${fileName}”.`
                 : `${quantity} monsters imported from “${fileName}”.`,
@@ -2121,7 +2210,7 @@ document.querySelector('#monsterUpload').onsubmit = async event => {
         event.target.reset();
         await load();
     } catch (error) {
-        message(error.message);
+        paneNotification('battleSetup', error.message);
     }
 };
 
@@ -2154,7 +2243,7 @@ document.querySelector('#characterForm').onsubmit = async event => {
         event.target.reset();
         await load();
     } catch (error) {
-        message(error.message);
+        paneNotification('characters', error.message);
     }
 };
 
