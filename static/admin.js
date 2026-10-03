@@ -8,12 +8,26 @@ const message = text => {
     document.querySelector('#message').textContent = text;
 };
 
+const paneNotificationTimeouts = {
+    characters: null,
+    monsters: null,
+};
+
 const paneNotification = (kind, text) => {
     const id = kind === 'characters'
         ? '#characterAddNotification'
         : '#monsterAddNotification';
 
-    document.querySelector(id).textContent = text;
+    const notification = document.querySelector(id);
+
+    clearTimeout(paneNotificationTimeouts[kind]);
+
+    notification.textContent = text;
+
+    paneNotificationTimeouts[kind] = setTimeout(() => {
+        notification.textContent = '';
+        paneNotificationTimeouts[kind] = null;
+    }, 5_000);
 };
 
 const all = () => [
