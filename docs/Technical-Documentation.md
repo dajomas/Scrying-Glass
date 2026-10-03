@@ -315,7 +315,7 @@ The legacy Monster whole-list bulk toggle accepts `active`, `ally`, `show_ac`, `
 
 CSV imports require UTF-8 data, permit a BOM, require a header and at least one nonblank row, trim and case-fold headers, and accept `true`/`false`, `yes`/`no`, `on`/`off`, or `1`/`0` for booleans.
 
-Monster CSV requires `name`, `monster_type` or `type`, `ac`, and `hp`. Character CSV requires `name`. Missing IDs receive generated UUID hex values; duplicate IDs or conflicts with current encounter IDs return an error.
+Monster CSV requires `name`, `monster_species` or `type`, `ac`, and `hp`. Character CSV requires `name`. Missing IDs receive generated UUID hex values; duplicate IDs or conflicts with current encounter IDs return an error.
 
 Setup import deep-copies selected combatants, generates fresh IDs, preserves current/max HP, derives alive state from HP, restores initiative from original initiative, clears active/visible/turn flags, resets Monster card flags, and leaves the existing battle order unchanged.
 

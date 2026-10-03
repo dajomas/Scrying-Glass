@@ -203,7 +203,7 @@ Back up the complete directory. `state.json` preserves the working encounter; `c
 
 Scrying Glass accepts compatible `.monster` JSON files. The [Tetra-cube D&D 5e Statblock Generator](https://tetra-cube.com/dnd/dnd-statblock.html) is a useful external tool for authoring files with a name, type, Armor Class, and Hit Points.
 
-Monster CSV imports require `name`, `monster_type` or `type`, `ac`, and `hp`. Character CSV imports require `name`. CSV must be UTF-8 with a header row. Missing IDs are generated, while duplicate IDs or IDs already used in the active encounter are rejected.
+Monster CSV imports require `name`, `monster_species` or `type`, `ac`, and `hp`. Character CSV imports require `name`. CSV must be UTF-8 with a header row. Missing IDs are generated, while duplicate IDs or IDs already used in the active encounter are rejected.
 
 ## Migrating from Monster Display
 
