@@ -9,7 +9,7 @@ Run:
 from __future__ import annotations
 import argparse, asyncio, copy, csv, hashlib, hmac, io, json, random, re, secrets, shutil, sys, uuid, uvicorn, yaml
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any, Callable, Literal
 from urllib.parse import quote
 from urllib.request import Request, urlopen
 from fastapi import Depends, FastAPI, File, Form, HTTPException, Request as FastAPIRequest, UploadFile, WebSocket
@@ -55,6 +55,128 @@ ADMIN_SESSION_COOKIE = "scrying_glass_admin_session"
 CLIENT_SESSION_COOKIE = "scrying_glass_client_session"
 # Cookies used before the rename to Scrying Glass; removed on successful login.
 LEGACY_SESSION_COOKIES = ("monster_session", "monster_admin_session", "monster_client_session")
+
+DICE_HP_RE = re.compile(
+    r"""
+    ^\s*
+    (?P<count>[1-9]\d*)
+    d\s*
+    (?P<sides>[2-9]\d*)
+    (?:
+        \s*
+        (?P<operator>[+-])
+        \s*
+        (?P<modifier>\d+)
+    )?
+    \s*$
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
+
+MAX_HP_DICE_COUNT = 100
+MAX_HP_DIE_SIDES = 1_000
+MAX_HP_MODIFIER = 100_000
+
+def parse_hp_dice_expression(value: str) -> tuple[int, int, int] | None:
+    """Return (dice_count, die_sides, modifier), or None when not dice notation."""
+    match = DICE_HP_RE.fullmatch(value)
+
+    if match is None:
+        return None
+
+    count = int(match.group("count"))
+    sides = int(match.group("sides"))
+    modifier = int(match.group("modifier") or 0)
+
+    if match.group("operator") == "-":
+        modifier = -modifier
+
+    if count > MAX_HP_DICE_COUNT:
+        raise HTTPException(
+            400,
+            f"HP dice count must not exceed {MAX_HP_DICE_COUNT}",
+        )
+
+    if sides > MAX_HP_DIE_SIDES:
+        raise HTTPException(
+            400,
+            f"HP die sides must not exceed {MAX_HP_DIE_SIDES}",
+        )
+
+    if abs(modifier) > MAX_HP_MODIFIER:
+        raise HTTPException(
+            400,
+            f"HP dice modifier must be between "
+            f"-{MAX_HP_MODIFIER} and {MAX_HP_MODIFIER}",
+        )
+
+    return count, sides, modifier
+
+
+def roll_hp_dice(dice_count: int, die_sides: int, modifier: int) -> int:
+    """Roll dice independently and return a non-negative HP total."""
+    rolled = sum(random.randint(1, die_sides) for _ in range(dice_count))
+    return max(0, rolled + modifier)
+
+
+def hp_value_factory(
+    hp_range_start_raw: str,
+    hp_range_end_raw: str | None,
+) -> Callable[[], int]:
+    """Validate HP input and return a function that produces one monster's HP."""
+    start = str(hp_range_start_raw or "").strip()
+    end = str(hp_range_end_raw or "").strip()
+
+    if not start:
+        raise HTTPException(400, "HP Range start is required")
+
+    dice = parse_hp_dice_expression(start)
+
+    if dice is not None:
+        if end:
+            raise HTTPException(
+                400,
+                "HP Range end must be empty when HP Range start is a dice expression",
+            )
+
+        dice_count, die_sides, modifier = dice
+        return lambda: roll_hp_dice(dice_count, die_sides, modifier)
+
+    try:
+        numeric_start = int(start)
+    except ValueError as exc:
+        raise HTTPException(
+            400,
+            "HP Range start must be a non-negative integer or a dice expression such as 3d8+9",
+        ) from exc
+
+    if numeric_start < 0 or str(numeric_start) != start:
+        raise HTTPException(
+            400,
+            "HP Range start must be a non-negative whole number",
+        )
+
+    if not end:
+        return lambda: numeric_start
+
+    try:
+        numeric_end = int(end)
+    except ValueError as exc:
+        raise HTTPException(
+            400,
+            "HP Range end must be a non-negative integer",
+        ) from exc
+
+    if numeric_end < 0 or str(numeric_end) != end:
+        raise HTTPException(
+            400,
+            "HP Range end must be a non-negative whole number",
+        )
+
+    if numeric_start > numeric_end:
+        raise HTTPException(400, "HP Range start cannot be higher than HP Range end")
+
+    return lambda: random.randint(numeric_start, numeric_end)
 
 def merge(a: dict[str, Any], b: dict[str, Any]) -> dict[str, Any]:
     out = dict(a)
@@ -409,6 +531,70 @@ def save_state() -> None:
         encoding="utf-8",
     )
     temp.replace(STATE_FILE)
+
+def save_active_setup_monsters() -> bool:
+    """
+    Persist the working monster encounter into the currently active saved setup.
+
+    Returns True when a saved setup was updated. Returns False when the current
+    encounter is intentionally unsaved and therefore exists only in state.json.
+    """
+    reference = active_setup_reference()
+
+    if reference is None:
+        return False
+
+    campaign = require_campaign(reference["campaign"])
+    name = setup_slug(reference["name"])
+    path = setup_path(name, campaign)
+
+    if not path.exists():
+        # The setup reference is stale. Preserve the current encounter as
+        # unsaved runtime state rather than recreating an unexpected file.
+        clear_active_setup()
+        return False
+
+    snapshot = setup_snapshot(STATE)
+    temp = path.with_suffix(".tmp")
+
+    temp.write_text(
+        json.dumps(snapshot, indent=2),
+        encoding="utf-8",
+    )
+    temp.replace(path)
+
+    remember_setup(campaign, name)
+    return True
+
+async def monster_changed() -> None:
+    async with LOCK:
+        save_active_setup_monsters()
+        save_state()
+
+    await broadcast()
+
+async def character_changed() -> None:
+    async with LOCK:
+        save_active_campaign_characters()
+        save_state()
+
+    await broadcast()
+
+async def combatants_changed(
+    *,
+    monsters: bool = False,
+    characters: bool = False,
+) -> None:
+    async with LOCK:
+        if monsters:
+            save_active_setup_monsters()
+
+        if characters:
+            save_active_campaign_characters()
+
+        save_state()
+
+    await broadcast()
 
 def public_state() -> dict[str, Any]:
     d = CONFIG['display']
@@ -1870,7 +2056,7 @@ async def import_setup(
 
     STATE["monsters"].extend(imported_monsters)
 
-    await changed()
+    await combatants_changed(monsters=True, characters=False)
 
     return {
         "name": name,
@@ -1882,7 +2068,7 @@ async def import_setup(
 async def roll_monster_initiative(_: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     for monster in STATE['monsters']:
         monster['initiative'] = random.randint(1, 20)
-    await changed()
+    await combatants_changed(monsters=True, characters=False)
     return {'count': len(STATE['monsters'])}
 
 @admin.post('/api/monsters')
@@ -1890,52 +2076,54 @@ async def create_monster(
     name: str = Form(...),
     monster_species: str = Form(...),
     ac: int = Form(...),
-    hp_range_start: int = Form(...),
-    hp_range_end: int = Form(...),
+    hprangestart: str = Form(...),
+    hprangeend: str = Form(""),
     color: str = Form(...),
     quantity: int = Form(1, ge=1, le=50),
     image: UploadFile | None = File(None),
     _: dict[str, str] = Depends(require("admin", ADMIN_SESSION_COOKIE)),
-):
-    if hp_range_start > hp_range_end:
-        raise HTTPException(
-            400,
-            "HP Range start cannot be higher than HP Range end",
-        )
+) -> list[dict[str, Any]]:
+
+    next_hp = hp_value_factory(hprangestart, hprangeend)
 
     fields = {
-        'name': name.strip(),
-        'monster_species': monster_species.strip(),
-        'ac': ac,
+        "name": name.strip(),
+        "monster_species": monster_species.strip(),
+        "ac": ac,
     }
-
     image_url = (
         save_image(image)
-        if image and image.filename
-        else dnd_image(fields['monster_species'])
+        if image is not None and image.filename
+        else dnd_image(fields["monster_species"])
     )
 
-    created = [
-        make_monster(
-            {
-                **fields,
-                'name': (
-                    fields['name']
-                    if quantity == 1
-                    else f"{fields['name']} - {number}"
-                ),
-                'hp': random.randint(hp_range_start, hp_range_end),
-            },
-            color,
-            None,
-            image_url,
-        )
-        for number in range(1, quantity + 1)
-    ]
+    created = []
 
-    STATE['monsters'].extend(created)
-    await changed()
+    for number in range(1, quantity + 1):
+        generated_name = (
+            fields["name"]
+            if quantity == 1
+            else f"{fields['name']} - {number}"
+        )
+        rolled_hp = next_hp()
+
+        created.append(
+            make_monster(
+                {
+                    **fields,
+                    "name": generated_name,
+                    "hp": rolled_hp,
+                },
+                color,
+                None,
+                image_url,
+            )
+        )
+
+    STATE["monsters"].extend(created)
+    await combatants_changed(monsters=True, characters=False)
     return created
+
 
 @admin.post('/api/monsters/import')
 async def import_monster(monster_file: UploadFile=File(...), color: str=Form(...), quantity: int=Form(1, ge=1, le=50), image: UploadFile | None=File(None), _: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
@@ -1951,7 +2139,7 @@ async def import_monster(monster_file: UploadFile=File(...), color: str=Form(...
     created = make_monsters(fields, color, quantity, image_url)
 
     STATE['monsters'].extend(created)
-    await changed()
+    await combatants_changed(monsters=True, characters=False)
     return created
 
 @admin.post("/api/monsters/import-csv")
@@ -1984,7 +2172,7 @@ async def import_monsters_csv(
         )
 
     STATE["monsters"].extend(imported)
-    await changed()
+    await combatants_changed(monsters=True, characters=False)
 
     return {"count": len(imported)}
 
@@ -2019,7 +2207,7 @@ async def import_characters_csv(
 
     STATE["characters"].extend(imported)
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=False, characters=True)
 
     return {"count": len(imported)}
     
@@ -2039,7 +2227,7 @@ async def edit_monster(ident: str, name: str=Form(...), monster_species: str=For
         m['visible'] = True
         m['in_turn'] = False
     clean_order()
-    await changed()
+    await combatants_changed(monsters=True, characters=False)
     return m
 
 @admin.patch("/api/monsters/{ident}")
@@ -2089,7 +2277,7 @@ async def update_monster(
     set_turn(monster, values.get("in_turn"))
     clean_order()
 
-    await changed()
+    await combatants_changed(monsters=True, characters=False)
     return monster
 
 @admin.post("/api/monsters/bulk")
@@ -2156,7 +2344,7 @@ async def bulk_monsters(
             if ident not in removed_ids
         ]
 
-    await changed()
+    await combatants_changed(monsters=True, characters=False)
     return {"count": len(targets)}
 
 @admin.post('/api/characters')
@@ -2164,7 +2352,7 @@ async def create_character(character: CharacterCreate, _: dict[str, str]=Depends
     c = {'id': uuid.uuid4().hex, **character.model_dump(), 'max_hp': character.hp, 'original_hp': character.hp, 'original_initiative': character.initiative, 'active': False, 'alive': character.hp >= 0, 'visible': False, 'in_turn': False}
     STATE["characters"].append(c)
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=False, characters=True)
 
     return c
 
@@ -2222,7 +2410,7 @@ async def update_character(
     set_turn(character, values.get("in_turn"))
     clean_order()
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=False, characters=True)
 
     return character
 
@@ -2241,6 +2429,8 @@ async def delete_combatant(
     )
 
     removed_character = False
+    is_monster = monster_index is None
+    is_character = not is_monster
 
     if monster_index is not None:
         removed = STATE["monsters"].pop(monster_index)
@@ -2254,6 +2444,7 @@ async def delete_combatant(
             None,
         )
 
+        is_character = character_index is not None
         if character_index is None:
             raise HTTPException(404, "Combatant not found")
 
@@ -2269,7 +2460,7 @@ async def delete_combatant(
     if removed_character:
         save_active_campaign_characters()
 
-    await changed()
+    await combatants_changed(monsters=is_monster, characters=is_character)
 
     return {
         "id": ident,
@@ -2294,7 +2485,8 @@ async def reset_one_combatant(
     if is_character:
         save_active_campaign_characters()
 
-    await changed()
+    await combatants_changed(monsters=not is_character, characters=is_character)
+
 
     return x
     
@@ -2342,7 +2534,7 @@ async def bulk_characters(
 
     # Character records are owned by the active campaign.
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=False, characters=True)
     return {"count": len(targets)}
 
 @admin.post("/api/monsters/bulk")
@@ -2406,7 +2598,7 @@ async def bulk_monsters(
             if ident not in removed_ids
         ]
 
-    await changed()
+    await combatants_changed(monsters=True, characters=False)
     return {"count": len(targets)}
 
 @admin.post("/api/battle/end")
@@ -2417,7 +2609,7 @@ async def battle_end(
     STATE["battle_order"] = []
 
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=True, characters=True)
 
     return {"status": "ended"}
 
@@ -2432,7 +2624,7 @@ async def reset_all(
     STATE["battle_order"] = []
 
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=True, characters=True)
 
     return {"status": "reset"}
 
@@ -2445,7 +2637,7 @@ async def battle_start(
     sort_admin_by_initiative()
 
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=True, characters=True)
 
     return public_state()
 
@@ -2456,7 +2648,7 @@ async def battle_next(
     current = advance_turn()
 
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=True, characters=True)
 
     return {"current": current}
 
@@ -2529,7 +2721,7 @@ async def apply_battle_actions(
 
     clean_order()
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=True, characters=True)
 
     return {
         "applied": len(prepared),

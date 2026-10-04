@@ -303,6 +303,16 @@ ADMIN_HTML = r'''<!doctype html>
         > </p>
 
       <div>
+
+        <p id="monsterHpRangeHelp" class="field-help">
+          In the HP Range Start and HP Range end fields, 
+          enter a fixed HP value in the start field and leave the end field empty,
+          a numeric HP range from which a random HP value will be chosen (start and end fields inclusive), 
+          or dice notation such as <code>3d8+9</code>.
+          Spaces around <code>+</code> or <code>-</code> are
+          optional. Leave HP Range end empty when using dice notation.
+        </p>
+
         <form id="monsterForm" class="row">
           <label class="field">
             <span class="field-label">
@@ -348,23 +358,26 @@ ADMIN_HTML = r'''<!doctype html>
             </span>
             <input
               id="monsterHpRangeStart"
-              name="hp_range_start"
-              type="number"
-              placeholder="Start HP"
+              name="hprangestart"
+              class="hp-range-input"
+              type="text"
+              inputmode="text"
+              placeholder="15 or 3d8+9"
               required
+              aria-describedby="monsterHpRangeHelp"
             >
           </label>
 
           <label class="field field-compact">
-            <span class="field-label">
-              HP Range end <span class="required-marker" aria-hidden="true">*</span>
-            </span>
+            <span class="field-label">HP Range end</span>
             <input
               id="monsterHpRangeEnd"
-              name="hp_range_end"
+              name="hprangeend"
+              class="hp-range-input"
               type="number"
-              placeholder="End HP"
-              required
+              min="0"
+              placeholder="Optional"
+              aria-describedby="monsterHpRangeHelp"
             >
           </label>
 
