@@ -532,6 +532,70 @@ def save_state() -> None:
     )
     temp.replace(STATE_FILE)
 
+def save_active_setup_monsters() -> bool:
+    """
+    Persist the working monster encounter into the currently active saved setup.
+
+    Returns True when a saved setup was updated. Returns False when the current
+    encounter is intentionally unsaved and therefore exists only in state.json.
+    """
+    reference = active_setup_reference()
+
+    if reference is None:
+        return False
+
+    campaign = require_campaign(reference["campaign"])
+    name = setup_slug(reference["name"])
+    path = setup_path(name, campaign)
+
+    if not path.exists():
+        # The setup reference is stale. Preserve the current encounter as
+        # unsaved runtime state rather than recreating an unexpected file.
+        clear_active_setup()
+        return False
+
+    snapshot = setup_snapshot(STATE)
+    temp = path.with_suffix(".tmp")
+
+    temp.write_text(
+        json.dumps(snapshot, indent=2),
+        encoding="utf-8",
+    )
+    temp.replace(path)
+
+    remember_setup(campaign, name)
+    return True
+
+async def monster_changed() -> None:
+    async with LOCK:
+        save_active_setup_monsters()
+        save_state()
+
+    await broadcast()
+
+async def character_changed() -> None:
+    async with LOCK:
+        save_active_campaign_characters()
+        save_state()
+
+    await broadcast()
+
+async def combatants_changed(
+    *,
+    monsters: bool = False,
+    characters: bool = False,
+) -> None:
+    async with LOCK:
+        if monsters:
+            save_active_setup_monsters()
+
+        if characters:
+            save_active_campaign_characters()
+
+        save_state()
+
+    await broadcast()
+
 def public_state() -> dict[str, Any]:
     d = CONFIG['display']
     return {
@@ -1992,7 +2056,7 @@ async def import_setup(
 
     STATE["monsters"].extend(imported_monsters)
 
-    await changed()
+    await combatants_changed(monsters=True, characters=False)
 
     return {
         "name": name,
@@ -2004,7 +2068,7 @@ async def import_setup(
 async def roll_monster_initiative(_: dict[str, str]=Depends(require("admin", ADMIN_SESSION_COOKIE))):
     for monster in STATE['monsters']:
         monster['initiative'] = random.randint(1, 20)
-    await changed()
+    await combatants_changed(monsters=True, characters=False)
     return {'count': len(STATE['monsters'])}
 
 @admin.post('/api/monsters')
@@ -2057,7 +2121,7 @@ async def create_monster(
         )
 
     STATE["monsters"].extend(created)
-    await changed()
+    await combatants_changed(monsters=True, characters=False)
     return created
 
 
@@ -2075,7 +2139,7 @@ async def import_monster(monster_file: UploadFile=File(...), color: str=Form(...
     created = make_monsters(fields, color, quantity, image_url)
 
     STATE['monsters'].extend(created)
-    await changed()
+    await combatants_changed(monsters=True, characters=False)
     return created
 
 @admin.post("/api/monsters/import-csv")
@@ -2108,7 +2172,7 @@ async def import_monsters_csv(
         )
 
     STATE["monsters"].extend(imported)
-    await changed()
+    await combatants_changed(monsters=True, characters=False)
 
     return {"count": len(imported)}
 
@@ -2143,7 +2207,7 @@ async def import_characters_csv(
 
     STATE["characters"].extend(imported)
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=False, characters=True)
 
     return {"count": len(imported)}
     
@@ -2163,7 +2227,7 @@ async def edit_monster(ident: str, name: str=Form(...), monster_species: str=For
         m['visible'] = True
         m['in_turn'] = False
     clean_order()
-    await changed()
+    await combatants_changed(monsters=True, characters=False)
     return m
 
 @admin.patch("/api/monsters/{ident}")
@@ -2213,7 +2277,7 @@ async def update_monster(
     set_turn(monster, values.get("in_turn"))
     clean_order()
 
-    await changed()
+    await combatants_changed(monsters=True, characters=False)
     return monster
 
 @admin.post("/api/monsters/bulk")
@@ -2280,7 +2344,7 @@ async def bulk_monsters(
             if ident not in removed_ids
         ]
 
-    await changed()
+    await combatants_changed(monsters=True, characters=False)
     return {"count": len(targets)}
 
 @admin.post('/api/characters')
@@ -2288,7 +2352,7 @@ async def create_character(character: CharacterCreate, _: dict[str, str]=Depends
     c = {'id': uuid.uuid4().hex, **character.model_dump(), 'max_hp': character.hp, 'original_hp': character.hp, 'original_initiative': character.initiative, 'active': False, 'alive': character.hp >= 0, 'visible': False, 'in_turn': False}
     STATE["characters"].append(c)
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=False, characters=True)
 
     return c
 
@@ -2346,7 +2410,7 @@ async def update_character(
     set_turn(character, values.get("in_turn"))
     clean_order()
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=False, characters=True)
 
     return character
 
@@ -2365,6 +2429,8 @@ async def delete_combatant(
     )
 
     removed_character = False
+    is_monster = monster_index is None
+    is_character = not is_monster
 
     if monster_index is not None:
         removed = STATE["monsters"].pop(monster_index)
@@ -2378,6 +2444,7 @@ async def delete_combatant(
             None,
         )
 
+        is_character = character_index is not None
         if character_index is None:
             raise HTTPException(404, "Combatant not found")
 
@@ -2393,7 +2460,7 @@ async def delete_combatant(
     if removed_character:
         save_active_campaign_characters()
 
-    await changed()
+    await combatants_changed(monsters=is_monster, characters=is_character)
 
     return {
         "id": ident,
@@ -2418,7 +2485,8 @@ async def reset_one_combatant(
     if is_character:
         save_active_campaign_characters()
 
-    await changed()
+    await combatants_changed(monsters=not is_character, characters=is_character)
+
 
     return x
     
@@ -2466,7 +2534,7 @@ async def bulk_characters(
 
     # Character records are owned by the active campaign.
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=False, characters=True)
     return {"count": len(targets)}
 
 @admin.post("/api/monsters/bulk")
@@ -2530,7 +2598,7 @@ async def bulk_monsters(
             if ident not in removed_ids
         ]
 
-    await changed()
+    await combatants_changed(monsters=True, characters=False)
     return {"count": len(targets)}
 
 @admin.post("/api/battle/end")
@@ -2541,7 +2609,7 @@ async def battle_end(
     STATE["battle_order"] = []
 
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=True, characters=True)
 
     return {"status": "ended"}
 
@@ -2556,7 +2624,7 @@ async def reset_all(
     STATE["battle_order"] = []
 
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=True, characters=True)
 
     return {"status": "reset"}
 
@@ -2569,7 +2637,7 @@ async def battle_start(
     sort_admin_by_initiative()
 
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=True, characters=True)
 
     return public_state()
 
@@ -2580,7 +2648,7 @@ async def battle_next(
     current = advance_turn()
 
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=True, characters=True)
 
     return {"current": current}
 
@@ -2653,7 +2721,7 @@ async def apply_battle_actions(
 
     clean_order()
     save_active_campaign_characters()
-    await changed()
+    await combatants_changed(monsters=True, characters=True)
 
     return {
         "applied": len(prepared),
