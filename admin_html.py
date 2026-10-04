@@ -311,7 +311,7 @@ ADMIN_HTML = r'''<!doctype html>
           or dice notation such as <code>3d8+9</code>.
           Spaces around <code>+</code> or <code>-</code> are
           optional. Leave HP Range end empty when using dice notation.
-        </p>
+        </p></br>
 
         <form id="monsterForm" class="row">
           <label class="field">
