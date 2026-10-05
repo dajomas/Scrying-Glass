@@ -61,7 +61,7 @@ DICE_HP_RE = re.compile(
     ^\s*
     (?P<count>[1-9]\d*)
     d\s*
-    (?P<sides>[2-9]\d*)
+    (?P<sides>[2-9]\d*|1\d+)
     (?:
         \s*
         (?P<operator>[+-])

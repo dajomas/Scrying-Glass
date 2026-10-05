@@ -58,8 +58,7 @@ const campaignDeleteModal = document.querySelector('#campaignDeleteModal');
 const characterBulkAction = document.querySelector('#characterBulkAction');
 const monsterBulkAction = document.querySelector('#monsterBulkAction');
 const monsterFileHelpModal = document.querySelector('#monsterFileHelpModal');
-const DICE_HP_RE =
-    /^\s*(?<count>[1-9]\d*)d\s*(?<sides>[2-9]\d*)(?:\s*(?<operator>[+-])\s*(?<modifier>\d+))?\s*$/i;
+const DICE_HP_RE = /^\s*(?<count>[1-9]\d*)d\s*(?<sides>[2-9]\d*|1\d+)(?:\s*(?<operator>[+-])\s*(?<modifier>\d+))?\s*$/i;
 
 function isDiceHpExpression(value) {
     return DICE_HP_RE.test(String(value ?? '').trim());
