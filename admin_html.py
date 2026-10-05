@@ -305,13 +305,16 @@ ADMIN_HTML = r'''<!doctype html>
       <div>
 
         <p id="monsterHpRangeHelp" class="field-help">
-          In the HP Range Start and HP Range end fields, 
-          enter a fixed HP value in the start field and leave the end field empty,
-          a numeric HP range from which a random HP value will be chosen (start and end fields inclusive), 
-          or dice notation such as <code>3d8+9</code>.
-          Spaces around <code>+</code> or <code>-</code> are
-          optional. Leave HP Range end empty when using dice notation.
-        </p></br>
+          In the HP Range Start and HP Range end fields:
+          <ul>
+            <li>enter a fixed HP value in the start field and leave the end field empty, or</li>
+            <li>enter a numeric HP range from which a random HP value will be chosen (start and end fields inclusive), or</li>
+            <li>enter a dice expression in the start field, such as <code>3d8+9</code>, and leave the end field empty.</br> 
+              The dice expression can be a simple roll such as <code>2d6</code> or dice notation such as <code>3d8+9</code>.</br>
+              Spaces around <code>+</code> or <code>-</code> are optional.</li>
+          </ul>
+          If no image is provided, an attempt is made to find an image on D&D Beyond based on the monster species (against Monster Name on D&D Beyond).
+        </p>
 
         <form id="monsterForm" class="row">
           <label class="field">
