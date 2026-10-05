@@ -316,6 +316,16 @@ ADMIN_HTML = r'''<!doctype html>
           If no image is provided, an attempt is made to find an image on D&D Beyond based on the monster species (against Monster Name on D&D Beyond).
         </p>
 
+        <label class="monster-species-lookup-option">
+          <input
+            id="monsterSpeciesLookupOverwrite"
+            type="checkbox"
+          >
+          <span>
+            Overwrite Armor Class and HP Range with found D&amp;D Beyond values
+          </span>
+        </label>
+
         <form id="monsterForm" class="row">
           <label class="field">
             <span class="field-label">
