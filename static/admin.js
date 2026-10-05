@@ -99,7 +99,7 @@ function validateMonsterHpRange(startValue, endValue) {
     if (numericStart === null) {
         return (
             'HP Range start must be a non-negative whole number or a dice expression ' +
-            'such as 3d8+9.'
+            'such as 3d8+9. => ' + String(start)
         );
     }
 
@@ -1346,7 +1346,7 @@ document.querySelector('#editForm').onsubmit = async event => {
                 });
             }
         } catch (error) {
-            paneNotification('monster', error.message);
+            paneNotification('monsters', error.message);
             return;
         }
     } else {
@@ -1545,7 +1545,7 @@ csvImportModal.addEventListener('click', event => {
 
 document.querySelector('#rollMonsterInitiative').onclick = async () => {
     if (!latest.monsters.length) {
-        paneNotification('monster', 'There are no monsters to roll initiative for');
+        paneNotification('monsters', 'There are no monsters to roll initiative for');
         return;
     }
 
@@ -1559,9 +1559,9 @@ document.querySelector('#rollMonsterInitiative').onclick = async () => {
         });
 
         await load();
-        paneNotification('monster', `Rolled d20 initiative for ${result.count} monster(s)`);
+        paneNotification('monsters', `Rolled d20 initiative for ${result.count} monster(s)`);
     } catch (error) {
-        paneNotification('monster', error.message);
+        paneNotification('monsters', error.message);
     }
 };
 
@@ -2202,7 +2202,7 @@ document.querySelector('#monsterForm').onsubmit = async event => {
     );
 
     if (hpValidationError) {
-        paneNotification('monster', hpValidationError);
+        paneNotification('monsters', hpValidationError);
 
         const startIsInvalid =
             !hpRangeStart ||
@@ -2220,20 +2220,39 @@ document.querySelector('#monsterForm').onsubmit = async event => {
         return;
     }
 
+    // Submit normalized strings. In particular, retain a valid dice expression
+    // such as "3d8+9" rather than converting it into Number/NaN.
     formData.set('hprangestart', hpRangeStart);
     formData.set('hprangeend', hpRangeEnd);
 
     const name = String(formData.get('name') ?? '').trim();
 
     try {
-        const response = await fetch('/api/monsters', {
+        const created = await request('/api/monsters', {
             method: 'POST',
             body: formData,
         });
 
-        // Preserve the existing response/error/reset/load logic here.
+        const count = Array.isArray(created) ? created.length : 0;
+
+        form.reset();
+
+        // Reload the authoritative state and redraw #monsters immediately.
+        await load();
+
+        paneNotification(
+            'monsters',
+            count === 1
+                ? `Monster ${name} added to the battle setup.`
+                : `${count} monsters added to the battle setup.`,
+        );
     } catch (error) {
-        paneNotification('monster', error.message);
+        paneNotification(
+            'monsters',
+            error instanceof Error
+                ? error.message
+                : 'Unable to add monster.',
+        );
     }
 };
 
