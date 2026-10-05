@@ -2,44 +2,41 @@
 
 Scrying Glass is a self-hosted, real-time tabletop encounter display for game masters. A private **Admin** interface prepares and runs encounters, while a separate **Client Display** presents the battle on a player screen, TV, or projector.
 
-The application runs two FastAPI services from one Python process, stores encounter data as JSON, serves uploaded images, and pushes live Client Display updates through WebSockets.
+The application runs two FastAPI services from one Python process, stores campaign and encounter data as JSON, serves uploaded images, and pushes live Client Display updates through WebSockets.
 
 > Formerly **Monster Display** (`monster_display_server`). See [Migrating from Monster Display](#migrating-from-monster-display) when upgrading an earlier installation.
 
 ## Features
 
-- Separate Admin and Client Display applications with independent session cookies, so both can remain signed in in the same browser.
+- Separate Admin and Client Display applications with independent session cookies.
 - Role-based `admin` and `client` accounts.
 - Live Client Display updates through WebSockets.
-- Manual monster and character creation.
-- Manual monster HP ranges: each created monster receives an independently rolled, inclusive HP value between the configured **HP Range start** and **HP Range end**.
+- Campaign-owned characters and campaign-specific saved battle setups.
+- Manual monster creation with fixed HP, inclusive numeric HP ranges, or D&D-style dice expressions.
+- Dice expressions accept optional spaces around modifiers: `3d8+9`, `3d8 +9`, `3d8+ 9`, and `3d8 + 9` are equivalent.
+- Multi-digit dice sides are supported, including `d10`, `d12`, `d20`, and `d100`.
+- Each monster created in a quantity receives an independent numeric-range selection or dice roll.
+- Rolled initial HP is stored as the monster's current HP, maximum HP, and reset HP.
+- Automatic persistence: character mutations save to the active campaign roster; monster mutations save to the loaded battle setup.
 - Compatible `.monster` JSON imports and quantity-based creation of up to 50 monster copies at once.
-- When a monster quantity is greater than one, copies receive numbered names in creation order, such as `Goblin - 1`, `Goblin - 2`, and `Goblin - 3`.
 - Monster and character CSV imports, including generated IDs for blank ID fields.
-- Optional uploaded monster images and best-effort D&D Beyond image lookup.
-- Campaigns that group battle setups: create, edit, activate, delete, and move or copy setups between campaigns.
-- Automatic migration of legacy unassigned setups into a **Default** campaign.
-- Per-campaign battle setups with named New, Save, Load, Rename, Delete, and Import from setup actions.
-- A named **New** action creates an empty working setup and immediately saves it under the entered unique name.
+- Optional uploaded monster images and best-effort D&D Beyond image lookup using the canonical `monster_species` value.
+- Legacy-marked exact D&D Beyond matches are tried before non-legacy exact matches; the dedicated monster-page image is used when available.
+- Monster edit dialogs show a thumbnail of the current image, limited to 300px in either dimension, and preview a replacement file locally until **Save monster** is clicked.
 - Per-setup Client Display colors, CSS gradients, and uploaded background images.
-- Initiative ordering, tie resolution, current-turn actions, turn advancement, and activity logging.
-- Monster and character list color markers that match combatant colors.
-- Selected-combatant bulk actions through row checkboxes in the Monster and Character panes.
-- Local 15-second status notifications in the Add character, Add monster, Campaign Setup, and Battle setups panes.
-- In-page `.monster` help describing compatible files and the imported fields.
-- CSV and JSON activity-log exports.
+- Initiative ordering, tie resolution, current-turn actions, turn advancement, activity logging, and bulk actions.
 
 ## Documentation
 
-- [User Guide](docs/User-Guide.md) — GM workflow, campaigns, battle setups, imports, combat controls, bulk actions, and troubleshooting.
-- [Technical Documentation](docs/Technical-Documentation.md) — architecture, persistence, state model, API routes, combat rules, and operational constraints.
-- [Systemd Deployment](docs/Systemd-Deployment.md) — installation as a hardened non-root `systemd` service, upgrades, backups, and migration.
+- [User Guide](docs/User-Guide.md) — GM workflow, campaigns, battle setups, monster creation, images, combat controls, and troubleshooting.
+- [Technical Documentation](docs/Technical-Documentation.md) — architecture, persistence, state model, APIs, HP grammar, image lookup, and operational constraints.
+- [Systemd Deployment](docs/Systemd-Deployment.md) — hardened non-root `systemd` deployment, upgrades, backups, and migration.
 
 ## Requirements
 
 - Python **3.14** or newer.
 - A modern browser.
-- Network connectivity between the server and display devices for LAN use.
+- LAN connectivity between the server and display devices.
 
 Required Python packages:
 
@@ -53,9 +50,8 @@ python-multipart
 ## Installation
 
 ```bash
-git clone [https://github.com/dajomas/scrying-glass.git](https://github.com/dajomas/scrying-glass.git)
+git clone https://github.com/dajomas/scrying-glass.git
 cd scrying-glass
-
 git checkout features/development
 
 python3.14 -m venv .venv
@@ -66,51 +62,19 @@ python3.14 -m pip install "fastapi>=0.115" "uvicorn[standard]>=0.30" "PyYAML>=6.
 cp config.example.yaml config.yaml
 ```
 
-Edit `config.yaml` and replace its example credentials before starting the application.
-
-## Project layout
-
-```text
-scrying_glass_server.py  # FastAPI applications, models, state, persistence, routes, startup
-admin_html.py             # Admin HTML document template
-client_html.py            # Client Display HTML document template
-login_html.py             # Shared login HTML template
-static/
-├── admin.css             # Admin styles
-├── admin.js              # Admin rendering, dialogs, API calls, and browser-only selections
-├── client.css            # Client Display styles
-├── client.js             # Client Display rendering and WebSocket handling
-└── login.css             # Login-page styles
-config.example.yaml       # Example configuration
-run.sh                    # Convenience launcher
-```
-
-The application serves the files in `static/`. After changing JavaScript or CSS, restart the service and hard-refresh the affected browser page.
+Edit `config.yaml` and replace example credentials before starting the application.
 
 ## Quick start
-
-Validate and start the application:
 
 ```bash
 python3.14 -m py_compile scrying_glass_server.py admin_html.py client_html.py login_html.py
 python3.14 scrying_glass_server.py --config config.yaml
 ```
 
-Open the following pages, replacing `SERVER` with the hostname or IP address of the machine running Scrying Glass:
-
 | Screen | Default address | Intended user |
 |---|---|---|
 | Admin | `http://SERVER:3000/` | Game master |
 | Client Display | `http://SERVER:4000/` or `http://SERVER:4000/display` | Players, TV, or projector |
-
-Opening `http://SERVER:4000/` redirects to the Client login page when there is no valid Client session. With a valid Client session, it redirects to the Client Display.
-
-For local use:
-
-```text
-http://localhost:3000/
-http://localhost:4000/
-```
 
 ## Configuration
 
@@ -132,133 +96,71 @@ security:
       password: "change-this-client-password"
 
 display:
-  # Fallback for legacy setups and the initial background for a new setup.
   background: "#080b14"
   entry_direction: "from_bottom"
   exit_direction: "to_bottom"
   monster_width_percent: 45
-  default_monster_color: "#842029"
-  default_character_color: "#1f4e79"
   dndbeyond_image_lookup: true
 ```
 
-Configuration may be YAML or JSON. Command-line values override the corresponding configuration values. Passwords may be plaintext or scrypt hashes; see the Technical Documentation for hash generation.
+`display.dndbeyond_image_lookup` enables optional outbound HTTPS lookups to D&D Beyond. A lookup failure never blocks monster creation; upload a monster image directly when an exact matching remote image is unavailable.
 
 ## Typical workflow
 
-1. Sign in to the Admin page with an `admin` account.
-2. Select an existing campaign or create a new one. Activating a campaign opens its most recently used setup where possible.
-3. Enter a unique name in **Battle setup name** and click **New** to create and immediately save an empty encounter, load a saved setup, or import combatants from another setup.
-4. Set the Client Display background for the working setup if desired.
-5. Add monsters and characters manually, from `.monster` files, or from CSV.
-6. Select repeated combatants with their checkboxes and use the relevant **Bulk** menu to prepare them efficiently.
-7. Set initiative and activate the living combatants that will participate.
-8. Save the battle setup again after making encounter changes that you want to retain.
-9. Start the battle, resolve initiative ties, and use **Next** to advance turns.
-10. Click the underlined current combatant in Battle order to apply Damage, Heal, Buff, or Debuff actions to one or more targets.
-11. Export the activity log if required, then use **Reset All** when the encounter ends.
+1. Sign in to the Admin page.
+2. Select or create a campaign; activating a campaign opens its preferred setup where available.
+3. Create a named battle setup with **New**, or load an existing setup.
+4. Add campaign characters and setup monsters.
+5. Set initiative and join living combatants to the battle.
+6. Start the battle, resolve ties, and use **Next** to advance turns.
+7. Use the current-combatant action dialog to apply Damage, Heal, Buff, or Debuff actions.
 
-## Campaigns and setups
+Character changes are automatically written to the active campaign. Monster changes are automatically written to the currently loaded saved battle setup. An intentionally unsaved encounter is retained as runtime working state until it is saved under a setup name.
 
-A campaign groups related battle setups. Each setup belongs to one campaign, and one campaign is active at a time.
+## Manual monster HP
 
-- New campaigns receive an empty `default` setup and become active by default.
-- Activating a campaign opens its recorded `last_setup`; if that file no longer exists, Scrying Glass opens the most recently modified setup instead.
-- Existing setups from versions before campaigns are automatically moved to the **Default** campaign during startup.
-- Setup names may be reused in different campaigns, but not within the same campaign.
-- Enter a unique setup name and click **New** to discard the current working encounter, create an empty one, and immediately save it under that name.
-- Switching campaigns, loading a setup, creating a campaign, and deleting the active campaign can replace the working encounter. Save first when changes matter.
+The manual monster form supports three HP modes:
 
-See [Campaigns](docs/User-Guide.md#campaigns) and [Battle setups](docs/User-Guide.md#battle-setups) for the complete workflow.
+| HP Range start | HP Range end | Result |
+|---|---|---|
+| `17` | blank | Every created copy starts with 17 HP |
+| `10` | `20` | Every created copy independently receives 10 through 20 HP, inclusive |
+| `3d8+9` | blank | Every created copy independently rolls 3d8 and adds 9 |
 
-## Pane notifications
-
-The Add character, Add monster, Campaign Setup, and Battle setups panes display local status messages for actions started in that pane.
-
-- Notifications disappear automatically after 15 seconds.
-- A newer notification in the same pane replaces the earlier timer.
-- The messages are browser-only feedback; they are not saved in setup files and are not shown on the Client Display.
-
-## Selected combatants
-
-The Monster and Character panes use independent row selections. Select checkboxes and choose an action from the matching **Bulk** menu.
-
-- Typical actions include Select all, Unselect all, Join Battle, Leave Battle, Reset, and Remove.
-- Monster bulk controls also cover ally state and the AC, HP, and initiative fields displayed on Client Monster cards.
-- Character bulk controls cover battle participation, initiative-bar visibility, reset, and removal.
-- Selections remain after successful actions while the selected combatants still exist; **Select all** and **Unselect all** intentionally replace the selection.
-- A bulk removal has one confirmation for the entire selected set.
-- Browser selections are not stored in `state.json` or saved setups, and they are not visible to Client Display users.
-
-## Per-setup backgrounds
-
-The Client Display background belongs to the current working battle setup. In the Admin **Battle setups** pane, use **View screen background** to choose a color, enter a CSS background value such as a gradient, or upload an image.
-
-Applying a background updates the Client Display immediately. Save the setup to retain it. A newly created setup starts with `display.background` from `config.yaml`; older setup files without a background use that value as a fallback until saved.
-
-Background uploads are stored in `storage_dir/uploads/`. Include `uploads/` in backups because setup files can reference those images.
-
-## Manual monster HP ranges
-
-The manual monster form uses **HP Range start** and **HP Range end** instead of a single HP value.
-
-- The start value may not be greater than the end value.
-- Both end points are included in the random selection.
-- When start and end are equal, that value is assigned.
-- Every created monster receives an independent HP roll.
-- The rolled HP initializes the monster's current HP, maximum HP, and reset HP.
-
-For example, creating three Goblins with a range of 7 to 12 can produce:
+Dice expressions use this form:
 
 ```text
-Goblin - 1: 7 HP
-Goblin - 2: 11 HP
-Goblin - 3: 9 HP
+<count>d<sides>[+|-<modifier>]
 ```
 
-The exact results vary because each monster receives its own random inclusive roll.
-
-## Importing monsters
-
-Scrying Glass accepts compatible `.monster` JSON files. The [Tetra-cube D&D 5e Statblock Generator](https://tetra-cube.com/dnd/dnd-statblock.html) is a useful external tool for authoring files with a name, type, Armor Class, and Hit Points.
-
-The `.monster` importer reads these values:
-
-| Imported value | JSON field search order |
-|---|---|
-| Name | `name` |
-| Monster species | `type` |
-| HP | `hpText`, then `hp` |
-| AC | `ac`, `armorClass`, `otherArmorDesc`, then `natArmorBonus` |
-
-The importer uses the first usable number in the selected HP or AC field. Name, species/type, HP, and AC must all be usable for the import to succeed.
-
-Quantity, color, and an optional replacement image are chosen in the Admin import form. When quantity is greater than one, imported copies receive numbered names in creation order. Use the **?** button beside the `.monster` import area for the same field reference and a supported JSON example.
-
-Monster CSV imports require:
+Spaces around `+` or `-` are optional. Common examples include:
 
 ```text
-name,monster_species,ac,hp
+1d8
+2d10+4
+3d8 + 9
+1d20
+1d100-5
 ```
 
-The CSV column `type` may be used instead of `monster_species`.
+Dice mode requires an empty HP Range end field. The roll result is stored as `hp`, `max_hp`, and `original_hp`, so reset restores the original rolled value rather than rolling again.
 
-Character CSV imports require:
+## Monster images
 
-```text
-name
-```
+A manually uploaded image always takes precedence. Without an upload, Scrying Glass can perform a best-effort D&D Beyond lookup using **Monster species** as the canonical D&D Beyond creature name. Use a canonical value such as `Mimic`, `Goblin`, or `Ancient Red Dragon`; the local encounter display name may be customized independently.
 
-CSV files must be UTF-8 with a header row. Missing IDs are generated, while duplicate IDs or IDs already used in the active encounter are rejected.
+When editing a monster, its current image is displayed as a thumbnail no larger than 300px wide or high. Selecting a replacement file previews it locally; the replacement is uploaded only after clicking **Save monster**.
 
 ## Data storage
 
-All persistent runtime data is stored below `storage_dir`:
+All persistent data is stored below `storage_dir`:
 
 ```text
 scrying-glass-data/
 ├── state.json
 ├── campaigns.json
+├── characters/
+│   └── <campaign-slug>.json
 ├── uploads/
 │   └── <uuid>.<image-extension>
 └── setups/
@@ -266,11 +168,18 @@ scrying-glass-data/
         └── <normalized-setup-name>.json
 ```
 
-Back up the complete directory. `state.json` preserves the working encounter; `campaigns.json` preserves campaign metadata and the active campaign; setup snapshots preserve named encounters; and `uploads/` contains monster and background images referenced by state and setup files.
+Back up the complete directory. It contains campaign character rosters, saved battle setups, the working state, activity logs, and uploaded monster/background images.
+
+## Static assets after upgrades
+
+After changing or deploying `admin.js` or `admin.css`, restart the service if necessary and hard-refresh the browser:
+
+- Linux/Windows: `Ctrl+Shift+R`
+- macOS: `Cmd+Shift+R`
+
+With Chrome DevTools open, enable **Disable cache** while testing updates.
 
 ## Migrating from Monster Display
-
-The project was renamed from Monster Display to Scrying Glass.
 
 | Before | After |
 |---|---|
@@ -278,16 +187,12 @@ The project was renamed from Monster Display to Scrying Glass.
 | `./monster-display-data` | `./scrying-glass-data` |
 | `monster_admin_session` / `monster_client_session` | `scrying_glass_admin_session` / `scrying_glass_client_session` |
 
-If `storage_dir` is explicitly configured, keep its value or change it deliberately after making a backup. If the default data directory is used and `./scrying-glass-data` does not exist, the application can continue using the legacy `./monster-display-data` directory and logs a migration suggestion.
-
-Users must sign in again after the rename because session cookies changed and sessions are in-memory. See [Migrating from Monster Display](docs/Systemd-Deployment.md#migrating-from-monster-display) for the full systemd procedure.
+If the default data directory is used and `./scrying-glass-data` does not exist, the application can continue using the legacy `./monster-display-data` directory and logs a migration suggestion.
 
 ## Security
 
-Scrying Glass is intended for a trusted local network. Do not expose its default HTTP listeners directly to the public internet.
-
-For remote access, use an HTTPS reverse proxy, firewall or VPN restrictions, strong passwords or scrypt password hashes, and a dedicated non-root service account. The application has in-memory sessions and is designed to run as a single process with one worker per persistent storage directory.
+Scrying Glass is intended for a trusted local network. Do not expose default HTTP listeners directly to the public internet. Use an HTTPS reverse proxy, firewall or VPN restrictions, strong passwords or scrypt hashes, and a dedicated non-root service account for remote use.
 
 ## License
 
-This project is licensed under the MIT License.
+MIT License.
