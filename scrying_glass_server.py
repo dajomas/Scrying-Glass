@@ -1341,11 +1341,9 @@ def dnd_image(monster_species: str) -> str | None:
             candidates.append((is_legacy, href))
         # True first: older/legacy exact matches are tried before current ones.
         candidates.sort(key=lambda candidate: not candidate[0])
-        print (f"Found {len(candidates)} candidates for {monster_species}: {candidates}")
 
         for _, href in candidates:
             monster_url = f"https://www.dndbeyond.com{href}"
-            print(f"Fetching monster details for {monster_species}: {monster_url}")
 
             monster_request = Request(monster_url, headers=headers)
             with urlopen(monster_request, timeout=5) as response:
@@ -1365,7 +1363,7 @@ def dnd_image(monster_species: str) -> str | None:
                 monster_html,
                 re.IGNORECASE | re.DOTALL | re.VERBOSE,
             )
-            print(f"Image search for {monster_species}: {image.group(0) if image else 'None'}")
+
             # Attributes are not guaranteed to remain in a fixed order. Retry
             # with src before class for pages that render it that way.
             if image is None:
@@ -1379,7 +1377,6 @@ def dnd_image(monster_species: str) -> str | None:
                     monster_html,
                     re.IGNORECASE | re.DOTALL | re.VERBOSE,
                 )
-            print(f"Image search for {monster_species}: {image.group(0) if image else 'None'}")
 
             if image is not None:
                 image_url = image.group("url").strip()
