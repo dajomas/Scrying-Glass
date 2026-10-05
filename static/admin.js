@@ -451,7 +451,20 @@ function characterRow(character) {
 }
 
 function monsterEdit(monster) {
+    const imagePreview = monster.image_url
+        ? `
+        <div class="monster-edit-image full">
+            <img
+                class="monster-edit-image-preview"
+                src="${esc(monster.image_url)}"
+                alt="${esc(monster.name)}"
+            >
+        </div>
+        `
+        : '';
+
     return `
+    ${imagePreview}
     <label>
         Name <span class="required-marker" aria-hidden="true">*</span>
         <input name="name" required value="${esc(monster.name)}">
@@ -546,6 +559,27 @@ function openEdit(kind, id) {
 
     document.querySelector('#editForm').innerHTML =
         kind === 'monsters' ? monsterEdit(item) : characterEdit(item);
+
+    if (kind === 'monsters') {
+        const form = document.querySelector('#editForm');
+        const imageInput = form.elements.image;
+        const imagePreview = form.querySelector(
+            '.monster-edit-image-preview'
+        );
+
+        if (imageInput && imagePreview) {
+            imageInput.onchange = event => {
+                const [file] = event.target.files;
+
+                if (!file) {
+                    return;
+                }
+
+                imagePreview.src = URL.createObjectURL(file);
+                imagePreview.alt = `Selected replacement image for ${item.name}`;
+            };
+        }
+    }
 
     document.querySelector('#cancelEdit').onclick = closeEdit;
     editModal.hidden = false;
