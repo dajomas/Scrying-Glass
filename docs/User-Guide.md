@@ -1,189 +1,143 @@
 # Scrying Glass User Guide
 
-Scrying Glass lets a game master prepare and run encounters from the private **Admin** screen while players view a separate live **Client Display**.
+Scrying Glass lets a game master manage encounters privately in Admin while players see a live Client Display.
 
-For installation and configuration, see the [README](../README.md). For internals and API details, see the [Technical Documentation](Technical-Documentation.md).
+## Sign in
 
-## Start and sign in
-
-```bash
-python3.14 scrying_glass_server.py --config config.yaml
-```
-
-| Screen | Address | Login role |
+| Screen | Address | Role |
 |---|---|---|
 | Admin | `http://SERVER:3000/` | `admin` |
-| Client Display | `http://SERVER:4000/` or `http://SERVER:4000/display` | `client` or `admin` |
+| Client Display | `http://SERVER:4000/` or `/display` | `client` or `admin` |
 
-Admin and Client Display use separate session cookies, so both screens can remain open in one browser.
+Admin and Client sessions use different cookies, so both can be open in one browser.
 
 ## Campaigns and setups
 
-A campaign owns its character roster and groups its battle setups. One campaign is active at a time.
+A campaign owns its character roster and groups saved battle setups. One campaign is active at a time.
 
-- A new campaign receives an empty `default` setup.
-- Activating a campaign opens its recorded last-used setup where possible.
-- Existing pre-campaign setup files are migrated into the Default campaign.
-- **New** creates and immediately saves an empty named setup.
-- **Load** replaces the working encounter with the chosen setup.
-- **Save** explicitly saves the complete working setup under the entered name.
-- **Import from setup** adds reset runtime copies of monsters without replacing the current encounter.
+- A new campaign receives an empty Default setup.
+- Activating a campaign opens its last-used setup when available, otherwise its most recently modified setup.
+- **New** creates and saves an empty named setup.
+- **Save** writes the current working setup under the entered name.
+- **Load** replaces the working encounter.
+- **Import from setup** appends reset copies of monsters from another saved setup.
 
 ### Automatic saving
 
-You do not need to click Save after ordinary combatant changes:
+- Character additions, edits, damage/healing, resets, bulk actions, and removals are saved automatically to the active campaign.
+- Monster additions, edits, damage/healing, resets, bulk actions, and removals are saved automatically to the loaded saved setup.
+- If no setup is loaded, monster changes remain in the unsaved working encounter. Save before loading/switching to avoid losing intentionally unsaved work.
 
-- Adding, editing, damaging, healing, resetting, bulk-updating, or removing a **Character** automatically saves that character roster to the active campaign.
-- Adding, editing, damaging, healing, resetting, bulk-updating, or removing a **Monster** automatically saves the currently loaded battle setup.
-- Battle actions, battle start/end, and turn advancement save the affected campaign and setup data as needed.
-
-If the encounter is intentionally unsaved—shown as no saved battle setup loaded—monster changes remain in the working encounter until you use **Save**. Switching campaign or loading another setup can replace unsaved work, so save it first when it matters.
-
-## Add monster manually
-
-The Add monster pane accepts a local display name and a canonical **Monster species**.
+## Add monsters manually
 
 | Field | Meaning |
 |---|---|
-| Name | Name displayed in this encounter, such as `Mimic 1` |
-| Monster species | Canonical D&D Beyond creature name/type, such as `Mimic` |
+| Name | Local encounter name, for example `Mimic 1` |
+| Monster species | Canonical creature name for D&D Beyond, for example `Mimic` |
 | AC | Armor Class |
-| HP Range start | Fixed HP, numeric range start, or dice expression |
-| HP Range end | Numeric range end; leave blank for fixed HP or dice notation |
-| Quantity | 1 through 50 independent copies |
-| Color | Monster card outline, initiative token, and Admin color marker |
-| Image | Optional PNG, JPG/JPEG, GIF, or WebP upload |
+| HP Range start | Fixed HP, range start, or dice expression |
+| HP Range end | Numeric range end; blank for fixed/dice HP |
+| Quantity | 1–50 copies |
+| Image | Optional upload |
 
-### HP modes
+### HP choices
 
 | HP Range start | HP Range end | Result |
 |---|---|---|
-| `17` | blank | Each copy starts with 17 HP |
-| `10` | `20` | Each copy independently receives 10 through 20 HP |
-| `3d8+9` | blank | Each copy independently rolls 3d8 and adds 9 |
+| `17` | blank | Every copy gets fixed 17 HP |
+| `10` | `20` | Every copy independently receives 10 through 20 HP |
+| `3d8+9` | blank | Every copy independently rolls `3d8+9` |
 
-Numeric ranges include both endpoints. Each monster gets its own result, including when you create many copies at once. The result becomes its current HP, maximum HP, and reset HP.
-
-### Dice notation
-
-Use:
-
-```text
-<count>d<sides>[+|-<modifier>]
-```
-
-Spaces around `+` or `-` are optional. These are identical:
-
-```text
-3d8+9
-3d8 +9
-3d8+ 9
-3d8 + 9
-```
-
-Common supported dice include `d4`, `d6`, `d8`, `d10`, `d12`, `d20`, and `d100`.
-
-Examples:
+Dice examples:
 
 ```text
 1d8
 2d10+4
-3d20 + 5
+3d8 + 9
+1d20
 1d100-10
 ```
 
-Rules:
+Spaces around `+`/`-` are optional. Dice HP requires blank HP Range end. The created number becomes current HP, max HP, and reset HP.
 
-- Dice count must be positive.
-- Dice must have at least two sides.
-- Dice notation requires an empty HP Range end field.
-- HP Range end must not be lower than a numeric HP Range start.
-- Invalid expressions are rejected before the request where possible, and always by the server.
+### D&D Beyond AC/HP assistance
 
-### Images
+After entering Monster species, Scrying Glass can look up an exact D&D Beyond result. It prefers an available Legacy-marked match and prefers a source dice expression over average HP.
 
-An uploaded image takes precedence over automatic lookup. If no image is uploaded, Scrying Glass may look up a D&D Beyond image using **Monster species**. Enter the canonical creature name for this feature; custom encounter names belong in **Name**.
+For example, `58 (9d8 + 18)` fills HP Range start with:
 
-The lookup is best effort. It prefers an exact D&D Beyond result marked Legacy when one is available, otherwise it tries an exact current result. If there is no usable dedicated monster image, the monster is still created normally without one.
+```text
+9d8+18
+```
 
-After successful creation, the monster list updates immediately and the Add monster pane shows a short confirmation.
+The Add monster notification area shows lookup feedback. By default a result fills only blank AC/HP fields. Enable **Overwrite Armor Class and HP Range with found D&D Beyond values** when you want lookup results to replace entered values.
 
-### Edit a monster
+If lookup does not find usable stats, enter values normally; lookup failure does not prevent creation.
 
-Click **Edit** in a Monster row to change name, species, AC, color, HP values, initiative, ally state, or image.
+### Images and colors
 
-- The current monster image appears at the top of the dialog as a thumbnail no larger than 300px wide or high.
-- Select a file in **Replace image** to preview it immediately in the dialog.
-- The selected replacement exists only in the browser until **Save monster** is clicked.
-- **Cancel** leaves the saved image unchanged.
+An uploaded image overrides automatic lookup. Without an upload, a best-effort D&D Beyond image lookup uses Monster species.
 
-## Import monsters and characters
+Every Admin color picker has a dot after it showing the selected color, including default colors. This is visual feedback; the color picker itself is what gets saved.
 
-### `.monster` files
+Click **Edit** for a monster to update fields. The current image appears as a thumbnail no larger than 300px in either dimension. Selecting **Replace image** previews the file immediately, but it uploads only when **Save monster** is clicked. Cancel leaves the stored image unchanged.
 
-Scrying Glass accepts compatible UTF-8 JSON `.monster` files. It reads:
+## Characters and imports
 
-| Imported value | JSON field search order |
-|---|---|
-| Name | `name` |
-| Monster species | `type` |
-| HP | `hpText`, then `hp` |
-| AC | `ac`, `armorClass`, `otherArmorDesc`, then `natArmorBonus` |
+Characters require name, color, and HP; initiative is optional.
 
-Quantity, color, and an optional replacement image are chosen in the import form. Use the **?** button beside the importer for in-page format help.
-
-### CSV files
-
-Monster CSV files require:
+Monster CSV requires:
 
 ```text
 name,monster_species,ac,hp
 ```
 
-Character CSV files require:
+Character CSV requires:
 
 ```text
 name
 ```
 
-`type` may be used instead of `monster_species` in Monster CSV imports. CSV files must be UTF-8 and include a header row.
+Compatible `.monster` JSON imports read `name`, `type`, HP from `hpText` or `hp`, and AC from `ac`, `armorClass`, `otherArmorDesc`, or `natArmorBonus`. Quantity, color, and optional replacement image are selected in the import form.
 
-## Monster and character controls
+## Initiative and Client card fields
 
-Each row provides Edit, battle participation, turn, reset, removal, and HP controls. Monster rows also provide ally status and Client card AC/HP/initiative visibility controls.
+A monster card can independently show AC, HP, and initiative.
 
-Use the checkboxes and **Bulk** menu to apply actions to selected rows. Monster and Character selections are independent and remain browser-local.
+To show initiative on the Client card:
 
-A combatant at zero or lower HP is dead and cannot take the turn. Reset restores original HP and original initiative values.
+1. Enter a numeric initiative in the Monster row and leave the field to save it.
+2. Enable **Init on**.
+3. Make the monster active/alive so it has a card during battle.
+
+**Init on** only permits display. It cannot display a blank initiative value.
 
 ## Run a battle
 
-1. Add or load combatants and set initiative.
-2. Mark living participants **Join Battle**.
-3. Click **Start battle** and resolve ties if prompted.
-4. Use **Next** to advance among active living combatants.
-5. Click the underlined current combatant in the battle order to open the action dialog.
+1. Add/load combatants and set initiative.
+2. Join living participants to battle.
+3. Start the battle and resolve ties.
+4. Use **Next** to advance active living combatants.
+5. Click the underlined current combatant in the battle order for multi-target Damage, Heal, Buff, or Debuff actions.
 
-Damage and Heal require an amount; Buff and Debuff do not. Actions are validated together before they are applied and are recorded in the activity log.
+Damage and Heal require a positive amount. Buff and Debuff use no amount. Actions are recorded in the Activity log.
 
 ## Client Display
 
-Active living monsters render as cards. Characters appear in the initiative bar. Monster cards show name and species, plus AC, HP, or initiative only when enabled by the Admin.
-
-Each setup can have a separate display background. In **Battle setups**, choose a color, enter a CSS value such as a gradient, or upload an image. Apply it for immediate display; automatic monster persistence does not replace the need to save an intentionally unsaved setup.
+Active living monsters render as cards. Visible combatants appear in the initiative bar. Monster card backgrounds can use images; card AC/HP/initiative fields appear only when enabled. Each setup can have its own display background color, CSS value, or uploaded image.
 
 ## Troubleshooting
 
-| Problem | Check |
+| Issue | Check |
 |---|---|
-| Old Admin behavior after an update | Restart if required and hard-refresh with `Ctrl+Shift+R` on Linux/Windows or `Cmd+Shift+R` on macOS |
-| Add monster does not update immediately | Confirm the current `admin.js` is deployed; successful creation should be followed by a state reload and pane notification |
-| Dice expression rejected | Check the syntax, use at least `d2`, and leave HP Range end empty |
-| No remote monster image | Use canonical Monster species spelling; lookup is optional, so upload an image if needed |
-| Changed monster disappears after switching setup | Confirm you were working in a loaded saved setup; save an unsaved encounter before switching |
-| Character change appears lost after campaign switch | Confirm the intended campaign was active before the change |
-| CSV import fails | Check UTF-8 encoding, required headers, numeric fields, and unique IDs |
+| Old behavior after update | Restart if necessary; hard-refresh with `Ctrl+Shift+R` or `Cmd+Shift+R` |
+| D&D Beyond suggestion unavailable | Check canonical species spelling, configuration, and outbound connectivity |
+| Dice expression rejected | Check syntax and leave HP Range end blank |
+| Initiative absent from Client card | Enter a numeric initiative, then enable **Init on** |
+| Remote image absent | Lookup is best effort; upload an image manually |
+| Monster changes disappear | Save an unsaved encounter before loading/switching setup |
+| CSV import fails | Check UTF-8, headers, numeric fields, and duplicate IDs |
 
 ## Backups
 
-Back up the complete `storage_dir`, including `campaigns.json`, `characters/`, `setups/`, `state.json`, and `uploads/`. Uploaded files may be referenced by saved setup backgrounds and monster records.
+Back up all of `storage_dir`: `campaigns.json`, `characters/`, `setups/`, `state.json`, and `uploads/`.

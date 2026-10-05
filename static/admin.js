@@ -134,6 +134,32 @@ async function lookupMonsterSpeciesStats() {
     }
 }
 
+function setColorPreview(preview, color) {
+    if (!preview || !color) {
+        return;
+    }
+
+    preview.style.backgroundColor = color;
+}
+
+function installColorPreview(inputSelector, previewSelector) {
+    const input = document.querySelector(inputSelector);
+    const preview = document.querySelector(previewSelector);
+
+    if (!input || !preview) {
+        return;
+    }
+
+    const update = () => {
+        setColorPreview(preview, input.value);
+    };
+
+    update();
+
+    input.addEventListener('input', update);
+    input.addEventListener('change', update);
+}
+
 const message = text => {
     document.querySelector('#message').textContent = text;
 };
@@ -609,7 +635,18 @@ function monsterEdit(monster) {
     </label>
     <label>
         Color
-        <input name="color" type="color" value="${esc(monster.color)}">
+        <span class="color-picker-control">
+            <input
+                name="color"
+                type="color"
+                value="${esc(monster.color)}"
+            >
+            <span
+                class="turn-marker color-picker-preview"
+                style="background-color: ${esc(monster.color)}"
+                aria-hidden="true"
+            ></span>
+        </span>
     </label>
     <label>
         Current HP <span class="required-marker" aria-hidden="true">*</span>
@@ -653,7 +690,18 @@ function characterEdit(character) {
     </label>
     <label>
         Color
-        <input name="color" type="color" value="${esc(character.color)}">
+        <span class="color-picker-control">
+            <input
+                name="color"
+                type="color"
+                value="${esc(character.color)}"
+            >
+            <span
+                class="turn-marker color-picker-preview"
+                style="background-color: ${esc(character.color)}"
+                aria-hidden="true"
+            ></span>
+        </span>
     </label>
     <label>
         Current HP <span class="required-marker" aria-hidden="true">*</span>
@@ -713,6 +761,32 @@ function openEdit(kind, id) {
 
     document.querySelector('#cancelEdit').onclick = closeEdit;
     editModal.hidden = false;
+
+    const editColorInput = document.querySelector(
+        '#editForm input[name="color"]',
+    );
+
+    const editColorPreview = document.querySelector(
+        '#editForm .color-picker-preview',
+    );
+
+    if (editColorInput && editColorPreview) {
+        const updateEditColorPreview = () => {
+            setColorPreview(editColorPreview, editColorInput.value);
+        };
+
+        updateEditColorPreview();
+
+        editColorInput.addEventListener(
+            'input',
+            updateEditColorPreview,
+        );
+
+        editColorInput.addEventListener(
+            'change',
+            updateEditColorPreview,
+        );
+    }
 }
 
 function campaignBySlug(slug) {
@@ -3135,6 +3209,11 @@ document.querySelector('#resetAll').onclick = async () => {
         message(error.message);
     }
 };
+
+installColorPreview('#monsterColor', '#monsterColorPreview');
+installColorPreview('#monsterFileColor', '#monsterFileColorPreview',);
+installColorPreview('#characterColor', '#characterColorPreview',);
+installColorPreview('#backgroundColor', '#backgroundColorPreview',);
 
 load();
 setups();
