@@ -1,6 +1,6 @@
 # Deploy Scrying Glass with systemd
 
-This guide deploys Scrying Glass as a persistent `systemd` service under a dedicated non-root Linux account. Application code, configuration, and writable encounter data are separated so upgrades do not overwrite setups, campaigns, working state, or uploaded images.
+This guide deploys Scrying Glass as a persistent `systemd` service under a dedicated non-root Linux account. Application code, configuration, and writable encounter data are separated so upgrades do not overwrite campaigns, character rosters, battle setups, working state, or uploads.
 
 See the [README](../README.md), [User Guide](User-Guide.md), and [Technical Documentation](Technical-Documentation.md) for application details.
 
@@ -10,33 +10,28 @@ The deployment:
 
 - Starts Scrying Glass at boot.
 - Runs it as the non-root `scryingglass` account.
-- Restarts it after unexpected failure.
-- Stores protected configuration in `/etc/scrying-glass`.
-- Stores state, campaigns, setups, and uploads in `/var/lib/scrying-glass`.
-- Uses basic `systemd` privilege and filesystem hardening.
+- Restarts after unexpected failure.
+- Stores configuration in `/etc/scrying-glass`.
+- Stores persistent data in `/var/lib/scrying-glass`.
+- Allows optional outbound HTTPS traffic for D&D Beyond image lookup when enabled.
 
 | Service | Default port | URL |
 |---|---:|---|
 | Admin | 3000 | `http://SERVER:3000/` |
 | Client Display | 4000 | `http://SERVER:4000/` or `http://SERVER:4000/display` |
 
-The Client root route at `http://SERVER:4000/` redirects unauthenticated visitors to the Client login page. With a valid Client session, it redirects to the Client Display. The direct `/display` route remains available.
-
 ## Prerequisites
 
-- A Linux host using `systemd`.
-- Python **3.14** or newer available as `python3.14`.
+- Linux host using `systemd`.
+- Python **3.14** or newer.
 - Git, if cloning from the repository.
-- Firewall access to ports 3000 and 4000 for intended LAN users.
+- Firewall access to ports 3000 and 4000 for trusted LAN users.
 - An account with `sudo`.
 
-Dependencies:
+Install dependencies:
 
-```text
-fastapi
-uvicorn[standard]
-PyYAML
-python-multipart
+```bash
+python3.14 -m pip install "fastapi>=0.115" "uvicorn[standard]>=0.30" "PyYAML>=6.0" python-multipart
 ```
 
 ## Deployment layout
@@ -48,32 +43,30 @@ python-multipart
 ├── admin_html.py
 ├── client_html.py
 ├── login_html.py
-├── static/
-│   ├── admin.css
-│   ├── admin.js
-│   ├── client.css
-│   ├── client.js
-│   └── login.css
-├── config.example.yaml
-└── run.sh
+└── static/
+    ├── admin.css
+    ├── admin.js
+    ├── client.css
+    ├── client.js
+    └── login.css
 
-/etc/scrying-glass/                 Protected configuration
+/etc/scrying-glass/
 └── config.yaml
 
-/var/lib/scrying-glass/             Writable persistent encounter data
+/var/lib/scrying-glass/
 ├── state.json
 ├── campaigns.json
+├── characters/
+│   └── <campaign-slug>.json
 ├── uploads/
 └── setups/
     └── <campaign-slug>/
         └── <setup-name>.json
 ```
 
-Do not place the live `storage_dir` inside the Git checkout. Persistent data must survive code replacement and Git updates.
+Do not place `storage_dir` in the Git checkout. The `characters/`, `setups/`, `uploads/`, and state files are all persistent application data.
 
 ## Create account and storage
-
-Create a non-login service account:
 
 ```bash
 sudo useradd \
@@ -83,59 +76,35 @@ sudo useradd \
   --create-home \
   --shell /usr/sbin/nologin \
   scryingglass
-```
 
-Create writable persistent storage and protected configuration storage:
-
-```bash
-sudo install -d \
-  -o scryingglass \
-  -g scryingglass \
-  -m 0750 \
-  /var/lib/scrying-glass
-
-sudo install -d \
-  -o root \
-  -g scryingglass \
-  -m 0750 \
-  /etc/scrying-glass
+sudo install -d -o scryingglass -g scryingglass -m 0750 /var/lib/scrying-glass
+sudo install -d -o root -g scryingglass -m 0750 /etc/scrying-glass
 ```
 
 ## Install application
 
 ```bash
-sudo git clone [https://github.com/dajomas/scrying-glass.git](https://github.com/dajomas/scrying-glass.git) \
-  /opt/scrying-glass
-
+sudo git clone https://github.com/dajomas/scrying-glass.git /opt/scrying-glass
 cd /opt/scrying-glass
 sudo git checkout features/development
 
 sudo python3.14 -m venv /opt/scrying-glass/.venv
-
 sudo /opt/scrying-glass/.venv/bin/python -m pip install --upgrade pip
-
 sudo /opt/scrying-glass/.venv/bin/python -m pip install \
-  "fastapi>=0.115" \
-  "uvicorn[standard]>=0.30" \
-  "PyYAML>=6.0" \
-  python-multipart
+  "fastapi>=0.115" "uvicorn[standard]>=0.30" "PyYAML>=6.0" python-multipart
 
 sudo chown -R root:root /opt/scrying-glass
 sudo chmod -R a=rX,u+w /opt/scrying-glass
 ```
 
-The service account should not be able to change executable code or static browser assets.
+The service account should not be able to modify executable code or static browser assets.
 
 ## Configure application
 
 ```bash
-sudo cp /opt/scrying-glass/config.example.yaml \
-  /etc/scrying-glass/config.yaml
-
+sudo cp /opt/scrying-glass/config.example.yaml /etc/scrying-glass/config.yaml
 sudo editor /etc/scrying-glass/config.yaml
 ```
-
-Example:
 
 ```yaml
 network:
@@ -150,7 +119,6 @@ security:
     - username: "dm"
       role: "admin"
       password: "replace-with-a-strong-admin-password"
-
     - username: "table"
       role: "client"
       password: "replace-with-a-strong-client-password"
@@ -160,57 +128,22 @@ display:
   entry_direction: "from_bottom"
   exit_direction: "to_bottom"
   monster_width_percent: 45
-  default_monster_color: "#842029"
-  default_character_color: "#1f4e79"
   dndbeyond_image_lookup: true
 ```
-
-Secure configuration credentials:
 
 ```bash
 sudo chown root:scryingglass /etc/scrying-glass/config.yaml
 sudo chmod 0640 /etc/scrying-glass/config.yaml
 ```
 
-`display.background` is the fallback for legacy setup files and the initial background for a new setup. Use the Admin UI to set and save each setup's individual Client Display background. Uploaded image backgrounds are stored below `/var/lib/scrying-glass/uploads/`.
-
-### Use scrypt hashes
-
-Plaintext passwords work, but scrypt hashes are preferable:
-
-```bash
-cd /opt/scrying-glass
-
-sudo /opt/scrying-glass/.venv/bin/python -c \
-  'from scrying_glass_server import password_hash; print(password_hash("replace-me"))'
-```
-
-Use the resulting `scrypt$...` value in the configuration.
+`dndbeyond_image_lookup: true` permits best-effort lookup of a dedicated D&D Beyond monster image when no image is uploaded. The service needs outbound DNS and HTTPS access for this optional feature. Failures do not block monster creation. Set it to `false` in restricted or offline environments.
 
 ## Validate installation
 
 ```bash
 cd /opt/scrying-glass
-
 sudo /opt/scrying-glass/.venv/bin/python -m py_compile \
-  scrying_glass_server.py \
-  admin_html.py \
-  client_html.py \
-  login_html.py
-
-sudo find static -maxdepth 1 -type f \
-  \( -name '*.js' -o -name '*.css' \) \
-  -printf '%f\n' | sort
-```
-
-The Python command should produce no output. The second command should list:
-
-```text
-admin.css
-admin.js
-client.css
-client.js
-login.css
+  scrying_glass_server.py admin_html.py client_html.py login_html.py
 ```
 
 Optional foreground test:
@@ -222,7 +155,7 @@ sudo -u scryingglass \
   --config /etc/scrying-glass/config.yaml
 ```
 
-Stop it with `Ctrl+C` after confirming both ports are listening.
+Stop the foreground test with `Ctrl+C` after confirming both ports listen.
 
 ## Create service
 
@@ -239,9 +172,7 @@ Type=simple
 User=scryingglass
 Group=scryingglass
 WorkingDirectory=/opt/scrying-glass
-
 ExecStart=/opt/scrying-glass/.venv/bin/python /opt/scrying-glass/scrying_glass_server.py --config /etc/scrying-glass/config.yaml
-
 Restart=on-failure
 RestartSec=5
 UMask=0027
@@ -251,7 +182,6 @@ PrivateTmp=true
 ProtectHome=true
 ProtectSystem=strict
 ReadWritePaths=/var/lib/scrying-glass
-
 RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
 CapabilityBoundingSet=
 AmbientCapabilities=
@@ -260,18 +190,7 @@ AmbientCapabilities=
 WantedBy=multi-user.target
 ```
 
-| Setting | Effect |
-|---|---|
-| `User` / `Group` | Runs without root privileges |
-| `UMask=0027` | Restricts permissions on newly created files |
-| `NoNewPrivileges=true` | Prevents privilege gain through execution |
-| `PrivateTmp=true` | Uses an isolated temporary directory |
-| `ProtectHome=true` | Blocks normal user home directories |
-| `ProtectSystem=strict` | Makes most host paths read-only |
-| `ReadWritePaths=/var/lib/scrying-glass` | Allows writes only to persistent application data |
-| `CapabilityBoundingSet=` | Removes unnecessary Linux capabilities |
-
-The service retains network access for Admin and Client traffic, WebSockets, and optional external image lookup.
+`AF_INET` and `AF_INET6` are required for Admin/Client traffic and optional D&D Beyond HTTPS lookups. No additional write path is required: all uploads, campaign rosters, setup snapshots, and runtime state are kept below `/var/lib/scrying-glass`.
 
 ## Start and verify
 
@@ -282,35 +201,16 @@ sudo systemctl status scrying-glass.service
 sudo journalctl -u scrying-glass.service -f
 ```
 
-Verify listener sockets:
-
 ```bash
 sudo ss -lptn 'sport = :3000'
 sudo ss -lptn 'sport = :4000'
-```
-
-Verify that the Admin and unauthenticated Client routes answer as expected:
-
-```bash
-curl -I http://127.0.0.1:3000/
-curl -I http://127.0.0.1:4000/
-```
-
-Expected unauthenticated behavior:
-
-- Port 3000 redirects to the Admin login page.
-- Port 4000 redirects to the Client login page.
-
-Verify writable persistent storage:
-
-```bash
 sudo ls -la /var/lib/scrying-glass
-sudo ls -la /var/lib/scrying-glass/uploads
+sudo ls -la /var/lib/scrying-glass/characters
 sudo ls -la /var/lib/scrying-glass/setups
-sudo ls -la /var/lib/scrying-glass/campaigns.json
+sudo ls -la /var/lib/scrying-glass/uploads
 ```
 
-The first start creates `campaigns.json` and a Default campaign folder. If setup saves or image uploads fail, repair permissions:
+If setup saves, campaign roster writes, or image uploads fail, repair permissions:
 
 ```bash
 sudo chown -R scryingglass:scryingglass /var/lib/scrying-glass
@@ -318,21 +218,17 @@ sudo chmod -R u=rwX,g=rX,o= /var/lib/scrying-glass
 sudo systemctl restart scrying-glass.service
 ```
 
-## Firewall and remote access
+## Persistence behavior
 
-Allow ports only on trusted networks. Example for firewalld:
-
-```bash
-sudo firewall-cmd --permanent --add-port=3000/tcp
-sudo firewall-cmd --permanent --add-port=4000/tcp
-sudo firewall-cmd --reload
-```
-
-Do not publish the default HTTP ports to the public internet. If remote access is necessary, place an HTTPS reverse proxy in front of the service, bind or firewall the back-end ports appropriately, use a VPN or access controls for Admin access, and use scrypt password hashes.
+- Any character mutation is saved automatically to the active campaign roster in `characters/<campaign-slug>.json`.
+- Any monster mutation is saved automatically to the currently loaded saved battle setup.
+- An encounter with no active saved setup remains an unsaved working encounter in `state.json` until it is explicitly saved.
+- Battle operations that can change both monsters and characters persist both ownership stores.
+- Uploading a monster image through **Save monster** writes a new file below `uploads/`; selecting a replacement file in the browser without saving does not upload it.
 
 ## Upgrades and backups
 
-Back up persistent data before every upgrade:
+Back up the complete persistent directory before every upgrade:
 
 ```bash
 sudo tar -C /var/lib -czf \
@@ -340,119 +236,32 @@ sudo tar -C /var/lib -czf \
   scrying-glass
 ```
 
-Upgrade code and dependencies:
+This backup must include campaign metadata, campaign character rosters, setup snapshots, `state.json`, activity logs, and uploads. A setup or roster can reference uploaded monster or background images, so do not back up JSON files without `uploads/`.
+
+Upgrade:
 
 ```bash
 cd /opt/scrying-glass
-
 sudo git fetch --all --prune
 sudo git checkout features/development
 sudo git pull --ff-only
 
 sudo /opt/scrying-glass/.venv/bin/python -m pip install \
-  "fastapi>=0.115" \
-  "uvicorn[standard]>=0.30" \
-  "PyYAML>=6.0" \
-  python-multipart
+  "fastapi>=0.115" "uvicorn[standard]>=0.30" "PyYAML>=6.0" python-multipart
 
 sudo /opt/scrying-glass/.venv/bin/python -m py_compile \
-  scrying_glass_server.py \
-  admin_html.py \
-  client_html.py \
-  login_html.py
-
-sudo find /opt/scrying-glass/static -maxdepth 1 -type f \
-  \( -name '*.js' -o -name '*.css' \) \
-  -printf '%f\n' | sort
+  scrying_glass_server.py admin_html.py client_html.py login_html.py
 
 sudo systemctl restart scrying-glass.service
 sudo systemctl status scrying-glass.service
 ```
 
-The working encounter, campaigns, setups, activity logs, per-setup backgrounds, and uploads persist because they remain outside the Git checkout in `/var/lib/scrying-glass`.
+After upgrades that change static files, hard-refresh Admin and Client pages:
 
-After an upgrade, hard-refresh both Admin and Client browser pages. Static browser files live in `/opt/scrying-glass/static/`; updating Python files without the corresponding static files can leave the interface loading but behaving like an older release.
+- Linux/Windows: `Ctrl+Shift+R`
+- macOS: `Cmd+Shift+R`
 
-The Admin browser assets include the pane-local notification behavior, manual monster HP range controls, `.monster` import help popup, and other UI behavior. Always deploy the matching `static/admin.js` and `static/admin.css` files with the matching server and HTML modules.
-
-### Campaign migration
-
-The first start after upgrading from pre-campaign storage automatically moves:
-
-```text
-/var/lib/scrying-glass/setups/*.json
-```
-
-to:
-
-```text
-/var/lib/scrying-glass/setups/default/
-```
-
-It also registers the Default campaign in `campaigns.json`. Review the migration log with:
-
-```bash
-sudo journalctl -u scrying-glass.service -b | grep 'unassigned battle setup'
-```
-
-Make a backup before the first start. A version without campaign support does not read nested `setups/<campaign>/` folders, so rolling back requires restoring a compatible backup.
-
-### Monster species migration
-
-Current Scrying Glass versions use `monster_species` as the canonical monster field. Existing state and setup files that contain the earlier `monster_type` field are migrated when loaded.
-
-Before upgrading, make the normal backup described above. This protects against any local edits, interrupted upgrades, or compatibility issues with older application versions.
-
-## Migrating from Monster Display
-
-Earlier installations may use `/opt/monster-display`, `/etc/monster-display`, `/var/lib/monster-display`, a `monsterdisplay` account, and `monster-display.service`.
-
-1. Stop the former service and back up data.
-
-   ```bash
-   sudo systemctl disable --now monster-display.service
-   sudo tar -C /var/lib -czf /root/monster-display-backup-$(date +%F).tar.gz monster-display
-   ```
-
-2. Rename account and group while retaining UID/GID.
-
-   ```bash
-   sudo usermod -l scryingglass -d /var/lib/scrying-glass monsterdisplay
-   sudo groupmod -n scryingglass monsterdisplay
-   ```
-
-3. Move directories.
-
-   ```bash
-   sudo mv /opt/monster-display /opt/scrying-glass
-   sudo mv /etc/monster-display /etc/scrying-glass
-   sudo mv /var/lib/monster-display /var/lib/scrying-glass
-   ```
-
-4. Update repository configuration and application code.
-
-   ```bash
-   cd /opt/scrying-glass
-   sudo git remote set-url origin https://github.com/dajomas/scrying-glass.git
-   sudo git pull --ff-only
-   ```
-
-5. Update `storage_dir` in `/etc/scrying-glass/config.yaml`.
-
-   ```bash
-   sudo sed -i 's#/var/lib/monster-display#/var/lib/scrying-glass#' /etc/scrying-glass/config.yaml
-   ```
-
-6. Create the `scrying-glass.service` unit shown above, remove the old unit, and start the new service.
-
-   ```bash
-   sudo rm /etc/systemd/system/monster-display.service
-   sudo systemctl daemon-reload
-   sudo systemctl enable --now scrying-glass.service
-   sudo systemctl status scrying-glass.service
-   ```
-
-Campaigns, setups, uploads, and working state move with the persistent directory. Users must sign in again because session cookies changed.
+For troubleshooting static browser assets, open Chrome DevTools → **Network**, enable **Disable cache**, then reload. Deploy matching versions of `admin_html.py`, `static/admin.js`, `static/admin.css`, and `scrying_glass_server.py` together.
 
 ## Troubleshooting
 
@@ -462,45 +271,20 @@ Campaigns, setups, uploads, and working state move with the persistent directory
 sudo journalctl -u scrying-glass.service -n 100 --no-pager
 ```
 
-Common causes are missing Python 3.14, missing dependencies, invalid YAML, unreadable configuration, unwritable storage/campaign directories, or a port already in use.
+Common causes are missing Python, dependencies, invalid YAML, unreadable configuration, unwritable storage, or a port already in use.
 
-### Service cannot write state or uploads
+### Service cannot save setup, roster, or image
 
-The `scryingglass` account must own the configured storage directory. If `storage_dir` is moved, update `ReadWritePaths` in the unit too.
+Confirm the service account owns the configured `storage_dir`. If it changed, also update `ReadWritePaths` in the systemd unit.
+
+### D&D Beyond image lookup does not work
+
+Confirm `display.dndbeyond_image_lookup: true`, outbound DNS/HTTPS connectivity, and that **Monster species** is a canonical D&D Beyond monster name. The lookup is best effort; upload an image manually when it returns no exact usable monster-page image.
 
 ### Browser uses old page code
 
-Restart the service, verify that all expected files exist in `/opt/scrying-glass/static/`, then hard-refresh:
+Restart the service, check `/opt/scrying-glass/static/`, then hard-refresh. A stale `admin.js` can leave a newer HTML template apparently loaded while its form behavior remains old.
 
-- Linux/Windows: `Ctrl+Shift+R`
-- macOS: `Cmd+Shift+R`
+## Migrating from Monster Display
 
-For a dedicated kiosk display, fully close and reopen the browser if hard refresh does not clear cached assets.
-
-### Admin or Client cannot log in
-
-Confirm the configured account, password, role, and port. Sessions are cleared on restart. Admin and Client use distinct cookies and can be logged in simultaneously in one browser.
-
-### Client root returns unexpected content
-
-Use:
-
-```bash
-curl -I http://127.0.0.1:4000/
-```
-
-Without a Client session, the response should redirect to `/login`. If the service instead returns a JSON `Not Found` response, confirm that the deployed `scrying_glass_server.py` includes the Client `GET /` route and restart the service.
-
-### Manual monster creation fails
-
-Verify that the deployed `admin_html.py`, `static/admin.js`, and `scrying_glass_server.py` are from the same release.
-
-For manual monster creation, the form and endpoint must agree on:
-
-```text
-monster_species
-hp_range_start
-hp_range_end
-```
-
-Also confirm that the HP range start is not greater than the HP range end.
+Back up the old persistent directory, move it deliberately, update `storage_dir`, and deploy the renamed service. Users must sign in again because session cookies changed. See the README and Technical Documentation for the storage and state model.

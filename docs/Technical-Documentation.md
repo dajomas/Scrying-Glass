@@ -1,27 +1,6 @@
 # Scrying Glass Technical Documentation
 
-Scrying Glass is a single-process Python/FastAPI application for a game-master-controlled tabletop battle display. It runs separate Admin and Client FastAPI applications in one interpreter, keeps encounter state in shared memory, persists it as JSON, and broadcasts Client Display updates over WebSockets.
-
-See the [README](../README.md) for installation and the [User Guide](User-Guide.md) for user-facing workflows.
-
-## Source layout
-
-```text
-scrying_glass_server.py  # FastAPI apps, models, state, persistence, rules, routes, startup
-admin_html.py             # Admin HTML document template
-client_html.py            # Client Display HTML document template
-login_html.py             # Shared login HTML template
-static/
-├── admin.css             # Admin styles
-├── admin.js              # Admin state, rendering, dialogs, API interaction, selections
-├── client.css            # Client Display styles
-├── client.js             # Client rendering and WebSocket client
-└── login.css             # Login styles
-config.example.yaml       # Example deployment configuration
-run.sh                    # Convenience launcher
-```
-
-HTML templates define document structure. Browser behavior belongs in the static JavaScript and CSS files, which the FastAPI applications serve as static assets.
+Scrying Glass is a single-process Python/FastAPI application for a game-master-controlled tabletop battle display. It runs separate Admin and Client FastAPI applications in one interpreter, keeps working encounter state in shared memory, persists JSON data, and broadcasts Client Display updates through WebSockets.
 
 ## Runtime architecture
 
@@ -32,103 +11,14 @@ Admin browser ── HTTP ──► Admin FastAPI app ── TCP 3000 by default
                                   ├── shared SESSIONS
                                   ├── shared SOCKETS
                                   ├── async save lock
-                                  └── state.json, campaigns.json, setups/<campaign>/, uploads/
+                                  └── state.json, campaigns.json, characters/, setups/, uploads/
                                   │
 Client browser ── HTTP/WS ► Client FastAPI app ── TCP 4000 by default
 ```
 
-Both apps share one process and one in-memory state model. Run exactly one worker and one service instance per storage directory. A multi-worker or multi-replica deployment requires external shared state, session storage, locking, and publish/subscribe synchronization before it is safe.
+Run one process and one worker per storage directory. Multi-worker or multi-replica deployments require external shared state, locking, sessions, and pub/sub before they are safe.
 
-## Dependencies and configuration
-
-Install dependencies:
-
-```bash
-python3.14 -m pip install "fastapi>=0.115" "uvicorn[standard]>=0.30" "PyYAML>=6.0" python-multipart
-```
-
-Configuration can be YAML or JSON. Command-line values override matching file values.
-
-```yaml
-network:
-  bind: "0.0.0.0"
-  admin_port: 3000
-  client_port: 4000
-
-storage_dir: "./scrying-glass-data"
-
-security:
-  users:
-    - username: "dm"
-      role: "admin"
-      password: "replace-this-admin-password"
-
-    - username: "table"
-      role: "client"
-      password: "replace-this-client-password"
-
-display:
-  background: "#080b14"
-  entry_direction: "from_bottom"
-  exit_direction: "to_bottom"
-  monster_width_percent: 45
-  default_monster_color: "#842029"
-  default_character_color: "#1f4e79"
-  dndbeyond_image_lookup: true
-```
-
-| Key | Purpose |
-|---|---|
-| `network.bind` | Interface used by both HTTP services |
-| `network.admin_port` | Admin listener; default 3000 |
-| `network.client_port` | Client Display listener; default 4000 |
-| `storage_dir` | Parent directory for state, campaigns, setups, and uploads |
-| `security.users` | Username, role, and plaintext or scrypt password records |
-| `display.background` | Fallback for legacy setup files and initial background for new setups |
-| `display.entry_direction` | `from_bottom` or `from_top` |
-| `display.exit_direction` | `to_bottom` or `to_top` |
-| `display.monster_width_percent` | Display sizing configuration retained in public display state |
-| `display.dndbeyond_image_lookup` | Enables optional remote image lookup |
-
-Example:
-
-```bash
-python3.14 scrying_glass_server.py \
-  --config /etc/scrying-glass/config.yaml \
-  --bind 0.0.0.0 \
-  --admin-port 3000 \
-  --client-port 4000 \
-  --storage-dir /var/lib/scrying-glass
-```
-
-## Authentication
-
-Login creates a `secrets.token_urlsafe(32)` token held in the in-memory session store. A session holds username and role.
-
-| Application | Cookie |
-|---|---|
-| Admin | `scrying_glass_admin_session` |
-| Client Display | `scrying_glass_client_session` |
-
-Cookies are scoped by hostname instead of port. Separate cookie names therefore allow Admin and Client Display sessions in the same browser. Legacy cookie names are cleared after successful login.
-
-Admin mutation routes require an Admin session. Client state routes and WebSocket connections require a Client cookie; Client login accepts both `client` and `admin` roles.
-
-Passwords may be plaintext or use this format:
-
-```text
-scrypt$<salt_hex>$<digest_hex>
-```
-
-Generate a hash with:
-
-```bash
-python3.14 -c 'from scrying_glass_server import password_hash; print(password_hash("replace-me"))'
-```
-
-Sessions are lost when the process restarts.
-
-## Persistence and campaigns
+## Storage and ownership
 
 For `storage_dir: /var/lib/scrying-glass`:
 
@@ -136,6 +26,8 @@ For `storage_dir: /var/lib/scrying-glass`:
 /var/lib/scrying-glass/
 ├── state.json
 ├── campaigns.json
+├── characters/
+│   └── <campaign-slug>.json
 ├── uploads/
 │   └── <uuid>.<extension>
 └── setups/
@@ -143,67 +35,57 @@ For `storage_dir: /var/lib/scrying-glass`:
         └── <normalized-setup-name>.json
 ```
 
-| Location | Purpose |
-|---|---|
-| `state.json` | Working encounter, battle order, activity log, and working display background |
-| `campaigns.json` | Active campaign plus campaign metadata and most recently worked-on setup |
-| `uploads/` | Uploaded Monster and setup-background images, mounted below `/media/` |
-| `setups/<campaign-slug>/` | Named complete-state snapshots belonging to one campaign |
+| Store | Owner | Contents |
+|---|---|---|
+| `characters/<campaign>.json` | Campaign | Character roster and character runtime values |
+| `setups/<campaign>/<setup>.json` | Battle setup | Monsters, monster-only battle order, activity log, and setup display state |
+| `state.json` | Runtime | Working battle order, activity log, display state, active-setup reference, and unsaved monsters when no setup is active |
+| `uploads/` | Shared persistent files | Uploaded monster and background images |
 
-State and campaign data are written by temporary-file replacement. Campaign and setup names are normalized to lower-case safe slugs limited to 80 characters.
+`setup_snapshot()` excludes campaign-owned characters and filters the saved battle order to monster IDs. This prevents character records from being copied into every setup snapshot.
 
-A campaign registry has this general shape:
+### Automatic persistence
 
-```json
-{
-  "active": "curse-of-strahd",
-  "campaigns": {
-    "default": {
-      "name": "Default",
-      "description": "Battle setups that were not connected to a campaign",
-      "created": "2026-09-29T06:00:05+00:00",
-      "last_setup": "goblin-ambush",
-      "last_setup_at": "2026-09-29T08:12:44+00:00"
-    }
-  }
-}
+Mutation handlers use target-aware persistence under the shared async lock:
+
+```python
+async def combatants_changed(
+    *,
+    monsters: bool = False,
+    characters: bool = False,
+) -> None:
+    async with LOCK:
+        if monsters:
+            save_active_setup_monsters()
+        if characters:
+            save_active_campaign_characters()
+        save_state()
+    await broadcast()
 ```
 
-At startup and during campaign/setup operations, migration detects `*.json` files directly inside the old `setups/` directory. It moves them into `setups/default/`, creates and registers Default as needed, resolves naming collisions with numeric suffixes, registers unlisted campaign folders, and ensures that an active campaign exists.
-
-Each newly created campaign receives `default.json`, an empty normalized setup. Activating a campaign opens its recorded `last_setup` when present; otherwise it opens the most recently modified setup. If no setup exists, working state is left unchanged.
+- Character mutations persist the active campaign roster.
+- Monster mutations persist the active saved setup when one exists.
+- If `active_setup` is absent or stale, monster state remains an unsaved encounter in `state.json`; the server does not silently create or overwrite an arbitrary named setup.
+- Mixed battle operations save both stores.
+- Files are written through temporary-file replacement.
 
 ## State model
 
-The normalized root state is:
+The normalized root state contains `monsters`, `characters`, `battle_order`, `activity_log`, `display`, and `active_setup`.
 
-```json
-{
-  "monsters": [],
-  "characters": [],
-  "battle_order": [],
-  "activity_log": [],
-  "display": {
-    "background": "#080b14"
-  }
-}
-```
-
-`normalize_state()` fills fields absent from older state and setup files, initializes legacy setup backgrounds from configured fallback, and removes battle-order IDs that no longer identify an entity.
-
-A Monster includes identity, display, combat, and Client-card fields:
+A Monster includes:
 
 ```json
 {
   "id": "uuid-hex",
-  "name": "Ice Guard",
-  "monster_species": "humanoid",
-  "ac": 16,
-  "hp": 45,
-  "max_hp": 45,
-  "original_hp": 45,
+  "name": "Mimic 1",
+  "monster_species": "Mimic",
+  "ac": 12,
+  "hp": 58,
+  "max_hp": 58,
+  "original_hp": 58,
   "color": "#842029",
-  "image_url": "/media/uuid.png",
+  "image_url": "https://example.invalid/image.png",
   "active": false,
   "alive": true,
   "visible": false,
@@ -217,305 +99,157 @@ A Monster includes identity, display, combat, and Client-card fields:
 }
 ```
 
-`monster_species` is the canonical species/type field.
+`monster_species` is the canonical species/type field. Older `monster_type` values are migrated to `monster_species` by state normalization when needed.
 
-Older saved monster records may contain `monster_type`. During normalization, that legacy value is migrated to `monster_species` when the canonical field is absent. When both fields exist, `monster_species` is retained and the legacy `monster_type` field is discarded.
+## Manual monster API
 
-A Character uses the corresponding shared combat fields but no Monster image, species, AC, ally, or card-stat visibility fields.
+`POST /api/monsters` accepts multipart form data because the same request may carry an uploaded image.
 
-`STATE.display.background` applies to the current working encounter and is saved into named setup snapshots. It accepts Client-supported CSS values, including colors and gradients. Uploaded backgrounds are represented as `url("/media/<uuid>.<extension>")`. The configured background is an initial or legacy fallback, not a replacement for an already saved per-setup background.
+| Field | Type | Meaning |
+|---|---|---|
+| `name` | string | Local encounter/display name |
+| `monster_species` | string | Canonical creature name/type; used for optional D&D Beyond lookup |
+| `ac` | integer | Armor Class |
+| `hprangestart` | string | Required fixed HP, numeric lower bound, or dice expression |
+| `hprangeend` | string | Optional numeric upper bound; must be blank for dice mode |
+| `quantity` | integer | 1 through 50 |
+| `color` | string | Monster display color |
+| `image` | file | Optional PNG, JPG/JPEG, GIF, or WebP upload |
 
-An Activity Log record includes an ID, ISO-8601 timestamp, actor and target identifiers/names/states, action, and optional amount. Valid actions are `damage`, `heal`, `buff`, and `debuff`; Buff and Debuff have a null amount.
+The Admin form validates input for immediate feedback, but server validation remains authoritative.
 
-## Synchronization and selections
+### HP resolution
 
-Mutation handlers save and broadcast through `changed()`:
+The server resolves HP once per monster inside the quantity loop. It supports:
 
-```python
-async def changed() -> None:
-    async with LOCK:
-        save_state()
-    await broadcast()
+| Start | End | Factory result |
+|---|---|---|
+| `17` | blank | `lambda: 17` |
+| `10` | `20` | `lambda: random.randint(10, 20)` |
+| `3d8+9` | blank | dice roller returning one independent total per call |
+
+Each result initializes `hp`, `max_hp`, and `original_hp`. Dice notation is generation-only; it is not persisted as reset logic. Reset restores the concrete original result and never rerolls.
+
+### Dice grammar
+
+The accepted grammar is:
+
+```text
+<count>d<sides>[ optional-space ][ + | - ][ optional-space ]<modifier>
 ```
 
-The Client fetches `/api/state` initially, then renders WebSocket state messages. The Admin page refreshes state after mutations.
+Whitespace around the operator is optional. The implementation must accept all of these equivalently:
 
-Selected Monster and Character IDs are different: they are Admin-browser-only state maintained in `static/admin.js`. They are not part of `STATE`, `state.json`, campaign data, saved setup snapshots, or Client Display state.
+```text
+3d8+9
+3d8 +9
+3d8+ 9
+3d8 + 9
+```
 
-| Event | Selection behavior |
-|---|---|
-| Select all | Replaces a pane selection with all current entities of that type |
-| Unselect all | Clears that pane selection |
-| Join, leave, visibility, display, or reset action | Keeps selected IDs that still exist |
-| Remove action | Deleted IDs disappear on next state render |
-| Setup load or campaign switch | Stale IDs are pruned because the loaded state has different entities |
-| Monster selection action | Does not affect Character selection |
-| Character selection action | Does not affect Monster selection |
+The `d` is case-insensitive. Multi-digit die sizes are supported, including `d10`, `d12`, `d20`, and `d100`.
 
-The browser should prune stale IDs during render. Server-side selected-bulk operations must validate every submitted ID before mutating any combatant, so stale input fails without partially applying an action.
+Examples:
 
-## Admin pane notifications
+```text
+1d8
+2d10+4
+3d20 + 5
+1d100-10
+```
 
-The Admin UI provides transient, contextual notifications in these panes:
+Validation rules:
 
-- Add character
-- Add monster
-- Campaign Setup
-- Battle setups
+- Dice count is a positive integer.
+- Die sides must be at least 2.
+- Server-side limits protect resources: `MAX_HP_DICE_COUNT = 100`, `MAX_HP_DIE_SIDES = 1000`, and `MAX_HP_MODIFIER = 100000`.
+- A dice expression requires an empty `hprangeend`.
+- Numeric values must be non-negative whole numbers.
+- Numeric start cannot exceed numeric end.
+- No `eval()` is used.
 
-Each notification target maintains an independent timeout. A newer notification in the same pane clears the prior timeout, replaces its text, and remains visible for 15 seconds.
+The client and server regexes must remain synchronized. A clear implementation is to capture one or more digits for sides and perform the minimum/maximum checks in ordinary validation code.
 
-Notifications are browser-only UI feedback. They are not written into `STATE`, saved in `state.json`, saved into setup snapshots, broadcast through WebSockets, or shown to Client Display users.
+## D&D Beyond image lookup
+
+`display.dndbeyond_image_lookup` controls optional lookup. It is best effort and must never prevent monster creation.
+
+1. An uploaded `image` wins and is saved under `/media/`.
+2. Without an upload, lookup uses `monster_species`, not the local encounter `name`.
+3. The monster search response is scanned for exact normalized title matches using the established `<a ... href="/monsters/...">...</a>` matcher.
+4. For each exact candidate, legacy preference is computed from the complete matched anchor:
+
+   ```python
+   is_legacy = "legacy" in result.group(0).casefold()
+   ```
+
+5. Candidates are sorted legacy first:
+
+   ```python
+   candidates.sort(key=lambda candidate: not candidate[0])
+   ```
+
+6. Each candidate page is fetched in order. The desired image is the dedicated page image carrying `class="monster-image"`, not a generic `og:image` social-media asset.
+7. If a legacy candidate has no usable dedicated image, lookup continues to current candidates. If no candidate succeeds, `image_url` remains `None`.
+
+The detail-page markup can place `class` before or after `src`; image extraction must support both attribute orders. Relative and protocol-relative URLs must be normalized before storing them.
+
+The external site’s markup is not an API contract. Keep errors contained inside the optional lookup path, avoid logging full remote HTML in production, and use a manually uploaded image when lookup is unavailable or ambiguous.
+
+## Edit-monster image handling
+
+`monsterEdit(monster)` dynamically renders the edit form in `static/admin.js`.
+
+- When `monster.image_url` is present, the form renders an image thumbnail at the top.
+- CSS constrains it with `max-width: min(100%, 300px)` and `max-height: 300px`, preserving aspect ratio.
+- The **Replace image** file input uses `URL.createObjectURL(file)` for browser-local preview only.
+- The preview does not upload or persist data.
+- The existing multipart `POST /api/monsters/{id}/edit` route uploads the selected file only after **Save monster** submits the form.
+- Canceling the dialog or reloading the page discards an unsaved replacement selection.
+
+## Browser synchronization
+
+The Client fetches state initially and then consumes authenticated WebSocket state messages. The Admin page reloads authoritative state after mutations.
+
+The manual monster form success branch must:
+
+1. Submit multipart `FormData` to `POST /api/monsters`.
+2. Parse/validate the response through the shared `request()` helper.
+3. Reset the form after success.
+4. Call `await load()` to redraw `#monsters` immediately.
+5. Call `paneNotification('monsters', ...)` for local feedback.
+
+Omitting the post-success `load()` leaves the browser list stale until a page reload even though server persistence succeeded.
+
+Pane notifications are browser-only; they are not in state, saved setups, or Client Display messages.
 
 ## API inventory
 
-Unless stated otherwise, Admin mutation routes require an Admin session.
-
-### Pages and live state
-
-| App | Method | Path | Purpose |
-|---|---|---|---|
-| Admin | GET/POST | `/login` | Admin login |
-| Admin | GET | `/` | Admin UI; redirects to Admin login without a valid Admin session |
-| Client | GET/POST | `/login` | Client or Admin login |
-| Client | GET | `/` | Redirects to `/login` without a valid Client session; otherwise redirects to `/display` |
-| Client | GET | `/display` | Client Display UI |
-| Admin | GET | `/api/state` | Current state for Admin session |
-| Client | GET | `/api/state` | Current state for Client session |
-| Client | WebSocket | `/ws` | Authenticated Client live updates |
-
-### Campaign and setup routes
-
 | Method | Path | Purpose |
 |---|---|---|
-| GET | `/api/campaigns` | Migrates and returns campaigns, active campaign, setup metadata, and moved legacy setups |
-| POST | `/api/campaigns` | Creates campaign and empty `default` setup; may activate and open it |
-| PATCH | `/api/campaigns/{slug}` | Renames or edits campaign metadata |
-| DELETE | `/api/campaigns/{slug}` | Deletes campaign; moves or deletes setups as explicitly requested |
-| POST | `/api/campaigns/{slug}/activate` | Activates campaign and opens selected preferred setup |
-| POST | `/api/campaigns/{slug}/setups` | Moves or copies setup from another campaign |
-| GET | `/api/setups` | Lists setups in active or supplied campaign |
-| POST | `/api/setups/new` | Replaces working state with a blank unsaved state |
-| POST | `/api/setups/save` | Saves complete working state under normalized name |
-| POST | `/api/setups/load` | Replaces working state with snapshot |
-| POST | `/api/setups/rename` | Renames saved setup |
-| DELETE | `/api/setups/{name}` | Deletes setup and opens next or fresh default setup |
-| POST | `/api/setups/import` | Appends runtime-reset copies from setup |
+| GET | `/api/state` | Current Admin or Client state for the authenticated application |
+| POST | `/api/monsters` | Create manual monsters from multipart data |
+| POST | `/api/monsters/import` | Import `.monster` JSON |
+| POST | `/api/monsters/import-csv` | Import Monster CSV |
+| POST | `/api/monsters/{id}/edit` | Edit Monster with optional image replacement |
+| PATCH | `/api/monsters/{id}` | Update Monster state or HP delta |
+| POST | `/api/monsters/bulk` | Apply selected-Monster actions |
+| POST | `/api/characters` | Create character |
+| POST | `/api/characters/import-csv` | Import Character CSV |
+| PATCH | `/api/characters/{id}` | Update character |
+| POST | `/api/characters/bulk` | Apply selected-Character actions |
+| POST | `/api/setups/save` | Explicitly save current working setup under a name |
+| POST | `/api/setups/load` | Load named setup into working state |
+| POST | `/api/battle/start` | Validate/start battle order |
+| POST | `/api/battle/next` | Advance turn |
+| POST | `/api/battle/actions` | Apply validated multi-target current-turn actions |
 
-### Named New setup workflow
+## Operations and security
 
-The Admin **New** button is a client-side workflow built from two existing setup routes:
-
-1. It reads the name entered in the Battle setup name field.
-2. It rejects an empty or known duplicate name in the active campaign before discarding the current working encounter.
-3. It requests confirmation from the user.
-4. It calls `POST /api/setups/new` to replace the working state with a blank setup.
-5. It immediately calls `POST /api/setups/save` with the entered name and active campaign.
-6. It refreshes the campaign/setup metadata, selects the newly saved setup, and reloads state.
-
-The browser's duplicate-name check provides immediate feedback. The save operation remains the server-side persistence operation; deployments should keep the client and server code synchronized so the New workflow and server save behavior agree.
-
-### Display and combatant routes
-
-| Method | Path | Purpose |
-|---|---|---|
-| PATCH | `/api/display/background` | Updates working background and broadcasts it |
-| POST | `/api/display/background-image` | Stores allowed image and assigns it as working background |
-| POST | `/api/monsters` | Creates one or more Monsters from multipart form data |
-| POST | `/api/monsters/import` | Imports compatible `.monster` JSON |
-| POST | `/api/monsters/import-csv` | Imports Monster CSV |
-| POST | `/api/monsters/roll-initiative` | Assigns d20 initiative to every Monster |
-| POST | `/api/monsters/bulk` | Applies a supported action to selected Monster IDs |
-| POST | `/api/monsters/{id}/edit` | Edits Monster with optional image replacement |
-| PATCH | `/api/monsters/{id}` | Updates Monster fields or applies HP delta |
-| POST | `/api/characters` | Creates Character |
-| POST | `/api/characters/import-csv` | Imports Character CSV |
-| POST | `/api/characters/bulk` | Applies a supported action to selected Character IDs |
-| PATCH | `/api/characters/{id}` | Updates Character fields or applies HP delta |
-| DELETE | `/api/combatants/{id}` | Removes one Monster or Character from working encounter |
-| POST | `/api/combatants/{id}/reset` | Resets one combatant |
-
-Monster bulk actions include:
-
-```text
-join-battle
-leave-battle
-set-ally
-unset-ally
-show-ac
-hide-ac
-show-hp
-hide-hp
-show-initiative
-hide-initiative
-reset
-remove
-```
-
-Character bulk actions include:
-
-```text
-join-battle
-leave-battle
-reset
-remove
-```
-
-### Battle and activity routes
-
-| Method | Path | Purpose |
-|---|---|---|
-| POST | `/api/battle/reset-all` | Resets every combatant and clears battle order |
-| POST | `/api/battle/start` | Starts a battle from validated full ordered IDs |
-| POST | `/api/battle/next` | Advances to next eligible combatant |
-| POST | `/api/battle/actions` | Atomically applies current-turn multi-target actions |
-| GET | `/api/activity-log.json` | Downloads complete log as JSON |
-| GET | `/api/activity-log.csv` | Downloads complete log as CSV |
-| POST | `/api/activity-log/clear` | Clears the activity log |
-
-## Monster creation and imports
-
-### Manual monster creation
-
-`POST /api/monsters` accepts multipart form data for manual monster creation.
-
-| Form field | Purpose |
-|---|---|
-| `name` | Base Monster display name |
-| `monster_species` | Monster species/type |
-| `ac` | Armor Class |
-| `hp_range_start` | Lowest permitted initial HP |
-| `hp_range_end` | Highest permitted initial HP |
-| `color` | Monster card/list color |
-| `quantity` | Number of copies, from 1 through 50 |
-| `image` | Optional uploaded replacement image |
-
-The server rejects a request when:
-
-```text
-hp_range_start > hp_range_end
-```
-
-For every created Monster, the server independently chooses initial HP using:
-
-```python
-random.randint(hp_range_start, hp_range_end)
-```
-
-`random.randint()` includes both end points. The selected value initializes all three of these fields for that Monster:
-
-```text
-hp
-max_hp
-original_hp
-```
-
-When both range values are equal, every copy receives that number.
-
-For quantity greater than one, the server adds a numeric suffix in creation order:
-
-```text
-Goblin - 1
-Goblin - 2
-Goblin - 3
-```
-
-A quantity of one retains the submitted base name without a suffix.
-
-### CSV imports
-
-CSV imports require UTF-8 data, permit a BOM, require a header and at least one nonblank row, trim and case-fold headers, and accept `true`/`false`, `yes`/`no`, `on`/`off`, or `1`/`0` for booleans.
-
-Monster CSV requires:
-
-```text
-name,monster_species,ac,hp
-```
-
-The `type` column may be used instead of `monster_species`.
-
-Character CSV requires:
-
-```text
-name
-```
-
-Missing IDs receive generated UUID hex values; duplicate IDs or conflicts with current encounter IDs return an error.
-
-### `.monster` files
-
-The `.monster` import route requires an uploaded filename ending in `.monster` and a UTF-8 JSON body.
-
-| Imported value | JSON field search order |
-|---|---|
-| Name | `name` |
-| Monster species | `type` |
-| HP | `hpText`, then `hp` |
-| AC | `ac`, `armorClass`, `otherArmorDesc`, then `natArmorBonus` |
-
-The parser extracts the first signed integer from the selected HP value and the first usable integer from the selected AC value. Name, species/type, HP, and AC must all be usable or the import fails with HTTP 400.
-
-The `.monster` upload form supplies quantity, color, and an optional replacement image. Quantity-based imports use the same numbered-name behavior as manual Monster creation.
-
-The Admin `.monster` help popup is static client-side documentation. It explains the accepted fields and shows a minimal supported JSON structure without changing the import protocol.
-
-A minimal compatible file can look like:
-
-```json
-{
-  "name": "Goblin",
-  "type": "humanoid",
-  "ac": 15,
-  "hp": 7
-}
-```
-
-The [Tetra-cube D&D 5e Statblock Generator](https://tetra-cube.com/dnd/dnd-statblock.html) is a recommended external authoring tool for compatible monster statblocks. Scrying Glass does not bundle, control, or depend on the Tetra-cube site at runtime; it only accepts an uploaded `.monster` file.
-
-## Setup import and combat rules
-
-Setup import deep-copies selected combatants, generates fresh IDs, preserves current/max HP, derives alive state from HP, restores initiative from original initiative, clears active/visible/turn flags, resets Monster card flags, and leaves the existing battle order unchanged.
-
-Battle start requires every active living combatant exactly once in the supplied order. Admin code sorts by descending initiative and resolves equal numeric initiative through a tie dialog. During battle, activating a living combatant inserts it after equal initiatives and before lower or initiative-less appropriate entries. Advancing skips dead/inactive combatants and clears battle state when no eligible combatants remain.
-
-Current-turn action requests validate all rows before applying any. The actor must be active, alive, and in turn; targets must be active and alive. Damage and Heal require positive integer amounts; Buff and Debuff do not take amounts. Every applied action writes a log entry.
-
-Deleting a combatant removes its ID from battle order. Upload files are not deleted automatically because other saved states may reference them.
-
-## Client rendering
-
-The Client Display renders visible initiative tokens and active living Monster cards. Characters appear in the initiative bar only.
-
-- The Monster-card stage uses an adaptive grid.
-- Enabled AC, HP, and initiative fields render in Monster-card text.
-- Text uses an opaque contrast-aware panel for readability over images.
-- Ally Monsters render with ` - Ally` appended without changing stored names.
-- The initiative bar hides when empty, allowing the stage to use the full viewport.
-- Setup background values come from `state.display.background`.
-- Image backgrounds are centered, cover the viewport, do not repeat, and use fixed attachment.
-
-Admin color markers use combatant colors with Monster fallback `#842029` and Character fallback `#1f4e79`. Checkbox selections and bulk menus are Admin-only and do not appear in Client state or rendering.
-
-## Security and operations
-
-- Cookies currently use `secure=False`; terminate TLS at a reverse proxy and revise cookie settings before public exposure.
-- Sessions are process-local and disappear at restart.
-- No built-in CSRF protection, rate limiting, audit trail, or multi-Admin concurrency coordination exists.
-- Client access should be considered access to encounter state, even when not every detail is visibly rendered.
-- Uploads are extension-checked and statically served. Restrict filesystem permissions and network reachability.
-- D&D Beyond image lookup is best effort and depends on an external website.
-- Setup and campaign deletion is permanent. Uploads are not garbage-collected automatically.
-- Campaign and setup operations are not coordinated between multiple Admin browsers. The last completed mutation wins.
-- The two-step named New workflow is browser-driven. Avoid running mismatched versions of `admin.js` and `scrying_glass_server.py`.
-
-Validate a source update with:
-
-```bash
-python3.14 -m py_compile scrying_glass_server.py admin_html.py client_html.py login_html.py
-
-find static -maxdepth 1 -type f \
-  \( -name '*.js' -o -name '*.css' \) \
-  -printf '%f\n' | sort
-```
-
-Hard-refresh Admin and Client pages after a static asset update.
+- Sessions are process-local and disappear on restart.
+- Run one worker per storage directory.
+- Uploads are extension-checked and statically served; protect the storage directory.
+- D&D Beyond lookup requires outbound HTTPS and is best effort.
+- Use an HTTPS reverse proxy and revise cookie settings before public exposure.
+- Static HTML, JS, CSS, and server code should be deployed together.
+- Hard-refresh browser pages after static asset changes.
