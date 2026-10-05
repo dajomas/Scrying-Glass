@@ -1397,6 +1397,229 @@ def dnd_image(monster_species: str) -> str | None:
         # Image lookup is optional and must not block monster creation.
         return None
 
+def normalized_dnd_name(value: str) -> str:
+    return re.sub(
+        r"[^a-z0-9]+",
+        " ",
+        str(value).casefold(),
+    ).strip()
+
+def dnd_monster_candidates(monster_species: str) -> list[tuple[bool, str]]:
+    """
+    Return exact D&D Beyond monster candidates as (is_legacy, href).
+
+    Candidates are sorted with a legacy-marked matching anchor first. This
+    function deliberately uses the established anchor matcher because it is
+    known to work with the current D&D Beyond search response.
+    """
+    requested_name = normalized_dnd_name(monster_species)
+
+    if not requested_name:
+        return []
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 compatible; ScryingGlass/1.0",
+        "Accept": "text/html,application/xhtml+xml",
+    }
+
+    search_url = (
+        "https://www.dndbeyond.com/monsters"
+        f"?filter-search={quote(monster_species)}"
+    )
+
+    request = Request(search_url, headers=headers)
+
+    with urlopen(request, timeout=5) as response:
+        search_html = response.read(1_000_000).decode(
+            "utf-8",
+            "replace",
+        )
+
+    candidates: list[tuple[bool, str]] = []
+    seen_hrefs: set[str] = set()
+
+    for result in re.finditer(
+        r'<a\b[^>]*href="(?P<href>/monsters/[^"]+)"[^>]*>'
+        r"(?P<content>.*?)</a>",
+        search_html,
+        re.IGNORECASE | re.DOTALL,
+    ):
+        title = re.sub(r"<[^>]+>", "", result.group("content"))
+        title = re.sub(r"\s+", " ", title).strip()
+
+        if normalized_dnd_name(title) != requested_name:
+            continue
+
+        href = result.group("href")
+
+        if href in seen_hrefs:
+            continue
+
+        seen_hrefs.add(href)
+
+        # Deliberately inspect the complete matched anchor, as agreed.
+        is_legacy = "legacy" in result.group(0).casefold()
+
+        candidates.append((is_legacy, href))
+
+    candidates.sort(key=lambda candidate: not candidate[0])
+
+    return candidates
+
+def dnd_monster_detail_html(href: str) -> str:
+    headers = {
+        "User-Agent": "Mozilla/5.0 compatible; ScryingGlass/1.0",
+        "Accept": "text/html,application/xhtml+xml",
+    }
+
+    monster_url = (
+        href
+        if href.startswith("http://") or href.startswith("https://")
+        else f"https://www.dndbeyond.com{href}"
+    )
+
+    request = Request(monster_url, headers=headers)
+
+    with urlopen(request, timeout=5) as response:
+        return response.read(1_000_000).decode("utf-8", "replace")
+
+def html_to_text(value: str) -> str:
+    value = re.sub(r"<[^>]+>", " ", value)
+    value = re.sub(r"&nbsp;", " ", value, flags=re.IGNORECASE)
+    value = re.sub(r"&amp;", "&", value, flags=re.IGNORECASE)
+    return re.sub(r"\s+", " ", value).strip()
+
+def dnd_monster_stats_from_html(
+    monster_html: str,
+) -> tuple[int | None, str | None, str | None]:
+    """
+    Return (ac, hp_value, hp_source) from a D&D Beyond monster page.
+
+    HP dice notation is preferred over the displayed numeric average.
+    """
+    ac: int | None = None
+    hp_value: str | None = None
+    hp_source: str | None = None
+
+    armor_match = re.search(
+        r"""
+        <span\b
+            [^>]*\bclass=["'][^"']*
+            mon-stat-block__attribute-label
+            [^"']*["']
+            [^>]*>
+            \s*Armor\ Class\s*
+        </span>
+
+        (?P<content>.{0,3000}?)
+
+        <span\b
+            [^>]*\bclass=["'][^"']*
+            mon-stat-block__attribute-label
+            [^"']*["']
+            [^>]*>
+        """,
+        monster_html,
+        re.IGNORECASE | re.DOTALL | re.VERBOSE,
+    )
+
+    if armor_match is not None:
+        ac_match = re.search(
+            r"""
+            <span\b
+                [^>]*\bclass=["'][^"']*
+                mon-stat-block__attribute-data-value
+                [^"']*["']
+                [^>]*>
+                \s*(?P<ac>\d+)\s*
+            </span>
+            """,
+            armor_match.group("content"),
+            re.IGNORECASE | re.DOTALL | re.VERBOSE,
+        )
+
+        if ac_match is not None:
+            ac = int(ac_match.group("ac"))
+
+    hp_match = re.search(
+        r"""
+        <span\b
+            [^>]*\bclass=["'][^"']*
+            mon-stat-block__attribute-label
+            [^"']*["']
+            [^>]*>
+            \s*Hit\ Points\s*
+        </span>
+
+        (?P<content>.{0,3000}?)
+
+        <span\b
+            [^>]*\bclass=["'][^"']*
+            mon-stat-block__attribute-label
+            [^"']*["']
+            [^>]*>
+        """,
+        monster_html,
+        re.IGNORECASE | re.DOTALL | re.VERBOSE,
+    )
+
+    if hp_match is None:
+        return ac, None, None
+
+    hp_content = hp_match.group("content")
+
+    dice_match = re.search(
+        r"""
+        <span\b
+            [^>]*\bclass=["'][^"']*
+            mon-stat-block__attribute-data-extra
+            [^"']*["']
+            [^>]*>
+            \s*
+            \(
+            \s*
+            (?P<dice>
+                [1-9]\d*
+                \s*d\s*
+                (?:[2-9]\d*|1\d+)
+                (?:\s*[+-]\s*\d+)?
+            )
+            \s*
+            \)
+            \s*
+        </span>
+        """,
+        hp_content,
+        re.IGNORECASE | re.DOTALL | re.VERBOSE,
+    )
+
+    if dice_match is not None:
+        return (
+            ac,
+            re.sub(r"\s+", "", dice_match.group("dice")),
+            "dice",
+        )
+
+    average_match = re.search(
+        r"""
+        <span\b
+            [^>]*\bclass=["'][^"']*
+            mon-stat-block__attribute-data-value
+            [^"']*["']
+            [^>]*>
+            \s*(?P<hp>\d+)\s*
+        </span>
+        """,
+        hp_content,
+        re.IGNORECASE | re.DOTALL | re.VERBOSE,
+    )
+
+    if average_match is not None:
+        hp_value = average_match.group("hp")
+        hp_source = "average"
+
+    return ac, hp_value
+
 def make_monster(fields: dict[str, Any], color: str, upload: UploadFile | None, image_url: str | None=None) -> dict[str, Any]:
     hp = fields['hp']
     return {'id': uuid.uuid4().hex, **fields, 'max_hp': hp, 'original_hp': hp, 'color': color, 'image_url': image_url if image_url is not None else save_image(upload) if upload and upload.filename else dnd_image(fields['monster_species']), 'active': False, 'alive': True, 'visible': False, 'ally': False, 'initiative': None, 'original_initiative': None, 'show_ac': False, 'show_hp': False, 'show_initiative': False, 'in_turn': False}
@@ -1722,6 +1945,65 @@ def admin_get_state(
     ),
 ):
     return public_state()
+
+@admin.get("/api/dndbeyond/monster-stats")
+async def dndbeyond_monster_stats(
+    species: str,
+    _: dict[str, str] = Depends(
+        require("admin", ADMIN_SESSION_COOKIE)
+    ),
+) -> dict[str, Any]:
+    """
+    Return non-persistent AC and HP suggestions for a canonical species name.
+
+    The lookup is optional and must never mutate STATE or prevent manual
+    monster creation.
+    """
+    monster_species = species.strip()
+
+    if not monster_species:
+        raise HTTPException(400, "Monster species is required")
+
+    if not CONFIG["display"].get("dndbeyond_image_lookup", True):
+        return {
+            "found": False,
+            "reason": "D&D Beyond lookup is disabled",
+        }
+
+    try:
+        candidates = dnd_monster_candidates(monster_species)
+
+        for is_legacy, href in candidates:
+            monster_html = dnd_monster_detail_html(href)
+            ac, hp, hp_source = dnd_monster_stats_from_html(
+                monster_html
+            )
+
+            if ac is None and hp is None:
+                continue
+
+            return {
+                "found": True,
+                "species": monster_species,
+                "ac": ac,
+                "hp": hp,
+                "hp_source": hp_source,
+                "legacy": is_legacy,
+                "source_url": f"https://www.dndbeyond.com{href}",
+            }
+
+        return {
+            "found": False,
+            "species": monster_species,
+        }
+
+    except Exception:
+        # This endpoint is convenience-only. Do not expose remote errors or
+        # make a temporary D&D Beyond failure look like a local server failure.
+        return {
+            "found": False,
+            "species": monster_species,
+        }
 
 @admin.patch('/api/display/background')
 async def update_display_background(

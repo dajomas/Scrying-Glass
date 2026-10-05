@@ -601,3 +601,20 @@ input[type="number"] {
     border-radius: 6px;
     object-fit: contain;
 }
+
+.monster-species-lookup-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0 0 0.65rem;
+    color: #cbd5e1;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.monster-species-lookup-option input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    margin: 0;
+    cursor: pointer;
+}

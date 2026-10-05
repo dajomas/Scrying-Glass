@@ -4,6 +4,136 @@ let editing = null;
 const selectedCharacterIds = new Set();
 const selectedMonsterIds = new Set();
 
+let monsterSpeciesLookupTimer = null;
+let monsterSpeciesLookupRequest = 0;
+
+function setMonsterSpeciesLookupStatus(text, options = {}) {
+    const {
+        timed = false,
+    } = options;
+
+    const notification = document.querySelector(
+        '#monsterAddNotification',
+    );
+
+    if (!notification) {
+        return;
+    }
+
+    if (timed) {
+        paneNotification('monsters', text);
+        return;
+    }
+
+    clearTimeout(paneNotificationTimeouts.monsters);
+    paneNotificationTimeouts.monsters = null;
+    notification.textContent = (text === '') ? ' ' : text;
+}
+
+async function lookupMonsterSpeciesStats() {
+    const speciesInput = document.querySelector('#monsterSpecies');
+    const acInput = document.querySelector('#monsterAc');
+    const hpStartInput = document.querySelector(
+        '#monsterHpRangeStart',
+    );
+    const hpEndInput = document.querySelector(
+        '#monsterHpRangeEnd',
+    );
+
+    const overwriteInput = document.querySelector(
+        '#monsterSpeciesLookupOverwrite',
+    );
+    const overwriteFoundStats = Boolean(overwriteInput?.checked);
+
+    const species = speciesInput.value.trim();
+
+    if (!species) {
+        setMonsterSpeciesLookupStatus('');
+        return;
+    }
+
+    const requestId = ++monsterSpeciesLookupRequest;
+
+    setMonsterSpeciesLookupStatus(
+        `Looking up ${species} on D&D Beyond…`,
+    );
+
+    try {
+        const suggestion = await request(
+            `/api/dndbeyond/monster-stats?species=${encodeURIComponent(species)}`,
+        );
+
+        // Ignore an old response if the user changed species while it ran.
+        if (requestId !== monsterSpeciesLookupRequest) {
+            return;
+        }
+
+        if (!suggestion?.found) {
+            setMonsterSpeciesLookupStatus(
+                `No exact D&D Beyond stats found for ${species}.`,
+            );
+            return;
+        }
+
+        const changes = [];
+
+        if (
+            suggestion.ac !== null &&
+            suggestion.ac !== undefined &&
+            (
+                overwriteFoundStats ||
+                !acInput.value.trim()
+            )
+        ) {
+            acInput.value = String(suggestion.ac);
+            changes.push(`AC ${suggestion.ac}`);
+        }
+
+        if (
+            suggestion.hp &&
+            (
+                overwriteFoundStats ||
+                (
+                    !hpStartInput.value.trim() &&
+                    !hpEndInput.value.trim()
+                )
+            )
+        ) {
+            hpStartInput.value = suggestion.hp;
+            hpEndInput.value = '';
+            changes.push(
+                suggestion.hp_source === 'dice'
+                    ? `HP ${suggestion.hp}`
+                    : `HP ${suggestion.hp}`,
+            );
+        }
+
+        const edition = suggestion.legacy ? 'legacy' : 'current';
+
+        if (changes.length) {
+            paneNotification(
+                'monsters',
+                `Loaded ${changes.join(', ')} from the ${edition} D&D Beyond result.`,
+            );
+        } else if (overwriteFoundStats) {
+            paneNotification(
+                'monsters',
+                `Found ${edition} D&D Beyond stats, but no usable AC or HP values were returned.`,
+            );
+        } else {
+            paneNotification(
+                'monsters',
+                `Found ${edition} D&D Beyond stats; existing AC and HP were left unchanged. Enable overwrite to replace them.`,
+            );
+        }
+    } catch {
+        // A lookup failure must not interrupt manual entry.
+        setMonsterSpeciesLookupStatus(
+            'D&D Beyond lookup is unavailable; enter AC and HP manually.',
+        );
+    }
+}
+
 const message = text => {
     document.querySelector('#message').textContent = text;
 };
@@ -1576,6 +1706,17 @@ csvImportModal.addEventListener('click', event => {
     }
 });
 
+document.querySelector(
+    '#monsterSpeciesLookupOverwrite',
+).addEventListener('change', event => {
+    if (
+        event.target.checked &&
+        document.querySelector('#monsterSpecies').value.trim()
+    ) {
+        lookupMonsterSpeciesStats();
+    }
+});
+
 document.querySelector('#rollMonsterInitiative').onclick = async () => {
     if (!latest.monsters.length) {
         paneNotification('monsters', 'There are no monsters to roll initiative for');
@@ -2288,6 +2429,35 @@ document.querySelector('#monsterForm').onsubmit = async event => {
         );
     }
 };
+
+document.querySelector('#monsterSpecies').addEventListener(
+    'input',
+    () => {
+        clearTimeout(monsterSpeciesLookupTimer);
+
+        const species = document.querySelector(
+            '#monsterSpecies',
+        ).value.trim();
+
+        if (!species) {
+            setMonsterSpeciesLookupStatus('');
+            return;
+        }
+
+        monsterSpeciesLookupTimer = setTimeout(
+            lookupMonsterSpeciesStats,
+            600,
+        );
+    },
+);
+
+document.querySelector('#monsterSpecies').addEventListener(
+    'blur',
+    () => {
+        clearTimeout(monsterSpeciesLookupTimer);
+        lookupMonsterSpeciesStats();
+    },
+);
 
 document.querySelector('#monsterUpload').onsubmit = async event => {
     event.preventDefault();
