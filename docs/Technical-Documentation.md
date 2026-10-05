@@ -1,144 +1,54 @@
 # Scrying Glass Technical Documentation
 
-Scrying Glass is a single-process Python/FastAPI application for a game-master-controlled tabletop battle display. It runs separate Admin and Client FastAPI applications in one interpreter, keeps working encounter state in shared memory, persists JSON data, and broadcasts Client Display updates through WebSockets.
+Scrying Glass is a single-process Python/FastAPI tabletop encounter display. Admin and Client FastAPI applications share in-memory state, persistence helpers, sessions, and WebSocket connections.
 
-## Runtime architecture
-
-```text
-Admin browser ── HTTP ──► Admin FastAPI app ── TCP 3000 by default
-                                  │
-                                  ├── shared STATE
-                                  ├── shared SESSIONS
-                                  ├── shared SOCKETS
-                                  ├── async save lock
-                                  └── state.json, campaigns.json, characters/, setups/, uploads/
-                                  │
-Client browser ── HTTP/WS ► Client FastAPI app ── TCP 4000 by default
-```
-
-Run one process and one worker per storage directory. Multi-worker or multi-replica deployments require external shared state, locking, sessions, and pub/sub before they are safe.
-
-## Storage and ownership
-
-For `storage_dir: /var/lib/scrying-glass`:
+## Persistence ownership
 
 ```text
-/var/lib/scrying-glass/
+storage_dir/
 ├── state.json
 ├── campaigns.json
-├── characters/
-│   └── <campaign-slug>.json
+├── characters/<campaign-slug>.json
 ├── uploads/
-│   └── <uuid>.<extension>
-└── setups/
-    └── <campaign-slug>/
-        └── <normalized-setup-name>.json
+└── setups/<campaign-slug>/<setup>.json
 ```
 
-| Store | Owner | Contents |
+| Data | Persistent owner |
+|---|---|
+| Characters | Active campaign roster |
+| Monsters | Active saved battle setup, when loaded |
+| Unsaved monsters | Working `state.json` state |
+| Battle order/activity log/display | Runtime state and setup snapshot as applicable |
+| Uploads | Shared `uploads/` directory |
+
+Target-aware mutation persistence saves campaign characters and/or the active setup under one async lock, writes runtime state, then broadcasts. A stale/missing active setup is cleared instead of silently recreating an arbitrary setup.
+
+## Manual monster request
+
+`POST /api/monsters` accepts multipart fields:
+
+| Field | Meaning |
+|---|---|
+| `name` | Encounter display name |
+| `monster_species` | Canonical D&D Beyond lookup name/type |
+| `ac` | Armor Class |
+| `hprangestart` | Fixed HP, numeric lower bound, or dice expression |
+| `hprangeend` | Optional numeric upper bound; empty for fixed/dice HP |
+| `quantity` | 1–50 |
+| `color` | Display color |
+| `image` | Optional image upload |
+
+The browser validates early, but Python is authoritative. On success, the Admin handler must reload `/api/state` and issue an Add monster pane notification so the list updates without a browser refresh.
+
+## HP generation
+
+| Start | End | Per-monster generator |
 |---|---|---|
-| `characters/<campaign>.json` | Campaign | Character roster and character runtime values |
-| `setups/<campaign>/<setup>.json` | Battle setup | Monsters, monster-only battle order, activity log, and setup display state |
-| `state.json` | Runtime | Working battle order, activity log, display state, active-setup reference, and unsaved monsters when no setup is active |
-| `uploads/` | Shared persistent files | Uploaded monster and background images |
+| `17` | blank | Fixed `17` |
+| `10` | `20` | Inclusive `random.randint(10, 20)` |
+| `3d8+9` | blank | Independent dice roll |
 
-`setup_snapshot()` excludes campaign-owned characters and filters the saved battle order to monster IDs. This prevents character records from being copied into every setup snapshot.
-
-### Automatic persistence
-
-Mutation handlers use target-aware persistence under the shared async lock:
-
-```python
-async def combatants_changed(
-    *,
-    monsters: bool = False,
-    characters: bool = False,
-) -> None:
-    async with LOCK:
-        if monsters:
-            save_active_setup_monsters()
-        if characters:
-            save_active_campaign_characters()
-        save_state()
-    await broadcast()
-```
-
-- Character mutations persist the active campaign roster.
-- Monster mutations persist the active saved setup when one exists.
-- If `active_setup` is absent or stale, monster state remains an unsaved encounter in `state.json`; the server does not silently create or overwrite an arbitrary named setup.
-- Mixed battle operations save both stores.
-- Files are written through temporary-file replacement.
-
-## State model
-
-The normalized root state contains `monsters`, `characters`, `battle_order`, `activity_log`, `display`, and `active_setup`.
-
-A Monster includes:
-
-```json
-{
-  "id": "uuid-hex",
-  "name": "Mimic 1",
-  "monster_species": "Mimic",
-  "ac": 12,
-  "hp": 58,
-  "max_hp": 58,
-  "original_hp": 58,
-  "color": "#842029",
-  "image_url": "https://example.invalid/image.png",
-  "active": false,
-  "alive": true,
-  "visible": false,
-  "ally": false,
-  "initiative": null,
-  "original_initiative": null,
-  "show_ac": false,
-  "show_hp": false,
-  "show_initiative": false,
-  "in_turn": false
-}
-```
-
-`monster_species` is the canonical species/type field. Older `monster_type` values are migrated to `monster_species` by state normalization when needed.
-
-## Manual monster API
-
-`POST /api/monsters` accepts multipart form data because the same request may carry an uploaded image.
-
-| Field | Type | Meaning |
-|---|---|---|
-| `name` | string | Local encounter/display name |
-| `monster_species` | string | Canonical creature name/type; used for optional D&D Beyond lookup |
-| `ac` | integer | Armor Class |
-| `hprangestart` | string | Required fixed HP, numeric lower bound, or dice expression |
-| `hprangeend` | string | Optional numeric upper bound; must be blank for dice mode |
-| `quantity` | integer | 1 through 50 |
-| `color` | string | Monster display color |
-| `image` | file | Optional PNG, JPG/JPEG, GIF, or WebP upload |
-
-The Admin form validates input for immediate feedback, but server validation remains authoritative.
-
-### HP resolution
-
-The server resolves HP once per monster inside the quantity loop. It supports:
-
-| Start | End | Factory result |
-|---|---|---|
-| `17` | blank | `lambda: 17` |
-| `10` | `20` | `lambda: random.randint(10, 20)` |
-| `3d8+9` | blank | dice roller returning one independent total per call |
-
-Each result initializes `hp`, `max_hp`, and `original_hp`. Dice notation is generation-only; it is not persisted as reset logic. Reset restores the concrete original result and never rerolls.
-
-### Dice grammar
-
-The accepted grammar is:
-
-```text
-<count>d<sides>[ optional-space ][ + | - ][ optional-space ]<modifier>
-```
-
-Whitespace around the operator is optional. The implementation must accept all of these equivalently:
+Dice syntax accepts optional modifier whitespace:
 
 ```text
 3d8+9
@@ -147,109 +57,73 @@ Whitespace around the operator is optional. The implementation must accept all o
 3d8 + 9
 ```
 
-The `d` is case-insensitive. Multi-digit die sizes are supported, including `d10`, `d12`, `d20`, and `d100`.
+It supports multi-digit sides, including `d10`, `d12`, `d20`, and `d100`. Server limits protect resources: positive count, sides >= 2, `MAX_HP_DICE_COUNT = 100`, `MAX_HP_DIE_SIDES = 1000`, and bounded modifiers. Dice expressions require blank `hprangeend`.
 
-Examples:
+Each generated result is stored as `hp`, `max_hp`, and `original_hp`; reset restores the concrete result and does not reroll.
 
-```text
-1d8
-2d10+4
-3d20 + 5
-1d100-10
+## D&D Beyond lookup
+
+The optional lookup is controlled by `display.dndbeyond_image_lookup`. It is read-only/convenience behavior and must never prevent manual creation.
+
+### Candidate selection
+
+1. Use `monster_species` as the D&D Beyond monster name.
+2. Search the D&D Beyond monster listing.
+3. Retain exact normalized title matches from the established anchor matcher:
+
+```python
+r'<a\b[^>]*href="(?P<href>/monsters/[^"]+)"[^>]*>' r'(?P<content>.*?)</a>'
 ```
 
-Validation rules:
+4. Prefer legacy-marked matching anchors:
 
-- Dice count is a positive integer.
-- Die sides must be at least 2.
-- Server-side limits protect resources: `MAX_HP_DICE_COUNT = 100`, `MAX_HP_DIE_SIDES = 1000`, and `MAX_HP_MODIFIER = 100000`.
-- A dice expression requires an empty `hprangeend`.
-- Numeric values must be non-negative whole numbers.
-- Numeric start cannot exceed numeric end.
-- No `eval()` is used.
+```python
+is_legacy = "legacy" in result.group(0).casefold()
+candidates.sort(key=lambda candidate: not candidate[0])
+```
 
-The client and server regexes must remain synchronized. A clear implementation is to capture one or more digits for sides and perform the minimum/maximum checks in ordinary validation code.
+5. Fetch candidates in that order. A missing usable legacy result falls back to the next exact candidate.
 
-## D&D Beyond image lookup
+### Suggested statistics
 
-`display.dndbeyond_image_lookup` controls optional lookup. It is best effort and must never prevent monster creation.
+The stats suggestion endpoint returns non-persistent AC/HP data after matching a detail page. It extracts D&D Beyond stat-block markup:
 
-1. An uploaded `image` wins and is saved under `/media/`.
-2. Without an upload, lookup uses `monster_species`, not the local encounter `name`.
-3. The monster search response is scanned for exact normalized title matches using the established `<a ... href="/monsters/...">...</a>` matcher.
-4. For each exact candidate, legacy preference is computed from the complete matched anchor:
+```html
+<span class="mon-stat-block__attribute-label">Hit Points</span>
+<span class="mon-stat-block__attribute-data-value">58</span>
+<span class="mon-stat-block__attribute-data-extra">(9d8 + 18)</span>
+```
 
-   ```python
-   is_legacy = "legacy" in result.group(0).casefold()
-   ```
+When both are present, return the normalized dice formula `9d8+18` instead of average HP `58`. If no dice formula is available, return the numeric average.
 
-5. Candidates are sorted legacy first:
+The browser uses the existing Add monster notification area for lookup progress/results. By default, suggestions fill only blank AC and HP fields. The **Overwrite Armor Class and HP Range with found D&D Beyond values** checkbox permits overwriting existing values. A suggested dice expression goes to `hprangestart` and clears `hprangeend`.
 
-   ```python
-   candidates.sort(key=lambda candidate: not candidate[0])
-   ```
+### Images
 
-6. Each candidate page is fetched in order. The desired image is the dedicated page image carrying `class="monster-image"`, not a generic `og:image` social-media asset.
-7. If a legacy candidate has no usable dedicated image, lookup continues to current candidates. If no candidate succeeds, `image_url` remains `None`.
+An uploaded file wins. Otherwise, lookup extracts the dedicated `<img class="monster-image">` on the matched monster page rather than generic `og:image` metadata. The extractor must accept either `class`/`src` attribute order and normalize relative/protocol-relative image URLs.
 
-The detail-page markup can place `class` before or after `src`; image extraction must support both attribute orders. Relative and protocol-relative URLs must be normalized before storing them.
+## Edit image preview
 
-The external site’s markup is not an API contract. Keep errors contained inside the optional lookup path, avoid logging full remote HTML in production, and use a manually uploaded image when lookup is unavailable or ambiguous.
+The dynamically generated Monster edit form renders `image_url` as a thumbnail constrained to 300px maximum width/height. Selecting **Replace image** creates a browser-local `URL.createObjectURL()` preview only. The selected file is uploaded only through multipart `POST /api/monsters/{id}/edit` after **Save monster**.
 
-## Edit-monster image handling
+## Client initiative rendering
 
-`monsterEdit(monster)` dynamically renders the edit form in `static/admin.js`.
+The Client card renderer independently supports AC, HP, and initiative fields. Initiative appears only when:
 
-- When `monster.image_url` is present, the form renders an image thumbnail at the top.
-- CSS constrains it with `max-width: min(100%, 300px)` and `max-height: 300px`, preserving aspect ratio.
-- The **Replace image** file input uses `URL.createObjectURL(file)` for browser-local preview only.
-- The preview does not upload or persist data.
-- The existing multipart `POST /api/monsters/{id}/edit` route uploads the selected file only after **Save monster** submits the form.
-- Canceling the dialog or reloading the page discards an unsaved replacement selection.
+```js
+monster.show_initiative && monster.initiative !== null
+```
 
-## Browser synchronization
+The Admin **Init on** control changes only `show_initiative`; it does not assign an initiative value. Therefore the monster must first have a numeric initiative. A blank/null initiative is intentionally omitted from the Client card.
 
-The Client fetches state initially and then consumes authenticated WebSocket state messages. The Admin page reloads authoritative state after mutations.
+## Client synchronization
 
-The manual monster form success branch must:
+The Client fetches initial state and receives live WebSocket state messages. The Client card stage contains active living monsters. Visibility controls initiative-bar entries separately from card-field visibility. Static asset changes require browser hard refresh.
 
-1. Submit multipart `FormData` to `POST /api/monsters`.
-2. Parse/validate the response through the shared `request()` helper.
-3. Reset the form after success.
-4. Call `await load()` to redraw `#monsters` immediately.
-5. Call `paneNotification('monsters', ...)` for local feedback.
+## Operations
 
-Omitting the post-success `load()` leaves the browser list stale until a page reload even though server persistence succeeded.
-
-Pane notifications are browser-only; they are not in state, saved setups, or Client Display messages.
-
-## API inventory
-
-| Method | Path | Purpose |
-|---|---|---|
-| GET | `/api/state` | Current Admin or Client state for the authenticated application |
-| POST | `/api/monsters` | Create manual monsters from multipart data |
-| POST | `/api/monsters/import` | Import `.monster` JSON |
-| POST | `/api/monsters/import-csv` | Import Monster CSV |
-| POST | `/api/monsters/{id}/edit` | Edit Monster with optional image replacement |
-| PATCH | `/api/monsters/{id}` | Update Monster state or HP delta |
-| POST | `/api/monsters/bulk` | Apply selected-Monster actions |
-| POST | `/api/characters` | Create character |
-| POST | `/api/characters/import-csv` | Import Character CSV |
-| PATCH | `/api/characters/{id}` | Update character |
-| POST | `/api/characters/bulk` | Apply selected-Character actions |
-| POST | `/api/setups/save` | Explicitly save current working setup under a name |
-| POST | `/api/setups/load` | Load named setup into working state |
-| POST | `/api/battle/start` | Validate/start battle order |
-| POST | `/api/battle/next` | Advance turn |
-| POST | `/api/battle/actions` | Apply validated multi-target current-turn actions |
-
-## Operations and security
-
+- Run one process/worker per storage directory.
 - Sessions are process-local and disappear on restart.
-- Run one worker per storage directory.
-- Uploads are extension-checked and statically served; protect the storage directory.
-- D&D Beyond lookup requires outbound HTTPS and is best effort.
-- Use an HTTPS reverse proxy and revise cookie settings before public exposure.
-- Static HTML, JS, CSS, and server code should be deployed together.
-- Hard-refresh browser pages after static asset changes.
+- D&D Beyond lookup requires outbound HTTPS and is fragile external HTML scraping; contain exceptions and fall back to manual entry/upload.
+- Deploy matching Python, HTML, JavaScript, and CSS versions.
+- Use a trusted network, HTTPS reverse proxy/VPN restrictions, and strong credentials for remote deployment.
