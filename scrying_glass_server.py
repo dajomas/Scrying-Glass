@@ -1272,85 +1272,129 @@ def save_image(upload: UploadFile) -> str:
         shutil.copyfileobj(upload.file, f)
     return '/media/' + dst.name
 
-def dnd_image(monster_name: str) -> str | None:
-    if not CONFIG['display'].get('dndbeyond_image_lookup', True):
+def dnd_image(monster_species: str) -> str | None:
+    """
+    Find the dedicated D&D Beyond monster image for monster_species.
+
+    Exact normalized name matches are collected from D&D Beyond search results.
+    A match whose complete result HTML contains 'legacy' is preferred. The
+    dedicated <img class="monster-image"> URL from that monster page is used,
+    not a generic Open Graph image.
+    """
+    if not CONFIG["display"].get("dndbeyond_image_lookup", True):
         return None
 
     requested_name = re.sub(
-        r'[^a-z0-9]+',
-        ' ',
-        monster_name.casefold(),
+        r"[^a-z0-9]+",
+        " ",
+        monster_species.casefold(),
     ).strip()
 
     if not requested_name:
         return None
 
+    headers = {
+        "User-Agent": "Mozilla/5.0 compatible; ScryingGlass/1.0",
+        "Accept": "text/html,application/xhtml+xml",
+    }
+
     try:
-        request = Request(
-            'https://www.dndbeyond.com/monsters'
-            '?filter-search=' + quote(monster_name),
-            headers={
-                'User-Agent': 'Mozilla/5.0 '
-                '(compatible; ScryingGlass/1.0)',
-                'Accept': 'text/html,application/xhtml+xml',
-            },
+        search_url = (
+            "https://www.dndbeyond.com/monsters"
+            f"?filter-search={quote(monster_species)}"
         )
+
+        request = Request(search_url, headers=headers)
 
         with urlopen(request, timeout=5) as response:
-            html = response.read(1_000_000).decode('utf-8', 'replace')
+            search_html = response.read(1_000_000).decode(
+                "utf-8",
+                "replace",
+            )
 
-        # D&D Beyond result cards generally contain a monster page link and title.
-        # Only accept an exact normalized result title.
-        results = re.finditer(
-            r'<a[^>]+href=["\'](?P<href>/monsters/[^"\']+)["\'][^>]*>'
-            r'(?P<content>.*?)</a>',
-            html,
+        candidates: list[tuple[bool, str]] = []
+
+        for result in re.finditer(
+            r'<a\b[^>]*href="(?P<href>/monsters/[^"]+)"[^>]*>'
+            r"(?P<content>.*?)</a>",
+            search_html,
             re.IGNORECASE | re.DOTALL,
-        )
+        ):
+            title = re.sub(r"<[^>]+>", "", result.group("content"))
+            title = re.sub(r"\s+", " ", title).strip()
 
-        for result in results:
-            title = re.sub(r'<[^>]+>', ' ', result.group('content'))
-            title = re.sub(r'\s+', ' ', title).strip()
             normalized_title = re.sub(
-                r'[^a-z0-9]+',
-                ' ',
+                r"[^a-z0-9]+",
+                " ",
                 title.casefold(),
             ).strip()
 
             if normalized_title != requested_name:
                 continue
 
-            monster_url = (
-                'https://www.dndbeyond.com' + result.group('href')
-            )
+            href = result.group("href")
 
-            monster_request = Request(
-                monster_url,
-                headers={
-                    'User-Agent': 'Mozilla/5.0 '
-                    '(compatible; ScryingGlass/1.0)',
-                    'Accept': 'text/html,application/xhtml+xml',
-                },
-            )
+            # Prefer an older / legacy monster page where D&D Beyond labels it
+            # that way. Current exact-name matches remain fallback candidates.
+            is_legacy = "legacy" in result.group(0).casefold()
 
+            candidates.append((is_legacy, href))
+        # True first: older/legacy exact matches are tried before current ones.
+        candidates.sort(key=lambda candidate: not candidate[0])
+
+        for _, href in candidates:
+            monster_url = f"https://www.dndbeyond.com{href}"
+
+            monster_request = Request(monster_url, headers=headers)
             with urlopen(monster_request, timeout=5) as response:
                 monster_html = response.read(1_000_000).decode(
-                    'utf-8',
-                    'replace',
+                    "utf-8",
+                    "replace",
                 )
 
+            # Extract the actual monster illustration, not Open Graph metadata.
             image = re.search(
-                r'<meta[^>]+property=["\']og:image["\'][^>]+'
-                r'content=["\'](?P<url>[^"\']+)',
+                r"""
+                <img\b
+                    [^>]*\bclass=["'][^"']*\bmonster-image\b[^"']*["']
+                    [^>]*\bsrc=["'](?P<url>[^"']+)["']
+                    [^>]*>
+                """,
                 monster_html,
-                re.IGNORECASE,
+                re.IGNORECASE | re.DOTALL | re.VERBOSE,
             )
 
-            if image:
-                return image.group('url')
+            # Attributes are not guaranteed to remain in a fixed order. Retry
+            # with src before class for pages that render it that way.
+            if image is None:
+                image = re.search(
+                    r"""
+                    <img\b
+                        [^>]*\bsrc=["'](?P<url>[^"']+)["']
+                        [^>]*\bclass=["'][^"']*\bmonster-image\b[^"']*["']
+                        [^>]*>
+                    """,
+                    monster_html,
+                    re.IGNORECASE | re.DOTALL | re.VERBOSE,
+                )
+
+            if image is not None:
+                image_url = image.group("url").strip()
+
+                if image_url.startswith("//"):
+                    image_url = f"https:{image_url}"
+                elif image_url.startswith("/"):
+                    image_url = (
+                        "https://www.dndbeyond.com"
+                        f"{image_url}"
+                    )
+
+                return image_url
 
         return None
+
     except Exception:
+        # Image lookup is optional and must not block monster creation.
         return None
 
 def make_monster(fields: dict[str, Any], color: str, upload: UploadFile | None, image_url: str | None=None) -> dict[str, Any]:
