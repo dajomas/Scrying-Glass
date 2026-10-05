@@ -158,12 +158,19 @@ ADMIN_HTML = r'''<!doctype html>
 
           <label class="field field-color">
             <span class="field-label">Color</span>
-            <input
-              id="characterColor"
-              name="color"
-              type="color"
-              value="#1f4e79"
-            >
+              <span class="color-picker-control"><input
+                id="characterColor"
+                name="color"
+                type="color"
+                value="#1f4e79"
+              >
+              <span
+                id="characterColorPreview"
+                class="turn-marker color-picker-preview"
+                style="background-color: #1f4e79"
+                aria-hidden="true"
+              ></span>
+            </span>
           </label>
 
           <label class="field field-compact">
@@ -253,12 +260,21 @@ ADMIN_HTML = r'''<!doctype html>
         <div class="row">
           <label class="field field-color">
             <span class="field-label">Background color</span>
-            <input
-              id="backgroundColor"
-              type="color"
-              value="#080b14"
-              title="Background color"
-            >
+              <span class="color-picker-control">
+                <input
+                  id="backgroundColor"
+                  type="color"
+                  value="#080b14"
+                  title="Background color"
+                >
+                <span
+                  id="backgroundColorPreview"
+                  class="turn-marker color-picker-preview"
+                  style="background-color: #080b14"
+                  aria-hidden="true"
+                ></span>
+              </span>
+            </span>
           </label>
 
           <label class="field field-inline">
@@ -409,12 +425,20 @@ ADMIN_HTML = r'''<!doctype html>
 
           <label class="field field-color">
             <span class="field-label">Color</span>
-            <input
-              id="monsterColor"
-              name="color"
-              type="color"
-              value="#842029"
-            >
+            <span class="color-picker-control">
+              <input
+                id="monsterColor"
+                name="color"
+                type="color"
+                value="#842029"
+              >
+              <span
+                id="monsterColorPreview"
+                class="turn-marker color-picker-preview"
+                style="background-color: #842029"
+                aria-hidden="true"
+              ></span>
+            </span>
           </label>
 
           <label class="field">
@@ -475,12 +499,20 @@ ADMIN_HTML = r'''<!doctype html>
 
           <label class="field field-color">
             <span class="field-label">Color</span>
-            <input
-              id="monsterFileColor"
-              name="color"
-              type="color"
-              value="#842029"
-            >
+            <span class="color-picker-control">
+              <input
+                id="monsterFileColor"
+                name="color"
+                type="color"
+                value="#842029"
+              >
+              <span
+                id="monsterFileColorPreview"
+                class="turn-marker color-picker-preview"
+                style="background-color: #842029"
+                aria-hidden="true"
+              ></span>
+            </span>
           </label>
 
           <label class="field">
