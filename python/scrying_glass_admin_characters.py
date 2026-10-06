@@ -3,6 +3,7 @@
 from __future__ import annotations
 from typing import Any
 from fastapi import File, Form
+import copy
 
 class AdminCharactersMixin:
     """Implement admin characters handlers using the shared server context."""
@@ -41,67 +42,98 @@ class AdminCharactersMixin:
 
     async def create_character(self, character: CharacterCreate):
         """Create character."""
-        c = {'id': self.context.uuid.uuid4().hex, **character.model_dump(), 'max_hp': character.hp, 'original_hp': character.hp, 'original_initiative': character.initiative, 'active': False, 'alive': character.hp >= 0, 'visible': False, 'in_turn': False}
+        c = {'id': self.context.uuid.uuid4().hex, **character.model_dump(), 'max_hp': character.hp, 'original_hp': character.hp, 'original_initiative': character.initiative, 'active': False, 'alive': character.hp > 0, 'visible': False, 'in_turn': False}
         self.context.STATE["characters"].append(c)
         self.context.save_active_campaign_characters()
         await self.context.combatants_changed(monsters=False, characters=True)
 
         return c
 
-    async def update_character(self, ident: str, update: CharacterUpdate) -> dict[str, Any]:
-        """Update character."""
+    async def update_character(
+        self,
+        ident: str,
+        update: CharacterUpdate,
+    ) -> dict[str, Any]:
+        """Validate a proposed update before changing live character state."""
         character = next(
-            (item for item in self.context.STATE["characters"] if item["id"] == ident),
+            (
+                item
+                for item in self.context.STATE["characters"]
+                if item["id"] == ident
+            ),
             None,
         )
 
-        if not character:
-            raise self.context.HTTPException(404, "Character not found")
+        if character is None:
+            raise self.context.HTTPException(
+                404,
+                "Character not found",
+            )
 
-        values = update.model_dump(
-            exclude_unset=True,
-            exclude_none=True,
-        )
+        values = {
+            key: value
+            for key, value in update.model_dump(
+                exclude_unset=True,
+            ).items()
+            if value is not None or key == "initiative"
+        }
 
         hp_delta = values.pop("hp_delta", None)
+        requested_turn = values.get("in_turn")
+
+        candidate = copy.deepcopy(character)
 
         for key, value in values.items():
             if key != "in_turn":
-                character[key] = value
+                candidate[key] = value
 
         if hp_delta is not None:
-            character["hp"] += hp_delta
+            candidate["hp"] += hp_delta
 
         if "max_hp" in values:
-            character["original_hp"] = values["max_hp"]
+            candidate["original_hp"] = values["max_hp"]
 
-        if character["hp"] <= 0:
-            character["alive"] = False
-            character["visible"] = True
-            character["in_turn"] = False
-        else:
-            character["alive"] = True
+        hp_changed = "hp" in values or hp_delta is not None
+
+        # Explicit Alive/Dead choices retain precedence.
+        if "alive" not in values and hp_changed:
+            candidate["alive"] = candidate["hp"] > 0
+
+        if not candidate.get("alive"):
+            candidate["visible"] = True
+            candidate["in_turn"] = False
+
+        if not candidate.get("active"):
+            candidate["in_turn"] = False
+
+        if requested_turn is True and (
+            not candidate.get("active")
+            or not candidate.get("alive")
+        ):
+            raise self.context.HTTPException(
+                400,
+                "Only an active living combatant may have the battle turn",
+            )
+
+        self.context.remember_turn_successors()
+        character.update(candidate)
+
+        self.context.set_turn(character, requested_turn)
+
+        if character.get("active") and character.get("alive"):
+            self.context.insert_into_battle_order(character)
+
+        self.context.clean_order()
 
         if hp_delta is not None:
             self.context.log_hp_change(character, hp_delta)
 
-        if values.get("active") is True:
-            self.context.insert_into_battle_order(character)
-
-        if values.get("alive") is False:
-            character["visible"] = True
-            character["in_turn"] = False
-
-        if values.get("active") is False:
-            character["in_turn"] = False
-
-        self.context.set_turn(character, values.get("in_turn"))
-        self.context.clean_order()
-        self.context.save_active_campaign_characters()
-        await self.context.combatants_changed(monsters=False, characters=True)
+        await self.context.combatants_changed(
+            monsters=False,
+            characters=True,
+        )
 
         return character
-
     async def bulk_characters(self, body: BulkCombatantAction) -> dict[str, int]:
         """Apply one validated bulk action to selected campaign characters."""
         allowed = {"join-battle", "leave-battle", "reset", "remove"}
@@ -111,9 +143,12 @@ class AdminCharactersMixin:
 
         targets = self.context.selected_entities("characters", body.ids)
 
+        self.context.remember_turn_successors()
+
         if body.action == "join-battle":
             for character in targets:
                 character["active"] = True
+                self.context.insert_into_battle_order(character)
 
         elif body.action == "leave-battle":
             for character in targets:

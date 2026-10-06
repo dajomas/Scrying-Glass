@@ -75,7 +75,16 @@ class StateService:
             "activity_log": raw.get("activity_log", []),
             "display": self.context.normalize_display(raw.get("display")),
             "active_setup": active_setup,
+            "turn_successors": [],
         }
+
+        raw_successors = raw.get("turn_successors", [])
+        if isinstance(raw_successors, list):
+            state["turn_successors"] = [
+                ident
+                for ident in raw_successors
+                if isinstance(ident, str) and ident
+            ]
 
         if (
             not isinstance(state["monsters"], list)
@@ -135,6 +144,97 @@ class StateService:
         known = {x['id'] for x in [*state['monsters'], *state['characters']]}
         state['battle_order'] = [x for x in state['battle_order'] if x in known]
         return state
+
+    def display_state(self) -> dict[str, Any]:
+        """Return only information intended for the player display."""
+        full = self.context.public_state()
+
+        common_fields = (
+            "id",
+            "name",
+            "color",
+            "active",
+            "alive",
+            "visible",
+            "in_turn",
+        )
+
+        def display_character(item: dict[str, Any]) -> dict[str, Any]:
+            return {key: item.get(key) for key in common_fields}
+
+        def display_monster(item: dict[str, Any]) -> dict[str, Any]:
+            result = display_character(item)
+            result.update({
+                "monster_species": item.get("monster_species", "unknown"),
+                "ally": item.get("ally", False),
+                "image_url": item.get("image_url"),
+                "show_ac": item.get("show_ac", False),
+                "show_hp": item.get("show_hp", False),
+                "show_initiative": item.get("show_initiative", False),
+                "initiative": None,
+            })
+
+            if result["show_ac"]:
+                result["ac"] = item.get("ac")
+
+            if result["show_hp"]:
+                result["hp"] = item.get("hp")
+                result["max_hp"] = item.get("max_hp")
+
+            if result["show_initiative"]:
+                result["initiative"] = item.get("initiative")
+
+            return result
+
+        monsters = [
+            display_monster(item)
+            for item in full["monsters"]
+            if item.get("active") and item.get("visible")
+        ]
+        characters = [
+            display_character(item)
+            for item in full["characters"]
+            if item.get("active") and item.get("visible")
+        ]
+
+        visible_ids = {
+            item["id"]
+            for item in [*monsters, *characters]
+        }
+
+        display_order = list(dict.fromkeys(
+            ident
+            for ident in full["battle_order"]
+            if ident in visible_ids
+        ))
+        ordered_ids = set(display_order)
+
+        additional = sorted(
+            (
+                item
+                for item in [
+                    *full["characters"],
+                    *full["monsters"],
+                ]
+                if item["id"] in visible_ids
+                and item["id"] not in ordered_ids
+            ),
+            key=self.context.admin_initiative_key,
+        )
+
+        display_order.extend(item["id"] for item in additional)
+
+        return {
+            "monsters": monsters,
+            "characters": characters,
+            "battle_order": [
+                ident
+                for ident in full["battle_order"]
+                if ident in visible_ids
+            ],
+            "display_order": display_order,
+            "display": self.context.copy.deepcopy(full["display"]),
+        }
 
     def public_state(self) -> dict[str, Any]:
         """Build the state payload exposed to authenticated displays."""

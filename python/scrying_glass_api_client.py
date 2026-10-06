@@ -87,7 +87,7 @@ class ClientAPI:
 
     def client_get_state(self):
         """Client get state."""
-        return self.context.public_state()
+        return self.context.display_state()
 
     async def ws(self, websocket: WebSocket):
         """Ws."""
@@ -102,7 +102,7 @@ class ClientAPI:
         self.context.SOCKETS.add(websocket)
 
         await websocket.send_text(
-            self.context.json.dumps({"type": "state", "state": self.context.public_state()})
+            self.context.json.dumps({"type": "state", "state": self.context.display_state()})
         )
 
         try:

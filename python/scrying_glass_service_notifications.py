@@ -15,9 +15,9 @@ class NotificationsService:
 
     async def broadcast(self) -> None:
         """Broadcast."""
-        message = self.context.json.dumps({'type': 'state', 'state': self.context.public_state()})
+        message = self.context.json.dumps({'type': 'state', 'state': self.context.display_state()})
         stale = []
-        for ws in self.context.SOCKETS:
+        for ws in tuple(self.context.SOCKETS):
             try:
                 await ws.send_text(message)
             except Exception:

@@ -11,6 +11,7 @@ class AdminBattleMixin:
         """Battle end."""
         self.context.clear_turns()
         self.context.STATE["battle_order"] = []
+        self.context.STATE["turn_successors"] = []
 
         self.context.save_active_campaign_characters()
         await self.context.combatants_changed(monsters=True, characters=True)
@@ -24,6 +25,7 @@ class AdminBattleMixin:
 
         self.context.sort_admin_by_max_hp()
         self.context.STATE["battle_order"] = []
+        self.context.STATE["turn_successors"] = []
 
         self.context.save_active_campaign_characters()
         await self.context.combatants_changed(monsters=True, characters=True)
@@ -103,6 +105,8 @@ class AdminBattleMixin:
             prepared.append((target, row.action, amount))
 
         # Apply only after every row passed validation.
+        self.context.remember_turn_successors()
+
         for target, action, amount in prepared:
             if action == "damage":
                 target["hp"] -= amount

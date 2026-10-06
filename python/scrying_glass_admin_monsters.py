@@ -3,6 +3,8 @@
 from __future__ import annotations
 from typing import Any
 from fastapi import File, Form
+import asyncio
+import copy
 
 class AdminMonstersMixin:
     """Implement admin monsters handlers using the shared server context."""
@@ -23,14 +25,23 @@ class AdminMonstersMixin:
             "monster_species": monster_species.strip(),
             "ac": ac,
         }
-        image_url = (
-            self.context.save_image(image)
-            if image is not None and image.filename
-            else self.context.dnd_image(fields["monster_species"])
-        )
+
+        working_state = self.context.STATE
+        if image is not None and image.filename:
+            image_url = self.context.save_image(image)
+        else:
+            image_url = await asyncio.to_thread(
+                self.context.dnd_image,
+                fields["monster_species"],
+            )
 
         created = []
 
+        if self.context.STATE is not working_state:
+            raise self.context.HTTPException(
+                409,
+                "The encounter changed while this request was running. Retry.",
+            )
         for number in range(1, quantity + 1):
             generated_name = (
                 fields["name"]
@@ -56,21 +67,54 @@ class AdminMonstersMixin:
         await self.context.combatants_changed(monsters=True, characters=False)
         return created
 
-    async def import_monster(self, monster_file: UploadFile=File(...), color: str=Form(...), quantity: int=Form(1, ge=1, le=50), image: UploadFile | None=File(None)):
-        """Import monster."""
-        if not (monster_file.filename or '').lower().endswith('.monster'):
-            raise self.context.HTTPException(400, 'Upload a .monster file')
-        fields = self.context.parse_monster(await monster_file.read())
-        image_url = (
-            self.context.save_image(image)
-            if image and image.filename
-            else self.context.dnd_image(fields['monster_species'])
+    async def import_monster(
+        self,
+        monster_file: UploadFile = File(...),
+        color: str = Form(...),
+        quantity: int = Form(1, ge=1, le=50),
+        image: UploadFile | None = File(None),
+    ):
+        """Import monsters only into the encounter where the request started."""
+        working_state = self.context.STATE
+
+        if not (monster_file.filename or "").lower().endswith(".monster"):
+            raise self.context.HTTPException(
+                400,
+                "Upload a .monster file",
+            )
+
+        fields = self.context.parse_monster(
+            await monster_file.read()
         )
 
-        created = self.context.make_monsters(fields, color, quantity, image_url)
+        if image is not None and image.filename:
+            image_url = self.context.save_image(image)
+        else:
+            image_url = await asyncio.to_thread(
+                self.context.dnd_image,
+                fields["monster_species"],
+            )
 
-        self.context.STATE['monsters'].extend(created)
-        await self.context.combatants_changed(monsters=True, characters=False)
+        created = self.context.make_monsters(
+            fields,
+            color,
+            quantity,
+            image_url,
+        )
+
+        if self.context.STATE is not working_state:
+            raise self.context.HTTPException(
+                409,
+                "The encounter changed while this request was running. Retry.",
+            )
+
+        working_state["monsters"].extend(created)
+
+        await self.context.combatants_changed(
+            monsters=True,
+            characters=False,
+        )
+
         return created
 
     async def import_monsters_csv(self, csv_file: UploadFile=File(...)) -> dict[str, int]:
@@ -109,66 +153,127 @@ class AdminMonstersMixin:
         m = next((x for x in self.context.STATE['monsters'] if x['id'] == ident), None)
         if not m:
             raise self.context.HTTPException(404, 'Monster not found')
-        parsed_initiative = None if initiative.strip() == '' else int(initiative)
+        try:
+            parsed_initiative = (
+                None if initiative.strip() == "" else int(initiative)
+            )
+        except ValueError as exc:
+            raise self.context.HTTPException(
+                400,
+                "Initiative must be a whole number or empty",
+            ) from exc
         if parsed_initiative is not None and (not -100 <= parsed_initiative <= 100):
             raise self.context.HTTPException(400, 'Initiative must be between -100 and 100')
-        m.update({'name': name.strip(), 'monster_species': monster_species.strip(), 'ac': ac, 'hp': hp, 'max_hp': max_hp, 'original_hp': original_hp, 'color': color, 'initiative': parsed_initiative, 'ally': ally.lower() == 'true'})
+        replacement_image_url = None
         if image and image.filename:
-            m['image_url'] = self.context.save_image(image)
-        if m['hp'] <= 0:
-            m['alive'] = False
-            m['visible'] = True
-            m['in_turn'] = False
+            replacement_image_url = self.context.save_image(image)
+
+        self.context.remember_turn_successors()
+
+        m.update({
+            "name": name.strip(),
+            "monster_species": monster_species.strip(),
+            "ac": ac,
+            "hp": hp,
+            "max_hp": max_hp,
+            "original_hp": original_hp,
+            "color": color,
+            "initiative": parsed_initiative,
+            "ally": ally.lower() == "true",
+        })
+
+        if replacement_image_url is not None:
+            m["image_url"] = replacement_image_url
+
+        self.context.update_alive_state(m)
+        if m.get("active") and m.get("alive"):
+            self.context.insert_into_battle_order(m)
         self.context.clean_order()
         await self.context.combatants_changed(monsters=True, characters=False)
         return m
 
-    async def update_monster(self, ident: str, update: MonsterUpdate) -> dict[str, Any]:
-        """Update monster."""
+    async def update_monster(
+        self,
+        ident: str,
+        update: MonsterUpdate,
+    ) -> dict[str, Any]:
+        """Validate a proposed update before changing live monster state."""
         monster = next(
-            (item for item in self.context.STATE["monsters"] if item["id"] == ident),
+            (
+                item
+                for item in self.context.STATE["monsters"]
+                if item["id"] == ident
+            ),
             None,
         )
 
-        if not monster:
-            raise self.context.HTTPException(404, "Monster not found")
+        if monster is None:
+            raise self.context.HTTPException(
+                404,
+                "Monster not found",
+            )
 
-        values = update.model_dump(
-            exclude_unset=True,
-            exclude_none=True,
-        )
+        values = {
+            key: value
+            for key, value in update.model_dump(
+                exclude_unset=True,
+            ).items()
+            if value is not None or key == "initiative"
+        }
 
         hp_delta = values.pop("hp_delta", None)
+        requested_turn = values.get("in_turn")
+
+        # Work on a separate copy until validation succeeds.
+        candidate = copy.deepcopy(monster)
 
         for key, value in values.items():
             if key != "in_turn":
-                monster[key] = value
+                candidate[key] = value
 
         if hp_delta is not None:
-            monster["hp"] += hp_delta
+            candidate["hp"] += hp_delta
 
-        if monster["hp"] <= 0:
-            monster["alive"] = False
-            monster["visible"] = True
-            monster["in_turn"] = False
-        else:
-            monster["alive"] = True
+        candidate["alive"] = candidate["hp"] > 0
+
+        if not candidate["alive"]:
+            candidate["visible"] = True
+            candidate["in_turn"] = False
+
+        if not candidate.get("active"):
+            candidate["in_turn"] = False
+
+        # Validate the resulting state, not the original state.
+        if requested_turn is True and (
+            not candidate.get("active")
+            or not candidate.get("alive")
+        ):
+            raise self.context.HTTPException(
+                400,
+                "Only an active living combatant may have the battle turn",
+            )
+
+        # Validation passed. Commit to the existing live object.
+        self.context.remember_turn_successors()
+        monster.update(candidate)
+
+        self.context.set_turn(monster, requested_turn)
+
+        if monster.get("active") and monster.get("alive"):
+            self.context.insert_into_battle_order(monster)
+
+        self.context.clean_order()
 
         if hp_delta is not None:
             self.context.log_hp_change(monster, hp_delta)
 
-        if values.get("active") is True:
-            self.context.insert_into_battle_order(monster)
+        await self.context.combatants_changed(
+            monsters=True,
+            characters=False,
+        )
 
-        if values.get("active") is False:
-            monster["in_turn"] = False
-
-        self.context.set_turn(monster, values.get("in_turn"))
-        self.context.clean_order()
-
-        await self.context.combatants_changed(monsters=True, characters=False)
         return monster
-
+        
     async def bulk_monsters(self, body: BulkCombatantAction) -> dict[str, int]:
         """Apply one validated bulk action to selected monsters."""
         fields = {
@@ -190,13 +295,15 @@ class AdminMonstersMixin:
 
         targets = self.context.selected_entities("monsters", body.ids)
 
+        self.context.remember_turn_successors()
+
         if body.action in fields:
             field, value = fields[body.action]
 
             if body.action == "join-battle":
                 for monster in targets:
-                    # Prefer the existing activation helper where available.
                     monster[field] = value
+                    self.context.insert_into_battle_order(monster)
             elif body.action == "leave-battle":
                 removed_ids = {monster["id"] for monster in targets}
                 for monster in targets:
