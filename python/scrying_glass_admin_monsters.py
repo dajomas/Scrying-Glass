@@ -117,37 +117,66 @@ class AdminMonstersMixin:
 
         return created
 
-    async def import_monsters_csv(self, csv_file: UploadFile=File(...)) -> dict[str, int]:
-        """Import monsters csv."""
+    async def import_monsters_csv(
+        self,
+        csv_file: UploadFile = File(...),
+    ) -> dict[str, int]:
+        """Import CSV monsters only into the encounter where the request started."""
+        working_state = self.context.STATE
+
         if not (csv_file.filename or "").lower().endswith(".csv"):
-            raise self.context.HTTPException(400, "Upload a .csv file")
+            raise self.context.HTTPException(
+                400,
+                "Upload a .csv file",
+            )
 
         rows = self.context.csv_rows(await csv_file.read())
+
         imported = [
             self.context.csv_monster(row, row_number)
             for row_number, row in enumerate(rows, start=2)
         ]
 
+        if self.context.STATE is not working_state:
+            raise self.context.HTTPException(
+                409,
+                "The encounter changed while this request was running. Retry.",
+            )
+
         ids = [monster["id"] for monster in imported]
-        existing_ids = {monster["id"] for monster in self.context.STATE["monsters"]}
-        existing_ids.update(character["id"] for character in self.context.STATE["characters"])
+
+        existing_ids = {
+            monster["id"]
+            for monster in working_state["monsters"]
+        }
+        existing_ids.update(
+            character["id"]
+            for character in working_state["characters"]
+        )
 
         if len(ids) != len(set(ids)):
-            raise self.context.HTTPException(400, "CSV contains duplicate IDs")
+            raise self.context.HTTPException(
+                400,
+                "CSV contains duplicate IDs",
+            )
 
         conflicting = set(ids) & existing_ids
         if conflicting:
             raise self.context.HTTPException(
                 400,
-                "CSV ID already exists in the current setup: "
+                "CSV ID already exists in the active encounter: "
                 + ", ".join(sorted(conflicting)[:5]),
             )
 
-        self.context.STATE["monsters"].extend(imported)
-        await self.context.combatants_changed(monsters=True, characters=False)
+        working_state["monsters"].extend(imported)
+
+        await self.context.combatants_changed(
+            monsters=True,
+            characters=False,
+        )
 
         return {"count": len(imported)}
-
+        
     async def edit_monster(self, ident: str, name: str=Form(...), monster_species: str=Form(...), ac: int=Form(...), hp: int=Form(...), max_hp: int=Form(...), original_hp: int=Form(...), color: str=Form(...), initiative: str=Form(''), ally: str=Form('false'), image: UploadFile | None=File(None)):
         """Edit monster."""
         m = next((x for x in self.context.STATE['monsters'] if x['id'] == ident), None)
