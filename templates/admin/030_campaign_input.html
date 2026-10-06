@@ -1,0 +1,41 @@
+    <section id="campaignInputPane" class="pane pane-campaign-group">
+      <div>
+        <div class="row">
+          <h2>Campaign Setup</h2>
+          <span id="activeCampaignInfo" class="campaign-info"></span>
+        </div>
+
+        <p
+          id="campaignNotification"
+          class="pane-notification-campaign"
+          role="status"
+          aria-live="polite"
+        > </p>
+
+        <div class="row">
+          <label class="field">
+            <span class="field-label">Active campaign</span>
+            <select
+              id="campaignSelect"
+              class="campaign-select"
+            ></select>
+          </label>
+          <label class="field"><span class="field-label">&nbsp;</span><button id="switchCampaign">Switch</button></label>
+          <label class="field"><span class="field-label">&nbsp;</span><button id="newCampaign">New campaign</button></label>
+          <label class="field"><span class="field-label">&nbsp;</span><button id="editCampaign">Edit campaign</button></label>
+          <label class="field"><span class="field-label">&nbsp;</span><button id="deleteCampaign" class="danger">Delete campaign</button></label>
+          <label class="field"><span class="field-label">&nbsp;</span><button id="openCampaignSetup" class="import">
+            Add setup to campaign
+          </button>
+        </div>
+        <div class="row">
+          <label class="field">
+          <div class="row">
+            <button id="openCharacterCsvImport" class="import">
+              Import characters CSV
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+

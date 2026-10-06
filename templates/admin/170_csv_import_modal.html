@@ -1,0 +1,28 @@
+  <div id="csvImportModal" class="modal" hidden>
+    <div>
+      <h2 id="csvImportTitle">Import CSV</h2>
+
+      <p id="csvImportHelp">
+        Select a CSV file to add records to the current setup.
+      </p>
+
+      <form id="csvImportForm" class="import-form">
+        <label>
+          CSV file <span class="required-marker" aria-hidden="true">*</span>
+          <input
+            id="csvImportFile"
+            name="csv_file"
+            type="file"
+            accept=".csv,text/csv"
+            required
+          >
+        </label>
+
+        <div class="actions">
+          <button class="import">Import CSV</button>
+          <button type="button" id="cancelCsvImport">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+

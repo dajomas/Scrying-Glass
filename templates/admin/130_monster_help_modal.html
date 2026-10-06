@@ -1,0 +1,91 @@
+  <div
+    id="monsterFileHelpModal"
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="monsterFileHelpTitle"
+    hidden
+  >
+    <div class="monster-file-help-modal">
+      <div class="modal-title-row">
+        <h2 id="monsterFileHelpTitle">Importing .monster files</h2>
+
+        <button
+          id="closeMonsterFileHelp"
+          class="modal-close"
+          type="button"
+          aria-label="Close .monster file help"
+          title="Close"
+        >
+          ×
+        </button>
+      </div>
+
+      <p>
+        A <code>.monster</code> file is a JSON monster-export file. A good place to create a <code>.monster</code> file is at
+        <a href="https://tetra-cube.com/dnd/dnd-statblock.html" target="_blank">Tetra-cube D&D 5e Statblock Generator</a>.
+        Save or download the monster data as a file with the <code>.monster</code>
+        extension, then select it using the <strong>Monster file</strong>
+        chooser and click <strong>Import .monster</strong>.
+      </p>
+
+      <h3>Fields used from the file</h3>
+
+      <table class="help-table">
+        <thead>
+          <tr>
+            <th>Imported value</th>
+            <th>Accepted JSON field</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Monster name</td>
+            <td><code>name</code></td>
+            <td>Required.</td>
+          </tr>
+          <tr>
+            <td>Monster type</td>
+            <td><code>type</code></td>
+            <td>Required.</td>
+          </tr>
+          <tr>
+            <td>Hit points</td>
+            <td><code>hpText</code>, then <code>hp</code></td>
+            <td>The first integer in the value is used.</td>
+          </tr>
+          <tr>
+            <td>Armor Class</td>
+            <td>
+              <code>ac</code>, <code>armorClass</code>,
+              <code>otherArmorDesc</code>, then <code>natArmorBonus</code>
+            </td>
+            <td>The first available value containing a number is used.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Example supported file</h3>
+
+      <pre class="monster-file-example">{
+    "name": "Goblin",
+    "type": "humanoid",
+    "ac": 15,
+    "hp": 7
+  }</pre>
+
+      <p>
+        The import form controls the number of copies, display color, and an
+        optional replacement image. Other JSON fields in the file are not used
+        by this importer.
+      </p>
+
+      <div class="actions">
+        <button id="closeMonsterFileHelpBottom" type="button">
+          Close help
+        </button>
+      </div>
+    </div>
+  </div>
+
