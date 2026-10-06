@@ -2617,7 +2617,7 @@ function activeBattleTargets() {
     }
 
     return [...latest.monsters, ...latest.characters]
-        .filter(combatant => combatant.active && combatant.alive)
+        .filter(combatant => combatant.active)
         .sort((left, right) => left.name.localeCompare(right.name));
 }
 
@@ -2649,7 +2649,7 @@ function addBattleActionRow() {
     const targets = activeBattleTargets();
 
     if (!targets.length) {
-        message('There are no active living combatants available as targets.');
+        message('There are no active combatants available as targets.');
         return;
     }
 

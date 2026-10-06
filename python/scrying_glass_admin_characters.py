@@ -8,23 +8,48 @@ import copy
 class AdminCharactersMixin:
     """Implement admin characters handlers using the shared server context."""
 
-    async def import_characters_csv(self, csv_file: UploadFile=File(...)) -> dict[str, int]:
-        """Import characters csv."""
+    async def import_characters_csv(
+        self,
+        csv_file: UploadFile = File(...),
+    ) -> dict[str, int]:
+        """Import CSV characters only into the encounter where the request started."""
+        working_state = self.context.STATE
+
         if not (csv_file.filename or "").lower().endswith(".csv"):
-            raise self.context.HTTPException(400, "Upload a .csv file")
+            raise self.context.HTTPException(
+                400,
+                "Upload a .csv file",
+            )
 
         rows = self.context.csv_rows(await csv_file.read())
+
         imported = [
             self.context.csv_character(row, row_number)
             for row_number, row in enumerate(rows, start=2)
         ]
 
+        if self.context.STATE is not working_state:
+            raise self.context.HTTPException(
+                409,
+                "The encounter changed while this request was running. Retry.",
+            )
+
         ids = [character["id"] for character in imported]
-        existing_ids = {monster["id"] for monster in self.context.STATE["monsters"]}
-        existing_ids.update(character["id"] for character in self.context.STATE["characters"])
+
+        existing_ids = {
+            monster["id"]
+            for monster in working_state["monsters"]
+        }
+        existing_ids.update(
+            character["id"]
+            for character in working_state["characters"]
+        )
 
         if len(ids) != len(set(ids)):
-            raise self.context.HTTPException(400, "CSV contains duplicate IDs")
+            raise self.context.HTTPException(
+                400,
+                "CSV contains duplicate IDs",
+            )
 
         conflicting = set(ids) & existing_ids
         if conflicting:
@@ -34,12 +59,14 @@ class AdminCharactersMixin:
                 + ", ".join(sorted(conflicting)[:5]),
             )
 
-        self.context.STATE["characters"].extend(imported)
-        self.context.save_active_campaign_characters()
-        await self.context.combatants_changed(monsters=False, characters=True)
+        working_state["characters"].extend(imported)
+
+        await self.context.combatants_changed(
+            monsters=False,
+            characters=True,
+        )
 
         return {"count": len(imported)}
-
     async def create_character(self, character: CharacterCreate):
         """Create character."""
         c = {'id': self.context.uuid.uuid4().hex, **character.model_dump(), 'max_hp': character.hp, 'original_hp': character.hp, 'original_initiative': character.initiative, 'active': False, 'alive': character.hp > 0, 'visible': False, 'in_turn': False}
