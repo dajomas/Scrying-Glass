@@ -1,143 +1,256 @@
 # Scrying Glass User Guide
 
-Scrying Glass lets a game master manage encounters privately in Admin while players see a live Client Display.
+The game master prepares and runs combat in the Admin interface. Players watch
+a separate Client Display that receives live updates. The code split changes
+file organization, not the intended encounter workflow.
 
-## Sign in
+See [README](../README.md) for installation and configuration,
+[Technical Documentation](Technical-Documentation.md) for internals, and
+[Systemd Deployment](Systemd-Deployment.md) for a managed Linux service.
 
-| Screen | Address | Role |
+## Start and sign in
+
+Use your existing shell launcher if it activates the virtual environment, or
+run from the repository root:
+
+```bash
+.venv/bin/python scrying_glass_server.py --config config.yaml
+```
+
+| Screen | Default address | Account role |
 |---|---|---|
-| Admin | `http://SERVER:3000/` | `admin` |
-| Client Display | `http://SERVER:4000/` or `/display` | `client` or `admin` |
+| Admin | http://SERVER:3000/ | admin |
+| Client Display | http://SERVER:4000/display | client or admin |
 
-Admin and Client sessions use different cookies, so both can be open in one browser.
+Replace SERVER with the host/IP. Separate cookies allow both interfaces in one
+browser. Restart clears sessions; sign in again afterward.
 
-## Campaigns and setups
+## Admin panes
 
-A campaign owns its character roster and groups saved battle setups. One campaign is active at a time.
+Top controls show/hide campaign input, character input, battle setup input,
+monster input, character display and monster display. Battle controls and the
+activity log provide turn management and recorded actions. Pane visibility is
+presentation state, not combatant activation or deletion.
 
-- A new campaign receives an empty Default setup.
-- Activating a campaign opens its last-used setup when available, otherwise its most recently modified setup.
-- **New** creates and saves an empty named setup.
-- **Save** writes the current working setup under the entered name.
-- **Load** replaces the working encounter.
-- **Import from setup** appends reset copies of monsters from another saved setup.
+## Campaigns
 
-### Automatic saving
+A campaign owns a character roster and groups related battle setups. There is
+one active campaign and one shared working encounter. Save before switching if
+you need to retain encounter changes that may be replaced.
 
-- Character additions, edits, damage/healing, resets, bulk actions, and removals are saved automatically to the active campaign.
-- Monster additions, edits, damage/healing, resets, bulk actions, and removals are saved automatically to the loaded saved setup.
-- If no setup is loaded, monster changes remain in the unsaved working encounter. Save before loading/switching to avoid losing intentionally unsaved work.
+Selecting/activating a campaign opens its last-worked-on setup if still present,
+otherwise its newest setup by modification time. A campaign with no setups has
+no setup to open. New campaigns receive an empty default setup. Fresh installs
+start with Default; older unassigned setups are migrated there, with numeric
+suffixes on naming collisions.
 
-## Add monsters manually
+Create/edit campaigns using their name and optional description. Normalized
+names must be unique. To delete a campaign with setups, explicitly choose to
+move its setups elsewhere or permanently delete them. The last campaign cannot
+be deleted. Deleting the active campaign selects another one and can replace
+the working encounter. Campaign deletion also removes that campaign's roster;
+moving its setups is not a character-roster merge.
 
-| Field | Meaning |
+Add setup to campaign offers move or copy from another campaign. Colliding
+setup names receive numeric suffixes. The copied/moved setup retains its saved
+background and monster data; characters come from the target campaign's roster.
+
+## Campaign characters
+
+Add characters to the active campaign with name, color, HP and optional
+initiative. Edit their HP, maximum HP, initiative and runtime flags from the
+character controls. Max HP provides the character reset baseline.
+
+Characters are stored separately from battle setups. A new setup retains the
+active campaign's roster. Loading a setup uses that campaign's current roster,
+not an old character copy from its snapshot. Character CSV imports append to
+the active campaign. Removing a character updates the campaign roster; it is
+not merely a removal from one setup.
+
+## Battle setups
+
+| Action | Result |
 |---|---|
-| Name | Local encounter name, for example `Mimic 1` |
-| Monster species | Canonical creature name for D&D Beyond, for example `Mimic` |
-| AC | Armor Class |
-| HP Range start | Fixed HP, range start, or dice expression |
-| HP Range end | Numeric range end; blank for fixed/dice HP |
-| Quantity | 1–50 copies |
-| Image | Optional upload |
+| New | Clears the working monster encounter/order/log and retains the active campaign's characters |
+| Save | Writes the named monster/setup snapshot and saves the campaign roster separately |
+| Load | Replaces encounter data with the saved setup and current campaign roster |
+| Rename | Renames a saved setup; conflicts are rejected |
+| Delete | Permanently deletes it and opens the next alphabetic setup, wrapping to the first |
+| Import from setup | Appends new copies of monsters from a selected saved setup |
 
-### HP choices
+Names are normalized into lowercase storage slugs; saving the same name in the
+same campaign overwrites it. Different campaigns can use the same setup name.
+When deletion leaves no setups, an empty default setup is created and opened.
+Loading/deleting can replace the working battle, log and background: save first.
 
-| HP Range start | HP Range end | Result |
+Monster changes to an associated active setup are persisted through relevant
+mutation handlers. Character changes persist to the campaign roster. Do not
+assume every change remains isolated from saved data until pressing Save.
+Use Save to explicitly name/associate the encounter and retain its background.
+
+### Import from setup
+
+Choose source campaign/setup. Only monsters are imported; campaign characters
+are not imported from battle setups. Copies get new IDs, retain source current
+HP and max HP, restore original initiative, and clear active/visible/turn and
+stat-display flags. Alive derives from retained HP. The current battle order
+and source setup are not changed by the import itself.
+
+### View background
+
+Use the setup controls to choose a color, CSS background/gradient, or an uploaded
+PNG/JPG/JPEG/GIF/WebP image. Apply for immediate display feedback; save the setup
+to store that choice with it. New/legacy setups use the configured fallback
+until they carry a saved background. Uploaded background files are retained
+because other setups may reference them. Images are centered and cover the
+player display without tiling.
+
+## Add monsters
+
+Manual entry uses name, monster species, AC, HP Range Start, optional HP Range
+End, color, quantity (1..50) and optional image. Species identifies the creature
+for optional D&D Beyond suggestions; the display name can distinguish copies.
+
+| HP input | Start | End |
 |---|---|---|
-| `17` | blank | Every copy gets fixed 17 HP |
-| `10` | `20` | Every copy independently receives 10 through 20 HP |
-| `3d8+9` | blank | Every copy independently rolls `3d8+9` |
+| Fixed HP | 24 | Empty |
+| Inclusive random range | 18 | 30 |
+| Dice expression | 3d8+9 | Empty |
 
-Dice examples:
+Each generated monster receives an independent ID and HP roll. Dice can include
+a positive or negative modifier; spaces around the modifier are accepted.
+Invalid/oversized expressions are rejected. Uploaded images take precedence
+over remote lookup. D&D Beyond lookup is optional and best effort: enter stats
+and upload an image manually if it fails.
 
-```text
-1d8
-2d10+4
-3d8 + 9
-1d20
-1d100-10
+### .monster files
+
+Upload compatible UTF-8 JSON .monster files with usable name, type, armor class
+and hit points. Choose quantity/color and an optional image. The external
+[Tetra-cube statblock generator](https://tetra-cube.com/dnd/dnd-statblock.html)
+can produce compatible files; it is not bundled or required at runtime.
+
+## CSV imports
+
+Use the monster/character CSV import dialogs. CSV must be UTF-8 (BOM accepted),
+include headers and contain at least one nonblank row. Headers are trimmed and
+case-insensitive. IDs are generated when absent/blank; duplicates or IDs already
+used by any combatant in the encounter are rejected.
+
+Monster example:
+
+```csv
+name,monster_species,ac,hp,max_hp,initiative,color
+Goblin,goblin,15,7,7,14,#842029
+Goblin captain,goblin,16,21,21,17,#4c1d95
 ```
 
-Spaces around `+`/`-` are optional. Dice HP requires blank HP Range end. The created number becomes current HP, max HP, and reset HP.
+Required monster columns are name, monster_species (or type), ac and hp.
+Use monster_species in new CSVs; do not rely on the old monster_type header.
+Optional columns include id, original_hp, image_url, ally, runtime flags,
+original_initiative and show_ac/show_hp/show_initiative.
 
-### D&D Beyond AC/HP assistance
+Character example:
 
-After entering Monster species, Scrying Glass can look up an exact D&D Beyond result. It prefers an available Legacy-marked match and prefers a source dice expression over average HP.
-
-For example, `58 (9d8 + 18)` fills HP Range start with:
-
-```text
-9d8+18
+```csv
+name,hp,max_hp,initiative,color
+Aelwyn,34,34,16,#1f4e79
+Brom,48,48,11,#0f766e
 ```
 
-The Add monster notification area shows lookup feedback. By default a result fills only blank AC/HP fields. Enable **Overwrite Armor Class and HP Range with found D&D Beyond values** when you want lookup results to replace entered values.
+Character name is required; other fields have defaults. Boolean fields accept
+true/false, yes/no, y/n, on/off or 1/0. Correct invalid rows and retry; keep a
+backup of important rosters before bulk changes.
 
-If lookup does not find usable stats, enter values normally; lookup failure does not prevent creation.
+## Combatant controls
 
-### Images and colors
+| Control | Meaning |
+|---|---|
+| Active / Off | Participation in battle eligibility; active living monsters can appear as cards |
+| Visible | Presence in the initiative bar, distinct from Active |
+| Turn | Current turn; requires an active living combatant |
+| Edit | Update identity, stats and applicable display/image fields |
+| Damage / Heal | Change HP and write an activity-log record |
+| Reset | Restore HP/initiative baselines and clear runtime flags |
+| Remove | Permanently remove the combatant and its battle-order ID |
 
-An uploaded image overrides automatic lookup. Without an upload, a best-effort D&D Beyond image lookup uses Monster species.
+Monster-only controls include Ally and AC/HP/Init card visibility. Ally affects
+the rendered label, not the stored name. Color markers match the combatant color.
+Monsters at zero/lower HP become dead, visible in the initiative bar and out of
+turn. Character controls additionally allow manual Alive/Dead status.
 
-Every Admin color picker has a dot after it showing the selected color, including default colors. This is visual feedback; the color picker itself is what gets saved.
-
-Click **Edit** for a monster to update fields. The current image appears as a thumbnail no larger than 300px in either dimension. Selecting **Replace image** previews the file immediately, but it uploads only when **Save monster** is clicked. Cancel leaves the stored image unchanged.
-
-## Characters and imports
-
-Characters require name, color, and HP; initiative is optional.
-
-Monster CSV requires:
-
-```text
-name,monster_species,ac,hp
-```
-
-Character CSV requires:
-
-```text
-name
-```
-
-Compatible `.monster` JSON imports read `name`, `type`, HP from `hpText` or `hp`, and AC from `ac`, `armorClass`, `otherArmorDesc`, or `natArmorBonus`. Quantity, color, and optional replacement image are selected in the import form.
-
-## Initiative and Client card fields
-
-A monster card can independently show AC, HP, and initiative.
-
-To show initiative on the Client card:
-
-1. Enter a numeric initiative in the Monster row and leave the field to save it.
-2. Enable **Init on**.
-3. Make the monster active/alive so it has a card during battle.
-
-**Init on** only permits display. It cannot display a blank initiative value.
+Bulk controls operate on selected IDs. Monster bulk actions include joining or
+leaving battle, ally flags, stat visibility, reset and remove. Character bulk
+actions include joining/leaving battle, reset and remove. Check selection and
+confirmation prompts before destructive actions. Bulk and individual activation
+may update battle order differently; review the order after bulk changes.
 
 ## Run a battle
 
-1. Add/load combatants and set initiative.
-2. Join living participants to battle.
-3. Start the battle and resolve ties.
-4. Use **Next** to advance active living combatants.
-5. Click the underlined current combatant in the battle order for multi-target Damage, Heal, Buff, or Debuff actions.
+1. Add/load monsters and verify the active campaign roster.
+2. Set initiative and activate living participants.
+3. Click Start battle and resolve tied initiatives as prompted.
+4. Use Next to advance through active living combatants.
+5. Use End to clear turns/order, or Reset All to reset combatants and order.
 
-Damage and Heal require a positive amount. Buff and Debuff use no amount. Actions are recorded in the Activity log.
+Individual activation during an existing battle can insert a combatant according
+to initiative: before lower initiatives and after existing equals. Combatants
+without numeric initiative follow numeric entries. Next skips dead/inactive
+entries and adds eligible participants omitted from order. With none eligible,
+order and turn state clear. End does not perform the full combatant reset.
 
-## Client Display
+## Current-turn actions
 
-Active living monsters render as cards. Visible combatants appear in the initiative bar. Monster card backgrounds can use images; card AC/HP/initiative fields appear only when enabled. Each setup can have its own display background color, CSS value, or uploaded image.
+Click the marked/underlined current combatant to open battle actions. Add one or
+more target rows. Actor and targets must be active and alive, and the actor must
+currently have the turn.
 
-## Troubleshooting
+- Damage subtracts HP; a positive amount is required.
+- Heal adds HP; a positive amount is required.
+- Buff and Debuff log an action without changing HP or supplying an amount.
 
-| Issue | Check |
+All rows are validated before changes are applied. Every applied row is logged.
+Buff/debuff records are descriptive log entries, not an automatic conditions
+or duration engine.
+
+## Activity log and display
+
+The log records UTC timestamp, actor, actor life state, target, target life state,
+action and amount. Direct HP changes without a current actor use System.
+Export CSV/JSON before clearing; clearing permanently removes current records.
+
+The Client Display shows active living monster cards and visible combatants in
+an initiative bar. Characters participate in the bar, not full monster cards.
+Monster AC/HP/initiative values appear when enabled. Ally labels append - Ally.
+The bar hides when empty. Backgrounds follow the working encounter.
+
+Treat Client login as access to encounter state, not a secure redaction of all
+hidden card values. Use only trusted players/devices.
+
+## Updates, backups and troubleshooting
+
+The split Admin HTML loads fragments once when the server imports the loader.
+Restart for markup changes; hard-refresh after browser asset changes. Players
+and GMs do not need to know the internal file layout to use the interface.
+
+Back up the whole configured storage_dir, including characters/, campaigns.json,
+state.json, setups/ and uploads/. Stop the process for a consistent backup.
+Do not copy only saved setup files and expect campaign characters/images to move.
+
+| Symptom | What to check |
 |---|---|
-| Old behavior after update | Restart if necessary; hard-refresh with `Ctrl+Shift+R` or `Cmd+Shift+R` |
-| D&D Beyond suggestion unavailable | Check canonical species spelling, configuration, and outbound connectivity |
-| Dice expression rejected | Check syntax and leave HP Range end blank |
-| Initiative absent from Client card | Enter a numeric initiative, then enable **Init on** |
-| Remote image absent | Lookup is best effort; upload an image manually |
-| Monster changes disappear | Save an unsaved encounter before loading/switching setup |
-| CSV import fails | Check UTF-8, headers, numeric fields, and duplicate IDs |
+| Missing uvicorn during a terminal check | Activate the environment or use .venv/bin/python |
+| Missing HTML fragment at startup | Complete templates/admin tree and correct loader path |
+| Old page | Restart after HTML changes and hard-refresh |
+| Client does not update | Port/access and WebSocket reconnection by refreshing |
+| Login fails after restart | Sessions cleared; sign in again with the correct role |
+| CSV rejected | Headers, UTF-8, numbers, boolean values and unique IDs |
+| No suggested stats/image | Remote lookup is best effort; enter/upload manually |
+| Older setups missing | Check Default and migration logs |
+| Characters differ between setups | Campaign roster is authoritative; characters are not snapshot-owned |
+| Encounter unexpectedly replaced | Campaign activation or setup load/delete can open another setup |
+| Last campaign cannot be deleted | Create/retain another campaign; choose setup move/delete policy |
 
-## Backups
-
-Back up all of `storage_dir`: `campaigns.json`, `characters/`, `setups/`, `state.json`, and `uploads/`.
+Keep credentials/configuration separate from source and limit reachability to a
+trusted network. Coordinate multiple Admin users: there is no conflict/version
+resolution for simultaneous changes.
