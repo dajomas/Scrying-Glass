@@ -1,0 +1,103 @@
+    <section id="battleSetupInputPane" class="pane pane-battle-group">
+      <div>
+        <div class="row">
+          <h2>Manage active campaign Battle setups</h2>
+          <span
+            id="activeBattleSetupInfo"
+            class="battle-setup-info"
+            aria-live="polite"
+          >
+            No saved battle setup loaded
+          </span>
+        </div>
+
+        <p
+          id="battleSetupNotification"
+          class="pane-notification-battleSetup"
+          role="status"
+          aria-live="polite"
+        > </p>
+
+        <label class="field field-inline">
+          <span class="field-label">Battle setup name</span>
+          <input
+            id="setupName"
+            class="setup-name"
+            placeholder="For example: goblin-ambush"
+          >
+        </label>
+
+        <label class="field field-inline"><span class="field-label">&nbsp;</span><button id="newSetup" class="reset">New</button></label>
+        <label class="field field-inline"><span class="field-label">&nbsp;</span><button id="saveSetup">Save</button></label>
+
+        <label class="field field-inline">
+          <span class="field-label">Battle setup name</span>
+          <select id="setupSelect">
+            <option value="">Load saved setup…</option>
+          </select>
+        </label>
+
+        <label class="field field-inline"><span class="field-label">&nbsp;</span><button id="loadSetup">Load</button></label>
+        <label class="field field-inline"><span class="field-label">&nbsp;</span><button id="renameSetup">Rename</button></label>
+        <label class="field field-inline"><span class="field-label">&nbsp;</span><button id="deleteSetup" class="danger">Delete</button></label>
+
+        <div class="row">
+          <button id="openImport" class="import">Import from setup</button>
+          <button id="openMonsterCsvImport" class="import">
+            Import monsters CSV
+          </button>
+        </div>
+
+        <div class="row">
+          <h3>View screen background</h3>
+        </div>
+
+        <div class="row">
+          <label class="field field-color">
+            <span class="field-label">Background color</span>
+              <span class="color-picker-control">
+                <input
+                  id="backgroundColor"
+                  type="color"
+                  value="#080b14"
+                  title="Background color"
+                >
+                <span
+                  id="backgroundColorPreview"
+                  class="turn-marker color-picker-preview"
+                  style="background-color: #080b14"
+                  aria-hidden="true"
+                ></span>
+              </span>
+            </span>
+          </label>
+
+          <label class="field field-inline">
+            <span class="field-label">Background value</span>
+            <input
+              id="backgroundValue"
+              class="setup-name"
+              placeholder="Color, CSS gradient, or image URL"
+            >
+          </label>
+
+          <label class="field field-inline">
+            <span class="field-label">Background image</span>
+            <input
+              id="backgroundImage"
+              type="file"
+              accept="image/png,image/jpeg,image/gif,image/webp"
+            >
+          </label>
+
+          <label class="field"><span class="field-label">&nbsp;</span><button id="applyBackground" type="button">Apply background</button></label>
+          <label class="field"><span class="field-label">&nbsp;</span><button id="clearBackgroundImage" type="button">Use color</button></label>
+        </div>
+
+        <p class="campaign-info">
+          Choose a color, enter a CSS background value, or upload a background
+          image. Save the battle setup to retain it.
+        </p>
+      </div>
+    </section>
+

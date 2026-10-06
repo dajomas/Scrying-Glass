@@ -1,0 +1,35 @@
+  <div id="importModal" class="modal" hidden>
+    <div>
+      <h2>Import monsters from a saved setup</h2>
+      <p>
+        Imported monsters receive new IDs and reset runtime state.
+        Characters belong to campaigns and are not part of battle setups.
+        The current battle order is not changed.
+      </p>
+
+      <form id="importForm" class="import-form">
+        <label>
+          Campaign
+          <select id="importCampaign" name="campaign"></select>
+        </label>
+
+        <label>
+          Saved setup <span class="required-marker" aria-hidden="true">*</span>
+          <select id="importSetup" name="name" required></select>
+        </label>
+
+        <label>
+          Import
+          <select name="kind">
+            <option value="monsters">Monsters only</option>
+          </select>
+        </label>
+
+        <div class="actions">
+          <button class="import">Import</button>
+          <button type="button" id="cancelImport">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+

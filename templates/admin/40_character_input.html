@@ -1,0 +1,73 @@
+    <section id="characterInputPane" class="pane pane-campaign-group">
+      <div class="row">
+        <h2>Add character to active campaign</h2>
+      </div>
+
+      <p
+        id="characterAddNotification"
+        class="pane-notification-campaign"
+        role="status"
+        aria-live="polite"
+      > </p>
+
+      <div>
+        <form id="characterForm" class="row">
+          <label class="field">
+            <span class="field-label">
+              Character name <span class="required-marker" aria-hidden="true">*</span>
+            </span>
+            <input
+              id="characterName"
+              name="name"
+              placeholder="For example: Aelwyn"
+              required
+            >
+          </label>
+
+          <label class="field field-color">
+            <span class="field-label">Color</span>
+              <span class="color-picker-control"><input
+                id="characterColor"
+                name="color"
+                type="color"
+                value="#1f4e79"
+              >
+              <span
+                id="characterColorPreview"
+                class="turn-marker color-picker-preview"
+                style="background-color: #1f4e79"
+                aria-hidden="true"
+              ></span>
+            </span>
+          </label>
+
+          <label class="field field-compact">
+            <span class="field-label">
+              Starting HP <span class="required-marker" aria-hidden="true">*</span>
+            </span>
+            <input
+              id="characterHp"
+              name="hp"
+              type="number"
+              min="0"
+              value="1"
+              required
+            >
+          </label>
+
+          <label class="field field-compact">
+            <span class="field-label">Initiative</span>
+            <input
+              id="characterInitiative"
+              name="initiative"
+              type="number"
+              placeholder="Optional"
+            >
+          </label>
+
+          <label class="field"><span class="field-label">&nbsp;</span><button>Add character</button></label>
+        </form>
+
+      </div>
+    </section>
+

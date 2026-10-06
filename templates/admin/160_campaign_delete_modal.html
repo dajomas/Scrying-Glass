@@ -1,0 +1,31 @@
+  <div id="campaignDeleteModal" class="modal" hidden>
+    <div>
+      <h2 id="campaignDeleteTitle">Delete campaign</h2>
+      <p id="campaignDeleteText"></p>
+      <form id="campaignDeleteForm" class="import-form">
+        <label>
+          Campaign to delete
+          <select id="campaignDeleteTarget" name="campaign"></select>
+        </label>
+
+        <label id="campaignDeleteActionLabel">
+          Its battle setups
+          <select id="campaignDeleteAction" name="setup_action">
+            <option value="move">Move them to another campaign</option>
+            <option value="delete">Delete them</option>
+          </select>
+        </label>
+
+        <label id="campaignDeleteMoveLabel">
+          Move its battle setups to
+          <select id="campaignDeleteMoveTo" name="move_to"></select>
+        </label>
+
+        <div class="actions">
+          <button class="danger">Delete</button>
+          <button type="button" id="cancelCampaignDelete">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
