@@ -472,7 +472,7 @@ async function removeCombatant(kind, id) {
 
 async function patch(kind, id, data) {
     try {
-        await request(`/api/${kind}/${id}`, {
+        await request(`/api/${kind}/${encodeURIComponent(id)}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -506,7 +506,7 @@ function monsterRow(monster) {
                 type="checkbox"
                 class="bulk-selection-checkbox"
                 data-select-kind="monsters"
-                data-select-id="${monster.id}"
+                data-select-id="${esc(monster.id)}"
                 aria-label="Select ${esc(monster.name)}"
                 ${selectedMonsterIds.has(monster.id) ? 'checked' : ''}
             >
@@ -521,34 +521,34 @@ function monsterRow(monster) {
         <td>
         <input
             class="initiative-edit"
-            data-mi="${monster.id}"
+            data-mi="${esc(monster.id)}"
             type="number"
             value="${monster.initiative ?? ''}"
             placeholder="init"
         >
         </td>
         <td>
-        <button data-edit="${monster.id}" data-kind="monsters" class="edit">Edit</button>
-        <button class="${monster.active ? 'on' : ''}" data-ma="${monster.id}">${monster.active ? 'In Battle' : 'Join Battle'}</button>
-        <button class="${monster.ally ? 'on' : ''}" data-mally="${monster.id}">Ally</button>
-        <button class="${monster.visible ? 'on' : ''}" data-mv="${monster.id}">Visible</button>
-        <button data-mt="${monster.id}" class="${monster.in_turn ? 'on' : ''}">Turn</button>
-        <button data-t="${monster.id}" data-f="show_ac">AC ${monster.show_ac ? 'on' : 'off'}</button>
-        <button data-t="${monster.id}" data-f="show_hp">HP ${monster.show_hp ? 'on' : 'off'}</button>
-        <button data-t="${monster.id}" data-f="show_initiative">Init ${monster.show_initiative ? 'on' : 'off'}</button>
-        <button data-r="${monster.id}" class="reset">Reset</button>
+        <button data-edit="${esc(monster.id)}" data-kind="monsters" class="edit">Edit</button>
+        <button class="${monster.active ? 'on' : ''}" data-ma="${esc(monster.id)}">${monster.active ? 'In Battle' : 'Join Battle'}</button>
+        <button class="${monster.ally ? 'on' : ''}" data-mally="${esc(monster.id)}">Ally</button>
+        <button class="${monster.visible ? 'on' : ''}" data-mv="${esc(monster.id)}">Visible</button>
+        <button data-mt="${esc(monster.id)}" class="${monster.in_turn ? 'on' : ''}">Turn</button>
+        <button data-t="${esc(monster.id)}" data-f="show_ac">AC ${monster.show_ac ? 'on' : 'off'}</button>
+        <button data-t="${esc(monster.id)}" data-f="show_hp">HP ${monster.show_hp ? 'on' : 'off'}</button>
+        <button data-t="${esc(monster.id)}" data-f="show_initiative">Init ${monster.show_initiative ? 'on' : 'off'}</button>
+        <button data-r="${esc(monster.id)}" class="reset">Reset</button>
         <button
             class="danger"
             type="button"
             data-remove-kind="monsters"
-            data-remove-id="${monster.id}"
+            data-remove-id="${esc(monster.id)}"
         >
             Remove
         </button>
         </td>
         <td>
-        <button data-d="${monster.id}" class="danger">Damage</button>
-        <button data-h="${monster.id}">Heal</button>
+        <button data-d="${esc(monster.id)}" class="danger">Damage</button>
+        <button data-h="${esc(monster.id)}">Heal</button>
         </td>
     </tr>
     `;
@@ -562,45 +562,45 @@ function characterRow(character) {
                 type="checkbox"
                 class="bulk-selection-checkbox"
                 data-select-kind="characters"
-                data-select-id="${character.id}"
+                data-select-id="${esc(character.id)}"
                 aria-label="Select ${esc(character.name)}"
                 ${selectedCharacterIds.has(character.id) ? 'checked' : ''}
             >
         </td>
         <td>${colorMarker(character, '#1f4e79')}${esc(character.name)}</td>
         <td>
-        <input class="hp-edit" data-chp="${character.id}" type="number" min="0" value="${character.hp}">
+        <input class="hp-edit" data-chp="${esc(character.id)}" type="number" min="0" value="${character.hp}">
         /
-        <input class="hp-edit" data-cmaxhp="${character.id}" type="number" min="0" value="${character.max_hp}">
+        <input class="hp-edit" data-cmaxhp="${esc(character.id)}" type="number" min="0" value="${character.max_hp}">
         </td>
         <td>
         <input
             class="initiative-edit"
-            data-ci="${character.id}"
+            data-ci="${esc(character.id)}"
             type="number"
             value="${character.initiative ?? ''}"
             placeholder="init"
         >
         </td>
         <td>
-        <button data-edit="${character.id}" data-kind="characters" class="edit">Edit</button>
-        <button class="${character.active ? 'on' : ''}" data-ca="${character.id}">${character.active ? 'In Battle' : 'Join Battle'}</button>
-        <button class="${character.alive ? 'on' : ''}" data-cl="${character.id}">${character.alive ? 'Alive' : 'Dead'}</button>
-        <button class="${character.visible ? 'on' : ''}" data-cv="${character.id}">Visible</button>
-        <button data-ct="${character.id}" class="${character.in_turn ? 'on' : ''}">Turn</button>
-        <button data-cr="${character.id}" class="reset">Reset</button>
+        <button data-edit="${esc(character.id)}" data-kind="characters" class="edit">Edit</button>
+        <button class="${character.active ? 'on' : ''}" data-ca="${esc(character.id)}">${character.active ? 'In Battle' : 'Join Battle'}</button>
+        <button class="${character.alive ? 'on' : ''}" data-cl="${esc(character.id)}">${character.alive ? 'Alive' : 'Dead'}</button>
+        <button class="${character.visible ? 'on' : ''}" data-cv="${esc(character.id)}">Visible</button>
+        <button data-ct="${esc(character.id)}" class="${character.in_turn ? 'on' : ''}">Turn</button>
+        <button data-cr="${esc(character.id)}" class="reset">Reset</button>
         <button
             class="danger"
             type="button"
             data-remove-kind="characters"
-            data-remove-id="${character.id}"
+            data-remove-id="${esc(character.id)}"
         >
             Remove
         </button>
         </td>
         <td>
-        <button data-cd="${character.id}" class="danger">Damage</button>
-        <button data-ch="${character.id}">Heal</button>
+        <button data-cd="${esc(character.id)}" class="danger">Damage</button>
+        <button data-ch="${esc(character.id)}">Heal</button>
         </td>
     </tr>
     `;
@@ -1559,7 +1559,7 @@ document.querySelector('#editForm').onsubmit = async event => {
                 formData.append('image', image);
 
                 const response = await fetch(
-                    `/api/monsters/${editing.id}/edit`,
+                    `/api/monsters/${encodeURIComponent(editing.id)}/edit`,
                     {
                         method: 'POST',
                         body: formData,
@@ -1574,7 +1574,7 @@ document.querySelector('#editForm').onsubmit = async event => {
                     throw new Error(error.detail);
                 }
             } else {
-                await request(`/api/monsters/${editing.id}`, {
+                await request(`/api/monsters/${encodeURIComponent(editing.id)}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1592,7 +1592,7 @@ document.querySelector('#editForm').onsubmit = async event => {
         }
 
         try {
-            await request(`/api/characters/${editing.id}`, {
+            await request(`/api/characters/${encodeURIComponent(editing.id)}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -2617,7 +2617,7 @@ function activeBattleTargets() {
     }
 
     return [...latest.monsters, ...latest.characters]
-        .filter(combatant => combatant.active && combatant.alive)
+        .filter(combatant => combatant.active)
         .sort((left, right) => left.name.localeCompare(right.name));
 }
 
@@ -2649,7 +2649,7 @@ function addBattleActionRow() {
     const targets = activeBattleTargets();
 
     if (!targets.length) {
-        message('There are no active living combatants available as targets.');
+        message('There are no active combatants available as targets.');
         return;
     }
 
@@ -2871,7 +2871,7 @@ document.addEventListener('click', async event => {
     }
 
     if (button.dataset.r) {
-        request(`/api/combatants/${id}/reset`, { method: 'POST' })
+        request(`/api/combatants/${encodeURIComponent(id)}/reset`, { method: 'POST' })
             .then(load)
             .catch(error => message(error.message));
         return;
@@ -2945,7 +2945,7 @@ document.addEventListener('click', async event => {
     }
 
     if (button.dataset.cr) {
-        request(`/api/combatants/${id}/reset`, { method: 'POST' })
+        request(`/api/combatants/${encodeURIComponent(id)}/reset`, { method: 'POST' })
             .then(load)
             .catch(error => message(error.message));
     }

@@ -13,6 +13,11 @@ def parse_monster(raw: bytes) -> dict[str, Any]:
         x = json.loads(raw.decode('utf-8'))
     except Exception as exc:
         raise HTTPException(400, '.monster must contain UTF-8 JSON') from exc
+    if not isinstance(x, dict):
+        raise HTTPException(
+            400,
+            ".monster must contain a JSON object",
+        )
     name = str(x.get('name', '')).strip()
     kind = str(x.get('type', '')).strip()
     hp = re.search('-?\\d+', str(x.get('hpText', x.get('hp', ''))))
@@ -27,6 +32,27 @@ def csv_text(value: Any, default: str = "") -> str:
     if value is None:
         return default
     return str(value).strip()
+
+COMBATANT_ID_RE = re.compile(r"[A-Za-z0-9_-]{1,100}")
+
+def csv_combatant_id(
+    row: dict[str, str],
+    row_number: int,
+) -> str:
+    """Validate a supplied combatant ID or generate one when blank."""
+    ident = csv_text(row.get("id"))
+
+    if not ident:
+        return uuid.uuid4().hex
+
+    if COMBATANT_ID_RE.fullmatch(ident) is None:
+        raise HTTPException(
+            400,
+            f"CSV row {row_number}: id must contain 1–100 characters "
+            "using only ASCII letters, digits, underscores, or hyphens",
+        )
+
+    return ident
 
 def csv_int(
     row: dict[str, Any],
@@ -180,7 +206,7 @@ def csv_monster(row: dict[str, str], row_number: int) -> dict[str, Any]:
         row_number=row_number,
     )
 
-    ident = csv_text(row.get("id")) or uuid.uuid4().hex
+    ident = csv_combatant_id(row, row_number)
 
     return {
         "id": ident,
@@ -196,7 +222,7 @@ def csv_monster(row: dict[str, str], row_number: int) -> dict[str, Any]:
         "alive": csv_bool(
             row,
             "alive",
-            default=hp >= 0,
+            default=hp > 0,
             row_number=row_number,
         ),
         "visible": csv_bool(row, "visible", default=False, row_number=row_number),
@@ -255,7 +281,7 @@ def csv_character(row: dict[str, str], row_number: int) -> dict[str, Any]:
         row_number=row_number,
     )
 
-    ident = csv_text(row.get("id")) or uuid.uuid4().hex
+    ident = csv_combatant_id(row, row_number)
 
     return {
         "id": ident,
@@ -284,7 +310,7 @@ def csv_character(row: dict[str, str], row_number: int) -> dict[str, Any]:
         "alive": csv_bool(
             row,
             "alive",
-            default=hp >= 0,
+            default=hp > 0,
             row_number=row_number,
         ),
         "visible": csv_bool(row, "visible", default=False, row_number=row_number),

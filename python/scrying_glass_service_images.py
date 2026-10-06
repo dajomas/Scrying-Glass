@@ -131,10 +131,37 @@ class ImagesService:
             # Image lookup is optional and must not block monster creation.
             return None
 
-    def make_monster(self, fields: dict[str, Any], color: str, upload: UploadFile | None, image_url: str | None=None) -> dict[str, Any]:
-        """Make monster."""
-        hp = fields['hp']
-        return {'id': self.context.uuid.uuid4().hex, **fields, 'max_hp': hp, 'original_hp': hp, 'color': color, 'image_url': image_url if image_url is not None else self.context.save_image(upload) if upload and upload.filename else self.context.dnd_image(fields['monster_species']), 'active': False, 'alive': True, 'visible': False, 'ally': False, 'initiative': None, 'original_initiative': None, 'show_ac': False, 'show_hp': False, 'show_initiative': False, 'in_turn': False}
+    def make_monster(
+        self,
+        fields: dict[str, Any],
+        color: str,
+        upload: UploadFile | None,
+        image_url: str | None = None,
+    ) -> dict[str, Any]:
+        """Build a monster without performing a remote image lookup."""
+        hp = fields["hp"]
+
+        if upload is not None and upload.filename:
+            image_url = self.context.save_image(upload)
+
+        return {
+            "id": self.context.uuid.uuid4().hex,
+            **fields,
+            "max_hp": hp,
+            "original_hp": hp,
+            "color": color,
+            "image_url": image_url,
+            "active": False,
+            "alive": hp > 0,
+            "visible": False,
+            "ally": False,
+            "initiative": None,
+            "original_initiative": None,
+            "show_ac": False,
+            "show_hp": False,
+            "show_initiative": False,
+            "in_turn": False,
+        }
 
     def make_monsters(self, fields: dict[str, Any], color: str, quantity: int, image_url: str | None) -> list[dict[str, Any]]:
         """Make monsters."""

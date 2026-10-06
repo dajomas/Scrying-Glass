@@ -18,10 +18,41 @@ class BattleService:
         for x in self.context.entities():
             x['in_turn'] = False
 
+    def remember_turn_successors(self) -> None:
+        """Remember who follows the current combatant before changing state."""
+        current = self.context.active_combatant()
+        if current is None:
+            return
+
+        order = list(self.context.STATE["battle_order"])
+        current_id = current["id"]
+
+        if current_id not in order:
+            return
+
+        position = order.index(current_id)
+
+        self.context.STATE["turn_successors"] = (
+            order[position + 1:]
+            + order[:position + 1]
+        )
+
     def clean_order(self) -> None:
-        """Remove combatants that are no longer eligible from battle order."""
-        known = {x['id'] for x in self.context.entities()}
-        self.context.STATE['battle_order'] = [x for x in self.context.STATE['battle_order'] if x in known]
+        """Keep each active living combatant at most once in battle order."""
+        eligible_ids = {
+            combatant["id"]
+            for combatant in self.context.eligible()
+        }
+
+        seen: set[str] = set()
+        cleaned: list[str] = []
+
+        for ident in self.context.STATE["battle_order"]:
+            if ident in eligible_ids and ident not in seen:
+                cleaned.append(ident)
+                seen.add(ident)
+
+        self.context.STATE["battle_order"] = cleaned
 
     def insert_into_battle_order(self, combatant: dict[str, Any]) -> None:
         'Insert a newly activated living combatant into an existing battle order.\n\n    Higher numeric initiative acts first. On equal initiative, the newly added\n    combatant is placed after all existing combatants with that same initiative.\n    Combatants without initiative are placed after numeric initiatives.\n    '
@@ -70,6 +101,7 @@ class BattleService:
             return
         if not x.get('active') or not x.get('alive', True):
             raise self.context.HTTPException(400, 'Only an active living combatant may have the battle turn')
+        self.context.STATE["turn_successors"] = []
         self.context.clear_turns()
         x['in_turn'] = True
         x['visible'] = True
@@ -84,26 +116,60 @@ class BattleService:
         if len(order) != len(wanted) or set(order) != wanted:
             raise self.context.HTTPException(400, 'Battle order must include every active living combatant exactly once')
         self.context.STATE['battle_order'] = order
+        self.context.STATE["turn_successors"] = []
         self.context.clear_turns()
         if order:
             self.context.entity(order[0])['in_turn'] = True
             self.context.entity(order[0])['visible'] = True
 
     def advance_turn(self) -> dict[str, Any] | None:
-        """Advance turn."""
-        ids = {x['id'] for x in self.context.eligible()}
-        if not ids:
+        """Advance from the current turn, or its remembered successor."""
+        eligible = self.context.eligible()
+        eligible_ids = {combatant["id"] for combatant in eligible}
+
+        if not eligible_ids:
             self.context.clear_turns()
-            self.context.STATE['battle_order'] = []
+            self.context.STATE["battle_order"] = []
+            self.context.STATE["turn_successors"] = []
             return None
-        order = [i for i in self.context.STATE['battle_order'] if i in ids]
-        order += [x['id'] for x in sorted(self.context.eligible(), key=lambda z: (-self.context.numeric_initiative(z), z['name'].lower())) if x['id'] not in order]
-        self.context.STATE['battle_order'] = order
-        pos = next((n for n, i in enumerate(order) if self.context.entity(i).get('in_turn')), -1)
+
+        current = self.context.active_combatant()
+        current_id = current["id"] if current is not None else None
+
+        self.context.clean_order()
+        order = list(self.context.STATE["battle_order"])
+
+        for combatant in sorted(
+            eligible,
+            key=self.context.admin_initiative_key,
+        ):
+            if combatant["id"] not in order:
+                order.append(combatant["id"])
+
+        self.context.STATE["battle_order"] = order
+
+        if current_id in order:
+            position = order.index(current_id)
+            next_id = order[(position + 1) % len(order)]
+        else:
+            next_id = next(
+                (
+                    ident
+                    for ident in self.context.STATE.get(
+                        "turn_successors", []
+                    )
+                    if ident in eligible_ids
+                ),
+                order[0],
+            )
+
         self.context.clear_turns()
-        target = self.context.entity(order[(pos + 1) % len(order)])
-        target['in_turn'] = True
-        target['visible'] = True
+        self.context.STATE["turn_successors"] = []
+
+        target = self.context.entity(next_id)
+        target["in_turn"] = True
+        target["visible"] = True
+
         return target
 
     def selected_entities(self, kind: Literal['characters', 'monsters'], ids: list[str]) -> list[dict[str, Any]]:

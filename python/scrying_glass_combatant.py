@@ -18,20 +18,22 @@ def update_alive_state(combatant: dict[str, Any]) -> None:
         combatant["in_turn"] = False
 
 def reset_entity(x: dict[str, Any]) -> None:
-    """Reset entity."""
-    x['active'] = False
-    x['alive'] = True
-    x['visible'] = False
-    x['in_turn'] = False
-    x['initiative'] = x.get('original_initiative')
-    if 'monster_species' in x:
-        x['hp'] = x['original_hp']
-        x['max_hp'] = x['original_hp']
-        x['show_ac'] = False
-        x['show_hp'] = False
-        x['show_initiative'] = False
+    """Restore reset values and remove the combatant from battle."""
+    x["active"] = False
+    x["visible"] = False
+    x["in_turn"] = False
+    x["initiative"] = x.get("original_initiative")
+
+    if "monster_species" in x:
+        x["hp"] = x["original_hp"]
+        x["max_hp"] = x["original_hp"]
+        x["show_ac"] = False
+        x["show_hp"] = False
+        x["show_initiative"] = False
     else:
-        x['hp'] = x['max_hp']
+        x["hp"] = x["max_hp"]
+
+    x["alive"] = x["hp"] > 0
 
 def reset_imported_monster(source: dict[str, Any]) -> dict[str, Any]:
     """Reset imported monster."""

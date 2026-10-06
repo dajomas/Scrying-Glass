@@ -61,6 +61,11 @@ class AdminCampaignsMixin:
                 meta = data['campaigns'][new_slug]
             meta['name'] = payload.name.strip()
         self.context.write_campaigns(data)
+        if payload.name is not None and new_slug != slug:
+            reference = self.context.active_setup_reference()
+            if reference is not None and reference["campaign"] == slug:
+                self.context.set_active_setup(new_slug, reference["name"])
+        await self.context.changed()
         return self.context.campaigns_payload()
 
     async def delete_campaign(self, slug: str, move_to: str | None=None, delete_setups: bool=False):
@@ -81,6 +86,35 @@ class AdminCampaignsMixin:
                 raise self.context.HTTPException(400, 'Cannot move setups into the campaign being deleted')
         if setups and target_slug is None and not delete_setups:
             raise self.context.HTTPException(409, f'Campaign still contains {len(setups)} setup(s); choose a campaign to move them to, or delete them')
+
+        reactivated = data["active"] == slug
+        replacement_slug = None
+        replacement_name = None
+        replacement_state = None
+
+        if reactivated:
+            replacement_slug = target_slug or sorted(
+                campaign
+                for campaign in data["campaigns"]
+                if campaign != slug
+            )[0]
+
+            replacement_name = self.context.pick_campaign_setup(
+                replacement_slug
+            )
+
+            if replacement_name is None:
+                raise self.context.HTTPException(
+                    409,
+                    "The replacement campaign has no setup. "
+                    "Create a setup there before deleting the active campaign.",
+                )
+
+            replacement_state = self.context.load_setup_state(
+                replacement_name,
+                replacement_slug,
+            )
+
         deleted_setups = [src.stem for src in setups] if delete_setups else []
         moved = []
         if target_slug is not None:
@@ -97,22 +131,67 @@ class AdminCampaignsMixin:
         self.context.campaign_characters_path(slug).unlink(missing_ok=True)
 
         del data["campaigns"][slug]
-        reactivated = data['active'] == slug
+
         if reactivated:
-            data['active'] = target_slug or sorted(data['campaigns'], key=str.casefold)[0]
+            data["active"] = replacement_slug
+
         self.context.write_campaigns(data)
-        opened = await self.context.open_campaign_setup(data['active']) if reactivated else None
+
+        opened = None
+
+        if reactivated:
+            self.context.STATE = replacement_state
+            self.context.set_active_setup(
+                replacement_slug,
+                replacement_name,
+            )
+            self.context.remember_setup(
+                replacement_slug,
+                replacement_name,
+            )
+            opened = replacement_name
+
+        await self.context.changed()
         return {**self.context.campaigns_payload(), 'moved': moved, 'deleted_setups': deleted_setups, 'opened_setup': opened}
 
     async def activate_campaign(self, slug: str):
-        """Activate campaign."""
+        """Validate the destination before changing the active campaign."""
         self.context.migrate_unassigned_setups()
         slug = self.context.require_campaign(slug)
+
+        name = self.context.pick_campaign_setup(slug)
+
+        if name is None:
+            next_state = self.context.normalize_state({
+                "monsters": [],
+                "characters": self.context.load_campaign_characters(slug),
+                "battle_order": [],
+                "activity_log": [],
+                "display": {
+                    "background": self.context.configured_background(),
+                },
+            })
+        else:
+            next_state = self.context.load_setup_state(name, slug)
+
         data = self.context.read_campaigns()
-        data['active'] = slug
+        data["active"] = slug
         self.context.write_campaigns(data)
-        opened = await self.context.open_campaign_setup(slug)
-        return {**self.context.campaigns_payload(), 'opened_setup': opened}
+
+        self.context.STATE = next_state
+
+        if name is None:
+            self.context.clear_active_setup()
+        else:
+            self.context.set_active_setup(slug, name)
+            self.context.remember_setup(slug, name)
+
+        await self.context.changed()
+
+        return {
+            **self.context.campaigns_payload(),
+            "opened_setup": name,
+        }
 
     async def add_setup_to_campaign(self, slug: str, payload: CampaignSetupAdd):
         """Add setup to campaign."""
@@ -125,8 +204,20 @@ class AdminCampaignsMixin:
         if source_slug == target_slug:
             raise self.context.HTTPException(400, 'Setup is already in this campaign')
         dst = self.context.unique_setup_path(self.context.campaign_dir(target_slug), src.stem)
-        if payload.mode == 'copy':
+        reference = self.context.active_setup_reference()
+        moving_loaded_setup = (
+            payload.mode == "move"
+            and reference is not None
+            and reference["campaign"] == source_slug
+            and reference["name"] == src.stem
+        )
+
+        if payload.mode == "copy":
             self.context.shutil.copy2(src, dst)
         else:
             src.replace(dst)
+
+            if moving_loaded_setup:
+                self.context.clear_active_setup()
+                await self.context.changed()
         return {**self.context.campaigns_payload(), 'setup': dst.stem, 'campaign': target_slug, 'mode': payload.mode}

@@ -105,6 +105,7 @@ class PersistenceService:
 
                     # Runtime working-state fields still come from state.json.
                     restored["battle_order"] = saved_state["battle_order"]
+                    restored["turn_successors"] = saved_state["turn_successors"]
                     restored["activity_log"] = saved_state["activity_log"]
                     restored["display"] = saved_state["display"]
                     restored["active_setup"] = {
@@ -159,9 +160,13 @@ class PersistenceService:
         if reference is None:
             return False
 
-        campaign = self.context.require_campaign(reference["campaign"])
-        name = self.context.setup_slug(reference["name"])
-        path = self.context.setup_path(name, campaign)
+        try:
+            campaign = self.context.require_campaign(reference["campaign"])
+            name = self.context.setup_slug(reference["name"])
+            path = self.context.setup_path(name, campaign)
+        except self.context.HTTPException:
+            self.context.clear_active_setup()
+            return False
 
         if not path.exists():
             # The setup reference is stale. Preserve the current encounter as

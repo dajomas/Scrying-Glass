@@ -39,6 +39,11 @@ class AdminSetupsMixin:
         """Save setup."""
         name = self.context.setup_slug(payload.name)
         campaign = self.context.require_campaign(payload.campaign)
+        if campaign != self.context.active_campaign():
+            raise self.context.HTTPException(
+                409,
+                "Activate this campaign before saving, loading, or deleting its setup",
+            )
         path = self.context.setup_path(name, campaign)
 
         temp = path.with_suffix(".tmp")
@@ -66,6 +71,11 @@ class AdminSetupsMixin:
     
         name = self.context.setup_slug(payload.name)
         campaign = self.context.require_campaign(payload.campaign)
+        if campaign != self.context.active_campaign():
+            raise self.context.HTTPException(
+                409,
+                "Activate this campaign before saving, loading, or deleting its setup",
+            )
         self.context.STATE = self.context.load_setup_state(name, campaign)
         self.context.set_active_setup(campaign, name)
         self.context.remember_setup(campaign, name)
@@ -133,6 +143,11 @@ class AdminSetupsMixin:
         """
     
         campaign = self.context.require_campaign(campaign)
+        if campaign != self.context.active_campaign():
+            raise self.context.HTTPException(
+                409,
+                "Activate this campaign before saving, loading, or deleting its setup",
+            )
         name = self.context.setup_slug(name)
         path = self.context.setup_path(name, campaign)
         if not path.exists():

@@ -19,10 +19,12 @@ class AdminCombatantsMixin:
         )
 
         removed_character = False
-        is_monster = monster_index is None
-        is_character = not is_monster
+        is_monster = monster_index is not None
+        is_character = False
 
         if monster_index is not None:
+            self.context.remember_turn_successors()
+
             removed = self.context.STATE["monsters"].pop(monster_index)
         else:
             character_index = next(
@@ -37,7 +39,8 @@ class AdminCombatantsMixin:
             is_character = character_index is not None
             if character_index is None:
                 raise self.context.HTTPException(404, "Combatant not found")
-
+    
+            self.context.remember_turn_successors()
             removed = self.context.STATE["characters"].pop(character_index)
             removed_character = True
 
@@ -65,6 +68,8 @@ class AdminCombatantsMixin:
             raise self.context.HTTPException(404, "Combatant not found")
 
         is_character = x in self.context.STATE["characters"]
+
+        self.context.remember_turn_successors()
 
         self.context.reset_entity(x)
         self.context.clean_order()

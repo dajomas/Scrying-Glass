@@ -26,6 +26,7 @@ def install_services(context: Any) -> dict[str, Any]:
     context.normalize_display = service.normalize_display
     context.normalize_state = service.normalize_state
     context.public_state = service.public_state
+    context.display_state = service.display_state
     context.active_setup_reference = service.active_setup_reference
     context.set_active_setup = service.set_active_setup
     context.clear_active_setup = service.clear_active_setup
@@ -71,6 +72,7 @@ def install_services(context: Any) -> dict[str, Any]:
     service = BattleService(context)
     services['battle'] = service
     context.clear_turns = service.clear_turns
+    context.remember_turn_successors = service.remember_turn_successors
     context.clean_order = service.clean_order
     context.insert_into_battle_order = service.insert_into_battle_order
     context.sort_admin_by_initiative = service.sort_admin_by_initiative

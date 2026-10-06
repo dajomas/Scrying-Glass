@@ -1,4 +1,5 @@
 let previous = new Map();
+const removalTimers = new Map();
 
 function esc(value) {
     return String(value).replace(/[&<>"']/g, character => ({
@@ -110,24 +111,13 @@ function render(state) {
             .map(combatant => [combatant.id, combatant]),
     );
 
-    const battleOrdered = state.battle_order
+    const displayOrder = state.display_order ?? state.battle_order;
+
+    const initiativeCombatants = displayOrder
         .map(id => combatantsById.get(id))
-        .filter(Boolean);
-
-    const additionalVisibleCombatants = [...combatantsById.values()]
         .filter(combatant =>
-            combatant.active &&
-            combatant.visible &&
-            !battleOrdered.some(existing => existing.id === combatant.id),
-        )
-        .sort((left, right) =>
-            (right.initiative ?? -999) - (left.initiative ?? -999),
+            combatant && combatant.active && combatant.visible,
         );
-
-    const initiativeCombatants = [
-        ...battleOrdered.filter(combatant => combatant.visible),
-        ...additionalVisibleCombatants,
-    ];
 
     const initiative = document.querySelector('#initiative');
 
@@ -147,12 +137,16 @@ function render(state) {
     ).join('');
 
     const activeMonsters = state.monsters.filter(monster =>
-        monster.active && monster.alive,
+        monster.active && monster.alive && monster.visible,
     );
 
     const stage = document.querySelector('#stage');
 
     if (!activeMonsters.length) {
+        for (const timer of removalTimers.values()) {
+            clearTimeout(timer);
+        }
+        removalTimers.clear();
         stage.style.gridTemplateColumns = '';
         stage.style.gridTemplateRows = '';
         stage.innerHTML = '<div class="empty"></div>';
@@ -183,13 +177,24 @@ function render(state) {
 
         const oldCard = document.getElementById(`m-${id}`);
 
-        if (oldCard) {
+        if (oldCard && !removalTimers.has(id)) {
             oldCard.classList.add(exitClass(state.display));
-            setTimeout(() => oldCard.remove(), 750);
+
+            const timer = setTimeout(() => {
+                oldCard.remove();
+                removalTimers.delete(id);
+            }, 750);
+
+            removalTimers.set(id, timer);
         }
     }
 
     activeMonsters.forEach((monster, index) => {
+        if (removalTimers.has(monster.id)) {
+            clearTimeout(removalTimers.get(monster.id));
+            removalTimers.delete(monster.id);
+        }
+
         let card = document.getElementById(`m-${monster.id}`);
 
         if (!card) {
@@ -202,6 +207,8 @@ function render(state) {
                 card.classList.remove('enter-bottom', 'enter-top');
             });
         }
+
+        card.classList.remove("exit-top", "exit-bottom");
 
         const row = Math.floor(index / columns) + 1;
         const column = (index % columns) + 1;
