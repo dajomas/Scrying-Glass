@@ -1,14 +1,14 @@
 """Attach context-aware services to the existing server namespace."""
 from typing import Any
-from scrying_glass_service_auth import AuthService
-from scrying_glass_service_state import StateService
-from scrying_glass_service_campaigns import CampaignsService
-from scrying_glass_service_migrations import MigrationsService
-from scrying_glass_service_persistence import PersistenceService
-from scrying_glass_service_activity import ActivityService
-from scrying_glass_service_images import ImagesService
-from scrying_glass_service_battle import BattleService
-from scrying_glass_service_notifications import NotificationsService
+from .scrying_glass_service_auth import AuthService
+from .scrying_glass_service_state import StateService
+from .scrying_glass_service_campaigns import CampaignsService
+from .scrying_glass_service_migrations import MigrationsService
+from .scrying_glass_service_persistence import PersistenceService
+from .scrying_glass_service_activity import ActivityService
+from .scrying_glass_service_images import ImagesService
+from .scrying_glass_service_battle import BattleService
+from .scrying_glass_service_notifications import NotificationsService
 
 def install_services(context: Any) -> dict[str, Any]:
     """Bind every service before requests or startup operations can execute."""

@@ -5,7 +5,9 @@ restart the server after editing a fragment. No template engine is required.
 """
 from pathlib import Path
 
-_TEMPLATE_DIR = Path(__file__).resolve().parent / "templates" / "admin"
+_TEMPLATE_DIR = (
+    Path(__file__).resolve().parent.parent / "templates" / "admin"
+)
 
 # Explicit order preserves the original DOM and markup boundaries.
 _PARTS = (

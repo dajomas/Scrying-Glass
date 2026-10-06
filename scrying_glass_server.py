@@ -4,7 +4,7 @@ Dependencies:
   python3.14 -m pip install 'fastapi>=0.115' 'uvicorn[standard]>=0.30' 'PyYAML>=6.0' python-multipart
 
 Run:
-  python3.14 scrying_glass_server.py --config config.yaml"""
+  python3.14 python.scrying_glass_server.py --config config.yaml"""
 
 
 # ============================================================================
@@ -22,14 +22,14 @@ from fastapi import Depends, FastAPI, File, Form, HTTPException, Request as Fast
 from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 # from pydantic import BaseModel, Field
-from login_html import LOGIN
-from admin_html import ADMIN_HTML
-from client_html import CLIENT_HTML
+from web_html.admin_html import ADMIN_HTML
+from web_html.client_html import CLIENT_HTML
+from web_html.login_html import LOGIN
 from typing import get_type_hints
 from datetime import datetime, timezone
 
-from scrying_glass_api_admin import AdminAPI
-from scrying_glass_api_client import ClientAPI
+from python.scrying_glass_api_admin import AdminAPI
+from python.scrying_glass_api_client import ClientAPI
 
 # ============================================================================
 # Constants and default configuration
@@ -49,7 +49,7 @@ LEGACY_SESSION_COOKIES = ("monster_session", "monster_admin_session", "monster_c
 # Copy their imports, constants and helper dependencies with them.
 # login() also needs the LOGIN HTML template.
 
-from scrying_glass_init import (
+from python.scrying_glass_init import (
     DEFAULT_CONFIG,
     DEFAULT_STORAGE_DIR,
     load_config,
@@ -59,9 +59,9 @@ from scrying_glass_init import (
     password_ok,
 )
 
-from scrying_glass_hp import hp_value_factory
+from python.scrying_glass_hp import hp_value_factory
 
-from scrying_glass_combatant import (
+from python.scrying_glass_combatant import (
     admin_initiative_key,
     admin_max_hp_key,
     combatant_state,
@@ -72,7 +72,7 @@ from scrying_glass_combatant import (
     update_alive_state,
 )
 
-from scrying_glass_tools import (
+from python.scrying_glass_tools import (
     campaign_slug,
     now_iso,
     setup_slug,
@@ -80,20 +80,20 @@ from scrying_glass_tools import (
     unique_setup_path,
 )
 
-from scrying_glass_monster_csv import (
+from python.scrying_glass_monster_csv import (
     csv_character,
     csv_monster,
     csv_rows,
     parse_monster,
 )
 
-from scrying_glass_dndbeyond import (
+from python.scrying_glass_dndbeyond import (
     dnd_monster_candidates,
     dnd_monster_detail_html,
     dnd_monster_stats_from_html,
 )
 
-from scrying_glass_classes import (
+from python.scrying_glass_classes import (
     BattleActions,
     BattleStart,
     BulkCombatantAction,
@@ -139,7 +139,7 @@ STATIC_DIR: Path
 
 
 # Bind domain services to the live context before route registration.
-from scrying_glass_services import install_services
+from python.scrying_glass_services import install_services
 _services = install_services(sys.modules[__name__])
 
 

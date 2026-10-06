@@ -2,15 +2,15 @@
 from __future__ import annotations
 from typing import Any, get_type_hints
 from fastapi import Depends, FastAPI
-from scrying_glass_admin_pages import AdminPagesMixin
-from scrying_glass_admin_display import AdminDisplayMixin
-from scrying_glass_admin_setups import AdminSetupsMixin
-from scrying_glass_admin_campaigns import AdminCampaignsMixin
-from scrying_glass_admin_monsters import AdminMonstersMixin
-from scrying_glass_admin_characters import AdminCharactersMixin
-from scrying_glass_admin_combatants import AdminCombatantsMixin
-from scrying_glass_admin_battle import AdminBattleMixin
-from scrying_glass_admin_activity import AdminActivityMixin
+from .scrying_glass_admin_pages import AdminPagesMixin
+from .scrying_glass_admin_display import AdminDisplayMixin
+from .scrying_glass_admin_setups import AdminSetupsMixin
+from .scrying_glass_admin_campaigns import AdminCampaignsMixin
+from .scrying_glass_admin_monsters import AdminMonstersMixin
+from .scrying_glass_admin_characters import AdminCharactersMixin
+from .scrying_glass_admin_combatants import AdminCombatantsMixin
+from .scrying_glass_admin_battle import AdminBattleMixin
+from .scrying_glass_admin_activity import AdminActivityMixin
 
 # Path, handler name, HTTP method, authentication required.
 ADMIN_ROUTES = (

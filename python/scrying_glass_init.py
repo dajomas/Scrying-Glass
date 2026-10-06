@@ -12,7 +12,7 @@ from typing import Any
 
 from fastapi.responses import HTMLResponse, RedirectResponse, Response
 
-from login_html import LOGIN
+from web_html.login_html import LOGIN
 
 DEFAULT_STORAGE_DIR = './scrying-glass-data'
 
