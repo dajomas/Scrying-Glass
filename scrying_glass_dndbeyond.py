@@ -1,3 +1,8 @@
+import re
+
+from urllib.parse import quote
+from urllib.request import Request, urlopen
+
 def normalized_dnd_name(value: str) -> str:
     """Normalized dnd name."""
     return re.sub(
@@ -222,4 +227,4 @@ def dnd_monster_stats_from_html(
         hp_value = average_match.group("hp")
         hp_source = "average"
 
-    return ac, hp_value
+    return ac, hp_value, hp_source

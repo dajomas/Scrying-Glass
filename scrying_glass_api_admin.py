@@ -352,7 +352,7 @@ class AdminAPI:
 
         campaign = self.context.require_campaign(None)
 
-        STATE = self.context.normalize_state({
+        self.context.STATE = self.context.normalize_state({
             "monsters": [],
             "characters": self.context.load_campaign_characters(campaign),
             "battle_order": [],
@@ -399,7 +399,7 @@ class AdminAPI:
     
         name = self.context.setup_slug(payload.name)
         campaign = self.context.require_campaign(payload.campaign)
-        STATE = self.context.load_setup_state(name, campaign)
+        self.context.STATE = self.context.load_setup_state(name, campaign)
         self.context.set_active_setup(campaign, name)
         self.context.remember_setup(campaign, name)
         await self.context.changed()
@@ -490,14 +490,14 @@ class AdminAPI:
             next_name = self.context.DEFAULT_SETUP_NAME
             created_default = True
         try:
-            STATE = self.context.load_setup_state(next_name, campaign)
+            self.context.STATE = self.context.load_setup_state(next_name, campaign)
         except self.context.HTTPException as exc:
             raise self.context.HTTPException(
                 exc.status_code,
                 f"Setup {name} was deleted, but {next_name} could not be opened: "
                 f"{exc.detail}",
             ) from exc
-        self.context.set_active_setup(campaign, name)
+        self.context.set_active_setup(campaign, next_name)
         self.context.remember_setup(campaign, next_name)
         await self.context.changed()
         return {'deleted': name, 'opened_setup': next_name, 'created_default': created_default, 'campaign': campaign}

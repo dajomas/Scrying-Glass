@@ -1,6 +1,9 @@
 import random
 import re
+
 from typing import Any, Callable
+
+from fastapi import HTTPException
 
 DICE_HP_RE = re.compile(
     r"""

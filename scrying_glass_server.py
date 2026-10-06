@@ -26,6 +26,7 @@ from login_html import LOGIN
 from admin_html import ADMIN_HTML
 from client_html import CLIENT_HTML
 from typing import get_type_hints
+from datetime import datetime, timezone
 
 from scrying_glass_api_admin import AdminAPI
 from scrying_glass_api_client import ClientAPI
@@ -48,13 +49,65 @@ LEGACY_SESSION_COOKIES = ("monster_session", "monster_admin_session", "monster_c
 # Copy their imports, constants and helper dependencies with them.
 # login() also needs the LOGIN HTML template.
 
-from scrying_glass_init import *
-from scrying_glass_hp import *
-from scrying_glass_combatant import *
-from scrying_glass_tools import *
-from scrying_glass_monster_csv import *
-from scrying_glass_dndbeyond import *
-from scrying_glass_classes import *
+from scrying_glass_init import (
+    DEFAULT_CONFIG,
+    DEFAULT_STORAGE_DIR,
+    load_config,
+    login,
+    merge,
+    password_hash,
+    password_ok,
+)
+
+from scrying_glass_hp import hp_value_factory
+
+from scrying_glass_combatant import (
+    admin_initiative_key,
+    admin_max_hp_key,
+    combatant_state,
+    numeric_initiative,
+    reset_entity,
+    reset_imported_monster,
+    setup_snapshot,
+    update_alive_state,
+)
+
+from scrying_glass_tools import (
+    campaign_slug,
+    now_iso,
+    setup_slug,
+    unique_ids,
+    unique_setup_path,
+)
+
+from scrying_glass_monster_csv import (
+    csv_character,
+    csv_monster,
+    csv_rows,
+    parse_monster,
+)
+
+from scrying_glass_dndbeyond import (
+    dnd_monster_candidates,
+    dnd_monster_detail_html,
+    dnd_monster_stats_from_html,
+)
+
+from scrying_glass_classes import (
+    BattleActions,
+    BattleStart,
+    BulkCombatantAction,
+    CampaignCreate,
+    CampaignSetupAdd,
+    CampaignUpdate,
+    CharacterCreate,
+    CharacterUpdate,
+    DisplayBackgroundUpdate,
+    MonsterUpdate,
+    SetupImport,
+    SetupName,
+    SetupRename,
+)
 
 # ============================================================================
 # Mutable runtime state and configured storage paths
