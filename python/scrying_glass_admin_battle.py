@@ -81,10 +81,16 @@ class AdminBattleMixin:
             if target is None:
                 raise self.context.HTTPException(404, "Target combatant was not found")
 
-            if not target.get("active") or not target.get("alive", True):
+            if not target.get("active"):
                 raise self.context.HTTPException(
                     400,
-                    f"Target {target['name']} must be active and alive",
+                    f"Target {target['name']} must be active",
+                )
+
+            if row.action != "heal" and not target.get("alive", True):
+                raise self.context.HTTPException(
+                    400,
+                    f"Target {target['name']} must be alive for {row.action}",
                 )
 
             if row.action in {"damage", "heal"}:
@@ -114,6 +120,9 @@ class AdminBattleMixin:
             elif action == "heal":
                 target["hp"] += amount
                 self.context.update_alive_state(target)
+
+                if target.get("active") and target.get("alive"):
+                    self.context.insert_into_battle_order(target)
 
             self.context.log_battle_action(actor, target, action, amount)
 
