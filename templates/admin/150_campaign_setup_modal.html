@@ -1,0 +1,36 @@
+  <div id="campaignSetupModal" class="modal" hidden>
+    <div>
+      <h2>Add battle setup to campaign</h2>
+      <p>Move or copy a saved battle setup from one campaign into another.</p>
+      <form id="campaignSetupForm" class="import-form">
+        <label>
+          From campaign <span class="required-marker" aria-hidden="true">*</span>
+          <select id="campaignSetupFrom" name="from_campaign" required></select>
+        </label>
+
+        <label>
+          Saved setup <span class="required-marker" aria-hidden="true">*</span>
+          <select id="campaignSetupName" name="setup" required></select>
+        </label>
+
+        <label>
+          To campaign <span class="required-marker" aria-hidden="true">*</span>
+          <select id="campaignSetupTo" name="to_campaign" required></select>
+        </label>
+
+        <label>
+          Mode
+          <select name="mode">
+            <option value="move">Move</option>
+            <option value="copy">Copy</option>
+          </select>
+        </label>
+
+        <div class="actions">
+          <button class="import">Add</button>
+          <button type="button" id="cancelCampaignSetup">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+

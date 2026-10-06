@@ -1,0 +1,225 @@
+    <section id="monsterInputPane" class="pane pane-battle-group">
+      <div class="row">
+        <h2>Add monster to Battle setup</h2>
+      </div>
+
+      <p
+          id="monsterAddNotification"
+          class="pane-notification-battleSetup"
+          role="status"
+          aria-live="polite"
+        > </p>
+
+      <div>
+
+        <p id="monsterHpRangeHelp" class="field-help">
+          In the HP Range Start and HP Range end fields:
+          <ul>
+            <li>enter a fixed HP value in the start field and leave the end field empty, or</li>
+            <li>enter a numeric HP range from which a random HP value will be chosen (start and end fields inclusive), or</li>
+            <li>enter a dice expression in the start field, such as <code>3d8+9</code>, and leave the end field empty.</br> 
+              The dice expression can be a simple roll such as <code>2d6</code> or dice notation such as <code>3d8+9</code>.</br>
+              Spaces around <code>+</code> or <code>-</code> are optional.</li>
+          </ul>
+          If no image is provided, an attempt is made to find an image on D&D Beyond based on the monster species (against Monster Name on D&D Beyond).
+        </p>
+
+        <label class="monster-species-lookup-option">
+          <input
+            id="monsterSpeciesLookupOverwrite"
+            type="checkbox"
+          >
+          <span>
+            Overwrite Armor Class and HP Range with found D&amp;D Beyond values
+          </span>
+        </label>
+
+        <form id="monsterForm" class="row">
+          <label class="field">
+            <span class="field-label">
+              Monster name <span class="required-marker" aria-hidden="true">*</span>
+            </span>
+            <input
+              id="monsterName"
+              name="name"
+              placeholder="For example: Goblin"
+              required
+            >
+          </label>
+
+          <label class="field">
+            <span class="field-label">
+              Monster species <span class="required-marker" aria-hidden="true">*</span>
+            </span>
+            <input
+              id="monsterSpecies"
+              name="monster_species"
+              placeholder="For example: humanoid"
+              required
+            >
+          </label>
+
+          <label class="field field-compact">
+            <span class="field-label">
+              Armor Class <span class="required-marker" aria-hidden="true">*</span>
+            </span>
+            <input
+              id="monsterAc"
+              name="ac"
+              type="number"
+              min="0"
+              placeholder="AC"
+              required
+            >
+          </label>
+
+          <label class="field field-compact">
+            <span class="field-label">
+              HP Range start <span class="required-marker" aria-hidden="true">*</span>
+            </span>
+            <input
+              id="monsterHpRangeStart"
+              name="hprangestart"
+              class="hp-range-input"
+              type="text"
+              inputmode="text"
+              placeholder="15 or 3d8+9"
+              required
+              aria-describedby="monsterHpRangeHelp"
+            >
+          </label>
+
+          <label class="field field-compact">
+            <span class="field-label">HP Range end</span>
+            <input
+              id="monsterHpRangeEnd"
+              name="hprangeend"
+              class="hp-range-input"
+              type="number"
+              min="0"
+              placeholder="Optional"
+              aria-describedby="monsterHpRangeHelp"
+            >
+          </label>
+
+          <label class="field field-compact">
+            <span class="field-label">Quantity</span>
+            <input
+              id="monsterQuantity"
+              name="quantity"
+              type="number"
+              min="1"
+              max="50"
+              value="1"
+              title="Number of monsters"
+            >
+          </label>
+
+          <label class="field field-color">
+            <span class="field-label">Color</span>
+            <span class="color-picker-control">
+              <input
+                id="monsterColor"
+                name="color"
+                type="color"
+                value="#842029"
+              >
+              <span
+                id="monsterColorPreview"
+                class="turn-marker color-picker-preview"
+                style="background-color: #842029"
+                aria-hidden="true"
+              ></span>
+            </span>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Image</span>
+            <input
+              id="monsterImage"
+              name="image"
+              type="file"
+              accept="image/*"
+            >
+          </label>
+
+          <button>Add manually</button>
+        </form>
+
+        <div class="row monster-file-help-row">
+          <p>Or import a JSON <code>.monster</code> file:</p>
+
+          <button
+            id="openMonsterFileHelp"
+            class="help-button"
+            type="button"
+            aria-haspopup="dialog"
+            aria-controls="monsterFileHelpModal"
+            title="Help with .monster files"
+          >
+            ?
+            <span class="sr-only">Help with .monster files</span>
+          </button>
+        </div>
+
+        <form id="monsterUpload" class="row">
+          <label class="field">
+            <span class="field-label">
+              Monster file <span class="required-marker" aria-hidden="true">*</span>
+            </span>
+            <input
+              id="monsterFile"
+              name="monster_file"
+              type="file"
+              accept=".monster,application/json"
+              required
+            >
+          </label>
+
+          <label class="field field-compact">
+            <span class="field-label">Quantity</span>
+            <input
+              id="monsterFileQuantity"
+              name="quantity"
+              type="number"
+              min="1"
+              max="50"
+              value="1"
+              title="Number of monsters"
+            >
+          </label>
+
+          <label class="field field-color">
+            <span class="field-label">Color</span>
+            <span class="color-picker-control">
+              <input
+                id="monsterFileColor"
+                name="color"
+                type="color"
+                value="#842029"
+              >
+              <span
+                id="monsterFileColorPreview"
+                class="turn-marker color-picker-preview"
+                style="background-color: #842029"
+                aria-hidden="true"
+              ></span>
+            </span>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Replace image</span>
+            <input
+              id="monsterFileImage"
+              name="image"
+              type="file"
+              accept="image/*"
+            >
+          </label>
+
+          <button>Import .monster</button>
+        </form>
+
+      </div>
+    </section>
+
