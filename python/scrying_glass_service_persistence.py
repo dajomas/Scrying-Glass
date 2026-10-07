@@ -81,34 +81,116 @@ class PersistenceService:
             self.context.STATE["characters"],
         )
 
-    def load_setup_state(self, name: str, campaign: str) -> dict[str, Any]:
-        """Load setup state."""
+    def load_setup_state(
+        self,
+        name: str,
+        campaign: str,
+    ) -> dict[str, Any]:
+        """Load encounter data without reviving historical runtime turns."""
+        import copy
+
+        campaign = self.context.require_campaign(campaign)
+        name = self.context.setup_slug(name)
         path = self.context.setup_path(name, campaign)
 
-        if not path.exists():
-            raise self.context.HTTPException(404, "Saved setup not found")
-
         try:
-            raw = self.context.json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, self.context.json.JSONDecodeError) as exc:
-            raise self.context.HTTPException(400, f"Unable to load setup: {exc}") from exc
+            raw = self.context.json.loads(
+                path.read_text(encoding="utf-8")
+            )
+        except FileNotFoundError as exc:
+            raise self.context.HTTPException(
+                404,
+                "Saved setup not found",
+            ) from exc
+        except (
+            OSError,
+            UnicodeDecodeError,
+            self.context.json.JSONDecodeError,
+        ) as exc:
+            raise self.context.HTTPException(
+                400,
+                f"Unable to load setup: {exc}",
+            ) from exc
 
         if not isinstance(raw, dict):
-            raise self.context.HTTPException(400, "Saved setup must contain a JSON object")
+            raise self.context.HTTPException(
+                400,
+                "Saved setup must contain a JSON object",
+            )
 
-        raw["characters"] = self.context.load_campaign_characters(campaign)
+        candidate = copy.deepcopy(raw)
+        candidate["characters"] = (
+            self.context.load_campaign_characters(campaign)
+        )
+
+        for kind in ("monsters", "characters"):
+            items = candidate.get(kind, [])
+
+            if not isinstance(items, list):
+                raise self.context.HTTPException(
+                    400,
+                    f"Unable to load setup: {kind} must be a list",
+                )
+
+            for index, item in enumerate(items):
+                if not isinstance(item, dict):
+                    raise self.context.HTTPException(
+                        400,
+                        f"Unable to load setup: "
+                        f"{kind}[{index}] must be an object",
+                    )
+
+                if (
+                    "in_turn" in item
+                    and type(item["in_turn"]) is not bool
+                ):
+                    raise self.context.HTTPException(
+                        400,
+                        f"Unable to load setup: "
+                        f"{kind}[{index}].in_turn must be a boolean",
+                    )
+
+                item["in_turn"] = False
+
+        candidate["turn_successors"] = []
+        candidate["active_setup"] = None
+        candidate.pop("active_turn_id", None)
 
         try:
-            return self.context.normalize_state(raw)
+            return self.context.normalize_state(candidate)
         except ValueError as exc:
-            raise self.context.HTTPException(400, f"Unable to load setup: {exc}") from exc
+            raise self.context.HTTPException(
+                400,
+                f"Unable to load setup: {exc}",
+            ) from exc
 
     def load_state(self) -> None:
-        """Restore all combatants before validating runtime references."""
+        """Restore an encounter completely, or fail without replacing live state."""
         import copy
         import logging
 
         logger = logging.getLogger(__name__)
+
+        def read_object(path: Any, description: str) -> dict[str, Any]:
+            try:
+                value = self.context.json.loads(
+                    path.read_text(encoding="utf-8")
+                )
+            except (
+                OSError,
+                UnicodeDecodeError,
+                self.context.json.JSONDecodeError,
+            ) as exc:
+                raise RuntimeError(
+                    f"Unable to read {description} ({path}): {exc}"
+                ) from exc
+
+            if not isinstance(value, dict):
+                raise RuntimeError(
+                    f"{description} ({path}) must contain a JSON object"
+                )
+
+            return value
 
         try:
             campaign = self.context.require_campaign(None)
@@ -133,41 +215,27 @@ class PersistenceService:
             self.context.STATE = normalized
             return
 
-        try:
-            saved = self.context.json.loads(
-                self.context.STATE_FILE.read_text(encoding="utf-8")
-            )
-        except (
-            OSError,
-            UnicodeDecodeError,
-            self.context.json.JSONDecodeError,
-        ) as exc:
-            raise RuntimeError(
-                f"Unable to load state.json: {exc}"
-            ) from exc
-
-        if not isinstance(saved, dict):
-            raise RuntimeError(
-                "Unable to load state.json: root must be a JSON object"
-            )
+        saved = read_object(
+            self.context.STATE_FILE,
+            "state.json",
+        )
 
         working_monsters = saved.get("monsters", [])
         if not isinstance(working_monsters, list):
             raise RuntimeError(
-                "Unable to load state.json: monsters must be a list"
+                "Unable to restore state.json: monsters must be a list"
             )
 
         candidate = copy.deepcopy(saved)
         candidate["characters"] = characters
+        candidate["monsters"] = copy.deepcopy(working_monsters)
 
         reference = saved.get("active_setup")
-        restored_reference = None
-        setup_monsters = None
 
         if reference is not None:
             if not isinstance(reference, dict):
                 raise RuntimeError(
-                    "Unable to load state.json: "
+                    "Unable to restore state.json: "
                     "active_setup must be an object or null"
                 )
 
@@ -181,118 +249,83 @@ class PersistenceService:
                 or not reference_name.strip()
             ):
                 raise RuntimeError(
-                    "Unable to load state.json: active_setup requires "
+                    "Unable to restore state.json: active_setup requires "
                     "nonempty campaign and name strings"
                 )
 
-            if reference_campaign.strip() != campaign:
-                logger.warning(
-                    "Ignoring saved setup reference for campaign %r; "
-                    "the active campaign is %r",
-                    reference_campaign,
-                    campaign,
+            reference_campaign = reference_campaign.strip()
+
+            if reference_campaign != campaign:
+                raise RuntimeError(
+                    "Unable to restore state.json: its setup belongs to "
+                    f"campaign {reference_campaign!r}, but the active "
+                    f"campaign is {campaign!r}. Resolve the mismatch "
+                    "before restarting."
                 )
-            else:
-                try:
-                    name = self.context.setup_slug(reference_name)
-                    path = self.context.setup_path(name, campaign)
 
-                    setup = self.context.json.loads(
-                        path.read_text(encoding="utf-8")
-                    )
+            try:
+                name = self.context.setup_slug(reference_name)
+                path = self.context.setup_path(name, campaign)
+            except (ValueError, self.context.HTTPException) as exc:
+                detail = getattr(exc, "detail", str(exc))
+                raise RuntimeError(
+                    f"Unable to resolve the saved setup reference: {detail}"
+                ) from exc
 
-                    if not isinstance(setup, dict):
-                        raise ValueError(
-                            "Saved setup must contain a JSON object"
-                        )
+            setup = read_object(
+                path,
+                "referenced encounter setup",
+            )
 
-                    setup_monsters = setup.get("monsters", [])
-                    if not isinstance(setup_monsters, list):
-                        raise ValueError(
-                            "Saved setup monsters must be a list"
-                        )
+            setup_monsters = setup.get("monsters", [])
+            if not isinstance(setup_monsters, list):
+                raise RuntimeError(
+                    f"Unable to restore setup {name!r}: "
+                    "monsters must be a list"
+                )
 
-                    restored_reference = {
-                        "campaign": campaign,
-                        "name": name,
-                    }
+            if not working_monsters:
+                candidate["monsters"] = copy.deepcopy(setup_monsters)
 
-                except (
-                    OSError,
-                    UnicodeDecodeError,
-                    ValueError,
-                    self.context.HTTPException,
-                ) as exc:
-                    detail = getattr(exc, "detail", str(exc))
-                    logger.warning(
-                        "Unable to restore referenced setup %r: %s. "
-                        "Keeping state.json monsters as an unsaved encounter.",
-                        reference_name,
-                        detail,
-                    )
-
-        if working_monsters:
-            candidate["monsters"] = copy.deepcopy(working_monsters)
-        elif setup_monsters is not None:
-            candidate["monsters"] = copy.deepcopy(setup_monsters)
+            candidate["active_setup"] = {
+                "campaign": campaign,
+                "name": name,
+            }
         else:
-            candidate["monsters"] = []
-
-        candidate["active_setup"] = restored_reference
+            candidate["active_setup"] = None
 
         combatants = [
             *candidate["monsters"],
             *candidate["characters"],
         ]
 
-        if "active_turn_id" in saved:
-            active_turn_id = saved["active_turn_id"]
+        has_turn_marker = "active_turn_id" in saved
+        active_turn_id = saved.get("active_turn_id")
 
+        if has_turn_marker:
             if active_turn_id is not None and (
                 not isinstance(active_turn_id, str)
                 or not active_turn_id.strip()
             ):
                 raise RuntimeError(
-                    "Unable to load state.json: active_turn_id "
+                    "Unable to restore state.json: active_turn_id "
                     "must be a nonempty string or null"
                 )
 
-            target = None
-
-            for item in combatants:
+            for index, item in enumerate(combatants):
                 if not isinstance(item, dict):
                     continue
 
-                item["in_turn"] = False
-
-                if item.get("id") == active_turn_id:
-                    target = item
-
-            if active_turn_id is not None:
-                target_alive = (
-                    target.get("alive")
-                    if target is not None and "alive" in target
-                    else (
-                        target is not None
-                        and type(target.get("hp")) is int
-                        and target["hp"] > 0
-                    )
-                )
-
                 if (
-                    target is not None
-                    and target.get("active") is True
-                    and target_alive is True
+                    "in_turn" in item
+                    and type(item["in_turn"]) is not bool
                 ):
-                    target["in_turn"] = True
-                    target["visible"] = True
-                else:
-                    logger.warning(
-                        "Saved active turn %r is missing or ineligible; "
-                        "restoring the encounter without an active turn",
-                        active_turn_id,
+                    raise RuntimeError(
+                        "Unable to restore state.json: "
+                        f"combatant {index} has a non-boolean in_turn flag"
                     )
 
+                item["in_turn"] = False
         else:
             legacy_turns = [
                 item
@@ -304,8 +337,7 @@ class PersistenceService:
             if len(legacy_turns) > 1:
                 logger.warning(
                     "Legacy persisted files contain conflicting turns. "
-                    "Clearing turn flags instead of choosing an arbitrary "
-                    "combatant."
+                    "Restoring without an active turn."
                 )
 
                 for item in legacy_turns:
@@ -315,10 +347,37 @@ class PersistenceService:
 
         try:
             normalized = self.context.normalize_state(candidate)
-        except (ValueError, TypeError) as exc:
+        except ValueError as exc:
             raise RuntimeError(
                 f"Unable to restore encounter state: {exc}"
             ) from exc
+
+        if has_turn_marker and active_turn_id is not None:
+            target = next(
+                (
+                    item
+                    for item in [
+                        *normalized["monsters"],
+                        *normalized["characters"],
+                    ]
+                    if item["id"] == active_turn_id
+                ),
+                None,
+            )
+
+            if (
+                target is not None
+                and target["active"]
+                and target["alive"]
+            ):
+                target["in_turn"] = True
+                target["visible"] = True
+            else:
+                logger.warning(
+                    "Saved active turn %r is missing or ineligible; "
+                    "restoring without an active turn.",
+                    active_turn_id,
+                )
 
         self.context.STATE = normalized
 
