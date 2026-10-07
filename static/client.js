@@ -88,7 +88,12 @@ function gridSize(count) {
 }
 
 function render(state) {
-    const background = String(state.display.background || '').trim();
+    const background = String(
+        state.display?.background || '#080b14'
+    ).trim() || '#080b14';
+
+    // Reset the previous background, then apply the current one.
+    document.body.style.background = '#080b14';
 
     if (background.startsWith('url(')) {
         document.body.style.backgroundImage = background;
@@ -96,14 +101,9 @@ function render(state) {
         document.body.style.backgroundSize = 'cover';
         document.body.style.backgroundRepeat = 'no-repeat';
         document.body.style.backgroundAttachment = 'fixed';
-        document.body.style.backgroundColor = '#080b14';
     } else {
-        document.body.style.background = background || '#080b14';
-        document.body.style.backgroundImage = '';
-        document.body.style.backgroundPosition = '';
-        document.body.style.backgroundSize = '';
-        document.body.style.backgroundRepeat = '';
-        document.body.style.backgroundAttachment = '';
+        // Supports solid colors and CSS gradients.
+        document.body.style.background = background;
     }
 
     const combatantsById = new Map(
@@ -137,7 +137,7 @@ function render(state) {
     ).join('');
 
     const activeMonsters = state.monsters.filter(monster =>
-        monster.active && monster.alive && monster.visible,
+        monster.active && monster.alive,
     );
 
     const stage = document.querySelector('#stage');
