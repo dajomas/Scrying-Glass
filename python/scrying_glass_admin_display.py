@@ -7,31 +7,47 @@ from fastapi import File, Form
 class AdminDisplayMixin:
     """Implement admin display handlers using the shared server context."""
 
-    async def dndbeyond_monster_stats(self, species: str) -> dict[str, Any]:
-        """
-        Return non-persistent AC and HP suggestions for a canonical species name.
+    async def dndbeyond_monster_stats(
+        self,
+        species: str,
+    ) -> dict[str, Any]:
+        """Look up optional AC/HP suggestions without blocking the event loop."""
+        import asyncio
+        import logging
 
-        The lookup is optional and must never mutate STATE or prevent manual
-        monster creation.
-        """
+        logger = logging.getLogger(__name__)
         monster_species = species.strip()
 
         if not monster_species:
-            raise self.context.HTTPException(400, "Monster species is required")
+            raise self.context.HTTPException(
+                400,
+                "Monster species is required",
+            )
 
-        if not self.context.CONFIG["display"].get("dndbeyond_image_lookup", True):
+        if not self.context.CONFIG["display"].get(
+            "dndbeyond_image_lookup",
+            True,
+        ):
             return {
                 "found": False,
+                "species": monster_species,
                 "reason": "D&D Beyond lookup is disabled",
             }
 
-        try:
-            candidates = self.context.dnd_monster_candidates(monster_species)
+        def lookup() -> dict[str, Any]:
+            candidates = self.context.dnd_monster_candidates(
+                monster_species,
+            )
 
             for is_legacy, href in candidates:
-                monster_html = self.context.dnd_monster_detail_html(href)
-                ac, hp, hp_source = self.context.dnd_monster_stats_from_html(
-                    monster_html
+                monster_html = self.context.dnd_monster_detail_html(
+                    href,
+                )
+
+                ac, hp, hp_source = (
+                    self.context.dnd_monster_stats_from_html(
+                        monster_html,
+                    )
                 )
 
                 if ac is None and hp is None:
@@ -44,7 +60,9 @@ class AdminDisplayMixin:
                     "hp": hp,
                     "hp_source": hp_source,
                     "legacy": is_legacy,
-                    "source_url": f"https://www.dndbeyond.com{href}",
+                    "source_url": (
+                        f"https://www.dndbeyond.com{href}"
+                    ),
                 }
 
             return {
@@ -52,9 +70,17 @@ class AdminDisplayMixin:
                 "species": monster_species,
             }
 
+        try:
+            return await asyncio.to_thread(lookup)
+        except asyncio.CancelledError:
+            raise
         except Exception:
-            # This endpoint is convenience-only. Do not expose remote errors or
-            # make a temporary D&D Beyond failure look like a local server failure.
+            logger.debug(
+                "Optional D&D Beyond lookup failed for %r",
+                monster_species,
+                exc_info=True,
+            )
+
             return {
                 "found": False,
                 "species": monster_species,

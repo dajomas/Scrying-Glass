@@ -90,23 +90,84 @@ class ClientAPI:
         return self.context.display_state()
 
     async def ws(self, websocket: WebSocket):
-        """Ws."""
-        token = websocket.cookies.get(self.context.CLIENT_SESSION_COOKIE, "")
+        """Authenticate a display socket and always clean up its registration."""
+        import asyncio
+        import logging
+        from fastapi import WebSocketDisconnect
+
+        logger = logging.getLogger(__name__)
+
+        token = websocket.cookies.get(
+            self.context.CLIENT_SESSION_COOKIE,
+            "",
+        )
         session = self.context.SESSIONS.get(token)
 
-        if not session:
+        if (
+            not session
+            or session.get("role") not in {"admin", "client"}
+        ):
             await websocket.close(code=1008)
             return
 
-        await websocket.accept()
-        self.context.SOCKETS.add(websocket)
-
-        await websocket.send_text(
-            self.context.json.dumps({"type": "state", "state": self.context.display_state()})
+        broadcast_lock = getattr(
+            self.context,
+            "_display_broadcast_lock",
+            None,
         )
 
+        if broadcast_lock is None:
+            broadcast_lock = asyncio.Lock()
+            self.context._display_broadcast_lock = broadcast_lock
+
+        accepted = False
+
         try:
+            await websocket.accept()
+            accepted = True
+
+            async with broadcast_lock:
+                initial_message = self.context.json.dumps({
+                    "type": "state",
+                    "state": self.context.display_state(),
+                })
+
+                await asyncio.wait_for(
+                    websocket.send_text(initial_message),
+                    timeout=2.0,
+                )
+
+                self.context.SOCKETS.add(websocket)
+
             while True:
                 await websocket.receive_text()
+
+        except WebSocketDisconnect:
+            pass
+
+        except asyncio.CancelledError:
+            raise
+
+        except TimeoutError:
+            logger.debug(
+                "Display WebSocket initial-state send timed out"
+            )
+
         except Exception:
+            logger.exception(
+                "Display WebSocket handler failed"
+            )
+
+        finally:
             self.context.SOCKETS.discard(websocket)
+
+            if accepted:
+                try:
+                    await asyncio.wait_for(
+                        websocket.close(),
+                        timeout=0.5,
+                    )
+                except asyncio.CancelledError:
+                    raise
+                except Exception:
+                    pass

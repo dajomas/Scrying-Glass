@@ -46,104 +46,265 @@ class StateService:
         }
 
     def normalize_state(self, raw: dict[str, Any]) -> dict[str, Any]:
-        """Normalize state."""
-        raw_active_setup = raw.get("active_setup")
+        """Validate and normalize a complete encounter without mutating input."""
+        import copy
 
-        if isinstance(raw_active_setup, dict):
-            raw_campaign = raw_active_setup.get("campaign")
-            raw_name = raw_active_setup.get("name")
+        if not isinstance(raw, dict):
+            raise ValueError("State must contain a JSON object")
+
+        def require_list(field: str) -> list[Any]:
+            value = raw.get(field, [])
+            if not isinstance(value, list):
+                raise ValueError(f"{field} must be a list")
+            return value
+
+        def require_integer(
+            item: dict[str, Any],
+            field: str,
+            location: str,
+            *,
+            nullable: bool = False,
+        ) -> None:
+            value = item[field]
+            if nullable and value is None:
+                return
+            if type(value) is not int:
+                expected = "an integer or null" if nullable else "an integer"
+                raise ValueError(f"{location}.{field} must be {expected}")
+
+        def require_string(
+            item: dict[str, Any],
+            field: str,
+            location: str,
+            *,
+            nullable: bool = False,
+        ) -> None:
+            value = item[field]
+            if nullable and value is None:
+                return
+            if not isinstance(value, str):
+                expected = "a string or null" if nullable else "a string"
+                raise ValueError(f"{location}.{field} must be {expected}")
+
+        def normalize_id_list(field: str) -> list[str]:
+            result: list[str] = []
+            seen: set[str] = set()
+
+            for index, ident in enumerate(require_list(field)):
+                if not isinstance(ident, str) or not ident.strip():
+                    raise ValueError(
+                        f"{field}[{index}] must be a nonempty string"
+                    )
+                if ident not in seen:
+                    result.append(ident)
+                    seen.add(ident)
+
+            return result
+
+        monsters = copy.deepcopy(require_list("monsters"))
+        characters = copy.deepcopy(require_list("characters"))
+        activity_log = copy.deepcopy(require_list("activity_log"))
+        battle_order = normalize_id_list("battle_order")
+        turn_successors = normalize_id_list("turn_successors")
+
+        raw_display = raw.get("display")
+        if raw_display is not None:
+            if not isinstance(raw_display, dict):
+                raise ValueError("display must be an object")
+            if (
+                "background" in raw_display
+                and not isinstance(raw_display["background"], str)
+            ):
+                raise ValueError("display.background must be a string")
+
+        active_setup = None
+        raw_reference = raw.get("active_setup")
+
+        if raw_reference is not None:
+            if not isinstance(raw_reference, dict):
+                raise ValueError("active_setup must be an object or null")
+
+            campaign = raw_reference.get("campaign")
+            name = raw_reference.get("name")
 
             if (
-                isinstance(raw_campaign, str)
-                and raw_campaign.strip()
-                and isinstance(raw_name, str)
-                and raw_name.strip()
+                not isinstance(campaign, str)
+                or not campaign.strip()
+                or not isinstance(name, str)
+                or not name.strip()
             ):
-                active_setup: dict[str, str] | None = {
-                    "campaign": raw_campaign.strip(),
-                    "name": raw_name.strip(),
-                }
-            else:
-                active_setup = None
-        else:
-            active_setup = None
+                raise ValueError(
+                    "active_setup must contain nonempty campaign "
+                    "and name strings"
+                )
 
-        state = {
-            "monsters": raw.get("monsters", []),
-            "characters": raw.get("characters", []),
-            "battle_order": raw.get("battle_order", []),
-            "activity_log": raw.get("activity_log", []),
-            "display": self.context.normalize_display(raw.get("display")),
-            "active_setup": active_setup,
-            "turn_successors": [],
-        }
+            active_setup = {
+                "campaign": campaign.strip(),
+                "name": name.strip(),
+            }
 
-        raw_successors = raw.get("turn_successors", [])
-        if isinstance(raw_successors, list):
-            state["turn_successors"] = [
-                ident
-                for ident in raw_successors
-                if isinstance(ident, str) and ident
-            ]
+        id_locations: dict[str, str] = {}
+        turn_locations: list[str] = []
 
-        if (
-            not isinstance(state["monsters"], list)
-            or not isinstance(state["characters"], list)
-            or not isinstance(state["battle_order"], list)
-            or not isinstance(state["activity_log"], list)
+        for kind, items in (
+            ("monsters", monsters),
+            ("characters", characters),
         ):
-            raise ValueError('Setup has invalid monsters, characters, battle_order, or activity_log data')
+            is_monster = kind == "monsters"
 
-        state["activity_log"] = [
-            entry
-            for entry in state["activity_log"]
-            if isinstance(entry, dict)
-        ]
+            for index, item in enumerate(items):
+                location = f"{kind}[{index}]"
 
-        for m in state['monsters']:
-            if not isinstance(m, dict):
-                raise ValueError('Setup contains an invalid monster')
-            m.setdefault('id', self.context.uuid.uuid4().hex)
-            m.setdefault('name', 'Unnamed Monster')
-            if 'monster_species' not in m:
-                m['monster_species'] = m.pop('monster_type', 'unknown')
-            else:
-                m.pop('monster_type', None)
+                if not isinstance(item, dict):
+                    raise ValueError(f"{location} must be an object")
 
-            m['monster_species'] = str(m['monster_species']).strip() or 'unknown'
-            m.setdefault('ac', 0)
-            m.setdefault('hp', 1)
-            m.setdefault('original_hp', m.get('max_hp', m['hp']))
-            m.setdefault('max_hp', m['original_hp'])
-            m.setdefault('color', '#842029')
-            m.setdefault('image_url', None)
-            m.setdefault('alive', m['hp'] > 0)
-            m.setdefault('active', False)
-            m.setdefault('visible', False)
-            m.setdefault('ally', False)
-            m.setdefault('initiative', None)
-            m.setdefault('original_initiative', m.get('initiative'))
-            m.setdefault('show_ac', False)
-            m.setdefault('show_hp', False)
-            m.setdefault('show_initiative', False)
-            m.setdefault('in_turn', False)
-        for c in state['characters']:
-            if not isinstance(c, dict):
-                raise ValueError('Setup contains an invalid character')
-            c.setdefault('id', self.context.uuid.uuid4().hex)
-            c.setdefault('name', 'Unnamed Character')
-            c.setdefault('color', '#1f4e79')
-            c.setdefault('hp', 1)
-            c.setdefault('max_hp', c['hp'])
-            c.setdefault('original_hp', c['max_hp'])
-            c.setdefault('original_initiative', c.get('initiative'))
-            c.setdefault('alive', c['hp'] > 0)
-            c.setdefault('active', False)
-            c.setdefault('visible', False)
-            c.setdefault('in_turn', False)
-        known = {x['id'] for x in [*state['monsters'], *state['characters']]}
-        state['battle_order'] = [x for x in state['battle_order'] if x in known]
-        return state
+                if "id" not in item:
+                    item["id"] = self.context.uuid.uuid4().hex
+
+                ident = item["id"]
+                if not isinstance(ident, str) or not ident.strip():
+                    raise ValueError(
+                        f"{location}.id must be a nonempty string"
+                    )
+
+                if ident in id_locations:
+                    raise ValueError(
+                        f"Duplicate combatant ID {ident!r}: "
+                        f"{id_locations[ident]} and {location}"
+                    )
+
+                id_locations[ident] = location
+
+                item.setdefault(
+                    "name",
+                    "Unnamed Monster" if is_monster else "Unnamed Character",
+                )
+                item.setdefault(
+                    "color",
+                    "#842029" if is_monster else "#1f4e79",
+                )
+                item.setdefault("hp", 1)
+                require_integer(item, "hp", location)
+
+                if is_monster:
+                    item.setdefault(
+                        "original_hp",
+                        item.get("max_hp", item["hp"]),
+                    )
+                    item.setdefault("max_hp", item["original_hp"])
+                else:
+                    item.setdefault("max_hp", item["hp"])
+                    item.setdefault("original_hp", item["max_hp"])
+
+                item.setdefault("initiative", None)
+                item.setdefault(
+                    "original_initiative",
+                    item["initiative"],
+                )
+                item.setdefault("alive", item["hp"] > 0)
+                item.setdefault("active", False)
+                item.setdefault("visible", False)
+                item.setdefault("in_turn", False)
+
+                if is_monster:
+                    if "monster_species" not in item:
+                        item["monster_species"] = item.pop(
+                            "monster_type",
+                            "unknown",
+                        )
+                    else:
+                        item.pop("monster_type", None)
+
+                    require_string(item, "monster_species", location)
+                    item["monster_species"] = (
+                        item["monster_species"].strip() or "unknown"
+                    )
+
+                    item.setdefault("ac", 0)
+                    item.setdefault("image_url", None)
+                    item.setdefault("ally", False)
+                    item.setdefault("show_ac", False)
+                    item.setdefault("show_hp", False)
+                    item.setdefault("show_initiative", False)
+
+                for field in ("name", "color"):
+                    require_string(item, field, location)
+
+                for field in ("max_hp", "original_hp"):
+                    require_integer(item, field, location)
+
+                for field in ("initiative", "original_initiative"):
+                    require_integer(
+                        item,
+                        field,
+                        location,
+                        nullable=True,
+                    )
+
+                if "ac" in item:
+                    require_integer(item, "ac", location)
+
+                if "image_url" in item:
+                    require_string(
+                        item,
+                        "image_url",
+                        location,
+                        nullable=True,
+                    )
+
+                boolean_fields = [
+                    "alive",
+                    "active",
+                    "visible",
+                    "in_turn",
+                ]
+
+                if is_monster:
+                    boolean_fields.extend([
+                        "ally",
+                        "show_ac",
+                        "show_hp",
+                        "show_initiative",
+                    ])
+
+                for field in boolean_fields:
+                    if type(item[field]) is not bool:
+                        raise ValueError(
+                            f"{location}.{field} must be a boolean"
+                        )
+
+                if item["in_turn"]:
+                    if not item["active"] or not item["alive"]:
+                        raise ValueError(
+                            f"{location}.in_turn requires an active, "
+                            "living combatant"
+                        )
+                    turn_locations.append(location)
+
+        if len(turn_locations) > 1:
+            raise ValueError(
+                "Only one combatant may be in turn: "
+                + ", ".join(turn_locations)
+            )
+
+        known_ids = set(id_locations)
+
+        return {
+            "monsters": monsters,
+            "characters": characters,
+            "battle_order": [
+                ident for ident in battle_order if ident in known_ids
+            ],
+            "turn_successors": [
+                ident for ident in turn_successors if ident in known_ids
+            ],
+            "activity_log": [
+                entry for entry in activity_log
+                if isinstance(entry, dict)
+            ],
+            "display": self.context.normalize_display(raw_display),
+            "active_setup": active_setup,
+        }
 
     def display_state(self) -> dict[str, Any]:
         """Return only information intended for the player display."""

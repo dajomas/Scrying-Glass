@@ -31,19 +31,27 @@ function setMonsterSpeciesLookupStatus(text, options = {}) {
 }
 
 async function lookupMonsterSpeciesStats() {
+    clearTimeout(monsterSpeciesLookupTimer);
+    monsterSpeciesLookupTimer = null;
+
+    const requestId = ++monsterSpeciesLookupRequest;
+
     const speciesInput = document.querySelector('#monsterSpecies');
     const acInput = document.querySelector('#monsterAc');
-    const hpStartInput = document.querySelector(
-        '#monsterHpRangeStart',
-    );
-    const hpEndInput = document.querySelector(
-        '#monsterHpRangeEnd',
-    );
-
+    const hpStartInput = document.querySelector('#monsterHpRangeStart');
+    const hpEndInput = document.querySelector('#monsterHpRangeEnd');
     const overwriteInput = document.querySelector(
         '#monsterSpeciesLookupOverwrite',
     );
-    const overwriteFoundStats = Boolean(overwriteInput?.checked);
+
+    if (
+        !speciesInput ||
+        !acInput ||
+        !hpStartInput ||
+        !hpEndInput
+    ) {
+        return;
+    }
 
     const species = speciesInput.value.trim();
 
@@ -52,7 +60,19 @@ async function lookupMonsterSpeciesStats() {
         return;
     }
 
-    const requestId = ++monsterSpeciesLookupRequest;
+    const overwriteFoundStats = Boolean(overwriteInput?.checked);
+
+    const originalAc = acInput.value;
+    const originalHpStart = hpStartInput.value;
+    const originalHpEnd = hpEndInput.value;
+
+    function isCurrentRequest() {
+        return (
+            requestId === monsterSpeciesLookupRequest &&
+            speciesInput.value.trim() === species &&
+            Boolean(overwriteInput?.checked) === overwriteFoundStats
+        );
+    }
 
     setMonsterSpeciesLookupStatus(
         `Looking up ${species} on D&D Beyond…`,
@@ -63,23 +83,39 @@ async function lookupMonsterSpeciesStats() {
             `/api/dndbeyond/monster-stats?species=${encodeURIComponent(species)}`,
         );
 
-        // Ignore an old response if the user changed species while it ran.
-        if (requestId !== monsterSpeciesLookupRequest) {
+        if (!isCurrentRequest()) {
             return;
         }
 
-        if (!suggestion?.found) {
-            setMonsterSpeciesLookupStatus(
-                `No exact D&D Beyond stats found for ${species}.`,
+        if (!suggestion || suggestion.found !== true) {
+            paneNotification(
+                'monsters',
+                suggestion?.reason
+                    ? String(suggestion.reason)
+                    : `No usable D&D Beyond stats found for ${species}; ` +
+                      'enter AC and HP manually.',
             );
             return;
         }
 
         const changes = [];
 
+        const acUnchanged = acInput.value === originalAc;
+        const hpUnchanged = (
+            hpStartInput.value === originalHpStart &&
+            hpEndInput.value === originalHpEnd
+        );
+
+        const hasUsableAc = (
+            typeof suggestion.ac === 'number' &&
+            Number.isInteger(suggestion.ac) &&
+            suggestion.ac >= 0 &&
+            suggestion.ac <= 999
+        );
+
         if (
-            suggestion.ac !== null &&
-            suggestion.ac !== undefined &&
+            hasUsableAc &&
+            acUnchanged &&
             (
                 overwriteFoundStats ||
                 !acInput.value.trim()
@@ -89,8 +125,21 @@ async function lookupMonsterSpeciesStats() {
             changes.push(`AC ${suggestion.ac}`);
         }
 
+        let suggestedHp = '';
+
         if (
-            suggestion.hp &&
+            typeof suggestion.hp === 'number' &&
+            Number.isFinite(suggestion.hp) &&
+            suggestion.hp >= 0
+        ) {
+            suggestedHp = String(suggestion.hp);
+        } else if (typeof suggestion.hp === 'string') {
+            suggestedHp = suggestion.hp.trim();
+        }
+
+        if (
+            suggestedHp !== '' &&
+            hpUnchanged &&
             (
                 overwriteFoundStats ||
                 (
@@ -99,13 +148,9 @@ async function lookupMonsterSpeciesStats() {
                 )
             )
         ) {
-            hpStartInput.value = suggestion.hp;
+            hpStartInput.value = suggestedHp;
             hpEndInput.value = '';
-            changes.push(
-                suggestion.hp_source === 'dice'
-                    ? `HP ${suggestion.hp}`
-                    : `HP ${suggestion.hp}`,
-            );
+            changes.push(`HP ${suggestedHp}`);
         }
 
         const edition = suggestion.legacy ? 'legacy' : 'current';
@@ -113,21 +158,44 @@ async function lookupMonsterSpeciesStats() {
         if (changes.length) {
             paneNotification(
                 'monsters',
-                `Loaded ${changes.join(', ')} from the ${edition} D&D Beyond result.`,
+                `Loaded ${changes.join(', ')} from the ` +
+                `${edition} D&D Beyond result.`,
             );
-        } else if (overwriteFoundStats) {
+            return;
+        }
+
+        if (!acUnchanged || !hpUnchanged) {
             paneNotification(
                 'monsters',
-                `Found ${edition} D&D Beyond stats, but no usable AC or HP values were returned.`,
+                `Found ${edition} D&D Beyond stats; values edited ` +
+                'while the lookup was running were left unchanged.',
+            );
+            return;
+        }
+
+        if (overwriteFoundStats) {
+            paneNotification(
+                'monsters',
+                `Found ${edition} D&D Beyond stats, but no usable ` +
+                'AC or HP values were returned.',
             );
         } else {
             paneNotification(
                 'monsters',
-                `Found ${edition} D&D Beyond stats; existing AC and HP were left unchanged. Enable overwrite to replace them.`,
+                `Found ${edition} D&D Beyond stats; existing AC ` +
+                'and HP were left unchanged. Enable overwrite to replace them.',
             );
         }
-    } catch {
-        // A lookup failure must not interrupt manual entry.
+    } catch (error) {
+        if (!isCurrentRequest()) {
+            return;
+        }
+
+        console.debug(
+            'Optional D&D Beyond stats lookup failed:',
+            error,
+        );
+
         setMonsterSpeciesLookupStatus(
             'D&D Beyond lookup is unavailable; enter AC and HP manually.',
         );
@@ -295,15 +363,103 @@ function closeImport() {
 async function request(url, options = {}) {
     const response = await fetch(url, options);
 
-    if (!response.ok) {
-        const error = await response.json().catch(() => ({
-            detail: response.statusText,
-        }));
-
-        throw new Error(error.detail);
+    if (response.ok) {
+        return response.json().catch(() => null);
     }
 
-    return response.json().catch(() => null);
+    const fallbackMessage = response.statusText
+        ? `${response.status} ${response.statusText}`
+        : `Request failed with HTTP ${response.status}`;
+
+    function formatDetail(detail) {
+        if (typeof detail === 'string') {
+            return detail.trim();
+        }
+
+        if (typeof detail === 'number' || typeof detail === 'boolean') {
+            return String(detail);
+        }
+
+        if (Array.isArray(detail)) {
+            return detail
+                .map(formatDetail)
+                .filter(Boolean)
+                .join('; ');
+        }
+
+        if (!detail || typeof detail !== 'object') {
+            return '';
+        }
+
+        const explanation = (
+            typeof detail.message === 'string'
+                ? detail.message
+                : (
+                    typeof detail.msg === 'string'
+                        ? detail.msg
+                        : ''
+                )
+        ).trim();
+
+        let field = '';
+
+        if (typeof detail.field === 'string') {
+            field = detail.field.trim();
+        } else if (Array.isArray(detail.loc)) {
+            field = detail.loc
+                .filter(part => ![
+                    'body',
+                    'query',
+                    'path',
+                    'header',
+                    'cookie',
+                ].includes(part))
+                .map(part => String(part))
+                .join('.');
+        }
+
+        if (explanation) {
+            return field
+                ? `${field}: ${explanation}`
+                : explanation;
+        }
+
+        if ('detail' in detail) {
+            return formatDetail(detail.detail);
+        }
+
+        if ('error' in detail) {
+            return formatDetail(detail.error);
+        }
+
+        return '';
+    }
+
+    let errorBody = null;
+
+    try {
+        errorBody = await response.json();
+    } catch {
+        // Non-JSON errors use the HTTP status rather than raw HTML.
+    }
+
+    const detail = (
+        errorBody &&
+        typeof errorBody === 'object' &&
+        !Array.isArray(errorBody) &&
+        'detail' in errorBody
+    )
+        ? errorBody.detail
+        : errorBody;
+
+    const error = new Error(
+        formatDetail(detail) || fallbackMessage,
+    );
+
+    error.status = response.status;
+    error.url = url;
+
+    throw error;
 }
 
 function esc(value) {
@@ -653,7 +809,7 @@ function monsterEdit(monster) {
         <input name="hp" type="number" value="${monster.hp}">
     </label>
     <label>
-        Max HP <span class="required-marker" aria-hidden="true">*</span>  
+        Max HP <span class="required-marker" aria-hidden="true">*</span>
         <input name="max_hp" type="number" min="0" value="${monster.max_hp}">
     </label>
     <label>
@@ -2508,6 +2664,9 @@ document.querySelector('#monsterSpecies').addEventListener(
     'input',
     () => {
         clearTimeout(monsterSpeciesLookupTimer);
+        monsterSpeciesLookupTimer = null;
+
+        ++monsterSpeciesLookupRequest;
 
         const species = document.querySelector(
             '#monsterSpecies',
@@ -2517,6 +2676,8 @@ document.querySelector('#monsterSpecies').addEventListener(
             setMonsterSpeciesLookupStatus('');
             return;
         }
+
+        setMonsterSpeciesLookupStatus('');
 
         monsterSpeciesLookupTimer = setTimeout(
             lookupMonsterSpeciesStats,
@@ -2536,22 +2697,98 @@ document.querySelector('#monsterSpecies').addEventListener(
 document.querySelector('#monsterUpload').onsubmit = async event => {
     event.preventDefault();
 
+    const form = event.currentTarget;
+    const payload = new FormData(form);
+
+    const uploadedFile = payload.get('monster_file');
+    const fileName = (
+        uploadedFile instanceof File && uploadedFile.name
+    )
+        ? uploadedFile.name
+        : 'the uploaded file';
+
+    const quantityText = String(payload.get('quantity') ?? '1').trim();
+    const requestedQuantity = Number(quantityText);
+
+    if (
+        !/^\d+$/.test(quantityText) ||
+        !Number.isInteger(requestedQuantity) ||
+        requestedQuantity < 1 ||
+        requestedQuantity > 50
+    ) {
+        paneNotification(
+            'battleSetup',
+            'Quantity must be a whole number between 1 and 50.',
+        );
+        return;
+    }
+
+    const submitButtons = Array.from(
+        form.querySelectorAll(
+            'button[type="submit"], button:not([type]), input[type="submit"]',
+        ),
+    );
+
+    const originalDisabledStates = submitButtons.map(
+        button => button.disabled,
+    );
+
+    submitButtons.forEach(button => {
+        button.disabled = true;
+    });
+
     try {
-        const result = await request('/api/monsters/import', {
-            method: 'POST',
-            body: new FormData(event.target),
-        });
+        let result;
+
+        try {
+            result = await request('/api/monsters/import', {
+                method: 'POST',
+                body: payload,
+            });
+        } catch (error) {
+            paneNotification(
+                'battleSetup',
+                error instanceof Error
+                    ? error.message
+                    : 'Unable to import monsters.',
+            );
+            return;
+        }
+
+        const importedCount = Array.isArray(result)
+            ? result.length
+            : requestedQuantity;
+
+        const successMessage = importedCount === 1
+            ? `Monster imported from “${fileName}”.`
+            : `${importedCount} monsters imported from “${fileName}”.`;
+
+        form.reset();
+
+        try {
+            await load();
+        } catch (error) {
+            console.error(
+                'Monster import succeeded, but refreshing the admin view failed:',
+                error,
+            );
+
+            paneNotification(
+                'battleSetup',
+                `${successMessage} The view could not be refreshed; ` +
+                'reload the page rather than importing again.',
+            );
+            return;
+        }
 
         paneNotification(
             'battleSetup',
-            quantity === 1
-                ? `Monster imported from “${fileName}”.`
-                : `${quantity} monsters imported from “${fileName}”.`,
+            successMessage,
         );
-        event.target.reset();
-        await load();
-    } catch (error) {
-        paneNotification('battleSetup', error.message);
+    } finally {
+        submitButtons.forEach((button, index) => {
+            button.disabled = originalDisabledStates[index];
+        });
     }
 };
 

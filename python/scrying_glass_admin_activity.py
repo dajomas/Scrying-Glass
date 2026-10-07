@@ -25,7 +25,21 @@ class AdminActivityMixin:
         )
 
     async def export_activity_log_csv(self) -> Response:
-        """Export activity log csv."""
+        """Export activity logs as CSV safe for spreadsheet applications."""
+        formula_prefixes = (
+            "=",
+            "+",
+            "-",
+            "@",
+            "\t",
+            "\r",
+            "\n",
+            "＝",
+            "＋",
+            "－",
+            "＠",
+        )
+
         fieldnames = [
             "id",
             "timestamp",
@@ -39,6 +53,16 @@ class AdminActivityMixin:
             "amount",
         ]
 
+        def spreadsheet_safe(value: Any) -> Any:
+            if not isinstance(value, str):
+                return value
+
+            return (
+                f"'{value}"
+                if value.startswith(formula_prefixes)
+                else value
+            )
+
         output = self.context.io.StringIO(newline="")
         writer = self.context.csv.DictWriter(
             output,
@@ -49,7 +73,13 @@ class AdminActivityMixin:
         writer.writeheader()
 
         for entry in self.context.STATE["activity_log"]:
-            writer.writerow(entry)
+            if not isinstance(entry, dict):
+                continue
+
+            writer.writerow({
+                field: spreadsheet_safe(entry.get(field, ""))
+                for field in fieldnames
+            })
 
         return self.context.Response(
             content=output.getvalue(),

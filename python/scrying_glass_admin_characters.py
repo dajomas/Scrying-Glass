@@ -67,6 +67,7 @@ class AdminCharactersMixin:
         )
 
         return {"count": len(imported)}
+
     async def create_character(self, character: CharacterCreate):
         """Create character."""
         c = {'id': self.context.uuid.uuid4().hex, **character.model_dump(), 'max_hp': character.hp, 'original_hp': character.hp, 'original_initiative': character.initiative, 'active': False, 'alive': character.hp > 0, 'visible': False, 'in_turn': False}
@@ -81,7 +82,9 @@ class AdminCharactersMixin:
         ident: str,
         update: CharacterUpdate,
     ) -> dict[str, Any]:
-        """Validate a proposed update before changing live character state."""
+        """Validate the update and log HP changes before changing the turn."""
+        import copy
+
         character = next(
             (
                 item
@@ -122,7 +125,6 @@ class AdminCharactersMixin:
 
         hp_changed = "hp" in values or hp_delta is not None
 
-        # Explicit Alive/Dead choices retain precedence.
         if "alive" not in values and hp_changed:
             candidate["alive"] = candidate["hp"] > 0
 
@@ -143,8 +145,11 @@ class AdminCharactersMixin:
             )
 
         self.context.remember_turn_successors()
-        character.update(candidate)
 
+        if hp_delta is not None:
+            self.context.log_hp_change(candidate, hp_delta)
+
+        character.update(candidate)
         self.context.set_turn(character, requested_turn)
 
         if character.get("active") and character.get("alive"):
@@ -152,15 +157,13 @@ class AdminCharactersMixin:
 
         self.context.clean_order()
 
-        if hp_delta is not None:
-            self.context.log_hp_change(character, hp_delta)
-
         await self.context.combatants_changed(
             monsters=False,
             characters=True,
         )
 
         return character
+
     async def bulk_characters(self, body: BulkCombatantAction) -> dict[str, int]:
         """Apply one validated bulk action to selected campaign characters."""
         allowed = {"join-battle", "leave-battle", "reset", "remove"}
