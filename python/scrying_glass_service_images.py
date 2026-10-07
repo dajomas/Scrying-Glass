@@ -14,21 +14,26 @@ class ImagesService:
         self.context = context
 
     def save_image(self, upload: UploadFile) -> str:
-        """Save a bounded image upload atomically and remove partial files."""
+        """Save a bounded upload atomically without masking cleanup errors."""
+        import logging
+        import os
+        import tempfile
+
+        logger = logging.getLogger(__name__)
         max_upload_bytes = 10 * 1024 * 1024
         chunk_size = 1024 * 1024
-        allowed_extensions = {
+
+        extension = self.context.Path(
+            upload.filename or ""
+        ).suffix.lower()
+
+        if extension not in {
             ".png",
             ".jpg",
             ".jpeg",
             ".gif",
             ".webp",
-        }
-
-        filename = upload.filename or ""
-        extension = self.context.Path(filename).suffix.lower()
-
-        if extension not in allowed_extensions:
+        }:
             raise self.context.HTTPException(
                 400,
                 "Image must be PNG, JPG, GIF, or WebP",
@@ -37,7 +42,7 @@ class ImagesService:
         declared_size = getattr(upload, "size", None)
 
         if (
-            isinstance(declared_size, int)
+            type(declared_size) is int
             and declared_size > max_upload_bytes
         ):
             raise self.context.HTTPException(
@@ -45,32 +50,39 @@ class ImagesService:
                 "Image must not exceed 10 MiB",
             )
 
-        self.context.UPLOAD_DIR.mkdir(
-            parents=True,
-            exist_ok=True,
-        )
-
         destination = (
             self.context.UPLOAD_DIR
             / f"{self.context.uuid.uuid4().hex}{extension}"
         )
-        temporary = destination.with_suffix(
-            f"{destination.suffix}.uploading",
-        )
-
-        bytes_written = 0
+        temporary = None
 
         try:
-            with temporary.open("xb") as output:
+            self.context.UPLOAD_DIR.mkdir(
+                parents=True,
+                exist_ok=True,
+            )
+
+            upload.file.seek(0)
+            total = 0
+
+            with tempfile.NamedTemporaryFile(
+                mode="wb",
+                prefix=".upload-",
+                suffix=".tmp",
+                dir=str(self.context.UPLOAD_DIR),
+                delete=False,
+            ) as output:
+                temporary = self.context.Path(output.name)
+
                 while True:
                     chunk = upload.file.read(chunk_size)
 
                     if not chunk:
                         break
 
-                    bytes_written += len(chunk)
+                    total += len(chunk)
 
-                    if bytes_written > max_upload_bytes:
+                    if total > max_upload_bytes:
                         raise self.context.HTTPException(
                             413,
                             "Image must not exceed 10 MiB",
@@ -78,21 +90,38 @@ class ImagesService:
 
                     output.write(chunk)
 
-            temporary.replace(destination)
+                if total == 0:
+                    raise self.context.HTTPException(
+                        400,
+                        "Image upload is empty",
+                    )
+
+            os.replace(temporary, destination)
+            temporary = None
 
         except self.context.HTTPException:
-            temporary.unlink(missing_ok=True)
-            destination.unlink(missing_ok=True)
             raise
 
-        except OSError as exc:
-            temporary.unlink(missing_ok=True)
-            destination.unlink(missing_ok=True)
+        except (OSError, ValueError) as exc:
+            logger.exception(
+                "Unable to save image upload",
+            )
 
             raise self.context.HTTPException(
                 500,
-                f"Unable to save image upload: {exc}",
+                "Unable to save image upload",
             ) from exc
+
+        finally:
+            if temporary is not None:
+                try:
+                    temporary.unlink(missing_ok=True)
+                except OSError:
+                    logger.warning(
+                        "Unable to remove partial image upload %s",
+                        temporary,
+                        exc_info=True,
+                    )
 
         return f"/media/{destination.name}"
 
