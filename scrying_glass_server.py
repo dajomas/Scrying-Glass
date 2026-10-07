@@ -206,14 +206,12 @@ if __name__ == '__main__':
     migrate_unassigned_setups()
     migrate_campaign_characters()
     load_state()
-
-    # The active campaign roster is authoritative after restart.
-    STATE["characters"] = load_campaign_characters(active_campaign())
     clean_order()
     save_state()
-    admin.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="admin-static")   
+
+    admin.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="admin-static")
     admin.mount('/media', StaticFiles(directory=str(UPLOAD_DIR)), name='admin-media')
-    client.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="client-static")   
+    client.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="client-static")
     client.mount('/media', StaticFiles(directory=str(UPLOAD_DIR)), name='client-media')
 
     async def serve():
