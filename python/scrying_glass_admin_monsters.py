@@ -176,57 +176,123 @@ class AdminMonstersMixin:
         )
 
         return {"count": len(imported)}
-        
-    async def edit_monster(self, ident: str, name: str=Form(...), monster_species: str=Form(...), ac: int=Form(...), hp: int=Form(...), max_hp: int=Form(...), original_hp: int=Form(...), color: str=Form(...), initiative: str=Form(''), ally: str=Form('false'), image: UploadFile | None=File(None)):
-        """Edit monster."""
-        m = next((x for x in self.context.STATE['monsters'] if x['id'] == ident), None)
-        if not m:
-            raise self.context.HTTPException(404, 'Monster not found')
+
+    async def edit_monster(
+        self,
+        ident: str,
+        name: str = Form(...),
+        monster_species: str = Form(...),
+        ac: int = Form(...),
+        hp: int = Form(...),
+        max_hp: int = Form(...),
+        original_hp: int = Form(...),
+        color: str = Form(...),
+        initiative: str = Form(""),
+        ally: str = Form("false"),
+        image: UploadFile | None = File(None),
+    ):
+        """Validate all edit fields before changing the live monster."""
+        import copy
+        from pydantic import ValidationError
+
+        monster = next(
+            (
+                item
+                for item in self.context.STATE["monsters"]
+                if item["id"] == ident
+            ),
+            None,
+        )
+
+        if monster is None:
+            raise self.context.HTTPException(
+                404,
+                "Monster not found",
+            )
+
         try:
             parsed_initiative = (
-                None if initiative.strip() == "" else int(initiative)
+                None
+                if not initiative.strip()
+                else int(initiative)
             )
         except ValueError as exc:
             raise self.context.HTTPException(
                 400,
                 "Initiative must be a whole number or empty",
             ) from exc
-        if parsed_initiative is not None and (not -100 <= parsed_initiative <= 100):
-            raise self.context.HTTPException(400, 'Initiative must be between -100 and 100')
-        replacement_image_url = None
-        if image and image.filename:
-            replacement_image_url = self.context.save_image(image)
+
+        ally_value = ally.strip().lower()
+        if ally_value not in {"true", "false"}:
+            raise self.context.HTTPException(
+                400,
+                "Ally must be true or false",
+            )
+
+        try:
+            validated = self.context.MonsterUpdate(
+                name=name.strip(),
+                monster_species=monster_species.strip(),
+                ac=ac,
+                hp=hp,
+                max_hp=max_hp,
+                original_hp=original_hp,
+                color=color.strip(),
+                initiative=parsed_initiative,
+                ally=ally_value == "true",
+            )
+        except ValidationError as exc:
+            errors = [
+                {
+                    "field": ".".join(
+                        str(part) for part in error["loc"]
+                    ),
+                    "message": error["msg"],
+                }
+                for error in exc.errors()
+            ]
+
+            raise self.context.HTTPException(
+                422,
+                errors,
+            ) from exc
+
+        candidate = copy.deepcopy(monster)
+        candidate.update(
+            validated.model_dump(exclude_unset=True)
+        )
+
+        self.context.update_alive_state(candidate)
+
+        if not candidate.get("active"):
+            candidate["in_turn"] = False
+
+        if image is not None and image.filename:
+            candidate["image_url"] = self.context.save_image(image)
 
         self.context.remember_turn_successors()
+        monster.update(candidate)
 
-        m.update({
-            "name": name.strip(),
-            "monster_species": monster_species.strip(),
-            "ac": ac,
-            "hp": hp,
-            "max_hp": max_hp,
-            "original_hp": original_hp,
-            "color": color,
-            "initiative": parsed_initiative,
-            "ally": ally.lower() == "true",
-        })
+        if monster.get("active") and monster.get("alive"):
+            self.context.insert_into_battle_order(monster)
 
-        if replacement_image_url is not None:
-            m["image_url"] = replacement_image_url
-
-        self.context.update_alive_state(m)
-        if m.get("active") and m.get("alive"):
-            self.context.insert_into_battle_order(m)
         self.context.clean_order()
-        await self.context.combatants_changed(monsters=True, characters=False)
-        return m
+
+        await self.context.combatants_changed(
+            monsters=True,
+            characters=False,
+        )
+
+        return monster
 
     async def update_monster(
         self,
         ident: str,
         update: MonsterUpdate,
     ) -> dict[str, Any]:
-        """Validate a proposed update before changing live monster state."""
+        """Validate the update and log HP changes before changing the turn."""
+        import copy
+
         monster = next(
             (
                 item
@@ -253,7 +319,6 @@ class AdminMonstersMixin:
         hp_delta = values.pop("hp_delta", None)
         requested_turn = values.get("in_turn")
 
-        # Work on a separate copy until validation succeeds.
         candidate = copy.deepcopy(monster)
 
         for key, value in values.items():
@@ -272,7 +337,6 @@ class AdminMonstersMixin:
         if not candidate.get("active"):
             candidate["in_turn"] = False
 
-        # Validate the resulting state, not the original state.
         if requested_turn is True and (
             not candidate.get("active")
             or not candidate.get("alive")
@@ -282,10 +346,12 @@ class AdminMonstersMixin:
                 "Only an active living combatant may have the battle turn",
             )
 
-        # Validation passed. Commit to the existing live object.
         self.context.remember_turn_successors()
-        monster.update(candidate)
 
+        if hp_delta is not None:
+            self.context.log_hp_change(candidate, hp_delta)
+
+        monster.update(candidate)
         self.context.set_turn(monster, requested_turn)
 
         if monster.get("active") and monster.get("alive"):
@@ -293,16 +359,13 @@ class AdminMonstersMixin:
 
         self.context.clean_order()
 
-        if hp_delta is not None:
-            self.context.log_hp_change(monster, hp_delta)
-
         await self.context.combatants_changed(
             monsters=True,
             characters=False,
         )
 
         return monster
-        
+
     async def bulk_monsters(self, body: BulkCombatantAction) -> dict[str, int]:
         """Apply one validated bulk action to selected monsters."""
         fields = {
