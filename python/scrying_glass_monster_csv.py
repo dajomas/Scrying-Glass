@@ -8,24 +8,72 @@ from typing import Any
 from fastapi import HTTPException
 
 def parse_monster(raw: bytes) -> dict[str, Any]:
-    """Parse monster."""
+    """Parse a UTF-8 JSON monster file, preserving numeric zero values."""
     try:
-        x = json.loads(raw.decode('utf-8'))
-    except Exception as exc:
-        raise HTTPException(400, '.monster must contain UTF-8 JSON') from exc
-    if not isinstance(x, dict):
+        data = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise HTTPException(
+            400,
+            ".monster must contain UTF-8 JSON",
+        ) from exc
+
+    if not isinstance(data, dict):
         raise HTTPException(
             400,
             ".monster must contain a JSON object",
         )
-    name = str(x.get('name', '')).strip()
-    kind = str(x.get('type', '')).strip()
-    hp = re.search('-?\\d+', str(x.get('hpText', x.get('hp', ''))))
-    acraw = x.get('ac') or x.get('armorClass') or x.get('otherArmorDesc') or x.get('natArmorBonus')
-    ac = re.search('\\d+', str(acraw)) if acraw is not None else None
-    if not name or not kind or (not hp) or (not ac):
-        raise HTTPException(400, '.monster needs usable name, type, AC, and HP')
-    return {'name': name, 'monster_species': kind, 'ac': int(ac.group()), 'hp': int(hp.group())}
+
+    name = str(data.get("name") or "").strip()
+    monster_species = str(data.get("type") or "").strip()
+
+    hp_raw = data.get("hpText")
+    if hp_raw is None or str(hp_raw).strip() == "":
+        hp_raw = data.get("hp")
+
+    hp_match = (
+        re.search(r"-?\d+", str(hp_raw))
+        if hp_raw is not None
+        else None
+    )
+
+    ac_raw = next(
+        (
+            data[field]
+            for field in (
+                "ac",
+                "armorClass",
+                "otherArmorDesc",
+                "natArmorBonus",
+            )
+            if data.get(field) is not None
+            and str(data[field]).strip() != ""
+        ),
+        None,
+    )
+
+    ac_match = (
+        re.search(r"\d+", str(ac_raw))
+        if ac_raw is not None
+        else None
+    )
+
+    if (
+        not name
+        or not monster_species
+        or hp_match is None
+        or ac_match is None
+    ):
+        raise HTTPException(
+            400,
+            ".monster needs usable name, type, AC, and HP",
+        )
+
+    return {
+        "name": name,
+        "monster_species": monster_species,
+        "ac": int(ac_match.group()),
+        "hp": int(hp_match.group()),
+    }
 
 def csv_text(value: Any, default: str = "") -> str:
     """Csv text."""
@@ -63,19 +111,22 @@ def csv_int(
     maximum: int | None = None,
     row_number: int,
 ) -> int | None:
-    """Csv int."""
+    """Parse a CSV integer and validate supplied values and defaults."""
     raw = csv_text(row.get(field))
 
-    if not raw:
-        return default
+    if raw:
+        try:
+            value = int(raw)
+        except ValueError as exc:
+            raise HTTPException(
+                400,
+                f"CSV row {row_number}: {field} must be a whole number",
+            ) from exc
+    else:
+        value = default
 
-    try:
-        value = int(raw)
-    except ValueError as exc:
-        raise HTTPException(
-            400,
-            f"CSV row {row_number}: {field} must be a whole number",
-        ) from exc
+    if value is None:
+        return None
 
     if minimum is not None and value < minimum:
         raise HTTPException(
@@ -182,7 +233,7 @@ def csv_monster(row: dict[str, str], row_number: int) -> dict[str, Any]:
     maximum_hp = csv_int(
         row,
         "max_hp",
-        default=hp,
+        default=max(hp, 0),
         minimum=0,
         maximum=99999,
         row_number=row_number,
