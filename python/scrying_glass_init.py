@@ -42,11 +42,49 @@ def password_hash(password: str, salt: bytes | None=None) -> str:
     return f'scrypt${salt.hex()}${digest.hex()}'
 
 def password_ok(password: str, stored: str) -> bool:
-    """Password ok."""
-    if stored.startswith('scrypt$'):
-        _, salt, digest = stored.split('$', 2)
-        return hmac.compare_digest(password_hash(password, bytes.fromhex(salt)).split('$', 2)[2], digest)
-    return hmac.compare_digest(password, stored)
+    """Verify a password, rejecting malformed stored hashes safely."""
+    if not isinstance(password, str) or not isinstance(stored, str):
+        return False
+
+    if not stored.startswith("scrypt$"):
+        return hmac.compare_digest(
+            password.encode("utf-8"),
+            stored.encode("utf-8"),
+        )
+
+    parts = stored.split("$")
+    if len(parts) != 3:
+        return False
+
+    _, salt_hex, digest_hex = parts
+
+    if (
+        not salt_hex
+        or len(salt_hex) % 2 != 0
+        or re.fullmatch(r"[0-9a-fA-F]+", salt_hex) is None
+        or re.fullmatch(r"[0-9a-fA-F]{128}", digest_hex) is None
+    ):
+        return False
+
+    try:
+        salt = bytes.fromhex(salt_hex)
+        expected_digest = bytes.fromhex(digest_hex)
+
+        actual_digest = hashlib.scrypt(
+            password.encode("utf-8"),
+            salt=salt,
+            n=2 ** 14,
+            r=8,
+            p=1,
+            dklen=64,
+        )
+    except ValueError:
+        return False
+
+    return hmac.compare_digest(
+        actual_digest,
+        expected_digest,
+    )
 
 def login(error: str='') -> HTMLResponse:
     """Render the login page with an optional error message."""
