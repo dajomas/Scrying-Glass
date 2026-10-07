@@ -14,14 +14,87 @@ class ImagesService:
         self.context = context
 
     def save_image(self, upload: UploadFile) -> str:
-        """Save image."""
-        ext = self.context.Path(upload.filename or '').suffix.lower()
-        if ext not in {'.png', '.jpg', '.jpeg', '.gif', '.webp'}:
-            raise self.context.HTTPException(400, 'Image must be PNG, JPG, GIF, or WebP')
-        dst = self.context.UPLOAD_DIR / f'{self.context.uuid.uuid4().hex}{ext}'
-        with dst.open('wb') as f:
-            self.context.shutil.copyfileobj(upload.file, f)
-        return '/media/' + dst.name
+        """Save a bounded image upload atomically and remove partial files."""
+        max_upload_bytes = 10 * 1024 * 1024
+        chunk_size = 1024 * 1024
+        allowed_extensions = {
+            ".png",
+            ".jpg",
+            ".jpeg",
+            ".gif",
+            ".webp",
+        }
+
+        filename = upload.filename or ""
+        extension = self.context.Path(filename).suffix.lower()
+
+        if extension not in allowed_extensions:
+            raise self.context.HTTPException(
+                400,
+                "Image must be PNG, JPG, GIF, or WebP",
+            )
+
+        declared_size = getattr(upload, "size", None)
+
+        if (
+            isinstance(declared_size, int)
+            and declared_size > max_upload_bytes
+        ):
+            raise self.context.HTTPException(
+                413,
+                "Image must not exceed 10 MiB",
+            )
+
+        self.context.UPLOAD_DIR.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
+
+        destination = (
+            self.context.UPLOAD_DIR
+            / f"{self.context.uuid.uuid4().hex}{extension}"
+        )
+        temporary = destination.with_suffix(
+            f"{destination.suffix}.uploading",
+        )
+
+        bytes_written = 0
+
+        try:
+            with temporary.open("xb") as output:
+                while True:
+                    chunk = upload.file.read(chunk_size)
+
+                    if not chunk:
+                        break
+
+                    bytes_written += len(chunk)
+
+                    if bytes_written > max_upload_bytes:
+                        raise self.context.HTTPException(
+                            413,
+                            "Image must not exceed 10 MiB",
+                        )
+
+                    output.write(chunk)
+
+            temporary.replace(destination)
+
+        except self.context.HTTPException:
+            temporary.unlink(missing_ok=True)
+            destination.unlink(missing_ok=True)
+            raise
+
+        except OSError as exc:
+            temporary.unlink(missing_ok=True)
+            destination.unlink(missing_ok=True)
+
+            raise self.context.HTTPException(
+                500,
+                f"Unable to save image upload: {exc}",
+            ) from exc
+
+        return f"/media/{destination.name}"
 
     def dnd_image(self, monster_species: str) -> str | None:
         '\n    Find the dedicated D&D Beyond monster image for monster_species.\n\n    Exact normalized name matches are collected from D&D Beyond search results.\n    A match whose complete result HTML contains \'legacy\' is preferred. The\n    dedicated <img class="monster-image"> URL from that monster page is used,\n    not a generic Open Graph image.\n    '
