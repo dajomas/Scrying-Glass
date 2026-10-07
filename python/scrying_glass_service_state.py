@@ -186,20 +186,27 @@ class StateService:
 
             return result
 
+        # Monster cards are included whenever the monster is In Battle.
+        # The browser retains the existing alive/dead card behavior.
         monsters = [
             display_monster(item)
             for item in full["monsters"]
-            if item.get("active") and item.get("visible")
+            if item.get("active")
         ]
+
+        # Characters appear only in the battle-order strip.
         characters = [
             display_character(item)
             for item in full["characters"]
             if item.get("active") and item.get("visible")
         ]
 
+        # Visible controls inclusion in the battle-order strip,
+        # independently of whether a monster card is displayed.
         visible_ids = {
             item["id"]
             for item in [*monsters, *characters]
+            if item.get("active") and item.get("visible")
         }
 
         display_order = list(dict.fromkeys(
