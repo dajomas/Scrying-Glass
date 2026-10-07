@@ -13,27 +13,53 @@ class PersistenceService:
         """Retain the live server context."""
         self.context = context
 
-    def load_campaign_characters(self, slug: str) -> list[dict[str, Any]]:
-        """Load campaign characters."""
+    def load_campaign_characters(
+        self,
+        slug: str,
+    ) -> list[dict[str, Any]]:
+        """Load and validate a campaign's character roster."""
         path = self.context.campaign_characters_path(slug)
 
         if not path.exists():
             return []
 
         try:
-            raw = self.context.json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, self.context.json.JSONDecodeError) as exc:
+            raw = self.context.json.loads(
+                path.read_text(encoding="utf-8")
+            )
+        except (
+            OSError,
+            UnicodeDecodeError,
+            self.context.json.JSONDecodeError,
+        ) as exc:
             raise self.context.HTTPException(
                 400,
                 f"Unable to load campaign characters: {exc}",
             ) from exc
 
-        characters = raw.get("characters", raw) if isinstance(raw, dict) else raw
+        characters = (
+            raw.get("characters", raw)
+            if isinstance(raw, dict)
+            else raw
+        )
 
         if not isinstance(characters, list):
-            raise self.context.HTTPException(400, "Campaign character roster is invalid")
+            raise self.context.HTTPException(
+                400,
+                "Campaign character roster must contain a character list",
+            )
 
-        return self.context.normalize_state({"characters": characters})["characters"]
+        try:
+            normalized = self.context.normalize_state({
+                "characters": characters,
+            })
+        except ValueError as exc:
+            raise self.context.HTTPException(
+                400,
+                f"Campaign character roster is invalid: {exc}",
+            ) from exc
+
+        return normalized["characters"]
 
     def save_campaign_characters(self, slug: str, characters: list[dict[str, Any]]) -> None:
         """Save campaign characters."""
@@ -79,7 +105,7 @@ class PersistenceService:
 
     def load_state(self) -> None:
         """Load state."""
-    
+
 
         if not self.context.STATE_FILE.exists():
             self.context.STATE = self.context.normalize_state(self.context.STATE)

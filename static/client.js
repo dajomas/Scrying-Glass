@@ -249,28 +249,65 @@ function render(state) {
     previous = current;
 }
 
-async function initial() {
-    const response = await fetch('/api/state');
+function connectDisplay() {
+    const websocket = new WebSocket(
+        `${location.protocol === 'https:' ? 'wss://' : 'ws://'}${location.host}/ws`,
+    );
 
-    if (response.ok) {
-        render(await response.json());
+    let reloadTimer = null;
+
+    function scheduleReload() {
+        if (reloadTimer !== null) {
+            return;
+        }
+
+        reloadTimer = setTimeout(() => {
+            location.reload();
+        }, 1500);
     }
+
+    websocket.onmessage = event => {
+        let message;
+
+        try {
+            message = JSON.parse(event.data);
+        } catch (error) {
+            console.error(
+                'Ignoring invalid display WebSocket JSON:',
+                error,
+            );
+            return;
+        }
+
+        if (
+            !message ||
+            message.type !== 'state' ||
+            !message.state
+        ) {
+            return;
+        }
+
+        try {
+            render(message.state);
+        } catch (error) {
+            console.error(
+                'Unable to render display state:',
+                error,
+            );
+
+            websocket.close();
+            scheduleReload();
+        }
+    };
+
+    websocket.onclose = scheduleReload;
+
+    websocket.onerror = () => {
+        websocket.close();
+        scheduleReload();
+    };
+
+    return websocket;
 }
 
-initial();
-
-const websocket = new WebSocket(
-    `${location.protocol === 'https:' ? 'wss://' : 'ws://'}${location.host}/ws`,
-);
-
-websocket.onmessage = event => {
-    const message = JSON.parse(event.data);
-
-    if (message.type === 'state') {
-        render(message.state);
-    }
-};
-
-websocket.onclose = () => {
-    setTimeout(() => location.reload(), 1500);
-};
+const websocket = connectDisplay();
