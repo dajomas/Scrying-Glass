@@ -295,15 +295,103 @@ function closeImport() {
 async function request(url, options = {}) {
     const response = await fetch(url, options);
 
-    if (!response.ok) {
-        const error = await response.json().catch(() => ({
-            detail: response.statusText,
-        }));
-
-        throw new Error(error.detail);
+    if (response.ok) {
+        return response.json().catch(() => null);
     }
 
-    return response.json().catch(() => null);
+    const fallbackMessage = response.statusText
+        ? `${response.status} ${response.statusText}`
+        : `Request failed with HTTP ${response.status}`;
+
+    function formatDetail(detail) {
+        if (typeof detail === 'string') {
+            return detail.trim();
+        }
+
+        if (typeof detail === 'number' || typeof detail === 'boolean') {
+            return String(detail);
+        }
+
+        if (Array.isArray(detail)) {
+            return detail
+                .map(formatDetail)
+                .filter(Boolean)
+                .join('; ');
+        }
+
+        if (!detail || typeof detail !== 'object') {
+            return '';
+        }
+
+        const explanation = (
+            typeof detail.message === 'string'
+                ? detail.message
+                : (
+                    typeof detail.msg === 'string'
+                        ? detail.msg
+                        : ''
+                )
+        ).trim();
+
+        let field = '';
+
+        if (typeof detail.field === 'string') {
+            field = detail.field.trim();
+        } else if (Array.isArray(detail.loc)) {
+            field = detail.loc
+                .filter(part => ![
+                    'body',
+                    'query',
+                    'path',
+                    'header',
+                    'cookie',
+                ].includes(part))
+                .map(part => String(part))
+                .join('.');
+        }
+
+        if (explanation) {
+            return field
+                ? `${field}: ${explanation}`
+                : explanation;
+        }
+
+        if ('detail' in detail) {
+            return formatDetail(detail.detail);
+        }
+
+        if ('error' in detail) {
+            return formatDetail(detail.error);
+        }
+
+        return '';
+    }
+
+    let errorBody = null;
+
+    try {
+        errorBody = await response.json();
+    } catch {
+        // Non-JSON errors use the HTTP status rather than raw HTML.
+    }
+
+    const detail = (
+        errorBody &&
+        typeof errorBody === 'object' &&
+        !Array.isArray(errorBody) &&
+        'detail' in errorBody
+    )
+        ? errorBody.detail
+        : errorBody;
+
+    const error = new Error(
+        formatDetail(detail) || fallbackMessage,
+    );
+
+    error.status = response.status;
+    error.url = url;
+
+    throw error;
 }
 
 function esc(value) {
@@ -653,7 +741,7 @@ function monsterEdit(monster) {
         <input name="hp" type="number" value="${monster.hp}">
     </label>
     <label>
-        Max HP <span class="required-marker" aria-hidden="true">*</span>  
+        Max HP <span class="required-marker" aria-hidden="true">*</span>
         <input name="max_hp" type="number" min="0" value="${monster.max_hp}">
     </label>
     <label>
@@ -2536,22 +2624,98 @@ document.querySelector('#monsterSpecies').addEventListener(
 document.querySelector('#monsterUpload').onsubmit = async event => {
     event.preventDefault();
 
+    const form = event.currentTarget;
+    const payload = new FormData(form);
+
+    const uploadedFile = payload.get('monster_file');
+    const fileName = (
+        uploadedFile instanceof File && uploadedFile.name
+    )
+        ? uploadedFile.name
+        : 'the uploaded file';
+
+    const quantityText = String(payload.get('quantity') ?? '1').trim();
+    const requestedQuantity = Number(quantityText);
+
+    if (
+        !/^\d+$/.test(quantityText) ||
+        !Number.isInteger(requestedQuantity) ||
+        requestedQuantity < 1 ||
+        requestedQuantity > 50
+    ) {
+        paneNotification(
+            'battleSetup',
+            'Quantity must be a whole number between 1 and 50.',
+        );
+        return;
+    }
+
+    const submitButtons = Array.from(
+        form.querySelectorAll(
+            'button[type="submit"], button:not([type]), input[type="submit"]',
+        ),
+    );
+
+    const originalDisabledStates = submitButtons.map(
+        button => button.disabled,
+    );
+
+    submitButtons.forEach(button => {
+        button.disabled = true;
+    });
+
     try {
-        const result = await request('/api/monsters/import', {
-            method: 'POST',
-            body: new FormData(event.target),
-        });
+        let result;
+
+        try {
+            result = await request('/api/monsters/import', {
+                method: 'POST',
+                body: payload,
+            });
+        } catch (error) {
+            paneNotification(
+                'battleSetup',
+                error instanceof Error
+                    ? error.message
+                    : 'Unable to import monsters.',
+            );
+            return;
+        }
+
+        const importedCount = Array.isArray(result)
+            ? result.length
+            : requestedQuantity;
+
+        const successMessage = importedCount === 1
+            ? `Monster imported from “${fileName}”.`
+            : `${importedCount} monsters imported from “${fileName}”.`;
+
+        form.reset();
+
+        try {
+            await load();
+        } catch (error) {
+            console.error(
+                'Monster import succeeded, but refreshing the admin view failed:',
+                error,
+            );
+
+            paneNotification(
+                'battleSetup',
+                `${successMessage} The view could not be refreshed; ` +
+                'reload the page rather than importing again.',
+            );
+            return;
+        }
 
         paneNotification(
             'battleSetup',
-            quantity === 1
-                ? `Monster imported from “${fileName}”.`
-                : `${quantity} monsters imported from “${fileName}”.`,
+            successMessage,
         );
-        event.target.reset();
-        await load();
-    } catch (error) {
-        paneNotification('battleSetup', error.message);
+    } finally {
+        submitButtons.forEach((button, index) => {
+            button.disabled = originalDisabledStates[index];
+        });
     }
 };
 
