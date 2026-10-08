@@ -4,11 +4,15 @@
 
 body {
     margin: 0;
-    min-height: 100vh;
+    height: 100vh;
+    height: 100dvh;
     background: #080b14;
     color: #fff;
     font-family: system-ui, sans-serif;
     overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
 }
 
 #initiative {
@@ -165,4 +169,10 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#initiative .token {
+    font-size: var(--battle-order-font-size, 16px);
+    line-height: 1.15;
+    flex-shrink: 0;
 }

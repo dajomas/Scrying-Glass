@@ -34,15 +34,29 @@ class StateService:
             self.context.CONFIG.get('display', {}).get('background', self.context.DEFAULT_VIEW_BACKGROUND)
         ).strip() or self.context.DEFAULT_VIEW_BACKGROUND
 
-    def normalize_display(self, raw: Any) -> dict[str, str]:
-        """Normalize display."""
+    def normalize_display(self, raw: Any) -> dict[str, Any]:
+        """Normalize display settings, including viewer battle-order font size."""
         display = raw if isinstance(raw, dict) else {}
+
         background = str(
-            display.get('background', self.context.configured_background())
+            display.get(
+                "background",
+                self.context.configured_background(),
+            )
         ).strip()
 
+        font_size = display.get("battle_order_font_size", 16)
+
+        if type(font_size) is not int:
+            font_size = 16
+
+        font_size = max(12, min(40, font_size))
+
         return {
-            'background': background or self.context.configured_background(),
+            "background": (
+                background or self.context.configured_background()
+            ),
+            "battle_order_font_size": font_size,
         }
 
     def normalize_state(self, raw: dict[str, Any]) -> dict[str, Any]:
@@ -405,8 +419,12 @@ class StateService:
         }
 
     def public_state(self) -> dict[str, Any]:
-        """Build the state payload exposed to authenticated displays."""
-        d = self.context.CONFIG['display']
+        """Build the full state payload for authenticated administration."""
+        configured_display = self.context.CONFIG["display"]
+        runtime_display = self.context.normalize_display(
+            self.context.STATE.get("display"),
+        )
+
         return {
             "monsters": self.context.STATE["monsters"],
             "characters": self.context.STATE["characters"],
@@ -414,10 +432,15 @@ class StateService:
             "activity_log": self.context.STATE["activity_log"],
             "active_setup": self.context.STATE.get("active_setup"),
             "display": {
-                "background": self.context.STATE["display"]["background"],
-                "entry_direction": d["entry_direction"],
-                "exit_direction": d["exit_direction"],
-                "monster_width_percent": d["monster_width_percent"],
+                "background": runtime_display["background"],
+                "battle_order_font_size": (
+                    runtime_display["battle_order_font_size"]
+                ),
+                "entry_direction": configured_display["entry_direction"],
+                "exit_direction": configured_display["exit_direction"],
+                "monster_width_percent": (
+                    configured_display["monster_width_percent"]
+                ),
             },
         }
 

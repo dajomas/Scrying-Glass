@@ -5,15 +5,40 @@
           Inactive
         </span>
       </div>
+
       <div class="row">
         <button id="startBattle" class="battle">Start battle</button>
         <button id="nextBattle" class="battle">Next</button>
         <button id="endBattle" class="danger">End battle</button>
         <button id="resetAll" class="reset">Reset All</button>
       </div>
+
+      <div class="row">
+        <span>Viewer battle-order text:</span>
+
+        <button
+          id="battleOrderFontDecrease"
+          type="button"
+          aria-label="Decrease viewer battle-order font size"
+          title="Decrease viewer battle-order font size"
+        >A−</button>
+
+        <span
+          id="battleOrderFontSize"
+          aria-live="polite"
+        >16 px</span>
+
+        <button
+          id="battleOrderFontIncrease"
+          type="button"
+          aria-label="Increase viewer battle-order font size"
+          title="Increase viewer battle-order font size"
+        >A+</button>
+      </div>
+
       <div class="row">&nbsp;</div>
+
       <div class="row">
         <span id="battleInfo"></span>
       </div>
     </section>
-

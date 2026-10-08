@@ -88,6 +88,8 @@ function gridSize(count) {
 }
 
 function render(state) {
+    applyBattleOrderFontSize(state.display);
+
     const background = String(
         state.display?.background || '#080b14'
     ).trim() || '#080b14';
@@ -311,3 +313,18 @@ function connectDisplay() {
 }
 
 const websocket = connectDisplay();
+
+function applyBattleOrderFontSize(display) {
+    const requestedSize = Number(
+        display?.battle_order_font_size ?? 16,
+    );
+
+    const size = Number.isInteger(requestedSize)
+        ? Math.max(12, Math.min(40, requestedSize))
+        : 16;
+
+    document.documentElement.style.setProperty(
+        '--battle-order-font-size',
+        `${size}px`,
+    );
+}

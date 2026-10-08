@@ -102,3 +102,7 @@ class BattleActions(BaseModel):
     """Battleactions."""
     actor_id: str = Field(min_length=1, max_length=100)
     actions: list[BattleActionRow] = Field(min_length=1, max_length=100)
+
+class BattleOrderFontAdjust(BaseModel):
+    """Adjust viewer battle-order text by one step."""
+    direction: Literal["increase", "decrease"]

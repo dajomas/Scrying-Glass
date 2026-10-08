@@ -1308,6 +1308,8 @@ async function load() {
     try {
         latest = await request('/api/state');
 
+        updateBattleOrderFontControls(latest.display?.battle_order_font_size);
+
         syncActiveBattleSetupControls();
         renderActiveBattleSetup();
 
@@ -3446,6 +3448,94 @@ document.querySelector('#resetAll').onclick = async () => {
         message(error.message);
     }
 };
+
+let battleOrderFontAdjustmentPending = false;
+
+function updateBattleOrderFontControls(fontSize) {
+    const numericSize = Number(fontSize);
+    const size = Number.isInteger(numericSize)
+        ? Math.max(12, Math.min(40, numericSize))
+        : 16;
+
+    const label = document.querySelector('#battleOrderFontSize');
+    const decrease = document.querySelector('#battleOrderFontDecrease');
+    const increase = document.querySelector('#battleOrderFontIncrease');
+
+    if (label) {
+        label.textContent = `${size} px`;
+    }
+
+    if (decrease) {
+        decrease.disabled = (
+            battleOrderFontAdjustmentPending || size <= 12
+        );
+    }
+
+    if (increase) {
+        increase.disabled = (
+            battleOrderFontAdjustmentPending || size >= 40
+        );
+    }
+}
+
+async function adjustBattleOrderFont(direction) {
+    if (battleOrderFontAdjustmentPending) {
+        return;
+    }
+
+    battleOrderFontAdjustmentPending = true;
+
+    updateBattleOrderFontControls(
+        latest?.display?.battle_order_font_size,
+    );
+
+    try {
+        const result = await request(
+            '/api/display/battle-order-font',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ direction }),
+            },
+        );
+
+        if (latest?.display) {
+            latest.display.battle_order_font_size = (
+                result.battle_order_font_size
+            );
+        }
+
+        updateBattleOrderFontControls(
+            result.battle_order_font_size,
+        );
+    } catch (error) {
+        message(
+            error instanceof Error
+                ? error.message
+                : 'Unable to change viewer font size.',
+        );
+    } finally {
+        battleOrderFontAdjustmentPending = false;
+
+        updateBattleOrderFontControls(
+            latest?.display?.battle_order_font_size,
+        );
+    }
+}
+
+document.querySelector(
+    '#battleOrderFontDecrease',
+).addEventListener('click', () => {
+    adjustBattleOrderFont('decrease');
+});
+
+document.querySelector(
+    '#battleOrderFontIncrease',
+).addEventListener('click', () => {
+    adjustBattleOrderFont('increase');
+});
 
 installColorPreview('#monsterColor', '#monsterColorPreview');
 installColorPreview('#monsterFileColor', '#monsterFileColorPreview',);

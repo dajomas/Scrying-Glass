@@ -107,3 +107,30 @@ class AdminDisplayMixin:
             'background': self.context.STATE['display']['background'],
             'image_url': image_url,
         }
+
+    async def adjust_battle_order_font(
+        self,
+        payload: BattleOrderFontAdjust,
+    ) -> dict[str, Any]:
+        """Adjust and persist viewer battle-order font size."""
+        async with self.context.LOCK:
+            display = self.context.normalize_display(
+                self.context.STATE.get("display"),
+            )
+
+            current = display["battle_order_font_size"]
+            adjustment = (
+                2 if payload.direction == "increase" else -2
+            )
+            updated = max(12, min(40, current + adjustment))
+
+            display["battle_order_font_size"] = updated
+            self.context.STATE["display"] = display
+
+            self.context.save_state()
+
+        await self.context.broadcast()
+
+        return {
+            "battle_order_font_size": updated,
+        }
