@@ -153,6 +153,8 @@ class PersistenceService:
                 item["in_turn"] = False
 
         candidate["turn_successors"] = []
+        candidate["battle_round"] = 0
+        candidate["turn_successors_before_wrap"] = []
         candidate["active_setup"] = None
         candidate.pop("active_turn_id", None)
 

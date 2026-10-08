@@ -632,3 +632,17 @@ input[type="number"] {
     align-items: center;
     gap: 0.35rem;
 }
+
+.battle-round {
+    display: inline-block;
+    padding: .25rem .65rem;
+    border-radius: 999px;
+    background: #111827;
+    color: #fff;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.battle-round[hidden] {
+    display: none;
+}

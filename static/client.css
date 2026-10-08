@@ -193,3 +193,20 @@ h1 {
     white-space: normal;
     overflow-wrap: anywhere;
 }
+
+#initiative .round-indicator {
+    flex: 0 0 auto;
+
+    font-size: var(--battle-order-font-size, 16px);
+    line-height: 1.15;
+    font-weight: 800;
+
+    padding: .45rem .75rem;
+    border: 3px solid #fbbf24;
+    border-radius: 999px;
+
+    background: #111827;
+    color: #fbbf24;
+
+    white-space: nowrap;
+}

@@ -87,6 +87,31 @@ function gridSize(count) {
     return [rows, columns];
 }
 
+function renderBattleRound(state) {
+    const initiative = document.querySelector('#initiative');
+
+    if (!initiative) {
+        return;
+    }
+
+    initiative.querySelector('.round-indicator')?.remove();
+
+    const round = state?.battle_round;
+    const active = Number.isInteger(round) && round >= 1;
+
+    if (!active) {
+        return;
+    }
+
+    const indicator = document.createElement('span');
+    indicator.className = 'round-indicator';
+    indicator.textContent = `Round ${round}`;
+    indicator.setAttribute('aria-label', `Battle round ${round}`);
+
+    initiative.prepend(indicator);
+    initiative.hidden = false;
+}
+
 function render(state) {
     applyBattleOrderFontSize(state.display);
 
@@ -137,6 +162,8 @@ function render(state) {
         ${esc(displayCombatantName(combatant))}
     </span>`
     ).join('');
+
+    renderBattleRound(state);
 
     const activeMonsters = state.monsters.filter(monster =>
         monster.active && monster.alive,

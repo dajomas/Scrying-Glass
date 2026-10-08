@@ -343,6 +343,20 @@ function validateMonsterHpRange(startValue, endValue) {
     return null;
 }
 
+function updateBattleRound(state) {
+    const element = document.querySelector('#battleRound');
+
+    if (!element) {
+        return;
+    }
+
+    const round = state?.battle_round;
+    const active = Number.isInteger(round) && round >= 1;
+
+    element.hidden = !active;
+    element.textContent = active ? `Round ${round}` : '';
+}
+
 // Campaign registry as returned by GET /api/campaigns:
 // {active: slug, campaigns: [{slug, name, description, setups: [...]}], moved: [...]}
 let campaignData = { active: null, campaigns: [], moved: [] };
@@ -1309,6 +1323,7 @@ async function load() {
         latest = await request('/api/state');
 
         updateBattleOrderFontControls(latest.display?.battle_order_font_size);
+        updateBattleRound(latest);
 
         syncActiveBattleSetupControls();
         renderActiveBattleSetup();

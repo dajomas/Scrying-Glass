@@ -120,6 +120,14 @@ class StateService:
         activity_log = copy.deepcopy(require_list("activity_log"))
         battle_order = normalize_id_list("battle_order")
         turn_successors = normalize_id_list("turn_successors")
+        turn_successors_before_wrap = normalize_id_list("turn_successors_before_wrap")
+
+        battle_round = raw.get("battle_round", 0)
+
+        if type(battle_round) is not int or battle_round < 0:
+            raise ValueError(
+                "battle_round must be a non-negative integer"
+            )
 
         raw_display = raw.get("display")
         if raw_display is not None:
@@ -318,6 +326,12 @@ class StateService:
             ],
             "display": self.context.normalize_display(raw_display),
             "active_setup": active_setup,
+            "battle_round": battle_round,
+            "turn_successors_before_wrap": [
+                ident
+                for ident in turn_successors_before_wrap
+                if ident in known_ids
+            ],
         }
 
     def display_state(self) -> dict[str, Any]:
@@ -409,6 +423,7 @@ class StateService:
         return {
             "monsters": monsters,
             "characters": characters,
+            "battle_round": full["battle_round"],
             "battle_order": [
                 ident
                 for ident in full["battle_order"]
@@ -428,6 +443,7 @@ class StateService:
         return {
             "monsters": self.context.STATE["monsters"],
             "characters": self.context.STATE["characters"],
+            "battle_round": self.context.STATE.get("battle_round", 0),
             "battle_order": self.context.STATE["battle_order"],
             "activity_log": self.context.STATE["activity_log"],
             "active_setup": self.context.STATE.get("active_setup"),
