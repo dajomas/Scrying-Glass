@@ -94,6 +94,7 @@ from python.scrying_glass_dndbeyond import (
 )
 
 from python.scrying_glass_classes import (
+    BattleOrderFontAdjust,
     BattleActions,
     BattleStart,
     BulkCombatantAction,

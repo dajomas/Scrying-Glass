@@ -87,7 +87,34 @@ function gridSize(count) {
     return [rows, columns];
 }
 
+function renderBattleRound(state) {
+    const initiative = document.querySelector('#initiative');
+
+    if (!initiative) {
+        return;
+    }
+
+    initiative.querySelector('.round-indicator')?.remove();
+
+    const round = state?.battle_round;
+    const active = Number.isInteger(round) && round >= 1;
+
+    if (!active) {
+        return;
+    }
+
+    const indicator = document.createElement('span');
+    indicator.className = 'round-indicator';
+    indicator.textContent = `Round ${round}`;
+    indicator.setAttribute('aria-label', `Battle round ${round}`);
+
+    initiative.prepend(indicator);
+    initiative.hidden = false;
+}
+
 function render(state) {
+    applyBattleOrderFontSize(state.display);
+
     const background = String(
         state.display?.background || '#080b14'
     ).trim() || '#080b14';
@@ -135,6 +162,8 @@ function render(state) {
         ${esc(displayCombatantName(combatant))}
     </span>`
     ).join('');
+
+    renderBattleRound(state);
 
     const activeMonsters = state.monsters.filter(monster =>
         monster.active && monster.alive,
@@ -311,3 +340,18 @@ function connectDisplay() {
 }
 
 const websocket = connectDisplay();
+
+function applyBattleOrderFontSize(display) {
+    const requestedSize = Number(
+        display?.battle_order_font_size ?? 16,
+    );
+
+    const size = Number.isInteger(requestedSize)
+        ? Math.max(12, Math.min(40, requestedSize))
+        : 16;
+
+    document.documentElement.style.setProperty(
+        '--battle-order-font-size',
+        `${size}px`,
+    );
+}

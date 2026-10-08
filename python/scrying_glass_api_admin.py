@@ -19,6 +19,7 @@ ADMIN_ROUTES = (
     ('/', 'admin_home', 'GET', False),
     ('/api/state', 'admin_get_state', 'GET', True),
     ('/api/dndbeyond/monster-stats', 'dndbeyond_monster_stats', 'GET', True),
+    ('/api/display/battle-order-font', 'adjust_battle_order_font', 'POST', True),
     ('/api/display/background', 'update_display_background', 'PATCH', True),
     ('/api/display/background-image', 'upload_display_background_image', 'POST', True),
     ('/api/setups', 'get_setups', 'GET', True),

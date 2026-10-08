@@ -10,6 +10,8 @@ class AdminBattleMixin:
     async def battle_end(self) -> dict[str, str]:
         """Battle end."""
         self.context.clear_turns()
+        self.context.STATE["battle_round"] = 0
+        self.context.STATE["turn_successors_before_wrap"] = []
         self.context.STATE["battle_order"] = []
         self.context.STATE["turn_successors"] = []
 
@@ -24,6 +26,8 @@ class AdminBattleMixin:
             self.context.reset_entity(combatant)
 
         self.context.sort_admin_by_max_hp()
+        self.context.STATE["battle_round"] = 0
+        self.context.STATE["turn_successors_before_wrap"] = []
         self.context.STATE["battle_order"] = []
         self.context.STATE["turn_successors"] = []
 

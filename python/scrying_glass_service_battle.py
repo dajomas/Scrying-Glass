@@ -19,8 +19,9 @@ class BattleService:
             x['in_turn'] = False
 
     def remember_turn_successors(self) -> None:
-        """Remember who follows the current combatant before changing state."""
+        """Remember successors and the boundary between this and next round."""
         current = self.context.active_combatant()
+
         if current is None:
             return
 
@@ -31,10 +32,15 @@ class BattleService:
             return
 
         position = order.index(current_id)
+        remaining_this_round = order[position + 1:]
 
         self.context.STATE["turn_successors"] = (
-            order[position + 1:]
+            remaining_this_round
             + order[:position + 1]
+        )
+
+        self.context.STATE["turn_successors_before_wrap"] = (
+            remaining_this_round
         )
 
     def clean_order(self) -> None:
@@ -102,6 +108,7 @@ class BattleService:
         if not x.get('active') or not x.get('alive', True):
             raise self.context.HTTPException(400, 'Only an active living combatant may have the battle turn')
         self.context.STATE["turn_successors"] = []
+        self.context.STATE["turn_successors_before_wrap"] = []
         self.context.clear_turns()
         x['in_turn'] = True
         x['visible'] = True
@@ -111,60 +118,110 @@ class BattleService:
         return [x for x in self.context.entities() if x.get('active') and x.get('alive', True)]
 
     def begin_battle(self, order: list[str]) -> None:
-        """Begin battle."""
-        wanted = {x['id'] for x in self.context.eligible()}
+        """Start the supplied turn order at round one."""
+        wanted = {
+            combatant["id"]
+            for combatant in self.context.eligible()
+        }
+
         if len(order) != len(wanted) or set(order) != wanted:
-            raise self.context.HTTPException(400, 'Battle order must include every active living combatant exactly once')
-        self.context.STATE['battle_order'] = order
+            raise self.context.HTTPException(
+                400,
+                "Battle order must include every active living "
+                "combatant exactly once",
+            )
+
+        self.context.STATE["battle_order"] = list(order)
+        self.context.STATE["battle_round"] = 1
         self.context.STATE["turn_successors"] = []
+        self.context.STATE["turn_successors_before_wrap"] = []
+
         self.context.clear_turns()
+
         if order:
-            self.context.entity(order[0])['in_turn'] = True
-            self.context.entity(order[0])['visible'] = True
+            target = self.context.entity(order[0])
+            target["in_turn"] = True
+            target["visible"] = True
 
     def advance_turn(self) -> dict[str, Any] | None:
-        """Advance from the current turn, or its remembered successor."""
+        """Advance the turn and increment the round when order wraps."""
         eligible = self.context.eligible()
-        eligible_ids = {combatant["id"] for combatant in eligible}
+        eligible_ids = {
+            combatant["id"]
+            for combatant in eligible
+        }
 
         if not eligible_ids:
             self.context.clear_turns()
             self.context.STATE["battle_order"] = []
             self.context.STATE["turn_successors"] = []
+            self.context.STATE["turn_successors_before_wrap"] = []
             return None
 
         current = self.context.active_combatant()
         current_id = current["id"] if current is not None else None
 
+        remembered_successors = list(
+            self.context.STATE.get("turn_successors", [])
+        )
+        before_wrap = set(
+            self.context.STATE.get(
+                "turn_successors_before_wrap",
+                [],
+            )
+        )
+
         self.context.clean_order()
         order = list(self.context.STATE["battle_order"])
+
+        ordered_ids = set(order)
 
         for combatant in sorted(
             eligible,
             key=self.context.admin_initiative_key,
         ):
-            if combatant["id"] not in order:
-                order.append(combatant["id"])
+            ident = combatant["id"]
+
+            if ident not in ordered_ids:
+                order.append(ident)
+                ordered_ids.add(ident)
 
         self.context.STATE["battle_order"] = order
+        wrapped = False
 
         if current_id in order:
             position = order.index(current_id)
-            next_id = order[(position + 1) % len(order)]
+            next_position = (position + 1) % len(order)
+            next_id = order[next_position]
+            wrapped = next_position == 0
         else:
             next_id = next(
                 (
                     ident
-                    for ident in self.context.STATE.get(
-                        "turn_successors", []
-                    )
+                    for ident in remembered_successors
                     if ident in eligible_ids
                 ),
-                order[0],
+                None,
             )
+
+            if next_id is not None:
+                wrapped = next_id not in before_wrap
+            else:
+                next_id = order[0]
+                wrapped = bool(remembered_successors)
+
+        battle_round = self.context.STATE.get("battle_round", 0)
+
+        if type(battle_round) is not int or battle_round < 1:
+            battle_round = 1
+        elif wrapped:
+            battle_round += 1
+
+        self.context.STATE["battle_round"] = battle_round
 
         self.context.clear_turns()
         self.context.STATE["turn_successors"] = []
+        self.context.STATE["turn_successors_before_wrap"] = []
 
         target = self.context.entity(next_id)
         target["in_turn"] = True

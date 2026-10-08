@@ -4,22 +4,37 @@
 
 body {
     margin: 0;
-    min-height: 100vh;
+    height: 100vh;
+    height: 100dvh;
     background: #080b14;
     color: #fff;
     font-family: system-ui, sans-serif;
     overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
 }
 
 #initiative {
-    height: 10vh;
+    flex: 0 0 auto;
     min-height: 54px;
+    max-height: 40vh;
+    max-height: 40dvh;
+    min-width: 0;
+
     background: #111827e8;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    align-content: flex-start;
+    justify-content: flex-start;
+
     gap: .6rem;
     padding: .5rem 1vw;
-    overflow-x: auto;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
     position: relative;
     z-index: 5;
 }
@@ -45,12 +60,16 @@ body {
 }
 
 #stage {
-    height: 90vh;
+    flex: 1 1 0;
+    min-height: 0;
+    min-width: 0;
+
     position: relative;
     display: grid;
     grid-auto-flow: row;
     gap: .7vh .7vw;
     padding: .7vh .7vw;
+
     overflow: hidden;
     align-items: stretch;
     justify-items: stretch;
@@ -59,10 +78,6 @@ body {
 
 #initiative[hidden] {
     display: none;
-}
-
-body:has(#initiative[hidden]) #stage {
-    height: 100vh;
 }
 
 .monster {
@@ -165,4 +180,33 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#initiative .token {
+    font-size: var(--battle-order-font-size, 16px);
+    line-height: 1.15;
+
+    flex: 0 0 auto;
+    min-width: 0;
+    max-width: 100%;
+
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+#initiative .round-indicator {
+    flex: 0 0 auto;
+
+    font-size: var(--battle-order-font-size, 16px);
+    line-height: 1.15;
+    font-weight: 800;
+
+    padding: .45rem .75rem;
+    border: 3px solid #fbbf24;
+    border-radius: 999px;
+
+    background: #111827;
+    color: #fbbf24;
+
+    white-space: nowrap;
 }
