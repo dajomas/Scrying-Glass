@@ -16,14 +16,25 @@ body {
 }
 
 #initiative {
-    height: 10vh;
+    flex: 0 0 auto;
     min-height: 54px;
+    max-height: 40vh;
+    max-height: 40dvh;
+    min-width: 0;
+
     background: #111827e8;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    align-content: flex-start;
+    justify-content: flex-start;
+
     gap: .6rem;
     padding: .5rem 1vw;
-    overflow-x: auto;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
     position: relative;
     z-index: 5;
 }
@@ -49,12 +60,16 @@ body {
 }
 
 #stage {
-    height: 90vh;
+    flex: 1 1 0;
+    min-height: 0;
+    min-width: 0;
+
     position: relative;
     display: grid;
     grid-auto-flow: row;
     gap: .7vh .7vw;
     padding: .7vh .7vw;
+
     overflow: hidden;
     align-items: stretch;
     justify-items: stretch;
@@ -63,10 +78,6 @@ body {
 
 #initiative[hidden] {
     display: none;
-}
-
-body:has(#initiative[hidden]) #stage {
-    height: 100vh;
 }
 
 .monster {
@@ -174,5 +185,11 @@ h1 {
 #initiative .token {
     font-size: var(--battle-order-font-size, 16px);
     line-height: 1.15;
-    flex-shrink: 0;
+
+    flex: 0 0 auto;
+    min-width: 0;
+    max-width: 100%;
+
+    white-space: normal;
+    overflow-wrap: anywhere;
 }
