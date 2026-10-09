@@ -1190,6 +1190,7 @@ function renderActivityLog(entries) {
             ${esc(entry.action || '')}
         </td>
         <td>${esc(entry.amount ?? '')}</td>
+        <td class="activity-log-details">${esc(entry.note ?? '')}</td>
         </tr>
     `)
         .join('');
@@ -1204,6 +1205,7 @@ function renderActivityLog(entries) {
         <th>Target state</th>
         <th>Action</th>
         <th>Amount</th>
+        <th>Details</th>
         </tr>
         ${rows}
     </table>

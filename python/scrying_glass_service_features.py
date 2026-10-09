@@ -6,6 +6,7 @@ import time
 import uuid
 from .scrying_glass_feature_rules import normalize_features,apply_hp,validate_effects
 from .scrying_glass_feature_storage import FeatureStorage
+from .scrying_glass_feature_logging import feature_changes
 
 TRACKED={'update_monster','update_character','bulk_monsters','bulk_characters','reset_one_combatant','reset_all','battle_start','battle_next','battle_end','apply_battle_actions','edit_features','add_effect','remove_effect','end_concentration','restore_checkpoint'}
 BOUNDARIES={'load_setup','new_setup','activate_campaign','delete_campaign','delete_setup','rename_setup','add_setup_to_campaign','clear_activity_log'}
@@ -68,7 +69,10 @@ class FeaturesService:
     async def edit_features(self,ident,body):
         allowed={'temp_hp','life_state','death_successes','death_failures','concentrating','hp_delta','absorb_temp'}
         if not isinstance(body,dict) or set(body)-allowed or not body: raise self.context.HTTPException(422,'Invalid feature fields')
-        target=self.target(ident);candidate=copy.deepcopy(target);delta=body.get('hp_delta')
+        target=self.target(ident)
+        before=copy.deepcopy(target)
+        candidate=copy.deepcopy(target)
+        delta=body.get('hp_delta')
         if delta is not None and (type(delta) is not int or not -99999<=delta<=99999): raise self.context.HTTPException(422,'Invalid HP delta')
         if 'absorb_temp' in body and type(body['absorb_temp']) is not bool: raise self.context.HTTPException(422,'absorb_temp must be boolean')
         if delta is not None: apply_hp(candidate,delta,absorb=body.get('absorb_temp',True))
@@ -91,7 +95,8 @@ class FeaturesService:
         if not target['alive'] or ('concentrating' in body and not target['concentrating']): self.clear_concentration(ident)
         self.context.clean_order()
         if target.get('active') and target.get('alive'): self.context.insert_into_battle_order(target)
-        self.log('combat-features',target,abs(delta) if delta is not None else None,json.dumps(body,sort_keys=True))
+        for action,amount,note in feature_changes(before,target,delta):
+            self.log(action,target,amount,note=note)
         await self.persist();return target
     async def add_effect(self,ident,body):
         if not isinstance(body,dict) or set(body)-{'name','source_id','notes','public','concentration','timing','turns','anchor_id'}: raise self.context.HTTPException(422,'Invalid effect fields')
@@ -104,7 +109,10 @@ class FeaturesService:
         if effect['concentration']:
             source=self.target(effect['source_id'])
             if not source['alive']: raise self.context.HTTPException(422,'Concentration source must be standing')
+            was_concentrating=source.get('concentrating',False)
             source['concentrating']=True
+            if not was_concentrating:
+                self.log('concentration-started',source,note='Concentration started for effect: '+effect['name'])
         target['effects'].append(effect);self.log('effect-added',target,note=effect['name'])
         await self.persist();return effect
     async def remove_effect(self,ident,effect_id):
@@ -117,7 +125,12 @@ class FeaturesService:
         if source: source['concentrating']=False
         for item in self.context.entities(): item['effects']=[e for e in item.get('effects',[]) if not(e.get('concentration') and e.get('source_id')==source_id)]
     async def end_concentration(self,ident):
-        self.target(ident);self.clear_concentration(ident);self.log('concentration-ended',self.context.entity(ident))
+        target=self.target(ident)
+        names=[e['name'] for x in self.context.entities() for e in x.get('effects',[]) if e.get('concentration') and e.get('source_id')==ident]
+        self.clear_concentration(ident)
+        note='Concentration ended'
+        if names: note+='; removed linked effects: '+', '.join(dict.fromkeys(names))
+        self.log('concentration-ended',target,note=note)
         await self.persist();return {'ended':ident}
     def expire(self,anchor_id,timing):
         if not anchor_id: return

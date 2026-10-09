@@ -51,6 +51,7 @@ class AdminActivityMixin:
             "target_combatant_state",
             "action",
             "amount",
+            "note",
         ]
 
         def spreadsheet_safe(value: Any) -> Any:
