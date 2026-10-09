@@ -1,5 +1,7 @@
-echo "Create git archive"
-git archive --format=zip --output=scrying-glass-source.zip features/development
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+echo "Create git archive for branch ${BRANCH}"
+git archive --format=zip --output=scrying-glass-source.zip ${BRANCH}
 
 echo "Convert zip file to base64"
 python3 - <<'PY'
