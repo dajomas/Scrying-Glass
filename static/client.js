@@ -116,13 +116,9 @@ function effectBadges(combatant) {
     return (combatant.effects||[]).map(e=>`<span class="effect-badge">${esc(e.name)}</span>`).join(' ');
 }
 function renderClientCampaign(state) {
-    const element=document.querySelector('#clientCampaign');
-    if(!element)return;
-    const name=state?.campaign?.name;
-    element.textContent=name?'Campaign: '+name:'No active campaign';
-    element.title=name||'';
+    const element=document.querySelector('#clientCampaign');if(!element)return;
+    const name=state?.campaign?.name;element.textContent=name?'Campaign: '+name:'No active campaign';element.title=name||'';
 }
-
 function render(state) {
     renderClientCampaign(state);
     applyBattleOrderFontSize(state.display);
@@ -295,80 +291,87 @@ function render(state) {
 }
 
 function connectDisplay() {
-    const websocket = new WebSocket(
-        `${location.protocol === 'https:' ? 'wss://' : 'ws://'}${location.host}/ws`,
-    );
-
-    let reloadTimer = null;
-    let lastSeen=Date.now(),lastRevision=null;
+    let socket=null,retryTimer=null,attempt=0,stopped=false;
+    let lastSeen=Date.now(),lastRevision=null,lastSnapshot=null,resyncPending=false;
     const indicator=document.querySelector('#displaySync');
-    function status(text){if(indicator)indicator.textContent=text;}
-    status('Connecting…');
-    const heartbeatTimer=setInterval(()=>{
-        if(websocket.readyState===WebSocket.OPEN)websocket.send(JSON.stringify({type:'ping'}));
-        if(Date.now()-lastSeen>30000)status('Disconnected / stale display');
-        if(Date.now()-lastSeen>45000)websocket.close();
-    },10000);
-
-    function scheduleReload() {
-        if (reloadTimer !== null) {
-            return;
-        }
-
-        reloadTimer = setTimeout(() => {
-            location.reload();
-        }, 1500);
+    const status=text=>{if(indicator)indicator.textContent=text;};
+    function send(message) {
+        if(socket?.readyState===WebSocket.OPEN)socket.send(JSON.stringify(message));
     }
-
-    websocket.onmessage = event => {
-        let message;
-
+    function resync() {
+        if(!resyncPending&&socket?.readyState===WebSocket.OPEN){resyncPending=true;send({type:'resync'});}
+    }
+    function scheduleReconnect() {
+        if(stopped||retryTimer!==null)return;
+        const delay=Math.min(30000,1000*2**Math.min(attempt++,5));
+        status('Reconnecting… (last display retained)');
+        retryTimer=setTimeout(()=>{retryTimer=null;open();},delay+Math.floor(Math.random()*250));
+    }
+    async function checkSignIn() {
         try {
-            message = JSON.parse(event.data);
-        } catch (error) {
-            console.error(
-                'Ignoring invalid display WebSocket JSON:',
-                error,
-            );
-            return;
-        }
-
-        lastSeen=Date.now();
-        if(message?.type==='heartbeat') {
-            status(message.revision===lastRevision?'Live · checked '+new Date().toLocaleTimeString():'Waiting for latest state');return;
-        }
-        if (
-            !message ||
-            message.type !== 'state' ||
-            !message.state
-        ) {
-            return;
-        }
-
+            const response=await fetch('/api/state',{cache:'no-store'});
+            if(response.status===401){stopped=true;location.assign('/login');return false;}
+        }catch(error){console.debug('Unable to check display session',error);}
+        return true;
+    }
+    function open() {
+        if(stopped||socket?.readyState===WebSocket.OPEN||socket?.readyState===WebSocket.CONNECTING)return;
+        status(lastSnapshot===null?'Connecting…':'Reconnecting… (last display retained)');
         try {
-            render(message.state);
-            lastRevision=message.revision;
-            status('Live · updated '+new Date().toLocaleTimeString());
-            websocket.send(JSON.stringify({type:'ack',revision:message.revision}));
-        } catch (error) {
-            console.error(
-                'Unable to render display state:',
-                error,
-            );
-
-            websocket.close();
-            scheduleReload();
+            socket=new WebSocket(`${location.protocol==='https:'?'wss://':'ws://'}${location.host}/ws`);
+        }catch(error){console.warn('Unable to open display WebSocket',error);scheduleReconnect();return;}
+        const current=socket;
+        resyncPending=false;
+        current.onopen=()=>{if(socket===current){lastSeen=Date.now();status('Connected · synchronizing…');}};
+        current.onmessage=event=>{
+            if(socket!==current||stopped)return;
+            let message;
+            try{message=JSON.parse(event.data);}catch(error){console.warn('Invalid display WebSocket JSON',error);return;}
+            lastSeen=Date.now();
+            if(message?.type==='heartbeat') {
+                send({type:'pong',revision:lastRevision});
+                if(message.revision!==lastRevision){status('Connected · synchronizing…');resync();}
+                else status('Live · checked '+new Date().toLocaleTimeString());
+                return;
+            }
+            if(message?.type!=='state'||!message.state)return;
+            try {
+                const snapshot=JSON.stringify(message.state);
+                // A reconnect must not rebuild an unchanged stage or reload its images.
+                if(snapshot!==lastSnapshot){render(message.state);lastSnapshot=snapshot;}
+                lastRevision=message.revision;resyncPending=false;attempt=0;
+                status('Live · updated '+new Date().toLocaleTimeString());
+                send({type:'ack',revision:lastRevision});
+            }catch(error){console.error('Display state render failed',error);status('Display update failed; retained last screen');}
+        };
+        current.onclose=async event=>{
+            if(socket!==current||stopped)return;
+            console.info('Display WebSocket closed',{code:event.code,reason:event.reason,clean:event.wasClean});
+            status('Disconnected · last display retained');
+            if(event.code===1008&&!(await checkSignIn()))return;
+            if(socket!==current||stopped)return;
+            scheduleReconnect();
+        };
+        current.onerror=()=>{
+            if(socket===current)console.warn('Display WebSocket transport error; waiting for close/reconnect');
+        };
+    }
+    function resume() {
+        if(stopped||document.hidden)return;
+        if(socket?.readyState===WebSocket.OPEN){send({type:'ping'});resync();}
+        else if(socket?.readyState!==WebSocket.CONNECTING){
+            if(retryTimer!==null){clearTimeout(retryTimer);retryTimer=null;}open();
         }
-    };
-
-    websocket.onclose=()=>{clearInterval(heartbeatTimer);status("Reconnecting…");scheduleReload();};
-
-    websocket.onerror = () => {
-        websocket.close();
-        scheduleReload();
-    };
-
-    return websocket;
+    }
+    const statusTimer=setInterval(()=>{
+        // A late JS timer may label the screen stale, but must not close a healthy socket.
+        if(!stopped&&!document.hidden&&socket?.readyState===WebSocket.OPEN&&Date.now()-lastSeen>45000)
+            status('Waiting for server · last display retained');
+    },10000);
+    document.addEventListener('visibilitychange',resume);
+    window.addEventListener('online',resume);
+    open();
+    return {resync,close(){stopped=true;clearInterval(statusTimer);if(retryTimer!==null)clearTimeout(retryTimer);document.removeEventListener('visibilitychange',resume);window.removeEventListener('online',resume);socket?.close();}};
 }
 
 const websocket = connectDisplay();
