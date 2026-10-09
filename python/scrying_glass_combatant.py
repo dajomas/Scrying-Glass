@@ -7,15 +7,11 @@ def combatant_state(combatant: dict[str, Any] | None) -> str:
     if combatant is None:
         return "unknown"
 
-    return "alive" if combatant.get("alive", True) else "dead"
+    return combatant.get("life_state", "alive" if combatant.get("alive", True) else "dead")
 
 def update_alive_state(combatant: dict[str, Any]) -> None:
-    """Update alive state."""
-    combatant["alive"] = combatant.get("hp", 0) > 0
-
-    if not combatant["alive"]:
-        combatant["visible"] = True
-        combatant["in_turn"] = False
+    from .scrying_glass_feature_rules import sync_health
+    sync_health(combatant)
 
 def reset_entity(x: dict[str, Any]) -> None:
     """Restore reset values and remove the combatant from battle."""
@@ -34,6 +30,10 @@ def reset_entity(x: dict[str, Any]) -> None:
         x["hp"] = x["max_hp"]
 
     x["alive"] = x["hp"] > 0
+    x['life_state'] = 'standing' if x['alive'] else 'down'
+    x['temp_hp'] = x['death_successes'] = x['death_failures'] = 0
+    x['concentrating'] = False
+    x['effects'] = []
 
 def reset_imported_monster(source: dict[str, Any]) -> dict[str, Any]:
     """Reset imported monster."""
@@ -43,6 +43,10 @@ def reset_imported_monster(source: dict[str, Any]) -> dict[str, Any]:
     # Keep the source setup's current HP and current Max HP.
     # Do not overwrite hp with original_hp during setup import.
     item['alive'] = item.get('hp', 0) > 0
+    item['life_state'] = 'standing' if item['alive'] else 'down'
+    item['concentrating'] = False
+    item['effects'] = []
+    item['temp_hp'] = item['death_successes'] = item['death_failures'] = 0
 
     item['initiative'] = item.get('original_initiative')
     item['active'] = False

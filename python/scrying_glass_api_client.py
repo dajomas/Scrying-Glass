@@ -142,8 +142,10 @@ class ClientAPI:
                 if not self.context.auth_session(token):
                     await websocket.close(code=1008)
                     return
+                revision = self.context.features.store.revision()
                 initial_message = self.context.json.dumps({
                     "type": "state",
+                    "revision": revision,
                     "state": self.context.display_state(),
                 })
 
@@ -157,9 +159,29 @@ class ClientAPI:
                     await websocket.close(code=1008)
                     return
                 self.context.SOCKETS.add(websocket)
+                import time
+                self.context.features.displays[websocket]={'username':session['username'],'revision':None,'sent':revision,'seen':time.time()}
 
             while True:
-                await websocket.receive_text()
+                if not self.context.auth_session(token):
+                    await websocket.close(code=1008);return
+                try:
+                    text=await asyncio.wait_for(websocket.receive_text(),timeout=15)
+                    if len(text)>1024:
+                        await websocket.close(code=1008);return
+                    try: message=self.context.json.loads(text)
+                    except ValueError: message={}
+                    data=self.context.features.displays.get(websocket)
+                    if data and isinstance(message,dict):
+                        data['seen']=time.time();ack=message.get('revision')
+                        if message.get('type')=='ack' and type(ack) is int and 0<=ack<=data['sent']:
+                            data['revision']=ack
+                except TimeoutError: pass
+                data=self.context.features.displays.get(websocket)
+                if not data or time.time()-data['seen']>45 or not self.context.auth_session(token):
+                    await websocket.close(code=1008);return
+                async with broadcast_lock:
+                    await asyncio.wait_for(websocket.send_text(self.context.json.dumps({'type':'heartbeat','revision':self.context.features.store.revision()})),timeout=2)
 
         except WebSocketDisconnect:
             pass
@@ -179,6 +201,7 @@ class ClientAPI:
 
         finally:
             self.context.SOCKETS.discard(websocket)
+            self.context.features.displays.pop(websocket,None)
 
             if accepted:
                 try:

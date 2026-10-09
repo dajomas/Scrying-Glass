@@ -42,16 +42,30 @@ def transactional_handler(context, handler, *, role=None, cookie_name=None):
     @wraps(handler)
     async def transaction(*args, **kwargs):
         original = copy.deepcopy(context.STATE)
+        features = getattr(context, 'features', None)
+        campaign_before = context.active_campaign() if features else None
+        context._bundle_files = []
         context._defer_database_broadcast = True
         context._database_broadcast_pending = False
         try:
             with context.STORAGE.transaction():
                 result = await handler(*args, **kwargs)
+                if features:
+                    features.reconcile()
+                    if context.STATE != original:
+                        context.save_active_campaign_characters()
+                        context.save_active_setup_monsters()
+                        context.save_state()
+                    features.after_transaction(handler.__name__,original,campaign_before)
             pending = context._database_broadcast_pending
         except BaseException:
             context.STATE = original
+            for path in getattr(context,'_bundle_files',[]):
+                try: path.unlink(missing_ok=True)
+                except OSError: pass
             raise
         finally:
+            context._bundle_files = []
             context._defer_database_broadcast = False
             context._database_broadcast_pending = False
         if pending:

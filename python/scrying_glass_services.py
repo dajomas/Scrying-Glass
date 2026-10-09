@@ -90,4 +90,7 @@ def install_services(context: Any) -> dict[str, Any]:
     context.monster_changed = service.monster_changed
     context.character_changed = service.character_changed
     context.combatants_changed = service.combatants_changed
+    from .scrying_glass_service_features import FeaturesService
+    context.features = FeaturesService(context)
+    services["features"] = context.features
     return services

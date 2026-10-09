@@ -9,6 +9,7 @@ CLIENT_HTML = r'''<!doctype html>
 </head>
 <body>
   <header class="client-toolbar" aria-label="Display account controls">
+    <span id="displaySync" role="status" aria-live="polite">Connecting…</span>
     <form action="/logout" method="post">
       <button id="clientLogout" type="submit">Log out</button>
     </form>

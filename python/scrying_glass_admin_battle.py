@@ -38,6 +38,8 @@ class AdminBattleMixin:
 
     async def battle_start(self, payload: BattleStart):
         """Battle start."""
+        if getattr(self.context,'features',None):
+            self.context.features.store.save_snapshot(self.context.active_campaign(),self.context.STATE,'checkpoint','Before battle')
         self.context.begin_battle(payload.order)
         self.context.sort_admin_by_initiative()
 
@@ -48,7 +50,13 @@ class AdminBattleMixin:
 
     async def battle_next(self):
         """Battle next."""
+        previous = self.context.active_combatant()
+        remembered = self.context.STATE.get('turn_successors',[])
+        if getattr(self.context,'features',None):
+            self.context.features.expire(previous['id'] if previous else (remembered[-1] if remembered else None),'end')
         current = self.context.advance_turn()
+        if getattr(self.context,'features',None) and current:
+            self.context.features.expire(current['id'],'start')
 
         self.context.save_active_campaign_characters()
         await self.context.combatants_changed(monsters=True, characters=True)
@@ -91,6 +99,8 @@ class AdminBattleMixin:
                     f"Target {target['name']} must be active",
                 )
 
+            if row.action=='heal' and target.get('life_state')=='dead':
+                raise self.context.HTTPException(400,'Explicitly recover a dead combatant before healing')
             if row.action != "heal" and not target.get("alive", True):
                 raise self.context.HTTPException(
                     400,

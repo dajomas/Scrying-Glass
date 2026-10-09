@@ -330,7 +330,8 @@ class AdminMonstersMixin:
         if hp_delta is not None:
             candidate["hp"] += hp_delta
 
-        candidate["alive"] = candidate["hp"] > 0
+        from .scrying_glass_feature_rules import sync_health
+        sync_health(candidate)
 
         if not candidate["alive"]:
             candidate["visible"] = True

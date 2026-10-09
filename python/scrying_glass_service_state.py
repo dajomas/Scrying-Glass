@@ -313,6 +313,8 @@ class StateService:
                             f"{location}.{field} must be a boolean"
                         )
 
+                from .scrying_glass_feature_rules import normalize_features
+                normalize_features(item)
                 if item["in_turn"]:
                     if not item["active"] or not item["alive"]:
                         raise ValueError(
@@ -364,7 +366,8 @@ class StateService:
         )
 
         def display_character(item: dict[str, Any]) -> dict[str, Any]:
-            return {key: item.get(key) for key in common_fields}
+            from .scrying_glass_feature_rules import public_features
+            return {**{key: item.get(key) for key in common_fields}, **public_features(item)}
 
         def display_monster(item: dict[str, Any]) -> dict[str, Any]:
             result = display_character(item)
@@ -384,6 +387,7 @@ class StateService:
             if result["show_hp"]:
                 result["hp"] = item.get("hp")
                 result["max_hp"] = item.get("max_hp")
+                result["temp_hp"] = item.get("temp_hp",0)
 
             if result["show_initiative"]:
                 result["initiative"] = item.get("initiative")

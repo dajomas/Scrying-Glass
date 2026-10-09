@@ -1,0 +1,85 @@
+/* Encounter tools layout v2. Scoped so existing admin panes remain unchanged. */
+#encounterFeatures {border:1px solid #475569;padding:1.25rem;}
+#encounterFeatures *, #encounterFeatures *::before, #encounterFeatures *::after {box-sizing:border-box;}
+#encounterFeatures [hidden] {display:none !important;}
+#encounterFeatures h2 {margin:0;font-size:1.3rem;}
+#encounterFeatures h3 {margin:0 0 .75rem;font-size:1rem;color:#f1f5f9;}
+#encounterFeatures .et-header {display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding-bottom:1rem;border-bottom:1px solid #475569;}
+#encounterFeatures .et-intro {margin:.45rem 0 0;color:#cbd5e1;font-size:.9rem;line-height:1.5;max-width:44rem;}
+#encounterFeatures .et-eyebrow {font-size:.73rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#94a3b8;}
+#encounterFeatures .et-connection {display:grid;gap:.35rem;flex:0 1 22rem;padding:.65rem .8rem;background:#111827;border:1px solid #334155;border-radius:8px;min-width:0;}
+#encounterFeatures #displayConnections {font-size:.85rem;line-height:1.4;overflow-wrap:anywhere;}
+#encounterFeatures .et-quick-actions {display:grid;grid-template-columns:11rem minmax(0,1fr);align-items:center;gap:.75rem;margin:1rem 0;}
+#encounterFeatures .et-undo {width:100%;text-align:left;white-space:normal;overflow-wrap:anywhere;}
+#encounterFeatures .et-notice {margin:.65rem 0;padding:.7rem .85rem;border:1px solid #475569;border-radius:6px;background:#111827;font-size:.9rem;min-height:0;overflow-wrap:anywhere;}
+#encounterFeatures .et-notice:empty {display:none;}
+#encounterFeatures .et-warning {margin:.75rem 0;padding:.8rem;border:1px solid #b45309;border-left:4px solid #f59e0b;border-radius:6px;color:#fde68a;background:#422006;line-height:1.5;}
+#encounterFeatures .et-target {padding:1rem;background:#111827;border:1px solid #475569;border-radius:8px;margin:1rem 0;}
+#encounterFeatures .et-target-controls {display:flex;align-items:flex-end;gap:.75rem;flex-wrap:wrap;}
+#encounterFeatures .et-target-field {flex:1 1 20rem;min-width:0;}
+#encounterFeatures .et-status {margin:.8rem 0 0;color:#cbd5e1;font-size:.9rem;line-height:1.6;overflow-wrap:anywhere;}
+#encounterFeatures .et-panels {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;align-items:start;}
+#encounterFeatures .et-panel {margin:0;min-width:0;border:1px solid #475569;border-radius:8px;background:#172033;overflow:hidden;}
+#encounterFeatures .et-panel > summary {display:flex;align-items:center;gap:.75rem;padding:1rem;cursor:pointer;list-style:none;min-height:5.25rem;}
+#encounterFeatures .et-panel > summary::-webkit-details-marker {display:none;}
+#encounterFeatures .et-panel > summary::before {content:'+';display:grid;place-items:center;flex:0 0 1.65rem;height:1.65rem;border-radius:5px;background:#334155;color:#e2e8f0;font-size:1.15rem;}
+#encounterFeatures .et-panel[open] > summary::before {content:'−';}
+#encounterFeatures .et-panel > summary:hover {background:#253249;}
+#encounterFeatures .et-panel > summary:focus-visible {outline:2px solid #93c5fd;outline-offset:-3px;}
+#encounterFeatures .et-summary-text {display:grid;gap:.3rem;min-width:0;}
+#encounterFeatures .et-panel-title {font-size:1rem;font-weight:700;line-height:1.35;color:#f8fafc;}
+#encounterFeatures .et-panel-description {font-size:.8rem;color:#b8c5d9;line-height:1.45;}
+#encounterFeatures .et-panel[open] > summary {border-bottom:1px solid #475569;}
+#encounterFeatures .et-health-panel {border-top:3px solid #34d399;}
+#encounterFeatures .et-effects-panel {border-top:3px solid #a78bfa;}
+#encounterFeatures .et-recovery-panel {border-top:3px solid #60a5fa;}
+#encounterFeatures .et-backup-panel {border-top:3px solid #fbbf24;}
+#encounterFeatures .et-panel-body {display:grid;gap:1rem;padding:1rem;}
+#encounterFeatures .et-subgroup {min-width:0;padding-bottom:1rem;border-bottom:1px solid #334155;}
+#encounterFeatures .et-subgroup:last-child {padding-bottom:0;border-bottom:0;}
+#encounterFeatures .et-field {display:grid;gap:.4rem;min-width:0;font-size:.85rem;color:#dbeafe;}
+#encounterFeatures .et-field > span {font-weight:600;line-height:1.3;}
+#encounterFeatures input:not([type="checkbox"]), #encounterFeatures select, #encounterFeatures textarea {width:100%;min-width:0;max-width:100%;margin:0;padding:.65rem .75rem;border:1px solid #64748b;border-radius:6px;background:#0f172a;color:#f1f5f9;font:inherit;line-height:1.4;}
+#encounterFeatures textarea {display:block;resize:vertical;min-height:5.5rem;}
+#encounterFeatures input::placeholder, #encounterFeatures textarea::placeholder {color:#94a3b8;}
+#encounterFeatures .et-field + button {margin-top:.75rem;}
+#encounterFeatures .et-control-action {display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.75rem;align-items:end;}
+#encounterFeatures .et-save-fields, #encounterFeatures .et-duration-fields {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;}
+#encounterFeatures .et-save-fields + button {margin-top:.75rem;}
+#encounterFeatures .et-help {margin:.65rem 0 0;color:#b8c5d9;font-size:.8rem;line-height:1.5;}
+#encounterFeatures .et-panel-body > .et-help {margin:0;}
+#encounterFeatures .et-check {display:flex;align-items:flex-start;gap:.6rem;margin-top:.75rem;color:#e2e8f0;font-size:.85rem;line-height:1.45;}
+#encounterFeatures .et-check input {flex:0 0 auto;width:1rem;height:1rem;margin:.1rem 0 0;accent-color:#60a5fa;}
+#encounterFeatures .et-check-group {padding:.1rem .75rem .75rem;background:#111827;border-radius:6px;}
+#encounterFeatures .et-buttons {display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.75rem;}
+#encounterFeatures button {margin:0;min-height:2.6rem;padding:.65rem .85rem;font:inherit;font-size:.85rem;font-weight:600;line-height:1.4;max-width:100%;white-space:normal;}
+#encounterFeatures button:disabled {cursor:not-allowed;background:#334155;border-color:#475569;color:#94a3b8;opacity:.8;}
+#encounterFeatures .et-secondary {background:#334155;border-color:#64748b;color:#e2e8f0;}
+#encounterFeatures .et-danger-outline {background:#281b25;border-color:#b75c67;color:#fecdd3;}
+#encounterFeatures button:not(:disabled):hover {filter:brightness(1.15);}
+#encounterFeatures button:focus-visible, #encounterFeatures input:focus-visible, #encounterFeatures select:focus-visible, #encounterFeatures textarea:focus-visible {outline:2px solid #93c5fd;outline-offset:2px;}
+#encounterFeatures .et-effect-form {display:grid;gap:1rem;min-width:0;}
+#encounterFeatures .et-effect-form h3 {margin:0;}
+#encounterFeatures .et-required {font-size:.75rem;color:#cbd5e1;font-weight:400;}
+#encounterFeatures .et-fieldset {display:grid;gap:.8rem;min-width:0;margin:0;padding:.9rem;border:1px solid #475569;border-radius:6px;}
+#encounterFeatures .et-fieldset legend {padding:0 .4rem;color:#dbeafe;font-size:.85rem;font-weight:600;}
+#encounterFeatures .et-fieldset .et-help {margin:0;}
+#encounterFeatures .et-submit {justify-self:start;}
+#encounterFeatures #featureEffects {list-style:none;padding:0;margin:0;display:grid;gap:.6rem;}
+#encounterFeatures #featureEffects li {display:flex;justify-content:space-between;align-items:flex-start;gap:.7rem;margin:0;padding:.75rem;background:#111827;border:1px solid #334155;border-radius:6px;overflow-wrap:anywhere;line-height:1.5;font-size:.85rem;}
+#encounterFeatures #featureEffects li > span {min-width:0;}
+#encounterFeatures #featureEffects button {flex:0 0 auto;background:#334155;min-height:2rem;padding:.4rem .6rem;font-size:.75rem;}
+#encounterFeatures input[type="file"] {font-size:.8rem;}
+#encounterFeatures input[type="file"]::file-selector-button {padding:.45rem .6rem;border:1px solid #64748b;border-radius:4px;background:#334155;color:#f1f5f9;cursor:pointer;margin-right:.6rem;}
+@media (max-width:850px) {
+  #encounterFeatures .et-panels {grid-template-columns:minmax(0,1fr);}
+  #encounterFeatures .et-header {flex-direction:column;}
+  #encounterFeatures .et-connection {flex:none;width:100%;}
+}
+@media (max-width:480px) {
+  #encounterFeatures {padding:.8rem;}
+  #encounterFeatures .et-quick-actions {grid-template-columns:minmax(0,1fr);gap:.4rem;}
+  #encounterFeatures .et-control-action, #encounterFeatures .et-save-fields, #encounterFeatures .et-duration-fields {grid-template-columns:minmax(0,1fr);}
+  #encounterFeatures .et-control-action button {justify-self:start;}
+  #encounterFeatures #featureEffects li {flex-direction:column;}
+}

@@ -70,9 +70,14 @@ class NotificationsService:
 
             message = self.context.json.dumps({
                 "type": "state",
+                "revision": self.context.features.store.revision() if getattr(self.context,"features",None) else 0,
                 "state": self.context.display_state(),
             })
 
+            if getattr(self.context,'features',None):
+                for ws in sockets:
+                    if ws in self.context.features.displays:
+                        self.context.features.displays[ws]['sent'] = self.context.features.store.revision()
             await asyncio.gather(
                 *(
                     send_one(websocket, message)

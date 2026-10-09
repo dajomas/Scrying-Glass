@@ -112,6 +112,10 @@ function renderBattleRound(state) {
     initiative.hidden = false;
 }
 
+function effectBadges(combatant) {
+    return (combatant.effects||[]).map(e=>`<span class="effect-badge">${esc(e.name)}</span>`).join(' ');
+}
+
 function render(state) {
     applyBattleOrderFontSize(state.display);
 
@@ -157,7 +161,7 @@ function render(state) {
     }
 
     initiative.innerHTML = initiativeCombatants.map(combatant =>
-        `<span class="token ${combatant.alive ? '' : 'dead'} ${combatant.in_turn ? 'turn' : ''}"
+        `<span class="token ${combatant.life_state==='dead'?'dead':(!combatant.alive?'down':'')} ${combatant.in_turn ? 'turn' : ''}"
         style="background:${esc(combatant.color)};color:${readableText(combatant.color)}">
         ${esc(displayCombatantName(combatant))}
     </span>`
@@ -166,7 +170,7 @@ function render(state) {
     renderBattleRound(state);
 
     const activeMonsters = state.monsters.filter(monster =>
-        monster.active && monster.alive,
+        monster.active && (monster.alive || ['down','stable'].includes(monster.life_state)),
     );
 
     const stage = document.querySelector('#stage');
@@ -240,6 +244,7 @@ function render(state) {
         }
 
         card.classList.remove("exit-top", "exit-bottom");
+        card.classList.toggle("down",!monster.alive);
 
         const row = Math.floor(index / columns) + 1;
         const column = (index % columns) + 1;
@@ -259,7 +264,7 @@ function render(state) {
         }
 
         if (monster.show_hp) {
-            stats.push(`HP ${monster.hp}/${monster.max_hp}`);
+            stats.push(`HP ${monster.hp}/${monster.max_hp}${monster.temp_hp ? " + " + monster.temp_hp + " temporary" : ""}`);
         }
 
         if (monster.show_initiative && monster.initiative !== null) {
@@ -272,6 +277,7 @@ function render(state) {
         <h1>${esc(displayCombatantName(monster))}${monster.in_turn ? ' ◀' : ''}</h1>
         <div class="type">${esc(monster.monster_species)}</div>
         <div class="stats">${stats.join(' · ')}</div>
+        <div>${!monster.alive?esc(monster.life_state||"down"):""} ${effectBadges(monster)}</div>
         </div>
     `;
 
@@ -286,6 +292,15 @@ function connectDisplay() {
     );
 
     let reloadTimer = null;
+    let lastSeen=Date.now(),lastRevision=null;
+    const indicator=document.querySelector('#displaySync');
+    function status(text) {if(indicator) indicator.textContent=text;}
+    status('Connecting…');
+    const heartbeatTimer=setInterval(()=>{
+        if(websocket.readyState===WebSocket.OPEN) websocket.send(JSON.stringify({type:'ping'}));
+        if(Date.now()-lastSeen>30000) status('Disconnected / stale display');
+        if(Date.now()-lastSeen>45000) websocket.close();
+    },10000);
 
     function scheduleReload() {
         if (reloadTimer !== null) {
@@ -320,6 +335,9 @@ function connectDisplay() {
 
         try {
             render(message.state);
+            lastRevision=message.revision;
+            status('Live · updated '+new Date().toLocaleTimeString());
+            websocket.send(JSON.stringify({type:'ack',revision:message.revision}));
         } catch (error) {
             console.error(
                 'Unable to render display state:',
@@ -331,7 +349,7 @@ function connectDisplay() {
         }
     };
 
-    websocket.onclose = scheduleReload;
+    websocket.onclose=()=>{clearInterval(heartbeatTimer);status("Reconnecting…");scheduleReload();};
 
     websocket.onerror = () => {
         websocket.close();

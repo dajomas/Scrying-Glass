@@ -207,7 +207,7 @@ class MigrationTests(unittest.TestCase):
     def check_upgrade(self,version):
         snap,state=old_database(self.path,version);c=context(self.directory)
         try:
-            db=c.STORAGE;ident=db.get_value('active_campaign');self.assertEqual(db.connection.execute('PRAGMA user_version').fetchone()[0],4)
+            db=c.STORAGE;ident=db.get_value('active_campaign');self.assertEqual(db.connection.execute('PRAGMA user_version').fetchone()[0],5)
             if version==2:self.assertEqual(ident,'42')
             self.assertEqual(db.load_characters(ident)[0]['id'],'c');self.assertEqual(db.load_setup(ident,'fight')['monsters'],snap['monsters'])
             self.assertEqual(db.connection.execute('SELECT updated_at FROM battle_setups').fetchone()[0],1234.5)

@@ -48,3 +48,145 @@
         <span id="battleInfo"></span>
       </div>
     </section>
+<section id="encounterFeatures" aria-labelledby="encounterToolsTitle">
+  <header class="et-header">
+    <div>
+      <h2 id="encounterToolsTitle">Encounter tools</h2>
+      <p class="et-intro">Recovery, combatant status and effects — separate from the battle controls above.</p>
+    </div>
+    <div class="et-connection"><span class="et-eyebrow">Viewer connection</span><span id="displayConnections" role="status">Checking displays…</span></div>
+  </header>
+
+  <div class="et-quick-actions">
+    <span class="et-eyebrow">Last encounter change</span>
+    <button id="featureUndo" class="et-secondary et-undo" type="button" disabled>Nothing to undo</button>
+  </div>
+  <p id="featureNotice" class="et-notice" role="status" aria-live="polite"></p>
+  <p id="downedReminder" class="et-warning" hidden></p>
+
+  <div class="et-target">
+    <div class="et-target-controls">
+      <label class="et-field et-target-field" for="featureTarget"><span>Selected combatant</span><select id="featureTarget" aria-describedby="featureHealth"></select></label>
+      <button id="featureRefresh" class="et-secondary" type="button">Refresh status</button>
+    </div>
+    <p id="featureHealth" class="et-status" aria-live="polite">Select a combatant to manage health and effects.</p>
+  </div>
+
+  <div class="et-panels">
+    <details class="et-panel et-health-panel">
+      <summary><span class="et-summary-text"><span class="et-panel-title">Health &amp; survival</span><span class="et-panel-description">Temporary HP, damage, recovery and death saves</span></span></summary>
+      <div class="et-panel-body">
+        <p class="et-help">These controls affect the selected combatant above.</p>
+        <div class="et-subgroup">
+          <h3>Temporary hit points</h3>
+          <div class="et-control-action">
+            <label class="et-field" for="featureTempHp"><span>Temporary HP pool</span><input id="featureTempHp" type="number" min="0" max="99999" value="0" aria-describedby="tempHpHelp"></label>
+            <button id="setTempHp" type="button">Set pool</button>
+          </div>
+          <p id="tempHpHelp" class="et-help">Replaces the current pool; it does not add to it. Enter 0 to clear.</p>
+        </div>
+        <div class="et-subgroup">
+          <h3>Damage or healing</h3>
+          <div class="et-control-action">
+            <label class="et-field" for="featureHpDelta"><span>HP change</span><input id="featureHpDelta" type="number" min="-99999" max="99999" value="0" aria-describedby="hpChangeHelp"></label>
+            <button id="applyFeatureHp" type="button">Preview &amp; apply</button>
+          </div>
+          <p id="hpChangeHelp" class="et-help">Negative values cause damage; positive values heal.</p>
+          <label class="et-check" for="featureAbsorbTemp"><input id="featureAbsorbTemp" type="checkbox" checked><span>Absorb damage with temporary HP first</span></label>
+        </div>
+        <div class="et-subgroup">
+          <h3>Life state</h3>
+          <div class="et-control-action">
+            <label class="et-field" for="featureLifeState"><span>New state</span><select id="featureLifeState"><option value="standing">Standing / recover</option><option value="down">Down</option><option value="stable">Stable</option><option value="dead">Dead</option></select></label>
+            <button id="setLifeState" type="button">Apply state</button>
+          </div>
+          <p class="et-help">Recovering sets HP to at least 1. Marking dead requires confirmation.</p>
+        </div>
+        <div class="et-subgroup">
+          <h3>Death saving throws</h3>
+          <div class="et-save-fields">
+            <label class="et-field" for="deathSuccesses"><span>Successes</span><input id="deathSuccesses" type="number" min="0" max="3" value="0"></label>
+            <label class="et-field" for="deathFailures"><span>Failures</span><input id="deathFailures" type="number" min="0" max="3" value="0"></label>
+          </div>
+          <button id="setDeathSaves" type="button">Save counters</button>
+          <p class="et-help">For downed or stable combatants. Three successes stabilize; three failures mark dead.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="et-panel et-effects-panel">
+      <summary><span class="et-summary-text"><span class="et-panel-title">Conditions &amp; concentration</span><span class="et-panel-description">Review effects, add conditions and manage their source</span></span></summary>
+      <div class="et-panel-body">
+        <div class="et-subgroup">
+          <h3>Concentration</h3>
+          <div class="et-buttons">
+            <button id="startConcentration" type="button">Mark concentrating</button>
+            <button id="endConcentration" class="et-danger-outline" type="button">End concentration</button>
+          </div>
+          <p class="et-help">Ending concentration also removes effects linked to this source.</p>
+        </div>
+        <div class="et-subgroup">
+          <h3>Current effects</h3>
+          <ul id="featureEffects" class="et-effects-list" aria-label="Effects on the selected combatant"></ul>
+          <p class="et-help">An empty list means no effects are currently recorded.</p>
+        </div>
+        <form id="effectForm" class="et-effect-form">
+          <h3>Add an effect</h3>
+          <label class="et-field" for="effectName"><span>Effect name <span class="et-required">(required)</span></span><input id="effectName" required maxlength="100" placeholder="e.g. Blessed or Poisoned"></label>
+          <label class="et-field" for="effectSource"><span>Source combatant</span><select id="effectSource"></select></label>
+          <div class="et-check-group">
+            <label class="et-check" for="effectPublic"><input id="effectPublic" type="checkbox"><span>Show the effect name to players</span></label>
+            <label class="et-check" for="effectConcentration"><input id="effectConcentration" type="checkbox"><span>Link this effect to the source's concentration</span></label>
+          </div>
+          <fieldset class="et-fieldset">
+            <legend>Duration &amp; expiry</legend>
+            <label class="et-field" for="effectTiming"><span>Expire at</span><select id="effectTiming"><option value="manual">Manual removal</option><option value="start">Start of anchor turn</option><option value="end">End of anchor turn</option></select></label>
+            <div class="et-duration-fields">
+              <label class="et-field" for="effectAnchor"><span>Anchor combatant</span><select id="effectAnchor"></select></label>
+              <label class="et-field" for="effectTurns"><span>Occurrences remaining</span><input id="effectTurns" type="number" min="1" max="10000" value="1"></label>
+            </div>
+            <p class="et-help">Anchor and counter apply only to timed effects. The counter measures that combatant's turn boundaries, not whole rounds.</p>
+          </fieldset>
+          <label class="et-field" for="effectNotes"><span>Private GM notes</span><textarea id="effectNotes" maxlength="2000" rows="3" placeholder="Reminder text — never sent to players"></textarea></label>
+          <button class="et-submit" type="submit">Add effect to selected combatant</button>
+        </form>
+      </div>
+    </details>
+
+    <details class="et-panel et-recovery-panel">
+      <summary><span class="et-summary-text"><span class="et-panel-title">Encounter checkpoints</span><span class="et-panel-description">Save a recovery point or restore a previous encounter state</span></span></summary>
+      <div class="et-panel-body">
+        <div class="et-subgroup">
+          <h3>Save current encounter</h3>
+          <label class="et-field" for="checkpointName"><span>Checkpoint name</span><input id="checkpointName" maxlength="100" placeholder="e.g. Before the boss fight"></label>
+          <button id="saveCheckpoint" type="button">Save checkpoint</button>
+        </div>
+        <div class="et-subgroup">
+          <h3>Restore a saved checkpoint</h3>
+          <label class="et-field" for="checkpointSelect"><span>Saved checkpoint</span><select id="checkpointSelect"></select></label>
+          <div class="et-buttons">
+            <button id="restoreCheckpoint" type="button">Preview &amp; restore</button>
+            <button id="deleteCheckpoint" class="et-danger-outline" type="button">Delete checkpoint</button>
+          </div>
+          <p class="et-help">Restoring replaces HP, effects, roster and turn state. You will see a preview and confirmation first.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="et-panel et-backup-panel">
+      <summary><span class="et-summary-text"><span class="et-panel-title">Campaign backups</span><span class="et-panel-description">Export a portable bundle or import it as a new campaign</span></span></summary>
+      <div class="et-panel-body">
+        <div class="et-subgroup">
+          <h3>Export this campaign</h3>
+          <p class="et-help">Includes the roster, saved setups, current encounter and referenced local images. Treat the bundle as private GM data.</p>
+          <button id="exportBundle" type="button">Export campaign bundle</button>
+        </div>
+        <div class="et-subgroup">
+          <h3>Import a campaign bundle</h3>
+          <label class="et-field" for="importBundle"><span>Select a Scrying Glass ZIP bundle</span><input id="importBundle" type="file" accept=".zip" aria-describedby="bundleImportHelp"></label>
+          <p id="bundleImportHelp" class="et-help">Selecting a file asks for confirmation. Import creates a new campaign without replacing or activating your current campaign.</p>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>

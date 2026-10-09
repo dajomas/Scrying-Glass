@@ -17,7 +17,7 @@ LIST_FIELDS = ("battle_order", "turn_successors", "turn_successors_before_wrap")
 STATE_FIELDS = set(LIST_FIELDS) | {"monsters", "characters", "activity_log", "display", "active_setup", "active_turn_id", "battle_round"}
 
 class SQLiteStorage:
-    SCHEMA_VERSION = 4
+    SCHEMA_VERSION = 5
 
     def __init__(self, path: Path):
         self.path = Path(path)
@@ -29,7 +29,7 @@ class SQLiteStorage:
             self.connection.execute("PRAGMA foreign_keys=ON")
             self.connection.execute("PRAGMA busy_timeout=10000")
             version = self.connection.execute("PRAGMA user_version").fetchone()[0]
-            if version not in (0, 1, 2, 3, 4):
+            if version not in (0, 1, 2, 3, 4, 5):
                 raise RuntimeError(f"Unsupported schema version: {version}")
             if version == 0:
                 if self.connection.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").fetchone():
@@ -40,13 +40,15 @@ class SQLiteStorage:
             elif version in (1, 2):
                 self._backup()
                 self._upgrade(version)
-            if version != 4:
+            if version not in (4, 5):
                 if version == 3:
                     self._backup()
                 with self.transaction():
                     self.connection.execute("CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL UNIQUE, role TEXT NOT NULL CHECK(role IN ('superadmin','admin','client')), password_hash TEXT NOT NULL)")
                     self.connection.execute("CREATE TABLE account_migration (id INTEGER PRIMARY KEY CHECK(id=1), completed INTEGER NOT NULL CHECK(completed=1))")
                     self.connection.execute("PRAGMA user_version=4")
+            from .scrying_glass_feature_storage import upgrade_features
+            upgrade_features(self, backup=version != 0)
             self._check_foreign_keys()
         except BaseException:
             self.close()
@@ -168,8 +170,13 @@ class SQLiteStorage:
             updates = ','.join(f'{f}=excluded.{f}' for f in ('position',)+ENTITY_FIELDS)
             self.connection.execute(f"INSERT INTO {table}({','.join(names)}) VALUES ({','.join('?' for _ in names)}) ON CONFLICT({owner_name},combatant_id) DO UPDATE SET {updates}",values)
             record = self.connection.execute(f"SELECT id FROM {table} WHERE {owner_name}=? AND combatant_id=?",(owner,ident)).fetchone()[0]
-            extra = {k:v for k,v in item.items() if k not in set(ENTITY_FIELDS)|{'id'}}
-            self._attributes(table,record,extra,present=[f for f in ENTITY_FIELDS if f in item])
+            extra = {k:v for k,v in item.items() if k not in set(ENTITY_FIELDS)|{'id','effects'}}
+            present=[f for f in ENTITY_FIELDS if f in item]
+            if 'effects' in item: present.append('effects')
+            self._attributes(table,record,extra,present=present)
+            if self.connection.execute('PRAGMA user_version').fetchone()[0]>=5:
+                from .scrying_glass_feature_storage import save_effects
+                save_effects(self,table,record,item.get('effects',[]))
         for row in self.connection.execute(f"SELECT combatant_id FROM {table} WHERE {owner_name}=?",(owner,)).fetchall():
             if row[0] not in seen: self.connection.execute(f"DELETE FROM {table} WHERE {owner_name}=? AND combatant_id=?",(owner,row[0]))
 
@@ -178,9 +185,12 @@ class SQLiteStorage:
         for row in self.connection.execute(f"SELECT * FROM {table} WHERE {owner_name}=? ORDER BY position,id",(owner,)):
             extra,present=self._read_attributes(table,row['id'])
             item={'id':row['combatant_id']}
-            for field in present:
+            for field in present - {"effects"}:
                 value=row[field]
                 item[field]=bool(value) if field in BOOL_FIELDS and value is not None else value
+            if 'effects' in present:
+                from .scrying_glass_feature_storage import load_effects
+                item['effects']=load_effects(self,table,row['id'])
             item.update(extra);result.append(item)
         return result
 
