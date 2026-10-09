@@ -1760,10 +1760,6 @@ document.querySelector('#editForm').onsubmit = async event => {
             return;
         }
     } else {
-        if (data.initiative === null) {
-            delete data.initiative;
-        }
-
         try {
             await request(`/api/characters/${encodeURIComponent(editing.id)}`, {
                 method: 'PATCH',
@@ -1773,7 +1769,7 @@ document.querySelector('#editForm').onsubmit = async event => {
                 body: JSON.stringify(data),
             });
         } catch (error) {
-            paneNotification('character', error.message);
+            paneNotification('characters', error.message);
             return;
         }
     }
@@ -1802,7 +1798,7 @@ document.querySelector('#importForm').onsubmit = async event => {
     const campaign = formData.get('campaign') || campaignData.active;
 
     if (!name) {
-        paneNotification('setup', 'Choose a saved setup to import from');
+        paneNotification('battleSetup', 'Choose a saved setup to import from');
         return;
     }
 
@@ -1870,13 +1866,14 @@ document.querySelector('#csvImportForm').onsubmit = async event => {
         return;
     }
 
+    const kind = csvImportKind;
     const form = event.target;
     const submit = form.querySelector('button[type="submit"], button.import');
 
     submit.disabled = true;
 
     try {
-        const endpoint = csvImportKind === 'monsters'
+        const endpoint = kind === 'monsters'
             ? '/api/monsters/import-csv'
             : '/api/characters/import-csv';
 
@@ -1889,21 +1886,21 @@ document.querySelector('#csvImportForm').onsubmit = async event => {
         await load();
 
         paneNotification(
-            csvImportKind === 'characters' ? 'campaign' : 'battleSetup',
-            `Imported ${result.count} ${csvImportKind === 'monsters' ? 'monster' : 'character'
+            kind === 'characters' ? 'campaign' : 'battleSetup',
+            `Imported ${result.count} ${kind === 'monsters' ? 'monster' : 'character'
             }${result.count === 1 ? '' : 's'} from CSV.`,
         );
 
         const count = Number(result?.count ?? 0);
-        const noun = csvImportKind === 'characters' ? 'character' : 'monster';
-        const target = csvImportKind === 'characters' ? 'characters' : 'monsters';
+        const noun = kind === 'characters' ? 'character' : 'monster';
+        const target = kind === 'characters' ? 'characters' : 'monsters';
 
         paneNotification(
             target,
             `${count} ${noun}${count === 1 ? '' : 's'} added successfully.`,
         );
     } catch (error) {
-        paneNotification(csvImportKind === 'characters' ? 'campaign' : 'battleSetup', error.message);
+        paneNotification(kind === 'characters' ? 'campaign' : 'battleSetup', error.message);
     } finally {
         submit.disabled = false;
     }
@@ -2091,6 +2088,9 @@ async function applyOpenedSetup(result) {
     renderCampaigns();
 
     if (!result || !result.opened_setup) {
+        document.querySelector('#setupName').value = '';
+        document.querySelector('#setupSelect').value = '';
+        await load();
         renderActiveBattleSetup();
         return '';
     }
@@ -2105,6 +2105,7 @@ async function applyOpenedSetup(result) {
 
     return `; opened battle setup ${result.opened_setup}`;
 }
+
 
 const REPLACE_WARNING =
     'The current battle will be replaced by the campaign\'s most recently used battle setup. ' +
@@ -2383,13 +2384,8 @@ document.querySelector('#newSetup').onclick = async () => {
     }
 
     try {
-        // First replace the current working encounter with an empty one.
-        await request('/api/setups/new', {
-            method: 'POST',
-        });
-
-        // Then persist it immediately using the requested unique name.
-        const result = await request('/api/setups/save', {
+        // Validate uniqueness and create the named empty setup atomically.
+        const result = await request('/api/setups/new', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -3207,12 +3203,12 @@ document.addEventListener('click', async event => {
 document.addEventListener('change', event => {
     const input = event.target;
 
-    if (input.dataset.mi && input.value !== '') {
-        patch('monsters', input.dataset.mi, { initiative: +input.value });
+    if (input.dataset.mi) {
+        patch('monsters', input.dataset.mi, { initiative: input.value === '' ? null : +input.value });
     }
 
-    if (input.dataset.ci && input.value !== '') {
-        patch('characters', input.dataset.ci, { initiative: +input.value });
+    if (input.dataset.ci) {
+        patch('characters', input.dataset.ci, { initiative: input.value === '' ? null : +input.value });
     }
 
     if (input.dataset.chp && input.value !== '') {
@@ -3301,7 +3297,7 @@ function tieUI() {
     ${bucket.members.map((member, memberIndex) => `
         <label class="tie">
         ${esc(member.name)}
-        <select data-tie-bucket="${bucketIndex}" data-tie-member="${member.id}">
+        <select data-tie-bucket="${bucketIndex}" data-tie-member="${esc(member.id)}">
             ${bucket.members.map((_, position) => `
             <option value="${position + 1}" ${position === memberIndex ? 'selected' : ''}>
                 ${position + 1}

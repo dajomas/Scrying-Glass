@@ -3,6 +3,7 @@ import hmac
 import json
 import re
 import secrets
+import copy
 
 import yaml
 
@@ -20,15 +21,15 @@ DEFAULT_CONFIG = {'network': {'bind': '0.0.0.0', 'admin_port': 3000, 'client_por
 
 def merge(a: dict[str, Any], b: dict[str, Any]) -> dict[str, Any]:
     """Recursively merge configuration mappings without modifying either input."""
-    out = dict(a)
+    out = copy.deepcopy(a)
     for k, v in b.items():
-        out[k] = merge(out[k], v) if isinstance(v, dict) and isinstance(out.get(k), dict) else v
+        out[k] = merge(out[k], v) if isinstance(v, dict) and isinstance(out.get(k), dict) else copy.deepcopy(v)
     return out
 
 def load_config(p: Path | None) -> dict[str, Any]:
     """Load JSON or YAML configuration and merge it with the defaults."""
     if p is None:
-        return DEFAULT_CONFIG
+        return copy.deepcopy(DEFAULT_CONFIG)
     raw = p.read_text(encoding='utf-8')
     x = json.loads(raw) if p.suffix.lower() == '.json' else yaml.safe_load(raw)
     if not isinstance(x, dict):

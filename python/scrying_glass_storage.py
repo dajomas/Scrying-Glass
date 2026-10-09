@@ -55,7 +55,15 @@ class SQLiteStorage:
     @contextmanager
     def transaction(self):
         if self.connection.in_transaction:
-            yield self
+            savepoint = "nested_" + uuid.uuid4().hex
+            self.connection.execute(f"SAVEPOINT {savepoint}")
+            try:
+                yield self
+                self.connection.execute(f"RELEASE SAVEPOINT {savepoint}")
+            except BaseException:
+                self.connection.execute(f"ROLLBACK TO SAVEPOINT {savepoint}")
+                self.connection.execute(f"RELEASE SAVEPOINT {savepoint}")
+                raise
             return
         self.connection.execute("BEGIN IMMEDIATE")
         try:
@@ -65,6 +73,7 @@ class SQLiteStorage:
             if self.connection.in_transaction:
                 self.connection.execute("ROLLBACK")
             raise
+
 
     def close(self): self.connection.close()
 

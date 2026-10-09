@@ -2,7 +2,8 @@
 from __future__ import annotations
 from typing import Any, get_type_hints
 from fastapi import Depends, FastAPI
-from .scrying_glass_database_transactions import transactional_handler
+from .scrying_glass_database_transactions import transactional_handler, serialized_handler
+from .scrying_glass_request_security import same_origin
 from .scrying_glass_admin_pages import AdminPagesMixin
 from .scrying_glass_admin_display import AdminDisplayMixin
 from .scrying_glass_admin_setups import AdminSetupsMixin
@@ -84,7 +85,16 @@ class AdminAPI(AdminPagesMixin, AdminDisplayMixin, AdminSetupsMixin, AdminCampai
                     "admin", self.context.ADMIN_SESSION_COOKIE,
                 )))
             if authenticated and method != "GET":
-                handler = transactional_handler(self.context, handler)
+                dependencies.append(Depends(same_origin))
+                handler = transactional_handler(
+                    self.context, handler, role="admin",
+                    cookie_name=self.context.ADMIN_SESSION_COOKIE,
+                )
+            elif authenticated and name != "dndbeyond_monster_stats":
+                handler = serialized_handler(
+                    self.context, handler, role="admin",
+                    cookie_name=self.context.ADMIN_SESSION_COOKIE,
+                )
             self.app.add_api_route(
                 path, handler, methods=[method], dependencies=dependencies,
             )

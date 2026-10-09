@@ -12,15 +12,23 @@ class AdminSetupsMixin:
         slug = self.context.require_campaign(campaign)
         return {'campaign': slug, 'names': self.context.list_setups(slug)}
 
-    async def new_setup(self):
+    async def new_setup(self, payload: SetupName | None = None):
         """New setup."""
     
 
-        campaign = self.context.require_campaign(None)
+        campaign = self.context.require_campaign(payload.campaign if payload else None)
+        if campaign != self.context.active_campaign():
+            raise self.context.HTTPException(409, "Activate this campaign before creating its setup")
+        name = self.context.setup_slug(payload.name) if payload else None
+        if name is not None and self.context.STORAGE.setup_exists(campaign, name):
+            raise self.context.HTTPException(409, "A battle setup with this name already exists")
+        characters = self.context.load_campaign_characters(campaign)
+        for character in characters:
+            character["in_turn"] = False
 
         self.context.STATE = self.context.normalize_state({
             "monsters": [],
-            "characters": self.context.load_campaign_characters(campaign),
+            "characters": characters,
             "battle_order": [],
             "activity_log": [],
             "display": {
@@ -29,9 +37,14 @@ class AdminSetupsMixin:
         })
 
         self.context.clear_active_setup()
-
+        self.context.save_campaign_characters(campaign, self.context.STATE["characters"])
+        if name is not None:
+            self.context.STORAGE.save_setup(campaign, name, self.context.setup_snapshot(self.context.STATE))
+            self.context.set_active_setup(campaign, name)
+            self.context.remember_setup(campaign, name)
         await self.context.changed()
-
+        if name is not None:
+            return {"name": name, "campaign": campaign}
         return self.context.public_state()
 
     async def save_setup(self, payload: SetupName):

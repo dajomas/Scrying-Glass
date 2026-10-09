@@ -2,6 +2,7 @@
 from __future__ import annotations
 from typing import Any, get_type_hints
 from fastapi import Depends, FastAPI, File, Form
+from .scrying_glass_database_transactions import serialized_handler, operation_lock
 
 class ClientAPI:
     """Own client endpoints; access live state through the supplied server context."""
@@ -40,6 +41,8 @@ class ClientAPI:
         handler.__func__.__annotations__ = get_type_hints(
             handler.__func__, globalns=vars(self.context),
         )
+        handler = serialized_handler(self.context, handler, role='client',
+                                     cookie_name=self.context.CLIENT_SESSION_COOKIE)
         self.app.add_api_route('/api/state', handler, methods=['GET'], dependencies=[Depends(self.context.require('client', self.context.CLIENT_SESSION_COOKIE))])
         handler = self.ws
         handler.__func__.__annotations__ = get_type_hints(
@@ -99,6 +102,13 @@ class ClientAPI:
 
         logger = logging.getLogger(__name__)
 
+        origin = websocket.headers.get("origin")
+        scheme = "https" if websocket.url.scheme == "wss" else "http"
+        expected_origin = f"{scheme}://{websocket.headers.get('host', '')}"
+        if origin and origin != expected_origin:
+            await websocket.close(code=1008)
+            return
+
         token = websocket.cookies.get(
             self.context.CLIENT_SESSION_COOKIE,
             "",
@@ -128,7 +138,7 @@ class ClientAPI:
             await websocket.accept()
             accepted = True
 
-            async with broadcast_lock:
+            async with operation_lock(self.context), broadcast_lock:
                 if not self.context.auth_session(token):
                     await websocket.close(code=1008)
                     return

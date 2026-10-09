@@ -4,11 +4,16 @@ from pathlib import Path
 from fastapi import Depends, HTTPException, Request, Body
 from fastapi.responses import HTMLResponse, RedirectResponse
 from .scrying_glass_init import password_hash
+from .scrying_glass_database_transactions import serialized_handler
 
 
 def install_user_routes(context, app):
     auth = context.auth_service
     guard = Depends(context.require("superadmin", context.ADMIN_SESSION_COOKIE))
+
+    def serialize(handler):
+        return serialized_handler(context, handler, role="superadmin",
+                                  cookie_name=context.ADMIN_SESSION_COOKIE)
 
     async def same_origin(request: Request):
         origin = request.headers.get("origin")
@@ -45,6 +50,7 @@ def install_user_routes(context, app):
             raise HTTPException(422, "Password cannot be null; omit to keep unchanged")
 
     @app.post("/api/users", status_code=201, dependencies=[guard, Depends(same_origin)])
+    @serialize
     async def create(body: dict = Body(...)):
         fields(body, True)
         auth.validate(body["username"], body["role"], body["password"])
@@ -57,6 +63,7 @@ def install_user_routes(context, app):
         return {"id": ident, "username": body["username"], "role": body["role"]}
 
     @app.patch("/api/users/{user_id}", dependencies=[guard, Depends(same_origin)])
+    @serialize
     async def update(user_id: int, body: dict = Body(...)):
         fields(body, False)
         with context.STORAGE.transaction():
@@ -76,6 +83,7 @@ def install_user_routes(context, app):
         return {"id": user_id, "username": username, "role": role}
 
     @app.delete("/api/users/{user_id}", dependencies=[guard, Depends(same_origin)])
+    @serialize
     async def delete(user_id: int):
         with context.STORAGE.transaction():
             old = auth.db.execute("SELECT * FROM users WHERE id=?", (user_id,)).fetchone()

@@ -2,6 +2,7 @@ import csv
 import json
 import re
 import uuid
+import io
 
 from typing import Any
 
@@ -174,7 +175,7 @@ def csv_rows(raw: bytes) -> list[dict[str, str]]:
         raise HTTPException(400, "CSV must be UTF-8 encoded") from exc
 
     try:
-        reader = csv.DictReader(text.splitlines())
+        reader = csv.DictReader(io.StringIO(text, newline=""))
     except csv.Error as exc:
         raise HTTPException(400, "Could not read CSV file") from exc
 
@@ -211,7 +212,7 @@ def csv_rows(raw: bytes) -> list[dict[str, str]]:
 def csv_monster(row: dict[str, str], row_number: int) -> dict[str, Any]:
     """Csv monster."""
     name = csv_text(row.get("name"))
-    monster_species = csv_text(row.get("monster_species") or row.get('monster_species') or row.get("type"))
+    monster_species = csv_text(row.get("monster_species") or row.get('monster_type') or row.get("type"))
     ac = csv_int(row, "ac", minimum=0, maximum=999, row_number=row_number)
     hp = csv_int(row, "hp", minimum=-99999, maximum=99999, row_number=row_number)
 
@@ -221,7 +222,7 @@ def csv_monster(row: dict[str, str], row_number: int) -> dict[str, Any]:
     if not monster_species:
         raise HTTPException(
             400,
-            f"CSV row {row_number}: monster_species, monster_species or type is required",
+            f"CSV row {row_number}: monster_species, monster_type or type is required",
         )
 
     if ac is None:
