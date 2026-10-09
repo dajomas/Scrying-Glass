@@ -7,11 +7,15 @@ def combatant_state(combatant: dict[str, Any] | None) -> str:
     if combatant is None:
         return "unknown"
 
-    return combatant.get("life_state", "alive" if combatant.get("alive", True) else "dead")
+    return "alive" if combatant.get("alive", True) else "dead"
 
 def update_alive_state(combatant: dict[str, Any]) -> None:
-    from .scrying_glass_feature_rules import sync_health
-    sync_health(combatant)
+    """Update alive state."""
+    combatant["alive"] = combatant.get("hp", 0) > 0
+
+    if not combatant["alive"]:
+        combatant["visible"] = True
+        combatant["in_turn"] = False
 
 def reset_entity(x: dict[str, Any]) -> None:
     """Restore reset values and remove the combatant from battle."""
@@ -29,11 +33,7 @@ def reset_entity(x: dict[str, Any]) -> None:
     else:
         x["hp"] = x["max_hp"]
 
-    x['hp']=max(0,x['hp']);x['max_hp']=max(0,x['max_hp'])
     x["alive"] = x["hp"] > 0
-    x['life_state']='standing' if x['alive'] else 'down'
-    x['temp_hp']=x['death_successes']=x['death_failures']=0
-    x['concentrating']=False;x['effects']=[]
 
 def reset_imported_monster(source: dict[str, Any]) -> dict[str, Any]:
     """Reset imported monster."""
@@ -42,11 +42,7 @@ def reset_imported_monster(source: dict[str, Any]) -> dict[str, Any]:
 
     # Keep the source setup's current HP and current Max HP.
     # Do not overwrite hp with original_hp during setup import.
-    item['hp']=max(0,item.get('hp',0));item['max_hp']=max(0,item.get('max_hp',0))
     item['alive'] = item.get('hp', 0) > 0
-    item['life_state']='standing' if item['alive'] else 'down'
-    item['temp_hp']=item['death_successes']=item['death_failures']=0
-    item['concentrating']=False;item['effects']=[]
 
     item['initiative'] = item.get('original_initiative')
     item['active'] = False
@@ -75,11 +71,15 @@ def setup_snapshot(state: dict[str, Any]) -> dict[str, Any]:
 
     return snapshot
 
-def admin_initiative_key(x: dict[str, Any]) -> tuple[int, str]:
-    """Admin initiative key."""
+def admin_initiative_key(x: dict[str, Any]) -> tuple[int, int, str]:
+    """Sort all integer initiatives before unset values, then by name."""
     value = x.get('initiative')
-    initiative = value if isinstance(value, int) and (not isinstance(value, bool)) else -999
-    return (-initiative, str(x.get('name', '')).casefold())
+    is_numeric = isinstance(value, int) and not isinstance(value, bool)
+    return (
+        0 if is_numeric else 1,
+        -value if is_numeric else 0,
+        str(x.get('name', '')).casefold(),
+    )
 
 def admin_max_hp_key(x: dict[str, Any]) -> tuple[int, str]:
     """Admin max hp key."""
