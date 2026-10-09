@@ -30,13 +30,10 @@ def install_services(context: Any) -> dict[str, Any]:
     context.active_setup_reference = service.active_setup_reference
     context.set_active_setup = service.set_active_setup
     context.clear_active_setup = service.clear_active_setup
-    context.active_setup_path = service.active_setup_path
+    context.active_setup_exists = service.active_setup_exists
     service = CampaignsService(context)
     services['campaigns'] = service
-    context.setup_path = service.setup_path
-    context.campaign_characters_path = service.campaign_characters_path
     context.list_setups = service.list_setups
-    context.campaign_dir = service.campaign_dir
     context.read_campaigns = service.read_campaigns
     context.write_campaigns = service.write_campaigns
     context.active_campaign = service.active_campaign
@@ -50,6 +47,7 @@ def install_services(context: Any) -> dict[str, Any]:
     services['migrations'] = service
     context.migrate_unassigned_setups = service.migrate_unassigned_setups
     context.migrate_campaign_characters = service.migrate_campaign_characters
+    context.import_legacy_storage = service.import_legacy_storage
     service = PersistenceService(context)
     services['persistence'] = service
     context.load_campaign_characters = service.load_campaign_characters

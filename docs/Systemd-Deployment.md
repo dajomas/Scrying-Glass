@@ -22,10 +22,7 @@ TCP 3000 (Admin) and 4000 (Client Display).
 └── config.example.yaml
 /etc/scrying-glass/config.yaml
 /var/lib/scrying-glass/
-├── state.json
-├── campaigns.json
-├── characters/
-├── setups/
+├── scrying-glass.sqlite3
 └── uploads/
 ```
 
@@ -182,7 +179,7 @@ For remote use, prefer a VPN and HTTPS reverse proxy with Admin restrictions.
 
 1. Record the current code revision and preserve config/service unit separately.
 2. Stop the server before backing up persistent state.
-3. Back up the entire storage directory, including characters and uploads.
+3. Back up the entire storage directory, including the SQLite database and uploads.
 4. Deploy all packages, templates and static files from the same revision.
 5. Update dependencies if required, compile and run import checks.
 6. Restart and validate workflows, WebSockets and persistence.
@@ -217,8 +214,10 @@ storage layout; a code-only rollback may not understand migrated data.
 ## Migrating older installations
 
 The source split alone does not relocate data. Existing explicit storage_dir
-continues to work. Loose setups are moved into the Default campaign; missing
-campaign character rosters are initialized from suitable legacy snapshots.
+continues to work. First startup imports legacy JSON into scrying-glass.sqlite3
+without modifying the source files. Loose setups become Default campaign records;
+missing campaign rosters are seeded from suitable legacy snapshots. See
+[SQLite migration instructions](SQLite-Migration.md).
 Back up before the first migration and check the journal afterward.
 
 Monster Display installations used different code/config/storage/service names.
@@ -249,6 +248,6 @@ sudo ss -lptn 'sport = :4000'
 | Address already in use | Another instance or process owns the configured ports |
 | Old page | Restart for markup, hard-refresh for browser assets |
 
-Check campaign rosters under characters/, not only setups/. All sessions are
+Check campaign rosters in SQLite campaign_characters, not archived JSON files. All sessions are
 cleared by restart. A service import test is not a substitute for testing both
 ports, login, saving/loading, image uploads and WebSocket delivery.

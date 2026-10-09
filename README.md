@@ -24,7 +24,7 @@ introduced on 6 October 2026; it does not designate a new software release.
 - Battle initiative, tie resolution, turn advancement, individual/bulk controls.
 - Current-turn damage, healing, buff/debuff logging, and CSV/JSON log exports.
 - Per-setup display backgrounds: colors, CSS gradients and uploaded images.
-- JSON persistence, legacy migration and real-time player display updates.
+- SQLite persistence, non-destructive legacy import and real-time player display updates.
 
 ## Requirements
 
@@ -165,28 +165,27 @@ setup restores its encounter data and loads the campaign's current roster.
 
 ## Persistence and backups
 
-```text
-storage_dir/
-├── state.json
-├── campaigns.json
-├── characters/
-│   └── <campaign-slug>.json
-├── setups/
-│   └── <campaign-slug>/
-│       └── <setup-slug>.json
-└── uploads/
-    └── <uuid>.<extension>
-```
+Structured data is stored in `storage_dir/scrying-glass.sqlite3`. Uploaded monster
+and background images remain in `storage_dir/uploads/`; configuration remains
+in the existing YAML/JSON configuration file. SQLite uses Python's standard-library
+`sqlite3` module, so no database server or additional dependency is required.
 
-`state.json` stores working runtime state. With a valid active saved setup,
-monster data is owned by that setup rather than duplicated in state.json.
-Characters are persisted separately in `characters/<campaign>.json`.
-Back up the complete storage directory, including campaign metadata, rosters,
-setups and all images. Stop the server for a consistent filesystem backup.
+Campaign metadata, campaign-owned character rosters, named monster encounters,
+and runtime state have separate database records. Existing dictionary/snapshot
+formats remain JSON payloads inside SQLite. Saved setups remain authoritative for
+their monsters; runtime state stores the active setup reference, active-turn marker,
+battle round, successor lists, activity log, display settings and unsaved monsters.
 
-The source split itself does not require moving or resetting runtime data.
-Older loose setups are migrated into the Default campaign at startup; older
-setup character data can seed a missing campaign roster.
+The first startup imports existing `campaigns.json`, `characters/*.json`,
+`setups/<campaign>/*.json`, loose `setups/*.json`, and `state.json`. It leaves all
+source files untouched. Import and startup validation share a transaction; invalid
+input aborts startup instead of silently skipping data. A database marker prevents
+subsequent re-imports. Once imported, the old JSON files are archival copies, not
+live data: do not edit them expecting the running application to change.
+
+Stop the server before copying the entire storage directory and configuration.
+The backup must include the database and uploaded images. Keep the pre-migration
+backup for rollback. See [SQLite migration instructions](docs/SQLite-Migration.md).
 
 ## Editing the UI
 

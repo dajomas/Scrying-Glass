@@ -1,110 +1,108 @@
-"""Migrations services using the live server context."""
-
+"""One-time, non-destructive import of legacy JSON storage."""
 from __future__ import annotations
-from typing import Any, Literal
+import copy
+import json
 from pathlib import Path
-from fastapi import HTTPException, Request as FastAPIRequest, UploadFile
-
+from typing import Any
 
 class MigrationsService:
-    """Group migrations operations without owning a separate copy of runtime state."""
-
-    def __init__(self, context: Any) -> None:
-        """Retain the live server context."""
+    def __init__(self, context: Any):
         self.context = context
 
     def migrate_unassigned_setups(self) -> list[str]:
-        'Move battle setups that are not connected to a campaign into "Default".\n\n    Also keeps the registry and the directories consistent:\n      * campaign directories without a registry entry are registered;\n      * registry entries without a directory get their directory recreated;\n      * there is always at least one campaign and a valid active campaign.\n    Returns the names of the setups that were moved.\n    '
-        data = self.context.read_campaigns()
-        dirty = not self.context.CAMPAIGNS_FILE.exists()
-        campaigns = data['campaigns']
-
-        for directory in self.context.SETUPS_DIR.iterdir():
-            if directory.is_dir() and directory.name not in campaigns:
-                campaigns[directory.name] = {
-                    'name': directory.name.replace('-', ' ').title(),
-                    'description': '',
-                    'created': self.context.now_iso(),
-                }
-                dirty = True
-
-        for slug in campaigns:
-            self.context.campaign_dir(slug).mkdir(parents=True, exist_ok=True)
-
-        moved: list[str] = []
-        loose = sorted(self.context.SETUPS_DIR.glob('*.json'), key=lambda p: p.name.casefold())
-        if loose or not campaigns:
-            created_default = self.context.DEFAULT_CAMPAIGN_SLUG not in campaigns
-            if created_default:
-                campaigns[self.context.DEFAULT_CAMPAIGN_SLUG] = {
-                    'name': self.context.DEFAULT_CAMPAIGN_NAME,
-                    'description': 'Battle setups that were not connected to a campaign',
-                    'created': self.context.now_iso(),
-                }
-                dirty = True
-            target = self.context.campaign_dir(self.context.DEFAULT_CAMPAIGN_SLUG)
-            target.mkdir(parents=True, exist_ok=True)
-            newest: tuple[float, str] | None = None
-            for src in loose:
-                mtime = src.stat().st_mtime
-                dst = self.context.unique_setup_path(target, src.stem)
-                src.replace(dst)
-                moved.append(dst.stem)
-                if newest is None or mtime > newest[0]:
-                    newest = (mtime, dst.stem)
-            if created_default:
-                # New campaign: add the empty "Default" battle setup (skipped if a
-                # moved setup already uses that name).
-                self.context.create_default_setup(self.context.DEFAULT_CAMPAIGN_SLUG)
-                if newest is not None:
-                    # The most recently modified moved setup counts as "most recently
-                    # worked on", so activating Default opens it instead of the empty one.
-                    campaigns[self.context.DEFAULT_CAMPAIGN_SLUG]['last_setup'] = newest[1]
-
-        if data['active'] not in campaigns:
-            data['active'] = self.context.DEFAULT_CAMPAIGN_SLUG if self.context.DEFAULT_CAMPAIGN_SLUG in campaigns else sorted(campaigns, key=str.casefold)[0]
-            dirty = True
-
-        if dirty or moved:
-            self.context.write_campaigns(data)
-        if moved:
-            print(f'Moved {len(moved)} unassigned battle setup(s) into campaign "{campaigns[self.context.DEFAULT_CAMPAIGN_SLUG]["name"]}": {", ".join(moved)}')
-        return moved
+        # Legacy reconciliation now occurs only during the one-time import.
+        return []
 
     def migrate_campaign_characters(self) -> None:
-        """Create missing campaign character rosters from existing setup snapshots."""
-        self.context.CHARACTERS_DIR.mkdir(parents=True, exist_ok=True)
+        return None
 
-        data = self.context.read_campaigns()
+    def import_legacy_storage(self) -> dict[str, int]:
+        c = self.context
+        db = c.STORAGE
+        if db.get_value("legacy_import_complete"):
+            return {"campaigns": 0, "setups": 0, "characters": 0}
+        if db.read_campaigns()["campaigns"]:
+            raise RuntimeError("Database has campaigns but no import marker; refusing to overwrite it")
 
-        for slug, metadata in data["campaigns"].items():
-            roster_path = self.context.campaign_characters_path(slug)
+        def read_json(path: Path):
+            try:
+                return json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, UnicodeError, ValueError) as exc:
+                raise RuntimeError(f"Cannot import {path}: {exc}") from exc
 
-            if roster_path.exists():
-                continue
-
-            names = self.context.list_setups(slug)
-            preferred = metadata.get("last_setup")
-
-            if preferred in names:
-                source_name = preferred
-            elif names:
-                source_name = max(
-                    names,
-                    key=lambda name: self.context.setup_path(name, slug).stat().st_mtime,
-                )
-            else:
-                source_name = None
-
-            characters: list[dict[str, Any]] = []
-
-            if source_name is not None:
-                try:
-                    raw = self.context.json.loads(
-                        self.context.setup_path(source_name, slug).read_text(encoding="utf-8")
-                    )
-                    characters = self.context.normalize_state(raw)["characters"]
-                except (OSError, self.context.json.JSONDecodeError, ValueError):
-                    characters = []
-
-            self.context.save_campaign_characters(slug, characters)
+        registry = read_json(c.DATA_DIR / "campaigns.json") if (c.DATA_DIR / "campaigns.json").exists() else {"active": None, "campaigns": {}}
+        if not isinstance(registry, dict) or not isinstance(registry.get("campaigns", {}), dict):
+            raise RuntimeError("campaigns.json must contain a campaigns object")
+        registry.setdefault("campaigns", {})
+        directory = c.DATA_DIR / "setups"
+        records = []
+        loose = []
+        if directory.exists():
+            for entry in sorted(directory.iterdir(), key=lambda p: p.name.casefold()):
+                if entry.is_dir():
+                    registry["campaigns"].setdefault(entry.name, {})
+                    records.extend((entry.name, p) for p in sorted(entry.glob("*.json")))
+                elif entry.suffix == ".json":
+                    loose.append(entry)
+        if loose or not registry["campaigns"]:
+            registry["campaigns"].setdefault(c.DEFAULT_CAMPAIGN_SLUG, {"name": c.DEFAULT_CAMPAIGN_NAME})
+        for slug, meta in registry["campaigns"].items():
+            if not isinstance(meta, dict):
+                raise RuntimeError(f"Invalid metadata for campaign {slug!r}")
+            meta.setdefault("name", slug.replace("-", " ").title())
+            meta.setdefault("description", "")
+            meta.setdefault("created", c.now_iso())
+        if registry.get("active") not in registry["campaigns"]:
+            registry["active"] = c.DEFAULT_CAMPAIGN_SLUG if c.DEFAULT_CAMPAIGN_SLUG in registry["campaigns"] else sorted(registry["campaigns"], key=str.casefold)[0]
+        counts = {"campaigns": len(registry["campaigns"]), "setups": 0, "characters": 0}
+        with db.transaction():
+            db.write_campaigns(registry)
+            records.extend((c.DEFAULT_CAMPAIGN_SLUG, p) for p in loose)
+            imported = {}
+            for slug, path in records:
+                raw = read_json(path)
+                if not isinstance(raw, dict):
+                    raise RuntimeError(f"Setup {path} must contain an object")
+                candidate = copy.deepcopy(raw)
+                # Old snapshots may contain stale turns; opening a setup resets them.
+                for kind in ("monsters", "characters"):
+                    items = candidate.get(kind, [])
+                    if not isinstance(items, list):
+                        raise RuntimeError(f"{path}: {kind} must be a list")
+                    for item in items:
+                        if not isinstance(item, dict):
+                            raise RuntimeError(f"{path}: invalid combatant")
+                        if "in_turn" in item and type(item["in_turn"]) is not bool:
+                            raise RuntimeError(f"{path}: invalid in_turn flag")
+                        item["in_turn"] = False
+                normalized = c.normalize_state(candidate)
+                for original, monster in zip(raw.get("monsters", []), normalized["monsters"]):
+                    monster["in_turn"] = original.get("in_turn", False)
+                name = db.unique_setup_name(slug, path.stem)
+                db.save_setup(slug, name, c.setup_snapshot(normalized), path.stat().st_mtime)
+                imported[(slug, name)] = normalized
+                counts["setups"] += 1
+            for slug, meta in registry["campaigns"].items():
+                roster = c.DATA_DIR / "characters" / f"{slug}.json"
+                if roster.exists():
+                    raw = read_json(roster)
+                    characters = raw.get("characters", raw) if isinstance(raw, dict) else raw
+                    characters = c.normalize_state({"characters": characters})["characters"]
+                else:
+                    preferred = meta.get("last_setup")
+                    name = preferred if isinstance(preferred, str) and db.setup_exists(slug, preferred) else db.newest_setup(slug)
+                    characters = imported[(slug, name)]["characters"] if name else []
+                db.save_characters(slug, characters)
+                counts["characters"] += len(characters)
+                if not db.list_setups(slug):
+                    c.create_default_setup(slug)
+            state_path = c.DATA_DIR / "state.json"
+            if state_path.exists():
+                state = read_json(state_path)
+                if not isinstance(state, dict):
+                    raise RuntimeError("state.json must contain an object")
+                db.set_value("runtime_state", state)
+            # Validate full startup restoration before committing the import marker.
+            c.load_state()
+            db.set_value("legacy_import_complete", {"at": c.now_iso(), "counts": counts})
+        return counts

@@ -2,6 +2,7 @@
 from __future__ import annotations
 from typing import Any, get_type_hints
 from fastapi import Depends, FastAPI
+from .scrying_glass_database_transactions import transactional_handler
 from .scrying_glass_admin_pages import AdminPagesMixin
 from .scrying_glass_admin_display import AdminDisplayMixin
 from .scrying_glass_admin_setups import AdminSetupsMixin
@@ -78,6 +79,8 @@ class AdminAPI(AdminPagesMixin, AdminDisplayMixin, AdminSetupsMixin, AdminCampai
                 dependencies.append(Depends(self.context.require(
                     "admin", self.context.ADMIN_SESSION_COOKIE,
                 )))
+            if authenticated and method != "GET":
+                handler = transactional_handler(self.context, handler)
             self.app.add_api_route(
                 path, handler, methods=[method], dependencies=dependencies,
             )

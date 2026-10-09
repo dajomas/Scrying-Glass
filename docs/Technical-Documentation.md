@@ -46,7 +46,9 @@ operations. The module remains the live context; it is not a state snapshot.
 | `python/scrying_glass_service_auth.py` | Configured-user lookup and cookie authorization dependencies |
 | `python/scrying_glass_service_state.py` | Encounter normalization, lookup, public state and active setup references |
 | `python/scrying_glass_service_campaigns.py` | Campaign metadata, setup paths and activation |
-| `python/scrying_glass_service_migrations.py` | Loose-setup migration and campaign-roster migration |
+| `python/scrying_glass_service_migrations.py` | Non-destructive one-time legacy JSON import |
+| `python/scrying_glass_storage.py` | SQLite schema, transactions and structured-data CRUD |
+| `python/scrying_glass_database_transactions.py` | Mutating request serialization, rollback and post-commit broadcasting |
 | `python/scrying_glass_service_persistence.py` | Campaign rosters, setup/state loading and writes |
 | `python/scrying_glass_service_activity.py` | Battle action and direct HP-change log records |
 | `python/scrying_glass_service_images.py` | Uploaded images, remote image lookup and monster construction |
@@ -125,7 +127,7 @@ Do not publicly mount templates merely to assemble the page.
 3. Construct Admin/Client apps and register routes.
 4. Under the main guard, parse CLI arguments and load YAML/JSON configuration.
 5. Apply overrides and resolve storage/static paths.
-6. Create upload/setup/character directories and migrate legacy data.
+6. Create uploads, open SQLite and import legacy JSON once in a startup transaction.
 7. Load state and the active campaign's authoritative character roster.
 8. Clean order, save state, mount assets/media and start both Uvicorn servers.
 
@@ -173,46 +175,53 @@ manual creation. Passwords may be plaintext or scrypt$<salt_hex>$<digest_hex>.
 
 ## Persistence
 
-```text
-storage_dir/
-├── state.json
-├── campaigns.json
-├── characters/
-│   └── <campaign-slug>.json
-├── setups/
-│   └── <campaign-slug>/
-│       └── <setup-slug>.json
-└── uploads/
-    └── <uuid>.<extension>
-```
+Structured data is stored in `storage_dir/scrying-glass.sqlite3`. Uploaded monster
+and background images remain in `storage_dir/uploads/`; configuration remains
+in the existing YAML/JSON configuration file. SQLite uses Python's standard-library
+`sqlite3` module, so no database server or additional dependency is required.
 
-| Location | Ownership |
-|---|---|
-| state.json | Working battle order, activity log, background, active setup reference and unsaved monsters |
-| campaigns.json | Registry, active campaign and last-worked-on setup metadata |
-| characters/<slug>.json | Campaign-owned character roster |
-| setups/<campaign>/<setup>.json | Saved monster encounter and setup/runtime snapshot; characters excluded |
-| uploads/ | Monster and background images referenced through /media/ |
+Campaign metadata, campaign-owned character rosters, named monster encounters,
+and runtime state have separate database records. Existing dictionary/snapshot
+formats remain JSON payloads inside SQLite. Saved setups remain authoritative for
+their monsters; runtime state stores the active setup reference, active-turn marker,
+battle round, successor lists, activity log, display settings and unsaved monsters.
 
-The root state has monsters, characters, battle_order, activity_log, display and
-active_setup (null or a campaign/name reference). normalize_state fills legacy
-fields and removes unknown battle-order IDs. monster_species is the canonical
-monster field; legacy monster_type is converted while normalizing saved state.
+The first startup imports existing `campaigns.json`, `characters/*.json`,
+`setups/<campaign>/*.json`, loose `setups/*.json`, and `state.json`. It leaves all
+source files untouched. Import and startup validation share a transaction; invalid
+input aborts startup instead of silently skipping data. A database marker prevents
+subsequent re-imports. Once imported, the old JSON files are archival copies, not
+live data: do not edit them expecting the running application to change.
 
-Saving a setup writes a snapshot with characters cleared, saves the campaign
-roster separately, and sets the active setup reference. With a valid reference,
-state.json omits monsters because the saved setup is authoritative. Without
-one it stores unsaved working monsters. Reload restores campaign characters
-from their roster, not from each battle setup.
+Stop the server before copying the entire storage directory and configuration.
+The backup must include the database and uploaded images. Keep the pre-migration
+backup for rollback. See [SQLite migration instructions](SQLite-Migration.md).
 
-Monster changes use save_active_setup_monsters where appropriate. Character
-changes persist the campaign roster. combatants_changed controls both paths
-before saving working state and broadcasting. changed saves state and broadcasts;
-it is not a replacement for every specialized persistence path. Writes use a
-temporary file followed by replacement, not a database-wide transaction.
+### SQLite schema and transactions
 
-Back up the complete storage directory with the process stopped. Copying only
-setups omits characters, registry, working state and referenced images.
+- `campaigns(slug, metadata_json)` stores campaign identity and metadata.
+- `campaign_characters(campaign_slug, characters_json)` stores the campaign roster.
+- `battle_setups(campaign_slug, name, snapshot_json, updated_at)` stores named encounters.
+- `application_state(key, value_json)` stores the active campaign, runtime state and import marker.
+
+The setup key is `(campaign_slug, name)`. Foreign keys cascade campaign slug
+renames and campaign deletion to its setups/roster. Schema version is tracked by
+`PRAGMA user_version`; unsupported versions fail rather than being overwritten.
+Parameterized statements are used for values. Setup modification times are imported
+and retained for the existing newest-setup fallback; explicit last_setup wins.
+
+The server owns one SQLite connection on its event-loop thread. Mutating authenticated
+admin requests are serialized by a separate operation lock and use `BEGIN IMMEDIATE`.
+Specialized notification persistence operations join the request transaction or start
+one when invoked directly. Nested transactions join the outer transaction (they are
+not independent savepoints). Exceptions propagate to the outer transaction, which
+rolls back the database and restores the pre-request in-memory state. Notifications
+are deferred until commit. Uploaded files are outside SQL transactions: a failed
+request can leave an unreferenced upload, but must not delete a previously referenced image.
+
+This is not a multi-process runtime-state design. Use one process per data directory.
+Synchronous database operations run on the event loop; no thread-shared connection
+or ORM is introduced. This favors simplicity for the existing small single-GM app.
 
 ## Campaign lifecycle and migration
 
@@ -221,8 +230,8 @@ campaigns receive an empty default setup and a character roster. Activation
 opens last_setup if present, otherwise the newest setup by modification time;
 no setup means no replacement is loaded by open_campaign_setup.
 
-Migration moves loose setups/*.json into Default, adds numeric collision
-suffixes, reconciles registry/folders, and ensures a valid active campaign.
+The one-time import copies loose setups/*.json into Default database records, adds numeric collision
+suffixes, registers discovered campaign folders, and ensures a valid active campaign.
 Missing campaign character rosters are seeded from an appropriate legacy
 setup, or initialized empty. Existing rosters are not overwritten by migration.
 
@@ -352,7 +361,7 @@ not replace full runtime and browser tests.
 | Missing local module | Check package prefixes, sibling relative imports and deployed files |
 | Missing HTML fragment | Check root templates/admin and loader parent.parent path |
 | Old UI | Restart for HTML edits, then hard-refresh CSS/JavaScript |
-| Missing campaign characters | Check characters/<campaign>.json, not setup snapshots |
+| Missing campaign characters | Check campaign_characters in SQLite, not setup snapshots |
 | Unsuccessful D&D lookup | Upload image/input stats manually; inspect local imports/parser return arity |
 | Permission error | Check writable storage_dir and readable package/assets/config |
 

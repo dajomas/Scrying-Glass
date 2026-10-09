@@ -3,7 +3,6 @@
 from __future__ import annotations
 from typing import Any, Literal
 from pathlib import Path
-from fastapi import HTTPException, Request as FastAPIRequest, UploadFile
 
 
 class CampaignsService:
@@ -13,48 +12,20 @@ class CampaignsService:
         """Retain the live server context."""
         self.context = context
 
-    def setup_path(self, name: str, campaign: str | None=None) -> Path:
-        """Setup path."""
-        return self.context.campaign_dir(self.context.require_campaign(campaign)) / (self.context.setup_slug(name) + '.json')
 
-    def campaign_characters_path(self, slug: str) -> Path:
-        """Campaign characters path."""
-        return self.context.CHARACTERS_DIR / f"{slug}.json"
 
-    def list_setups(self, campaign: str | None=None) -> list[str]:
-        """List setups."""
-        return sorted((p.stem for p in self.context.campaign_dir(self.context.require_campaign(campaign)).glob('*.json')), key=str.casefold)
 
-    def campaign_dir(self, slug: str) -> Path:
-        """Campaign dir."""
-        return self.context.SETUPS_DIR / slug
+
+    def list_setups(self, campaign: str | None = None) -> list[str]:
+        return self.context.STORAGE.list_setups(self.context.require_campaign(campaign))
+
+
 
     def read_campaigns(self) -> dict[str, Any]:
-        """Read campaigns."""
-        data: dict[str, Any] = {'active': None, 'campaigns': {}}
-        if self.context.CAMPAIGNS_FILE.exists():
-            try:
-                raw = self.context.json.loads(self.context.CAMPAIGNS_FILE.read_text(encoding='utf-8'))
-            except (OSError, self.context.json.JSONDecodeError):
-                raw = {}
-            if isinstance(raw, dict):
-                if isinstance(raw.get('campaigns'), dict):
-                    data['campaigns'] = {
-                        str(k): v for k, v in raw['campaigns'].items() if isinstance(v, dict)
-                    }
-                if isinstance(raw.get('active'), str):
-                    data['active'] = raw['active']
-        for slug, meta in data['campaigns'].items():
-            meta.setdefault('name', slug)
-            meta.setdefault('description', '')
-            meta.setdefault('created', self.context.now_iso())
-        return data
+        return self.context.STORAGE.read_campaigns()
 
     def write_campaigns(self, data: dict[str, Any]) -> None:
-        """Write campaigns."""
-        temp = self.context.CAMPAIGNS_FILE.with_suffix('.tmp')
-        temp.write_text(self.context.json.dumps(data, indent=2), encoding='utf-8')
-        temp.replace(self.context.CAMPAIGNS_FILE)
+        self.context.STORAGE.write_campaigns(data)
 
     def active_campaign(self) -> str:
         """Active campaign."""
@@ -68,24 +39,15 @@ class CampaignsService:
             slug = self.context.campaign_slug(str(campaign))
         if slug not in self.context.read_campaigns()['campaigns']:
             raise self.context.HTTPException(404, f'Campaign not found: {slug}')
-        self.context.campaign_dir(slug).mkdir(parents=True, exist_ok=True)
         return slug
 
     def create_default_setup(self, slug: str) -> str | None:
-        'Create an empty battle setup called "Default" in a newly created campaign.\n\n    Does nothing (returns None) if the campaign already has a setup with that name.\n    '
-        directory = self.context.campaign_dir(slug)
-        directory.mkdir(parents=True, exist_ok=True)
-        path = directory / f'{self.context.DEFAULT_SETUP_NAME}.json'
-        if path.exists():
+        name = self.context.DEFAULT_SETUP_NAME
+        if self.context.STORAGE.setup_exists(slug, name):
             return None
-        empty = self.context.normalize_state({'monsters': [], 'characters': [], 'battle_order': [], 'activity_log': [], 'display': {'background': self.context.configured_background(),}})
-        temp = path.with_suffix('.tmp')
-        temp.write_text(
-            self.context.json.dumps(self.context.setup_snapshot(empty), indent=2),
-            encoding="utf-8",
-        )
-        temp.replace(path)
-        return self.context.DEFAULT_SETUP_NAME
+        empty = self.context.normalize_state({"display": {"background": self.context.configured_background()}})
+        self.context.STORAGE.save_setup(slug, name, self.context.setup_snapshot(empty))
+        return name
 
     def remember_setup(self, campaign: str, name: str) -> None:
         """Record the battle setup most recently worked on (saved/loaded) in a campaign."""
@@ -98,13 +60,10 @@ class CampaignsService:
         self.context.write_campaigns(data)
 
     def pick_campaign_setup(self, campaign: str) -> str | None:
-        'Setup to open when a campaign is activated.\n\n    1. the most recently worked on setup recorded in campaigns.json (if it still exists);\n    2. otherwise the setup file modified most recently;\n    3. None when the campaign has no setups.\n    '
-        directory = self.context.campaign_dir(campaign)
-        last = self.context.read_campaigns()['campaigns'].get(campaign, {}).get('last_setup')
-        if isinstance(last, str) and (directory / f'{last}.json').exists():
+        last = self.context.read_campaigns()["campaigns"].get(campaign, {}).get("last_setup")
+        if isinstance(last, str) and self.context.STORAGE.setup_exists(campaign, last):
             return last
-        files = sorted(directory.glob('*.json'), key=lambda p: (-p.stat().st_mtime, p.stem.casefold()))
-        return files[0].stem if files else None
+        return self.context.STORAGE.newest_setup(campaign)
 
     async def open_campaign_setup(self, campaign: str) -> str | None:
         """Load the campaign's most recent (or first) setup into the live battle state."""
@@ -112,7 +71,6 @@ class CampaignsService:
         name = self.context.pick_campaign_setup(campaign)
         if name is None:
             return None
-        path = self.context.campaign_dir(campaign) / f'{name}.json'
         try:
             self.context.STATE = self.context.load_setup_state(name, campaign)
         except self.context.HTTPException as exc:
@@ -130,7 +88,7 @@ class CampaignsService:
         data = self.context.read_campaigns()
         items = []
         for slug, meta in data['campaigns'].items():
-            setups = sorted((p.stem for p in self.context.campaign_dir(slug).glob('*.json')), key=str.casefold)
+            setups = self.context.STORAGE.list_setups(slug)
             items.append({
                 'slug': slug,
                 'name': meta.get('name', slug),

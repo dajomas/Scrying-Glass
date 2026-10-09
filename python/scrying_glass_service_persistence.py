@@ -3,7 +3,6 @@
 from __future__ import annotations
 from typing import Any, Literal
 from pathlib import Path
-from fastapi import HTTPException, Request as FastAPIRequest, UploadFile
 
 
 class PersistenceService:
@@ -18,24 +17,9 @@ class PersistenceService:
         slug: str,
     ) -> list[dict[str, Any]]:
         """Load and validate a campaign's character roster."""
-        path = self.context.campaign_characters_path(slug)
-
-        if not path.exists():
+        raw = self.context.STORAGE.load_characters(slug)
+        if raw is None:
             return []
-
-        try:
-            raw = self.context.json.loads(
-                path.read_text(encoding="utf-8")
-            )
-        except (
-            OSError,
-            UnicodeDecodeError,
-            self.context.json.JSONDecodeError,
-        ) as exc:
-            raise self.context.HTTPException(
-                400,
-                f"Unable to load campaign characters: {exc}",
-            ) from exc
 
         characters = (
             raw.get("characters", raw)
@@ -62,17 +46,7 @@ class PersistenceService:
         return normalized["characters"]
 
     def save_campaign_characters(self, slug: str, characters: list[dict[str, Any]]) -> None:
-        """Save campaign characters."""
-        self.context.CHARACTERS_DIR.mkdir(parents=True, exist_ok=True)
-
-        path = self.context.campaign_characters_path(slug)
-        temp = path.with_suffix(".tmp")
-
-        temp.write_text(
-            self.context.json.dumps({"characters": characters}, indent=2),
-            encoding="utf-8",
-        )
-        temp.replace(path)
+        self.context.STORAGE.save_characters(slug, characters)
 
     def save_active_campaign_characters(self) -> None:
         """Save active campaign characters."""
@@ -91,26 +65,10 @@ class PersistenceService:
 
         campaign = self.context.require_campaign(campaign)
         name = self.context.setup_slug(name)
-        path = self.context.setup_path(name, campaign)
-
         try:
-            raw = self.context.json.loads(
-                path.read_text(encoding="utf-8")
-            )
+            raw = self.context.STORAGE.load_setup(campaign, name)
         except FileNotFoundError as exc:
-            raise self.context.HTTPException(
-                404,
-                "Saved setup not found",
-            ) from exc
-        except (
-            OSError,
-            UnicodeDecodeError,
-            self.context.json.JSONDecodeError,
-        ) as exc:
-            raise self.context.HTTPException(
-                400,
-                f"Unable to load setup: {exc}",
-            ) from exc
+            raise self.context.HTTPException(404, "Saved setup not found") from exc
 
         if not isinstance(raw, dict):
             raise self.context.HTTPException(
@@ -173,27 +131,6 @@ class PersistenceService:
 
         logger = logging.getLogger(__name__)
 
-        def read_object(path: Any, description: str) -> dict[str, Any]:
-            try:
-                value = self.context.json.loads(
-                    path.read_text(encoding="utf-8")
-                )
-            except (
-                OSError,
-                UnicodeDecodeError,
-                self.context.json.JSONDecodeError,
-            ) as exc:
-                raise RuntimeError(
-                    f"Unable to read {description} ({path}): {exc}"
-                ) from exc
-
-            if not isinstance(value, dict):
-                raise RuntimeError(
-                    f"{description} ({path}) must contain a JSON object"
-                )
-
-            return value
-
         try:
             campaign = self.context.require_campaign(None)
             characters = self.context.load_campaign_characters(campaign)
@@ -203,7 +140,7 @@ class PersistenceService:
                 f"Unable to load the active campaign roster: {detail}"
             ) from exc
 
-        if not self.context.STATE_FILE.exists():
+        if self.context.STORAGE.get_value("runtime_state") is None:
             candidate = copy.deepcopy(self.context.STATE)
             candidate["characters"] = characters
 
@@ -217,15 +154,14 @@ class PersistenceService:
             self.context.STATE = normalized
             return
 
-        saved = read_object(
-            self.context.STATE_FILE,
-            "state.json",
-        )
+        saved = self.context.STORAGE.get_value("runtime_state")
+        if not isinstance(saved, dict):
+            raise RuntimeError("Persisted runtime state must be an object")
 
         working_monsters = saved.get("monsters", [])
         if not isinstance(working_monsters, list):
             raise RuntimeError(
-                "Unable to restore state.json: monsters must be a list"
+                "Unable to restore persisted runtime state: monsters must be a list"
             )
 
         candidate = copy.deepcopy(saved)
@@ -237,7 +173,7 @@ class PersistenceService:
         if reference is not None:
             if not isinstance(reference, dict):
                 raise RuntimeError(
-                    "Unable to restore state.json: "
+                    "Unable to restore persisted runtime state: "
                     "active_setup must be an object or null"
                 )
 
@@ -251,7 +187,7 @@ class PersistenceService:
                 or not reference_name.strip()
             ):
                 raise RuntimeError(
-                    "Unable to restore state.json: active_setup requires "
+                    "Unable to restore persisted runtime state: active_setup requires "
                     "nonempty campaign and name strings"
                 )
 
@@ -259,7 +195,7 @@ class PersistenceService:
 
             if reference_campaign != campaign:
                 raise RuntimeError(
-                    "Unable to restore state.json: its setup belongs to "
+                    "Unable to restore persisted runtime state: its setup belongs to "
                     f"campaign {reference_campaign!r}, but the active "
                     f"campaign is {campaign!r}. Resolve the mismatch "
                     "before restarting."
@@ -267,17 +203,16 @@ class PersistenceService:
 
             try:
                 name = self.context.setup_slug(reference_name)
-                path = self.context.setup_path(name, campaign)
             except (ValueError, self.context.HTTPException) as exc:
                 detail = getattr(exc, "detail", str(exc))
                 raise RuntimeError(
                     f"Unable to resolve the saved setup reference: {detail}"
                 ) from exc
 
-            setup = read_object(
-                path,
-                "referenced encounter setup",
-            )
+            try:
+                setup = self.context.STORAGE.load_setup(campaign, name)
+            except FileNotFoundError as exc:
+                raise RuntimeError(f"Referenced setup is missing: {campaign}/{name}") from exc
 
             setup_monsters = setup.get("monsters", [])
             if not isinstance(setup_monsters, list):
@@ -310,7 +245,7 @@ class PersistenceService:
                 or not active_turn_id.strip()
             ):
                 raise RuntimeError(
-                    "Unable to restore state.json: active_turn_id "
+                    "Unable to restore persisted runtime state: active_turn_id "
                     "must be a nonempty string or null"
                 )
 
@@ -323,7 +258,7 @@ class PersistenceService:
                     and type(item["in_turn"]) is not bool
                 ):
                     raise RuntimeError(
-                        "Unable to restore state.json: "
+                        "Unable to restore persisted runtime state: "
                         f"combatant {index} has a non-boolean in_turn flag"
                     )
 
@@ -426,48 +361,21 @@ class PersistenceService:
 
         persisted["characters"] = []
 
-        if self.context.active_setup_path() is not None:
+        if self.context.active_setup_exists():
             persisted["monsters"] = []
         else:
             persisted["active_setup"] = None
 
-        temp = self.context.STATE_FILE.with_suffix(".tmp")
-
-        temp.write_text(
-            self.context.json.dumps(persisted, indent=2),
-            encoding="utf-8",
-        )
-        temp.replace(self.context.STATE_FILE)
+        self.context.STORAGE.set_value("runtime_state", persisted)
 
     def save_active_setup_monsters(self) -> bool:
-        '\n    Persist the working monster encounter into the currently active saved setup.\n\n    Returns True when a saved setup was updated. Returns False when the current\n    encounter is intentionally unsaved and therefore exists only in state.json.\n    '
         reference = self.context.active_setup_reference()
-
         if reference is None:
             return False
-
-        try:
-            campaign = self.context.require_campaign(reference["campaign"])
-            name = self.context.setup_slug(reference["name"])
-            path = self.context.setup_path(name, campaign)
-        except self.context.HTTPException:
+        if not self.context.active_setup_exists():
             self.context.clear_active_setup()
             return False
-
-        if not path.exists():
-            # The setup reference is stale. Preserve the current encounter as
-            # unsaved runtime state rather than recreating an unexpected file.
-            self.context.clear_active_setup()
-            return False
-
-        snapshot = self.context.setup_snapshot(self.context.STATE)
-        temp = path.with_suffix(".tmp")
-
-        temp.write_text(
-            self.context.json.dumps(snapshot, indent=2),
-            encoding="utf-8",
-        )
-        temp.replace(path)
-
+        campaign, name = reference["campaign"], reference["name"]
+        self.context.STORAGE.save_setup(campaign, name, self.context.setup_snapshot(self.context.STATE))
         self.context.remember_setup(campaign, name)
         return True

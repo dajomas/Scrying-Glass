@@ -233,9 +233,10 @@ The split Admin HTML loads fragments once when the server imports the loader.
 Restart for markup changes; hard-refresh after browser asset changes. Players
 and GMs do not need to know the internal file layout to use the interface.
 
-Back up the whole configured storage_dir, including characters/, campaigns.json,
-state.json, setups/ and uploads/. Stop the process for a consistent backup.
-Do not copy only saved setup files and expect campaign characters/images to move.
+Back up the whole configured storage_dir, including scrying-glass.sqlite3 and
+uploads/. Stop the process for a consistent backup. Campaigns, rosters, setups
+and working state now live in SQLite; legacy JSON files are retained only as
+pre-migration copies. See [SQLite migration instructions](SQLite-Migration.md).
 
 | Symptom | What to check |
 |---|---|

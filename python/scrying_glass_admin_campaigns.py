@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 from typing import Any
-from fastapi import File, Form
 
 class AdminCampaignsMixin:
     """Implement admin campaigns handlers using the shared server context."""
@@ -17,12 +16,9 @@ class AdminCampaignsMixin:
         self.context.migrate_unassigned_setups()
         slug = self.context.campaign_slug(payload.name)
         data = self.context.read_campaigns()
-        if slug in data['campaigns'] or self.context.campaign_dir(slug).exists():
+        if slug in data['campaigns']:
             raise self.context.HTTPException(409, f'Campaign already exists: {slug}')
     
-        self.context.campaign_dir(slug).mkdir(parents=True, exist_ok=False)
-        self.context.create_default_setup(slug)
-        self.context.save_campaign_characters(slug, [])
 
         data["campaigns"][slug] = {
             'name': payload.name.strip(),
@@ -32,6 +28,8 @@ class AdminCampaignsMixin:
         if payload.activate:
             data['active'] = slug
         self.context.write_campaigns(data)
+        self.context.create_default_setup(slug)
+        self.context.save_campaign_characters(slug, [])
         opened = await self.context.open_campaign_setup(slug) if payload.activate else None
         return {**self.context.campaigns_payload(), 'opened_setup': opened}
 
@@ -46,15 +44,9 @@ class AdminCampaignsMixin:
         if payload.name is not None:
             new_slug = self.context.campaign_slug(payload.name)
             if new_slug != slug:
-                if new_slug in data['campaigns'] or self.context.campaign_dir(new_slug).exists():
+                if new_slug in data['campaigns']:
                     raise self.context.HTTPException(409, f'Campaign already exists: {new_slug}')
-                self.context.campaign_dir(slug).rename(self.context.campaign_dir(new_slug))
-                old_characters_path = self.context.campaign_characters_path(slug)
-                new_characters_path = self.context.campaign_characters_path(new_slug)
-                if old_characters_path.exists():
-                    old_characters_path.rename(new_characters_path)
-                else:
-                    self.context.save_campaign_characters(new_slug, [])
+                self.context.STORAGE.rename_campaign(slug, new_slug)
                 data["campaigns"][new_slug] = data["campaigns"].pop(slug)
                 if data['active'] == slug:
                     data['active'] = new_slug
@@ -75,8 +67,7 @@ class AdminCampaignsMixin:
         data = self.context.read_campaigns()
         if len(data['campaigns']) <= 1:
             raise self.context.HTTPException(400, 'The last remaining campaign cannot be deleted')
-        source = self.context.campaign_dir(slug)
-        setups = sorted(source.glob('*.json'))
+        setups = self.context.STORAGE.list_setups(slug)
         target_slug = None
         if move_to and delete_setups:
             raise self.context.HTTPException(400, 'Choose either move_to or delete_setups, not both')
@@ -115,20 +106,16 @@ class AdminCampaignsMixin:
                 replacement_slug,
             )
 
-        deleted_setups = [src.stem for src in setups] if delete_setups else []
+        deleted_setups = list(setups) if delete_setups else []
         moved = []
         if target_slug is not None:
-            for src in setups:
-                dst = self.context.unique_setup_path(self.context.campaign_dir(target_slug), src.stem)
-                src.replace(dst)
-                moved.append(dst.stem)
+            for name in setups:
+                moved.append(self.context.STORAGE.transfer_setup(slug, target_slug, name, "move"))
         reference = self.context.active_setup_reference()
 
         if reference is not None and reference["campaign"] == slug:
             self.context.clear_active_setup()
 
-        self.context.shutil.rmtree(source, ignore_errors=True)
-        self.context.campaign_characters_path(slug).unlink(missing_ok=True)
 
         del data["campaigns"][slug]
 
@@ -198,26 +185,21 @@ class AdminCampaignsMixin:
         self.context.migrate_unassigned_setups()
         target_slug = self.context.require_campaign(slug)
         source_slug = self.context.require_campaign(payload.from_campaign)
-        src = self.context.setup_path(payload.setup, source_slug)
-        if not src.exists():
+        name = self.context.setup_slug(payload.setup)
+        if not self.context.STORAGE.setup_exists(source_slug, name):
             raise self.context.HTTPException(404, 'Saved setup not found')
         if source_slug == target_slug:
             raise self.context.HTTPException(400, 'Setup is already in this campaign')
-        dst = self.context.unique_setup_path(self.context.campaign_dir(target_slug), src.stem)
         reference = self.context.active_setup_reference()
         moving_loaded_setup = (
             payload.mode == "move"
             and reference is not None
             and reference["campaign"] == source_slug
-            and reference["name"] == src.stem
+            and reference["name"] == name
         )
 
-        if payload.mode == "copy":
-            self.context.shutil.copy2(src, dst)
-        else:
-            src.replace(dst)
-
-            if moving_loaded_setup:
-                self.context.clear_active_setup()
-                await self.context.changed()
-        return {**self.context.campaigns_payload(), 'setup': dst.stem, 'campaign': target_slug, 'mode': payload.mode}
+        destination = self.context.STORAGE.transfer_setup(source_slug, target_slug, name, payload.mode)
+        if moving_loaded_setup:
+            self.context.clear_active_setup()
+            await self.context.changed()
+        return {**self.context.campaigns_payload(), 'setup': destination, 'campaign': target_slug, 'mode': payload.mode}

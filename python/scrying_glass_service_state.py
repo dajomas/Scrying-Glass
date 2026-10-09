@@ -3,7 +3,6 @@
 from __future__ import annotations
 from typing import Any, Literal
 from pathlib import Path
-from fastapi import HTTPException, Request as FastAPIRequest, UploadFile
 
 
 class StateService:
@@ -492,19 +491,8 @@ class StateService:
         """Mark the current monster encounter as unsaved."""
         self.context.STATE["active_setup"] = None
 
-    def active_setup_path(self) -> Path | None:
-        """Return the referenced setup path only when it still exists."""
+    def active_setup_exists(self) -> bool:
         reference = self.context.active_setup_reference()
-
         if reference is None:
-            return None
-
-        try:
-            campaign = self.context.require_campaign(reference["campaign"])
-            name = self.context.setup_slug(reference["name"])
-        except self.context.HTTPException:
-            return None
-
-        path = self.context.setup_path(name, campaign)
-
-        return path if path.exists() else None
+            return False
+        return self.context.STORAGE.setup_exists(reference["campaign"], reference["name"])

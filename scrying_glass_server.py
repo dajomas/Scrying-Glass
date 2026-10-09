@@ -77,7 +77,6 @@ from python.scrying_glass_tools import (
     now_iso,
     setup_slug,
     unique_ids,
-    unique_setup_path,
 )
 
 from python.scrying_glass_monster_csv import (
@@ -126,12 +125,11 @@ STATE: dict[str, Any] = {
 LOCK = asyncio.Lock()
 SESSIONS: dict[str, dict[str, str]] = {}
 SOCKETS: set[WebSocket] = set()
+from python.scrying_glass_storage import SQLiteStorage
+
+STORAGE: SQLiteStorage
 DATA_DIR: Path
-STATE_FILE: Path
 UPLOAD_DIR: Path
-SETUPS_DIR: Path
-CAMPAIGNS_FILE: Path
-CHARACTERS_DIR: Path
 STATIC_DIR: Path
 
 # ============================================================================
@@ -194,21 +192,22 @@ if __name__ == '__main__':
         sys.exit(f"Static asset directory does not exist: {STATIC_DIR}")
 
     UPLOAD_DIR = DATA_DIR / "uploads"
-    SETUPS_DIR = DATA_DIR / "setups"
-    CHARACTERS_DIR = DATA_DIR / "characters"
 
     UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-    SETUPS_DIR.mkdir(parents=True, exist_ok=True)
-    CHARACTERS_DIR.mkdir(parents=True, exist_ok=True)
 
-    STATE_FILE = DATA_DIR / "state.json"
-    CAMPAIGNS_FILE = DATA_DIR / "campaigns.json"
 
-    migrate_unassigned_setups()
-    migrate_campaign_characters()
-    load_state()
-    clean_order()
-    save_state()
+    STORAGE = SQLiteStorage(DATA_DIR / "scrying-glass.sqlite3")
+    try:
+        with STORAGE.transaction():
+            imported = import_legacy_storage()
+            load_state()
+            clean_order()
+            save_state()
+    except Exception as exc:
+        STORAGE.close()
+        sys.exit(f"Unable to initialize database: {exc}")
+    if imported["campaigns"]:
+        print(f"Imported legacy storage into SQLite: {imported}")
 
     admin.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="admin-static")
     admin.mount('/media', StaticFiles(directory=str(UPLOAD_DIR)), name='admin-media')
@@ -223,3 +222,5 @@ if __name__ == '__main__':
         asyncio.run(serve())
     except KeyboardInterrupt:
         pass
+    finally:
+        STORAGE.close()

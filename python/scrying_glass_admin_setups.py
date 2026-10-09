@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 from typing import Any
-from fastapi import File, Form
 
 class AdminSetupsMixin:
     """Implement admin setups handlers using the shared server context."""
@@ -44,14 +43,7 @@ class AdminSetupsMixin:
                 409,
                 "Activate this campaign before saving, loading, or deleting its setup",
             )
-        path = self.context.setup_path(name, campaign)
-
-        temp = path.with_suffix(".tmp")
-        temp.write_text(
-            self.context.json.dumps(self.context.setup_snapshot(self.context.STATE), indent=2),
-            encoding="utf-8",
-        )
-        temp.replace(path)
+        self.context.STORAGE.save_setup(campaign, name, self.context.setup_snapshot(self.context.STATE))
 
         # Characters are campaign-owned, so save their current state separately.
         self.context.save_campaign_characters(campaign, self.context.STATE["characters"])
@@ -88,9 +80,8 @@ class AdminSetupsMixin:
         old = self.context.setup_slug(payload.name)
         new = self.context.setup_slug(payload.new_name)
 
-        src = self.context.setup_path(old, campaign)
 
-        if not src.exists():
+        if not self.context.STORAGE.setup_exists(campaign, old):
             raise self.context.HTTPException(404, "Saved setup not found")
 
         if new == old:
@@ -100,15 +91,14 @@ class AdminSetupsMixin:
                 "campaign": campaign,
             }
 
-        dst = self.context.setup_path(new, campaign)
 
-        if dst.exists():
+        if self.context.STORAGE.setup_exists(campaign, new):
             raise self.context.HTTPException(
                 409,
                 f"A battle setup called {new} already exists in this campaign",
             )
 
-        src.rename(dst)
+        self.context.STORAGE.rename_setup(campaign, old, new)
 
         data = self.context.read_campaigns()
         meta = data["campaigns"].get(campaign)
@@ -149,8 +139,7 @@ class AdminSetupsMixin:
                 "Activate this campaign before saving, loading, or deleting its setup",
             )
         name = self.context.setup_slug(name)
-        path = self.context.setup_path(name, campaign)
-        if not path.exists():
+        if not self.context.STORAGE.setup_exists(campaign, name):
             raise self.context.HTTPException(404, 'Saved setup not found')
         reference = self.context.active_setup_reference()
 
@@ -161,7 +150,7 @@ class AdminSetupsMixin:
         ):
             self.context.clear_active_setup()
 
-        path.unlink()
+        self.context.STORAGE.delete_setup(campaign, name)
         remaining = self.context.list_setups(campaign)
         created_default = False
         if remaining:
