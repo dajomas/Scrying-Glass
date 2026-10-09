@@ -1,15 +1,53 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Scrying Glass - Users</title><link rel="stylesheet" href="/static/admin.css"><script src="/static/users.js" defer></script></head>
-<body><main><h1>User management</h1>
-<form action="/logout" method="post"><button type="submit">Log out</button></form>
-<p>Manage account usernames, roles and passwords.</p>
-<p id="userMessage" role="status"></p>
-<section><h2 id="formTitle">Create user</h2><form id="userForm">
-<label>Username <input id="username" required maxlength="64" autocomplete="off"></label>
-<label>Role <select id="role"><option value="client">Client</option><option value="admin">Admin</option><option value="superadmin">Superadmin</option></select></label>
-<label>Password <input id="password" type="password" minlength="8" maxlength="1024" autocomplete="new-password" required></label>
-<p>When editing, leave password blank to keep it unchanged. Saving changes signs that user out.</p>
-<button type="submit">Save user</button><button type="button" id="cancelEdit">Cancel / new user</button>
-</form></section><section><h2>Accounts</h2><table><thead><tr><th>Username</th><th>Role</th><th>Actions</th></tr></thead><tbody id="userRows"></tbody></table></section>
-</main></body></html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Scrying Glass - Users</title>
+    <link rel="stylesheet" href="/static/admin.css">
+    <script src="/static/users.js" defer></script>
+</head>
+
+<body>
+    <main>
+        <h1>User management</h1>
+        <form action="/logout" method="post"><button type="submit">Log out</button></form>
+        <p>Manage account usernames, roles and passwords.</p>
+        <p id="userMessage" role="status"></p>
+        <section>
+            <h2 id="formTitle">Create user</h2>
+            <form id="userForm">
+                <label>Username <input id="username" required maxlength="64" autocomplete="off"></label>
+                <label>Role <select id="role">
+                        <option value="client">Client</option>
+                        <option value="admin">Admin</option>
+                        <option value="superadmin">Superadmin</option>
+                    </select></label>
+                <label>Password <input id="password" type="password" minlength="8" maxlength="1024"
+                        autocomplete="new-password" required></label>
+                <p>The <strong>Client</strong> role allows a user acces to the viewing page.</br>
+                    The <strong>Admin</strong> role allows a user access to the campaign management page (including
+                    battle setups and combat).</br>
+                    The <strong>Superadmin</strong> role allows a user access to the User management page.</p>
+                <p>When editing, leave password blank to keep it unchanged. Saving changes signs that user out.</p>
+                <button type="submit">Save user</button><button type="button" id="cancelEdit">Cancel / new user</button>
+            </form>
+        </section>
+        <section>
+            <h2>Accounts</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="userRows"></tbody>
+            </table>
+        </section>
+    </main>
+</body>
+
+</html>
