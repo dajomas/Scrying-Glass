@@ -50,9 +50,9 @@ class ClientAPI:
     # ============================================================================
 
 
-    def client_root(self, request: FastAPIRequest):
+    async def client_root(self, request: FastAPIRequest):
         """Client root."""
-        session = self.context.SESSIONS.get(request.cookies.get(self.context.CLIENT_SESSION_COOKIE, ""))
+        session = self.context.auth_session(request.cookies.get(self.context.CLIENT_SESSION_COOKIE, ""))
 
         if not session:
             return self.context.RedirectResponse("/login", status_code=303)
@@ -63,10 +63,10 @@ class ClientAPI:
         """Client login get."""
         return self.context.login()
 
-    def client_login_post(self, username: str=Form(...), password: str=Form(...)):
+    async def client_login_post(self, username: str=Form(...), password: str=Form(...)):
         """Client login post."""
         u = self.context.user(username)
-        if not u or u.get('role') not in {'admin', 'client'} or (not self.context.password_ok(password, str(u.get('password', '')))):
+        if not u or u.get('role') not in {'superadmin', 'admin', 'client'} or (not self.context.password_ok(password, str(u.get('password', '')))):
             return self.context.login('Invalid credentials')
         token = self.context.secrets.token_urlsafe(32)
         self.context.SESSIONS[token] = {'username': username, 'role': u['role']}
@@ -76,9 +76,9 @@ class ClientAPI:
             r.delete_cookie(legacy)
         return r
 
-    def client_home(self, request: FastAPIRequest):
+    async def client_home(self, request: FastAPIRequest):
         """Client home."""
-        return self.context.HTMLResponse(self.context.CLIENT_HTML) if self.context.SESSIONS.get(request.cookies.get(self.context.CLIENT_SESSION_COOKIE, '')) else self.context.RedirectResponse('/login', 303)
+        return self.context.HTMLResponse(self.context.CLIENT_HTML) if self.context.auth_session(request.cookies.get(self.context.CLIENT_SESSION_COOKIE, '')) else self.context.RedirectResponse('/login', 303)
 
     # ============================================================================
     # State and live updates
@@ -101,11 +101,11 @@ class ClientAPI:
             self.context.CLIENT_SESSION_COOKIE,
             "",
         )
-        session = self.context.SESSIONS.get(token)
+        session = self.context.auth_session(token)
 
         if (
             not session
-            or session.get("role") not in {"admin", "client"}
+            or session.get("role") not in {"superadmin", "admin", "client"}
         ):
             await websocket.close(code=1008)
             return

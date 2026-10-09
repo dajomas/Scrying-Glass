@@ -1,3 +1,5 @@
+> Account storage update: users now live in SQLite (schema v4). The new `superadmin` role manages users; existing `security.users` is a one-time migration input only. See [User management](User-Management.md) for upgrade instructions. This supersedes older configuration-account instructions below.
+
 # Scrying Glass User Guide
 
 The game master prepares and runs combat in the Admin interface. Players watch

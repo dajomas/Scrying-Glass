@@ -1,4 +1,4 @@
--- Generated schema v3; reference only. Let the application migrate existing databases.
+-- Schema v4; reference only. Let the application migrate existing databases.
 
 CREATE TABLE activity_log_entries (id INTEGER PRIMARY KEY AUTOINCREMENT, encounter_id INTEGER NOT NULL REFERENCES encounters(id) ON DELETE CASCADE, event_id TEXT NOT NULL, position INTEGER NOT NULL CHECK(position>=0), timestamp TEXT, active_combatant_id TEXT, active_combatant TEXT, active_combatant_state TEXT, target_combatant_id TEXT, target_combatant TEXT, target_combatant_state TEXT, action TEXT, amount INTEGER, UNIQUE(encounter_id,event_id));
 
@@ -33,3 +33,15 @@ CREATE TABLE monsters_attributes (id INTEGER PRIMARY KEY AUTOINCREMENT, parent_i
 CREATE TABLE ordered_combatants (id INTEGER PRIMARY KEY AUTOINCREMENT, encounter_id INTEGER NOT NULL REFERENCES encounters(id) ON DELETE CASCADE, list_kind TEXT NOT NULL CHECK(list_kind IN ('battle_order','turn_successors','turn_successors_before_wrap')), combatant_id TEXT NOT NULL, occurrence INTEGER NOT NULL DEFAULT 0, position INTEGER NOT NULL CHECK(position>=0), UNIQUE(encounter_id,list_kind,combatant_id,occurrence));
 
 CREATE TRIGGER cleanup_setup_encounter AFTER DELETE ON battle_setups BEGIN DELETE FROM encounters WHERE id=OLD.encounter_id; END;
+
+-- Schema v4: database-backed accounts and one-time import marker.
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    role TEXT NOT NULL CHECK(role IN ('superadmin','admin','client')),
+    password_hash TEXT NOT NULL
+);
+CREATE TABLE account_migration (
+    id INTEGER PRIMARY KEY CHECK(id=1),
+    completed INTEGER NOT NULL CHECK(completed=1)
+);

@@ -1,4 +1,4 @@
-"""Schema v3: typed columns and ID-bearing child rows; JSON read only for upgrades."""
+"""Schema v4: SQLite accounts plus typed columns and ID-bearing child rows; JSON read only for upgrades."""
 from __future__ import annotations
 import copy
 import json
@@ -17,7 +17,7 @@ LIST_FIELDS = ("battle_order", "turn_successors", "turn_successors_before_wrap")
 STATE_FIELDS = set(LIST_FIELDS) | {"monsters", "characters", "activity_log", "display", "active_setup", "active_turn_id", "battle_round"}
 
 class SQLiteStorage:
-    SCHEMA_VERSION = 3
+    SCHEMA_VERSION = 4
 
     def __init__(self, path: Path):
         self.path = Path(path)
@@ -29,7 +29,7 @@ class SQLiteStorage:
         self.migration_backup = None
         try:
             version = self.connection.execute("PRAGMA user_version").fetchone()[0]
-            if version not in (0, 1, 2, 3):
+            if version not in (0, 1, 2, 3, 4):
                 raise RuntimeError(f"Unsupported schema version: {version}")
             if version == 0:
                 if self.connection.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").fetchone():
@@ -40,6 +40,13 @@ class SQLiteStorage:
             elif version in (1, 2):
                 self._backup()
                 self._upgrade(version)
+            if version != 4:
+                if version == 3:
+                    self._backup()
+                with self.transaction():
+                    self.connection.execute("CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL UNIQUE, role TEXT NOT NULL CHECK(role IN ('superadmin','admin','client')), password_hash TEXT NOT NULL)")
+                    self.connection.execute("CREATE TABLE account_migration (id INTEGER PRIMARY KEY CHECK(id=1), completed INTEGER NOT NULL CHECK(completed=1))")
+                    self.connection.execute("PRAGMA user_version=4")
             self._check_foreign_keys()
         except BaseException:
             self.close()

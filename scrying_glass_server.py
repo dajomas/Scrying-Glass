@@ -198,6 +198,7 @@ if __name__ == '__main__':
 
     try:
         STORAGE = SQLiteStorage(DATA_DIR / "scrying-glass.sqlite3")
+        initialize_users()
         with STORAGE.transaction():
             imported = import_legacy_storage()
             load_state()

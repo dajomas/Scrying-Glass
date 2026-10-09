@@ -7,17 +7,9 @@ network:
 # Persistent JSON state and uploaded monster images are stored below this path.
 storage_dir: "./scrying-glass-data"
 
-security:
-  # Passwords may be plaintext for a first setup, but use scrypt hashes in production.
-  # Generate one with:
-  # python3.14 -c 'from scrying_glass_server import password_hash; print(password_hash("replace-me"))'
-  users:
-    - username: "dm"
-      role: "admin"
-      password: "replace-this-admin-password"
-    - username: "table"
-      role: "client"
-      password: "replace-this-client-password"
+# Accounts are stored in scrying-glass.sqlite3, not configuration.
+# A new installation prints a randomly generated superadmin password once.
+# Existing security.users are imported once; see docs/User-Management.md.
 
 display:
   # CSS color, CSS gradient, or image URL, e.g. "url('/media/background.jpg') center / cover".

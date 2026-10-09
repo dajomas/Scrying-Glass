@@ -15,6 +15,9 @@ def install_services(context: Any) -> dict[str, Any]:
     services = {}
     service = AuthService(context)
     services['auth'] = service
+    context.auth_service = service
+    context.auth_session = service.session
+    context.initialize_users = service.initialize_users
     context.user = service.user
     context.require = service.require
     service = StateService(context)

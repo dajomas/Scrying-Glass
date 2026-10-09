@@ -11,22 +11,22 @@ class AdminPagesMixin:
         """Admin login get."""
         return self.context.login()
 
-    def admin_login_post(self, username: str=Form(...), password: str=Form(...)):
+    async def admin_login_post(self, username: str=Form(...), password: str=Form(...)):
         """Admin login post."""
         u = self.context.user(username)
-        if not u or u.get('role') != 'admin' or (not self.context.password_ok(password, str(u.get('password', '')))):
+        if not u or u.get('role') not in {'admin', 'superadmin'} or (not self.context.password_ok(password, str(u.get('password', '')))):
             return self.context.login('Invalid admin credentials')
         token = self.context.secrets.token_urlsafe(32)
-        self.context.SESSIONS[token] = {'username': username, 'role': 'admin'}
+        self.context.SESSIONS[token] = {'username': username, 'role': u['role']}
         r = self.context.RedirectResponse('/', 303)
         r.set_cookie(self.context.ADMIN_SESSION_COOKIE, token, httponly=True, samesite='lax', secure=False)
         for legacy in self.context.LEGACY_SESSION_COOKIES:
             r.delete_cookie(legacy)
         return r
 
-    def admin_home(self, request: FastAPIRequest):
+    async def admin_home(self, request: FastAPIRequest):
         """Admin home."""
-        return self.context.HTMLResponse(self.context.ADMIN_HTML) if self.context.SESSIONS.get(request.cookies.get(self.context.ADMIN_SESSION_COOKIE, ''), {}).get('role') == 'admin' else self.context.RedirectResponse('/login', 303)
+        return self.context.HTMLResponse(self.context.ADMIN_HTML) if (self.context.auth_session(request.cookies.get(self.context.ADMIN_SESSION_COOKIE, '')) or {}).get('role') in {'admin', 'superadmin'} else self.context.RedirectResponse('/login', 303)
 
     def admin_get_state(self):
         """Admin get state."""
