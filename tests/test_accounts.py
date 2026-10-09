@@ -14,6 +14,7 @@ import types
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+from contextlib import closing
 
 class FakeHTTPException(Exception):
     def __init__(self, status_code, detail):
@@ -186,7 +187,7 @@ class AccountTests(unittest.TestCase):
 
     def test_upgrade_v3_preserves_data_and_creates_backup(self):
         self.storage.close()
-        with sqlite3.connect(self.path) as db:
+        with closing(sqlite3.connect(self.path)) as db, db:
             db.execute("DROP TABLE users")
             db.execute("DROP TABLE account_migration")
             db.execute("PRAGMA user_version=3")

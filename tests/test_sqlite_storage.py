@@ -232,26 +232,28 @@ class MigrationTests(unittest.TestCase):
     def test_unknown_nested_data_rolls_back_schema(self):
         old_database(self.path,unsupported=True)
         with self.assertRaises(ValueError):SQLiteStorage(self.path)
-        with sqlite3.connect(self.path) as c:self.assertEqual(c.execute('PRAGMA user_version').fetchone()[0],1)
+        with closing(sqlite3.connect(self.path)) as c, c:self.assertEqual(c.execute('PRAGMA user_version').fetchone()[0],1)
     def test_future_schema_rejected(self):
         with closing(sqlite3.connect(self.path)) as c, c:c.execute('PRAGMA user_version=99')
         with self.assertRaises(RuntimeError):SQLiteStorage(self.path)
     def test_unversioned_existing_table_rejected(self):
         with closing(sqlite3.connect(self.path)) as c, c:c.execute('CREATE TABLE example(x)')
         with self.assertRaises(RuntimeError):SQLiteStorage(self.path)
-    def test_upgrade_v3_preserves_data_and_creates_backup(self):
-        self.storage.close()
-        with closing(sqlite3.connect(self.path)) as db, db:
-            db.execute("DROP TABLE users")
-            db.execute("DROP TABLE account_migration")
-            db.execute("PRAGMA user_version=3")
-        from python.scrying_glass_storage import SQLiteStorage
-        self.storage = SQLiteStorage(self.path)
-        self.context.STORAGE = self.storage
-        self.assertEqual(self.auth.db.execute("PRAGMA user_version").fetchone()[0], 4)
-        self.assertTrue(self.storage.migration_backup.is_file())
-        self.assertEqual(self.auth.db.execute("SELECT COUNT(*) FROM application_state").fetchone()[0], 1)
-        self.assertIsNone(self.auth.db.execute("SELECT 1 FROM account_migration").fetchone())
+    def test_missing_live_setup_rolls_back_upgrade(self):
+        old_database(self.path)
+        with closing(sqlite3.connect(self.path)) as conn, conn:
+            value = json.loads(conn.execute(
+                "SELECT value_json FROM application_state WHERE key='runtime_state'"
+            ).fetchone()[0])
+            value["active_setup"]["name"] = "missing"
+            conn.execute(
+                "UPDATE application_state SET value_json=? WHERE key='runtime_state'",
+                (json.dumps(value),),
+            )
+        with self.assertRaises(ValueError):
+            SQLiteStorage(self.path)
+        with closing(sqlite3.connect(self.path)) as conn, conn:
+            self.assertEqual(conn.execute("PRAGMA user_version").fetchone()[0], 1)
 
     def test_backup_filename_not_overwritten(self):
         old_database(self.path);old=self.path.with_name(self.path.name+'.before-normalization.bak');old.write_bytes(b'keep')

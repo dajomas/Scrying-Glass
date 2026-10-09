@@ -23,11 +23,11 @@ class SQLiteStorage:
         self.path = Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.connection = sqlite3.connect(self.path, timeout=10, isolation_level=None)
-        self.connection.row_factory = sqlite3.Row
-        self.connection.execute("PRAGMA foreign_keys=ON")
-        self.connection.execute("PRAGMA busy_timeout=10000")
         self.migration_backup = None
         try:
+            self.connection.row_factory = sqlite3.Row
+            self.connection.execute("PRAGMA foreign_keys=ON")
+            self.connection.execute("PRAGMA busy_timeout=10000")
             version = self.connection.execute("PRAGMA user_version").fetchone()[0]
             if version not in (0, 1, 2, 3, 4):
                 raise RuntimeError(f"Unsupported schema version: {version}")
