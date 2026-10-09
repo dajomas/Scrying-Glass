@@ -3558,9 +3558,3 @@ installColorPreview('#backgroundColor', '#backgroundColorPreview',);
 
 load();
 setups();
-
-// User administration is visible only to superadmins; API authorization is authoritative.
-fetch('/api/me').then(r => r.ok ? r.json() : null).then(user => {
-  const link = document.getElementById('userManagementLink');
-  if (link && user && user.role === 'superadmin') link.hidden = false;
-}).catch(() => {});

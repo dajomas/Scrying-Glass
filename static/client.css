@@ -210,3 +210,29 @@ h1 {
 
     white-space: nowrap;
 }
+/* Reserve a small toolbar row so logout never obscures the encounter. */
+.client-toolbar {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: .3rem .6rem;
+    background: #111827e8;
+    position: relative;
+    z-index: 6;
+}
+
+.client-toolbar form { margin: 0; }
+
+.client-toolbar button {
+    border: 1px solid #64748b;
+    border-radius: .4rem;
+    padding: .35rem .75rem;
+    background: #1e293b;
+    color: #fff;
+    font: inherit;
+    cursor: pointer;
+}
+
+.client-toolbar button:hover { background: #334155; }
+.client-toolbar button:focus-visible { outline: 2px solid #fbbf24; outline-offset: 2px; }

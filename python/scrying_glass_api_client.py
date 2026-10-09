@@ -11,6 +11,8 @@ class ClientAPI:
         self.context = context
         self.app = app
         self.register_routes()
+        from .scrying_glass_logout import install_logout
+        install_logout(context, app, context.CLIENT_SESSION_COOKIE)
 
     def register_routes(self) -> None:
         """Register bound methods while preserving authentication and route metadata."""
@@ -127,6 +129,9 @@ class ClientAPI:
             accepted = True
 
             async with broadcast_lock:
+                if not self.context.auth_session(token):
+                    await websocket.close(code=1008)
+                    return
                 initial_message = self.context.json.dumps({
                     "type": "state",
                     "state": self.context.display_state(),
@@ -137,6 +142,10 @@ class ClientAPI:
                     timeout=2.0,
                 )
 
+                # Logout can run while the initial send awaits network I/O.
+                if not self.context.auth_session(token):
+                    await websocket.close(code=1008)
+                    return
                 self.context.SOCKETS.add(websocket)
 
             while True:

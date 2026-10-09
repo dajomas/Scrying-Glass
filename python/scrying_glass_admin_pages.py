@@ -1,33 +1,44 @@
-"""Admin pages endpoint handlers; route registration stays in AdminAPI."""
-
+"""Role-specific administration pages; registration stays in AdminAPI."""
 from __future__ import annotations
-from typing import Any
-from fastapi import File, Form
+from fastapi import Form, Request as FastAPIRequest
+
 
 class AdminPagesMixin:
-    """Implement admin pages handlers using the shared server context."""
+    """Show user management to superadmins and battle controls to admins."""
 
-    def admin_login_get(self):
-        """Admin login get."""
+    async def admin_login_get(self, request: FastAPIRequest):
+        session = self.context.auth_session(
+            request.cookies.get(self.context.ADMIN_SESSION_COOKIE, "")
+        )
+        if session and session["role"] in {"admin", "superadmin"}:
+            destination = "/users" if session["role"] == "superadmin" else "/"
+            return self.context.RedirectResponse(destination, 303)
         return self.context.login()
 
     async def admin_login_post(self, username: str=Form(...), password: str=Form(...)):
-        """Admin login post."""
-        u = self.context.user(username)
-        if not u or u.get('role') not in {'admin', 'superadmin'} or (not self.context.password_ok(password, str(u.get('password', '')))):
-            return self.context.login('Invalid admin credentials')
+        user = self.context.user(username)
+        if not user or user.get("role") not in {"admin", "superadmin"} or not self.context.password_ok(password, str(user.get("password", ""))):
+            return self.context.login("Invalid admin credentials")
         token = self.context.secrets.token_urlsafe(32)
-        self.context.SESSIONS[token] = {'username': username, 'role': u['role']}
-        r = self.context.RedirectResponse('/', 303)
-        r.set_cookie(self.context.ADMIN_SESSION_COOKIE, token, httponly=True, samesite='lax', secure=False)
+        self.context.SESSIONS[token] = {"username": username, "role": user["role"]}
+        destination = "/users" if user["role"] == "superadmin" else "/"
+        response = self.context.RedirectResponse(destination, 303)
+        response.set_cookie(self.context.ADMIN_SESSION_COOKIE, token, httponly=True, samesite="lax", secure=False)
         for legacy in self.context.LEGACY_SESSION_COOKIES:
-            r.delete_cookie(legacy)
-        return r
+            response.delete_cookie(legacy)
+        return response
 
     async def admin_home(self, request: FastAPIRequest):
-        """Admin home."""
-        return self.context.HTMLResponse(self.context.ADMIN_HTML) if (self.context.auth_session(request.cookies.get(self.context.ADMIN_SESSION_COOKIE, '')) or {}).get('role') in {'admin', 'superadmin'} else self.context.RedirectResponse('/login', 303)
+        session = self.context.auth_session(
+            request.cookies.get(self.context.ADMIN_SESSION_COOKIE, "")
+        )
+        if not session:
+            return self.context.RedirectResponse("/login", 303)
+        if session["role"] == "superadmin":
+            return self.context.RedirectResponse("/users", 303)
+        if session["role"] == "admin":
+            return self.context.HTMLResponse(self.context.ADMIN_HTML)
+        return self.context.RedirectResponse("/login", 303)
 
     def admin_get_state(self):
-        """Admin get state."""
         return self.context.public_state()

@@ -8,6 +8,11 @@ CLIENT_HTML = r'''<!doctype html>
   <link rel="stylesheet" href="/static/client.css">
 </head>
 <body>
+  <header class="client-toolbar" aria-label="Display account controls">
+    <form action="/logout" method="post">
+      <button id="clientLogout" type="submit">Log out</button>
+    </form>
+  </header>
   <div id="initiative"></div>
   <div id="stage"></div>
 

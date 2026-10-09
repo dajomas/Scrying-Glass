@@ -1,8 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Scrying Glass - Users</title><link rel="stylesheet" href="/static/admin.css"><script src="/static/users.js" defer></script></head>
-<body><main><h1>User management</h1><p><a href="/">Back to battle administration</a></p>
-<p>Superadmin: battle administration and user management. Admin: battle administration. Client: display only.</p>
+<body><main><h1>User management</h1>
+<form action="/logout" method="post"><button type="submit">Log out</button></form>
+<p>Manage account usernames, roles and passwords.</p>
 <p id="userMessage" role="status"></p>
 <section><h2 id="formTitle">Create user</h2><form id="userForm">
 <label>Username <input id="username" required maxlength="64" autocomplete="off"></label>
