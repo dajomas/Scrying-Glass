@@ -240,15 +240,34 @@ class ImagesService:
         upload: UploadFile | None,
         image_url: str | None = None,
     ) -> dict[str, Any]:
-        """Build a monster without performing a remote image lookup."""
-        hp = fields["hp"]
+        """Validate creation/import fields before building an editable monster."""
+        if not isinstance(fields, dict):
+            raise self.context.HTTPException(422, "Monster fields must be an object")
+        prepared = dict(fields)
+        for field in ("name", "monster_species"):
+            value = prepared.get(field)
+            if not isinstance(value, str):
+                raise self.context.HTTPException(422, f"{field} must be text")
+            value = value.strip()
+            if not 1 <= len(value) <= 100:
+                raise self.context.HTTPException(422, f"{field} must contain 1-100 characters after trimming")
+            prepared[field] = value
+        ac = prepared.get("ac")
+        if type(ac) is not int or not 0 <= ac <= 999:
+            raise self.context.HTTPException(422, "AC must be an integer between 0 and 999")
+        if not isinstance(color, str) or not 1 <= len(color.strip()) <= 40:
+            raise self.context.HTTPException(422, "Color must contain 1-40 characters")
+        color = color.strip()
+        hp = prepared.get("hp")
+        if type(hp) is not int or not -(2 ** 63) <= hp <= 2 ** 63 - 1:
+            raise self.context.HTTPException(422, "HP must be an integer within the signed 64-bit storage range")
 
         if upload is not None and upload.filename:
             image_url = self.context.save_image(upload)
 
         return {
+            **prepared,
             "id": self.context.uuid.uuid4().hex,
-            **fields,
             "max_hp": hp,
             "original_hp": hp,
             "color": color,
@@ -264,7 +283,7 @@ class ImagesService:
             "show_initiative": False,
             "in_turn": False,
         }
-
+    
     def make_monsters(self, fields: dict[str, Any], color: str, quantity: int, image_url: str | None) -> list[dict[str, Any]]:
         """Make monsters."""
         return [
