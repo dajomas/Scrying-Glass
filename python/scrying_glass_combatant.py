@@ -7,6 +7,10 @@ def combatant_state(combatant: dict[str, Any] | None) -> str:
     if combatant is None:
         return "unknown"
 
+    life_state = combatant.get("life_state")
+    if life_state in ("down", "stable", "dead"):
+        return life_state
+
     return "alive" if combatant.get("alive", True) else "dead"
 
 def update_alive_state(combatant: dict[str, Any]) -> None:
