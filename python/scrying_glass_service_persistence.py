@@ -3,6 +3,7 @@
 from __future__ import annotations
 from typing import Any, Literal
 from pathlib import Path
+from .scrying_glass_turn_rules import can_take_turn
 
 
 class PersistenceService:
@@ -304,8 +305,7 @@ class PersistenceService:
 
             if (
                 target is not None
-                and target["active"]
-                and target["alive"]
+                and can_take_turn(target)
             ):
                 target["in_turn"] = True
                 target["visible"] = True
@@ -346,12 +346,11 @@ class PersistenceService:
                 )
 
             if (
-                current.get("active") is not True
-                or current.get("alive") is not True
+                not can_take_turn(current)
             ):
                 raise ValueError(
                     "Cannot save state: the combatant in turn "
-                    "must be active and alive"
+                    "must be active and turn-eligible"
                 )
 
             active_turn_id = ident

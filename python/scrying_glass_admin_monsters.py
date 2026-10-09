@@ -319,6 +319,7 @@ class AdminMonstersMixin:
         }
 
         hp_delta = values.pop("hp_delta", None)
+        critical_hit = values.pop("critical_hit", False)
         requested_turn = values.get("in_turn")
 
         candidate = copy.deepcopy(monster)
@@ -328,7 +329,8 @@ class AdminMonstersMixin:
                 candidate[key] = value
 
         if hp_delta is not None:
-            candidate["hp"] += hp_delta
+            from .scrying_glass_feature_rules import apply_hp
+            apply_hp(candidate,hp_delta,critical=critical_hit)
 
         from .scrying_glass_feature_rules import sync_health
         sync_health(candidate)

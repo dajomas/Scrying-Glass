@@ -1,12 +1,12 @@
-"""Pure validation and HP operations for encounter features."""
-STATES = {'standing', 'down', 'stable', 'dead'}
+"""Nonnegative HP, excess-damage death, zero-HP saves and effect validation."""
+from .scrying_glass_turn_rules import permanently_dead,can_take_turn,is_character
+STATES={'standing','down','stable','dead'}
 
 def validate_effects(effects):
     if not isinstance(effects,list) or len(effects)>100: raise ValueError('At most 100 effects are allowed')
     seen=set()
     for e in effects:
-        if not isinstance(e,dict) or set(e)-{'id','name','source_id','notes','public','concentration','timing','turns','anchor_id'}:
-            raise ValueError('Invalid effect object')
+        if not isinstance(e,dict) or set(e)-{'id','name','source_id','notes','public','concentration','timing','turns','anchor_id'}: raise ValueError('Invalid effect object')
         for k,limit in (('id',100),('name',100),('notes',2000)):
             value=e.get(k,'' if k=='notes' else None)
             if not isinstance(value,str) or len(value)>limit or (k!='notes' and not value.strip()): raise ValueError('Invalid effect '+k)
@@ -21,44 +21,65 @@ def validate_effects(effects):
         turns=e.get('turns')
         if e['timing']=='manual':
             if turns is not None: raise ValueError('Manual effects cannot have a counter')
-        elif not e.get('anchor_id') or type(turns) is not int or not 1<=turns<=10000:
-            raise ValueError('Timed effects require an anchor and positive counter')
+        elif not e.get('anchor_id') or type(turns) is not int or not 1<=turns<=10000: raise ValueError('Timed effects require anchor and positive counter')
 
 def normalize_features(item):
-    if 'life_state' not in item:
-        item['life_state']='standing' if item.get('hp',0)>0 and item.get('alive',True) else ('dead' if item.get('hp',0)>0 else 'down')
+    if type(item.get('hp',0)) is not int or type(item.get('max_hp',0)) is not int: raise ValueError('HP and maximum HP must be integers')
+    # Historical negatives are normalized, not reinterpreted as damage events.
+    item['hp']=max(0,item.get('hp',0));item['max_hp']=max(0,item.get('max_hp',0))
+    if 'original_hp' in item and type(item['original_hp']) is int: item['original_hp']=max(0,item['original_hp'])
+    if 'life_state' not in item: item['life_state']='standing' if item['hp']>0 and item.get('alive',True) else ('dead' if item['hp']>0 else 'down')
     state=item['life_state']
     if not isinstance(state,str) or state not in STATES: raise ValueError('Invalid life state')
-    if state=='standing' and item.get('hp',0)<=0: raise ValueError('Standing requires positive HP')
-    if state in ('down','stable') and item.get('hp',0)>0: raise ValueError('Down/stable requires nonpositive HP')
     for k,limit in (('temp_hp',99999),('death_successes',3),('death_failures',3)):
         item.setdefault(k,0)
         if type(item[k]) is not int or not 0<=item[k]<=limit: raise ValueError('Invalid '+k)
+    if permanently_dead(item): item['life_state']='dead';item['hp']=0
+    elif item['hp']>0:
+        item['life_state']='standing';item['death_successes']=item['death_failures']=0
+    elif state=='standing': item['life_state']='down'
+    if item['life_state']=='stable': item['death_successes']=item['death_failures']=0
     item.setdefault('concentrating',False)
     if type(item['concentrating']) is not bool: raise ValueError('Invalid concentrating flag')
     item.setdefault('effects',[]);validate_effects(item['effects'])
-    item['alive']=state=='standing'
-    if not item['alive']: item['in_turn']=False
+    item['alive']=item['life_state']=='standing'
+    if not can_take_turn(item): item['in_turn']=False
     return item
 
 def sync_health(item):
-    old=item.get('life_state')
-    if old=='dead': item['alive']=False
-    elif item.get('hp',0)>0:
-        item['life_state']='standing';item['alive']=True
-        item['death_successes']=item['death_failures']=0
-    else:
-        item['life_state']='stable' if old=='stable' else 'down';item['alive']=False
-    if not item['alive']: item['visible']=True;item['in_turn']=False
-
-def apply_hp(item,delta,*,absorb=True):
-    if type(delta) is not int: raise ValueError('HP change must be an integer')
     normalize_features(item)
-    if delta<0 and absorb:
-        consumed=min(item['temp_hp'],-delta);item['temp_hp']-=consumed;delta+=consumed
-    if delta<0 and item['life_state']=='stable': item['life_state']='down'
-    item['hp']+=delta;sync_health(item)
+    if not item['alive']: item['visible']=True
+
+def apply_hp(item,delta,*,absorb=True,critical=False):
+    """Apply one damage/healing event; never retain or accumulate negative HP."""
+    if type(delta) is not int or type(critical) is not bool: raise ValueError('Invalid HP change/critical flag')
+    normalize_features(item)
+    before=item['hp'];temporary=item['temp_hp'];old_failures=item['death_failures']
+    result={'damage':0,'excess':0,'instant_death':False,'failed_saves':0,'temp_consumed':0}
+    if permanently_dead(item): return result
+    if delta>=0:
+        if delta: item['hp']+=delta;item['life_state']='standing';item['death_successes']=item['death_failures']=0
+        sync_health(item);return result
+    damage=-delta
+    consumed=min(temporary,damage) if absorb else 0
+    item['temp_hp']-=consumed;damage-=consumed
+    result.update(damage=damage,temp_consumed=consumed)
+    if not damage and not (before==0 and is_character(item)): return result
+    item['hp']=max(0,before-damage)
+    if is_character(item):
+        excess=max(0,damage-before);result['excess']=excess
+        if item['hp']==0 and excess>0 and excess>=item['max_hp']:
+            item['life_state']='dead';result['instant_death']=True
+        elif before==0:
+            if item['life_state']=='stable': item['death_successes']=item['death_failures']=0
+            previous=item['death_failures']
+            item['death_failures']=min(3,previous+(2 if critical else 1))
+            result['failed_saves']=item['death_failures']-previous
+            item['life_state']='dead' if item['death_failures']>=3 else 'down'
+        elif item['hp']==0: item['life_state']='down'
+    elif item['hp']==0: item['life_state']='dead'
+    sync_health(item)
+    return result
 
 def public_features(item):
-    return {'life_state':item.get('life_state','standing' if item.get('alive',True) else 'down'),
-            'effects':[{'name':e['name']} for e in item.get('effects',[]) if e.get('public')]}
+    return {'life_state':item.get('life_state','standing' if item.get('alive',True) else 'down'),'effects':[{'name':e['name']} for e in item.get('effects',[]) if e.get('public')]}

@@ -3,6 +3,8 @@
 from __future__ import annotations
 from typing import Any
 from fastapi import File, Form
+from .scrying_glass_feature_rules import apply_hp
+from .scrying_glass_turn_rules import permanently_dead,can_take_turn
 
 class AdminBattleMixin:
     """Implement admin battle handlers using the shared server context."""
@@ -50,8 +52,8 @@ class AdminBattleMixin:
 
     async def battle_next(self):
         """Battle next."""
-        previous = self.context.active_combatant()
-        remembered = self.context.STATE.get('turn_successors',[])
+        previous=self.context.active_combatant()
+        remembered=self.context.STATE.get('turn_successors',[])
         if getattr(self.context,'features',None):
             self.context.features.expire(previous['id'] if previous else (remembered[-1] if remembered else None),'end')
         current = self.context.advance_turn()
@@ -80,7 +82,7 @@ class AdminBattleMixin:
             )
 
         valid_actions = {"damage", "heal", "buff", "debuff"}
-        prepared: list[tuple[dict[str, Any], str, int | None]] = []
+        prepared = []
 
         # Validate all rows before changing state, so a malformed row cannot leave
         # prior rows partially applied.
@@ -99,9 +101,9 @@ class AdminBattleMixin:
                     f"Target {target['name']} must be active",
                 )
 
-            if row.action=='heal' and target.get('life_state')=='dead':
-                raise self.context.HTTPException(400,'Explicitly recover a dead combatant before healing')
-            if row.action != "heal" and not target.get("alive", True):
+            if permanently_dead(target):
+                raise self.context.HTTPException(400,'Explicitly recover a dead combatant before applying battle actions')
+            if row.action not in {'damage','heal'} and not target.get("alive", True):
                 raise self.context.HTTPException(
                     400,
                     f"Target {target['name']} must be alive for {row.action}",
@@ -122,20 +124,28 @@ class AdminBattleMixin:
                     )
                 amount = None
 
-            prepared.append((target, row.action, amount))
+            critical=getattr(row,'critical_hit',False)
+            if critical and row.action!='damage':
+                raise self.context.HTTPException(422,'Critical hit applies only to damage')
+            prepared.append((target,row.action,amount,critical))
 
         # Apply only after every row passed validation.
         self.context.remember_turn_successors()
 
-        for target, action, amount in prepared:
+        for target, action, amount, critical in prepared:
             if action == "damage":
-                target["hp"] -= amount
-                self.context.update_alive_state(target)
+                result=apply_hp(target,-amount,critical=critical)
+                if getattr(self.context,'features',None):
+                    if result['instant_death']:
+                        self.context.features.log('instant-death',target,note=f"Excess damage {result['excess']} ≥ maximum HP {target['max_hp']}")
+                    elif result['failed_saves']:
+                        self.context.features.log('death-save-failure',target,result['failed_saves'],note=f"Damage at 0 HP; failures now {target['death_failures']}/3"+(' (critical hit)' if critical else ''))
+                    if target.get('concentrating'):
+                        self.context.features.log('concentration-reminder',target,note='Resolve concentration manually')
             elif action == "heal":
-                target["hp"] += amount
-                self.context.update_alive_state(target)
+                apply_hp(target,amount)
 
-                if target.get("active") and target.get("alive"):
+                if can_take_turn(target):
                     self.context.insert_into_battle_order(target)
 
             self.context.log_battle_action(actor, target, action, amount)

@@ -23,8 +23,9 @@ class MonsterUpdate(BaseModel):
     ally: bool | None = None
     visible: bool | None = None
     initiative: int | None = Field(default=None, ge=-100, le=100)
-    hp: int | None = Field(default=None, ge=-99999, le=99999)
+    hp: int | None = Field(default=None, ge=0, le=99999)
     hp_delta: int | None = Field(default=None, ge=-99999, le=99999)
+    critical_hit: bool = False
     show_ac: bool | None = None
     show_hp: bool | None = None
     show_initiative: bool | None = None
@@ -49,9 +50,10 @@ class CharacterUpdate(BaseModel):
     alive: bool | None = None
     visible: bool | None = None
     initiative: int | None = Field(default=None, ge=-100, le=100)
-    hp: int | None = Field(default=None, ge=-99999, le=99999)
+    hp: int | None = Field(default=None, ge=0, le=99999)
     max_hp: int | None = Field(default=None, ge=0, le=99999)
     hp_delta: int | None = Field(default=None, ge=-99999, le=99999)
+    critical_hit: bool = False
     in_turn: bool | None = None
 
 class BattleStart(BaseModel):
@@ -97,6 +99,7 @@ class BattleActionRow(BaseModel):
     target_id: str = Field(min_length=1, max_length=100)
     action: Literal["damage", "heal", "buff", "debuff"]
     amount: int | None = Field(default=None, ge=1, le=99999)
+    critical_hit: bool = False
 
 class BattleActions(BaseModel):
     """Battleactions."""

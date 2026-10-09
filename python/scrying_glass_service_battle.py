@@ -3,6 +3,7 @@
 from __future__ import annotations
 from typing import Any, Literal
 from pathlib import Path
+from .scrying_glass_turn_rules import can_take_turn
 from fastapi import HTTPException, Request as FastAPIRequest, UploadFile
 
 
@@ -64,7 +65,7 @@ class BattleService:
         'Insert a newly activated living combatant into an existing battle order.\n\n    Higher numeric initiative acts first. On equal initiative, the newly added\n    combatant is placed after all existing combatants with that same initiative.\n    Combatants without initiative are placed after numeric initiatives.\n    '
         if not self.context.STATE['battle_order']:
             return
-        if not combatant.get('active') or not combatant.get('alive', True):
+        if not can_take_turn(combatant):
             return
         combatant_id = combatant['id']
         if combatant_id in self.context.STATE['battle_order']:
@@ -105,8 +106,8 @@ class BattleService:
             return
         if requested is not True:
             return
-        if not x.get('active') or not x.get('alive', True):
-            raise self.context.HTTPException(400, 'Only an active living combatant may have the battle turn')
+        if not can_take_turn(x):
+            raise self.context.HTTPException(400, 'Only an active, turn-eligible combatant may have the battle turn')
         self.context.STATE["turn_successors"] = []
         self.context.STATE["turn_successors_before_wrap"] = []
         self.context.clear_turns()
@@ -115,7 +116,7 @@ class BattleService:
 
     def eligible(self) -> list[dict[str, Any]]:
         """Eligible."""
-        return [x for x in self.context.entities() if x.get('active') and x.get('alive', True)]
+        return [x for x in self.context.entities() if can_take_turn(x)]
 
     def begin_battle(self, order: list[str]) -> None:
         """Start the supplied turn order at round one."""
@@ -127,12 +128,12 @@ class BattleService:
         if len(order) != len(wanted) or set(order) != wanted:
             raise self.context.HTTPException(
                 400,
-                "Battle order must include every active living "
+                "Battle order must include every turn-eligible "
                 "combatant exactly once",
             )
 
         if not order:
-            raise self.context.HTTPException(400, "Activate at least one living combatant before starting a battle")
+            raise self.context.HTTPException(400, "Activate at least one turn-eligible combatant before starting a battle")
 
         self.context.STATE["battle_order"] = list(order)
         self.context.STATE["battle_round"] = 1

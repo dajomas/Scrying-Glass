@@ -3,6 +3,7 @@
 from __future__ import annotations
 from typing import Any
 from fastapi import File, Form
+from .scrying_glass_turn_rules import can_take_turn
 import copy
 
 class AdminCharactersMixin:
@@ -111,6 +112,7 @@ class AdminCharactersMixin:
         }
 
         hp_delta = values.pop("hp_delta", None)
+        critical_hit = values.pop("critical_hit", False)
         requested_turn = values.get("in_turn")
 
         candidate = copy.deepcopy(character)
@@ -120,30 +122,32 @@ class AdminCharactersMixin:
                 candidate[key] = value
 
         if hp_delta is not None:
-            candidate["hp"] += hp_delta
+            from .scrying_glass_feature_rules import apply_hp
+            apply_hp(candidate,hp_delta,critical=critical_hit)
 
         if "max_hp" in values:
             candidate["original_hp"] = values["max_hp"]
 
         hp_changed = "hp" in values or hp_delta is not None
 
-        if "alive" not in values and hp_changed:
-            candidate["alive"] = candidate["hp"] > 0
+        from .scrying_glass_feature_rules import sync_health
+        if "alive" in values:
+            candidate['life_state'] = ('standing' if candidate['hp']>0 else 'down') if values['alive'] else 'dead'
+        if hp_changed or 'alive' in values or 'max_hp' in values:
+            sync_health(candidate)
 
         if not candidate.get("alive"):
             candidate["visible"] = True
+        if not can_take_turn(candidate):
             candidate["in_turn"] = False
 
         if not candidate.get("active"):
             candidate["in_turn"] = False
 
-        if requested_turn is True and (
-            not candidate.get("active")
-            or not candidate.get("alive")
-        ):
+        if requested_turn is True and not can_take_turn(candidate):
             raise self.context.HTTPException(
                 400,
-                "Only an active living combatant may have the battle turn",
+                "Only an active, turn-eligible combatant may have the battle turn",
             )
 
         self.context.remember_turn_successors()
@@ -154,7 +158,7 @@ class AdminCharactersMixin:
         character.update(candidate)
         self.context.set_turn(character, requested_turn)
 
-        if character.get("active") and character.get("alive"):
+        if can_take_turn(character):
             self.context.insert_into_battle_order(character)
 
         self.context.clean_order()

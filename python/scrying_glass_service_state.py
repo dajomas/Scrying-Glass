@@ -3,6 +3,7 @@
 from __future__ import annotations
 from typing import Any, Literal
 from pathlib import Path
+from .scrying_glass_turn_rules import can_take_turn
 
 
 class StateService:
@@ -316,10 +317,10 @@ class StateService:
                 from .scrying_glass_feature_rules import normalize_features
                 normalize_features(item)
                 if item["in_turn"]:
-                    if not item["active"] or not item["alive"]:
+                    if not can_take_turn(item):
                         raise ValueError(
                             f"{location}.in_turn requires an active, "
-                            "living combatant"
+                            "turn-eligible combatant"
                         )
                     turn_locations.append(location)
 
@@ -367,7 +368,7 @@ class StateService:
 
         def display_character(item: dict[str, Any]) -> dict[str, Any]:
             from .scrying_glass_feature_rules import public_features
-            return {**{key: item.get(key) for key in common_fields}, **public_features(item)}
+            return {**{key:item.get(key) for key in common_fields}, **public_features(item)}
 
         def display_monster(item: dict[str, Any]) -> dict[str, Any]:
             result = display_character(item)

@@ -1,0 +1,29 @@
+/* Campaign backup controls moved out of the Encounter tools stylesheet scope. */
+#campaignInputPane .campaign-backups-panel {box-sizing:border-box;margin:1.25rem 0 0;min-width:0;border:1px solid #287373;border-top:3px solid #5eead4;border-radius:8px;background:#103030;overflow:hidden;}
+#campaignInputPane .campaign-backups-panel *, #campaignInputPane .campaign-backups-panel *::before, #campaignInputPane .campaign-backups-panel *::after {box-sizing:border-box;}
+#campaignInputPane .campaign-backups-panel > summary {display:flex;align-items:center;gap:.75rem;padding:1rem;cursor:pointer;list-style:none;min-height:4.75rem;}
+#campaignInputPane .campaign-backups-panel > summary::-webkit-details-marker {display:none;}
+#campaignInputPane .campaign-backups-panel > summary::before {content:'+';display:grid;place-items:center;flex:0 0 1.65rem;height:1.65rem;border-radius:5px;background:#176b6b;color:#ecfeff;font-size:1.15rem;}
+#campaignInputPane .campaign-backups-panel[open] > summary::before {content:'−';}
+#campaignInputPane .campaign-backups-panel > summary:hover {background:#174646;}
+#campaignInputPane .campaign-backups-panel > summary:focus-visible {outline:2px solid #99f6e4;outline-offset:-3px;}
+#campaignInputPane .campaign-backups-panel[open] > summary {border-bottom:1px solid #287373;}
+#campaignInputPane .campaign-backups-panel .et-summary-text {display:grid;gap:.3rem;min-width:0;}
+#campaignInputPane .campaign-backups-panel .et-panel-title {font-size:1rem;font-weight:700;line-height:1.35;color:#ccfbf1;}
+#campaignInputPane .campaign-backups-panel .et-panel-description {font-size:.8rem;color:#b7d9d3;line-height:1.45;}
+#campaignInputPane .campaign-backups-panel .et-panel-body {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem;padding:1rem;}
+#campaignInputPane .campaign-backups-panel .et-subgroup {min-width:0;}
+#campaignInputPane .campaign-backups-panel .et-subgroup + .et-subgroup {padding-left:1.25rem;border-left:1px solid #287373;}
+#campaignInputPane .campaign-backups-panel h3 {margin:0 0 .75rem;font-size:1rem;color:#f0fdfa;}
+#campaignInputPane .campaign-backups-panel .et-help {margin:.65rem 0 0;color:#b7d9d3;font-size:.8rem;line-height:1.5;}
+#campaignInputPane .campaign-backups-panel .et-field {display:grid;gap:.4rem;min-width:0;font-size:.85rem;color:#ccfbf1;}
+#campaignInputPane .campaign-backups-panel .et-field > span {font-weight:600;line-height:1.3;}
+#campaignInputPane .campaign-backups-panel input[type="file"] {width:100%;min-width:0;max-width:100%;margin:0;padding:.65rem .75rem;border:1px solid #4a8f86;border-radius:6px;background:#092424;color:#f0fdfa;font:inherit;font-size:.8rem;line-height:1.4;}
+#campaignInputPane .campaign-backups-panel input[type="file"]::file-selector-button {padding:.45rem .6rem;border:1px solid #4a8f86;border-radius:4px;background:#176b6b;color:#f0fdfa;cursor:pointer;margin-right:.6rem;}
+#campaignInputPane .campaign-backups-panel button {margin:.85rem 0 0;min-height:2.6rem;padding:.65rem .85rem;font:inherit;font-size:.85rem;font-weight:600;line-height:1.4;max-width:100%;white-space:normal;background:#176b6b;border-color:#4a8f86;}
+#campaignInputPane .campaign-backups-panel button:hover {background:#218282;}
+#campaignInputPane .campaign-backups-panel button:focus-visible, #campaignInputPane .campaign-backups-panel input:focus-visible {outline:2px solid #99f6e4;outline-offset:2px;}
+@media (max-width:700px) {
+  #campaignInputPane .campaign-backups-panel .et-panel-body {grid-template-columns:minmax(0,1fr);}
+  #campaignInputPane .campaign-backups-panel .et-subgroup + .et-subgroup {padding:1rem 0 0;border-left:0;border-top:1px solid #287373;}
+}

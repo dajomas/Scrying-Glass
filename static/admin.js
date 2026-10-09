@@ -726,7 +726,7 @@ function monsterRow(monster) {
 
 function characterRow(character) {
     return `
-    <tr class="${character.alive ? '' : 'dead'}">
+    <tr class="${characterPermanentlyDead(character) ? 'dead' : ''}">
         <td class="bulk-selection-cell">
             <input
                 type="checkbox"
@@ -755,7 +755,7 @@ function characterRow(character) {
         <td>
         <button data-edit="${esc(character.id)}" data-kind="characters" class="edit">Edit</button>
         <button class="${character.active ? 'on' : ''}" data-ca="${esc(character.id)}">${character.active ? 'In Battle' : 'Join Battle'}</button>
-        <button class="${character.alive ? 'on' : ''}" data-cl="${esc(character.id)}">${character.alive ? 'Alive' : 'Dead'}</button>
+        <button class="${characterPermanentlyDead(character) ? '' : 'on'}" data-cl="${esc(character.id)}" title="Toggle explicit alive/dead state">${esc(character.life_state || (character.alive ? 'standing' : 'down'))}</button>
         <button class="${character.visible ? 'on' : ''}" data-cv="${esc(character.id)}">Visible</button>
         <button data-ct="${esc(character.id)}" class="${character.in_turn ? 'on' : ''}">Turn</button>
         <button data-cr="${esc(character.id)}" class="reset">Reset</button>
@@ -2898,6 +2898,11 @@ function updateActionRowAmount(row) {
 
     amountField.hidden = !required;
     amountInput.required = required;
+    const critical=row.querySelector('[data-action-critical]');
+    if(critical) {
+        critical.parentElement.hidden=action!=='damage';
+        if(action!=='damage') critical.checked=false;
+    }
 
     if (!required) {
         amountInput.value = '';
@@ -2940,6 +2945,7 @@ function addBattleActionRow() {
     <label class="amount-field">
         Amount
         <input data-action-amount type="number" min="1" max="99999" value="1">
+        <span class="critical-option"><input data-action-critical type="checkbox"> Critical hit</span>
     </label>
 
     <button type="button" class="danger" data-remove-action-row>
@@ -3010,6 +3016,7 @@ battleActionForm.onsubmit = async event => {
             target_id: row.querySelector('[data-action-target]').value,
             action,
             amount: actionAmountRequired(action) ? Number(rawAmount) : null,
+            critical_hit: action==='damage' && Boolean(row.querySelector('[data-action-critical]')?.checked),
         };
     });
 
@@ -3260,9 +3267,14 @@ document.addEventListener('change', event => {
     );
 });
 
-function living() {
-    return all().filter(combatant => combatant.active && combatant.alive);
+function characterPermanentlyDead(character) {
+    return character.life_state==='dead' || (character.death_failures ?? 0)>=3;
 }
+function turnEligible(combatant) {
+    if(!combatant.active || combatant.life_state==='dead') return false;
+    return !('monster_species' in combatant) ? !characterPermanentlyDead(combatant) : Boolean(combatant.alive);
+}
+function living() {return all().filter(turnEligible);}
 
 function initiativeOf(combatant) {
     return typeof combatant.initiative === 'number' &&

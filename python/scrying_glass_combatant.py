@@ -29,11 +29,11 @@ def reset_entity(x: dict[str, Any]) -> None:
     else:
         x["hp"] = x["max_hp"]
 
+    x['hp']=max(0,x['hp']);x['max_hp']=max(0,x['max_hp'])
     x["alive"] = x["hp"] > 0
-    x['life_state'] = 'standing' if x['alive'] else 'down'
-    x['temp_hp'] = x['death_successes'] = x['death_failures'] = 0
-    x['concentrating'] = False
-    x['effects'] = []
+    x['life_state']='standing' if x['alive'] else 'down'
+    x['temp_hp']=x['death_successes']=x['death_failures']=0
+    x['concentrating']=False;x['effects']=[]
 
 def reset_imported_monster(source: dict[str, Any]) -> dict[str, Any]:
     """Reset imported monster."""
@@ -42,11 +42,11 @@ def reset_imported_monster(source: dict[str, Any]) -> dict[str, Any]:
 
     # Keep the source setup's current HP and current Max HP.
     # Do not overwrite hp with original_hp during setup import.
+    item['hp']=max(0,item.get('hp',0));item['max_hp']=max(0,item.get('max_hp',0))
     item['alive'] = item.get('hp', 0) > 0
-    item['life_state'] = 'standing' if item['alive'] else 'down'
-    item['concentrating'] = False
-    item['effects'] = []
-    item['temp_hp'] = item['death_successes'] = item['death_failures'] = 0
+    item['life_state']='standing' if item['alive'] else 'down'
+    item['temp_hp']=item['death_successes']=item['death_failures']=0
+    item['concentrating']=False;item['effects']=[]
 
     item['initiative'] = item.get('original_initiative')
     item['active'] = False

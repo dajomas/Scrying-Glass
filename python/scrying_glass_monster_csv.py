@@ -215,7 +215,7 @@ def csv_monster(row: dict[str, str], row_number: int) -> dict[str, Any]:
     name = csv_text(row.get("name"))
     monster_species = csv_text(row.get("monster_species") or row.get('monster_type') or row.get("type"))
     ac = csv_int(row, "ac", minimum=0, maximum=999, row_number=row_number)
-    hp = csv_int(row, "hp", minimum=-99999, maximum=99999, row_number=row_number)
+    hp = csv_int(row, "hp", minimum=0, maximum=99999, row_number=row_number)
 
     if not 1 <= len(name) <= 100:
         raise HTTPException(400, f"CSV row {row_number}: name must contain 1-100 characters")
