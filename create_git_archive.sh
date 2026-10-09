@@ -1,4 +1,7 @@
+echo "Create git archive"
 git archive --format=zip --output=scrying-glass-source.zip features/development
+
+echo "Convert zip file to base64"
 python3 - <<'PY'
 import base64
 from pathlib import Path
