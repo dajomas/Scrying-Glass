@@ -91,10 +91,21 @@ class AdminActivityMixin:
         )
 
     async def clear_activity_log(self) -> dict[str, int]:
-        """Clear activity log."""
+        """Clear runtime and active saved-setup logs without saving other edits."""
         cleared = len(self.context.STATE["activity_log"])
-        self.context.STATE["activity_log"] = []
-
-        await self.context.changed()
-
+        async with self.context.LOCK:
+            with self.context.STORAGE.transaction():
+                reference = self.context.active_setup_reference()
+                if reference is not None and self.context.active_setup_exists():
+                    snapshot = self.context.STORAGE.load_setup(
+                        reference["campaign_id"], reference["name"],
+                    )
+                    snapshot["activity_log"] = []
+                    self.context.STORAGE.save_setup(
+                        reference["campaign_id"], reference["name"], snapshot,
+                    )
+                self.context.STATE["activity_log"] = []
+                self.context.save_state()
+        await self.context.broadcast()
         return {"cleared": cleared}
+
