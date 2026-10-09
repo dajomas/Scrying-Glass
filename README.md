@@ -1,29 +1,33 @@
-> Account storage update: users now live in SQLite (schema v4). The new `superadmin` role manages users; existing `security.users` is a one-time migration input only. See [User management](docs/User-Management.md) for upgrade instructions. This supersedes older configuration-account instructions below.
-
 # Scrying Glass
 
 Scrying Glass is a self-hosted tabletop encounter manager: the game master uses
 an authenticated Admin interface while players watch a separate live Client
-Display. Both FastAPI applications run in one Python process, persist data as
-JSON, and share encounter state. Client updates use WebSockets.
+Display. Both FastAPI applications run in one Python process, persist structured data in
+SQLite (schema v4), and share encounter state. Client updates use WebSockets.
 
-Formerly Monster Display. This documentation describes the split-source layout
-introduced on 6 October 2026; it does not designate a new software release.
+Formerly Monster Display. This documentation covers the supplied source snapshot,
+including normalized SQLite storage, database-backed accounts and filtered player updates.
+Database schema versions are distinct from application version labels.
 
 ## Documentation
 
 - [User Guide](docs/User-Guide.md): campaigns, characters, setups, imports and combat.
 - [Technical Documentation](docs/Technical-Documentation.md): modules, context, state, APIs and development.
+- [User Management](docs/User-Management.md): first login, roles, account migration and recovery.
+- [SQLite Migration](docs/SQLite-Migration.md): upgrade paths, backups and rollback.
+- [Database Schema](docs/Database-Schema.sql): reference DDL, not a manual migration script.
 - [Systemd Deployment](docs/Systemd-Deployment.md): Linux service installation, upgrades and backups.
 
 ## Features
 
-- Separate Admin and Client applications with separate session cookies.
+- Separate Admin and Client applications with separate session cookies and logout.
+- Database-backed client/admin/superadmin accounts and superadmin-only user management.
 - Campaigns with campaign-owned character rosters and named battle setups.
 - Manual monster creation with fixed, ranged or dice-expression HP.
 - Monster quantities, .monster JSON import, and monster/character CSV import.
 - Uploaded images and optional best-effort D&D Beyond image/stat suggestions.
-- Battle initiative, tie resolution, turn advancement, individual/bulk controls.
+- Battle initiative, tie resolution, round tracking, turn advancement, individual/bulk controls.
+- Adjustable viewer battle-order text (12–40 px, in 2 px steps).
 - Current-turn damage, healing, buff/debuff logging, and CSV/JSON log exports.
 - Per-setup display backgrounds: colors, CSS gradients and uploaded images.
 - Normalized SQLite persistence, stable campaign IDs, legacy migration and real-time player display updates.
@@ -54,10 +58,13 @@ repository/
 │   ├── client_html.py
 │   └── login_html.py
 ├── templates/
+│   ├── users.html              # Superadmin account-management page
 │   └── admin/                  # 20 ordered HTML fragments
 ├── static/                     # Admin/client/login CSS and browser JavaScript
 ├── config.example.yaml
-├── run.sh                      # Existing launcher, if used
+├── run.sh                      # Linux/macOS launcher; environment in ~/dnd
+├── run.bat / run.ps1            # Windows launchers; environment in %USERPROFILE%\dnd
+├── tests/                      # Python tests and JavaScript/audit checks
 └── docs/
 ```
 
@@ -95,7 +102,7 @@ Copy and edit the configuration:
 cp config.example.yaml config.yaml
 ```
 
-Replace all example passwords before use. Example configuration:
+Accounts are not configured here on a fresh installation. Example configuration:
 
 ```yaml
 network:
@@ -105,14 +112,6 @@ network:
 
 storage_dir: "./scrying-glass-data"
 
-security:
-  users:
-    - username: "dm"
-      role: "admin"
-      password: "replace-with-a-strong-admin-password"
-    - username: "table"
-      role: "client"
-      password: "replace-with-a-strong-client-password"
 
 display:
   background: "#080b14"
@@ -144,12 +143,37 @@ command. The direct virtual-environment executable also works without activation
 
 | Screen | Default address | Role |
 |---|---|---|
-| Admin | `http://SERVER:3000/` | admin |
-| Client Display | `http://SERVER:4000/display` | client or admin |
+| Battle Admin | `http://SERVER:3000/` | admin UI; superadmin redirects to /users |
+| User Management | `http://SERVER:3000/users` | superadmin |
+| Client Display | `http://SERVER:4000/display` | client, admin or superadmin |
 
 Replace SERVER with the hostname/IP; use localhost for same-machine access.
 The root script remains the entry point: do not replace it with an external
 Uvicorn module command, which bypasses initialization under the main guard.
+
+## First login and accounts
+
+On first account initialization, a fresh installation creates a `superadmin` with a
+random password and prints its credentials once to startup stdout (the journal for
+systemd). Sign in on the Admin port: superadmins land on `/users`, not the battle UI.
+Change the bootstrap password there, then create an `admin` for battle administration
+and a `client` for players. No default player account is created. A superadmin can
+call battle APIs and access the player display, but `/` redirects to user management.
+
+Existing `security.users` is imported once. The first legacy admin is promoted if
+there is no legacy superadmin; existing passwords remain usable. After verifying the
+import, remove that section from your live configuration. Later configuration edits
+do not reset database accounts. See [User Management](docs/User-Management.md).
+
+## Included launchers
+
+Run `bash run.sh`, `run.bat`, or `./run.ps1` from the appropriate shell after creating
+`config.yaml`. Each launcher changes to the checkout root, checks sqlite3 support and
+starts the root server with that config. They do not forward extra CLI arguments.
+`run.sh` creates/uses `~/dnd` and skips pip when its dependency-spec marker matches;
+the Windows launchers use `%USERPROFILE%\dnd` and invoke pip each time. Windows
+environment creation specifically checks for Python 3.14. For custom ports/storage
+or another environment, use the direct Python command instead.
 
 ## Encounter workflow
 
@@ -167,7 +191,7 @@ setup restores its encounter data and loads the campaign's current roster.
 
 ## Persistence and backups
 
-Structured data lives in `storage_dir/scrying-glass.sqlite3`, now schema version 3.
+Structured data lives in `storage_dir/scrying-glass.sqlite3`, now schema version 4.
 The database stores individual values in typed columns and lists in ID-bearing child
 rows; it does not store serialized JSON payloads. Uploaded images remain under
 `storage_dir/uploads/`, and configuration remains a YAML/JSON file. JSON API responses
@@ -179,8 +203,10 @@ IDs are represented as decimal strings in API/form values. The admin frontend us
 not slug, for campaign selection. Existing monster/character combatant IDs remain intact.
 
 Upgrades from slug-based SQLite v1 and campaign-ID SQLite v2 are backed up and converted
-transactionally to v3. Existing v2 campaign IDs are retained. Original JSON installations
-are imported directly into v3 without modifying source files. See
+to normalized v3, followed by a separate account-table upgrade to v4.
+Existing v3 databases are backed up before adding account tables. Existing v2 campaign
+IDs are retained. Original JSON installations
+are imported into the current v4 database without modifying source files. See
 [SQLite migration instructions](docs/SQLite-Migration.md) and [database schema](docs/Database-Schema.sql).
 
 Stop the application before backing up the entire storage directory plus configuration.
@@ -201,8 +227,12 @@ No Jinja dependency was introduced by the split.
 Use a trusted LAN. Do not expose default HTTP ports directly to the internet.
 For remote access, use network restrictions/VPN and an HTTPS reverse proxy;
 review cookie settings and application-level protections before exposure.
-Sessions are in memory and are lost on restart. Client access exposes the state
-payload, not merely the details visually shown on cards.
+Sessions are in memory and are lost on restart. Player HTTP/WebSocket state is
+filtered server-side: hidden monster stats, character stats, activity logs and setup
+references are omitted. This is not complete secrecy: visible names, ordering and
+image URLs remain available, and `/media` is an unauthenticated static mount.
+Cross-origin browser mutations and display sockets with mismatched origins are
+rejected; cookies still use `secure=False`. Logout revokes only that interface session.
 
 ## Upgrade and legacy names
 

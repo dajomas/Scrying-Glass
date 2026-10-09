@@ -4,7 +4,7 @@ network:
   admin_port: 3000
   client_port: 4000
 
-# Persistent JSON state and uploaded monster images are stored below this path.
+# SQLite schema-v4 encounter/accounts database and uploaded images live below this path.
 storage_dir: "./scrying-glass-data"
 
 # Accounts are stored in scrying-glass.sqlite3, not configuration.

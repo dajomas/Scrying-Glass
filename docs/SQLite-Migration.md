@@ -1,19 +1,16 @@
-> Account storage update: users now live in SQLite (schema v4). The new `superadmin` role manages users; existing `security.users` is a one-time migration input only. See [User management](User-Management.md) for upgrade instructions. This supersedes older configuration-account instructions below.
+# SQLite schema-v4 migration
 
-# Normalized SQLite schema-v3 migration
+## Scope
 
-## Complete source package
-
-This delivery is built against the latest supplied archive, commit
-743df7bc7d0d8768f3b12ffcaf3bde61a0d1fb2f. That archive contains slug-based SQLite v1.
-The package contains all differences from that archive, including stable campaign IDs,
-updated admin JavaScript, normalized persistence, migrations, tests and documentation.
-Apply every included source file together. No source file needs deleting. Existing
-configuration, uploaded images and unchanged application code remain in place.
+The current storage schema is v4: the normalized encounter model introduced in v3
+plus database-backed users and an account-import marker. Deploy code, templates and
+static assets from the same revision. This guide covers original JSON and SQLite
+v1/v2/v3 upgrades; [User Management](User-Management.md) covers account initialization.
+Do not replace live configuration or data with example files.
 
 ## What is no longer JSON
 
-There are no serialized JSON payload columns in schema v3. Campaign metadata, display,
+There are no serialized JSON payload columns in schema v4. Campaign metadata, display,
 battle/turn settings and import status use typed scalar columns. Characters, monsters,
 battle-order/successor lists and activity logs use separate records, each with an integer
 primary-key id. Original combatant IDs and log event IDs are retained in dedicated columns.
@@ -27,11 +24,16 @@ for old-database/legacy import only. Configuration files are outside this storag
 
 ## Supported starts
 
-- Empty storage/original JSON: create v3; import original data once, non-destructively.
-- SQLite v1: back up, assign campaign IDs and normalize all structured payloads.
-- SQLite v2: back up, keep the existing campaign IDs and normalize structured payloads.
-- SQLite v3: normal startup, no repeated schema conversion.
+- Empty storage: create the normalized tables, then add v4 account tables.
+- Original JSON: initialize v4 and import legacy encounter data once without changing source files.
+- SQLite v1: back up, assign campaign IDs and normalize payloads to v3, then add v4 accounts.
+- SQLite v2: back up, retain campaign IDs and normalize payloads to v3, then add v4 accounts.
+- SQLite v3: back up and add users/account_migration tables, retaining normalized encounter data.
+- SQLite v4: no repeated schema conversion; account import is skipped once its marker exists.
 
+The v1/v2 normalization and v4 account-table addition use separate committed
+transactions. Account initialization and legacy JSON/domain startup are also separate
+phases. A later startup failure does not undo earlier successful schema upgrades.
 Unknown versions/nonempty unversioned databases are rejected. Do not manually set
 user_version or rename columns to bypass migration.
 
@@ -39,7 +41,7 @@ user_version or rename columns to bypass migration.
 
 1. Stop the application; prevent automatic restart during deployment.
 2. Back up its entire configured data directory, configuration and matching code.
-3. Extract the complete changed-files archive into the matching checkout root.
+3. Deploy the complete matching application revision into the checkout root, preserving live config and storage.
 4. With the existing Python 3.14 environment active, run:
 
    ```bash
@@ -62,7 +64,9 @@ user_version or rename columns to bypass migration.
 5. Test against a COPY of production data using unused ports:
 
    ```bash
-   python scrying_glass_server.py --config config.yaml      --storage-dir /absolute/path/to/copied-data      --admin-port 13000 --client-port 14000
+   python scrying_glass_server.py --config config.yaml \
+     --storage-dir /absolute/path/to/copied-data \
+     --admin-port 13000 --client-port 14000
    ```
 
 6. Inspect the startup log and schema. Verify campaign/character/setup counts, original
@@ -70,11 +74,13 @@ user_version or rename columns to bypass migration.
    campaign rename, setup rename/move/copy/delete and restart. Confirm record IDs are
    stable for unchanged entities and list entries.
 7. Deploy against production only after the copied-data smoke test succeeds.
-8. Hard-refresh the admin browser; campaign API values now use IDs, not slugs.
+8. Verify bootstrap/legacy superadmin login, create or verify admin/client accounts,
+   check `/users` versus battle-page role routing, and remove migrated `security.users`
+   only after verification. Hard-refresh browsers; campaign API values use IDs, not slugs.
 
 ## Automatic backup and transaction
 
-An existing v1/v2 database is backed up with SQLite's backup API before schema changes:
+An existing v1/v2/v3 database is backed up with SQLite's backup API before schema changes:
 
 ```text
 scrying-glass.sqlite3.before-normalization.bak
@@ -86,12 +92,13 @@ Ensure enough disk space and write permission for backup and SQLite journals.
 
 The upgrade reads all old payloads, allocates/retains campaign IDs, creates normalized
 tables/child records, converts references and checks foreign-key integrity inside a
-BEGIN IMMEDIATE transaction. user_version becomes 3 only after successful conversion.
+BEGIN IMMEDIATE transaction. user_version becomes 3 only after successful normalization. A separate transaction
+adds users/account_migration and sets user_version=4. A v3 installation skips normalization.
 Typed/structural validation failures roll back SQL schema and data. Keep the failed
 upgrade backup; the application reports the problem instead of overwriting unknown data.
 
 Schema conversion commits before normal domain startup validation. If later domain
-validation rejects an encounter, the database is already v3: restore the backup with
+validation rejects an encounter, the database may already be v4: restore the backup with
 matching old code if you need to reverse the upgrade. Unsupported nested extensions,
 duplicate explicit IDs, malformed JSON, unknown live references and nonempty embedded
 setup characters require resolution rather than silent truncation. Older transition
@@ -117,7 +124,7 @@ setup name for compatibility with the existing setup controls. Last-used and act
 setup associations are ID-based internally. Rename/move preserves setup identity;
 copy creates a separate setup/encounter and child records.
 
-## API changes from supplied v1 source
+## API changes for older slug-based clients
 
 GET /api/campaigns returns id rather than slug. active is a decimal campaign-ID string.
 Campaign paths, setup request campaign/from_campaign and move_to values carry IDs.
@@ -137,12 +144,12 @@ old SQLite backups. No reverse converter is included.
 
 Use one server process per data directory. One event-loop thread owns the database
 connection. Existing mutating-request transactions and deferred broadcasting remain.
-Nested transactions join the outer unit, not independent savepoints. Media files are
+Nested transactions use SQLite savepoints; outer rollback still undoes the complete request. Media files are
 outside SQL rollback and failed mutations can leave orphaned uploads. Synchronous SQL
 and slow remote work may delay other mutations. Back up database plus media with the
 process stopped; never remove a live journal.
 
 The included unit tests execute actual SQLite upgrades and changed domain/handler code,
-not a running HTTP server. See the accompanying validation report for executed tests,
-archive completeness checks and limitations. Real FastAPI routing, browser/WebSocket
+not a running HTTP server. Use the test output from your own deployment revision; there is no bundled
+release-specific execution report to substitute for that validation. Real FastAPI routing, browser/WebSocket
 workflows, Python 3.14 and Windows launchers must be checked in the deployment environment.

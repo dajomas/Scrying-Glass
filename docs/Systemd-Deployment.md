@@ -1,5 +1,3 @@
-> Account storage update: users now live in SQLite (schema v4). The new `superadmin` role manages users; existing `security.users` is a one-time migration input only. See [User management](User-Management.md) for upgrade instructions. This supersedes older configuration-account instructions below.
-
 # Deploy Scrying Glass with systemd
 
 This guide installs the split application as a single process under a dedicated
@@ -20,6 +18,7 @@ TCP 3000 (Admin) and 4000 (Client Display).
 ├── python/                    # Application package, including __init__.py
 ├── web_html/                  # HTML loaders, including __init__.py
 ├── templates/admin/           # All 20 HTML fragments
+├── templates/users.html       # Superadmin page, read on request
 ├── static/                    # Browser assets
 └── config.example.yaml
 /etc/scrying-glass/config.yaml
@@ -83,20 +82,27 @@ Use the README configuration with:
 storage_dir: "/var/lib/scrying-glass"
 ```
 
-Replace default credentials. Set bind and ports for the intended network. The
-configuration background is the initial/fallback value; named encounters have
-their own backgrounds. Uploaded images remain below storage_dir/uploads.
+Set bind and ports for the intended network. The configuration background is the
+initial/fallback value; named encounters have their own backgrounds. Uploaded images
+remain below storage_dir/uploads. Current accounts live in SQLite, not YAML.
 
-Generate a scrypt password hash without putting the password in command history:
+On a fresh installation, first startup prints a random superadmin password once.
+For systemd, retrieve it from the restricted journal:
 
 ```bash
-cd /opt/scrying-glass
-sudo /opt/scrying-glass/.venv/bin/python -c \
-  'from getpass import getpass; from python.scrying_glass_init import password_hash; print(password_hash(getpass("Password: ")))'
+sudo journalctl -u scrying-glass.service --no-pager
 ```
 
-Put the emitted scrypt$... string in config.yaml. Protect configuration and
-backups as credentials-sensitive data.
+Sign in on the Admin port, change that password at `/users`, and create an `admin`
+for battle controls plus a `client` for players. Superadmins land on `/users`;
+admins land on the battle page. If you run the foreground startup test first,
+record its bootstrap credentials there: the next service start will not print
+them again. Treat the journal and database backups as credentials-sensitive.
+
+For upgrades, retain legacy `security.users` for the first account import, verify
+login, then remove it from config. Config hashes are not the current account store
+and changing YAML does not reset accounts. See [User Management](User-Management.md)
+for offline recovery and migration details.
 
 ## Validate before startup
 
@@ -216,12 +222,13 @@ storage layout; a code-only rollback may not understand migrated data.
 ## Migrating older installations
 
 The source split alone does not relocate data. Existing explicit storage_dir
-continues to work. First startup imports legacy JSON into normalized schema-v3 scrying-glass.sqlite3
-without modifying the source files. Loose setups become Default campaign records;
+continues to work. First startup imports legacy JSON into normalized schema-v4 scrying-glass.sqlite3
+without modifying the source files. Database accounts initialize before encounter import. Loose setups become Default campaign records;
 missing campaign rosters are seeded from suitable legacy snapshots. See
 [SQLite migration instructions](SQLite-Migration.md).
 Back up before the first migration and check the journal afterward. Existing SQLite
-schema v1/v2 is backed up and migrated automatically to normalized schema v3.
+schema v1/v2 is backed up and normalized, then upgraded to schema v4.
+Existing schema v3 is backed up before adding v4 account tables.
 See [migration instructions](SQLite-Migration.md).
 
 Monster Display installations used different code/config/storage/service names.

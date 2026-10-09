@@ -3,12 +3,13 @@
 ## Upgrade
 
 1. Stop Scrying Glass and back up configuration and the entire storage directory.
-2. Extract the changed-files archive over the existing source tree. Do not replace your live config.yaml with config.example.yaml.
+2. Deploy all source, template and static files from the matching revision. Do not replace your live config.yaml with config.example.yaml.
 3. Start using the existing configuration, including security.users, once.
 4. SQLite schema v4 is created automatically. Existing version 3 databases are backed up using the existing .before-normalization.bak naming convention. Versions 1 and 2 retain their previous normalization upgrade and backup, then receive account tables.
 5. All legacy accounts are imported atomically. Plaintext passwords are converted to salted scrypt hashes; valid existing scrypt hashes are retained. Usernames are case-sensitive and unique, 1-64 characters without control characters or surrounding whitespace. Duplicate usernames or malformed accounts stop initialization rather than partially importing.
 6. If no legacy superadmin exists, the first legacy admin in configuration order is promoted to superadmin. Other roles are retained. Sign in with that account's existing password.
-7. Open User management in the admin interface, or /users on the admin port.
+7. Sign in on the Admin port: superadmins automatically land on /users.
+   Admins land on the battle page; the management page is not embedded in battle HTML.
 8. After verifying login, remove security.users from your live configuration. The application does not rewrite that file. Once migration is recorded, configuration accounts are ignored permanently: they cannot overwrite passwords or resurrect deleted users.
 
 ## Fresh installation
@@ -17,11 +18,15 @@ There are no default accounts/passwords in configuration. On first account initi
 
 ## Permissions
 
-| Role | Display | Battle administration | User management |
-|---|---|---|---|
-| client | Yes | No | No |
-| admin | Yes | Yes | No |
-| superadmin | Yes | Yes | Yes |
+| Role | Display | Battle APIs | Admin root page | User management |
+|---|---|---|---|---|
+| client | Yes | No | Redirect to login | No |
+| admin | Yes | Yes | Battle interface | No |
+| superadmin | Yes | Yes | Redirect to /users | Yes |
+
+For interactive battle administration, create/use an admin account. Superadmins
+retain battle API authorization, but the current application does not serve them
+battle HTML at `/` or provide another battle-page route.
 
 User management supports creation, username and role changes, password resets, and deletion. Passwords are never returned to the browser. New/reset passwords must be 8-1024 characters; shorter legacy passwords remain usable until changed. Leave the edit password field empty to preserve the hash. APIs accept only username, role, password. PATCH omits password to preserve it; null/empty password is rejected.
 
@@ -33,10 +38,18 @@ The last superadmin cannot be deleted or demoted. Modifying any account invalida
 - GET /users: management UI (superadmin only).
 - GET /api/users: id, username, role only.
 - POST /api/users: username, role, password; returns 201.
-- PATCH /api/users/{id}: one or more editable fields.
-- DELETE /api/users/{id}: removes an account.
+- PATCH /api/users/{user_id}: one or more editable fields.
+- DELETE /api/users/{user_id}: removes an account.
 
 Unauthenticated API access returns 401; insufficient permissions return 403; unknown user IDs return 404; duplicates or the last-superadmin guard return 409; invalid fields return 422.
+
+## Logout
+
+Both ports expose POST /logout, not GET. Logout invalidates only the current
+interface token and expires its cookie; Client logout also closes matching
+WebSockets. Repeating logout is safe. The other interface session is unaffected.
+Account changes invalidate all sessions for that username on both interfaces.
+Session pages/API responses are marked Cache-Control: no-store.
 
 ## Operations
 
@@ -46,4 +59,6 @@ To recover a lost superadmin password: stop the application, generate a hash usi
 
 ## Validation
 
-Run `python -m unittest discover -s tests -v` with the application's dependencies installed. Account unit tests cover migration, authorization dependencies, CRUD, validation, session revocation and schema v3 upgrades. They call endpoints directly rather than through HTTP routing; when FastAPI is unavailable, minimal dependency/response substitutes are used. Full server and browser integration must also be tested in the deployed environment. The changed-files archive includes tests and this guide; it contains no live configuration or database.
+Run `python -m unittest discover -s tests -v` with the application's dependencies installed. Account unit tests cover migration, authorization dependencies, CRUD, validation, session revocation and schema v3 upgrades. They call endpoints directly rather than through HTTP routing; when FastAPI is unavailable, minimal dependency/response substitutes are used. Full server and browser integration must also be tested in the deployed environment. The source snapshot includes tests and this guide. Keep live configuration and
+databases outside source deliveries. See [Technical Documentation](Technical-Documentation.md)
+for additional JavaScript and workflow checks.

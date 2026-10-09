@@ -1,10 +1,7 @@
-> Account storage update: users now live in SQLite (schema v4). The new `superadmin` role manages users; existing `security.users` is a one-time migration input only. See [User management](User-Management.md) for upgrade instructions. This supersedes older configuration-account instructions below.
-
 # Scrying Glass User Guide
 
 The game master prepares and runs combat in the Admin interface. Players watch
-a separate Client Display that receives live updates. The code split changes
-file organization, not the intended encounter workflow.
+a separate Client Display that receives live updates. Accounts, campaigns and encounters persist in SQLite; live display updates use WebSockets.
 
 See [README](../README.md) for installation and configuration,
 [Technical Documentation](Technical-Documentation.md) for internals, and
@@ -21,11 +18,24 @@ run from the repository root:
 
 | Screen | Default address | Account role |
 |---|---|---|
-| Admin | http://SERVER:3000/ | admin |
-| Client Display | http://SERVER:4000/display | client or admin |
+| Battle Admin | http://SERVER:3000/ | admin; superadmin redirects to /users |
+| User Management | http://SERVER:3000/users | superadmin |
+| Client Display | http://SERVER:4000/display | client, admin or superadmin |
 
 Replace SERVER with the host/IP. Separate cookies allow both interfaces in one
 browser. Restart clears sessions; sign in again afterward.
+
+Fresh installs print a randomly generated superadmin password once at startup.
+That account lands on `/users`: change its password and create an admin for battle
+controls plus a client for the player display. Existing installations import config
+accounts once; the first legacy admin may become superadmin. See
+[User Management](User-Management.md). Superadmins authorize battle API operations,
+but their Admin root page redirects to account management rather than battle HTML.
+
+Use the logout control to sign out of the current interface. Admin and Client logout
+are separate; signing out of one leaves the other's session intact. Client logout
+closes that session's live display connections. Account changes invalidate all of
+that user's sessions; saving changes to your own account requires signing in again.
 
 ## Admin panes
 
@@ -201,11 +211,21 @@ without numeric initiative follow numeric entries. Next skips dead/inactive
 entries and adds eligible participants omitted from order. With none eligible,
 order and turn state clear. End does not perform the full combatant reset.
 
+Battle starts at Round 1. Next increments the round when the turn order wraps,
+including when a removed/dead current combatant requires remembered successors.
+End, Reset All and an encounter with no eligible participants clear the round.
+The round and eligible current turn survive a server restart.
+
+Use Viewer battle-order text A−/A+ in the Battle pane to change the player-strip
+font in 2 px steps (default 16 px, limits 12–40 px). Changes appear immediately
+and persist in runtime state. Saving a setup also captures its display settings.
+
 ## Current-turn actions
 
 Click the marked/underlined current combatant to open battle actions. Add one or
-more target rows. Actor and targets must be active and alive, and the actor must
-currently have the turn.
+more target rows. The actor must be active, alive and currently have the turn. All targets must be
+active; damage/buff/debuff require living targets, but healing can revive a dead
+target. A healed target that becomes alive is reinserted into battle order.
 
 - Damage subtracts HP; a positive amount is required.
 - Heal adds HP; a positive amount is required.
@@ -219,15 +239,23 @@ or duration engine.
 
 The log records UTC timestamp, actor, actor life state, target, target life state,
 action and amount. Direct HP changes without a current actor use System.
-Export CSV/JSON before clearing; clearing permanently removes current records.
+Export CSV/JSON before clearing; clearing permanently removes the runtime log and
+the associated saved setup log without saving unrelated encounter edits. CSV
+formula-like text receives a leading apostrophe for spreadsheet safety; JSON
+preserves the original text.
 
 The Client Display shows active living monster cards and visible combatants in
 an initiative bar. Characters participate in the bar, not full monster cards.
 Monster AC/HP/initiative values appear when enabled. Ally labels append - Ally.
-The bar hides when empty. Backgrounds follow the working encounter.
+The bar hides when empty unless it is showing an active round indicator.
+Only active visible combatants appear in the strip; dead visible participants may
+remain there, while full monster cards require active and alive. Visible participants
+missing from battle order are appended in initiative order. Backgrounds follow the working encounter.
 
-Treat Client login as access to encounter state, not a secure redaction of all
-hidden card values. Use only trusted players/devices.
+Player state is filtered on the server: hidden monster AC/HP/initiative and all
+character stats, activity logs and setup references are excluded. Names, life/turn
+flags, selected images and ordering remain visible. This does not hide uploaded
+media behind authentication: `/media` is a static mount. Use trusted players/devices.
 
 ## Updates, backups and troubleshooting
 
@@ -245,7 +273,7 @@ JSON files remain archival. See [migration instructions](SQLite-Migration.md).
 | Missing uvicorn during a terminal check | Activate the environment or use .venv/bin/python |
 | Missing HTML fragment at startup | Complete templates/admin tree and correct loader path |
 | Old page | Restart after HTML changes and hard-refresh |
-| Client does not update | Port/access and WebSocket reconnection by refreshing |
+| Client does not update | Check port/proxy WebSocket access; display normally reloads automatically after a disconnect |
 | Login fails after restart | Sessions cleared; sign in again with the correct role |
 | CSV rejected | Headers, UTF-8, numbers, boolean values and unique IDs |
 | No suggested stats/image | Remote lookup is best effort; enter/upload manually |

@@ -4,7 +4,7 @@ Dependencies:
   python3.14 -m pip install 'fastapi>=0.115' 'uvicorn[standard]>=0.30' 'PyYAML>=6.0' python-multipart
 
 Run:
-  python3.14 python.scrying_glass_server.py --config config.yaml"""
+  python3.14 scrying_glass_server.py --config config.yaml"""
 
 
 # ============================================================================
