@@ -60,6 +60,8 @@ class AdminCharactersMixin:
             )
 
         working_state["characters"].extend(imported)
+        for combatant in imported:
+            self.context.insert_into_battle_order(combatant)
 
         await self.context.combatants_changed(
             monsters=False,

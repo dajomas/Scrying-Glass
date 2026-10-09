@@ -169,6 +169,8 @@ class AdminMonstersMixin:
             )
 
         working_state["monsters"].extend(imported)
+        for combatant in imported:
+            self.context.insert_into_battle_order(combatant)
 
         await self.context.combatants_changed(
             monsters=True,

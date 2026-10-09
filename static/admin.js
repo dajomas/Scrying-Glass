@@ -1640,7 +1640,14 @@ function setParentPaneHidden(parentKey, hidden) {
 }
 
 function setAllHideablePanesHidden(hidden) {
-    hideablePanes.forEach(control => setPaneHidden(control, hidden));
+    // A global layout transition supersedes saved parent/child toggle state.
+    Object.values(paneDependencies).forEach(dependency => {
+        dependency.saved = null;
+    });
+    hideablePanes.forEach(control => {
+        control.button.hidden = false;
+        setPaneHidden(control, hidden);
+    });
 }
 
 hideablePanes.forEach(control => {
@@ -2434,6 +2441,7 @@ document.querySelector('#saveSetup').onclick = async () => {
         });
 
         document.querySelector('#setupName').value = result.name;
+        await load();
         await setups();
         document.querySelector('#setupSelect').value = result.name;
 

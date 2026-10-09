@@ -183,6 +183,8 @@ function render(state) {
         return;
     }
 
+    stage.querySelectorAll(".empty").forEach(element => element.remove());
+
     const [rows, columns] = gridSize(activeMonsters.length);
 
     stage.style.gridAutoFlow = 'row';

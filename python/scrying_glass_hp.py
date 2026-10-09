@@ -26,39 +26,30 @@ MAX_HP_DIE_SIDES = 1_000
 MAX_HP_MODIFIER = 100_000
 
 def parse_hp_dice_expression(value: str) -> tuple[int, int, int] | None:
-    """Return (dice_count, die_sides, modifier), or None when not dice notation."""
+    """Parse bounded dice components without leaking integer-conversion errors."""
     match = DICE_HP_RE.fullmatch(value)
-
     if match is None:
         return None
 
-    count = int(match.group("count"))
-    sides = int(match.group("sides"))
-    modifier = int(match.group("modifier") or 0)
+    def bounded_component(raw: str, maximum: int, label: str) -> int:
+        digits = raw.lstrip("0") or "0"
+        if len(digits) > len(str(maximum)):
+            raise HTTPException(400, f"{label} must not exceed {maximum}")
+        try:
+            number = int(digits)
+        except ValueError as exc:
+            raise HTTPException(400, f"Invalid {label}") from exc
+        if number > maximum:
+            raise HTTPException(400, f"{label} must not exceed {maximum}")
+        return number
 
+    count = bounded_component(match.group("count"), MAX_HP_DICE_COUNT, "HP dice count")
+    sides = bounded_component(match.group("sides"), MAX_HP_DIE_SIDES, "HP die sides")
+    modifier = bounded_component(match.group("modifier") or "0", MAX_HP_MODIFIER, "HP dice modifier")
     if match.group("operator") == "-":
         modifier = -modifier
-
-    if count > MAX_HP_DICE_COUNT:
-        raise HTTPException(
-            400,
-            f"HP dice count must not exceed {MAX_HP_DICE_COUNT}",
-        )
-
-    if sides > MAX_HP_DIE_SIDES:
-        raise HTTPException(
-            400,
-            f"HP die sides must not exceed {MAX_HP_DIE_SIDES}",
-        )
-
-    if abs(modifier) > MAX_HP_MODIFIER:
-        raise HTTPException(
-            400,
-            f"HP dice modifier must be between "
-            f"-{MAX_HP_MODIFIER} and {MAX_HP_MODIFIER}",
-        )
-
     return count, sides, modifier
+
 
 def roll_hp_dice(dice_count: int, die_sides: int, modifier: int) -> int:
     """Roll dice independently and return a non-negative HP total."""
@@ -96,10 +87,10 @@ def hp_value_factory(
             "HP Range start must be a non-negative integer or a dice expression such as 3d8+9",
         ) from exc
 
-    if numeric_start < 0 or str(numeric_start) != start:
+    if numeric_start < 0 or numeric_start > 2 ** 63 - 1 or str(numeric_start) != start:
         raise HTTPException(
             400,
-            "HP Range start must be a non-negative whole number",
+            "HP Range start must be a non-negative whole number no larger than 9223372036854775807",
         )
 
     if not end:
@@ -113,10 +104,10 @@ def hp_value_factory(
             "HP Range end must be a non-negative integer",
         ) from exc
 
-    if numeric_end < 0 or str(numeric_end) != end:
+    if numeric_end < 0 or numeric_end > 2 ** 63 - 1 or str(numeric_end) != end:
         raise HTTPException(
             400,
-            "HP Range end must be a non-negative whole number",
+            "HP Range end must be a non-negative whole number no larger than 9223372036854775807",
         )
 
     if numeric_start > numeric_end:

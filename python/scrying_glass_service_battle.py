@@ -131,6 +131,9 @@ class BattleService:
                 "combatant exactly once",
             )
 
+        if not order:
+            raise self.context.HTTPException(400, "Activate at least one living combatant before starting a battle")
+
         self.context.STATE["battle_order"] = list(order)
         self.context.STATE["battle_round"] = 1
         self.context.STATE["turn_successors"] = []
