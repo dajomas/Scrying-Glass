@@ -65,6 +65,15 @@ class StateService:
         if not isinstance(raw, dict):
             raise ValueError("State must contain a JSON object")
 
+        supported = {
+            "monsters", "characters", "battle_order", "turn_successors",
+            "turn_successors_before_wrap", "activity_log", "display",
+            "active_setup", "active_turn_id", "battle_round",
+        }
+        unknown = set(raw) - supported
+        if unknown:
+            raise ValueError(f"Unsupported state fields: {sorted(unknown)}")
+
         def require_list(field: str) -> list[Any]:
             value = raw.get(field, [])
             if not isinstance(value, list):
@@ -117,6 +126,16 @@ class StateService:
         monsters = copy.deepcopy(require_list("monsters"))
         characters = copy.deepcopy(require_list("characters"))
         activity_log = copy.deepcopy(require_list("activity_log"))
+        log_ids: set[str] = set()
+        for index, entry in enumerate(activity_log):
+            if not isinstance(entry, dict):
+                raise ValueError(f"activity_log[{index}] must be an object")
+            if "id" not in entry:
+                entry["id"] = self.context.uuid.uuid4().hex
+            ident = entry["id"]
+            if not isinstance(ident, str) or not ident.strip() or ident in log_ids:
+                raise ValueError(f"activity_log[{index}] has an invalid or duplicate ID")
+            log_ids.add(ident)
         battle_order = normalize_id_list("battle_order")
         turn_successors = normalize_id_list("turn_successors")
         turn_successors_before_wrap = normalize_id_list("turn_successors_before_wrap")
@@ -319,10 +338,7 @@ class StateService:
             "turn_successors": [
                 ident for ident in turn_successors if ident in known_ids
             ],
-            "activity_log": [
-                entry for entry in activity_log
-                if isinstance(entry, dict)
-            ],
+            "activity_log": activity_log,
             "display": self.context.normalize_display(raw_display),
             "active_setup": active_setup,
             "battle_round": battle_round,

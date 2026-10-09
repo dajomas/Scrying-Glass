@@ -5,7 +5,7 @@ import json
 import sqlite3
 import time
 import uuid
-from contextlib import contextmanager
+from contextlib import contextmanager, closing
 from pathlib import Path
 
 TEXT_FIELDS = ("name", "color", "monster_species", "image_url")
@@ -87,7 +87,7 @@ class SQLiteStorage:
         while target.exists():
             target = self.path.with_name(self.path.name + f".before-normalization-{number}.bak")
             number += 1
-        with sqlite3.connect(target) as destination:
+        with closing(sqlite3.connect(target)) as destination, destination:
             self.connection.backup(destination)
         self.migration_backup = target
 
@@ -329,10 +329,18 @@ class SQLiteStorage:
 
     def rename_setup(self,campaign,old,new):self.connection.execute("UPDATE battle_setups SET name=? WHERE campaign_id=? AND name=?",(new,campaign,old))
     def delete_setup(self,campaign,name):self.connection.execute("DELETE FROM battle_setups WHERE campaign_id=? AND name=?",(campaign,name))
-    def unique_setup_name(self,campaign,name):
-        result=name;number=2
-        while self.setup_exists(campaign,result):result=f'{name}-{number}';number+=1
+    def unique_setup_name(self, campaign, name):
+        """Reserve suffix space within the API's 80-character setup-name limit."""
+        base = name[:80]
+        result = base
+        number = 2
+        while self.setup_exists(campaign, result):
+            suffix = f"-{number}"
+            stem = base[:80 - len(suffix)].rstrip("-")
+            result = f"{stem}{suffix}"
+            number += 1
         return result
+
     def transfer_setup(self,source,target,name,mode):
         if mode not in ('move','copy'):raise ValueError("Invalid mode")
         with self.transaction():

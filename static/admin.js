@@ -3142,9 +3142,13 @@ document.addEventListener('click', async event => {
     }
 
     if (button.dataset.d) {
-        const value = +prompt('Damage to remove:', '1');
+        const entered = prompt('Damage to remove:', '1');
+        if (entered === null || entered.trim() === '') {
+            return;
+        }
+        const value = Number(entered);
 
-        if (Number.isFinite(value)) {
+        if (Number.isSafeInteger(value) && value > 0) {
             patch('monsters', id, { hp_delta: -Math.abs(value) });
         }
 
@@ -3152,9 +3156,13 @@ document.addEventListener('click', async event => {
     }
 
     if (button.dataset.h) {
-        const value = +prompt('Healing to add:', '1');
+        const entered = prompt('Healing to add:', '1');
+        if (entered === null || entered.trim() === '') {
+            return;
+        }
+        const value = Number(entered);
 
-        if (Number.isFinite(value)) {
+        if (Number.isSafeInteger(value) && value > 0) {
             patch('monsters', id, { hp_delta: Math.abs(value) });
         }
 
@@ -3182,9 +3190,13 @@ document.addEventListener('click', async event => {
     }
 
     if (button.dataset.cd) {
-        const value = +prompt('Damage to remove:', '1');
+        const entered = prompt('Damage to remove:', '1');
+        if (entered === null || entered.trim() === '') {
+            return;
+        }
+        const value = Number(entered);
 
-        if (Number.isFinite(value)) {
+        if (Number.isSafeInteger(value) && value > 0) {
             patch('characters', id, { hp_delta: -Math.abs(value) });
         }
 
@@ -3192,9 +3204,13 @@ document.addEventListener('click', async event => {
     }
 
     if (button.dataset.ch) {
-        const value = +prompt('Healing to add:', '1');
+        const entered = prompt('Healing to add:', '1');
+        if (entered === null || entered.trim() === '') {
+            return;
+        }
+        const value = Number(entered);
 
-        if (Number.isFinite(value)) {
+        if (Number.isSafeInteger(value) && value > 0) {
             patch('characters', id, { hp_delta: Math.abs(value) });
         }
 

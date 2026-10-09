@@ -12,7 +12,7 @@ def parse_monster(raw: bytes) -> dict[str, Any]:
     """Parse a UTF-8 JSON monster file, preserving numeric zero values."""
     try:
         data = json.loads(raw.decode("utf-8"))
-    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+    except (UnicodeDecodeError, ValueError, RecursionError) as exc:
         raise HTTPException(
             400,
             ".monster must contain UTF-8 JSON",
@@ -69,13 +69,26 @@ def parse_monster(raw: bytes) -> dict[str, Any]:
             ".monster needs usable name, type, AC, and HP",
         )
 
+    def storage_integer(match, field):
+        digits = match.group()
+        significant = digits.lstrip("-").lstrip("0") or "0"
+        if len(significant) > 19:
+            raise HTTPException(400, f".monster {field} exceeds the supported integer range")
+        try:
+            value = int(digits)
+        except ValueError as exc:
+            raise HTTPException(400, f".monster {field} is not a usable integer") from exc
+        if not -(2 ** 63) <= value <= 2 ** 63 - 1:
+            raise HTTPException(400, f".monster {field} exceeds the supported integer range")
+        return value
+
     return {
         "name": name,
         "monster_species": monster_species,
-        "ac": int(ac_match.group()),
-        "hp": int(hp_match.group()),
+        "ac": storage_integer(ac_match, "AC"),
+        "hp": storage_integer(hp_match, "HP"),
     }
-
+ 
 def csv_text(value: Any, default: str = "") -> str:
     """Csv text."""
     if value is None:
@@ -168,45 +181,33 @@ def csv_bool(
     )
 
 def csv_rows(raw: bytes) -> list[dict[str, str]]:
-    """Csv rows."""
+    """Read CSV without silently overwriting headers or dropping surplus cells."""
     try:
         text = raw.decode("utf-8-sig")
     except UnicodeDecodeError as exc:
         raise HTTPException(400, "CSV must be UTF-8 encoded") from exc
-
     try:
-        reader = csv.DictReader(io.StringIO(text, newline=""))
-    except csv.Error as exc:
-        raise HTTPException(400, "Could not read CSV file") from exc
-
-    if not reader.fieldnames:
-        raise HTTPException(400, "CSV must contain a header row")
-
-    reader.fieldnames = [
-        csv_text(name).casefold()
-        for name in reader.fieldnames
-        if name is not None
-    ]
-
-    rows: list[dict[str, str]] = []
-
-    try:
+        reader = csv.DictReader(io.StringIO(text, newline=""), strict=True)
+        headers = reader.fieldnames
+        if not headers:
+            raise HTTPException(400, "CSV must contain a header row")
+        normalized = [csv_text(name).casefold() for name in headers]
+        if any(not name for name in normalized):
+            raise HTTPException(400, "CSV column names must not be blank")
+        if len(normalized) != len(set(normalized)):
+            raise HTTPException(400, "CSV contains duplicate column names")
+        reader.fieldnames = normalized
+        rows: list[dict[str, str]] = []
         for row in reader:
-            cleaned = {
-                csv_text(key).casefold(): csv_text(value)
-                for key, value in row.items()
-                if key is not None
-            }
-
-            # Ignore fully blank spreadsheet rows.
+            if None in row:
+                raise HTTPException(400, f"CSV record ending at line {reader.line_num} has more cells than the header")
+            cleaned = {key: csv_text(value) for key, value in row.items()}
             if any(cleaned.values()):
                 rows.append(cleaned)
     except csv.Error as exc:
         raise HTTPException(400, "Could not read CSV file") from exc
-
     if not rows:
         raise HTTPException(400, "CSV contains no data rows")
-
     return rows
 
 def csv_monster(row: dict[str, str], row_number: int) -> dict[str, Any]:

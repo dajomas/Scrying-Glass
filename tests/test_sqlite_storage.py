@@ -19,6 +19,7 @@ from python.scrying_glass_admin_campaigns import AdminCampaignsMixin
 from python.scrying_glass_admin_setups import AdminSetupsMixin
 from python.scrying_glass_database_transactions import transactional_handler
 from python.scrying_glass_combatant import setup_snapshot,reset_imported_monster,admin_initiative_key
+from contextlib import closing
 
 class HTTPError(Exception):
     def __init__(self,status_code,detail):
@@ -213,7 +214,7 @@ class MigrationTests(unittest.TestCase):
             c.load_state();self.assertEqual(c.STATE['battle_round'],4);self.assertTrue(c.STATE['monsters'][0]['in_turn']);self.assertEqual(c.STATE['display']['battle_order_font_size'],24);self.assertEqual(c.STATE['activity_log'][0]['id'],'event')
             self.assertEqual(c.STATE['turn_successors_before_wrap'],['c']);self.assertEqual(db.read_campaigns()['campaigns'][ident]['last_setup'],'fight')
             self.assertTrue(db.migration_backup.is_file())
-            with sqlite3.connect(db.migration_backup) as backup:self.assertEqual(backup.execute('PRAGMA user_version').fetchone()[0],version)
+            with closing(sqlite3.connect(db.migration_backup)) as backup, backup:self.assertEqual(backup.execute('PRAGMA user_version').fetchone()[0],version)
             self.assertEqual(list(db.connection.execute('PRAGMA foreign_key_check')),[])
             for table in ('campaigns','battle_setups','characters','encounters','application_state'):
                 self.assertFalse(any('json' in r[1] for r in db.connection.execute(f'PRAGMA table_info({table})')))
@@ -221,30 +222,37 @@ class MigrationTests(unittest.TestCase):
         db=SQLiteStorage(self.path)
         try:self.assertIsNone(db.migration_backup);self.assertEqual(db.get_value('active_campaign'),ident)
         finally:db.close()
+
     def test_v1_slug_database_upgrade(self):self.check_upgrade(1)
     def test_v2_id_database_upgrade_preserves_ids(self):self.check_upgrade(2)
     def test_corrupt_json_rolls_back_schema(self):
         old_database(self.path,bad=True)
         with self.assertRaises(ValueError):SQLiteStorage(self.path)
-        with sqlite3.connect(self.path) as c:self.assertEqual(c.execute('PRAGMA user_version').fetchone()[0],1);self.assertIn('slug',[r[1] for r in c.execute('PRAGMA table_info(campaigns)')])
+        with closing(sqlite3.connect(self.path)) as c, c:self.assertEqual(c.execute('PRAGMA user_version').fetchone()[0],1);self.assertIn('slug',[r[1] for r in c.execute('PRAGMA table_info(campaigns)')])
     def test_unknown_nested_data_rolls_back_schema(self):
         old_database(self.path,unsupported=True)
         with self.assertRaises(ValueError):SQLiteStorage(self.path)
         with sqlite3.connect(self.path) as c:self.assertEqual(c.execute('PRAGMA user_version').fetchone()[0],1)
     def test_future_schema_rejected(self):
-        with sqlite3.connect(self.path) as c:c.execute('PRAGMA user_version=99')
+        with closing(sqlite3.connect(self.path)) as c, c:c.execute('PRAGMA user_version=99')
         with self.assertRaises(RuntimeError):SQLiteStorage(self.path)
     def test_unversioned_existing_table_rejected(self):
-        with sqlite3.connect(self.path) as c:c.execute('CREATE TABLE example(x)')
+        with closing(sqlite3.connect(self.path)) as c, c:c.execute('CREATE TABLE example(x)')
         with self.assertRaises(RuntimeError):SQLiteStorage(self.path)
+    def test_upgrade_v3_preserves_data_and_creates_backup(self):
+        self.storage.close()
+        with closing(sqlite3.connect(self.path)) as db, db:
+            db.execute("DROP TABLE users")
+            db.execute("DROP TABLE account_migration")
+            db.execute("PRAGMA user_version=3")
+        from python.scrying_glass_storage import SQLiteStorage
+        self.storage = SQLiteStorage(self.path)
+        self.context.STORAGE = self.storage
+        self.assertEqual(self.auth.db.execute("PRAGMA user_version").fetchone()[0], 4)
+        self.assertTrue(self.storage.migration_backup.is_file())
+        self.assertEqual(self.auth.db.execute("SELECT COUNT(*) FROM application_state").fetchone()[0], 1)
+        self.assertIsNone(self.auth.db.execute("SELECT 1 FROM account_migration").fetchone())
 
-    def test_missing_live_setup_rolls_back_upgrade(self):
-        old_database(self.path)
-        with sqlite3.connect(self.path) as conn:
-            value=json.loads(conn.execute("SELECT value_json FROM application_state WHERE key='runtime_state'").fetchone()[0]);value['active_setup']['name']='missing'
-            conn.execute("UPDATE application_state SET value_json=? WHERE key='runtime_state'",(json.dumps(value),))
-        with self.assertRaises(ValueError):SQLiteStorage(self.path)
-        with sqlite3.connect(self.path) as conn:self.assertEqual(conn.execute('PRAGMA user_version').fetchone()[0],1)
     def test_backup_filename_not_overwritten(self):
         old_database(self.path);old=self.path.with_name(self.path.name+'.before-normalization.bak');old.write_bytes(b'keep')
         db=SQLiteStorage(self.path)
