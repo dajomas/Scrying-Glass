@@ -33,6 +33,10 @@ def reset_entity(x: dict[str, Any]) -> None:
     else:
         x["hp"] = x["max_hp"]
 
+    x["temp_hp"] = 0
+    x["death_successes"] = 0
+    x["death_failures"] = 0
+    x["life_state"] = "standing" if x["hp"] > 0 else "down"
     x["alive"] = x["hp"] > 0
 
 def reset_imported_monster(source: dict[str, Any]) -> dict[str, Any]:

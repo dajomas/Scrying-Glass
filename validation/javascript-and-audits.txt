@@ -1,0 +1,29 @@
+test_bulk_select_all.js: exit=0
+7 bulk shortcut tests passed
+
+test_campaign_backups_layout.js: exit=0
+6 DOM-contract tests passed
+
+test_campaign_ids.js: exit=0
+PASS: campaign UI ID lookup, selection, active setup and rename checks
+
+test_display_reconnect.js: exit=0
+8 in-place reconnection tests passed
+
+test_encounter_visibility.js: exit=0
+10 visibility state-machine tests passed
+
+tests/audit_connection_lifetime.py: exit=0
+Connections opened: 128; without explicit close: 0
+PASS: failed PRAGMA initialization closes connection; suite closes all tracked connections
+----------------------------------------------------------------------
+Ran 180 tests in 4.227s
+
+OK
+
+tests/audit_log_clear.py patched: exit=0
+returned count: 1 live entries: 0 reloaded setup entries: 0
+PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+
+tests/audit_round3_check.py: exit=0
+PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
