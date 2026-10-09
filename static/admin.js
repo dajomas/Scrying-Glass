@@ -358,7 +358,7 @@ function updateBattleRound(state) {
 }
 
 // Campaign registry as returned by GET /api/campaigns:
-// {active: slug, campaigns: [{slug, name, description, setups: [...]}], moved: [...]}
+// {active: campaignId, campaigns: [{campaignId, name, description, setups: [...]}], moved: [...]}
 let campaignData = { active: null, campaigns: [], moved: [] };
 let campaignEditing = null;
 
@@ -959,12 +959,12 @@ function openEdit(kind, id) {
     }
 }
 
-function campaignBySlug(slug) {
-    return campaignData.campaigns.find(item => item.slug === slug) || null;
+function campaignById(campaignId) {
+    return campaignData.campaigns.find(item => item.id === campaignId) || null;
 }
 
 function activeCampaign() {
-    return campaignBySlug(campaignData.active);
+    return campaignById(campaignData.active);
 }
 
 function syncActiveBattleSetupControls() {
@@ -972,7 +972,7 @@ function syncActiveBattleSetupControls() {
 
     if (
         !activeSetup
-        || typeof activeSetup.campaign !== 'string'
+        || typeof activeSetup.campaign_id !== 'string'
         || typeof activeSetup.name !== 'string'
     ) {
         return;
@@ -982,7 +982,7 @@ function syncActiveBattleSetupControls() {
 
     if (
         !activeCampaignEntry
-        || activeCampaignEntry.slug !== activeSetup.campaign
+        || activeCampaignEntry.id !== activeSetup.campaign_id
     ) {
         return;
     }
@@ -1013,9 +1013,9 @@ function renderActiveBattleSetup() {
 
     if (
         !activeSetup
-        || typeof activeSetup.campaign !== 'string'
+        || typeof activeSetup.campaign_id !== 'string'
         || typeof activeSetup.name !== 'string'
-        || !activeSetup.campaign.trim()
+        || !activeSetup.campaign_id.trim()
         || !activeSetup.name.trim()
     ) {
         info.textContent = 'No saved battle setup loaded';
@@ -1024,7 +1024,7 @@ function renderActiveBattleSetup() {
 
     const activeCampaignEntry = activeCampaign();
     const sameCampaign = activeCampaignEntry
-        && activeCampaignEntry.slug === activeSetup.campaign;
+        && activeCampaignEntry.id === activeSetup.campaign_id;
 
     const isKnownSetup = Boolean(
         sameCampaign
@@ -1045,7 +1045,7 @@ function campaignOptions(selected, placeholder = '') {
     return (placeholder ? `<option value="">${esc(placeholder)}</option>` : '') +
         campaignData.campaigns
             .map(item =>
-                `<option value="${esc(item.slug)}"${item.slug === selected ? ' selected' : ''}>` +
+                `<option value="${esc(item.id)}"${item.id === selected ? ' selected' : ''}>` +
                 `${esc(item.name)} (${item.setups.length})</option>`)
             .join('');
 }
@@ -1061,14 +1061,14 @@ function setupOptions(names, placeholder, selected = '') {
 function renderImportSetups() {
     const importCampaign = document.querySelector('#importCampaign');
     const importSelect = document.querySelector('#importSetup');
-    const campaign = campaignBySlug(importCampaign.value) || activeCampaign();
+    const campaign = campaignById(importCampaign.value) || activeCampaign();
     const names = campaign ? campaign.setups : [];
     const oldValue = importSelect.value;
     importSelect.innerHTML = setupOptions(names, 'Choose setup…', names.includes(oldValue) ? oldValue : '');
 }
 
 function renderCampaignSetupNames() {
-    const from = campaignBySlug(document.querySelector('#campaignSetupFrom').value);
+    const from = campaignById(document.querySelector('#campaignSetupFrom').value);
     const select = document.querySelector('#campaignSetupName');
     const names = from ? from.setups : [];
     const oldValue = select.value;
@@ -1098,7 +1098,7 @@ function renderCampaigns() {
     const importCampaign = document.querySelector('#importCampaign');
     const oldImportCampaign = importCampaign.value;
     importCampaign.innerHTML = campaignOptions(
-        campaignBySlug(oldImportCampaign) ? oldImportCampaign : campaignData.active,
+        campaignById(oldImportCampaign) ? oldImportCampaign : campaignData.active,
     );
     renderImportSetups();
 
@@ -2060,7 +2060,7 @@ function closeCampaignModal() {
 
 function openCampaignModal(campaign = null) {
     const form = document.querySelector('#campaignForm');
-    campaignEditing = campaign ? campaign.slug : null;
+    campaignEditing = campaign ? campaign.id : null;
     document.querySelector('#campaignModalTitle').textContent =
         campaign ? `Edit campaign: ${campaign.name}` : 'New campaign';
     document.querySelector('#campaignSubmit').textContent = campaign ? 'Save' : 'Create';
@@ -2077,7 +2077,7 @@ document.querySelector('#cancelCampaignDelete').onclick = () => { campaignDelete
 document.querySelector('#newCampaign').onclick = () => openCampaignModal();
 
 document.querySelector('#editCampaign').onclick = () => {
-    const campaign = campaignBySlug(document.querySelector('#campaignSelect').value);
+    const campaign = campaignById(document.querySelector('#campaignSelect').value);
     if (!campaign) {
         paneNotification('campaign', 'Choose a campaign to edit');
         return;
@@ -2152,30 +2152,30 @@ document.querySelector('#campaignForm').onsubmit = async event => {
 
 async function switchCampaign() {
     const campaignSelect = document.querySelector('#campaignSelect');
-    const slug = campaignSelect.value;
+    const campaignId = campaignSelect.value;
     // Put the dropdown back on the active campaign when the switch does not happen.
     const revert = () => { campaignSelect.value = campaignData.active || ''; };
-    if (!slug) {
+    if (!campaignId) {
         revert();
         paneNotification('campaign', 'Choose a campaign to switch to');
         return;
     }
-    if (slug === campaignData.active) {
-        paneNotification('campaign', `${activeCampaign()?.name || slug} is already the active campaign`);
+    if (campaignId === campaignData.active) {
+        paneNotification('campaign', `${activeCampaign()?.name || campaignId} is already the active campaign`);
         return;
     }
-    const target = campaignBySlug(slug);
-    if (!confirm(`Switch to campaign ${target ? target.name : slug}?\n\n${REPLACE_WARNING}`)) {
+    const target = campaignById(campaignId);
+    if (!confirm(`Switch to campaign ${target ? target.name : campaignId}?\n\n${REPLACE_WARNING}`)) {
         revert();
         return;
     }
     try {
-        campaignData = await request(`/api/campaigns/${encodeURIComponent(slug)}/activate`, {
+        campaignData = await request(`/api/campaigns/${encodeURIComponent(campaignId)}/activate`, {
             method: 'POST',
         });
         document.querySelector('#setupSelect').value = '';
         const opened = await applyOpenedSetup(campaignData);
-        paneNotification('campaign', `Switched to campaign: ${activeCampaign()?.name || slug}${opened}`);
+        paneNotification('campaign', `Switched to campaign: ${activeCampaign()?.name || campaignId}${opened}`);
     } catch (error) {
         revert();
         paneNotification('campaign', error.message);
@@ -2189,13 +2189,13 @@ document.querySelector('#campaignSelect').onchange = switchCampaign;
 // The delete dialog lets the admin choose WHICH campaign to delete. The
 // "move setups to" list always excludes the campaign chosen for deletion.
 function renderCampaignDeleteDialog() {
-    const campaign = campaignBySlug(document.querySelector('#campaignDeleteTarget').value);
+    const campaign = campaignById(document.querySelector('#campaignDeleteTarget').value);
     if (!campaign) {
         return;
     }
-    const others = campaignData.campaigns.filter(item => item.slug !== campaign.slug);
+    const others = campaignData.campaigns.filter(item => item.id !== campaign.id);
     const hasSetups = campaign.setups.length > 0;
-    const isActive = campaign.slug === campaignData.active;
+    const isActive = campaign.id === campaignData.active;
     document.querySelector('#campaignDeleteTitle').textContent = `Delete campaign: ${campaign.name}`;
     document.querySelector('#campaignDeleteText').textContent =
         (hasSetups
@@ -2209,13 +2209,12 @@ function renderCampaignDeleteDialog() {
     const moveTo = document.querySelector('#campaignDeleteMoveTo');
     const previous = moveTo.value;
     const preferred =
-        others.find(item => item.slug === previous) ||
-        others.find(item => item.slug === campaignData.active) ||
-        others.find(item => item.slug === 'default') ||
+        others.find(item => item.id === previous) ||
+        others.find(item => item.id === campaignData.active) ||
         others[0];
     moveTo.innerHTML = others
         .map(item =>
-            `<option value="${esc(item.slug)}"${item.slug === preferred.slug ? ' selected' : ''}>${esc(item.name)}</option>`)
+            `<option value="${esc(item.id)}"${item.id === preferred.id ? ' selected' : ''}>${esc(item.name)}</option>`)
         .join('');
 }
 
@@ -2227,12 +2226,12 @@ document.querySelector('#deleteCampaign').onclick = () => {
     // Preselect the first campaign that is NOT active, so the active campaign is
     // never deleted by accident; it can still be chosen explicitly.
     const initial =
-        campaignData.campaigns.find(item => item.slug !== campaignData.active) ||
+        campaignData.campaigns.find(item => item.id !== campaignData.active) ||
         campaignData.campaigns[0];
     document.querySelector('#campaignDeleteTarget').innerHTML = campaignData.campaigns
         .map(item =>
-            `<option value="${esc(item.slug)}"${item.slug === initial.slug ? ' selected' : ''}>` +
-            `${esc(item.name)}${item.slug === campaignData.active ? ' (active)' : ''}</option>`)
+            `<option value="${esc(item.id)}"${item.id === initial.id ? ' selected' : ''}>` +
+            `${esc(item.name)}${item.id === campaignData.active ? ' (active)' : ''}</option>`)
         .join('');
     document.querySelector('#campaignDeleteMoveTo').innerHTML = '';
     document.querySelector('#campaignDeleteAction').value = 'move';
@@ -2245,8 +2244,8 @@ document.querySelector('#campaignDeleteAction').onchange = renderCampaignDeleteD
 
 document.querySelector('#campaignDeleteForm').onsubmit = async event => {
     event.preventDefault();
-    const slug = document.querySelector('#campaignDeleteTarget').value;
-    const campaign = campaignBySlug(slug);
+    const campaignId = document.querySelector('#campaignDeleteTarget').value;
+    const campaign = campaignById(campaignId);
     if (!campaign) {
         paneNotification('campaign', 'Choose a campaign to delete');
         return;
@@ -2254,7 +2253,7 @@ document.querySelector('#campaignDeleteForm').onsubmit = async event => {
     const moveTo = document.querySelector('#campaignDeleteMoveTo').value;
     const hasSetups = campaign.setups.length > 0;
     const deleteSetups = hasSetups && document.querySelector('#campaignDeleteAction').value === 'delete';
-    if (hasSetups && !deleteSetups && (!moveTo || moveTo === slug)) {
+    if (hasSetups && !deleteSetups && (!moveTo || moveTo === campaignId)) {
         paneNotification('campaign', 'Choose another campaign to move the battle setups to');
         return;
     }
@@ -2267,8 +2266,8 @@ document.querySelector('#campaignDeleteForm').onsubmit = async event => {
         ? ''
         : deleteSetups
             ? `\n\nIts ${campaign.setups.length} battle setup(s) will be PERMANENTLY DELETED: ${campaign.setups.join(', ')}`
-            : `\n\nIts ${campaign.setups.length} battle setup(s) will be moved to ${campaignBySlug(moveTo)?.name || moveTo}.`;
-    if (slug === campaignData.active
+            : `\n\nIts ${campaign.setups.length} battle setup(s) will be moved to ${campaignById(moveTo)?.name || moveTo}.`;
+    if (campaignId === campaignData.active
         ? !confirm(
             `${campaign.name} is the active campaign. After deleting it another campaign ` +
             `becomes active.${setupNote}\n\n${REPLACE_WARNING}`,
@@ -2277,7 +2276,7 @@ document.querySelector('#campaignDeleteForm').onsubmit = async event => {
         return;
     }
     try {
-        const result = await request(`/api/campaigns/${encodeURIComponent(slug)}${query}`, {
+        const result = await request(`/api/campaigns/${encodeURIComponent(campaignId)}${query}`, {
             method: 'DELETE',
         });
         campaignData = result;
@@ -2286,7 +2285,7 @@ document.querySelector('#campaignDeleteForm').onsubmit = async event => {
         const opened = await applyOpenedSetup(result);
         paneNotification(
             'campaign',
-            `Deleted campaign: ${campaign ? campaign.name : slug}` +
+            `Deleted campaign: ${campaign ? campaign.name : campaignId}` +
             (result.moved && result.moved.length ? ` (moved ${result.moved.length} setup(s))` : '') +
             (result.deleted_setups && result.deleted_setups.length ? ` (deleted ${result.deleted_setups.length} setup(s))` : '') +
             opened,
@@ -2303,9 +2302,9 @@ document.querySelector('#openCampaignSetup').onclick = async () => {
         return;
     }
     const target = document.querySelector('#campaignSelect').value || campaignData.active;
-    const source = campaignData.campaigns.find(item => item.slug !== target && item.setups.length)
-        || campaignData.campaigns.find(item => item.slug !== target);
-    document.querySelector('#campaignSetupFrom').innerHTML = campaignOptions(source.slug);
+    const source = campaignData.campaigns.find(item => item.id !== target && item.setups.length)
+        || campaignData.campaigns.find(item => item.id !== target);
+    document.querySelector('#campaignSetupFrom').innerHTML = campaignOptions(source.id);
     document.querySelector('#campaignSetupTo').innerHTML = campaignOptions(target);
     renderCampaignSetupNames();
     campaignSetupModal.hidden = false;
@@ -2343,7 +2342,7 @@ document.querySelector('#campaignSetupForm').onsubmit = async event => {
         paneNotification(
             'campaign',
             `${mode === 'copy' ? 'Copied' : 'Moved'} setup ${setup} to campaign ` +
-            `${campaignBySlug(result.campaign)?.name || result.campaign}` +
+            `${campaignById(result.campaign)?.name || result.campaign}` +
             (result.setup !== setup ? ` as ${result.setup}` : ''),
         );
     } catch (error) {
@@ -2445,7 +2444,7 @@ document.querySelector('#saveSetup').onclick = async () => {
         syncActiveBattleSetupControls();
         renderActiveBattleSetup();
 
-        paneNotification('battleSetup', `Saved setup: ${result.name} (campaign: ${campaignBySlug(result.campaign)?.name || result.campaign})`);
+        paneNotification('battleSetup', `Saved setup: ${result.name} (campaign: ${campaignById(result.campaign)?.name || result.campaign})`);
     } catch (error) {
         paneNotification('battleSetup', error.message);
     }
@@ -2495,7 +2494,7 @@ async function loadSelectedSetup(event) {
 
         paneNotification('battleSetup',
             `Loaded setup ${result.name} in campaign `
-            + `${campaignBySlug(result.campaign)?.name || result.campaign}`,
+            + `${campaignById(result.campaign)?.name || result.campaign}`,
         );
     } catch (error) {
         revert();

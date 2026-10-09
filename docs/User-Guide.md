@@ -41,7 +41,7 @@ you need to retain encounter changes that may be replaced.
 Selecting/activating a campaign opens its last-worked-on setup if still present,
 otherwise its newest setup by modification time. A campaign with no setups has
 no setup to open. New campaigns receive an empty default setup. Fresh installs
-start with Default; older unassigned setups are migrated there, with numeric
+start with Default; older unassigned setups are imported there, with numeric
 suffixes on naming collisions.
 
 Create/edit campaigns using their name and optional description. Normalized
@@ -78,7 +78,7 @@ not merely a removal from one setup.
 | Delete | Permanently deletes it and opens the next alphabetic setup, wrapping to the first |
 | Import from setup | Appends new copies of monsters from a selected saved setup |
 
-Names are normalized into lowercase storage slugs; saving the same name in the
+Battle setup names are normalized into lowercase storage names; saving the same name in the
 same campaign overwrites it. Different campaigns can use the same setup name.
 When deletion leaves no setups, an empty default setup is created and opened.
 Loading/deleting can replace the working battle, log and background: save first.
@@ -233,10 +233,10 @@ The split Admin HTML loads fragments once when the server imports the loader.
 Restart for markup changes; hard-refresh after browser asset changes. Players
 and GMs do not need to know the internal file layout to use the interface.
 
-Back up the whole configured storage_dir, including scrying-glass.sqlite3 and
-uploads/. Stop the process for a consistent backup. Campaigns, rosters, setups
-and working state now live in SQLite; legacy JSON files are retained only as
-pre-migration copies. See [SQLite migration instructions](SQLite-Migration.md).
+Back up the whole configured storage_dir, including scrying-glass.sqlite3 and uploads/,
+plus configuration, with the process stopped. Database values and list entries now use
+relational columns/records. Campaign rename preserves its ID and relationships. Legacy
+JSON files remain archival. See [migration instructions](SQLite-Migration.md).
 
 | Symptom | What to check |
 |---|---|

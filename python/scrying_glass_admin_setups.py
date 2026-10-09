@@ -112,7 +112,7 @@ class AdminSetupsMixin:
 
         if (
             reference is not None
-            and reference["campaign"] == campaign
+            and reference["campaign_id"] == campaign
             and reference["name"] == old
         ):
             self.context.set_active_setup(campaign, new)
@@ -145,7 +145,7 @@ class AdminSetupsMixin:
 
         if (
             reference is not None
-            and reference["campaign"] == campaign
+            and reference["campaign_id"] == campaign
             and reference["name"] == name
         ):
             self.context.clear_active_setup()

@@ -45,6 +45,11 @@ try {
         }
     }
 
+    & $VenvPython -c "import sqlite3; print('SQLite:', sqlite3.sqlite_version)"
+    if ($LASTEXITCODE -ne 0) {
+        throw 'Python lacks working sqlite3 support; repair Python, not pip dependencies.'
+    }
+
     & $VenvPython -m pip install --upgrade pip
     if ($LASTEXITCODE -ne 0) {
         throw "pip upgrade failed (exit code $LASTEXITCODE)."

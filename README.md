@@ -24,7 +24,7 @@ introduced on 6 October 2026; it does not designate a new software release.
 - Battle initiative, tie resolution, turn advancement, individual/bulk controls.
 - Current-turn damage, healing, buff/debuff logging, and CSV/JSON log exports.
 - Per-setup display backgrounds: colors, CSS gradients and uploaded images.
-- SQLite persistence, non-destructive legacy import and real-time player display updates.
+- Normalized SQLite persistence, stable campaign IDs, legacy migration and real-time player display updates.
 
 ## Requirements
 
@@ -165,27 +165,26 @@ setup restores its encounter data and loads the campaign's current roster.
 
 ## Persistence and backups
 
-Structured data is stored in `storage_dir/scrying-glass.sqlite3`. Uploaded monster
-and background images remain in `storage_dir/uploads/`; configuration remains
-in the existing YAML/JSON configuration file. SQLite uses Python's standard-library
-`sqlite3` module, so no database server or additional dependency is required.
+Structured data lives in `storage_dir/scrying-glass.sqlite3`, now schema version 3.
+The database stores individual values in typed columns and lists in ID-bearing child
+rows; it does not store serialized JSON payloads. Uploaded images remain under
+`storage_dir/uploads/`, and configuration remains a YAML/JSON file. JSON API responses
+and in-memory dictionaries are unchanged as formats; JSON is not a database storage format.
 
-Campaign metadata, campaign-owned character rosters, named monster encounters,
-and runtime state have separate database records. Existing dictionary/snapshot
-formats remain JSON payloads inside SQLite. Saved setups remain authoritative for
-their monsters; runtime state stores the active setup reference, active-turn marker,
-battle round, successor lists, activity log, display settings and unsaved monsters.
+Campaigns and battle setups have stable integer database IDs. Campaign renames update
+one campaign row, without rewriting characters, setups or runtime references. Campaign
+IDs are represented as decimal strings in API/form values. The admin frontend uses id,
+not slug, for campaign selection. Existing monster/character combatant IDs remain intact.
 
-The first startup imports existing `campaigns.json`, `characters/*.json`,
-`setups/<campaign>/*.json`, loose `setups/*.json`, and `state.json`. It leaves all
-source files untouched. Import and startup validation share a transaction; invalid
-input aborts startup instead of silently skipping data. A database marker prevents
-subsequent re-imports. Once imported, the old JSON files are archival copies, not
-live data: do not edit them expecting the running application to change.
+Upgrades from slug-based SQLite v1 and campaign-ID SQLite v2 are backed up and converted
+transactionally to v3. Existing v2 campaign IDs are retained. Original JSON installations
+are imported directly into v3 without modifying source files. See
+[SQLite migration instructions](docs/SQLite-Migration.md) and [database schema](docs/Database-Schema.sql).
 
-Stop the server before copying the entire storage directory and configuration.
-The backup must include the database and uploaded images. Keep the pre-migration
-backup for rollback. See [SQLite migration instructions](docs/SQLite-Migration.md).
+Stop the application before backing up the entire storage directory plus configuration.
+Keep matching pre-upgrade code and data for rollback. Archived JSON files are not updated
+after import. Use one application process per data directory. sqlite3 is supplied by
+Python, not pip; the launchers check its availability before starting.
 
 ## Editing the UI
 

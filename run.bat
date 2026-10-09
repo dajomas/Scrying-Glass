@@ -37,6 +37,13 @@ python -m venv "%VDIR%"
 if errorlevel 1 goto failed
 
 :install_dependencies
+"%VENV_PYTHON%" -c "import sqlite3; print('SQLite:', sqlite3.sqlite_version)"
+if errorlevel 1 (
+    >&2 echo ERROR: Python lacks sqlite3 support. Repair Python, not pip dependencies.
+    set "EXIT_CODE=1"
+    goto finish
+)
+
 "%VENV_PYTHON%" -m pip install --upgrade pip
 if errorlevel 1 goto failed
 

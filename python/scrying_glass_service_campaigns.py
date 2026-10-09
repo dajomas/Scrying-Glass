@@ -28,25 +28,26 @@ class CampaignsService:
         self.context.STORAGE.write_campaigns(data)
 
     def active_campaign(self) -> str:
-        """Active campaign."""
-        return self.context.read_campaigns()['active'] or self.context.DEFAULT_CAMPAIGN_SLUG
+        value = self.context.STORAGE.get_value("active_campaign")
+        if value is None:
+            raise self.context.HTTPException(404, "No active campaign")
+        return str(value)
 
     def require_campaign(self, campaign: str | None) -> str:
-        """Resolve an optional campaign slug/name to an existing campaign slug."""
-        if campaign is None or not str(campaign).strip():
-            slug = self.context.active_campaign()
-        else:
-            slug = self.context.campaign_slug(str(campaign))
-        if slug not in self.context.read_campaigns()['campaigns']:
-            raise self.context.HTTPException(404, f'Campaign not found: {slug}')
-        return slug
+        value = self.context.active_campaign() if campaign is None or not str(campaign).strip() else str(campaign).strip()
+        if not value.isascii() or not value.isdecimal() or int(value) <= 0:
+            raise self.context.HTTPException(404, f"Invalid campaign ID: {value}")
+        ident = str(int(value))
+        if not self.context.STORAGE.campaign_exists(ident):
+            raise self.context.HTTPException(404, f"Campaign not found: {ident}")
+        return ident
 
-    def create_default_setup(self, slug: str) -> str | None:
+    def create_default_setup(self, campaign_id: str) -> str | None:
         name = self.context.DEFAULT_SETUP_NAME
-        if self.context.STORAGE.setup_exists(slug, name):
+        if self.context.STORAGE.setup_exists(campaign_id, name):
             return None
         empty = self.context.normalize_state({"display": {"background": self.context.configured_background()}})
-        self.context.STORAGE.save_setup(slug, name, self.context.setup_snapshot(empty))
+        self.context.STORAGE.save_setup(campaign_id, name, self.context.setup_snapshot(empty))
         return name
 
     def remember_setup(self, campaign: str, name: str) -> None:
@@ -87,11 +88,11 @@ class CampaignsService:
         """Campaigns payload."""
         data = self.context.read_campaigns()
         items = []
-        for slug, meta in data['campaigns'].items():
-            setups = self.context.STORAGE.list_setups(slug)
+        for campaign_id, meta in data['campaigns'].items():
+            setups = self.context.STORAGE.list_setups(campaign_id)
             items.append({
-                'slug': slug,
-                'name': meta.get('name', slug),
+                'id': campaign_id,
+                'name': meta.get('name', campaign_id),
                 'description': meta.get('description', ''),
                 'created': meta.get('created'),
                 'setups': setups,

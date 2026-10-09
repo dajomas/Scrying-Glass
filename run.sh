@@ -26,6 +26,11 @@ fi
 
 source "${VDIR}/bin/activate"
 
+if ! python -c 'import sqlite3; print("SQLite:", sqlite3.sqlite_version)'; then
+    echo "ERROR: This Python installation lacks sqlite3 support; repair Python, not pip dependencies." >&2
+    exit 1
+fi
+
 if [[ ! -f "${INSTALL_MARKER}" ]] ||
    [[ "$(< "${INSTALL_MARKER}")" != "${DEPENDENCY_SPEC}" ]]; then
     echo "Installing Python dependencies..."

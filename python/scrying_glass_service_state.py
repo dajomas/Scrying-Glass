@@ -145,7 +145,7 @@ class StateService:
             if not isinstance(raw_reference, dict):
                 raise ValueError("active_setup must be an object or null")
 
-            campaign = raw_reference.get("campaign")
+            campaign = raw_reference.get("campaign_id")
             name = raw_reference.get("name")
 
             if (
@@ -160,7 +160,7 @@ class StateService:
                 )
 
             active_setup = {
-                "campaign": campaign.strip(),
+                "campaign_id": campaign.strip(),
                 "name": name.strip(),
             }
 
@@ -466,7 +466,7 @@ class StateService:
         if not isinstance(value, dict):
             return None
 
-        campaign = value.get("campaign")
+        campaign = value.get("campaign_id")
         name = value.get("name")
 
         if not isinstance(campaign, str) or not campaign.strip():
@@ -476,14 +476,14 @@ class StateService:
             return None
 
         return {
-            "campaign": campaign,
+            "campaign_id": campaign,
             "name": name,
         }
 
     def set_active_setup(self, campaign: str, name: str) -> None:
         """Mark the named saved setup as the source of the working monsters."""
         self.context.STATE["active_setup"] = {
-            "campaign": campaign,
+            "campaign_id": campaign,
             "name": name,
         }
 
@@ -495,4 +495,4 @@ class StateService:
         reference = self.context.active_setup_reference()
         if reference is None:
             return False
-        return self.context.STORAGE.setup_exists(reference["campaign"], reference["name"])
+        return self.context.STORAGE.setup_exists(reference["campaign_id"], reference["name"])

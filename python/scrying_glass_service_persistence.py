@@ -177,7 +177,7 @@ class PersistenceService:
                     "active_setup must be an object or null"
                 )
 
-            reference_campaign = reference.get("campaign")
+            reference_campaign = reference.get("campaign_id")
             reference_name = reference.get("name")
 
             if (
@@ -225,7 +225,7 @@ class PersistenceService:
                 candidate["monsters"] = copy.deepcopy(setup_monsters)
 
             candidate["active_setup"] = {
-                "campaign": campaign,
+                "campaign_id": campaign,
                 "name": name,
             }
         else:
@@ -375,7 +375,7 @@ class PersistenceService:
         if not self.context.active_setup_exists():
             self.context.clear_active_setup()
             return False
-        campaign, name = reference["campaign"], reference["name"]
+        campaign, name = reference["campaign_id"], reference["name"]
         self.context.STORAGE.save_setup(campaign, name, self.context.setup_snapshot(self.context.STATE))
         self.context.remember_setup(campaign, name)
         return True

@@ -196,16 +196,19 @@ if __name__ == '__main__':
     UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 
-    STORAGE = SQLiteStorage(DATA_DIR / "scrying-glass.sqlite3")
     try:
+        STORAGE = SQLiteStorage(DATA_DIR / "scrying-glass.sqlite3")
         with STORAGE.transaction():
             imported = import_legacy_storage()
             load_state()
             clean_order()
             save_state()
     except Exception as exc:
-        STORAGE.close()
+        if "STORAGE" in globals():
+            STORAGE.close()
         sys.exit(f"Unable to initialize database: {exc}")
+    if STORAGE.migration_backup is not None:
+        print(f"Normalized database upgrade complete; backup: {STORAGE.migration_backup}")
     if imported["campaigns"]:
         print(f"Imported legacy storage into SQLite: {imported}")
 

@@ -47,7 +47,7 @@ operations. The module remains the live context; it is not a state snapshot.
 | `python/scrying_glass_service_state.py` | Encounter normalization, lookup, public state and active setup references |
 | `python/scrying_glass_service_campaigns.py` | Campaign metadata, setup paths and activation |
 | `python/scrying_glass_service_migrations.py` | Non-destructive one-time legacy JSON import |
-| `python/scrying_glass_storage.py` | SQLite schema, transactions and structured-data CRUD |
+| `python/scrying_glass_storage.py` | Normalized schema-v3 columns/child records, backups, v1/v2 upgrades and CRUD |
 | `python/scrying_glass_database_transactions.py` | Mutating request serialization, rollback and post-commit broadcasting |
 | `python/scrying_glass_service_persistence.py` | Campaign rosters, setup/state loading and writes |
 | `python/scrying_glass_service_activity.py` | Battle action and direct HP-change log records |
@@ -127,7 +127,7 @@ Do not publicly mount templates merely to assemble the page.
 3. Construct Admin/Client apps and register routes.
 4. Under the main guard, parse CLI arguments and load YAML/JSON configuration.
 5. Apply overrides and resolve storage/static paths.
-6. Create uploads, open SQLite and import legacy JSON once in a startup transaction.
+6. Create uploads, open normalized schema-v3 SQLite, upgrade v1/v2 if present, and import original JSON only when needed.
 7. Load state and the active campaign's authoritative character roster.
 8. Clean order, save state, mount assets/media and start both Uvicorn servers.
 
@@ -175,69 +175,93 @@ manual creation. Passwords may be plaintext or scrypt$<salt_hex>$<digest_hex>.
 
 ## Persistence
 
-Structured data is stored in `storage_dir/scrying-glass.sqlite3`. Uploaded monster
-and background images remain in `storage_dir/uploads/`; configuration remains
-in the existing YAML/JSON configuration file. SQLite uses Python's standard-library
-`sqlite3` module, so no database server or additional dependency is required.
+Structured data lives in `storage_dir/scrying-glass.sqlite3`, now schema version 3.
+The database stores individual values in typed columns and lists in ID-bearing child
+rows; it does not store serialized JSON payloads. Uploaded images remain under
+`storage_dir/uploads/`, and configuration remains a YAML/JSON file. JSON API responses
+and in-memory dictionaries are unchanged as formats; JSON is not a database storage format.
 
-Campaign metadata, campaign-owned character rosters, named monster encounters,
-and runtime state have separate database records. Existing dictionary/snapshot
-formats remain JSON payloads inside SQLite. Saved setups remain authoritative for
-their monsters; runtime state stores the active setup reference, active-turn marker,
-battle round, successor lists, activity log, display settings and unsaved monsters.
+Campaigns and battle setups have stable integer database IDs. Campaign renames update
+one campaign row, without rewriting characters, setups or runtime references. Campaign
+IDs are represented as decimal strings in API/form values. The admin frontend uses id,
+not slug, for campaign selection. Existing monster/character combatant IDs remain intact.
 
-The first startup imports existing `campaigns.json`, `characters/*.json`,
-`setups/<campaign>/*.json`, loose `setups/*.json`, and `state.json`. It leaves all
-source files untouched. Import and startup validation share a transaction; invalid
-input aborts startup instead of silently skipping data. A database marker prevents
-subsequent re-imports. Once imported, the old JSON files are archival copies, not
-live data: do not edit them expecting the running application to change.
+Upgrades from slug-based SQLite v1 and campaign-ID SQLite v2 are backed up and converted
+transactionally to v3. Existing v2 campaign IDs are retained. Original JSON installations
+are imported directly into v3 without modifying source files. See
+[SQLite migration instructions](SQLite-Migration.md) and [database schema](Database-Schema.sql).
 
-Stop the server before copying the entire storage directory and configuration.
-The backup must include the database and uploaded images. Keep the pre-migration
-backup for rollback. See [SQLite migration instructions](SQLite-Migration.md).
+Stop the application before backing up the entire storage directory plus configuration.
+Keep matching pre-upgrade code and data for rollback. Archived JSON files are not updated
+after import. Use one application process per data directory. sqlite3 is supplied by
+Python, not pip; the launchers check its availability before starting.
 
-### SQLite schema and transactions
+### Relational model
 
-- `campaigns(slug, metadata_json)` stores campaign identity and metadata.
-- `campaign_characters(campaign_slug, characters_json)` stores the campaign roster.
-- `battle_setups(campaign_slug, name, snapshot_json, updated_at)` stores named encounters.
-- `application_state(key, value_json)` stores the active campaign, runtime state and import marker.
+- campaigns: integer id; name, description, creation and last-used setup columns.
+- battle_setups: stable id, campaign_id, name, encounter_id and modification time.
+- character_rosters: campaign-owned roster identity, including an explicit empty roster.
+- characters: one record per campaign character; database id, combatant_id, position and attributes.
+- encounters: scalar settings for saved and runtime encounters, including display/round/turn fields.
+- monsters: one record per encounter monster; database id, combatant_id, position and attributes.
+- ordered_combatants: one row per battle-order/successor entry, with id, kind and position.
+- activity_log_entries: one record per log entry, with id, original event_id, position and scalar fields.
+- application_state: singleton id=1, active campaign/runtime encounter and import status/counts.
+- migration_runs, migration_campaign_maps, legacy_campaign_maps: historical mapping/upgrade rows.
 
-The setup key is `(campaign_slug, name)`. Foreign keys cascade campaign slug
-renames and campaign deletion to its setups/roster. Schema version is tracked by
-`PRAGMA user_version`; unsupported versions fail rather than being overwritten.
-Parameterized statements are used for values. Setup modification times are imported
-and retained for the existing newest-setup fallback; explicit last_setup wins.
+See Database-Schema.sql for the complete generated CREATE statements. Typed attributes
+extension tables store scalar extra properties and field-presence markers as individual
+records. These preserve absent-versus-null semantics and compatible extra scalar fields;
+they are not JSON blobs or serialized object trees. Unknown nested extras, unsupported
+state/display fields and duplicate supplied IDs cause transaction rollback rather than
+silent data loss. Missing legacy combatant/log IDs are generated once during import.
 
-The server owns one SQLite connection on its event-loop thread. Mutating authenticated
-admin requests are serialized by a separate operation lock and use `BEGIN IMMEDIATE`.
-Specialized notification persistence operations join the request transaction or start
-one when invoked directly. Nested transactions join the outer transaction (they are
-not independent savepoints). Exceptions propagate to the outer transaction, which
-rolls back the database and restores the pre-request in-memory state. Notifications
-are deferred until commit. Uploaded files are outside SQL transactions: a failed
-request can leave an unreferenced upload, but must not delete a previously referenced image.
+Main character/monster properties (HP, AC, initiative, names, visibility, status, images,
+etc.) have named columns. Original combatant IDs remain separate from integer storage
+record IDs. Record IDs survive edits/reordering through UPSERT by owner and logical ID.
+List order uses position, never the record ID. Duplicate ordered references use an
+occurrence index so every original list item can survive conversion as a distinct record.
+Historical log actor/target and ordered combatant IDs are text references, not foreign
+keys into one live combatant table: logs must survive combatant deletion and characters
+and monsters occupy separate tables. Ownership relationships do have enforced foreign keys.
 
-This is not a multi-process runtime-state design. Use one process per data directory.
-Synchronous database operations run on the event loop; no thread-shared connection
-or ORM is introduced. This favors simplicity for the existing small single-GM app.
+Setup and runtime scalar/list records belong to an encounter. Characters remain campaign-
+owned and are loaded from the roster. Saved setups remain authoritative for their monsters;
+unsaved runtime monsters have their own encounter records. Active and last-used setups
+are database-ID references, rebuilt as campaign/name references for the existing service
+interface. Setup rename/move preserves its database ID; copy allocates new record IDs.
+
+The campaign API returns id instead of slug. Campaign route parameters, setup request
+campaign/from_campaign and move_to query values carry decimal ID strings. Runtime
+active_setup is {"campaign_id":"12","name":"fight"}. Hard-refresh admin.js after deployment.
+
+### Transactions and migration
+
+The existing mutation wrapper serializes mutating requests, rolls back SQL and in-memory
+STATE on failure, and defers broadcasting until commit. Nested transactions join the outer
+unit, not independent savepoints. One connection is owned by the event-loop thread. Media
+uploads remain outside database rollback; failed uploads/mutations can leave orphaned files.
+
+Schema-v1/v2 upgrades are backed up then rebuilt in one transaction, retaining v2 campaign
+IDs, combatant/event IDs, order, timestamps, rosters, activity records and runtime settings.
+Original JSON is read only by the one-time importer and old-schema migration. Database
+writes do not serialize JSON. Normal domain startup validation follows a committed schema
+upgrade; if it subsequently fails, use the pre-upgrade backup and matching old code to revert.
 
 ## Campaign lifecycle and migration
 
-Campaign/setup names become lowercase slugs capped at 80 characters. New
-campaigns receive an empty default setup and a character roster. Activation
-opens last_setup if present, otherwise the newest setup by modification time;
-no setup means no replacement is loaded by open_campaign_setup.
+Campaigns use immutable integer IDs. Their names are editable and must be unique under
+case-insensitive application checks. New campaigns get an empty default setup and roster.
+Setup names still use normalized lowercase names capped at 80 characters, unique per campaign.
+Last-used setup selection uses its ID reference, otherwise the newest stored modification time.
 
-The one-time import copies loose setups/*.json into Default database records, adds numeric collision
-suffixes, registers discovered campaign folders, and ensures a valid active campaign.
-Missing campaign character rosters are seeded from an appropriate legacy
-setup, or initialized empty. Existing rosters are not overwritten by migration.
+The original JSON importer discovers registry/folder campaigns, assigns IDs, imports loose
+setups into Default with collision suffixes, seeds absent rosters and leaves every source file
+untouched. Existing ID-based databases retain their campaign IDs. Normalized schema-v3 startup
+is idempotent. Slugs persist only in historical migration mapping rows, not as live identifiers.
 
-Deleting the last campaign is prohibited. For a campaign with setups, select
-move_to or delete_setups, not both. Deleting a setup opens the next alphabetic
-setup (wrapping); an empty campaign receives a fresh default setup.
+Deleting the last campaign is prohibited. Campaign deletion with setups requires move_to or
+delete_setups. Setup deletion opens the next alphabetically, wrapping, or creates empty Default.
 
 ## Authentication
 
@@ -263,10 +287,10 @@ The Client state payload exposes encounter data even when visually hidden.
 | GET | `/api/setups` | `get_setups` | Required |
 | GET | `/api/campaigns` | `get_campaigns` | Required |
 | POST | `/api/campaigns` | `create_campaign` | Required |
-| PATCH | `/api/campaigns/{slug}` | `update_campaign` | Required |
-| DELETE | `/api/campaigns/{slug}` | `delete_campaign` | Required |
-| POST | `/api/campaigns/{slug}/activate` | `activate_campaign` | Required |
-| POST | `/api/campaigns/{slug}/setups` | `add_setup_to_campaign` | Required |
+| PATCH | `/api/campaigns/{campaign_id}` | `update_campaign` | Required |
+| DELETE | `/api/campaigns/{campaign_id}` | `delete_campaign` | Required |
+| POST | `/api/campaigns/{campaign_id}/activate` | `activate_campaign` | Required |
+| POST | `/api/campaigns/{campaign_id}/setups` | `add_setup_to_campaign` | Required |
 | POST | `/api/setups/new` | `new_setup` | Required |
 | POST | `/api/setups/save` | `save_setup` | Required |
 | POST | `/api/setups/load` | `load_setup` | Required |
@@ -361,7 +385,7 @@ not replace full runtime and browser tests.
 | Missing local module | Check package prefixes, sibling relative imports and deployed files |
 | Missing HTML fragment | Check root templates/admin and loader parent.parent path |
 | Old UI | Restart for HTML edits, then hard-refresh CSS/JavaScript |
-| Missing campaign characters | Check campaign_characters in SQLite, not setup snapshots |
+| Missing campaign characters | Query characters through character_rosters and campaign_id |
 | Unsuccessful D&D lookup | Upload image/input stats manually; inspect local imports/parser return arity |
 | Permission error | Check writable storage_dir and readable package/assets/config |
 

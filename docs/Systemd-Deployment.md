@@ -214,11 +214,13 @@ storage layout; a code-only rollback may not understand migrated data.
 ## Migrating older installations
 
 The source split alone does not relocate data. Existing explicit storage_dir
-continues to work. First startup imports legacy JSON into scrying-glass.sqlite3
+continues to work. First startup imports legacy JSON into normalized schema-v3 scrying-glass.sqlite3
 without modifying the source files. Loose setups become Default campaign records;
 missing campaign rosters are seeded from suitable legacy snapshots. See
 [SQLite migration instructions](SQLite-Migration.md).
-Back up before the first migration and check the journal afterward.
+Back up before the first migration and check the journal afterward. Existing SQLite
+schema v1/v2 is backed up and migrated automatically to normalized schema v3.
+See [migration instructions](SQLite-Migration.md).
 
 Monster Display installations used different code/config/storage/service names.
 Stop the old service and back up before renaming or transferring anything.
@@ -248,6 +250,6 @@ sudo ss -lptn 'sport = :4000'
 | Address already in use | Another instance or process owns the configured ports |
 | Old page | Restart for markup, hard-refresh for browser assets |
 
-Check campaign rosters in SQLite campaign_characters, not archived JSON files. All sessions are
+Check normalized characters joined through character_rosters, not archived JSON files. All sessions are
 cleared by restart. A service import test is not a substitute for testing both
 ports, login, saving/loading, image uploads and WebSocket delivery.
