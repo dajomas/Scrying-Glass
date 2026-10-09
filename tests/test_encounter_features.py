@@ -1,6 +1,7 @@
 """Real SQLite feature tests; HTTP/browser integration is separate."""
 import asyncio,copy,io,json,sqlite3,tempfile,time,types,unittest,zipfile
 from pathlib import Path
+from contextlib import closing
 from unittest.mock import patch
 import importlib.util
 from test_sqlite_storage import context,HTTPError
@@ -39,17 +40,39 @@ class FeatureTests(unittest.TestCase):
         self.assertEqual((self.item()['hp'],self.item()['temp_hp']),(10,7))
     def test_temp_replaced(self):
         self.call('edit_features','m',{'temp_hp':8});self.call('edit_features','m',{'temp_hp':3});self.assertEqual(self.item()['temp_hp'],3)
-    def test_zero_is_down_and_recovers(self):
-        self.call('edit_features','m',{'hp_delta':-12});self.assertEqual(self.item()['life_state'],'down')
-        self.call('edit_features','m',{'hp_delta':3});self.assertEqual(self.item()['life_state'],'standing')
+    def test_character_zero_is_down_and_recovers(self):
+        self.call('edit_features', 'c', {'hp_delta': -20})
+        self.assertEqual(self.item('c')['life_state'], 'down')
+        self.assertEqual(self.item('c')['death_failures'], 0)
+        self.call('edit_features', 'c', {'hp_delta': 3})
+        self.assertEqual(self.item('c')['life_state'], 'standing')
+
+    def test_monster_zero_is_dead_and_healing_does_not_revive(self):
+        self.call('edit_features', 'm', {'hp_delta': -12})
+        self.assertEqual(self.item()['life_state'], 'dead')
+        self.assertEqual(self.item()['hp'], 0)
+        self.assertEqual(self.item()['death_failures'], 0)
+        self.assertNotIn('m', self.c.STATE['battle_order'])
+        self.call('edit_features', 'm', {'hp_delta': 3})
+        self.assertEqual(self.item()['life_state'], 'dead')
+        self.assertEqual(self.item()['hp'], 0)
     def test_dead_needs_explicit_recovery(self):
         self.call('edit_features','m',{'life_state':'dead'});self.call('edit_features','m',{'hp_delta':3});self.assertEqual(self.item()['life_state'],'dead')
         self.call('edit_features','m',{'life_state':'standing'});self.assertTrue(self.item()['alive'])
     def test_death_saves(self):
         self.call('edit_features','m',{'life_state':'down'});self.call('edit_features','m',{'death_successes':3});self.assertEqual(self.item()['life_state'],'stable')
         self.call('edit_features','m',{'death_failures':3});self.assertEqual(self.item()['life_state'],'dead')
-    def test_stable_damaged(self):
-        self.call('edit_features','m',{'life_state':'stable'});self.call('edit_features','m',{'hp_delta':-1});self.assertEqual(self.item()['life_state'],'down')
+    def test_stable_character_damaged(self):
+        self.call('edit_features', 'c', {'life_state': 'stable'})
+        self.call('edit_features', 'c', {'hp_delta': -1})
+        self.assertEqual(self.item('c')['life_state'], 'down')
+        self.assertEqual(self.item('c')['death_failures'], 1)
+
+    def test_stable_monster_damaged_is_dead_without_death_save(self):
+        self.call('edit_features', 'm', {'life_state': 'stable'})
+        self.call('edit_features', 'm', {'hp_delta': -1})
+        self.assertEqual(self.item()['life_state'], 'dead')
+        self.assertEqual(self.item()['death_failures'], 0)
     def test_invalid_edits_atomic(self):
         before=copy.deepcopy(self.c.STATE);revision=self.f.store.revision()
         for body in ({'temp_hp':-1},{'temp_hp':True},{'life_state':[]},{'death_successes':4},{'unknown':1}):
@@ -134,7 +157,7 @@ class FeatureTests(unittest.TestCase):
         for table in ('characters_effects','monsters_effects','snapshot_characters_effects','snapshot_characters_attributes','snapshot_characters','encounter_snapshots','feature_state'):db.connection.execute('DROP TABLE '+table)
         db.connection.execute('DROP TRIGGER IF EXISTS cleanup_snapshot');db.connection.execute('PRAGMA user_version=4');db.close();db=self.c.STORAGE.__class__(path)
         self.assertEqual(db.connection.execute('SELECT username FROM users').fetchone()[0],'dm');self.assertTrue(db.migration_backup.is_file())
-        with sqlite3.connect(db.migration_backup) as backup:self.assertEqual(backup.execute('PRAGMA user_version').fetchone()[0],4)
+        with closing(sqlite3.connect(db.migration_backup)) as backup:self.assertEqual(backup.execute('PRAGMA user_version').fetchone()[0],4)
         db.close()
 
 if __name__=='__main__':unittest.main()

@@ -1,0 +1,14 @@
+['/usr/local/bin/python3.12', 'tests/audit_connection_lifetime.py']: exit=0
+Connections opened: 119; without explicit close: 0
+PASS: failed PRAGMA initialization closes connection; suite closes all tracked connections
+----------------------------------------------------------------------
+Ran 171 tests in 6.572s
+
+OK
+
+['/usr/local/bin/python3.12', 'tests/audit_log_clear.py', 'patched']: exit=0
+returned count: 1 live entries: 0 reloaded setup entries: 0
+PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+
+['/usr/local/bin/python3.12', 'tests/audit_round3_check.py']: exit=0
+PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
