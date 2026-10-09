@@ -35,6 +35,9 @@ class AdminCampaignsMixin:
             if self.context.STORAGE.campaign_name_exists(name, exclude=ident):
                 raise self.context.HTTPException(409, "Campaign name already exists")
         self.context.STORAGE.update_campaign(ident, name=name, description=description)
+        if name is not None and ident==self.context.active_campaign():
+            if getattr(self.context,'features',None):self.context.features.store.bump()
+            await self.context.broadcast()
         return self.context.campaigns_payload()
 
     async def delete_campaign(self, campaign_id: str, move_to: str | None=None, delete_setups: bool=False):

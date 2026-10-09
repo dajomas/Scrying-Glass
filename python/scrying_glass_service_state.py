@@ -355,6 +355,14 @@ class StateService:
     def display_state(self) -> dict[str, Any]:
         """Return only information intended for the player display."""
         full = self.context.public_state()
+        campaign=None
+        try:
+            campaign_id=self.context.active_campaign()
+        except self.context.HTTPException as exc:
+            if exc.status_code!=404:raise
+        else:
+            metadata=self.context.read_campaigns().get('campaigns',{}).get(str(campaign_id),{})
+            campaign={'id':str(campaign_id),'name':str(metadata.get('name') or campaign_id)}
 
         common_fields = (
             "id",
@@ -368,7 +376,7 @@ class StateService:
 
         def display_character(item: dict[str, Any]) -> dict[str, Any]:
             from .scrying_glass_feature_rules import public_features
-            return {**{key:item.get(key) for key in common_fields}, **public_features(item)}
+            return {**{key:item.get(key) for key in common_fields},**public_features(item)}
 
         def display_monster(item: dict[str, Any]) -> dict[str, Any]:
             result = display_character(item)
@@ -441,6 +449,7 @@ class StateService:
         display_order.extend(item["id"] for item in additional)
 
         return {
+            "campaign": campaign,
             "monsters": monsters,
             "characters": characters,
             "battle_round": full["battle_round"],

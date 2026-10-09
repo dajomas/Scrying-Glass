@@ -1323,6 +1323,7 @@ function sortedMonstersForAdmin() {
 async function load() {
     try {
         latest = await request('/api/state');
+        window.updateEncounterToolsVisibility?.(latest);
 
         updateBattleOrderFontControls(latest.display?.battle_order_font_size);
         updateBattleRound(latest);
@@ -2899,10 +2900,7 @@ function updateActionRowAmount(row) {
     amountField.hidden = !required;
     amountInput.required = required;
     const critical=row.querySelector('[data-action-critical]');
-    if(critical) {
-        critical.parentElement.hidden=action!=='damage';
-        if(action!=='damage') critical.checked=false;
-    }
+    if(critical){critical.parentElement.hidden=action!=='damage';if(action!=='damage')critical.checked=false;}
 
     if (!required) {
         amountInput.value = '';
@@ -3016,7 +3014,7 @@ battleActionForm.onsubmit = async event => {
             target_id: row.querySelector('[data-action-target]').value,
             action,
             amount: actionAmountRequired(action) ? Number(rawAmount) : null,
-            critical_hit: action==='damage' && Boolean(row.querySelector('[data-action-critical]')?.checked),
+            critical_hit: action==='damage'&&Boolean(row.querySelector('[data-action-critical]')?.checked),
         };
     });
 
@@ -3268,13 +3266,13 @@ document.addEventListener('change', event => {
 });
 
 function characterPermanentlyDead(character) {
-    return character.life_state==='dead' || (character.death_failures ?? 0)>=3;
+    return character.life_state==='dead'||(character.death_failures??0)>=3;
 }
 function turnEligible(combatant) {
-    if(!combatant.active || combatant.life_state==='dead') return false;
-    return !('monster_species' in combatant) ? !characterPermanentlyDead(combatant) : Boolean(combatant.alive);
+    if(!combatant.active||combatant.life_state==='dead')return false;
+    return !('monster_species' in combatant)?!characterPermanentlyDead(combatant):Boolean(combatant.alive);
 }
-function living() {return all().filter(turnEligible);}
+function living(){return all().filter(turnEligible);}
 
 function initiativeOf(combatant) {
     return typeof combatant.initiative === 'number' &&

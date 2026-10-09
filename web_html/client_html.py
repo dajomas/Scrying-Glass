@@ -8,7 +8,8 @@ CLIENT_HTML = r'''<!doctype html>
   <link rel="stylesheet" href="/static/client.css">
 </head>
 <body>
-  <header class="client-toolbar" aria-label="Display account controls">
+  <header class="client-toolbar" aria-label="Campaign and display status">
+    <span id="clientCampaign" aria-live="polite">Campaign: …</span>
     <span id="displaySync" role="status" aria-live="polite">Connecting…</span>
     <form action="/logout" method="post">
       <button id="clientLogout" type="submit">Log out</button>

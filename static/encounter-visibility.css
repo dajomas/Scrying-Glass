@@ -1,0 +1,3 @@
+/* Suppress initial flash before the visibility controller initializes. */
+#encounterFeatures:not([data-et-visible="true"]) {display:none !important;}
+#encounterFeatures[hidden] {display:none !important;}
