@@ -2,6 +2,11 @@
       <div class="row display-pane-heading">      
         <h2>Characters</h2>
 
+        <div class="bulk-action-toolbar">
+          <button id="selectAllCharacters" type="button" class="bulk-select-all"
+                  data-select-all-kind="characters" aria-label="Select all characters">
+            Select all
+          </button>
         <label class="bulk-control" for="characterBulkAction">
           <span class="bulk-label">Bulk</span>
           <select id="characterBulkAction" class="bulk-action-select">
@@ -14,6 +19,7 @@
             <option value="remove">Remove</option>
           </select>
         </label>
+        </div>
       </div>
 
       <div id="characters"></div>

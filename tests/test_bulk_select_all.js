@@ -1,0 +1,23 @@
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
+const root=path.join(__dirname,'..');
+const admin=fs.readFileSync(path.join(root,'static/admin.js'),'utf8');
+const start=admin.indexOf('function setAllSelected('),end=admin.indexOf('function updateRowSelection(',start);
+assert(start>=0&&end>start);const helper=admin.slice(start,end);
+const script=fs.readFileSync(path.join(root,'static/bulk-select-all.js'),'utf8');
+const sets={characters:new Set(),monsters:new Set()};
+const items={characters:[{id:'c1'},{id:'c2'}],monsters:[{id:'m1'},{id:'m2'}]};
+const boxes={characters:[{checked:false},{checked:false}],monsters:[{checked:false},{checked:false}]};
+const handlers={};
+const buttons=['characters','monsters','invalid'].map(kind=>({dataset:{selectAllKind:kind},addEventListener:(name,handler)=>{assert.equal(name,'click');handlers[kind]=handler;}}));
+const document={querySelectorAll:selector=>selector==='button[data-select-all-kind]'?buttons:boxes[selector.includes('characters')?'characters':'monsters']};
+const sandbox={document,latest:items,selectionFor:kind=>sets[kind],itemsFor:kind=>items[kind]};
+vm.createContext(sandbox);vm.runInContext(helper,sandbox);vm.runInContext(script,sandbox);
+let passed=0;function test(fn){fn();passed++;}
+test(()=>{handlers.characters();assert.deepEqual([...sets.characters],['c1','c2']);assert(boxes.characters.every(x=>x.checked));assert.equal(sets.monsters.size,0);});
+test(()=>{handlers.monsters();assert.deepEqual([...sets.monsters],['m1','m2']);assert(boxes.monsters.every(x=>x.checked));assert.deepEqual([...sets.characters],['c1','c2']);});
+test(()=>{handlers.characters();assert.equal(sets.characters.size,2);});
+test(()=>{sets.characters.add('stale');handlers.characters();assert.equal(sets.characters.has('stale'),false);});
+test(()=>{items.characters=[];handlers.characters();assert.equal(sets.characters.size,0);});
+test(()=>{handlers.invalid();assert.equal(sets.monsters.size,2);});
+test(()=>{sandbox.latest=undefined;handlers.monsters();assert.equal(sets.monsters.size,2);});
+console.log(passed+' bulk shortcut tests passed');

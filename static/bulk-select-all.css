@@ -1,0 +1,11 @@
+/* Keep the shortcut immediately beside its existing Bulk dropdown. */
+.display-pane-heading .bulk-action-toolbar {display:inline-flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin-left:auto;min-width:0;}
+.display-pane-heading .bulk-action-toolbar .bulk-control {margin-left:0;}
+.display-pane-heading .bulk-select-all {white-space:nowrap;background:#334155;border-color:#64748b;}
+.display-pane-heading .bulk-select-all:hover {background:#475569;}
+.display-pane-heading .bulk-select-all:focus-visible {outline:2px solid #93c5fd;outline-offset:2px;}
+@media (max-width:600px) {
+  .display-pane-heading .bulk-action-toolbar {width:100%;justify-content:flex-start;}
+  .display-pane-heading .bulk-action-toolbar .bulk-control {min-width:0;}
+  .display-pane-heading .bulk-action-toolbar .bulk-action-select {min-width:0;max-width:100%;}
+}

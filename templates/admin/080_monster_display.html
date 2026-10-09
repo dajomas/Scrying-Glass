@@ -3,6 +3,11 @@
         <h2>Monsters</h2>
         <button id="rollMonsterInitiative" class="roll">Roll monster initiatives (d20)</button>
 
+        <div class="bulk-action-toolbar">
+          <button id="selectAllMonsters" type="button" class="bulk-select-all"
+                  data-select-all-kind="monsters" aria-label="Select all monsters">
+            Select all
+          </button>
         <label class="bulk-control" for="monsterBulkAction">
           <span class="bulk-label">Bulk</span>
           <select id="monsterBulkAction" class="bulk-action-select">
@@ -23,6 +28,7 @@
             <option value="remove">Remove</option>
           </select>
         </label>
+        </div>
       </div>
 
       <div id="monsters"></div>
