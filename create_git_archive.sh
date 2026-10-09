@@ -1,4 +1,4 @@
-git archive --format=zip --output=scrying-glass-source.zip origin/features/development
+git archive --format=zip --output=scrying-glass-source.zip features/development
 python3 - <<'PY'
 import base64
 from pathlib import Path

@@ -217,8 +217,8 @@ def csv_monster(row: dict[str, str], row_number: int) -> dict[str, Any]:
     ac = csv_int(row, "ac", minimum=0, maximum=999, row_number=row_number)
     hp = csv_int(row, "hp", minimum=-99999, maximum=99999, row_number=row_number)
 
-    if not name:
-        raise HTTPException(400, f"CSV row {row_number}: name is required")
+    if not 1 <= len(name) <= 100:
+        raise HTTPException(400, f"CSV row {row_number}: name must contain 1-100 characters")
 
     if not monster_species:
         raise HTTPException(
@@ -259,6 +259,13 @@ def csv_monster(row: dict[str, str], row_number: int) -> dict[str, Any]:
         row_number=row_number,
     )
 
+    if len(monster_species) > 100:
+        raise HTTPException(400, f"CSV row {row_number}: monster_species must not exceed 100 characters")
+
+    color = csv_text(row.get("color")) or "#842029"
+    if len(color) > 40:
+        raise HTTPException(400, f"CSV row {row_number}: color must not exceed 40 characters")
+
     ident = csv_combatant_id(row, row_number)
 
     return {
@@ -269,7 +276,7 @@ def csv_monster(row: dict[str, str], row_number: int) -> dict[str, Any]:
         "hp": hp,
         "max_hp": maximum_hp,
         "original_hp": original_hp,
-        "color": csv_text(row.get("color"), "#842029"),
+        "color": color,
         "image_url": csv_text(row.get("image_url")) or None,
         "active": csv_bool(row, "active", default=False, row_number=row_number),
         "alive": csv_bool(
@@ -304,8 +311,8 @@ def csv_character(row: dict[str, str], row_number: int) -> dict[str, Any]:
     """Csv character."""
     name = csv_text(row.get("name"))
 
-    if not name:
-        raise HTTPException(400, f"CSV row {row_number}: name is required")
+    if not 1 <= len(name) <= 100:
+        raise HTTPException(400, f"CSV row {row_number}: name must contain 1-100 characters")
 
     hp = csv_int(
         row,
@@ -334,12 +341,16 @@ def csv_character(row: dict[str, str], row_number: int) -> dict[str, Any]:
         row_number=row_number,
     )
 
+    color = csv_text(row.get("color")) or "#1f4e79"
+    if len(color) > 40:
+        raise HTTPException(400, f"CSV row {row_number}: color must not exceed 40 characters")
+
     ident = csv_combatant_id(row, row_number)
 
     return {
         "id": ident,
         "name": name,
-        "color": csv_text(row.get("color"), "#1f4e79"),
+        "color": color,
         "hp": hp,
         "max_hp": maximum_hp,
         "original_hp": csv_int(
