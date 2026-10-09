@@ -1,5 +1,5 @@
-git archive --format=zip --output=scrying-glass-source.zip origin/features/database
-python3 - <<'!PY!'
+git archive --format=zip --output=scrying-glass-source.zip origin/features/development
+python3 - <<'PY'
 import base64
 from pathlib import Path
 
@@ -9,4 +9,4 @@ target.write_text(
     base64.b64encode(source.read_bytes()).decode("ascii"),
     encoding="ascii",
 )
-!PY!
+PY
