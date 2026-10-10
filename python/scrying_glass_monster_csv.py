@@ -6,7 +6,7 @@ import io
 from decimal import Decimal, InvalidOperation
 
 from typing import Any
-from .scrying_glass_json_import import DuplicateJsonKeyError, InvalidJsonTextError, load_import_json
+from .scrying_glass_json_import import DuplicateJsonKeyError, InvalidJsonTextError, InvalidJsonNumberError, load_import_json
 
 from fastapi import HTTPException
 
@@ -14,7 +14,7 @@ def parse_monster(raw: bytes) -> dict[str, Any]:
     """Parse a UTF-8 JSON monster file, preserving numeric zero values."""
     try:
         data = load_import_json(raw.decode("utf-8"))
-    except (DuplicateJsonKeyError, InvalidJsonTextError) as exc:
+    except (DuplicateJsonKeyError, InvalidJsonTextError, InvalidJsonNumberError) as exc:
         raise HTTPException(400, str(exc)) from exc
     except (UnicodeDecodeError, ValueError, RecursionError) as exc:
         raise HTTPException(
