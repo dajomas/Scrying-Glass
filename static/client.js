@@ -1,4 +1,3 @@
-let previous = new Map();
 const removalTimers = new Map();
 
 function esc(value) {
@@ -197,7 +196,6 @@ function render(state) {
         stage.style.gridTemplateColumns = '';
         stage.style.gridTemplateRows = '';
         stage.innerHTML = '<div class="empty"></div>';
-        previous.clear();
         return;
     }
 
@@ -219,14 +217,15 @@ function render(state) {
         activeMonsters.map(monster => [monster.id, monster]),
     );
 
-    for (const [id] of previous) {
+    // A failed render can leave cards that never reached the previous snapshot.
+    // Reconcile the actual stage so those orphaned cards receive normal exits.
+    for (const oldCard of stage.querySelectorAll('.monster')) {
+        const id = oldCard.id.slice(2);
         if (current.has(id)) {
             continue;
         }
 
-        const oldCard = document.getElementById(`m-${id}`);
-
-        if (oldCard && !removalTimers.has(id)) {
+        if (!removalTimers.has(id)) {
             oldCard.classList.add(exitClass(state.display));
 
             const timer = setTimeout(() => {
@@ -297,7 +296,6 @@ function render(state) {
 
     });
 
-    previous = current;
 }
 
 function connectDisplay() {
