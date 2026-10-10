@@ -28,7 +28,7 @@ class ActivityService:
             "amount": amount,
         })
 
-    def log_hp_change(self, target: dict[str, Any], hp_delta: int) -> None:
+    def log_hp_change(self, target: dict[str, Any], hp_delta: int, hp_result: dict[str, Any] | None = None) -> None:
         """Log hp change."""
         if hp_delta == 0:
             return
@@ -50,6 +50,17 @@ class ActivityService:
         })
 
         features = getattr(self.context, "features", None)
+        if features and hp_result and hp_delta < 0:
+            if hp_result.get("instant_death"):
+                features.log(
+                    "instant-death", target,
+                    note=f"Excess damage {hp_result['excess']} >= maximum HP {target['max_hp']}",
+                )
+            elif hp_result.get("failed_saves", 0):
+                note = f"Damage at 0 HP; failures now {target['death_failures']}/3"
+                if hp_result.get("critical_hit"):
+                    note += " (critical hit)"
+                features.log("death-save-failure", target, hp_result["failed_saves"], note=note)
         if (
             features
             and hp_delta < 0

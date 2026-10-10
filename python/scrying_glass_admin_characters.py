@@ -141,9 +141,11 @@ class AdminCharactersMixin:
             if key != "in_turn":
                 candidate[key] = value
 
+        hp_result = None
         if hp_delta is not None:
             from .scrying_glass_feature_rules import apply_hp
-            apply_hp(candidate,hp_delta,critical=critical_hit)
+            hp_result = apply_hp(candidate,hp_delta,critical=critical_hit)
+            hp_result["critical_hit"] = critical_hit
 
         if "max_hp" in values:
             candidate["original_hp"] = values["max_hp"]
@@ -173,7 +175,7 @@ class AdminCharactersMixin:
         self.context.remember_turn_successors()
 
         if hp_delta is not None:
-            self.context.log_hp_change(candidate, hp_delta)
+            self.context.log_hp_change(candidate, hp_delta, hp_result)
 
         character.update(candidate)
         self.context.set_turn(character, requested_turn)
