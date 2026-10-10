@@ -40,15 +40,12 @@ class AdminDisplayMixin:
             )
 
             for is_legacy, href in candidates:
-                monster_html = self.context.dnd_monster_detail_html(
-                    href,
-                )
-
-                ac, hp, hp_source = (
-                    self.context.dnd_monster_stats_from_html(
-                        monster_html,
-                    )
-                )
+                try:
+                    monster_html = self.context.dnd_monster_detail_html(href)
+                    ac, hp, hp_source = self.context.dnd_monster_stats_from_html(monster_html)
+                except Exception:
+                    logger.debug("Optional D&D Beyond candidate failed: %r", href, exc_info=True)
+                    continue
 
                 if ac is None and hp is None:
                     continue

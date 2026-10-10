@@ -15,6 +15,9 @@ def normalize_lairs(raw):
             value=item.get(key,'' if key=='notes' else None)
             if not isinstance(value,str) or len(value)>limit or (key!='notes' and not value.strip()):
                 raise ValueError('Invalid lair '+key)
+            try: value.encode('utf-8')
+            except UnicodeEncodeError as exc:
+                raise ValueError('Invalid UTF-8 lair ' + key) from exc
             item[key]=value if key=='notes' else value.strip()
         item.setdefault('color','#8064a2')
         if not isinstance(item['color'],str) or not re.fullmatch(r'#[0-9a-fA-F]{6}',item['color']):

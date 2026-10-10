@@ -1,4 +1,5 @@
 import re
+from html import unescape
 
 from urllib.parse import quote
 from urllib.request import Request, urlopen
@@ -51,13 +52,12 @@ def dnd_monster_candidates(monster_species: str) -> list[tuple[bool, str]]:
         search_html,
         re.IGNORECASE | re.DOTALL,
     ):
-        title = re.sub(r"<[^>]+>", "", result.group("content"))
-        title = re.sub(r"\s+", " ", title).strip()
+        title = html_to_text(result.group("content"))
 
         if normalized_dnd_name(title) != requested_name:
             continue
 
-        href = result.group("href")
+        href = unescape(result.group("href"))
 
         if href in seen_hrefs:
             continue
@@ -96,7 +96,7 @@ def html_to_text(value: str) -> str:
     value = re.sub(r"<[^>]+>", " ", value)
     value = re.sub(r"&nbsp;", " ", value, flags=re.IGNORECASE)
     value = re.sub(r"&amp;", "&", value, flags=re.IGNORECASE)
-    return re.sub(r"\s+", " ", value).strip()
+    return re.sub(r"\s+", " ", unescape(value)).strip()
 
 def dnd_monster_stats_from_html(
     monster_html: str,
