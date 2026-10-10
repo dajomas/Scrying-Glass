@@ -42,13 +42,17 @@
         if(polling)return;polling=true;
         try {
             [state,summary]=await Promise.all([api('/api/state'),api('/api/features')]);
-            choices($('featureTarget'),combatants());choices($('effectSource'),[...combatants(),...(state?.lairs||[])],true);choices($('effectAnchor'),[...combatants(),...(state?.lairs||[])],true);
+            const previousTarget=$('featureTarget').value;
+            choices($('featureTarget'),combatants());
+            const targetChanged=$('featureTarget').value!==previousTarget;
+            if(targetChanged)editable.forEach(id=>delete $(id).dataset.dirty);
+            choices($('effectSource'),[...combatants(),...(state?.lairs||[])],true);choices($('effectAnchor'),[...combatants(),...(state?.lairs||[])],true);
             choices($('checkpointSelect'),summary.checkpoints.map(x=>({...x,name:x.name+' — '+new Date(x.created*1000).toLocaleString()})));
             $('featureUndo').disabled=!summary.undo||busy;$('featureUndo').textContent=summary.undo?'Undo: '+summary.undo.label:'Nothing to undo';
             $('displayConnections').textContent=`${summary.displays.length} display(s) connected${summary.displays.length?': '+summary.displays.map(x=>x.username+' ('+x.status+')').join(', '):''}`;
             $('downedReminder').hidden=!summary.downed.length;
             $('downedReminder').textContent='Death-save reminder: '+summary.downed.map(x=>x.name).join(', ')+'. Downed characters keep their initiative turns. Damage at 0 HP adds failed saves automatically; record rolled saves manually.';
-            draw(force);
+            draw(force||targetChanged);
         }catch(error){notice(error.message);}finally{polling=false;}
     }
     async function perform(action) {

@@ -86,6 +86,9 @@ def import_bundle(context,raw):
             validate_storage_integers(payload)
             metadata=payload['campaign'];name=metadata['name'];description=metadata.get('description','')
             if not isinstance(name,str) or not 1<=len(name)<=100 or not isinstance(description,str) or len(description)>2000: raise ValueError('Invalid campaign metadata')
+            name = name.strip()
+            if not name:
+                raise ValueError('Campaign name must contain non-whitespace characters')
             setups=payload['setups']
             if not isinstance(setups,dict) or not 1<=len(setups)<=200: raise ValueError('Invalid setup collection')
             validated={}
