@@ -79,7 +79,7 @@ class FeaturesService:
     async def undo(self,body):
         top=self.store.latest_undo(self.context.active_campaign())
         if not top: raise self.context.HTTPException(409,'Nothing to undo')
-        if body.get('id')!=top['id'] or top['after_digest']!=fingerprint(self.context.STATE): raise self.context.HTTPException(409,'Encounter changed; refresh before undoing')
+        if type(body.get('id')) is not int or body['id']!=top['id'] or top['after_digest']!=fingerprint(self.context.STATE): raise self.context.HTTPException(409,'Encounter changed; refresh before undoing')
         self.restore_state(self.store.load(top['id'],self.context.active_campaign(),'undo'))
         self.store.delete(top['id'],self.context.active_campaign(),'undo');self.log('undo',note=top['name'])
         await self.persist();return {'undone':top['name']}
@@ -90,7 +90,7 @@ class FeaturesService:
         before=copy.deepcopy(target)
         candidate=copy.deepcopy(target)
         delta=body.get('hp_delta')
-        if delta is not None and (type(delta) is not int or not -99999<=delta<=99999): raise self.context.HTTPException(422,'Invalid HP delta')
+        if 'hp_delta' in body and (type(delta) is not int or not -99999<=delta<=99999): raise self.context.HTTPException(422,'Invalid HP delta')
         if 'absorb_temp' in body and type(body['absorb_temp']) is not bool: raise self.context.HTTPException(422,'absorb_temp must be boolean')
         if delta is not None: apply_hp(candidate,delta,absorb=body.get('absorb_temp',True))
         for key in allowed-{'hp_delta','absorb_temp'}:
@@ -161,20 +161,30 @@ class FeaturesService:
             item['effects']=keep
     def reconcile(self):
         ids={x['id'] for x in self.context.entities()}
+        participant_ids=ids | {x['id'] for x in self.context.STATE.get('lairs', [])}
         for item in self.context.entities():
             normalize_features(item)
             if item.get('concentrating') and not item['alive']: self.clear_concentration(item['id'])
             item['effects']=[e for e in item['effects'] if not(e.get('concentration') and e.get('source_id') not in ids)]
+            for effect in item['effects']:
+                if effect.get('source_id') is not None and effect['source_id'] not in participant_ids:
+                    effect['source_id']=None
+                if effect.get('anchor_id') is not None and effect['anchor_id'] not in participant_ids:
+                    # Match lair deletion: preserve the condition for manual resolution.
+                    effect.update(timing='manual', turns=None, anchor_id=None)
     async def save_checkpoint(self,body):
         name=body.get('name') if isinstance(body,dict) else None
         if not isinstance(name,str) or not 1<=len(name.strip())<=100: raise self.context.HTTPException(422,'Checkpoint name must be 1-100 characters')
+        try: name.encode('utf-8')
+        except UnicodeEncodeError as exc:
+            raise self.context.HTTPException(422,'Checkpoint name must contain valid UTF-8 text') from exc
         return {'id':self.store.save_snapshot(self.context.active_campaign(),self.context.STATE,'checkpoint',name.strip())}
     def preview_checkpoint(self,ident):
         try: state=self.store.load(ident,self.context.active_campaign(),'checkpoint')
         except ValueError as exc: raise self.context.HTTPException(404,str(exc)) from exc
         return {'id':ident,'revision':self.store.revision(),'battle_round':state['battle_round'],'monsters':len(state['monsters']),'characters':len(state['characters']),'active_setup':state['active_setup'],'combatants':[{'name':x['name'],'hp':x.get('hp'),'life_state':x.get('life_state')} for x in state['monsters']+state['characters']]}
     async def restore_checkpoint(self,ident,body):
-        if body.get('confirm') is not True or body.get('revision')!=self.store.revision(): raise self.context.HTTPException(409,'Preview and confirm against current revision')
+        if body.get('confirm') is not True or type(body.get('revision')) is not int or body['revision']!=self.store.revision(): raise self.context.HTTPException(409,'Preview and confirm against current revision')
         try: state=self.store.load(ident,self.context.active_campaign(),'checkpoint')
         except ValueError as exc: raise self.context.HTTPException(404,str(exc)) from exc
         self.restore_state(state);self.log('checkpoint-restored',note=str(ident));await self.persist();return {'restored':ident}
