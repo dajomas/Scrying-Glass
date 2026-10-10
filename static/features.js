@@ -55,25 +55,33 @@
             draw(force||targetChanged);
         }catch(error){notice(error.message);}finally{polling=false;}
     }
-    async function perform(action) {
+    async function perform(action, savedFields=[]) {
         if(busy)return;busy=true;
-        try{await action();notice('Saved.');editable.forEach(id=>delete $(id).dataset.dirty);await refresh(true);if(typeof load==='function')await load();}
+        try{
+            const result=await action();
+            if(result===false){notice('Cancelled.');return;}
+            notice('Saved.');
+            savedFields.forEach(id=>delete $(id).dataset.dirty);
+            await refresh();
+            if(typeof load==='function')await load();
+        }
         catch(error){notice(error.message);}finally{busy=false;if(summary)$('featureUndo').disabled=!summary.undo;}
     }
     function edit(body){const item=target();if(!item)throw new Error('Select a combatant');return api(`/api/combatants/${encodeURIComponent(item.id)}/features`,'PATCH',body);}
     editable.forEach(id=>$(id).addEventListener('input',()=>{$(id).dataset.dirty='1';}));
     $('featureTarget').onchange=()=>{editable.forEach(id=>delete $(id).dataset.dirty);draw(true);};
     $('featureRefresh').onclick=()=>refresh(true);
-    $('featureUndo').onclick=()=>perform(()=>api('/api/battle/undo','POST',{id:summary.undo?.id}));
-    $('setTempHp').onclick=()=>perform(()=>edit({temp_hp:Number($('featureTempHp').value)}));
-    $('setLifeState').onclick=()=>perform(async()=>{const value=$('featureLifeState').value;if(value!=='dead'||confirm('Mark this combatant dead?'))await edit({life_state:value});});
-    $('setDeathSaves').onclick=()=>perform(()=>edit({death_successes:Number($('deathSuccesses').value),death_failures:Number($('deathFailures').value)}));
+    $('featureUndo').onclick=()=>perform(()=>api('/api/battle/undo','POST',{id:summary.undo?.id}),editable);
+    $('setTempHp').onclick=()=>perform(()=>edit({temp_hp:Number($('featureTempHp').value)}),['featureTempHp']);
+    $('setLifeState').onclick=()=>perform(async()=>{const value=$('featureLifeState').value;if(value==='dead'&&!confirm('Mark this combatant dead?'))return false;return edit({life_state:value});},['featureLifeState']);
+    $('setDeathSaves').onclick=()=>perform(()=>edit({death_successes:Number($('deathSuccesses').value),death_failures:Number($('deathFailures').value)}),['deathSuccesses','deathFailures']);
     $('startConcentration').onclick=()=>perform(()=>edit({concentrating:true}));
     $('endConcentration').onclick=()=>perform(()=>{const item=target();if(!item)throw new Error('Select a combatant');return api(`/api/combatants/${encodeURIComponent(item.id)}/concentration/end`,'POST');});
     $('applyFeatureHp').onclick=()=>perform(async()=>{
         const item=target();if(!item)throw new Error('Select a combatant');const delta=Number($('featureHpDelta').value),absorb=$('featureAbsorbTemp').checked;
         if(!Number.isInteger(delta))throw new Error('HP change must be an integer');
-        if(confirm(window.scryingDamagePreview(item,delta,absorb)))await edit({hp_delta:delta,absorb_temp:absorb});
+        if(!confirm(window.scryingDamagePreview(item,delta,absorb)))return false;
+        return edit({hp_delta:delta,absorb_temp:absorb});
     });
     $('effectForm').onsubmit=event=>{event.preventDefault();perform(async()=>{
         const item=target();if(!item)throw new Error('Select a combatant');const timing=$('effectTiming').value;
@@ -83,12 +91,13 @@
     $('saveCheckpoint').onclick=()=>perform(()=>api('/api/checkpoints','POST',{name:$('checkpointName').value||'Encounter checkpoint'}));
     $('restoreCheckpoint').onclick=()=>perform(async()=>{
         const id=$('checkpointSelect').value;if(!id)throw new Error('Select a checkpoint');const p=await api(`/api/checkpoints/${id}`);
-        if(confirm(`Restore checkpoint?\nRound ${p.battle_round}; ${p.monsters} monsters; ${p.characters} characters.\nSetup: ${p.active_setup?.name||'None'}\nCurrent HP, effects, roster and turn state will be replaced. Audit history is retained.`))await api(`/api/checkpoints/${id}/restore`,'POST',{confirm:true,revision:p.revision});
-    });
-    $('deleteCheckpoint').onclick=()=>perform(async()=>{const id=$('checkpointSelect').value;if(!id)throw new Error('Select a checkpoint');if(confirm('Permanently delete checkpoint?'))await api(`/api/checkpoints/${id}`,'DELETE');});
+        if(!confirm(`Restore checkpoint?\nRound ${p.battle_round}; ${p.monsters} monsters; ${p.characters} characters.\nSetup: ${p.active_setup?.name||'None'}\nCurrent HP, effects, roster and turn state will be replaced. Audit history is retained.`))return false;
+        return api(`/api/checkpoints/${id}/restore`,'POST',{confirm:true,revision:p.revision});
+    },editable);
+    $('deleteCheckpoint').onclick=()=>perform(async()=>{const id=$('checkpointSelect').value;if(!id)throw new Error('Select a checkpoint');if(!confirm('Permanently delete checkpoint?'))return false;return api(`/api/checkpoints/${id}`,'DELETE');});
     $('exportBundle').onclick=()=>{location.href='/api/campaign-bundle';};
     $('importBundle').onchange=()=>perform(async()=>{
-        const file=$('importBundle').files[0];if(!file||!confirm('Import as a NEW campaign, leaving the active campaign unchanged?'))return;
+        const file=$('importBundle').files[0];if(!file||!confirm('Import as a NEW campaign, leaving the active campaign unchanged?'))return false;
         const body=new FormData();body.append('file',file);const result=await api('/api/campaign-bundle','POST',body);
         alert(`Imported ${result.name}. Switch campaigns, then restore the "Imported encounter" checkpoint to resume its runtime state.`);
         if(typeof setups==='function')await setups();$('importBundle').value='';
