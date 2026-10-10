@@ -197,7 +197,7 @@ class AccountTests(unittest.TestCase):
         from python.scrying_glass_storage import SQLiteStorage
         self.storage = SQLiteStorage(self.path)
         self.context.STORAGE = self.storage
-        self.assertEqual(self.auth.db.execute("PRAGMA user_version").fetchone()[0], 5)
+        self.assertEqual(self.auth.db.execute("PRAGMA user_version").fetchone()[0], 6)
         self.assertTrue(self.storage.migration_backup.is_file())
         self.assertEqual(self.auth.db.execute("SELECT COUNT(*) FROM application_state").fetchone()[0], 1)
         self.assertIsNone(self.auth.db.execute("SELECT 1 FROM account_migration").fetchone())

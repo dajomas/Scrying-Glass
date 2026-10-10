@@ -69,6 +69,8 @@ class AdminAPI(AdminPagesMixin, AdminDisplayMixin, AdminSetupsMixin, AdminCampai
         self.register_routes()
         from .scrying_glass_api_features import install_feature_routes
         install_feature_routes(context,app)
+        from .scrying_glass_api_lairs import install_lair_routes
+        install_lair_routes(context, app)
         from .scrying_glass_admin_users import install_user_routes
         install_user_routes(context, app)
         from .scrying_glass_logout import install_logout

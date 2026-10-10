@@ -115,6 +115,16 @@ function renderBattleRound(state) {
 function effectBadges(combatant) {
     return (combatant.effects||[]).map(e=>`<span class="effect-badge">${esc(e.name)}</span>`).join(' ');
 }
+function initiativeTokenContent(combatant) {
+    // Lairs show only their name, never initiative, status or effect badges.
+    if (combatant.kind === 'lair') return esc(combatant.name);
+    const name = combatant.monster_species && combatant.ally
+        ? `${combatant.name} - Ally` : combatant.name;
+    const status = !combatant.alive
+        ? ' (' + esc(combatant.life_state || 'down') + ')' : '';
+    return `${esc(name)} ${status} ${effectBadges(combatant)}`;
+}
+
 function renderClientCampaign(state) {
     const element=document.querySelector('#clientCampaign');if(!element)return;
     const name=state?.campaign?.name;element.textContent=name?'Campaign: '+name:'No active campaign';element.title=name||'';
@@ -142,7 +152,7 @@ function render(state) {
     }
 
     const combatantsById = new Map(
-        [...state.characters, ...state.monsters]
+        [...state.characters, ...state.monsters, ...(state.lairs || [])]
             .map(combatant => [combatant.id, combatant]),
     );
 
@@ -165,9 +175,9 @@ function render(state) {
     }
 
     initiative.innerHTML = initiativeCombatants.map(combatant =>
-        `<span class="token ${combatant.life_state==='dead'?'dead':(!combatant.alive?'down':'')} ${combatant.in_turn ? 'turn' : ''}"
+        `<span class="token ${combatant.kind==='lair'?'lair':(combatant.life_state==='dead'?'dead':(!combatant.alive?'down':''))} ${combatant.in_turn ? 'turn' : ''}"
         style="background:${esc(combatant.color)};color:${readableText(combatant.color)}">
-        ${esc(displayCombatantName(combatant))} ${!combatant.alive?' ('+esc(combatant.life_state||'down')+')':''} ${effectBadges(combatant)}
+        ${initiativeTokenContent(combatant)}
     </span>`
     ).join('');
 

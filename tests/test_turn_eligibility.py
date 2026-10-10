@@ -3,13 +3,14 @@ import ast,tempfile,unittest
 from pathlib import Path
 from test_sqlite_storage import context
 from python.scrying_glass_turn_rules import can_take_turn
+from python.scrying_glass_lair_rules import participants, initiative_key, place_lair
 from python.scrying_glass_feature_rules import normalize_features,apply_hp
 
 class TurnTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.c=context(Path(self.tmp.name));self.c.import_legacy_storage();self.c.load_state()
         tree=ast.parse((Path(__file__).resolve().parents[1]/'python/scrying_glass_service_battle.py').read_text());cls=next(n for n in tree.body if isinstance(n,ast.ClassDef))
-        future=ast.ImportFrom(module='__future__',names=[ast.alias(name='annotations')],level=0);scope={'can_take_turn':can_take_turn}
+        future=ast.ImportFrom(module='__future__',names=[ast.alias(name='annotations')],level=0);scope={'can_take_turn':can_take_turn,'participants':participants,'initiative_key':initiative_key,'place_lair':place_lair}
         exec(compile(ast.fix_missing_locations(ast.Module(body=[future,cls],type_ignores=[])),'battle-service','exec'),scope)
         service=scope['BattleService'](self.c)
         for name in vars(scope['BattleService']):

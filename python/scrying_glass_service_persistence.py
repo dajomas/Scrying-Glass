@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Any, Literal
 from pathlib import Path
 from .scrying_glass_turn_rules import can_take_turn
+from .scrying_glass_lair_rules import participants
 
 
 class PersistenceService:
@@ -82,7 +83,7 @@ class PersistenceService:
             self.context.load_campaign_characters(campaign)
         )
 
-        for kind in ("monsters", "characters"):
+        for kind in ("monsters", "characters", "lairs"):
             items = candidate.get(kind, [])
 
             if not isinstance(items, list):
@@ -235,6 +236,7 @@ class PersistenceService:
         combatants = [
             *candidate["monsters"],
             *candidate["characters"],
+            *candidate.get("lairs", []),
         ]
 
         has_turn_marker = "active_turn_id" in saved
@@ -297,6 +299,7 @@ class PersistenceService:
                     for item in [
                         *normalized["monsters"],
                         *normalized["characters"],
+                        *normalized.get("lairs", []),
                     ]
                     if item["id"] == active_turn_id
                 ),
@@ -322,7 +325,7 @@ class PersistenceService:
         """Persist runtime references and an authoritative active-turn marker."""
         import copy
 
-        combatants = self.context.entities()
+        combatants = participants(self.context)
         current_turns = [
             item
             for item in combatants

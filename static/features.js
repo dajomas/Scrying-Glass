@@ -31,7 +31,8 @@
         for(const [id,value]of Object.entries(values))if(force||($(id)!==document.activeElement&&!$(id).dataset.dirty))$(id).value=value;
         $('featureEffects').replaceChildren(...(item.effects||[]).map(e=>{
             const li=document.createElement('li'),label=document.createElement('span'),remove=document.createElement('button');
-            const source=combatants().find(x=>x.id===e.source_id),anchor=combatants().find(x=>x.id===e.anchor_id);
+            const participants=[...combatants(),...(state?.lairs||[])];
+            const source=participants.find(x=>x.id===e.source_id),anchor=participants.find(x=>x.id===e.anchor_id);
             label.textContent=`${e.name} [${e.public?'public':'private'}]${source?' — '+source.name:''}${e.concentration?' · concentration':''}${e.timing!=='manual'?` · ${e.turns} × ${e.timing} of ${anchor?.name||'missing anchor'} turn`:''}${e.notes?' · '+e.notes:''} `;
             remove.type='button';remove.textContent='Remove';remove.onclick=()=>perform(()=>api(`/api/combatants/${encodeURIComponent(item.id)}/effects/${encodeURIComponent(e.id)}`,'DELETE'));
             li.append(label,remove);return li;
@@ -41,7 +42,7 @@
         if(polling)return;polling=true;
         try {
             [state,summary]=await Promise.all([api('/api/state'),api('/api/features')]);
-            choices($('featureTarget'),combatants());choices($('effectSource'),combatants(),true);choices($('effectAnchor'),combatants(),true);
+            choices($('featureTarget'),combatants());choices($('effectSource'),[...combatants(),...(state?.lairs||[])],true);choices($('effectAnchor'),[...combatants(),...(state?.lairs||[])],true);
             choices($('checkpointSelect'),summary.checkpoints.map(x=>({...x,name:x.name+' — '+new Date(x.created*1000).toLocaleString()})));
             $('featureUndo').disabled=!summary.undo||busy;$('featureUndo').textContent=summary.undo?'Undo: '+summary.undo.label:'Nothing to undo';
             $('displayConnections').textContent=`${summary.displays.length} display(s) connected${summary.displays.length?': '+summary.displays.map(x=>x.username+' ('+x.status+')').join(', '):''}`;

@@ -271,6 +271,7 @@ const paneNotification = (kind, text) => {
 const all = () => [
     ...latest.monsters,
     ...latest.characters,
+    ...(latest.lairs || []),
 ];
 
 const editModal = document.querySelector('#editModal');
@@ -1323,6 +1324,7 @@ function sortedMonstersForAdmin() {
 async function load() {
     try {
         latest = await request('/api/state');
+        window.scryingLairsRender?.(latest);
         window.updateEncounterToolsVisibility?.(latest);
 
         updateBattleOrderFontControls(latest.display?.battle_order_font_size);
@@ -1498,6 +1500,13 @@ const hideablePanes = [
         visibleLabel: 'Show battle setup input',
     },
     {
+        key: 'lairInput',
+        button: document.querySelector('#toggleLairPane'),
+        pane: document.querySelector('#lairTools'),
+        hiddenLabel: 'Hide lair input',
+        visibleLabel: 'Show lair input',
+    },
+    {
         key: 'monsterInput',
         button: document.querySelector('#toggleMonsterPane'),
         pane: document.querySelector('#monsterInputPane'),
@@ -1540,11 +1549,11 @@ const paneControlByKey = new Map(
 */
 const paneDependencies = {
     campaign: {
-        child: 'characterInput',
+        children: ['characterInput'],
         saved: null,
     },
     battleSetup: {
-        child: 'monsterInput',
+        children: ['lairInput', 'monsterInput'],
         saved: null,
     },
 };
@@ -1563,66 +1572,35 @@ function setPaneHidden(control, hidden) {
 
 function hideDependentPane(parentKey) {
     const dependency = paneDependencies[parentKey];
+    if (!dependency) return;
 
-    if (!dependency) {
-        return;
+    // Preserve each child's independent preference once per hide cycle.
+    if (dependency.saved === null) dependency.saved = {};
+    for (const key of dependency.children) {
+        const child = paneControlByKey.get(key);
+        if (!child) continue;
+        if (!(key in dependency.saved)) {
+            dependency.saved[key] = {
+                paneHidden: child.pane.hidden,
+                buttonHidden: child.button.hidden,
+            };
+        }
+        setPaneHidden(child, true);
+        child.button.hidden = true;
     }
-
-    const child = paneControlByKey.get(dependency.child);
-
-    if (!child) {
-        return;
-    }
-
-    /*
-    * Save the child's original state only once per parent-hide cycle.
-    * This prevents repeated page refreshes or repeated calls from overwriting
-    * the original state with the forced-hidden state.
-    */
-    if (dependency.saved === null) {
-        dependency.saved = {
-            paneHidden: child.pane.hidden,
-            buttonHidden: child.button.hidden,
-        };
-    }
-
-    /*
-    * Hide both the child input pane and its individual Show/Hide button.
-    * The button must be hidden too: users must not be able to show a pane
-    * whose parent is hidden.
-    */
-    child.pane.hidden = true;
-    child.button.hidden = true;
 }
 
 function restoreDependentPane(parentKey) {
     const dependency = paneDependencies[parentKey];
+    if (!dependency || dependency.saved === null) return;
 
-    if (!dependency || dependency.saved === null) {
-        return;
+    for (const key of dependency.children) {
+        const child = paneControlByKey.get(key);
+        const saved = dependency.saved[key];
+        if (!child || !saved) continue;
+        setPaneHidden(child, saved.paneHidden);
+        child.button.hidden = saved.buttonHidden;
     }
-
-    const child = paneControlByKey.get(dependency.child);
-    const saved = dependency.saved;
-
-    if (!child) {
-        dependency.saved = null;
-        return;
-    }
-
-    /*
-    * Restore the child pane's original hidden state through the standard
-    * function, so button wording and aria-expanded remain correct.
-    */
-    setPaneHidden(child, saved.paneHidden);
-
-    /*
-    * Restore whether the child toggle button itself was visible.
-    * Normally this is false, but storing it makes restoration exact and
-    * avoids coupling to other UI rules.
-    */
-    child.button.hidden = saved.buttonHidden;
-
     dependency.saved = null;
 }
 
@@ -2968,6 +2946,10 @@ function addBattleActionRow() {
 }
 
 function openBattleActions(actorId) {
+    if ((latest.lairs || []).some(x => x.id === actorId)) {
+        window.scryingOpenLairAction?.(actorId);
+        return;
+    }
     const actor = [...latest.monsters, ...latest.characters]
         .find(combatant => combatant.id === actorId);
 
@@ -3272,7 +3254,7 @@ function turnEligible(combatant) {
     if(!combatant.active||combatant.life_state==='dead')return false;
     return !('monster_species' in combatant)?!characterPermanentlyDead(combatant):Boolean(combatant.alive);
 }
-function living(){return all().filter(turnEligible);}
+function living(){return all().filter(x => x.kind !== 'lair' && turnEligible(x));}
 
 function initiativeOf(combatant) {
     return typeof combatant.initiative === 'number' &&
@@ -3406,8 +3388,8 @@ async function startBattle(order) {
 document.querySelector('#startBattle').onclick = () => {
     const order = normalOrder();
 
-    if (!order.length) {
-        message('Activate at least one living combatant first');
+    if (!order.length && !(latest.lairs || []).some(x => x.active)) {
+        message('Activate at least one turn-eligible participant first');
         return;
     }
 

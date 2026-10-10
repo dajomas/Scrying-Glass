@@ -7,6 +7,8 @@ def combatant_state(combatant: dict[str, Any] | None) -> str:
     if combatant is None:
         return "unknown"
 
+    if combatant.get("kind") == "lair": return "unknown"
+
     life_state = combatant.get("life_state")
     if life_state in ("down", "stable", "dead"):
         return life_state
@@ -68,7 +70,7 @@ def setup_snapshot(state: dict[str, Any]) -> dict[str, Any]:
 
     monster_ids = {
         monster["id"]
-        for monster in snapshot["monsters"]
+        for monster in [*snapshot["monsters"], *snapshot.get("lairs", [])]
     }
 
     snapshot["battle_order"] = [
@@ -79,13 +81,14 @@ def setup_snapshot(state: dict[str, Any]) -> dict[str, Any]:
 
     return snapshot
 
-def admin_initiative_key(x: dict[str, Any]) -> tuple[int, int, str]:
+def admin_initiative_key(x: dict[str, Any]) -> tuple[int, int, int, str]:
     """Sort all integer initiatives before unset values, then by name."""
     value = x.get('initiative')
     is_numeric = isinstance(value, int) and not isinstance(value, bool)
     return (
         0 if is_numeric else 1,
         -value if is_numeric else 0,
+        1 if x.get('kind') == 'lair' else 0,
         str(x.get('name', '')).casefold(),
     )
 

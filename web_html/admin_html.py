@@ -17,6 +17,7 @@ _PARTS = (
     '030_campaign_input.html',
     '040_character_input.html',
     '050_setup_input.html',
+    '185_lair_tools.html',
     '060_monster_input.html',
     '070_character_display.html',
     '080_monster_display.html',

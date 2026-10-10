@@ -45,3 +45,12 @@ CREATE TABLE account_migration (
     id INTEGER PRIMARY KEY CHECK(id=1),
     completed INTEGER NOT NULL CHECK(completed=1)
 );
+
+-- Schema v6 addition: encounter-owned lairs (initiative is fixed at 20 in code).
+CREATE TABLE IF NOT EXISTS lairs (
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ encounter_id INTEGER NOT NULL UNIQUE REFERENCES encounters(id) ON DELETE CASCADE,
+ participant_id TEXT NOT NULL, name TEXT NOT NULL, notes TEXT NOT NULL DEFAULT '', color TEXT NOT NULL,
+ active INTEGER NOT NULL CHECK(active IN (0,1)), visible INTEGER NOT NULL CHECK(visible IN (0,1)),
+ in_turn INTEGER NOT NULL CHECK(in_turn IN (0,1)), UNIQUE(encounter_id,participant_id));
+PRAGMA user_version=6;

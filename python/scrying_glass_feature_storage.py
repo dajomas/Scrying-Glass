@@ -5,7 +5,7 @@ from .scrying_glass_storage import TEXT_FIELDS,INT_FIELDS,BOOL_FIELDS
 
 def upgrade_features(storage,*,backup=True):
     db=storage.connection
-    if db.execute('PRAGMA user_version').fetchone()[0]==5: return
+    if db.execute('PRAGMA user_version').fetchone()[0] in (5, 6): return
     if backup and storage.migration_backup is None: storage._backup()
     with storage.transaction():
         db.execute('CREATE TABLE feature_state (id INTEGER PRIMARY KEY CHECK(id=1), revision INTEGER NOT NULL DEFAULT 0)')

@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Any, Literal
 from pathlib import Path
 from .scrying_glass_turn_rules import can_take_turn
+from .scrying_glass_lair_rules import normalize_lairs, participants, place_lair
 
 
 class StateService:
@@ -19,12 +20,12 @@ class StateService:
 
     def entity(self, ident: str) -> dict[str, Any] | None:
         """Find a combatant by its unique identifier."""
-        return next((x for x in self.context.entities() if x['id'] == ident), None)
+        return next((x for x in participants(self.context) if x['id'] == ident), None)
 
     def active_combatant(self) -> dict[str, Any] | None:
         """Active combatant."""
         return next(
-            (combatant for combatant in self.context.entities() if combatant.get("in_turn")),
+            (combatant for combatant in participants(self.context) if combatant.get("in_turn")),
             None,
         )
 
@@ -69,7 +70,7 @@ class StateService:
         supported = {
             "monsters", "characters", "battle_order", "turn_successors",
             "turn_successors_before_wrap", "activity_log", "display",
-            "active_setup", "active_turn_id", "battle_round",
+            "active_setup", "active_turn_id", "battle_round", "lairs",
         }
         unknown = set(raw) - supported
         if unknown:
@@ -324,6 +325,12 @@ class StateService:
                         )
                     turn_locations.append(location)
 
+        lairs = normalize_lairs(raw.get('lairs', []))
+        for item in lairs:
+            if item['id'] in id_locations: raise ValueError('Duplicate participant ID: '+item['id'])
+            id_locations[item['id']] = 'lair'
+            if item['in_turn']: turn_locations.append('lair')
+
         if len(turn_locations) > 1:
             raise ValueError(
                 "Only one combatant may be in turn: "
@@ -331,10 +338,13 @@ class StateService:
             )
 
         known_ids = set(id_locations)
+        by_id = {item['id']: item for item in [*monsters, *characters, *lairs]}
+        battle_order = place_lair([ident for ident in battle_order if ident in known_ids], by_id.get)
 
         return {
             "monsters": monsters,
             "characters": characters,
+            "lairs": lairs,
             "battle_order": [
                 ident for ident in battle_order if ident in known_ids
             ],
@@ -418,11 +428,16 @@ class StateService:
             if item.get("active") and item.get("visible")
         ]
 
+        lairs = [
+            {key: item[key] for key in ('id','kind','name','color','initiative','active','visible','in_turn')}
+            for item in full.get('lairs', []) if item['active'] and item['visible']
+        ]
+
         # Visible controls inclusion in the battle-order strip,
         # independently of whether a monster card is displayed.
         visible_ids = {
             item["id"]
-            for item in [*monsters, *characters]
+            for item in [*monsters, *characters, *lairs]
             if item.get("active") and item.get("visible")
         }
 
@@ -439,6 +454,7 @@ class StateService:
                 for item in [
                     *full["characters"],
                     *full["monsters"],
+                    *full.get("lairs", []),
                 ]
                 if item["id"] in visible_ids
                 and item["id"] not in ordered_ids
@@ -452,6 +468,7 @@ class StateService:
             "campaign": campaign,
             "monsters": monsters,
             "characters": characters,
+            "lairs": lairs,
             "battle_round": full["battle_round"],
             "battle_order": [
                 ident
@@ -472,6 +489,7 @@ class StateService:
         return {
             "monsters": self.context.STATE["monsters"],
             "characters": self.context.STATE["characters"],
+            "lairs": self.context.STATE.get("lairs", []),
             "battle_round": self.context.STATE.get("battle_round", 0),
             "battle_order": self.context.STATE["battle_order"],
             "activity_log": self.context.STATE["activity_log"],

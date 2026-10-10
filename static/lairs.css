@@ -1,0 +1,8 @@
+.lair-tools { margin:1rem 0; padding:1rem; border-radius:.5rem; }
+.lair-config,.lair-defaults { display:flex; flex-wrap:wrap; gap:.7rem; align-items:end; }
+.lair-config label,.lair-defaults label { display:flex; flex-direction:column; gap:.3rem; }
+.lair-config label:has(input[type=checkbox]) { flex-direction:row; }
+#lairActionModal>.lair-dialog { width:min(1100px,95vw); max-height:90vh; }
+.lair-target-scroll { overflow-x:auto; margin-top:1rem; }
+.lair-target-scroll input[type=number] { width:6rem; }
+.lair-target-scroll input[type=text] { min-width:12rem; }

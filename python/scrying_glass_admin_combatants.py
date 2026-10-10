@@ -67,6 +67,8 @@ class AdminCombatantsMixin:
         if not x:
             raise self.context.HTTPException(404, "Combatant not found")
 
+        if x.get('kind') == 'lair':
+            raise self.context.HTTPException(400, 'Use lair controls to disable or remove a lair')
         is_character = x in self.context.STATE["characters"]
 
         self.context.remember_turn_successors()

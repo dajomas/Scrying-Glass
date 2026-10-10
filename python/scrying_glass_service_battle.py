@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Any, Literal
 from pathlib import Path
 from .scrying_glass_turn_rules import can_take_turn
+from .scrying_glass_lair_rules import participants, initiative_key, place_lair
 from fastapi import HTTPException, Request as FastAPIRequest, UploadFile
 
 
@@ -16,7 +17,7 @@ class BattleService:
 
     def clear_turns(self) -> None:
         """Clear turns."""
-        for x in self.context.entities():
+        for x in participants(self.context):
             x['in_turn'] = False
 
     def remember_turn_successors(self) -> None:
@@ -59,7 +60,7 @@ class BattleService:
                 cleaned.append(ident)
                 seen.add(ident)
 
-        self.context.STATE["battle_order"] = cleaned
+        self.context.STATE["battle_order"] = place_lair(cleaned, self.context.entity)
 
     def insert_into_battle_order(self, combatant: dict[str, Any]) -> None:
         'Insert a newly activated living combatant into an existing battle order.\n\n    Higher numeric initiative acts first. On equal initiative, the newly added\n    combatant is placed after all existing combatants with that same initiative.\n    Combatants without initiative are placed after numeric initiatives.\n    '
@@ -70,21 +71,10 @@ class BattleService:
         combatant_id = combatant['id']
         if combatant_id in self.context.STATE['battle_order']:
             return
-        combatant_initiative = combatant.get('initiative')
-        has_numeric_initiative = isinstance(combatant_initiative, int) and (not isinstance(combatant_initiative, bool))
         insert_at = len(self.context.STATE['battle_order'])
         for index, existing_id in enumerate(self.context.STATE['battle_order']):
             existing = self.context.entity(existing_id)
-            if existing is None:
-                continue
-            existing_initiative = existing.get('initiative')
-            existing_has_numeric_initiative = isinstance(existing_initiative, int) and (not isinstance(existing_initiative, bool))
-            if not has_numeric_initiative:
-                continue
-            if not existing_has_numeric_initiative:
-                insert_at = index
-                break
-            if existing_initiative < combatant_initiative:
+            if existing is not None and initiative_key(existing) > initiative_key(combatant):
                 insert_at = index
                 break
         self.context.STATE['battle_order'].insert(insert_at, combatant_id)
@@ -116,7 +106,7 @@ class BattleService:
 
     def eligible(self) -> list[dict[str, Any]]:
         """Eligible."""
-        return [x for x in self.context.entities() if can_take_turn(x)]
+        return [x for x in participants(self.context) if can_take_turn(x)]
 
     def begin_battle(self, order: list[str]) -> None:
         """Start the supplied turn order at round one."""
@@ -125,6 +115,9 @@ class BattleService:
             for combatant in self.context.eligible()
         }
 
+        order = list(order)
+        for item in self.context.STATE.get('lairs', []):
+            if can_take_turn(item) and item['id'] not in order: order.append(item['id'])
         if len(order) != len(wanted) or set(order) != wanted:
             raise self.context.HTTPException(
                 400,
@@ -135,6 +128,7 @@ class BattleService:
         if not order:
             raise self.context.HTTPException(400, "Activate at least one turn-eligible combatant before starting a battle")
 
+        order = place_lair(order, self.context.entity)
         self.context.STATE["battle_order"] = list(order)
         self.context.STATE["battle_round"] = 1
         self.context.STATE["turn_successors"] = []
@@ -187,7 +181,9 @@ class BattleService:
             ident = combatant["id"]
 
             if ident not in ordered_ids:
-                order.append(ident)
+                insert_at = next((i for i, existing_id in enumerate(order)
+                    if initiative_key(self.context.entity(existing_id)) > initiative_key(combatant)), len(order))
+                order.insert(insert_at, ident)
                 ordered_ids.add(ident)
 
         self.context.STATE["battle_order"] = order

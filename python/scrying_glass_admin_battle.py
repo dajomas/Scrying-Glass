@@ -27,6 +27,8 @@ class AdminBattleMixin:
         for combatant in self.context.entities():
             self.context.reset_entity(combatant)
 
+        for lair in self.context.STATE.get('lairs', []):
+            lair.update(active=False, visible=False, in_turn=False)
         self.context.sort_admin_by_max_hp()
         self.context.STATE["battle_round"] = 0
         self.context.STATE["turn_successors_before_wrap"] = []
@@ -69,6 +71,8 @@ class AdminBattleMixin:
         """Apply battle actions."""
         actor = self.context.entity(payload.actor_id)
 
+        if actor is not None and actor.get('kind') == 'lair':
+            raise self.context.HTTPException(400, 'Use the lair action endpoint')
         if actor is None:
             raise self.context.HTTPException(404, "Active combatant was not found")
 
@@ -92,6 +96,8 @@ class AdminBattleMixin:
 
             target = self.context.entity(row.target_id)
 
+            if target is not None and target.get('kind') == 'lair':
+                raise self.context.HTTPException(400, 'Lairs cannot be targeted')
             if target is None:
                 raise self.context.HTTPException(404, "Target combatant was not found")
 

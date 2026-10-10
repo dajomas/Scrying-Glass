@@ -1,0 +1,45 @@
+<section class="pane pane-battle-group lair-tools" id="lairTools">
+ <h2>Lair</h2><p>Initiative 20, losing ties. No HP or AC; cannot be targeted.</p>
+ <form id="lairConfigForm" class="lair-config">
+  <label>Name <input id="lairName" maxlength="100" required value="Lair"></label>
+  <label>Color
+   <span class="color-picker-control">
+    <input id="lairColor" type="color" value="#8064a2">
+    <span id="lairColorPreview" class="turn-marker color-picker-preview"
+          style="background-color: #8064a2" aria-hidden="true"></span>
+   </span>
+  </label>
+  <!-- Hidden state bridges retain compatibility with the existing config form. -->
+  <input id="lairActive" type="hidden">
+  <input id="lairVisible" type="hidden">
+  <div class="actions lair-state-controls" role="group" aria-label="Lair battle controls">
+   <button id="lairJoinBattle" type="button" aria-pressed="false" disabled>Join Battle</button>
+   <button id="lairToggleVisible" type="button" aria-pressed="false" disabled>Visible</button>
+   <button id="lairToggleTurn" type="button" aria-pressed="false" disabled>Turn</button>
+  </div>
+  <label>DM notes <textarea id="lairNotes" maxlength="2000"></textarea></label>
+  <div class="actions"><button id="saveLair" type="submit">Add lair</button>
+   <button id="removeLair" type="button" class="danger" hidden>Remove lair</button>
+   <button id="resolveLair" type="button" disabled>Resolve lair action</button></div>
+ </form><p id="lairNotice" role="status" aria-live="polite"></p>
+</section>
+<div id="lairActionModal" class="modal" hidden><div class="lair-dialog">
+ <form id="lairActionForm">
+  <h2 id="lairActionTitle">Resolve lair action</h2>
+  <p>Resolve saving throws, resistances and immunities manually. Enter final damage and conditions for each selected target.</p>
+  <label>Action name <input id="lairActionName" value="Lair action" maxlength="100" required></label>
+  <div class="lair-defaults">
+   <label>Default damage <input id="lairDefaultDamage" type="number" min="0" max="99999" step="1" value="0"></label>
+   <label>Default conditions (comma separated) <input id="lairDefaultConditions" maxlength="2000" placeholder="Prone, Frightened"></label>
+   <button id="lairFillSelected" type="button">Copy defaults to selected targets</button>
+   <button id="lairSelectAll" type="button">Select all</button><button id="lairSelectNone" type="button">Select none</button>
+  </div>
+  <label><input id="lairConditionsPublic" type="checkbox"> Show conditions to players</label>
+  <label>Condition expiry <select id="lairConditionTiming">
+   <option value="manual">Manual removal</option><option value="lair-start">Start of next lair turn</option>
+   <option value="target-end">End of target's next turn</option></select></label>
+  <div class="lair-target-scroll"><table><thead><tr><th>Select</th><th>Target</th><th>HP / temp HP</th><th>Final damage</th><th>Conditions</th></tr></thead><tbody id="lairTargets"></tbody></table></div>
+  <p id="lairActionNotice" role="status" aria-live="polite"></p>
+  <div class="actions"><button id="applyLairAction" type="submit">Apply to selected targets</button>
+   <button id="cancelLairAction" type="button">Cancel</button></div>
+ </form></div></div>
