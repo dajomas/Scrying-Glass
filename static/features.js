@@ -24,6 +24,8 @@
     }
     const combatants=()=>[...(state?.characters||[]),...(state?.monsters||[])];
     const target=()=>combatants().find(x=>x.id===$('featureTarget').value);
+    const encounterScope=()=>JSON.stringify([state?.active_campaign_id??state?.active_setup?.campaign_id??null,state?.active_setup?.name??null]);
+    const targetScope=()=>JSON.stringify([encounterScope(),$('featureTarget').value]);
     function draw(force=false) {
         const item=target();if(!item){$('featureHealth').textContent='No combatants';$('featureEffects').replaceChildren();return;}
         $('featureHealth').textContent=`${item.name}: ${item.life_state||'standing'} · HP ${item.hp}/${item.max_hp} · Temporary HP ${item.temp_hp||0} · Death saves ${item.death_successes||0}/${item.death_failures||0}${item.concentrating?' · Concentrating':''}`;
@@ -41,10 +43,12 @@
     async function refresh(force=false) {
         if(polling)return;polling=true;
         try {
+            const previousScope=encounterScope();
             [state,summary]=await Promise.all([api('/api/state'),api('/api/features')]);
+            const scopeChanged=encounterScope()!==previousScope;
             const previousTarget=$('featureTarget').value;
             choices($('featureTarget'),combatants());
-            const targetChanged=$('featureTarget').value!==previousTarget;
+            const targetChanged=$('featureTarget').value!==previousTarget||scopeChanged;
             if(targetChanged)editable.forEach(id=>delete $(id).dataset.dirty);
             choices($('effectSource'),[...combatants(),...(state?.lairs||[])],true);choices($('effectAnchor'),[...combatants(),...(state?.lairs||[])],true);
             choices($('checkpointSelect'),summary.checkpoints.map(x=>({...x,name:x.name+' — '+new Date(x.created*1000).toLocaleString()})));
@@ -57,11 +61,17 @@
     }
     async function perform(action, savedFields=[]) {
         if(busy)return;busy=true;
+        const submittedTarget=targetScope();
+        const submittedValues=new Map(savedFields.map(id=>[id,$(id).value]));
         try{
             const result=await action();
             if(result===false){notice('Cancelled.');return;}
             notice('Saved.');
-            savedFields.forEach(id=>delete $(id).dataset.dirty);
+            const sameTarget=targetScope()===submittedTarget;
+            savedFields.forEach(id=>{
+                if(savedFields===editable||(sameTarget&&$(id).value===submittedValues.get(id)))
+                    delete $(id).dataset.dirty;
+            });
             await refresh();
             if(typeof load==='function')await load();
         }

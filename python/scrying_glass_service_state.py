@@ -487,6 +487,7 @@ class StateService:
         )
 
         return {
+            "active_campaign_id": self.context.active_campaign(),
             "monsters": self.context.STATE["monsters"],
             "characters": self.context.STATE["characters"],
             "lairs": self.context.STATE.get("lairs", []),
