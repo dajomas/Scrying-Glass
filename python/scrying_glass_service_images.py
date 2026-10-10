@@ -289,15 +289,19 @@ class ImagesService:
     
     def make_monsters(self, fields: dict[str, Any], color: str, quantity: int, image_url: str | None) -> list[dict[str, Any]]:
         """Make monsters."""
+        from .scrying_glass_monster_names import numbered_monster_name
+        try:
+            generated_names = [
+                numbered_monster_name(fields["name"], quantity, number)
+                for number in range(1, quantity + 1)
+            ]
+        except ValueError as exc:
+            raise self.context.HTTPException(422, str(exc)) from exc
         return [
             self.context.make_monster(
                 {
                     **fields,
-                    'name': (
-                        fields['name']
-                        if quantity == 1
-                        else f"{fields['name']} - {number}"
-                    ),
+                    'name': generated_names[number - 1],
                 },
                 color,
                 None,

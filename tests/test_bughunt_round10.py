@@ -18,6 +18,7 @@ def load_class(filename,name,extra=None):
     path=Path(__file__).resolve().parents[1]/'python'/filename
     cls=next(x for x in ast.parse(path.read_text()).body if isinstance(x,ast.ClassDef) and x.name==name)
     scope=dict(Form=lambda *a,**kw:None,File=lambda *a,**kw:None,**(extra or {}))
+    scope.setdefault("__package__", "python")
     future=ast.ImportFrom(module='__future__',names=[ast.alias(name='annotations')],level=0)
     exec(compile(ast.fix_missing_locations(ast.Module(body=[future,cls],type_ignores=[])),str(path),'exec'),scope)
     return scope[name]
