@@ -36,7 +36,7 @@ class BoundedCombatantImportTests(unittest.TestCase):
     def monster(self,raw):
         path=Path(__file__).resolve().parents[1]/'python/scrying_glass_monster_csv.py'
         nodes=[n for n in ast.parse(path.read_text()).body if not(isinstance(n,ast.ImportFrom) and n.module=='fastapi')]
-        scope={'HTTPException':HTTPError}
+        scope={'HTTPException':HTTPError,'__package__':'python'}
         exec(compile(ast.fix_missing_locations(ast.Module(body=nodes,type_ignores=[])),str(path),'exec'),scope)
         self.c.parse_monster=scope['parse_monster']
         service=helpers.load_class('scrying_glass_service_images.py','ImagesService')(self.c)

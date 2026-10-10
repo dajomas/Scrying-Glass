@@ -25,7 +25,7 @@ class CsvLairIdentityTests(unittest.TestCase):
         fixture.FeatureTests.setUp(self)
         path=Path(__file__).resolve().parents[1]/'python/scrying_glass_monster_csv.py'
         nodes=[n for n in ast.parse(path.read_text()).body if not(isinstance(n,ast.ImportFrom) and n.module=='fastapi')]
-        scope={'HTTPException':HTTPError}
+        scope={'HTTPException':HTTPError,'__package__':'python'}
         exec(compile(ast.fix_missing_locations(ast.Module(body=nodes,type_ignores=[])),str(path),'exec'),scope)
         for name in ('csv_rows','csv_monster','csv_character'):setattr(self.c,name,scope[name])
         self.c.STATE['lairs']=normalize_lairs([{'id':'lair-existing','name':'Volcano'}])

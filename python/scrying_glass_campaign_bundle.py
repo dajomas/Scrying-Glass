@@ -6,6 +6,7 @@ import re
 import uuid
 import zipfile
 from pathlib import PurePosixPath
+from .scrying_glass_json_import import load_import_json
 from .scrying_glass_identity_rules import validate_roster_setup_ids
 
 MEDIA=re.compile(r'/media/[A-Za-z0-9_.-]+')
@@ -159,7 +160,7 @@ def import_bundle(context,raw):
                 if member.filename!='campaign.json' and (len(p.parts)!=2 or p.parts[0]!='media' or p.name in ('.','..') or chr(92) in member.filename): raise ValueError('Unsafe member path')
                 if member.filename != 'campaign.json' and member.file_size == 0:
                     raise ValueError('Media files must not be empty')
-            payload=json.loads(bundle.read('campaign.json'))
+            payload=load_import_json(bundle.read('campaign.json'))
             if not isinstance(payload,dict) or payload.get('format')!='scrying-glass-campaign' or payload.get('version')!=1: raise ValueError('Unsupported bundle format')
             validate_storage_integers(payload)
             metadata=payload['campaign'];name=metadata['name'];description=metadata.get('description','')
