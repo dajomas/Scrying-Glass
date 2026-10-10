@@ -352,7 +352,14 @@ function connectDisplay() {
                 lastRevision=message.revision;resyncPending=false;attempt=0;
                 status('Live · updated '+new Date().toLocaleTimeString());
                 send({type:'ack',revision:lastRevision});
-            }catch(error){console.error('Display state render failed',error);status('Display update failed; retained last screen');}
+            }catch(error){
+                // Rendering can mutate the DOM before throwing; cached equality is unsafe.
+                lastSnapshot=null;
+                // Let the next heartbeat or manual resync retry this failed response.
+                resyncPending=false;
+                console.error('Display state render failed',error);
+                status('Display update failed · waiting for a fresh snapshot');
+            }
         };
         current.onclose=async event=>{
             if(socket!==current||stopped)return;
