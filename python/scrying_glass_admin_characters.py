@@ -74,6 +74,12 @@ class AdminCharactersMixin:
                 + ", ".join(sorted(conflicting)[:5]),
             )
 
+        # Normalize health/life state before deciding whether rows may take turns.
+        try:
+            imported = self.context.normalize_state({"characters": imported})["characters"]
+        except ValueError as exc:
+            raise self.context.HTTPException(400, f"CSV combatant state is invalid: {exc}") from exc
+
         working_state["characters"].extend(imported)
         for combatant in imported:
             self.context.insert_into_battle_order(combatant)
