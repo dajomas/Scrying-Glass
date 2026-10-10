@@ -48,3 +48,15 @@ class ActivityService:
             "action": action,
             "amount": abs(hp_delta),
         })
+
+        features = getattr(self.context, "features", None)
+        if (
+            features
+            and hp_delta < 0
+            and target.get("alive", True)
+            and target.get("concentrating", False)
+        ):
+            features.log(
+                "concentration-reminder", target,
+                note="Resolve concentration manually",
+            )
