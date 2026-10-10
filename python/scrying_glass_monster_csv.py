@@ -345,7 +345,8 @@ def csv_character(row: dict[str, str], row_number: int) -> dict[str, Any]:
     maximum_hp = csv_int(
         row,
         "max_hp",
-        default=max(hp, 0),
+        # Current HP may exceed the maximum/baseline policy after healing.
+        default=min(max(hp, 0), 99999),
         minimum=0,
         maximum=99999,
         row_number=row_number,
