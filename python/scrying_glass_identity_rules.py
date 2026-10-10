@@ -1,6 +1,10 @@
 """Validate campaign-owned roster IDs against encounter-owned participants."""
 
 
+class ParticipantIdentityConflict(ValueError):
+    """A roster ID is already owned by an encounter participant."""
+
+
 def validate_roster_setup_ids(characters, setups, *, label="Campaign roster"):
     """Reject collisions against setups whose encounter data will remain intact."""
     roster_ids = {character["id"] for character in characters}
@@ -11,7 +15,7 @@ def validate_roster_setup_ids(characters, setups, *, label="Campaign roster"):
         }
         conflicting = roster_ids & participant_ids
         if conflicting:
-            raise ValueError(
+            raise ParticipantIdentityConflict(
                 f"{label} character IDs conflict with setup {name}: "
                 + ", ".join(sorted(conflicting)[:5])
             )

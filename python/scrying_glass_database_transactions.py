@@ -5,6 +5,7 @@ import copy
 import inspect
 from functools import wraps
 from .scrying_glass_health_limits import HpStorageRangeError
+from .scrying_glass_identity_rules import ParticipantIdentityConflict
 
 
 def operation_lock(context):
@@ -66,6 +67,8 @@ def transactional_handler(context, handler, *, role=None, cookie_name=None):
                 except OSError: pass
             if isinstance(exc, HpStorageRangeError):
                 raise context.HTTPException(422, str(exc)) from exc
+            if isinstance(exc, ParticipantIdentityConflict):
+                raise context.HTTPException(409, str(exc)) from exc
             raise
         finally:
             context._bundle_files = []

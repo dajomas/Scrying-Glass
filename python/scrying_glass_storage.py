@@ -7,6 +7,7 @@ import time
 import uuid
 from contextlib import contextmanager, closing
 from pathlib import Path
+from .scrying_glass_identity_rules import validate_roster_setup_ids
 
 TEXT_FIELDS = ("name", "color", "monster_species", "image_url")
 INT_FIELDS = ("ac", "hp", "max_hp", "original_hp", "initiative", "original_initiative")
@@ -383,6 +384,10 @@ class SQLiteStorage:
             if row is None:
                 raise FileNotFoundError(name)
             snapshot = self.load_setup(source, name)
+            validate_roster_setup_ids(
+                self.load_characters(target) or [], {result: snapshot},
+                label="Destination roster",
+            )
             if str(source) != str(target):
                 internal_ids = {
                     item['id']
