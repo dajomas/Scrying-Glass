@@ -205,6 +205,45 @@ class AdminSetupsMixin:
             for item in source["monsters"]
         ]
 
+        # Allocate every clone first so self/cross-monster links stay in this batch.
+        id_map = {
+            original["id"]: clone["id"]
+            for original, clone in zip(source["monsters"], imported_monsters)
+        }
+        external_ids = set()
+        if campaign == self.context.active_campaign():
+            source_external_ids = {
+                item["id"]
+                for item in [*source["characters"], *source.get("lairs", [])]
+            }
+            destination_external_ids = {
+                item["id"]
+                for item in [
+                    *self.context.STATE["characters"],
+                    *self.context.STATE.get("lairs", []),
+                ]
+            }
+            external_ids = source_external_ids & destination_external_ids
+
+        def remap_reference(ident):
+            if ident in id_map:
+                return id_map[ident]
+            return ident if ident in external_ids else None
+
+        for monster in imported_monsters:
+            effects = []
+            for effect in monster.get("effects", []):
+                effect["id"] = self.context.uuid.uuid4().hex
+                effect["source_id"] = remap_reference(effect.get("source_id"))
+                # A concentration-linked effect cannot outlive its missing source.
+                if effect.get("concentration") and effect["source_id"] is None:
+                    continue
+                effect["anchor_id"] = remap_reference(effect.get("anchor_id"))
+                if effect.get("timing") != "manual" and effect["anchor_id"] is None:
+                    effect.update(timing="manual", turns=None, anchor_id=None)
+                effects.append(effect)
+            monster["effects"] = effects
+
         self.context.STATE["monsters"].extend(imported_monsters)
 
         await self.context.combatants_changed(monsters=True, characters=False)

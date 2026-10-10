@@ -7,6 +7,7 @@ import uuid
 from .scrying_glass_feature_rules import normalize_features,apply_hp,validate_effects
 from .scrying_glass_feature_storage import FeatureStorage
 from .scrying_glass_feature_logging import feature_changes
+from .scrying_glass_turn_rules import can_take_turn
 
 TRACKED={'update_monster','update_character','bulk_monsters','bulk_characters','reset_one_combatant','reset_all','battle_start','battle_next','battle_end','apply_battle_actions','edit_features','add_effect','remove_effect','end_concentration','restore_checkpoint','create_lair','update_lair','delete_lair','apply_lair_action'}
 BOUNDARIES={'load_setup','new_setup','activate_campaign','delete_campaign','delete_setup','rename_setup','add_setup_to_campaign','clear_activity_log'}
@@ -95,7 +96,7 @@ class FeaturesService:
         if delta is not None and delta<0 and target.get('concentrating'): self.log('concentration-reminder',target,note='Resolve concentration manually')
         if not target['alive'] or ('concentrating' in body and not target['concentrating']): self.clear_concentration(ident)
         self.context.clean_order()
-        if target.get('active') and target.get('alive'): self.context.insert_into_battle_order(target)
+        if can_take_turn(target): self.context.insert_into_battle_order(target)
         for action,amount,note in feature_changes(before,target,delta):
             self.log(action,target,amount,note=note)
         await self.persist();return target

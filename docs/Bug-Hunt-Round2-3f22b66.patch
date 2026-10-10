@@ -1,0 +1,67 @@
+--- a/python/scrying_glass_admin_setups.py
++++ b/python/scrying_glass_admin_setups.py
+@@ -205,6 +205,45 @@
+             for item in source["monsters"]
+         ]
+ 
++        # Allocate every clone first so self/cross-monster links stay in this batch.
++        id_map = {
++            original["id"]: clone["id"]
++            for original, clone in zip(source["monsters"], imported_monsters)
++        }
++        external_ids = set()
++        if campaign == self.context.active_campaign():
++            source_external_ids = {
++                item["id"]
++                for item in [*source["characters"], *source.get("lairs", [])]
++            }
++            destination_external_ids = {
++                item["id"]
++                for item in [
++                    *self.context.STATE["characters"],
++                    *self.context.STATE.get("lairs", []),
++                ]
++            }
++            external_ids = source_external_ids & destination_external_ids
++
++        def remap_reference(ident):
++            if ident in id_map:
++                return id_map[ident]
++            return ident if ident in external_ids else None
++
++        for monster in imported_monsters:
++            effects = []
++            for effect in monster.get("effects", []):
++                effect["id"] = self.context.uuid.uuid4().hex
++                effect["source_id"] = remap_reference(effect.get("source_id"))
++                # A concentration-linked effect cannot outlive its missing source.
++                if effect.get("concentration") and effect["source_id"] is None:
++                    continue
++                effect["anchor_id"] = remap_reference(effect.get("anchor_id"))
++                if effect.get("timing") != "manual" and effect["anchor_id"] is None:
++                    effect.update(timing="manual", turns=None, anchor_id=None)
++                effects.append(effect)
++            monster["effects"] = effects
++
+         self.context.STATE["monsters"].extend(imported_monsters)
+ 
+         await self.context.combatants_changed(monsters=True, characters=False)
+--- a/python/scrying_glass_service_features.py
++++ b/python/scrying_glass_service_features.py
+@@ -7,6 +7,7 @@
+ from .scrying_glass_feature_rules import normalize_features,apply_hp,validate_effects
+ from .scrying_glass_feature_storage import FeatureStorage
+ from .scrying_glass_feature_logging import feature_changes
++from .scrying_glass_turn_rules import can_take_turn
+ 
+ TRACKED={'update_monster','update_character','bulk_monsters','bulk_characters','reset_one_combatant','reset_all','battle_start','battle_next','battle_end','apply_battle_actions','edit_features','add_effect','remove_effect','end_concentration','restore_checkpoint','create_lair','update_lair','delete_lair','apply_lair_action'}
+ BOUNDARIES={'load_setup','new_setup','activate_campaign','delete_campaign','delete_setup','rename_setup','add_setup_to_campaign','clear_activity_log'}
+@@ -95,7 +96,7 @@
+         if delta is not None and delta<0 and target.get('concentrating'): self.log('concentration-reminder',target,note='Resolve concentration manually')
+         if not target['alive'] or ('concentrating' in body and not target['concentrating']): self.clear_concentration(ident)
+         self.context.clean_order()
+-        if target.get('active') and target.get('alive'): self.context.insert_into_battle_order(target)
++        if can_take_turn(target): self.context.insert_into_battle_order(target)
+         for action,amount,note in feature_changes(before,target,delta):
+             self.log(action,target,amount,note=note)
+         await self.persist();return target
