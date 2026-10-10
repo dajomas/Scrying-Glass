@@ -74,6 +74,12 @@ class AdminCampaignsMixin:
                 replacement_id
             )
 
+            if replacement_name is None and target_id == replacement_id and setups:
+                # The first moved setup will become the replacement encounter.
+                replacement_name = self.context.STORAGE.unique_setup_name(
+                    replacement_id, setups[0]
+                )
+
             if replacement_name is None:
                 raise self.context.HTTPException(
                     409,
@@ -81,10 +87,11 @@ class AdminCampaignsMixin:
                     "Create a setup there before deleting the active campaign.",
                 )
 
-            replacement_state = self.context.load_setup_state(
-                replacement_name,
-                replacement_id,
-            )
+            if not (target_id == replacement_id and setups):
+                replacement_state = self.context.load_setup_state(
+                    replacement_name,
+                    replacement_id,
+                )
 
         deleted_setups = list(setups) if delete_setups else []
         moved = []
@@ -107,6 +114,10 @@ class AdminCampaignsMixin:
         opened = None
 
         if reactivated:
+            if replacement_state is None:
+                replacement_state = self.context.load_setup_state(
+                    replacement_name, replacement_id,
+                )
             self.context.STATE = replacement_state
             self.context.set_active_setup(
                 replacement_id,
@@ -129,9 +140,12 @@ class AdminCampaignsMixin:
         name = self.context.pick_campaign_setup(campaign_id)
 
         if name is None:
+            characters = self.context.load_campaign_characters(campaign_id)
+            for character in characters:
+                character["in_turn"] = False
             next_state = self.context.normalize_state({
                 "monsters": [],
-                "characters": self.context.load_campaign_characters(campaign_id),
+                "characters": characters,
                 "battle_order": [],
                 "activity_log": [],
                 "display": {
