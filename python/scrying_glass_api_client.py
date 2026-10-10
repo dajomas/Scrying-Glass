@@ -154,17 +154,19 @@ class ClientAPI:
                 try:message=self.context.json.loads(text)
                 except ValueError:continue
                 if not isinstance(message,dict):continue
+                message_type=message.get('type')
+                if not isinstance(message_type,str):continue
                 data=features.displays.get(websocket)
                 if data:
                     data['seen']=time.time()
                     revision=message.get('revision')
-                    if message.get('type') in {'ack','pong'} and type(revision) is int and 0<=revision<=data['sent']:
+                    if message_type in {'ack','pong'} and type(revision) is int and 0<=revision<=data['sent']:
                         if data['revision'] is None or revision>=data['revision']:data['revision']=revision
                 if not self.context.auth_session(token):
                     await websocket.close(code=1008,reason='Sign in required');return
-                if message.get('type')=='resync':
+                if message_type=='resync':
                     if not await send_state():return
-                elif message.get('type')=='ping':
+                elif message_type=='ping':
                     await send_heartbeat()
                 # ACK/PONG are receive-only. Responding to PONG would create a heartbeat loop.
         except WebSocketDisconnect as exc:

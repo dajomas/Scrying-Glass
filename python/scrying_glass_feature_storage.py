@@ -43,7 +43,11 @@ class FeatureStorage:
         limit=30 if kind=='undo' else 50
         for r in self.db.execute('SELECT id FROM encounter_snapshots WHERE campaign_id=? AND kind=? ORDER BY id DESC LIMIT -1 OFFSET ?',(campaign,kind,limit)).fetchall(): self.delete(r[0],campaign,kind)
         return ident
-    def row(self,ident,campaign,kind): return self.db.execute('SELECT * FROM encounter_snapshots WHERE id=? AND campaign_id=? AND kind=?',(ident,campaign,kind)).fetchone()
+    def row(self,ident,campaign,kind):
+        # Route integers may exceed SQLite's binding range; treat them as absent.
+        if type(ident) is not int or not 1 <= ident <= 2 ** 63 - 1:
+            return None
+        return self.db.execute('SELECT * FROM encounter_snapshots WHERE id=? AND campaign_id=? AND kind=?',(ident,campaign,kind)).fetchone()
     def load(self,ident,campaign,kind):
         row=self.row(ident,campaign,kind)
         if row is None: raise ValueError('Snapshot not found in active campaign')
@@ -51,7 +55,10 @@ class FeatureStorage:
         state['characters']=self.storage._load_entities('snapshot_characters','snapshot_id',ident)
         state['active_setup']={'campaign_id':str(campaign),'name':row['setup_name']} if row['setup_name'] else None
         return state
-    def delete(self,ident,campaign,kind): self.db.execute('DELETE FROM encounter_snapshots WHERE id=? AND campaign_id=? AND kind=?',(ident,campaign,kind))
+    def delete(self,ident,campaign,kind):
+        if type(ident) is not int or not 1 <= ident <= 2 ** 63 - 1:
+            return
+        self.db.execute('DELETE FROM encounter_snapshots WHERE id=? AND campaign_id=? AND kind=?',(ident,campaign,kind))
     def clear_undo(self): self.db.execute("DELETE FROM encounter_snapshots WHERE kind='undo'")
     def list(self,campaign,kind): return [dict(r) for r in self.db.execute('SELECT id,name,created FROM encounter_snapshots WHERE campaign_id=? AND kind=? ORDER BY id DESC',(campaign,kind))]
     def latest_undo(self,campaign): return self.db.execute("SELECT * FROM encounter_snapshots WHERE campaign_id=? AND kind='undo' ORDER BY id DESC LIMIT 1",(campaign,)).fetchone()
