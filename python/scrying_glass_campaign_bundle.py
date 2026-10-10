@@ -8,19 +8,40 @@ import zipfile
 from pathlib import PurePosixPath
 
 MEDIA=re.compile(r'/media/[A-Za-z0-9_.-]+')
+LOCAL_MEDIA=re.compile(r'(?<![A-Za-z0-9_:/.-])/media/[A-Za-z0-9_.-]+')
 
-def walk(value,replace):
-    if isinstance(value,dict): return {k:walk(v,replace) for k,v in value.items()}
-    if isinstance(value,list): return [walk(v,replace) for v in value]
-    if isinstance(value,str): return MEDIA.sub(replace,value)
-    return value
+def walk_media(payload, replace):
+    """Collect/rewrite media only in schema-defined image and background fields."""
+    result = copy.deepcopy(payload)
+
+    def entities(items):
+        for item in items:
+            image = item.get('image_url')
+            if isinstance(image, str) and MEDIA.fullmatch(image):
+                item['image_url'] = MEDIA.sub(replace, image)
+
+    def state(value):
+        entities(value.get('monsters', []))
+        entities(value.get('characters', []))
+        display = value.get('display', {})
+        background = display.get('background')
+        if isinstance(background, str):
+            # Local URLs may occur inside CSS url(...) and layered backgrounds.
+            display['background'] = LOCAL_MEDIA.sub(replace, background)
+
+    entities(result.get('characters', []))
+    for value in result.get('setups', {}).values():
+        state(value)
+    if 'encounter' in result:
+        state(result['encounter'])
+    return result
 
 def export_bundle(context):
     campaign=context.active_campaign()
     payload={'format':'scrying-glass-campaign','version':1,'campaign':context.read_campaigns()['campaigns'][campaign],'characters':context.STORAGE.load_characters(campaign) or [],'setups':{name:context.STORAGE.load_setup(campaign,name) for name in context.STORAGE.list_setups(campaign)},'encounter':copy.deepcopy(context.STATE)}
     media=set()
     def collect(match): media.add(match[0]);return match[0]
-    walk(payload,collect)
+    walk_media(payload,collect)
     manifest=json.dumps(payload,ensure_ascii=False,indent=2).encode()
     if len(manifest)>10*1024*1024: raise context.HTTPException(413,'Manifest exceeds 10 MiB')
     if len(media)>999: raise context.HTTPException(413,'Too many media files')
@@ -70,7 +91,13 @@ def import_bundle(context,raw):
             def rewrite(match):
                 if match[0] not in mapping: raise ValueError('Missing referenced media')
                 return mapping[match[0]]
-            validated=walk(validated,rewrite);characters=walk(characters,rewrite);encounter=walk(encounter,rewrite)
+            rewritten = walk_media(
+                {'setups': validated, 'characters': characters, 'encounter': encounter},
+                rewrite,
+            )
+            validated = rewritten['setups']
+            characters = rewritten['characters']
+            encounter = rewritten['encounter']
             base=name;i=2
             while context.STORAGE.campaign_name_exists(name):
                 suffix=f' (import {i})';name=base[:100-len(suffix)]+suffix;i+=1

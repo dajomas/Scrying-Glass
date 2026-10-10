@@ -142,6 +142,9 @@ class AdminBattleMixin:
             if action == "damage":
                 result=apply_hp(target,-amount,critical=critical)
                 if getattr(self.context,'features',None):
+                    # Resolve this transition before a later row can heal the source.
+                    if not target.get('alive', True) and target.get('concentrating'):
+                        self.context.features.clear_concentration(target['id'])
                     if result['instant_death']:
                         self.context.features.log('instant-death',target,note=f"Excess damage {result['excess']} ≥ maximum HP {target['max_hp']}")
                     elif result['failed_saves']:

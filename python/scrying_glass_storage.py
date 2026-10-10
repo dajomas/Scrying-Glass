@@ -344,7 +344,19 @@ class SQLiteStorage:
             self._save_encounter(encounter,snapshot)
             self.connection.execute("UPDATE battle_setups SET updated_at=? WHERE campaign_id=? AND name=?",(time.time() if updated_at is None else updated_at,campaign,name))
 
-    def rename_setup(self,campaign,old,new):self.connection.execute("UPDATE battle_setups SET name=? WHERE campaign_id=? AND name=?",(new,campaign,old))
+    def rename_setup(self, campaign, old, new):
+        """Rename a setup and its checkpoint references atomically."""
+        with self.transaction():
+            cursor = self.connection.execute(
+                "UPDATE battle_setups SET name=? WHERE campaign_id=? AND name=?",
+                (new, campaign, old),
+            )
+            if cursor.rowcount:
+                self.connection.execute(
+                    "UPDATE encounter_snapshots SET setup_name=? "
+                    "WHERE campaign_id=? AND setup_name=? AND kind='checkpoint'",
+                    (new, campaign, old),
+                )
     def delete_setup(self,campaign,name):self.connection.execute("DELETE FROM battle_setups WHERE campaign_id=? AND name=?",(campaign,name))
     def unique_setup_name(self, campaign, name):
         """Reserve suffix space within the API's 80-character setup-name limit."""
