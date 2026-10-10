@@ -154,6 +154,11 @@ class AdminMonstersMixin:
             for character in working_state["characters"]
         )
 
+        existing_ids.update(
+            lair["id"]
+            for lair in working_state.get("lairs", [])
+        )
+
         if len(ids) != len(set(ids)):
             raise self.context.HTTPException(
                 400,

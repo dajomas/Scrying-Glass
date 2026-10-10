@@ -46,6 +46,20 @@ class AdminCharactersMixin:
             for character in working_state["characters"]
         )
 
+        existing_ids.update(
+            lair["id"]
+            for lair in working_state.get("lairs", [])
+        )
+
+        # Characters are campaign-owned and will be loaded into every saved setup.
+        campaign = self.context.active_campaign()
+        for setup_name in self.context.STORAGE.list_setups(campaign):
+            saved = self.context.STORAGE.load_setup(campaign, setup_name)
+            existing_ids.update(
+                participant["id"]
+                for participant in [*saved["monsters"], *saved.get("lairs", [])]
+            )
+
         if len(ids) != len(set(ids)):
             raise self.context.HTTPException(
                 400,
@@ -56,7 +70,7 @@ class AdminCharactersMixin:
         if conflicting:
             raise self.context.HTTPException(
                 400,
-                "CSV ID already exists in the active campaign encounter: "
+                "CSV ID conflicts with a participant in this campaign: "
                 + ", ".join(sorted(conflicting)[:5]),
             )
 
