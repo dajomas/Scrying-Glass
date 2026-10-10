@@ -11,9 +11,9 @@ from .scrying_glass_json_import import DuplicateJsonKeyError, InvalidJsonTextErr
 from fastapi import HTTPException
 
 def parse_monster(raw: bytes) -> dict[str, Any]:
-    """Parse a UTF-8 JSON monster file, preserving numeric zero values."""
+    """Parse UTF-8 JSON with an optional leading BOM, preserving numeric zero values."""
     try:
-        data = load_import_json(raw.decode("utf-8"))
+        data = load_import_json(raw.decode("utf-8-sig"))
     except (DuplicateJsonKeyError, InvalidJsonTextError, InvalidJsonNumberError) as exc:
         raise HTTPException(400, str(exc)) from exc
     except (UnicodeDecodeError, ValueError, RecursionError) as exc:
