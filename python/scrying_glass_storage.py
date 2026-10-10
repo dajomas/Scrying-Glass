@@ -370,17 +370,53 @@ class SQLiteStorage:
             number += 1
         return result
 
-    def transfer_setup(self,source,target,name,mode):
-        if mode not in ('move','copy'):raise ValueError("Invalid mode")
+    def transfer_setup(self, source, target, name, mode):
+        """Transfer a setup without attaching effects to another campaign's roster."""
+        if mode not in ('move', 'copy'):
+            raise ValueError("Invalid mode")
         with self.transaction():
-            result=self.unique_setup_name(target,name)
-            row=self.connection.execute("SELECT updated_at FROM battle_setups WHERE campaign_id=? AND name=?",(source,name)).fetchone()
-            if row is None:raise FileNotFoundError(name)
-            if mode=='move':
-                setup_id=self.connection.execute("SELECT id FROM battle_setups WHERE campaign_id=? AND name=?",(source,name)).fetchone()[0]
-                self.connection.execute("UPDATE campaigns SET last_setup_id=NULL WHERE id=? AND last_setup_id=?",(source,setup_id))
-                self.connection.execute("UPDATE battle_setups SET campaign_id=?,name=? WHERE id=?",(target,result,setup_id))
-            else:self.save_setup(target,result,self.load_setup(source,name),row[0])
+            result = self.unique_setup_name(target, name)
+            row = self.connection.execute(
+                "SELECT updated_at FROM battle_setups WHERE campaign_id=? AND name=?",
+                (source, name),
+            ).fetchone()
+            if row is None:
+                raise FileNotFoundError(name)
+            snapshot = self.load_setup(source, name)
+            if str(source) != str(target):
+                internal_ids = {
+                    item['id']
+                    for item in [*snapshot['monsters'], *snapshot.get('lairs', [])]
+                }
+                for monster in snapshot['monsters']:
+                    effects = []
+                    for effect in monster.get('effects', []):
+                        if effect.get('source_id') not in internal_ids:
+                            if effect.get('concentration'):
+                                continue
+                            effect['source_id'] = None
+                        if effect.get('anchor_id') not in internal_ids:
+                            effect['anchor_id'] = None
+                            if effect.get('timing') != 'manual':
+                                effect.update(timing='manual', turns=None)
+                        effects.append(effect)
+                    monster['effects'] = effects
+            # Saved setup references must not retain their former owner/name.
+            snapshot['active_setup'] = None
+            if mode == 'move':
+                setup_id = self.connection.execute(
+                    "SELECT id FROM battle_setups WHERE campaign_id=? AND name=?",
+                    (source, name),
+                ).fetchone()[0]
+                self.connection.execute(
+                    "UPDATE campaigns SET last_setup_id=NULL WHERE id=? AND last_setup_id=?",
+                    (source, setup_id),
+                )
+                self.connection.execute(
+                    "UPDATE battle_setups SET campaign_id=?,name=? WHERE id=?",
+                    (target, result, setup_id),
+                )
+            self.save_setup(target, result, snapshot, row[0])
             return result
     def newest_setup(self,campaign):
         rows=list(self.connection.execute("SELECT name,updated_at FROM battle_setups WHERE campaign_id=?",(campaign,)))

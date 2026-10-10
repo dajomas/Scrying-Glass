@@ -8,6 +8,7 @@ import tempfile
 import types
 import unittest
 from pathlib import Path
+from contextlib import closing
 from unittest.mock import patch
 import test_encounter_features as feature_tests
 from test_sqlite_storage import HTTPError
@@ -188,7 +189,7 @@ class LairTests(unittest.TestCase):
         try:
             self.assertEqual(db.connection.execute('PRAGMA user_version').fetchone()[0],6)
             self.assertTrue(db.migration_backup.is_file())
-            with sqlite3.connect(db.migration_backup) as backup:self.assertEqual(backup.execute('PRAGMA user_version').fetchone()[0],5)
+            with closing(sqlite3.connect(db.migration_backup)) as backup:self.assertEqual(backup.execute('PRAGMA user_version').fetchone()[0],5)
             self.assertEqual(list(db.connection.execute('PRAGMA foreign_key_check')),[])
         finally:db.close()
     def test_route_registration_guards(self):
