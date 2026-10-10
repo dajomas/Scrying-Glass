@@ -24,7 +24,7 @@ class CsvHealthEligibilityTests(unittest.TestCase):
             cls=csv_fixture.load_class('scrying_glass_admin_characters.py','AdminCharactersMixin')
             method='import_characters_csv'
         raw=(header+'\n'+row+'\n'+(row+'\n' if duplicate else '')).encode()
-        async def read():return raw
+        async def read(size=-1):return raw if size < 0 else raw[:size]
         handler=cls();handler.context=self.c
         asyncio.run(transactional_handler(self.c,getattr(handler,method))(
             types.SimpleNamespace(filename='import.csv',read=read)))

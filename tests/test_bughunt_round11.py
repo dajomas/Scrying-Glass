@@ -42,7 +42,7 @@ class CsvLairIdentityTests(unittest.TestCase):
             raw=f'id,name,hp\n{ident},Character import,10\n'.encode()
             cls=load_class('scrying_glass_admin_characters.py','AdminCharactersMixin')
             method='import_characters_csv'
-        async def read():return raw
+        async def read(size=-1):return raw if size < 0 else raw[:size]
         handler=cls();handler.context=self.c
         return asyncio.run(transactional_handler(self.c,getattr(handler,method))(
             types.SimpleNamespace(filename='import.csv',read=read)))

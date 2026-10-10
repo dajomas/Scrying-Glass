@@ -22,7 +22,11 @@ class AdminCharactersMixin:
                 "Upload a .csv file",
             )
 
-        rows = self.context.csv_rows(await csv_file.read())
+        max_import_bytes = 5 * 1024 * 1024
+        raw = await csv_file.read(max_import_bytes + 1)
+        if len(raw) > max_import_bytes:
+            raise self.context.HTTPException(413, "CSV import file must not exceed 5 MiB")
+        rows = self.context.csv_rows(raw)
 
         imported = [
             self.context.csv_character(row, row_number)

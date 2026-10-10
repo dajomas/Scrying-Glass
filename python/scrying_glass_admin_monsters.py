@@ -83,9 +83,11 @@ class AdminMonstersMixin:
                 "Upload a .monster file",
             )
 
-        fields = self.context.parse_monster(
-            await monster_file.read()
-        )
+        max_import_bytes = 5 * 1024 * 1024
+        raw = await monster_file.read(max_import_bytes + 1)
+        if len(raw) > max_import_bytes:
+            raise self.context.HTTPException(413, ".monster import file must not exceed 5 MiB")
+        fields = self.context.parse_monster(raw)
 
         if image is not None and image.filename:
             image_url = self.context.save_image(image)
@@ -130,7 +132,11 @@ class AdminMonstersMixin:
                 "Upload a .csv file",
             )
 
-        rows = self.context.csv_rows(await csv_file.read())
+        max_import_bytes = 5 * 1024 * 1024
+        raw = await csv_file.read(max_import_bytes + 1)
+        if len(raw) > max_import_bytes:
+            raise self.context.HTTPException(413, "CSV import file must not exceed 5 MiB")
+        rows = self.context.csv_rows(raw)
 
         imported = [
             self.context.csv_monster(row, row_number)
