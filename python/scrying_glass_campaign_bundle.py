@@ -5,12 +5,21 @@ import json
 import re
 import uuid
 import zipfile
+import zlib
 from pathlib import PurePosixPath
 from .scrying_glass_json_import import load_import_json
 from .scrying_glass_identity_rules import validate_roster_setup_ids
 
 MEDIA=re.compile(r'/media/[A-Za-z0-9_.-]+')
 BACKGROUND_STARTS = re.compile(r'/\*|url\(', re.IGNORECASE)
+
+BUNDLE_IMPORT_ERRORS = (ValueError, KeyError, TypeError, zipfile.BadZipFile, RuntimeError, OSError, zlib.error)
+try:
+    from lzma import LZMAError
+except ImportError:
+    pass  # LZMA support is optional, as it is in zipfile.
+else:
+    BUNDLE_IMPORT_ERRORS += (LZMAError,)
 
 def rewrite_media_url(value, replace):
     """Rewrite a supported local URL path without scanning its opaque suffix."""
@@ -161,7 +170,7 @@ def import_bundle(context,raw):
                 if member.filename != 'campaign.json' and member.file_size == 0:
                     raise ValueError('Media files must not be empty')
             payload=load_import_json(bundle.read('campaign.json'))
-            if not isinstance(payload,dict) or payload.get('format')!='scrying-glass-campaign' or payload.get('version')!=1: raise ValueError('Unsupported bundle format')
+            if not isinstance(payload,dict) or payload.get('format')!='scrying-glass-campaign' or type(payload.get('version')) is not int or payload['version']!=1: raise ValueError('Unsupported bundle format')
             validate_storage_integers(payload)
             metadata=payload['campaign'];name=metadata['name'];description=metadata.get('description','')
             if not isinstance(name,str) or not 1<=len(name)<=100 or not isinstance(description,str) or len(description)>2000: raise ValueError('Invalid campaign metadata')
@@ -219,7 +228,7 @@ def import_bundle(context,raw):
                 context._bundle_files.append(path)
                 path.write_bytes(data);written.append(path)
             return {'campaign_id':str(campaign),'name':name,'checkpoint_id':checkpoint}
-    except (ValueError,KeyError,TypeError,zipfile.BadZipFile,RuntimeError,OSError) as exc:
+    except BUNDLE_IMPORT_ERRORS as exc:
         for path in written:
             try: path.unlink(missing_ok=True)
             except OSError: pass
