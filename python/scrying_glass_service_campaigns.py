@@ -35,9 +35,14 @@ class CampaignsService:
 
     def require_campaign(self, campaign: str | None) -> str:
         value = self.context.active_campaign() if campaign is None or not str(campaign).strip() else str(campaign).strip()
-        if not value.isascii() or not value.isdecimal() or int(value) <= 0:
+        if not value.isascii() or not value.isdecimal():
             raise self.context.HTTPException(404, f"Invalid campaign ID: {value}")
-        ident = str(int(value))
+        ident = value.lstrip("0") or "0"
+        maximum = "9223372036854775807"
+        if ident == "0" or len(ident) > len(maximum) or (
+            len(ident) == len(maximum) and ident > maximum
+        ):
+            raise self.context.HTTPException(404, "Campaign ID is outside the supported range")
         if not self.context.STORAGE.campaign_exists(ident):
             raise self.context.HTTPException(404, f"Campaign not found: {ident}")
         return ident

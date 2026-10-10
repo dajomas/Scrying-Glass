@@ -1,7 +1,7 @@
 (() => {
     'use strict';
     const $=id=>document.getElementById(id);
-    let state=null,summary=null,busy=false,polling=false;
+    let state=null,summary=null,busy=false,polling=null;
     const editable=['featureTempHp','featureLifeState','deathSuccesses','deathFailures'];
     const notice=text=>{$('featureNotice').textContent=text;};
     async function api(url,method='GET',body) {
@@ -40,8 +40,11 @@
             li.append(label,remove);return li;
         }));
     }
-    async function refresh(force=false) {
-        if(polling)return;polling=true;
+    async function refresh(force=false, fresh=false) {
+        if(polling&&!force&&!fresh){await polling;return;}
+        while(polling)await polling;
+        let finishPoll;
+        polling=new Promise(resolve=>{finishPoll=resolve;});
         try {
             const previousScope=encounterScope();
             [state,summary]=await Promise.all([api('/api/state'),api('/api/features')]);
@@ -57,7 +60,7 @@
             $('downedReminder').hidden=!summary.downed.length;
             $('downedReminder').textContent='Death-save reminder: '+summary.downed.map(x=>x.name).join(', ')+'. Downed characters keep their initiative turns. Damage at 0 HP adds failed saves automatically; record rolled saves manually.';
             draw(force||targetChanged);
-        }catch(error){notice(error.message);}finally{polling=false;}
+        }catch(error){notice(error.message);}finally{polling=null;finishPoll();}
     }
     async function perform(action, savedFields=[]) {
         if(busy)return;busy=true;
@@ -72,7 +75,7 @@
                 if(savedFields===editable||(sameTarget&&$(id).value===submittedValues.get(id)))
                     delete $(id).dataset.dirty;
             });
-            await refresh();
+            await refresh(false,true);
             if(typeof load==='function')await load();
         }
         catch(error){notice(error.message);}finally{busy=false;if(summary)$('featureUndo').disabled=!summary.undo;}
