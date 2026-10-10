@@ -8,6 +8,7 @@ from .scrying_glass_feature_rules import normalize_features,apply_hp,validate_ef
 from .scrying_glass_feature_storage import FeatureStorage
 from .scrying_glass_feature_logging import feature_changes
 from .scrying_glass_turn_rules import can_take_turn
+from .scrying_glass_identity_rules import validate_roster_setup_ids
 
 TRACKED={'update_monster','update_character','bulk_monsters','bulk_characters','reset_one_combatant','reset_all','battle_start','battle_next','battle_end','apply_battle_actions','edit_features','add_effect','remove_effect','end_concentration','restore_checkpoint','create_lair','update_lair','delete_lair','apply_lair_action'}
 BOUNDARIES={'load_setup','new_setup','activate_campaign','delete_campaign','delete_setup','rename_setup','add_setup_to_campaign','clear_activity_log'}
@@ -59,6 +60,20 @@ class FeaturesService:
             raise self.context.HTTPException(409,'Referenced setup no longer exists')
         try: candidate=self.context.normalize_state(state)
         except ValueError as exc: raise self.context.HTTPException(422,str(exc)) from exc
+        reference = candidate.get('active_setup')
+        replaced_name = reference['name'] if reference else None
+        campaign = self.context.active_campaign()
+        retained_setups = {
+            name: self.context.STORAGE.load_setup(campaign, name)
+            for name in self.context.STORAGE.list_setups(campaign)
+            if name != replaced_name
+        }
+        try:
+            validate_roster_setup_ids(
+                candidate['characters'], retained_setups, label='Restored roster',
+            )
+        except ValueError as exc:
+            raise self.context.HTTPException(409, str(exc)) from exc
         candidate['activity_log']=copy.deepcopy(self.context.STATE.get('activity_log',[]))
         self.context.STATE=candidate
     async def undo(self,body):

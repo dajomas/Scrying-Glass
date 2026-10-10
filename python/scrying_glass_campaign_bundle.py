@@ -6,6 +6,7 @@ import re
 import uuid
 import zipfile
 from pathlib import PurePosixPath
+from .scrying_glass_identity_rules import validate_roster_setup_ids
 
 MEDIA=re.compile(r'/media/[A-Za-z0-9_.-]+')
 LOCAL_MEDIA=re.compile(r'(?<![A-Za-z0-9_:/.-])/media/[A-Za-z0-9_.-]+')
@@ -97,7 +98,18 @@ def import_bundle(context,raw):
                 validated[key]=context.normalize_state(state)
                 if validated[key]['characters']: raise ValueError('Setup contains characters')
             characters=context.normalize_state({'characters':payload['characters']})['characters']
-            encounter=context.normalize_state(payload['encounter']);mapping={};staged=[]
+            encounter=context.normalize_state(payload['encounter'])
+            validate_roster_setup_ids(characters, validated)
+            reference = encounter.get('active_setup')
+            replaced_name = reference['name'] if reference else None
+            retained_setups = {
+                key: state for key, state in validated.items()
+                if key != replaced_name
+            }
+            validate_roster_setup_ids(
+                encounter['characters'], retained_setups, label='Encounter roster',
+            )
+            mapping={};staged=[]
             for member in entries:
                 if member.filename=='campaign.json': continue
                 old=PurePosixPath(member.filename).name;suffix=PurePosixPath(old).suffix.lower()
