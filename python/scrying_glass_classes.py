@@ -2,7 +2,7 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-MAX_STORED_HP = 2 ** 63 - 1
+from .scrying_glass_health_limits import MAX_STORED_HP
 
 class DisplayBackgroundUpdate(BaseModel):
     """Displaybackgroundupdate."""

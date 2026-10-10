@@ -1,5 +1,6 @@
 """Nonnegative HP, excess-damage death, zero-HP saves and effect validation."""
 from .scrying_glass_turn_rules import permanently_dead,can_take_turn,is_character
+from .scrying_glass_health_limits import MAX_STORED_HP, HpStorageRangeError
 STATES={'standing','down','stable','dead'}
 
 def validate_effects(effects):
@@ -58,6 +59,8 @@ def apply_hp(item,delta,*,absorb=True,critical=False):
     result={'damage':0,'excess':0,'instant_death':False,'failed_saves':0,'temp_consumed':0}
     if permanently_dead(item): return result
     if delta>=0:
+        if item['hp'] + delta > MAX_STORED_HP:
+            raise HpStorageRangeError(f"Resulting HP must not exceed {MAX_STORED_HP}")
         if delta: item['hp']+=delta;item['life_state']='standing';item['death_successes']=item['death_failures']=0
         sync_health(item);return result
     damage=-delta

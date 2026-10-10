@@ -4,6 +4,7 @@ import asyncio
 import copy
 import inspect
 from functools import wraps
+from .scrying_glass_health_limits import HpStorageRangeError
 
 
 def operation_lock(context):
@@ -58,11 +59,13 @@ def transactional_handler(context, handler, *, role=None, cookie_name=None):
                         context.save_state()
                     features.after_transaction(handler.__name__,original,campaign_before)
             pending = context._database_broadcast_pending
-        except BaseException:
+        except BaseException as exc:
             context.STATE = original
             for path in getattr(context,'_bundle_files',[]):
                 try: path.unlink(missing_ok=True)
                 except OSError: pass
+            if isinstance(exc, HpStorageRangeError):
+                raise context.HTTPException(422, str(exc)) from exc
             raise
         finally:
             context._bundle_files = []
