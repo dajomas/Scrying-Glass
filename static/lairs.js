@@ -1,8 +1,13 @@
 (() => {
     'use strict';
     const $=id=>document.getElementById(id);
-    let state=null,editingId=null,actorId=null,revision=null,busy=false,opening=false,actionState=null;
+    let state=null,editingId=null,editingScope=null,actorId=null,revision=null,busy=false,opening=false,actionState=null;
     const configFields=['lairName','lairColor','lairActive','lairVisible','lairNotes'];
+    const configValue=id=>id==='lairActive'||id==='lairVisible'?$(id).checked:$(id).value;
+    const configScope=snapshot=>JSON.stringify([
+        snapshot?.active_campaign_id??snapshot?.active_setup?.campaign_id??null,
+        snapshot?.active_setup?.name??null,snapshot?.lairs?.[0]?.id??null,
+    ]);
     const notice=text=>{$('lairNotice').textContent=text;};
     async function api(url,method='GET',body) {
         const options={method,cache:'no-store'};
@@ -17,9 +22,9 @@
         configFields.forEach(id=>delete $(id).dataset.dirty);
     }
     window.scryingLairsRender=snapshot=>{
-        state=snapshot;const item=state.lairs?.[0];
-        if((item?.id||null)!==editingId||!configFields.some(id=>$(id).dataset.dirty))setConfig(item);
-        editingId=item?.id||null;$('saveLair').textContent=item?'Save lair':'Add lair';$('removeLair').hidden=!item;
+        state=snapshot;const item=state.lairs?.[0],scope=configScope(snapshot);
+        if(scope!==editingScope||!configFields.some(id=>$(id).dataset.dirty))setConfig(item);
+        editingScope=scope;editingId=item?.id||null;$('saveLair').textContent=item?'Save lair':'Add lair';$('removeLair').hidden=!item;
         $('resolveLair').disabled=busy||!item?.active||!item?.in_turn;
     };
     configFields.forEach(id=>$(id).addEventListener('input',()=>{$(id).dataset.dirty='1';}));
@@ -32,9 +37,13 @@
     }
     $('lairConfigForm').onsubmit=event=>{
         event.preventDefault();perform(async()=>{
+            const submittedScope=editingScope,submittedValues=new Map(configFields.map(id=>[id,configValue(id)]));
             const body={name:$('lairName').value,color:$('lairColor').value,active:$('lairActive').checked,visible:$('lairVisible').checked,notes:$('lairNotes').value};
             await api(editingId?`/api/lairs/${encodeURIComponent(editingId)}`:'/api/lairs',editingId?'PATCH':'POST',body);
-            configFields.forEach(id=>delete $(id).dataset.dirty);notice('Lair saved.');
+            if(editingScope===submittedScope)configFields.forEach(id=>{
+                if(configValue(id)===submittedValues.get(id))delete $(id).dataset.dirty;
+            });
+            notice('Lair saved.');
         });
     };
     $('removeLair').onclick=()=>{
