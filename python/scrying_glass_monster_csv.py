@@ -3,6 +3,7 @@ import json
 import re
 import uuid
 import io
+from decimal import Decimal, InvalidOperation
 
 from typing import Any
 
@@ -27,12 +28,14 @@ def parse_monster(raw: bytes) -> dict[str, Any]:
     name = str(data.get("name") or "").strip()
     monster_species = str(data.get("type") or "").strip()
 
+    number_pattern = r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?"
+
     hp_raw = data.get("hpText")
     if hp_raw is None or str(hp_raw).strip() == "":
         hp_raw = data.get("hp")
 
     hp_match = (
-        re.search(r"-?\d+", str(hp_raw))
+        re.search(number_pattern, str(hp_raw))
         if hp_raw is not None
         else None
     )
@@ -53,7 +56,7 @@ def parse_monster(raw: bytes) -> dict[str, Any]:
     )
 
     ac_match = (
-        re.search(r"\d+", str(ac_raw))
+        re.search(number_pattern, str(ac_raw))
         if ac_raw is not None
         else None
     )
@@ -69,24 +72,22 @@ def parse_monster(raw: bytes) -> dict[str, Any]:
             ".monster needs usable name, type, AC, and HP",
         )
 
-    def storage_integer(match, field):
-        digits = match.group()
-        significant = digits.lstrip("-").lstrip("0") or "0"
-        if len(significant) > 19:
-            raise HTTPException(400, f".monster {field} exceeds the supported integer range")
+    def bounded_integer(match, field, minimum, maximum):
         try:
-            value = int(digits)
-        except ValueError as exc:
-            raise HTTPException(400, f".monster {field} is not a usable integer") from exc
-        if not -(2 ** 63) <= value <= 2 ** 63 - 1:
-            raise HTTPException(400, f".monster {field} exceeds the supported integer range")
-        return value
+            value = Decimal(match.group())
+        except (InvalidOperation, ValueError) as exc:
+            raise HTTPException(400, f".monster {field} is not a usable number") from exc
+        if not value.is_finite() or value < minimum or value > maximum:
+            raise HTTPException(400, f".monster {field} must be between {minimum} and {maximum}")
+        if value != value.to_integral_value():
+            raise HTTPException(400, f".monster {field} must be a whole number")
+        return int(value)
 
     return {
         "name": name,
         "monster_species": monster_species,
-        "ac": storage_integer(ac_match, "AC"),
-        "hp": storage_integer(hp_match, "HP"),
+        "ac": bounded_integer(ac_match, "AC", 0, 999),
+        "hp": bounded_integer(hp_match, "HP", -(2 ** 63), 2 ** 63 - 1),
     }
  
 def csv_text(value: Any, default: str = "") -> str:

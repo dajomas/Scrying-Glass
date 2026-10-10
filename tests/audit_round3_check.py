@@ -1,5 +1,6 @@
 import sys, ast, textwrap, tempfile, json, csv, io, re, uuid, copy
 from pathlib import Path
+from decimal import Decimal, InvalidOperation
 sys.path.insert(0, 'tests')
 from test_sqlite_storage import context, HTTPError
 
@@ -35,7 +36,7 @@ with tempfile.TemporaryDirectory() as directory:
     try: c.normalize_state({'activity_log':[{'id':'x'},{'id':'x'}]});raise AssertionError()
     except ValueError:pass
     c.STORAGE.close()
-ns={'json':json,'csv':csv,'io':io,'re':re,'uuid':uuid,'HTTPException':HTTPError}
+ns={'json':json,'csv':csv,'io':io,'re':re,'uuid':uuid,'HTTPException':HTTPError,'Decimal':Decimal,'InvalidOperation':InvalidOperation}
 load_functions('python/scrying_glass_monster_csv.py',{'csv_text','csv_rows','parse_monster'},ns)
 for data in (b'name,Name\nA,B\n',b'name,hp\nA,1,2\n',b'name,hp\n"unclosed,1',b'name,\nA,1\n'):
     try:ns['csv_rows'](data);raise AssertionError('Expected malformed CSV rejection')
