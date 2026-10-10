@@ -158,6 +158,11 @@ class AdminCharactersMixin:
 
         from .scrying_glass_feature_rules import sync_health
         if "alive" in values:
+            from .scrying_glass_turn_rules import permanently_dead
+            if values["alive"] and permanently_dead(character):
+                # Explicit recovery must not retain terminal death-save history.
+                candidate["death_successes"] = 0
+                candidate["death_failures"] = 0
             candidate['life_state'] = ('standing' if candidate['hp']>0 else 'down') if values['alive'] else 'dead'
         if hp_changed or 'alive' in values or 'max_hp' in values:
             sync_health(candidate)
