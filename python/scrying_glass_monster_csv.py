@@ -25,14 +25,25 @@ def parse_monster(raw: bytes) -> dict[str, Any]:
             ".monster must contain a JSON object",
         )
 
-    name = str(data.get("name") or "").strip()
-    monster_species = str(data.get("type") or "").strip()
+    def required_text(field):
+        value = data.get(field)
+        if not isinstance(value, str):
+            raise HTTPException(400, f".monster {field} must be text")
+        value = value.strip()
+        if not 1 <= len(value) <= 100:
+            raise HTTPException(400, f".monster {field} must contain 1-100 characters after trimming")
+        return value
+
+    name = required_text("name")
+    monster_species = required_text("type")
 
     number_pattern = r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?"
 
     hp_raw = data.get("hpText")
-    if hp_raw is None or str(hp_raw).strip() == "":
+    if hp_raw is None or (isinstance(hp_raw, str) and not hp_raw.strip()):
         hp_raw = data.get("hp")
+    if hp_raw is not None and type(hp_raw) not in (str, int, float):
+        raise HTTPException(400, ".monster HP must be numeric or text, not a container or boolean")
 
     hp_match = (
         re.search(number_pattern, str(hp_raw))
@@ -50,10 +61,13 @@ def parse_monster(raw: bytes) -> dict[str, Any]:
                 "natArmorBonus",
             )
             if data.get(field) is not None
-            and str(data[field]).strip() != ""
+            and (not isinstance(data[field], str) or data[field].strip())
         ),
         None,
     )
+
+    if ac_raw is not None and type(ac_raw) not in (str, int, float):
+        raise HTTPException(400, ".monster AC must be numeric or text, not a container or boolean")
 
     ac_match = (
         re.search(number_pattern, str(ac_raw))
