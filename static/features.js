@@ -78,7 +78,7 @@
             notice('Saved.');
             const sameTarget=targetScope()===submittedTarget;
             savedFields.forEach(id=>{
-                if(savedFields===editable||(sameTarget&&$(id).value===submittedValues.get(id)))
+                if(sameTarget&&$(id).value===submittedValues.get(id))
                     delete $(id).dataset.dirty;
             });
             await refresh(false,true);
@@ -107,8 +107,12 @@
     });
     $('effectForm').onsubmit=event=>{event.preventDefault();perform(async()=>{
         const item=target();if(!item)throw new Error('Select a combatant');const timing=$('effectTiming').value;
-        await api(`/api/combatants/${encodeURIComponent(item.id)}/effects`,'POST',{name:$('effectName').value,source_id:$('effectSource').value||null,notes:$('effectNotes').value,public:$('effectPublic').checked,concentration:$('effectConcentration').checked,timing,anchor_id:timing==='manual'?null:$('effectAnchor').value||null,turns:timing==='manual'?null:Number($('effectTurns').value)});
-        $('effectName').value='';$('effectNotes').value='';
+        const submittedTarget=targetScope(),name=$('effectName').value,notes=$('effectNotes').value;
+        await api(`/api/combatants/${encodeURIComponent(item.id)}/effects`,'POST',{name,source_id:$('effectSource').value||null,notes,public:$('effectPublic').checked,concentration:$('effectConcentration').checked,timing,anchor_id:timing==='manual'?null:$('effectAnchor').value||null,turns:timing==='manual'?null:Number($('effectTurns').value)});
+        if(targetScope()===submittedTarget){
+            if($('effectName').value===name)$('effectName').value='';
+            if($('effectNotes').value===notes)$('effectNotes').value='';
+        }
     });};
     $('saveCheckpoint').onclick=()=>perform(()=>api('/api/checkpoints','POST',{name:$('checkpointName').value||'Encounter checkpoint'}));
     $('restoreCheckpoint').onclick=()=>perform(async()=>{
