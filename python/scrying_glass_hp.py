@@ -61,8 +61,8 @@ def hp_value_factory(
     hp_range_end_raw: str | None,
 ) -> Callable[[], int]:
     """Validate HP input and return a function that produces one monster's HP."""
-    start = str(hp_range_start_raw or "").strip()
-    end = str(hp_range_end_raw or "").strip()
+    start = str("" if hp_range_start_raw is None else hp_range_start_raw).strip()
+    end = str("" if hp_range_end_raw is None else hp_range_end_raw).strip()
 
     if not start:
         raise HTTPException(400, "HP Range start is required")

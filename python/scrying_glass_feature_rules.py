@@ -15,6 +15,13 @@ def validate_effects(effects):
         seen.add(e['id'])
         for k in ('source_id','anchor_id'):
             if e.get(k) is not None and (not isinstance(e[k],str) or not 1<=len(e[k])<=100): raise ValueError('Invalid effect '+k)
+        for k in ('id', 'name', 'notes', 'source_id', 'anchor_id'):
+            value = e.get(k)
+            if isinstance(value, str):
+                try:
+                    value.encode('utf-8')
+                except UnicodeEncodeError as exc:
+                    raise ValueError('Invalid UTF-8 effect ' + k) from exc
         for k in ('public','concentration'):
             if type(e.get(k)) is not bool: raise ValueError('Invalid effect '+k)
         if e['concentration'] and not e.get('source_id'): raise ValueError('Concentration requires a source')
@@ -25,10 +32,18 @@ def validate_effects(effects):
         elif not e.get('anchor_id') or type(turns) is not int or not 1<=turns<=10000: raise ValueError('Timed effects require anchor and positive counter')
 
 def normalize_features(item):
-    if type(item.get('hp',0)) is not int or type(item.get('max_hp',0)) is not int: raise ValueError('HP and maximum HP must be integers')
+    # Validate stored HP before mutating the caller's object.
+    for field in ('hp', 'max_hp', 'original_hp'):
+        if field == 'original_hp' and field not in item:
+            continue
+        value = item.get(field, 0)
+        if type(value) is not int:
+            raise ValueError(field + ' must be an integer')
+        if value > MAX_STORED_HP:
+            raise HpStorageRangeError(f'{field} must not exceed {MAX_STORED_HP}')
     # Historical negatives are normalized, not reinterpreted as damage events.
     item['hp']=max(0,item.get('hp',0));item['max_hp']=max(0,item.get('max_hp',0))
-    if 'original_hp' in item and type(item['original_hp']) is int: item['original_hp']=max(0,item['original_hp'])
+    if 'original_hp' in item: item['original_hp']=max(0,item['original_hp'])
     if 'life_state' not in item: item['life_state']='standing' if item['hp']>0 and item.get('alive',True) else ('dead' if item['hp']>0 else 'down')
     state=item['life_state']
     if not isinstance(state,str) or state not in STATES: raise ValueError('Invalid life state')
@@ -53,7 +68,7 @@ def sync_health(item):
 
 def apply_hp(item,delta,*,absorb=True,critical=False):
     """Apply one damage/healing event; never retain or accumulate negative HP."""
-    if type(delta) is not int or type(critical) is not bool: raise ValueError('Invalid HP change/critical flag')
+    if type(delta) is not int or type(critical) is not bool or type(absorb) is not bool: raise ValueError('Invalid HP change/critical/absorption flag')
     normalize_features(item)
     before=item['hp'];temporary=item['temp_hp'];old_failures=item['death_failures']
     result={'damage':0,'excess':0,'instant_death':False,'failed_saves':0,'temp_consumed':0}
