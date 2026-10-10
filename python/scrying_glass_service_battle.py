@@ -215,6 +215,10 @@ class BattleService:
         if type(battle_round) is not int or battle_round < 1:
             battle_round = 1
         elif wrapped:
+            if battle_round >= 2 ** 63 - 1:
+                raise self.context.HTTPException(
+                    409, "Battle round limit reached; end and restart the battle",
+                )
             battle_round += 1
 
         self.context.STATE["battle_round"] = battle_round

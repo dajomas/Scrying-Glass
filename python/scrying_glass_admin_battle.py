@@ -45,6 +45,9 @@ class AdminBattleMixin:
         if getattr(self.context,'features',None):
             self.context.features.store.save_snapshot(self.context.active_campaign(),self.context.STATE,'checkpoint','Before battle')
         self.context.begin_battle(payload.order)
+        current = self.context.active_combatant()
+        if getattr(self.context, 'features', None) and current:
+            self.context.features.expire(current['id'], 'start')
         self.context.sort_admin_by_initiative()
 
         self.context.save_active_campaign_characters()
