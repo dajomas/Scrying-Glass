@@ -57,6 +57,18 @@ def export_bundle(context):
     if output.tell()>25*1024*1024: raise context.HTTPException(413,'Compressed bundle exceeds 25 MiB')
     return output.getvalue()
 
+def validate_storage_integers(payload):
+    """Reject JSON integers SQLite cannot persist before creating any records."""
+    pending = [payload]
+    while pending:
+        value = pending.pop()
+        if isinstance(value, dict):
+            pending.extend(value.values())
+        elif isinstance(value, list):
+            pending.extend(value)
+        elif type(value) is int and not -(2 ** 63) <= value <= 2 ** 63 - 1:
+            raise ValueError('Integer outside the signed 64-bit storage range')
+
 def import_bundle(context,raw):
     if len(raw)>25*1024*1024: raise context.HTTPException(413,'Bundle exceeds 25 MiB')
     written=[]
@@ -71,6 +83,7 @@ def import_bundle(context,raw):
                 if member.filename!='campaign.json' and (len(p.parts)!=2 or p.parts[0]!='media' or p.name in ('.','..') or chr(92) in member.filename): raise ValueError('Unsafe member path')
             payload=json.loads(bundle.read('campaign.json'))
             if not isinstance(payload,dict) or payload.get('format')!='scrying-glass-campaign' or payload.get('version')!=1: raise ValueError('Unsupported bundle format')
+            validate_storage_integers(payload)
             metadata=payload['campaign'];name=metadata['name'];description=metadata.get('description','')
             if not isinstance(name,str) or not 1<=len(name)<=100 or not isinstance(description,str) or len(description)>2000: raise ValueError('Invalid campaign metadata')
             setups=payload['setups']

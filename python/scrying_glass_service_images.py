@@ -98,6 +98,9 @@ class ImagesService:
 
             os.replace(temporary, destination)
             temporary = None
+            # The database wrapper also owns rollback of newly created media.
+            if getattr(self.context, "_defer_database_broadcast", False):
+                self.context._bundle_files.append(destination)
 
         except self.context.HTTPException:
             raise
