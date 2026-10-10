@@ -16,6 +16,12 @@ class AuthService:
         return self.context.STORAGE.connection
 
     def user(self, name):
+        if not isinstance(name, str):
+            return None
+        try:
+            name.encode('utf-8')
+        except UnicodeEncodeError:
+            return None
         row = self.db.execute("SELECT id, username, role, password_hash AS password FROM users WHERE username=?", (name,)).fetchone()
         return dict(row) if row else None
 
@@ -50,6 +56,12 @@ class AuthService:
             raise HTTPException(422, "Invalid role")
         if password is not None and (not isinstance(password, str) or not 8 <= len(password) <= 1024):
             raise HTTPException(422, "Password must be 8-1024 characters")
+        for field, value in (("Username", username), ("Password", password)):
+            if value is not None:
+                try:
+                    value.encode("utf-8")
+                except UnicodeEncodeError as exc:
+                    raise HTTPException(422, f"{field} must contain valid UTF-8 text") from exc
 
     def initialize_users(self):
         if self.db.execute("SELECT 1 FROM account_migration").fetchone():

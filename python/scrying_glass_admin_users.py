@@ -5,6 +5,7 @@ from fastapi import Depends, HTTPException, Request, Body
 from fastapi.responses import HTMLResponse, RedirectResponse
 from .scrying_glass_init import password_hash
 from .scrying_glass_database_transactions import serialized_handler
+from .scrying_glass_request_security import same_origin
 
 
 def install_user_routes(context, app):
@@ -14,13 +15,6 @@ def install_user_routes(context, app):
     def serialize(handler):
         return serialized_handler(context, handler, role="superadmin",
                                   cookie_name=context.ADMIN_SESSION_COOKIE)
-
-    async def same_origin(request: Request):
-        origin = request.headers.get("origin")
-        if origin and origin != str(request.base_url).rstrip("/"):
-            raise HTTPException(403, "Cross-origin user changes are not allowed")
-        if request.headers.get("sec-fetch-site") == "cross-site":
-            raise HTTPException(403, "Cross-site user changes are not allowed")
 
     @app.get("/api/me", dependencies=[Depends(context.require("admin", context.ADMIN_SESSION_COOKIE))])
     async def me(request: Request):
@@ -38,6 +32,10 @@ def install_user_routes(context, app):
     @app.get("/api/users", dependencies=[guard])
     async def users():
         return [dict(r) for r in auth.db.execute("SELECT id,username,role FROM users ORDER BY username")]
+
+    def validate_user_id(user_id):
+        if type(user_id) is not int or not 1 <= user_id <= 2 ** 63 - 1:
+            raise HTTPException(422, "User ID must be a positive signed 64-bit integer")
 
     def fields(body, create):
         if not isinstance(body, dict) or set(body) - {"username", "role", "password"}:
@@ -65,6 +63,7 @@ def install_user_routes(context, app):
     @app.patch("/api/users/{user_id}", dependencies=[guard, Depends(same_origin)])
     @serialize
     async def update(user_id: int, body: dict = Body(...)):
+        validate_user_id(user_id)
         fields(body, False)
         with context.STORAGE.transaction():
             old = auth.db.execute("SELECT * FROM users WHERE id=?", (user_id,)).fetchone()
@@ -85,6 +84,7 @@ def install_user_routes(context, app):
     @app.delete("/api/users/{user_id}", dependencies=[guard, Depends(same_origin)])
     @serialize
     async def delete(user_id: int):
+        validate_user_id(user_id)
         with context.STORAGE.transaction():
             old = auth.db.execute("SELECT * FROM users WHERE id=?", (user_id,)).fetchone()
             if not old:
