@@ -81,6 +81,8 @@ def import_bundle(context,raw):
             if 'campaign.json' not in names or bundle.getinfo('campaign.json').file_size>10*1024*1024: raise ValueError('Missing/oversized manifest')
             for member in entries:
                 p=PurePosixPath(member.filename)
+                if member.is_dir() or member.filename != member.orig_filename or member.filename != p.as_posix():
+                    raise ValueError('Bundle members must use canonical file paths')
                 if member.filename!='campaign.json' and (len(p.parts)!=2 or p.parts[0]!='media' or p.name in ('.','..') or chr(92) in member.filename): raise ValueError('Unsafe member path')
             payload=json.loads(bundle.read('campaign.json'))
             if not isinstance(payload,dict) or payload.get('format')!='scrying-glass-campaign' or payload.get('version')!=1: raise ValueError('Unsupported bundle format')

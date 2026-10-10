@@ -52,7 +52,7 @@ class CharacterUpdate(BaseModel):
     alive: bool | None = None
     visible: bool | None = None
     initiative: int | None = Field(default=None, ge=-100, le=100)
-    hp: int | None = Field(default=None, ge=0, le=99999)
+    hp: int | None = Field(default=None, ge=0, le=MAX_STORED_HP)
     max_hp: int | None = Field(default=None, ge=0, le=99999)
     hp_delta: int | None = Field(default=None, ge=-99999, le=99999)
     critical_hit: bool = False
