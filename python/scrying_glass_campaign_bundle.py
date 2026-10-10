@@ -9,7 +9,77 @@ from pathlib import PurePosixPath
 from .scrying_glass_identity_rules import validate_roster_setup_ids
 
 MEDIA=re.compile(r'/media/[A-Za-z0-9_.-]+')
-LOCAL_MEDIA=re.compile(r'(?<![A-Za-z0-9_:/.-])/media/[A-Za-z0-9_.-]+')
+BACKGROUND_STARTS = re.compile(r'/\*|url\(', re.IGNORECASE)
+
+def rewrite_media_url(value, replace):
+    """Rewrite a supported local URL path without scanning its opaque suffix."""
+    path = value.split('#', 1)[0].split('?', 1)[0]
+    return MEDIA.sub(replace, value, count=1) if MEDIA.fullmatch(path) else value
+
+
+def rewrite_background_media(value, replace):
+    """Scan CSS comments and ordinary url(...) tokens without inspecting suffixes."""
+    stripped = value.strip()
+    path = stripped.split('#', 1)[0].split('?', 1)[0]
+    if MEDIA.fullmatch(path):
+        return value.replace(stripped, rewrite_media_url(stripped, replace), 1)
+
+    output = []
+    position = 0
+    while True:
+        match = BACKGROUND_STARTS.search(value, position)
+        if match is None:
+            output.append(value[position:])
+            break
+        output.append(value[position:match.start()])
+        if match.group(0) == '/*':
+            end = value.find('*/', match.end())
+            if end < 0:
+                output.append(value[match.start():])
+                break
+            end += 2
+            output.append(value[match.start():end])
+            position = end
+            continue
+
+        cursor = match.end()
+        while cursor < len(value) and value[cursor].isspace():
+            cursor += 1
+        quote = value[cursor] if cursor < len(value) and value[cursor] in ('"', "'") else None
+        start = cursor + 1 if quote else cursor
+        cursor = start
+        terminator = quote or ')'
+        while cursor < len(value):
+            if value[cursor] == chr(92):
+                cursor += 2
+            elif value[cursor] == terminator:
+                break
+            else:
+                cursor += 1
+        if cursor >= len(value):
+            output.append(value[match.start():])
+            break
+        end_url = cursor
+        if quote:
+            cursor += 1
+            while cursor < len(value) and value[cursor].isspace():
+                cursor += 1
+            if cursor >= len(value) or value[cursor] != ')':
+                end = value.find(')', cursor)
+                if end < 0:
+                    output.append(value[match.start():])
+                    break
+                output.append(value[match.start():end+1])
+                position = end + 1
+                continue
+        end = cursor + 1
+        url = value[start:end_url]
+        core = url.strip()
+        rewritten = url.replace(core, rewrite_media_url(core, replace), 1) if core else url
+        output.append(value[match.start():start] + rewritten + value[end_url:end])
+        position = end
+    return ''.join(output)
+
 
 def walk_media(payload, replace):
     """Collect/rewrite media only in schema-defined image and background fields."""
@@ -19,10 +89,7 @@ def walk_media(payload, replace):
         for item in items:
             image = item.get('image_url')
             if isinstance(image, str):
-                path = image.split('#', 1)[0].split('?', 1)[0]
-                if MEDIA.fullmatch(path):
-                    # Rewrite only the path; query/fragment text is not a dependency.
-                    item['image_url'] = MEDIA.sub(replace, image, count=1)
+                item['image_url'] = rewrite_media_url(image, replace)
 
     def state(value):
         entities(value.get('monsters', []))
@@ -31,7 +98,7 @@ def walk_media(payload, replace):
         background = display.get('background')
         if isinstance(background, str):
             # Local URLs may occur inside CSS url(...) and layered backgrounds.
-            display['background'] = LOCAL_MEDIA.sub(replace, background)
+            display['background'] = rewrite_background_media(background, replace)
 
     entities(result.get('characters', []))
     for value in result.get('setups', {}).values():
