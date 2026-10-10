@@ -1,7 +1,7 @@
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 HASH=$(git rev-parse ${BRANCH} | cut -c1-7)
 
-echo "Create git archive for branch ${BRANCH}"
+echo "Create git archive for branch ${BRANCH} (${HASH})"
 git archive --format=zip --output=scrying-glass-source.zip ${BRANCH}
 
 echo "Convert zip file to base64"
