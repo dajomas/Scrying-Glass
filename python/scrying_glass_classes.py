@@ -2,6 +2,8 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
+MAX_STORED_HP = 2 ** 63 - 1
+
 class DisplayBackgroundUpdate(BaseModel):
     """Displaybackgroundupdate."""
     background: str = Field(min_length=1, max_length=4096)
@@ -16,14 +18,14 @@ class MonsterUpdate(BaseModel):
     name: str | None = Field(default=None, min_length=1, max_length=100)
     monster_species: str | None = Field(default=None, min_length=1, max_length=100)
     ac: int | None = Field(default=None, ge=0, le=999)
-    max_hp: int | None = Field(default=None, ge=0, le=99999)
-    original_hp: int | None = Field(default=None, ge=0, le=99999)
+    max_hp: int | None = Field(default=None, ge=0, le=MAX_STORED_HP)
+    original_hp: int | None = Field(default=None, ge=0, le=MAX_STORED_HP)
     color: str | None = Field(default=None, min_length=1, max_length=40)
     active: bool | None = None
     ally: bool | None = None
     visible: bool | None = None
     initiative: int | None = Field(default=None, ge=-100, le=100)
-    hp: int | None = Field(default=None, ge=0, le=99999)
+    hp: int | None = Field(default=None, ge=0, le=MAX_STORED_HP)
     hp_delta: int | None = Field(default=None, ge=-99999, le=99999)
     critical_hit: bool = False
     show_ac: bool | None = None

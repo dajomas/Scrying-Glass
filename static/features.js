@@ -40,7 +40,7 @@
             li.append(label,remove);return li;
         }));
     }
-    async function refresh(force=false, fresh=false) {
+    async function refresh(force=false, fresh=false, discardDrafts=null) {
         if(polling&&!force&&!fresh){await polling;return;}
         while(polling)await polling;
         let finishPoll;
@@ -59,8 +59,14 @@
             $('displayConnections').textContent=`${summary.displays.length} display(s) connected${summary.displays.length?': '+summary.displays.map(x=>x.username+' ('+x.status+')').join(', '):''}`;
             $('downedReminder').hidden=!summary.downed.length;
             $('downedReminder').textContent='Death-save reminder: '+summary.downed.map(x=>x.name).join(', ')+'. Downed characters keep their initiative turns. Damage at 0 HP adds failed saves automatically; record rolled saves manually.';
+            if(discardDrafts&&targetScope()===discardDrafts.target){
+                discardDrafts.values.forEach((value,id)=>{
+                    if($(id).value===value)delete $(id).dataset.dirty;
+                });
+            }
             draw(force||targetChanged);
-        }catch(error){notice(error.message);}finally{polling=null;finishPoll();}
+            return true;
+        }catch(error){notice(error.message);return false;}finally{polling=null;finishPoll();}
     }
     async function perform(action, savedFields=[]) {
         if(busy)return;busy=true;
@@ -83,7 +89,10 @@
     function edit(body){const item=target();if(!item)throw new Error('Select a combatant');return api(`/api/combatants/${encodeURIComponent(item.id)}/features`,'PATCH',body);}
     editable.forEach(id=>$(id).addEventListener('input',()=>{$(id).dataset.dirty='1';}));
     $('featureTarget').onchange=()=>{editable.forEach(id=>delete $(id).dataset.dirty);draw(true);};
-    $('featureRefresh').onclick=()=>refresh(true);
+    $('featureRefresh').onclick=()=>refresh(false,true,{
+        target:targetScope(),
+        values:new Map(editable.map(id=>[id,$(id).value])),
+    });
     $('featureUndo').onclick=()=>perform(()=>api('/api/battle/undo','POST',{id:summary.undo?.id}),editable);
     $('setTempHp').onclick=()=>perform(()=>edit({temp_hp:Number($('featureTempHp').value)}),['featureTempHp']);
     $('setLifeState').onclick=()=>perform(async()=>{const value=$('featureLifeState').value;if(value==='dead'&&!confirm('Mark this combatant dead?'))return false;return edit({life_state:value});},['featureLifeState']);
