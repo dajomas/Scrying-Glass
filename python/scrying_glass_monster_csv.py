@@ -6,6 +6,7 @@ import io
 from decimal import Decimal, InvalidOperation
 
 from typing import Any
+from .scrying_glass_health_limits import MAX_STORED_HP
 from .scrying_glass_json_import import DuplicateJsonKeyError, InvalidJsonTextError, InvalidJsonNumberError, load_import_json
 
 from fastapi import HTTPException
@@ -233,7 +234,7 @@ def csv_monster(row: dict[str, str], row_number: int) -> dict[str, Any]:
     name = csv_text(row.get("name"))
     monster_species = csv_text(row.get("monster_species") or row.get('monster_type') or row.get("type"))
     ac = csv_int(row, "ac", minimum=0, maximum=999, row_number=row_number)
-    hp = csv_int(row, "hp", minimum=0, maximum=99999, row_number=row_number)
+    hp = csv_int(row, "hp", minimum=0, maximum=MAX_STORED_HP, row_number=row_number)
 
     if not 1 <= len(name) <= 100:
         raise HTTPException(400, f"CSV row {row_number}: name must contain 1-100 characters")
@@ -255,7 +256,7 @@ def csv_monster(row: dict[str, str], row_number: int) -> dict[str, Any]:
         "max_hp",
         default=max(hp, 0),
         minimum=0,
-        maximum=99999,
+        maximum=MAX_STORED_HP,
         row_number=row_number,
     )
 
@@ -264,7 +265,7 @@ def csv_monster(row: dict[str, str], row_number: int) -> dict[str, Any]:
         "original_hp",
         default=maximum_hp,
         minimum=0,
-        maximum=99999,
+        maximum=MAX_STORED_HP,
         row_number=row_number,
     )
 
@@ -337,7 +338,7 @@ def csv_character(row: dict[str, str], row_number: int) -> dict[str, Any]:
         "hp",
         default=1,
         minimum=-99999,
-        maximum=99999,
+        maximum=MAX_STORED_HP,
         row_number=row_number,
     )
 
