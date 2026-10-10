@@ -18,8 +18,11 @@ def walk_media(payload, replace):
     def entities(items):
         for item in items:
             image = item.get('image_url')
-            if isinstance(image, str) and MEDIA.fullmatch(image):
-                item['image_url'] = MEDIA.sub(replace, image)
+            if isinstance(image, str):
+                path = image.split('#', 1)[0].split('?', 1)[0]
+                if MEDIA.fullmatch(path):
+                    # Rewrite only the path; query/fragment text is not a dependency.
+                    item['image_url'] = MEDIA.sub(replace, image, count=1)
 
     def state(value):
         entities(value.get('monsters', []))
@@ -52,7 +55,10 @@ def export_bundle(context):
         for url in sorted(media):
             name=url.removeprefix('/media/');path=(context.UPLOAD_DIR/name).resolve()
             if path.parent!=context.UPLOAD_DIR.resolve() or not path.is_file(): raise context.HTTPException(409,'Missing/unsafe media: '+name)
-            total+=path.stat().st_size
+            size = path.stat().st_size
+            if size == 0:
+                raise context.HTTPException(409, 'Empty media: ' + name)
+            total+=size
             if total>100*1024*1024: raise context.HTTPException(413,'Expanded bundle exceeds 100 MiB')
             bundle.writestr('media/'+name,path.read_bytes())
     if output.tell()>25*1024*1024: raise context.HTTPException(413,'Compressed bundle exceeds 25 MiB')
@@ -84,6 +90,8 @@ def import_bundle(context,raw):
                 if member.is_dir() or member.filename != member.orig_filename or member.filename != p.as_posix():
                     raise ValueError('Bundle members must use canonical file paths')
                 if member.filename!='campaign.json' and (len(p.parts)!=2 or p.parts[0]!='media' or p.name in ('.','..') or chr(92) in member.filename): raise ValueError('Unsafe member path')
+                if member.filename != 'campaign.json' and member.file_size == 0:
+                    raise ValueError('Media files must not be empty')
             payload=json.loads(bundle.read('campaign.json'))
             if not isinstance(payload,dict) or payload.get('format')!='scrying-glass-campaign' or payload.get('version')!=1: raise ValueError('Unsupported bundle format')
             validate_storage_integers(payload)
