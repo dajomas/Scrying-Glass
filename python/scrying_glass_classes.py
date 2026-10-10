@@ -1,6 +1,6 @@
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 from .scrying_glass_health_limits import MAX_STORED_HP
 
@@ -33,6 +33,12 @@ class MonsterUpdate(BaseModel):
     show_initiative: bool | None = None
     in_turn: bool | None = None
 
+    @model_validator(mode="after")
+    def _critical_hit_requires_damage(self):
+        if self.critical_hit and (self.hp_delta is None or self.hp_delta >= 0):
+            raise ValueError("critical_hit requires a negative hp_delta damage event")
+        return self
+
 class MonsterBulkUpdate(BaseModel):
     """Monsterbulkupdate."""
     field: Literal["active", "ally", "show_ac", "show_hp", "show_initiative"]
@@ -57,6 +63,12 @@ class CharacterUpdate(BaseModel):
     hp_delta: int | None = Field(default=None, ge=-99999, le=99999)
     critical_hit: bool = False
     in_turn: bool | None = None
+
+    @model_validator(mode="after")
+    def _critical_hit_requires_damage(self):
+        if self.critical_hit and (self.hp_delta is None or self.hp_delta >= 0):
+            raise ValueError("critical_hit requires a negative hp_delta damage event")
+        return self
 
 class BattleStart(BaseModel):
     """Battlestart."""
