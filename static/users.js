@@ -46,14 +46,20 @@ async function load() {
 byId("cancelEdit").onclick = reset;
 byId("userForm").onsubmit = async event => {
   event.preventDefault();
+  // Bind this submission before the first await; the selected form can change.
+  const targetId = editing;
+  const password = byId("password").value;
   const body = {username: byId("username").value, role: byId("role").value};
-  if (byId("password").value || editing === null) body.password = byId("password").value;
+  if (password || targetId === null) body.password = password;
   try {
-    const users = editing !== null ? await api("/api/users") : [];
-    const self = users.some(user => user.id === editing && user.username === current.username);
-    await api(editing === null ? "/api/users" : "/api/users/" + editing, editing === null ? "POST" : "PATCH", body);
+    const users = targetId !== null ? await api("/api/users") : [];
+    const self = users.some(user => user.id === targetId && user.username === current.username);
+    await api(targetId === null ? "/api/users" : "/api/users/" + targetId, targetId === null ? "POST" : "PATCH", body);
     if (self) { location.assign("/login"); return; }
-    reset(); await load(); message("User saved.");
+    // Do not discard another selection or newer input while this request ran.
+    if (editing === targetId && byId("username").value === body.username &&
+        byId("role").value === body.role && byId("password").value === password) reset();
+    await load(); message("User saved.");
   } catch (error) { message(error.message); }
 };
 (async () => { try { current = await api("/api/me"); await load(); } catch (error) { message(error.message); } })();
