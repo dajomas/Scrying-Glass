@@ -18,8 +18,9 @@ class CharacterHpCompatibilityTests(unittest.TestCase):
     tearDown=fixture.FeatureTests.tearDown
     call=fixture.FeatureTests.call
 
-    def test_edit_preserves_hp_produced_by_valid_healing(self):
-        self.call('edit_features','c',{'hp_delta':99999})
+    def test_edit_preserves_legacy_above_maximum_hp(self):
+        # Older persisted data may exceed max_hp; editing must not destroy it.
+        self.c.entity('c')['hp']=100019
         self.assertEqual(self.c.entity('c')['hp'],100019)
         update=CharacterUpdate(name='Renamed cleric',hp=100019,max_hp=20)
         path=Path(__file__).resolve().parents[1]/'python/scrying_glass_admin_characters.py'

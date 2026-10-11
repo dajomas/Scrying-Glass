@@ -24,6 +24,11 @@ if [[ ! -x "${VDIR}/bin/python" || ! -f "${VDIR}/bin/activate" ]]; then
     rm -f "${INSTALL_MARKER}"
 fi
 
+if ! "${VDIR}/bin/python" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 14) else 1)'; then
+    echo "ERROR: Existing virtual environment requires Python 3.14 or newer. Recreate ${VDIR} after backing up any files stored there." >&2
+    exit 1
+fi
+
 source "${VDIR}/bin/activate"
 
 if ! python -c 'import sqlite3; print("SQLite:", sqlite3.sqlite_version)'; then

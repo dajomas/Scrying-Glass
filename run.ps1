@@ -45,6 +45,11 @@ try {
         }
     }
 
+    & $VenvPython -c "import sys; sys.exit(0 if sys.version_info >= (3, 14) else 1)"
+    if ($LASTEXITCODE -ne 0) {
+        throw 'Existing virtual environment requires Python 3.14 or newer. Recreate it after backing up any files stored there.'
+    }
+
     & $VenvPython -c "import sqlite3; print('SQLite:', sqlite3.sqlite_version)"
     if ($LASTEXITCODE -ne 0) {
         throw 'Python lacks working sqlite3 support; repair Python, not pip dependencies.'

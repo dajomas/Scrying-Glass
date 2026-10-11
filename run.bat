@@ -37,6 +37,13 @@ python -m venv "%VDIR%"
 if errorlevel 1 goto failed
 
 :install_dependencies
+"%VENV_PYTHON%" -c "import sys; sys.exit(0 if sys.version_info >= (3, 14) else 1)"
+if errorlevel 1 (
+    >&2 echo ERROR: Existing virtual environment requires Python 3.14 or newer.
+    >&2 echo Recreate it after backing up any files stored there.
+    set "EXIT_CODE=1"
+    goto finish
+)
 "%VENV_PYTHON%" -c "import sqlite3; print('SQLite:', sqlite3.sqlite_version)"
 if errorlevel 1 (
     >&2 echo ERROR: Python lacks sqlite3 support. Repair Python, not pip dependencies.

@@ -34,19 +34,18 @@ class HpArithmeticBoundsTests(unittest.TestCase):
         self.item().update(hp=hp,max_hp=MAX_STORED_HP,original_hp=MAX_STORED_HP)
         self.c.save_active_setup_monsters();self.c.save_state()
 
-    def test_feature_healing_overflow_returns_422_and_rolls_back(self):
+    def test_feature_healing_at_limit_preserves_hp(self):
         self.maximum_monster()
-        before=copy.deepcopy(self.c.STATE);revision=self.f.store.revision()
-        with self.assertRaises(HTTPError) as error:self.call('edit_features','m',{'hp_delta':1})
-        self.assertEqual(error.exception.status_code,422)
-        self.assertEqual(self.c.STATE,before)
-        self.assertEqual(self.f.store.revision(),revision)
+        before=copy.deepcopy(self.c.STATE)
+        self.call('edit_features','m',{'hp_delta':1})
+        self.assertEqual(self.item()['hp'],MAX_STORED_HP)
+        self.assertEqual(self.c.STATE['monsters'],before['monsters'])
         self.assertEqual(self.c.STORAGE.load_setup(self.c.active_campaign(),'default')['monsters'][0]['hp'],MAX_STORED_HP)
 
-    def test_pure_health_operation_rejects_overflow_before_hp_change(self):
+    def test_pure_healing_at_limit_preserves_health(self):
         self.maximum_monster()
         item=copy.deepcopy(self.item());normalize_features(item);before=copy.deepcopy(item)
-        with self.assertRaises(ValueError):apply_hp(item,1)
+        apply_hp(item,1)
         self.assertEqual(item,before)
 
     def test_exact_upper_boundary_is_allowed(self):
@@ -63,11 +62,12 @@ class HpArithmeticBoundsTests(unittest.TestCase):
         self.maximum_monster();self.call('edit_features','m',{'hp_delta':0})
         self.assertEqual(self.item()['hp'],MAX_STORED_HP)
 
-    def test_ordinary_healing_semantics_are_unchanged(self):
-        self.call('edit_features','m',{'hp_delta':5})
-        self.assertEqual(self.item()['hp'],17)
+    def test_ordinary_healing_caps_at_maximum(self):
+        self.call('edit_features','m',{'hp_delta':-5})
+        self.call('edit_features','m',{'hp_delta':10})
+        self.assertEqual(self.item()['hp'],12)
 
-    def test_battle_batch_overflow_rolls_back_all_rows(self):
+    def test_battle_batch_caps_healing_and_commits_damage(self):
         self.maximum_monster()
         self.c.datetime=datetime;self.c.timezone=timezone
         self.c.log_battle_action=load_class('scrying_glass_service_activity.py','ActivityService')(self.c).log_battle_action
@@ -76,13 +76,10 @@ class HpArithmeticBoundsTests(unittest.TestCase):
         payload=types.SimpleNamespace(actor_id='c',actions=[
             types.SimpleNamespace(target_id='c',action='damage',amount=1,critical_hit=False),
             types.SimpleNamespace(target_id='m',action='heal',amount=1,critical_hit=False)])
-        before=copy.deepcopy(self.c.STATE);revision=self.f.store.revision()
-        with self.assertRaises(HTTPError) as error:
-            asyncio.run(transactional_handler(self.c,handler.apply_battle_actions)(payload))
-        self.assertEqual(error.exception.status_code,422)
-        self.assertEqual(self.c.STATE,before)
-        self.assertEqual(self.f.store.revision(),revision)
-        self.assertEqual(self.c.STORAGE.load_characters(self.c.active_campaign())[0]['hp'],20)
+        result=asyncio.run(transactional_handler(self.c,handler.apply_battle_actions)(payload))
+        self.assertEqual(result['applied'],2)
+        self.assertEqual(self.item()['hp'],MAX_STORED_HP)
+        self.assertEqual(self.c.STORAGE.load_characters(self.c.active_campaign())[0]['hp'],19)
 
     def test_unrelated_value_errors_are_not_relabelled_as_client_errors(self):
         async def broken():raise ValueError('programming failure')

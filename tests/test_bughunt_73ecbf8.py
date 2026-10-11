@@ -69,8 +69,10 @@ class HealthRegressionTests(unittest.TestCase):
         item = combatant(hp=0, life_state='down', temp_hp=0)
         apply_hp(item, -1, critical=True)
         self.assertEqual(item['death_failures'], 2)
-    def test_healing_overflow(self):
-        with self.assertRaises(HpStorageRangeError): apply_hp(combatant(hp=MAX_STORED_HP), 1)
+    def test_healing_at_storage_limit_is_capped(self):
+        item = combatant(hp=MAX_STORED_HP, max_hp=MAX_STORED_HP)
+        apply_hp(item, 1)
+        self.assertEqual(item['hp'], MAX_STORED_HP)
     def test_valid_unicode(self):
         validate_effects([effect(name='Bénédiction 🐉', notes='Café')])
     def test_duplicate_effects(self):

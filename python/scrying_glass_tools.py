@@ -10,14 +10,14 @@ def setup_slug(name: str) -> str:
     slug = re.sub('[^a-z0-9]+', '-', name.strip().lower()).strip('-')
     if not slug:
         raise HTTPException(400, 'Setup name must contain letters or numbers')
-    return slug[:80]
+    return slug[:80].rstrip('-')
 
 def campaign_slug(name: str) -> str:
     """Campaign slug."""
     slug = re.sub('[^a-z0-9]+', '-', name.strip().lower()).strip('-')
     if not slug:
         raise HTTPException(400, 'Campaign name must contain letters or numbers')
-    return slug[:80]
+    return slug[:80].rstrip('-')
 
 def now_iso() -> str:
     """Now iso."""
