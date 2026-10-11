@@ -1,0 +1,16 @@
+#battleActionModal > div { width: min(900px, 94vw); }
+#battleActionModal .battle-action-row {
+    grid-template-columns: minmax(10rem, 1fr) minmax(7rem, 9rem) auto minmax(7rem, 8rem) auto;
+}
+#battleActionModal .battle-action-row select { min-width: 0; max-width: 100%; }
+#battleActionModal .battle-turn-effects {
+    margin: .75rem 0; padding: .85rem; border: 1px solid #64748b;
+    background: #111827;
+}
+#battleActionModal .battle-turn-effects h3 { margin-top: 0; }
+#battleTurnEffectsForm .row { align-items: end; }
+#battleTurnNotice { min-height: 1.4em; margin-bottom: 0; color: #fbbf24; }
+#battleActionModal .battle-action-row [hidden] { display: none; }
+@media (max-width: 700px) {
+    #battleActionModal .battle-action-row { grid-template-columns: 1fr; }
+}

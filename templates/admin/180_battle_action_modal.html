@@ -1,26 +1,36 @@
+  <link rel="stylesheet" href="/static/battle-turn-actions.css">
+  <script defer src="/static/battle-turn-actions.js"></script>
   <div id="battleActionModal" class="modal" hidden>
     <div>
       <h2 id="battleActionTitle">Battle actions</h2>
-
+      <section class="battle-turn-effects" aria-labelledby="battleTurnEffectsTitle">
+        <h3 id="battleTurnEffectsTitle">Start of turn damage and healing</h3>
+        <p id="battleTurnCombatant"></p>
+        <p>Apply these changes to the current combatant before choosing their actions.
+          Leave unused fields empty. Damage is applied before healing.</p>
+        <form id="battleTurnEffectsForm">
+          <div class="row">
+            <label class="field">Damage
+              <input id="battleTurnDamage" type="number" min="0" max="99999" step="1" inputmode="numeric">
+            </label>
+            <label class="field">Healing
+              <input id="battleTurnHealing" type="number" min="0" max="99999" step="1" inputmode="numeric">
+            </label>
+            <button type="submit" class="battle">Apply start of turn</button>
+          </div>
+          <p id="battleTurnNotice" role="status" aria-live="polite"></p>
+        </form>
+      </section>
       <p id="battleActionHelp">
         Choose one or more targets and actions for the current combatant.
       </p>
-
       <form id="battleActionForm" class="battle-action-form">
         <div id="battleActionRows"></div>
-
         <div class="actions">
-          <button type="button" id="addBattleActionTarget">
-            Add target
-          </button>
-          <button type="submit" class="battle">
-            Apply
-          </button>
-          <button type="button" id="cancelBattleActions">
-            Cancel
-          </button>
+          <button type="button" id="addBattleActionTarget">Add target</button>
+          <button type="submit" class="battle">Apply</button>
+          <button type="button" id="cancelBattleActions">Cancel</button>
         </div>
       </form>
     </div>
   </div>
-
