@@ -9,8 +9,8 @@ const items={characters:[{id:'c1'},{id:'c2'}],monsters:[{id:'m1'},{id:'m2'}]};
 const boxes={characters:[{checked:false},{checked:false}],monsters:[{checked:false},{checked:false}]};
 const handlers={};
 const buttons=['characters','monsters','invalid'].map(kind=>({dataset:{selectAllKind:kind},addEventListener:(name,handler)=>{assert.equal(name,'click');handlers[kind]=handler;}}));
-const document={querySelectorAll:selector=>selector==='button[data-select-all-kind]'?buttons:boxes[selector.includes('characters')?'characters':'monsters']};
-const sandbox={document,latest:items,selectionFor:kind=>sets[kind],itemsFor:kind=>items[kind]};
+const document={getElementById:()=>null,querySelectorAll:selector=>selector==='button[data-select-all-kind]'?buttons:boxes[selector.includes('characters')?'characters':'monsters']};
+const sandbox={document,runBulkAction:async()=>{},latest:items,selectionFor:kind=>sets[kind],itemsFor:kind=>items[kind]};
 vm.createContext(sandbox);vm.runInContext(helper,sandbox);vm.runInContext(script,sandbox);
 let passed=0;function test(fn){fn();passed++;}
 test(()=>{handlers.characters();assert.deepEqual([...sets.characters],['c1','c2']);assert(boxes.characters.every(x=>x.checked));assert.equal(sets.monsters.size,0);});

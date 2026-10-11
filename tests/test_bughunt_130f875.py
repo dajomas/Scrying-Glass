@@ -114,8 +114,8 @@ def valid_compression_test(codec):
 for label,codec,available in (
     ('stored',zipfile.ZIP_STORED,True),('deflated',zipfile.ZIP_DEFLATED,True),
     ('bzip2',zipfile.ZIP_BZIP2,zipfile.bz2 is not None),('lzma',zipfile.ZIP_LZMA,zipfile.lzma is not None)):
-    test=valid_compression_test(codec)
-    if not available:test=unittest.skip('Compression support unavailable')(test)
-    setattr(BundleTests,'test_valid_'+label,test)
+    _generated_test=valid_compression_test(codec)
+    if not available:_generated_test=unittest.skip('Compression support unavailable')(_generated_test)
+    setattr(BundleTests,'test_valid_'+label,_generated_test)
 
 if __name__=='__main__':unittest.main()

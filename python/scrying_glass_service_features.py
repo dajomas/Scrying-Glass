@@ -86,6 +86,10 @@ class FeaturesService:
     async def edit_features(self,ident,body):
         allowed={'temp_hp','life_state','death_successes','death_failures','concentrating','hp_delta','absorb_temp'}
         if not isinstance(body,dict) or set(body)-allowed or not body: raise self.context.HTTPException(422,'Invalid feature fields')
+        # Validate raw counters before recovery/stabilization can reset them.
+        for field in ('death_successes', 'death_failures'):
+            if field in body and (type(body[field]) is not int or not 0 <= body[field] <= 3):
+                raise self.context.HTTPException(422, field + ' must be an integer from 0 to 3')
         target=self.target(ident)
         before=copy.deepcopy(target)
         candidate=copy.deepcopy(target)
