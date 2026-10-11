@@ -30,6 +30,7 @@ from datetime import datetime, timezone
 
 from python.scrying_glass_api_admin import AdminAPI
 from python.scrying_glass_api_client import ClientAPI
+from python.scrying_glass_asset_cache import AssetCacheBustingMiddleware
 
 # ============================================================================
 # Constants and default configuration
@@ -150,6 +151,8 @@ _services = install_services(sys.modules[__name__])
 
 admin = FastAPI(title='Scrying Glass Admin')
 client = FastAPI(title='Scrying Glass Client')
+admin.add_middleware(AssetCacheBustingMiddleware)
+client.add_middleware(AssetCacheBustingMiddleware)
 _server_context = sys.modules[__name__]
 admin_api = AdminAPI(_server_context, admin)
 client_api = ClientAPI(_server_context, client)
