@@ -13,10 +13,16 @@
     function reorderCriticalFields(rows) {
         for (const row of rows.querySelectorAll('.battle-action-row')) {
             const amount = row.querySelector('.amount-field');
-            const field = row.querySelector('input[type="checkbox"]')?.closest('label');
+            const checkbox = row.querySelector('[data-action-critical]');
+            const field = checkbox?.closest('.critical-option');
             if (!amount || !field || field === amount || field.contains(amount) ||
-                amount.contains(field) || field.parentNode !== amount.parentNode) continue;
-            if (field.nextElementSibling !== amount) amount.before(field);
+                amount.parentNode !== row) continue;
+            // The baseline renders this span inside the Amount label.
+            // Move the span, not the label, retaining checkbox identity and parent.
+            if (field.parentNode !== row || field.nextElementSibling !== amount)
+                amount.before(field);
+            if (!checkbox.hasAttribute('aria-label'))
+                checkbox.setAttribute('aria-label', 'Critical hit');
         }
     }
     function install() {

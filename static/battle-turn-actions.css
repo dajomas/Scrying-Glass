@@ -10,7 +10,20 @@
 #battleActionModal .battle-turn-effects h3 { margin-top: 0; }
 #battleTurnEffectsForm .row { align-items: end; }
 #battleTurnNotice { min-height: 1.4em; margin-bottom: 0; color: #fbbf24; }
+#battleActionModal .battle-action-row > .critical-option {
+    grid-column: 3;
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+    min-height: 2.4rem;
+    white-space: nowrap;
+}
+#battleActionModal .battle-action-row > .amount-field { grid-column: 4; }
+#battleActionModal .battle-action-row > [data-remove-action-row] { grid-column: 5; }
 #battleActionModal .battle-action-row [hidden] { display: none; }
 @media (max-width: 700px) {
     #battleActionModal .battle-action-row { grid-template-columns: 1fr; }
+    #battleActionModal .battle-action-row > .critical-option,
+    #battleActionModal .battle-action-row > .amount-field,
+    #battleActionModal .battle-action-row > [data-remove-action-row] { grid-column: auto; }
 }
