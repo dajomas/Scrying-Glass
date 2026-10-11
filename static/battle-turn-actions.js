@@ -64,10 +64,6 @@
                 $('battleTurnHealing').value); }
             catch (error) { notice(error.message); return; }
             if (!actions.length) { notice('Enter damage or healing greater than zero.'); return; }
-            if (typeof window.scryingDamagePreview === 'function' &&
-                !confirm(actions.map(row => window.scryingDamagePreview(item,
-                    row.action === 'damage' ? -row.amount : row.amount, true)).join('\n\n') +
-                    '\n\nDamage is applied before healing.')) return;
             const submittedSession = session;
             busy = true;
             const controls = [...form.querySelectorAll('input, button'),
