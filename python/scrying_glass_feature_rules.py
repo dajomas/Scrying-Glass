@@ -67,16 +67,18 @@ def sync_health(item):
     if not item['alive']: item['visible']=True
 
 def apply_hp(item,delta,*,absorb=True,critical=False):
-    """Apply one damage/healing event; never retain or accumulate negative HP."""
+    """Apply damage or healing, capping healing at maximum HP."""
     if type(delta) is not int or type(critical) is not bool or type(absorb) is not bool: raise ValueError('Invalid HP change/critical/absorption flag')
     normalize_features(item)
     before=item['hp'];temporary=item['temp_hp'];old_failures=item['death_failures']
     result={'damage':0,'excess':0,'instant_death':False,'failed_saves':0,'temp_consumed':0}
     if permanently_dead(item): return result
     if delta>=0:
-        if item['hp'] + delta > MAX_STORED_HP:
-            raise HpStorageRangeError(f"Resulting HP must not exceed {MAX_STORED_HP}")
-        if delta: item['hp']+=delta;item['life_state']='standing';item['death_successes']=item['death_failures']=0
+        if delta:
+            item['hp'] = min(item['max_hp'], item['hp'] + delta)
+            if item['hp'] > 0:
+                item['life_state']='standing'
+                item['death_successes']=item['death_failures']=0
         sync_health(item);return result
     damage=-delta
     consumed=min(temporary,damage) if absorb else 0
