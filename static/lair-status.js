@@ -4,13 +4,13 @@
         const note = document.getElementById('lairActiveStatus');
         if (!note) return;
         function draw(snapshot) {
-            const active = (snapshot?.lairs || []).filter(lair => lair.active);
-            const text = active.length
-                ? `${active.length === 1 ? 'Active lair' : 'Active lairs'}: ${active.map(lair => lair.name || 'Lair').join(', ')}`
-                : 'No active lair.';
+            const lairs = snapshot?.lairs || [];
+            const lair = lairs.find(item => item.active) || lairs[0];
+            const text = !lair ? 'No Lair'
+                : `${lair.active ? 'Active Lair' : 'Lair'}: ${lair.name || 'Lair'}`;
             if (note.textContent !== text) note.textContent = text;
-            note.classList.toggle('has-active-lair', active.length > 0);
-            note.classList.toggle('no-active-lair', active.length === 0);
+            note.classList.toggle('has-active-lair', Boolean(lair?.active));
+            note.classList.toggle('no-active-lair', !lair?.active);
         }
         const render = window.scryingLairsRender;
         window.scryingLairsRender = function (snapshot) {
