@@ -106,6 +106,7 @@ class SetupRename(_Utf8Model):
 
 class SetupImport(_Utf8Model):
     """Setupimport."""
+    life_filter: Literal["alive", "dead", "all"] = "alive"
     name: str = Field(min_length=1, max_length=100)
     kind: Literal["monsters"]
     campaign: str | None = Field(default=None, max_length=100)

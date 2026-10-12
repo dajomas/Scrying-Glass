@@ -1,4 +1,5 @@
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
+git rev-parse ${BRANCH}
 HASH=$(git rev-parse ${BRANCH} | cut -c1-7)
 
 echo "Create git archive for branch ${BRANCH} (${HASH})"

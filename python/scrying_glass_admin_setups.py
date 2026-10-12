@@ -200,15 +200,23 @@ class AdminSetupsMixin:
 
         source = self.context.load_setup_state(name, campaign)
 
+        life_filter = getattr(payload, "life_filter", "alive")
+        if life_filter not in {"alive", "dead", "all"}:
+            raise self.context.HTTPException(400, "Unsupported import life filter")
+        selected_monsters = [
+            item for item in source["monsters"]
+            if life_filter == "all"
+            or bool(item.get("alive", True)) == (life_filter == "alive")
+        ]
         imported_monsters = [
             self.context.reset_imported_monster(item)
-            for item in source["monsters"]
+            for item in selected_monsters
         ]
 
         # Allocate every clone first so self/cross-monster links stay in this batch.
         id_map = {
             original["id"]: clone["id"]
-            for original, clone in zip(source["monsters"], imported_monsters)
+            for original, clone in zip(selected_monsters, imported_monsters)
         }
         external_ids = set()
         if campaign == self.context.active_campaign():

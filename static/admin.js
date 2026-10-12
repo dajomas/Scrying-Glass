@@ -1769,6 +1769,7 @@ document.querySelector('#editForm').onsubmit = async event => {
 document.querySelector('#openImport').onclick = async () => {
     await setups();
     document.querySelector('#importCampaign').value = campaignData.active || '';
+    document.querySelector('#importLifeFilter').value = 'alive';
     renderImportSetups();
     importModal.hidden = false;
 };
@@ -1783,14 +1784,20 @@ document.querySelector('#importForm').onsubmit = async event => {
     const formData = new FormData(event.target);
     const name = formData.get('name');
     const kind = formData.get('kind');
+    const life_filter = formData.get('life_filter') || 'alive';
+    const lifeLabel = {alive: 'Alive', dead: 'Dead', all: 'Alive and Dead'}[life_filter];
     const campaign = formData.get('campaign') || campaignData.active;
+    if (!lifeLabel) {
+        paneNotification('battleSetup', 'Choose a valid monster state to import');
+        return;
+    }
 
     if (!name) {
         paneNotification('battleSetup', 'Choose a saved setup to import from');
         return;
     }
 
-    if (!confirm(`Import ${kind} from ${name} into the current setup?`)) {
+    if (!confirm(`Import ${lifeLabel} ${kind} from ${name} into the current setup?`)) {
         return;
     }
 
@@ -1800,7 +1807,7 @@ document.querySelector('#importForm').onsubmit = async event => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ name, kind, campaign }),
+            body: JSON.stringify({ name, kind, campaign, life_filter }),
         });
 
         closeImport();

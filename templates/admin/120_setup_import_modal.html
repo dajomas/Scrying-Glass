@@ -2,7 +2,8 @@
     <div>
       <h2>Import monsters from a saved setup</h2>
       <p>
-        Imported monsters receive new IDs and reset runtime state.
+        Filter monsters by their saved alive/dead state in the source setup.
+        Imported monsters receive new IDs and reset runtime state; their current HP is preserved.
         Characters belong to campaigns and are not part of battle setups.
         The current battle order is not changed.
       </p>
@@ -22,6 +23,15 @@
           Import
           <select name="kind">
             <option value="monsters">Monsters only</option>
+          </select>
+        </label>
+
+        <label>
+          Monster state
+          <select id="importLifeFilter" name="life_filter" required>
+            <option value="alive" selected>Alive</option>
+            <option value="dead">Dead</option>
+            <option value="all">Alive and Dead</option>
           </select>
         </label>
 
