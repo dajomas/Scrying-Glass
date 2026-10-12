@@ -1,35 +1,36 @@
-# SQLite schema-v4 migration
+# SQLite schema-v6 migration
+
+Documented baseline: `features/development` at `4f401b4adfca92e9c9599aea8924c14efb49aea4`.
 
 ## Scope
 
-The current storage schema is v4: the normalized encounter model introduced in v3
-plus database-backed users and an account-import marker. Deploy code, templates and
-static assets from the same revision. This guide covers original JSON and SQLite
-v1/v2/v3 upgrades; [User Management](User-Management.md) covers account initialization.
-Do not replace live configuration or data with example files.
+The current schema is v6: normalized encounter records (v3), accounts (v4), effects/snapshots/revisions (v5) and encounter-owned lairs (v6). Deploy code, templates and assets together. Account initialization is covered in [User Management](User-Management.md).
 
 ## What is no longer JSON
 
-There are no serialized JSON payload columns in schema v4. Campaign metadata, display,
+There are no serialized JSON payload columns in schema v6. Campaign metadata, display,
 battle/turn settings and import status use typed scalar columns. Characters, monsters,
-battle-order/successor lists and activity logs use separate records, each with an integer
+battle-order/successor lists, effects, lairs, snapshot rosters and activity logs use separate records, each with an integer
 primary-key id. Original combatant IDs and log event IDs are retained in dedicated columns.
 Array order uses position. Edits/reordering retain row IDs; copy creates new instance IDs.
 
 Scalar extension attributes and field-presence markers use typed child records. This
 preserves absent versus null fields and existing extra scalar attributes without storing
 objects or arrays in a text field. Unsupported nested extras/unknown state fields fail,
-rather than silently being discarded. JSON remains the API/in-memory format and is read
-for old-database/legacy import only. Configuration files are outside this storage change.
+rather than silently being discarded. JSON remains the API/in-memory and portable campaign-bundle manifest format; live storage uses relational records, not JSON payload columns. Configuration files are outside this storage change.
 
 ## Supported starts
 
 - Empty storage: create the normalized tables, then add v4 account tables.
-- Original JSON: initialize v4 and import legacy encounter data once without changing source files.
+- Original JSON: initialize v6 and import legacy encounter data once without changing source files.
 - SQLite v1: back up, assign campaign IDs and normalize payloads to v3, then add v4 accounts.
 - SQLite v2: back up, retain campaign IDs and normalize payloads to v3, then add v4 accounts.
 - SQLite v3: back up and add users/account_migration tables, retaining normalized encounter data.
-- SQLite v4: no repeated schema conversion; account import is skipped once its marker exists.
+- SQLite v4: back up, add v5 effects/recovery/revision tables, then the v6 lairs table.
+- SQLite v5: back up and add the v6 lairs table.
+- SQLite v6: no repeated schema conversion; account import is skipped once marked complete.
+
+All earlier supported starts continue through these phases to v6; fresh databases also finish at v6.
 
 The v1/v2 normalization and v4 account-table addition use separate committed
 transactions. Account initialization and legacy JSON/domain startup are also separate
@@ -80,7 +81,7 @@ user_version or rename columns to bypass migration.
 
 ## Automatic backup and transaction
 
-An existing v1/v2/v3 database is backed up with SQLite's backup API before schema changes:
+An existing v1/v2/v3/v4/v5 database is backed up with SQLite's backup API before schema changes:
 
 ```text
 scrying-glass.sqlite3.before-normalization.bak
@@ -93,12 +94,12 @@ Ensure enough disk space and write permission for backup and SQLite journals.
 The upgrade reads all old payloads, allocates/retains campaign IDs, creates normalized
 tables/child records, converts references and checks foreign-key integrity inside a
 BEGIN IMMEDIATE transaction. user_version becomes 3 only after successful normalization. A separate transaction
-adds users/account_migration and sets user_version=4. A v3 installation skips normalization.
+adds users/account_migration and sets user_version=4. A v3 installation skips normalization. Separate transactions then add v5 effects, snapshot character rows and revisions, followed by v6 lairs. Only one pre-upgrade backup is retained for the chain via `migration_backup`; startup reports its path.
 Typed/structural validation failures roll back SQL schema and data. Keep the failed
 upgrade backup; the application reports the problem instead of overwriting unknown data.
 
 Schema conversion commits before normal domain startup validation. If later domain
-validation rejects an encounter, the database may already be v4: restore the backup with
+validation rejects an encounter, the database may already be v6: restore the backup with
 matching old code if you need to reverse the upgrade. Unsupported nested extensions,
 duplicate explicit IDs, malformed JSON, unknown live references and nonempty embedded
 setup characters require resolution rather than silent truncation. Older transition
@@ -131,6 +132,10 @@ Campaign paths, setup request campaign/from_campaign and move_to values carry ID
 Runtime active_setup uses {"campaign_id":"12","name":"fight"}. The included admin.js
 handles these changes. External scripts must obtain campaign IDs from the campaigns
 endpoint rather than deriving them from names. Database INTEGER IDs remain integers.
+
+## Recovery-specific tables
+
+Schema v5 adds `feature_state`, `encounter_snapshots`, `snapshot_characters` and its attributes, plus effect tables for characters, monsters and snapshot characters. Health extension fields use typed scalar attributes. Schema v6 adds `lairs`, unique by encounter. Snapshot deletion triggers encounter cleanup. Undo is limited to 30 entries and checkpoints to 50 per campaign.
 
 ## Rollback
 

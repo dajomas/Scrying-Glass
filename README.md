@@ -1,9 +1,11 @@
 # Scrying Glass
 
+Documented baseline: `features/development` at `4f401b4adfca92e9c9599aea8924c14efb49aea4`.
+
 Scrying Glass is a self-hosted tabletop encounter manager: the game master uses
 an authenticated Admin interface while players watch a separate live Client
 Display. Both FastAPI applications run in one Python process, persist structured data in
-SQLite (schema v4), and share encounter state. Client updates use WebSockets.
+SQLite (schema v6), and share encounter state. Client updates use WebSockets.
 
 Formerly Monster Display. This documentation covers the supplied source snapshot,
 including normalized SQLite storage, database-backed accounts and filtered player updates.
@@ -16,6 +18,10 @@ Database schema versions are distinct from application version labels.
 - [User Management](docs/User-Management.md): first login, roles, account migration and recovery.
 - [SQLite Migration](docs/SQLite-Migration.md): upgrade paths, backups and rollback.
 - [Database Schema](docs/Database-Schema.sql): reference DDL, not a manual migration script.
+- [Encounter Features](docs/Encounter-Features.md): health, effects, undo, checkpoints and portable campaign bundles.
+- [Lair Actions](docs/Lair-Actions.md): initiative-20 environmental turns and batched actions.
+- [Damage and Death Saves](docs/Corrected-Damage-Logic.md): temporary HP, critical hits and massive damage.
+- [Display Connections](docs/Display-Connection-Stability.md): heartbeat, revisions and in-place reconnect.
 - [Systemd Deployment](docs/Systemd-Deployment.md): Linux service installation, upgrades and backups.
 
 ## Features
@@ -28,7 +34,12 @@ Database schema versions are distinct from application version labels.
 - Uploaded images and optional best-effort D&D Beyond image/stat suggestions.
 - Battle initiative, tie resolution, round tracking, turn advancement, individual/bulk controls.
 - Adjustable viewer battle-order text (12–40 px, in 2 px steps).
-- Current-turn damage, healing, buff/debuff logging, and CSV/JSON log exports.
+- Current-turn actions, ordered reaction rows and start-of-turn damage/healing.
+- Nonnegative HP, maximum-HP-capped healing, temporary HP and manual death saves.
+- Persistent private/public effects, timed expiry and concentration reminders.
+- Persistent undo, named checkpoints and ZIP campaign export/import with local media.
+- One optional lair per encounter, fixed at initiative 20 after tied creatures.
+- Detailed activity logging with CSV/JSON exports and viewer revision/status tracking.
 - Per-setup display backgrounds: colors, CSS gradients and uploaded images.
 - Normalized SQLite persistence, stable campaign IDs, legacy migration and real-time player display updates.
 
@@ -59,7 +70,7 @@ repository/
 │   └── login_html.py
 ├── templates/
 │   ├── users.html              # Superadmin account-management page
-│   └── admin/                  # 20 ordered HTML fragments
+│   └── admin/                  # 21 ordered HTML fragments
 ├── static/                     # Admin/client/login CSS and browser JavaScript
 ├── config.example.yaml
 ├── run.sh                      # Linux/macOS launcher; environment in ~/dnd
@@ -182,7 +193,7 @@ or another environment, use the direct Python command instead.
 3. Create/load a battle setup and add or import monsters.
 4. Choose a display background and save the setup.
 5. Set initiative, activate participants, start battle and resolve ties.
-6. Advance turns and use the active combatant's action dialog.
+6. Advance turns and use the current participant’s action or lair dialog; down/stable characters retain turns for manual death saves.
 7. Export the activity log if needed; end/reset the battle as appropriate.
 
 Characters belong to campaigns, not setup snapshots. New setups retain the
@@ -203,10 +214,10 @@ IDs are represented as decimal strings in API/form values. The admin frontend us
 not slug, for campaign selection. Existing monster/character combatant IDs remain intact.
 
 Upgrades from slug-based SQLite v1 and campaign-ID SQLite v2 are backed up and converted
-to normalized v3, followed by a separate account-table upgrade to v4.
+to normalized v3, followed by account tables (v4), effects/recovery/revisions (v5) and lairs (v6).
 Existing v3 databases are backed up before adding account tables. Existing v2 campaign
 IDs are retained. Original JSON installations
-are imported into the current v4 database without modifying source files. See
+are imported into the current v6 database without modifying source files. See
 [SQLite migration instructions](docs/SQLite-Migration.md) and [database schema](docs/Database-Schema.sql).
 
 Stop the application before backing up the entire storage directory plus configuration.
@@ -219,7 +230,7 @@ Python, not pip; the launchers check its availability before starting.
 Admin markup lives in ordered fragments in `templates/admin/`. The loader
 exports ADMIN_HTML as before and reads fragments once at import; restart the
 server after markup edits. Keep fragment order and element IDs intact.
-CSS and JavaScript live in `static/`; hard-refresh the browser after changes.
+CSS and JavaScript live in `static/`; reload the page after changes. HTML responses add fresh `_cb` tokens to local CSS/JS URLs. Already-open tabs must reload to use updated assets.
 No Jinja dependency was introduced by the split.
 
 ## Security

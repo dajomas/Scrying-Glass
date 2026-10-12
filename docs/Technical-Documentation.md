@@ -1,5 +1,7 @@
 # Scrying Glass Technical Documentation
 
+Documented baseline: `features/development` at `4f401b4adfca92e9c9599aea8924c14efb49aea4`.
+
 This document describes the architecture in the supplied source snapshot. See
 [README](../README.md), [User Guide](User-Guide.md) and
 [Systemd Deployment](Systemd-Deployment.md). No new release version is implied.
@@ -25,7 +27,7 @@ repository/
 │   └── login_html.py
 ├── templates/
 │   ├── users.html              # Superadmin page, read on request
-│   └── admin/                  # 20 ordered HTML fragments
+│   └── admin/                  # 21 ordered HTML fragments
 ├── static/                     # Admin/client/login CSS and browser JavaScript
 ├── config.example.yaml
 ├── run.sh / run.bat / run.ps1   # Launchers; use home-directory dnd environments
@@ -39,7 +41,7 @@ The root server owns CONFIG, STATE, LOCK, SESSIONS, SOCKETS, storage paths and
 the two FastAPI applications. It retains the imported helpers and request-model
 names needed by API handlers and annotation resolution.
 
-`install_services(sys.modules[__name__])` creates nine service instances and
+`install_services(sys.modules[__name__])` creates ten service instances and
 binds their methods onto the server module before API registration or startup
 operations. The module remains the live context; it is not a state snapshot.
 
@@ -66,11 +68,11 @@ The split changes ownership of code, not ownership of data.
 
 AdminAPI combines nine mixins from `scrying_glass_admin_<domain>.py`: pages,
 display, setups, campaigns, monsters, characters, combatants, battle and activity.
-The coordinator registers a 42-route core manifest, then six account/page routes
-and POST /logout (49 explicit Admin HTTP routes, excluding framework-generated
+The coordinator registers a 42-route core manifest, then 12 feature routes, four lair routes, six account/page routes
+and POST /logout (65 explicit Admin HTTP routes, excluding framework-generated
 docs/OpenAPI routes and static mounts).
 Mixin files define handlers; they do not register routes independently.
-ClientAPI registers seven HTTP routes (including POST /logout) and one WebSocket route.
+ClientAPI registers six HTTP routes (including POST /logout) and one WebSocket route.
 
 Handler annotations are resolved with get_type_hints using vars(context), so
 FastAPIRequest, UploadFile, WebSocket, Response and request models must exist
@@ -107,7 +109,7 @@ Do not add package directories to sys.path as a substitute for package imports.
 
 ## HTML and browser assets
 
-web_html/admin_html.py exports ADMIN_HTML by concatenating 20 UTF-8 files in an
+web_html/admin_html.py exports ADMIN_HTML by concatenating 21 UTF-8 files in an
 explicit order. With root templates/admin, its path is:
 
 ```python
@@ -115,7 +117,7 @@ _TEMPLATE_DIR = Path(__file__).resolve().parent.parent / "templates" / "admin"
 ```
 
 Fragments cover document framing, pane and battle controls, four input panes,
-two display panes, the activity log and nine dialogs. They are partial markup,
+two display panes, the activity log and nine dialogs plus a separately ordered lair-tools fragment. They are partial markup,
 not independent documents. The monster-display fragment closes the main element.
 Fragment contents are trusted local files. Missing fragments fail during import.
 HTML loads once; restart after edits. This is not a Jinja template system.
@@ -131,7 +133,7 @@ Do not publicly mount templates merely to assemble the page.
 3. Construct Admin/Client apps and register routes.
 4. Under the main guard, parse CLI arguments and load YAML/JSON configuration.
 5. Apply overrides and resolve storage/static paths.
-6. Create uploads, open schema-v4 SQLite and upgrade old schemas if present.
+6. Create uploads, open schema-v6 SQLite and upgrade old schemas if present.
 7. Initialize database accounts once, then transactionally import original JSON when needed.
 8. Load state and the active campaign's authoritative character roster.
 9. Clean order, save state, mount assets/media and start both Uvicorn servers.
@@ -186,10 +188,10 @@ IDs are represented as decimal strings in API/form values. The admin frontend us
 not slug, for campaign selection. Existing monster/character combatant IDs remain intact.
 
 Upgrades from slug-based SQLite v1 and campaign-ID SQLite v2 are backed up and converted
-to normalized v3, then upgraded separately to v4 account tables.
+to normalized v3, then upgraded through v4 accounts, v5 effects/recovery/revisions and v6 lairs.
 Existing v3 databases are backed up before the account-table upgrade. Existing v2
 campaign IDs are retained. Original JSON installations
-are imported into the current v4 database without modifying source files. See
+are imported into the current v6 database without modifying source files. See
 [SQLite migration instructions](SQLite-Migration.md) and [database schema](Database-Schema.sql).
 
 Stop the application before backing up the entire storage directory plus configuration.
@@ -260,7 +262,7 @@ Last-used setup selection uses its ID reference, otherwise the newest stored mod
 
 The original JSON importer discovers registry/folder campaigns, assigns IDs, imports loose
 setups into Default with collision suffixes, seeds absent rosters and leaves every source file
-untouched. Existing ID-based databases retain their campaign IDs. Normalized schema-v4 startup
+untouched. Existing ID-based databases retain their campaign IDs. Normalized schema-v6 startup
 is idempotent. Slugs persist only in historical migration mapping rows, not as live identifiers.
 
 Deleting the last campaign is prohibited. Campaign deletion with setups requires move_to or
@@ -282,8 +284,7 @@ lands on `/users`; there is no separate battle-HTML route for that role.
 Both apps provide POST-only `/logout`: revoke the supplied interface token, expire
 its cookie and legacy cookies, return 303 to `/login`, and close matching display
 sockets on Client logout. The other interface session remains valid. Account edits
-or deletion invalidate all sessions/sockets for that username. Session pages and
-API responses receive `Cache-Control: no-store`.
+or deletion invalidate all sessions/sockets for that username. Protected APIs use `Cache-Control: no-store`; the HTML cache-busting middleware rewrites local CSS/JS URLs with per-response `_cb` tokens and sets HTML `Cache-Control: no-cache`. Existing tabs must reload to obtain new scripts.
 
 Cookies use HttpOnly, SameSite=lax and secure=False. Protected browser mutations
 reject mismatched Origin or Sec-Fetch-Site=cross-site; requests without these headers
@@ -382,15 +383,14 @@ The .monster parser reads compatible JSON name/type/AC/HP fields.
 
 ## Combat, logs and synchronization
 
-Battle start validates every active living combatant appears exactly once in
+Battle start validates every eligible active creature appears exactly once in
 order. Individual activation during battle can insert a combatant by initiative;
 equal initiatives follow existing equals. Turn advancement filters eligibility,
 adds omitted eligible IDs, cycles through order and clears turns if none remain.
 Bulk and individual handlers retain their existing distinct behavior.
 
-Actions validate all rows before applying them. Actor must be active, alive and
-in turn; targets must be active. Damage/buff/debuff require living targets;
-heal may revive a dead target and reinsert it into battle order. Damage/heal require positive amounts;
+Actions validate all rows before applying them. Actor must be active, standing and
+in turn for ordinary rows; targets must be active. Damage/heal may target down/stable participants; ordinary dead targets require explicit recovery first. Reaction rows use an independent active source and accept down/dead sources/targets for damage/healing. Healing caps at maximum HP and never revives explicit death. Damage/heal require positive amounts;
 buff/debuff are logged without HP changes or amounts. At HTTP registration, the mutation wrapper additionally serializes requests,
 opens a database transaction and restores in-memory STATE on failure.
 Direct HP deltas are also logged; without a current actor the log uses System.
@@ -399,11 +399,11 @@ Battle round starts at 1, increments on turn-order wrap and clears to 0 on End,
 Reset All or no eligible combatants. Remembered successors preserve the next-turn
 and round boundary when the current combatant disappears. Runtime persistence
 stores an authoritative active_turn_id, restoring it only for an existing active
-living combatant; conflicting legacy turns are cleared with a warning.
+participant; character down/stable state retains future eligibility, while death may retain only unresolved current-turn ownership; conflicting legacy turns are cleared with a warning.
 
 WebSockets receive JSON {"type":"state","state":...} using `display_state()`,
 not the full Admin `public_state()`. Client `/api/state` uses the same filtered
-projection. It includes active monsters and active visible characters, display
+projection. It includes active monsters and active visible characters, visible active lairs, campaign ID/name, public effect names, life state, display
 settings, battle round, filtered battle_order and display_order. Character stats
 are omitted; monster AC/HP/max HP appear only when enabled, and hidden initiative
 is null. Activity logs and setup references are not sent. display_order appends
@@ -413,7 +413,7 @@ ordering can therefore reveal relative initiative even without numeric values.
 Broadcasts serialize snapshots under a separate broadcast lock, send concurrently
 and drop failed/stalled sockets (2 s send timeout; 0.5 s cleanup timeout). Initial
 socket state uses the operation/broadcast locks and rechecks the session before
-registration. The browser reloads after approximately 1.5 s on disconnect/error.
+registration. The browser reconnects in place with backoff; identical snapshots are not rerendered. Server-driven 15-second idle heartbeats use ACK/PONG/resync protocol. Missing application replies alone do not force disconnects. See [Display connections](Display-Connection-Stability.md).
 
 Protected core Admin mutations run under the operation lock and an outer SQLite
 transaction; failure restores STATE and broadcasts occur only after commit. Most
@@ -426,6 +426,39 @@ can still overwrite one another's intended edits. File uploads are outside SQL r
 Clearing the activity log clears runtime and the associated saved setup's log without
 saving unrelated encounter edits. CSV exports prefix formula-like string values with
 an apostrophe for spreadsheet safety; JSON export preserves the original strings.
+
+## Feature and lair API routes
+
+All routes below use Admin-port admin/superadmin authorization; mutations apply same-origin checks and serialized transactions.
+
+| Method | Path | Contract |
+|---|---|---|
+| GET | `/api/features` | Revision, undo top, checkpoint list, display status and downed character reminders |
+| POST | `/api/battle/undo` | `{id}` of current top; fingerprint must match |
+| PATCH | `/api/combatants/{ident}/features` | temp_hp, life_state, death_successes/failures, concentrating, hp_delta, absorb_temp |
+| POST | `/api/combatants/{ident}/effects` | name, optional source_id/notes/public/concentration/timing/turns/anchor_id |
+| DELETE | `/api/combatants/{ident}/effects/{effect_id}` | Remove effect |
+| POST | `/api/combatants/{ident}/concentration/end` | Remove loaded source-linked effects |
+| POST | `/api/checkpoints` | `{name}` |
+| GET | `/api/checkpoints/{ident}` | Preview including current revision |
+| POST | `/api/checkpoints/{ident}/restore` | `{confirm: true, revision}` matching preview |
+| DELETE | `/api/checkpoints/{ident}` | Delete active-campaign checkpoint |
+| GET | `/api/campaign-bundle` | ZIP export |
+| POST | `/api/campaign-bundle` | Multipart `file`; creates inactive campaign |
+| POST | `/api/lairs` | name, optional notes/color/active/visible |
+| PATCH | `/api/lairs/{ident}` | Same editable fields; initiative is not editable |
+| DELETE | `/api/lairs/{ident}` | Remove lair; preserve existing conditions with reconciled links |
+| POST | `/api/lairs/{ident}/actions` | name, revision, targets; current lair turn required |
+
+Battle action rows optionally carry `source_id` for damage/healing reactions and `critical_hit` for damage. Setup import accepts `life_filter=alive|dead|all`, default alive. See [User Guide](User-Guide.md), [Encounter Features](Encounter-Features.md) and [Lair Actions](Lair-Actions.md) for semantics and limits.
+
+## Recovery, effects and lair modules
+
+`FeaturesService` is the tenth context-bound service. `LairService` is instantiated by its route installer. Feature storage adds revision and bounded normalized snapshots; lair storage adds a typed encounter-owned row. `scrying_glass_feature_rules.py` centralizes nonnegative HP, temporary HP absorption, capped healing and character damage/death-save behavior. `scrying_glass_turn_rules.py` separates standing from future-turn eligibility. `scrying_glass_campaign_bundle.py` validates portable ZIPs and cleans imported media on rollback.
+
+Tracked supported mutations create undo snapshots; setup/campaign boundaries and unsupported structural changes clear history. Undo requires the current top ID and after-state fingerprint. Checkpoint restoration requires explicit confirmation at the current revision and rejects missing referenced setups or ID collisions with retained setup monsters. Restore retains the audit trail and replaces encounter and roster atomically. Media uploads remain outside general SQL rollback.
+
+`feature_state`, `encounter_snapshots`, `snapshot_characters`, its attributes, three effects tables and `lairs` extend the v4 relational model. Health fields and log notes use typed attributes rather than JSON blobs. See regenerated [Database Schema](Database-Schema.sql) for actual v6 DDL, including the snapshot-cleanup trigger.
 
 ## Development checks
 

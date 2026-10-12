@@ -1,5 +1,7 @@
 # Deploy Scrying Glass with systemd
 
+Documented baseline: `features/development` at `4f401b4adfca92e9c9599aea8924c14efb49aea4`.
+
 This guide installs the split application as a single process under a dedicated
 non-root account. Code, configuration and writable encounter data remain
 separate. See [README](../README.md), [Technical Documentation](Technical-Documentation.md)
@@ -17,7 +19,7 @@ TCP 3000 (Admin) and 4000 (Client Display).
 ├── scrying_glass_server.py
 ├── python/                    # Application package, including __init__.py
 ├── web_html/                  # HTML loaders, including __init__.py
-├── templates/admin/           # All 20 HTML fragments
+├── templates/admin/           # All 21 HTML fragments
 ├── templates/users.html       # Superadmin page, read on request
 ├── static/                    # Browser assets
 └── config.example.yaml
@@ -222,13 +224,13 @@ storage layout; a code-only rollback may not understand migrated data.
 ## Migrating older installations
 
 The source split alone does not relocate data. Existing explicit storage_dir
-continues to work. First startup imports legacy JSON into normalized schema-v4 scrying-glass.sqlite3
+continues to work. First startup imports legacy JSON into normalized schema-v6 scrying-glass.sqlite3
 without modifying the source files. Database accounts initialize before encounter import. Loose setups become Default campaign records;
 missing campaign rosters are seeded from suitable legacy snapshots. See
 [SQLite migration instructions](SQLite-Migration.md).
 Back up before the first migration and check the journal afterward. Existing SQLite
-schema v1/v2 is backed up and normalized, then upgraded to schema v4.
-Existing schema v3 is backed up before adding v4 account tables.
+schema v1/v2 is backed up and normalized, then upgraded to schema v6.
+Existing schema v3/v4/v5 is backed up before completing the remaining upgrades to v6. Test revisions, health state, effects, lairs and recovery on a copy before production startup.
 See [migration instructions](SQLite-Migration.md).
 
 Monster Display installations used different code/config/storage/service names.

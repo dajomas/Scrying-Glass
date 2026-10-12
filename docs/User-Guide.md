@@ -1,5 +1,7 @@
 # Scrying Glass User Guide
 
+Documented baseline: `features/development` at `4f401b4adfca92e9c9599aea8924c14efb49aea4`.
+
 The game master prepares and runs combat in the Admin interface. Players watch
 a separate Client Display that receives live updates. Accounts, campaigns and encounters persist in SQLite; live display updates use WebSockets.
 
@@ -85,7 +87,7 @@ not merely a removal from one setup.
 |---|---|
 | New | Clears the working monster encounter/order/log and retains the active campaign's characters |
 | Save | Writes the named monster/setup snapshot and saves the campaign roster separately |
-| Load | Replaces encounter data with the saved setup and current campaign roster |
+| Load | Replaces encounter data with the saved setup and current campaign roster; selecting the dropdown loads immediately without a confirmation |
 | Rename | Renames a saved setup; conflicts are rejected |
 | Delete | Permanently deletes it and opens the next alphabetic setup, wrapping to the first |
 | Import from setup | Appends new copies of monsters from a selected saved setup |
@@ -103,9 +105,9 @@ Use Save to explicitly name/associate the encounter and retain its background.
 ### Import from setup
 
 Choose source campaign/setup. Only monsters are imported; campaign characters
-are not imported from battle setups. Copies get new IDs, retain source current
+are not imported from battle setups. Choose Alive (default), Dead or All. This filter uses the stored `alive` flag: Dead includes non-standing monsters, not only explicitly dead ones. Copies get new IDs, retain source current
 HP and max HP, restore original initiative, and clear active/visible/turn and
-stat-display flags. Alive derives from retained HP. The current battle order
+stat-display flags. Health features are normalized from retained state. Effects get fresh IDs; links among imported monsters are remapped. Missing concentration sources discard linked effects; missing timed anchors convert effects to manual. Characters and lairs are not imported. The current battle order
 and source setup are not changed by the import itself.
 
 ### View background
@@ -180,7 +182,7 @@ backup of important rosters before bulk changes.
 |---|---|
 | Active / Off | Participation in battle eligibility; active living monsters can appear as cards |
 | Visible | Presence in the initiative bar, distinct from Active |
-| Turn | Current turn; requires an active living combatant |
+| Turn | Current turn; requires an eligible active participant |
 | Edit | Update identity, stats and applicable display/image fields |
 | Damage / Heal | Change HP and write an activity-log record |
 | Reset | Restore HP/initiative baselines and clear runtime flags |
@@ -188,10 +190,9 @@ backup of important rosters before bulk changes.
 
 Monster-only controls include Ally and AC/HP/Init card visibility. Ally affects
 the rendered label, not the stored name. Color markers match the combatant color.
-Monsters at zero/lower HP become dead, visible in the initiative bar and out of
-turn. Character controls additionally allow manual Alive/Dead status.
+Damage clamps HP to zero. Monsters killed by damage become dead; characters become down unless excess damage causes instant death. Use Encounter tools for explicit standing/down/stable/dead state and death-save counters.
 
-Bulk controls operate on selected IDs. Monster bulk actions include joining or
+Select all selects the current list; Unselect all clears it. Select dead replaces the selection: characters match explicit death or three failures, whereas monsters also match `alive=False`. Selecting does not mutate combatants. Bulk controls operate on selected IDs. Monster bulk actions include joining or
 leaving battle, ally flags, stat visibility, reset and remove. Character bulk
 actions include joining/leaving battle, reset and remove. Check selection and
 confirmation prompts before destructive actions. Bulk and individual activation
@@ -200,14 +201,14 @@ may update battle order differently; review the order after bulk changes.
 ## Run a battle
 
 1. Add/load monsters and verify the active campaign roster.
-2. Set initiative and activate living participants.
+2. Set initiative and activate participants. Down/stable characters remain eligible for manual death-save turns; dead characters and non-standing monsters do not receive future turns.
 3. Click Start battle and resolve tied initiatives as prompted.
-4. Use Next to advance through active living combatants.
+4. Use Next to advance through eligible participants, including down/stable characters and an active lair.
 5. Use End to clear turns/order, or Reset All to reset combatants and order.
 
 Individual activation during an existing battle can insert a combatant according
 to initiative: before lower initiatives and after existing equals. Combatants
-without numeric initiative follow numeric entries. Next skips dead/inactive
+without numeric initiative follow numeric entries. Next skips ineligible
 entries and adds eligible participants omitted from order. With none eligible,
 order and turn state clear. End does not perform the full combatant reset.
 
@@ -220,36 +221,45 @@ Use Viewer battle-order text A−/A+ in the Battle pane to change the player-str
 font in 2 px steps (default 16 px, limits 12–40 px). Changes appear immediately
 and persist in runtime state. Saving a setup also captures its display settings.
 
-## Current-turn actions
+## Current-turn actions and reactions
 
-Click the marked/underlined current combatant to open battle actions. Add one or
-more target rows. The actor must be active, alive and currently have the turn. All targets must be
-active; damage/buff/debuff require living targets, but healing can revive a dead
-target. A healed target that becomes alive is reinserted into battle order.
+Click the highlighted current combatant to open Battle actions. Ordinary rows use the turn owner as source and require it to be standing. Targets must be active; damage/healing accept down or stable targets, while buff/debuff require standing targets. Explicitly dead ordinary targets must be recovered first in Encounter tools.
 
-- Damage subtracts HP; a positive amount is required.
-- Heal adds HP; a positive amount is required.
-- Buff and Debuff log an action without changing HP or supplying an amount.
+- Damage and healing require positive amounts; damage consumes temporary HP first and healing caps at maximum HP.
+- Critical hit applies only to damage. It affects failures at zero HP, not the entered damage amount.
+- Buff/debuff are descriptive log entries, not persistent conditions. Add effects through Encounter tools.
+- Add reaction chooses its own active source and active target. Damage/healing reactions allow down or dead sources/targets for manually adjudicated death bursts and other reactions. Dead targets remain dead and ordinary healing does not resurrect them.
+- Rows are validated together and applied top-to-bottom. One row per affected creature supports multi-target reactions. The log attributes each row to its source.
 
-All rows are validated before changes are applied. Every applied row is logged.
-Buff/debuff records are descriptive log entries, not an automatic conditions
-or duration engine.
+Start of turn damage and healing applies to the current combatant, damage first. Empty/zero fields are ignored; it does not advance the turn. These are ordinary self-action rows: a down/dead turn owner cannot use them. Use Encounter tools or a reaction from another source where appropriate. Actions and reactions do not automate reaction availability, dice, resistance, spells or saving throws.
+
+A participant may retain ownership of an unresolved current turn after dying. Resolve applicable reaction rows and then advance; death excludes future turns rather than silently transferring the current one.
+
+## Health, effects and recovery
+
+See [Encounter Features](Encounter-Features.md) for temporary HP, life-state controls, private/public effects, concentration, undo and checkpoints. See [Damage and Death Saves](Corrected-Damage-Logic.md) for damage thresholds and critical hits.
+
+Encounter tools opens automatically during battle and restores its prior visibility when battle ends. Campaign backups is under Campaign Setup, independent of Encounter tools visibility. Bundle import creates a new inactive campaign; activate it and restore its Imported encounter checkpoint to resume exported runtime state.
+
+## Lair turns
+
+An encounter may contain one lair at initiative 20, after creatures tied at 20. It has no HP or conditions. Use its highlighted turn or Resolve lair action to apply a validated batch of damage/conditions to active non-dead creatures. Damage, saves and mitigation are adjudicated by the GM; Next advances the turn separately. See [Lair Actions](Lair-Actions.md).
 
 ## Activity log and display
 
 The log records UTC timestamp, actor, actor life state, target, target life state,
-action and amount. Direct HP changes without a current actor use System.
+action, amount and Details (`note`). Direct HP changes without a current actor use System.
 Export CSV/JSON before clearing; clearing permanently removes the runtime log and
 the associated saved setup log without saving unrelated encounter edits. CSV
 formula-like text receives a leading apostrophe for spreadsheet safety; JSON
 preserves the original text.
 
-The Client Display shows active living monster cards and visible combatants in
+The Client Display shows active non-dead monster cards (down/stable cards are muted) and visible combatants in
 an initiative bar. Characters participate in the bar, not full monster cards.
 Monster AC/HP/initiative values appear when enabled. Ally labels append - Ally.
 The bar hides when empty unless it is showing an active round indicator.
 Only active visible combatants appear in the strip; dead visible participants may
-remain there, while full monster cards require active and alive. Visible participants
+remain there, while full monster cards exclude explicitly dead monsters. Visible active lairs appear in the initiative strip, not as monster cards. The toolbar shows the active campaign name and synchronization status. Visible participants
 missing from battle order are appended in initiative order. Backgrounds follow the working encounter.
 
 Player state is filtered on the server: hidden monster AC/HP/initiative and all
@@ -260,7 +270,7 @@ media behind authentication: `/media` is a static mount. Use trusted players/dev
 ## Updates, backups and troubleshooting
 
 The split Admin HTML loads fragments once when the server imports the loader.
-Restart for markup changes; hard-refresh after browser asset changes. Players
+Restart for markup changes; reload after browser asset changes; per-response asset cache busting refreshes local CSS/JS URLs. Players
 and GMs do not need to know the internal file layout to use the interface.
 
 Back up the whole configured storage_dir, including scrying-glass.sqlite3 and uploads/,
@@ -273,7 +283,7 @@ JSON files remain archival. See [migration instructions](SQLite-Migration.md).
 | Missing uvicorn during a terminal check | Activate the environment or use .venv/bin/python |
 | Missing HTML fragment at startup | Complete templates/admin tree and correct loader path |
 | Old page | Restart after HTML changes and hard-refresh |
-| Client does not update | Check port/proxy WebSocket access; display normally reloads automatically after a disconnect |
+| Client does not update | Check port/proxy WebSocket access; display reconnects in place and retains the last screen; check synchronization status |
 | Login fails after restart | Sessions cleared; sign in again with the correct role |
 | CSV rejected | Headers, UTF-8, numbers, boolean values and unique IDs |
 | No suggested stats/image | Remote lookup is best effort; enter/upload manually |

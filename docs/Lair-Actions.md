@@ -1,6 +1,6 @@
 # Lair actions
 
-Implemented against the supplied features/development snapshot caa4b47.
+Documented baseline: `features/development` at `4f401b4adfca92e9c9599aea8924c14efb49aea4`.
 
 ## Using a lair
 
@@ -8,7 +8,7 @@ Implemented against the supplied features/development snapshot caa4b47.
 2. Choose In battle and Visible to players, then Add lair.
 3. Start the encounter normally. The server inserts the lair at initiative 20 after every tied creature.
 4. At the lair turn, click Resolve lair action or click the highlighted lair in the admin initiative order.
-5. Select any combination of active characters and monsters (including ally monsters). Permanently dead creatures and the lair itself are excluded.
+5. Select any combination of active characters and monsters (including ally monsters). Permanently dead creatures and the lair itself are excluded. Down/stable active characters may be targeted.
 6. Enter damage and comma-separated condition names. Copy defaults to selected targets, then adjust individual rows for saves, resistance or immunity.
 7. Choose condition visibility and expiry, then Apply to selected targets and review the confirmation.
 8. Click Next Turn normally. Resolving an action does not advance the turn automatically.

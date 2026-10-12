@@ -1,28 +1,17 @@
-# Select all shortcuts
+# Bulk selection shortcuts
 
-Adds a Select all button immediately left of the Bulk control in both Characters and Monsters.
-Both existing dropdowns, including Select all and Unselect all, remain unchanged.
-The buttons call the existing setAllSelected(kind,true) helper, updating selection sets AND
-checkboxes so subsequent bulk operations see the correct IDs. They do not toggle/unselect,
-change HP, or perform API writes. Selection is scoped to the appropriate current list.
+Documented baseline: `features/development` at `4f401b4adfca92e9c9599aea8924c14efb49aea4`.
 
-This overlay targets the prior supplied patches. Existing admin.js, damage/logging logic,
-Encounter tools controls and client page are not replaced. The new standalone script reuses
-existing functions. Prior scoped CSS/script links are retained in the two header/footer
-replacements. Merge those links if you have other local template customizations.
+Characters and Monsters each have Select all immediately before Bulk. Select all is not a toggle. Unselect all clears the selection; Select dead replaces it with matching IDs from the current list.
 
-Install: extract at the application root, retaining paths; restart Scrying Glass because templates
-load at startup; hard-refresh the admin page. No database or backend change.
+- Characters: explicit `life_state=dead` or at least three death-save failures. Down/stable characters are not selected merely because HP is zero.
+- Monsters: explicit dead state or `alive=False`, including non-standing monsters.
 
-On wider screens the button and dropdown remain grouped at the right of the heading, with the
-button immediately before Bulk. On small screens the group wraps below the heading.
+Selection updates the internal ID set and checkboxes, but makes no API write. Review the selection before Reset/Remove or another bulk mutation. Selection is scoped to the appropriate list and stale IDs are removed by the existing selection helper.
 
-Validation: both dropdown option lists match the baseline exactly; each new ID is unique;
-buttons precede their respective bulk controls. Node syntax check and seven focused tests passed
-using the actual existing setAllSelected helper with DOM substitutes: character/monster scoping,
-repeated clicks, stale ID cleanup, empty list, invalid kind and early click before data loads.
-Archive integrity is verified. No live browser visual test was performed.
+Implementation: `static/bulk-select-all.js`, existing helpers in `static/admin.js`, and the character/monster fragments. Checks:
 
-    node tests/test_bulk_select_all.js
-
-Rollback: restore the prior four template fragments and remove the new script/style files.
+```bash
+node tests/test_bulk_select_all.js
+node --test tests/bulk-select-dead.test.cjs
+```

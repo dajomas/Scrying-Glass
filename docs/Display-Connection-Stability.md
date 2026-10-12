@@ -1,20 +1,8 @@
 # Display connection stability and in-place reconnection
 
-This overlay requires the earlier Encounter features and client campaign-label patch. It replaces
-only python/scrying_glass_api_client.py and static/client.js. Backend state/damage/undo logic,
-client toolbar/campaign/effect styling, both ports and authentication-cookie separation are retained.
+Documented baseline: `features/development` at `4f401b4adfca92e9c9599aea8924c14efb49aea4`.
 
-## What caused the visible flash
-
-The prior browser reconnect path called location.reload(), recreating the entire page whenever
-a WebSocket closed. That was a direct cause of the screen flash. It also used a JavaScript timer
-to close apparently stale sockets after a fixed silence period, while the server enforced a
-separate application-message inactivity cutoff. Delayed/suspended browser JavaScript can trigger
-those policies even when the underlying connection is otherwise viable.
-
-The posted accepted/open messages establish reconnection, not the reason for the earlier close.
-Timer delay is a plausible trigger, not a confirmed diagnosis of every connection loss. Network,
-proxy, event-loop stalls, process restart and actual socket failures can still cause disconnects.
+Both applications retain separate ports and sessions. The connection manager preserves the last rendered screen while it reconnects.
 
 ## Changes
 
@@ -30,7 +18,7 @@ proxy, event-loop stalls, process restart and actual socket failures can still c
 - A delayed browser timer may show a warning but does not forcibly close an open socket.
 - Server no longer disconnects solely because application ACK/PONG messages were delayed.
 - Existing native WebSocket protocol keepalive/transport error detection remains under Uvicorn's
-  configured WebSocket implementation; this patch does not disable it or alter its settings.
+  configured WebSocket implementation; the implementation does not disable it or alter its settings.
 - Visibility/online recovery requests a fresh state snapshot without recreating the page.
 - Successful rendering is acknowledged as before; display connection status retains its meaning.
 - Session revocation and same-origin checks remain. An unauthorized closed session is checked
@@ -52,30 +40,11 @@ useful than accepted/open alone for identifying recurring faults. A real reconne
 an accepted/open entry in Uvicorn; the page and unchanged encounter stage should no longer flash.
 Send timeouts remain enforced so a stalled client does not hold application locks indefinitely.
 
-## Install
+## Checks
 
-1. Stop the service and back up the two replacement files.
-2. Extract the ZIP at the application root, retaining paths.
-3. Restart Scrying Glass and hard-refresh the CLIENT page once to load the new code.
-4. Leave the viewer idle, switch tabs, return, and verify connection/status behaviour.
-5. Temporarily stop/restart the server and verify that the last screen is retained and later
-   updates arrive without a page reload. Check sign-out/revocation still returns to login.
+```bash
+python -m unittest discover -s tests -p 'test_display_connection.py'
+node tests/test_display_reconnect.js
+```
 
-No database/schema/template change is included. Retain earlier client HTML/CSS and state service,
-which provide campaign names, safe effect payloads and the status label used here.
-
-## Validation
-
-11 Python tests exercised the actual replacement ws function with a fake transport and real
-asyncio locks: initial snapshot, no ACK/PONG reply loop, idle heartbeat without forced inactivity
-close, ping, resync, invalid JSON, oversized messages, origins, missing/revoked sessions and cleanup.
-8 Node tests exercised the actual connection manager with fake sockets/timers: in-place reconnect,
-unchanged snapshot suppression, changed snapshots, PONG replies, delayed timers without closure,
-resync, single pending retry, visibility resume and cleanup.
-Python/JS syntax checks and ZIP integrity passed. These are targeted protocol/state-machine tests,
-not a live browser/HTTP/WebSocket/proxy integration test. The full feature suite was not rerun.
-
-    python -m unittest discover -s tests -p 'test_display_connection.py'
-    node tests/test_display_reconnect.js
-
-Rollback: restore the two prior replacement files and restart/hard-refresh. No DB rollback.
+After code changes restart the server and reload existing viewer tabs. Test idle tabs, offline/online transitions, server restart and revoked sessions with your actual proxy/browser. Sessions are cleared on restart, so resynchronization may require login. The admin marks a socket stale after over 35 seconds without recorded contact; this is a status label, not an inactivity-disconnect policy.

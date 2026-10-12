@@ -5,7 +5,7 @@
 1. Stop Scrying Glass and back up configuration and the entire storage directory.
 2. Deploy all source, template and static files from the matching revision. Do not replace your live config.yaml with config.example.yaml.
 3. Start using the existing configuration, including security.users, once.
-4. SQLite schema v4 is created automatically. Existing version 3 databases are backed up using the existing .before-normalization.bak naming convention. Versions 1 and 2 retain their previous normalization upgrade and backup, then receive account tables.
+4. SQLite schema v6 is created automatically; account tables were introduced in v4, followed by v5 encounter features and v6 lairs. Existing version 3 databases are backed up using the existing .before-normalization.bak naming convention. Versions 1 and 2 retain their previous normalization upgrade and backup, then receive account tables.
 5. All legacy accounts are imported atomically. Plaintext passwords are converted to salted scrypt hashes; valid existing scrypt hashes are retained. Usernames are case-sensitive and unique, 1-64 characters without control characters or surrounding whitespace. Duplicate usernames or malformed accounts stop initialization rather than partially importing.
 6. If no legacy superadmin exists, the first legacy admin in configuration order is promoted to superadmin. Other roles are retained. Sign in with that account's existing password.
 7. Sign in on the Admin port: superadmins automatically land on /users.
