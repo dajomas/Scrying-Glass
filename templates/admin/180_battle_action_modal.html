@@ -22,12 +22,16 @@
         </form>
       </section>
       <p id="battleActionHelp">
-        Choose one or more targets and actions for the current combatant.
+        Add actions and reactions in resolution order (top to bottom).
+        Reactions have their own source and target, including down or dead combatants.
+        Use one row per affected creature for death bursts. A dead combatant cannot
+        be revived by healing; recover it explicitly in Encounter Tools.
       </p>
       <form id="battleActionForm" class="battle-action-form">
         <div id="battleActionRows"></div>
         <div class="actions">
           <button type="button" id="addBattleActionTarget">Add target</button>
+          <button type="button" id="addBattleReaction">Add reaction</button>
           <button type="submit" class="battle">Apply</button>
           <button type="button" id="cancelBattleActions">Cancel</button>
         </div>

@@ -2885,7 +2885,7 @@ function updateActionRowAmount(row) {
     }
 }
 
-function addBattleActionRow() {
+function addBattleActionRow(reaction = false) {
     const targets = activeBattleTargets();
 
     if (!targets.length) {
@@ -2894,9 +2894,13 @@ function addBattleActionRow() {
     }
 
     const row = document.createElement('div');
-    row.className = 'battle-action-row';
+    row.className = 'battle-action-row' + (reaction ? ' battle-reaction-row' : '');
 
     row.innerHTML = `
+    ${reaction ? `<label>Reaction source
+        <select data-action-source required>${targets.map(source =>
+            `<option value="${esc(source.id)}">${esc(source.name)}${source.alive ? '' : ' (down/dead)'}</option>`
+        ).join('')}</select></label>` : ''}
     <label>
         Target
         <select data-action-target required>
@@ -2913,8 +2917,7 @@ function addBattleActionRow() {
         <select data-action-kind required>
         <option value="damage">Damage</option>
         <option value="heal">Heal</option>
-        <option value="buff">Buff</option>
-        <option value="debuff">Debuff</option>
+        ${reaction ? '' : '<option value="buff">Buff</option><option value="debuff">Debuff</option>'}
         </select>
     </label>
 
@@ -2936,9 +2939,7 @@ function addBattleActionRow() {
     row.querySelector('[data-remove-action-row]').addEventListener('click', () => {
         row.remove();
 
-        if (!battleActionRows.children.length) {
-            addBattleActionRow();
-        }
+
     });
 
     battleActionRows.appendChild(row);
@@ -2953,7 +2954,7 @@ function openBattleActions(actorId) {
     const actor = [...latest.monsters, ...latest.characters]
         .find(combatant => combatant.id === actorId);
 
-    if (!actor || !actor.active || !actor.alive || !actor.in_turn) {
+    if (!actor || !actor.active || !actor.in_turn) {
         message('Only the current active combatant can perform battle actions.');
         return;
     }
@@ -2963,13 +2964,15 @@ function openBattleActions(actorId) {
         `Battle actions: ${actor.name}`;
 
     battleActionRows.innerHTML = '';
-    addBattleActionRow();
+    addBattleActionRow(!actor.alive);
     battleActionModal.hidden = false;
 }
 
 document.querySelector('#addBattleActionTarget').onclick = () => {
     addBattleActionRow();
 };
+
+document.querySelector('#addBattleReaction').onclick = () => addBattleActionRow(true);
 
 document.querySelector('#cancelBattleActions').onclick = closeBattleActions;
 
@@ -2993,6 +2996,7 @@ battleActionForm.onsubmit = async event => {
         const rawAmount = row.querySelector('[data-action-amount]').value;
 
         return {
+            source_id: row.querySelector('[data-action-source]')?.value || null,
             target_id: row.querySelector('[data-action-target]').value,
             action,
             amount: actionAmountRequired(action) ? Number(rawAmount) : null,
@@ -3000,7 +3004,9 @@ battleActionForm.onsubmit = async event => {
         };
     });
 
+    if (!actions.length) { message('Add at least one action or reaction.'); return; }
     const applyButton = battleActionForm.querySelector('button[type="submit"]');
+    if (applyButton.disabled) return;
     applyButton.disabled = true;
 
     try {

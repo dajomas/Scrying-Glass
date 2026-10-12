@@ -27,3 +27,18 @@
     #battleActionModal .battle-action-row > .amount-field,
     #battleActionModal .battle-action-row > [data-remove-action-row] { grid-column: auto; }
 }
+
+#battleActionModal .battle-reaction-row {
+    grid-template-columns: minmax(9rem, 1fr) minmax(9rem, 1fr) minmax(6rem, 7rem) auto minmax(5rem, 6rem) auto;
+    border-left: 3px solid #a78bfa;
+    padding-left: .5rem;
+}
+#battleActionModal .battle-reaction-row > .critical-option { grid-column: 4; }
+#battleActionModal .battle-reaction-row > .amount-field { grid-column: 5; }
+#battleActionModal .battle-reaction-row > [data-remove-action-row] { grid-column: 6; }
+@media (max-width: 700px) {
+    #battleActionModal .battle-reaction-row { grid-template-columns: 1fr; }
+    #battleActionModal .battle-reaction-row > .critical-option,
+    #battleActionModal .battle-reaction-row > .amount-field,
+    #battleActionModal .battle-reaction-row > [data-remove-action-row] { grid-column: auto; }
+}

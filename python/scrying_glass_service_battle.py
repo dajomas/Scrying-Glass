@@ -52,6 +52,11 @@ class BattleService:
             for combatant in self.context.eligible()
         }
 
+        # Retain the current owner while resolving reactions and death bursts.
+        current = self.context.active_combatant()
+        if current and current.get('active'):
+            eligible_ids.add(current['id'])
+
         seen: set[str] = set()
         cleaned: list[str] = []
 
@@ -158,6 +163,10 @@ class BattleService:
 
         current = self.context.active_combatant()
         current_id = current["id"] if current is not None else None
+
+        self.context.remember_turn_successors()
+        if current is not None and not can_take_turn(current):
+            current['in_turn'] = False
 
         remembered_successors = list(
             self.context.STATE.get("turn_successors", [])

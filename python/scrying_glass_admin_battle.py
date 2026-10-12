@@ -79,8 +79,8 @@ class AdminBattleMixin:
         if actor is None:
             raise self.context.HTTPException(404, "Active combatant was not found")
 
-        if not actor.get("active") or not actor.get("alive", True):
-            raise self.context.HTTPException(400, "The acting combatant must be active and alive")
+        if not actor.get("active"):
+            raise self.context.HTTPException(400, "The turn owner must be active")
 
         if not actor.get("in_turn"):
             raise self.context.HTTPException(
@@ -94,6 +94,17 @@ class AdminBattleMixin:
         # Validate all rows before changing state, so a malformed row cannot leave
         # prior rows partially applied.
         for row in payload.actions:
+            source_id = getattr(row, 'source_id', None)
+            source = self.context.entity(source_id) if source_id else actor
+            if source is None:
+                raise self.context.HTTPException(404, "Source combatant was not found")
+            if source.get('kind') == 'lair' or not source.get('active'):
+                raise self.context.HTTPException(400, "Reaction source must be an active combatant")
+            if source_id:
+                if row.action not in {'damage', 'heal'}:
+                    raise self.context.HTTPException(400, "Reactions support damage or healing only")
+            elif not actor.get('alive', True):
+                raise self.context.HTTPException(400, "A dead or down turn owner may only resolve reaction rows")
             if row.action not in valid_actions:
                 raise self.context.HTTPException(400, "Unsupported battle action")
 
@@ -110,7 +121,7 @@ class AdminBattleMixin:
                     f"Target {target['name']} must be active",
                 )
 
-            if permanently_dead(target):
+            if permanently_dead(target) and not source_id:
                 raise self.context.HTTPException(400,'Explicitly recover a dead combatant before applying battle actions')
             if row.action not in {'damage','heal'} and not target.get("alive", True):
                 raise self.context.HTTPException(
@@ -136,12 +147,12 @@ class AdminBattleMixin:
             critical=getattr(row,'critical_hit',False)
             if critical and row.action!='damage':
                 raise self.context.HTTPException(422,'Critical hit applies only to damage')
-            prepared.append((target,row.action,amount,critical))
+            prepared.append((source,target,row.action,amount,critical))
 
         # Apply only after every row passed validation.
         self.context.remember_turn_successors()
 
-        for target, action, amount, critical in prepared:
+        for source, target, action, amount, critical in prepared:
             if action == "damage":
                 result=apply_hp(target,-amount,critical=critical)
                 if getattr(self.context,'features',None):
@@ -160,7 +171,7 @@ class AdminBattleMixin:
                 if can_take_turn(target):
                     self.context.insert_into_battle_order(target)
 
-            self.context.log_battle_action(actor, target, action, amount)
+            self.context.log_battle_action(source, target, action, amount)
 
         self.context.clean_order()
         self.context.save_active_campaign_characters()

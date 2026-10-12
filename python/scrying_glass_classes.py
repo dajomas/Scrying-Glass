@@ -129,6 +129,7 @@ class CampaignSetupAdd(_Utf8Model):
 
 class BattleActionRow(_Utf8Model):
     """Battleactionrow."""
+    source_id: str | None = Field(default=None, min_length=1, max_length=100)
     target_id: str = Field(min_length=1, max_length=100)
     action: Literal["damage", "heal", "buff", "debuff"]
     amount: int | None = Field(default=None, ge=1, le=99999)

@@ -318,7 +318,7 @@ class StateService:
                 from .scrying_glass_feature_rules import normalize_features
                 normalize_features(item)
                 if item["in_turn"]:
-                    if not can_take_turn(item):
+                    if not item.get("active"):
                         raise ValueError(
                             f"{location}.in_turn requires an active, "
                             "turn-eligible combatant"

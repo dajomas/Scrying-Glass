@@ -169,9 +169,6 @@ class AdminCharactersMixin:
 
         if not candidate.get("alive"):
             candidate["visible"] = True
-        if not can_take_turn(candidate):
-            candidate["in_turn"] = False
-
         if not candidate.get("active"):
             candidate["in_turn"] = False
 

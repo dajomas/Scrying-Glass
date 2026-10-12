@@ -59,7 +59,8 @@ def normalize_features(item):
     if type(item['concentrating']) is not bool: raise ValueError('Invalid concentrating flag')
     item.setdefault('effects',[]);validate_effects(item['effects'])
     item['alive']=item['life_state']=='standing'
-    if not can_take_turn(item): item['in_turn']=False
+    # Death changes future eligibility, not ownership of an unresolved turn.
+    if not item.get('active'): item['in_turn']=False
     return item
 
 def sync_health(item):

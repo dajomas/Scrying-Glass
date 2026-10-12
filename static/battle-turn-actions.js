@@ -90,7 +90,7 @@
                 if (session !== submittedSession) return;
                 updateActor();
                 const current = actor();
-                if (!current || !current.in_turn || !current.active || !current.alive) {
+                if (!current || !current.in_turn || !current.active) {
                     closeBattleActions();
                     message('Start-of-turn changes applied; this combatant can no longer act.');
                 }

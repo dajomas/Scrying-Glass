@@ -25,7 +25,7 @@ class TurnTests(unittest.TestCase):
         self.c.begin_battle(['a','b','m']);self.c.advance_turn();self.c.advance_turn();self.assertEqual(self.c.advance_turn()['id'],'a');self.assertEqual(self.c.STATE['battle_round'],2)
     def test_manual_down_turn(self):self.c.set_turn(self.c.entity('b'),True);self.assertTrue(self.c.entity('b')['in_turn'])
     def test_third_failure_removed(self):
-        self.c.begin_battle(['a','b','m']);self.c.advance_turn();self.c.remember_turn_successors();self.c.entity('b')['death_failures']=2;apply_hp(self.c.entity('b'),-1);self.c.clean_order();self.assertNotIn('b',self.c.STATE['battle_order']);self.assertEqual(self.c.advance_turn()['id'],'m')
+        self.c.begin_battle(['a','b','m']);self.c.advance_turn();self.c.remember_turn_successors();self.c.entity('b')['death_failures']=2;apply_hp(self.c.entity('b'),-1);self.c.clean_order();self.assertIn('b',self.c.STATE['battle_order']);self.assertEqual(self.c.advance_turn()['id'],'m');self.assertNotIn('b',self.c.STATE['battle_order'])
     def test_down_damage_preserves_turn(self):self.c.set_turn(self.c.entity('b'),True);apply_hp(self.c.entity('b'),-1);self.assertTrue(self.c.entity('b')['in_turn'])
     def test_zero_hp_monster_excluded(self):apply_hp(self.c.entity('m'),-5);self.assertFalse(can_take_turn(self.c.entity('m')))
     def test_negative_maximum_no_longer_means_death(self):x=self.c.entity('b');x['max_hp']=-1;normalize_features(x);self.assertEqual(x['life_state'],'down');self.assertTrue(can_take_turn(x))

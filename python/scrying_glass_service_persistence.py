@@ -308,7 +308,7 @@ class PersistenceService:
 
             if (
                 target is not None
-                and can_take_turn(target)
+                and target.get("active")
             ):
                 target["in_turn"] = True
                 target["visible"] = True
@@ -349,7 +349,7 @@ class PersistenceService:
                 )
 
             if (
-                not can_take_turn(current)
+                not current.get("active")
             ):
                 raise ValueError(
                     "Cannot save state: the combatant in turn "
