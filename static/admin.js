@@ -2898,12 +2898,15 @@ function addBattleActionRow(reaction = false) {
 
     row.innerHTML = `
     ${reaction ? `<label>Reaction source
-        <select data-action-source required>${targets.map(source =>
+        <select data-action-source required>
+        <option value="" disabled selected>Select source…</option>
+        ${targets.map(source =>
             `<option value="${esc(source.id)}">${esc(source.name)}${source.alive ? '' : ' (down/dead)'}</option>`
         ).join('')}</select></label>` : ''}
     <label>
         Target
         <select data-action-target required>
+        <option value="" disabled selected>Select target…</option>
         ${targets.map(target => `
             <option value="${esc(target.id)}">
             ${esc(target.monster_species && target.ally ? `${target.name} - Ally` : (!target.monster_species) ? `${target.name} - Character` : `${target.name} - Monster`)}
@@ -2986,6 +2989,11 @@ battleActionForm.onsubmit = async event => {
     event.preventDefault();
 
     if (!battleActionActorId) {
+        return;
+    }
+
+    // Also enforce native validation when the handler is invoked directly.
+    if (!battleActionForm.reportValidity()) {
         return;
     }
 
