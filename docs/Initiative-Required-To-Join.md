@@ -1,41 +1,43 @@
 # Initiative required before joining battle
 
-Characters and monsters must have a whole-number initiative before joining.
-Zero and negative initiatives are valid. Empty/unset values are not.
+Characters and monsters need a whole-number initiative before joining battle.
+Zero and negative initiatives are valid; empty/unset initiative is not.
 
-The individual Join Battle button is disabled until the saved initiative is
-present; its tooltip explains why. After entering initiative and the normal
-state refresh completes, the button becomes available. Existing active
-combatants can still leave, including legacy records with missing initiative.
+## Rejection feedback
 
-Bulk Join Battle rejects the entire selection if any selected character or
-monster has no initiative, naming the missing combatants. Nothing partially
-joins. Enter initiatives or roll monster initiatives before retrying.
+Clicking an individual Join Battle button without initiative does not submit the
+join. It shows `Enter initiative before joining battle: <name>` in the fixed
+`#message` area. Buttons remain clickable for feedback and use `aria-disabled`
+and a tooltip to indicate the blocked state. The normal join handler is stopped
+by a capture-phase listener. After saved-state refresh with initiative entered,
+the button follows its normal behavior again. Leave Battle remains allowed.
 
-To avoid removing initiative after joining, clearing initiative on an active
-combatant is rejected. Leave battle first, or submit active=false and
-initiative=null together. Inactive combatants can retain empty initiative.
-Starting a battle also rejects legacy active records without initiative.
-Lairs retain their existing fixed-initiative behavior.
+Server-rejected individual or bulk joins also show the returned error in
+`#message`. For example, a mixed bulk selection displays the names missing
+initiative while the server rejects the entire action atomically. Non-JSON
+errors show an HTTP-status fallback. Network errors show an explanatory message.
+Existing pane-specific error messages may still appear as well.
+
+The existing five-second global-message timeout applies and restarts on each
+new rejection. Messages remain visible below the stationary button row.
 
 ## Server enforcement
 
-The shared write-transaction wrapper checks individual updates and bulk joins
-before calling their handlers. A transition check catches invalid activations
-from imports or clearing initiative through monster edits. Failed transitions
-roll back both database writes and runtime state before any deferred broadcast.
-Only applicable character/monster operations are checked; setup loading remains
-compatible with older stored records, which can be corrected or removed before
-starting battle. No stored data is automatically rewritten.
+The prior server gate is unchanged: individual and bulk joins require integer
+initiative. Clearing it while active is rejected; leave first or submit
+active=false and initiative=null together. Imports cannot newly activate
+characters/monsters without initiative. Legacy active missing-initiative records
+must be corrected or leave before starting a battle. Lairs remain unchanged.
 
-A separate UI script observes character and monster row rendering and updates
-button availability from the saved state. It does not replace admin.js or its
-message helper. The server remains authoritative if a request bypasses the UI.
+The UI script observes row rendering and intercepts blocked individual clicks.
+It wraps fetch to mirror failed same-origin character/monster join requests to
+#message, using a cloned response so existing request/error handling still works.
+Successful joins and unrelated API errors do not create a rejection message.
 
 ## Checks
 
 ```sh
-python -m unittest discover -s tests -p 'test_initiative_join_gate.py' -v
 node --test tests/initiative-join-gate.test.cjs
 node --check static/initiative-join-gate.js
+python -m unittest discover -s tests -p 'test_initiative_join_gate.py' -v
 ```
