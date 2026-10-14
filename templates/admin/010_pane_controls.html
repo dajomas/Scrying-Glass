@@ -1,4 +1,4 @@
-    <section>
+    <section id="adminButtonBar" aria-label="Admin pane controls">
       <div class="row">
         <form action="/logout" method="post">
           <button id="adminLogout" type="submit">Log out</button>
@@ -72,4 +72,8 @@
         </button>
       </div>
     </section>
+
+    <p id="message" class="message" role="status" aria-live="polite"></p>
+  </header>
+  <main id="adminScroll" tabindex="0" aria-label="Admin panes">
 
