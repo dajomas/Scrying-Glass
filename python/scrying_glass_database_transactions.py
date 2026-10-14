@@ -6,6 +6,7 @@ import inspect
 from functools import wraps
 from .scrying_glass_health_limits import HpStorageRangeError
 from .scrying_glass_identity_rules import ParticipantIdentityConflict
+from .scrying_glass_initiative_gate import validate_initiative_request, validate_initiative_transition
 
 
 def operation_lock(context):
@@ -51,7 +52,9 @@ def transactional_handler(context, handler, *, role=None, cookie_name=None):
         context._database_broadcast_pending = False
         try:
             with context.STORAGE.transaction():
+                validate_initiative_request(context, handler, args, kwargs)
                 result = await handler(*args, **kwargs)
+                validate_initiative_transition(context, original, handler.__name__)
                 if features:
                     features.reconcile()
                     if context.STATE != original:
