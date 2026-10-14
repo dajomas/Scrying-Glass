@@ -15,10 +15,10 @@ BOOL_FIELDS = ("alive", "active", "visible", "in_turn", "ally", "show_ac", "show
 ENTITY_FIELDS = TEXT_FIELDS + INT_FIELDS + BOOL_FIELDS
 LOG_FIELDS = ("timestamp", "active_combatant_id", "active_combatant", "active_combatant_state", "target_combatant_id", "target_combatant", "target_combatant_state", "action", "amount")
 LIST_FIELDS = ("battle_order", "turn_successors", "turn_successors_before_wrap")
-STATE_FIELDS = set(LIST_FIELDS) | {"monsters", "characters", "activity_log", "display", "active_setup", "active_turn_id", "battle_round", "lairs"}
+STATE_FIELDS = set(LIST_FIELDS) | {"monsters", "characters", "activity_log", "display", "active_setup", "active_turn_id", "battle_round", "lairs", "has_lair"}
 
 class SQLiteStorage:
-    SCHEMA_VERSION = 6
+    SCHEMA_VERSION = 7
 
     def __init__(self, path: Path):
         self.path = Path(path)
@@ -30,7 +30,7 @@ class SQLiteStorage:
             self.connection.execute("PRAGMA foreign_keys=ON")
             self.connection.execute("PRAGMA busy_timeout=10000")
             version = self.connection.execute("PRAGMA user_version").fetchone()[0]
-            if version not in (0, 1, 2, 3, 4, 5, 6):
+            if version not in (0, 1, 2, 3, 4, 5, 6, 7):
                 raise RuntimeError(f"Unsupported schema version: {version}")
             if version == 0:
                 if self.connection.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").fetchone():
@@ -41,7 +41,7 @@ class SQLiteStorage:
             elif version in (1, 2):
                 self._backup()
                 self._upgrade(version)
-            if version not in (4, 5, 6):
+            if version not in (4, 5, 6, 7):
                 if version == 3:
                     self._backup()
                 with self.transaction():
@@ -52,6 +52,8 @@ class SQLiteStorage:
             upgrade_features(self, backup=version != 0)
             from .scrying_glass_lair_storage import upgrade_lairs
             upgrade_lairs(self, backup=version != 0)
+            from .scrying_glass_setup_lair import upgrade_setup_lair
+            upgrade_setup_lair(self, backup=version != 0)
             self._check_foreign_keys()
         except BaseException:
             self.close()
@@ -240,6 +242,8 @@ class SQLiteStorage:
         unknown=set(state)-STATE_FIELDS
         if unknown:raise ValueError(f"Unsupported encounter fields: {sorted(unknown)}")
         if state.get('characters'):raise ValueError("Characters must be saved to campaign rosters")
+        has_lair=state.get('has_lair',bool(state.get('lairs')))
+        if type(has_lair) is not bool:raise ValueError("has_lair must be a boolean")
         display=state.get('display',{})
         if not isinstance(display,dict) or set(display)-{'background','battle_order_font_size'}:raise ValueError("Unsupported display structure")
         background=display.get('background','#080b14');font=display.get('battle_order_font_size',16);round_=state.get('battle_round',0)
@@ -254,6 +258,8 @@ class SQLiteStorage:
         marker=state.get('active_turn_id')
         if marker is not None and not isinstance(marker,str):raise ValueError("Invalid active turn ID")
         self.connection.execute("UPDATE encounters SET battle_round=?,background=?,battle_order_font_size=?,active_setup_id=?,active_turn_id=?,has_active_turn_marker=? WHERE id=?",(round_,background,font,active_setup,marker,int('active_turn_id' in state),encounter))
+        if self.connection.execute("PRAGMA user_version").fetchone()[0] >= 7:
+            self.connection.execute("UPDATE encounters SET has_lair=? WHERE id=?",(int(has_lair),encounter))
         self._save_entities('monsters','encounter_id',encounter,state.get('monsters',[]))
         from .scrying_glass_lair_storage import save_lairs
         if self.connection.execute('PRAGMA user_version').fetchone()[0] >= 6:
@@ -269,6 +275,7 @@ class SQLiteStorage:
             setup=self.connection.execute("SELECT campaign_id,name FROM battle_setups WHERE id=?",(row['active_setup_id'],)).fetchone()
             reference={'campaign_id':str(setup['campaign_id']),'name':setup['name']}
         result={'monsters':self._load_entities('monsters','encounter_id',encounter),'characters':[],'activity_log':self._load_log(encounter),'display':{'background':row['background'],'battle_order_font_size':row['battle_order_font_size']},'active_setup':reference,'battle_round':row['battle_round']}
+        result['has_lair'] = bool(row['has_lair']) if 'has_lair' in row.keys() else False
         from .scrying_glass_lair_storage import load_lairs
         result['lairs'] = load_lairs(self, encounter) if self.connection.execute('PRAGMA user_version').fetchone()[0] >= 6 else []
         for kind in LIST_FIELDS:

@@ -8,7 +8,7 @@ SCHEMA = """CREATE TABLE IF NOT EXISTS lairs (
  in_turn INTEGER NOT NULL CHECK(in_turn IN (0,1)), UNIQUE(encounter_id,participant_id))"""
 
 def upgrade_lairs(storage,*,backup=True):
-    if storage.connection.execute('PRAGMA user_version').fetchone()[0]==6:return
+    if storage.connection.execute('PRAGMA user_version').fetchone()[0]>=6:return
     if backup and storage.migration_backup is None:storage._backup()
     with storage.transaction():
         storage.connection.execute(SCHEMA)

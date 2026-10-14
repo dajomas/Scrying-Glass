@@ -6,3 +6,9 @@
 .lair-target-scroll { overflow-x:auto; margin-top:1rem; }
 .lair-target-scroll input[type=number] { width:6rem; }
 .lair-target-scroll input[type=text] { min-width:12rem; }
+
+/* Availability gates rendering without overwriting existing toggle preferences. */
+#lairTools[data-setup-has-lair="false"],
+#toggleLairPane[data-setup-has-lair="false"] {
+    display: none !important;
+}

@@ -296,18 +296,28 @@ Keep credentials/configuration separate from source and limit reachability to a
 trusted network. Coordinate multiple Admin users: there is no conflict/version
 resolution for simultaneous changes.
 
-## Initiative tie defaults and shared monster rolls
+## Initiative tie controls
 
-The initiative tie popup defaults to characters acting before monsters, retaining
-existing order within each kind. The Monsters Bulk menu includes **Roll shared
-initiative (d20)**, which rolls once for all selected monsters. Unselected
-monsters remain unchanged. The roll-all button still rolls individually.
-Shared initiative does not merge combatants or reorder a running battle.
+Characters default to earlier positions than monsters in each tied initiative
+group. Changing a position swaps the previous number onto the combatant that
+held the chosen number within the same group. The Monsters Bulk menu includes
+**Roll shared initiative (d20)** to assign one server-side roll to the selection.
+Shared initiative does not merge turns or reorder a running battle.
 
-### Swapping tie positions
 
-Changing a combatant's position automatically swaps it with the combatant that
-currently holds the chosen position, within the same initiative group.
-For example, with C1=1, C2=2, M1=3, M2=4, M3=5, changing M2 to 2 changes C2 to 4.
-The resulting order is C1=1, C2=4, M1=3, M2=2, M3=5. Other positions are unchanged.
-Repeated changes use the latest positions. Confirm with **Start battle** when done.
+## Has lair: battle setup pane availability
+
+The **Has lair** checkbox is directly below the Battle setup name input and
+above the Import buttons. It is saved separately for each battle setup.
+Unchecked hides the Lair pane and its toggle button; checked makes them
+available under the existing parent-pane, manual-toggle and battle-collapse
+rules. It does not force a manually hidden pane open or bypass a hidden setup
+parent. Existing preferences are retained when the checkbox is toggled.
+
+This controls the administration pane only. Unchecking does not delete the
+configured lair, change its Join Battle/Visible/Turn state, or remove its turn.
+Use the existing Lair controls to change battle participation.
+
+New setups default to unchecked. On upgrade, setups with a configured lair
+start checked; other setups start unchecked. Imported older setup data follows
+the same rule unless it explicitly contains a saved checkbox value.

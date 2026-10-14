@@ -184,10 +184,10 @@ class LairTests(unittest.TestCase):
         self.assertEqual(imported['lairs'][0]['name'],'Volcano')
     def test_schema_v5_upgrade_and_backup(self):
         path=Path(self.tmp.name)/'upgrade.sqlite3';db=SQLiteStorage(path)
-        db.connection.execute('DROP TABLE lairs');db.connection.execute('PRAGMA user_version=5');db.close()
+        db.connection.execute('DROP TABLE lairs');db.connection.execute('ALTER TABLE encounters DROP COLUMN has_lair');db.connection.execute('PRAGMA user_version=5');db.close()
         db=SQLiteStorage(path)
         try:
-            self.assertEqual(db.connection.execute('PRAGMA user_version').fetchone()[0],6)
+            self.assertEqual(db.connection.execute('PRAGMA user_version').fetchone()[0],SQLiteStorage.SCHEMA_VERSION)
             self.assertTrue(db.migration_backup.is_file())
             with closing(sqlite3.connect(db.migration_backup)) as backup:self.assertEqual(backup.execute('PRAGMA user_version').fetchone()[0],5)
             self.assertEqual(list(db.connection.execute('PRAGMA foreign_key_check')),[])
@@ -204,8 +204,8 @@ class LairTests(unittest.TestCase):
         with patch.dict(sys.modules,{'fastapi':fake}):
             from python.scrying_glass_api_lairs import install_lair_routes
             install_lair_routes(context,app)
-        self.assertEqual(len(captured),4)
-        self.assertEqual([row[2]['methods'] for row in captured],[['POST'],['PATCH'],['DELETE'],['POST']])
+        self.assertEqual(len(captured),5)
+        self.assertEqual([row[2]['methods'] for row in captured],[['PATCH'],['POST'],['PATCH'],['DELETE'],['POST']])
         for path,handler,options in captured:
             self.assertEqual(options['dependencies'][0],('guard','admin','admin-cookie'))
             self.assertEqual(options['dependencies'][1].__name__,'same_origin')

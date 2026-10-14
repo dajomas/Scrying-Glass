@@ -70,11 +70,15 @@ class StateService:
         supported = {
             "monsters", "characters", "battle_order", "turn_successors",
             "turn_successors_before_wrap", "activity_log", "display",
-            "active_setup", "active_turn_id", "battle_round", "lairs",
+            "active_setup", "active_turn_id", "battle_round", "lairs", "has_lair",
         }
         unknown = set(raw) - supported
         if unknown:
             raise ValueError(f"Unsupported state fields: {sorted(unknown)}")
+
+        has_lair = raw.get("has_lair", bool(raw.get("lairs")))
+        if type(has_lair) is not bool:
+            raise ValueError("has_lair must be a boolean")
 
         def require_list(field: str) -> list[Any]:
             value = raw.get(field, [])
@@ -352,6 +356,7 @@ class StateService:
                 ident for ident in turn_successors if ident in known_ids
             ],
             "activity_log": activity_log,
+            "has_lair": has_lair,
             "display": self.context.normalize_display(raw_display),
             "active_setup": active_setup,
             "battle_round": battle_round,
@@ -491,6 +496,7 @@ class StateService:
             "monsters": self.context.STATE["monsters"],
             "characters": self.context.STATE["characters"],
             "lairs": self.context.STATE.get("lairs", []),
+            "has_lair": self.context.STATE.get("has_lair", bool(self.context.STATE.get("lairs"))),
             "battle_round": self.context.STATE.get("battle_round", 0),
             "battle_order": self.context.STATE["battle_order"],
             "activity_log": self.context.STATE["activity_log"],

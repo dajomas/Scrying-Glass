@@ -155,7 +155,7 @@ class FeatureTests(unittest.TestCase):
     def test_v4_upgrade_backup_preserves_accounts(self):
         path=Path(self.tmp.name)/'v4.sqlite3';db=self.c.STORAGE.__class__(path);db.connection.execute("INSERT INTO users(username,role,password_hash) VALUES ('dm','admin','hash')")
         for table in ('characters_effects','monsters_effects','snapshot_characters_effects','snapshot_characters_attributes','snapshot_characters','encounter_snapshots','feature_state'):db.connection.execute('DROP TABLE '+table)
-        db.connection.execute('DROP TRIGGER IF EXISTS cleanup_snapshot');db.connection.execute('PRAGMA user_version=4');db.close();db=self.c.STORAGE.__class__(path)
+        db.connection.execute('DROP TRIGGER IF EXISTS cleanup_snapshot');db.connection.execute('ALTER TABLE encounters DROP COLUMN has_lair');db.connection.execute('PRAGMA user_version=4');db.close();db=self.c.STORAGE.__class__(path)
         self.assertEqual(db.connection.execute('SELECT username FROM users').fetchone()[0],'dm');self.assertTrue(db.migration_backup.is_file())
         with closing(sqlite3.connect(db.migration_backup)) as backup:self.assertEqual(backup.execute('PRAGMA user_version').fetchone()[0],4)
         db.close()

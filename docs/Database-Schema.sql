@@ -1,4 +1,4 @@
--- Schema v6; generated from SQLiteStorage at 4f401b4adfca92e9c9599aea8924c14efb49aea4.
+-- Schema v7; includes encounter-owned Has lair pane availability.
 -- Reference only: let the application initialize/migrate existing databases.
 -- PRAGMA user_version is set by application migrations; do not execute this as an upgrade.
 
@@ -26,7 +26,7 @@ CREATE TABLE characters_effects (id INTEGER PRIMARY KEY AUTOINCREMENT, parent_id
 
 CREATE TABLE encounter_snapshots (id INTEGER PRIMARY KEY AUTOINCREMENT, campaign_id INTEGER NOT NULL REFERENCES campaigns(id) ON DELETE CASCADE, encounter_id INTEGER NOT NULL UNIQUE REFERENCES encounters(id), kind TEXT NOT NULL CHECK(kind IN ('undo','checkpoint')), name TEXT NOT NULL, created REAL NOT NULL, setup_name TEXT, after_digest TEXT);
 
-CREATE TABLE encounters (id INTEGER PRIMARY KEY AUTOINCREMENT, battle_round INTEGER NOT NULL DEFAULT 0 CHECK(battle_round>=0), background TEXT NOT NULL DEFAULT '#080b14', battle_order_font_size INTEGER NOT NULL DEFAULT 16, active_setup_id INTEGER REFERENCES battle_setups(id) ON DELETE SET NULL, active_turn_id TEXT, has_active_turn_marker INTEGER NOT NULL DEFAULT 0 CHECK(has_active_turn_marker IN (0,1)));
+CREATE TABLE encounters (id INTEGER PRIMARY KEY AUTOINCREMENT, battle_round INTEGER NOT NULL DEFAULT 0 CHECK(battle_round>=0), background TEXT NOT NULL DEFAULT '#080b14', battle_order_font_size INTEGER NOT NULL DEFAULT 16, active_setup_id INTEGER REFERENCES battle_setups(id) ON DELETE SET NULL, active_turn_id TEXT, has_active_turn_marker INTEGER NOT NULL DEFAULT 0 CHECK(has_active_turn_marker IN (0,1)), has_lair INTEGER NOT NULL DEFAULT 0 CHECK(has_lair IN (0,1)));
 
 CREATE TABLE feature_state (id INTEGER PRIMARY KEY CHECK(id=1), revision INTEGER NOT NULL DEFAULT 0);
 
