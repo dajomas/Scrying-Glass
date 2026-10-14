@@ -298,20 +298,16 @@ resolution for simultaneous changes.
 
 ## Initiative tie defaults and shared monster rolls
 
-When starting a battle with tied numeric initiatives, the Resolve tied initiative
-popup defaults to characters acting before monsters in each tie. Existing order
-within each kind is retained. You can override the positions; every member must
-have a unique position.
+The initiative tie popup defaults to characters acting before monsters, retaining
+existing order within each kind. The Monsters Bulk menu includes **Roll shared
+initiative (d20)**, which rolls once for all selected monsters. Unselected
+monsters remain unchanged. The roll-all button still rolls individually.
+Shared initiative does not merge combatants or reorder a running battle.
 
-To give selected monsters one shared initiative:
+### Swapping tie positions
 
-1. Select the desired monsters in the Monsters pane.
-2. Choose **Roll shared initiative (d20)** in the Bulk dropdown.
-3. Start the battle and review any initiative ties.
-
-The server rolls one d20 and assigns that number to all selected monsters.
-Unselected monsters remain unchanged. The existing **Roll monster initiatives
-(d20)** button still rolls separately for every monster.
-
-Shared initiative creates an initiative tie, not a single merged combatant or
-simultaneous turn. Changing initiative does not reorder a running battle.
+Changing a combatant's position automatically swaps it with the combatant that
+currently holds the chosen position, within the same initiative group.
+For example, with C1=1, C2=2, M1=3, M2=4, M3=5, changing M2 to 2 changes C2 to 4.
+The resulting order is C1=1, C2=4, M1=3, M2=2, M3=5. Other positions are unchanged.
+Repeated changes use the latest positions. Confirm with **Start battle** when done.

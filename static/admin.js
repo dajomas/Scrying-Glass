@@ -3342,7 +3342,7 @@ function tieUI() {
     ${bucket.members.map((member, memberIndex) => `
         <label class="tie">
         ${esc(member.name)}
-        <select data-tie-bucket="${bucketIndex}" data-tie-member="${esc(member.id)}">
+        <select data-tie-bucket="${bucketIndex}" data-tie-member="${esc(member.id)}" data-tie-position="${memberIndex + 1}">
             ${bucket.members.map((_, position) => `
             <option value="${position + 1}" ${position === memberIndex ? 'selected' : ''}>
                 ${position + 1}
@@ -3353,6 +3353,38 @@ function tieUI() {
     `).join('')}
     `).join('');
 }
+
+function swapTiePosition(event) {
+    const select = event.target;
+
+    if (!select.matches('select[data-tie-bucket][data-tie-member]')) {
+        return;
+    }
+
+    const previous = select.dataset.tiePosition;
+    const chosen = select.value;
+
+    if (chosen === previous) {
+        return;
+    }
+
+    const other = [...event.currentTarget.querySelectorAll(
+        'select[data-tie-bucket][data-tie-member]',
+    )].find(candidate =>
+        candidate !== select &&
+        candidate.dataset.tieBucket === select.dataset.tieBucket &&
+        candidate.value === chosen,
+    );
+
+    if (other) {
+        other.value = previous;
+        other.dataset.tiePosition = previous;
+    }
+
+    select.dataset.tiePosition = chosen;
+}
+
+document.querySelector('#tieGroups').addEventListener('change', swapTiePosition);
 
 function readTieOrder() {
     const ties = tiedBuckets();

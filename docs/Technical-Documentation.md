@@ -494,29 +494,30 @@ Uploads are extension-checked, not comprehensively content-validated. They are
 not automatically garbage-collected. Sessions are not durable; there is no
 built-in rate limiting or distributed synchronization. Deletion is permanent.
 
-## Shared monster initiative and tie defaults
+## Initiative tie defaults and shared monster rolls
 
-`POST /api/monsters/bulk` accepts `roll-shared-initiative` with the existing
-`ids` list. The handler validates the selected IDs before mutation, rolls
-`context.random.randint(1, 20)` once, assigns the result to every selected
-monster, and calls `combatants_changed(monsters=True, characters=False)`.
-The response retains the existing `{"count": N}` format. No schema or route
-changes are needed. Existing battle order is preserved.
+The initiative tie popup defaults to characters acting before monsters, retaining
+existing order within each kind. The Monsters Bulk menu includes **Roll shared
+initiative (d20)**, which rolls once for all selected monsters. Unselected
+monsters remain unchanged. The roll-all button still rolls individually.
+Shared initiative does not merge combatants or reorder a running battle.
 
-The `tieUI()` function in `static/admin.js` identifies characters by membership
-in `latest.characters`. It stably sorts a copy of each tied bucket with characters
-first, assigning unique default positions without mutating the underlying
-bucket. Manual tie resolution and the existing individual monster rolls remain
-unchanged.
+### Tie-position swap implementation
 
-Focused regression checks:
+Each tie select initializes `data-tie-position` to its selected default position.
+A delegated `change` listener on `#tieGroups` calls `swapTiePosition`, finds the
+other select with the chosen value in the same `data-tie-bucket`, and assigns it
+the changed select's previous value. Both tracked positions are updated after
+each swap. Event delegation also handles freshly rendered popup contents.
+`readTieOrder()` continues validating unique positions and reading the selected
+values. No backend, route, or schema changes are needed for swapping.
+
+Run the focused regression checks with:
 
 ```sh
-python -m unittest discover -s tests -p 'test_shared_monster_initiative.py' -v
-node --test tests/initiative-tie-defaults.test.cjs
+node --test tests/initiative-tie-swap.test.cjs
 node --check static/admin.js
 ```
 
-The Python tests isolate the bulk handler with mocked context services; the
-JavaScript tests isolate tie rendering. They are not browser or full-application
-integration tests.
+The tests exercise the swap handler and rendering with lightweight DOM doubles;
+they do not replace full browser integration testing.
