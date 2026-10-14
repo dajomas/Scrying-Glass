@@ -409,7 +409,7 @@ class AdminMonstersMixin:
             "show-initiative": ("show_initiative", True),
             "hide-initiative": ("show_initiative", False),
         }
-        allowed = {*fields, "reset", "remove"}
+        allowed = {*fields, "reset", "remove", "roll-shared-initiative"}
 
         if body.action not in allowed:
             raise self.context.HTTPException(400, "Unsupported bulk monster action")
@@ -437,6 +437,11 @@ class AdminMonstersMixin:
             else:
                 for monster in targets:
                     monster[field] = value
+
+        elif body.action == "roll-shared-initiative":
+            initiative = self.context.random.randint(1, 20)
+            for monster in targets:
+                monster["initiative"] = initiative
 
         elif body.action == "reset":
             for monster in targets:

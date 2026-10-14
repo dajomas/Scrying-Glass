@@ -295,3 +295,23 @@ JSON files remain archival. See [migration instructions](SQLite-Migration.md).
 Keep credentials/configuration separate from source and limit reachability to a
 trusted network. Coordinate multiple Admin users: there is no conflict/version
 resolution for simultaneous changes.
+
+## Initiative tie defaults and shared monster rolls
+
+When starting a battle with tied numeric initiatives, the Resolve tied initiative
+popup defaults to characters acting before monsters in each tie. Existing order
+within each kind is retained. You can override the positions; every member must
+have a unique position.
+
+To give selected monsters one shared initiative:
+
+1. Select the desired monsters in the Monsters pane.
+2. Choose **Roll shared initiative (d20)** in the Bulk dropdown.
+3. Start the battle and review any initiative ties.
+
+The server rolls one d20 and assigns that number to all selected monsters.
+Unselected monsters remain unchanged. The existing **Roll monster initiatives
+(d20)** button still rolls separately for every monster.
+
+Shared initiative creates an initiative tie, not a single merged combatant or
+simultaneous turn. Changing initiative does not reorder a running battle.

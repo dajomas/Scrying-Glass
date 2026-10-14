@@ -3329,7 +3329,13 @@ function normalOrder() {
 }
 
 function tieUI() {
-    const ties = tiedBuckets();
+    const characterIds = new Set(latest.characters.map(character => character.id));
+    const ties = tiedBuckets().map(bucket => ({
+        ...bucket,
+        members: bucket.members.slice().sort((left, right) =>
+            Number(characterIds.has(right.id)) - Number(characterIds.has(left.id)),
+        ),
+    }));
 
     return ties.map((bucket, bucketIndex) => `
     <div class="tie-title">Initiative ${bucket.initiative}</div>

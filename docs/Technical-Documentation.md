@@ -493,3 +493,30 @@ not replace full runtime and browser tests.
 Uploads are extension-checked, not comprehensively content-validated. They are
 not automatically garbage-collected. Sessions are not durable; there is no
 built-in rate limiting or distributed synchronization. Deletion is permanent.
+
+## Shared monster initiative and tie defaults
+
+`POST /api/monsters/bulk` accepts `roll-shared-initiative` with the existing
+`ids` list. The handler validates the selected IDs before mutation, rolls
+`context.random.randint(1, 20)` once, assigns the result to every selected
+monster, and calls `combatants_changed(monsters=True, characters=False)`.
+The response retains the existing `{"count": N}` format. No schema or route
+changes are needed. Existing battle order is preserved.
+
+The `tieUI()` function in `static/admin.js` identifies characters by membership
+in `latest.characters`. It stably sorts a copy of each tied bucket with characters
+first, assigning unique default positions without mutating the underlying
+bucket. Manual tie resolution and the existing individual monster rolls remain
+unchanged.
+
+Focused regression checks:
+
+```sh
+python -m unittest discover -s tests -p 'test_shared_monster_initiative.py' -v
+node --test tests/initiative-tie-defaults.test.cjs
+node --check static/admin.js
+```
+
+The Python tests isolate the bulk handler with mocked context services; the
+JavaScript tests isolate tie rendering. They are not browser or full-application
+integration tests.
