@@ -45,6 +45,8 @@ class CampaignsService:
             raise self.context.HTTPException(404, "Campaign ID is outside the supported range")
         if not self.context.STORAGE.campaign_exists(ident):
             raise self.context.HTTPException(404, f"Campaign not found: {ident}")
+        from .scrying_glass_campaign_ownership import require_campaign_owner
+        require_campaign_owner(self.context, ident)
         return ident
 
     def create_default_setup(self, campaign_id: str) -> str | None:
@@ -104,4 +106,5 @@ class CampaignsService:
                 'last_setup': meta.get('last_setup') if meta.get('last_setup') in setups else None,
             })
         items.sort(key=lambda x: str(x['name']).casefold())
-        return {'active': data['active'], 'campaigns': items, 'moved': moved or []}
+        from .scrying_glass_campaign_ownership import campaign_payload
+        return campaign_payload(self.context, {'active': data['active'], 'campaigns': items, 'moved': moved or []})

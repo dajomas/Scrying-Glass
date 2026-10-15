@@ -4,6 +4,7 @@ import asyncio
 import copy
 import inspect
 from functools import wraps
+from .scrying_glass_campaign_ownership import ownership_request, admin_state, actor, ownership
 from .scrying_glass_health_limits import HpStorageRangeError
 from .scrying_glass_identity_rules import ParticipantIdentityConflict
 from .scrying_glass_initiative_gate import validate_initiative_request, validate_initiative_transition
@@ -22,13 +23,19 @@ def serialized_handler(context, handler, *, role=None, cookie_name=None):
     async def wrapped(*args, **kwargs):
         request = kwargs.pop("_operation_request", None)
         async with operation_lock(context):
-            # Recheck authorization after waiting for another request.
+            # Resolve the actor only after waiting for the serialized operation lock.
+            session = None
             if request is not None and role is not None:
-                await context.require(role, cookie_name)(request)
-            result = handler(*args, **kwargs)
-            if inspect.isawaitable(result):
-                result = await result
-            return copy.deepcopy(result) if isinstance(result, (dict, list)) else result
+                session = await context.require(role, cookie_name)(request)
+            with ownership_request(context, session, handler, args, kwargs, request):
+                result = handler(*args, **kwargs)
+                if inspect.isawaitable(result):
+                    result = await result
+                if handler.__name__ == 'feature_summary' and actor(context) and actor(context)['role'] == 'admin' and isinstance(result, dict):
+                    result['displays'] = []
+                if handler.__name__ == 'admin_get_state':
+                    result = admin_state(context, result)
+                return copy.deepcopy(result) if isinstance(result, (dict, list)) else result
 
     if role is not None:
         from fastapi import Request
@@ -52,9 +59,13 @@ def transactional_handler(context, handler, *, role=None, cookie_name=None):
         context._database_broadcast_pending = False
         try:
             with context.STORAGE.transaction():
+                existing_campaigns = ownership(context).ids() if actor(context) is not None else None
                 validate_initiative_request(context, handler, args, kwargs)
                 result = await handler(*args, **kwargs)
                 validate_initiative_transition(context, original, handler.__name__)
+                if existing_campaigns is not None:
+                    for campaign_id in ownership(context).ids() - existing_campaigns:
+                        ownership(context).assign_created(campaign_id)
                 if features:
                     features.reconcile()
                     if context.STATE != original:

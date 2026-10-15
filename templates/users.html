@@ -5,9 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Scrying Glass - Users</title>
-    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/static/admin.css">
     <script src="/static/users.js" defer></script>
+    <script src="/static/campaign-ownership-admin.js" defer></script>
 </head>
 
 <body>
@@ -46,6 +46,16 @@
                     </tr>
                 </thead>
                 <tbody id="userRows"></tbody>
+            </table>
+        </section>
+        <section id="campaignOwnershipSection">
+            <h2>Campaign ownership</h2>
+            <p>Only regular admins can own campaigns. Unassigned campaigns are visible only to superadmins.</p>
+            <button id="refreshCampaignOwners" type="button">Refresh campaign owners</button>
+            <p id="campaignOwnerNotice" role="status" aria-live="polite"></p>
+            <table>
+                <thead><tr><th>Campaign</th><th>Assigned admin</th><th>Action</th></tr></thead>
+                <tbody id="campaignOwnerRows"></tbody>
             </table>
         </section>
     </main>

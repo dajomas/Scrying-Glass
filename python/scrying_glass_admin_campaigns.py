@@ -18,6 +18,8 @@ class AdminCampaignsMixin:
         if self.context.STORAGE.campaign_name_exists(name):
             raise self.context.HTTPException(409, "Campaign name already exists")
         ident = self.context.STORAGE.create_campaign(name, payload.description.strip(), self.context.now_iso())
+        from .scrying_glass_campaign_ownership import assign_created_campaign
+        assign_created_campaign(self.context, ident)
         self.context.create_default_setup(ident)
         self.context.save_campaign_characters(ident, [])
         if payload.activate:
@@ -64,11 +66,13 @@ class AdminCampaignsMixin:
         replacement_state = None
 
         if reactivated:
-            replacement_id = target_id or sorted(
-                campaign
-                for campaign in data["campaigns"]
-                if campaign != campaign_id
-            )[0]
+            from .scrying_glass_campaign_ownership import ownership, actor
+            candidates = sorted(campaign for campaign in data["campaigns"]
+                                if campaign != campaign_id and ownership(self.context).allowed(campaign)) if actor(self.context) else sorted(
+                                    campaign for campaign in data["campaigns"] if campaign != campaign_id)
+            if not target_id and not candidates:
+                raise self.context.HTTPException(409, "No other assigned campaign can replace this active campaign; ask a superadmin to delete it")
+            replacement_id = target_id or candidates[0]
 
             replacement_name = self.context.pick_campaign_setup(
                 replacement_id
