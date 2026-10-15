@@ -6,10 +6,11 @@ CLIENT_HTML = r'''<!doctype html>
   <title>Scrying Glass</title>
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="/static/client.css">
+  <link rel="stylesheet" href="/static/viewer-campaigns.css">
 </head>
 <body>
   <header class="client-toolbar" aria-label="Campaign and display status">
-    <span id="clientCampaign" aria-live="polite">Campaign: …</span>
+    <button id="clientCampaign" type="button" aria-live="polite" aria-haspopup="dialog" disabled>Campaign: …</button>
     <span id="displaySync" role="status" aria-live="polite">Connecting…</span>
     <form action="/logout" method="post">
       <button id="clientLogout" type="submit">Log out</button>
@@ -18,6 +19,7 @@ CLIENT_HTML = r'''<!doctype html>
   <div id="initiative"></div>
   <div id="stage"></div>
 
+  <script src="/static/viewer-campaigns.js" defer></script>
   <script src="/static/client.js" defer></script>
 </body>
 </html>'''

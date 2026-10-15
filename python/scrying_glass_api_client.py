@@ -12,6 +12,8 @@ class ClientAPI:
         self.context = context
         self.app = app
         self.register_routes()
+        from .scrying_glass_campaign_viewer_routes import install_campaign_viewers
+        install_campaign_viewers(context, app)
         from .scrying_glass_logout import install_logout
         install_logout(context, app, context.CLIENT_SESSION_COOKIE)
 
@@ -90,9 +92,11 @@ class ClientAPI:
     # ============================================================================
 
 
-    def client_get_state(self):
-        """Client get state."""
-        return self.context.display_state()
+    def client_get_state(self, request: FastAPIRequest):
+        """Return only the signed-in viewer's authorized campaign."""
+        from .scrying_glass_campaign_viewers import viewers
+        return viewers(self.context).state(request.cookies.get(self.context.CLIENT_SESSION_COOKIE, ''),
+                                           request.query_params.get('campaign_id'))
 
     async def ws(self, websocket: WebSocket):
         """Server-driven heartbeat; no browser-timer inactivity disconnects."""
@@ -122,7 +126,8 @@ class ClientAPI:
                 if not self.context.auth_session(token):
                     await websocket.close(code=1008,reason='Sign in required');return False
                 revision=features.store.revision()
-                message={'type':'state','revision':revision,'state':self.context.display_state()}
+                from .scrying_glass_campaign_viewers import viewers
+                message={'type':'state','revision':revision,'state':viewers(self.context).socket_state(websocket)}
                 await asyncio.wait_for(websocket.send_text(self.context.json.dumps(message)),timeout=2)
                 if not self.context.auth_session(token):
                     await websocket.close(code=1008,reason='Sign in required');return False

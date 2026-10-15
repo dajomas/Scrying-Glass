@@ -29,13 +29,20 @@
           </button>
         </div>
         <div class="row">
-          <label class="field">
           <div class="row">
             <button id="openCharacterCsvImport" class="import">
               Import characters CSV
             </button>
           </div>
         </div>
+        <details id="campaignViewerAccess">
+          <summary id="campaignViewerAccessTitle">Viewer access</summary>
+          <p>Select the client-role users allowed to view this campaign. Users can view multiple campaigns.</p>
+          <div id="campaignViewerUsers"></div>
+          <button id="saveCampaignViewers" type="button" disabled>Save viewer access</button>
+          <p id="campaignViewerNotice" role="status" aria-live="polite"></p>
+        </details>
+        <script src="/static/campaign-viewer-admin.js" defer></script>
       </div>
     </section>
 

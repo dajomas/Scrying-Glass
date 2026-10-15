@@ -127,6 +127,7 @@ function initiativeTokenContent(combatant) {
 function renderClientCampaign(state) {
     const element=document.querySelector('#clientCampaign');if(!element)return;
     const name=state?.campaign?.name;element.textContent=name?'Campaign: '+name:'No active campaign';element.title=name||'';
+    window.renderViewerCampaignSelection?.(state);
 }
 function render(state) {
     renderClientCampaign(state);
@@ -317,7 +318,7 @@ function connectDisplay() {
     }
     async function checkSignIn() {
         try {
-            const response=await fetch('/api/state',{cache:'no-store'});
+            const response=await fetch('/api/state'+location.search,{cache:'no-store'});
             if(response.status===401){stopped=true;location.assign('/login');return false;}
         }catch(error){console.debug('Unable to check display session',error);}
         return true;
@@ -326,7 +327,7 @@ function connectDisplay() {
         if(stopped||socket?.readyState===WebSocket.OPEN||socket?.readyState===WebSocket.CONNECTING)return;
         status(lastSnapshot===null?'Connecting…':'Reconnecting… (last display retained)');
         try {
-            socket=new WebSocket(`${location.protocol==='https:'?'wss://':'ws://'}${location.host}/ws`);
+            socket=new WebSocket(`${location.protocol==='https:'?'wss://':'ws://'}${location.host}/ws${location.search}`);
         }catch(error){console.warn('Unable to open display WebSocket',error);scheduleReconnect();return;}
         const current=socket;
         resyncPending=false;

@@ -67,6 +67,8 @@ class AdminAPI(AdminPagesMixin, AdminDisplayMixin, AdminSetupsMixin, AdminCampai
         self.context = context
         self.app = app
         self.register_routes()
+        from .scrying_glass_campaign_viewer_routes import install_campaign_viewers
+        install_campaign_viewers(context, app, admin=True)
         from .scrying_glass_api_features import install_feature_routes
         install_feature_routes(context,app)
         from .scrying_glass_api_lairs import install_lair_routes
