@@ -24,8 +24,7 @@ Use Python 3.14+ with standard-library sqlite3 and a modern browser. Run exactly
 ```bash
 git clone https://github.com/dajomas/scrying-glass.git
 cd scrying-glass
-git fetch origin features/development
-git checkout --detach 1541640f9dcb0f202cc1b2b6afa89836f117989b
+git checkout main
 python3.14 -m venv .venv
 .venv/bin/python -m pip install --upgrade pip
 .venv/bin/python -m pip install 'fastapi>=0.115' 'uvicorn[standard]>=0.30' 'PyYAML>=6.0' python-multipart
