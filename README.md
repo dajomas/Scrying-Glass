@@ -1,262 +1,95 @@
 # Scrying Glass
 
-Documented baseline: `features/development` at `4f401b4adfca92e9c9599aea8924c14efb49aea4`.
+[Overview](Readme.md) · [User Guide](docs/User-Guide.md) · [Technical Documentation](docs/Technical-Documentation.md) · [Systemd Deployment](docs/Systemd-Deployment.md)
 
-Scrying Glass is a self-hosted tabletop encounter manager: the game master uses
-an authenticated Admin interface while players watch a separate live Client
-Display. Both FastAPI applications run in one Python process, persist structured data in
-SQLite (schema v6), and share encounter state. Client updates use WebSockets.
+Scrying Glass, formerly Monster Display, is a self-hosted tabletop encounter manager. The GM uses an authenticated Admin interface; players use a separate Client Display. Two FastAPI applications run in one Python process, persist structured data in SQLite and deliver player updates over WebSockets.
 
-Formerly Monster Display. This documentation covers the supplied source snapshot,
-including normalized SQLite storage, database-backed accounts and filtered player updates.
-Database schema versions are distinct from application version labels.
+## Capabilities
 
-## Documentation
+- Campaign-owned character rosters and named monster encounter setups.
+- Database accounts, superadmin user management, regular-admin campaign ownership and campaign-specific client viewer grants.
+- Fixed/ranged/dice HP, monster quantities, CSV and .monster imports, uploaded images and optional D&D Beyond suggestions.
+- Initiative validation and ties, shared monster initiative, rounds and turn progression.
+- Damage, capped healing, temporary HP, life states, manual death-save counters, actions and reactions.
+- Private/public effects, concentration links and turn-boundary expiry.
+- Encounter lairs at initiative 20, bounded persistent undo, checkpoints and portable campaign bundles.
+- Activity-log exports, per-setup backgrounds, viewer font sizing and synchronization status.
 
-- [User Guide](docs/User-Guide.md): campaigns, characters, setups, imports and combat.
-- [Technical Documentation](docs/Technical-Documentation.md): modules, context, state, APIs and development.
-- [User Management](docs/User-Management.md): first login, roles, account migration and recovery.
-- [SQLite Migration](docs/SQLite-Migration.md): upgrade paths, backups and rollback.
-- [Database Schema](docs/Database-Schema.sql): reference DDL, not a manual migration script.
-- [Encounter Features](docs/Encounter-Features.md): health, effects, undo, checkpoints and portable campaign bundles.
-- [Lair Actions](docs/Lair-Actions.md): initiative-20 environmental turns and batched actions.
-- [Damage and Death Saves](docs/Corrected-Damage-Logic.md): temporary HP, critical hits and massive damage.
-- [Display Connections](docs/Display-Connection-Stability.md): heartbeat, revisions and in-place reconnect.
-- [Systemd Deployment](docs/Systemd-Deployment.md): Linux service installation, upgrades and backups.
+This is a GM-assisted tracker, not a full rules engine. Resolve dice, saves, mitigation, concentration checks, reaction availability and resurrection exceptions manually.
 
-## Features
+## Requirements and installation
 
-- Separate Admin and Client applications with separate session cookies and logout.
-- Database-backed client/admin/superadmin accounts and superadmin-only user management.
-- Campaigns with campaign-owned character rosters and named battle setups.
-- Manual monster creation with fixed, ranged or dice-expression HP.
-- Monster quantities, .monster JSON import, and monster/character CSV import.
-- Uploaded images and optional best-effort D&D Beyond image/stat suggestions.
-- Battle initiative, tie resolution, round tracking, turn advancement, individual/bulk controls.
-- Adjustable viewer battle-order text (12–40 px, in 2 px steps).
-- Current-turn actions, ordered reaction rows and start-of-turn damage/healing.
-- Nonnegative HP, maximum-HP-capped healing, temporary HP and manual death saves.
-- Persistent private/public effects, timed expiry and concentration reminders.
-- Persistent undo, named checkpoints and ZIP campaign export/import with local media.
-- One optional lair per encounter, fixed at initiative 20 after tied creatures.
-- Detailed activity logging with CSV/JSON exports and viewer revision/status tracking.
-- Per-setup display backgrounds: colors, CSS gradients and uploaded images.
-- Normalized SQLite persistence, stable campaign IDs, legacy migration and real-time player display updates.
-
-## Requirements
-
-Python 3.14 or newer, a modern browser, and network connectivity between the
-server and intended display devices. Use one application process per storage
-directory; shared runtime state is not distributed across workers.
-
-## Source layout
-
-```text
-repository/
-├── scrying_glass_server.py       # Entry point, runtime context, apps and startup
-├── python/
-│   ├── __init__.py
-│   ├── scrying_glass_services.py # Service installation/binding
-│   ├── scrying_glass_service_*.py
-│   ├── scrying_glass_api_admin.py
-│   ├── scrying_glass_admin_*.py
-│   ├── scrying_glass_api_client.py
-│   ├── scrying_glass_classes.py
-│   └── ...helper modules...
-├── web_html/
-│   ├── __init__.py
-│   ├── admin_html.py            # ADMIN_HTML fragment loader
-│   ├── client_html.py
-│   └── login_html.py
-├── templates/
-│   ├── users.html              # Superadmin account-management page
-│   └── admin/                  # 21 ordered HTML fragments
-├── static/                     # Admin/client/login CSS and browser JavaScript
-├── config.example.yaml
-├── run.sh                      # Linux/macOS launcher; environment in ~/dnd
-├── run.bat / run.ps1            # Windows launchers; environment in %USERPROFILE%\dnd
-├── tests/                      # Python tests and JavaScript/audit checks
-└── docs/
-```
-
-Deploy the complete layout, not just the root script. The existing corrected
-helper modules must accompany the new service and admin-handler modules.
-Keep `__init__.py` in both packages. The HTML package is `web_html`, not `html`,
-to avoid colliding with Python's standard-library package.
-
-## Installation
-
-Obtain the repository revision containing the split layout and change into its
-root. For the existing repository:
+Use Python 3.14+ with standard-library sqlite3 and a modern browser. Run exactly one application process per storage directory; multiple workers/replicas are unsupported. Node and browser automation are test tooling, not runtime requirements.
 
 ```bash
 git clone https://github.com/dajomas/scrying-glass.git
 cd scrying-glass
-```
-
-Select your intended branch or release; do not assume the split is on every
-branch. Create the virtual environment and install dependencies:
-
-```bash
+git fetch origin features/development
+git checkout --detach 1541640f9dcb0f202cc1b2b6afa89836f117989b
 python3.14 -m venv .venv
 .venv/bin/python -m pip install --upgrade pip
-.venv/bin/python -m pip install \
-  'fastapi>=0.115' \
-  'uvicorn[standard]>=0.30' \
-  'PyYAML>=6.0' \
-  python-multipart
-```
-
-Copy and edit the configuration:
-
-```bash
+.venv/bin/python -m pip install 'fastapi>=0.115' 'uvicorn[standard]>=0.30' 'PyYAML>=6.0' python-multipart
 cp config.example.yaml config.yaml
 ```
 
-Accounts are not configured here on a fresh installation. Example configuration:
+A detached checkout makes this baseline reproducible. Deliberately select a branch when developing newer changes.
+
+## Configuration
 
 ```yaml
 network:
   bind: "0.0.0.0"
   admin_port: 3000
   client_port: 4000
-
 storage_dir: "./scrying-glass-data"
-
-
 display:
   background: "#080b14"
   entry_direction: "from_bottom"
   exit_direction: "to_bottom"
   monster_width_percent: 45
+  default_monster_color: "#842029"
+  default_character_color: "#1f4e79"
   dndbeyond_image_lookup: true
 ```
 
-## Validate and launch
+Accounts live in SQLite, not new configuration files. Legacy security.users is imported once only. Relative storage paths resolve from the working directory; use absolute paths for services. Saved encounter display settings override the configured fallback.
 
-Run checks using the application's virtual environment:
+CLI overrides: --config, --bind, --admin-port, --client-port, --storage-dir.
+
+## Validate and run
 
 ```bash
+.venv/bin/python -c "import sqlite3; print(sqlite3.sqlite_version)"
 .venv/bin/python -m compileall -q scrying_glass_server.py python web_html
-.venv/bin/python -c "from web_html.admin_html import ADMIN_HTML; print('HTML loaded:', len(ADMIN_HTML), 'characters')"
-.venv/bin/python -c "import scrying_glass_server; print('Server import passed')"
-```
-
-Compilation checks Python syntax; the import check also loads HTML fragments
-and constructs routes. It does not initialize storage or start listeners.
-
-```bash
+.venv/bin/python -c "from web_html.admin_html import ADMIN_HTML; print(len(ADMIN_HTML))"
+.venv/bin/python -c "import scrying_glass_server"
 .venv/bin/python scrying_glass_server.py --config config.yaml
 ```
 
-Your existing shell launcher may activate the environment before running this
-command. The direct virtual-environment executable also works without activation.
+Import checks do not initialize deployment storage, run application lifespans or test listeners. Launch the root script directly; external uvicorn module:app commands skip main-guard initialization.
 
-| Screen | Default address | Role |
+| Interface | Default URL | Account |
 |---|---|---|
-| Battle Admin | `http://SERVER:3000/` | admin UI; superadmin redirects to /users |
-| User Management | `http://SERVER:3000/users` | superadmin |
-| Client Display | `http://SERVER:4000/display` | client, admin or superadmin |
+| Battle Admin | http://SERVER:3000/ | admin |
+| User Management | http://SERVER:3000/users | superadmin |
+| Client Display | http://SERVER:4000/display | client/admin/superadmin, scoped by permissions |
 
-Replace SERVER with the hostname/IP; use localhost for same-machine access.
-The root script remains the entry point: do not replace it with an external
-Uvicorn module command, which bypasses initialization under the main guard.
+Fresh installs print a random superadmin password once. Change it immediately, then create admin/client accounts. Superadmins land on /users rather than battle HTML. Use a regular admin for interactive battles. Assign campaign ownership and client viewer grants separately.
 
-## First login and accounts
+## Layout and deployment
 
-On first account initialization, a fresh installation creates a `superadmin` with a
-random password and prints its credentials once to startup stdout (the journal for
-systemd). Sign in on the Admin port: superadmins land on `/users`, not the battle UI.
-Change the bootstrap password there, then create an `admin` for battle administration
-and a `client` for players. No default player account is created. A superadmin can
-call battle APIs and access the player display, but `/` redirects to user management.
+Deploy scrying_glass_server.py, python/, web_html/, templates/ and static/ together. Keep package __init__.py files. web_html avoids collision with Python's html module. Admin markup is assembled from ordered templates/admin fragments; user management uses templates/users.html. Restart after imported HTML changes and reload browsers for assets.
 
-Existing `security.users` is imported once. The first legacy admin is promoted if
-there is no legacy superadmin; existing passwords remain usable. After verifying the
-import, remove that section from your live configuration. Later configuration edits
-do not reset database accounts. See [User Management](docs/User-Management.md).
+The repository documentation directory is docs/. This set contains four self-contained documents; supplemental feature pages are not required. A root README can link to docs/Readme.md.
 
-## Included launchers
+## Persistence and backup
 
-Run `bash run.sh`, `run.bat`, or `./run.ps1` from the appropriate shell after creating
-`config.yaml`. Each launcher changes to the checkout root, checks sqlite3 support and
-starts the root server with that config. They do not forward extra CLI arguments.
-`run.sh` creates/uses `~/dnd` and skips pip when its dependency-spec marker matches;
-the Windows launchers use `%USERPROFILE%\dnd` and invoke pip each time. Windows
-environment creation specifically checks for Python 3.14. For custom ports/storage
-or another environment, use the direct Python command instead.
+storage_dir contains scrying-glass.sqlite3, uploads/ and optional migration backups/archived legacy data. The database includes accounts/password hashes, campaigns, rosters, setups, runtime, logs and recovery state. Legacy JSON remains archival after import.
 
-## Encounter workflow
+Stop the application and back up the entire directory, configuration and service unit. Automatic database migration backups omit media/configuration. Campaign bundles omit accounts, other campaigns and accumulated undo/checkpoint collections; they are not full installation backups.
 
-1. Sign into Admin; open and sign into the Client Display separately.
-2. Select/create a campaign and maintain its character roster.
-3. Create/load a battle setup and add or import monsters.
-4. Choose a display background and save the setup.
-5. Set initiative, activate participants, start battle and resolve ties.
-6. Advance turns and use the current participant’s action or lair dialog; down/stable characters retain turns for manual death saves.
-7. Export the activity log if needed; end/reset the battle as appropriate.
+## Security and limitations
 
-Characters belong to campaigns, not setup snapshots. New setups retain the
-active campaign's characters. Setup import appends monsters only. Loading a
-setup restores its encounter data and loads the campaign's current roster.
+Use a trusted LAN or restricted VPN/HTTPS proxy, not public default HTTP listeners. Sessions are in memory and clear on restart. Account changes invalidate sessions. Player state is filtered, but names, images, public effects, life state and relative ordering are intentionally visible. /media is a static mount without session protection.
 
-## Persistence and backups
-
-Structured data lives in `storage_dir/scrying-glass.sqlite3`, now schema version 4.
-The database stores individual values in typed columns and lists in ID-bearing child
-rows; it does not store serialized JSON payloads. Uploaded images remain under
-`storage_dir/uploads/`, and configuration remains a YAML/JSON file. JSON API responses
-and in-memory dictionaries are unchanged as formats; JSON is not a database storage format.
-
-Campaigns and battle setups have stable integer database IDs. Campaign renames update
-one campaign row, without rewriting characters, setups or runtime references. Campaign
-IDs are represented as decimal strings in API/form values. The admin frontend uses id,
-not slug, for campaign selection. Existing monster/character combatant IDs remain intact.
-
-Upgrades from slug-based SQLite v1 and campaign-ID SQLite v2 are backed up and converted
-to normalized v3, followed by account tables (v4), effects/recovery/revisions (v5) and lairs (v6).
-Existing v3 databases are backed up before adding account tables. Existing v2 campaign
-IDs are retained. Original JSON installations
-are imported into the current v6 database without modifying source files. See
-[SQLite migration instructions](docs/SQLite-Migration.md) and [database schema](docs/Database-Schema.sql).
-
-Stop the application before backing up the entire storage directory plus configuration.
-Keep matching pre-upgrade code and data for rollback. Archived JSON files are not updated
-after import. Use one application process per data directory. sqlite3 is supplied by
-Python, not pip; the launchers check its availability before starting.
-
-## Editing the UI
-
-Admin markup lives in ordered fragments in `templates/admin/`. The loader
-exports ADMIN_HTML as before and reads fragments once at import; restart the
-server after markup edits. Keep fragment order and element IDs intact.
-CSS and JavaScript live in `static/`; reload the page after changes. HTML responses add fresh `_cb` tokens to local CSS/JS URLs. Already-open tabs must reload to use updated assets.
-No Jinja dependency was introduced by the split.
-
-## Security
-
-Use a trusted LAN. Do not expose default HTTP ports directly to the internet.
-For remote access, use network restrictions/VPN and an HTTPS reverse proxy;
-review cookie settings and application-level protections before exposure.
-Sessions are in memory and are lost on restart. Player HTTP/WebSocket state is
-filtered server-side: hidden monster stats, character stats, activity logs and setup
-references are omitted. This is not complete secrecy: visible names, ordering and
-image URLs remain available, and `/media` is an unauthenticated static mount.
-Cross-origin browser mutations and display sockets with mismatched origins are
-rejected; cookies still use `secure=False`. Logout revokes only that interface session.
-
-## Upgrade and legacy names
-
-Deploy all Python packages, HTML fragments and static assets together. Back up
-configuration and storage, stop the application, update code, validate, then
-restart. See [Systemd Deployment](docs/Systemd-Deployment.md#upgrade-procedure).
-
-Earlier installations used monster_display_server.py and monster-display-data.
-The current entry point is scrying_glass_server.py. If the new default storage
-directory is absent, the legacy default directory can be used as a fallback.
-Explicit storage_dir settings are unchanged. Legacy login cookies are removed
-on successful login; everyone must sign in after a restart.
-
-## License
-
-See the repository [LICENSE](LICENSE) for the MIT license.
+There is one shared live active campaign, not an independent runtime per admin. Serialized transactions do not provide optimistic conflict detection for simultaneous edits. Coordinate administrators. See the other three documents for workflows, internals and operations.

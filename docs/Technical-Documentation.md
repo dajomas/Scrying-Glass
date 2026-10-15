@@ -1,553 +1,213 @@
 # Scrying Glass Technical Documentation
 
-Documented baseline: `features/development` at `4f401b4adfca92e9c9599aea8924c14efb49aea4`.
+## Runtime and composition
 
-This document describes the architecture in the supplied source snapshot. See
-[README](../README.md), [User Guide](User-Guide.md) and
-[Systemd Deployment](Systemd-Deployment.md). No new release version is implied.
+The root scrying_glass_server.py owns CONFIG, STATE, LOCK, SESSIONS, SOCKETS, STORAGE, paths and two FastAPI applications. Services bind methods to that live module before route construction and call each other through self.context. State replacement must update context.STATE. Services must not import the root server.
 
-## Source layout
+Root imports use python.* and web_html.*; siblings use relative imports. Retain __init__.py and avoid loading modules under two identities. web_html avoids standard-library html collision.
 
-```text
-repository/
-├── scrying_glass_server.py       # Entry point, runtime context, apps and startup
-├── python/
-│   ├── __init__.py
-│   ├── scrying_glass_services.py # Service installation/binding
-│   ├── scrying_glass_service_*.py
-│   ├── scrying_glass_api_admin.py
-│   ├── scrying_glass_admin_*.py
-│   ├── scrying_glass_api_client.py
-│   ├── scrying_glass_classes.py
-│   └── ...helper modules...
-├── web_html/
-│   ├── __init__.py
-│   ├── admin_html.py            # ADMIN_HTML fragment loader
-│   ├── client_html.py
-│   └── login_html.py
-├── templates/
-│   ├── users.html              # Superadmin page, read on request
-│   └── admin/                  # 21 ordered HTML fragments
-├── static/                     # Admin/client/login CSS and browser JavaScript
-├── config.example.yaml
-├── run.sh / run.bat / run.ps1   # Launchers; use home-directory dnd environments
-├── tests/                      # Unit, JavaScript and audit checks
-└── docs/
-```
+AdminAPI composes domain mixins plus feature/lair/account/ownership/viewer installers. Annotation resolution uses live-context names; request models/FastAPI types must exist before handler registration. Historical route counts are obsolete after extensions.
 
-## Runtime context and services
+## Module map
 
-The root server owns CONFIG, STATE, LOCK, SESSIONS, SOCKETS, storage paths and
-the two FastAPI applications. It retains the imported helpers and request-model
-names needed by API handlers and annotation resolution.
-
-`install_services(sys.modules[__name__])` creates ten service instances and
-binds their methods onto the server module before API registration or startup
-operations. The module remains the live context; it is not a state snapshot.
-
-| Module | Responsibility |
+| Module/group | Responsibility |
 |---|---|
-| `python/scrying_glass_service_auth.py` | SQLite account lookup, one-time initialization and live cookie authorization |
-| `python/scrying_glass_service_state.py` | Encounter normalization, lookup, public state and active setup references |
-| `python/scrying_glass_service_campaigns.py` | Campaign metadata, setup paths and activation |
-| `python/scrying_glass_service_migrations.py` | Non-destructive one-time legacy JSON import |
-| `python/scrying_glass_storage.py` | Schema-v4 account tables, normalized encounter records, backups, upgrades and CRUD |
-| `python/scrying_glass_database_transactions.py` | Mutating request serialization, rollback and post-commit broadcasting |
-| `python/scrying_glass_service_persistence.py` | Campaign rosters, setup/state loading and writes |
-| `python/scrying_glass_service_activity.py` | Battle action and direct HP-change log records |
-| `python/scrying_glass_service_images.py` | Uploaded images, remote image lookup and monster construction |
-| `python/scrying_glass_service_battle.py` | Battle order, initiative, activation and turn progression |
-| `python/scrying_glass_service_notifications.py` | Save helpers, lock handling and WebSocket broadcasting |
+| scrying_glass_services | Service binding |
+| service_auth | Database accounts, initialization, authorization |
+| service_state | Normalize and project Admin/player state |
+| service_campaigns | Campaign/setup lifecycle |
+| service_migrations | One-time legacy JSON import |
+| service_persistence | Runtime/roster/setup writes |
+| service_activity | Action and HP logs |
+| service_images | Media/remote lookup/monster construction |
+| service_battle | Activation/order/rounds/turns |
+| service_notifications | Persistence helpers and broadcasts |
+| service_features | Recovery, effects and revision integration |
+| scrying_glass_storage | Normalized SQLite and schema upgrades |
+| database_transactions | Serialization, rollback, deferred broadcast |
+| campaign_ownership and routes | Admin ownership/reassignment |
+| campaign_viewers and routes | Viewer grants and campaign scoping |
+| feature_rules, turn_rules, health_limits | Health and eligibility invariants |
+| initiative_gate | Integer initiative requirement |
+| feature_storage, api_features | Recovery/effect storage and APIs |
+| service_lairs, lair_rules/storage, api_lairs | Lair model and actions |
+| campaign_bundle | ZIP validation, media remapping/cleanup |
+| request_security, logout, asset_cache | Origin checks, revocation, cache busting |
 
-Services call one another through self.context. In particular, state replacement
-must assign self.context.STATE, not a local STATE variable. Services do not
-import the root server, and the API classes receive the same live context.
-The split changes ownership of code, not ownership of data.
+## Startup and paths
 
-## API composition
+Direct-script startup loads config/overrides, resolves storage, checks static/, creates uploads/, opens SQLite, initializes users, transactionally imports legacy data and loads/normalizes/saves runtime. It mounts static/media and runs both Uvicorn listeners concurrently. Shutdown closes storage.
 
-AdminAPI combines nine mixins from `scrying_glass_admin_<domain>.py`: pages,
-display, setups, campaigns, monsters, characters, combatants, battle and activity.
-The coordinator registers a 42-route core manifest, then 12 feature routes, four lair routes, six account/page routes
-and POST /logout (65 explicit Admin HTTP routes, excluding framework-generated
-docs/OpenAPI routes and static mounts).
-Mixin files define handlers; they do not register routes independently.
-ClientAPI registers six HTTP routes (including POST /logout) and one WebSocket route.
+Composed router/application lifespans initialize additive campaign viewer/ownership storage. Preserve lifespan composition; server import checks do not execute it. External uvicorn imports skip main-guard storage initialization.
 
-Handler annotations are resolved with get_type_hints using vars(context), so
-FastAPIRequest, UploadFile, WebSocket, Response and request models must exist
-in the root server namespace before constructing the API objects. Protected
-admin routes attach Depends(context.require(...)) at registration time.
+Relative storage resolves from working directory; templates/static resolve from source. An absent new default directory may fall back to the legacy monster-display-data directory. Explicit storage_dir remains authoritative.
 
-## Package imports
+Configuration merges defaults. CLI: --config, --bind, --admin-port, --client-port, --storage-dir. Accounts are not current YAML settings; security.users imports once only.
 
-The root server uses absolute imports:
+## SQLite model and migration
 
-```python
-from python.scrying_glass_services import install_services
-from python.scrying_glass_api_admin import AdminAPI
-from python.scrying_glass_api_client import ClientAPI
-from web_html.admin_html import ADMIN_HTML
-```
+Canonical structured storage is storage_dir/scrying-glass.sqlite3; uploads remain files. Base schema reaches v6: normalized records, accounts, effects/recovery/revisions and lairs. Ownership/viewer tables initialize additively; PRAGMA user_version alone does not identify every extension.
 
-Sibling imports inside python use relative names, for example:
+Campaign/setup IDs are stable integers. API campaign IDs are decimal strings. Campaign renames retain relationships; setup names normalize lowercase and are unique per campaign. Combatant logical IDs differ from storage record IDs; order uses position, not primary-key order.
 
-```python
-from .scrying_glass_service_auth import AuthService
-from .scrying_glass_admin_pages import AdminPagesMixin
-```
+Relational groups include campaigns, battle_setups, character_rosters, characters, encounters, monsters, ordered_combatants, activity_log_entries, users, account_migration, application_state, migration maps, effects, recovery snapshots, revision records, lairs and owner/viewer links.
 
-The initialization helper imports the separate HTML package absolutely:
+Supported scalar extras and absent/null markers use typed records, not JSON payload columns. Unsupported nested extras and duplicate supplied IDs can cause rollback rather than silent loss. Historical log IDs are text references so history survives deletion. Ownership relationships use foreign keys.
 
-```python
-from web_html.login_html import LOGIN
-```
+Characters remain campaign-owned. Saved setups own their monsters; unsaved working monsters use runtime encounter records. Active/last-used setup references use stable database relationships. Service state exposes active_setup such as {"campaign_id":"12","name":"fight"}.
 
-Standard-library and third-party imports are unchanged. Do not import a module
-both as a bare name and as python.<name>; keep one consistent identity.
-Do not add package directories to sys.path as a substitute for package imports.
+Older supported SQLite schemas are backed up then upgraded. Original JSON imports leave source files unchanged; old JSON becomes archival, not live storage. Database migration backups omit config/media. Restore matching pre-upgrade code/data for rollback; never fake a downgrade by editing user_version.
 
-## HTML and browser assets
+## Transactions and concurrency
 
-web_html/admin_html.py exports ADMIN_HTML by concatenating 21 UTF-8 files in an
-explicit order. With root templates/admin, its path is:
+Protected supported mutations serialize under an operation lock and outer SQLite transaction. Failure restores SQL and in-memory STATE. Broadcast waits until commit. Nested transactions use savepoints. Most protected reads return detached snapshots under the operation lock; remote D&D lookup runs outside it in a worker thread. Account mutations use serialized transactions.
 
-```python
-_TEMPLATE_DIR = Path(__file__).resolve().parent.parent / "templates" / "admin"
-```
+One connection belongs to the event-loop thread. General uploads are outside SQL rollback and can leave orphans; bundle import has dedicated cleanup. One process per storage directory is mandatory. Serialization is not optimistic edit-conflict detection.
 
-Fragments cover document framing, pane and battle controls, four input panes,
-two display panes, the activity log and nine dialogs plus a separately ordered lair-tools fragment. They are partial markup,
-not independent documents. The monster-display fragment closes the main element.
-Fragment contents are trusted local files. Missing fragments fail during import.
-HTML loads once; restart after edits. This is not a Jinja template system.
+## Authentication and campaign scope
 
-Client and login HTML remain in web_html modules. CSS/JavaScript are served
-from root static/. Keep assets, markup IDs and browser handlers synchronized.
-Do not publicly mount templates merely to assemble the page.
+Users store salted scrypt hashes. Legacy users import atomically; first legacy admin is promoted if no superadmin exists. Otherwise bootstrap credentials are randomly generated and printed once. Account import completion prevents configuration from resetting/resurrecting users.
 
-## Startup and execution
+Session tokens are in memory. Cookies: scrying_glass_admin_session and scrying_glass_client_session. Authorization re-reads database users/roles. Account edits revoke both-interface sessions/sockets. POST /logout revokes only its interface; Client logout closes matching sockets.
 
-1. Import packages, helpers, models and HTML.
-2. Create runtime state/context and bind services.
-3. Construct Admin/Client apps and register routes.
-4. Under the main guard, parse CLI arguments and load YAML/JSON configuration.
-5. Apply overrides and resolve storage/static paths.
-6. Create uploads, open schema-v6 SQLite and upgrade old schemas if present.
-7. Initialize database accounts once, then transactionally import original JSON when needed.
-8. Load state and the active campaign's authoritative character roster.
-9. Clean order, save state, mount assets/media and start both Uvicorn servers.
+Client users require explicit campaign grants; admin viewer rights follow ownership; superadmins can view all. Admin domain operations enforce owned target/source/destination campaigns and active encounter scope. Another owner's active runtime yields blank admin state, not access. Global display connection metadata is not returned to regular admins.
 
-Launch the root script directly. An external uvicorn module:app command imports
-the module but skips steps under the main guard. One process shares state,
-sessions, sockets and a lock; multiple workers or replicas are unsupported
-without an external state/session store and update synchronization.
+Ownership reassignment preserves client grants; changing away from admin clears ownership. Bundle ownership is not imported. One shared live campaign remains; inactive viewer selections load saved state without reviving historical turns.
 
-## Configuration
+Cookies use HttpOnly, SameSite=lax, secure=False. Protected browser mutations check supplied Origin and reject cross-site fetch metadata; missing headers alone are not sufficient for rejection. WebSockets check supplied Origin. Login POSTs do not use the protected-mutation dependency. Static/media mounts have no session dependency. Review TLS, proxy headers, rate limiting and exposure separately.
 
-```yaml
-network:
-  bind: "0.0.0.0"
-  admin_port: 3000
-  client_port: 4000
+## HTTP route inventory
 
-storage_dir: "./scrying-glass-data"
+Paths are relative to the appropriate listener. Admin operations require admin/superadmin plus applicable campaign scope; account/ownership management requires superadmin.
 
+### Core Admin
 
-display:
-  background: "#080b14"
-  entry_direction: "from_bottom"
-  exit_direction: "to_bottom"
-  monster_width_percent: 45
-  dndbeyond_image_lookup: true
-```
+| Method | Path |
+|---|---|
+| GET, POST | /login |
+| POST | /logout |
+| GET | / |
+| GET | /api/state |
+| GET | /api/dndbeyond/monster-stats |
+| POST | /api/display/battle-order-font |
+| PATCH | /api/display/background |
+| POST | /api/display/background-image |
+| GET, POST | /api/campaigns |
+| PATCH, DELETE | /api/campaigns/{campaign_id} |
+| POST | /api/campaigns/{campaign_id}/activate |
+| POST | /api/campaigns/{campaign_id}/setups |
+| GET | /api/setups |
+| POST | /api/setups/new |
+| POST | /api/setups/save |
+| POST | /api/setups/load |
+| POST | /api/setups/rename |
+| DELETE | /api/setups/{name} |
+| POST | /api/setups/import |
+| POST | /api/monsters/roll-initiative |
+| POST | /api/monsters |
+| POST | /api/monsters/import |
+| POST | /api/monsters/import-csv |
+| POST | /api/characters/import-csv |
+| POST | /api/monsters/{ident}/edit |
+| PATCH | /api/monsters/{ident} |
+| POST | /api/characters |
+| PATCH | /api/characters/{ident} |
+| DELETE | /api/combatants/{ident} |
+| POST | /api/combatants/{ident}/reset |
+| POST | /api/characters/bulk |
+| POST | /api/monsters/bulk |
+| POST | /api/battle/start |
+| POST | /api/battle/next |
+| POST | /api/battle/end |
+| POST | /api/battle/reset-all |
+| POST | /api/battle/actions |
+| GET | /api/activity-log.json |
+| GET | /api/activity-log.csv |
+| POST | /api/activity-log/clear |
 
-CLI overrides are --config, --bind, --admin-port, --client-port and --storage-dir.
-Configuration is merged with defaults. Relative storage_dir is resolved from
-the working directory; HTML/static paths are relative to their source files.
-Use absolute storage/configuration paths for a service deployment.
+### Accounts, ownership and grants
 
-The configured display.background is the initial/fallback background. Working
-and saved encounters carry their own display.background. dndbeyond_image_lookup
-also gates optional monster stat suggestions. Remote failures do not block
-manual creation. Only legacy `security.users` accepts plaintext or scrypt$<salt_hex>$<digest_hex>
-passwords as a one-time import. Current accounts store salted hashes in SQLite;
-manage them through `/users`, not configuration.
+| Method | Path |
+|---|---|
+| GET | /api/me |
+| GET | /users |
+| GET, POST | /api/users |
+| PATCH, DELETE | /api/users/{user_id} |
+| GET | /api/campaign-ownership |
+| PUT | /api/campaign-ownership/{campaign_id} |
+| GET, PUT | /api/campaigns/{campaign_id}/viewers |
 
-## Persistence
+/api/me accepts admin/superadmin. Viewer grant routes require a permitted administrator. User APIs accept username, role, password only; PATCH omits password to preserve it, explicit empty/null is invalid. Errors: 401 unauthenticated, 403 denied, 404 unknown user, 409 duplicate/last-superadmin conflict, 422 validation.
 
-Structured data lives in `storage_dir/scrying-glass.sqlite3`, now schema version 4.
-The database stores individual values in typed columns and lists in ID-bearing child
-rows; it does not store serialized JSON payloads. Uploaded images remain under
-`storage_dir/uploads/`, and configuration remains a YAML/JSON file. JSON API responses
-and in-memory dictionaries are unchanged as formats; JSON is not a database storage format.
+### Features and lairs
 
-Campaigns and battle setups have stable integer database IDs. Campaign renames update
-one campaign row, without rewriting characters, setups or runtime references. Campaign
-IDs are represented as decimal strings in API/form values. The admin frontend uses id,
-not slug, for campaign selection. Existing monster/character combatant IDs remain intact.
+| Method | Path |
+|---|---|
+| GET | /api/features |
+| POST | /api/battle/undo |
+| PATCH | /api/combatants/{ident}/features |
+| POST | /api/combatants/{ident}/effects |
+| DELETE | /api/combatants/{ident}/effects/{effect_id} |
+| POST | /api/combatants/{ident}/concentration/end |
+| POST | /api/checkpoints |
+| GET, DELETE | /api/checkpoints/{ident} |
+| POST | /api/checkpoints/{ident}/restore |
+| GET, POST | /api/campaign-bundle |
+| POST | /api/lairs |
+| PATCH, DELETE | /api/lairs/{ident} |
+| POST | /api/lairs/{ident}/actions |
 
-Upgrades from slug-based SQLite v1 and campaign-ID SQLite v2 are backed up and converted
-to normalized v3, then upgraded through v4 accounts, v5 effects/recovery/revisions and v6 lairs.
-Existing v3 databases are backed up before the account-table upgrade. Existing v2
-campaign IDs are retained. Original JSON installations
-are imported into the current v6 database without modifying source files. See
-[SQLite migration instructions](SQLite-Migration.md) and [database schema](Database-Schema.sql).
-
-Stop the application before backing up the entire storage directory plus configuration.
-Keep matching pre-upgrade code and data for rollback. Archived JSON files are not updated
-after import. Use one application process per data directory. sqlite3 is supplied by
-Python, not pip; the launchers check its availability before starting.
-
-### Relational model
-
-- campaigns: integer id; name, description, creation and last-used setup columns.
-- battle_setups: stable id, campaign_id, name, encounter_id and modification time.
-- character_rosters: campaign-owned roster identity, including an explicit empty roster.
-- characters: one record per campaign character; database id, combatant_id, position and attributes.
-- encounters: scalar settings for saved and runtime encounters, including display/round/turn fields.
-- monsters: one record per encounter monster; database id, combatant_id, position and attributes.
-- ordered_combatants: one row per battle-order/successor entry, with id, kind and position.
-- activity_log_entries: one record per log entry, with id, original event_id, position and scalar fields.
-- users: integer id, case-sensitive unique username, role and salted password_hash.
-- account_migration: singleton completion marker preventing repeated config-account import.
-- application_state: singleton id=1, active campaign/runtime encounter and import status/counts.
-- migration_runs, migration_campaign_maps, legacy_campaign_maps: historical mapping/upgrade rows.
-
-See Database-Schema.sql for the complete generated CREATE statements. Typed attributes
-extension tables store scalar extra properties and field-presence markers as individual
-records. These preserve absent-versus-null semantics and compatible extra scalar fields;
-they are not JSON blobs or serialized object trees. Unknown nested extras, unsupported
-state/display fields and duplicate supplied IDs cause transaction rollback rather than
-silent data loss. Missing legacy combatant/log IDs are generated once during import.
-
-Main character/monster properties (HP, AC, initiative, names, visibility, status, images,
-etc.) have named columns. Original combatant IDs remain separate from integer storage
-record IDs. Record IDs survive edits/reordering through UPSERT by owner and logical ID.
-List order uses position, never the record ID. Duplicate ordered references use an
-occurrence index so every original list item can survive conversion as a distinct record.
-Historical log actor/target and ordered combatant IDs are text references, not foreign
-keys into one live combatant table: logs must survive combatant deletion and characters
-and monsters occupy separate tables. Ownership relationships do have enforced foreign keys.
-
-Setup and runtime scalar/list records belong to an encounter. Characters remain campaign-
-owned and are loaded from the roster. Saved setups remain authoritative for their monsters;
-unsaved runtime monsters have their own encounter records. Active and last-used setups
-are database-ID references, rebuilt as campaign/name references for the existing service
-interface. Setup rename/move preserves its database ID; copy allocates new record IDs.
-
-The campaign API returns id instead of slug. Campaign route parameters, setup request
-campaign/from_campaign and move_to query values carry decimal ID strings. Runtime
-active_setup is {"campaign_id":"12","name":"fight"}. Hard-refresh admin.js after deployment.
-
-### Transactions and migration
-
-The existing mutation wrapper serializes mutating requests, rolls back SQL and in-memory
-STATE on failure, and defers broadcasting until commit. Nested SQLite transactions use SAVEPOINT/RELEASE; failure rolls back the nested
-unit, and an outer failure still rolls back the complete request. One connection is owned by the event-loop thread. Media
-uploads remain outside database rollback; failed uploads/mutations can leave orphaned files.
-
-Schema-v1/v2 upgrades are backed up then rebuilt in one transaction, retaining v2 campaign
-IDs, combatant/event IDs, order, timestamps, rosters, activity records and runtime settings.
-Original JSON is read only by the one-time importer and old-schema migration. Database
-writes do not serialize JSON. Normal domain startup validation follows a committed schema
-upgrade; if it subsequently fails, use the pre-upgrade backup and matching old code to revert.
-
-## Campaign lifecycle and migration
-
-Campaigns use immutable integer IDs. Their names are editable and must be unique under
-case-insensitive application checks. New campaigns get an empty default setup and roster.
-Setup names still use normalized lowercase names capped at 80 characters, unique per campaign.
-Last-used setup selection uses its ID reference, otherwise the newest stored modification time.
-
-The original JSON importer discovers registry/folder campaigns, assigns IDs, imports loose
-setups into Default with collision suffixes, seeds absent rosters and leaves every source file
-untouched. Existing ID-based databases retain their campaign IDs. Normalized schema-v6 startup
-is idempotent. Slugs persist only in historical migration mapping rows, not as live identifiers.
-
-Deleting the last campaign is prohibited. Campaign deletion with setups requires move_to or
-delete_setups. Setup deletion opens the next alphabetically, wrapping, or creates empty Default.
-
-## Authentication and role-specific pages
-
-Accounts live in SQLite. First initialization imports legacy `security.users` once,
-promotes the first admin if needed, or generates and prints a bootstrap superadmin
-password. See [User Management](User-Management.md) for validation and recovery.
-
-Admin and Client cookies are `scrying_glass_admin_session` and
-`scrying_glass_client_session`. Tokens are in memory; restart clears sessions.
-Authorization re-reads database users and roles. Admin APIs accept admin/superadmin;
-user APIs require superadmin; Client accepts all three roles. Admin `/` serves battle
-HTML only to admins and redirects superadmins to `/users`. Superadmin login likewise
-lands on `/users`; there is no separate battle-HTML route for that role.
-
-Both apps provide POST-only `/logout`: revoke the supplied interface token, expire
-its cookie and legacy cookies, return 303 to `/login`, and close matching display
-sockets on Client logout. The other interface session remains valid. Account edits
-or deletion invalidate all sessions/sockets for that username. Protected APIs use `Cache-Control: no-store`; the HTML cache-busting middleware rewrites local CSS/JS URLs with per-response `_cb` tokens and sets HTML `Cache-Control: no-cache`. Existing tabs must reload to obtain new scripts.
-
-Cookies use HttpOnly, SameSite=lax and secure=False. Protected browser mutations
-reject mismatched Origin or Sec-Fetch-Site=cross-site; requests without these headers
-are not rejected by that check alone. Display WebSockets reject mismatched Origin
-when supplied. These checks do not replace authentication or network restrictions.
-Configure HTTPS/proxy origin handling correctly before remote access. Login POSTs
-do not use the protected-mutation same-origin dependency. `/static` and `/media`
-are static mounts without session dependencies.
-
-## Admin route inventory
-
-| Method | Path | Handler | Admin authentication |
-|---|---|---|---|
-| GET | `/login` | `admin_login_get` | Login/page handling |
-| POST | `/login` | `admin_login_post` | Login/page handling |
-| GET | `/` | `admin_home` | Login/page handling |
-| GET | `/api/state` | `admin_get_state` | Required |
-| GET | `/api/dndbeyond/monster-stats` | `dndbeyond_monster_stats` | Required |
-| POST | `/api/display/battle-order-font` | `adjust_battle_order_font` | Required |
-| PATCH | `/api/display/background` | `update_display_background` | Required |
-| POST | `/api/display/background-image` | `upload_display_background_image` | Required |
-| GET | `/api/setups` | `get_setups` | Required |
-| GET | `/api/campaigns` | `get_campaigns` | Required |
-| POST | `/api/campaigns` | `create_campaign` | Required |
-| PATCH | `/api/campaigns/{campaign_id}` | `update_campaign` | Required |
-| DELETE | `/api/campaigns/{campaign_id}` | `delete_campaign` | Required |
-| POST | `/api/campaigns/{campaign_id}/activate` | `activate_campaign` | Required |
-| POST | `/api/campaigns/{campaign_id}/setups` | `add_setup_to_campaign` | Required |
-| POST | `/api/setups/new` | `new_setup` | Required |
-| POST | `/api/setups/save` | `save_setup` | Required |
-| POST | `/api/setups/load` | `load_setup` | Required |
-| POST | `/api/setups/rename` | `rename_setup` | Required |
-| DELETE | `/api/setups/{name}` | `delete_setup` | Required |
-| POST | `/api/setups/import` | `import_setup` | Required |
-| POST | `/api/monsters/roll-initiative` | `roll_monster_initiative` | Required |
-| POST | `/api/monsters` | `create_monster` | Required |
-| POST | `/api/monsters/import` | `import_monster` | Required |
-| POST | `/api/monsters/import-csv` | `import_monsters_csv` | Required |
-| POST | `/api/characters/import-csv` | `import_characters_csv` | Required |
-| POST | `/api/monsters/{ident}/edit` | `edit_monster` | Required |
-| PATCH | `/api/monsters/{ident}` | `update_monster` | Required |
-| POST | `/api/characters` | `create_character` | Required |
-| PATCH | `/api/characters/{ident}` | `update_character` | Required |
-| DELETE | `/api/combatants/{ident}` | `delete_combatant` | Required |
-| POST | `/api/combatants/{ident}/reset` | `reset_one_combatant` | Required |
-| POST | `/api/characters/bulk` | `bulk_characters` | Required |
-| POST | `/api/monsters/bulk` | `bulk_monsters` | Required |
-| POST | `/api/battle/end` | `battle_end` | Required |
-| POST | `/api/battle/reset-all` | `reset_all` | Required |
-| POST | `/api/battle/start` | `battle_start` | Required |
-| POST | `/api/battle/next` | `battle_next` | Required |
-| POST | `/api/battle/actions` | `apply_battle_actions` | Required |
-| GET | `/api/activity-log.json` | `export_activity_log_json` | Required |
-| GET | `/api/activity-log.csv` | `export_activity_log_csv` | Required |
-| POST | `/api/activity-log/clear` | `clear_activity_log` | Required |
-
-Additional Admin routes:
-
-| Method | Path | Access |
-|---|---|---|
-| GET | `/api/me` | admin or superadmin |
-| GET | `/users` | superadmin; unauthenticated users redirect to login |
-| GET | `/api/users` | superadmin |
-| POST | `/api/users` | superadmin; creates account, returns 201 |
-| PATCH | `/api/users/{user_id}` | superadmin |
-| DELETE | `/api/users/{user_id}` | superadmin |
-| POST | `/logout` | Revokes supplied interface session; idempotent |
-
-Client routes are GET / (login/display redirect), GET/POST /login, GET /display,
-authenticated GET /api/state, POST /logout, and authenticated WebSocket /ws.
-Both apps mount /static and /media during direct-script initialization.
+Client exposes GET /, GET/POST /login, GET /display, GET /api/state, POST /logout and WebSocket /ws. Both apps mount /static and /media.
 
 ## Request contracts
 
-- Campaign create/update use name/description; create may activate the campaign.
-- Setup save/load use name and optional campaign. Rename adds new_name.
-- Setup import requires kind="monsters"; characters cannot be imported from setups.
-- Monster creation is multipart: name, monster_species, ac, hprangestart,
-  optional hprangeend, color, quantity (1..50) and optional image.
-- Monster/character CSV upload uses csv_file; .monster upload uses monster_file.
-- Bulk actions use {action, ids}; monster actions include join/leave battle,
-  ally flags, stat visibility, reset and remove. Character actions include
-  join/leave battle, reset and remove.
-- Battle start supplies order; actions supply actor_id and action rows with
-  target_id, action and an amount for damage/heal only.
-- Viewer font updates use {direction: "increase"|"decrease"}; default 16 px,
-  steps of 2 px, clamped to 12..40. Changes persist in runtime display state;
-  setup snapshots also carry the display settings when saved.
-- Background updates use {background}; background-image uploads use image.
+- Setups use name and optional campaign ID; rename adds new_name. Import is monsters-only with life_filter=alive|dead|all.
+- Monster creation multipart: name, monster_species, ac, hprangestart, optional hprangeend, color, quantity 1–50, optional image.
+- CSV field csv_file; statblock field monster_file; bundle field file.
+- Bulk: action and ids. Battle start: order. Action rows: actor_id plus targets/actions/amounts, optional source_id reactions and critical_hit damage.
+- Background: background; image upload: image. Font: direction increase/decrease, 2 px steps, 12–40.
+- Undo: current top id plus fingerprint validation. Checkpoint restore: confirm=true and current preview revision. Lair actions: name, current revision and target rows.
 
-CSV is UTF-8 (BOM accepted), has a header and at least one nonblank data row.
-Monster columns require name, monster_species (or type), ac and hp; character
-CSV requires name. Blank IDs receive generated UUIDs. Duplicate/conflicting
-IDs are rejected. Boolean values support true/false, yes/no, y/n, on/off, 1/0.
-The .monster parser reads compatible JSON name/type/AC/HP fields.
+Consult request classes, domain handlers and running OpenAPI for exact schemas. This inventory is not a replacement for model validation.
 
-## Combat, logs and synchronization
+## Health, turns, recovery and logging
 
-Battle start validates every eligible active creature appears exactly once in
-order. Individual activation during battle can insert a combatant by initiative;
-equal initiatives follow existing equals. Turn advancement filters eligibility,
-adds omitted eligible IDs, cycles through order and clears turns if none remain.
-Bulk and individual handlers retain their existing distinct behavior.
+Standing and future-turn eligibility are separate. Active down/stable characters retain manual death-save turns; dead characters and non-standing monsters are excluded from future turns. Unresolved current turn can remain after death. Remembered successors preserve next-turn and round boundary when a current participant disappears.
 
-Actions validate all rows before applying them. Actor must be active, standing and
-in turn for ordinary rows; targets must be active. Damage/heal may target down/stable participants; ordinary dead targets require explicit recovery first. Reaction rows use an independent active source and accept down/dead sources/targets for damage/healing. Healing caps at maximum HP and never revives explicit death. Damage/heal require positive amounts;
-buff/debuff are logged without HP changes or amounts. At HTTP registration, the mutation wrapper additionally serializes requests,
-opens a database transaction and restores in-memory STATE on failure.
-Direct HP deltas are also logged; without a current actor the log uses System.
+Round begins 1, increments on wrap, clears on End/reset/no eligible participants. Runtime restores authoritative turn only if valid. Creature joining requires integer initiative; zero/negative valid. Clearing while active is blocked unless deactivated simultaneously.
 
-Battle round starts at 1, increments on turn-order wrap and clears to 0 on End,
-Reset All or no eligible combatants. Remembered successors preserve the next-turn
-and round boundary when the current combatant disappears. Runtime persistence
-stores an authoritative active_turn_id, restoring it only for an existing active
-participant; character down/stable state retains future eligibility, while death may retain only unresolved current-turn ownership; conflicting legacy turns are cleared with a warning.
+Actions validate together and apply sequentially. Ordinary actor must stand; reaction damage/healing permits independent active down/dead sources/targets. Shared rules absorb temporary HP, clamp HP, cap healing and calculate excess damage/death failures. Absolute corrections are not attacks. Critical-hit flag changes failures, not damage magnitude.
 
-WebSockets receive JSON {"type":"state","state":...} using `display_state()`,
-not the full Admin `public_state()`. Client `/api/state` uses the same filtered
-projection. It includes active monsters and active visible characters, visible active lairs, campaign ID/name, public effect names, life state, display
-settings, battle round, filtered battle_order and display_order. Character stats
-are omitted; monster AC/HP/max HP appear only when enabled, and hidden initiative
-is null. Activity logs and setup references are not sent. display_order appends
-visible participants missing from battle_order using server-side initiative sorting;
-ordering can therefore reveal relative initiative even without numeric values.
+Effects use private/public names, optional concentration and start/end anchor occurrences. Manual turn assignment does not consume counters. One lair per encounter sits after creatures tied at 20 and uses revision-bound action batches.
 
-Broadcasts serialize snapshots under a separate broadcast lock, send concurrently
-and drop failed/stalled sockets (2 s send timeout; 0.5 s cleanup timeout). Initial
-socket state uses the operation/broadcast locks and rechecks the session before
-registration. The browser reconnects in place with backoff; identical snapshots are not rerendered. Server-driven 15-second idle heartbeats use ACK/PONG/resync protocol. Missing application replies alone do not force disconnects. See [Display connections](Display-Connection-Stability.md).
+Undo is bounded to 30 supported operations; checkpoints to 50 per campaign. Boundaries/unsupported operations clear history. Audit history is retained with recovery events. Bundle format/limits and health/lair workflows are consolidated in the User Guide.
 
-Protected core Admin mutations run under the operation lock and an outer SQLite
-transaction; failure restores STATE and broadcasts occur only after commit. Most
-protected core reads and Client state reads share that operation lock and return
-detached dict/list snapshots. The D&D stat suggestion endpoint instead runs remote
-lookup in a worker thread outside this lock. User mutations are serialized and use
-their own SQLite transactions. This is not optimistic conflict detection: two admins
-can still overwrite one another's intended edits. File uploads are outside SQL rollback.
+Clear log removes runtime and associated saved-setup logs without persisting unrelated edits. CSV neutralizes formula-like text; JSON preserves it.
 
-Clearing the activity log clears runtime and the associated saved setup's log without
-saving unrelated encounter edits. CSV exports prefix formula-like string values with
-an apostrophe for spreadsheet safety; JSON export preserves the original strings.
+## Player state and WebSockets
 
-## Feature and lair API routes
+Client HTTP and sockets use a campaign-authorized filtered display projection, not full Admin state. State envelopes are {"type":"state","state":...}.
 
-All routes below use Admin-port admin/superadmin authorization; mutations apply same-origin checks and serialized transactions.
+Player data includes appropriate active monsters, visible characters/lairs, campaign identity, public effect names, life/turn flags, display, round and filtered order. Character stats, logs, setup references and private effect fields are omitted. Monster AC/HP/max HP/temp HP follow visibility; hidden initiative is null. Relative ordering can still disclose relative initiative. display_order adds visible participants absent from battle_order using server initiative sorting.
 
-| Method | Path | Contract |
-|---|---|---|
-| GET | `/api/features` | Revision, undo top, checkpoint list, display status and downed character reminders |
-| POST | `/api/battle/undo` | `{id}` of current top; fingerprint must match |
-| PATCH | `/api/combatants/{ident}/features` | temp_hp, life_state, death_successes/failures, concentrating, hp_delta, absorb_temp |
-| POST | `/api/combatants/{ident}/effects` | name, optional source_id/notes/public/concentration/timing/turns/anchor_id |
-| DELETE | `/api/combatants/{ident}/effects/{effect_id}` | Remove effect |
-| POST | `/api/combatants/{ident}/concentration/end` | Remove loaded source-linked effects |
-| POST | `/api/checkpoints` | `{name}` |
-| GET | `/api/checkpoints/{ident}` | Preview including current revision |
-| POST | `/api/checkpoints/{ident}/restore` | `{confirm: true, revision}` matching preview |
-| DELETE | `/api/checkpoints/{ident}` | Delete active-campaign checkpoint |
-| GET | `/api/campaign-bundle` | ZIP export |
-| POST | `/api/campaign-bundle` | Multipart `file`; creates inactive campaign |
-| POST | `/api/lairs` | name, optional notes/color/active/visible |
-| PATCH | `/api/lairs/{ident}` | Same editable fields; initiative is not editable |
-| DELETE | `/api/lairs/{ident}` | Remove lair; preserve existing conditions with reconciled links |
-| POST | `/api/lairs/{ident}/actions` | name, revision, targets; current lair turn required |
+Broadcast snapshots use a separate lock and concurrent sends. Documented send timeout is 2 seconds, cleanup 0.5 seconds. Initial registration locks and rechecks sessions. Application heartbeats start after 15 seconds without incoming messages; ACK/PONG/resync track revisions. Missing application replies alone do not close viable transport. Browser reconnects with bounded backoff, keeps the last scene and skips identical snapshots.
 
-Battle action rows optionally carry `source_id` for damage/healing reactions and `critical_hit` for damage. Setup import accepts `life_filter=alive|dead|all`, default alive. See [User Guide](User-Guide.md), [Encounter Features](Encounter-Features.md) and [Lair Actions](Lair-Actions.md) for semantics and limits.
+## HTML, caching and validation
 
-## Recovery, effects and lair modules
-
-`FeaturesService` is the tenth context-bound service. `LairService` is instantiated by its route installer. Feature storage adds revision and bounded normalized snapshots; lair storage adds a typed encounter-owned row. `scrying_glass_feature_rules.py` centralizes nonnegative HP, temporary HP absorption, capped healing and character damage/death-save behavior. `scrying_glass_turn_rules.py` separates standing from future-turn eligibility. `scrying_glass_campaign_bundle.py` validates portable ZIPs and cleans imported media on rollback.
-
-Tracked supported mutations create undo snapshots; setup/campaign boundaries and unsupported structural changes clear history. Undo requires the current top ID and after-state fingerprint. Checkpoint restoration requires explicit confirmation at the current revision and rejects missing referenced setups or ID collisions with retained setup monsters. Restore retains the audit trail and replaces encounter and roster atomically. Media uploads remain outside general SQL rollback.
-
-`feature_state`, `encounter_snapshots`, `snapshot_characters`, its attributes, three effects tables and `lairs` extend the v4 relational model. Health fields and log notes use typed attributes rather than JSON blobs. See regenerated [Database Schema](Database-Schema.sql) for actual v6 DDL, including the snapshot-cleanup trigger.
-
-## Development checks
-
-Run `python -m unittest discover -s tests -v` with application dependencies installed.
-Optional JavaScript checks: `node --check static/admin.js`, `node --check static/client.js`,
-`node --check static/users.js`, and `node tests/test_campaign_ids.js`.
+Admin HTML is concatenated from ordered UTF-8 fragments at import; restart after edits. This is not Jinja. Keep DOM IDs synchronized with scripts. HTML middleware rewrites local assets with per-response _cb tokens and no-cache; protected APIs use no-store. Existing tabs need reload.
 
 ```bash
 .venv/bin/python -m compileall -q scrying_glass_server.py python web_html
-.venv/bin/python -c "from web_html.admin_html import ADMIN_HTML; print('HTML loaded:', len(ADMIN_HTML), 'characters')"
-.venv/bin/python -c "import scrying_glass_server; print('Server import passed')"
+.venv/bin/python -c "import sqlite3; import scrying_glass_server"
+.venv/bin/python -m unittest discover -s tests -p 'test_*.py'
+node --check static/client.js
+node --check static/features.js
+node --check static/campaign-viewer-admin.js
+node --check static/initiative-join-gate.js
+node tests/test_display_reconnect.js
+node --test tests/initiative-join-gate.test.cjs
 ```
 
-Import checking requires the virtual environment and all fragment files.
-After structural changes, test both logins, all campaign/setup transitions,
-CSV/.monster imports, individual/bulk controls, battle actions, log exports,
-WebSocket updates, backgrounds and restart persistence. AST/syntax checks do
-not replace full runtime and browser tests.
+Browser tests can require Playwright/Chromium. Some tests use direct handlers, substitutions or mocked APIs, not real HTTP authentication. Validate actual lifespans, both logins, cross-owner denial, grants/revocation, imports, health/reactions/effects, restart recovery, checkpoint/bundle/media, lairs, rounds and proxy WebSockets on copied data.
 
-## Limitations and troubleshooting
-
-| Symptom | Investigation |
-|---|---|
-| Missing uvicorn/FastAPI | Use .venv/bin/python; inspect packages in that interpreter |
-| Missing local module | Check package prefixes, sibling relative imports and deployed files |
-| Missing HTML fragment | Check root templates/admin and loader parent.parent path |
-| Old UI | Restart for HTML edits, then hard-refresh CSS/JavaScript |
-| Missing campaign characters | Query characters through character_rosters and campaign_id |
-| Unsuccessful D&D lookup | Upload image/input stats manually; inspect local imports/parser return arity |
-| Permission error | Check writable storage_dir and readable package/assets/config |
-
-Uploads are extension-checked, not comprehensively content-validated. They are
-not automatically garbage-collected. Sessions are not durable; there is no
-built-in rate limiting or distributed synchronization. Deletion is permanent.
-
-## Initiative tie controls
-
-Characters default to earlier positions than monsters in each tied initiative
-group. Changing a position swaps the previous number onto the combatant that
-held the chosen number within the same group. The Monsters Bulk menu includes
-**Roll shared initiative (d20)** to assign one server-side roll to the selection.
-Shared initiative does not merge turns or reorder a running battle.
-
-
-## Has lair: battle setup pane availability
-
-The **Has lair** checkbox is directly below the Battle setup name input and
-above the Import buttons. It is saved separately for each battle setup.
-Unchecked hides the Lair pane and its toggle button; checked makes them
-available under the existing parent-pane, manual-toggle and battle-collapse
-rules. It does not force a manually hidden pane open or bypass a hidden setup
-parent. Existing preferences are retained when the checkbox is toggled.
-
-This controls the administration pane only. Unchecking does not delete the
-configured lair, change its Join Battle/Visible/Turn state, or remove its turn.
-Use the existing Lair controls to change battle participation.
-
-New setups default to unchecked. On upgrade, setups with a configured lair
-start checked; other setups start unchecked. Imported older setup data follows
-the same rule unless it explicitly contains a saved checkbox value.
-
-### Implementation and migration
-
-`has_lair` is a boolean top-level encounter state field, persisted in the
-`encounters.has_lair` column. SQLite schema v7 migration adds a constrained
-boolean column, initializes existing lair-owning encounters to true, and uses
-the existing pre-migration backup mechanism. Runtime, saved setups and recovery
-snapshots all use the same encounter serialization. Normalization accepts old
-state by deriving a missing flag from its lair list, but preserves explicit false.
-
-`PATCH /api/setups/has-lair` accepts `has_lair` and `scope` containing the active
-`campaign_id` and `setup` reference. It uses the existing admin authorization,
-same-origin and transaction gates and rejects a changed scope with HTTP 409.
-Changing it persists the current saved setup and runtime state.
-
-`static/setup-has-lair.js` wraps the existing lair render hook. CSS gating on
-`data-setup-has-lair` controls effective availability independently of the
-existing pane controller's `hidden` properties. This prevents parent restoration,
-manual toggles and automatic battle layout transitions from bypassing the gate.
-The checkbox is disabled while a write is pending; errors refresh the server state.
-
-Validation commands:
-
-```sh
-python -m unittest discover -s tests -p 'test_setup_has_lair.py'
-python -m unittest discover -s tests -p 'test_sqlite_storage.py'
-python -m unittest discover -s tests -p 'test_lairs.py'
-python -m unittest discover -s tests -p 'test_encounter_features.py'
-node --test tests/setup-has-lair.test.cjs
-node tests/test_lair_pane_visibility.js
-node --check static/setup-has-lair.js
-```
+These are validation instructions, not claims that this documentation build executed the application suite.
