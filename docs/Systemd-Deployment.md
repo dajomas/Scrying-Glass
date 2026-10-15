@@ -21,8 +21,7 @@ sudo install -d -o scryingglass -g scryingglass -m 0750 /var/lib/scrying-glass
 sudo install -d -o root -g scryingglass -m 0750 /etc/scrying-glass
 sudo git clone https://github.com/dajomas/scrying-glass.git /opt/scrying-glass
 cd /opt/scrying-glass
-sudo git fetch origin features/development
-sudo git checkout --detach 1541640f9dcb0f202cc1b2b6afa89836f117989b
+sudo git checkout main
 sudo python3.14 -m venv /opt/scrying-glass/.venv
 sudo /opt/scrying-glass/.venv/bin/python -m pip install --upgrade pip
 sudo /opt/scrying-glass/.venv/bin/python -m pip install 'fastapi>=0.115' 'uvicorn[standard]>=0.30' 'PyYAML>=6.0' python-multipart
