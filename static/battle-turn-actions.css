@@ -42,3 +42,14 @@
     #battleActionModal .battle-reaction-row > .amount-field,
     #battleActionModal .battle-reaction-row > [data-remove-action-row] { grid-column: auto; }
 }
+
+/* Applied history stays readable while new actions/reactions are added. */
+.battle-action-applied-status {
+    color: #86efac;
+    font-weight: 600;
+    align-self: center;
+}
+.battle-action-row[data-applied="true"] {
+    border-left: 3px solid #86efac;
+    padding-left: 0.5rem;
+}

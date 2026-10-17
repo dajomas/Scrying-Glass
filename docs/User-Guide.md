@@ -91,6 +91,24 @@ Damage/healing amounts must be positive. Enter damage after adjudicating mitigat
 
 Add reaction chooses an independent active source/target. Damage/healing reactions allow down/dead sources/targets for manually adjudicated death bursts. Healing does not resurrect explicit death. Rows validate together and apply top-to-bottom, each attributed to its source.
 
+Apply submits only pending action and reaction rows and keeps the modal open.
+Successfully applied rows stay visible, show Applied, and are locked, including
+Remove. Subsequent Apply clicks skip these rows; use Add target or Add reaction
+for additional entries. Identical new rows are intentional new actions, not duplicates
+of an applied row. With no pending rows, Apply makes no request.
+
+Close dismisses the modal without applying pending rows or undoing applied rows.
+Clicking the backdrop also closes it. While Apply is submitting or refreshing,
+modal controls and backdrop closure are temporarily blocked to protect the batch.
+Reopening starts a fresh draft; Applied markers are not saved across modal sessions.
+
+Rejected batches remain editable for correction and retry. A successful submission
+is marked applied before refreshing, so a refresh failure does not replay those rows.
+If a connection fails before success is confirmed, check the activity log/current HP
+before retrying: this browser-level protection does not provide server-side retry
+idempotency or protect against duplicate requests from another tab.
+
+
 Start-of-turn damage/heal targets the current creature, damage first, ignores empty/zero fields and does not advance. Ordinary self-action eligibility applies, so down/dead actors cannot use it.
 
 ## Health and death saves

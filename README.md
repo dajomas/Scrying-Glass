@@ -11,6 +11,7 @@ Scrying Glass, formerly Monster Display, is a self-hosted tabletop encounter man
 - Fixed/ranged/dice HP, monster quantities, CSV and .monster imports, uploaded images and optional D&D Beyond suggestions.
 - Initiative validation and ties, shared monster initiative, rounds and turn progression.
 - Damage, capped healing, temporary HP, life states, manual death-save counters, actions and reactions.
+- Keep the action modal open across applies; resolved action/reaction rows are locked and skipped on later applies, with an explicit Close button.
 - Private/public effects, concentration links and turn-boundary expiry.
 - Encounter lairs at initiative 20, bounded persistent undo, checkpoints and portable campaign bundles.
 - Activity-log exports, per-setup backgrounds, viewer font sizing and synchronization status.

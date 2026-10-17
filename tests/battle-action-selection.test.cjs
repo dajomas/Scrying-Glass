@@ -16,7 +16,9 @@ function setup() {
     function makeRow() {
         const fields = {};
         return {
-            className: '',
+            className: '', dataset: {},
+            appendChild() {},
+            querySelectorAll() { return Object.values(fields); },
             set innerHTML(html) {
                 this.html = html;
                 for (const key of ['source', 'target']) {
@@ -25,7 +27,8 @@ function setup() {
                     const options = [...match[1].matchAll(/<option value="([^"]*)"([^>]*)>/g)];
                     const selected = options.find(x => /selected/.test(x[2])) || options[0];
                     fields[`[data-action-${key}]`] = {
-                        value: selected[1], required: true,
+                        value: selected[1], required: true, disabled: false,
+                        closest() { return {dataset: {}}; },
                         disabledPlaceholder: /disabled/.test(selected[2]),
                     };
                 }
@@ -35,7 +38,8 @@ function setup() {
                 if (selector === '[data-action-source]') return fields[selector] || null;
                 return fields[selector] ||= {
                     value: selector === '[data-action-kind]' ? 'damage' : '1',
-                    hidden: false, checked: false, addEventListener() {},
+                    hidden: false, checked: false, disabled: false, addEventListener() {},
+                    closest() { return {dataset: {}}; },
                     parentElement: {hidden: false},
                 };
             },
@@ -43,7 +47,7 @@ function setup() {
         };
     }
     const requests = [];
-    const button = {disabled: false};
+    const button = {disabled: false, closest() {return null;}};
     const form = {
         reportValidity() {
             return rows.children.every(row => ['target', 'source'].every(key => {
@@ -59,7 +63,7 @@ function setup() {
             characters: [{id:'c', name:'Paladin', active:true, alive:true}],
         },
         battleActionRows: rows, battleActionForm: form,
-        battleActionModal: {addEventListener() {}}, battleActionActorId: 'm',
+        battleActionModal: {addEventListener() {}, querySelectorAll() {return [button];}, setAttribute() {}, removeAttribute() {}}, battleActionsApplying:false, battleActionActorId: 'm',
         document: {createElement:makeRow, querySelector:id => controls[id] ||= {}},
         esc:x => String(x), message() {}, load:async () => {},
         request:async (url, options) => {

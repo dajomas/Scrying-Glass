@@ -192,6 +192,50 @@ Player data includes appropriate active monsters, visible characters/lairs, camp
 
 Broadcast snapshots use a separate lock and concurrent sends. Documented send timeout is 2 seconds, cleanup 0.5 seconds. Initial registration locks and rechecks sessions. Application heartbeats start after 15 seconds without incoming messages; ACK/PONG/resync track revisions. Missing application replies alone do not close viable transport. Browser reconnects with bounded backoff, keeps the last scene and skips identical snapshots.
 
+## Persistent action/reaction modal
+
+`static/admin.js` tracks submission activity with `battleActionsApplying` and row
+completion with `data-applied="true"`. The form collects only pending
+`.battle-action-row` elements in DOM order, preserving optional reaction source,
+target, amount and damage-only critical-hit payloads. Native form validation still
+runs before submission; disabled applied controls do not participate in validation.
+
+A successful POST marks its captured rows applied before calling `load(true)`.
+Each resolved row gets an Applied label, and all its controls remain disabled.
+The modal remains open and retains the turn owner. New rows can then be added
+and submitted without replaying history. An empty pending batch makes no POST.
+The API contract, backend validation and database schema are unchanged.
+
+During a batch, controls in both modal forms are disabled and their original disabled
+states are captured. The finally block restores those states except for resolved
+row controls, clears `aria-busy`, and releases the submission guard. Add/open/close
+handlers also check the guard, preventing backdrop closure or draft replacement
+while awaiting the POST and refresh. Start-of-turn submission retains its separate
+handler and existing reset behavior.
+
+`load(rethrowErrors = false)` preserves existing callers' error handling. The new
+`load(true)` opt-in propagates refresh errors to the action handler, which reports
+that changes were already applied without clearing completion markers. Ordinary
+POST failures keep rows pending and restore controls. Completion is local to this
+open modal, not persisted server-side: ambiguous network failures require checking
+state/logs before retry, and reopening or another tab does not deduplicate requests.
+
+`templates/admin/180_battle_action_modal.html` replaces Cancel with explicit Close
+and includes an aria-live status notice. Close/backdrop discard pending drafts but
+never undo previously submitted changes. `static/battle-turn-actions.css` styles
+the Applied label and resolved-row border.
+
+Focused checks (dependency-free Node mocks, not a real browser):
+
+```bash
+node --check static/admin.js
+node tests/battle-action-apply.test.cjs
+node tests/battle-action-selection.test.cjs
+node tests/battle-reactions.test.cjs
+node tests/battle-turn-actions.test.cjs
+python -m pytest -q tests/test_battle_reactions.py tests/test_turn_eligibility.py
+```
+
 ## HTML, caching and validation
 
 Admin HTML is concatenated from ordered UTF-8 fragments at import; restart after edits. This is not Jinja. Keep DOM IDs synchronized with scripts. HTML middleware rewrites local assets with per-response _cb tokens and no-cache; protected APIs use no-store. Existing tabs need reload.

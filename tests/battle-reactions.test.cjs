@@ -12,7 +12,7 @@ function row() {
     return {className:'', innerHTML:'', querySelector:get, remove(){}};
 }
 const ctx = {latest:{monsters:[{id:'m',name:'Dead Mephit',active:true,alive:false,in_turn:true}],characters:[{id:'c',name:'Paladin',active:true,alive:true}]},
-    battleActionRows:rows,battleActionForm:{},battleActionModal:{addEventListener(){}},battleActionActorId:null,
+    battleActionRows:rows,battleActionForm:{},battleActionModal:{addEventListener(){}},battleActionsApplying:false, battleActionActorId:null,
     document:{createElement:row,querySelector:id=>controls[id] ||= {}},esc:x=>String(x),message(){}};
 vm.runInNewContext(block,ctx);
 ctx.addBattleActionRow(true);

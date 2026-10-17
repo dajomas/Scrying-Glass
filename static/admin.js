@@ -1321,7 +1321,7 @@ function sortedMonstersForAdmin() {
     });
 }
 
-async function load() {
+async function load(rethrowErrors = false) {
     try {
         latest = await request('/api/state');
         window.scryingLairsRender?.(latest);
@@ -1474,6 +1474,7 @@ async function load() {
 
     } catch (error) {
         message(error.message);
+        if (rethrowErrors === true) throw error;
     }
 }
 
@@ -2855,6 +2856,7 @@ const battleActionModal = document.querySelector('#battleActionModal');
 const battleActionForm = document.querySelector('#battleActionForm');
 const battleActionRows = document.querySelector('#battleActionRows');
 let battleActionActorId = null;
+let battleActionsApplying = false;
 
 function activeBattleTargets() {
     if (!latest) {
@@ -2867,6 +2869,7 @@ function activeBattleTargets() {
 }
 
 function closeBattleActions() {
+    if (battleActionsApplying) return;
     battleActionModal.hidden = true;
     battleActionActorId = null;
     battleActionRows.innerHTML = '';
@@ -2893,6 +2896,7 @@ function updateActionRowAmount(row) {
 }
 
 function addBattleActionRow(reaction = false) {
+    if (battleActionsApplying) return;
     const targets = activeBattleTargets();
 
     if (!targets.length) {
@@ -2957,6 +2961,7 @@ function addBattleActionRow(reaction = false) {
 }
 
 function openBattleActions(actorId) {
+    if (battleActionsApplying) return;
     if ((latest.lairs || []).some(x => x.id === actorId)) {
         window.scryingOpenLairAction?.(actorId);
         return;
@@ -2969,6 +2974,7 @@ function openBattleActions(actorId) {
         return;
     }
 
+    document.querySelector('#battleActionNotice').textContent = '';
     battleActionActorId = actorId;
     document.querySelector('#battleActionTitle').textContent =
         `Battle actions: ${actor.name}`;
@@ -2984,7 +2990,7 @@ document.querySelector('#addBattleActionTarget').onclick = () => {
 
 document.querySelector('#addBattleReaction').onclick = () => addBattleActionRow(true);
 
-document.querySelector('#cancelBattleActions').onclick = closeBattleActions;
+document.querySelector('#closeBattleActions').onclick = closeBattleActions;
 
 battleActionModal.addEventListener('click', event => {
     if (event.target === battleActionModal) {
@@ -2995,7 +3001,7 @@ battleActionModal.addEventListener('click', event => {
 battleActionForm.onsubmit = async event => {
     event.preventDefault();
 
-    if (!battleActionActorId) {
+    if (!battleActionActorId || battleActionsApplying) {
         return;
     }
 
@@ -3004,7 +3010,8 @@ battleActionForm.onsubmit = async event => {
         return;
     }
 
-    const rows = [...battleActionRows.querySelectorAll('.battle-action-row')];
+    const rows = [...battleActionRows.querySelectorAll('.battle-action-row')]
+        .filter(row => row.dataset.applied !== 'true');
 
     const actions = rows.map(row => {
         const action = row.querySelector('[data-action-kind]').value;
@@ -3019,10 +3026,16 @@ battleActionForm.onsubmit = async event => {
         };
     });
 
-    if (!actions.length) { message('Add at least one action or reaction.'); return; }
+    if (!actions.length) { message('No pending actions or reactions. Add a new row to apply more.'); return; }
     const applyButton = battleActionForm.querySelector('button[type="submit"]');
     if (applyButton.disabled) return;
-    applyButton.disabled = true;
+    battleActionsApplying = true;
+    // Freeze this batch and the separate start-of-turn form until refresh ends.
+    const controls = [...battleActionModal.querySelectorAll('input, select, button')];
+    const previousDisabled = controls.map(control => control.disabled);
+    controls.forEach(control => { control.disabled = true; });
+    battleActionModal.setAttribute('aria-busy', 'true');
+    let applied = false;
 
     try {
         const result = await request('/api/battle/actions', {
@@ -3034,13 +3047,30 @@ battleActionForm.onsubmit = async event => {
             }),
         });
 
-        closeBattleActions();
-        await load();
-        message(`Applied ${result.applied} battle action${result.applied === 1 ? '' : 's'}.`);
+        // Record success before refreshing: a failed refresh must not replay HP changes.
+        applied = true;
+        for (const row of rows) {
+            row.dataset.applied = 'true';
+            const status = document.createElement('span');
+            status.className = 'battle-action-applied-status';
+            status.textContent = 'Applied';
+            row.appendChild(status);
+        }
+        document.querySelector('#battleActionNotice').textContent =
+            `Applied ${result.applied} battle action${result.applied === 1 ? '' : 's'}. ` +
+            'Add targets or reactions to continue, or Close when finished.';
+        await load(true);
     } catch (error) {
-        message(error.message);
+        document.querySelector('#battleActionNotice').textContent = applied
+            ? `Actions were applied, but refresh failed: ${error.message}. Refresh before continuing.`
+            : error.message;
     } finally {
-        applyButton.disabled = false;
+        controls.forEach((control, index) => {
+            control.disabled = previousDisabled[index] ||
+                control.closest('.battle-action-row')?.dataset.applied === 'true';
+        });
+        battleActionsApplying = false;
+        battleActionModal.removeAttribute('aria-busy');
     }
 };
 

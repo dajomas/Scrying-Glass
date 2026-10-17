@@ -198,6 +198,21 @@ finally:
 
 Exit and restart. Review ownership if role changed. This is emergency offline administration, not normal user management.
 
+## Deploying the persistent action-modal patch
+
+This UI-only patch requires matching `static/admin.js`,
+`static/battle-turn-actions.css`, and
+`templates/admin/180_battle_action_modal.html`. No Python package, configuration,
+SQLite schema or data migration changes are required. Follow the normal backup
+and upgrade process; restart the service because HTML fragments load at import,
+then reload existing Admin tabs so markup, scripts and styles match.
+
+Smoke test on a copied encounter: apply an action and reaction; confirm the modal
+stays open and both rows show Applied and cannot be edited. Apply again without
+adding rows and check that HP and the activity log do not change. Add another row,
+apply it, then Close; verify that closing never rolls back earlier applies or applies
+an unfinished row. Start-of-turn controls must remain separate.
+
 ## Troubleshooting
 
 ```bash
