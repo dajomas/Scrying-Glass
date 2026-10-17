@@ -1,6 +1,6 @@
 # Scrying Glass
 
-[Overview](Readme.md) · [User Guide](docs/User-Guide.md) · [Technical Documentation](docs/Technical-Documentation.md) · [Systemd Deployment](docs/Systemd-Deployment.md)
+[Deployment package](DEPLOYMENT.md) · [User Guide](docs/User-Guide.md) · [Technical Documentation](docs/Technical-Documentation.md) · [Systemd Deployment](docs/Systemd-Deployment.md)
 
 Scrying Glass, formerly Monster Display, is a self-hosted tabletop encounter manager. The GM uses an authenticated Admin interface; players use a separate Client Display. Two FastAPI applications run in one Python process, persist structured data in SQLite and deliver player updates over WebSockets.
 
@@ -99,7 +99,7 @@ Fresh installs print a random superadmin password once. Change it immediately, t
 
 Deploy scrying_glass_server.py, python/, web_html/, templates/ and static/ together. Keep package __init__.py files. web_html avoids collision with Python's html module. Admin markup is assembled from ordered templates/admin fragments; user management uses templates/users.html. Restart after imported HTML changes and reload browsers for assets.
 
-The repository documentation directory is docs/. This set contains four self-contained documents; supplemental feature pages are not required. A root README can link to docs/Readme.md.
+The repository documentation directory is docs/. This set contains four self-contained documents; supplemental feature pages are not required. Package-specific instructions are in DEPLOYMENT.md; exact source identity and checksums are recorded in package-manifest.json.
 
 ## Persistence and backup
 

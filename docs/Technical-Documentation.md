@@ -307,7 +307,7 @@ node --test tests/*.test.cjs
 
 The wildcard command covers that filename group only, not every JavaScript file
 in tests or the Python/browser/HTTP suites. See
-[the patch validation record](../Patch/Initiative-Tie-Tests-Validation.md) for executed
+[the patch validation record](../Patch/Deployment-Validation.md) for executed
 results and investigation details.
 
 ## HTML, caching and validation

@@ -1,0 +1,1746 @@
+{
+  "format": "scrying-glass-deployment-manifest-v1",
+  "source_branch": "features/development",
+  "source_commit": "4d3e3b6946024025854af01329b6c363510c1f0a",
+  "source_zip_comment": "4d3e3b6946024025854af01329b6c363510c1f0a",
+  "source_archive_sha256": "5095b5ec4f90cff360de97024d43469ae7f3dd3ec793d5ac818155604b32fbfc",
+  "created_date": "2026-10-17",
+  "application_label": "v4.16 (unchanged)",
+  "status": "deployment candidate; see Patch/Deployment-Validation.md",
+  "files": [
+    {
+      "path": ".gitignore",
+      "size_bytes": 320,
+      "sha256": "b4a64a4739a49e7c19432d8499bd534f08b3735c80b2005b0ab3517a1fa0ea4e",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "DEPLOYMENT.md",
+      "size_bytes": 6902,
+      "sha256": "cc7a2fa387ec783d1e950d8a1cc9b5f9ff06cd599b4cc04c45363553a2e24769",
+      "mode": "0644",
+      "origin": "packaging-addition"
+    },
+    {
+      "path": "LICENSE",
+      "size_bytes": 1064,
+      "sha256": "6403bcef1fec118f460489ebbe579311fdbf2c64b90a1e1f90f02aad11dd03d4",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "Patch/Deployment-Commit-Message.txt",
+      "size_bytes": 514,
+      "sha256": "1dcb743ad0774a555d711532584812c07d324965ab0dcbbffb1cad71e4a445ca",
+      "mode": "0644",
+      "origin": "packaging-addition"
+    },
+    {
+      "path": "Patch/Deployment-Release-Notes.md",
+      "size_bytes": 3097,
+      "sha256": "c1bae2a086d3bb200446f43b0638e8f70562146ddeb45f3e2e1ab0060c668a68",
+      "mode": "0644",
+      "origin": "packaging-addition"
+    },
+    {
+      "path": "Patch/Deployment-Validation.md",
+      "size_bytes": 4108,
+      "sha256": "bbad0e34f2210a5dc82f36c98fa7a3081983eea3444dd11dc8665094b891faad",
+      "mode": "0644",
+      "origin": "packaging-addition"
+    },
+    {
+      "path": "Patch/Packaging-Only.diff",
+      "size_bytes": 2546,
+      "sha256": "1ccbc6df625a08c613c75bd828f4f36e287c601fb31f4676f94f5c59e5cd093c",
+      "mode": "0644",
+      "origin": "packaging-addition"
+    },
+    {
+      "path": "Patch/Validation-Results.json",
+      "size_bytes": 37263,
+      "sha256": "74da25b8349b9eb6df17a8a15085ee2d8f38cf0327ebce1bdf96f6ce53ac3ef5",
+      "mode": "0644",
+      "origin": "packaging-addition"
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 7395,
+      "sha256": "1051e56f02323dcfa1c26ffec419e607bef74721902de5e1608b9e0df03b352b",
+      "mode": "0644",
+      "origin": "source-documentation-adjustment"
+    },
+    {
+      "path": "config.example.yaml",
+      "size_bytes": 998,
+      "sha256": "32bc365a4c196f9e4e07a41a9045e87446677e0b2bd351bf993b9eec7cc0120c",
+      "mode": "0644",
+      "origin": "source-documentation-adjustment"
+    },
+    {
+      "path": "create_git_archive.sh",
+      "size_bytes": 562,
+      "sha256": "e2ce3381e01f729315a1ba1caebf6394bc8c6f116f717ee8d9109cb97743a66f",
+      "mode": "0755",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "deployment/check.py",
+      "size_bytes": 3129,
+      "sha256": "8a0ae18886c17015a5eca6a457a6bc154bf12536f13e092f95fbbe22f2e15ba0",
+      "mode": "0644",
+      "origin": "packaging-addition"
+    },
+    {
+      "path": "docs/Systemd-Deployment.md",
+      "size_bytes": 12976,
+      "sha256": "c4f3dd50b40a369f273be26bd1e0e8d94e17a45812610e5cdb342718fe65f311",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "docs/Technical-Documentation.md",
+      "size_bytes": 21467,
+      "sha256": "08e4c4df3b2f17e37d630d288ff2c5a6895af3732fc71fa9b1146549cb3b37d4",
+      "mode": "0644",
+      "origin": "source-documentation-adjustment"
+    },
+    {
+      "path": "docs/User-Guide.md",
+      "size_bytes": 16610,
+      "sha256": "6335e50cc9a4accac2676a5df1379c62791d55a4ff383dccb46069f963f00787",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/__init__.py",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_admin_activity.py",
+      "size_bytes": 3532,
+      "sha256": "c4f168ee0cd02114ab1be00e075e1d4abc6c5c267963d8ecaf7ed4abdb579d06",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_admin_battle.py",
+      "size_bytes": 8509,
+      "sha256": "5a90c567ada5a9ac95fd2c4b84f776a9e487fbe12a1213d5da7e9559bc1907c9",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_admin_campaigns.py",
+      "size_bytes": 9207,
+      "sha256": "a60b758b21c6c8ee5251d17b1f65ddce729d916c8a027e665b7b2f391b4a402a",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_admin_characters.py",
+      "size_bytes": 8866,
+      "sha256": "9041d6ee2f020ad561bf519199c0243dabfb18e4004f150ee6248d2c8070f50a",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_admin_combatants.py",
+      "size_bytes": 2737,
+      "sha256": "39a05e40c0a949ba8c7fba42fd0e4aeb94076acd050e185497d3d4b961daa2fa",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_admin_display.py",
+      "size_bytes": 4300,
+      "sha256": "f201b142bd5f20e99254f382de5f7c03b92671af45ccfc42d608b33db5f5c5f2",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_admin_monsters.py",
+      "size_bytes": 15189,
+      "sha256": "c965e6a16a672ac4e527f3869090a1c649f8842b0da06b3bca6b350f0224f5dd",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_admin_pages.py",
+      "size_bytes": 2188,
+      "sha256": "2a521ffd2cb4678048feb19ffe2569da1d09c2f6f69a06c02acab2d03e8a76c3",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_admin_setups.py",
+      "size_bytes": 10511,
+      "sha256": "da2da389a96a03652235a647451cdf2383a61d0cbbd7098d0cf10e33730ea315",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_admin_users.py",
+      "size_bytes": 5151,
+      "sha256": "0aadd9dfd28d8012276697bcea1f50d9c1de109c3fcc96078269849700ddc8f1",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_api_admin.py",
+      "size_bytes": 6020,
+      "sha256": "7277c70052f31a5c152bc6afad26e42f7000515931c14c7c76691e9d611102ef",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_api_client.py",
+      "size_bytes": 10161,
+      "sha256": "55fdff19d8f513442f4826fa8831120fcc411940dce430e5095305b5befcef44",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_api_features.py",
+      "size_bytes": 2831,
+      "sha256": "6fdbdb183a3758232548fc97adc6358a85bdd76b8b540589cf4f8d61a7df39b3",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_api_lairs.py",
+      "size_bytes": 1435,
+      "sha256": "a5051d7f13c7b796fe11588e655a30a11b2e205862dc514fa86f87bd51c9d9e1",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_asset_cache.py",
+      "size_bytes": 4981,
+      "sha256": "cd44947071edc240ee5344f6512819b856f6f39ecd075550fc429096dc1c242d",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_campaign_bundle.py",
+      "size_bytes": 11779,
+      "sha256": "8a4fe6fa5ec2ebe2a569c070dc4f8ac04f3a9381a2c551fd0a5fbc1c73ba6e20",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_campaign_ownership.py",
+      "size_bytes": 8798,
+      "sha256": "f422de07d92d6f9b0a48a5d5bca94be982c3862b4d23f154b994b8bf9e6d94d3",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_campaign_ownership_routes.py",
+      "size_bytes": 1505,
+      "sha256": "17d65f80a267a26d2e1bc8a35d1c298a4762077e8dd4fefa1a2ebd9c5c649426",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_campaign_viewer_routes.py",
+      "size_bytes": 1795,
+      "sha256": "4efe1220d8070cf25089308f8171de9897e3a069421d8eed17adf2555bc53e38",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_campaign_viewers.py",
+      "size_bytes": 7206,
+      "sha256": "6f24ac0418cafa3f92f96635f673f1641504f65ea255c2f19540e73da85e8c92",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_classes.py",
+      "size_bytes": 5687,
+      "sha256": "9553e8f697dc93969c88a88e367d4433e0d75b6cc6159af8c98c7ee862ae7cb1",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_combatant.py",
+      "size_bytes": 3146,
+      "sha256": "e9b611bf73582d625b9104462adcf47e121d82f9a92818e74a365f667b9b85a2",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_database_transactions.py",
+      "size_bytes": 4518,
+      "sha256": "d5b8a96fc36f54c7e1fb9fc145053ac2d8998bb4147e128bb09077cff85d97b9",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_dndbeyond.py",
+      "size_bytes": 5949,
+      "sha256": "c01662060bf2cb7085a465e7302ee0beaf50b0a0b74c1a6904e1d19a4a8b25b4",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_feature_logging.py",
+      "size_bytes": 929,
+      "sha256": "0badbad9221feb9647c65750ebcd190967840022cd9c3851e213edf1e5edb0c2",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_feature_rules.py",
+      "size_bytes": 6174,
+      "sha256": "d14751dbecc4db9f9a47500bc9b5b04a1551c20242024455ca8bfd9e03570d37",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_feature_storage.py",
+      "size_bytes": 6356,
+      "sha256": "a3ec11823fb0924c9873e8e8f9a31c3142be498628bc81b7e3941da5fe73978b",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_health_limits.py",
+      "size_bytes": 208,
+      "sha256": "8723d83e5ad15cc7f554f7948651d6ffe1782ef1c3ba4b1053cd48ace859d0fd",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_hp.py",
+      "size_bytes": 3737,
+      "sha256": "b3c7a3971d5cb9b928ebdef0bfda06df2445279bd46fdd358cdaa895bbb2b5cf",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_identity_rules.py",
+      "size_bytes": 861,
+      "sha256": "f5ce58115fa105c08300f99c95b7980a6b02ad573a2d9f63e5a0d06178fdbb98",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_init.py",
+      "size_bytes": 3024,
+      "sha256": "4465045d68f2fecdab2934d0ded4e6e0d4fd1899b4681ec94d03068b59212d05",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_initiative_gate.py",
+      "size_bytes": 2625,
+      "sha256": "736dabe408980cdd87b86f46369fed97a42321a5ba2e4e5430f1e17da145238e",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_json_import.py",
+      "size_bytes": 1670,
+      "sha256": "a96e0e7e27c8da5d3b591c2f6105149c33c1e7c0bd1c3515f4095a8893b7edd4",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_lair_rules.py",
+      "size_bytes": 2262,
+      "sha256": "8d280b6ead67df5b3a2c7855572f195d2cbb31bcf5ec34659dee684493f5aef4",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_lair_storage.py",
+      "size_bytes": 2016,
+      "sha256": "7aeefe09a6d38133191234ccfac7f4053189098de8ba10b63d0d49c49e619a02",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_logout.py",
+      "size_bytes": 2389,
+      "sha256": "b0081d5ed62e307ac4701a8bb57a8f50a82f65d8973290a5b381c72911391dd7",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_monster_csv.py",
+      "size_bytes": 12279,
+      "sha256": "2190c21a05b04f19dd30d65328ef860b822d7ea958a1cd049dfa3451040debaf",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_monster_names.py",
+      "size_bytes": 644,
+      "sha256": "86c5cbc23fc475961804767b214efc9e2a0925aaa871879270cc0de58e38503d",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_request_security.py",
+      "size_bytes": 658,
+      "sha256": "9c88e97605e0dc4eb25db61fc2f32ffbddbf5ed22845771dc8adf245608da75a",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_service_activity.py",
+      "size_bytes": 3197,
+      "sha256": "fc286a562897f4d1c7b0aa962af668e7ec09dcfb2fe4af2041c960e32d0477c9",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_service_auth.py",
+      "size_bytes": 5616,
+      "sha256": "034e7e787f73efc31cf4ed72be24af68fc15429e95e6b1f07e3a68c07ea658f1",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_service_battle.py",
+      "size_bytes": 9468,
+      "sha256": "041f79550ba1adfeee11f3d8e3c0175467a8f6e39f98f6f077c07d5c6b05b285",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_service_campaigns.py",
+      "size_bytes": 4802,
+      "sha256": "cf6a1f704fcf95250294a92e526c82d900b5b0cef896b1a8224ff87991200671",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_service_features.py",
+      "size_bytes": 15662,
+      "sha256": "d612ba5a02e427a06054d897d13fcd66fdb75bfcb27ee636e3fbfc53cf54fb92",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_service_images.py",
+      "size_bytes": 11546,
+      "sha256": "bba358d2405a1c746a400d3df495ef3011f3b399dffc13db676001c9e237e866",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_service_lairs.py",
+      "size_bytes": 7715,
+      "sha256": "b403a026478a7801121f98f81d6e2e5c774d07718ad69529c1e144b02c30a7f4",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_service_migrations.py",
+      "size_bytes": 6651,
+      "sha256": "a7c4615cef85812a00fc78fb1179dacba2ecb633aa85136cc65736ceb7a143ec",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_service_notifications.py",
+      "size_bytes": 4229,
+      "sha256": "e11fb3b8f46df365117516ec585a7cc508196926d2b0672a516f122709b2d941",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_service_persistence.py",
+      "size_bytes": 13110,
+      "sha256": "25fa4c9b34dfb27fe41b34b58e45b2d01ce4b6ffccd41b057a149f0036ae0c15",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_service_state.py",
+      "size_bytes": 20406,
+      "sha256": "68576be7b6271c75b53ce736856d5c4631c184e6defc96af8631938517f6941b",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_services.py",
+      "size_bytes": 4864,
+      "sha256": "d556b1647714d43daab7529c5f9457b55aa5c9bf66de3dd2352fd3556c689ef4",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_setup_lair.py",
+      "size_bytes": 1269,
+      "sha256": "d490f19d8e29f76b478b5d19382ac8b910e4d876a05e35f1fc8e9e54e3730357",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_storage.py",
+      "size_bytes": 39345,
+      "sha256": "ca6c13fc4c25462b50ea71bc46b1df0cc255857eced663b65254d5a25141f037",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_tools.py",
+      "size_bytes": 1480,
+      "sha256": "455c8eabb885af5ec0c4be8ad6e0ff28facbdcd3ff48ee4f05f5f77405ef221e",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "python/scrying_glass_turn_rules.py",
+      "size_bytes": 604,
+      "sha256": "071d99e173b1b24650310037606c7b0593cfb44cc577194077b0b9ace3ad7f97",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "requirements.txt",
+      "size_bytes": 216,
+      "sha256": "6bbd2f5830e5e901f2fd03c06116cd803aa2a460ca7928f98016f98be6c2e5a6",
+      "mode": "0644",
+      "origin": "packaging-addition"
+    },
+    {
+      "path": "run.bat",
+      "size_bytes": 2148,
+      "sha256": "89cea6993d8edaad155549cd016faa8db611afc37485e9e5d88b37e138c02100",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "run.ps1",
+      "size_bytes": 2701,
+      "sha256": "386a9ca779ebff2074fa6a2e5c7f28676ff1ffdd929f2fd3bdd8d2729efbe14b",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "run.sh",
+      "size_bytes": 2121,
+      "sha256": "6f9737167f4e8247530241f60b7dcc4ee92d428e4c47cc7fcb0a894e7525e4c3",
+      "mode": "0755",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "scrying_glass_server.py",
+      "size_bytes": 8458,
+      "sha256": "8b3e27ab451b94bb29f8f47f5ef7bb057a4784434c8da4f5560743f5852efc31",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/admin-message-timeout.js",
+      "size_bytes": 603,
+      "sha256": "8ec14c8318f44fa0ec68957c7bdaa7089d7cc2b5ab7fc50670c3a7a6924c0bd1",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/admin-shell.css",
+      "size_bytes": 1067,
+      "sha256": "409593366f379894ac0de108d3eef8885a6db160ebd1ad7af34c4917e281ce8e",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/admin.css",
+      "size_bytes": 10800,
+      "sha256": "273ef936047119f9b8702ff70a9c25b1eecb1ab8e8982ada49613b926ce24777",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/admin.js",
+      "size_bytes": 112021,
+      "sha256": "cd047ee281699cb8bfe329184f5889d8778a7c474adc969cfb6afee2510623b2",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/battle-turn-actions.css",
+      "size_bytes": 2394,
+      "sha256": "c0fef2a04b9ff41cff6480a1c9d80d662996f79745ff9df17955deb121080662",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/battle-turn-actions.js",
+      "size_bytes": 5381,
+      "sha256": "693dc2450c0817ce79830e826b396343a0e6cc358e5ecdd1411a2ad52b920801",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/bulk-select-all.css",
+      "size_bytes": 837,
+      "sha256": "6019d9a78cb8db9480bae4e527ff7e516cb87170e07f23a706f58d77f571bf6b",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/bulk-select-all.js",
+      "size_bytes": 2080,
+      "sha256": "a62f91e3b793908e5f57de8a1f393751a0e41d9395189e4aec0349612156f1fa",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/campaign-backups.css",
+      "size_bytes": 3652,
+      "sha256": "6d393d26b5eb7f393edc992076e16b6755d7c28db0c50f24e341b3baa442f47c",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/campaign-backups.js",
+      "size_bytes": 979,
+      "sha256": "af54ddfc52932ac1bb37f8c0465b02408710badf3bbd8092155967b9c6703340",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/campaign-ownership-admin.js",
+      "size_bytes": 3082,
+      "sha256": "a3a31f3382b5e4bb3b9e3b308f99832e24cfba01baf15bbd42b953448ddd5e28",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/campaign-ownership-notice.js",
+      "size_bytes": 1196,
+      "sha256": "c76148959708d6650c8ad5c8655462a1dcfae47d78f4121207f1bf990d0da380",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/campaign-viewer-admin.js",
+      "size_bytes": 5539,
+      "sha256": "a468cd6b6f97db1df93744ef7e08ec665199372a290a5ee648ab84e95d3c40c1",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/client.css",
+      "size_bytes": 5047,
+      "sha256": "2472fa6def26c34495d104fe57465259535e7d2ffa31f94a96bcab4f658b8670",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/client.js",
+      "size_bytes": 14545,
+      "sha256": "4c571e76dd918ca8042cd6e778f6050905367306fcd3dc23a5eca268c4c608e3",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/damage-preview.js",
+      "size_bytes": 1261,
+      "sha256": "acef1eb90516a3d2e72e45f138656ffe0b5fa692c6ecad55ab57a9373f6afbea",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/encounter-tools.css",
+      "size_bytes": 8344,
+      "sha256": "06c8a17e4a460231362daed65e26335136de8d1a0817403564545b06c45ba2c7",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/encounter-visibility.css",
+      "size_bytes": 205,
+      "sha256": "e856680fc0cadaa6fc0691e7106d7375125081df33b3f6569b00ae65daf9b299",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/encounter-visibility.js",
+      "size_bytes": 1315,
+      "sha256": "d69a1e6b076e8f3e42aa036e9b588e08f6bf6a4ea02eac734a50f678e409ea22",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/favicon.ico",
+      "size_bytes": 4286,
+      "sha256": "e59ce9107e4e9be127b871db6ffaeb46e15b166a69721ac654bd093ab8b8b303",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/features.js",
+      "size_bytes": 11200,
+      "sha256": "6e9fd0e1c0b02ebfe68ed7fba890151c90f7c4bdb75a74e6f77628ddaa9ef87e",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/initiative-join-gate.js",
+      "size_bytes": 3496,
+      "sha256": "7460544d235734bb0b0e5b032618ea02d6f342d4a5f4742721e4ee45e2dd5176",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/lair-color-preview.js",
+      "size_bytes": 968,
+      "sha256": "89aed2e7f3fe3ebe3410b5d3dff865a9dd9f9166e35e34fd6c6f70043ce7bea7",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/lair-state-buttons.js",
+      "size_bytes": 2627,
+      "sha256": "b31ed74392af5c455ca3fbead0571a6fd7be739dc84da283f9c65a6297dbb05d",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/lair-status.css",
+      "size_bytes": 458,
+      "sha256": "1c081fc872e1552ee5a71883dabeecd8b204bcbd26075c6797862861c89cae39",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/lair-status.js",
+      "size_bytes": 1221,
+      "sha256": "da11050fd98f9d67e7c30a807e626c66443492af850f5c90c4182795a3c5f1c3",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/lairs.css",
+      "size_bytes": 768,
+      "sha256": "247c24f59f7589e3959f8c81eb6245297bda6415d4d72ac25fe7d05add35b334",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/lairs.js",
+      "size_bytes": 8620,
+      "sha256": "1146071461de78a54b8ab813c14fc70a63b01e00b55c0f6cb0c97abd9c15173d",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/login.css",
+      "size_bytes": 499,
+      "sha256": "62e202f9137f692d918102bb074b97b293625328155fa5a371b98573571ec91d",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/setup-has-lair.js",
+      "size_bytes": 1723,
+      "sha256": "c609c4e95560cc6b81d2c38e55dbcb247c7c2c4a7d31233afa0fe13c8dd62615",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/setup-switch.js",
+      "size_bytes": 2563,
+      "sha256": "9e60f4343d6b7d5c25bc8e389c461b3042da987b2e11e75d5bea707b6f372bee",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/users.js",
+      "size_bytes": 3320,
+      "sha256": "b84fa823e6aefca3be1aad2b3dbe72ecd4b6a820077cc8b5dc0ea90839ce8599",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/viewer-campaigns.css",
+      "size_bytes": 1090,
+      "sha256": "8e3266457be6a08c91fc78cb57ef47a175ed768a6e458817fc395658f1c7a0c5",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "static/viewer-campaigns.js",
+      "size_bytes": 2621,
+      "sha256": "e6e509724a04b5f7002aba29856357dfe25cd84741b2e846530c2c4c3101e081",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/000_document_start.html",
+      "size_bytes": 758,
+      "sha256": "22d62810031228b4303bd1462867291cc17c8bf2659433232ae4ac8f0fd7aa08",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/010_pane_controls.html",
+      "size_bytes": 2433,
+      "sha256": "0e210581a1bf04b21dc7814d07a6b16ee244657a8e1efcce3bbef6ec05f46f1c",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/020_battle_controls.html",
+      "size_bytes": 11022,
+      "sha256": "5c76702460128703e32691d60d40eca92769d9a18e102d92b25c60e5a12a3e16",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/030_campaign_input.html",
+      "size_bytes": 2286,
+      "sha256": "b38f521b81819c46f71e2ec12173bc97f7346e36b93698ffde21d724b9747f2f",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/040_character_input.html",
+      "size_bytes": 2132,
+      "sha256": "fc5668be30d4d1a2354d7115757468639b9c7918672d5eea2e695aff03abe090",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/050_setup_input.html",
+      "size_bytes": 4044,
+      "sha256": "b1d4504f54eb5d77925f248c522580e5e25322152f739e38f7ba07eb40a5e8ac",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/060_monster_input.html",
+      "size_bytes": 7036,
+      "sha256": "7d0dd2c7e131f6eb507c1e51e95c84d29421286754155980511f38407c39232c",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/070_character_display.html",
+      "size_bytes": 1085,
+      "sha256": "5e3b5e0d6b593bbd76b9bbc2a1e04aa61c123022321a451f6061f75c4bd02919",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/080_monster_display.html",
+      "size_bytes": 1712,
+      "sha256": "485d648f3f25de32c1f8ebc15933b6ee901d205ae2b07ae4f18526a8780775b9",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/090_activity_log.html",
+      "size_bytes": 593,
+      "sha256": "62c07ba49be068aea1459576266a59ea853361a773cbea461a279ff11a01a1e9",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/100_tie_modal.html",
+      "size_bytes": 377,
+      "sha256": "6ba182dc2a82181aca50bca20f995dd7d1936ae50188c2411b851f2362b57ede",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/110_edit_modal.html",
+      "size_bytes": 172,
+      "sha256": "44ec6075285a08cde609ab7c003b597c98fee9edaf6fe89c339d352f3d8ebc13",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/120_setup_import_modal.html",
+      "size_bytes": 1437,
+      "sha256": "2470ac55101cdbd9292cadfda3c2b9ad6989ac6e6787aafe57b7f5f6c332e62c",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/130_monster_help_modal.html",
+      "size_bytes": 2608,
+      "sha256": "17a27ad961003d2bf934014cb5abf3cb1ea5bf622a2c26518a96ba63c70ff662",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/140_campaign_modal.html",
+      "size_bytes": 650,
+      "sha256": "22ec65e86df2db88146c2c58ddfdf60cc326792e701910aeb765fb7e6643e7cd",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/150_campaign_setup_modal.html",
+      "size_bytes": 1210,
+      "sha256": "12cfcfed8ab2d903e7534cbda233ab2c4894d61236996af24b336a065ee8f4f4",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/160_campaign_delete_modal.html",
+      "size_bytes": 1025,
+      "sha256": "603ff0498feca332ffe3c65ef788c3762acbf74a2a355f8ef47ce1059084a789",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/170_csv_import_modal.html",
+      "size_bytes": 743,
+      "sha256": "3b13e2704969df7a006ca7892e8cbe33c8a0e63849a253e80777556f935677fd",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/180_battle_action_modal.html",
+      "size_bytes": 2248,
+      "sha256": "a1b292503b0380d675ff63f6fa5051711abe1d77325e1eb0719ada5b53a988f5",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/185_lair_tools.html",
+      "size_bytes": 3471,
+      "sha256": "e0c3b6235c94ce51b118d6a8e7878d7ee7a3f3562914e6f132b3d1c76f8a210a",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/admin/190_document_end.html",
+      "size_bytes": 616,
+      "sha256": "f772e0c2303d75e892a6ee57ae79bd0ed66d202acc933ef063645e5d3e37ffc1",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "templates/users.html",
+      "size_bytes": 2909,
+      "sha256": "6d45ff48626ae4de3ad7b616fbbe5bc15f750fae3850fc6204faa2be0f263e24",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/admin-message-timeout-browser.py",
+      "size_bytes": 680,
+      "sha256": "508feedebd92ed98883c9cb8439c03c76cdec839bf079cb2eea10234d95be43d",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/admin-message-timeout.test.cjs",
+      "size_bytes": 2688,
+      "sha256": "d2a272af06c20d2509961520919841ce66578aade96b1f1cb08324f4352133b6",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/audit_connection_lifetime.py",
+      "size_bytes": 2321,
+      "sha256": "3db2bae1e1fa54bb6b1a080c448dc44c92a0111fdbb96debdef6d13cde47eecc",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/audit_log_clear.py",
+      "size_bytes": 2545,
+      "sha256": "2edabb6e486a88447699c73738a05494e1baac224b8d580aaaa11663382d8bdd",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/audit_round3_check.py",
+      "size_bytes": 3638,
+      "sha256": "776b8b27f947a83a12f6465bb371f44dc59b48897d508cb3b3499546ebf98203",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/battle-action-apply.test.cjs",
+      "size_bytes": 8449,
+      "sha256": "1b87c24ecf32a5026e4f889cc701e583bba1f5d28f18ea9f0262132e4bfa17af",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/battle-action-selection.test.cjs",
+      "size_bytes": 5773,
+      "sha256": "ae8520cd01cf92ae85e40d167480f4b9e0413f892792ca66c33fc65c56331f6c",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/battle-reactions.test.cjs",
+      "size_bytes": 1875,
+      "sha256": "023bd9df57a720fbe8e0dcbf7afb2c22499d12370cf98a65ad60cb17335b759e",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/battle-turn-actions.test.cjs",
+      "size_bytes": 4350,
+      "sha256": "3027acb1fed9d3613d4718d6a4cd7c3fd9d3f9c7d438eda20aa2f8d551d23459",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/browser_smoke_272cc73.py",
+      "size_bytes": 5458,
+      "sha256": "eed9c59909cfcbd94a05628be3386b86e00e7c741b776d86625bc5d41b7bd2d9",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/bulk-select-dead.test.cjs",
+      "size_bytes": 3442,
+      "sha256": "0e55ca5d1bdf083d149af7489667fdfd5135fd26bfd8f6b49c1070668b2f7f9c",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/encounter-active-combatant.test.cjs",
+      "size_bytes": 3061,
+      "sha256": "dcdf476c605df0f628aeef99b78dcd1add92914835886bfa8315b346e4fe9f1e",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/initiative-join-gate.test.cjs",
+      "size_bytes": 4649,
+      "sha256": "3f3083599233ca5ddde69a79cbd8e85b1015114d425a3ce26d3dff9a342b99b1",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/initiative-tie-defaults.test.cjs",
+      "size_bytes": 4748,
+      "sha256": "8b15c39a79010cb4a6c3a33b9c7b7796761b986f034fadbee08416126cc1d868",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/initiative-tie-swap.test.cjs",
+      "size_bytes": 2749,
+      "sha256": "7a2b55b698f0fe538c0a04212ce3b8158c1e1cfa06e62921f813f109713d4751",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/lair-status.test.cjs",
+      "size_bytes": 1870,
+      "sha256": "05c3e4ca866b90511585578bf86ae86644dd7b1987b33660ba33e0a5c61e79fe",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/setup-has-lair.test.cjs",
+      "size_bytes": 3724,
+      "sha256": "dbf5bdd37cff632d74203849c4be0e20dc65df53483ee268cc4e00bafba6f52f",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/setup-import-life-filter.test.cjs",
+      "size_bytes": 1980,
+      "sha256": "67f79d79496a885505323366f2724e53e8956421c18c2dc8dd30367f62df2eac",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/setup-input-layout.test.cjs",
+      "size_bytes": 1415,
+      "sha256": "2d3fe9b7c052301ff84cef0b69afa55145503848e8be2dff13120c8611dd3267",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/setup-switch.test.cjs",
+      "size_bytes": 2739,
+      "sha256": "9b3c194b09cedd0b1bbe1c2ac19dd0ffe3cf96af894c06501bd52fe3fcb653f2",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_accounts.py",
+      "size_bytes": 11101,
+      "sha256": "ffa7e92041944cb6395f0abe0f59f6f8f746ec0a5ee5da42536a83bd419f7115",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_activity_life_states.py",
+      "size_bytes": 2329,
+      "sha256": "deed8a547b236a3c8a3373908fd01637036b60f0c6b0aea015b9852ae82b293a",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_admin_shell_layout.py",
+      "size_bytes": 6215,
+      "sha256": "b3d84294133fc0676cb5ab838e6399ef9528febcc14108bf530e28aab0ca4591",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_asset_cache_busting.py",
+      "size_bytes": 5350,
+      "sha256": "b3c037f8179744614292b83b0e32c3c89c7ae3f978ec801556fe19449cccb0bf",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_batch_ab59844.py",
+      "size_bytes": 6969,
+      "sha256": "8699c12ace46b99730a862b50969210f67bcfd94665f90986c1353275540f81e",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_battle_reactions.py",
+      "size_bytes": 4267,
+      "sha256": "75e9dbd7fcd958a203b04d3ddc18ab6f4b22a337f8ccc6ede5e5bd399946ec8d",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_0f46ef7.js",
+      "size_bytes": 7573,
+      "sha256": "c731b8858211dcc2fbb709277b46f6205578c1c2d34e1ba2a7e33f63c4091697",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_130f875.py",
+      "size_bytes": 6476,
+      "sha256": "dac2216c16bff02494320f3ca8f6ed6f60b08d9a79e6b16b02c5ad893ad46ea7",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_210aac8.py",
+      "size_bytes": 8021,
+      "sha256": "bf50dd665d405d2b36acba8d59372f9cf80440b8787e310dd3686ee9ab4dcf20",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_3d5b2d4.py",
+      "size_bytes": 7299,
+      "sha256": "2c137913dda9405a41f2bd18ad840cd67cb5cf9af2b69251167dfb408e52adcb",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_4d1df12.py",
+      "size_bytes": 7201,
+      "sha256": "64a5e22a4a847c7bca1fd6384a5a86fb3ebbea9b15deef7459126066c45dca76",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_4eb87b6.py",
+      "size_bytes": 7824,
+      "sha256": "3dc49beb1af7f8b8b8bb1578832383735182f8650a1d492c47b31fb40fc4dd06",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_504cb25.js",
+      "size_bytes": 5058,
+      "sha256": "011b5c5ea4caf02613f99ddfef54ad812bc98d9c7def5f4264a3105c4ac3ab6c",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_711881a.py",
+      "size_bytes": 7352,
+      "sha256": "b0ce6675998a6ebb458782d44c85745c7ca455a16e41af62ecf9978da7173283",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_73ecbf8.py",
+      "size_bytes": 5315,
+      "sha256": "003aa98c4a15a4370a6803ea9eae9a004e87ff17a5ee60c0038f97a9222d428e",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_757fd9d.js",
+      "size_bytes": 6257,
+      "sha256": "a741a1631b25503dacc17b0e701610110dc0f645ea552887e43f509bea42171d",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_985b4b2.js",
+      "size_bytes": 5997,
+      "sha256": "9555818bd918f760669a7ad9fb572ac10222b48f61417882a1096818f5e692a0",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_ec8f202.js",
+      "size_bytes": 6571,
+      "sha256": "005ad6e2416158e73ee3afeb03d8ebdb3e0d364db43f40cc5b8dc5a19418c155",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_fixes.py",
+      "size_bytes": 8717,
+      "sha256": "318be427ab1f2c3c45b78f958af9f914bd39c1563e667e9d956eb360913694b8",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round10.py",
+      "size_bytes": 4386,
+      "sha256": "b81b9b191fb377378ed761e35f6bf252f7739d9089f43ea7ab58dff384ebfa55",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round11.py",
+      "size_bytes": 5189,
+      "sha256": "306fc65fd3ad9a6047002e5e5f6d7dbaf11f622df078b33fcfd9b6c4926e49df",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round12.py",
+      "size_bytes": 5312,
+      "sha256": "919b3ddde677affebb4583a34fffff606a1d5e045583fbd87632260575cd1e7a",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round13.py",
+      "size_bytes": 5016,
+      "sha256": "d58c14d29acb14a216778a3d6c95583e946f434609ba62f01cb849979b2f8687",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round14.py",
+      "size_bytes": 4480,
+      "sha256": "012bec95f4bf87e9e795d604bef35c6f5f61562caaa28611ee424038b925af86",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round15.py",
+      "size_bytes": 3470,
+      "sha256": "edfb1e74d034e98a0faa78a0ee2d6e638a2ff04cab46c00fb373a75fff96f728",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round16.py",
+      "size_bytes": 3837,
+      "sha256": "87ec72f8baaaf9fa3584824368908002ac9d25ebca2032082e210dfff19349e4",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round17.py",
+      "size_bytes": 3785,
+      "sha256": "d99530df113786f035640476c5a1abec700a1257fd72cd7a26d0925e92943833",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round18.py",
+      "size_bytes": 4967,
+      "sha256": "72f96ce7a7f5f2764c72f340fb47f75305c2d356a042a7ea0271096ff5d54c45",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round19.py",
+      "size_bytes": 4690,
+      "sha256": "8631f1a66a008fb172c4d0cbbc8ee1566f45bfc5035741a493ddc4d8056ff157",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round2.py",
+      "size_bytes": 6064,
+      "sha256": "011e3c9da17c5db992ecf0055a8f084a06ef7ef176a9b107e47db6e0ec19c50b",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round20.py",
+      "size_bytes": 3018,
+      "sha256": "f0fe42aa5aa444992f5540688d4491ec782d1e5a246e16a5e0b9bd21520ce4d1",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round21.py",
+      "size_bytes": 4805,
+      "sha256": "92d9da73e3d9d58b3c9234845e86fee47d45c1e68a521198554fd7fda2d53c63",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round22.py",
+      "size_bytes": 3633,
+      "sha256": "0c9af2f2243b5445981c98416d8568ecebb977cda7a1f95676ed3d30ee13ed18",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round23.py",
+      "size_bytes": 2970,
+      "sha256": "268d41abaac5cdd1f850efefd551c0bd9c25b58cd00d940647c07ae55fca7b26",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round24.py",
+      "size_bytes": 2658,
+      "sha256": "113ab7f83b23cafcc31e15ed094809bafd4143a484edbe627746de57121b9404",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round25.py",
+      "size_bytes": 4321,
+      "sha256": "4243a8789cf61fe5d87de97a3f7d20e143277d1e8a9f5b51be4bdeef5c0aaeb0",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round26.py",
+      "size_bytes": 4116,
+      "sha256": "278d3ebd2bd792d9964038df828aae296517524f3fcbd8c1c0bd2b99d446d529",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round27.py",
+      "size_bytes": 4000,
+      "sha256": "f631388523d2df26e1c8e8ef9e55bdce936e133f789fd26e6af079d068c68eae",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round28.py",
+      "size_bytes": 2409,
+      "sha256": "0eaf188dbb9123365d55d4b01dc1738454a8246b4409f44002e93d6259d8c217",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round29.py",
+      "size_bytes": 3425,
+      "sha256": "fbca2057a8371dad6ade9e972640ac6aaf480df95b87f11ab4e62a82a211b26a",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round3.py",
+      "size_bytes": 6227,
+      "sha256": "edca6424ec7890b375316a16f0169249e178e44e54a1984681b6453e2dcd32f1",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round30.py",
+      "size_bytes": 2992,
+      "sha256": "044746573affa4ea1576d78431b95b0cbef1c7a8d92cce02c09ce95337384754",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round31.py",
+      "size_bytes": 3449,
+      "sha256": "bd84557906d7973b3803143048101b401644f253858363fec1b364bc7af764d5",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round4.py",
+      "size_bytes": 4334,
+      "sha256": "e5ad3ba470ee6394edfa183aba5677dbd34da8fa525e393f17100c5f61734355",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round5.py",
+      "size_bytes": 2321,
+      "sha256": "3939992deeddc7e36135ce82dbf441afc7a84093cc988518b22dd763a9edd774",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round7.py",
+      "size_bytes": 1165,
+      "sha256": "efd433ea66bfc9b5cf6775ad660d9ec3216fd96e4391bf4fc0cebb5639290a8b",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round8.py",
+      "size_bytes": 1274,
+      "sha256": "d9f1ec0a15fc923bc8e9b0c1361a5f8a491bd81a61dc6139a29bd5406531e7d9",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bughunt_round9.py",
+      "size_bytes": 2984,
+      "sha256": "a6cf962587fb179bc6f3e66b64ef52c4e8fd23ef024c2f97eb59a7d1fadc06f4",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_bulk_select_all.js",
+      "size_bytes": 2196,
+      "sha256": "d8ad478241ce12e4a1c8144c7daf6b0977bf3e3bc113fe63ddbae5e128de9264",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_campaign_backups_layout.js",
+      "size_bytes": 1847,
+      "sha256": "d545638313e33a61d02c633574714947a3fa2448ad07a9765e94b8719974343e",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_campaign_ids.js",
+      "size_bytes": 2040,
+      "sha256": "3fef76e35fd9583357bc7641be0ed3d09e007b575a70b16f9c7721a68c3dcf5a",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_campaign_ownership.py",
+      "size_bytes": 13183,
+      "sha256": "dd93bd9c04b4914a4f32b75b9ade7cee3905e861fd657c559d7a24fac3b0a34f",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_campaign_viewer_admin_selection.py",
+      "size_bytes": 7514,
+      "sha256": "6d60a0349aaa3757fcf248b21bb38dfa5efc8d44ae1930fdc82a122b65303e80",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_campaign_viewer_browser.py",
+      "size_bytes": 5313,
+      "sha256": "f2552e73f1a9177911a3e3cbfeae641f508530ae4edf2902c82f8101dd0d7b2e",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_campaign_viewer_lifespan_integration.py",
+      "size_bytes": 2615,
+      "sha256": "1e5823be025dea2d6c9902e1e0fde103e8943c52e9badd79afa63fe09d07031c",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_campaign_viewer_routes.py",
+      "size_bytes": 5226,
+      "sha256": "c1af94d1942e55ef2803af89874b1cd92aa83f0e65f568c0b232e22520b1b1ad",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_campaign_viewers.py",
+      "size_bytes": 10666,
+      "sha256": "2f50aaa720c24c0de2427bb19f168101a945e610a4ce0b02e7fba202e7bd0b56",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_client_campaign.py",
+      "size_bytes": 2823,
+      "sha256": "e566029789cca4dfcb016f6ad119aa7db5e380dc8ab5a1c9636c937559644fe1",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_damage_logic.py",
+      "size_bytes": 9654,
+      "sha256": "4d6a843c91bb0884b00c3e88a43ebae2399271c26549b6b4fabbaaccb7aecaed",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_death_save_validation_2ba6607.py",
+      "size_bytes": 2524,
+      "sha256": "f71572dbdef17b3d2bb516294edfc6179538db6e2731ee22bb73c7602ff8bd14",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_display_connection.py",
+      "size_bytes": 4193,
+      "sha256": "aedff52eefd405dfea6d1bbb1b96ce71c53b5fe4192b0d8eab5ec73926b6f65a",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_display_reconnect.js",
+      "size_bytes": 4067,
+      "sha256": "bdc0d7e9e8d3073e517d25f04fb15982ea40a39ca13f3c47e001a4593e878bbc",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_encounter_features.py",
+      "size_bytes": 14346,
+      "sha256": "3dac6a0f4901c9846f722eb72b2733bd83c4b57f7e6998dd64222d690d3be8d0",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_encounter_visibility.js",
+      "size_bytes": 1898,
+      "sha256": "99afbc012fe7c1a5d27c9a844fa755b4fbeb70d6cb571d112deee5e2ec943a0d",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_feature_async_scope.js",
+      "size_bytes": 6147,
+      "sha256": "55303bd8c1750b8c9d85b82ca83b0afa31043021e3d48fc85f673a2df67abce7",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_feature_edit_preservation.js",
+      "size_bytes": 8054,
+      "sha256": "168ee4f87f4de2e74a2e0cfc1f1b76886eb1cc9f534e656e1db44245dc35706c",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_feature_logging.py",
+      "size_bytes": 4316,
+      "sha256": "e6577b1e6bb7b820b08fcaca33f751b37e4788b29fc1c2f20b176d6e03d53860",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_feature_manual_refresh.js",
+      "size_bytes": 5112,
+      "sha256": "0e9af0b73452420b2ac5d358a018de9941d5a5eafcfc64367602ccfe43040550",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_feature_refresh_queue.js",
+      "size_bytes": 5696,
+      "sha256": "a7385b0b55e838bc21d9f1c37dbee0afa309f82d8a730a63a80e13147e80310d",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_feature_target_polling.js",
+      "size_bytes": 3505,
+      "sha256": "de401c7e4c090f4a2a82a0b1803688f6989b30c3aba92e9f59d3b97560fc2046",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_healing_max_hp_cap.py",
+      "size_bytes": 2386,
+      "sha256": "40f81972f503a96d364ca79e85a8e7972a77eef10ebfb596823ae6c97d96f22e",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_initiative_join_gate.py",
+      "size_bytes": 5996,
+      "sha256": "114b8e45c678da04bac09b5158ec4de48fb810444ea270725198a95a6ea496ab",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_initiative_ordering.py",
+      "size_bytes": 2264,
+      "sha256": "5eb553301c6f0de46584ed844e155c5376715fa607cb3c35bb6cd216075156a0",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_lair_damage_logging.py",
+      "size_bytes": 5576,
+      "sha256": "de4d46a1d0b64f27374225907dc34543680a84581044f0219cfb3e4d8623f977",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_lair_pane_visibility.js",
+      "size_bytes": 6553,
+      "sha256": "8cadd1fccc499040edddfe93cc0a3b4eada487811e3e9cf6a0fb0249780e1e85",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_lair_presentation.js",
+      "size_bytes": 5543,
+      "sha256": "ed287fecce5bdb8be28f2f813120bd228a1d0181a3c4a41e5842b8be91101c58",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_lair_state_buttons.js",
+      "size_bytes": 5417,
+      "sha256": "bba97d407342e838eb503602ba0b4d21747cfa38fdcf64cbe5abdd33826f6b19",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_lair_state_buttons.py",
+      "size_bytes": 4966,
+      "sha256": "33ed2b9a63e82d949371a1c415d0bfd3bf49549874c8e6c38e08cb7cd1b8383d",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_lairs.js",
+      "size_bytes": 5081,
+      "sha256": "06152b189f1fb8cc9b7f9fb54f6ed10a68d47287fb3e59b23159892cb2748fe3",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_lairs.py",
+      "size_bytes": 16133,
+      "sha256": "7ceed840848bba452d9901bd79805d815684bc08ba119dd410fa5165006519a2",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_launcher_python310.py",
+      "size_bytes": 7657,
+      "sha256": "0833f404c93bbf21279b27d5bda852e77502d5ef7c5b646e1cef4b11b603fcf4",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_launcher_runtime_82860c4.py",
+      "size_bytes": 1625,
+      "sha256": "996e18e071d194c944b9f1419d94efd847479f512764df4f84c89da946e822e2",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_logout.py",
+      "size_bytes": 8378,
+      "sha256": "82e4e54b37c7b1a0e2107d74b810634795a14cdf713fdd60e9fd6da3e13bad82",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_reset_health.py",
+      "size_bytes": 5253,
+      "sha256": "50a067d5482bf6d4b2b6c9bb4d3e6ccecee34c2c17a0d3bb6f0f777b1804d5c2",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_role_pages.py",
+      "size_bytes": 5704,
+      "sha256": "d6d0132e500d4b92abe23c250fb8c2ce746856a3f068cb60d811885a50d4f73c",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_setup_has_lair.py",
+      "size_bytes": 4897,
+      "sha256": "22f9d1e50e60b5a544e5620dbd2e22e4be30f7ab3dd766d10dfdbbbd7f419c71",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_setup_import_life_filter.py",
+      "size_bytes": 4224,
+      "sha256": "ece06b1eb5489a2c4f7cada1d46b3bfe7bd51746acd2e84e6ec0a7a748e78999",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_shared_monster_initiative.py",
+      "size_bytes": 3015,
+      "sha256": "104016d945826a8a86e3fa5a2e7bd86f8fcddd7a451d64dbdb421602fd4da289",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_slug_truncation_82860c4.py",
+      "size_bytes": 1369,
+      "sha256": "9bf7119fdd8faeb1ca4dcf367bc27bbda0fe51c1f6dae0ad8389a1d57fd555bb",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_sqlite_storage.py",
+      "size_bytes": 22281,
+      "sha256": "a145eb560d0ac2da882e87cd6b9dee08acaeadd16eaa8113007c5662fbbe9c1d",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "tests/test_turn_eligibility.py",
+      "size_bytes": 3345,
+      "sha256": "393562b97de34df93559ecb99fb2c7f518e1b85f0e61e1ed053f17f99fc59f45",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "web_html/__init__.py",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "web_html/admin_html.py",
+      "size_bytes": 1415,
+      "sha256": "4e02b0b1c8097c6d22eeeeb9cf26b3aefbb9daa50d9adf6722d38b0383bd6445",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "web_html/client_html.py",
+      "size_bytes": 959,
+      "sha256": "9611512a70e0644a05ec22fe9b094136360c5a003f2567c48ad71f1acef298c9",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    },
+    {
+      "path": "web_html/login_html.py",
+      "size_bytes": 640,
+      "sha256": "7b5f181422a7a0c9c29d604a672d95c3844e1d89bb6eca5acc6bb045870a0b50",
+      "mode": "0644",
+      "origin": "source-unchanged"
+    }
+  ],
+  "notes": [
+    "Manifest excludes itself. Extra local files are not checked.",
+    "No runtime dependencies or interpreter are bundled.",
+    "No application runtime source changes were made during packaging."
+  ]
+}
