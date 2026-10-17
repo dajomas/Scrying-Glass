@@ -236,6 +236,39 @@ node tests/battle-turn-actions.test.cjs
 python -m pytest -q tests/test_battle_reactions.py tests/test_turn_eligibility.py
 ```
 
+## Initiative tie regression fixtures
+
+`tests/initiative-tie-defaults.test.cjs` exercises the actual `tieUI()` renderer
+in a Node VM with only its data dependencies (`latest`, `tiedBuckets`, `esc`).
+The source slice ends at `function swapTiePosition(`, not `readTieOrder()`:
+the latter also includes the browser-only `#tieGroups` event registration and
+therefore raises `document is not defined` in this intentionally DOM-free fixture.
+Extraction asserts both function boundaries to diagnose later source layout changes.
+Do not add a fake document merely to execute unrelated initialization.
+
+The rendered-select parser allows attributes after `data-tie-member`, including
+`data-tie-position`. The old expression required the ID attribute to end the
+opening select tag and returned no matches once position tracking was added.
+The fixture verifies one selected numeric position per select and the expected
+combatant count, avoiding silent success when markup matching fails.
+
+Coverage includes stable character-first ordering, homogeneous ties, empty ties,
+independent one-based positions for multiple buckets, input immutability (including
+frozen inputs), trailing attributes, invalid selected-option markup, DOM-free
+extraction and explicit missing-boundary errors. The existing swap fixture checks
+manual overrides, repeated swaps and bucket isolation. Runtime initiative behavior
+is unchanged; these are test-harness fixes, not a combat-order change.
+
+```bash
+node --test tests/initiative-tie-defaults.test.cjs tests/initiative-tie-swap.test.cjs
+node --test tests/*.test.cjs
+```
+
+The wildcard command covers that filename group only, not every JavaScript file
+in tests or the Python/browser/HTTP suites. See
+[the patch validation record](../Patch/Initiative-Tie-Tests-Validation.md) for executed
+results and investigation details.
+
 ## HTML, caching and validation
 
 Admin HTML is concatenated from ordered UTF-8 fragments at import; restart after edits. This is not Jinja. Keep DOM IDs synchronized with scripts. HTML middleware rewrites local assets with per-response _cb tokens and no-cache; protected APIs use no-store. Existing tabs need reload.
