@@ -2,7 +2,11 @@
 
 ## Layout and prerequisites
 
-Use Linux/systemd, Git and Python 3.14+ with sqlite3. Install Python through your supported distribution mechanism; do not pip-install sqlite3. Run one non-root process per storage directory.
+Use Linux/systemd, Git and a Python 3.10-or-newer interpreter with working
+standard-library sqlite3 for the setup below. This aligns the example with the
+launcher minimum; it is not a claim that the complete application has been
+validated on Python 3.10. Install Python through your supported distribution
+mechanism; do not pip-install sqlite3. Run one non-root process per storage directory.
 
 - /opt/scrying-glass: read-only code, templates, static and virtual environment.
 - /etc/scrying-glass/config.yaml: restricted configuration.
@@ -22,7 +26,7 @@ sudo install -d -o root -g scryingglass -m 0750 /etc/scrying-glass
 sudo git clone https://github.com/dajomas/scrying-glass.git /opt/scrying-glass
 cd /opt/scrying-glass
 sudo git checkout main
-sudo python3.14 -m venv /opt/scrying-glass/.venv
+sudo python3.10 -m venv /opt/scrying-glass/.venv
 sudo /opt/scrying-glass/.venv/bin/python -m pip install --upgrade pip
 sudo /opt/scrying-glass/.venv/bin/python -m pip install 'fastapi>=0.115' 'uvicorn[standard]>=0.30' 'PyYAML>=6.0' python-multipart
 sudo chown -R root:root /opt/scrying-glass
@@ -34,6 +38,26 @@ sudo chmod 0640 /etc/scrying-glass/config.yaml
 ```
 
 Deploy the complete source/templates/static layout. Recreate virtual environments at their final path, rather than moving them.
+
+`python3.10` is an explicit example, not an exact-minor restriction: substitute a
+newer compatible Python executable if preferred. This installation uses
+`/opt/scrying-glass/.venv`, not the interactive launchers' `~/dnd` environment.
+The unit's `ExecStart` invokes that virtualenv's Python directly. It does not run
+`run.sh`, select another interpreter, enforce its version guard, or install packages.
+Check the interpreter selected at environment creation before starting the service:
+
+```bash
+sudo /opt/scrying-glass/.venv/bin/python -c "import sys, sqlite3; print(sys.version); print('SQLite:', sqlite3.sqlite_version); assert sys.version_info >= (3, 10)"
+```
+
+Installing another Python version does not change an existing virtualenv's
+interpreter. To change it, stop the service, back up configuration and storage,
+and recreate the virtualenv at its final path with the intended interpreter;
+reinstall dependencies and repeat preflight checks before restarting. Do not
+remove encounter storage as part of recreating the environment. Neither launcher
+acceptance nor a successful import replaces full startup and encounter validation
+with that interpreter and its resolved dependency versions.
+
 
 ## Configuration and preflight
 

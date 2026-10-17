@@ -1,5 +1,24 @@
 # Scrying Glass User Guide
 
+## Starting with the launcher scripts
+
+The launchers accept Python 3.10 or newer and require working sqlite3 support.
+Use `./run.sh` on Linux, `.\run.ps1` in PowerShell, or `run.bat` on Windows after
+preparing configuration as described in the README. Existing compatible environments
+are reused. New environments use a compatible interpreter discovered by the launcher.
+
+If startup says the existing environment requires Python 3.10 or newer, it has not
+been automatically replaced. The launchers use `~/dnd` on Linux and
+`%USERPROFILE%\dnd` on Windows. Back up any files stored there before recreating
+that environment with the intended Python. Do not delete campaign or encounter
+storage to fix an interpreter problem. Installing a newer Python alone does not
+upgrade the interpreter inside an existing environment.
+
+The minimum launcher version is not a statement that all application workflows
+have been validated on Python 3.10. Check installation, imports and a copied
+encounter after changing interpreters. For systemd deployments, follow the
+[deployment guide](Systemd-Deployment.md); the service uses its own virtualenv.
+
 ## Accounts and sign-in
 
 Admin defaults to port 3000; Client defaults to 4000. Separate cookies allow both in one browser. Logout affects only the current interface; restart clears all sessions. Account edits invalidate that user's sessions and display sockets.

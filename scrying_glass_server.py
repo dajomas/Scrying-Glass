@@ -1,10 +1,13 @@
-"""Scrying Glass v4.16 (Python 3.14+), formerly "Monster Display".
+"""Scrying Glass v4.16, formerly "Monster Display".
 
-Dependencies:
-  python3.14 -m pip install 'fastapi>=0.115' 'uvicorn[standard]>=0.30' 'PyYAML>=6.0' python-multipart
+Launcher policy: Python 3.10 or newer, with working sqlite3 support.
+This minimum is not a claim of full application validation on Python 3.10.
+
+Dependencies (substitute a newer compatible Python executable if preferred):
+  python3.10 -m pip install 'fastapi>=0.115' 'uvicorn[standard]>=0.30' 'PyYAML>=6.0' python-multipart
 
 Run:
-  python3.14 scrying_glass_server.py --config config.yaml"""
+  python3.10 scrying_glass_server.py --config config.yaml"""
 
 
 # ============================================================================

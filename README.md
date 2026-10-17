@@ -48,7 +48,8 @@ Back up any files before manually recreating an old environment.
 SQLite checks, dependencies, config path and server invocation remain unchanged.
 Linux retains its dependency marker; Windows retains installation on each launch.
 The manual installation example uses `python3.10`; a newer compatible executable
-may be substituted. The separate systemd deployment example continues to use 3.14.
+may be substituted. The systemd guide also uses 3.10 in its environment-creation
+example and runs that environment directly, without launcher discovery or guards.
 Actual Python 3.10 application startup and Windows execution still require testing;
 launcher regression tests use simulated versions and mocked external commands.
 

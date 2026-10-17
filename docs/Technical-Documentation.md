@@ -1,5 +1,46 @@
 # Scrying Glass Technical Documentation
 
+## Python version and launcher policy
+
+The launcher minimum is Python 3.10, not an exact minor-version selection. This
+policy allows a compatible interpreter to be chosen; it does not establish full
+application/dependency compatibility on every accepted Python version. Full
+application execution on Python 3.10 remains unverified in this patch series.
+
+- Linux: reuse a complete `~/dnd` environment after checking
+  `sys.version_info >= (3, 10)`. For creation, probe `python3`, `python3.14`,
+  `python3.13`, `python3.12`, `python3.11`, `python3.10`, then `python` in that order.
+  Select the first command that exists and passes the minimum check.
+- Windows: reuse `%USERPROFILE%\dnd` after the same minimum check. For creation,
+  try `py -3`, then `python` on PATH. Validate the reported version rather than
+  requiring an exact `-3.10` interpreter.
+- Every launcher rejects an existing environment below 3.10 before pip, checks
+  sqlite3 before package installation, and retains its existing config and entry
+  point. Linux retains its dependency marker; Windows installs on each launch.
+- A compatible existing environment is not silently replaced or downgraded.
+  Back up files before manually recreating an unsupported environment. Changing
+  the system Python installation does not upgrade an existing virtualenv.
+
+The systemd unit does not use launcher discovery or its version checks. Its
+`ExecStart` uses `/opt/scrying-glass/.venv/bin/python` directly; validate that
+interpreter separately and recreate the service environment deliberately if
+changing its Python version. Launch the root server script, not an external
+`uvicorn module:app` command that would skip main-guard initialization.
+
+Launcher regression checks:
+
+```bash
+bash -n run.sh
+python3 -m unittest discover -s tests -p 'test_launcher*.py' -v
+```
+
+These tests use mocked Linux executable commands and simulated version reports.
+Windows checks are static contracts, not PowerShell/cmd execution. Their passing
+results do not prove full Python 3.10 server operation or dependency installation.
+After installing dependencies in the chosen environment, check its version and
+sqlite3, import the server, and validate real startup, persistence and encounter
+workflows on copied data. Preserve this distinction in future compatibility claims.
+
 ## Runtime and composition
 
 The root scrying_glass_server.py owns CONFIG, STATE, LOCK, SESSIONS, SOCKETS, STORAGE, paths and two FastAPI applications. Services bind methods to that live module before route construction and call each other through self.context. State replacement must update context.STATE. Services must not import the root server.
