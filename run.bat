@@ -15,20 +15,20 @@ goto install_dependencies
 
 :create_venv
 rem Prefer the Python launcher.
-py -3.14 -c "import sys; sys.exit(0 if sys.version_info[:2] == (3, 14) else 1)" >nul 2>&1
+py -3 -c "import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)" >nul 2>&1
 if not errorlevel 1 goto create_with_py
 
-rem Fall back to Python 3.14 on PATH.
-python -c "import sys; sys.exit(0 if sys.version_info[:2] == (3, 14) else 1)" >nul 2>&1
+rem Fall back to Python 3.10 or newer on PATH.
+python -c "import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)" >nul 2>&1
 if not errorlevel 1 goto create_with_python
 
->&2 echo ERROR: Python 3.14 was not found.
->&2 echo Make it available through py -3.14 or python on PATH.
+>&2 echo ERROR: Python 3.10 or newer was not found.
+>&2 echo Make it available through py -3 or python on PATH.
 set "EXIT_CODE=1"
 goto finish
 
 :create_with_py
-py -3.14 -m venv "%VDIR%"
+py -3 -m venv "%VDIR%"
 if errorlevel 1 goto failed
 goto install_dependencies
 
@@ -37,9 +37,9 @@ python -m venv "%VDIR%"
 if errorlevel 1 goto failed
 
 :install_dependencies
-"%VENV_PYTHON%" -c "import sys; sys.exit(0 if sys.version_info >= (3, 14) else 1)"
+"%VENV_PYTHON%" -c "import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)"
 if errorlevel 1 (
-    >&2 echo ERROR: Existing virtual environment requires Python 3.14 or newer.
+    >&2 echo ERROR: Existing virtual environment requires Python 3.10 or newer.
     >&2 echo Recreate it after backing up any files stored there.
     set "EXIT_CODE=1"
     goto finish

@@ -18,14 +18,28 @@ DEPENDENCIES=(
 DEPENDENCY_SPEC="$(printf '%s\n' "${DEPENDENCIES[@]}")"
 
 if [[ ! -x "${VDIR}/bin/python" || ! -f "${VDIR}/bin/activate" ]]; then
-    python3.14 -m venv "${VDIR}"
+    PYTHON_COMMAND=""
+    for candidate in python3 python3.14 python3.13 python3.12 python3.11 python3.10 python; do
+        if command -v "$candidate" >/dev/null 2>&1 &&
+           "$candidate" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)' >/dev/null 2>&1; then
+            PYTHON_COMMAND="$candidate"
+            break
+        fi
+    done
+
+    if [[ -z "$PYTHON_COMMAND" ]]; then
+        echo "ERROR: Python 3.10 or newer was not found on PATH." >&2
+        exit 1
+    fi
+
+    "$PYTHON_COMMAND" -m venv "${VDIR}"
 
     # An environment that was recreated must be set up again.
     rm -f "${INSTALL_MARKER}"
 fi
 
-if ! "${VDIR}/bin/python" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 14) else 1)'; then
-    echo "ERROR: Existing virtual environment requires Python 3.14 or newer. Recreate ${VDIR} after backing up any files stored there." >&2
+if ! "${VDIR}/bin/python" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)'; then
+    echo "ERROR: Existing virtual environment requires Python 3.10 or newer. Recreate ${VDIR} after backing up any files stored there." >&2
     exit 1
 fi
 

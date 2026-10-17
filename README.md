@@ -20,19 +20,37 @@ This is a GM-assisted tracker, not a full rules engine. Resolve dice, saves, mit
 
 ## Requirements and installation
 
-Use Python 3.14+ with standard-library sqlite3 and a modern browser. Run exactly one application process per storage directory; multiple workers/replicas are unsupported. Node and browser automation are test tooling, not runtime requirements.
+The launcher scripts accept Python 3.10 or newer with standard-library sqlite3. A modern browser is required. This launcher minimum is not a claim that every Python/dependency combination has passed full application validation. Run exactly one application process per storage directory; multiple workers/replicas are unsupported. Node and browser automation are test tooling, not runtime requirements.
 
 ```bash
 git clone https://github.com/dajomas/scrying-glass.git
 cd scrying-glass
 git checkout main
-python3.14 -m venv .venv
+python3.10 -m venv .venv
 .venv/bin/python -m pip install --upgrade pip
 .venv/bin/python -m pip install 'fastapi>=0.115' 'uvicorn[standard]>=0.30' 'PyYAML>=6.0' python-multipart
 cp config.example.yaml config.yaml
 ```
 
 A detached checkout makes this baseline reproducible. Deliberately select a branch when developing newer changes.
+
+## Launcher interpreter selection
+
+`run.sh` reuses `~/dnd` if it is a complete virtual environment and its Python is
+3.10 or newer. For creation, it probes `python3`, then versioned commands 3.14
+through 3.10, then `python`, choosing the first compatible interpreter on PATH.
+`run.ps1` and `run.bat` reuse `%USERPROFILE%\dnd`; for creation they try `py -3`
+and then `python` on PATH, accepting 3.10 and newer rather than one exact minor.
+All launchers reject an existing environment below 3.10 before pip installation.
+They do not automatically replace or downgrade an existing supported environment.
+Back up any files before manually recreating an old environment.
+
+SQLite checks, dependencies, config path and server invocation remain unchanged.
+Linux retains its dependency marker; Windows retains installation on each launch.
+The manual installation example uses `python3.10`; a newer compatible executable
+may be substituted. The separate systemd deployment example continues to use 3.14.
+Actual Python 3.10 application startup and Windows execution still require testing;
+launcher regression tests use simulated versions and mocked external commands.
 
 ## Configuration
 

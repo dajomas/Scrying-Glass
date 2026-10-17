@@ -17,7 +17,7 @@ class LauncherGuardTests(unittest.TestCase):
             python.chmod(0o755)
             result=subprocess.run(['bash',str(ROOT/'run.sh')],env={**os.environ,'HOME':str(home)},capture_output=True,text=True,timeout=5)
             self.assertNotEqual(result.returncode,0)
-            self.assertIn('Python 3.14',result.stderr)
+            self.assertIn('Python 3.10',result.stderr)
             commands=(home/'commands').read_text()
             self.assertNotIn('pip',commands)
             self.assertNotIn('scrying_glass_server.py',commands)
@@ -27,6 +27,6 @@ class LauncherGuardTests(unittest.TestCase):
         for name in ('run.sh','run.ps1','run.bat'):
             with self.subTest(name=name):
                 source=(ROOT/name).read_text()
-                guard=source.index('sys.version_info >= (3, 14)')
+                guard=source.index('sys.version_info >= (3, 10)')
                 self.assertLess(guard,source.index('-m pip'))
-                self.assertIn('Existing virtual environment requires Python 3.14',source)
+                self.assertIn('Existing virtual environment requires Python 3.10',source)

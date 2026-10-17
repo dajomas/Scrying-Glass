@@ -17,17 +17,17 @@ try {
         $PythonArguments = @()
 
         if (Get-Command py -ErrorAction SilentlyContinue) {
-            & py -3.14 -c "import sys; sys.exit(0 if sys.version_info[:2] == (3, 14) else 1)" 2>$null
+            & py -3 -c "import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)" 2>$null
 
             if ($LASTEXITCODE -eq 0) {
                 $PythonCommand = 'py'
-                $PythonArguments = @('-3.14')
+                $PythonArguments = @('-3')
             }
         }
 
         if (-not $PythonCommand) {
             if (Get-Command python -ErrorAction SilentlyContinue) {
-                & python -c "import sys; sys.exit(0 if sys.version_info[:2] == (3, 14) else 1)" 2>$null
+                & python -c "import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)" 2>$null
 
                 if ($LASTEXITCODE -eq 0) {
                     $PythonCommand = 'python'
@@ -36,7 +36,7 @@ try {
         }
 
         if (-not $PythonCommand) {
-            throw 'Python 3.14 was not found. Make it available through py -3.14 or python on PATH.'
+            throw 'Python 3.10 or newer was not found. Make it available through py -3 or python on PATH.'
         }
 
         & $PythonCommand @PythonArguments -m venv $VDir
@@ -45,9 +45,9 @@ try {
         }
     }
 
-    & $VenvPython -c "import sys; sys.exit(0 if sys.version_info >= (3, 14) else 1)"
+    & $VenvPython -c "import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)"
     if ($LASTEXITCODE -ne 0) {
-        throw 'Existing virtual environment requires Python 3.14 or newer. Recreate it after backing up any files stored there.'
+        throw 'Existing virtual environment requires Python 3.10 or newer. Recreate it after backing up any files stored there.'
     }
 
     & $VenvPython -c "import sqlite3; print('SQLite:', sqlite3.sqlite_version)"
