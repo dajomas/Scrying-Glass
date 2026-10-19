@@ -13,7 +13,7 @@ mechanism; do not pip-install sqlite3. Run one non-root process per storage dire
 - /var/lib/scrying-glass: writable database, media and migration backups.
 - /etc/systemd/system/scrying-glass.service: service unit.
 
-Restrict network reachability before initial start. Default Admin/Client ports are 3000/4000.
+Restrict network reachability before initial start. Default Admin/Client ports are 3000/3100.
 
 ## Account and installation
 
@@ -242,7 +242,7 @@ an unfinished row. Start-of-turn controls must remain separate.
 ```bash
 sudo journalctl -u scrying-glass.service -n 200 --no-pager
 sudo ss -lptn 'sport = :3000'
-sudo ss -lptn 'sport = :4000'
+sudo ss -lptn 'sport = :3100'
 sudo systemctl cat scrying-glass.service
 ```
 

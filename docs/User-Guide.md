@@ -21,7 +21,7 @@ encounter after changing interpreters. For systemd deployments, follow the
 
 ## Accounts and sign-in
 
-Admin defaults to port 3000; Client defaults to 4000. Separate cookies allow both in one browser. Logout affects only the current interface; restart clears all sessions. Account edits invalidate that user's sessions and display sockets.
+Admin defaults to port 3000; Client defaults to 3100. Separate cookies allow both in one browser. Logout affects only the current interface; restart clears all sessions. Account edits invalidate that user's sessions and display sockets.
 
 Superadmins manage accounts at /users; regular admins run battles at /. Superadmins authorize battle APIs but are redirected away from root battle HTML. Create a regular admin for interactive use.
 

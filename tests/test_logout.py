@@ -67,8 +67,8 @@ class LogoutTests(unittest.TestCase):
             SOCKETS=set(), ADMIN_SESSION_COOKIE="admin", CLIENT_SESSION_COOKIE="client",
             LEGACY_SESSION_COOKIES=("legacy",))
         self.request = types.SimpleNamespace(cookies={"admin": "a", "client": "c"},
-            headers={"origin": "http://server:4000", "sec-fetch-site": "same-origin"},
-            base_url="http://server:4000/", url=types.SimpleNamespace(path="/logout"))
+            headers={"origin": "http://server:3100", "sec-fetch-site": "same-origin"},
+            base_url="http://server:3100/", url=types.SimpleNamespace(path="/logout"))
 
     def tearDown(self):
         if self.module_patch: self.module_patch.stop()

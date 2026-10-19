@@ -59,7 +59,7 @@ launcher regression tests use simulated versions and mocked external commands.
 network:
   bind: "0.0.0.0"
   admin_port: 3000
-  client_port: 4000
+  client_port: 3100
 storage_dir: "./scrying-glass-data"
 display:
   background: "#080b14"
@@ -91,7 +91,7 @@ Import checks do not initialize deployment storage, run application lifespans or
 |---|---|---|
 | Battle Admin | http://SERVER:3000/ | admin |
 | User Management | http://SERVER:3000/users | superadmin |
-| Client Display | http://SERVER:4000/display | client/admin/superadmin, scoped by permissions |
+| Client Display | http://SERVER:3100/display | client/admin/superadmin, scoped by permissions |
 
 Fresh installs print a random superadmin password once. Change it immediately, then create admin/client accounts. Superadmins land on /users rather than battle HTML. Use a regular admin for interactive battles. Assign campaign ownership and client viewer grants separately.
 
