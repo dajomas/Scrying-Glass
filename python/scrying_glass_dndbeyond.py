@@ -1,7 +1,7 @@
 import re
 from html import unescape
 
-from urllib.parse import quote
+from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
 
 def normalized_dnd_name(value: str) -> str:
@@ -88,8 +88,33 @@ def dnd_monster_detail_html(href: str) -> str:
 
     request = Request(monster_url, headers=headers)
 
-    with urlopen(request, timeout=5) as response:
-        return response.read(1_000_000).decode("utf-8", "replace")
+    max_page_bytes = 8_000_000
+
+    with urlopen(request, timeout=15) as response:
+        final_url = response.geturl()
+        final = urlsplit(final_url)
+
+        if (
+            final.hostname not in {
+                "www.dndbeyond.com",
+                "dndbeyond.com",
+            }
+            or not final.path.startswith("/monsters/")
+        ):
+            raise ValueError(
+                "D&D Beyond did not return a monster page; "
+                f"redirected to {final_url}"
+            )
+
+        content = response.read(max_page_bytes + 1)
+
+    if len(content) > max_page_bytes:
+        raise ValueError(
+            f"D&D Beyond monster page exceeds "
+            f"{max_page_bytes} bytes: {monster_url}"
+        )
+
+    return content.decode("utf-8", "replace")
 
 def html_to_text(value: str) -> str:
     """Html to text."""
