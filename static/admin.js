@@ -75,7 +75,7 @@ async function lookupMonsterSpeciesStats() {
     }
 
     setMonsterSpeciesLookupStatus(
-        `Looking up ${species} on D&D Beyond…`,
+        `Looking up ${species} (D&D Beyond, then 5e.tools)…`,
     );
 
     try {
@@ -92,7 +92,7 @@ async function lookupMonsterSpeciesStats() {
                 'monsters',
                 suggestion?.reason
                     ? String(suggestion.reason)
-                    : `No usable D&D Beyond stats found for ${species}; ` +
+                    : `No usable monster stats found for ${species}; ` +
                       'enter AC and HP manually.',
             );
             return;
@@ -154,12 +154,15 @@ async function lookupMonsterSpeciesStats() {
         }
 
         const edition = suggestion.legacy ? 'legacy' : 'current';
+        const provider = suggestion.provider === '5e.tools'
+            ? `5e.tools (${suggestion.source || 'unknown source'})`
+            : `${edition} D&D Beyond`;
 
         if (changes.length) {
             paneNotification(
                 'monsters',
                 `Loaded ${changes.join(', ')} from the ` +
-                `${edition} D&D Beyond result.`,
+                `${provider} result.`,
             );
             return;
         }
@@ -167,7 +170,7 @@ async function lookupMonsterSpeciesStats() {
         if (!acUnchanged || !hpUnchanged) {
             paneNotification(
                 'monsters',
-                `Found ${edition} D&D Beyond stats; values edited ` +
+                `Found ${provider} stats; values edited ` +
                 'while the lookup was running were left unchanged.',
             );
             return;
@@ -176,13 +179,13 @@ async function lookupMonsterSpeciesStats() {
         if (overwriteFoundStats) {
             paneNotification(
                 'monsters',
-                `Found ${edition} D&D Beyond stats, but no usable ` +
+                `Found ${provider} stats, but no usable ` +
                 'AC or HP values were returned.',
             );
         } else {
             paneNotification(
                 'monsters',
-                `Found ${edition} D&D Beyond stats; existing AC ` +
+                `Found ${provider} stats; existing AC ` +
                 'and HP were left unchanged. Enable overwrite to replace them.',
             );
         }
@@ -192,12 +195,12 @@ async function lookupMonsterSpeciesStats() {
         }
 
         console.debug(
-            'Optional D&D Beyond stats lookup failed:',
+            'Optional monster stats lookup failed:',
             error,
         );
 
         setMonsterSpeciesLookupStatus(
-            'D&D Beyond lookup is unavailable; enter AC and HP manually.',
+            'Monster lookup is unavailable; enter AC and HP manually.',
         );
     }
 }

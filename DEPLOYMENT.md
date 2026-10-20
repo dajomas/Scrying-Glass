@@ -130,15 +130,51 @@ not installed in the packaging environment, so full server startup/HTTP/browser,
 Windows execution, full Python suite and Python 3.10 application tests remain
 outstanding. Complete target-machine preflight and smoke tests before live use.
 
-## Incremental monster-lookup diagnostics patch
+## 5e.tools monster fallback
 
-The diagnostics archive is an overlay for source base `aaeaf41`, not a complete
-installation. Extract it at the repository root after reviewing/backing up local
-changes. It contains changed files in full and new regression/patch documentation.
-It intentionally does not regenerate the original deployment package manifest;
-that manifest describes the original package, not this overlay.
+Optional monster suggestions now try D&D Beyond first, then 5e.tools JSON data.
+AC accepts numeric entries and AC objects; HP prefers a supported dice formula
+and falls back to the numeric average. Names match exactly after case and
+punctuation normalization. The UI labels the provider and source. Existing
+AC/HP overwrite and in-flight edit protection are unchanged.
 
-Run the targeted offline regression tests documented in the Technical
-Documentation, restart your application process, and retry the lookup. No
-frontend assets, dependencies, configuration defaults, or database schema change.
-See [patch notes](Patch/DnDBeyond-Lookup-Diagnostics.md) for scope and rollback.
+Image lookup follows the same provider order when creating a monster without an
+uploaded image. 5etools supplies a token URL (explicit `tokenUrl` or a generated
+WebP token path when `hasToken` is set), not necessarily a full illustration.
+Existing monsters' images are not retroactively updated. Image URLs are remote;
+they are not downloaded or cached locally, and availability is not probed.
+
+Configuration under `display`:
+```yaml
+fivetools_fallback: true
+fivetools_sources: ["MM", "XMM"]
+fivetools_data_base_url: "https://5e.tools/data/bestiary"
+fivetools_image_base_url: "https://5e.tools/img"
+```
+
+MM is tried before XMM to retain the older-edition preference. Only configured
+sources are searched: add source identifiers from the bestiary index to extend
+coverage. D&D Beyond and 5etools are independently controlled: disable both
+`dndbeyond_image_lookup` and `fivetools_fallback` to prevent optional provider
+lookups. No credentials are sent to 5etools. Remote JSON is bounded to 16 MB per
+file, fetched with a five-second socket timeout, and cached in-process for one
+hour with at most 32 entries. Restart clears the cache. Source files are loaded
+sequentially; configured source count affects cold-lookup latency.
+
+Unresolved `_copy` entries without their own usable values are skipped for stats;
+this is not a complete implementation of 5etools inheritance. Special-only AC/HP
+is not guessed. Fallback uses a single usable source entry and does not combine
+missing fields across providers/editions. Browser access to remote token hosts
+and server HTTPS access to data endpoints are required. Use third-party data
+and images only where permitted; none are bundled with this patch.
+
+Run offline tests from the repository root:
+```bash
+python -m unittest discover -s tests -p 'test_fivetools_fallback.py' -v
+```
+
+Live validation: enter Crawling Claw and check that the notification identifies
+5e.tools after D&D Beyond fails. Add a monster without uploading an image and
+check its token in the player view. If no result appears, inspect WARNING logs
+and verify index/source URL reachability from the service account. Token paths
+and live endpoints could not be verified from the patch-build environment.

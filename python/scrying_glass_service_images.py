@@ -129,6 +129,24 @@ class ImagesService:
         return f"/media/{destination.name}"
 
     def dnd_image(self, monster_species: str) -> str | None:
+        """Resolve an optional image, with 5etools after D&D Beyond."""
+        import logging
+        from .scrying_glass_fivetools import lookup
+
+        image = self._dndbeyond_image(monster_species)
+        if image:
+            return image
+        try:
+            result = lookup(monster_species, self.context.CONFIG["display"], want_image=True)
+            return result.get("image_url") if result else None
+        except Exception:
+            logging.getLogger(__name__).warning(
+                "Optional 5etools image lookup failed for %r", monster_species,
+                exc_info=True,
+            )
+            return None
+
+    def _dndbeyond_image(self, monster_species: str) -> str | None:
         '\n    Find the dedicated D&D Beyond monster image for monster_species.\n\n    Exact normalized name matches are collected from D&D Beyond search results.\n    A match whose complete result HTML contains \'legacy\' is preferred. The\n    dedicated <img class="monster-image"> URL from that monster page is used,\n    not a generic Open Graph image.\n    '
         if not self.context.CONFIG["display"].get("dndbeyond_image_lookup", True):
             return None

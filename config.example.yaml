@@ -21,3 +21,9 @@ display:
   default_character_color: "#1f4e79"
   # Best-effort lookup against public D&D Beyond HTML. A manually uploaded image always wins.
   dndbeyond_image_lookup: true
+  # Independent optional stats/token fallback after D&D Beyond fails.
+  fivetools_fallback: true
+  # Ordered exact-name sources; MM first preserves the older-edition preference.
+  fivetools_sources: ["MM", "XMM"]
+  fivetools_data_base_url: "https://5e.tools/data/bestiary"
+  fivetools_image_base_url: "https://5e.tools/img"

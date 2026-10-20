@@ -24,73 +24,45 @@ class AdminDisplayMixin:
                 "Monster species is required",
             )
 
-        if not self.context.CONFIG["display"].get(
-            "dndbeyond_image_lookup",
-            True,
-        ):
-            return {
-                "found": False,
-                "species": monster_species,
-                "reason": "D&D Beyond lookup is disabled",
-            }
-
         def lookup() -> dict[str, Any]:
-            candidates = self.context.dnd_monster_candidates(monster_species)
-            if not candidates:
-                return {
-                    "found": False,
-                    "species": monster_species,
-                    "reason": (
-                        f"No exact D&D Beyond monster links found for "
-                        f"{monster_species}. Enter AC and HP manually."
-                    ),
-                }
+            from .scrying_glass_fivetools import lookup as fivetools_lookup
 
-            failures: list[str] = []
-            for is_legacy, href in candidates:
-                edition = "legacy" if is_legacy else "current"
+            display = self.context.CONFIG["display"]
+            failures = []
+            if display.get("dndbeyond_image_lookup", True):
                 try:
-                    monster_html = self.context.dnd_monster_detail_html(href)
-                    ac, hp, hp_source = self.context.dnd_monster_stats_from_html(
-                        monster_html,
-                    )
-                except Exception as exc:
-                    logger.warning(
-                        "D&D Beyond lookup failed for %r (%s): %s",
-                        monster_species, href, exc, exc_info=True,
-                    )
-                    failures.append(
-                        f"{edition}: the page could not be retrieved "
-                        "as a monster stat page"
-                    )
-                    continue
-
-                if ac is None and hp is None:
-                    logger.warning(
-                        "No AC/HP parsed for %r (%s)", monster_species, href,
-                    )
-                    failures.append(
-                        f"{edition}: a monster page was returned, "
-                        "but AC/HP could not be parsed"
-                    )
-                    continue
-
-                return {
-                    "found": True,
-                    "species": monster_species,
-                    "ac": ac,
-                    "hp": hp,
-                    "hp_source": hp_source,
-                    "legacy": is_legacy,
-                    "source_url": f"https://www.dndbeyond.com{href}",
-                }
-
+                    candidates = self.context.dnd_monster_candidates(monster_species)
+                except Exception:
+                    logger.warning("D&D Beyond search failed for %r", monster_species, exc_info=True)
+                    candidates = []
+                    failures.append("D&D Beyond search failed")
+                for is_legacy, href in candidates:
+                    try:
+                        html = self.context.dnd_monster_detail_html(href)
+                        ac, hp, hp_source = self.context.dnd_monster_stats_from_html(html)
+                    except Exception as exc:
+                        logger.warning("D&D Beyond candidate unavailable (%s): %s", href, exc)
+                        continue
+                    if ac is not None or hp is not None:
+                        return {
+                            "found": True, "species": monster_species,
+                            "ac": ac, "hp": hp, "hp_source": hp_source,
+                            "legacy": is_legacy, "provider": "D&D Beyond",
+                            "source_url": f"https://www.dndbeyond.com{href}",
+                        }
+                failures.append("no usable D&D Beyond stats")
+            if display.get("fivetools_fallback", True):
+                try:
+                    result = fivetools_lookup(monster_species, display)
+                    if result:
+                        return result
+                except Exception:
+                    logger.warning("5etools lookup failed for %r", monster_species, exc_info=True)
+                failures.append("no usable 5e.tools stats in configured sources")
             return {
-                "found": False,
-                "species": monster_species,
+                "found": False, "species": monster_species,
                 "reason": (
-                    f"D&D Beyond lookup failed for {monster_species}. "
-                    + "; ".join(failures)
+                    "Monster lookup: " + ("; ".join(failures) or "all providers disabled")
                     + ". Enter AC and HP manually."
                 ),
             }
@@ -100,20 +72,10 @@ class AdminDisplayMixin:
         except asyncio.CancelledError:
             raise
         except Exception:
-            logger.warning(
-                "Optional D&D Beyond lookup failed for %r",
-                monster_species,
-                exc_info=True,
-            )
-
+            logger.warning("Optional monster lookup failed for %r", monster_species, exc_info=True)
             return {
-                "found": False,
-                "species": monster_species,
-                "reason": (
-                    f"D&D Beyond lookup could not be completed for "
-                    f"{monster_species}. Check the server log; "
-                    "enter AC and HP manually."
-                ),
+                "found": False, "species": monster_species,
+                "reason": "Monster lookup unavailable; enter AC and HP manually.",
             }
 
     async def update_display_background(self, payload: DisplayBackgroundUpdate) -> dict[str, Any]:
