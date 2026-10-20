@@ -260,3 +260,18 @@ sudo systemctl cat scrying-glass.service
 | Stale display | Session, grants, WebSocket proxy, browser reload |
 
 Import/unit checks do not replace live HTTP, browser, systemd and proxy validation.
+
+## Monster lookup diagnostics in service logs
+
+Optional D&D Beyond lookup failures now log at WARNING level, including
+candidate hrefs and exception tracebacks. If your unit captures application
+stderr in the journal, inspect it using the actual unit name:
+
+```bash
+journalctl -u YOUR-SERVICE.service --since '10 minutes ago' --no-pager
+```
+
+After applying the incremental patch, restart that service and retry a species
+lookup. A marketplace redirect is an upstream response, not evidence of a local
+database problem. Do not publish unreviewed tracebacks. No DEBUG configuration,
+database migration, or dependency change is required by this patch.

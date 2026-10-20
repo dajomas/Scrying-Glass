@@ -200,3 +200,22 @@ Display reconnects in place and retains its last screen. Status means contact/re
 | Missing roster | Campaign characters, not setup snapshot |
 
 Coordinate simultaneous administrators. Back up the whole stopped installation, not just bundles.
+
+## Troubleshooting monster-stat suggestions
+
+When adding a monster, species lookup can find a name but still fail to obtain
+stats. D&D Beyond may redirect the server request to a marketplace page even
+when the GM's signed-in browser displays the monster.
+
+The notification now distinguishes:
+- No exact monster links: the search response contained no accepted exact match.
+- Page could not be retrieved as a monster stat page: a request failed or the
+  downloader rejected a redirect/oversized response; consult server logs.
+- Monster page returned but AC/HP could not be parsed: the parser found neither
+  value; this is not proof of a markup change or accessible stat content.
+- Lookup could not be completed: failure outside an individual candidate,
+  including search-request errors; consult server logs.
+
+Candidates are tried in existing order, legacy first. A failed candidate does
+not prevent trying the next one. Enter AC/HP manually when suggestions are
+unavailable. This update does not grant access to restricted D&D Beyond content.

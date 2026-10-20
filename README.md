@@ -112,3 +112,13 @@ Stop the application and back up the entire directory, configuration and service
 Use a trusted LAN or restricted VPN/HTTPS proxy, not public default HTTP listeners. Sessions are in memory and clear on restart. Account changes invalidate sessions. Player state is filtered, but names, images, public effects, life state and relative ordering are intentionally visible. /media is a static mount without session protection.
 
 There is one shared live active campaign, not an independent runtime per admin. Serialized transactions do not provide optimistic conflict detection for simultaneous edits. Coordinate administrators. See the other three documents for workflows, internals and operations.
+
+## Optional monster-stat lookup diagnostics
+
+D&D Beyond AC/HP suggestions are best-effort and use anonymous server-side
+requests, not the GM browser's login session. Finding a species link does not
+ensure its stat page is accessible. The UI distinguishes no exact links,
+candidate retrieval failures, and pages with no parsable AC/HP. Details are
+logged at WARNING level; manual entry remains available. The existing
+`display.dndbeyond_image_lookup` setting controls this lookup too.
+See [patch notes](Patch/DnDBeyond-Lookup-Diagnostics.md).

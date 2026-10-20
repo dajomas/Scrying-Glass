@@ -129,3 +129,16 @@ not a fully runtime-certified release: FastAPI, Uvicorn and python-multipart are
 not installed in the packaging environment, so full server startup/HTTP/browser,
 Windows execution, full Python suite and Python 3.10 application tests remain
 outstanding. Complete target-machine preflight and smoke tests before live use.
+
+## Incremental monster-lookup diagnostics patch
+
+The diagnostics archive is an overlay for source base `aaeaf41`, not a complete
+installation. Extract it at the repository root after reviewing/backing up local
+changes. It contains changed files in full and new regression/patch documentation.
+It intentionally does not regenerate the original deployment package manifest;
+that manifest describes the original package, not this overlay.
+
+Run the targeted offline regression tests documented in the Technical
+Documentation, restart your application process, and retry the lookup. No
+frontend assets, dependencies, configuration defaults, or database schema change.
+See [patch notes](Patch/DnDBeyond-Lookup-Diagnostics.md) for scope and rollback.

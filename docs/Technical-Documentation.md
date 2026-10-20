@@ -329,3 +329,27 @@ node --test tests/initiative-join-gate.test.cjs
 Browser tests can require Playwright/Chromium. Some tests use direct handlers, substitutions or mocked APIs, not real HTTP authentication. Validate actual lifespans, both logins, cross-owner denial, grants/revocation, imports, health/reactions/effects, restart recovery, checkpoint/bundle/media, lairs, rounds and proxy WebSockets on copied data.
 
 These are validation instructions, not claims that this documentation build executed the application suite.
+
+## D&D Beyond lookup failure reporting
+
+`AdminDisplayMixin.dndbeyond_monster_stats()` runs optional lookup with
+`asyncio.to_thread`. Failed lookups return HTTP-success JSON with `found: false`,
+`species`, and a user-facing `reason`. The existing frontend displays `reason`.
+Success response fields and legacy-first candidate ordering are unchanged.
+
+An empty candidate list, candidate retrieval exception, and missing parsed
+AC/HP now have distinct diagnostics. Candidate exceptions retain traceback,
+species, and candidate href at WARNING level. Neither raw exception messages
+nor remote redirect destinations are sent to the UI. An outer lookup exception
+also logs at WARNING and returns a generic completion-failure reason.
+Cancellation continues to propagate. The endpoint does not mutate combat state.
+
+The downloader's existing redirect validation and 8 MB detail-page limit from
+base aaeaf41 are retained unchanged. This patch neither changes the parser nor
+adds authenticated access, a new provider, cookies, dependencies, or a schema
+migration. `display.dndbeyond_image_lookup` still gates suggestions.
+
+Offline regression tests:
+```bash
+python -m unittest discover -s tests -p 'test_dndbeyond_lookup_diagnostics.py' -v
+```

@@ -35,19 +35,44 @@ class AdminDisplayMixin:
             }
 
         def lookup() -> dict[str, Any]:
-            candidates = self.context.dnd_monster_candidates(
-                monster_species,
-            )
+            candidates = self.context.dnd_monster_candidates(monster_species)
+            if not candidates:
+                return {
+                    "found": False,
+                    "species": monster_species,
+                    "reason": (
+                        f"No exact D&D Beyond monster links found for "
+                        f"{monster_species}. Enter AC and HP manually."
+                    ),
+                }
 
+            failures: list[str] = []
             for is_legacy, href in candidates:
+                edition = "legacy" if is_legacy else "current"
                 try:
                     monster_html = self.context.dnd_monster_detail_html(href)
-                    ac, hp, hp_source = self.context.dnd_monster_stats_from_html(monster_html)
-                except Exception:
-                    logger.debug("Optional D&D Beyond candidate failed: %r", href, exc_info=True)
+                    ac, hp, hp_source = self.context.dnd_monster_stats_from_html(
+                        monster_html,
+                    )
+                except Exception as exc:
+                    logger.warning(
+                        "D&D Beyond lookup failed for %r (%s): %s",
+                        monster_species, href, exc, exc_info=True,
+                    )
+                    failures.append(
+                        f"{edition}: the page could not be retrieved "
+                        "as a monster stat page"
+                    )
                     continue
 
                 if ac is None and hp is None:
+                    logger.warning(
+                        "No AC/HP parsed for %r (%s)", monster_species, href,
+                    )
+                    failures.append(
+                        f"{edition}: a monster page was returned, "
+                        "but AC/HP could not be parsed"
+                    )
                     continue
 
                 return {
@@ -57,14 +82,17 @@ class AdminDisplayMixin:
                     "hp": hp,
                     "hp_source": hp_source,
                     "legacy": is_legacy,
-                    "source_url": (
-                        f"https://www.dndbeyond.com{href}"
-                    ),
+                    "source_url": f"https://www.dndbeyond.com{href}",
                 }
 
             return {
                 "found": False,
                 "species": monster_species,
+                "reason": (
+                    f"D&D Beyond lookup failed for {monster_species}. "
+                    + "; ".join(failures)
+                    + ". Enter AC and HP manually."
+                ),
             }
 
         try:
@@ -72,7 +100,7 @@ class AdminDisplayMixin:
         except asyncio.CancelledError:
             raise
         except Exception:
-            logger.debug(
+            logger.warning(
                 "Optional D&D Beyond lookup failed for %r",
                 monster_species,
                 exc_info=True,
@@ -81,6 +109,11 @@ class AdminDisplayMixin:
             return {
                 "found": False,
                 "species": monster_species,
+                "reason": (
+                    f"D&D Beyond lookup could not be completed for "
+                    f"{monster_species}. Check the server log; "
+                    "enter AC and HP manually."
+                ),
             }
 
     async def update_display_background(self, payload: DisplayBackgroundUpdate) -> dict[str, Any]:
