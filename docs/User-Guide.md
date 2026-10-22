@@ -1,20 +1,22 @@
 # Scrying Glass User Guide
 
-## Companion theme and unchanged workflows
+## Compact Characters and Monsters table inputs
 
-The interface uses dark blue-grey surfaces, warm light text, gold accents and
-serif headings to resemble Looking Glass. Campaign/character and battle/monster
-panes retain distinct but more restrained colour families. Existing pane toggles,
-battle controls, forms, modals and player-display interactions keep their roles.
+In the Characters table, Current HP, Max HP and Initiative inputs are narrower.
+The Monsters table Initiative inputs are narrower too. Each is half its previous
+CSS width; height and editing behaviour are unchanged. Setup fields and edit
+modals retain their existing sizes. Large values may need horizontal cursor
+movement inside a narrow input; use the Edit dialog for more room.
+Restart the server and hard-refresh the Admin page after installing the update.
 
-Combatant colours and per-setup display backgrounds remain under existing controls;
-the theme does not reset them. It does not combine Looking Glass maps with encounters.
-Sign-in and user management share the theme. Font appearance depends on locally
-installed fonts; the serif and system-font fallbacks work without downloading fonts.
+## Looking Glass companion styling
 
-After an update, restart Scrying Glass and hard-refresh the Admin and Client pages.
-If styling appears mixed, clear the site's cached assets or inspect failed stylesheet
-requests. Do not clear campaign storage to resolve a visual problem.
+The preceding presentation-only restyling aligns Scrying Glass with Looking Glass
+using shared dark surfaces, gold accents, local font fallbacks and coordinated
+controls. It does not merge the applications or change encounter data, permissions,
+combatant colours or configured player-display backgrounds. See
+`Patch/Restyling-Changes.md`, `Patch/Restyling-Apply.md` and
+`Patch/Restyling-Validation.md` from that package for its scope and checks.
 
 ## Starting with the launcher scripts
 

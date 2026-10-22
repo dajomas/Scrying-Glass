@@ -1,18 +1,21 @@
 # Scrying Glass
 
-## Looking Glass companion theme
+## Compact inline HP and initiative fields
 
-Scrying Glass now uses a shared dark blue-grey/gold theme inspired by Looking Glass.
-The admin workspace, sign-in, user management and viewer controls share typography,
-surfaces, focus indicators and control styling. Encounter management, campaign
-ownership, player permissions and data formats are unchanged. Fonts use locally
-available fallbacks; no remote font service is required.
+Character-table Current HP, Max HP and Initiative inputs, and monster-table
+Initiative inputs, now use half their previous width (15ch to 7.5ch). Input height,
+keyboard editing and numeric behaviour are unchanged. Setup-form and edit-dialog
+fields are unaffected. This is a follow-up overlay compatible with the companion
+theme; see [application instructions](Patch/Compact-Inputs-Apply.md).
 
-This is an incremental presentation-only review candidate based on Scrying Glass
-`3c1cb54c197fa530fb7f0cfe971152ccbf50bb08`, not an application merger.
-See [application instructions](Patch/Restyling-Apply.md),
-[changes](Patch/Restyling-Changes.md) and [validation](Patch/Restyling-Validation.md).
-Restart the server and hard-refresh both portals after installing the patch.
+## Looking Glass companion styling
+
+The preceding presentation-only restyling aligns Scrying Glass with Looking Glass
+using shared dark surfaces, gold accents, local font fallbacks and coordinated
+controls. It does not merge the applications or change encounter data, permissions,
+combatant colours or configured player-display backgrounds. See
+`Patch/Restyling-Changes.md`, `Patch/Restyling-Apply.md` and
+`Patch/Restyling-Validation.md` from that package for its scope and checks.
 
 [Deployment package](DEPLOYMENT.md) · [User Guide](docs/User-Guide.md) · [Technical Documentation](docs/Technical-Documentation.md) · [Systemd Deployment](docs/Systemd-Deployment.md)
 

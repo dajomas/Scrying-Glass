@@ -1,0 +1,10 @@
+/* Compact inline combatant-table editors; setup forms and dialogs unchanged. */
+#characters input.hp-edit[data-chp],
+#characters input.hp-edit[data-cmaxhp],
+#characters input.initiative-edit[data-ci],
+#monsters input.initiative-edit[data-mi] {
+    box-sizing: border-box;
+    width: 7.5ch;
+    min-width: 7.5ch;
+    max-width: 7.5ch;
+}
