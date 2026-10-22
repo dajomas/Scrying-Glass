@@ -1,5 +1,21 @@
 # Scrying Glass User Guide
 
+## Companion theme and unchanged workflows
+
+The interface uses dark blue-grey surfaces, warm light text, gold accents and
+serif headings to resemble Looking Glass. Campaign/character and battle/monster
+panes retain distinct but more restrained colour families. Existing pane toggles,
+battle controls, forms, modals and player-display interactions keep their roles.
+
+Combatant colours and per-setup display backgrounds remain under existing controls;
+the theme does not reset them. It does not combine Looking Glass maps with encounters.
+Sign-in and user management share the theme. Font appearance depends on locally
+installed fonts; the serif and system-font fallbacks work without downloading fonts.
+
+After an update, restart Scrying Glass and hard-refresh the Admin and Client pages.
+If styling appears mixed, clear the site's cached assets or inspect failed stylesheet
+requests. Do not clear campaign storage to resolve a visual problem.
+
 ## Starting with the launcher scripts
 
 The launchers accept Python 3.10 or newer and require working sqlite3 support.

@@ -1,7 +1,7 @@
 body {
-    font-family: system-ui, sans-serif;
-    background: #111827;
-    color: #eef2ff;
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
     margin: 0;
     padding: 1rem;
 }
@@ -12,7 +12,7 @@ main {
 }
 
 section {
-    background: #1f2937;
+    background: var(--bg-2);
     border-radius: 10px;
     padding: 1rem;
     margin: 1rem 0;
@@ -26,15 +26,15 @@ section {
 * monsters are encounter/setup-owned.
 */
 .pane-campaign-group {
-    background: #123b3b;
-    border: 1px solid #1f7777;
-    box-shadow: inset 0 0 0 1px #0d2f2f;
+    background: #192b32;
+    border: 1px solid #385968;
+    box-shadow: inset 0 0 0 1px #192b32;
 }
 
 .pane-battle-group {
-    background: #3d2920;
-    border: 1px solid #8a4b2d;
-    box-shadow: inset 0 0 0 1px #2a1b15;
+    background: #2b2630;
+    border: 1px solid #66543b;
+    box-shadow: inset 0 0 0 1px #2b2630;
 }
 
 /*
@@ -42,29 +42,29 @@ section {
 * clear even when the user has many open panes.
 */
 .pane-campaign-group h2 {
-    color: #99f6e4;
+    color: var(--blue);
 }
 
 .pane-battle-group h2 {
-    color: #fdba74;
+    color: var(--accent);
 }
 
 #toggleCampaignPane,
 #toggleCharacterPane {
-    background: #176b6b;
+    background: #294454;
 }
 
 #toggleCampaignPane:hover,
 #toggleCampaignPane:focus-visible,
 #toggleCharacterPane:hover,
 #toggleCharacterPane:focus-visible {
-    background: #218282;
+    background: #385968;
 }
 
 #toggleBattleSetupPane,
 #toggleLairPane,
 #toggleMonsterPane {
-    background: #7c4329;
+    background: #53452f;
 }
 
 #toggleBattleSetupPane:hover,
@@ -73,7 +73,7 @@ section {
 #toggleLairPane:focus-visible,
 #toggleMonsterPane:hover,
 #toggleMonsterPane:focus-visible {
-    background: #965237;
+    background: #66543b;
 }
 
 input,
@@ -82,12 +82,12 @@ select {
     padding: .55rem;
     margin: .18rem;
     border-radius: 6px;
-    border: 1px solid #64748b;
+    border: 1px solid var(--border);
 }
 
 button {
     cursor: pointer;
-    background: #2563eb;
+    background: var(--accent);
     color: #fff;
 }
 
@@ -135,8 +135,8 @@ button {
 }
 
 .battle-state.inactive {
-    background: #475569;
-    color: #e2e8f0;
+    background: var(--border);
+    color: var(--text);
 }
 
 table {
@@ -147,7 +147,7 @@ table {
 th,
 td {
     padding: .45rem;
-    border-bottom: 1px solid #475569;
+    border-bottom: 1px solid var(--border);
     text-align: left;
     vertical-align: top;
 }
@@ -171,7 +171,7 @@ td {
 }
 
 .field-label {
-    color: #cbd5e1;
+    color: var(--muted);
     font-size: .8rem;
     font-weight: 700;
     line-height: 1.1;
@@ -211,7 +211,7 @@ input[type="number"] {
 
 .field-help {
     margin: 0;
-    color: #cbd5e1;
+    color: var(--muted);
     font-size: 0.97rem;
     line-height: 1.35;
 }
@@ -231,7 +231,7 @@ input[type="number"] {
 }
 
 .pane-toggle {
-    background: #334155;
+    background: var(--surface);
 }
 
 .pane[hidden] {
@@ -253,12 +253,12 @@ input[type="number"] {
     min-height: 1.4rem;
     margin: 0.35rem 0 0.75rem;
     padding: 0.55rem 0.75rem;
-    border: 1px solid #fdba74;
+    border: 1px solid var(--accent);
     border-radius: 6px;
     background: #5c3522;
     color: #ffedd5;
     font-weight: 700;
-    box-shadow: inset 0 0 0 1px #7c4329;
+    box-shadow: inset 0 0 0 1px #53452f;
 }
 
 .pane-notification-campaign:empty {
@@ -311,7 +311,7 @@ input[type="number"] {
     grid-template-columns: minmax(10rem, 1fr) minmax(8rem, 10rem) minmax(7rem, 8rem) auto;
     gap: 0.5rem;
     align-items: end;
-    border: 1px solid #475569;
+    border: 1px solid var(--border);
     border-radius: 8px;
     padding: 0.65rem;
 }
@@ -345,7 +345,7 @@ input[type="number"] {
 }
 
 .modal>div {
-    background: #1f2937;
+    background: var(--bg-2);
     padding: 1.25rem;
     border-radius: 10px;
     width: min(700px, 94vw);
@@ -409,7 +409,7 @@ input[type="number"] {
 }
 
 .bulk-label {
-    color: #cbd5e1;
+    color: var(--muted);
     font-weight: 700;
 }
 
@@ -475,7 +475,7 @@ input[type="number"] {
 .activity-log {
     max-height: 24rem;
     overflow: auto;
-    border: 1px solid #475569;
+    border: 1px solid var(--border);
     border-radius: 8px;
 }
 
@@ -518,8 +518,8 @@ input[type="number"] {
     padding: 0;
     place-items: center;
     border-radius: 50%;
-    background: #475569;
-    color: #f8fafc;
+    background: var(--border);
+    color: var(--text);
     font-size: 1rem;
     font-weight: 900;
     line-height: 1;
@@ -527,7 +527,7 @@ input[type="number"] {
 
 .help-button:hover,
 .help-button:focus-visible {
-    background: #64748b;
+    background: var(--border);
     outline: 2px solid #fbbf24;
     outline-offset: 2px;
 }
@@ -550,7 +550,7 @@ input[type="number"] {
 .modal-close {
     min-width: 2.25rem;
     padding: 0.2rem 0.55rem;
-    background: #475569;
+    background: var(--border);
     font-size: 1.5rem;
     line-height: 1;
 }
@@ -567,10 +567,10 @@ input[type="number"] {
 .monster-file-example {
     overflow-x: auto;
     padding: 0.85rem;
-    border: 1px solid #475569;
+    border: 1px solid var(--border);
     border-radius: 6px;
-    background: #0f172a;
-    color: #e2e8f0;
+    background: var(--bg);
+    color: var(--text);
 }
 
 .sr-only {
@@ -591,9 +591,9 @@ input[type="number"] {
     align-items: center;
     min-height: 8rem;
     padding: 0.5rem;
-    border: 1px solid #475569;
+    border: 1px solid var(--border);
     border-radius: 8px;
-    background: #0f172a;
+    background: var(--bg);
 }
 
 .monster-edit-image img {
@@ -610,7 +610,7 @@ input[type="number"] {
     align-items: center;
     gap: 0.45rem;
     margin: 0 0 0.65rem;
-    color: #cbd5e1;
+    color: var(--muted);
     cursor: pointer;
     font-size: 0.85rem;
 }
@@ -640,7 +640,7 @@ input[type="number"] {
     display: inline-block;
     padding: .25rem .65rem;
     border-radius: 999px;
-    background: #111827;
+    background: var(--bg);
     color: #fff;
     font-weight: 800;
     white-space: nowrap;
@@ -656,3 +656,15 @@ input[type="number"] {
 #downedReminder {border-left:3px solid #d97706;padding-left:.6rem;}
 #encounterFeatures details {margin-top:.75rem;}
 .activity-log-details {min-width:14rem;max-width:32rem;white-space:normal;overflow-wrap:anywhere;line-height:1.45;}
+
+/* Companion-tool treatment: keep all layout and behavioural selectors intact. */
+section { border: 1px solid var(--border); border-radius: var(--radius); }
+h2, h3 { color: var(--accent); }
+button { background: var(--surface-2); color: var(--text); border-color: var(--border); font-weight: 600; }
+button:not([class]):not([id]), #saveSetup, #switchCampaign, #newCampaign { background: var(--accent); color: var(--accent-ink); }
+button.danger { background: #71382f; color: #ffe4de; }
+button.battle, button.on { background: #2d5640; color: #e2f5e9; }
+button.import, button.edit, button.reset, button.roll { background: var(--surface-2); color: var(--text); }
+.modal > div { border: 1px solid var(--border); box-shadow: 0 18px 60px #0008; }
+th { color: var(--muted); }
+textarea { padding: .55rem; }

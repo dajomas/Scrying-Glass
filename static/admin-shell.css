@@ -16,7 +16,7 @@ body.admin-shell {
     max-width: 1400px;
     margin: 0 auto;
     padding: .5rem 1rem 0;
-    background: #111827;
+    background: var(--bg);
     z-index: 1;
 }
 
@@ -58,3 +58,8 @@ body.admin-shell {
 #adminScroll .activity-log {
     max-height: none;
 }
+
+#adminHeader { background: var(--bg-2); border-bottom: 1px solid var(--border); }
+#adminHeader h1 { color: var(--text); }
+#adminButtonBar { background: transparent; border: 0; border-radius: 0; }
+#adminButtonBar button { font-size: .85rem; }

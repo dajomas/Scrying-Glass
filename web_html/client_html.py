@@ -5,6 +5,7 @@ CLIENT_HTML = r'''<!doctype html>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Scrying Glass</title>
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/static/glass-theme.css?v=1">
   <link rel="stylesheet" href="/static/client.css">
   <link rel="stylesheet" href="/static/viewer-campaigns.css">
 </head>

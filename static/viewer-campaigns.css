@@ -6,9 +6,9 @@
 #clientCampaign:disabled {opacity: 1;}
 #clientCampaign.campaign-switchable {cursor: pointer; text-decoration: underline;}
 #clientCampaign.campaign-switchable:hover,
-#clientCampaign:focus-visible {outline: 2px solid #60a5fa; outline-offset: 2px;}
+#clientCampaign:focus-visible {outline: 2px solid var(--blue); outline-offset: 2px;}
 #viewerCampaignDialog {
-    color: #eef2ff; background: #1f2937; border: 1px solid #64748b;
+    color: var(--text); background: var(--bg-2); border: 1px solid var(--border);
     border-radius: .75rem; width: min(32rem, 92vw); max-height: 85vh;
     overflow: auto; padding: 1.25rem;
 }
@@ -16,8 +16,8 @@
 #viewerCampaignDialog h2 {margin-top: 0;}
 .viewer-campaign-list {display: grid; gap: .5rem; margin: 1rem 0;}
 #viewerCampaignDialog button {
-    padding: .65rem; font: inherit; color: #fff; background: #2563eb;
-    border: 1px solid #94a3b8; border-radius: .4rem; cursor: pointer;
+    padding: .65rem; font: inherit; color: #fff; background: var(--accent);
+    border: 1px solid var(--muted); border-radius: .4rem; cursor: pointer;
     overflow-wrap: anywhere;
 }
 #viewerCampaignDialog button[aria-current="true"] {background: #047857;}

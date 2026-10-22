@@ -8,7 +8,7 @@ body {
     height: 100dvh;
     background: #080b14;
     color: #fff;
-    font-family: system-ui, sans-serif;
+    font-family: var(--font);
     overflow: hidden;
 
     display: flex;
@@ -112,7 +112,7 @@ body {
     max-width: 94%;
     padding: 0.45em 0.7em 0.55em;
     border-radius: 10px;
-    background: var(--text-panel-background, #111827);
+    background: var(--text-panel-background, var(--bg));
     color: var(--text-panel-color, #ffffff);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.55);
 }
@@ -205,7 +205,7 @@ h1 {
     border: 3px solid #fbbf24;
     border-radius: 999px;
 
-    background: #111827;
+    background: var(--bg);
     color: #fbbf24;
 
     white-space: nowrap;
@@ -225,7 +225,7 @@ h1 {
 .client-toolbar form { margin: 0; }
 
 .client-toolbar button {
-    border: 1px solid #64748b;
+    border: 1px solid var(--border);
     border-radius: .4rem;
     padding: .35rem .75rem;
     background: #1e293b;
@@ -234,16 +234,20 @@ h1 {
     cursor: pointer;
 }
 
-.client-toolbar button:hover { background: #334155; }
+.client-toolbar button:hover { background: var(--surface); }
 .client-toolbar button:focus-visible { outline: 2px solid #fbbf24; outline-offset: 2px; }
 
-#displaySync {font-size:.8rem;color:#cbd5e1;padding:.25rem .5rem;}
+#displaySync {font-size:.8rem;color:var(--muted);padding:.25rem .5rem;}
 .effect-badge {display:inline-block;border:1px solid currentColor;border-radius:.4rem;padding:.05rem .35rem;font-size:.75em;}
 .token.down {opacity:.8;border:2px dashed #d97706;}
 .monster.down {opacity:.75;}
 .client-toolbar {gap:.6rem;flex-wrap:wrap;}
-#clientCampaign {margin-right:auto;flex:1 1 12rem;min-width:0;color:#f1f5f9;font-size:.9rem;font-weight:600;line-height:1.4;overflow-wrap:anywhere;}
+#clientCampaign {margin-right:auto;flex:1 1 12rem;min-width:0;color:var(--text);font-size:.9rem;font-weight:600;line-height:1.4;overflow-wrap:anywhere;}
 #displaySync {flex:0 1 auto;}
 .client-toolbar form {flex:0 0 auto;}
 
 .token.lair { border:2px solid #bba1df; }
+
+/* Preserve combatant colours, text sizing and configured display backgrounds. */
+.client-toolbar { background: var(--bg-2); color: var(--text); border-bottom: 1px solid var(--border); }
+#clientLogout { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); border-radius: 6px; }

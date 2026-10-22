@@ -1,5 +1,30 @@
 # Scrying Glass Technical Documentation
 
+## Shared companion-theme architecture
+
+`static/glass-theme.css` defines shared CSS variables, local font stacks, dark
+colour-scheme, base typography, form styling, keyboard focus indicators and
+reduced-motion handling. Its tokens are adapted from Looking Glass commit
+`c3fb07b23499fa431cb33930a9d7838a2740fe79`.
+
+The theme is linked before existing styles in `templates/admin/000_document_start.html`,
+`templates/users.html`, `web_html/login_html.py` and `web_html/client_html.py`.
+Feature styles retain their selectors and layout rules while using shared tokens.
+Admin-specific component overrides remain in `static/admin.css`; fixed-shell
+adjustments remain in `static/admin-shell.css`. Viewer styling does not change
+combatant colour configuration or the display-background configuration.
+
+Change shared colours in the root variables rather than adding unrelated literal
+palettes. Keep semantic danger, healing, initiative and combatant colours distinct.
+Do not use theme rules to override `[hidden]` visibility gates or JavaScript-owned
+inline colour values. Inter and Cinzel are preferred font names, not bundled or
+remotely loaded font dependencies.
+
+The patch changes no backend handlers, database schema, JavaScript, dependencies,
+launcher behaviour or port configuration. Restart is required because HTML
+fragments and HTML string modules are loaded by the process.
+See `Patch/Restyling-Validation.md` for tested scope and known limitations.
+
 ## Python version and launcher policy
 
 The launcher minimum is Python 3.10, not an exact minor-version selection. This

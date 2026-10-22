@@ -1,5 +1,19 @@
 # Scrying Glass
 
+## Looking Glass companion theme
+
+Scrying Glass now uses a shared dark blue-grey/gold theme inspired by Looking Glass.
+The admin workspace, sign-in, user management and viewer controls share typography,
+surfaces, focus indicators and control styling. Encounter management, campaign
+ownership, player permissions and data formats are unchanged. Fonts use locally
+available fallbacks; no remote font service is required.
+
+This is an incremental presentation-only review candidate based on Scrying Glass
+`3c1cb54c197fa530fb7f0cfe971152ccbf50bb08`, not an application merger.
+See [application instructions](Patch/Restyling-Apply.md),
+[changes](Patch/Restyling-Changes.md) and [validation](Patch/Restyling-Validation.md).
+Restart the server and hard-refresh both portals after installing the patch.
+
 [Deployment package](DEPLOYMENT.md) · [User Guide](docs/User-Guide.md) · [Technical Documentation](docs/Technical-Documentation.md) · [Systemd Deployment](docs/Systemd-Deployment.md)
 
 Scrying Glass, formerly Monster Display, is a self-hosted tabletop encounter manager. The GM uses an authenticated Admin interface; players use a separate Client Display. Two FastAPI applications run in one Python process, persist structured data in SQLite and deliver player updates over WebSockets.
