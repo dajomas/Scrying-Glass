@@ -20,6 +20,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 14. [Viewer ownership fixture repairs](docs/handover/140-viewer-ownership-fixtures.md)
 15. [Renderer VM window fixture repair](docs/handover/150-renderer-vm-window.md)
 16. [Standalone audit and smoke fixtures](docs/handover/160-standalone-audit-and-smoke.md)
+17. [Manual reductions restart plan](docs/handover/170-manual-reductions-restart.md)
 
 ## Required update convention
 
