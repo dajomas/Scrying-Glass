@@ -1,0 +1,38 @@
+ partial card included by recovery snapshot is repaired rather than removed
+tests	JavaScript tests	2026-11-01T15:05:45.0130307Z # ReferenceError: window is not defined
+tests	JavaScript tests	2026-11-01T15:05:45.0131027Z #     at renderClientCampaign (evalmachine.<anonymous>:130:5)
+tests	JavaScript tests	2026-11-01T15:05:45.0131742Z #     at Object.render (evalmachine.<anonymous>:133:5)
+tests	JavaScript tests	2026-11-01T15:05:45.0132710Z #     at h.render (/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_985b4b2.js:40:26)
+tests	JavaScript tests	2026-11-01T15:05:45.0134047Z #     at /home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_985b4b2.js:72:23
+tests	JavaScript tests	2026-11-01T15:05:45.0135197Z #     at Object.<anonymous> (/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_985b4b2.js:79:51)
+tests	JavaScript tests	2026-11-01T15:05:45.0136166Z #     at Module._compile (node:internal/modules/cjs/loader:1781:14)
+tests	JavaScript tests	2026-11-01T15:05:45.0136880Z #     at Object..js (node:internal/modules/cjs/loader:1913:10)
+tests	JavaScript tests	2026-11-01T15:05:45.0138319Z #     at Module.load (node:internal/modules/cjs/loader:1505:32)
+tests	JavaScript tests	2026-11-01T15:05:45.0139057Z #     at Function._load (node:internal/modules/cjs/loader:1309:12)
+tests	JavaScript tests	2026-11-01T15:05:45.0139809Z #     at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+tests	JavaScript tests	2026-11-01T15:05:45.0140552Z # FAIL empty snapshot removes partial cards and pending timers
+tests	JavaScript tests	2026-11-01T15:05:45.0141154Z # ReferenceError: window is not defined
+tests	JavaScript tests	2026-11-01T15:05:45.0141758Z #     at renderClientCampaign (evalmachine.<anonymous>:130:5)
+tests	JavaScript tests	2026-11-01T15:05:45.0142417Z #     at Object.render (evalmachine.<anonymous>:133:5)
+tests	JavaScript tests	2026-11-01T15:05:45.0143347Z #     at h.render (/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_985b4b2.js:40:26)
+tests	JavaScript tests	2026-11-01T15:05:45.0144466Z #     at cases (/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_985b4b2.js:76:23)
+tests	JavaScript tests	2026-11-01T15:05:45.0145690Z #     at Object.<anonymous> (/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_985b4b2.js:79:51)
+tests	JavaScript tests	2026-11-01T15:05:45.0146696Z #     at Module._compile (node:internal/modules/cjs/loader:1781:14)
+tests	JavaScript tests	2026-11-01T15:05:45.0147432Z #     at Object..js (node:internal/modules/cjs/loader:1913:10)
+tests	JavaScript tests	2026-11-01T15:05:45.0148304Z #     at Module.load (node:internal/modules/cjs/loader:1505:32)
+tests	JavaScript tests	2026-11-01T15:05:45.0149007Z #     at Function._load (node:internal/modules/cjs/loader:1309:12)
+tests	JavaScript tests	2026-11-01T15:05:45.0149719Z #     at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+tests	JavaScript tests	2026-11-01T15:05:45.0150272Z # 8 tests; 0 passed; 8 failed
+tests	JavaScript tests	2026-11-01T15:05:45.0186504Z # Subtest: tests/test_bughunt_985b4b2.js
+tests	JavaScript tests	2026-11-01T15:05:45.0193107Z not ok 1 - tests/test_bughunt_985b4b2.js
+tests	JavaScript tests	2026-11-01T15:05:45.0193533Z   ---
+tests	JavaScript tests	2026-11-01T15:05:45.0193845Z   duration_ms: 46.102993
+tests	JavaScript tests	2026-11-01T15:05:45.0194199Z   type: 'test'
+tests	JavaScript tests	2026-11-01T15:05:45.0194910Z   location: '/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_985b4b2.js:1:1'
+tests	JavaScript tests	2026-11-01T15:05:45.0195696Z   failureType: 'testCodeFailure'
+tests	JavaScript tests	2026-11-01T15:05:45.0196093Z   exitCode: 1
+tests	JavaScript tests	2026-11-01T15:05:45.0196383Z   signal: ~
+tests	JavaScript tests	2026-11-01T15:05:45.0196674Z   error: 'test failed'
+tests	JavaScript tests	2026-11-01T15:05:45.0197032Z   code: 'ERR_TEST_FAILURE'
+tests	JavaScript tests	2026-11-01T15:05:45.0197371Z   ...
+tests	JavaScript tests	2026-11-01T
