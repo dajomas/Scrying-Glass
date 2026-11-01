@@ -1,0 +1,52 @@
+raft
+tests	JavaScript tests	2026-11-01T15:16:20.0204122Z # 4 checks, 0 failures
+tests	JavaScript tests	2026-11-01T15:16:20.0262585Z # Subtest: tests/test_feature_manual_refresh.js
+tests	JavaScript tests	2026-11-01T15:16:20.0266660Z ok 1 - tests/test_feature_manual_refresh.js
+tests	JavaScript tests	2026-11-01T15:16:20.0268167Z   ---
+tests	JavaScript tests	2026-11-01T15:16:20.0268387Z   duration_ms: 34.856949
+tests	JavaScript tests	2026-11-01T15:16:20.0268626Z   type: 'test'
+tests	JavaScript tests	2026-11-01T15:16:20.0268842Z   ...
+tests	JavaScript tests	2026-11-01T15:16:20.0269025Z 1..1
+tests	JavaScript tests	2026-11-01T15:16:20.0269434Z # tests 1
+tests	JavaScript tests	2026-11-01T15:16:20.0270334Z # suites 0
+tests	JavaScript tests	2026-11-01T15:16:20.0270739Z # pass 1
+tests	JavaScript tests	2026-11-01T15:16:20.0271206Z # fail 0
+tests	JavaScript tests	2026-11-01T15:16:20.0272147Z # cancelled 0
+tests	JavaScript tests	2026-11-01T15:16:20.0272547Z # skipped 0
+tests	JavaScript tests	2026-11-01T15:16:20.0272928Z # todo 0
+tests	JavaScript tests	2026-11-01T15:16:20.0273314Z # duration_ms 41.153919
+tests	JavaScript tests	2026-11-01T15:16:20.0323258Z ##[endgroup]
+tests	JavaScript tests	2026-11-01T15:16:20.0323630Z ##[group]tests/test_feature_refresh_queue.js
+tests	JavaScript tests	2026-11-01T15:16:20.0667489Z TAP version 13
+tests	JavaScript tests	2026-11-01T15:16:20.0893378Z # PASS: automatic polling coalesces behind a slow request
+tests	JavaScript tests	2026-11-01T15:16:20.0903782Z # PASS: save queues a fresh snapshot behind an existing poll
+tests	JavaScript tests	2026-11-01T15:16:20.0913723Z # PASS: manual refresh is awaited and not dropped behind a poll
+tests	JavaScript tests	2026-11-01T15:16:20.0931061Z # PASS: queued refresh recovers after the earlier poll fails
+tests	JavaScript tests	2026-11-01T15:16:20.0940294Z # PASS: ordinary save without a concurrent poll still refreshes
+tests	JavaScript tests	2026-11-01T15:16:20.0952913Z # PASS: concurrent manual refreshes complete without a stuck gate
+tests	JavaScript tests	2026-11-01T15:16:20.0955467Z # 6 checks, 0 failures
+tests	JavaScript tests	2026-11-01T15:16:20.1013648Z # Subtest: tests/test_feature_refresh_queue.js
+tests	JavaScript tests	2026-11-01T15:16:20.1017484Z ok 1 - tests/test_feature_refresh_queue.js
+tests	JavaScript tests	2026-11-01T15:16:20.1017831Z   ---
+tests	JavaScript tests	2026-11-01T15:16:20.1018080Z   duration_ms: 37.815594
+tests	JavaScript tests	2026-11-01T15:16:20.1018356Z   type: 'test'
+tests	JavaScript tests	2026-11-01T15:16:20.1018587Z   ...
+tests	JavaScript tests	2026-11-01T15:16:20.1018801Z 1..1
+tests	JavaScript tests	2026-11-01T15:16:20.1019022Z # tests 1
+tests	JavaScript tests	2026-11-01T15:16:20.1019645Z # suites 0
+tests	JavaScript tests	2026-11-01T15:16:20.1020027Z # pass 1
+tests	JavaScript tests	2026-11-01T15:16:20.1020358Z # fail 0
+tests	JavaScript tests	2026-11-01T15:16:20.1020729Z # cancelled 0
+tests	JavaScript tests	2026-11-01T15:16:20.1021121Z # skipped 0
+tests	JavaScript tests	2026-11-01T15:16:20.1021425Z # todo 0
+tests	JavaScript tests	2026-11-01T15:16:20.1021759Z # duration_ms 43.920306
+tests	JavaScript tests	2026-11-01T15:16:20.1068629Z ##[endgroup]
+tests	JavaScript tests	2026-11-01T15:16:20.1069019Z ##[group]tests/test_feature_target_polling.js
+tests	JavaScript tests	2026-11-01T15:16:20.1419394Z TAP version 13
+tests	JavaScript tests	2026-11-01T15:16:20.1647604Z # PASS: automatic target replacement resets dirty fields
+tests	JavaScript tests	2026-11-01T15:16:20.1652265Z # PASS: same-target polling preserves edits
+tests	JavaScript tests	2026-11-01T15:16:20.1664362Z # PASS: subsequent save uses replacement target values
+tests	JavaScript tests	2026-11-01T15:16:20.1674073Z # PASS: removing all targets clears dirty flags
+tests	JavaScript tests	2026-11-01T15:16:20.1738791Z # Subtest: tests/test_feature_target_polling.js
+tests	JavaScript tests	2026-11-01T15:16:20.1742287Z ok 1 - tests/test_feature_target_polling.js
+tests	JavaScript tests	2026-11-01T15:16:
