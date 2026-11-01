@@ -1,0 +1,29 @@
+for_function(
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9439044Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9439516Z     ...<4 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9439720Z         )
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9439900Z         ^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9440080Z     )
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9440263Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9440834Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9441574Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9441812Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9442457Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_page.py", line 1158, in wait_for_function
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9443503Z     return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9443984Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9444694Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 945, in wait_for_function
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9445417Z     await self._channel.send("waitForFunction", self._timeout, params)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9446149Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9446766Z     return await self._connection.wrap_api_call(
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9447095Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9447372Z     ...<3 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9447567Z     )
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9447744Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9448331Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9449101Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9449746Z playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 30000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9450098Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9450293Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9451357Z ERROR: test_client_lifespan_initializes_without_admin_endpoints (test_campaign_viewer_lifespan_integration.FastAPILifespanIntegrationTests.test_client_lifespan_initializes_without_admin_endpoints)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9452311Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9452945Z Traceback (

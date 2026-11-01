@@ -1,0 +1,32 @@
+=======================================
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5781875Z ERROR: test_slug_truncation_82860c4 (unittest.loader._FailedTest.test_slug_truncation_82860c4)
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5782481Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5783297Z ImportError: Failed to import test module: test_slug_truncation_82860c4
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5783746Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5784340Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5784911Z     module = self._get_module_from_name(name)
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5785539Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5786083Z     __import__(name)
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5786322Z     ~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5786868Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_slug_truncation_82860c4.py", line 5, in <module>
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5787401Z     import pytest
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5787865Z ModuleNotFoundError: No module named 'pytest'
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5788092Z 
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5788101Z 
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5788336Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5788707Z Ran 890 tests in 54.613s
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5788860Z 
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5788976Z FAILED (errors=7)
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.6714231Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.6715109Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.7856398Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.7857392Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.7992288Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.7993575Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.9147283Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.9288284Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.9288993Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:02.3509793Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:02.3512204Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/browser_smoke_272cc73.py", line 79, in <module>
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:02.3513241Z     assert 'Default' in client.locator('#clientCampaign').inner_text()
+tests	

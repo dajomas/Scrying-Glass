@@ -1,0 +1,25 @@
+uite (including browser fixtures)	2026-11-01T12:14:55.9408909Z ERROR: test_upgrade_v3_preserves_data_and_creates_backup (test_accounts.AccountTests.test_upgrade_v3_preserves_data_and_creates_backup)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9410382Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9411181Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9412798Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_accounts.py", line 198, in test_upgrade_v3_preserves_data_and_creates_backup
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9414162Z     self.storage = SQLiteStorage(self.path)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9414754Z                    ~~~~~~~~~~~~~^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9415852Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_storage.py", line 56, in __init__
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9416974Z     upgrade_setup_lair(self, backup=version != 0)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9417589Z     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9418726Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_setup_lair.py", line 10, in upgrade_setup_lair
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9420221Z     db.execute("ALTER TABLE encounters ADD COLUMN has_lair INTEGER NOT NULL DEFAULT 0 CHECK(has_lair IN (0,1))")
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9421178Z     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9421920Z sqlite3.OperationalError: duplicate column name: has_lair
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9422208Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9432005Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9433338Z ERROR: test_admin_can_save_multiple_client_viewers (test_campaign_viewer_browser.ViewerBrowserTests.test_admin_can_save_multiple_client_viewers)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9434153Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9434553Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9435328Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_browser.py", line 72, in test_admin_can_save_multiple_client_viewers
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9436257Z     self.page.wait_for_function("document.querySelectorAll('#campaignViewerUsers input').length===2")
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9436877Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9437677Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 21235, in wait_for_function
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9438293Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9438493Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9438742Z         self._impl_obj.wait_

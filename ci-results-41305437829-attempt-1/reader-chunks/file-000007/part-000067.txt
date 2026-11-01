@@ -1,0 +1,28 @@
+most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9453812Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_lifespan_integration.py", line 55, in test_client_lifespan_initializes_without_admin_endpoints
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9454534Z     asyncio.run(run())
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9454758Z     ~~~~~~~~~~~^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9455241Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 205, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9455717Z     return runner.run(main)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9455963Z            ~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9456439Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9456966Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9457290Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9457886Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9458442Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9458697Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9459294Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_lifespan_integration.py", line 53, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9459920Z     async with app.router.lifespan_context(app):
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9460252Z                ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9460796Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/contextlib.py", line 214, in __aenter__
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9461291Z     return await anext(self.gen)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9461557Z            ^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9462315Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/fastapi/routing.py", line 249, in merged_lifespan
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9463234Z     async with nested_context(app) as maybe_nested_state:
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9463578Z                ~~~~~~~~~~~~~~^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9464080Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/contextlib.py", line 214, in __aenter__
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9464709Z     return await anext(self.gen)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9464966Z            ^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9465572Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_campaign_ownership_routes.py", line 11, in lifespan
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9466278Z     async with operation_lock(context): ownership(context).initialize()
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9466710Z                                         ~~~

@@ -1,0 +1,28 @@
+ne Python browser and audit checks	2026-11-01T12:14:59.7181950Z ##[group]tests/admin-message-timeout-browser.py
+tests	Standalone Python browser and audit checks	2026-11-01T12:15:05.4948854Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-01T12:15:05.4949595Z ##[group]tests/audit_connection_lifetime.py
+tests	Standalone Python browser and audit checks	2026-11-01T12:15:10.0655250Z D&D Beyond candidate unavailable (/monsters/old): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-01T12:15:10.0656115Z D&D Beyond candidate unavailable (/monsters/new): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-01T12:15:10.0672155Z D&D Beyond candidate unavailable (/monsters/old): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-01T12:15:10.0673428Z D&D Beyond candidate unavailable (/monsters/new): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-01T12:15:10.0719614Z D&D Beyond candidate unavailable (/monsters/old): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-01T12:15:10.0729577Z D&D Beyond candidate unavailable (/monsters/old): Bad candidate
+tests	Standalone Python browser and audit checks	2026-11-01T12:15:10.0749120Z D&D Beyond candidate has no usable AC/HP (/monsters/old)
+tests	Standalone Python browser and audit checks	2026-11-01T12:15:10.0768109Z D&D Beyond candidate unavailable (/monsters/old): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-01T12:15:10.0769068Z D&D Beyond candidate unavailable (/monsters/new): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5687683Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5689561Z ERROR: test_upgrade_v3_preserves_data_and_creates_backup (test_accounts.AccountTests.test_upgrade_v3_preserves_data_and_creates_backup)
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5691397Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5692366Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5694240Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_accounts.py", line 198, in test_upgrade_v3_preserves_data_and_creates_backup
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5695567Z     self.storage = SQLiteStorage(self.path)
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5696175Z                    ~~~~~~~~~~~~~^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5697243Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_storage.py", line 56, in __init__
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5698225Z     upgrade_setup_lair(self, backup=version != 0)
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5698835Z     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5699957Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_setup_lair.py", line 10, in upgrade_setup_lair
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5701532Z     db.execute("ALTER TABLE encounters ADD COLUMN has_lair INTEGER NOT NULL DEFAULT 0 CHECK(has_lair IN (0,1))")
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5702988Z     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5704257Z sqlite3.OperationalError: duplicate column name: has_lair
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5704718Z 
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5705074Z ===========

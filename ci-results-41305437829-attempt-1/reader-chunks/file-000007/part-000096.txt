@@ -1,0 +1,29 @@
+===========================================================
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5706587Z ERROR: test_admin_can_save_multiple_client_viewers (test_campaign_viewer_browser.ViewerBrowserTests.test_admin_can_save_multiple_client_viewers)
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5707902Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5708328Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5709117Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_browser.py", line 72, in test_admin_can_save_multiple_client_viewers
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5710049Z     self.page.wait_for_function("document.querySelectorAll('#campaignViewerUsers input').length===2")
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5710677Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5711509Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 21235, in wait_for_function
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5712151Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5712371Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5712935Z         self._impl_obj.wait_for_function(
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5713295Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5713582Z     ...<4 lines>...
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5713813Z         )
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5714009Z         ^
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5714208Z     )
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5714411Z     ^
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5715004Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5715602Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5715866Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5716533Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_page.py", line 1158, in wait_for_function
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5717333Z     return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5717912Z Connections opened: 607; without explicit close: 3
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5718573Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5719325Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 945, in wait_for_function
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5720071Z     await self._channel.send("waitForFunction", self._timeout, params)
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5720827Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Standalone Python browser and audit checks	2026-11-01T12:16:00.5721468Z     return await self._connection.wrap_api_call(
+test

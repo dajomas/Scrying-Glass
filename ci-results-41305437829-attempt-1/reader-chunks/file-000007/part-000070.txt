@@ -1,0 +1,29 @@
+ browser fixtures)	2026-11-01T12:14:55.9494412Z     WHERE o.owner_user_id=? ORDER BY c.name COLLATE NOCASE,c.id""",(user['id'],))
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9494873Z     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9495310Z sqlite3.OperationalError: no such table: campaign_owners
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9495565Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9495750Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9496424Z ERROR: test_death_save_validation_2ba6607 (unittest.loader._FailedTest.test_death_save_validation_2ba6607)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9497039Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9497562Z ImportError: Failed to import test module: test_death_save_validation_2ba6607
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9497998Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9498557Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9499125Z     module = self._get_module_from_name(name)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9499734Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9500251Z     __import__(name)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9500459Z     ~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9501001Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_death_save_validation_2ba6607.py", line 3, in <module>
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9501533Z     import pytest
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9501825Z ModuleNotFoundError: No module named 'pytest'
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9502040Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9502047Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9502230Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9502936Z ERROR: test_slug_truncation_82860c4 (unittest.loader._FailedTest.test_slug_truncation_82860c4)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9503518Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9504025Z ImportError: Failed to import test module: test_slug_truncation_82860c4
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9504577Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9505135Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9505687Z     module = self._get_module_from_name(name)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9506293Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9506918Z     __import__(name)
+tests	Pyt

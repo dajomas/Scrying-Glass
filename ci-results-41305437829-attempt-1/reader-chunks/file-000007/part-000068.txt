@@ -1,0 +1,29 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9467359Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_campaign_ownership.py", line 26, in initialize
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9467943Z     storage = self.context.STORAGE
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9468215Z               ^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9468653Z AttributeError: 'types.SimpleNamespace' object has no attribute 'STORAGE'
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9468959Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9469145Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9470110Z ERROR: test_existing_lifespan_and_state_are_preserved (test_campaign_viewer_lifespan_integration.FastAPILifespanIntegrationTests.test_existing_lifespan_and_state_are_preserved)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9471000Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9471372Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9472157Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_lifespan_integration.py", line 40, in test_existing_lifespan_and_state_are_preserved
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9473028Z     asyncio.run(run())
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9473260Z     ~~~~~~~~~~~^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9473725Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 205, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9474191Z     return runner.run(main)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9474422Z            ~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9474893Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9475405Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9475754Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9476364Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9476893Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9477123Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9477697Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_lifespan_integration.py", line 35, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9478330Z     async with app.router.lifespan_context(app) as state:
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9478695Z                ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9479217Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/contextlib.py", line 214, in __aenter__
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9479711Z     return await anext(self.gen)
+tests	Python test suite (including browser fixtures)	2026-11-01T12:14:55.9479972Z            ^^^^^^^^^^^^^^^^^^^^^
+test
