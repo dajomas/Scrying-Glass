@@ -1,0 +1,29 @@
+-------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6406995Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6407384Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6407785Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6408032Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6408480Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6408990Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6409184Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6409631Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 34, in test_success
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6410075Z     self.assertTrue(result["found"])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6410391Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6410625Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6410761Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6410912Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6411360Z FAIL: test_unparsed_pages (test_dndbeyond_lookup_diagnostics.LookupTests.test_unparsed_pages)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6411799Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6412091Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6412485Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6412965Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6413212Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6413659Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6414067Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6414256Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6414734Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 67, in test_unparsed_pages
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6415263Z     self.assertIn("AC/HP could not be parsed", result["reason"])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6415579Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6416070Z AssertionError: 'AC/HP could not be parsed' not found in 'Monster lookup unavailable; enter AC and HP manually.'
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6416373Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6416555Z ------------------------------------------------

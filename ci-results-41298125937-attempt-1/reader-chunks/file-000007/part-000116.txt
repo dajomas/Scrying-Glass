@@ -1,0 +1,27 @@
+le "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/contextlib.py", line 214, in __aenter__
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7181856Z     return await anext(self.gen)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7182073Z            ^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7182527Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/fastapi/routing.py", line 249, in merged_lifespan
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7183096Z     async with nested_context(app) as maybe_nested_state:
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7183369Z                ~~~~~~~~~~~~~~^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7183752Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/contextlib.py", line 214, in __aenter__
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7184120Z     return await anext(self.gen)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7184338Z            ^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7184793Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_campaign_ownership_routes.py", line 11, in lifespan
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7185327Z     async with operation_lock(context): ownership(context).initialize()
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7185670Z                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7186156Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_campaign_ownership.py", line 26, in initialize
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7186587Z     storage = self.context.STORAGE
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7186805Z               ^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7187149Z AttributeError: 'types.SimpleNamespace' object has no attribute 'STORAGE'
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7187375Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7187530Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7188194Z ERROR: test_admin_and_superadmin_implicitly_see_all_campaigns (test_campaign_viewers.CampaignViewerTests.test_admin_and_superadmin_implicitly_see_all_campaigns)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7188817Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7189109Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7189676Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewers.py", line 88, in test_admin_and_superadmin_implicitly_see_all_campaigns
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7190373Z     for name in ('dm','root'):self.assertEqual({r['id'] for r in self.acl.choices(self.c.SESSIONS[name])},{self.a,self.b})
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7190839Z                                                                  ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7191350Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_campaign_viewers.py", line 60, in choices
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7191955Z                rows=self.db.execute("""SELECT c.id,c.name FROM campaigns c JOIN campaign_owners o ON o.campaign_id=c.id
+test

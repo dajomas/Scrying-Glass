@@ -1,0 +1,27 @@
+ner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_210aac8.py", line 109, in test_failed_parser_uses_next
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6348316Z     result=self.call(self.context(lambda href:href,parse));self.assertTrue(result['found']);self.assertFalse(result['legacy'])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6348808Z                                                            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6349099Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6349241Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6349384Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6349824Z FAIL: test_healthy_legacy_wins (test_bughunt_210aac8.StatsFallbackTests.test_healthy_legacy_wins)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6350268Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6350566Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6351028Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_210aac8.py", line 111, in test_healthy_legacy_wins
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6351667Z     result=self.call(self.context(lambda href:'valid'));self.assertTrue(result['found']);self.assertTrue(result['legacy'])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6352137Z                                                         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6352417Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6352545Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6352693Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6353362Z FAIL: test_missing_stats_uses_next (test_bughunt_210aac8.StatsFallbackTests.test_missing_stats_uses_next)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6353833Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6354125Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6354606Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_210aac8.py", line 117, in test_missing_stats_uses_next
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6355127Z     self.assertTrue(result['found']);self.assertFalse(result['legacy'])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6355425Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6355661Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6355797Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6355947Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6356650Z FAIL: test_admin_routes_keep_authorization_and_same_origin_guards (test_campaign_viewer_routes.ViewerRouteTests.test_admin_routes_keep_authorization_and_same_origin_guards)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6357292Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36

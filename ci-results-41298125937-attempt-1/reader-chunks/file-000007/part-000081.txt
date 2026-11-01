@@ -1,0 +1,28 @@
+	2026-11-01T10:36:43.6397307Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6397552Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6398001Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6398396Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6398577Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6399042Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 84, in test_partial_stats
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6399523Z     self.assertTrue((await self.call())["found"])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6399783Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6400028Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6400169Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6400313Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6400769Z FAIL: test_search_exception (test_dndbeyond_lookup_diagnostics.LookupTests.test_search_exception)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6401223Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6401508Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6401917Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6402301Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6402549Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6403094Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6403489Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6403673Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6404146Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 73, in test_search_exception
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6404660Z     self.assertIn("could not be completed", result["reason"])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6404965Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6405435Z AssertionError: 'could not be completed' not found in 'Monster lookup unavailable; enter AC and HP manually.'
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6405746Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6405903Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6406297Z FAIL: test_success (test_dndbeyond_lookup_diagnostics.LookupTests.test_success)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6406703Z ---------------------------------------------------------------

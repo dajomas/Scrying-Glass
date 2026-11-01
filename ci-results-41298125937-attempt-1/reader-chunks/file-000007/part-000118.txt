@@ -1,0 +1,30 @@
+om_name
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7202648Z     __import__(name)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7202905Z     ~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7203307Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_slug_truncation_82860c4.py", line 5, in <module>
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7203701Z     import pytest
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7203943Z ModuleNotFoundError: No module named 'pytest'
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7204098Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7204106Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7204259Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7204741Z FAIL: test_failed_legacy_uses_next (test_bughunt_210aac8.StatsFallbackTests.test_failed_legacy_uses_next)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7205211Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7205511Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7205997Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_210aac8.py", line 104, in test_failed_legacy_uses_next
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7206715Z     result=self.call(self.context(detail));self.assertTrue(result['found']);self.assertFalse(result['legacy']);self.assertEqual(len(visited),2)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7207233Z                                            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7207530Z AssertionError: False is not true
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7207664Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7207817Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7208409Z FAIL: test_failed_parser_uses_next (test_bughunt_210aac8.StatsFallbackTests.test_failed_parser_uses_next)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7208882Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7209173Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7209680Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_210aac8.py", line 109, in test_failed_parser_uses_next
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7210363Z     result=self.call(self.context(lambda href:href,parse));self.assertTrue(result['found']);self.assertFalse(result['legacy'])
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7210855Z                                                            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7211183Z AssertionError: False is not true
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7211315Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7211463Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7211905Z FAIL: test_healthy_legacy_wins (test_bughunt_210aac8.StatsFallbackTests.test_healthy_legacy_wins)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7212355Z ----------------------------------------------------------------------
+tests	Standalon

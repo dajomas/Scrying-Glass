@@ -1,0 +1,29 @@
+hon browser and audit checks	2026-11-01T10:37:42.7223044Z - [['GET'], ['PUT'], ['GET'], ['PUT']]
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7223264Z + [['GET'], ['PUT']]
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7223373Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7223513Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7224219Z FAIL: test_client_app_includes_lifespan_but_no_grant_routes (test_campaign_viewer_routes.ViewerRouteTests.test_client_app_includes_lifespan_but_no_grant_routes)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7224961Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7225270Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7225864Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_routes.py", line 77, in test_client_app_includes_lifespan_but_no_grant_routes
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7226391Z     self.assertEqual(len(self.routers), 1)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7226631Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7226849Z AssertionError: 2 != 1
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7226962Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7227110Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7227818Z FAIL: test_registration_works_without_add_event_handler_or_on_event (test_campaign_viewer_routes.ViewerRouteTests.test_registration_works_without_add_event_handler_or_on_event)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7228466Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7228753Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7229454Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_routes.py", line 55, in test_registration_works_without_add_event_handler_or_on_event
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7229997Z     self.assertEqual(len(self.routers), 1)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7230237Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7230449Z AssertionError: 2 != 1
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7230565Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7230708Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7231206Z FAIL: test_all_retrieval_failures (test_dndbeyond_lookup_diagnostics.LookupTests.test_all_retrieval_failures)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7231686Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7231977Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7232373Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7232940Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7233219Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11

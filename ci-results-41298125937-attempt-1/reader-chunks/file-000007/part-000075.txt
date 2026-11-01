@@ -1,0 +1,28 @@
+g browser fixtures)	2026-11-01T10:36:43.6337585Z ERROR: test_slug_truncation_82860c4 (unittest.loader._FailedTest.test_slug_truncation_82860c4)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6338025Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6338411Z ImportError: Failed to import test module: test_slug_truncation_82860c4
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6338736Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6339157Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6339569Z     module = self._get_module_from_name(name)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6340018Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6340401Z     __import__(name)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6340564Z     ~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6340961Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_slug_truncation_82860c4.py", line 5, in <module>
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6341346Z     import pytest
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6341576Z ModuleNotFoundError: No module named 'pytest'
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6341740Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6341745Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6341886Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6342376Z FAIL: test_failed_legacy_uses_next (test_bughunt_210aac8.StatsFallbackTests.test_failed_legacy_uses_next)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6343047Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6343392Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6343869Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_210aac8.py", line 104, in test_failed_legacy_uses_next
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6344602Z     result=self.call(self.context(detail));self.assertTrue(result['found']);self.assertFalse(result['legacy']);self.assertEqual(len(visited),2)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6345114Z                                            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6345518Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6345657Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6345802Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6346278Z FAIL: test_failed_parser_uses_next (test_bughunt_210aac8.StatsFallbackTests.test_failed_parser_uses_next)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6346855Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6347152Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6347637Z   File "/home/run

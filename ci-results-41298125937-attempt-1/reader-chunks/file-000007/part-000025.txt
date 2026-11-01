@@ -1,0 +1,28 @@
+File "production-handler", line 71, in dndbeyond_monster_stats
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4950534Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/threads.py", line 26, in to_thread
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4951213Z     return await loop.run_in_executor(None, func_call)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4951634Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4952339Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4952897Z     result = ctx.run(self.task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4953406Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4953960Z     return fn(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4954361Z   File "production-handler", line 28, in lookup
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4954792Z KeyError: "'__name__' not in globals"
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4955102Z FAIL
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4960950Z test_failed_parser_uses_next (test_bughunt_210aac8.StatsFallbackTests.test_failed_parser_uses_next) ... Optional monster lookup failed for 'Goblin'
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4961843Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4962384Z   File "production-handler", line 71, in dndbeyond_monster_stats
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4963508Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/threads.py", line 26, in to_thread
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4964156Z     return await loop.run_in_executor(None, func_call)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4964437Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4964870Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4965276Z     result = ctx.run(self.task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4965714Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4966347Z     return fn(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4966745Z   File "production-handler", line 28, in lookup
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4967182Z KeyError: "'__name__' not in globals"
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4967495Z FAIL
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4973092Z test_healthy_legacy_wins (test_bughunt_210aac8.StatsFallbackTests.test_healthy_legacy_wins) ... Optional monster lookup failed for 'Goblin'
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4973954Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4974455Z   File "production-handler", line 71, in dndbeyond_monster_stats
+tests	Python test suite (including browser fixtures)	2026-11-01T10:35:56.4975255Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14

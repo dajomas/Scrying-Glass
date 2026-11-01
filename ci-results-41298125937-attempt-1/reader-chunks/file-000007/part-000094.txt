@@ -1,0 +1,50 @@
+ 1..1
+tests	JavaScript tests	2026-11-01T10:36:45.0798450Z # tests 1
+tests	JavaScript tests	2026-11-01T10:36:45.0798674Z # suites 0
+tests	JavaScript tests	2026-11-01T10:36:45.0799235Z # pass 1
+tests	JavaScript tests	2026-11-01T10:36:45.0799451Z # fail 0
+tests	JavaScript tests	2026-11-01T10:36:45.0799674Z # cancelled 0
+tests	JavaScript tests	2026-11-01T10:36:45.0799994Z # skipped 0
+tests	JavaScript tests	2026-11-01T10:36:45.0800350Z # todo 0
+tests	JavaScript tests	2026-11-01T10:36:45.0800722Z # duration_ms 51.327143
+tests	JavaScript tests	2026-11-01T10:36:45.0843498Z ##[endgroup]
+tests	JavaScript tests	2026-11-01T10:36:45.0843980Z ##[group]tests/test_bughunt_757fd9d.js
+tests	JavaScript tests	2026-11-01T10:36:45.1170574Z TAP version 13
+tests	JavaScript tests	2026-11-01T10:36:45.1378402Z # PASS switching account cannot change PATCH target
+tests	JavaScript tests	2026-11-01T10:36:45.1383256Z # PASS cancel cannot turn PATCH into POST
+tests	JavaScript tests	2026-11-01T10:36:45.1392701Z # PASS switching to self cannot redirect a non-self save
+tests	JavaScript tests	2026-11-01T10:36:45.1400911Z # PASS switching away from self still redirects after self save
+tests	JavaScript tests	2026-11-01T10:36:45.1407964Z # PASS newly selected edit form is preserved
+tests	JavaScript tests	2026-11-01T10:36:45.1414478Z # PASS new typing for same account is preserved
+tests	JavaScript tests	2026-11-01T10:36:45.1421268Z # PASS new password typing is preserved
+tests	JavaScript tests	2026-11-01T10:36:45.1433424Z # PASS new role selection is preserved
+tests	JavaScript tests	2026-11-01T10:36:45.1441550Z # PASS unchanged successful edit resets form
+tests	JavaScript tests	2026-11-01T10:36:45.1448431Z # PASS normal create remains POST with password
+tests	JavaScript tests	2026-11-01T10:36:45.1454530Z # PASS blank edit password stays omitted
+tests	JavaScript tests	2026-11-01T10:36:45.1460102Z # PASS failed write preserves editing form
+tests	JavaScript tests	2026-11-01T10:36:45.1462410Z # 12 tests; 12 passed; 0 failed
+tests	JavaScript tests	2026-11-01T10:36:45.1511612Z # Subtest: tests/test_bughunt_757fd9d.js
+tests	JavaScript tests	2026-11-01T10:36:45.1515230Z ok 1 - tests/test_bughunt_757fd9d.js
+tests	JavaScript tests	2026-11-01T10:36:45.1515615Z   ---
+tests	JavaScript tests	2026-11-01T10:36:45.1515886Z   duration_ms: 37.270516
+tests	JavaScript tests	2026-11-01T10:36:45.1516201Z   type: 'test'
+tests	JavaScript tests	2026-11-01T10:36:45.1516455Z   ...
+tests	JavaScript tests	2026-11-01T10:36:45.1516683Z 1..1
+tests	JavaScript tests	2026-11-01T10:36:45.1516911Z # tests 1
+tests	JavaScript tests	2026-11-01T10:36:45.1517148Z # suites 0
+tests	JavaScript tests	2026-11-01T10:36:45.1517390Z # pass 1
+tests	JavaScript tests	2026-11-01T10:36:45.1517632Z # fail 0
+tests	JavaScript tests	2026-11-01T10:36:45.1517869Z # cancelled 0
+tests	JavaScript tests	2026-11-01T10:36:45.1518217Z # skipped 0
+tests	JavaScript tests	2026-11-01T10:36:45.1518793Z # todo 0
+tests	JavaScript tests	2026-11-01T10:36:45.1519021Z # duration_ms 43.140403
+tests	JavaScript tests	2026-11-01T10:36:45.1566591Z ##[endgroup]
+tests	JavaScript tests	2026-11-01T10:36:45.1567083Z ##[group]tests/test_bughunt_985b4b2.js
+tests	JavaScript tests	2026-11-01T10:36:45.1913246Z TAP version 13
+tests	JavaScript tests	2026-11-01T10:36:45.2126244Z # FAIL card created during failed update is retired after old snapshot recovery
+tests	JavaScript tests	2026-11-01T10:36:45.2126960Z # ReferenceError: window is not defined
+tests	JavaScript tests	2026-11-01T10:36:45.2143767Z #     at renderClientCampaign (evalmachine.<anonymous>:130:5)
+tests	JavaScript tests	2026-11-01T10:36:45.2157140Z #     at Object.render (evalmachine.<anonymous>:133:5)
+tests	JavaScript tests	2026-11-01T10:36:45.2157879Z #     at h.render (/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_985b4b2.js:40:26)
+tests	JavaScript tests	2026-11-01T10:36:45.2158844Z #     at /home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_985b4b2.js:52:23
+tests	J

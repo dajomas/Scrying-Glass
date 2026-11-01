@@ -1,0 +1,29 @@
+ checks	2026-11-01T10:36:55.8103330Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:36:55.8103824Z   File "production-handler", line 71, in dndbeyond_monster_stats
+tests	Standalone Python browser and audit checks	2026-11-01T10:36:55.8104384Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/threads.py", line 26, in to_thread
+tests	Standalone Python browser and audit checks	2026-11-01T10:36:55.8104823Z     return await loop.run_in_executor(None, func_call)
+tests	Standalone Python browser and audit checks	2026-11-01T10:36:55.8105107Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:36:55.8105538Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:36:55.8106048Z     result = ctx.run(self.task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:36:55.8106696Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:36:55.8107219Z     return fn(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-01T10:36:55.8107632Z   File "production-handler", line 28, in lookup
+tests	Standalone Python browser and audit checks	2026-11-01T10:36:55.8108256Z KeyError: "'__name__' not in globals"
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:37.0827176Z Optional monster lookup failed for 'Crawling Claw'
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:37.0827662Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:37.0828236Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_admin_display.py", line 71, in dndbeyond_monster_stats
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:37.0828733Z     return await asyncio.to_thread(lookup)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:37.0828986Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:37.0829427Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/threads.py", line 26, in to_thread
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:37.0829875Z     return await loop.run_in_executor(None, func_call)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:37.0830160Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:37.0830603Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:37.0831018Z     result = ctx.run(self.task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:37.0831450Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:37.0832165Z     return fn(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:37.0832636Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_admin_display.py", line 28, in lookup
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:37.0833320Z     from .scrying_glass_fivetools import lookup as fivetools_lookup
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:37.0833741Z ImportError: attempted relative import with no known parent package
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:37.0878016Z Optional monster lookup failed for 'Crawling Claw'
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:37.0878518Z Traceback (most recent call last):
+tests	Standalone Python browser and audit 

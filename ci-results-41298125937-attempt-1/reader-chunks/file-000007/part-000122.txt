@@ -1,0 +1,30 @@
+:37:42.7243708Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7243949Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7244397Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7244803Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7245091Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7245615Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 49, in test_candidate_failure_falls_back
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7246146Z     self.assertTrue(result["found"])
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7246387Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7246622Z AssertionError: False is not true
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7246754Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7246907Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7247310Z FAIL: test_disabled (test_dndbeyond_lookup_diagnostics.LookupTests.test_disabled)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7247716Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7248015Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7248418Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7248825Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7249076Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7249528Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7249928Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7250116Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7250570Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 79, in test_disabled
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7251042Z     self.assertIn("disabled", result["reason"])
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7251299Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7251717Z AssertionError: 'disabled' not found in 'Monster lookup unavailable; enter AC and HP manually.'
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7251994Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7252137Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7252562Z FAIL: test_empty_search (test_dndbeyond_lookup_diagnostics.LookupTests.test_empty_search)
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7253203Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42.7253496Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:37:42

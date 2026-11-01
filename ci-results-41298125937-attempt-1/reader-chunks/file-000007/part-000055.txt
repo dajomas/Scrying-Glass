@@ -1,0 +1,27 @@
+ss/python/scrying_glass_admin_display.py", line 28, in lookup
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9320693Z     from .scrying_glass_fivetools import lookup as fivetools_lookup
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9321105Z ImportError: attempted relative import with no known parent package
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9321383Z FAIL
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9341469Z test_empty_search (test_dndbeyond_lookup_diagnostics.LookupTests.test_empty_search) ... Optional monster lookup failed for 'Crawling Claw'
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9342210Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9342912Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_admin_display.py", line 71, in dndbeyond_monster_stats
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9343481Z     return await asyncio.to_thread(lookup)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9343848Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9344274Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/threads.py", line 26, in to_thread
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9344709Z     return await loop.run_in_executor(None, func_call)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9344993Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9345710Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9346223Z     result = ctx.run(self.task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9346670Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9347075Z     return fn(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9347519Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_admin_display.py", line 28, in lookup
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9348009Z     from .scrying_glass_fivetools import lookup as fivetools_lookup
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9348424Z ImportError: attempted relative import with no known parent package
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9348702Z FAIL
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9368550Z test_partial_stats (test_dndbeyond_lookup_diagnostics.LookupTests.test_partial_stats) ... Optional monster lookup failed for 'Crawling Claw'
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9369156Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9369695Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_admin_display.py", line 71, in dndbeyond_monster_stats
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9370194Z     return await asyncio.to_thread(lookup)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9370447Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9370883Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/threads.py", line 26, in to_thread
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:37.9371337Z     return await loop.run_in

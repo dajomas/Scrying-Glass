@@ -1,0 +1,29 @@
+res)	2026-11-01T10:36:43.6281372Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6281955Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_browser.py", line 72, in test_admin_can_save_multiple_client_viewers
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6282717Z     self.page.wait_for_function("document.querySelectorAll('#campaignViewerUsers input').length===2")
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6283439Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6284061Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 21235, in wait_for_function
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6284544Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6284723Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6284919Z         self._impl_obj.wait_for_function(
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6285159Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6285369Z     ...<4 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6285536Z         )
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6285684Z         ^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6285838Z     )
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6285980Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6286424Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6286856Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6287046Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6287536Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_page.py", line 1158, in wait_for_function
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6288114Z     return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6288502Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6289036Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 945, in wait_for_function
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6289578Z     await self._channel.send("waitForFunction", self._timeout, params)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6290123Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6290583Z     return await self._connection.wrap_api_call(
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6290844Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6291060Z     ...<3 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6291222Z     )
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6291369Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:36:43.6291820Z   File "/opt/hostedtoolcac
