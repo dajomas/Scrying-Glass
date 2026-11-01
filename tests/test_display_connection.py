@@ -1,7 +1,7 @@
 """Focused server WebSocket tests with fake transport, real asyncio locks."""
-import ast,asyncio,json,time,types,unittest
+import ast,asyncio,json,sys,time,types,unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 class Disconnect(Exception):
     code=1000;reason='test disconnect'
@@ -21,17 +21,38 @@ class Socket:
         return event
 
 class DisplayConnectionTests(unittest.TestCase):
-    def run_socket(self,events,mutate=None):
+    def run_socket(self,events,mutate=None,*,projection_error=None):
         feature=types.SimpleNamespace(store=types.SimpleNamespace(revision=lambda:7),displays={})
-        c=types.SimpleNamespace(features=feature,SOCKETS=set(),CLIENT_SESSION_COOKIE='client',json=json,display_state=lambda:{'campaign':{'id':'1','name':'Campaign'},'monsters':[]},auth_session=lambda token:{'username':'table','role':'client'} if token=='token' else None)
+        c=types.SimpleNamespace(features=feature,SOCKETS=set(),CLIENT_SESSION_COOKIE='client',json=json,
+            operation_lock=asyncio.Lock(),display_state=lambda:{'private':'server-only'},
+            auth_session=lambda token:{'username':'table','role':'client'} if token=='token' else None)
         socket=Socket(events)
         if mutate:mutate(c,socket)
         tree=ast.parse((Path(__file__).resolve().parents[1]/'python/scrying_glass_api_client.py').read_text());cls=next(n for n in tree.body if isinstance(n,ast.ClassDef));fn=next(n for n in cls.body if isinstance(n,ast.AsyncFunctionDef) and n.name=='ws')
-        future=ast.ImportFrom(module='__future__',names=[ast.alias(name='annotations')],level=0);scope={'operation_lock':lambda ctx:asyncio.Lock()}
+        future=ast.ImportFrom(module='__future__',names=[ast.alias(name='annotations')],level=0)
+        scope={'__name__':'display_connection_ws','__package__':'python',
+               'operation_lock':lambda ctx:ctx.operation_lock}
         exec(compile(ast.fix_missing_locations(ast.Module(body=[future,fn],type_ignores=[])),'ws','exec'),scope)
         fake=types.ModuleType('fastapi');fake.WebSocketDisconnect=Disconnect
-        with patch.dict('sys.modules',{'fastapi':fake}):asyncio.run(scope['ws'](types.SimpleNamespace(context=c),socket))
+        socket.projection_locks=[]
+        def project(websocket):
+            self.assertIs(websocket,socket)
+            socket.projection_locks.append((c.operation_lock.locked(),c._display_broadcast_lock.locked()))
+            if projection_error is not None:raise projection_error
+            return {'campaign':{'id':'1','name':'Campaign'},'monsters':[]}
+        # Isolate campaign storage, not the extracted protocol handler or its locks.
+        viewer=types.SimpleNamespace(socket_state=Mock(side_effect=project))
+        viewer_module=types.ModuleType('python.scrying_glass_campaign_viewers')
+        viewer_module.viewers=Mock(return_value=viewer)
+        socket.viewer_service=viewer
+        logger=Mock();socket.logger=logger
+        with patch.dict('sys.modules',{'fastapi':fake,viewer_module.__name__:viewer_module}),patch('logging.getLogger',return_value=logger):
+            asyncio.run(scope['ws'](types.SimpleNamespace(context=c),socket))
         self.assertFalse(c.SOCKETS);self.assertFalse(feature.displays)
+        self.assertFalse(c.operation_lock.locked())
+        if hasattr(c,'_display_broadcast_lock'):self.assertFalse(c._display_broadcast_lock.locked())
+        if projection_error is None:logger.exception.assert_not_called()
+        else:logger.exception.assert_called_once()
         return socket
     def test_initial_snapshot(self):self.assertEqual(self.run_socket([]).sent[0]['type'],'state')
     def test_ack_does_not_trigger_heartbeat(self):self.assertEqual(len(self.run_socket(['{"type":"ack","revision":7}']).sent),1)
@@ -51,5 +72,41 @@ class DisplayConnectionTests(unittest.TestCase):
             def revoke():c.auth_session=lambda token:None;return TimeoutError()
             s.events=[revoke]
         socket=self.run_socket([],mutate);self.assertTrue(any(code==1008 for code,_ in socket.closes));self.assertEqual(len(socket.sent),1)
+
+    def test_initial_snapshot_uses_viewer_projection(self):
+        socket=self.run_socket([])
+        self.assertEqual(socket.sent,[{'type':'state','revision':7,'state':{'campaign':{'id':'1','name':'Campaign'},'monsters':[]}}])
+        socket.viewer_service.socket_state.assert_called_once_with(socket)
+        self.assertNotIn('server-only',json.dumps(socket.sent))
+    def test_resync_rechecks_viewer_projection(self):
+        socket=self.run_socket(['{"type":"resync"}'])
+        self.assertEqual(socket.viewer_service.socket_state.call_count,2)
+        self.assertEqual(socket.projection_locks,[(True,True),(True,True)])
+    def test_snapshot_projection_holds_both_locks(self):
+        self.assertEqual(self.run_socket([]).projection_locks,[(True,True)])
+    def test_session_revoked_before_resync_is_rejected(self):
+        def mutate(c,s):
+            def revoke():c.auth_session=lambda token:None;return '{"type":"resync"}'
+            s.events=[revoke]
+        socket=self.run_socket([],mutate)
+        self.assertEqual([m['type'] for m in socket.sent],['state'])
+        self.assertTrue(any(code==1008 for code,_ in socket.closes))
+        socket.viewer_service.socket_state.assert_called_once_with(socket)
+    def test_disallowed_role_is_rejected_before_projection(self):
+        def mutate(c,s):c.auth_session=lambda token:{'username':'table','role':'unknown'}
+        socket=self.run_socket([],mutate)
+        self.assertFalse(socket.accepted);self.assertEqual(socket.sent,[])
+        self.assertEqual(socket.closes[0][0],1008)
+        socket.viewer_service.socket_state.assert_not_called()
+    def test_projection_failure_is_logged_and_cleaned_up(self):
+        socket=self.run_socket([],projection_error=RuntimeError('injected viewer failure'))
+        self.assertTrue(socket.accepted);self.assertEqual(socket.sent,[])
+        socket.viewer_service.socket_state.assert_called_once_with(socket)
+        socket.logger.exception.assert_called_once();self.assertTrue(socket.closes)
+    def test_viewer_module_fixture_restores_existing_module(self):
+        name='python.scrying_glass_campaign_viewers';sentinel=types.ModuleType(name)
+        with patch.dict(sys.modules,{name:sentinel}):
+            self.run_socket([])
+            self.assertIs(sys.modules[name],sentinel)
 
 if __name__=='__main__':unittest.main()

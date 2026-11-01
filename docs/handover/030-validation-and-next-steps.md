@@ -6,24 +6,30 @@ Last updated: 2026-11-01.
 
 ## Inspected CI evidence
 
-Run `41295839260`, attempt 1, tested commit `72e1ae7023bb33e47aee3fe8b554786717d1fb1f` on `features/perplexity` and concluded failure. Evidence was read from `ci-results-41295839260-attempt-1/` at commit `8d3fdf5f27a924d81aee561383c4ed7984c15954`.
+| Run, attempt 1 | Tested commit | Main Python tests | Failures | Errors |
+|---|---|---:|---:|---:|
+| 41295839260 | 72e1ae7023bb33e47aee3fe8b554786717d1fb1f | 861 | 35 | 10 |
+| 41297160008 | aefa5457fcfa84bf918890660ab2f782901a1679 | 866 | 24 | 8 |
 
-Run URL: https://github.com/dajomas/Scrying-Glass/actions/runs/41295839260
+Both runs concluded failure. Dependency installation and Python syntax/server import checks passed. Python, JavaScript and standalone browser/audit steps failed. Repeated discovery by the connection-lifetime audit is not another set of unique tests.
 
-Dependency installation and Python syntax/server import checks passed. The Python, JavaScript and standalone browser/audit steps failed. Main Python discovery reported 861 tests, 35 failures and 10 errors. The connection-lifetime audit reran discovery and reported the same counts; do not count these as another set of unique failing tests.
+Latest evidence: `ci-results-41297160008-attempt-1/` at commit `d9f4b54bb8d80d5f6435491b6d074752803896de`.
+Run URL: https://github.com/dajomas/Scrying-Glass/actions/runs/41297160008
 
-## First focused repair
+## First repair confirmed in CI
 
-The AST-extracted WebSocket fixture in `tests/test_bughunt_711881a.py` lacked package context and a fixture for its campaign-viewer dependency. Local reproduction exposed `ImportError: attempted relative import with no known parent package` before the first snapshot.
+All 35 tests in `tests/test_bughunt_711881a.py` passed in run 41297160008, including the five added regressions. The main-suite failure/error reduction matches the original module's 11 failures and 2 errors. Details: [WebSocket regression fixture repair](060-websocket-regression-fixture.md).
 
-The test-only repair, scope, validation results and limitations are recorded in [WebSocket regression fixture repair](060-websocket-regression-fixture.md). Its local 35-test module passed on Python 3.12.8. This is not a claim that the full CI suite or Python 3.14 run now passes.
+## Display-connection repair
+
+`tests/test_display_connection.py` had a separate extracted scope missing both module name and package context. Its viewer import raised `KeyError: "'__name__' not in globals"` before the first snapshot. The focused test-only repair reproduced 8 failures and 1 error in the original 11 tests, then passed 18 tests locally on Python 3.12.8. Details and limits: [Display-connection fixture repair](070-display-connection-fixture.md).
 
 ## Remaining validation
 
-- Inspect the normal push-triggered CI result for this repair once delivered.
-- Investigate the display-connection fixture failures next, then the other reported failure categories separately.
+- Inspect normal push-triggered CI for the display-connection repair after delivery; no result for it is claimed yet.
+- Investigate the D&D Beyond diagnostic failures next as a separate change.
 - Do not silently skip tests or relax production authorization to make fixtures pass.
-- Keep the incomplete Admin JavaScript split separate from CI-baseline repairs; its helper modules are not activated yet.
-- Record each observed result against the actual tested commit and run. A successful import is not a complete application, browser or authorization test.
+- Keep incomplete Admin source splitting separate from CI-baseline repairs; its helpers are not activated.
+- Record results against actual tested commits and runs. Fixture tests are not full application, transport or campaign-ACL integration tests.
 
-The current user direction is normal CI on implementation pushes. Do not carry the earlier documentation-only skip request forward.
+Normal CI is requested for implementation pushes. Do not carry an earlier documentation-only skip request forward.

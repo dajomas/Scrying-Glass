@@ -36,6 +36,10 @@ python -Werror::ResourceWarning -m unittest discover -s tests -p 'test_bughunt_7
 python -Werror::DeprecationWarning -m unittest discover -s tests -p 'test_bughunt_711881a.py'
 ```
 
-## Outstanding evidence
+## CI confirmation and remaining scope
 
-The full suite, real FastAPI/Starlette transport, real campaign-viewer ACL integration and Python 3.14 have not been rerun locally. CI must verify the committed repair. No passing CI result or reduction in the full-suite failure count is claimed here. Display-connection and other failing modules are outside this repair.
+Run `41297160008`, attempt 1, tested commit `aefa5457fcfa84bf918890660ab2f782901a1679`. All 35 tests in this module passed in the Python 3.14.9 CI environment. The full Python suite ran 866 tests with 24 failures and 8 errors, compared with 861 tests, 35 failures and 10 errors before this repair. The five additional tests and reduction of 11 failures and 2 errors match this module's change.
+
+Evidence was inspected under `ci-results-41297160008-attempt-1/` at commit `d9f4b54bb8d80d5f6435491b6d074752803896de`.
+
+This confirms the focused fixture repair, not the full suite or real transport/campaign ACL behavior. The overall workflow still failed. Display-connection and other failing modules remain separate repairs; see [current validation status](030-validation-and-next-steps.md).
