@@ -1,0 +1,32 @@
+ser and audit checks	2026-11-01T15:28:32.2685726Z ##[group]tests/admin-message-timeout-browser.py
+tests	Standalone Python browser and audit checks	2026-11-01T15:28:37.9468423Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-01T15:28:37.9469007Z ##[group]tests/audit_connection_lifetime.py
+tests	Standalone Python browser and audit checks	2026-11-01T15:28:44.0753009Z D&D Beyond candidate unavailable (/monsters/old): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-01T15:28:44.0753567Z D&D Beyond candidate unavailable (/monsters/new): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-01T15:28:44.0767315Z D&D Beyond candidate unavailable (/monsters/old): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-01T15:28:44.0768096Z D&D Beyond candidate unavailable (/monsters/new): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-01T15:28:44.0802697Z D&D Beyond candidate unavailable (/monsters/old): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-01T15:28:44.0810096Z D&D Beyond candidate unavailable (/monsters/old): Bad candidate
+tests	Standalone Python browser and audit checks	2026-11-01T15:28:44.0825981Z D&D Beyond candidate has no usable AC/HP (/monsters/old)
+tests	Standalone Python browser and audit checks	2026-11-01T15:28:44.0840312Z D&D Beyond candidate unavailable (/monsters/old): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-01T15:28:44.0840821Z D&D Beyond candidate unavailable (/monsters/new): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:09.6036557Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:09.6036995Z Ran 889 tests in 31.218s
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:09.6037133Z 
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:09.6037270Z OK
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:09.6040713Z Connections opened: 611; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:09.6041489Z PASS: failed PRAGMA initialization closes connection; suite closes all tracked connections
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:09.7659646Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:09.7660105Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:09.8848255Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:09.8848843Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:09.9000478Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:09.9002907Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:10.0191503Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:10.0352122Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:10.0352577Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:12.3999834Z {
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:12.4000201Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:12.4000675Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-01T15:29:12.4001232Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-11-01T15
