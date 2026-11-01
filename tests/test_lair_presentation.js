@@ -30,6 +30,7 @@ function viewer(){
  const initiative={innerHTML:'',hidden:false,querySelector:()=>null,prepend(){}};
  const stage={innerHTML:'',style:{}},campaign={};
  const sandbox={document:{body:{style:{}},querySelector:selector=>({'#initiative':initiative,'#stage':stage,'#clientCampaign':campaign}[selector])},applyBattleOrderFontSize(){},clearTimeout(){}};
+ sandbox.window=sandbox;
  vm.createContext(sandbox);vm.runInContext(clientSource.slice(0,clientSource.indexOf('function connectDisplay()')),sandbox);
  return {sandbox,initiative};
 }

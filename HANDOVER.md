@@ -18,6 +18,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 12. [Pytest module imports and execution](docs/handover/120-pytest-module-imports.md)
 13. [Accounts migration fixture repair](docs/handover/130-accounts-migration-fixture.md)
 14. [Viewer ownership fixture repairs](docs/handover/140-viewer-ownership-fixtures.md)
+15. [Renderer VM window fixture repair](docs/handover/150-renderer-vm-window.md)
 
 ## Required update convention
 
