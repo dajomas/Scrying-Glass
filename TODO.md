@@ -5,6 +5,7 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 ## Index
 
 1. [Monster lookup accounts and candidate selection](docs/todo/010-monster-lookup.md) - SG-TODO-001, proposed.
+2. [Non-standard monster damage and mechanical effects](docs/todo/020-monster-damage-effects.md) - SG-TODO-002, proposed.
 
 ## Maintenance
 

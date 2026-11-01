@@ -17,3 +17,11 @@ The task is proposed, not implemented. No owner, priority or deadline has been a
 This commit changes only task and handover documentation. README was reviewed and remains accurate; no runtime behavior, credentials, source tests or workflow configuration is changed. No tests are claimed to have run for this documentation change.
 
 The user explicitly requested `[skip ci]` for this documentation push. Do not dispatch an extra workflow or cancel a run from an earlier commit. The existing CI result for the StatsFallbackTests repair remains a separate matter and has not been verified by this documentation change.
+
+## 2026-11-01 - Non-standard monster effects backlog addition
+
+Add [SG-TODO-002 - Non-standard monster damage and mechanical effects](../todo/020-monster-damage-effects.md) to the TODO index. It captures the proposed design from the monster-damage discussion; detailed scope, dependencies, acceptance criteria and validation requirements remain in that task. Implementation is not started, and the proposed increments and rules-edition choices require refinement before implementation.
+
+Preparation reviewed the live branch instructions, README, handover/TODO indexes and maintenance sections, existing TODO style, current HP/effect rules and CI coverage documentation. The current effect validator does not accept structured mechanical fields. This entry records planned work only; it does not add those fields or claim that the proposed behavior exists.
+
+This addition changes documentation only. README remains accurate and is unchanged; the handover index is unchanged because no handover section is added or moved. No application tests were run, no workflow configuration is changed and no workflow is dispatched. The user requested `[skip ci]` in the proposed commit message for this push. Workflow-run state has not been checked; the skip token alone is not verification of that state.
