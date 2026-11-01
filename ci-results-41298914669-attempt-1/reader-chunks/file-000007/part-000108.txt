@@ -1,0 +1,28 @@
+459683Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2459689Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2459873Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2460510Z FAIL: test_failed_legacy_uses_next (test_bughunt_210aac8.StatsFallbackTests.test_failed_legacy_uses_next)
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2461239Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2461624Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2462279Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_210aac8.py", line 104, in test_failed_legacy_uses_next
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2463269Z     result=self.call(self.context(detail));self.assertTrue(result['found']);self.assertFalse(result['legacy']);self.assertEqual(len(visited),2)
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2463957Z                                            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2464317Z AssertionError: False is not true
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2464492Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2464680Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2465298Z FAIL: test_failed_parser_uses_next (test_bughunt_210aac8.StatsFallbackTests.test_failed_parser_uses_next)
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2465931Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2466314Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2467080Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_210aac8.py", line 109, in test_failed_parser_uses_next
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2468026Z     result=self.call(self.context(lambda href:href,parse));self.assertTrue(result['found']);self.assertFalse(result['legacy'])
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2468690Z                                                            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2469076Z AssertionError: False is not true
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2469251Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2469437Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2470023Z FAIL: test_healthy_legacy_wins (test_bughunt_210aac8.StatsFallbackTests.test_healthy_legacy_wins)
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2470623Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2470993Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2471627Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_210aac8.py", line 111, in test_healthy_legacy_wins
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2472513Z     result=self.call(self.context(lambda href:'valid'));self.assertTrue(result['found']);self.assertTrue(result['legacy'])
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2473142Z                                                         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Pyt

@@ -1,0 +1,26 @@
+ser and audit checks	2026-11-01T10:48:49.2431971Z                ~~~~~~~~~~~~~~^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2432483Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/contextlib.py", line 214, in __aenter__
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2432977Z     return await anext(self.gen)
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2433231Z            ^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2433846Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_campaign_ownership_routes.py", line 11, in lifespan
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2434564Z     async with operation_lock(context): ownership(context).initialize()
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2434999Z                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2435651Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_campaign_ownership.py", line 26, in initialize
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2436238Z     storage = self.context.STORAGE
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2436510Z               ^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2437406Z AttributeError: 'types.SimpleNamespace' object has no attribute 'STORAGE'
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2437723Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2437914Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2438801Z ERROR: test_admin_and_superadmin_implicitly_see_all_campaigns (test_campaign_viewers.CampaignViewerTests.test_admin_and_superadmin_implicitly_see_all_campaigns)
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2439624Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2440001Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2440897Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewers.py", line 88, in test_admin_and_superadmin_implicitly_see_all_campaigns
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2441857Z     for name in ('dm','root'):self.assertEqual({r['id'] for r in self.acl.choices(self.c.SESSIONS[name])},{self.a,self.b})
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2442490Z                                                                  ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2443176Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_campaign_viewers.py", line 60, in choices
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2443993Z                rows=self.db.execute("""SELECT c.id,c.name FROM campaigns c JOIN campaign_owners o ON o.campaign_id=c.id
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2444634Z                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2445160Z     WHERE o.owner_user_id=? ORDER BY c.name COLLATE NOCASE,c.id""",(user['id'],))
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2445633Z     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:48:49.2446075Z sqlite3.OperationalError: no such table: campaign_owners
+tests	Standalone Python browser and aud
