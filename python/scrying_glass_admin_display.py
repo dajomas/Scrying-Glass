@@ -35,13 +35,18 @@ class AdminDisplayMixin:
                 except Exception:
                     logger.warning("D&D Beyond search failed for %r", monster_species, exc_info=True)
                     candidates = []
-                    failures.append("D&D Beyond search failed")
+                    failures.append("D&D Beyond search could not be completed")
+                else:
+                    if not candidates:
+                        failures.append("No exact D&D Beyond match found")
                 for is_legacy, href in candidates:
+                    label = "legacy" if is_legacy else "current"
                     try:
                         html = self.context.dnd_monster_detail_html(href)
                         ac, hp, hp_source = self.context.dnd_monster_stats_from_html(html)
                     except Exception as exc:
                         logger.warning("D&D Beyond candidate unavailable (%s): %s", href, exc)
+                        failures.append(f"{label}: D&D Beyond page could not be retrieved")
                         continue
                     if ac is not None or hp is not None:
                         return {
@@ -50,6 +55,8 @@ class AdminDisplayMixin:
                             "legacy": is_legacy, "provider": "D&D Beyond",
                             "source_url": f"https://www.dndbeyond.com{href}",
                         }
+                    logger.warning("D&D Beyond candidate has no usable AC/HP (%s)", href)
+                    failures.append(f"{label}: AC/HP could not be parsed from D&D Beyond page")
                 failures.append("no usable D&D Beyond stats")
             if display.get("fivetools_fallback", True):
                 try:

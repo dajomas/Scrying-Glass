@@ -10,26 +10,19 @@ Last updated: 2026-11-01.
 |---|---|---:|---:|---:|
 | 41295839260 | 72e1ae7023bb33e47aee3fe8b554786717d1fb1f | 861 | 35 | 10 |
 | 41297160008 | aefa5457fcfa84bf918890660ab2f782901a1679 | 866 | 24 | 8 |
+| 41298125937 | 897f07907ea9c2e3ddf17f992827590cd3af724a | 873 | 16 | 7 |
 
-Both runs concluded failure. Dependency installation and Python syntax/server import checks passed. Python, JavaScript and standalone browser/audit steps failed. Repeated discovery by the connection-lifetime audit is not another set of unique tests.
+All three runs concluded failure. Dependency installation and Python syntax/server import checks passed. Python, JavaScript and standalone browser/audit steps failed. Audit rediscovery is not another set of unique tests.
 
-Latest evidence: `ci-results-41297160008-attempt-1/` at commit `d9f4b54bb8d80d5f6435491b6d074752803896de`.
-Run URL: https://github.com/dajomas/Scrying-Glass/actions/runs/41297160008
+Latest evidence: `ci-results-41298125937-attempt-1/` at commit `68adc77e6e0fc53e5db3b09853088f9f57ee3d46`.
+Run URL: https://github.com/dajomas/Scrying-Glass/actions/runs/41298125937
 
-## First repair confirmed in CI
+## Focused repair status
 
-All 35 tests in `tests/test_bughunt_711881a.py` passed in run 41297160008, including the five added regressions. The main-suite failure/error reduction matches the original module's 11 failures and 2 errors. Details: [WebSocket regression fixture repair](060-websocket-regression-fixture.md).
-
-## Display-connection repair
-
-`tests/test_display_connection.py` had a separate extracted scope missing both module name and package context. Its viewer import raised `KeyError: "'__name__' not in globals"` before the first snapshot. The focused test-only repair reproduced 8 failures and 1 error in the original 11 tests, then passed 18 tests locally on Python 3.12.8. Details and limits: [Display-connection fixture repair](070-display-connection-fixture.md).
+- [WebSocket fixture](060-websocket-regression-fixture.md): all 35 module tests passed in run 41297160008.
+- [Display-connection fixture](070-display-connection-fixture.md): all 18 module tests passed in run 41298125937. This supersedes its earlier pending-CI status.
+- [Monster lookup diagnostics](080-monster-lookup-diagnostics.md): local candidate passed 17 diagnostic tests plus 15 existing provider/fallback tests on Python 3.12.8; CI is pending. This includes a small production diagnostic-message repair, not just fixture setup.
 
 ## Remaining validation
 
-- Inspect normal push-triggered CI for the display-connection repair after delivery; no result for it is claimed yet.
-- Investigate the D&D Beyond diagnostic failures next as a separate change.
-- Do not silently skip tests or relax production authorization to make fixtures pass.
-- Keep incomplete Admin source splitting separate from CI-baseline repairs; its helpers are not activated.
-- Record results against actual tested commits and runs. Fixture tests are not full application, transport or campaign-ACL integration tests.
-
-Normal CI is requested for implementation pushes. Do not carry an earlier documentation-only skip request forward.
+Inspect normal CI for the lookup repair after delivery, then address the remaining failure categories separately. No full-suite passing result is claimed. Keep incomplete Admin source splitting separate; its helpers are not activated. Do not skip failing tests or weaken authorization to make fixtures pass. Normal CI remains requested for implementation pushes.
