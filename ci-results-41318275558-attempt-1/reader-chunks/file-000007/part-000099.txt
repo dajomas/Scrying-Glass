@@ -1,0 +1,32 @@
+_id=? ORDER BY c.name COLLATE NOCASE,c.id""",(user['id'],))
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8737241Z     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8737962Z sqlite3.OperationalError: no such table: campaign_owners
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8738351Z 
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8738692Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8739231Z Ran 888 tests in 54.975s
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8739449Z 
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8739595Z FAILED (errors=4)
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8740187Z Connections opened: 609; without explicit close: 3
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:26.0165959Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:26.0166728Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:26.1320959Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:26.1321887Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:26.1493267Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:26.1493740Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:26.2773316Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:26.2949851Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:26.2950517Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:27.7529950Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:27.7532555Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/browser_smoke_272cc73.py", line 79, in <module>
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:27.7533735Z     assert 'Default' in client.locator('#clientCampaign').inner_text()
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:27.7534438Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:27.7534898Z AssertionError
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:27.8166725Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:27.8173460Z ##[error]Process completed with exit code 1.
+tests	Post Run actions/checkout@v4	﻿2026-11-01T14:54:27.8278219Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-01T14:54:27.9174815Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-01T14:54:27.9217667Z git version 2.56.0
+tests	Post Run actions/checkout@v4	2026-11-01T14:54:27.9292513Z Temporarily overriding HOME='/home/runner/work/_temp/1fef9e1d-c383-46f3-b7f9-cefa23a385c8' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-01T14:54:27.9294393Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-01T14:54:27.9298710Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-01T14:54:27.9364064Z [command]/usr/bin/git config --local --name-only --ge

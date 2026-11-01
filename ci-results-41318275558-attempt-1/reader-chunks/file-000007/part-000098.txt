@@ -1,0 +1,26 @@
+    ^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8714187Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/fastapi/routing.py", line 249, in merged_lifespan
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8715208Z     async with nested_context(app) as maybe_nested_state:
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8715739Z                ~~~~~~~~~~~~~~^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8716557Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/contextlib.py", line 214, in __aenter__
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8717340Z     return await anext(self.gen)
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8717749Z            ^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8718730Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_campaign_ownership_routes.py", line 11, in lifespan
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8719873Z     async with operation_lock(context): ownership(context).initialize()
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8721020Z                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8722092Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_campaign_ownership.py", line 26, in initialize
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8723062Z     storage = self.context.STORAGE
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8723495Z               ^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8724217Z AttributeError: 'types.SimpleNamespace' object has no attribute 'STORAGE'
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8724705Z 
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8724998Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8726424Z ERROR: test_admin_and_superadmin_implicitly_see_all_campaigns (test_campaign_viewers.CampaignViewerTests.test_admin_and_superadmin_implicitly_see_all_campaigns)
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8727740Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8728311Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8729508Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewers.py", line 88, in test_admin_and_superadmin_implicitly_see_all_campaigns
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8731160Z     for name in ('dm','root'):self.assertEqual({r['id'] for r in self.acl.choices(self.c.SESSIONS[name])},{self.a,self.b})
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8732199Z                                                                  ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8733298Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_campaign_viewers.py", line 60, in choices
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8734570Z                rows=self.db.execute("""SELECT c.id,c.name FROM campaigns c JOIN campaign_owners o ON o.campaign_id=c.id
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8735605Z                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8736460Z     WHERE o.owner_user

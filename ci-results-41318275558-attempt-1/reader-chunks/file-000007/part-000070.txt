@@ -1,0 +1,37 @@
+7216Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T14:53:19.5917568Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T14:53:19.5918094Z Ran 888 tests in 57.076s
+tests	Python test suite (including browser fixtures)	2026-11-01T14:53:19.5918308Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T14:53:19.5918446Z FAILED (errors=4)
+tests	Python test suite (including browser fixtures)	2026-11-01T14:53:19.6940434Z ##[error]Process completed with exit code 1.
+tests	Pytest regression modules	﻿2026-11-01T14:53:19.6992151Z ##[group]Run python -m pytest -q tests/test_death_save_validation_2ba6607.py tests/test_slug_truncation_82860c4.py
+tests	Pytest regression modules	2026-11-01T14:53:19.6992992Z ^[[36;1mpython -m pytest -q tests/test_death_save_validation_2ba6607.py tests/test_slug_truncation_82860c4.py^[[0m
+tests	Pytest regression modules	2026-11-01T14:53:19.7014475Z shell: /usr/bin/bash -e {0}
+tests	Pytest regression modules	2026-11-01T14:53:19.7014729Z env:
+tests	Pytest regression modules	2026-11-01T14:53:19.7015188Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Pytest regression modules	2026-11-01T14:53:19.7015792Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	Pytest regression modules	2026-11-01T14:53:19.7016225Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.9/x64/lib/pkgconfig
+tests	Pytest regression modules	2026-11-01T14:53:19.7016654Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	Pytest regression modules	2026-11-01T14:53:19.7017026Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	Pytest regression modules	2026-11-01T14:53:19.7017393Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	Pytest regression modules	2026-11-01T14:53:19.7017761Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.9/x64/lib
+tests	Pytest regression modules	2026-11-01T14:53:19.7018130Z ##[endgroup]
+tests	Pytest regression modules	2026-11-01T14:53:21.4035662Z ...........................................                              [100%]
+tests	Pytest regression modules	2026-11-01T14:53:21.4037042Z 43 passed in 1.09s
+tests	JavaScript tests	﻿2026-11-01T14:53:21.4652941Z ##[group]Run status=0
+tests	JavaScript tests	2026-11-01T14:53:21.4653257Z ^[[36;1mstatus=0^[[0m
+tests	JavaScript tests	2026-11-01T14:53:21.4653492Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	JavaScript tests	2026-11-01T14:53:21.4653786Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	JavaScript tests	2026-11-01T14:53:21.4654054Z ^[[36;1m  node --test "$test" || status=1^[[0m
+tests	JavaScript tests	2026-11-01T14:53:21.4654333Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	JavaScript tests	2026-11-01T14:53:21.4654735Z ^[[36;1mdone < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)^[[0m
+tests	JavaScript tests	2026-11-01T14:53:21.4655141Z ^[[36;1mexit "$status"^[[0m
+tests	JavaScript tests	2026-11-01T14:53:21.4677703Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	JavaScript tests	2026-11-01T14:53:21.4678057Z env:
+tests	JavaScript tests	2026-11-01T14:53:21.4678504Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	JavaScript tests	2026-11-01T14:53:21.4679094Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	JavaScript tests	2026-11-01T14:53:21.4679539Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.9/x64/lib/pkgconfig
+tests	JavaScript tests	2026-11-01T14:53:21.4680037Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	JavaScript tests	2026-11-01T14:53:21.4680436Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	JavaScript tests	2026-11-01T14:53:21.4681040Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	JavaScript tests	2026-11-01T14:53:21.4681417Z   LD_LIBRA

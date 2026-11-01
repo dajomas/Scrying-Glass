@@ -1,0 +1,53 @@
+RY_PATH: /opt/hostedtoolcache/Python/3.14.9/x64/lib
+tests	JavaScript tests	2026-11-01T14:53:21.4681732Z ##[endgroup]
+tests	JavaScript tests	2026-11-01T14:53:21.4744630Z ##[group]tests/admin-message-timeout.test.cjs
+tests	JavaScript tests	2026-11-01T14:53:21.5170351Z TAP version 13
+tests	JavaScript tests	2026-11-01T14:53:21.5591332Z # Subtest: clears at five seconds, not earlier
+tests	JavaScript tests	2026-11-01T14:53:21.5596515Z ok 1 - clears at five seconds, not earlier
+tests	JavaScript tests	2026-11-01T14:53:21.5597085Z   ---
+tests	JavaScript tests	2026-11-01T14:53:21.5611872Z   duration_ms: 2.12392
+tests	JavaScript tests	2026-11-01T14:53:21.5612285Z   type: 'test'
+tests	JavaScript tests	2026-11-01T14:53:21.5612504Z   ...
+tests	JavaScript tests	2026-11-01T14:53:21.5612850Z # Subtest: replacement message gets its own full timeout
+tests	JavaScript tests	2026-11-01T14:53:21.5613516Z ok 2 - replacement message gets its own full timeout
+tests	JavaScript tests	2026-11-01T14:53:21.5613859Z   ---
+tests	JavaScript tests	2026-11-01T14:53:21.5614061Z   duration_ms: 0.642348
+tests	JavaScript tests	2026-11-01T14:53:21.5614405Z   type: 'test'
+tests	JavaScript tests	2026-11-01T14:53:21.5614641Z   ...
+tests	JavaScript tests	2026-11-01T14:53:21.5615115Z # Subtest: repeating the same text restarts the timer
+tests	JavaScript tests	2026-11-01T14:53:21.5615839Z ok 3 - repeating the same text restarts the timer
+tests	JavaScript tests	2026-11-01T14:53:21.5616410Z   ---
+tests	JavaScript tests	2026-11-01T14:53:21.5616780Z   duration_ms: 0.733277
+tests	JavaScript tests	2026-11-01T14:53:21.5617194Z   type: 'test'
+tests	JavaScript tests	2026-11-01T14:53:21.5617553Z   ...
+tests	JavaScript tests	2026-11-01T14:53:21.5618101Z # Subtest: manual clearing cancels the timeout
+tests	JavaScript tests	2026-11-01T14:53:21.5618887Z ok 4 - manual clearing cancels the timeout
+tests	JavaScript tests	2026-11-01T14:53:21.5619389Z   ---
+tests	JavaScript tests	2026-11-01T14:53:21.5619754Z   duration_ms: 0.591082
+tests	JavaScript tests	2026-11-01T14:53:21.5620202Z   type: 'test'
+tests	JavaScript tests	2026-11-01T14:53:21.5620567Z   ...
+tests	JavaScript tests	2026-11-01T14:53:21.5621470Z # Subtest: pre-existing message gets a timeout on installation
+tests	JavaScript tests	2026-11-01T14:53:21.5622419Z ok 5 - pre-existing message gets a timeout on installation
+tests	JavaScript tests	2026-11-01T14:53:21.5623057Z   ---
+tests	JavaScript tests	2026-11-01T14:53:21.5623440Z   duration_ms: 1.428664
+tests	JavaScript tests	2026-11-01T14:53:21.5623862Z   type: 'test'
+tests	JavaScript tests	2026-11-01T14:53:21.5624254Z   ...
+tests	JavaScript tests	2026-11-01T14:53:21.5624916Z # Subtest: empty or missing message element creates no timeout
+tests	JavaScript tests	2026-11-01T14:53:21.5625854Z ok 6 - empty or missing message element creates no timeout
+tests	JavaScript tests	2026-11-01T14:53:21.5626507Z   ---
+tests	JavaScript tests	2026-11-01T14:53:21.5626871Z   duration_ms: 1.045069
+tests	JavaScript tests	2026-11-01T14:53:21.5627281Z   type: 'test'
+tests	JavaScript tests	2026-11-01T14:53:21.5627638Z   ...
+tests	JavaScript tests	2026-11-01T14:53:21.5687179Z 1..6
+tests	JavaScript tests	2026-11-01T14:53:21.5687854Z # tests 6
+tests	JavaScript tests	2026-11-01T14:53:21.5688145Z # suites 0
+tests	JavaScript tests	2026-11-01T14:53:21.5688627Z # pass 6
+tests	JavaScript tests	2026-11-01T14:53:21.5689154Z # fail 0
+tests	JavaScript tests	2026-11-01T14:53:21.5689747Z # cancelled 0
+tests	JavaScript tests	2026-11-01T14:53:21.5690246Z # skipped 0
+tests	JavaScript tests	2026-11-01T14:53:21.5691017Z # todo 0
+tests	JavaScript tests	2026-11-01T14:53:21.5691765Z # duration_ms 64.696884
+tests	JavaScript tests	2026-11-01T14:53:21.5743948Z ##[endgroup]
+tests	JavaScript tests	2026-11-01T14:53:21.5744389Z ##[group]tests/battle-action-apply.test.cjs
+tests	JavaScript tests	2026-11-01T14:53:21.6170797Z TAP version 13
+tests	JavaScript tests	2026-11-01T14:53:21.6630634Z # Persistent modal tests passed: mixed ordered batch

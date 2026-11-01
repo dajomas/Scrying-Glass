@@ -1,0 +1,30 @@
+right/sync_api/_generated.py", line 21235, in wait_for_function
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8647547Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8647856Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8648211Z         self._impl_obj.wait_for_function(
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8648668Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8649038Z     ...<4 lines>...
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8649330Z         )
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8649588Z         ^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8649858Z     )
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8650485Z     ^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8651624Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8652544Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8652885Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8653882Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_page.py", line 1158, in wait_for_function
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8655116Z     return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8655863Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8657026Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 945, in wait_for_function
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8658229Z     await self._channel.send("waitForFunction", self._timeout, params)
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8659395Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8660473Z     return await self._connection.wrap_api_call(
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8661191Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8661590Z     ...<3 lines>...
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8661883Z     )
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8662131Z     ^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8663079Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8664318Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8665334Z playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 30000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8665918Z 
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8666216Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8668001Z ERROR: test_client_lifespan_initializes_without_admin_endpoints (test_campaign_viewer_lifespan_integration.FastAPILifespanIntegrationTests.test_client_lifespan_initializes_without_admin_end

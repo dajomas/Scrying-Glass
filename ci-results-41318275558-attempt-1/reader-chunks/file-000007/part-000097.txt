@@ -1,0 +1,29 @@
+xt).initialize()
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8691780Z                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8692828Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_campaign_ownership.py", line 26, in initialize
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8693742Z     storage = self.context.STORAGE
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8694163Z               ^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8694867Z AttributeError: 'types.SimpleNamespace' object has no attribute 'STORAGE'
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8695353Z 
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8695638Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8697224Z ERROR: test_existing_lifespan_and_state_are_preserved (test_campaign_viewer_lifespan_integration.FastAPILifespanIntegrationTests.test_existing_lifespan_and_state_are_preserved)
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8698661Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8699255Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8700565Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_lifespan_integration.py", line 40, in test_existing_lifespan_and_state_are_preserved
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8701874Z     asyncio.run(run())
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8702211Z     ~~~~~~~~~~~^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8702947Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 205, in run
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8703684Z     return runner.run(main)
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8704051Z            ~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8704829Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8705677Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8706182Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8707116Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8707939Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8708275Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8709181Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_lifespan_integration.py", line 35, in run
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8710200Z     async with app.router.lifespan_context(app) as state:
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8710931Z                ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8712039Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/contextlib.py", line 214, in __aenter__
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8712813Z     return await anext(self.gen)
+tests	Standalone Python browser and audit checks	2026-11-01T14:54:25.8713217Z        

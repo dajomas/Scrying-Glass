@@ -1,0 +1,40 @@
+ tests/test_bughunt_757fd9d.js
+tests	JavaScript tests	2026-11-01T14:53:23.1808073Z   ---
+tests	JavaScript tests	2026-11-01T14:53:23.1808408Z   duration_ms: 45.370118
+tests	JavaScript tests	2026-11-01T14:53:23.1808795Z   type: 'test'
+tests	JavaScript tests	2026-11-01T14:53:23.1809116Z   ...
+tests	JavaScript tests	2026-11-01T14:53:23.1809406Z 1..1
+tests	JavaScript tests	2026-11-01T14:53:23.1809694Z # tests 1
+tests	JavaScript tests	2026-11-01T14:53:23.1810010Z # suites 0
+tests	JavaScript tests	2026-11-01T14:53:23.1810620Z # pass 1
+tests	JavaScript tests	2026-11-01T14:53:23.1821499Z # fail 0
+tests	JavaScript tests	2026-11-01T14:53:23.1830061Z # cancelled 0
+tests	JavaScript tests	2026-11-01T14:53:23.1830381Z # skipped 0
+tests	JavaScript tests	2026-11-01T14:53:23.1831136Z # todo 0
+tests	JavaScript tests	2026-11-01T14:53:23.1831379Z # duration_ms 53.434546
+tests	JavaScript tests	2026-11-01T14:53:23.1867285Z ##[endgroup]
+tests	JavaScript tests	2026-11-01T14:53:23.1867950Z ##[group]tests/test_bughunt_985b4b2.js
+tests	JavaScript tests	2026-11-01T14:53:23.2286034Z TAP version 13
+tests	JavaScript tests	2026-11-01T14:53:23.2520192Z # FAIL card created during failed update is retired after old snapshot recovery
+tests	JavaScript tests	2026-11-01T14:53:23.2521733Z # ReferenceError: window is not defined
+tests	JavaScript tests	2026-11-01T14:53:23.2524856Z #     at renderClientCampaign (evalmachine.<anonymous>:130:5)
+tests	JavaScript tests	2026-11-01T14:53:23.2527563Z #     at Object.render (evalmachine.<anonymous>:133:5)
+tests	JavaScript tests	2026-11-01T14:53:23.2529458Z #     at h.render (/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_985b4b2.js:40:26)
+tests	JavaScript tests	2026-11-01T14:53:23.2531187Z #     at /home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_985b4b2.js:52:23
+tests	JavaScript tests	2026-11-01T14:53:23.2534104Z #     at Object.<anonymous> (/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_985b4b2.js:79:51)
+tests	JavaScript tests	2026-11-01T14:53:23.2536753Z #     at Module._compile (node:internal/modules/cjs/loader:1781:14)
+tests	JavaScript tests	2026-11-01T14:53:23.2539165Z #     at Object..js (node:internal/modules/cjs/loader:1913:10)
+tests	JavaScript tests	2026-11-01T14:53:23.2540276Z #     at Module.load (node:internal/modules/cjs/loader:1505:32)
+tests	JavaScript tests	2026-11-01T14:53:23.2541838Z #     at Function._load (node:internal/modules/cjs/loader:1309:12)
+tests	JavaScript tests	2026-11-01T14:53:23.2543097Z #     at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+tests	JavaScript tests	2026-11-01T14:53:23.2548754Z # FAIL failed initial render cards are retired on replacement snapshot
+tests	JavaScript tests	2026-11-01T14:53:23.2550271Z # AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Injected card DOM failure/. Input:
+tests	JavaScript tests	2026-11-01T14:53:23.2551855Z # 'ReferenceError: window is not defined'
+tests	JavaScript tests	2026-11-01T14:53:23.2553300Z #     at failNewCard (/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_985b4b2.js:49:59)
+tests	JavaScript tests	2026-11-01T14:53:23.2554904Z #     at /home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_985b4b2.js:55:21
+tests	JavaScript tests	2026-11-01T14:53:23.2556615Z #     at Object.<anonymous> (/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_985b4b2.js:79:51)
+tests	JavaScript tests	2026-11-01T14:53:23.2558065Z #     at Module._compile (node:internal/modules/cjs/loader:1781:14)
+tests	JavaScript tests	2026-11-01T14:53:23.2559164Z #     at Object..js (node:internal/modules/cjs/loader:1913:10)
+tests	JavaScript tests	2026-11-01T14:53:23.2560216Z #     at Module.load (node:internal/modules/cjs/loader:1505:32)
+tests	JavaScript tests	2026-11-01T14:53:23.2561550Z #     at Function._load (node:internal/modules/cjs/loader:1309:12)
+tests	JavaScript tests	2026-11-01T14:53:23.2562655Z #     at wrapModuleLoad (node:internal/modules/cj
