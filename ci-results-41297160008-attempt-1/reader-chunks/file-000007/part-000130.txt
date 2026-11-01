@@ -1,0 +1,30 @@
+1390641Z AssertionError: 0 != 1
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1390776Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1390964Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1391635Z FAIL: test_resync_receives_snapshot (test_display_connection.DisplayConnectionTests.test_resync_receives_snapshot)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1392434Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1392812Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1393462Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_display_connection.py", line 42, in test_resync_receives_snapshot
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1394417Z     def test_resync_receives_snapshot(self):self.assertEqual([m['type'] for m in self.run_socket(['{"type":"resync"}']).sent],['state','state'])
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1395182Z                                             ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1395794Z AssertionError: Lists differ: [] != ['state', 'state']
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1396017Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1396179Z Second list contains 2 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1396474Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1396688Z 'state'
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1396793Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1396876Z - []
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1397072Z + ['state', 'state']
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1397196Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1397388Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1398091Z FAIL: test_session_revoked_during_idle (test_display_connection.DisplayConnectionTests.test_session_revoked_during_idle)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1398760Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1399254Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1399918Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_display_connection.py", line 53, in test_session_revoked_during_idle
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1400859Z     socket=self.run_socket([],mutate);self.assertTrue(any(code==1008 for code,_ in socket.closes));self.assertEqual(len(socket.sent),1)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1401520Z                                       ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1401913Z AssertionError: False is not true
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1402085Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1402270Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1402899Z FAIL: test_all_retrieval_failures (test_dndbeyond_lookup_diagnostics.LookupTests.test_all_retrieval_failures)
+tests	Standalone Python brow

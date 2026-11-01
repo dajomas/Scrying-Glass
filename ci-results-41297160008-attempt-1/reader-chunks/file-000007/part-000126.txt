@@ -1,0 +1,30 @@
+2Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1337709Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1338317Z FAIL: test_missing_stats_uses_next (test_bughunt_210aac8.StatsFallbackTests.test_missing_stats_uses_next)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1338913Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1339414Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1340077Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_210aac8.py", line 117, in test_missing_stats_uses_next
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1340782Z     self.assertTrue(result['found']);self.assertFalse(result['legacy'])
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1341172Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1341474Z AssertionError: False is not true
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1341644Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1341823Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1342730Z FAIL: test_admin_routes_keep_authorization_and_same_origin_guards (test_campaign_viewer_routes.ViewerRouteTests.test_admin_routes_keep_authorization_and_same_origin_guards)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1343562Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1343929Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1344720Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_routes.py", line 60, in test_admin_routes_keep_authorization_and_same_origin_guards
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1345557Z     self.assertEqual([row[2]['methods'] for row in self.routes], [['GET'], ['PUT']])
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1346045Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1346593Z AssertionError: Lists differ: [['GET'], ['PUT'], ['GET'], ['PUT']] != [['GET'], ['PUT']]
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1346911Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1347068Z First list contains 2 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1347359Z First extra element 2:
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1347579Z ['GET']
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1347679Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1347818Z - [['GET'], ['PUT'], ['GET'], ['PUT']]
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1348082Z + [['GET'], ['PUT']]
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1348208Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1348396Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1349364Z FAIL: test_client_app_includes_lifespan_but_no_grant_routes (test_campaign_viewer_routes.ViewerRouteTests.test_client_app_includes_lifespan_but_no_grant_routes)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1350163Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit c

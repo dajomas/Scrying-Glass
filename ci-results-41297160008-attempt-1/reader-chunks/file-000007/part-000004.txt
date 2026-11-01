@@ -1,0 +1,38 @@
+g-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Run actions/setup-python@v5	2026-11-01T10:21:55.5691983Z ##[endgroup]
+tests	Run actions/setup-python@v5	2026-11-01T10:21:55.7489895Z ##[group]Installed versions
+tests	Run actions/setup-python@v5	2026-11-01T10:21:55.7840914Z (node:2278) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Run actions/setup-python@v5	2026-11-01T10:21:55.7841926Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Run actions/setup-python@v5	2026-11-01T10:21:55.7843625Z Successfully set up CPython (3.14.9)
+tests	Run actions/setup-python@v5	2026-11-01T10:21:55.7844472Z ##[endgroup]
+tests	Run actions/setup-python@v5	2026-11-01T10:21:55.9163708Z [command]/opt/hostedtoolcache/Python/3.14.9/x64/bin/pip cache dir
+tests	Run actions/setup-python@v5	2026-11-01T10:21:56.5326564Z /home/runner/.cache/pip
+tests	Run actions/setup-python@v5	2026-11-01T10:21:56.7021819Z pip cache is not found
+tests	Run actions/setup-node@v4	﻿2026-11-01T10:21:56.7212092Z ##[group]Run actions/setup-node@v4
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.7212419Z with:
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.7212613Z   node-version: 22
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.7212853Z   always-auth: false
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.7213069Z   check-latest: false
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.7215685Z   token: ***
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.7215881Z env:
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.7216324Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.7216909Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.7217341Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.9/x64/lib/pkgconfig
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.7217769Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.7218161Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.7218529Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.7218900Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.9/x64/lib
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.7219516Z ##[endgroup]
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.8747691Z (node:2308) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.8748508Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.8758578Z Found in cache @ /opt/hostedtoolcache/node/22.23.4/x64
+tests	Run actions/setup-node@v4	2026-11-01T10:21:56.8759634Z ##[group]Environment details
+tests	Run actions/setup-node@v4	2026-11-01T10:21:57.3775893Z node: v22.23.4
+tests	Run actions/setup-node@v4	2026-11-01T10:21:57.3776786Z npm: 10.9.9
+tests	Run actions/setup-node@v4	2026-11-01T10:21:57.3778623Z yarn: 1.22.22
+tests	Run actions/setup-node@v4	2026-11-01T10:21:57.3780064Z ##[endgroup]
+tests	Install Python and browser test dependencies	﻿2026-11-01T10:21:57.3947719Z ##[group]Run python -m pip install --upgrade pip
+tests	Install Python and browser test dependencies	2026-11-01T10:21:57.3948182Z ^[[36;1mpython -m pip install --upgrade pip^[[0m
+tests	Install Python and browser test dependencies	2026-11-01T10:21:57.3948610Z ^[[36;1mpython -m pip install -r requirements.txt httpx playwright^[[0m
+tests	Install Python and browser test dependencies	2026-11-01T10:21:57.3949367Z ^[[36;1mpython -m playwright install --with-deps chromium^[[0m
+tests	Install Python and browser test dependenci

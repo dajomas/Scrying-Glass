@@ -1,0 +1,29 @@
+=======================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5156944Z FAIL: test_partial_stats (test_dndbeyond_lookup_diagnostics.LookupTests.test_partial_stats)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5157512Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5157880Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5158385Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5158890Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5159484Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5160084Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5160602Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5160833Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5161447Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 84, in test_partial_stats
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5162078Z     self.assertTrue((await self.call())["found"])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5162410Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5162729Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5162908Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5163088Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5163677Z FAIL: test_search_exception (test_dndbeyond_lookup_diagnostics.LookupTests.test_search_exception)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5164259Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5164625Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5165126Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5165635Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5165946Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5166531Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5167049Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5167275Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5167904Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 73, in test_search_exception
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5168583Z     self.assertIn("could not be completed", result["reason"])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5168970Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+t

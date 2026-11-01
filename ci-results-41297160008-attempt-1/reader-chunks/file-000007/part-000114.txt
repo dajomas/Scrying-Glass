@@ -1,0 +1,33 @@
+    result = ctx.run(self.task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:23:35.2814922Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:23:35.2815446Z     return fn(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-01T10:23:35.2815781Z   File "production-handler", line 28, in lookup
+tests	Standalone Python browser and audit checks	2026-11-01T10:23:35.2816141Z KeyError: "'__name__' not in globals"
+tests	Standalone Python browser and audit checks	2026-11-01T10:23:35.2827611Z Optional monster lookup failed for 'Goblin'
+tests	Standalone Python browser and audit checks	2026-11-01T10:23:35.2828251Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:23:35.2828971Z   File "production-handler", line 71, in dndbeyond_monster_stats
+tests	Standalone Python browser and audit checks	2026-11-01T10:23:35.2830319Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/threads.py", line 26, in to_thread
+tests	Standalone Python browser and audit checks	2026-11-01T10:23:35.2831317Z     return await loop.run_in_executor(None, func_call)
+tests	Standalone Python browser and audit checks	2026-11-01T10:23:35.2831918Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:23:35.2832915Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:23:35.2833847Z     result = ctx.run(self.task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:23:35.2834692Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:23:35.2835243Z     return fn(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-01T10:23:35.2835582Z   File "production-handler", line 28, in lookup
+tests	Standalone Python browser and audit checks	2026-11-01T10:23:35.2836169Z KeyError: "'__name__' not in globals"
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.1656176Z Display WebSocket failed: user=table
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.1656860Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.1657337Z   File "ws", line 145, in ws
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.1657876Z   File "ws", line 129, in send_state
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.1658427Z KeyError: "'__name__' not in globals"
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.1713316Z Display WebSocket failed: user=table
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.1714072Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.1714643Z   File "ws", line 145, in ws
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.1715385Z   File "ws", line 129, in send_state
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.1715796Z KeyError: "'__name__' not in globals"
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.1770535Z Display WebSocket failed: user=table
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.1771120Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.1771545Z   File "ws", line 145, in ws
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.1771868Z   File "ws", line 129, in send_state
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.1772215Z KeyError: "'__name__' not in globals"
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.1

@@ -1,0 +1,28 @@
+ng browser fixtures)	2026-11-01T10:23:21.5052676Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5053400Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_210aac8.py", line 111, in test_healthy_legacy_wins
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5054311Z     result=self.call(self.context(lambda href:'valid'));self.assertTrue(result['found']);self.assertTrue(result['legacy'])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5055093Z                                                         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5055469Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5055724Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5055982Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5056598Z FAIL: test_missing_stats_uses_next (test_bughunt_210aac8.StatsFallbackTests.test_missing_stats_uses_next)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5057359Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5057735Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5058536Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_210aac8.py", line 117, in test_missing_stats_uses_next
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5059475Z     self.assertTrue(result['found']);self.assertFalse(result['legacy'])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5059868Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5060170Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5060340Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5060527Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5061429Z FAIL: test_admin_routes_keep_authorization_and_same_origin_guards (test_campaign_viewer_routes.ViewerRouteTests.test_admin_routes_keep_authorization_and_same_origin_guards)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5062264Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5062633Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5063416Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_routes.py", line 60, in test_admin_routes_keep_authorization_and_same_origin_guards
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5064273Z     self.assertEqual([row[2]['methods'] for row in self.routes], [['GET'], ['PUT']])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5064767Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5065317Z AssertionError: Lists differ: [['GET'], ['PUT'], ['GET'], ['PUT']] != [['GET'], ['PUT']]
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5065636Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5065801Z First list contains 2 additional elements.
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5066100Z First extra element 2:
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5066319Z ['GET']
+tests	Py

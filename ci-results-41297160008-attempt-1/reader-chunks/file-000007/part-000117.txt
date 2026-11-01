@@ -1,0 +1,28 @@
+:
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2378595Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_admin_display.py", line 71, in dndbeyond_monster_stats
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2379961Z     return await asyncio.to_thread(lookup)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2380501Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2381467Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/threads.py", line 26, in to_thread
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2382434Z     return await loop.run_in_executor(None, func_call)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2383008Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2383576Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2384116Z     result = ctx.run(self.task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2384663Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2385172Z     return fn(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2385747Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_admin_display.py", line 28, in lookup
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2386400Z     from .scrying_glass_fivetools import lookup as fivetools_lookup
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2386923Z ImportError: attempted relative import with no known parent package
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2415078Z Optional monster lookup failed for 'Crawling Claw'
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2415744Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2416509Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_admin_display.py", line 71, in dndbeyond_monster_stats
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2417145Z     return await asyncio.to_thread(lookup)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2417460Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2418007Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/threads.py", line 26, in to_thread
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2418562Z     return await loop.run_in_executor(None, func_call)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2418907Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2420188Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2420726Z     result = ctx.run(self.task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2421257Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2421777Z     return fn(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2422347Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_admin_display.py", line 28, in lookup
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2422986Z     from .scrying_gl

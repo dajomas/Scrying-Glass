@@ -1,0 +1,27 @@
+fixtures)	2026-11-01T10:23:21.5118026Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5118390Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5119300Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_display_connection.py", line 53, in test_session_revoked_during_idle
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5120285Z     socket=self.run_socket([],mutate);self.assertTrue(any(code==1008 for code,_ in socket.closes));self.assertEqual(len(socket.sent),1)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5120957Z                                       ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5121347Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5121526Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5121714Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5122352Z FAIL: test_all_retrieval_failures (test_dndbeyond_lookup_diagnostics.LookupTests.test_all_retrieval_failures)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5122982Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5123354Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5123868Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5124381Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5124706Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5125301Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5125822Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5126053Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5126704Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 58, in test_all_retrieval_failures
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5127356Z     self.assertIn("legacy:", result["reason"])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5127670Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5128204Z AssertionError: 'legacy:' not found in 'Monster lookup unavailable; enter AC and HP manually.'
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5128565Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5128750Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5129529Z FAIL: test_cancellation (test_dndbeyond_lookup_diagnostics.LookupTests.test_cancellation)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5130099Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5130631Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5131143Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio

@@ -1,0 +1,28 @@
+ass_fivetools import lookup as fivetools_lookup
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2423660Z ImportError: attempted relative import with no known parent package
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2485975Z Optional monster lookup failed for 'Crawling Claw'
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2486655Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2487844Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_admin_display.py", line 71, in dndbeyond_monster_stats
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2488952Z     return await asyncio.to_thread(lookup)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2489686Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2490414Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/threads.py", line 26, in to_thread
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2490967Z     return await loop.run_in_executor(None, func_call)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2491315Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2491871Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2492380Z     result = ctx.run(self.task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2492924Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2493422Z     return fn(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2493970Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_admin_display.py", line 28, in lookup
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2494589Z     from .scrying_glass_fivetools import lookup as fivetools_lookup
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:19.2495119Z ImportError: attempted relative import with no known parent package
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1226208Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1227868Z ERROR: test_upgrade_v3_preserves_data_and_creates_backup (test_accounts.AccountTests.test_upgrade_v3_preserves_data_and_creates_backup)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1229887Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1230755Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1232481Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_accounts.py", line 198, in test_upgrade_v3_preserves_data_and_creates_backup
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1233971Z     self.storage = SQLiteStorage(self.path)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1234666Z                    ~~~~~~~~~~~~~^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1235912Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_storage.py", line 56, in __init__
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1237156Z     upgrade_setup_lair(self, backup=version != 0)
+tests	Standalone Python browser and audit checks	2026-11-01T10:24:26.1237805Z     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-

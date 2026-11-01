@@ -1,0 +1,29 @@
+/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5131663Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5131978Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5132683Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5133204Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5133434Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5134042Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 88, in test_cancellation
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5134686Z     with self.assertRaises(asyncio.CancelledError):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5135049Z          ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5135400Z AssertionError: CancelledError not raised
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5135606Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5135794Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5136482Z FAIL: test_candidate_failure_falls_back (test_dndbeyond_lookup_diagnostics.LookupTests.test_candidate_failure_falls_back)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5137147Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5137523Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5138031Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5138533Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5138843Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5139577Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5140102Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5140328Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5140995Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 49, in test_candidate_failure_falls_back
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5141646Z     self.assertTrue(result["found"])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5141927Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5142226Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5142389Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5142582Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5143093Z FAIL: test_disabled (test_dndbeyond_lookup_diagnostics.LookupTests.test_disabled)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:23:21.5143619Z ----------------------------------------------------------
