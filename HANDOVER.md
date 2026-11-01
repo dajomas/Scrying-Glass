@@ -9,6 +9,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 3. [Open validation and next steps](docs/handover/030-validation-and-next-steps.md)
 4. [Maintaining this handover](docs/handover/040-maintenance-rules.md)
 5. [Admin script source split](docs/handover/050-admin-script-split.md)
+6. [WebSocket regression fixture repair](docs/handover/060-websocket-regression-fixture.md)
 
 ## Required update convention
 

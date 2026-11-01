@@ -20,7 +20,7 @@ def execute(nodes,scope):
 client_tree=ast.parse((ROOT/'python/scrying_glass_api_client.py').read_text())
 client_class=next(n for n in client_tree.body if isinstance(n,ast.ClassDef))
 ws_node=next(n for n in client_class.body if isinstance(n,ast.AsyncFunctionDef) and n.name=='ws')
-ws_handler=execute([ws_node],{'__name__':'regression_ws','operation_lock':lambda context:context.operation_lock})['ws']
+ws_handler=execute([ws_node],{'__name__':'regression_ws','__package__':'python','operation_lock':lambda context:context.operation_lock})['ws']
 storage_tree=ast.parse((ROOT/'python/scrying_glass_feature_storage.py').read_text())
 FeatureStorage=execute([next(n for n in storage_tree.body if isinstance(n,ast.ClassDef))],{})['FeatureStorage']
 
@@ -41,13 +41,24 @@ class Socket:
             self.last_data=copy.deepcopy(self.context.features.displays.get(self));raise Disconnect()
 
 class WebSocketTests(unittest.IsolatedAsyncioTestCase):
-    async def run_socket(self,messages,authorized=True):
+    async def run_socket(self,messages,authorized=True,*,auth_role='client',
+                         origin='https://table.example',projection_error=None):
         context=types.SimpleNamespace(CLIENT_SESSION_COOKIE='client',SOCKETS=set(),json=json,
-            operation_lock=asyncio.Lock(),display_state=lambda:{'characters':[]},
-            auth_session=lambda token:dict(username='table',role='client') if authorized and token=='token' else None,
+            operation_lock=asyncio.Lock(),display_state=lambda:{'private':'server-only'},
+            auth_session=lambda token:dict(username='table',role=auth_role) if authorized and token=='token' else None,
             features=types.SimpleNamespace(store=types.SimpleNamespace(revision=lambda:5),displays={}))
         websocket=Socket(context,messages);logger=Mock()
-        with patch.dict('sys.modules',{'fastapi':types.SimpleNamespace(WebSocketDisconnect=Disconnect)}),patch('logging.getLogger',return_value=logger):
+        websocket.headers['origin']=origin
+        # Isolate the protocol from campaign storage without replacing the handler.
+        # Campaign grant/filter behavior belongs to the dedicated viewer tests.
+        viewer_service=types.SimpleNamespace(socket_state=Mock(
+            return_value={'characters':[]},side_effect=projection_error))
+        viewer_module=types.ModuleType('python.scrying_glass_campaign_viewers')
+        viewer_module.viewers=Mock(return_value=viewer_service)
+        websocket.viewer_service=viewer_service
+        modules={'fastapi':types.SimpleNamespace(WebSocketDisconnect=Disconnect),
+                 viewer_module.__name__:viewer_module}
+        with patch.dict('sys.modules',modules),patch('logging.getLogger',return_value=logger):
             await ws_handler(types.SimpleNamespace(context=context),websocket)
         self.assertEqual(context.SOCKETS,set());self.assertEqual(context.features.displays,{})
         return websocket,logger
@@ -81,6 +92,36 @@ class WebSocketTests(unittest.IsolatedAsyncioTestCase):
     async def test_unauthorized_connection_is_rejected(self):
         ws,_=await self.run_socket([],authorized=False)
         self.assertEqual(ws.sent,[]);self.assertEqual(ws.closed[0][0],1008)
+
+    async def test_initial_snapshot_uses_viewer_projection(self):
+        ws,logger=await self.run_socket([])
+        self.assertEqual(ws.sent,[{'type':'state','revision':5,'state':{'characters':[]}}])
+        ws.viewer_service.socket_state.assert_called_once_with(ws)
+        self.assertNotIn('server-only',json.dumps(ws.sent))
+        logger.exception.assert_not_called()
+    async def test_disallowed_role_is_rejected_before_projection(self):
+        ws,logger=await self.run_socket([],auth_role='unknown')
+        self.assertEqual(ws.sent,[]);self.assertEqual(ws.closed[0][0],1008)
+        ws.viewer_service.socket_state.assert_not_called()
+        logger.exception.assert_not_called()
+    async def test_cross_origin_is_rejected_before_projection(self):
+        ws,logger=await self.run_socket([],origin='https://other.example')
+        self.assertEqual(ws.sent,[]);self.assertEqual(ws.closed[0][0],1008)
+        ws.viewer_service.socket_state.assert_not_called()
+        logger.exception.assert_not_called()
+    async def test_authorized_admin_roles_receive_projection(self):
+        for role in ('admin','superadmin'):
+            with self.subTest(role=role):
+                ws,logger=await self.run_socket([],auth_role=role)
+                self.assertEqual(ws.sent,[{'type':'state','revision':5,'state':{'characters':[]}}])
+                ws.viewer_service.socket_state.assert_called_once_with(ws)
+                logger.exception.assert_not_called()
+    async def test_projection_failure_is_logged_and_cleaned_up(self):
+        ws,logger=await self.run_socket([],projection_error=RuntimeError('injected projection failure'))
+        self.assertEqual(ws.sent,[])
+        ws.viewer_service.socket_state.assert_called_once_with(ws)
+        logger.exception.assert_called_once()
+        self.assertTrue(ws.closed)
 
 def malformed_type_test(value):
     async def test(self):
