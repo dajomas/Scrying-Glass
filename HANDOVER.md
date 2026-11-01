@@ -17,6 +17,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 11. [Composed campaign router tests](docs/handover/110-composed-campaign-routers.md)
 12. [Pytest module imports and execution](docs/handover/120-pytest-module-imports.md)
 13. [Accounts migration fixture repair](docs/handover/130-accounts-migration-fixture.md)
+14. [Viewer ownership fixture repairs](docs/handover/140-viewer-ownership-fixtures.md)
 
 ## Required update convention
 

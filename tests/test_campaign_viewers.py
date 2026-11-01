@@ -11,6 +11,7 @@ from pathlib import Path
 from unittest.mock import patch
 from test_sqlite_storage import context, HTTPError
 from python.scrying_glass_campaign_viewers import viewers
+from python.scrying_glass_campaign_ownership import ownership
 from python.scrying_glass_database_transactions import operation_lock
 from python.scrying_glass_storage import SQLiteStorage
 
@@ -51,6 +52,7 @@ class CampaignViewerTests(unittest.TestCase):
             return value if actual and actual['role']==value['role'] else None
         self.c.auth_session=session
         self.c.features=types.SimpleNamespace(store=types.SimpleNamespace(revision=lambda:7),displays={})
+        self.owners=ownership(self.c);self.owners.initialize()
         self.acl=viewers(self.c);self.acl.initialize()
     def tearDown(self): self.c.STORAGE.close();self.tmp.cleanup()
     def grant(self,campaign,*names): return self.acl.replace(campaign,{'user_ids':[self.ids[name] for name in names]})
@@ -84,8 +86,21 @@ class CampaignViewerTests(unittest.TestCase):
         self.grant(self.a,'alice')
         with self.assertRaises(HTTPError):self.grant(self.a,'bob','dm')
         self.assertEqual([r['username'] for r in self.acl.grants(self.a)['users'] if r['granted']],['alice'])
-    def test_admin_and_superadmin_implicitly_see_all_campaigns(self):
-        for name in ('dm','root'):self.assertEqual({r['id'] for r in self.acl.choices(self.c.SESSIONS[name])},{self.a,self.b})
+    def test_admin_sees_only_owned_campaigns(self):
+        self.owners.reassign(self.b,{'owner_user_id':None})
+        self.assertEqual({r['id'] for r in self.acl.choices(self.c.SESSIONS['dm'])},{self.a})
+        other=str(self.c.STORAGE.connection.execute(
+            'INSERT INTO users(username,role,password_hash) VALUES (?,?,?)',('other-dm','admin','hash')).lastrowid)
+        self.owners.reassign(self.b,{'owner_user_id':other})
+        self.assertEqual({r['id'] for r in self.acl.choices(self.c.SESSIONS['dm'])},{self.a})
+        self.owners.reassign(self.a,{'owner_user_id':None})
+        self.assertEqual(self.acl.choices(self.c.SESSIONS['dm']),[])
+        self.owners.reassign(self.b,{'owner_user_id':self.ids['dm']})
+        self.assertEqual({r['id'] for r in self.acl.choices(self.c.SESSIONS['dm'])},{self.b})
+    def test_superadmin_implicitly_sees_all_campaigns(self):
+        self.owners.reassign(self.a,{'owner_user_id':None})
+        self.owners.reassign(self.b,{'owner_user_id':None})
+        self.assertEqual({r['id'] for r in self.acl.choices(self.c.SESSIONS['root'])},{self.a,self.b})
     def test_grants_persist_across_restart(self):
         self.grant(self.a,'alice');path=self.c.STORAGE.path;self.c.STORAGE.close();self.c.STORAGE=SQLiteStorage(path);self.acl.initialize()
         self.assertEqual([r['id'] for r in self.acl.choices(self.c.SESSIONS['alice'])],[self.a])
