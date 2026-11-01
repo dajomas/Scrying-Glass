@@ -12,6 +12,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 6. [WebSocket regression fixture repair](docs/handover/060-websocket-regression-fixture.md)
 7. [Display-connection fixture repair](docs/handover/070-display-connection-fixture.md)
 8. [Monster lookup diagnostics repair](docs/handover/080-monster-lookup-diagnostics.md)
+9. [Stats fallback fixture repair](docs/handover/090-stats-fallback-fixture.md)
 
 ## Required update convention
 
