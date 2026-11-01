@@ -14,6 +14,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 8. [Monster lookup diagnostics repair](docs/handover/080-monster-lookup-diagnostics.md)
 9. [Stats fallback fixture repair](docs/handover/090-stats-fallback-fixture.md)
 10. [TODO tracking initialization](docs/handover/100-todo-tracking.md)
+11. [Composed campaign router tests](docs/handover/110-composed-campaign-routers.md)
 
 ## Required update convention
 
