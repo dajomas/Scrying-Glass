@@ -1,0 +1,39 @@
+7686Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4318061Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4318863Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_routes.py", line 55, in test_registration_works_without_add_event_handler_or_on_event
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4319605Z     self.assertEqual(len(self.routers), 1)
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4319912Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4320186Z AssertionError: 2 != 1
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4320328Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4320546Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4320886Z Ran 887 tests in 56.687s
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4321032Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4321149Z FAILED (failures=3, errors=7)
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.5269415Z ##[error]Process completed with exit code 1.
+tests	JavaScript tests	﻿2026-11-01T11:28:48.5320229Z ##[group]Run status=0
+tests	JavaScript tests	2026-11-01T11:28:48.5320519Z ^[[36;1mstatus=0^[[0m
+tests	JavaScript tests	2026-11-01T11:28:48.5320755Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	JavaScript tests	2026-11-01T11:28:48.5321046Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	JavaScript tests	2026-11-01T11:28:48.5321317Z ^[[36;1m  node --test "$test" || status=1^[[0m
+tests	JavaScript tests	2026-11-01T11:28:48.5321593Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	JavaScript tests	2026-11-01T11:28:48.5321994Z ^[[36;1mdone < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)^[[0m
+tests	JavaScript tests	2026-11-01T11:28:48.5322423Z ^[[36;1mexit "$status"^[[0m
+tests	JavaScript tests	2026-11-01T11:28:48.5345854Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	JavaScript tests	2026-11-01T11:28:48.5346211Z env:
+tests	JavaScript tests	2026-11-01T11:28:48.5346664Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	JavaScript tests	2026-11-01T11:28:48.5347434Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	JavaScript tests	2026-11-01T11:28:48.5347864Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.9/x64/lib/pkgconfig
+tests	JavaScript tests	2026-11-01T11:28:48.5348301Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	JavaScript tests	2026-11-01T11:28:48.5348723Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	JavaScript tests	2026-11-01T11:28:48.5349092Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	JavaScript tests	2026-11-01T11:28:48.5349469Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.9/x64/lib
+tests	JavaScript tests	2026-11-01T11:28:48.5349790Z ##[endgroup]
+tests	JavaScript tests	2026-11-01T11:28:48.5414690Z ##[group]tests/admin-message-timeout.test.cjs
+tests	JavaScript tests	2026-11-01T11:28:48.5988480Z TAP version 13
+tests	JavaScript tests	2026-11-01T11:28:48.6419605Z # Subtest: clears at five seconds, not earlier
+tests	JavaScript tests	2026-11-01T11:28:48.6426087Z ok 1 - clears at five seconds, not earlier
+tests	JavaScript tests	2026-11-01T11:28:48.6426702Z   ---
+tests	JavaScript tests	2026-11-01T11:28:48.6436468Z   duration_ms: 2.229019
+tests	JavaScript tests	2026-11-01T11:28:48.6436963Z   type: 'test'
+tests	JavaScript tests	2026-11-01T11:28:48.6437326Z   ...
+tests	JavaScript tests	2026-11-01T11:28:48.6437941Z # Subtest: replacement message gets it

@@ -1,0 +1,29 @@
+:28:48.4216347Z     return runner.run(main)
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4216709Z            ~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4217440Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4218232Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4218706Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4219607Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4220442Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4220797Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4221725Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_lifespan_integration.py", line 53, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4222743Z     async with app.router.lifespan_context(app):
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4223262Z                ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4224126Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/contextlib.py", line 214, in __aenter__
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4224945Z     return await anext(self.gen)
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4225598Z            ^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4226573Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/fastapi/routing.py", line 249, in merged_lifespan
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4227584Z     async with nested_context(app) as maybe_nested_state:
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4228107Z                ~~~~~~~~~~~~~~^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4228892Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/contextlib.py", line 214, in __aenter__
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4229660Z     return await anext(self.gen)
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4230052Z            ^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4231239Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_campaign_ownership_routes.py", line 11, in lifespan
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4232343Z     async with operation_lock(context): ownership(context).initialize()
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4233046Z                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4234282Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_campaign_ownership.py", line 26, in initialize
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4235196Z     storage = self.context.STORAGE
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4235832Z               ^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4236525Z AttributeError: 'types.SimpleNamespace' object has no attribute 'STORAGE'
+tests	Python test suite (including browser fixtures)	2026-11-01T11:28:48.4237004Z 
+tests	Python test suite (including

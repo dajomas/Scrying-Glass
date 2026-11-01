@@ -1,0 +1,29 @@
+nalError: duplicate column name: has_lair
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6744581Z 
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6744890Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6746440Z ERROR: test_admin_can_save_multiple_client_viewers (test_campaign_viewer_browser.ViewerBrowserTests.test_admin_can_save_multiple_client_viewers)
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6747710Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6748314Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6749541Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_browser.py", line 72, in test_admin_can_save_multiple_client_viewers
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6751019Z     self.page.wait_for_function("document.querySelectorAll('#campaignViewerUsers input').length===2")
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6751976Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6753255Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 21235, in wait_for_function
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6754241Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6754529Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6754887Z         self._impl_obj.wait_for_function(
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6755514Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6755911Z     ...<4 lines>...
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6756203Z         )
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6756473Z         ^
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6756745Z     )
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6756998Z     ^
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6757907Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6758836Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6759194Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6760212Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_page.py", line 1158, in wait_for_function
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6761490Z     return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6762242Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6763376Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 945, in wait_for_function
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6764521Z     await self._channel.send("waitForFunction", self._timeout, params)
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:53.6765848Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Standalone Python browser and audit checks	2

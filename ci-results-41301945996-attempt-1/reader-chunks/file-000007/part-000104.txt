@@ -1,0 +1,27 @@
+cks	2026-11-01T11:29:53.9340646Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:54.0551325Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:54.0730186Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:54.0730910Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:55.6137724Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:55.6140274Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/browser_smoke_272cc73.py", line 79, in <module>
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:55.6141048Z     assert 'Default' in client.locator('#clientCampaign').inner_text()
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:55.6141560Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:55.6141888Z AssertionError
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:55.6976308Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-01T11:29:55.6981772Z ##[error]Process completed with exit code 1.
+tests	Post Run actions/checkout@v4	﻿2026-11-01T11:29:55.7087987Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-01T11:29:55.8000872Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-01T11:29:55.8050735Z git version 2.56.0
+tests	Post Run actions/checkout@v4	2026-11-01T11:29:55.8097769Z Temporarily overriding HOME='/home/runner/work/_temp/db29c313-dedf-4e99-996a-d440082eb35c' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-01T11:29:55.8099381Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-01T11:29:55.8103985Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-01T11:29:55.8152361Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-01T11:29:55.8201300Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-01T11:29:55.8517149Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-01T11:29:55.8560181Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-01T11:29:55.8599644Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-01T11:29:55.8621667Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Post Run actions/checkout@v4	2026-11-01T11:29:55.8893323Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	Post Run actions/checkout@v4	2026-11-01T11:29:55.8951080Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+tests	Complete job	﻿2026-11-01T11:29:55.9433728Z Cleaning up orphan processes
+tests	Complete job	2026-11-01T11:29:55.9912415Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5.
