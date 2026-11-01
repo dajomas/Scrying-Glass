@@ -16,6 +16,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 10. [TODO tracking initialization](docs/handover/100-todo-tracking.md)
 11. [Composed campaign router tests](docs/handover/110-composed-campaign-routers.md)
 12. [Pytest module imports and execution](docs/handover/120-pytest-module-imports.md)
+13. [Accounts migration fixture repair](docs/handover/130-accounts-migration-fixture.md)
 
 ## Required update convention
 

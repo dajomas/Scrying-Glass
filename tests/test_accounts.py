@@ -186,20 +186,41 @@ class AccountTests(unittest.TestCase):
         self.assertEqual(output.getvalue(), "")
 
     def test_upgrade_v3_preserves_data_and_creates_backup(self):
-        self.storage.close()
-        with closing(sqlite3.connect(self.path)) as db, db:
-            db.execute("DROP TABLE users")
-            db.execute("DROP TABLE account_migration")
-            for table in ('characters_effects','monsters_effects','snapshot_characters_effects','snapshot_characters_attributes','snapshot_characters','encounter_snapshots','feature_state'):
-                db.execute('DROP TABLE '+table)
-            db.execute('DROP TRIGGER IF EXISTS cleanup_snapshot')
-            db.execute("PRAGMA user_version=3")
         from python.scrying_glass_storage import SQLiteStorage
+        self.storage.close()
+        self.path.unlink()
+        # Build the pre-account schema, not a partially downgraded current DB.
+        with closing(sqlite3.connect(self.path)) as db, db:
+            db.execute("PRAGMA foreign_keys=ON")
+            SQLiteStorage._create_schema(types.SimpleNamespace(connection=db))
+            db.execute("INSERT INTO campaigns(id,name,description,created) VALUES (41,'Legacy campaign','Preserve me','2020-01-01')")
+            db.execute("UPDATE application_state SET active_campaign_id=41 WHERE id=1")
+            db.execute("PRAGMA user_version=3")
+            tables = {r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+            self.assertTrue({'users', 'account_migration', 'feature_state', 'lairs'}.isdisjoint(tables))
+            self.assertNotIn('has_lair', {r[1] for r in db.execute("PRAGMA table_info(encounters)")})
         self.storage = SQLiteStorage(self.path)
         self.context.STORAGE = self.storage
-        self.assertEqual(self.auth.db.execute("PRAGMA user_version").fetchone()[0], 6)
+        db = self.auth.db
+        self.assertEqual(db.execute("PRAGMA user_version").fetchone()[0], SQLiteStorage.SCHEMA_VERSION)
         self.assertTrue(self.storage.migration_backup.is_file())
-        self.assertEqual(self.auth.db.execute("SELECT COUNT(*) FROM application_state").fetchone()[0], 1)
-        self.assertIsNone(self.auth.db.execute("SELECT 1 FROM account_migration").fetchone())
+        self.assertEqual(db.execute("SELECT COUNT(*) FROM application_state").fetchone()[0], 1)
+        self.assertEqual(db.execute("SELECT active_campaign_id FROM application_state WHERE id=1").fetchone()[0], 41)
+        expected = (41, 'Legacy campaign', 'Preserve me', '2020-01-01')
+        self.assertEqual(tuple(db.execute("SELECT id,name,description,created FROM campaigns WHERE id=41").fetchone()), expected)
+        self.assertEqual(db.execute("SELECT COUNT(*) FROM users").fetchone()[0], 0)
+        self.assertIsNone(db.execute("SELECT 1 FROM account_migration").fetchone())
+        self.assertEqual(list(db.execute("PRAGMA foreign_key_check")), [])
+        with closing(sqlite3.connect(self.storage.migration_backup)) as backup:
+            self.assertEqual(backup.execute("PRAGMA user_version").fetchone()[0], 3)
+            self.assertEqual(tuple(backup.execute("SELECT id,name,description,created FROM campaigns WHERE id=41").fetchone()), expected)
+            self.assertEqual(backup.execute("SELECT active_campaign_id FROM application_state WHERE id=1").fetchone()[0], 41)
+            self.assertIsNone(backup.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='users'").fetchone())
+            self.assertNotIn('has_lair', {r[1] for r in backup.execute("PRAGMA table_info(encounters)")})
+        self.storage.close()
+        self.storage = SQLiteStorage(self.path)
+        self.context.STORAGE = self.storage
+        self.assertIsNone(self.storage.migration_backup)
+        self.assertEqual(tuple(self.auth.db.execute("SELECT id,name,description,created FROM campaigns WHERE id=41").fetchone()), expected)
 
 if __name__ == "__main__": unittest.main()
