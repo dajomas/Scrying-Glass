@@ -195,4 +195,4 @@ CURRENT_SHA="$(git rev-parse HEAD)"
 printf '\nCopy/paste the following message:\n\n'
 printf 'The new databaseId is %s and is against commit hash %s\n\n' "$RUN_ID" "$RUN_SHA"
 printf 'Current commit hash is %s\n\n' "$CURRENT_SHA"
-printf 'The testresults can be found in the repository folder ci-results-%s-attempt-%s\n' "${RUN_ID}" "${ATTEMPT}"
+printf 'The testresults can be found in the repository folder %s\n' "${OUT}"
