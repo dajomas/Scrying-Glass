@@ -1,0 +1,29 @@
+n browser and audit checks	2026-11-01T10:06:04.7605739Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/threads.py", line 26, in to_thread
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7606048Z     return await loop.run_in_executor(None, func_call)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7606243Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7606556Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7606862Z     result = ctx.run(self.task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7607162Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7607456Z     return fn(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7607647Z   File "production-handler", line 28, in lookup
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7607848Z KeyError: "'__name__' not in globals"
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7615958Z Optional monster lookup failed for 'Goblin'
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7616369Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7616759Z   File "production-handler", line 71, in dndbeyond_monster_stats
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7617363Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/threads.py", line 26, in to_thread
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7617718Z     return await loop.run_in_executor(None, func_call)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7617943Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7618298Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7618593Z     result = ctx.run(self.task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7618907Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7619567Z     return fn(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7619763Z   File "production-handler", line 28, in lookup
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7620002Z KeyError: "'__name__' not in globals"
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7626507Z Optional monster lookup failed for 'Goblin'
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7626802Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7627166Z   File "production-handler", line 71, in dndbeyond_monster_stats
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7627584Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/threads.py", line 26, in to_thread
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7627867Z     return await loop.run_in_executor(None, func_call)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7628051Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:04.7628352Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10

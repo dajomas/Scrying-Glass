@@ -1,0 +1,28 @@
+t self._main_frame.wait_for_function(**locals_to_params(locals()))
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3417392Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3417991Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 945, in wait_for_function
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3418578Z     await self._channel.send("waitForFunction", self._timeout, params)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3419278Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3419803Z     return await self._connection.wrap_api_call(
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3420079Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3420302Z     ...<3 lines>...
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3420461Z     )
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3420603Z     ^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3421092Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3421736Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3422292Z playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 30000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3422597Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3422752Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3423652Z ERROR: test_client_lifespan_initializes_without_admin_endpoints (test_campaign_viewer_lifespan_integration.FastAPILifespanIntegrationTests.test_client_lifespan_initializes_without_admin_endpoints)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3424597Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3424910Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3425616Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_lifespan_integration.py", line 55, in test_client_lifespan_initializes_without_admin_endpoints
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3426242Z     asyncio.run(run())
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3426420Z     ~~~~~~~~~~~^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3426806Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 205, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3427192Z     return runner.run(main)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3427390Z            ~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3427797Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3428221Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3428487Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3429103Z   File "/opt/hostedtoolcache/Py

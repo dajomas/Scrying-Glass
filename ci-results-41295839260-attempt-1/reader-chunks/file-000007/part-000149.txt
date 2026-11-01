@@ -1,0 +1,28 @@
+	Standalone Python browser and audit checks	2026-11-01T10:06:50.3608114Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3608417Z FAIL: test_empty_search (test_dndbeyond_lookup_diagnostics.LookupTests.test_empty_search)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3608723Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3609008Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3609282Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3609561Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3609738Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3610055Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3610336Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3610471Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3610795Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 42, in test_empty_search
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3611134Z     self.assertIn("No exact", result["reason"])
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3611406Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3611698Z AssertionError: 'No exact' not found in 'Monster lookup unavailable; enter AC and HP manually.'
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3611893Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3611990Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3612294Z FAIL: test_partial_stats (test_dndbeyond_lookup_diagnostics.LookupTests.test_partial_stats)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3612604Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3612811Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3613082Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3613361Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3613539Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3613852Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3614134Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3614265Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3614592Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 84, in test_partial_stats
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3614933Z     self.assertTrue((await self.call())["found"])
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3615120Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -1,0 +1,28 @@
+g browser fixtures)	2026-11-01T10:05:53.6363020Z                       ~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6363309Z TypeError: 'NoneType' object is not subscriptable
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6363484Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6363636Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6364354Z ERROR: test_admin_can_save_multiple_client_viewers (test_campaign_viewer_browser.ViewerBrowserTests.test_admin_can_save_multiple_client_viewers)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6365034Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6365340Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6365918Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_browser.py", line 72, in test_admin_can_save_multiple_client_viewers
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6366651Z     self.page.wait_for_function("document.querySelectorAll('#campaignViewerUsers input').length===2")
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6367135Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6367774Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 21235, in wait_for_function
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6368277Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6368439Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6368637Z         self._impl_obj.wait_for_function(
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6368867Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6369182Z     ...<4 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6369346Z         )
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6369490Z         ^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6369631Z     )
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6369770Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6370235Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6370679Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6370858Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6371355Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_page.py", line 1158, in wait_for_function
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6371947Z     return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6372459Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6373017Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 945, in wait_for_function
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6373580Z     await self._channel.send("waitFo

@@ -1,0 +1,29 @@
+ures)	2026-11-01T10:05:53.6437098Z                                                         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6437376Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6437504Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6437646Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6438122Z FAIL: test_missing_stats_uses_next (test_bughunt_210aac8.StatsFallbackTests.test_missing_stats_uses_next)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6438585Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6439094Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6439591Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_210aac8.py", line 117, in test_missing_stats_uses_next
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6440116Z     self.assertTrue(result['found']);self.assertFalse(result['legacy'])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6440508Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6440735Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6440867Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6441009Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6441432Z FAIL: test_ack_is_receive_only (test_bughunt_711881a.WebSocketTests.test_ack_is_receive_only)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6441865Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6442154Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6442552Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6442954Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6443202Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6443650Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6444053Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6444240Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6444686Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_711881a.py", line 64, in test_ack_is_receive_only
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6445223Z     self.assertEqual(len(ws.sent),1);self.assertEqual(ws.last_data['revision'],5)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6445543Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6445751Z AssertionError: 0 != 1
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6445859Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6446006Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6446489Z FAIL: test_inva

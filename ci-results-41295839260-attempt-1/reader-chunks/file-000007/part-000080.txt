@@ -1,0 +1,29 @@
+lid_json_is_ignored (test_bughunt_711881a.WebSocketTests.test_invalid_json_is_ignored)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6446942Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6447229Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6447617Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6448001Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6448250Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6448703Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6449206Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6449385Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6449841Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_711881a.py", line 74, in test_invalid_json_is_ignored
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6450372Z     self.assertEqual(len(ws.sent),2);logger.exception.assert_not_called()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6450688Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6450897Z AssertionError: 0 != 2
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6451003Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6451154Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6451586Z FAIL: test_malformed_type_bool (test_bughunt_711881a.WebSocketTests.test_malformed_type_bool)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6452024Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6452322Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6452705Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6453091Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6453333Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6453791Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6454187Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6454369Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6454856Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_711881a.py", line 88, in test
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6455320Z     self.assertEqual([m['type'] for m in ws.sent],['state','heartbeat'])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6455654Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6456089Z AssertionError: Lists differ: [] != ['state', 'heartbeat']
+tests	Python test 

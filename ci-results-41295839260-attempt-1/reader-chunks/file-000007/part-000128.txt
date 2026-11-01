@@ -1,0 +1,30 @@
+n/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3405402Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3405589Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3406125Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_711881a.py", line 71, in test_boolean_ack_revision_is_ignored
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3406665Z     self.assertIsNone(ws.last_data['revision'])
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3406938Z                       ~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3407236Z TypeError: 'NoneType' object is not subscriptable
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3407422Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3407588Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3408278Z ERROR: test_admin_can_save_multiple_client_viewers (test_campaign_viewer_browser.ViewerBrowserTests.test_admin_can_save_multiple_client_viewers)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3408914Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3410007Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3410629Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_browser.py", line 72, in test_admin_can_save_multiple_client_viewers
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3411419Z     self.page.wait_for_function("document.querySelectorAll('#campaignViewerUsers input').length===2")
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3411935Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3412623Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 21235, in wait_for_function
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3413149Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3413315Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3413523Z         self._impl_obj.wait_for_function(
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3413770Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3413982Z     ...<4 lines>...
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3414151Z         )
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3414301Z         ^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3414450Z     )
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3414598Z     ^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3415063Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3415652Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3415850Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3416373Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_page.py", line 1158, in wait_for_function
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3416993Z     return awai

@@ -1,0 +1,29 @@
+-----------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6553238Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6553499Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6553756Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6553922Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6554215Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6554483Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6554607Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6554907Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 79, in test_disabled
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6555217Z     self.assertIn("disabled", result["reason"])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6555390Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6555670Z AssertionError: 'disabled' not found in 'Monster lookup unavailable; enter AC and HP manually.'
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6555856Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6555953Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6556233Z FAIL: test_empty_search (test_dndbeyond_lookup_diagnostics.LookupTests.test_empty_search)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6556519Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6556717Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6556974Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6557235Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6557399Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6557700Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6557962Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6558086Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6558390Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 42, in test_empty_search
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6558705Z     self.assertIn("No exact", result["reason"])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6558876Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6559221Z AssertionError: 'No exact' not found in 'Monster lookup unavailable; enter AC and HP manually.'
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6559407Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6559501Z ====

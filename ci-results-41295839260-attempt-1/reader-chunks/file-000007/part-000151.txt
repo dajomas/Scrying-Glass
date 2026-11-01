@@ -1,0 +1,31 @@
+n browser and audit checks	2026-11-01T10:06:50.3622488Z     self.assertTrue(result["found"])
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3622647Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3622815Z AssertionError: False is not true
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3622910Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3623010Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3623320Z FAIL: test_unparsed_pages (test_dndbeyond_lookup_diagnostics.LookupTests.test_unparsed_pages)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3623633Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3623839Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3624110Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3624386Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3624560Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3624874Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3625162Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3625294Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3625623Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 67, in test_unparsed_pages
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3625994Z     self.assertIn("AC/HP could not be parsed", result["reason"])
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3626219Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3626557Z AssertionError: 'AC/HP could not be parsed' not found in 'Monster lookup unavailable; enter AC and HP manually.'
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3626775Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3626894Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3627174Z Ran 861 tests in 48.471s
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3627260Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3627333Z FAILED (failures=35, errors=10)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3627567Z Connections opened: 607; without explicit close: 3
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.4375949Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.4376250Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.5136952Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.5137367Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.5268478Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.5268832Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.6017416Z PASS: bounded setup suffixes, unknown state rejection

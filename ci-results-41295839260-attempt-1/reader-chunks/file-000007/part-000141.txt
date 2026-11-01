@@ -1,0 +1,31 @@
+s	Standalone Python browser and audit checks	2026-11-01T10:06:50.3552409Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3552614Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3552887Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3553159Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3553332Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3553648Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3553924Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3554056Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3554331Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_711881a.py", line 56, in test_ping
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3554663Z     self.assertEqual([m['type'] for m in ws.sent],['state','heartbeat'])
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3554901Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3555136Z AssertionError: Lists differ: [] != ['state', 'heartbeat']
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3555269Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3555364Z Second list contains 2 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3555526Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3555646Z 'state'
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3555706Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3555749Z - []
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3555862Z + ['state', 'heartbeat']
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3556035Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3556133Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3556383Z FAIL: test_resync (test_bughunt_711881a.WebSocketTests.test_resync)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3556643Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3556850Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3557120Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3557397Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3557571Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3557882Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3558162Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3558294Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3558576Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_711881a

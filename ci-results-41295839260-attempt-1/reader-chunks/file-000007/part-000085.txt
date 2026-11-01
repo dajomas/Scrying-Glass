@@ -1,0 +1,32 @@
+1881a.py", line 80, in test_oversized_message_closes_with_policy_code
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6491395Z     self.assertEqual(ws.closed[0][0],1008)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6491556Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6491715Z AssertionError: 1000 != 1008
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6491806Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6491912Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6492155Z FAIL: test_ping (test_bughunt_711881a.WebSocketTests.test_ping)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6492411Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6492621Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6492896Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6493165Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6493336Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6493637Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6493907Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6494032Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6494298Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_bughunt_711881a.py", line 56, in test_ping
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6494625Z     self.assertEqual([m['type'] for m in ws.sent],['state','heartbeat'])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6494857Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6495085Z AssertionError: Lists differ: [] != ['state', 'heartbeat']
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6495219Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6495307Z Second list contains 2 additional elements.
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6495467Z First extra element 0:
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6495584Z 'state'
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6495643Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6495687Z - []
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6495795Z + ['state', 'heartbeat']
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6495871Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6495967Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6496201Z FAIL: test_resync (test_bughunt_711881a.WebSocketTests.test_resync)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6496450Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6496823Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6497087

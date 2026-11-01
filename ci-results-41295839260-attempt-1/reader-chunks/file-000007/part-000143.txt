@@ -1,0 +1,27 @@
+Standalone Python browser and audit checks	2026-11-01T10:06:50.3565565Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_routes.py", line 77, in test_client_app_includes_lifespan_but_no_grant_routes
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3565939Z     self.assertEqual(len(self.routers), 1)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3566106Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3566260Z AssertionError: 2 != 1
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3566340Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3566436Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3566923Z FAIL: test_registration_works_without_add_event_handler_or_on_event (test_campaign_viewer_routes.ViewerRouteTests.test_registration_works_without_add_event_handler_or_on_event)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3567473Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3567678Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3568094Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_routes.py", line 55, in test_registration_works_without_add_event_handler_or_on_event
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3568479Z     self.assertEqual(len(self.routers), 1)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3568643Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3568791Z AssertionError: 2 != 1
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3568869Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3569038Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3569430Z FAIL: test_ack_does_not_trigger_heartbeat (test_display_connection.DisplayConnectionTests.test_ack_does_not_trigger_heartbeat)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3569807Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3570022Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3570381Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_display_connection.py", line 37, in test_ack_does_not_trigger_heartbeat
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3570877Z     def test_ack_does_not_trigger_heartbeat(self):self.assertEqual(len(self.run_socket(['{"type":"ack","revision":7}']).sent),1)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3571259Z                                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3571467Z AssertionError: 0 != 1
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3571548Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3571646Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3572156Z FAIL: test_idle_sends_heartbeat_without_disconnect (test_display_connection.DisplayConnectionTests.test_idle_sends_heartbeat_without_disconnect)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3572567Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50

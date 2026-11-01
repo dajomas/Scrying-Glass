@@ -1,0 +1,26 @@
+0.3463712Z     storage = self.context.STORAGE
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3463942Z               ^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3464312Z AttributeError: 'types.SimpleNamespace' object has no attribute 'STORAGE'
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3464573Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3464728Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3465475Z ERROR: test_admin_and_superadmin_implicitly_see_all_campaigns (test_campaign_viewers.CampaignViewerTests.test_admin_and_superadmin_implicitly_see_all_campaigns)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3466189Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3466513Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3467164Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewers.py", line 88, in test_admin_and_superadmin_implicitly_see_all_campaigns
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3467950Z     for name in ('dm','root'):self.assertEqual({r['id'] for r in self.acl.choices(self.c.SESSIONS[name])},{self.a,self.b})
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3468478Z                                                                  ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3469166Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_campaign_viewers.py", line 60, in choices
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3469931Z                rows=self.db.execute("""SELECT c.id,c.name FROM campaigns c JOIN campaign_owners o ON o.campaign_id=c.id
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3470492Z                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3470956Z     WHERE o.owner_user_id=? ORDER BY c.name COLLATE NOCASE,c.id""",(user['id'],))
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3471466Z     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3471847Z sqlite3.OperationalError: no such table: campaign_owners
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3472057Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3472216Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3472758Z ERROR: test_death_save_validation_2ba6607 (unittest.loader._FailedTest.test_death_save_validation_2ba6607)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3473283Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3473745Z ImportError: Failed to import test module: test_death_save_validation_2ba6607
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3474139Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3474626Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3475095Z     module = self._get_module_from_name(name)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3475610Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/load

@@ -1,0 +1,29 @@
+span_integration.py", line 40, in test_existing_lifespan_and_state_are_preserved
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3441353Z     asyncio.run(run())
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3441533Z     ~~~~~~~~~~~^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3441920Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 205, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3442411Z     return runner.run(main)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3442599Z            ~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3442989Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3443417Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3443680Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3444175Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3444610Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3444808Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3445289Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_campaign_viewer_lifespan_integration.py", line 35, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3445825Z     async with app.router.lifespan_context(app) as state:
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3446119Z                ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3446560Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/contextlib.py", line 214, in __aenter__
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3446969Z     return await anext(self.gen)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3447187Z            ^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3459127Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/fastapi/routing.py", line 249, in merged_lifespan
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3459697Z     async with nested_context(app) as maybe_nested_state:
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3459996Z                ~~~~~~~~~~~~~~^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3460432Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/contextlib.py", line 214, in __aenter__
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3460838Z     return await anext(self.gen)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3461057Z            ^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3461578Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_campaign_ownership_routes.py", line 11, in lifespan
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3462165Z     async with operation_lock(context): ownership(context).initialize()
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3462534Z                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3463087Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_campaign_ownership.py", line 26, in initialize
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:5

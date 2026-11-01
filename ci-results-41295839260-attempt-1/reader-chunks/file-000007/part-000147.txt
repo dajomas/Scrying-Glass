@@ -1,0 +1,30 @@
+--------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3594058Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3594334Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3594616Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3594797Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3595113Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3595394Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3595530Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3595876Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 58, in test_all_retrieval_failures
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3596225Z     self.assertIn("legacy:", result["reason"])
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3596400Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3596698Z AssertionError: 'legacy:' not found in 'Monster lookup unavailable; enter AC and HP manually.'
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3596893Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3596994Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3597294Z FAIL: test_cancellation (test_dndbeyond_lookup_diagnostics.LookupTests.test_cancellation)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3597602Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3597808Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3598081Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3598361Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3598535Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3598846Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3599196Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3599334Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3599656Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_dndbeyond_lookup_diagnostics.py", line 88, in test_cancellation
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3600007Z     with self.assertRaises(asyncio.CancelledError):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3600298Z          ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3600492Z AssertionError: CancelledError not raised
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3600601Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3600701Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T

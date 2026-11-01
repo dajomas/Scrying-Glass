@@ -1,0 +1,28 @@
+.3572776Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3573149Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_display_connection.py", line 40, in test_idle_sends_heartbeat_without_disconnect
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3573802Z     socket=self.run_socket([TimeoutError(),TimeoutError()]);self.assertEqual([m['type'] for m in socket.sent],['state','heartbeat','heartbeat']);self.assertFalse(any(code==1008 for code,_ in socket.closes))
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3574321Z                                                             ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3574624Z AssertionError: Lists differ: [] != ['state', 'heartbeat', 'heartbeat']
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3574781Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3574867Z Second list contains 3 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3575029Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3575151Z 'state'
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3575209Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3575257Z - []
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3575390Z + ['state', 'heartbeat', 'heartbeat']
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3575486Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3575586Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3575925Z FAIL: test_invalid_json_ignored (test_display_connection.DisplayConnectionTests.test_invalid_json_ignored)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3576267Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3576475Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3576816Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_display_connection.py", line 43, in test_invalid_json_ignored
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3577238Z     def test_invalid_json_ignored(self):self.assertEqual(len(self.run_socket(['not-json']).sent),1)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3577548Z                                         ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3577741Z AssertionError: 0 != 1
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3577817Z 
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3578004Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3578367Z FAIL: test_oversized_message_rejected (test_display_connection.DisplayConnectionTests.test_oversized_message_rejected)
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3578729Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3579035Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3579386Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_display_connection.py", line 44, in test_oversized_message_rejected
+tests	Standalone Python browser and audit checks	2026-11-01T10:06:50.3579867Z     def test_oversized_message_rejected(self):self.assertTrue(any(code==1008 for code,_ in sel

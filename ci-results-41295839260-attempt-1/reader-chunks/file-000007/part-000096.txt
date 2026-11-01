@@ -1,0 +1,41 @@
+stics.py", line 67, in test_unparsed_pages
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6573115Z     self.assertIn("AC/HP could not be parsed", result["reason"])
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6573327Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6573655Z AssertionError: 'AC/HP could not be parsed' not found in 'Monster lookup unavailable; enter AC and HP manually.'
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6573864Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6573977Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6574160Z Ran 861 tests in 49.961s
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6574240Z 
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.6574308Z FAILED (failures=35, errors=10)
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:53.7429890Z ##[error]Process completed with exit code 1.
+tests	JavaScript tests	﻿2026-11-01T10:05:53.7467696Z ##[group]Run status=0
+tests	JavaScript tests	2026-11-01T10:05:53.7467882Z ^[[36;1mstatus=0^[[0m
+tests	JavaScript tests	2026-11-01T10:05:53.7468009Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	JavaScript tests	2026-11-01T10:05:53.7468163Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	JavaScript tests	2026-11-01T10:05:53.7468311Z ^[[36;1m  node --test "$test" || status=1^[[0m
+tests	JavaScript tests	2026-11-01T10:05:53.7468463Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	JavaScript tests	2026-11-01T10:05:53.7468683Z ^[[36;1mdone < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)^[[0m
+tests	JavaScript tests	2026-11-01T10:05:53.7468901Z ^[[36;1mexit "$status"^[[0m
+tests	JavaScript tests	2026-11-01T10:05:53.7486763Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	JavaScript tests	2026-11-01T10:05:53.7486954Z env:
+tests	JavaScript tests	2026-11-01T10:05:53.7487192Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	JavaScript tests	2026-11-01T10:05:53.7487511Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	JavaScript tests	2026-11-01T10:05:53.7487732Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.9/x64/lib/pkgconfig
+tests	JavaScript tests	2026-11-01T10:05:53.7487949Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	JavaScript tests	2026-11-01T10:05:53.7488180Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	JavaScript tests	2026-11-01T10:05:53.7488373Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	JavaScript tests	2026-11-01T10:05:53.7488574Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.9/x64/lib
+tests	JavaScript tests	2026-11-01T10:05:53.7488751Z ##[endgroup]
+tests	JavaScript tests	2026-11-01T10:05:53.7541258Z ##[group]tests/admin-message-timeout.test.cjs
+tests	JavaScript tests	2026-11-01T10:05:53.7823420Z TAP version 13
+tests	JavaScript tests	2026-11-01T10:05:53.8101631Z # Subtest: clears at five seconds, not earlier
+tests	JavaScript tests	2026-11-01T10:05:53.8103951Z ok 1 - clears at five seconds, not earlier
+tests	JavaScript tests	2026-11-01T10:05:53.8104255Z   ---
+tests	JavaScript tests	2026-11-01T10:05:53.8104475Z   duration_ms: 1.366402
+tests	JavaScript tests	2026-11-01T10:05:53.8104698Z   type: 'test'
+tests	JavaScript tests	2026-11-01T10:05:53.8105031Z   ...
+tests	JavaScript tests	2026-11-01T10:05:53.8105426Z # Subtest: replacement message gets its own full timeout
+tests	JavaScript tests	2026-11-01T10:05:53.8106305Z ok 2 - replacement message gets its own full timeout
+tests	JavaScript tests	2026-11-01T10:05:53.8106578Z   ---
+tests	JavaScript tests	2026-11-01T10:05:53.8106754Z   duration_ms: 0.424671
+tests	

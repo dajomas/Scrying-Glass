@@ -1,0 +1,29 @@
+1-01T10:05:48.3996326Z FAIL
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4033309Z test_initial_snapshot (test_display_connection.DisplayConnectionTests.test_initial_snapshot) ... ws:129: ImportWarning: can't resolve package from __spec__ or __package__, falling back on __name__ and __path__
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4034314Z Display WebSocket failed: user=table
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4034578Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4034823Z   File "ws", line 145, in ws
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4035065Z   File "ws", line 129, in send_state
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4035245Z KeyError: "'__name__' not in globals"
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4038248Z ERROR
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4070767Z test_invalid_json_ignored (test_display_connection.DisplayConnectionTests.test_invalid_json_ignored) ... ws:129: ImportWarning: can't resolve package from __spec__ or __package__, falling back on __name__ and __path__
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4071732Z Display WebSocket failed: user=table
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4071993Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4072229Z   File "ws", line 145, in ws
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4072467Z   File "ws", line 129, in send_state
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4072637Z KeyError: "'__name__' not in globals"
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4075928Z FAIL
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4108269Z test_missing_session_rejected (test_display_connection.DisplayConnectionTests.test_missing_session_rejected) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4140104Z test_origin_rejected (test_display_connection.DisplayConnectionTests.test_origin_rejected) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4171306Z test_oversized_message_rejected (test_display_connection.DisplayConnectionTests.test_oversized_message_rejected) ... ws:129: ImportWarning: can't resolve package from __spec__ or __package__, falling back on __name__ and __path__
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4172287Z Display WebSocket failed: user=table
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4172565Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4172803Z   File "ws", line 145, in ws
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4173080Z   File "ws", line 129, in send_state
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4173286Z KeyError: "'__name__' not in globals"
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4176660Z FAIL
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4208293Z test_ping_receives_one_heartbeat (test_display_connection.DisplayConnectionTests.test_ping_receives_one_heartbeat) ... ws:129: ImportWarning: can't resolve package from __spec__ or __package__, falling back on __name__ and __path__
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4209511Z Display WebSocket failed: user=table
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4209782Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-01T10:05:48.4210187Z   File "ws", line 145, in ws
+tests	Pyt
