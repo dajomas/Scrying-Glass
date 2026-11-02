@@ -4,7 +4,7 @@
 
 ## SG-TODO-001 - Account-backed monster lookup and explicit candidate selection
 
-- Status: in progress; candidate-selection increment prepared, validation pending.
+- Status: in progress; candidate increment delivered in 2c00583fb0c37b940d8580e324816a39960995e8; locked-page correction validation pending.
 - Requested: 2026-11-01. Narrowed delivery agreed: 2026-11-02.
 - Priority, owner and deadline: not assigned.
 - Original account-backed scope: deferred/blocked on verified supported and permitted authentication and entitlement access.
@@ -36,11 +36,29 @@ a successful zero-result primary lookup (or when the primary provider is disable
 | 0 | 0 | Report no match; retain manual entry. |
 
 Provider errors stop lookup with a distinct outcome; they do not masquerade as
-zero matches. Incomplete candidate enumeration is an error, not an incomplete
-selection list. Cancel or Escape closes selection without applying a result or
-triggering fallback. Species edits invalidate the selection. Preserve existing
-AC/HP overwrite/edit-race guards and use the chosen candidate's image snapshot
-through creation, even when that image is absent. Uploaded images take precedence.
+zero matches. Confirmed access gates are excluded candidates, not provider errors.
+Incomplete candidate enumeration is an error, not an incomplete selection list.
+Cancel or Escape closes selection without applying a result or triggering fallback.
+Species edits invalidate the selection. Preserve existing AC/HP overwrite/edit-race
+guards and use the chosen candidate's image snapshot through creation, even when
+that image is absent. Uploaded images take precedence.
+
+### Locked-page correction - 2026-11-02
+
+The user reported green CI for the preceding delivery but a live Crawling Claw
+failure: two locked D&D Beyond entries prevented fallback. The actual server
+traceback/response has not been supplied, so its exact failure mechanism is not
+verified. The correction recognizes narrowly matched visible access-denial text,
+including bounded 401/403 bodies, and trusted HTTPS D&D Beyond marketplace/login
+redirects. It returns empty candidate HTML for those gates. All-excluded results
+can then reach 5e.tools; a remaining usable primary candidate still wins.
+Generic denials, server errors, unknown/external redirects and timeouts remain
+errors. No account authentication, paid-content retrieval or bypass is added.
+
+Nine synthetic offline regressions passed locally; full corrective CI and the
+actual Crawling Claw response remain pending. Unknown lock wording or different
+redirect destinations may require evidence-based follow-up rather than broadening
+all 403 responses into zero matches. See the linked handover for exact limits.
 
 ### Acceptance and required validation
 
@@ -53,11 +71,12 @@ All completion boxes remain unchecked until supporting verification is reviewed.
 - [ ] Verify popup selection, automatic handling, cancellation, species changes and manual entry.
 - [ ] Verify existing-value protection and edits made while selection is open.
 - [ ] Verify selected-image continuity, upload precedence, token expiry and no-image behavior through actual HTTP creation.
-- [ ] Review full CI, real FastAPI route registration/authentication and live authorized provider/browser checks separately from mocks.
+- [ ] Review corrective CI and real Crawling Claw fallback, keeping live and fixture evidence separate.
+- [ ] Review real FastAPI route registration/authentication and live authorized provider/browser checks separately from mocks.
 
-Automated offline and intercepted-HTTP Chromium fixtures are included. The final
-committed fixtures have not yet been executed in the application environment.
-Existing CI discovers test_*.py modules; do not skip CI for this delivery.
+Existing CI discovers test_*.py modules, including test_dndbeyond_locked_pages.py;
+do not skip CI for this delivery. The user's preceding green-CI report has not
+been independently tied to a workflow run artifact; do not invent a run ID.
 
 ### Remaining account decisions and dependencies
 

@@ -2,7 +2,8 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Prepared: 2026-11-02 against 1dba198c19803747afff78f5d32dd70e982e5467.
+Initial increment: 2c00583fb0c37b940d8580e324816a39960995e8, delivered 2026-11-02.
+Locked-page correction prepared: 2026-11-02 against that commit.
 
 ## Scope and implementation
 
@@ -13,10 +14,10 @@ No credentials, account storage, database migration or entitlement checks are ad
 GET /api/monsters/lookup requires the existing admin authentication and runs remote
 work in a thread without holding the serialized encounter lock. It returns a
 status and candidates. D&D Beyond comes first; 5e.tools runs only after successful
-zero usable matches or primary disablement. Any retrieval/parser exception other
-than a missing D&D page (404) stops enumeration with a sanitized error. Pages with
-no parseable AC/HP are excluded; this cannot distinguish restricted content from
-unsupported markup. Live provider compatibility is not claimed.
+zero usable matches or primary disablement. Missing D&D pages (404), positively
+identified access gates and pages with no parseable AC/HP are excluded. Other
+retrieval/parser exceptions stop enumeration with a sanitized error. A no-stats
+page alone cannot distinguish restricted content from unsupported markup.
 
 The deferred script intercepts only the existing UI stats-request path and leaves
 the original AC/HP application and edit guards intact. Multiple results use a
@@ -50,18 +51,43 @@ sends a selected snapshot or manual sentinel; manual/cancelled/failed lookup doe
 not initiate an independent creation-time image search. Upload an image manually
 when desired. No new third-party data is bundled.
 
-## Validation evidence and pending work
+## Locked-page correction and validation - 2026-11-02
 
-During draft preparation, ten offline tests passed in a restricted Python harness
-with substituted FastAPI imports and unrelated base class. That evidence does not
-validate the final revised files, real route composition, HTTP or live providers.
-The final offline and intercepted-HTTP Chromium test modules are prepared but not
-yet executed. Existing unittest discovery in Branch tests includes both modules.
-No CI run, successful workflow or full application test result is claimed.
+The user reported green CI for the preceding increment, then reported locked
+Crawling Claw pages preventing 5e.tools fallback. No actual response/traceback or
+workflow run artifact was provided, so neither the precise live failure mechanism
+nor an independently inspected successful run is claimed.
 
-Required follow-up: review normal push-triggered CI; verify actual authenticated
-lookup/creation, uploads, expired tokens, restart behavior and player images;
-perform authorized live-provider checks. Chromium fixtures use intercepted HTTP
-and are not full application end-to-end coverage. Keep the TODO open until the
-increment's acceptance evidence is reviewed; account authentication remains
-separately deferred. README and indexed TODO/handover describe this distinction.
+The shared dnd_monster_detail_html helper now returns empty HTML for narrowly
+matched visible access-denial/purchase messages and HTTPS D&D Beyond redirects
+to /marketplace, /login or /sign-in (including descendants). Script, style,
+header, footer and nav text is ignored by the message classifier. Recognized
+challenge wording vetoes text-based lock classification. A 401/403 is classified
+only with positive body evidence, using at most 128001 bytes and refusing oversized
+bodies; generic denial statuses do not count as locked. Other HTTP failures,
+timeouts and untrusted/unknown redirects continue to raise. The existing 8 MB
+successful-page limit remains. Raw redirect URLs are not included in new errors.
+
+Empty HTML is parsed as no stats, so selection excludes that candidate and reaches
+5e.tools only if none remain. Existing callers of the shared detail helper also
+receive empty HTML for recognized access gates; the separate creation-time legacy
+image scraper is unchanged. There is no authentication or attempt to retrieve
+locked stats. Unknown wording and other redirect destinations remain a limitation;
+this patch is not proof of live D&D Beyond compatibility.
+
+Nine offline regression tests passed on the prepared correction. They cover gate
+text, bounded denial bodies, trusted versus untrusted redirects, generic errors,
+unchanged usable stats and all-locked versus mixed-candidate provider ordering.
+The local tree used the hash-verified original provider source plus the correction,
+and reconstructed unchanged production selection-function definitions. Selection
+checks execute AST-extracted functions with mocked fallback/token/image-URL helpers,
+not the full FastAPI application. Synthetic responses are not captured live pages.
+Python source compilation passed. Full CI, browser/application integration and
+actual Crawling Claw validation are still pending for this corrective commit.
+
+Earlier draft-harness checks were likewise not application end-to-end coverage.
+Existing CI discovers the new test_*.py module; no workflow change or skip marker
+is needed. README was reviewed and remains accurate: provider errors still stop
+candidate lookup, while confirmed locked pages are excluded candidates. HANDOVER.md
+links are unchanged; the existing TODO index and section record the correction.
+Keep SG-TODO-001 open pending its acceptance evidence and deferred account work.
