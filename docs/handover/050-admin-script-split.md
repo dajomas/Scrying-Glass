@@ -2,34 +2,54 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Last updated: 2026-11-01.
+Last updated: 2026-11-02.
+Task: [SG-TODO-008](../todo/080-source-size-refactors.md).
 
-## Status: helpers staged; runtime unchanged
+## Current status: first fragment pair staged; runtime unchanged
 
-This preparatory commit adds `python/scrying_glass_admin_source.py` and `python/scrying_glass_admin_static.py`. The server does not import or activate these helpers yet. The original `static/admin.js`, HTML includes and static/media mounts remain unchanged. The source fragments named by the reader are not delivered in this preparatory commit; do not instantiate the new static adapter until all five fragments are present.
+The user approved a five-commit Admin split plan on 2026-11-02. This increment
+adds static/admin/010-source.js and 020-source.js (17,605 and 18,043 bytes),
+unchanged slices of the existing script, plus preparation regressions. They are
+not loaded by the application. static/admin.js, HTML, mounts and provider/UI
+behavior remain unchanged. Do not activate assembly until all eight parts,
+reader updates and affected fixture changes are delivered together.
 
-The implementation is being delivered through separately approved staged commits. Approval of this commit does not authorize subsequent source or activation writes.
+## Approved remaining delivery
 
-## Intended browser-delivery design
+- Commit 2: stage 030/040; runtime unchanged.
+- Commit 3: stage 050/060; runtime unchanged.
+- Commit 4: stage 070/080 and verify complete source identity; runtime unchanged.
+- Commit 5: activate assembly, enforce 20,000 bytes per source file, replace the
+  tracked monolith with a small failure marker, adapt source-reading tests and
+  update deployment documentation. Preserve the deferred /static/admin.js URL
+  and one classic-script execution scope. Both /media mounts stay ordinary
+  StaticFiles; the generated response may exceed the tracked-source size limit.
 
-Store the Admin JavaScript as five ordered files under `static/admin/`, each at most 25,000 UTF-8 bytes. The reader concatenates their bytes without separators. `AdminScriptStaticFiles` substitutes a generated temporary file only for the `admin.js` lookup, leaving other static lookups to the existing base class.
+Each commit requires its own exact-content approval and normal CI. Existing
+scrying_glass_admin_source.py and scrying_glass_admin_static.py are inactive
+preparatory helpers; their old five-part/25,000-byte setup is not the final plan.
+The eight new fragment sizes are 17605, 18043, 19585, 11336, 15145, 11921, 18831,
+1739 bytes. No separators or application-logic changes are introduced.
 
-The final activation must preserve the existing deferred `/static/admin.js` include and change both `/static` mounts to the adapter. Both `/media` mounts must retain ordinary `StaticFiles`. The tracked `static/admin.js` will then become an explanatory failure marker rather than the browser bundle.
+## Evidence and limitations
 
-The assembled runtime bundle remains 112,153 bytes and is generated outside the checkout. The 25,000-byte limit applies to repository source files, not the HTTP response or disposable runtime bundle. Source edits refresh the generated file on the next lookup.
+Preparation base: ffe1fdb94c56537507ca9b556609ea1becc0eb1b.
+The upload matches Git blob cdec53064a1a9855bf2d140830d33cf0b33e54f2.
+The original is 114,205 bytes, SHA-256
+b97c2a3fda01aa8d3fa4cfa619939909a3c797c678c60a19512aa50c0d05fef5.
+This replaces the older 112,153-byte preparation described here previously;
+those historical checks do not validate this new source revision.
 
-## Source identity and local checks
+Three preparation tests passed locally: UTF-8/size/hash checks, exact staged-prefix
+comparison against the original runtime source, and Node syntax parsing of both
+new fragments (Node v20.20.1). Recombining all eight locally calculated slices
+also matched the original bytes. These are source/preparation checks, not
+FastAPI/static-response, live-provider or authenticated browser verification.
+Full application tests and CI have not been run or reviewed for this increment.
+The normal workflow discovers the new test_admin_source_preparation.py module.
+Its monolith-prefix test must be replaced with assembled-source checks at activation.
 
-Preparation used base commit `a89b798089205bddfc9ed76dc0c7b906fee8525a`. The supplied Admin source matched Git blob `48804b5dc92c3173fb107a031cb9ce4eedc8e3dd`. Concatenated candidate fragments matched the original byte-for-byte, with SHA-256 `99dc60c74e5d007aa2fb4cdea1ce1b2603c1bf245b7382e399aac821a6927cec`.
-
-Candidate fragment sizes in order: 22,285; 23,607; 23,281; 23,940; 19,040 bytes. Each passed `node --check`. The helper modules compiled. Local reader checks covered missing, oversized and invalid-UTF-8 fragments. Adapter logic checks used a base-class substitute, including delegation, temporary-file creation, unchanged-content mtime and source refresh.
-
-A Chromium 134.0.6998.35 fixture verified equivalent hoisting, lexical-state sharing, microtask ordering, subsequent deferred-script execution and DOMContentLoaded ordering for original and assembled fixture scripts. The complete production candidate was fetched, hash-checked and parsed. This used a local Python HTTP fixture and the candidate reader, not the real FastAPI/Starlette application or encounter UI.
-
-## CI and remaining work
-
-The user explicitly requested normal CI for these pushes; do not add `[skip ci]` or dispatch an extra workflow. No CI result is claimed by this document. Actual FastAPI/Starlette checks, including GET/HEAD, conditional requests and range behavior, are deferred to CI.
-
-Remaining work requires separate approval: deliver all five source fragments; activate the static adapter and marker with relevant README updates; adapt existing fixtures that read `static/admin.js` directly; inspect CI results. Source-reading fixtures are expected to fail after activation until adapted. Do not describe this preparatory commit as completion of the browser integration.
-
-The SQLite storage and package-manifest refactors are outside this commit. TODO tracking has not been created by this change.
+README and HANDOVER.md were reviewed and remain unchanged: runtime/deployment and
+index links are unaffected by this preparatory increment. SG-TODO-006 stage 2 is
+paused, not implemented or completed. SQLite splitting follows Admin separately;
+manifest, documentation and CI-log files are not code-refactor targets.
