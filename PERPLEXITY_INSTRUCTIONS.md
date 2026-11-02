@@ -30,6 +30,22 @@ to GitHub delivery unless the user explicitly says "archive only" or
 If GitHub delivery is blocked, explain the blocker. Do not silently treat an
 archive as a successful GitHub commit or push.
 
+### Early delivery feasibility
+
+Early in an implementation task, inspect the available read, write and
+approval tool schemas. Assess whether the intended delivery can be
+prepared and submitted through those tools.
+
+Distinguish observed tool failures or documented limits from estimates
+and uncertainties. Do not claim a connector limit without evidence.
+
+If a delivery-size or execution constraint is identified, explain its
+specific effect and propose a practical delivery plan before preparing
+large temporary exports or repeatedly reconstructing drafts.
+
+Unavailable local testing is handled by section 5.1 and is not, by itself,
+a GitHub delivery blocker.
+
 ## 2. Required preparation and documentation updates
 
 Before preparing repository changes:
@@ -65,6 +81,41 @@ Before committing or pushing:
 - Do not make unrelated or cosmetic documentation changes merely to touch
   a file.
 - Never claim tests were executed or passed unless they actually were.
+
+### Continuation and reuse of verified reads
+
+Retrieve the live PERPLEXITY_INSTRUCTIONS.md before planning or preparing
+repository changes.
+
+For other repository files, reuse complete reads already obtained during
+the task when their identity is still verified against the working branch.
+Record relevant commit or file/blob SHAs where available.
+
+Re-read files that changed, were previously truncated, or become relevant
+to new work. Do not repeat the entire preparation sequence merely because
+the user says "continue" or because the task spans multiple messages.
+
+Do not assume temporary execution files or variables survive between
+messages. If reconstruction is necessary, use the live repository and
+complete contents already present in the conversation; do not repeatedly
+ask the user to upload assistant-generated drafts.
+
+### Proportional documentation
+
+Review documentation relevant to the change and update statements that
+the change makes inaccurate or incomplete.
+
+Do not require edits to every named document when its contents remain
+accurate. In the delivery summary, identify relevant documents reviewed
+but left unchanged when that distinction matters.
+
+For substantial features, document user-facing behavior, operational or
+migration consequences, task status and validation limitations. Prefer
+cross-links to duplicated explanations.
+
+For corrective commits, concise updates to the relevant existing
+handover/TODO sections are sufficient unless user-facing or technical
+documentation also changes.
 
 ## 3. Indexed handover structure and maintenance
 
@@ -333,7 +384,7 @@ Before an external write:
   files, and includes required documentation updates. Never submit a
   placeholder confirmation, an empty files list, or a confirmation whose
   description promises changes absent from its bound arguments.
-  
+
 If new information requires changing the approved write, request fresh
 approval before proceeding.
 
@@ -343,6 +394,43 @@ for an incomplete delivery.
 
 Do not interpret approval for one write as blanket approval for later writes,
 merges, workflow dispatches or changes to other branches.
+
+### Coherent staged delivery
+
+Prefer one coherent implementation commit when practical. Do not require
+an entire large feature to fit into one commit or approval payload.
+
+When staging is necessary, propose the stages before requesting approval.
+Describe each stage's functionality, dependencies, tests, documentation
+and remaining work. Obtain the user's agreement to the staging plan.
+
+Each stage must be internally coherent and include the tests and
+documentation appropriate to that stage. Clearly identify functionality
+that is not yet available. Do not describe a foundation-only stage as a
+complete usable feature.
+
+Each external write requires its own bound confirmation. Do not silently
+split a write that was approved as one atomic change.
+
+The requirement to include documentation and TODO updates in the same
+commit applies to each agreed stage; it does not prohibit staged delivery.
+
+### Preparation versus external writes
+
+An implementation request authorizes repository inspection, analysis,
+code/test preparation and preparation of necessary documentation.
+Do not repeatedly ask for permission to continue those activities.
+
+Ask a clarification question only when an unresolved decision materially
+affects correctness, scope, compatibility, security or delivery.
+
+External writes still require the mandatory bound confirmation with
+complete, resolved arguments. General instructions such as "proceed" or
+"push it" do not replace that confirmation.
+
+If an approval request was empty, incorrect or incomplete, do not execute
+it. Prepare a corrected complete payload and request fresh confirmation;
+do not treat the invalid approval as authorization for different contents.
 
 ## 9. Completion reporting
 

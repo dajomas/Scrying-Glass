@@ -20,3 +20,11 @@ Use branch `features/perplexity` unless a different target is explicitly request
 ## Scope of this convention
 
 These are the required maintenance instructions for this handover and future assistant edits. They are a documented convention, not an automated repository enforcement mechanism. No validation workflow or branch-protection rule is added by this documentation change.
+
+## Workflow clarifications - 2026-11-02
+
+The [root project instructions](../../PERPLEXITY_INSTRUCTIONS.md) now clarify early delivery feasibility, reuse of verified complete reads, proportional documentation, explicitly agreed coherent delivery stages, and preparation versus external-write approval. These clarifications preserve branch restrictions, exact-content confirmation and truthful reporting. The existing CI-first feedback workflow and nonempty-payload safeguard remain in place.
+
+Review relevant documentation rather than touching every document mechanically. Update indexes when their entries change, not merely because section content changes. Every agreed delivery stage still includes its appropriate documentation and TODO status updates.
+
+This is a workflow-documentation update only. README, HANDOVER.md and TODO.md were reviewed and remain unchanged; their application descriptions, index entries and task statuses are unaffected. No application code, tests or CI configuration are changed. No automated tests were executed for this update, and no workflow outcome is claimed. SG-TODO-002 implementation remains undelivered by this change.
