@@ -1,0 +1,31 @@
+19:21:29.2496569Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2496890Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2497369Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_monster_lookup_focus_browser.py", line 50, in setUp
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2497836Z     self.page.evaluate("""window.dialogOpens = 0;
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2498123Z     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2498446Z         const original = HTMLDialogElement.prototype.showModal;
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2498764Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2499079Z         HTMLDialogElement.prototype.showModal = function() {
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2499399Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2499700Z             window.dialogOpens++; return original.call(this);
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2500017Z             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2500242Z         };""")
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2500410Z         ^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2500897Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 16843, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2501476Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2501640Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2501952Z         self._impl_obj.evaluate(expression=expression, arg=mapping.to_impl(arg))
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2502340Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2502581Z     )
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2502745Z     ^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2503182Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2503631Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2503826Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2504281Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_page.py", line 476, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2504891Z     return await self._main_frame.evaluate(expression, arg)
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2505210Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2505723Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 346, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2506159Z     await self._channel.send(
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2506362Z     ...<6 lines>...
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2506539Z     )
+tests	Standalone Python browser and audit ch

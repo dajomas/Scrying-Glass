@@ -1,0 +1,32 @@
+9:09.3751859Z (node:2142) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Run actions/setup-node@v4	2026-11-02T19:19:09.3752586Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Run actions/setup-node@v4	2026-11-02T19:19:09.3753809Z ##[group]Environment details
+tests	Run actions/setup-node@v4	2026-11-02T19:19:09.9528065Z node: v22.23.4
+tests	Run actions/setup-node@v4	2026-11-02T19:19:09.9528439Z npm: 10.9.9
+tests	Run actions/setup-node@v4	2026-11-02T19:19:09.9528689Z yarn: 1.22.22
+tests	Run actions/setup-node@v4	2026-11-02T19:19:09.9529661Z ##[endgroup]
+tests	Install Python and browser test dependencies	﻿2026-11-02T19:19:09.9648291Z ##[group]Run python -m pip install --upgrade pip
+tests	Install Python and browser test dependencies	2026-11-02T19:19:09.9648671Z ^[[36;1mpython -m pip install --upgrade pip^[[0m
+tests	Install Python and browser test dependencies	2026-11-02T19:19:09.9649193Z ^[[36;1mpython -m pip install -r requirements.txt httpx playwright pytest^[[0m
+tests	Install Python and browser test dependencies	2026-11-02T19:19:09.9649579Z ^[[36;1mpython -m playwright install --with-deps chromium^[[0m
+tests	Install Python and browser test dependencies	2026-11-02T19:19:09.9674844Z shell: /usr/bin/bash -e {0}
+tests	Install Python and browser test dependencies	2026-11-02T19:19:09.9675066Z env:
+tests	Install Python and browser test dependencies	2026-11-02T19:19:09.9675438Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Install Python and browser test dependencies	2026-11-02T19:19:09.9675903Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	Install Python and browser test dependencies	2026-11-02T19:19:09.9676242Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.9/x64/lib/pkgconfig
+tests	Install Python and browser test dependencies	2026-11-02T19:19:09.9676574Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	Install Python and browser test dependencies	2026-11-02T19:19:09.9676877Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	Install Python and browser test dependencies	2026-11-02T19:19:09.9677177Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	Install Python and browser test dependencies	2026-11-02T19:19:09.9677524Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.9/x64/lib
+tests	Install Python and browser test dependencies	2026-11-02T19:19:09.9677784Z ##[endgroup]
+tests	Install Python and browser test dependencies	2026-11-02T19:19:10.8974720Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages (26.2.2)
+tests	Install Python and browser test dependencies	2026-11-02T19:19:11.5438983Z Collecting httpx
+tests	Install Python and browser test dependencies	2026-11-02T19:19:11.5450051Z   Using cached httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+tests	Install Python and browser test dependencies	2026-11-02T19:19:11.5772948Z Collecting playwright
+tests	Install Python and browser test dependencies	2026-11-02T19:19:11.5784307Z   Using cached playwright-1.64.1-py3-none-manylinux1_x86_64.whl.metadata (3.3 kB)
+tests	Install Python and browser test dependencies	2026-11-02T19:19:11.6039985Z Collecting pytest
+tests	Install Python and browser test dependencies	2026-11-02T19:19:11.6050001Z   Using cached pytest-9.2.0-py3-none-any.whl.metadata (7.9 kB)
+tests	Install Python and browser test dependencies	2026-11-02T19:19:11.6430347Z Collecting fastapi>=0.115 (from -r requirements.txt (line 3))
+tests	Install Python and browser test dependencies	2026-11-02T19:19:11.6439706Z   Using cached fastapi-0.162.0-py3-none-any.whl.metadata (26 kB)
+tests	Install Python and browser test dependencies	2026-11-02T19:19:11.6679611Z Collecting uvicorn>=0.30 (from uvicorn[standard]>=0.30->-r requirements.txt (line 4))
+tests	Install Python and browser test dependencies	2026-11-

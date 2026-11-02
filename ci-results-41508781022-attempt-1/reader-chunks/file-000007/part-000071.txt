@@ -1,0 +1,30 @@
+	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5818394Z         HTMLDialogElement.prototype.showModal = function() {
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5818868Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5819300Z             window.dialogOpens++; return original.call(this);
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5819916Z             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5820164Z         };""")
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5820335Z         ^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5820841Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 16843, in evaluate
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5821315Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5821483Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5821791Z         self._impl_obj.evaluate(expression=expression, arg=mapping.to_impl(arg))
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5822162Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5822411Z     )
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5822568Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5823033Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5823498Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5823698Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5824169Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_page.py", line 476, in evaluate
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5824990Z     return await self._main_frame.evaluate(expression, arg)
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5825416Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5826193Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 346, in evaluate
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5826842Z     await self._channel.send(
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5827149Z     ...<6 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5827397Z     )
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5828005Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5828725Z     return await self._connection.wrap_api_call(
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5829198Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5829545Z     ...<3 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5829808Z     )
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5830053Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-02T19:20:36.5830776Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/s

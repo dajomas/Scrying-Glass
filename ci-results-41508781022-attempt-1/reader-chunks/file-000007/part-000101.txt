@@ -1,0 +1,30 @@
+	2026-11-02T19:21:29.2473328Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2473545Z     ...<3 lines>...
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2473721Z     )
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2473874Z     ^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2474360Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2475117Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2475758Z playwright._impl._errors.Error: Page.evaluate: TypeError: Illegal invocation
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2476472Z     at HTMLDialogElement.showModal (eval at evaluate (:370:30), <anonymous>:4:55)
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2477077Z     at UtilityScript.evaluate (<anonymous>:377:18)
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2477556Z     at UtilityScript.<anonymous> (<anonymous>:1:44)
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2477825Z 
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2478076Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2479192Z ERROR: test_escape_restores_focus_without_relookup (test_monster_lookup_focus_browser.LookupFocusRegressionTests.test_escape_restores_focus_without_relookup)
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2479919Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2480260Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2480744Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/tests/test_monster_lookup_focus_browser.py", line 50, in setUp
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2481230Z     self.page.evaluate("""window.dialogOpens = 0;
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2481514Z     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2481825Z         const original = HTMLDialogElement.prototype.showModal;
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2482152Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2482466Z         HTMLDialogElement.prototype.showModal = function() {
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2482791Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2483100Z             window.dialogOpens++; return original.call(this);
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2483408Z             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2483789Z         };""")
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2483961Z         ^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2484619Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 16843, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2485093Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2485280Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-02T19:21:29.2485583Z         self._impl_obj.eva
