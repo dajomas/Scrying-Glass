@@ -4,6 +4,7 @@ server, full database schema, routing or transaction integration is exercised.
 """
 import ast,asyncio,copy,io,sqlite3,types,unittest
 from pathlib import Path
+from contextlib import closing
 from unittest.mock import patch
 from pydantic import ValidationError
 from python import scrying_glass_classes as models
@@ -19,10 +20,10 @@ lookup=ns['dndbeyond_monster_stats'];BAD=chr(0xD800)
 class ModelTests(unittest.TestCase):
     def test_unicode_sqlite_roundtrip(self):
         value=models.CharacterCreate(name='José 🐉',color='#123456')
-        with sqlite3.connect(':memory:') as db:
+        with closing(sqlite3.connect(':memory:')) as db, db:
             self.assertEqual(db.execute('SELECT ?',(value.name,)).fetchone()[0],value.name)
     def test_sqlite_cannot_encode_surrogate(self):
-        with sqlite3.connect(':memory:') as db:
+        with closing(sqlite3.connect(':memory:')) as db, db:
             with self.assertRaises(UnicodeEncodeError):db.execute('SELECT ?',(BAD,))
     def test_exclude_unset_preserved(self):
         self.assertEqual(models.CharacterUpdate(name='Hero').model_dump(exclude_unset=True),{'name':'Hero'})

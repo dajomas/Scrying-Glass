@@ -15,6 +15,12 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 9. [Stats fallback fixture repair](docs/handover/090-stats-fallback-fixture.md)
 10. [TODO tracking initialization](docs/handover/100-todo-tracking.md)
 11. [Composed campaign router tests](docs/handover/110-composed-campaign-routers.md)
+12. [Pytest module imports and execution](docs/handover/120-pytest-module-imports.md)
+13. [Accounts migration fixture repair](docs/handover/130-accounts-migration-fixture.md)
+14. [Viewer ownership fixture repairs](docs/handover/140-viewer-ownership-fixtures.md)
+15. [Renderer VM window fixture repair](docs/handover/150-renderer-vm-window.md)
+16. [Standalone audit and smoke fixtures](docs/handover/160-standalone-audit-and-smoke.md)
+17. [Manual reductions restart plan](docs/handover/170-manual-reductions-restart.md)
 
 ## Required update convention
 

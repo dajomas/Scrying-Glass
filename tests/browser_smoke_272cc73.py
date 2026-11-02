@@ -17,6 +17,10 @@ fixture.setUp()
 try:
     state=fixture.c.public_state()
     display=fixture.c.display_state()
+    # Mock the complete authorized single-campaign viewer transport payload.
+    assert display['campaign'] and display['campaign']['name']=='Default'
+    display.update(viewer_campaigns=[dict(display['campaign'])],
+                   viewer_selection_required=False,viewer_access_message='')
     summary=fixture.f.summary()
 finally:
     fixture.tearDown()

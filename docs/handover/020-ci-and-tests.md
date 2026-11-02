@@ -25,23 +25,26 @@ GitHub skip-workflow documentation: https://docs.github.com/en/actions/how-tos/m
 - Runner: `ubuntu-latest`.
 - Python: 3.14, with pip caching.
 - Node.js: 22.
-- Dependencies: `requirements.txt`, plus `httpx` and `playwright`.
+- Dependencies: `requirements.txt`, plus `httpx`, `playwright` and `pytest`.
 - Browser: Playwright Chromium, installed with operating-system dependencies.
 - Repository and tests directories are included in `PYTHONPATH`.
 - Workflow token permission: `contents: read`.
 - Job timeout: 30 minutes.
 
-This is one selected CI environment, not a compatibility matrix. Dependency specifications are not a lockfile.
+This is one selected CI environment, not a compatibility matrix. Dependency specifications are not a lockfile. Pytest is a CI test dependency; application runtime requirements are unchanged.
 
 ## Checks configured
 
 1. Compile Python source and tests, then import `scrying_glass_server`.
 2. Run `python -m unittest discover -s tests -p 'test_*.py' -v`, including unittest-based browser fixtures.
-3. Find every `.js` and `.cjs` file under `tests/` and run each with `node --test`.
-4. Execute standalone Python files under `tests/` whose names do not match `test_*.py`, excluding `__init__.py`. This includes browser smoke checks and audit scripts.
-5. Pass `patched` to `tests/audit_log_clear.py` to enable its persistence and rollback assertions.
+3. Run `python -m pytest -q tests/test_death_save_validation_2ba6607.py tests/test_slug_truncation_82860c4.py` without case filtering.
+4. Find every `.js` and `.cjs` file under `tests/` and run each with `node --test`.
+5. Execute standalone Python files under `tests/` whose names do not match `test_*.py`, excluding `__init__.py`. This includes browser smoke checks and audit scripts.
+6. Pass `patched` to `tests/audit_log_clear.py` to enable its persistence and rollback assertions.
 
-The Python, JavaScript and standalone test steps use `if: ${{ !cancelled() }}` so later test groups still run after earlier failures unless the job is cancelled. File loops accumulate failures and return a nonzero exit code after processing the remaining files.
+The unittest, pytest, JavaScript and standalone test steps use `if: ${{ !cancelled() }}` so later test groups still run after earlier failures unless the job is cancelled. File loops accumulate failures and return a nonzero exit code after processing the remaining files.
+
+Installing pytest fixes the two module imports but does not make unittest execute their pytest-style functions. The separate pytest step follows unittest and precedes JavaScript; see [diagnosis and validation limits](120-pytest-module-imports.md).
 
 ## Coverage limitations
 
