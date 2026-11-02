@@ -6,6 +6,7 @@ import json
 import sqlite3
 import unittest
 import zipfile
+from contextlib import closing
 from unittest.mock import patch
 import test_bughunt_round18 as fixture
 import test_bughunt_round10 as helpers
@@ -179,7 +180,7 @@ class AttackStatisticsTests(unittest.TestCase):
                 db.connection.execute(f'ALTER TABLE {table}_effects DROP COLUMN {col}')
         db.connection.execute('PRAGMA user_version=7');db.close();db=self.c.STORAGE.__class__(path)
         self.assertEqual(db.connection.execute('PRAGMA user_version').fetchone()[0],8)
-        with sqlite3.connect(db.migration_backup) as backup:self.assertEqual(backup.execute('PRAGMA user_version').fetchone()[0],7)
+        with closing(sqlite3.connect(db.migration_backup)) as backup:self.assertEqual(backup.execute('PRAGMA user_version').fetchone()[0],7)
         db.close()
 
 if __name__=='__main__':unittest.main()

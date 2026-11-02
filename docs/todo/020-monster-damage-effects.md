@@ -86,3 +86,21 @@ save/rider handling, linked healing, automatic recovery, special death/zero rule
 recurrence, prohibition and absorption remain open. See [UI handover](../handover/190-statistics-restoration-layout.md)
 and [attack handover](../handover/180-attack-statistics-delivery.md). Do not mark the
 whole SG-TODO-002 complete.
+
+
+### CI feedback — backup connection cleanup, 2026-11-02
+
+Run 41452426944 attempt 1 tested 14404e34828ed5e4fed6828245250aaa348b4396.
+The functional suites passed, but connection auditing detected one unclosed backup
+reader in test_v7_backup. The corrective archive uses contextlib.closing without
+weakening assertions or changing application behavior.
+
+- [x] Prepare explicit-close fix and isolated success/failure-path resource tests.
+- [x] Run both isolated checks against fixed source and confirm they detect the
+  original leak when run as negative controls.
+- [ ] Rerun the actual test_attack_statistics module and full connection audit in
+  the complete checkout; require zero connections without explicit close.
+- [ ] Verify the corrected implementation in a new CI run; the old run remains failed.
+
+See [CI correction handover](../handover/180-attack-statistics-delivery.md). This
+does not complete SG-TODO-002 or implement the separate SG-TODO-003 Next shortcut.
