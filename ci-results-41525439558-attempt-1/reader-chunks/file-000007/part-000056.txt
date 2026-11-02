@@ -1,0 +1,21 @@
+rowser fixtures)	2026-11-02T21:08:46.9452715Z test_viewer_module_fixture_restores_existing_module (test_display_connection.DisplayConnectionTests.test_viewer_module_fixture_restores_existing_module) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9467309Z test_accessible_stats_unchanged (test_dndbeyond_locked_pages.LockedPageTests.test_accessible_stats_unchanged) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9475054Z test_gate_redirects_and_untrusted_redirects (test_dndbeyond_locked_pages.LockedPageTests.test_gate_redirects_and_untrusted_redirects) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9480680Z test_generic_denials_and_server_errors_still_raise (test_dndbeyond_locked_pages.LockedPageTests.test_generic_denials_and_server_errors_still_raise) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9484793Z test_locked_success_and_confirmed_http_denials (test_dndbeyond_locked_pages.LockedPageTests.test_locked_success_and_confirmed_http_denials) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9486350Z test_oversized_denial_is_not_classified (test_dndbeyond_locked_pages.LockedPageTests.test_oversized_denial_is_not_classified) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9488175Z test_visible_gate_text (test_dndbeyond_locked_pages.LockedPageTests.test_visible_gate_text) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9514037Z test_all_locked_falls_back (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_all_locked_falls_back) ... /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 429: 'fixture'>
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9514853Z   _warnings.warn(self.warn_message, ResourceWarning)
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9515504Z /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 500: 'fixture'>
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9516029Z   _warnings.warn(self.warn_message, ResourceWarning)
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9526586Z ok
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9556247Z test_locked_then_usable_keeps_primary (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_locked_then_usable_keeps_primary) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9593955Z test_unclassified_failure_and_search_failure_do_not_fallback (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_unclassified_failure_and_search_failure_do_not_fallback) ... D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9595318Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9596174Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_monster_selection.py", line 84, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9597034Z     html = context.dnd_monster_detail_html(href)
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9597816Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_dndbeyond.py", line 128, in dnd_monster_detail_html
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9598508Z     response = urlopen(request, timeout=15)
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9599269Z   File "/opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-02T21:08:46.9599889Z     return self._mock_c
