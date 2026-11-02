@@ -4,10 +4,11 @@
 
 ## SG-TODO-003 - Add Next to the Battle Actions modal
 
-- Status: in progress; implementation and regression tests prepared, CI/live validation pending.
+- Status: in progress; implementation delivered in f9fa3c76b6f7c078b3d0a5c63679eea2892dff9a; script-order correction prepared, corrective CI/live validation pending.
 - Requested: 2026-11-02. Implementation requested: 2026-11-02.
 - Priority, owner and deadline: not assigned.
-- Preparation base: c858a92709c456c8a1c62e8a73e60614e469cfb6 on features/perplexity.
+- Initial preparation base: c858a92709c456c8a1c62e8a73e60614e469cfb6 on features/perplexity.
+- Correction base/evidence snapshot: b2b2023417489d73796cff1e99381d8cc609bd18.
 
 ### Requested behavior and delivered design
 
@@ -17,12 +18,12 @@ and statistics-reduction drafts without submitting them. Previously applied chan
 remain committed and are not replayed or undone. Open the normal fresh actor screen
 with current target/default/token context; do not copy old rows or selections.
 
-The prepared controller reuses closeBattleActions, the existing /api/battle/next
-endpoint, load(true) and openBattleActions (including its lair delegation). Both
-Next buttons share a same-browser operation guard and the normal server turn rules.
-A fresh preflight verifies encounter/actor context. After POST, refresh and a fresh
-state read must agree with scope, returned actor, round and statistics token before
-opening anything. No separate next-participant algorithm or backend change is added.
+The controller reuses closeBattleActions, the existing /api/battle/next endpoint,
+load(true) and openBattleActions (including its lair delegation). Both Next buttons
+share a same-browser operation guard and normal server turn rules. A fresh preflight
+verifies encounter/actor context. After POST, refresh and a fresh state read must
+agree with scope, returned actor, round and statistics token before reopening.
+No separate next-participant algorithm or backend change is added.
 
 Pending rows are not Apply or Apply-and-Next. Close retains its existing semantics.
 Start-of-turn application and action/reaction/reduction submission block Next while
@@ -32,7 +33,7 @@ button. Action request tracking composes with the existing global request helper
 
 ### Acceptance criteria (validation pending; not completed)
 
-- [ ] Clearly labelled Next appears inside Battle Actions.
+- [ ] Clearly labelled Next appears inside Battle Actions and is bound on the assembled page.
 - [ ] All three old row types, actor/targets/amounts/critical/source/stat selections and applied markers clear through normal Close; the next screen uses fresh defaults/token.
 - [ ] Pending rows are discarded; committed damage/healing/reactions/reductions are neither replayed nor undone.
 - [ ] Advance occurs exactly once through normal progression, preserving rounds, eligibility and start/end-turn processing.
@@ -41,31 +42,40 @@ button. Action request tracking composes with the existing global request helper
 - [ ] Failed or uncertain advance never retries automatically; reconcile state, report the outcome and leave the shortcut screen closed on error.
 - [ ] Scope changes, stale actors, intervening turns, no active participant and lair turns do not reopen old HP controls or invent an actor.
 - [ ] Close, Apply, main Next, reactions and statistics workflows retain their existing regression coverage.
-- [ ] Review normal CI and perform authenticated application/browser checks, including player display updates.
+- [ ] Review corrective CI and perform authenticated application/browser checks, including player display updates.
 
-### Prepared tests and actual validation
+### CI diagnosis and correction - 2026-11-02
 
-Twelve Chromium fixture tests use extracted production action helpers, the real
-modal template and the new controller with mocked progression/transport. They cover
-row discard/fresh state, duplicate clicks, Apply/start-of-turn guards, blocked
-submissions, returned round/lair routing, no next actor, response loss, refresh
-failure, scope change, stale actor and standalone main Next. Round/eligibility/effect
-engine behavior remains covered by existing backend regressions, not a mocked new
-turn algorithm. Full configured CI must confirm compatibility with those suites.
+Inspected run 41522989190, attempt 1, against f9fa3c76b6f7c078b3d0a5c63679eea2892dff9a.
+Evidence: ci-results-41522989190-attempt-1 at b2b2023417489d73796cff1e99381d8cc609bd18.
+run.json reports overall failure: syntax/import, unittest/browser, pytest and
+JavaScript steps succeeded, but the standalone step failed. Log chunk 000096
+shows browser_smoke_272cc73.py reporting admin: request is not defined. That chunk
+also records the audit's 953-test rerun as OK and zero unclosed connections out of
+647. These successful isolated checks did not establish correct page boot.
 
-Five limited local controller checks passed using stub close/open/render/transport
-helpers: success, overlapping Next clicks, uncertain response, scope change and
-refresh failure. Both fresh-screen success and safe closed-screen failure behavior
-were checked. Python test source compiled. The complete twelve-test fixture and
-full application suite have not been executed locally. No green CI is claimed.
+The controller include appeared in fragment 180, before admin.js in fragment 190.
+A parser-inserted deferred script sees readyState=interactive and immediately runs
+install, which accesses request before the later Admin script exists. The correction
+moves the include once to the end of fragment 190 after Admin/extensions. Existing
+controller/turn logic and full-page smoke assertions are unchanged.
+
+A new boot-order fixture uses the actual two fragments and real controller with
+stub Admin helpers/other scripts. It passed locally with the corrected ordering,
+including clicking the actual button and observing exactly one Next POST and the
+new actor opening. Restoring the old ordering made the same fixture fail with
+request is not defined. Python source compiled. This is parser/defer integration
+coverage, not authenticated full-application validation. Corrective full CI remains
+pending; the existing twelve interaction fixtures remain unchanged.
 
 ### Remaining validation and limitations
 
-After approval, push with normal CI (no skip marker), inspect results and repair
-failures through the approved feedback workflow. Manually verify fresh start-of-turn
-controls/reminders, lairs, round wrap, applied/pending reduction rows and connected
-player updates against an authenticated running server. Keep this task open until
-acceptance evidence is reviewed.
+Deploy both changed HTML fragments, restart for imported markup and reload the
+browser. Verify the new button actually advances in the running application.
+Inspect normal corrective CI (no skip marker), including the unchanged complete
+page smoke. Manually verify fresh start-of-turn controls/reminders, lairs, round
+wrap, applied/pending reduction rows and connected player updates. Keep this task
+open until acceptance evidence is reviewed.
 
 Guards coordinate this browser's existing request-based controls; they are not
 server-side idempotency or multi-administrator optimistic concurrency. The existing
