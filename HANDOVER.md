@@ -25,6 +25,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 18. [Attack statistics archive implementation](docs/handover/180-attack-statistics-delivery.md)
 19. [Restore statistics readability and affected-only display](docs/handover/190-statistics-restoration-layout.md)
 20. [Monster candidate selection](docs/handover/200-monster-candidate-selection.md)
+21. [Next from Battle Actions](docs/handover/210-battle-actions-next.md)
 
 ## Required update convention
 

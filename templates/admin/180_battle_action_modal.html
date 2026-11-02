@@ -1,5 +1,6 @@
   <link rel="stylesheet" href="/static/battle-turn-actions.css">
   <script defer src="/static/battle-turn-actions.js"></script>
+  <script defer src="/static/battle-actions-next.js"></script>
   <div id="battleActionModal" class="modal" hidden>
     <div>
       <h2 id="battleActionTitle">Battle actions</h2>
@@ -26,6 +27,7 @@
         Reactions have their own source and target, including down or dead combatants.
         Statistics reduction rows resolve in the same top-to-bottom order as damage and healing.
         Apply leaves this window open; applied rows are locked and skipped on later applies.
+        Next discards pending rows, advances once and opens the new turn owner. It does not Apply or Undo.
         Close discards only unapplied rows. Use one row per affected creature for death bursts. A dead combatant cannot
         be revived by healing; recover it explicitly in Encounter Tools.
       </p>
@@ -37,6 +39,7 @@
           <button type="button" id="addBattleReaction">Add reaction</button>
           <button type="button" id="addStatisticsReduction">Add statistics reduction</button>
           <button type="submit" class="battle">Apply</button>
+          <button type="button" id="nextBattleActions" class="battle">Next</button>
           <button type="button" id="closeBattleActions">Close</button>
         </div>
       </form>

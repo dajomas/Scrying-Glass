@@ -7,7 +7,7 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 1. [Monster lookup accounts and candidate selection](docs/todo/010-monster-lookup.md) - SG-TODO-001, completed (agreed public-provider candidate-selection scope; verified green CI and user-confirmed manual checks, 2026-11-02).
 2. [Attack statistics reductions and restoration](docs/todo/020-monster-damage-effects.md) - SG-TODO-002, completed (agreed manual scope; user-confirmed green CI, 2026-11-02).
 
-3. [Next combatant from Battle Actions](docs/todo/030-battle-actions-next.md) - SG-TODO-003, proposed.
+3. [Next combatant from Battle Actions](docs/todo/030-battle-actions-next.md) - SG-TODO-003, in progress (implementation prepared; CI/live validation pending).
 4. [Deferred D&D Beyond account access](docs/todo/040-dndbeyond-account-access.md) - SG-TODO-004, blocked/deferred (carried forward from SG-TODO-001; supported and permitted integration not established).
 
 ## Maintenance
