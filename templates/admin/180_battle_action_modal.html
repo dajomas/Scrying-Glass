@@ -43,24 +43,24 @@
     </div>
   </div>
 
+  <link rel="stylesheet" href="/static/statistics.css">
   <div id="statisticsModal" class="modal" hidden>
-    <div>
+    <div class="statistics-dialog" role="dialog" aria-modal="true" aria-labelledby="statisticsTitle" tabindex="-1">
       <h2 id="statisticsTitle">Restore statistics</h2>
-      <p>Restore removes reductions, not damage: it never heals current HP or revives a combatant.
-      Original ability scores must be entered once before reducing them; blank means unknown.</p>
+      <p id="statisticsHelp">Only statistics with active reductions are shown. Restoring removes reductions;
+        it never heals current HP or revives a combatant.</p>
       <form id="statisticsBasesForm">
-        <div id="statisticsFields" class="edit-grid"></div>
-        <button type="submit">Save original/base statistics</button>
+        <div id="statisticsFields" class="statistics-table-wrap"></div>
+        <button id="statisticsSaveBases" type="submit" hidden>Save original/base statistics</button>
       </form>
-      <label>Statistic to restore <select id="statisticsRestoreStat">
-        <option value="all">All statistics</option>
-        <option value="max_hp">Max HP</option><option value="strength">STR</option>
-        <option value="dexterity">DEX</option><option value="constitution">CON</option>
-        <option value="intelligence">INT</option><option value="wisdom">WIS</option>
-        <option value="charisma">CHA</option>
-      </select></label>
-      <div class="actions">
+      <div id="statisticsRestoreControls" class="statistics-restore-controls">
+        <label for="statisticsRestoreStat">Statistic to restore</label>
+        <select id="statisticsRestoreStat"></select>
         <button id="statisticsRestore" type="button">Restore selected statistics</button>
+      </div>
+      <div class="statistics-footer">
+        <button id="statisticsEditBases" type="button">Edit original/base statistics…</button>
+        <button id="statisticsBack" type="button" hidden>Back to affected statistics</button>
         <button id="statisticsClose" type="button">Close</button>
       </div>
       <p id="statisticsNotice" role="status" aria-live="polite"></p>

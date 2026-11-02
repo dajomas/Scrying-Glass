@@ -23,18 +23,18 @@ Scrying Glass, formerly Monster Display, is a self-hosted tabletop encounter man
 
 ## Attack statistics reductions (SG-TODO-002)
 
-Battle actions now has an Add statistics reduction button. Each row selects a
-target, Max HP / STR / DEX / CON / INT / WIS / CHA, and a positive amount. Reduction
-rows share the ordered Apply transaction with damage/healing; they are not part
-of Encounter tools. Applied rows stay locked to avoid replay.
+Battle actions has an Add statistics reduction button. Each row selects a target,
+Max HP / STR / DEX / CON / INT / WIS / CHA, and a positive amount. These rows share
+the ordered Apply transaction with damage/healing, not an Encounter tools panel.
+Restore statistics appears beside Reset for characters and monsters. Its readable
+table and restore selector show only statistics with active reductions. A separate
+Edit original/base statistics view sets missing ability scores without cluttering
+restoration. See [workflow](docs/User-Guide.md#attack-statistics-reductions).
 
-Restore statistics appears beside Reset in each character row (also available for
-monsters). Restore one statistic or all without healing current HP. The dialog
-also records original/base values; unknown ability scores must be entered before
-they can be reduced. See [workflow](docs/User-Guide.md#attack-statistics-reductions)
-and [migration/API details](docs/Technical-Documentation.md#attack-statistics-schema-8).
-This overlay is built directly from the original uploaded e0c321a archive, not the
-previous assistant patch. Schema 8 requires a storage backup before first start.
+The attack increment uses schema 8; back up storage before first upgrading from
+the original baseline. The current restoration-layout overlay is UI-only, applies
+on top of the Attack-Statistics implementation, and adds no migration. See
+[handover](docs/handover/190-statistics-restoration-layout.md) for its validation.
 
 ## Capabilities
 
@@ -143,7 +143,7 @@ Stop the application and back up the entire directory, configuration and service
 
 Use a trusted LAN or restricted VPN/HTTPS proxy, not public default HTTP listeners. Sessions are in memory and clear on restart. Account changes invalidate sessions. Player state is filtered, but names, images, public effects, life state and relative ordering are intentionally visible. /media is a static mount without session protection.
 
-There is one shared live active campaign, not an independent runtime per admin. Most serialized transactions do not provide optimistic conflict detection for simultaneous edits. Attack batches containing statistic reductions and Restore statistics operations additionally check an encounter/campaign/revision token. Coordinate administrators. See the other three documents for workflows, internals and operations.
+There is one shared live active campaign, not an independent runtime per admin. Most serialized transactions do not provide optimistic conflict detection for simultaneous edits. Attack batches containing statistic reductions and restoration/base edits additionally check an encounter/campaign/revision token. Coordinate administrators. See the other three documents for workflows, internals and operations.
 
 ## 5e.tools monster fallback
 

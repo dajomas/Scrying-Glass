@@ -23,6 +23,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 17. [Manual reductions restart plan](docs/handover/170-manual-reductions-restart.md)
 
 18. [Attack statistics archive implementation](docs/handover/180-attack-statistics-delivery.md)
+19. [Restore statistics readability and affected-only display](docs/handover/190-statistics-restoration-layout.md)
 
 ## Required update convention
 

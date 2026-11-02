@@ -4,14 +4,13 @@
 
 Recorded: 2026-11-01. Related task: [SG-TODO-002](../todo/020-monster-damage-effects.md).
 
-## Superseding request — 2026-11-02
+## Superseding attack-window implementation
 
-The current user request selects attack-window reduction rows for all seven
-statistics and a Restore statistics button beside character Reset, built from the
-original archive rather than the previous assistant patch. See [180: attack
-statistics delivery](180-attack-statistics-delivery.md). Historical scope/delivery
-requirements below remain history, not the current implementation status or an
-instruction to stack the earlier patch.
+The later request selected attack-window rows for all seven statistics and Restore
+statistics beside Reset, built from the original archive rather than the earlier
+Encounter tools draft. See [180](180-attack-statistics-delivery.md) and the subsequent
+[UI correction](190-statistics-restoration-layout.md). The historical scope and
+GitHub-first delivery wording below are not instructions to stack earlier patches.
 
 ## Actual delivery state
 
