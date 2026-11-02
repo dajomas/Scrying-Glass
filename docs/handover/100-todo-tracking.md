@@ -25,3 +25,32 @@ Add [SG-TODO-002 - Non-standard monster damage and mechanical effects](../todo/0
 Preparation reviewed the live branch instructions, README, handover/TODO indexes and maintenance sections, existing TODO style, current HP/effect rules and CI coverage documentation. The current effect validator does not accept structured mechanical fields. This entry records planned work only; it does not add those fields or claim that the proposed behavior exists.
 
 This addition changes documentation only. README remains accurate and is unchanged; the handover index is unchanged because no handover section is added or moved. No application tests were run, no workflow configuration is changed and no workflow is dispatched. The user requested `[skip ci]` in the proposed commit message for this push. Workflow-run state has not been checked; the skip token alone is not verification of that state.
+
+
+## 2026-11-02 - Battle Actions Next shortcut backlog addition
+
+Add [SG-TODO-003 - Next combatant from Battle Actions](../todo/030-battle-actions-next.md)
+as a new indexed TODO section. The user requested a modal Next button equivalent
+to Close, main Battle Next, then clicking the newly active combatant. It clears
+old action/reaction/statistics-reduction rows without applying pending drafts,
+advances normally once and opens the new actor's fresh action screen. Applied
+changes remain committed. The task records acceptance criteria and planned
+validation; it does not implement this shortcut.
+
+Status is proposed with no owner, priority or deadline. Preserve SG-TODO-001 and
+the current archive-delivered/in-progress SG-TODO-002 context. The existing
+handover index needs no new entry for this addition because this section is
+updated in place; its current 180/190 entries are retained as context.
+
+This delivery changes task/handover documentation only. README and user/technical
+documentation were reviewed for scope and are not changed because no new runtime
+behavior is delivered. Application tests are not added or run. Documentation
+validation checks index/section links, stable identifiers/backlinks, expected
+scope statements and the commit-message first-line skip token; the exact report
+is in Patch/. No workflow was dispatched/observed and no GitHub write was made.
+
+The current attachment is the original baseline, whereas prior archive code/docs
+are recorded in this conversation. Complete indexed context in this archive
+preserves those conversation-documented sections; compare with your installed
+checkout before overwriting any newer local documentation. The requested change
+itself is TODO.md, the new 030 task file and this handover note.
