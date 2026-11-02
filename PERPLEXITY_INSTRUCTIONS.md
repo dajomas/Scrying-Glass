@@ -202,6 +202,76 @@ Do not claim mocked, static or fixture-based checks provide full live-server
 or end-to-end coverage. Describe the validation actually performed and its
 limitations.
 
+### 5.1 CI-first validation when local execution is unavailable
+
+The assistant may be unable to execute some or all tests because its
+environment lacks a repository checkout, dependencies, network access,
+a shell, browser tooling or an application runtime.
+
+Unavailable local test execution is not, by itself, a reason to stop
+implementation, withhold an otherwise prepared delivery, or repeatedly
+request permission to continue preparing changes.
+
+Unless the user explicitly requires validation before delivery, use the
+following CI-feedback workflow:
+
+1. Inspect the live implementation, relevant documentation, test
+   configuration and CI workflow.
+2. Prepare the implementation, relevant automated tests and necessary
+   documentation/TODO updates.
+3. Perform the review and checks available in the current environment.
+   Do not substitute a syntax check, mock or code review for a test that
+   was not executed.
+4. Record exactly which checks were executed, their observed results,
+   and which checks remain pending.
+5. Request the required bound confirmation for the complete, nonempty
+   GitHub write payload and commit message.
+6. After approval, push exactly the approved changes to the agreed
+   branch. Do not wait for unavailable local tests before making this
+   approved write.
+7. Treat the implementation as delivered with validation pending until
+   the relevant CI results have been reviewed.
+
+For this workflow, the user will manually obtain the CI results, commit
+the relevant logs, reports or other result artifacts to the repository,
+and tell the assistant which commit, paths, workflow run or other
+identifiers to inspect.
+
+When the user supplies those locations:
+
+- Retrieve and read the specified results from the repository.
+- Establish which implementation commit and workflow attempt they cover.
+- Distinguish test failures, collection failures, environment/setup
+  failures, skipped checks and checks that were never executed.
+- Diagnose failures against the corresponding implementation and tests.
+- Prepare necessary fixes and documentation/TODO updates.
+- Obtain fresh bound approval before each corrective GitHub write.
+- Repeat the feedback cycle as needed without claiming success before
+  supporting results are available.
+
+CI is expected to execute the checks configured in the workflow.
+Do not assume it covers every acceptance criterion or all HTTP,
+browser, live-server, security or manual validation.
+
+If a required automated check is missing from CI, prepare the relevant
+test and any necessary workflow update as part of the proposed changes,
+or explicitly identify the uncovered requirement. Do not silently
+describe an unconfigured check as delegated to CI.
+
+When relying on push-triggered CI, omit [skip ci] from the proposed
+commit message. A previous skip request does not apply to a delivery
+for which the user has subsequently selected CI validation. If the
+current instruction explicitly requires skipping CI, record CI
+validation as pending until the user specifies how it will be run.
+
+Lack of local execution does not waive implementation, test preparation,
+documentation, approval or truthful-reporting requirements. It changes
+where validation executes, not what counts as evidence.
+
+Do not mark a task or increment fully validated or completed solely
+because its code was pushed. Record implementation delivery and
+validation status separately.
+
 ## 6. Downloadable archive requirements
 
 When a downloadable archive is explicitly requested, include:
@@ -258,7 +328,12 @@ Before an external write:
 - Request approval using the required confirmation mechanism.
 - Make the write only after approval, using exactly the approved targets,
   content and commit message.
-
+- Before requesting confirmation, verify that the write payload is
+  complete and nonempty, contains the intended implementation and test
+  files, and includes required documentation updates. Never submit a
+  placeholder confirmation, an empty files list, or a confirmation whose
+  description promises changes absent from its bound arguments.
+  
 If new information requires changing the approved write, request fresh
 approval before proceeding.
 
