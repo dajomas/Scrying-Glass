@@ -9,7 +9,7 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 
 3. [Next combatant from Battle Actions](docs/todo/030-battle-actions-next.md) - SG-TODO-003, completed (verified green corrective CI; user-requested close-out, 2026-11-02).
 4. [Deferred D&D Beyond account access](docs/todo/040-dndbeyond-account-access.md) - SG-TODO-004, on hold until further notice (user request, 2026-11-02).
-5. [Initial Admin section visibility](docs/todo/050-admin-initial-visibility.md) - SG-TODO-005, proposed/requested.
+5. [Initial Admin section visibility](docs/todo/050-admin-initial-visibility.md) - SG-TODO-005, in progress (agreed related input groups; implementation prepared; CI/live validation pending).
 6. [5e.tools sources and descriptive names](docs/todo/060-fivetools-source-configuration.md) - SG-TODO-006, proposed/requested (XPBH/XPHB identifier discrepancy recorded).
 7. [Single-line monster buttons](docs/todo/070-monster-button-layout.md) - SG-TODO-007, proposed/requested.
 
