@@ -7,8 +7,11 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 1. [Monster lookup accounts and candidate selection](docs/todo/010-monster-lookup.md) - SG-TODO-001, completed (agreed public-provider candidate-selection scope; verified green CI and user-confirmed manual checks, 2026-11-02).
 2. [Attack statistics reductions and restoration](docs/todo/020-monster-damage-effects.md) - SG-TODO-002, completed (agreed manual scope; user-confirmed green CI, 2026-11-02).
 
-3. [Next combatant from Battle Actions](docs/todo/030-battle-actions-next.md) - SG-TODO-003, in progress (implementation prepared; CI/live validation pending).
-4. [Deferred D&D Beyond account access](docs/todo/040-dndbeyond-account-access.md) - SG-TODO-004, blocked/deferred (carried forward from SG-TODO-001; supported and permitted integration not established).
+3. [Next combatant from Battle Actions](docs/todo/030-battle-actions-next.md) - SG-TODO-003, completed (verified green corrective CI; user-requested close-out, 2026-11-02).
+4. [Deferred D&D Beyond account access](docs/todo/040-dndbeyond-account-access.md) - SG-TODO-004, on hold until further notice (user request, 2026-11-02).
+5. [Initial Admin section visibility](docs/todo/050-admin-initial-visibility.md) - SG-TODO-005, proposed/requested.
+6. [5e.tools sources and descriptive names](docs/todo/060-fivetools-source-configuration.md) - SG-TODO-006, proposed/requested (XPBH/XPHB identifier discrepancy recorded).
+7. [Single-line monster buttons](docs/todo/070-monster-button-layout.md) - SG-TODO-007, proposed/requested.
 
 ## Maintenance
 

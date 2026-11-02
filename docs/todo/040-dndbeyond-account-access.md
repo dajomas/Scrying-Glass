@@ -4,7 +4,9 @@
 
 ## SG-TODO-004 - Account-backed monster authentication and entitlement filtering
 
-- Status: blocked/deferred.
+- Status: on hold until further notice, explicitly requested by the user on 2026-11-02.
+- Do not resume investigation or implementation unless the user lifts the hold.
+- Underlying integration blocker remains: supported and permitted authentication/search access has not been established.
 - Origin: unfinished account requirements carried forward from [SG-TODO-001](010-monster-lookup.md) at its agreed-scope close-out, 2026-11-02.
 - Priority, owner and deadline: not assigned.
 - Implementation and live account verification: not started.
@@ -34,6 +36,7 @@ change the delivered public-provider error policy when adding account support.
 
 ### Acceptance and validation
 
+- [ ] User explicitly lifts the hold before work resumes.
 - [ ] Supported and permitted authentication/search access verified and documented.
 - [ ] An account can be connected/disconnected with protected secret handling.
 - [ ] Only account-accessible matching monsters are offered.
