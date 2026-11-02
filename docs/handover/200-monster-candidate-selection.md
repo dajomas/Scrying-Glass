@@ -2,10 +2,33 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+## Completion - 2026-11-02
+
+SG-TODO-001 is completed for the agreed public-provider candidate-selection scope.
+Verified green regression CI and the user's manual acceptance support close-out.
+Unimplemented account authentication and entitlement requirements are preserved
+as [SG-TODO-004](../todo/040-dndbeyond-account-access.md), blocked/deferred, not
+marked delivered. See [completed task](../todo/010-monster-lookup.md).
+
+Successful Branch tests run: 41509918102, attempt 1, against
+1474cde5c4d270c540d7009e5c08770058b40ac5. Inspected evidence is under
+ci-results-41509918102-attempt-1 at 6d9d1a720c4ddcdaf0671fb0271f8f4ef0902d85.
+run.json records completed success, including all configured test/check steps.
+The unittest summary reports 941 tests, OK; log chunks 000054/000055 show all four
+marketplace and three focus regressions passing. These seven are included in 941.
+The user separately confirmed all requested live/manual checks on 2026-11-02.
+No assistant-run live-provider test or full application end-to-end coverage is claimed.
+
+This documentation-only close-out uses [skip ci] at the user's request. No runtime,
+test or workflow changes are included and no additional tests are executed here.
+README and HANDOVER.md index remain accurate and unchanged. Historical pending/
+failed statuses below are retained for continuity and superseded by this section.
+
 Initial increment: 2c00583fb0c37b940d8580e324816a39960995e8, delivered 2026-11-02.
 Locked-page correction: fe392f77c0080d3ca3540abfbb301fc94ec9655a.
 Marketplace and blur-loop fixes: 846971b1ada9b5e44df8b7dca238c092e43efb47.
-Regression-test follow-up prepared: 2026-11-02 against 846971b.
+Regression tests: 9e5c7bb080fdfda0d5cf157dae083fa9336f0a72.
+Fixture repair: 1474cde5c4d270c540d7009e5c08770058b40ac5.
 
 ## Scope and implementation
 
@@ -65,7 +88,7 @@ support is required. Manual/cancelled/failed form lookup does not independently
 search again for a creation-time image. Upload an image manually when desired.
 No third-party data is bundled.
 
-## Validation evidence and pending close-out - 2026-11-02
+## Validation evidence and pending close-out - 2026-11-02 (historical)
 
 Earlier status notes saying the live traceback/redirect was unavailable are
 superseded: the user supplied the marketplace hostname/path, applied the targeted
@@ -106,12 +129,14 @@ only after the regression commit's CI is confirmed green. That follow-up must us
 account-authentication/entitlement requirements rather than marking them implemented.
 No closure or new green-CI result is claimed by this regression-test commit.
 
-## Regression CI fixture repair - 2026-11-02
+## Regression CI fixture repair - 2026-11-02 (historical)
 
 The preceding preparation-only validation status is superseded by inspected CI
 run 41508781022, attempt 1, against 9e5c7bb080fdfda0d5cf157dae083fa9336f0a72.
-Evidence is in ci-results-41508781022-attempt-1 at repository commit
-84a2e00026ff41192800ed65f4aea7e6349fbae5. run.json records a completed failed run.
+Evidence was inspected in ci-results-41508781022-attempt-1 at repository commit
+84a2e00026ff41192800ed65f4aea7e6349fbae5; that historical snapshot remains the
+reference because the current evidence commit replaced the old results directory.
+run.json recorded a completed failed run.
 
 The unittest step ran 941 tests and reported three errors, all in the new focus
 fixture's setUp at page.evaluate, before the behavior assertions. All four new
@@ -131,9 +156,7 @@ remain intact. Application/runtime code is unchanged.
 A minimal local Chromium 134.0.6998.35 fixture reproduced the old illegal invocation.
 With the corrected callback, the counter stayed at zero after installation, became
 one after an actual dialog.showModal call, focus moved into the dialog and the
-dialog closed successfully. This validates instrumentation only, not execution of
-the complete corrected focus tests or full application suite; those remain pending
-corrective CI. No green result or TODO closure is claimed. The correction must run
-normal CI; the requested [skip ci] applies only to the later documentation close-out
-after a successful regression run. TODO stays open and its existing pending status
-is unchanged. README and index links remain accurate and are unchanged.
+dialog closed successfully. This validated instrumentation only, not execution of
+the complete corrected focus tests or full application suite at that time. The
+pending-CI and open-TODO status recorded for the repair is superseded by the
+completion section and verified run 41509918102 above.
