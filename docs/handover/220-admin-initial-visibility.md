@@ -2,8 +2,20 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Prepared: 2026-11-02 against 6637a39ef21e0e035b849a7848ad0302c7ac7c33.
-Task: [SG-TODO-005](../todo/050-admin-initial-visibility.md), in progress.
+## Completion - 2026-11-02
+
+[SG-TODO-005](../todo/050-admin-initial-visibility.md) is completed at the user's
+request after their green-CI confirmation on 2026-11-02 at 22:37 CET.
+Implementation: ee9a4bd56439d8a5e7d5a94e5d9d1c1788c4c9e4, prepared against
+6637a39ef21e0e035b849a7848ad0302c7ac7c33 on features/perplexity.
+
+The user did not supply a workflow ID, logs or tested SHA with this confirmation.
+Record user-reported CI success rather than inventing an independently verified
+run or borrowing a previous task's workflow. Deployed first-opening/reload/manual
+checks were not separately reported; closure records the user's CI-based acceptance,
+not a claim that the assistant ran authenticated live checks. The former pending
+status is superseded on this explicit acceptance basis. Documentation only; no
+runtime, tests or workflow changes and no new test execution for this close-out.
 
 ## Accepted scope and user behavior
 
@@ -34,7 +46,7 @@ its button; the independent has-lair gate is not changed. The install guard make
 accidental repeat asset evaluation harmless. No large admin.js rewrite, server,
 authorization, schema, configuration or migration changes are included.
 
-## Validation and delivery status
+## Validation evidence and boundaries
 
 Eight focused Chromium unittest methods passed locally (four initial-condition
 subtests included in that count). They cover cached/delayed/invalid state, manual
@@ -46,14 +58,17 @@ Both prepared Python test sources compiled.
 The separate test_admin_initial_visibility_page.py uses the real assembled HTML,
 all real static scripts and intercepted HTTP with the established SQLite feature
 fixture. It verifies real toggle/model integration and load(true) behavior, captures
-pageerrors and forbids unexpected API mutations. That fixture and full suite remain
-pending CI; neither a passing application integration nor authenticated live run
-is claimed. Existing layout, visibility, setup/lair and complete-page smoke checks
-remain unchanged and must run normally. No workflow changes or skip marker.
+pageerrors and forbids unexpected API mutations. The assistant did not run that
+fixture or the full suite locally. User-confirmed green CI is recorded separately
+above and does not turn mocked HTTP into authenticated live coverage. Existing
+layout, visibility, setup/lair and complete-page smoke checks were left unchanged.
+
+## Operation and continuity
 
 Deploy the new script with the changed document-end fragment, restart and reload.
-After CI review, manually test a saved active campaign/setup, unsaved setup, reload
-and manual reopening. Keep SG-TODO-005 open until acceptance is reviewed. README
-was reviewed; its general Admin description remains accurate. Detailed behavior
-is documented here and in the linked task, with root indexes updated. Other tasks
-and the SG-TODO-004 hold remain unchanged.
+No migration or configuration change is needed. Per-page defaults do not imply
+persistent browser preferences. README and HANDOVER.md index were reviewed and
+remain accurate; the existing TODO index and section record completion. Other task
+statuses, including the SG-TODO-004 hold, are unchanged. The next requested task is
+SG-TODO-006; its XPBH/XPHB identifier discrepancy must be resolved before defaults
+are implemented. No SG-TODO-006 runtime work is claimed by this close-out.

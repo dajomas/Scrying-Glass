@@ -4,68 +4,64 @@
 
 ## SG-TODO-005 - Hide already-active campaign/setup sections on initial opening
 
-- Status: in progress; implementation/tests prepared, CI and live validation pending.
+- Status: completed, 2026-11-02, at the user's request after user-confirmed green CI.
 - Requested: 2026-11-02. Group scope and per-page behavior accepted: 2026-11-02.
-- Preparation base: 6637a39ef21e0e035b849a7848ad0302c7ac7c33 on features/perplexity.
+- Implementation: ee9a4bd56439d8a5e7d5a94e5d9d1c1788c4c9e4 on features/perplexity.
 - Priority, owner and deadline: not assigned.
 
-### Agreed behavior
+### Agreed and delivered behavior
 
-On each initial opening/reload of the Admin page, evaluate the first complete
-authoritative state once:
+On each initial opening/reload of Admin, evaluate the first complete authoritative
+state once:
 
 - An active campaign collapses Campaign setup and Character input.
 - An active saved battle setup collapses Battle setup, Monster input and Lair input.
-- Evaluate those conditions independently; otherwise preserve existing defaults.
-- Leave Battle controls, Character display, Monster display and Activity log alone.
+- Conditions are independent; false conditions preserve existing defaults.
+- Battle controls, Character display, Monster display and Activity log are unaffected.
 
-Reuse existing Show/Hide buttons and their visibility model. Already-hidden inputs
-stay hidden rather than toggling open. The lair pane's existing has-lair gate still
-applies; recording a collapsed preference must not reveal an unavailable lair pane.
-Manual choices made before the initial response are respected for that pane.
+Use existing Show/Hide handlers so per-page visibility, labels and aria-expanded
+remain synchronized. Already-hidden inputs stay hidden. Existing has-lair gating
+remains independent. Manual choices before the initial response are respected
+per pane; later polling, loads, renders and campaign/setup changes do not recollapse
+inputs. Users can reopen normally. Reload starts a fresh decision. No stored
+browser/database preference, new network request or backend mutation is introduced.
 
-First opening means once per page lifetime, not once per account/browser session.
-No local/session storage or database preference is added. Subsequent polling,
-loads, state renders and campaign/setup changes do not reapply the initial rule.
-Users can show inputs normally. A reload starts a fresh initial decision.
+The source of truth is active_campaign_id plus a valid active_setup reference
+with nonempty campaign_id/name strings; null means no saved active setup. Missing
+or malformed data does not consume the initial decision. The script loads after
+Admin/lair extensions, chains the existing renderer and catches up from latest.
 
-### State and integration
+### Acceptance and validation record
 
-Use active_campaign_id, not a dropdown selection or displayed campaign name.
-An active_setup reference needs nonempty campaign_id/name strings; null means no
-saved active setup. Missing/malformed initial state does not consume initialization.
-The script loads after Admin/lair extensions, observes their existing state-render
-hook and catches up from latest if the first load already completed. It performs
-no new network requests or state mutations. Toggle labels/aria-expanded remain
-synchronized through the existing toggle handlers.
+The delivered behavior and prepared regressions cover both agreed groups, all
+four active/inactive combinations, delayed/incomplete state, early/later manual
+choices, later scope changes, independent lair gating, unaffected display/log/Battle
+panes, synchronized accessibility labels and assembled-page initialization without
+API mutations. The user confirmed green CI and explicitly requested closure on
+2026-11-02 at 22:37 CET, following delivery of ee9a4bd.
 
-### Acceptance criteria (pending completion)
+No workflow databaseId, result-artifact path or tested SHA was supplied with that
+confirmation. CI success is user-reported, not an independently inspected run in
+this close-out. Do not invent a run ID or treat earlier task runs as this result.
 
-- [ ] Both campaign inputs initially collapse when a campaign is active.
-- [ ] All three setup inputs initially collapse when a saved setup is active.
-- [ ] All four active/inactive combinations behave independently.
-- [ ] Delayed/incomplete data is not mistaken for a final initial state.
-- [ ] Manual choices, including choices before the response, are not overwritten.
-- [ ] Later updates and scope changes do not recollapse inputs.
-- [ ] Existing lair gating, display/log/Battle visibility and accessibility labels remain correct.
-- [ ] Full assembled-page startup, initial state delivery and refresh preserve the behavior without new API mutations.
-- [ ] Review CI and verify real first opening/reload plus manual Show/Hide in the deployed application.
+Eight focused Chromium unittest methods passed locally during preparation (the
+four initial-condition subtests are included in that count). They use the actual
+controller but stub pane handlers/renderers and transport. A ninth assembled-page
+test loads real HTML/scripts with intercepted HTTP and an existing SQLite fixture,
+checking all five hidden/aria states, no initialization mutations and manual
+visibility surviving load(true). Both Python sources compiled. The assembled-page
+fixture and full suite were not executed by the assistant locally; the later CI
+success is the user's confirmation of their run.
 
-### Validation evidence and remaining work
+The earlier checklist's deployed first-opening/reload/manual-Show/Hide verification
+was not separately reported in the close-out request. The user's acceptance closes
+the task on the confirmed-CI basis without relabelling an unexecuted or unreported
+live check as passed. Fixture coverage is not authenticated live end-to-end evidence.
 
-Eight focused Chromium tests passed locally, including the four-condition subtests,
-cached initial state, invalid/incomplete state, subsequent scope changes, early user
-interaction, hidden/already-collapsed panes, no-active initial state and duplicate
-asset evaluation. They use the real new controller but stub pane handlers/state
-renderers, not the entire application. New Python sources compile.
+### Operation and retained limits
 
-A ninth test assembles the actual Admin page, loads real scripts and uses intercepted
-HTTP with a snapshot from the existing SQLite feature fixture. It checks all five
-hidden properties/aria states, no initialization mutations and manual visibility
-surviving load(true). This full-page fixture and the complete suite have not been
-run locally; execution is pending normal CI. No green result is claimed.
-
-Deploy the new script and updated fragment, restart for imported markup and reload.
-Confirm the actual initial groups and manual toggles before closing. No backend,
-configuration or migration changes are part of this task. See
-[handover](../handover/220-admin-initial-visibility.md).
+Deploy the new script and document-end fragment, restart for imported markup and
+reload browsers. No migration or configuration change. Defaults are per page;
+no persistent preferences are claimed. This close-out changes documentation only
+and runs no new tests. Other tasks and the SG-TODO-004 hold are unchanged.
+See [handover](../handover/220-admin-initial-visibility.md).
