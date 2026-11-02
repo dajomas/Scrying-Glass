@@ -5,7 +5,7 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 ## Index
 
 1. [Monster lookup accounts and candidate selection](docs/todo/010-monster-lookup.md) - SG-TODO-001, proposed.
-2. [Non-standard monster damage and mechanical effects](docs/todo/020-monster-damage-effects.md) - SG-TODO-002, in progress (attack increment and restore-layout correction; live validation pending).
+2. [Attack statistics reductions and restoration](docs/todo/020-monster-damage-effects.md) - SG-TODO-002, completed (agreed manual scope; user-confirmed green CI, 2026-11-02).
 
 3. [Next combatant from Battle Actions](docs/todo/030-battle-actions-next.md) - SG-TODO-003, proposed.
 

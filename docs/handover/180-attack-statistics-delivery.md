@@ -4,6 +4,37 @@
 
 Recorded: 2026-11-02. Task: [SG-TODO-002](../todo/020-monster-damage-effects.md).
 
+## Current completion record — 2026-11-02
+
+SG-TODO-002 is completed for the agreed manual attack-statistics and restoration
+scope. On 2026-11-02 at 14:47 CET the user reported "The CI workflow finished green"
+and requested completion. The successful run's ID, tested SHA and logs were not
+provided in this request and were not independently inspected for this closure;
+CI success is recorded as user-confirmed, not newly observed by this assistant.
+Do not reuse the ID of the earlier failed run as the green run.
+
+The completed scope covers Max HP and all six ability reductions in Battle
+Actions, original/base/effective values, manual stacking/restoration, affected-only
+restore UI and separate base editing, persistence/audit/undo/bundles/privacy, and
+the backup-reader cleanup fix. The original broader preset/automation ideas remain
+deferred proposals outside this accepted scope. They are not represented as
+implemented or covered by green CI. See the [completion task](../todo/020-monster-damage-effects.md)
+for the checklist, provenance and preserved historical design.
+
+This completion record supersedes the pending-CI/open-task language in historical
+notes below and in earlier related handover entries; those notes remain as dated
+history rather than being rewritten as successful runs. SG-TODO-001 and
+SG-TODO-003 stay proposed. Full live/deployment/authenticated scenarios are not
+claimed verified here merely because a workflow is green.
+
+This is documentation only: update TODO.md, task section 020 and this handover
+section. No runtime files, application tests, migration or workflow configuration
+change. No tests/workflows were rerun; documentation checks and archive validation
+are recorded under Patch/. The commit-message first line includes [skip ci] as
+requested. No GitHub write or workflow dispatch was performed.
+
+## Historical implementation and CI notes
+
 The previous Attack-Statistics archive implemented attack-window rows for Max HP
 and all six ability scores, ordered atomic application with damage/healing, manual
 restoration beside character/monster Reset, explicit original/base editing, private

@@ -1,3 +1,99 @@
+# 020 - Attack statistics reductions and restoration
+
+[Back to TODO index](../../TODO.md)
+
+## SG-TODO-002 - Manual attack statistics reductions and restoration
+
+- Status: completed.
+- Requested: 2026-11-01; agreed manual attack-screen scope refined 2026-11-02.
+- Completed: 2026-11-02, at the user's request following their green-CI confirmation.
+- Priority: not assigned.
+- Owner: not assigned.
+- Deadline: not assigned.
+- Completion basis: delivered manual feature, restoration/layout correction and
+  connection-cleanup correction; CI success reported by the user on 2026-11-02.
+
+### Completed scope
+
+The agreed implementation places Add statistics reduction in the Battle Actions
+modal. Each row selects a target, Max HP or one of STR/DEX/CON/INT/WIS/CHA, and a
+positive amount. Reductions resolve in order with the attack's damage/healing
+rows. Original/base values remain separate from effective statistics; unknown
+ability scores must be supplied rather than guessed. Reductions stack, persist
+and recover manually, without duplicating damage or inferring monster-specific
+consequences at zero.
+
+Restore statistics beside character Reset (also available for monsters) restores
+one or all affected statistics without healing current HP or reviving a creature.
+Its readable table and selector show only affected statistics; original/base score
+editing is a separate view. Persistence, transactions/audit, undo/checkpoints,
+setups/rosters, reload, bundles and private player filtering are integrated.
+The backup-reader explicit-close test correction is included in this delivered
+feature's CI feedback history.
+
+### Completion checklist — agreed manual scope
+
+- [x] Battle Actions reduction rows: target, seven supported statistics and amount.
+- [x] Ordered attack-batch resolution and applied-row replay protection.
+- [x] Separate original/base/effective values, stacking and unknown-score validation.
+- [x] Max-HP clamping without a second damage event or automatic special death rule.
+- [x] Manual restoration beside Reset without healing/resurrection.
+- [x] Affected-only restore table/options and a separate original-score editor.
+- [x] Persistence, audit/undo/checkpoints, import/export and privacy integration.
+- [x] Focused/regression/UI tests and the backup connection-cleanup correction.
+- [x] User reported the CI workflow finished green and requested task completion.
+
+### Validation provenance and completion decision
+
+On 2026-11-02 at 14:47 CET the user stated: "The CI workflow finished green" and
+explicitly requested completion of SG-TODO-002. This status update records that
+confirmation; the successful run's ID, tested SHA and logs were not supplied in
+this request and were not independently inspected for this documentation delivery.
+No successful run number, new test counts or commit SHA is invented.
+
+The previously analyzed run 41452426944 attempt 1 at
+14404e34828ed5e4fed6828245250aaa348b4396 remains a historical FAILED run. It passed
+the functional suites but found one backup connection without explicit close;
+its outcome is not relabelled green. The follow-up correction wrapped that reader
+in contextlib.closing and added isolated closure checks. The user's later green-CI
+confirmation supersedes the task's pending-CI status and closes the agreed scope.
+
+No tests or workflows were run for this documentation-only completion update.
+A green configured workflow is not a claim that every possible deployment,
+production-data migration or authenticated manual scenario was independently
+verified here. Such operational checks remain prudent deployment practice, not
+an assertion of unperformed testing or an open status for this accepted scope.
+
+### Deferred ideas outside the completed scope
+
+The original proposal also discussed versioned monster presets/rules editions,
+automatic/preset recovery, save-dependent riders, typed compound damage, linked
+attacker healing, direct-to-zero and explicit special death rules, recurrence,
+healing prohibition and absorption. These are NOT implemented or validated by
+marking this manual task complete. They are retained as future-work proposals
+requiring separately agreed follow-up scope; no owner/deadline or new task ID is
+invented for them. The historical design below preserves their details.
+
+SG-TODO-001 remains proposed. SG-TODO-003 (Next inside Battle Actions) remains
+proposed and is neither implemented nor completed by this update.
+
+### Related documentation
+
+- [Attack statistics and completion handover](../handover/180-attack-statistics-delivery.md)
+- [Affected-only restoration layout](../handover/190-statistics-restoration-layout.md)
+- [Next-button proposal](030-battle-actions-next.md)
+
+## Historical proposal and delivery notes — superseded status
+
+The material below is retained verbatim from the preceding task section for
+traceability. Its former statuses, unchecked broad-design criteria and instructions
+not to close the task describe earlier stages. They are not the current acceptance
+criteria for the manual scope completed above. Deferred mechanics remain proposals,
+not features silently marked done. Use the completion record above as authoritative.
+
+<details>
+<summary>Original broader proposal and pre-completion implementation/CI notes</summary>
+
 # 020 - Non-standard monster damage and mechanical effects
 
 [Back to TODO index](../../TODO.md)
@@ -104,3 +200,5 @@ weakening assertions or changing application behavior.
 
 See [CI correction handover](../handover/180-attack-statistics-delivery.md). This
 does not complete SG-TODO-002 or implement the separate SG-TODO-003 Next shortcut.
+
+</details>
