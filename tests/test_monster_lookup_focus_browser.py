@@ -47,11 +47,14 @@ class LookupFocusRegressionTests(unittest.TestCase):
             async function request(url, options) {return (await fetch(url, options)).json();}
         """ + listeners)
         self.page.add_script_tag(content=(ROOT / 'static/monster-candidate-selection.js').read_text(encoding='utf-8'))
-        self.page.evaluate("""window.dialogOpens = 0;
+        self.page.evaluate("""() => {
+            window.dialogOpens = 0;
             const original = HTMLDialogElement.prototype.showModal;
             HTMLDialogElement.prototype.showModal = function() {
                 window.dialogOpens++; return original.call(this);
-            };""")
+            };
+        }""")
+        self.assertEqual(self.page.evaluate('window.dialogOpens'), 0)
 
     def assert_no_extra_requests(self):
         # Longer than two 600 ms debounce periods; allow blur work to surface.

@@ -105,3 +105,35 @@ only after the regression commit's CI is confirmed green. That follow-up must us
 [skip ci], update the indexed TODO and validation notes, and preserve deferred
 account-authentication/entitlement requirements rather than marking them implemented.
 No closure or new green-CI result is claimed by this regression-test commit.
+
+## Regression CI fixture repair - 2026-11-02
+
+The preceding preparation-only validation status is superseded by inspected CI
+run 41508781022, attempt 1, against 9e5c7bb080fdfda0d5cf157dae083fa9336f0a72.
+Evidence is in ci-results-41508781022-attempt-1 at repository commit
+84a2e00026ff41192800ed65f4aea7e6349fbae5. run.json records a completed failed run.
+
+The unittest step ran 941 tests and reported three errors, all in the new focus
+fixture's setUp at page.evaluate, before the behavior assertions. All four new
+marketplace regressions passed. Python syntax/server import, the JavaScript step
+and the pytest step succeeded; pytest reported 43 passed. The standalone browser/
+audit step also failed and its inspected logs show the same focus-fixture setup
+error. Do not count those repeated executions as additional distinct regressions.
+
+The setup string ended with assignment of the showModal wrapper. Its evaluation
+completion value was that function; Playwright then invoked it without a dialog
+receiver, producing TypeError: Illegal invocation. The fixture now passes an
+explicit arrow callback which installs instrumentation and returns undefined.
+An immediate zero-count assertion verifies setup does not open a dialog. All
+three behavior tests, production event extraction and request-count assertions
+remain intact. Application/runtime code is unchanged.
+
+A minimal local Chromium 134.0.6998.35 fixture reproduced the old illegal invocation.
+With the corrected callback, the counter stayed at zero after installation, became
+one after an actual dialog.showModal call, focus moved into the dialog and the
+dialog closed successfully. This validates instrumentation only, not execution of
+the complete corrected focus tests or full application suite; those remain pending
+corrective CI. No green result or TODO closure is claimed. The correction must run
+normal CI; the requested [skip ci] applies only to the later documentation close-out
+after a successful regression run. TODO stays open and its existing pending status
+is unchanged. README and index links remain accurate and are unchanged.
