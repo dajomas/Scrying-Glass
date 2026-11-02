@@ -140,6 +140,14 @@ def dnd_monster_detail_html(href: str) -> str:
 
     with response:
         final = urlsplit(response.geturl())
+        if (
+            final.scheme == "https"
+            and final.hostname == "marketplace.dndbeyond.com"
+            and not final.username
+            and not final.password
+            and final.path.startswith("/category/")
+        ):
+            return ""
         if (final.scheme != "https" or final.hostname not in {"www.dndbeyond.com", "dndbeyond.com"}
                 or final.username or final.password):
             raise ValueError("D&D Beyond returned an untrusted monster redirect")

@@ -2701,14 +2701,6 @@ document.querySelector('#monsterSpecies').addEventListener(
     },
 );
 
-document.querySelector('#monsterSpecies').addEventListener(
-    'blur',
-    () => {
-        clearTimeout(monsterSpeciesLookupTimer);
-        lookupMonsterSpeciesStats();
-    },
-);
-
 document.querySelector('#monsterUpload').onsubmit = async event => {
     event.preventDefault();
 
