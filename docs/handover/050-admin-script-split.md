@@ -53,3 +53,20 @@ README and HANDOVER.md were reviewed and remain unchanged: runtime/deployment an
 index links are unaffected by this preparatory increment. SG-TODO-006 stage 2 is
 paused, not implemented or completed. SQLite splitting follows Admin separately;
 manifest, documentation and CI-log files are not code-refactor targets.
+
+## Trailing-newline correction - 2026-11-02
+
+Increment 1 was delivered as 4b50a5c5f9bf21b679dd568a85f838827fb9700c.
+Post-push blob verification found that the approved/transcribed payload had one
+extra LF at the end of each fragment (17,606 and 18,044 bytes). Runtime was
+unaffected because these sources are unused. This additional corrective commit
+removes exactly one final LF from each file; it does not change tests or runtime
+wiring, rewrite history, or count as planned source-pair increment 2.
+
+Locally reconstructed faulty files matched the committed Git blobs. The unchanged
+preparation suite reproduced three assertion failures across its three methods
+(two size subtests and prefix comparison; parsing passed). Against the corrected
+files all three methods passed. Corrected Git blobs must be
+8bd98db00cbcdd87a3e7910ccc860820262c5fc4 (010) and
+350f9b2b998a035ec17a5ab2f7840ae622430bba (020). Verify these after pushing.
+Full-suite, CI and live validation remain pending; no CI outcome is claimed.

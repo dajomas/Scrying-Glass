@@ -668,4 +668,3 @@ function colorMarker(combatant, fallback) {
         ` title="Color: ${color}" aria-hidden="true"></span>`;
 }
 
-

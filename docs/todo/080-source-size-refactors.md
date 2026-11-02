@@ -4,7 +4,7 @@
 
 ## SG-TODO-008 - Split oversized code without behavior changes
 
-- Status: in progress; Admin split increment 1 prepared, approval/CI pending.
+- Status: in progress; Admin increment 1 delivered; newline correction prepared, bound approval/CI pending.
 - Requested and five-commit Admin plan approved: 2026-11-02.
 - Priority, owner and deadline: not assigned.
 - Branch: features/perplexity. Preparation base: ffe1fdb94c56537507ca9b556609ea1becc0eb1b.
@@ -30,3 +30,8 @@ See [handover](../handover/050-admin-script-split.md) for sizes and evidence.
 Three local preparation tests passed; full CI and live behavior remain pending.
 SG-TODO-006 stage 2 is paused during this work; no source-label functionality is
 added here. SG-TODO-004 remains on hold. Each external write requires bound approval.
+
+Increment 1: 4b50a5c5f9bf21b679dd568a85f838827fb9700c. Correct its two extra trailing
+LF bytes before proceeding to increment 2. The unchanged tests reproduced the
+fault locally and passed with the exact corrected slices. The corrective write
+is additional to the five planned increments; task completion is not claimed.
