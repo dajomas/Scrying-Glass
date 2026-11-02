@@ -5,68 +5,59 @@
 Last updated: 2026-11-02.
 Task: [SG-TODO-008](../todo/080-source-size-refactors.md).
 
-## Current status: first fragment pair staged; runtime unchanged
+## Current status: second fragment pair prepared; runtime unchanged
 
-The user approved a five-commit Admin split plan on 2026-11-02. This increment
-adds static/admin/010-source.js and 020-source.js (17,605 and 18,043 bytes),
-unchanged slices of the existing script, plus preparation regressions. They are
-not loaded by the application. static/admin.js, HTML, mounts and provider/UI
-behavior remain unchanged. Do not activate assembly until all eight parts,
-reader updates and affected fixture changes are delivered together.
+The user approved the five-commit Admin plan on 2026-11-02. Increment 1 added
+010/020 in 4b50a5c5f9bf21b679dd568a85f838827fb9700c. The additional corrective
+commit aeea1aa44586665dd1a9c4860d43ac0680f89766 removed an accidentally transcribed
+extra final LF from each fragment. Post-push blob and size verification confirmed
+010 is 17,605 bytes / 8bd98db00cbcdd87a3e7910ccc860820262c5fc4 and
+020 is 18,043 bytes / 350f9b2b998a035ec17a5ab2f7840ae622430bba.
+The unchanged local tests reproduced the newline defect and passed after correction;
+no CI outcome was checked or claimed. The correction did not count as increment 2.
 
-## Approved remaining delivery
+This increment stages unchanged static/admin/030-source.js (19,585 bytes) and
+040-source.js (11,336 bytes). All four fragments remain unused by the application.
+The original static/admin.js, HTML includes, mounts, helpers and runtime behavior
+are unchanged. Existing preparation tests cover the new files without modification.
 
-- Commit 2: stage 030/040; runtime unchanged.
+## Remaining approved delivery
+
 - Commit 3: stage 050/060; runtime unchanged.
 - Commit 4: stage 070/080 and verify complete source identity; runtime unchanged.
 - Commit 5: activate assembly, enforce 20,000 bytes per source file, replace the
   tracked monolith with a small failure marker, adapt source-reading tests and
   update deployment documentation. Preserve the deferred /static/admin.js URL
-  and one classic-script execution scope. Both /media mounts stay ordinary
+  and a single classic-script execution scope. Both /media mounts stay ordinary
   StaticFiles; the generated response may exceed the tracked-source size limit.
 
-Each commit requires its own exact-content approval and normal CI. Existing
-scrying_glass_admin_source.py and scrying_glass_admin_static.py are inactive
-preparatory helpers; their old five-part/25,000-byte setup is not the final plan.
-The eight new fragment sizes are 17605, 18043, 19585, 11336, 15145, 11921, 18831,
-1739 bytes. No separators or application-logic changes are introduced.
+Each write requires exact-content approval and normal CI. Do not activate the
+inactive scrying_glass_admin_source.py / scrying_glass_admin_static.py helpers
+until all eight parts and fixture updates are ready. Their old five-part/25,000-byte
+configuration is not the final design. New sizes in order: 17605, 18043, 19585,
+11336, 15145, 11921, 18831, 1739 bytes. Assembly inserts no separators.
 
-## Evidence and limitations
+## Source identity and increment-2 validation
 
-Preparation base: ffe1fdb94c56537507ca9b556609ea1becc0eb1b.
-The upload matches Git blob cdec53064a1a9855bf2d140830d33cf0b33e54f2.
-The original is 114,205 bytes, SHA-256
-b97c2a3fda01aa8d3fa4cfa619939909a3c797c678c60a19512aa50c0d05fef5.
-This replaces the older 112,153-byte preparation described here previously;
-those historical checks do not validate this new source revision.
+Preparation base: aeea1aa44586665dd1a9c4860d43ac0680f89766.
+The uploaded original matches live Git blob cdec53064a1a9855bf2d140830d33cf0b33e54f2:
+114,205 bytes, SHA-256 b97c2a3fda01aa8d3fa4cfa619939909a3c797c678c60a19512aa50c0d05fef5.
+Older 112,153-byte preparation evidence does not validate this revision.
 
-Three preparation tests passed locally: UTF-8/size/hash checks, exact staged-prefix
-comparison against the original runtime source, and Node syntax parsing of both
-new fragments (Node v20.20.1). Recombining all eight locally calculated slices
-also matched the original bytes. These are source/preparation checks, not
-FastAPI/static-response, live-provider or authenticated browser verification.
-Full application tests and CI have not been run or reviewed for this increment.
-The normal workflow discovers the new test_admin_source_preparation.py module.
-Its monolith-prefix test must be replaced with assembled-source checks at activation.
+Expected new Git blobs:
+- 030: e11e33373abc43b9570a03a92c59efdb7da09507.
+- 040: 81ae5d291e6453ec024372de80d10a6b3b752bde.
 
-README and HANDOVER.md were reviewed and remain unchanged: runtime/deployment and
-index links are unaffected by this preparatory increment. SG-TODO-006 stage 2 is
-paused, not implemented or completed. SQLite splitting follows Admin separately;
-manifest, documentation and CI-log files are not code-refactor targets.
+The unchanged test_admin_source_preparation.py was reconstructed and hash-verified
+against live test blob 58d0485a10fa3497c5a44468ab093c35751e702b. All three methods
+passed locally with four fragments: UTF-8/size/hash checks, exact 66,569-byte staged
+prefix comparison, and Node syntax checks. All eight locally calculated slices
+also recombined byte-for-byte to the original. These are source/preparation tests,
+not live-provider, authenticated-browser or FastAPI/static-response verification.
+Full application tests and CI for this increment remain pending. Verify committed
+sizes and blobs after pushing; do not infer them from pre-push checks.
 
-## Trailing-newline correction - 2026-11-02
-
-Increment 1 was delivered as 4b50a5c5f9bf21b679dd568a85f838827fb9700c.
-Post-push blob verification found that the approved/transcribed payload had one
-extra LF at the end of each fragment (17,606 and 18,044 bytes). Runtime was
-unaffected because these sources are unused. This additional corrective commit
-removes exactly one final LF from each file; it does not change tests or runtime
-wiring, rewrite history, or count as planned source-pair increment 2.
-
-Locally reconstructed faulty files matched the committed Git blobs. The unchanged
-preparation suite reproduced three assertion failures across its three methods
-(two size subtests and prefix comparison; parsing passed). Against the corrected
-files all three methods passed. Corrected Git blobs must be
-8bd98db00cbcdd87a3e7910ccc860820262c5fc4 (010) and
-350f9b2b998a035ec17a5ab2f7840ae622430bba (020). Verify these after pushing.
-Full-suite, CI and live validation remain pending; no CI outcome is claimed.
+README, HANDOVER.md and TODO.md index links remain unchanged; no deployment or
+runtime change occurs yet. The monolith-prefix test must be replaced at activation.
+SG-TODO-006 stage 2 remains paused; SG-TODO-004 stays on hold. SQLite splitting
+follows separately. Manifest, documentation and CI logs are not code-refactor targets.
