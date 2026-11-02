@@ -106,9 +106,9 @@ def dnd_candidates(context, species):
 def fivetools_candidates(species, display):
     try:
         root = display.get("fivetools_data_base_url", "https://5e.tools/data/bestiary").rstrip("/")
-        sources = display.get("fivetools_sources", ["MM", "XMM"])
-        if not isinstance(sources, list) or len(sources) > 32 or not all(isinstance(s, str) for s in sources):
-            raise ValueError("Invalid sources")
+        sources = ft.configured_sources(display)
+        if not sources:
+            return []
         index = ft.load_json(root + "/index.json")
         if not isinstance(index, dict):
             raise ValueError("Invalid index")

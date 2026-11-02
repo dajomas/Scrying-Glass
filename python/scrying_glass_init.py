@@ -17,7 +17,7 @@ from web_html.login_html import LOGIN
 
 DEFAULT_STORAGE_DIR = './scrying-glass-data'
 
-DEFAULT_CONFIG = {'network': {'bind': '0.0.0.0', 'admin_port': 3000, 'client_port': 3100}, 'storage_dir': DEFAULT_STORAGE_DIR, 'security': {}, 'display': {'background': '#080b14', 'entry_direction': 'from_bottom', 'exit_direction': 'to_bottom', 'monster_width_percent': 45, 'dndbeyond_image_lookup': True, 'fivetools_fallback': True, 'fivetools_sources': ['MM', 'XMM'], 'fivetools_data_base_url': 'https://5e.tools/data/bestiary', 'fivetools_image_base_url': 'https://5e.tools/img'}}
+DEFAULT_CONFIG = {'network': {'bind': '0.0.0.0', 'admin_port': 3000, 'client_port': 3100}, 'storage_dir': DEFAULT_STORAGE_DIR, 'security': {}, 'display': {'background': '#080b14', 'entry_direction': 'from_bottom', 'exit_direction': 'to_bottom', 'monster_width_percent': 45, 'dndbeyond_image_lookup': True, 'fivetools_fallback': True, 'fivetools_sources': ['MM', 'XMM', 'PHB', 'XPHB', 'DMG', 'XDMG'], 'fivetools_data_base_url': 'https://5e.tools/data/bestiary', 'fivetools_image_base_url': 'https://5e.tools/img'}}
 
 def merge(a: dict[str, Any], b: dict[str, Any]) -> dict[str, Any]:
     """Recursively merge configuration mappings without modifying either input."""
@@ -27,14 +27,21 @@ def merge(a: dict[str, Any], b: dict[str, Any]) -> dict[str, Any]:
     return out
 
 def load_config(p: Path | None) -> dict[str, Any]:
-    """Load JSON or YAML configuration and merge it with the defaults."""
+    """Load JSON/YAML and validate the ordered optional-provider source list."""
+    from python.scrying_glass_fivetools import configured_sources
     if p is None:
-        return copy.deepcopy(DEFAULT_CONFIG)
-    raw = p.read_text(encoding='utf-8')
-    x = json.loads(raw) if p.suffix.lower() == '.json' else yaml.safe_load(raw)
-    if not isinstance(x, dict):
-        raise ValueError('Configuration root must be a mapping/object')
-    return merge(DEFAULT_CONFIG, x)
+        config = copy.deepcopy(DEFAULT_CONFIG)
+    else:
+        raw = p.read_text(encoding='utf-8')
+        x = json.loads(raw) if p.suffix.lower() == '.json' else yaml.safe_load(raw)
+        if not isinstance(x, dict):
+            raise ValueError('Configuration root must be a mapping/object')
+        config = merge(DEFAULT_CONFIG, x)
+    display = config.get('display')
+    if not isinstance(display, dict):
+        raise ValueError('display must be a mapping/object')
+    display['fivetools_sources'] = configured_sources(display)
+    return config
 
 def password_hash(password: str, salt: bytes | None=None) -> str:
     """Password hash."""

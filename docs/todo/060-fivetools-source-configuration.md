@@ -4,63 +4,77 @@
 
 ## SG-TODO-006 - Expand configurable 5e.tools defaults and display book names
 
-- Status: proposed/requested; implementation and validation not started.
-- Requested: 2026-11-02.
+- Status: in progress; stage 1 prepared, CI/live validation pending; stage 2 UI names not implemented.
+- Requested: 2026-11-02. Two-commit delivery approved: 2026-11-02.
 - Priority, owner and deadline: not assigned.
-- Dependency: resolve XPBH/XPHB identifier discrepancy before implementing defaults.
+- Preparation base: a8461e93ac6281f618aa3b436a68e2787578e909 on features/perplexity.
+- Identifier decision: user corrected XPBH to XPHB on 2026-11-02.
 
-### Requested behavior
+### Approved staged delivery
 
-Expand the MM/XMM source set to six sources, allow configuration in the config
-file, and use all six defaults when the list is omitted. Preserve explicit user
-configuration rather than appending default sources unconditionally.
+1. Source configuration/providers, tests and documentation: six defaults, explicit ordered overrides and empty-list handling. Raw source codes remain visible in this stage.
+2. Descriptive UI book/year names, preserving raw identifiers internally, with UI tests and documentation.
 
-The user's literal requested identifiers are:
+Stage 1 is a usable expanded-search increment, not completion of the full task.
+Do not close before stage 2 and required validation. SG-TODO-004 remains on hold
+and is not a dependency for this public-provider work.
 
-    MM, XMM, PHB, XPBH, DMG, XDMG
+### Source configuration and compatibility
 
-The same request defines an X prefix as the 2024 version of the corresponding
-2014 source. That rule would produce XPHB from PHB, not XPBH. Preserve the literal
-request here; verify the intended/provider identifier before changing code. Do not
-silently drop the 2024 player-handbook source or implement an unverified alias.
+Omitting display.fivetools_sources uses, in order:
 
-### On-screen labels requested
+    MM, XMM, PHB, XPHB, DMG, XDMG
 
-| Requested identifier | Descriptive label |
+JSON/YAML explicit lists replace the defaults, never append to them. An explicit
+empty list searches no 5e.tools sources and does not fetch its index/data, without
+disabling independent D&D Beyond lookup. Duplicate identifiers are searched once
+in first-occurrence order. Identifiers are case-sensitive, nonempty strings without
+surrounding whitespace; maximum 32 input entries. Null, scalar, malformed lists and
+invalid display mappings fail configuration loading rather than acting as omission.
+
+Existing config files explicitly listing only MM/XMM remain two-source overrides.
+Remove that key or expand it to opt into all six; restart after configuration edits.
+The configuration example is updated. Shared provider validation/default handling
+is used by candidate enumeration and legacy first-result stats/image lookup. The
+normal merge still isolates defaults from mutations. No new configuration key,
+schema, credentials, bundled third-party data or provider-order change is added.
+
+### Descriptive labels (stage 2 remaining)
+
+| Identifier | Requested label |
 |---|---|
 | MM | Monster Manuals 2014 |
 | XMM | Monster Manuals 2024 |
 | PHB | Player Handbook 2014 |
-| XPBH (XPHB discrepancy unresolved) | Player Handbook 2024 |
+| XPHB | Player Handbook 2024 |
 | DMG | Dungeon Master Guide 2014 |
 | XDMG | Dungeon Master Guide 2024 |
 
-These labels preserve the user's wording. Keep provider identifiers distinct from
-labels in requests, deduplication, source URLs and selected-candidate identity.
-Use descriptive names in candidate choices and lookup outcomes; do not replace
-provider source codes with display strings internally. Define a sensible fallback
-for custom/unmapped configured sources without inventing book metadata.
-
-### Existing implementation to extend
-
-config.example.yaml already exposes display.fivetools_sources: ["MM", "XMM"].
-Review configuration normalization plus both candidate and legacy stats/image
-provider paths so an omitted setting has one consistent six-source default.
-Update the existing key, configuration example and relevant documentation rather
-than adding a competing setting. Config/data/source validation must distinguish
-unavailable data or provider failure from a successful zero-match search.
+Preserve raw IDs in URLs, matching, deduplication and selected-candidate identity.
+Show names in popup choices and lookup notifications; unknown custom source codes
+must remain usable without fabricated names/edition metadata. UI behavior is not
+changed by stage 1.
 
 ### Acceptance and validation
 
-- [ ] Resolve the intended 2024 player-handbook identifier and record the decision.
-- [ ] Omitted list uses the agreed six-source default consistently across lookup paths.
-- [ ] Explicit lists override defaults; ordering and existing source matching remain predictable.
-- [ ] Configuration validation covers malformed lists and explicitly empty lists according to a documented policy.
-- [ ] Candidate popup and result notifications show the requested year-specific descriptive names.
-- [ ] Unknown custom source labels remain usable without incorrect edition claims.
-- [ ] Confirm each configured source is present/usable in the provider's supported data index; report missing data accurately.
-- [ ] Offline/config/UI regressions verify omitted/explicit settings, all six labels, provider order and selected identity.
+- [x] User confirmed XPHB as the intended identifier.
+- [ ] Review CI for omitted defaults, explicit/empty settings, ordering, deduplication and validation across configuration and provider paths.
+- [ ] Verify all six sources can supply usable stats/images through supported live data; distinguish index entries from successful live retrieval.
+- [ ] Deliver and validate descriptive names in popup choices and result notifications, including unknown/custom IDs.
+- [ ] Review complete regression CI and authorized live/browser behavior before completion.
 
-No configuration defaults, lookup implementation or live-provider assumptions are
-changed by this documentation-only task entry. Account integration SG-TODO-004
-is on hold and is not a dependency for this public-provider source-list work.
+Twelve new offline tests passed locally. They use the real 5e.tools helper module
+and AST-extracted actual config/candidate functions, with JSON/YAML temporary files
+and mocked data HTTP. They do not initialize the complete FastAPI server. Sources
+compile; full application/CI tests and live data/image access remain pending.
+Existing provider/diagnostics/UI tests remain unchanged and must run normally.
+
+All six IDs were present in data/bestiary/index.json of 5etools-mirror-3/5etools-src
+at 8790755429c346d20020eed7826d312d484c393f (blob 6c1dc9533c847cd5e4d081b68b7ad705db0278ef).
+This verifies index metadata only. The direct live 5e.tools fetch failed in the
+assistant environment; runtime reachability, returned stats and images are not
+claimed verified. Existing missing-source/HTTP error policies are otherwise unchanged.
+
+See [stage handover](../handover/230-fivetools-sources.md). README's explicit
+MM/XMM snippet remains a valid restrictive override, not the new omitted-list
+default; the fuller README/UI documentation refresh is planned with stage 2.

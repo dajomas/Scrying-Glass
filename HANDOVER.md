@@ -27,6 +27,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 20. [Monster candidate selection](docs/handover/200-monster-candidate-selection.md)
 21. [Next from Battle Actions](docs/handover/210-battle-actions-next.md)
 22. [Initial Admin input visibility](docs/handover/220-admin-initial-visibility.md)
+23. [Configurable 5e.tools source stages](docs/handover/230-fivetools-sources.md)
 
 ## Required update convention
 
