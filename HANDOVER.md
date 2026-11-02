@@ -22,6 +22,8 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 16. [Standalone audit and smoke fixtures](docs/handover/160-standalone-audit-and-smoke.md)
 17. [Manual reductions restart plan](docs/handover/170-manual-reductions-restart.md)
 
+18. [Attack statistics archive implementation](docs/handover/180-attack-statistics-delivery.md)
+
 ## Required update convention
 
 All future handover additions must follow the same indexed structure: update the relevant section or create a numbered Markdown file under `docs/handover/`, and update this index in the same commit. Read the [maintenance rules](docs/handover/040-maintenance-rules.md) before making changes.

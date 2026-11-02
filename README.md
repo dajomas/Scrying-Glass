@@ -21,6 +21,21 @@ combatant colours or configured player-display backgrounds. See
 
 Scrying Glass, formerly Monster Display, is a self-hosted tabletop encounter manager. The GM uses an authenticated Admin interface; players use a separate Client Display. Two FastAPI applications run in one Python process, persist structured data in SQLite and deliver player updates over WebSockets.
 
+## Attack statistics reductions (SG-TODO-002)
+
+Battle actions now has an Add statistics reduction button. Each row selects a
+target, Max HP / STR / DEX / CON / INT / WIS / CHA, and a positive amount. Reduction
+rows share the ordered Apply transaction with damage/healing; they are not part
+of Encounter tools. Applied rows stay locked to avoid replay.
+
+Restore statistics appears beside Reset in each character row (also available for
+monsters). Restore one statistic or all without healing current HP. The dialog
+also records original/base values; unknown ability scores must be entered before
+they can be reduced. See [workflow](docs/User-Guide.md#attack-statistics-reductions)
+and [migration/API details](docs/Technical-Documentation.md#attack-statistics-schema-8).
+This overlay is built directly from the original uploaded e0c321a archive, not the
+previous assistant patch. Schema 8 requires a storage backup before first start.
+
 ## Capabilities
 
 - Campaign-owned character rosters and named monster encounter setups.
@@ -128,7 +143,7 @@ Stop the application and back up the entire directory, configuration and service
 
 Use a trusted LAN or restricted VPN/HTTPS proxy, not public default HTTP listeners. Sessions are in memory and clear on restart. Account changes invalidate sessions. Player state is filtered, but names, images, public effects, life state and relative ordering are intentionally visible. /media is a static mount without session protection.
 
-There is one shared live active campaign, not an independent runtime per admin. Serialized transactions do not provide optimistic conflict detection for simultaneous edits. Coordinate administrators. See the other three documents for workflows, internals and operations.
+There is one shared live active campaign, not an independent runtime per admin. Most serialized transactions do not provide optimistic conflict detection for simultaneous edits. Attack batches containing statistic reductions and Restore statistics operations additionally check an encounter/campaign/revision token. Coordinate administrators. See the other three documents for workflows, internals and operations.
 
 ## 5e.tools monster fallback
 

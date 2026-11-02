@@ -4,12 +4,12 @@
 
 ## SG-TODO-002 - Support non-standard monster damage and mechanical effects
 
-- Status: proposed.
+- Status: in progress; attack-statistics increment implemented in archive, live validation pending.
 - Requested: 2026-11-01.
 - Priority: not assigned.
 - Owner: not assigned.
 - Deadline: not assigned.
-- Implementation and validation: not started.
+- Implementation and validation: attack-statistics increment implemented with offline tests; broader automation and live validation remain open.
 
 ### Requested change
 
@@ -56,8 +56,36 @@ Inspect the current HP/effect rules, battle action schemas and handlers, feature
 
 Add deterministic unit tests for stacking, recovery, rider amounts and order, damage versus HP-loss accounting, zero-stat/max-HP outcomes and bounds. Include integration tests for atomic rollback, migrations, persistence, snapshots, undo and import/export. Add UI tests for manual save outcomes, preview, effective/base statistics and visibility. Verify representative presets against their cited stat blocks during implementation, and distinguish mocked/offline checks from live-server validation.
 
-No implementation, schema migration or tests are delivered by this TODO entry. No owner, priority or deadline is agreed.
+The original TODO entry was documentation-only; the 2026-11-02 archive now supplies the attack-statistics increment below. No owner, priority or deadline is agreed.
 
 ### Related handover
 
 See [TODO tracking and documentation-only delivery scope](../handover/100-todo-tracking.md).
+
+
+### Revised first increment — attack statistics, 2026-11-02
+
+The latest request supersedes the prior assistant's Encounter tools design. This
+archive starts from the original uploaded baseline, not the previous patch.
+
+- [x] Add statistics reduction at the bottom of Battle actions: target, statistic,
+  positive amount. Choices: Max HP plus all six abilities.
+- [x] Resolve reduction rows in the same ordered atomic attack batch as damage and
+  healing; lock applied rows and reject stale reduction batches.
+- [x] Add Restore statistics beside character Reset (and monster Reset), restoring
+  one stat or all to original/base values without healing or revival.
+- [x] Provide original/base editing for missing ability scores and inspect totals;
+  keep recovery manual and preserve full stacked reductions at zero.
+- [x] Integrate schema 8 persistence, migration backup, undo/checkpoints, rosters,
+  setups, reload and bundles, keeping mechanical data private.
+- [x] Execute focused real-SQLite/transaction tests and mocked UI checks plus
+  available existing Python/JavaScript regressions.
+- [ ] Verify actual startup, authenticated role/origin/ownership HTTP enforcement
+  and real-browser attack/restore behavior on the deployment runtime.
+- [ ] Validate backup/upgrade/rollback on a copy of deployment data; review CI if run.
+
+Preset/edition verification is not required for this manual-only increment.
+Conditional saves/riders, linked attacker healing, automatic recovery, special
+zero/death rules, recurrence, healing prohibition and absorption remain later
+work. No derived ability modifiers are automated. Do not mark the broader
+SG-TODO-002 complete. See [implementation evidence](../handover/180-attack-statistics-delivery.md).

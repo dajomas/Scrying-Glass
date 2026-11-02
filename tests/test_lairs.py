@@ -184,6 +184,9 @@ class LairTests(unittest.TestCase):
         self.assertEqual(imported['lairs'][0]['name'],'Volcano')
     def test_schema_v5_upgrade_and_backup(self):
         path=Path(self.tmp.name)/'upgrade.sqlite3';db=SQLiteStorage(path)
+        for table in ('characters', 'monsters', 'snapshot_characters'):
+            for column in ('mechanical_version', 'reduction_stat', 'reduction_amount'):
+                db.connection.execute(f'ALTER TABLE {table}_effects DROP COLUMN {column}')
         db.connection.execute('DROP TABLE lairs');db.connection.execute('ALTER TABLE encounters DROP COLUMN has_lair');db.connection.execute('PRAGMA user_version=5');db.close()
         db=SQLiteStorage(path)
         try:

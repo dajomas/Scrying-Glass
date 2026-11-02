@@ -711,6 +711,7 @@ function monsterRow(monster) {
         <button data-t="${esc(monster.id)}" data-f="show_hp">HP ${monster.show_hp ? 'on' : 'off'}</button>
         <button data-t="${esc(monster.id)}" data-f="show_initiative">Init ${monster.show_initiative ? 'on' : 'off'}</button>
         <button data-r="${esc(monster.id)}" class="reset">Reset</button>
+        <button type="button" data-statistics="${esc(monster.id)}">Restore statistics</button>
         <button
             class="danger"
             type="button"
@@ -763,6 +764,7 @@ function characterRow(character) {
         <button class="${character.visible ? 'on' : ''}" data-cv="${esc(character.id)}">Visible</button>
         <button data-ct="${esc(character.id)}" class="${character.in_turn ? 'on' : ''}">Turn</button>
         <button data-cr="${esc(character.id)}" class="reset">Reset</button>
+        <button type="button" data-statistics="${esc(character.id)}">Restore statistics</button>
         <button
             class="danger"
             type="button"
@@ -1327,6 +1329,7 @@ function sortedMonstersForAdmin() {
 async function load(rethrowErrors = false) {
     try {
         latest = await request('/api/state');
+        window.scryingStatisticsState?.(latest);
         window.scryingLairsRender?.(latest);
         window.updateEncounterToolsVisibility?.(latest);
 
@@ -2859,6 +2862,7 @@ const battleActionModal = document.querySelector('#battleActionModal');
 const battleActionForm = document.querySelector('#battleActionForm');
 const battleActionRows = document.querySelector('#battleActionRows');
 let battleActionActorId = null;
+let battleStatisticsToken = null;
 let battleActionsApplying = false;
 
 function activeBattleTargets() {
@@ -2879,7 +2883,7 @@ function closeBattleActions() {
 }
 
 function actionAmountRequired(action) {
-    return action === 'damage' || action === 'heal';
+    return action === 'damage' || action === 'heal' || action === 'reduce-stat';
 }
 
 function updateActionRowAmount(row) {
@@ -2963,6 +2967,32 @@ function addBattleActionRow(reaction = false) {
     updateActionRowAmount(row);
 }
 
+function addStatisticsReductionRow() {
+    if (battleActionsApplying) return;
+    const targets = activeBattleTargets().filter(x => x.alive);
+    if (!targets.length) { message('There are no living active targets.'); return; }
+    const row = document.createElement('div');
+    row.className = 'battle-action-row statistics-reduction-row';
+    row.innerHTML = `
+        <input data-action-kind type="hidden" value="reduce-stat">
+        <label>Target <select data-action-target required>
+          <option value="" disabled selected>Select target…</option>
+          ${targets.map(x=>`<option value="${esc(x.id)}">${esc(x.name)}</option>`).join('')}
+        </select></label>
+        <label>Statistic <select data-action-stat required>
+          <option value="max_hp">Max HP</option><option value="strength">STR</option>
+          <option value="dexterity">DEX</option><option value="constitution">CON</option>
+          <option value="intelligence">INT</option><option value="wisdom">WIS</option>
+          <option value="charisma">CHA</option>
+        </select></label>
+        <label class="amount-field">Amount to reduce
+          <input data-action-amount type="number" required min="1" max="99999" step="1" value="1">
+        </label>
+        <button data-remove-action-row type="button" class="danger">Remove</button>`;
+    row.querySelector('[data-remove-action-row]').addEventListener('click',()=>row.remove());
+    battleActionRows.appendChild(row);
+}
+
 function openBattleActions(actorId) {
     if (battleActionsApplying) return;
     if ((latest.lairs || []).some(x => x.id === actorId)) {
@@ -2979,6 +3009,7 @@ function openBattleActions(actorId) {
 
     document.querySelector('#battleActionNotice').textContent = '';
     battleActionActorId = actorId;
+    battleStatisticsToken = latest.statistics_token;
     document.querySelector('#battleActionTitle').textContent =
         `Battle actions: ${actor.name}`;
 
@@ -2992,6 +3023,7 @@ document.querySelector('#addBattleActionTarget').onclick = () => {
 };
 
 document.querySelector('#addBattleReaction').onclick = () => addBattleActionRow(true);
+document.querySelector('#addStatisticsReduction').onclick = addStatisticsReductionRow;
 
 document.querySelector('#closeBattleActions').onclick = closeBattleActions;
 
@@ -3026,6 +3058,7 @@ battleActionForm.onsubmit = async event => {
             action,
             amount: actionAmountRequired(action) ? Number(rawAmount) : null,
             critical_hit: action==='damage'&&Boolean(row.querySelector('[data-action-critical]')?.checked),
+            ...(action === 'reduce-stat' ? {stat: row.querySelector('[data-action-stat]').value} : {}),
         };
     });
 
@@ -3047,6 +3080,7 @@ battleActionForm.onsubmit = async event => {
             body: JSON.stringify({
                 actor_id: battleActionActorId,
                 actions,
+                ...(actions.some(x=>x.action==='reduce-stat') ? {statistics_token: battleStatisticsToken} : {}),
             }),
         });
 
@@ -3063,6 +3097,7 @@ battleActionForm.onsubmit = async event => {
             `Applied ${result.applied} battle action${result.applied === 1 ? '' : 's'}. ` +
             'Add targets or reactions to continue, or Close when finished.';
         await load(true);
+        if (typeof battleStatisticsToken !== 'undefined') battleStatisticsToken = latest.statistics_token;
     } catch (error) {
         document.querySelector('#battleActionNotice').textContent = applied
             ? `Actions were applied, but refresh failed: ${error.message}. Refresh before continuing.`

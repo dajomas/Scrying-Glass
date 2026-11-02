@@ -267,3 +267,82 @@ Live validation: enter Crawling Claw and check that the notification identifies
 check its token in the player view. If no result appears, inspect WARNING logs
 and verify index/source URL reachability from the service account. Token paths
 and live endpoints could not be verified from the patch-build environment.
+
+
+## Attack statistics reductions
+
+In the current combatant's Battle actions/attack window, the bottom action bar
+includes Add statistics reduction. This is an attack row, not an Encounter tools
+feature. Click it once per target/statistic to reduce, and supply:
+
+- Target: an active, living combatant from the current encounter.
+- Statistic: Max HP, STR, DEX, CON, INT, WIS or CHA.
+- Amount to reduce: a positive whole number from 1 to 99,999.
+
+Arrange damage, healing and reduction rows in resolution order, top to bottom.
+Apply commits the pending rows together; an invalid reduction rejects the whole
+batch, so it cannot leave preceding damage half-applied. Rows already applied
+stay locked and are omitted from subsequent applies. Close discards unapplied
+rows only. Remove the initial unused damage row if this action only reduces a
+statistic. Reactions keep their existing damage/healing-only contract.
+
+Maximum HP has a known base from the current maximum. The original archive does
+not store six ability scores. Use Restore statistics beside Reset to enter known
+original/base scores (0–30) before applying ability reductions. Blank means
+unknown, never a guessed score. The server rejects a reduction of an unknown
+ability with instructions to enter the base first. This setup is not another
+attack field: attack rows contain only target, statistic and amount.
+
+Reductions stack and preserve full amounts even at zero. Effective values are
+original/base minus the total reduction, floored at zero. Reducing maximum HP
+clamps current HP only if above the new maximum; it does not apply a second damage
+event, consume temporary HP, add failed death saves or trigger massive-damage
+death. Zero Strength (or any other ability) does not automatically kill a creature.
+Resolve monster-specific rules, saves and amounts manually. The program does not
+recalculate AC, initiative, attack bonuses or other derived values from abilities.
+
+### Restore statistics beside Reset
+
+Every character row has Restore statistics immediately beside Reset; monster rows
+have the same control so their bases and restoration are usable too. Open it to
+inspect effective values, total reductions and original/base values. You can:
+
+1. Enter or correct original maximum HP and any known ability scores, then use
+   Save original/base statistics and confirm. Blank abilities remain unknown.
+   You cannot erase a base score while that ability still has active reductions.
+2. Choose a specific statistic or All statistics, then Restore selected statistics
+   and confirm. This removes all attack reductions for the chosen statistic(s),
+   restoring effective values to their original/base values. It is not a full
+   combatant reset and does not affect damage, temporary HP, battle membership,
+   initiative or unrelated conditions. It never heals current HP or resurrects.
+3. Close or cancel the confirmation to leave data unchanged. Base drafts are not
+   overwritten by polling while the dialog is open. Changing campaign or setup
+   closes it and discards drafts. Stale data produces an error: reopen and review.
+
+An explicit base increase also does not heal. If there are active maximum-HP
+reductions, legacy Max HP edits that would change the effective value are rejected;
+use original/base editing instead. Submitting the unchanged effective maximum is
+allowed. Without maximum-HP reductions, legacy Max HP edits update the stored base
+for opted-in entities.
+
+### Ordinary Reset, persistence and privacy
+
+Ordinary Reset remains separate: it retains reductions and explicit bases while
+capping its normal reset HP at the effective maximum. For characters it refills
+to the effective maximum; for monsters Original HP is still the reset-HP template.
+For example Original HP 9, base Max HP 20 and reduction 4 resets the monster to
+9/16, without replacing the base of 20. Restore statistics restores Max HP to 20
+but leaves current HP 9. Reset is an explicit recovery action; restoration alone
+is not healing.
+
+Turns, rests, ending concentration and deleting the attack source do not expire
+these reductions. Recover them manually with Restore statistics. Bases and
+reductions survive reload, rosters, setups, setup import, undo/checkpoints and
+campaign bundles. An entire attack batch is one undo operation. Restoration and
+base editing also have audit and undo records. Bundles remain private GM data.
+
+The player display does not receive ability scores, bases, reduction payloads or
+source mechanics; existing effective-HP visibility settings remain in force.
+Attack reductions are private and not listed as ordinary Encounter tools effects.
+No automatic monster presets, linked healing or special death/recovery rules are
+included.

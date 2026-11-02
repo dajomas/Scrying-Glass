@@ -201,3 +201,26 @@ Live validation: enter Crawling Claw and check that the notification identifies
 check its token in the player view. If no result appears, inspect WARNING logs
 and verify index/source URL reachability from the service account. Token paths
 and live endpoints could not be verified from the patch-build environment.
+
+
+## SG-TODO-002 attack-statistics overlay
+
+This replacement-file archive is built directly from the original supplied
+`scrying-glass-source-e0c321a-base64.txt`. Do not stack it on the earlier assistant
+patch: use the original baseline, or review/merge differences explicitly. Its
+manifest records original and replacement hashes. Stop the server, back up all
+storage/media/configuration and deploy Python, templates and static files together.
+Keep Patch/ out of application deployment and Git staging. No deletions/renames or
+manual SQL are required. Restart and reload admin browsers after overlaying.
+
+Startup upgrades supported storage to schema 8 with the normal database backup.
+See [technical details](docs/Technical-Documentation.md#attack-statistics-schema-8)
+and [workflow](docs/User-Guide.md#attack-statistics-reductions). Roll back only with
+matching pre-upgrade code and the full backup; never fake a downgrade by changing
+user_version. Root package-manifest.json still describes the historical full
+package, not this overlay; Patch/FILE_MANIFEST.json inventories this delivery.
+
+Local service/SQLite and mocked DOM tests are recorded in Patch/Validation/.
+Application startup, authenticated HTTP and real-browser deployment validation
+remain pending because FastAPI/Uvicorn are unavailable in the build environment.
+No GitHub commit, workflow dispatch or CI outcome is claimed for archive delivery.

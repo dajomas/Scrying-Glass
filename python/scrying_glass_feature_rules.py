@@ -7,10 +7,12 @@ def validate_effects(effects):
     if not isinstance(effects,list) or len(effects)>100: raise ValueError('At most 100 effects are allowed')
     seen=set()
     for e in effects:
-        if not isinstance(e,dict) or set(e)-{'id','name','source_id','notes','public','concentration','timing','turns','anchor_id'}: raise ValueError('Invalid effect object')
+        if not isinstance(e,dict) or set(e)-{'id','name','source_id','notes','public','concentration','timing','turns','anchor_id','mechanical'}: raise ValueError('Invalid effect object')
         for k,limit in (('id',100),('name',100),('notes',2000)):
             value=e.get(k,'' if k=='notes' else None)
             if not isinstance(value,str) or len(value)>limit or (k!='notes' and not value.strip()): raise ValueError('Invalid effect '+k)
+        from .scrying_glass_statistics import validate_mechanical
+        validate_mechanical(e)
         if e['id'] in seen: raise ValueError('Duplicate effect ID')
         seen.add(e['id'])
         for k in ('source_id','anchor_id'):
@@ -44,6 +46,9 @@ def normalize_features(item):
     # Historical negatives are normalized, not reinterpreted as damage events.
     item['hp']=max(0,item.get('hp',0));item['max_hp']=max(0,item.get('max_hp',0))
     if 'original_hp' in item: item['original_hp']=max(0,item['original_hp'])
+    item.setdefault('effects', []); validate_effects(item['effects'])
+    from .scrying_glass_statistics import normalize_statistics
+    normalize_statistics(item)
     if 'life_state' not in item: item['life_state']='standing' if item['hp']>0 and item.get('alive',True) else ('dead' if item['hp']>0 else 'down')
     state=item['life_state']
     if not isinstance(state,str) or state not in STATES: raise ValueError('Invalid life state')

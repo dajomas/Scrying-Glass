@@ -10,7 +10,7 @@ from .scrying_glass_feature_logging import feature_changes
 from .scrying_glass_turn_rules import can_take_turn
 from .scrying_glass_identity_rules import validate_roster_setup_ids
 
-TRACKED={'update_monster','update_character','bulk_monsters','bulk_characters','reset_one_combatant','reset_all','battle_start','battle_next','battle_end','apply_battle_actions','edit_features','add_effect','remove_effect','end_concentration','restore_checkpoint','create_lair','update_lair','delete_lair','apply_lair_action'}
+TRACKED={'edit_statistics','edit_monster','update_monster','update_character','bulk_monsters','bulk_characters','reset_one_combatant','reset_all','battle_start','battle_next','battle_end','apply_battle_actions','edit_features','add_effect','remove_effect','end_concentration','restore_checkpoint','create_lair','update_lair','delete_lair','apply_lair_action'}
 BOUNDARIES={'load_setup','new_setup','activate_campaign','delete_campaign','delete_setup','rename_setup','add_setup_to_campaign','clear_activity_log'}
 
 def fingerprint(state):
@@ -119,6 +119,9 @@ class FeaturesService:
         for action,amount,note in feature_changes(before,target,delta):
             self.log(action,target,amount,note=note)
         await self.persist();return target
+    async def edit_statistics(self,ident,body):
+        from .scrying_glass_statistics_service import edit_statistics
+        return await edit_statistics(self,ident,body)
     async def add_effect(self,ident,body):
         if not isinstance(body,dict) or set(body)-{'name','source_id','notes','public','concentration','timing','turns','anchor_id'}: raise self.context.HTTPException(422,'Invalid effect fields')
         target=self.target(ident)

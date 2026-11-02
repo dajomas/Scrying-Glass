@@ -4,6 +4,15 @@
 
 Recorded: 2026-11-01. Related task: [SG-TODO-002](../todo/020-monster-damage-effects.md).
 
+## Superseding request — 2026-11-02
+
+The current user request selects attack-window reduction rows for all seven
+statistics and a Restore statistics button beside character Reset, built from the
+original archive rather than the previous assistant patch. See [180: attack
+statistics delivery](180-attack-statistics-delivery.md). Historical scope/delivery
+requirements below remain history, not the current implementation status or an
+instruction to stack the earlier patch.
+
 ## Actual delivery state
 
 The preceding chat created and repeatedly reconstructed temporary drafts for a manual-only first increment. No implementation commit or push succeeded in that chat. Exported files and JSON payloads are not repository delivery and must not be assumed available to another chat. Do not ask the user to upload those drafts: implement from the live working branch and the agreed requirements below.

@@ -32,13 +32,16 @@ def reset_entity(x: dict[str, Any]) -> None:
 
     if "monster_species" in x:
         x["hp"] = x["original_hp"]
-        x["max_hp"] = x["original_hp"]
+        if 'base_max_hp' not in x:
+            x['max_hp'] = x['original_hp']
         x["show_ac"] = False
         x["show_hp"] = False
         x["show_initiative"] = False
     else:
         x["hp"] = x["max_hp"]
 
+    from .scrying_glass_statistics import normalize_statistics
+    normalize_statistics(x)
     x["temp_hp"] = 0
     x["death_successes"] = 0
     x["death_failures"] = 0

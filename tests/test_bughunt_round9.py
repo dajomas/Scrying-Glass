@@ -44,7 +44,7 @@ class MonsterHpBoundsTests(unittest.TestCase):
         path=Path(__file__).resolve().parents[1]/'python/scrying_glass_admin_monsters.py'
         cls=next(x for x in ast.parse(path.read_text()).body if isinstance(x,ast.ClassDef))
         future=ast.ImportFrom(module='__future__',names=[ast.alias(name='annotations')],level=0)
-        scope=dict(Form=lambda *a,**kw:None,File=lambda *a,**kw:None)
+        scope=dict(__name__='python.scrying_glass_admin_monsters',__package__='python',Form=lambda *a,**kw:None,File=lambda *a,**kw:None)
         exec(compile(ast.fix_missing_locations(ast.Module(body=[future,cls],type_ignores=[])),str(path),'exec'),scope)
         handler=scope['AdminMonstersMixin']();handler.context=self.c
         result=asyncio.run(transactional_handler(self.c,handler.edit_monster)(

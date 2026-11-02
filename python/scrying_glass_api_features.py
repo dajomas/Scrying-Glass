@@ -13,6 +13,7 @@ def install_feature_routes(context,app):
     async def feature_summary(): return context.features.summary()
     async def undo(body:dict=Body(...)): return await context.features.undo(body)
     async def edit_features(ident:str,body:dict=Body(...)): return await context.features.edit_features(ident,body)
+    async def edit_statistics(ident:str,body:dict=Body(...)): return await context.features.edit_statistics(ident,body)
     async def add_effect(ident:str,body:dict=Body(...)): return await context.features.add_effect(ident,body)
     async def remove_effect(ident:str,effect_id:str): return await context.features.remove_effect(ident,effect_id)
     async def end_concentration(ident:str): return await context.features.end_concentration(ident)
@@ -22,4 +23,4 @@ def install_feature_routes(context,app):
     async def delete_checkpoint(ident:int): return await context.features.delete_checkpoint(ident)
     async def export_bundle(): return Response(context.features.export_bundle(),media_type='application/zip',headers={'Content-Disposition':'attachment; filename="scrying-glass-campaign.zip"','Cache-Control':'no-store'})
     async def import_bundle(file:UploadFile=File(...)): return await context.features.import_bundle(await file.read(25*1024*1024+1))
-    for path,handler,method in [('/api/features',feature_summary,'GET'),('/api/battle/undo',undo,'POST'),('/api/combatants/{ident}/features',edit_features,'PATCH'),('/api/combatants/{ident}/effects',add_effect,'POST'),('/api/combatants/{ident}/effects/{effect_id}',remove_effect,'DELETE'),('/api/combatants/{ident}/concentration/end',end_concentration,'POST'),('/api/checkpoints',save_checkpoint,'POST'),('/api/checkpoints/{ident}',preview_checkpoint,'GET'),('/api/checkpoints/{ident}/restore',restore_checkpoint,'POST'),('/api/checkpoints/{ident}',delete_checkpoint,'DELETE'),('/api/campaign-bundle',export_bundle,'GET'),('/api/campaign-bundle',import_bundle,'POST')]: route(path,handler,method)
+    for path,handler,method in [('/api/combatants/{ident}/statistics',edit_statistics,'POST'),('/api/features',feature_summary,'GET'),('/api/battle/undo',undo,'POST'),('/api/combatants/{ident}/features',edit_features,'PATCH'),('/api/combatants/{ident}/effects',add_effect,'POST'),('/api/combatants/{ident}/effects/{effect_id}',remove_effect,'DELETE'),('/api/combatants/{ident}/concentration/end',end_concentration,'POST'),('/api/checkpoints',save_checkpoint,'POST'),('/api/checkpoints/{ident}',preview_checkpoint,'GET'),('/api/checkpoints/{ident}/restore',restore_checkpoint,'POST'),('/api/checkpoints/{ident}',delete_checkpoint,'DELETE'),('/api/campaign-bundle',export_bundle,'GET'),('/api/campaign-bundle',import_bundle,'POST')]: route(path,handler,method)
