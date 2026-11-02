@@ -8,7 +8,7 @@ from .scrying_glass_admin_pages import AdminPagesMixin
 from .scrying_glass_admin_display import AdminDisplayMixin
 from .scrying_glass_admin_setups import AdminSetupsMixin
 from .scrying_glass_admin_campaigns import AdminCampaignsMixin
-from .scrying_glass_admin_monsters import AdminMonstersMixin
+from .scrying_glass_monster_selection import CandidateMonstersMixin as AdminMonstersMixin
 from .scrying_glass_admin_characters import AdminCharactersMixin
 from .scrying_glass_admin_combatants import AdminCombatantsMixin
 from .scrying_glass_admin_battle import AdminBattleMixin
@@ -20,6 +20,7 @@ ADMIN_ROUTES = (
     ('/login', 'admin_login_post', 'POST', False),
     ('/', 'admin_home', 'GET', False),
     ('/api/state', 'admin_get_state', 'GET', True),
+    ('/api/monsters/lookup', 'monster_lookup_candidates', 'GET', True),
     ('/api/dndbeyond/monster-stats', 'dndbeyond_monster_stats', 'GET', True),
     ('/api/display/battle-order-font', 'adjust_battle_order_font', 'POST', True),
     ('/api/display/background', 'update_display_background', 'PATCH', True),
@@ -96,7 +97,7 @@ class AdminAPI(AdminPagesMixin, AdminDisplayMixin, AdminSetupsMixin, AdminCampai
                     self.context, handler, role="admin",
                     cookie_name=self.context.ADMIN_SESSION_COOKIE,
                 )
-            elif authenticated and name != "dndbeyond_monster_stats":
+            elif authenticated and name not in {"dndbeyond_monster_stats", "monster_lookup_candidates"}:
                 handler = serialized_handler(
                     self.context, handler, role="admin",
                     cookie_name=self.context.ADMIN_SESSION_COOKIE,

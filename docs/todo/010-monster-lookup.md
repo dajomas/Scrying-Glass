@@ -4,59 +4,71 @@
 
 ## SG-TODO-001 - Account-backed monster lookup and explicit candidate selection
 
-- Status: proposed.
-- Requested: 2026-11-01.
-- Priority: not assigned.
-- Owner: not assigned.
-- Deadline: not assigned.
-- Implementation and validation: not started.
+- Status: in progress; candidate-selection increment prepared, validation pending.
+- Requested: 2026-11-01. Narrowed delivery agreed: 2026-11-02.
+- Priority, owner and deadline: not assigned.
+- Original account-backed scope: deferred/blocked on verified supported and permitted authentication and entitlement access.
 
-### Requested behavior
+### Original requested behavior retained
 
 1. Allow adding a D&D Beyond account for monster searches.
-2. If D&D Beyond returns multiple monsters accessible to that account, show a popup so the user can select the wanted monster.
-3. If no accessible monsters are found in D&D Beyond, search 5e.tools. If it returns multiple matching monsters, show a popup to select the wanted monster.
-4. For either provider, automatically use the result when exactly one accessible matching monster is found; do not ask the user to select the only result.
+2. Count accessible matching monsters, not inaccessible search hits.
+3. Search D&D Beyond first. One accessible match is automatic; multiple accessible matches require explicit selection, without searching 5e.tools.
+4. Only zero accessible D&D Beyond matches triggers 5e.tools. One fallback match is automatic; multiple fallback matches require selection.
+5. Neither provider finding a match reports the outcome and preserves manual entry.
 
-### Provider and selection rules
+The original account-backed acceptance criteria remain open. Publicly retrievable
+usable stats are not proof of access through a configured account.
 
-Count accessible matching monsters, not inaccessible search hits. Search D&D Beyond first. Search 5e.tools only when D&D Beyond produces no accessible matching monsters, rather than combining both providers into one selection list.
+### Agreed candidate-selection increment - 2026-11-02
 
-| D&D Beyond accessible matches | 5e.tools matches | Required behavior |
+Implement selection using existing public providers without credentials or account
+entitlement claims. A usable candidate has parseable AC or HP. Enumerate all usable
+matches for the primary provider, and search configured 5e.tools sources only after
+a successful zero-result primary lookup (or when the primary provider is disabled).
+
+| Primary usable matches | Fallback matches | Behavior |
 |---|---|---|
-| Exactly 1 | Not searched | Use the D&D Beyond result automatically. |
-| More than 1 | Not searched | Show the D&D Beyond selection popup; use the selected result. |
-| 0 | Exactly 1 | Use the 5e.tools result automatically. |
-| 0 | More than 1 | Show the 5e.tools selection popup; use the selected result. |
-| 0 | 0 | Report that no match was found and retain manual entry. |
+| 1 | Not searched | Use automatically. |
+| More than 1 | Not searched | Select from primary popup. |
+| 0 | 1 | Use fallback automatically. |
+| 0 | More than 1 | Select from fallback popup. |
+| 0 | 0 | Report no match; retain manual entry. |
 
-### Acceptance criteria
+Provider errors stop lookup with a distinct outcome; they do not masquerade as
+zero matches. Incomplete candidate enumeration is an error, not an incomplete
+selection list. Cancel or Escape closes selection without applying a result or
+triggering fallback. Species edits invalidate the selection. Preserve existing
+AC/HP overwrite/edit-race guards and use the chosen candidate's image snapshot
+through creation, even when that image is absent. Uploaded images take precedence.
 
-- [ ] An account can be added for D&D Beyond monster searches, using an authentication approach whose feasibility and permitted use have been verified.
-- [ ] Only monsters accessible through the configured account are offered for D&D Beyond selection.
-- [ ] A single D&D Beyond match is used without a popup and without a 5e.tools search.
-- [ ] Multiple D&D Beyond matches produce a selection popup, and the selected monster is used without a 5e.tools search.
-- [ ] Zero accessible D&D Beyond matches triggers the 5e.tools fallback.
-- [ ] A single 5e.tools match is used without a popup.
-- [ ] Multiple 5e.tools matches produce a selection popup, and the selected monster is used.
-- [ ] Neither provider finding a match leaves manual entry available and provides a clear outcome.
-- [ ] Verification covers the match-count table, inaccessible results, account/authentication failures and popup cancellation; the unresolved policies below must be agreed before those last two cases are finalized.
+### Acceptance and required validation
 
-### Dependencies and decisions still required
+All completion boxes remain unchecked until supporting verification is reviewed.
 
-These are implementation considerations, not additional user commitments or a claim that an account integration already exists:
+- [ ] Original: add an account using verified supported/permitted authentication.
+- [ ] Original: offer only candidates accessible to that configured account.
+- [ ] Candidate increment: verify every zero/one/many row in the table.
+- [ ] Verify deduplication, unusable results, independent provider flags and failed/incomplete searches.
+- [ ] Verify popup selection, automatic handling, cancellation, species changes and manual entry.
+- [ ] Verify existing-value protection and edits made while selection is open.
+- [ ] Verify selected-image continuity, upload precedence, token expiry and no-image behavior through actual HTTP creation.
+- [ ] Review full CI, real FastAPI route registration/authentication and live authorized provider/browser checks separately from mocks.
 
-- Verify a supported and permitted way to authenticate and search accessible D&D Beyond content. Record a blocker if that cannot be established; do not bypass access controls.
-- Decide whether an account is configured per Scrying Glass administrator or for the installation, and define connection/disconnection and expired-session behavior.
-- Decide how authentication or provider errors differ from a valid zero-match result, including whether an error should permit fallback.
-- Decide popup cancellation behavior and which identifying fields distinguish candidates, such as provider, source book or edition where available.
-- Choose protected credential/session storage. Do not put account secrets in Git, logs, exported bundles or documentation.
-- Review search-result deduplication and how the selected candidate feeds the existing stat/image lookup without silently choosing a different candidate later.
+Automated offline and intercepted-HTTP Chromium fixtures are included. The final
+committed fixtures have not yet been executed in the application environment.
+Existing CI discovers test_*.py modules; do not skip CI for this delivery.
 
-### Validation plan
+### Remaining account decisions and dependencies
 
-Add deterministic offline tests for provider order and zero/one/many accessible matches. Add UI tests for popup selection, automatic single-result handling and the agreed cancellation/error behavior. Perform any live account/provider verification only with authorized access; report mocked and live verification separately.
+Verify an authorized authentication/search mechanism; do not bypass access controls.
+Account configuration scope (per administrator versus installation), connection,
+disconnection, expired-session behavior and protected credential/session storage
+remain deferred with account access. Do not store secrets in Git, logs or campaign
+bundles. Revisit error policies if an authorized integration becomes available.
 
-### Related handover
-
-See [TODO tracking initialization](../handover/100-todo-tracking.md). Existing lookup diagnostic repairs are documented separately in [monster lookup diagnostics](../handover/080-monster-lookup-diagnostics.md); they do not implement this feature.
+Candidate identifiers use source links, provider/source labels and legacy/current
+metadata where available; D&D Beyond source-book names are not inferred. See
+[implementation and limitations](../handover/200-monster-candidate-selection.md).
+Earlier diagnostics repairs remain documented in
+[monster lookup diagnostics](../handover/080-monster-lookup-diagnostics.md).

@@ -1,5 +1,17 @@
 # Scrying Glass
 
+## Monster candidate selection (SG-TODO-001 increment)
+
+The Add monster form now enumerates usable public-provider matches. One match
+is used automatically; multiple matches open a selection dialog. D&D Beyond
+is searched first, with 5e.tools searched only after zero usable D&D Beyond
+matches. Provider errors stop lookup rather than silently triggering fallback.
+Cancel leaves manual entry available. The chosen result's image is retained
+through creation; a missing image does not select another monster's image.
+This adds no D&D Beyond account authentication or entitlement filtering.
+See [candidate selection handover](docs/handover/200-monster-candidate-selection.md)
+for limits, API compatibility and pending validation.
+
 ## Compact inline HP and initiative fields
 
 Character-table Current HP, Max HP and Initiative inputs, and monster-table
@@ -147,15 +159,19 @@ There is one shared live active campaign, not an independent runtime per admin. 
 
 ## 5e.tools monster fallback
 
-Optional monster suggestions now try D&D Beyond first, then 5e.tools JSON data.
+Optional monster suggestions try D&D Beyond first, then 5e.tools JSON data.
+The Add monster form uses the candidate-selection rules above; the legacy stats
+endpoint remains first-result based for existing API callers.
 AC accepts numeric entries and AC objects; HP prefers a supported dice formula
 and falls back to the numeric average. Names match exactly after case and
 punctuation normalization. The UI labels the provider and source. Existing
 AC/HP overwrite and in-flight edit protection are unchanged.
 
-Image lookup follows the same provider order when creating a monster without an
-uploaded image. 5etools supplies a token URL (explicit `tokenUrl` or a generated
-WebP token path when `hasToken` is set), not necessarily a full illustration.
+Without a selection token, image lookup follows the same provider order when
+creating a monster without an uploaded image. The Add monster form instead
+uses the selected image snapshot, or no automatic image for manual entry.
+5etools supplies a token URL (explicit `tokenUrl` or a generated WebP token path
+when `hasToken` is set), not necessarily a full illustration.
 Existing monsters' images are not retroactively updated. Image URLs are remote;
 they are not downloaded or cached locally, and availability is not probed.
 
@@ -167,29 +183,33 @@ fivetools_data_base_url: "https://5e.tools/data/bestiary"
 fivetools_image_base_url: "https://5e.tools/img"
 ```
 
-MM is tried before XMM to retain the older-edition preference. Only configured
-sources are searched: add source identifiers from the bestiary index to extend
-coverage. D&D Beyond and 5etools are independently controlled: disable both
-`dndbeyond_image_lookup` and `fivetools_fallback` to prevent optional provider
-lookups. No credentials are sent to 5etools. Remote JSON is bounded to 16 MB per
-file, fetched with a five-second socket timeout, and cached in-process for one
-hour with at most 32 entries. Restart clears the cache. Source files are loaded
-sequentially; configured source count affects cold-lookup latency.
+MM is tried before XMM to retain the older-edition preference in legacy lookups.
+Candidate selection enumerates all configured sources before offering a choice.
+Only configured sources are searched: add source identifiers from the bestiary
+index to extend coverage. D&D Beyond and 5etools are independently controlled:
+disable both `dndbeyond_image_lookup` and `fivetools_fallback` to prevent optional
+provider lookups. No credentials are sent to 5etools. Remote JSON is bounded to
+16 MB per file, fetched with a five-second socket timeout, and cached in-process
+for one hour with at most 32 entries. Restart clears the cache. Source files are
+loaded sequentially; configured source count affects cold-lookup latency.
 
 Unresolved `_copy` entries without their own usable values are skipped for stats;
 this is not a complete implementation of 5etools inheritance. Special-only AC/HP
-is not guessed. Fallback uses a single usable source entry and does not combine
-missing fields across providers/editions. Browser access to remote token hosts
-and server HTTPS access to data endpoints are required. Use third-party data
-and images only where permitted; none are bundled with this patch.
+is not guessed. A selected candidate does not combine missing fields across
+providers/editions. Browser access to remote token hosts and server HTTPS access
+to data endpoints are required. Use third-party data and images only where
+permitted; none are bundled with this patch.
 
 Run offline tests from the repository root:
 ```bash
 python -m unittest discover -s tests -p 'test_fivetools_fallback.py' -v
+python -m unittest discover -s tests -p 'test_monster_candidate*.py' -v
 ```
 
-Live validation: enter Crawling Claw and check that the notification identifies
-5e.tools after D&D Beyond fails. Add a monster without uploading an image and
-check its token in the player view. If no result appears, inspect WARNING logs
-and verify index/source URL reachability from the service account. Token paths
-and live endpoints could not be verified from the patch-build environment.
+Live validation: enter Crawling Claw and check the lookup outcome. If D&D Beyond
+successfully returns no usable matches, check the 5e.tools result or selection
+popup. Add a monster without uploading an image and check its selected token in
+the player view. If lookup fails, inspect WARNING logs and verify index/source
+URL reachability from the service account. Provider errors no longer silently
+trigger fallback in the candidate-selection UI. Live endpoints and token paths
+remain unverified for this increment.
