@@ -1,0 +1,41 @@
+https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	UNKNOWN STEP	2026-11-02T19:26:20.7297746Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	UNKNOWN STEP	2026-11-02T19:26:20.7344276Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+tests	UNKNOWN STEP	2026-11-02T19:26:20.7589897Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+tests	UNKNOWN STEP	2026-11-02T19:26:20.7640792Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-02T19:26:20.7653652Z ##[group]Fetching the repository
+tests	UNKNOWN STEP	2026-11-02T19:26:20.7655545Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +1474cde5c4d270c540d7009e5c08770058b40ac5:refs/remotes/origin/features/perplexity
+tests	UNKNOWN STEP	2026-11-02T19:26:22.1411503Z From https://github.com/dajomas/Scrying-Glass
+tests	UNKNOWN STEP	2026-11-02T19:26:22.1413256Z  * [new ref]         1474cde5c4d270c540d7009e5c08770058b40ac5 -> origin/features/perplexity
+tests	UNKNOWN STEP	2026-11-02T19:26:22.1419958Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-02T19:26:22.1420769Z ##[group]Determining the checkout info
+tests	UNKNOWN STEP	2026-11-02T19:26:22.1421539Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-02T19:26:22.1428928Z [command]/usr/bin/git sparse-checkout disable
+tests	UNKNOWN STEP	2026-11-02T19:26:22.1488031Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+tests	UNKNOWN STEP	2026-11-02T19:26:22.1527914Z ##[group]Checking out the ref
+tests	UNKNOWN STEP	2026-11-02T19:26:22.1532687Z [command]/usr/bin/git checkout --progress --force -B features/perplexity refs/remotes/origin/features/perplexity
+tests	UNKNOWN STEP	2026-11-02T19:26:22.1836453Z Switched to a new branch 'features/perplexity'
+tests	UNKNOWN STEP	2026-11-02T19:26:22.1855089Z branch 'features/perplexity' set up to track 'origin/features/perplexity'.
+tests	UNKNOWN STEP	2026-11-02T19:26:22.1861319Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-02T19:26:22.1910972Z [command]/usr/bin/git log -1 --format=%H
+tests	UNKNOWN STEP	2026-11-02T19:26:22.1945194Z 1474cde5c4d270c540d7009e5c08770058b40ac5
+tests	UNKNOWN STEP	2026-11-02T19:26:22.2316407Z ##[group]Run actions/setup-python@v5
+tests	UNKNOWN STEP	2026-11-02T19:26:22.2316976Z with:
+tests	UNKNOWN STEP	2026-11-02T19:26:22.2317404Z   python-version: 3.14
+tests	UNKNOWN STEP	2026-11-02T19:26:22.2317844Z   cache: pip
+tests	UNKNOWN STEP	2026-11-02T19:26:22.2318488Z   check-latest: false
+tests	UNKNOWN STEP	2026-11-02T19:26:22.2321596Z   token: ***
+tests	UNKNOWN STEP	2026-11-02T19:26:22.2322011Z   update-environment: true
+tests	UNKNOWN STEP	2026-11-02T19:26:22.2322469Z   allow-prereleases: false
+tests	UNKNOWN STEP	2026-11-02T19:26:22.2322903Z   freethreaded: false
+tests	UNKNOWN STEP	2026-11-02T19:26:22.2323297Z env:
+tests	UNKNOWN STEP	2026-11-02T19:26:22.2323980Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	UNKNOWN STEP	2026-11-02T19:26:22.2324741Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-02T19:26:22.3733353Z ##[group]Installed versions
+tests	UNKNOWN STEP	2026-11-02T19:26:22.3836786Z (node:2334) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	UNKNOWN STEP	2026-11-02T19:26:22.3837723Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	UNKNOWN STEP	2026-11-02T19:26:22.3838729Z Successfully set up CPython (3.14.9)
+tests	UNKNOWN STEP	2026-11-02T19:26:22.3839482Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-02T19:26:22.4895681Z [command]/opt/hostedtoolcache/Python/3.14.9/x64/bin/pip cache dir
+tests	UNKNOWN STEP	2026-11-02T19:26:23.8924884Z /home/runner/.cache/pip
+tests	UNKNOWN STEP	2026-11-02T19:26:24.0110816Z Cache hit for: setup-python-Linux-x64-24.04-Ubu

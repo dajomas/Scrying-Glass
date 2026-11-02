@@ -1,0 +1,53 @@
+r
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5544735Z # PASS: manual refresh does not overwrite a draft entered after the click
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5558459Z # PASS: failed manual refresh restores the discarded draft marker
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5575482Z # PASS: failed refresh does not overwrite a newer draft
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5579030Z # 4 checks, 0 failures
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5638385Z # Subtest: tests/test_feature_manual_refresh.js
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5643620Z ok 1 - tests/test_feature_manual_refresh.js
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5645357Z   ---
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5645724Z   duration_ms: 38.997022
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5646135Z   type: 'test'
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5646473Z   ...
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5646780Z 1..1
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5647092Z # tests 1
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5648625Z # suites 0
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5649336Z # pass 1
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5650035Z # fail 0
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5651230Z # cancelled 0
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5651880Z # skipped 0
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5652491Z # todo 0
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5653128Z # duration_ms 47.085956
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5701369Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-02T19:27:48.5701800Z ##[group]tests/test_feature_refresh_queue.js
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6111384Z TAP version 13
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6354244Z # PASS: automatic polling coalesces behind a slow request
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6369928Z # PASS: save queues a fresh snapshot behind an existing poll
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6382779Z # PASS: manual refresh is awaited and not dropped behind a poll
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6401702Z # PASS: queued refresh recovers after the earlier poll fails
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6413195Z # PASS: ordinary save without a concurrent poll still refreshes
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6428917Z # PASS: concurrent manual refreshes complete without a stuck gate
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6432738Z # 6 checks, 0 failures
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6493687Z # Subtest: tests/test_feature_refresh_queue.js
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6499554Z ok 1 - tests/test_feature_refresh_queue.js
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6500137Z   ---
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6500527Z   duration_ms: 42.058115
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6500995Z   type: 'test'
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6501364Z   ...
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6501714Z 1..1
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6502058Z # tests 1
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6503217Z # suites 0
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6503626Z # pass 1
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6504287Z # fail 0
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6504856Z # cancelled 0
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6505419Z # skipped 0
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6505968Z # todo 0
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6506668Z # duration_ms 50.023207
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6554546Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6554998Z ##[group]tests/test_feature_target_polling.js
+tests	UNKNOWN STEP	2026-11-02T19:27:48.6966671Z TAP version 13
+tests	UNKNOWN STEP	2026-11-02T19:27:48.7217817Z # PASS: automatic target replacement resets dirty fields
+tests	UNKNOWN STEP	2026-11-02T19:27:48.7225616Z # PASS: same-target polling preserves edits
+tests	UNKNOWN STEP	2026-11-02T19:27:48.7240335Z # PASS: subsequent save uses replacement target values
+tests	UNKNOWN STEP	2026-11-02T19:27:48.7252849Z # PASS: removing all targets clears dirty flags
+tests	UNKNOWN STEP	2026-11-02T19:27:48.7320795Z # Subtest: tests/test_feature_target_pollin

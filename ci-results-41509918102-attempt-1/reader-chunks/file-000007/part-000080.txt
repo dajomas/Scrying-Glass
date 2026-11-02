@@ -1,0 +1,38 @@
+8:16.5542836Z     return self._mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5543375Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5544433Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5545467Z     return self._execute_mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5546075Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5547152Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5548075Z     raise effect
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5548773Z TimeoutError: fixture
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3191759Z D&D Beyond candidate lookup failed
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3192375Z Traceback (most recent call last):
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3193661Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_monster_selection.py", line 73, in dnd_candidates
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3194922Z     hits = context.dnd_monster_candidates(species)
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3196519Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3197544Z     return self._mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3198418Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3199172Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3199889Z     return self._execute_mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3200304Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3200997Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3201621Z     raise effect
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3201864Z OSError: secret
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3209009Z 5e.tools candidate lookup failed
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3209419Z Traceback (most recent call last):
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3210253Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_monster_selection.py", line 112, in fivetools_candidates
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3211034Z     index = ft.load_json(root + "/index.json")
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3211698Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3212305Z     return self._mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3212657Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3213290Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3213928Z     return self._execute_mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3214314Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3215326Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3215939Z     raise effect
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3216359Z OSError: secret
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3217237Z D&D Beyond candidate lookup failed
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3217646Z Traceback (most recent call last):
+tests	UNKNOWN STEP	2026-11-02T19:28:25.3218841Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_monster_selection.py", line 84, in dnd_candidates
+tests	UNKNOWN STEP	20

@@ -1,0 +1,38 @@
+/opt/hostedtoolcache/Python/3.14.9/x64
+tests	UNKNOWN STEP	2026-11-02T19:27:49.1030900Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	UNKNOWN STEP	2026-11-02T19:27:49.1031277Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	UNKNOWN STEP	2026-11-02T19:27:49.1031861Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.9/x64/lib
+tests	UNKNOWN STEP	2026-11-02T19:27:49.1032195Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-02T19:27:49.1094733Z ##[group]tests/admin-message-timeout-browser.py
+tests	UNKNOWN STEP	2026-11-02T19:27:54.9061674Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-02T19:27:54.9062461Z ##[group]tests/audit_connection_lifetime.py
+tests	UNKNOWN STEP	2026-11-02T19:28:00.9147704Z D&D Beyond candidate unavailable (/monsters/old): Unavailable
+tests	UNKNOWN STEP	2026-11-02T19:28:00.9148990Z D&D Beyond candidate unavailable (/monsters/new): Unavailable
+tests	UNKNOWN STEP	2026-11-02T19:28:00.9162068Z D&D Beyond candidate unavailable (/monsters/old): Unavailable
+tests	UNKNOWN STEP	2026-11-02T19:28:00.9162879Z D&D Beyond candidate unavailable (/monsters/new): Unavailable
+tests	UNKNOWN STEP	2026-11-02T19:28:00.9215385Z D&D Beyond candidate unavailable (/monsters/old): Unavailable
+tests	UNKNOWN STEP	2026-11-02T19:28:00.9226041Z D&D Beyond candidate unavailable (/monsters/old): Bad candidate
+tests	UNKNOWN STEP	2026-11-02T19:28:00.9245835Z D&D Beyond candidate has no usable AC/HP (/monsters/old)
+tests	UNKNOWN STEP	2026-11-02T19:28:00.9264784Z D&D Beyond candidate unavailable (/monsters/old): Unavailable
+tests	UNKNOWN STEP	2026-11-02T19:28:00.9265714Z D&D Beyond candidate unavailable (/monsters/new): Unavailable
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5521654Z D&D Beyond candidate lookup failed
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5522401Z Traceback (most recent call last):
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5523700Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_monster_selection.py", line 84, in dnd_candidates
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5524966Z     html = context.dnd_monster_detail_html(href)
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5526355Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_dndbeyond.py", line 128, in dnd_monster_detail_html
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5527621Z     response = urlopen(request, timeout=15)
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5528953Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5529933Z     return self._mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5530517Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5531587Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5532615Z     return self._execute_mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5533243Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5534364Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5535408Z     raise effect
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5536553Z urllib.error.HTTPError: HTTP Error 403: fixture
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5537312Z D&D Beyond candidate lookup failed
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5537952Z Traceback (most recent call last):
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5539521Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_monster_selection.py", line 73, in dnd_candidates
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5540739Z     hits = context.dnd_monster_candidates(species)
+tests	UNKNOWN STEP	2026-11-02T19:28:16.5541816Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	UNKNOWN STEP	2026-11-02T19:2

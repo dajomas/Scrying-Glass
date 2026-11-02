@@ -1,0 +1,35 @@
+>
+tests	UNKNOWN STEP	2026-11-02T19:27:16.3981065Z   _warnings.warn(self.warn_message, ResourceWarning)
+tests	UNKNOWN STEP	2026-11-02T19:27:16.3983254Z /opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/tempfile.py:538: ResourceWarning: Implicitly cleaning up <HTTPError 500: 'fixture'>
+tests	UNKNOWN STEP	2026-11-02T19:27:16.3984752Z   _warnings.warn(self.warn_message, ResourceWarning)
+tests	UNKNOWN STEP	2026-11-02T19:27:16.3997410Z ok
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4039623Z test_locked_then_usable_keeps_primary (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_locked_then_usable_keeps_primary) ... ok
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4091742Z test_unclassified_failure_and_search_failure_do_not_fallback (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_unclassified_failure_and_search_failure_do_not_fallback) ... D&D Beyond candidate lookup failed
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4093620Z Traceback (most recent call last):
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4094890Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_monster_selection.py", line 84, in dnd_candidates
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4096174Z     html = context.dnd_monster_detail_html(href)
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4097538Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_dndbeyond.py", line 128, in dnd_monster_detail_html
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4098979Z     response = urlopen(request, timeout=15)
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4099985Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4100990Z     return self._mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4101574Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4102604Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4103658Z     return self._execute_mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4104299Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4105395Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4106339Z     raise effect
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4106913Z urllib.error.HTTPError: HTTP Error 403: fixture
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4107592Z D&D Beyond candidate lookup failed
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4108440Z Traceback (most recent call last):
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4109725Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_monster_selection.py", line 73, in dnd_candidates
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4110936Z     hits = context.dnd_monster_candidates(species)
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4112365Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4113324Z     return self._mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4113850Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4114440Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4115005Z     return self._execute_mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4115347Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4115943Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4116539Z     raise effect
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4116989Z TimeoutError: fixture
+tests	UNKNOWN STEP	2026-11-02T19:27:16.4117400Z o
