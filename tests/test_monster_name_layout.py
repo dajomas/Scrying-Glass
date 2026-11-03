@@ -42,7 +42,7 @@ class MonsterNameLayoutTests(unittest.TestCase):
                     self.assertEqual(cell.locator('small').inner_text(), name)
                     expected_name = name + (' - Ally' if active else '')
                     self.assertIn(expected_name, cell.inner_text())
-                    self.assertEqual(page.locator('#monsters td button').count(), 13)
+                    self.assertEqual(page.locator('#monsters td button').count(), 11)
                     self.assertEqual(errors, [])
                     self.assertEqual(mutations, [])
                     page.close()

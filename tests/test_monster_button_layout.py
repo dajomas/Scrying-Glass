@@ -4,7 +4,6 @@ import json
 from pathlib import Path
 import unittest
 from urllib.parse import urlsplit
-
 from playwright.sync_api import sync_playwright
 import test_encounter_features as fixtures
 from web_html.admin_html import ADMIN_HTML
@@ -33,14 +32,12 @@ class MonsterButtonLayoutTests(unittest.TestCase):
 
     def open_page(self, width, active=False):
         snapshot = copy.deepcopy(self.snapshot)
-        monster = snapshot['monsters'][0]
-        monster.update(active=active, ally=active, visible=active,
-                       in_turn=active, show_ac=active, show_hp=active,
-                       show_initiative=active)
+        snapshot['monsters'][0].update(
+            active=active, ally=active, visible=active, in_turn=active,
+            show_ac=active, show_hp=active, show_initiative=active)
         campaign = snapshot['active_campaign_id']
         apis = {
-            '/api/state': snapshot,
-            '/api/features': self.summary,
+            '/api/state': snapshot, '/api/features': self.summary,
             '/api/campaigns': {'active': campaign, 'campaigns': [
                 {'id': campaign, 'name': 'Default', 'description': '',
                  'setups': ['default'], 'last_setup': 'default'}], 'moved': []},
@@ -76,7 +73,7 @@ class MonsterButtonLayoutTests(unittest.TestCase):
 
         page.route('**/*', route)
         page.goto('http://fixture.test/', wait_until='load')
-        page.wait_for_function("document.querySelectorAll('#monsters td button').length === 13")
+        page.wait_for_function("document.querySelectorAll('#monsters td button').length === 11")
         self.assertEqual(errors, [])
         self.assertEqual(mutations, [])
         return page, errors, mutations
@@ -92,9 +89,9 @@ class MonsterButtonLayoutTests(unittest.TestCase):
                                 'AC on' if active else 'AC off',
                                 'HP on' if active else 'HP off',
                                 'Init on' if active else 'Init off',
-                                'Reset', 'Restore statistics', 'Remove', 'Damage', 'Heal']
+                                'Reset', 'Restore statistics', 'Remove']
                     self.assertEqual([s.strip() for s in buttons.all_text_contents()], expected)
-                    boxes = [buttons.nth(i).bounding_box() for i in range(13)]
+                    boxes = [buttons.nth(i).bounding_box() for i in range(11)]
                     self.assertTrue(all(box is not None for box in boxes))
                     for index, box in enumerate(boxes):
                         self.assertAlmostEqual(box['y'], boxes[0]['y'], delta=1)
@@ -103,7 +100,7 @@ class MonsterButtonLayoutTests(unittest.TestCase):
                         if index:
                             self.assertGreaterEqual(box['x'], boxes[index-1]['x'] + boxes[index-1]['width'])
                     self.assertEqual(page.locator('#monsters td:nth-child(6) button').count(), 11)
-                    self.assertEqual(page.locator('#monsters td:nth-child(7) button').count(), 2)
+                    self.assertEqual(page.locator('#monsters th').count(), 6)
                     for attr in ('data-ma', 'data-mally', 'data-mv', 'data-mt'):
                         classes = page.locator('#monsters [' + attr + ']').get_attribute('class') or ''
                         self.assertEqual('on' in classes.split(), active)
@@ -119,7 +116,8 @@ class MonsterButtonLayoutTests(unittest.TestCase):
                                 total: node.scrollWidth, overflow: getComputedStyle(node).overflowX};
                     }""")
                     self.assertEqual(metrics['overflow'], 'auto')
-                    self.assertGreater(metrics['total'], metrics['client'])
+                    if width <= 768:
+                        self.assertGreater(metrics['total'], metrics['client'])
                     for before, empty in zip(metrics['before'], metrics['empty']):
                         self.assertLessEqual(before, empty + 1, 'Monster table must not widen its ancestors')
                     self.assertEqual(errors, [])
@@ -137,17 +135,18 @@ class MonsterButtonLayoutTests(unittest.TestCase):
                 page.keyboard.press('Tab')
                 self.assertIsNotNone(page.locator(':focus').get_attribute('data-mi'))
                 buttons = page.locator('#monsters td button')
-                for index in range(13):
-                    page.keyboard.press('Tab')
-                    self.assertTrue(buttons.nth(index).evaluate('node => node === document.activeElement'))
-                    self.assertTrue(buttons.nth(index).evaluate("""node => {
-                        const b = node.getBoundingClientRect();
-                        const r = document.querySelector('#monsters').getBoundingClientRect();
-                        return b.left >= r.left - 1 && b.right <= r.right + 1;
-                    }"""))
-                self.assertGreater(region.evaluate('node => node.scrollLeft'), 0)
-                page.keyboard.press('Shift+Tab')
-                self.assertTrue(buttons.nth(11).evaluate('node => node === document.activeElement'))
+                for key, indexes in (('Tab', range(11)), ('Shift+Tab', range(9, -1, -1))):
+                    for index in indexes:
+                        page.keyboard.press(key)
+                        self.assertTrue(buttons.nth(index).evaluate('node => node === document.activeElement'))
+                        self.assertTrue(buttons.nth(index).evaluate("""node => {
+                            const b = node.getBoundingClientRect();
+                            const region = document.querySelector('#monsters');
+                            const left = region.getBoundingClientRect().left + region.clientLeft;
+                            return b.left >= left - 1 && b.right <= left + region.clientWidth + 1;
+                        }"""), f'{width=} {key=} {index=}')
+                        if key == 'Tab' and index == 10 and region.evaluate('n => n.scrollWidth > n.clientWidth'):
+                            self.assertGreater(region.evaluate('n => n.scrollLeft'), 0)
                 self.assertEqual(errors, [])
                 self.assertEqual(mutations, [])
                 page.close()
@@ -168,6 +167,28 @@ class MonsterButtonLayoutTests(unittest.TestCase):
         page.keyboard.press('Enter')
         page.wait_for_function("document.querySelector('#statisticsModal').hidden")
         self.assertTrue(page.locator('#monsters [data-statistics]').evaluate('node => node === document.activeElement'))
+        self.assertEqual(errors, [])
+        self.assertEqual(mutations, [])
+
+    def test_hp_change_columns_stay_removed_after_refresh(self):
+        page, errors, mutations = self.open_page(768)
+        for cycle in range(3):
+            for kind, columns, buttons in (('monsters', 6, 11), ('characters', 5, 8)):
+                page.wait_for_function("([kind, count]) => document.querySelectorAll('#' + kind + ' th').length === count", arg=[kind, columns])
+                self.assertEqual(page.locator(f'#{kind} td button').count(), buttons)
+                self.assertEqual(page.locator(f'#{kind} [data-d], #{kind} [data-h], #{kind} [data-cd], #{kind} [data-ch]').count(), 0)
+                self.assertNotIn('HP change', page.locator(f'#{kind} th').all_text_contents())
+                self.assertTrue(page.locator(f'#{kind} table').evaluate(
+                    'table => [...table.rows].every(row => row.cells.length === table.rows[0].cells.length)'))
+            if cycle < 2:
+                page.evaluate('load(true)')
+        page.add_script_tag(content=(ROOT / 'static/combatant-row-layout.js').read_text())
+        page.evaluate('load(true)')
+        page.wait_for_function("document.querySelectorAll('#monsters th').length === 6 && document.querySelectorAll('#characters th').length === 5")
+        page.evaluate('closeBattleActions(); addBattleActionRow()')
+        for action in ('damage', 'heal'):
+            self.assertEqual(page.locator(f'#battleActionRows [data-action-kind] option[value="{action}"]').count(), 1)
+        page.evaluate('closeBattleActions()')
         self.assertEqual(errors, [])
         self.assertEqual(mutations, [])
 

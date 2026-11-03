@@ -2,72 +2,90 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Date: 2026-11-03. Task: [SG-TODO-007](../todo/070-monster-button-layout.md).
-Initial preparation base: `5bcc1cc99fd49615d38c9853951b8ec6424efd82`.
-Initial delivery: `da8e7352fee0b504628aeed94aae6687341e2c35`.
+Updated: 2026-11-03. Task: [SG-TODO-007](../todo/070-monster-button-layout.md).
+Initial delivery: da8e7352fee0b504628aeed94aae6687341e2c35.
+Name correction: 49aed0cbf074d63930ce29a8d64ef2d9cc970226.
+Current corrective preparation base: aff0ff459a2aae1e8f4301c40d162097068a711d.
 
-## Decision and implementation
+## Decisions and delivered history
 
-The user approved keeping all 13 monster-row buttons on one line and using
-horizontal scrolling confined to the Monsters table when they do not fit.
-The Display/status and HP change columns remain separate. Labels, state classes,
-data attributes, handlers and DOM button order are unchanged. Creation forms,
-bulk controls and character rows are unchanged. No operations are hidden.
+The user agreed one-line monster controls and table-local horizontal scrolling.
+The initial 13-button implementation left name/species wrapping word by word;
+the name correction protected column 2 with min-width:16ch and nowrap while
+retaining their explicit line break. The user subsequently requested removal of
+Damage and Heal from both combatant rows. The current scope is 11 monster-row
+buttons and removal of both HP change columns, preserving alternate workflows.
 
-`static/monster-button-layout.css` limits the table container to its available
-width and prevents wrapping in its two action cells and button labels. The Admin
-head loads that stylesheet. The existing `#monsters` container is a named region
-with `tabindex=0`, a focus outline and an accessible scrolling hint. Tab continues
-through selection, initiative and the 13 existing buttons; browser focus scrolling
-can expose off-screen operations. This behavior still requires full-page evidence.
+## Corrective implementation
 
-The user subsequently reported word-by-word wrapping of the name and species.
-The initial change protected action cells but not the name column. The correction
-adds `min-width: 16ch` and `white-space: nowrap` to column 2, preserving the explicit
-break between name and species and leaving additional width in the local scroller.
-The original button-only geometry tests missed this readability regression.
+`static/combatant-row-layout.js` loads deferred after the other Admin modules.
+Following the separate Admin enhancement pattern, it normalizes both rendered
+tables: find the HP change header, verify each body cell contains only the two
+known per-row HP buttons, then remove the header and matching cells from the DOM.
+A childList observer watches each container's direct table replacement by load().
+It does not watch its own nested cell removals, avoiding an observer loop. Initial
+normalization also handles a load that completed before the module executed.
+Installation is guarded against duplication. No encounter/API mutation occurs.
 
-Selectors target name column 2 and action columns 6 and 7 of the existing monster
-table only. If that structure changes, update the selectors and tests together.
+This deliberately leaves the legacy core renderer templates and HP handlers
+unchanged; the loaded enhancement removes their obsolete rendered columns rather
+than deleting core source or hiding controls with CSS. Missing the new script
+would restore the legacy controls, so deploy matching templates and the complete
+static tree, restart and reload browsers. The module fails closed if a future HP
+column gains another button; revisit its validation and tests if that layout changes.
 
-## Source architecture and size policy
+On Monsters focusin, the module adjusts only that container's scrollLeft when a
+focused control crosses the visible client area, with a small focus-ring margin.
+This handles partially visible controls that native keyboard scrolling left
+clipped. It does not move focus or alter handlers/order. Character layout beyond
+HP-column removal, forms, bulk toolbars and other HP workflows are unchanged.
 
-No Admin JavaScript source, tracked failure marker, assembly reader, adapter or
-source identity assertion is changed. Live `020-source.js` was inspected at blob
-`350f9b2b998a035ec17a5ab2f7840ae622430bba`. Existing live identity assertions
-retain the 114,814-byte bundle and SHA-256
-`40fca092f989bcd85eaf7f06dc02b962b662a28827864df68c998919cdf87b46`;
-these assertions were read, not executed during this preparation.
+The scoped CSS protects name column 2 and remaining action column 6. The original
+region name, keyboard access, hint and focus outline remain.
 
-New code files remain below 20,000 bytes. The agreed 25,000-byte tolerance for
-existing code does not relax the native Admin reader's 20,000-byte fragment cap.
-This change does not reconcile SG-TODO-008 records or alter SG-TODO-004's hold.
+## Source architecture and size
 
-## Validation and remaining work
+The eight Admin source fragments, tracked failure marker, assembly reader and
+static adapter are unchanged. The assembled core remains 114,814 bytes, expected
+SHA-256 40fca092f989bcd85eaf7f06dc02b962b662a28827864df68c998919cdf87b46.
+Existing identity, UTF-8, ordered assembly, syntax and runner-isolation tests are
+retained unchanged; no claim that they were rerun locally. No source fragment is
+loaded independently. The new standalone module is 2,125 bytes; the updated
+browser module is 10,940 bytes, below the agreed code limits. The native reader's
+20,000-byte fragment cap is not relaxed. SG-TODO-008 cleanup and SG-TODO-004's hold
+remain untouched. README and root indexes were reviewed and remain accurate;
+these existing task/handover sections carry the corrective scope and evidence.
 
-Initial preparation executed Python AST parsing and byte counts: 476-byte initial
-CSS and 9,201-byte original browser module. Its three methods cover six geometry/
-state cases (1440, 768, 375 pixels; active/inactive), Tab traversal at all three
-widths, local scroll geometry and keyboard opening/closing of Edit and Restore
-statistics. These methods were prepared, not executed here.
+## CI diagnosis
 
-Corrective preparation executed AST parsing of a new 2,941-byte regression module.
-It reuses the assembled-page intercepted-HTTP harness for six name/species cases,
-including Crawling Claw and a longer name with the Ally suffix. The original
-three methods remain intact. A separate simplified Chromium reproducer at 768
-pixels observed species wrapping change from two lines to one, cell width from
-97.375 to 174.375 pixels and table width from 1370.09375 to 1447.09375 pixels;
-document width remained 768 pixels. This isolates the CSS issue but is not an
-assembled-page, authenticated-server or deployed-interface test.
+Run 41641117462 attempt 1 tested 49aed0cbf074d63930ce29a8d64ef2d9cc970226.
+Evidence commit aff0ff459a2aae1e8f4301c40d162097068a711d, folder
+ci-results-41641117462-attempt-1. Reader index maps workflow.log to file-000007.
+Parts 76-78 show three viewport failures at the keyboard test's line 143; the
+1,015-test suite failed. Parts 104-105 show the connection audit repeating the
+same suite/failures, not a separate connection leak: 673 opened, zero without
+explicit close. Part 78 reports 43 pytest passes. Run metadata reports successful
+syntax/import and JavaScript steps. Parts 106-107 show later audit/smoke completion.
+The failed run is not acceptance and does not validate the new correction.
 
-No full-page browser method, existing interaction regression, authenticated
-server check or live-provider check was executed during these preparations.
-No CI result is claimed. The normal workflow installs Chromium and discovers
-both test modules through `tools/run_split_tests.py`; no workflow edit or skip
-is requested. Review user-collected evidence against its exact SHA and attempt,
-separately from deployed-interface acceptance. Task status remains in progress.
+## Preparation checks and remaining validation
 
-Deploy matching templates and the complete static tree, restart and reload the
-browser. README and root indexes were reviewed and remain accurate for this
-correction; the existing task and handover sections carry the regression details.
-No unrelated backlog cleanup is included.
+Node --check passed for the exact new module; Python AST parsing passed for the
+updated four-method browser module. A simplified real-Chromium fixture exercised
+the exact module at 1440, 768 and 375 pixels: both HP columns removed across three
+refresh cycles per width, 11 forward and 10 reverse focus checks per width passed.
+Document width did not increase (1440->1440, 768->768, 540->430). The simplified
+narrow fixture's preexisting Character-table overflow is outside the monster
+scroll assertion. An initial whole-document-equals-viewport assertion failed on
+that fixture; the revised check measures newly introduced overflow instead.
+
+The full-page intercepted-HTTP browser tests retain name readability, state
+labels, geometry, ancestor-overflow and Edit/Restore keyboard regressions, and
+add refreshed-table removal, idempotence and Battle Actions damage/heal choices.
+The strict focused-button visibility assertion remains and covers both traversal
+directions. Desktop need not overflow if all remaining controls fit; narrower
+widths must use the local scroller. Full assembled-page tests were not executed
+here. New CI, individual assertion results and authenticated/deployed validation
+remain pending. Normal push-triggered CI is requested, with no skip or workflow
+configuration change. User-collected evidence must identify tested SHA and attempt
+before task completion is considered.

@@ -7,18 +7,15 @@
     overflow-x: auto;
 }
 
-/* Do not sacrifice name readability to the unwrapped action cells.
- * The existing explicit break still separates name and species.
- */
+/* Preserve the explicit break between the unwrapped name and species. */
 #monsters th:nth-child(2),
 #monsters td:nth-child(2) {
     min-width: 16ch;
     white-space: nowrap;
 }
 
-/* Preserve the existing Display/status and HP change columns and tab order. */
+/* The obsolete HP-change column is removed by combatant-row-layout.js. */
 #monsters td:nth-child(6),
-#monsters td:nth-child(7),
 #monsters td button {
     white-space: nowrap;
 }
