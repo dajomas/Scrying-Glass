@@ -4,44 +4,35 @@
 
 ## SG-TODO-006 - Expand configurable 5e.tools defaults and display book names
 
-- Status: in progress; stage 1 prepared, CI/live validation pending; stage 2 UI names not implemented.
-- Requested: 2026-11-02. Two-commit delivery approved: 2026-11-02.
+- Status: in progress; stage 1 delivered; UI stage 2A notifications prepared, approval/CI pending; stage 2B popup names pending.
+- Requested: 2026-11-02. Original two-stage delivery approved: 2026-11-02.
+- Remaining stage 2 split into two coherent commits approved: 2026-11-03.
 - Priority, owner and deadline: not assigned.
-- Preparation base: a8461e93ac6281f618aa3b436a68e2787578e909 on features/perplexity.
+- Current preparation base: 24a7c18ead4203d21aa79f2b740a51799d3ef118.
 - Identifier decision: user corrected XPBH to XPHB on 2026-11-02.
 
-### Approved staged delivery
+### Agreed delivery
 
-1. Source configuration/providers, tests and documentation: six defaults, explicit ordered overrides and empty-list handling. Raw source codes remain visible in this stage.
-2. Descriptive UI book/year names, preserving raw identifiers internally, with UI tests and documentation.
+1. Configuration/providers/tests/docs: already delivered; raw codes remain internal.
+2A. Descriptive notification labels and shared formatter, source guards/tests/docs.
+2B. Popup labels using that formatter, browser regressions and final docs.
 
-Stage 1 is a usable expanded-search increment, not completion of the full task.
-Do not close before stage 2 and required validation. SG-TODO-004 remains on hold
-and is not a dependency for this public-provider work.
+The extra UI staging was agreed before writes. Each commit needs bound approval
+and normal CI; do not treat plan approval as authorization for an external write.
+2A deliberately leaves popup choices raw. Neither it nor stage 1 completes this task.
+SG-TODO-004 remains on hold and is not a dependency for public-provider work.
 
 ### Source configuration and compatibility
 
-Omitting display.fivetools_sources uses, in order:
+Omitted display.fivetools_sources uses MM, XMM, PHB, XPHB, DMG, XDMG, in order.
+Explicit lists replace rather than append; duplicates retain first occurrence.
+[] searches no 5e.tools source and does not fetch its index, without disabling
+D&D Beyond. IDs are case-sensitive nonempty strings without surrounding whitespace,
+maximum 32 input entries. Null/scalar/malformed values or invalid display mappings
+fail configuration loading. Existing MM/XMM overrides remain restricted; remove or
+expand and restart to opt into all six. No migration, new key or provider-order change.
 
-    MM, XMM, PHB, XPHB, DMG, XDMG
-
-JSON/YAML explicit lists replace the defaults, never append to them. An explicit
-empty list searches no 5e.tools sources and does not fetch its index/data, without
-disabling independent D&D Beyond lookup. Duplicate identifiers are searched once
-in first-occurrence order. Identifiers are case-sensitive, nonempty strings without
-surrounding whitespace; maximum 32 input entries. Null, scalar, malformed lists and
-invalid display mappings fail configuration loading rather than acting as omission.
-
-Existing config files explicitly listing only MM/XMM remain two-source overrides.
-Remove that key or expand it to opt into all six; restart after configuration edits.
-The configuration example is updated. Shared provider validation/default handling
-is used by candidate enumeration and legacy first-result stats/image lookup. The
-normal merge still isolates defaults from mutations. No new configuration key,
-schema, credentials, bundled third-party data or provider-order change is added.
-
-### Descriptive labels (stage 2 remaining)
-
-| Identifier | Requested label |
+| Identifier | Exact label |
 |---|---|
 | MM | Monster Manuals 2014 |
 | XMM | Monster Manuals 2024 |
@@ -50,31 +41,28 @@ schema, credentials, bundled third-party data or provider-order change is added.
 | DMG | Dungeon Master Guide 2014 |
 | XDMG | Dungeon Master Guide 2024 |
 
-Preserve raw IDs in URLs, matching, deduplication and selected-candidate identity.
-Show names in popup choices and lookup notifications; unknown custom source codes
-must remain usable without fabricated names/edition metadata. UI behavior is not
-changed by stage 1.
+Names are presentation only. Preserve raw IDs in URLs, matching, deduplication and
+selected-candidate identity. Unknown/custom IDs remain raw without guessed book or
+year metadata. D&D Beyond notification wording remains unchanged.
 
-### Acceptance and validation
+### Validation and remaining acceptance
+
+Stage-1 preparation: twelve local offline checks using real provider helper,
+AST-extracted config/candidate functions, mocked HTTP and JSON/YAML temporary files.
+Index metadata contained all six IDs, not proof of usable live stats/token images.
+See [handover](../handover/230-fivetools-sources.md) for provenance and limitations.
+
+Stage 2A: seven local source/reader/runner methods and three Node fixture subtests
+passed. Updated first-fragment/bundle fingerprints reflect the intentional UI change;
+other seven fragments remain identical. Size, syntax, UTF-8, assembly and isolation
+checks remain. Full CI, real browser and live-provider validation are pending.
 
 - [x] User confirmed XPHB as the intended identifier.
-- [ ] Review CI for omitted defaults, explicit/empty settings, ordering, deduplication and validation across configuration and provider paths.
-- [ ] Verify all six sources can supply usable stats/images through supported live data; distinguish index entries from successful live retrieval.
-- [ ] Deliver and validate descriptive names in popup choices and result notifications, including unknown/custom IDs.
-- [ ] Review complete regression CI and authorized live/browser behavior before completion.
+- [x] Agree separate notification and popup commits for the remaining stage.
+- [ ] Deliver notification-label increment after exact bound approval and review CI.
+- [ ] Deliver popup labels/browser regressions with raw identity and source links intact.
+- [ ] Verify actual live data/stats/images for configured sources, not just index entries.
+- [ ] Review complete regression CI and authorized live/browser behavior before closure.
 
-Twelve new offline tests passed locally. They use the real 5e.tools helper module
-and AST-extracted actual config/candidate functions, with JSON/YAML temporary files
-and mocked data HTTP. They do not initialize the complete FastAPI server. Sources
-compile; full application/CI tests and live data/image access remain pending.
-Existing provider/diagnostics/UI tests remain unchanged and must run normally.
-
-All six IDs were present in data/bestiary/index.json of 5etools-mirror-3/5etools-src
-at 8790755429c346d20020eed7826d312d484c393f (blob 6c1dc9533c847cd5e4d081b68b7ad705db0278ef).
-This verifies index metadata only. The direct live 5e.tools fetch failed in the
-assistant environment; runtime reachability, returned stats and images are not
-claimed verified. Existing missing-source/HTTP error policies are otherwise unchanged.
-
-See [stage handover](../handover/230-fivetools-sources.md). README's explicit
-MM/XMM snippet remains a valid restrictive override, not the new omitted-list
-default; the fuller README/UI documentation refresh is planned with stage 2.
+README configuration/UI guidance is refreshed; no backend/provider/API behavior,
+schema, credentials or bundled third-party data changes are included in stage 2A.

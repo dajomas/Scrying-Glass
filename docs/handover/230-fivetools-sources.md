@@ -2,69 +2,60 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Prepared 2026-11-02 against a8461e93ac6281f618aa3b436a68e2787578e909.
-Task: [SG-TODO-006](../todo/060-fivetools-source-configuration.md), in progress.
+Updated 2026-11-03. Task: [SG-TODO-006](../todo/060-fivetools-source-configuration.md).
+Current preparation base: 24a7c18ead4203d21aa79f2b740a51799d3ef118.
 
-## Approved delivery and current stage
+## Agreed delivery and stage 1
 
-The user corrected XPBH to XPHB and approved two coherent commits: first usable
-configuration/provider expansion, then descriptive UI names. Stage 1 is prepared
-with tests/docs; it does not provide the final book-name UI. Each write needs its
-own bound approval and normal CI. Do not mark the task complete after stage 1.
-Account integration SG-TODO-004 stays on hold.
+The user corrected XPBH to XPHB and approved configuration/providers followed by UI
+names. On 2026-11-03 the remaining UI stage was explicitly split into two commits:
+2A notifications/shared formatter/tests/docs, then 2B popup labels/browser tests/docs.
+Every write requires its own bound approval. Account integration SG-TODO-004 is on hold.
 
-## Stage 1 configuration and operation
+Stage 1 is already delivered, not a request to reimplement providers. Omitted sources
+use MM, XMM, PHB, XPHB, DMG, XDMG in that order. Explicit lists replace defaults;
+duplicates retain first occurrence; [] skips even the 5e.tools index fetch without
+disabling D&D Beyond. Case-sensitive nonempty strings without surrounding whitespace,
+maximum 32 input entries. Invalid display/null/scalar/malformed lists fail loading.
+Existing MM/XMM settings remain restricted overrides; remove/expand and restart to
+opt into all six. Default lists remain independent. No new key, schema or credentials.
 
-Omitted source lists use MM, XMM, PHB, XPHB, DMG, XDMG in that order. The config
-loader's independent default list is checked against the provider tuple by tests.
-Both providers call configured_sources for common fallback defaults and validation.
-Explicit lists override; duplicates deduplicate in first-occurrence order. Empty
-lists skip even the fallback index fetch. This affects 5e.tools only, not the
-independent D&D Beyond flag or provider priority. Existing configurations explicitly
-listing MM/XMM remain restricted until the key is removed or expanded. Restart
-for config changes; no migration or new key is required.
+Stage-1 preparation had twelve local offline tests with real helper and AST-extracted
+config/candidate functions, mocked HTTP and temporary JSON/YAML. Upstream index IDs
+were present at 8790755429c346d20020eed7826d312d484c393f in
+5etools-mirror-3/5etools-src, index blob 6c1dc9533c847cd5e4d081b68b7ad705db0278ef.
+That is index metadata, not successful live retrieval of all source data/images.
+Direct live fetching failed in the assistant environment; live reachability remains
+unverified. Provider errors, bounds/cache, matching and selection behavior are unchanged.
 
-Startup validates display as a mapping and sources as a list of at most 32 nonempty
-case-sensitive strings without surrounding whitespace. Null/scalar/malformed lists
-are errors, not requests for defaults. Legacy stats and image lookup retain first
-usable result semantics; candidate lookup still enumerates configured usable
-matches, keeps distinct variants and treats provider failures separately from zero
-matches. Transport bounds/cache, stat parsing, image URLs, selection tokens, D&D
-access gates and unrelated startup/password logic remain unchanged. Missing-index
-entry and source-failure handling otherwise retain prior behavior. No third-party
-data is bundled.
+## Stage 2A prepared: notification labels
 
-## Evidence and limits
+010-source.js adds pure monsterSourceLabel(candidate, popup=false). Notifications
+use the six exact requested labels; prototype-property/custom/unknown codes fall
+back to raw text without fabricated names or edition metadata. D&D Beyond keeps
+its original legacy/current wording. Label strings use the existing textContent
+notification path. Raw candidate/source IDs, tokens, URLs and matching are not
+rewritten. Existing AC/HP overwrite, in-flight-edit and stale-response guards remain.
 
-Reconstructed originals were hash-verified against Git blobs e262538874b335a8455358a45d9f6bcc7e45969a
-(provider), 9f1efb0caeae8be8f2c0cae9dfb585c1e016db69 (init),
-908f5e98ef337c21e818ae06dde2cd25f52c44e1 (selection) and
- efa61721d589d3e4b3c2eeaa35ac3bc93a00ca0b (configuration example).
-Twelve new offline regression methods passed locally after preparation. They cover
-JSON/YAML omitted/explicit/empty settings, independent defaults, malformed input,
-all six legacy stats/image source paths, full candidate enumeration/order,
-deduplication, no-fetch empty lists and sanitized candidate errors. The real
-5e.tools helper runs, while actual config/candidate functions are AST-extracted
-without importing unrelated FastAPI/startup classes. HTTP is mocked and forbidden
-at the transport boundary. Python source compilation passed. The full application
-suite, server import and CI remain pending for this stage.
+The formatter supports the upcoming popup format but the popup renderer is not
+changed in 2A; it continues to show raw IDs until 2B. This is a usable partial UI
+increment, not completed SG-TODO-006. Backend/provider/config/template/script order,
+static adapter and marker remain unchanged. Only the first of eight Admin fragments
+changes; sizes/identities are recorded in [Admin handover](050-admin-script-split.md).
 
-The upstream repository's bestiary index at 8790755429c346d20020eed7826d312d484c393f
-contained all six IDs; index blob 6c1dc9533c847cd5e4d081b68b7ad705db0278ef in
-5etools-mirror-3/5etools-src. This is index metadata, not verification of source
-content availability or service-account access. Direct live index fetching failed
-in the assistant environment. Verify actual provider data/token access separately.
+Seven source/reader/runner unittest methods and three new Node VM/DOM-fixture
+subtests passed locally. They cover exact names, immutable raw identity, unknown
+codes, D&D wording, actual lookup notifications and existing/in-flight AC/HP guards.
+Fragments and full assembled script passed syntax checks. VM mocks are not real
+Chromium, authenticated server, live data or image verification. Existing normal CI
+discovers the new .cjs file without workflow edits; CI/manual validation pending.
 
-## Documentation and next stage
+## Remaining stage 2B and acceptance
 
-config.example.yaml documents the six defaults, explicit override and empty-list
-semantics. README was reviewed: its explicit MM/XMM example remains a supported
-restricted override and does not declare those to be mandatory defaults. The
-comprehensive source/label README refresh is deferred to approved stage 2 to keep
-review payloads manageable. Detailed stage-1 operation is documented here and in
-the task. Root indexes include the new handover and current task state.
-
-Stage 2 must add the requested descriptive names to choices/notifications without
-changing raw source identifiers, matching, URLs or selected identity. Include UI
-regressions and update these notes. Existing UI still displays raw codes until
-that stage. No successful CI result, complete task or live validation is claimed.
+Use the same formatter for popup choices while preserving candidate identity/source
+links and selection/cancel/focus/pending-submit behavior. Add browser regressions
+for all six labels, unknown IDs and unchanged selected token/URL; finish docs and
+inspect exact-SHA CI. Do not close until required live/browser validation is recorded.
+README now distinguishes omitted six-source defaults from the explicit two-source
+example and explains partial notification-only labels. Root HANDOVER links unchanged.
+No archive, third-party data, manifest refresh, workflow dispatch or skip directive.

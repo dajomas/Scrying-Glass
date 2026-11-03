@@ -9,8 +9,9 @@ without separators and serves one classic script at the unchanged deferred
 a small failure marker: do not edit it as application source or deploy it alone.
 Deploy the matching server, `python/` and entire `static/` tree together, restart
 and reload browsers. The service account needs a writable temporary directory
-for the generated bundle; `/media` handling is unchanged. The generated HTTP
-script remains 114,205 bytes and is byte-identical to the pre-split source.
+for the generated bundle; `/media` handling is unchanged. The initial split was
+byte-identical to its 114,205-byte baseline. SG-TODO-006 stage 2A intentionally
+updates notification labels: the current generated script is 114,814 bytes.
 
 Legacy tests that read `static/admin.js` directly run against an assembled
 temporary repository copy, not the tracked marker. Prefix test commands in this
@@ -26,10 +27,11 @@ python tools/run_split_tests.py -- python tests/browser_smoke_272cc73.py
 The runner leaves the real checkout untouched. Normal CI uses it for Python,
 Node and standalone browser/audit fixtures. Separate tests exercise the production
 static adapter; fixture results are not authenticated/live-server verification.
-Seven local reader/source/runner methods passed during preparation. Full CI,
-FastAPI HTTP checks and deployed browser/startup validation remain pending.
-See [split handover](docs/handover/050-admin-script-split.md). This refactor does
-not implement SG-TODO-006 stage 2 or change lookup behavior.
+For stage 2A, seven source/reader/runner methods and three Node fixture subtests
+passed locally. Its full CI, HTTP/browser and live-provider validation remain pending.
+See [split handover](docs/handover/050-admin-script-split.md) and
+[source-label handover](docs/handover/230-fivetools-sources.md). Popup source labels
+remain raw until the second approved stage-2 commit; provider behavior is unchanged.
 
 ## Monster candidate selection (SG-TODO-001 increment)
 
@@ -195,8 +197,12 @@ The Add monster form uses the candidate-selection rules above; the legacy stats
 endpoint remains first-result based for existing API callers.
 AC accepts numeric entries and AC objects; HP prefers a supported dice formula
 and falls back to the numeric average. Names match exactly after case and
-punctuation normalization. The UI labels the provider and source. Existing
-AC/HP overwrite and in-flight edit protection are unchanged.
+punctuation normalization. Stage 2A notifications show descriptive 5e.tools book/year
+names; popup choices still show raw codes until stage 2B. Raw IDs remain unchanged
+internally. Existing AC/HP overwrite and in-flight edit protection are unchanged.
+The six labels are documented in the [source task](docs/todo/060-fivetools-source-configuration.md).
+Unknown/custom IDs retain their raw text without invented names or edition years.
+D&D Beyond wording is unchanged.
 
 Without a selection token, image lookup follows the same provider order when
 creating a monster without an uploaded image. The Add monster form instead
@@ -206,7 +212,7 @@ when `hasToken` is set), not necessarily a full illustration.
 Existing monsters' images are not retroactively updated. Image URLs are remote;
 they are not downloaded or cached locally, and availability is not probed.
 
-Configuration under `display`:
+Configuration under `display` (this example explicitly restricts sources):
 ```yaml
 fivetools_fallback: true
 fivetools_sources: ["MM", "XMM"]
@@ -214,6 +220,12 @@ fivetools_data_base_url: "https://5e.tools/data/bestiary"
 fivetools_image_base_url: "https://5e.tools/img"
 ```
 
+Omitting fivetools_sources uses MM, XMM, PHB, XPHB, DMG, XDMG, in that order.
+An explicit list replaces these defaults, duplicates are searched once in their
+first-occurrence order, and [] skips 5e.tools without disabling D&D Beyond.
+Existing explicit MM/XMM configurations remain two-source overrides; remove or
+expand the key to use the six sources, then restart. Source IDs are case-sensitive;
+invalid/null/scalar lists fail configuration validation. At most 32 input entries.
 MM is tried before XMM to retain the older-edition preference in legacy lookups.
 Candidate selection enumerates all configured sources before offering a choice.
 Only configured sources are searched: add source identifiers from the bestiary
@@ -235,6 +247,7 @@ Run offline tests from the repository root (use the split-test runner above):
 ```bash
 python tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_fivetools_fallback.py' -v
 python tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_monster_candidate*.py' -v
+python tools/run_split_tests.py -- node --test tests/fivetools-source-labels.test.cjs
 ```
 
 Live validation: enter Crawling Claw and check the lookup outcome. If D&D Beyond

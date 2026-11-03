@@ -1,3 +1,18 @@
+function monsterSourceLabel(candidate, popup = false) {
+    const source = candidate.source || (popup ? 'Source unavailable' : 'unknown source');
+    if (candidate.provider === '5e.tools') {
+        const labels = {
+            MM: 'Monster Manuals 2014', XMM: 'Monster Manuals 2024',
+            PHB: 'Player Handbook 2014', XPHB: 'Player Handbook 2024',
+            DMG: 'Dungeon Master Guide 2014', XDMG: 'Dungeon Master Guide 2024',
+        };
+        const label = Object.prototype.hasOwnProperty.call(labels, source) ? labels[source] : source;
+        return popup ? `5e.tools / ${label}` : `5e.tools (${label})`;
+    }
+    const edition = candidate.legacy ? 'legacy' : 'current';
+    return popup ? `${candidate.provider} / ${source} / ${edition}` : `${edition} D&D Beyond`;
+}
+
 let latest;
 let editing = null;
 
@@ -153,10 +168,7 @@ async function lookupMonsterSpeciesStats() {
             changes.push(`HP ${suggestedHp}`);
         }
 
-        const edition = suggestion.legacy ? 'legacy' : 'current';
-        const provider = suggestion.provider === '5e.tools'
-            ? `5e.tools (${suggestion.source || 'unknown source'})`
-            : `${edition} D&D Beyond`;
+        const provider = monsterSourceLabel(suggestion);
 
         if (changes.length) {
             paneNotification(

@@ -1,4 +1,4 @@
-"""Regression identity of the eight unchanged Admin source fragments."""
+"""Current identities of the eight Admin fragments after intentional UI changes."""
 from pathlib import Path
 import hashlib
 import shutil
@@ -8,7 +8,7 @@ from python.scrying_glass_admin_source import ADMIN_SCRIPT_PARTS, read_admin_scr
 
 ROOT = Path(__file__).resolve().parents[1]
 DIGESTS = (
-    "23c91e7d66db0260f09a33d992489ceba2b9bf966ad5030623f293a5e936f6cd",
+    "85e469e2073cd957bddd54b4de5e979b516fe6efc8e4c56a09244e49886b15d2",
     "a85ac3628d46516447e2e99761e2c02ac5f255c16e470a2645445ac749a435db",
     "c8a8904b31b079ee73919d050506a62b57ad984a2be2def36236874ca1344140",
     "cb296e6c87e0e582d71806d05db1fa82311f85ff351ea30cdd161523669d0dff",
@@ -31,9 +31,9 @@ class AdminSourcePreparationTests(unittest.TestCase):
 
     def test_complete_identity(self):
         data = read_admin_script(ROOT / "static")
-        self.assertEqual(len(data), 114205)
+        self.assertEqual(len(data), 114814)
         self.assertEqual(hashlib.sha256(data).hexdigest(),
-                         "b97c2a3fda01aa8d3fa4cfa619939909a3c797c678c60a19512aa50c0d05fef5")
+                         "40fca092f989bcd85eaf7f06dc02b962b662a28827864df68c998919cdf87b46")
 
     @unittest.skipUnless(shutil.which("node"), "Node is required for JavaScript parsing")
     def test_fragment_syntax(self):

@@ -16,9 +16,9 @@ class AdminSourceCompleteTests(unittest.TestCase):
         self.assertEqual({p.name for p in directory.iterdir()}, set(ADMIN_SCRIPT_PARTS))
         data = read_admin_script(ROOT / "static")
         self.assertEqual(data, b"".join((directory / name).read_bytes() for name in ADMIN_SCRIPT_PARTS))
-        self.assertEqual(len(data), 114205)
+        self.assertEqual(len(data), 114814)
         self.assertEqual(hashlib.sha256(data).hexdigest(),
-                         "b97c2a3fda01aa8d3fa4cfa619939909a3c797c678c60a19512aa50c0d05fef5")
+                         "40fca092f989bcd85eaf7f06dc02b962b662a28827864df68c998919cdf87b46")
 
     def test_reader_bounds(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -42,7 +42,7 @@ class AdminSourceCompleteTests(unittest.TestCase):
     def test_fixture_runner_isolation(self):
         import sys
         before = (ROOT / "static/admin.js").read_bytes()
-        command = "from pathlib import Path; import hashlib; d=Path('static/admin.js').read_bytes(); assert len(d)==114205; assert hashlib.sha256(d).hexdigest()=='b97c2a3fda01aa8d3fa4cfa619939909a3c797c678c60a19512aa50c0d05fef5'"
+        command = "from pathlib import Path; import hashlib; d=Path('static/admin.js').read_bytes(); assert len(d)==114814; assert hashlib.sha256(d).hexdigest()=='40fca092f989bcd85eaf7f06dc02b962b662a28827864df68c998919cdf87b46'"
         result = subprocess.run([sys.executable, str(ROOT / "tools/run_split_tests.py"),
                                  "--", sys.executable, "-c", command], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)
