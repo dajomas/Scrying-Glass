@@ -1,5 +1,7 @@
 import re
 from html import unescape
+from html.parser import HTMLParser
+from urllib.error import HTTPError
 
 from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
@@ -73,48 +75,94 @@ def dnd_monster_candidates(monster_species: str) -> list[tuple[bool, str]]:
 
     return candidates
 
+def dnd_monster_content_locked(monster_html: str) -> bool:
+    """Conservative visible-text evidence, not a generic 401/403 classifier."""
+    parser = _AccessText()
+    parser.feed(monster_html)
+    text = re.sub(r"\s+", " ", " ".join(parser.parts)).casefold()
+    if any(marker in text for marker in (
+        "verify you are human", "checking your browser", "just a moment", "captcha",
+    )):
+        return False
+    return any(re.search(pattern, text) for pattern in (
+        r"you (?:do not|don't) (?:have access to|own) this content",
+        r"you (?:must|need to) (?:purchase|unlock) this (?:content|monster)",
+        r"purchase this content to (?:view|access)",
+        r"this content is locked",
+    ))
+
+
+class _AccessText(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.parts = []
+        self.ignored = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in {"script", "style", "nav", "header", "footer"}:
+            self.ignored.append(tag)
+
+    def handle_endtag(self, tag):
+        if self.ignored and self.ignored[-1] == tag:
+            self.ignored.pop()
+
+    def handle_data(self, data):
+        if not self.ignored:
+            self.parts.append(data)
+
+
 def dnd_monster_detail_html(href: str) -> str:
-    """Dnd monster detail html."""
+    """Return monster HTML, or empty HTML for positively identified access gates.
+
+    Other failures still raise so callers do not confuse an incomplete lookup
+    with zero usable matches. No authentication or access-control bypass occurs.
+    """
     headers = {
         "User-Agent": "Mozilla/5.0 compatible; ScryingGlass/1.0",
         "Accept": "text/html,application/xhtml+xml",
     }
-
-    monster_url = (
-        href
-        if href.startswith("http://") or href.startswith("https://")
-        else f"https://www.dndbeyond.com{href}"
-    )
-
+    monster_url = href if href.startswith(("http://", "https://")) else f"https://www.dndbeyond.com{href}"
     request = Request(monster_url, headers=headers)
-
     max_page_bytes = 8_000_000
+    try:
+        response = urlopen(request, timeout=15)
+    except HTTPError as exc:
+        if exc.code in {401, 403}:
+            # A status code alone is not evidence of a locked content page.
+            try:
+                with exc:
+                    raw = exc.read(128_001)
+                if len(raw) <= 128_000 and dnd_monster_content_locked(raw.decode("utf-8", "replace")):
+                    return ""
+            except Exception:
+                raise exc
+        raise
 
-    with urlopen(request, timeout=15) as response:
-        final_url = response.geturl()
-        final = urlsplit(final_url)
-
+    with response:
+        final = urlsplit(response.geturl())
         if (
-            final.hostname not in {
-                "www.dndbeyond.com",
-                "dndbeyond.com",
-            }
-            or not final.path.startswith("/monsters/")
+            final.scheme == "https"
+            and final.hostname == "marketplace.dndbeyond.com"
+            and not final.username
+            and not final.password
+            and final.path.startswith("/category/")
         ):
-            raise ValueError(
-                "D&D Beyond did not return a monster page; "
-                f"redirected to {final_url}"
-            )
-
+            return ""
+        if (final.scheme != "https" or final.hostname not in {"www.dndbeyond.com", "dndbeyond.com"}
+                or final.username or final.password):
+            raise ValueError("D&D Beyond returned an untrusted monster redirect")
+        path = final.path.rstrip("/").casefold()
+        if any(path == gate or path.startswith(gate + "/") for gate in (
+            "/marketplace", "/login", "/sign-in",
+        )):
+            return ""
+        if not final.path.startswith("/monsters/"):
+            raise ValueError("D&D Beyond did not return a monster page")
         content = response.read(max_page_bytes + 1)
-
     if len(content) > max_page_bytes:
-        raise ValueError(
-            f"D&D Beyond monster page exceeds "
-            f"{max_page_bytes} bytes: {monster_url}"
-        )
-
-    return content.decode("utf-8", "replace")
+        raise ValueError("D&D Beyond monster page exceeds 8000000 bytes")
+    html = content.decode("utf-8", "replace")
+    return "" if dnd_monster_content_locked(html) else html
 
 def html_to_text(value: str) -> str:
     """Html to text."""

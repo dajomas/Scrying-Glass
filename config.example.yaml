@@ -23,7 +23,9 @@ display:
   dndbeyond_image_lookup: true
   # Independent optional stats/token fallback after D&D Beyond fails.
   fivetools_fallback: true
-  # Ordered exact-name sources; MM first preserves the older-edition preference.
-  fivetools_sources: ["MM", "XMM"]
+  # Omitted list uses these six defaults; explicit lists replace them in this order.
+  # MM first preserves legacy first-result preference. [] means no 5e.tools sources.
+  # Source IDs are case-sensitive; duplicates are searched once; maximum 32 entries.
+  fivetools_sources: ["MM", "XMM", "PHB", "XPHB", "DMG", "XDMG"]
   fivetools_data_base_url: "https://5e.tools/data/bestiary"
   fivetools_image_base_url: "https://5e.tools/img"

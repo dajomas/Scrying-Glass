@@ -25,9 +25,20 @@ def save_effects(storage,table,parent,effects):
     storage.connection.execute(f'DELETE FROM {table}_effects WHERE parent_id=?',(parent,))
     for position,e in enumerate(effects):
         storage.connection.execute(f'INSERT INTO {table}_effects(parent_id,effect_id,position,name,source_id,notes,public,concentration,timing,turns,anchor_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)',(parent,e['id'],position,e['name'],e.get('source_id'),e.get('notes',''),int(e['public']),int(e['concentration']),e['timing'],e.get('turns'),e.get('anchor_id')))
+        if 'mechanical' in e:
+            m=e['mechanical']
+            storage.connection.execute(f'UPDATE {table}_effects SET mechanical_version=?,reduction_stat=?,reduction_amount=? WHERE parent_id=? AND effect_id=?', (m['version'],m['stat'],m['amount'],parent,e['id']))
 
 def load_effects(storage,table,parent):
-    return [dict(id=r['effect_id'],name=r['name'],source_id=r['source_id'],notes=r['notes'],public=bool(r['public']),concentration=bool(r['concentration']),timing=r['timing'],turns=r['turns'],anchor_id=r['anchor_id']) for r in storage.connection.execute(f'SELECT * FROM {table}_effects WHERE parent_id=? ORDER BY position,id',(parent,))]
+    effects=[]
+    for r in storage.connection.execute(f'SELECT * FROM {table}_effects WHERE parent_id=? ORDER BY position,id',(parent,)):
+        e=dict(id=r['effect_id'],name=r['name'],source_id=r['source_id'],notes=r['notes'],public=bool(r['public']),concentration=bool(r['concentration']),timing=r['timing'],turns=r['turns'],anchor_id=r['anchor_id'])
+        if 'mechanical_version' in r.keys() and any(r[k] is not None for k in ('mechanical_version','reduction_stat','reduction_amount')):
+            e['mechanical']={'version':r['mechanical_version'],'stat':r['reduction_stat'],'amount':r['reduction_amount']}
+        effects.append(e)
+    from .scrying_glass_feature_rules import validate_effects
+    validate_effects(effects)
+    return effects
 
 class FeatureStorage:
     def __init__(self,storage): self.storage=storage;self.db=storage.connection

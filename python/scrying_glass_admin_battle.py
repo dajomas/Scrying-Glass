@@ -88,7 +88,12 @@ class AdminBattleMixin:
                 "Only the current active combatant may apply battle actions",
             )
 
-        valid_actions = {"damage", "heal", "buff", "debuff"}
+        import copy
+        from python.scrying_glass_statistics import reduce_stat, statistics_token
+        if any(row.action == 'reduce-stat' for row in payload.actions):
+            if getattr(payload, 'statistics_token', None) != statistics_token(self.context):
+                raise self.context.HTTPException(409, 'Encounter changed; reopen Battle actions before applying reductions')
+        valid_actions = {"damage", "heal", "buff", "debuff", "reduce-stat"}
         prepared = []
 
         # Validate all rows before changing state, so a malformed row cannot leave
@@ -129,7 +134,13 @@ class AdminBattleMixin:
                     f"Target {target['name']} must be alive for {row.action}",
                 )
 
-            if row.action in {"damage", "heal"}:
+            stat = getattr(row, 'stat', None)
+            if row.action != 'reduce-stat' and stat is not None:
+                raise self.context.HTTPException(422, 'A statistic is only valid on a reduction row')
+            if row.action == 'reduce-stat':
+                try: reduce_stat(copy.deepcopy(target), stat, row.amount, source['id'])
+                except ValueError as exc: raise self.context.HTTPException(422, str(exc)) from exc
+            if row.action in {"damage", "heal", "reduce-stat"}:
                 if row.amount is None or row.amount <= 0:
                     raise self.context.HTTPException(
                         400,
@@ -147,12 +158,19 @@ class AdminBattleMixin:
             critical=getattr(row,'critical_hit',False)
             if critical and row.action!='damage':
                 raise self.context.HTTPException(422,'Critical hit applies only to damage')
-            prepared.append((source,target,row.action,amount,critical))
+            prepared.append((source,target,row.action,amount,critical,stat))
 
         # Apply only after every row passed validation.
         self.context.remember_turn_successors()
 
-        for source, target, action, amount, critical in prepared:
+        for source, target, action, amount, critical, stat in prepared:
+            if action == 'reduce-stat':
+                try: reduce_stat(target, stat, amount, source['id'])
+                except ValueError as exc: raise self.context.HTTPException(422, str(exc)) from exc
+                if not target.get('alive') and getattr(self.context, 'features', None):
+                    self.context.features.clear_concentration(target['id'])
+                self.context.features.log('statistic-reduced', target, amount, note=f"{stat}; source: {source['name']}")
+                continue
             if action == "damage":
                 result=apply_hp(target,-amount,critical=critical)
                 if getattr(self.context,'features',None):

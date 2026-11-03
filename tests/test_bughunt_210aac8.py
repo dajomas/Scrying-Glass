@@ -4,6 +4,7 @@ server, full database schema, routing or transaction integration is exercised.
 """
 import ast,asyncio,copy,io,sqlite3,types,unittest
 from pathlib import Path
+from contextlib import closing
 from unittest.mock import patch
 from pydantic import ValidationError
 from python import scrying_glass_classes as models
@@ -13,16 +14,16 @@ ROOT=Path(__file__).resolve().parents[1]
 tree=ast.parse((ROOT/'python/scrying_glass_admin_display.py').read_text())
 node=next(n for c in tree.body if isinstance(c,ast.ClassDef) for n in c.body if isinstance(n,ast.AsyncFunctionDef) and n.name=='dndbeyond_monster_stats')
 future=ast.ImportFrom(module='__future__',names=[ast.alias(name='annotations')],level=0)
-ns={};exec(compile(ast.fix_missing_locations(ast.Module(body=[future,node],type_ignores=[])),'production-handler','exec'),ns)
+ns={'__name__':'stats_fallback_fixture','__package__':'python'};exec(compile(ast.fix_missing_locations(ast.Module(body=[future,node],type_ignores=[])),'production-handler','exec'),ns)
 lookup=ns['dndbeyond_monster_stats'];BAD=chr(0xD800)
 
 class ModelTests(unittest.TestCase):
     def test_unicode_sqlite_roundtrip(self):
         value=models.CharacterCreate(name='José 🐉',color='#123456')
-        with sqlite3.connect(':memory:') as db:
+        with closing(sqlite3.connect(':memory:')) as db, db:
             self.assertEqual(db.execute('SELECT ?',(value.name,)).fetchone()[0],value.name)
     def test_sqlite_cannot_encode_surrogate(self):
-        with sqlite3.connect(':memory:') as db:
+        with closing(sqlite3.connect(':memory:')) as db, db:
             with self.assertRaises(UnicodeEncodeError):db.execute('SELECT ?',(BAD,))
     def test_exclude_unset_preserved(self):
         self.assertEqual(models.CharacterUpdate(name='Hero').model_dump(exclude_unset=True),{'name':'Hero'})
@@ -90,11 +91,21 @@ class CandidateTests(unittest.TestCase):
         self.assertEqual(dnd.html_to_text('<span>Will-o&#x27;-Wisp</span>'),"Will-o'-Wisp")
 
 class StatsFallbackTests(unittest.TestCase):
+    def setUp(self):
+        fallback_patch=patch('python.scrying_glass_fivetools.lookup',return_value=None)
+        self.fallback=fallback_patch.start();self.addCleanup(fallback_patch.stop)
+        network_patch=patch('python.scrying_glass_fivetools.urlopen',side_effect=AssertionError('Network forbidden in fixture'))
+        network=network_patch.start();self.addCleanup(network_patch.stop)
+        self.addCleanup(network.assert_not_called)
     def context(self,detail,parse=lambda text:(12,'3d8+3','dice')):
-        return types.SimpleNamespace(CONFIG={'display':{'dndbeyond_image_lookup':True}},
+        return types.SimpleNamespace(CONFIG={'display':{'dndbeyond_image_lookup':True,'fivetools_fallback':False}},
             dnd_monster_candidates=lambda species:[(True,'/monsters/old'),(False,'/monsters/new')],
             dnd_monster_detail_html=detail,dnd_monster_stats_from_html=parse)
-    def call(self,c):return asyncio.run(lookup(types.SimpleNamespace(context=c),'Goblin'))
+    def call(self,c):
+        result=asyncio.run(lookup(types.SimpleNamespace(context=c),'Goblin'))
+        self.assertNotEqual(result.get('reason'),'Monster lookup unavailable; enter AC and HP manually.',
+                            'Unexpected outer handler error: check the extraction fixture')
+        return result
     def test_failed_legacy_uses_next(self):
         visited=[]
         def detail(href):
@@ -118,5 +129,43 @@ class StatsFallbackTests(unittest.TestCase):
     def test_disabled_no_network(self):
         c=self.context(lambda href:self.fail('Network should not run'));c.CONFIG['display']['dndbeyond_image_lookup']=False
         self.assertFalse(self.call(c)['found'])
+
+    def test_primary_success_never_calls_secondary(self):
+        c=self.context(lambda href:'valid');c.CONFIG['display']['fivetools_fallback']=True
+        self.assertEqual(self.call(c)['provider'],'D&D Beyond')
+        self.fallback.assert_not_called()
+    def test_secondary_runs_after_both_failed_candidates(self):
+        visited=[]
+        def detail(href):visited.append(href);raise OSError('Unavailable')
+        def fallback(*args):visited.append('secondary');return {'found':True,'provider':'5e.tools'}
+        self.fallback.side_effect=fallback
+        c=self.context(detail);c.CONFIG['display']['fivetools_fallback']=True
+        self.assertEqual(self.call(c)['provider'],'5e.tools')
+        self.assertEqual(visited,['/monsters/old','/monsters/new','secondary'])
+    def test_disabled_primary_allows_enabled_secondary(self):
+        c=self.context(lambda href:self.fail('Primary should not run'))
+        c.dnd_monster_candidates=lambda species:self.fail('Primary search should not run')
+        c.CONFIG['display'].update(dndbeyond_image_lookup=False,fivetools_fallback=True)
+        self.fallback.return_value={'found':True,'provider':'5e.tools'}
+        self.assertTrue(self.call(c)['found'])
+        self.fallback.assert_called_once_with('Goblin',c.CONFIG['display'])
+    def test_both_disabled_do_no_provider_lookup(self):
+        c=self.context(lambda href:self.fail('Primary should not run'))
+        c.dnd_monster_candidates=lambda species:self.fail('Primary search should not run')
+        c.CONFIG['display'].update(dndbeyond_image_lookup=False,fivetools_fallback=False)
+        result=self.call(c);self.assertFalse(result['found'])
+        self.assertIn('all providers disabled',result['reason']);self.fallback.assert_not_called()
+    def test_all_primary_failures_really_try_both_candidates(self):
+        visited=[]
+        def detail(href):visited.append(href);raise OSError('Unavailable')
+        result=self.call(self.context(detail))
+        self.assertFalse(result['found']);self.assertEqual(visited,['/monsters/old','/monsters/new'])
+        self.assertIn('legacy:',result['reason']);self.assertIn('current:',result['reason'])
+        self.fallback.assert_not_called()
+    def test_cancellation_propagates_without_secondary(self):
+        def detail(href):raise asyncio.CancelledError()
+        c=self.context(detail);c.CONFIG['display']['fivetools_fallback']=True
+        with self.assertRaises(asyncio.CancelledError):self.call(c)
+        self.fallback.assert_not_called()
 
 if __name__=='__main__':unittest.main()

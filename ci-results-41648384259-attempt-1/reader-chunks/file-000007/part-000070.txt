@@ -1,0 +1,22 @@
+ne 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-03T13:54:58.4400744Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-03T13:54:58.4401135Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-03T13:54:58.4401816Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-03T13:54:58.4402501Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-03T13:54:58.4402931Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-03T13:54:58.4403682Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-03T13:54:58.4404334Z     raise result
+tests	Python test suite (including browser fixtures)	2026-11-03T13:54:58.4404579Z OSError: secret
+tests	Python test suite (including browser fixtures)	2026-11-03T13:54:58.4404828Z ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:54:58.4405183Z test_tokens (test_monster_candidate_selection.CandidateTests.test_tokens) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:54:58.4405827Z test_unusable_duplicates_and_image (test_monster_candidate_selection.CandidateTests.test_unusable_duplicates_and_image) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:54:58.4418716Z test_selection_and_manual_never_relookup (test_monster_candidate_selection.CreationTests.test_selection_and_manual_never_relookup) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:55:02.9778142Z test_cancel_restores_focus_without_relookup (test_monster_lookup_focus_browser.LookupFocusRegressionTests.test_cancel_restores_focus_without_relookup) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:55:07.4898166Z test_escape_restores_focus_without_relookup (test_monster_lookup_focus_browser.LookupFocusRegressionTests.test_escape_restores_focus_without_relookup) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:55:13.5499205Z test_typing_opens_stable_popup_and_selection_does_not_relookup (test_monster_lookup_focus_browser.LookupFocusRegressionTests.test_typing_opens_stable_popup_and_selection_does_not_relookup) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:55:13.5507605Z test_marketplace_exception_does_not_trust_other_destinations (test_monster_lookup_live_regressions.MarketplaceRegressionTests.test_marketplace_exception_does_not_trust_other_destinations) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:55:13.5509831Z test_observed_marketplace_redirect_is_unavailable (test_monster_lookup_live_regressions.MarketplaceRegressionTests.test_observed_marketplace_redirect_is_unavailable) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:55:13.5516683Z test_one_usable_primary_candidate_prevents_fallback (test_monster_lookup_live_regressions.MarketplaceRegressionTests.test_one_usable_primary_candidate_prevents_fallback) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:55:13.5521235Z test_two_marketplace_redirects_reach_fallback_once (test_monster_lookup_live_regressions.MarketplaceRegressionTests.test_two_marketplace_redirects_reach_fallback_once) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:55:14.9803947Z test_name_and_species_each_keep_their_own_line (test_monster_name_layout.MonsterNameLayoutTests.test_name_and_species_each_keep_their_own_line) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:55:15.0426689Z test_bulk_character_reset_clears_temporary_hp (test_reset_health.ResetHealthTest

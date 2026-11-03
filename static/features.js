@@ -40,7 +40,7 @@
         $('featureHealth').textContent=`${item.name}: ${item.life_state||'standing'} · HP ${item.hp}/${item.max_hp} · Temporary HP ${item.temp_hp||0} · Death saves ${item.death_successes||0}/${item.death_failures||0}${item.concentrating?' · Concentrating':''}`;
         const values={featureTempHp:item.temp_hp||0,featureLifeState:item.life_state||'standing',deathSuccesses:item.death_successes||0,deathFailures:item.death_failures||0};
         for(const [id,value]of Object.entries(values))if(force||($(id)!==document.activeElement&&!$(id).dataset.dirty))$(id).value=value;
-        $('featureEffects').replaceChildren(...(item.effects||[]).map(e=>{
+        $('featureEffects').replaceChildren(...(item.effects||[]).filter(e=>!e.mechanical).map(e=>{
             const li=document.createElement('li'),label=document.createElement('span'),remove=document.createElement('button');
             const participants=[...combatants(),...(state?.lairs||[])];
             const source=participants.find(x=>x.id===e.source_id),anchor=participants.find(x=>x.id===e.anchor_id);

@@ -130,14 +130,16 @@ class CampaignSetupAdd(_Utf8Model):
 
 class BattleActionRow(_Utf8Model):
     """Battleactionrow."""
+    stat: Literal['max_hp','strength','dexterity','constitution','intelligence','wisdom','charisma'] | None = None
     source_id: str | None = Field(default=None, min_length=1, max_length=100)
     target_id: str = Field(min_length=1, max_length=100)
-    action: Literal["damage", "heal", "buff", "debuff"]
+    action: Literal["damage", "heal", "buff", "debuff", "reduce-stat"]
     amount: int | None = Field(default=None, ge=1, le=99999)
     critical_hit: bool = False
 
 class BattleActions(_Utf8Model):
     """Battleactions."""
+    statistics_token: str | None = Field(default=None, max_length=100)
     actor_id: str = Field(min_length=1, max_length=100)
     actions: list[BattleActionRow] = Field(min_length=1, max_length=100)
 

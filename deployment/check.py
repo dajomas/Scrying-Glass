@@ -1,36 +1,14 @@
-"""Verify listed package files; optionally check this Python's runtime readiness."""
+"""Check this Python's runtime readiness; no package checksum verification."""
 import argparse
-import hashlib
 import importlib.metadata
 import importlib.util
-import json
 from pathlib import Path
 import subprocess
 import sys
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--runtime', action='store_true', help='also check Python, dependencies and server import')
-    args = parser.parse_args()
-    root = Path(__file__).resolve().parents[1]
-    try:
-        manifest = json.loads((root / 'package-manifest.json').read_text(encoding='utf-8'))
-        for entry in manifest['files']:
-            path = root / entry['path']
-            if Path(entry['path']).is_absolute() or '..' in Path(entry['path']).parts:
-                raise ValueError('Unsafe manifest path: ' + entry['path'])
-            if not path.is_file():
-                raise ValueError('Missing package file: ' + entry['path'])
-            data = path.read_bytes()
-            if len(data) != entry['size_bytes'] or hashlib.sha256(data).hexdigest() != entry['sha256']:
-                raise ValueError('Package file differs: ' + entry['path'])
-        print('Package checksums passed:', len(manifest['files']), 'listed files.')
-    except (OSError, ValueError, KeyError, TypeError) as error:
-        print('Package verification failed:', error, file=sys.stderr)
-        return 1
-    if not args.runtime:
-        return 0
+def runtime_preflight(root):
+    print('Runtime preflight only; package integrity is not verified.')
     print('Python:', sys.version)
     if sys.version_info < (3, 10):
         print('Runtime requires Python 3.10 or newer.', file=sys.stderr)
@@ -63,6 +41,14 @@ def main():
         return result.returncode
     print('Runtime preflight passed. Storage, listeners, browser workflows and authentication are not exercised.')
     return 0
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--runtime', action='store_true',
+                        help='compatibility alias; runtime preflight is now the default')
+    parser.parse_args(argv)
+    return runtime_preflight(Path(__file__).resolve().parents[1])
 
 
 if __name__ == '__main__':

@@ -36,6 +36,7 @@ function fixture() {
  const sandbox={document:{body:{style:{}},querySelector:selector=>get(selector.slice(1)),getElementById:get,createElement:tag=>new Element(tag)},
   applyBattleOrderFontSize(){},requestAnimationFrame:fn=>fn(),
   setTimeout:(fn,delay)=>{const id=++timerId;h.timers.set(id,{fn,delay});return id;},clearTimeout:id=>h.timers.delete(id)};
+ sandbox.window=sandbox;
  vm.createContext(sandbox);vm.runInContext(code,sandbox);
  h.render=state=>sandbox.render(state);h.get=get;h.stage=stage;
  h.cards=()=>stage.querySelectorAll('.monster').map(card=>card.id).sort();

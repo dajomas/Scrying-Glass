@@ -1,0 +1,26 @@
+/* SG-TODO-007: keep overflow inside the monster table, not the Admin shell. */
+#monsters {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+}
+
+/* Preserve the explicit break between the unwrapped name and species. */
+#monsters th:nth-child(2),
+#monsters td:nth-child(2) {
+    min-width: 16ch;
+    white-space: nowrap;
+}
+
+/* The obsolete HP-change column is removed by combatant-row-layout.js. */
+#monsters td:nth-child(6),
+#monsters td button {
+    white-space: nowrap;
+}
+
+#monsters:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}

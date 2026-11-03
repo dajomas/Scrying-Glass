@@ -10,6 +10,7 @@ import sqlite3
 import types
 import unittest
 from pathlib import Path
+from contextlib import closing
 from python.scrying_glass_turn_rules import can_take_turn
 from python.scrying_glass_lair_rules import participants,initiative_key,place_lair
 ROOT=Path(__file__).resolve().parents[1]
@@ -101,7 +102,7 @@ class BattleTests(unittest.TestCase):
         target=self.wrap(3);self.assertEqual(target['id'],'a');self.assertEqual(self.state['battle_round'],4)
     def test_last_valid_round_increment(self):
         self.wrap(2**63-2);self.assertEqual(self.state['battle_round'],2**63-1)
-        with sqlite3.connect(':memory:') as db:db.execute('SELECT ?', (self.state['battle_round'],))
+        with closing(sqlite3.connect(':memory:')) as db, db:db.execute('SELECT ?', (self.state['battle_round'],))
     def test_round_overflow_is_controlled(self):
         with self.assertRaises(HTTPError) as raised:self.wrap(2**63-1)
         self.assertEqual(raised.exception.status_code,409)
@@ -112,6 +113,6 @@ class BattleTests(unittest.TestCase):
     def test_advance_never_produces_unbindable_round(self):
         try:self.wrap(2**63-1)
         except HTTPError:return
-        with sqlite3.connect(':memory:') as db:db.execute('SELECT ?', (self.state['battle_round'],))
+        with closing(sqlite3.connect(':memory:')) as db, db:db.execute('SELECT ?', (self.state['battle_round'],))
 
 if __name__=='__main__':unittest.main()

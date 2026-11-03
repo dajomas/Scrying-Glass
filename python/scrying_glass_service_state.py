@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Any, Literal
 from pathlib import Path
 from .scrying_glass_turn_rules import can_take_turn
+from .scrying_glass_statistics import statistics_token
 from .scrying_glass_lair_rules import normalize_lairs, participants, place_lair
 
 
@@ -492,6 +493,7 @@ class StateService:
         )
 
         return {
+            "statistics_token": statistics_token(self.context) if getattr(self.context, 'features', None) else None,
             "active_campaign_id": self.context.active_campaign(),
             "monsters": self.context.STATE["monsters"],
             "characters": self.context.STATE["characters"],

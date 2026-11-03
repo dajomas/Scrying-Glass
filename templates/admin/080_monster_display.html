@@ -1,6 +1,6 @@
     <section id="monsterDisplayPane" class="pane">
       <div class="row display-pane-heading">
-        <h2>Monsters</h2>
+        <h2 id="monsterDisplayHeading">Monsters</h2>
         <button id="rollMonsterInitiative" class="roll">Roll monster initiatives (d20)</button>
 
         <div class="bulk-action-toolbar">
@@ -32,6 +32,10 @@
         </div>
       </div>
 
-      <div id="monsters"></div>
+      <p id="monsterTableScrollHint" class="sr-only">
+        Scroll horizontally to reach all monster controls. Tab moves through each control.
+      </p>
+      <div id="monsters" role="region" tabindex="0"
+           aria-labelledby="monsterDisplayHeading" aria-describedby="monsterTableScrollHint"></div>
     </section>
 

@@ -31,7 +31,7 @@ class SetupHasLairTests(unittest.TestCase):
         self.db = SQLiteStorage(self.path)
         self.assertTrue(self.db.load_setup(self.campaign, 'yes')['has_lair'])
         self.assertFalse(self.db.load_setup(self.campaign, 'no')['has_lair'])
-        self.assertEqual(self.db.connection.execute('PRAGMA user_version').fetchone()[0], 7)
+        self.assertEqual(self.db.connection.execute('PRAGMA user_version').fetchone()[0], SQLiteStorage.SCHEMA_VERSION)
 
     def test_explicit_false_does_not_delete_lair(self):
         state = self.state(False)
@@ -48,6 +48,9 @@ class SetupHasLairTests(unittest.TestCase):
         self.db.save_setup(self.campaign, 'yes', state)
         self.db.save_setup(self.campaign, 'no', self.state())
         self.db.connection.execute('ALTER TABLE encounters DROP COLUMN has_lair')
+        for table in ('characters', 'monsters', 'snapshot_characters'):
+            for column in ('mechanical_version', 'reduction_stat', 'reduction_amount'):
+                self.db.connection.execute(f'ALTER TABLE {table}_effects DROP COLUMN {column}')
         self.db.connection.execute('PRAGMA user_version=6')
         self.db.close()
         self.db = SQLiteStorage(self.path)

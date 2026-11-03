@@ -24,7 +24,9 @@
       <p id="battleActionHelp">
         Add actions and reactions in resolution order (top to bottom).
         Reactions have their own source and target, including down or dead combatants.
+        Statistics reduction rows resolve in the same top-to-bottom order as damage and healing.
         Apply leaves this window open; applied rows are locked and skipped on later applies.
+        Next discards pending rows, advances once and opens the new turn owner. It does not Apply or Undo.
         Close discards only unapplied rows. Use one row per affected creature for death bursts. A dead combatant cannot
         be revived by healing; recover it explicitly in Encounter Tools.
       </p>
@@ -34,9 +36,35 @@
         <div class="actions">
           <button type="button" id="addBattleActionTarget">Add target</button>
           <button type="button" id="addBattleReaction">Add reaction</button>
+          <button type="button" id="addStatisticsReduction">Add statistics reduction</button>
           <button type="submit" class="battle">Apply</button>
+          <button type="button" id="nextBattleActions" class="battle">Next</button>
           <button type="button" id="closeBattleActions">Close</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="/static/statistics.css">
+  <div id="statisticsModal" class="modal" hidden>
+    <div class="statistics-dialog" role="dialog" aria-modal="true" aria-labelledby="statisticsTitle" tabindex="-1">
+      <h2 id="statisticsTitle">Restore statistics</h2>
+      <p id="statisticsHelp">Only statistics with active reductions are shown. Restoring removes reductions;
+        it never heals current HP or revives a combatant.</p>
+      <form id="statisticsBasesForm">
+        <div id="statisticsFields" class="statistics-table-wrap"></div>
+        <button id="statisticsSaveBases" type="submit" hidden>Save original/base statistics</button>
+      </form>
+      <div id="statisticsRestoreControls" class="statistics-restore-controls">
+        <label for="statisticsRestoreStat">Statistic to restore</label>
+        <select id="statisticsRestoreStat"></select>
+        <button id="statisticsRestore" type="button">Restore selected statistics</button>
+      </div>
+      <div class="statistics-footer">
+        <button id="statisticsEditBases" type="button">Edit original/base statistics…</button>
+        <button id="statisticsBack" type="button" hidden>Back to affected statistics</button>
+        <button id="statisticsClose" type="button">Close</button>
+      </div>
+      <p id="statisticsNotice" role="status" aria-live="polite"></p>
     </div>
   </div>

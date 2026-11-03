@@ -62,7 +62,7 @@ class ViewerBrowserTests(unittest.TestCase):
             window.savedGrant=null;
             window.fetch=async(url,options={})=>{
                 if(options.method==='PUT'){window.savedGrant={url,body:JSON.parse(options.body)};return {ok:true,json:async()=>({})};}
-                if(url==='/api/campaigns')return {ok:true,json:async()=>({active:'1'})};
+                if(url==='/api/campaigns')return {ok:true,json:async()=>({active:'1',campaigns:[{id:'1',name:'First campaign'}]})};
                 return {ok:true,json:async()=>({campaign:{id:'1',name:'First campaign'},users:[
                     {id:'10',username:'alice',granted:true},{id:'11',username:'bob',granted:false}]})};
             };
@@ -70,6 +70,9 @@ class ViewerBrowserTests(unittest.TestCase):
         self.page.add_script_tag(content=(ROOT/'static/campaign-viewer-admin.js').read_text())
         self.page.locator('#campaignViewerAccess').evaluate('(node)=>node.open=true')
         self.page.wait_for_function("document.querySelectorAll('#campaignViewerUsers input').length===2")
+        self.assertEqual(self.page.locator('#campaignViewerAccessTitle').inner_text(),'Viewer access: First campaign')
+        self.assertTrue(self.page.locator('#campaignViewerUsers input[value="10"]').is_checked())
+        self.assertTrue(self.page.locator('#saveCampaignViewers').is_enabled())
         self.page.locator('#campaignViewerUsers input[value="11"]').check()
         self.page.locator('#saveCampaignViewers').click()
         self.page.wait_for_function('window.savedGrant!==null')

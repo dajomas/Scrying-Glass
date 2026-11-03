@@ -13,6 +13,16 @@ LOG = logging.getLogger(__name__)
 _CACHE = OrderedDict()
 _LOCK = threading.RLock()
 
+DEFAULT_SOURCES = ("MM", "XMM", "PHB", "XPHB", "DMG", "XDMG")
+
+def configured_sources(display):
+    """Return independent ordered sources; an explicit empty list disables search."""
+    sources = display.get("fivetools_sources", list(DEFAULT_SOURCES))
+    if (not isinstance(sources, list) or len(sources) > 32 or
+            not all(isinstance(source, str) and source and source == source.strip() for source in sources)):
+        raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+    return list(dict.fromkeys(sources))
+
 def normalized(value):
     return re.sub(r"[^a-z0-9]+", " ", str(value).casefold()).strip()
 
@@ -74,9 +84,9 @@ def lookup(species, display, *, want_image=False):
     if not display.get("fivetools_fallback", True) or not normalized(species):
         return None
     root = display.get("fivetools_data_base_url", "https://5e.tools/data/bestiary").rstrip("/")
-    sources = display.get("fivetools_sources", ["MM", "XMM"])
-    if not isinstance(sources, list) or not all(isinstance(s, str) for s in sources):
-        raise ValueError("fivetools_sources must be a list of source identifiers")
+    sources = configured_sources(display)
+    if not sources:
+        return None
     index = load_json(root + "/index.json")
     if not isinstance(index, dict):
         raise ValueError("Invalid 5etools bestiary index")

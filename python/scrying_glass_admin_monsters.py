@@ -286,7 +286,11 @@ class AdminMonstersMixin:
             validated.model_dump(exclude_unset=True)
         )
 
-        self.context.update_alive_state(candidate)
+        from .scrying_glass_statistics import legacy_max_edit
+        try: legacy_max_edit(candidate, validated.model_dump(exclude_unset=True))
+        except ValueError as exc: raise self.context.HTTPException(422, str(exc)) from exc
+        from .scrying_glass_feature_rules import sync_health
+        sync_health(candidate)
 
         if not candidate.get("active"):
             candidate["in_turn"] = False
@@ -350,6 +354,9 @@ class AdminMonstersMixin:
             if key != "in_turn":
                 candidate[key] = value
 
+        from .scrying_glass_statistics import legacy_max_edit
+        try: legacy_max_edit(candidate, values)
+        except ValueError as exc: raise self.context.HTTPException(422, str(exc)) from exc
         hp_result = None
         if hp_delta is not None:
             from .scrying_glass_feature_rules import apply_hp

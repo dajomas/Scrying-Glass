@@ -1,76 +1,103 @@
 # Scrying Glass
 
-## Compact inline HP and initiative fields
+Scrying Glass, formerly Monster Display, is a self-hosted tabletop encounter
+manager. An authenticated GM Admin interface and a separate Client Display run
+as two FastAPI applications in one Python process, with SQLite persistence and
+WebSocket updates.
 
-Character-table Current HP, Max HP and Initiative inputs, and monster-table
-Initiative inputs, now use half their previous width (15ch to 7.5ch). Input height,
-keyboard editing and numeric behaviour are unchanged. Setup-form and edit-dialog
-fields are unaffected. This is a follow-up overlay compatible with the companion
-theme; see [application instructions](Patch/Compact-Inputs-Apply.md).
+[Deployment](DEPLOYMENT.md) · [User Guide](docs/User-Guide.md) ·
+[Technical Documentation](docs/Technical-Documentation.md) ·
+[Systemd Deployment](docs/Systemd-Deployment.md) · [TODO](TODO.md) · [Handover](HANDOVER.md)
 
-## Looking Glass companion styling
+## Source layout and deployment
 
-The preceding presentation-only restyling aligns Scrying Glass with Looking Glass
-using shared dark surfaces, gold accents, local font fallbacks and coordinated
-controls. It does not merge the applications or change encounter data, permissions,
-combatant colours or configured player-display backgrounds. See
-`Patch/Restyling-Changes.md`, `Patch/Restyling-Apply.md` and
-`Patch/Restyling-Validation.md` from that package for its scope and checks.
+Deploy `scrying_glass_server.py`, `python/`, `web_html/`, `templates/` and the
+complete `static/` tree together. Preserve package `__init__.py` files. Admin HTML
+is assembled from ordered `templates/admin/` fragments, not Jinja templates.
+Restart after imported HTML/Python changes and reload browsers for changed assets.
 
-[Deployment package](DEPLOYMENT.md) · [User Guide](docs/User-Guide.md) · [Technical Documentation](docs/Technical-Documentation.md) · [Systemd Deployment](docs/Systemd-Deployment.md)
+Admin source lives in eight ordered UTF-8 files under `static/admin/`, each at
+most 20,000 bytes. The static adapter assembles them without separators and serves
+one classic deferred script at `/static/admin.js` on both interfaces. The tracked
+`static/admin.js` is a failure marker, not application source: do not overwrite it,
+deploy it alone or load fragments independently. The current assembled core is
+114,814 bytes, SHA-256
+`40fca092f989bcd85eaf7f06dc02b962b662a28827864df68c998919cdf87b46`.
+The service account needs a writable temporary directory for the generated bundle.
+See [Admin split details](docs/handover/050-admin-script-split.md).
 
-Scrying Glass, formerly Monster Display, is a self-hosted tabletop encounter manager. The GM uses an authenticated Admin interface; players use a separate Client Display. Two FastAPI applications run in one Python process, persist structured data in SQLite and deliver player updates over WebSockets.
+Legacy source-reading tests use a disposable assembled checkout:
+
+```bash
+python tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_*.py' -v
+python tools/run_split_tests.py -- node --test tests/battle-action-apply.test.cjs
+python tools/run_split_tests.py -- python tests/browser_smoke_272cc73.py
+```
+
+The real checkout and marker remain untouched. Normal CI uses this runner for
+Python, pytest, Node and standalone browser/audit fixtures. Fixture results and
+workflow metadata are not authenticated/live-server verification.
+
+Technical Documentation is now an index with three topic files under
+`docs/technical/`; retain that directory with the documentation. Existing technical
+section anchors remain as links to the moved sections. The historical package
+manifest is retired from active verification. `deployment/check.py` performs
+runtime preflight only, with or without `--runtime`; it does not verify hashes,
+package completeness or provenance and does not require a manifest. A legacy
+manifest, if still present during staged cleanup, is unused. Use Git commit
+identity or independently generated release checksums for release integrity.
 
 ## Capabilities
 
 - Campaign-owned character rosters and named monster encounter setups.
-- Database accounts, superadmin user management, regular-admin campaign ownership and campaign-specific client viewer grants.
-- Fixed/ranged/dice HP, monster quantities, CSV and .monster imports, uploaded images and optional D&D Beyond suggestions.
-- Initiative validation and ties, shared monster initiative, rounds and turn progression.
-- Damage, capped healing, temporary HP, life states, manual death-save counters, actions and reactions.
-- Keep the action modal open across applies; resolved action/reaction rows are locked and skipped on later applies, with an explicit Close button.
+- Database accounts, superadmin user management, admin campaign ownership and
+  campaign-specific client viewer grants.
+- Fixed/ranged/dice HP, monster quantities, CSV and .monster imports, images and
+  optional public-provider monster suggestions.
+- Initiative validation/ties, shared monster initiative, rounds and turn progression.
+- Damage, capped healing, temporary HP, life states, manual death saves, actions
+  and reactions; resolved action rows remain locked while the modal stays open.
+- Attack statistic reductions, restoration and explicit original/base score entry.
 - Private/public effects, concentration links and turn-boundary expiry.
-- Encounter lairs at initiative 20, bounded persistent undo, checkpoints and portable campaign bundles.
-- Activity-log exports, per-setup backgrounds, viewer font sizing and synchronization status.
+- Lairs at initiative 20, bounded undo, checkpoints and portable campaign bundles.
+- Activity exports, per-setup backgrounds, viewer font size and synchronization status.
 
-This is a GM-assisted tracker, not a full rules engine. Resolve dice, saves, mitigation, concentration checks, reaction availability and resurrection exceptions manually.
+This is a GM-assisted tracker, not a full rules engine. Resolve dice, saves,
+mitigation, concentration checks, reaction availability and resurrection manually.
+See the User Guide for workflows and the numbered handover for delivery history.
 
 ## Requirements and installation
 
-The launcher scripts accept Python 3.10 or newer with standard-library sqlite3. A modern browser is required. This launcher minimum is not a claim that every Python/dependency combination has passed full application validation. Run exactly one application process per storage directory; multiple workers/replicas are unsupported. Node and browser automation are test tooling, not runtime requirements.
+Launchers accept Python 3.10 or newer with working standard-library sqlite3. This
+minimum is not a full dependency/Python compatibility matrix. Run exactly one
+application process per storage directory; workers/replicas are unsupported.
+A modern browser is required. Node and Playwright are test tooling, not runtime
+requirements. Choose a reviewed code revision before deployment.
 
 ```bash
-git clone https://github.com/dajomas/scrying-glass.git
-cd scrying-glass
-git checkout main
 python3.10 -m venv .venv
 .venv/bin/python -m pip install --upgrade pip
-.venv/bin/python -m pip install 'fastapi>=0.115' 'uvicorn[standard]>=0.30' 'PyYAML>=6.0' python-multipart
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python deployment/check.py --runtime
 cp config.example.yaml config.yaml
+.venv/bin/python scrying_glass_server.py --config config.yaml
 ```
 
-A detached checkout makes this baseline reproducible. Deliberately select a branch when developing newer changes.
+Use a newer compatible Python executable if appropriate. Copy the configuration
+only for fresh installations; preserve an existing config and storage on upgrade.
+Preflight checks dependencies and server import/route construction, not lifespans,
+storage initialization, listeners, authentication or browser workflows.
 
-## Launcher interpreter selection
+`run.sh` reuses a complete `~/dnd` environment at Python 3.10 or newer; otherwise
+it probes `python3`, then 3.14 through 3.10, then `python`. Windows launchers reuse
+`%USERPROFILE%\dnd`, otherwise trying `py -3` then `python`. They reject an existing
+environment below 3.10 rather than replacing/downgrading it. Linux retains its
+dependency marker; Windows installs on each launch. Back up files before manually
+recreating an environment. Systemd runs its explicit interpreter directly, not
+launcher discovery. Actual Windows execution and full Python 3.10 application
+validation remain distinct from mocked launcher contracts.
 
-`run.sh` reuses `~/dnd` if it is a complete virtual environment and its Python is
-3.10 or newer. For creation, it probes `python3`, then versioned commands 3.14
-through 3.10, then `python`, choosing the first compatible interpreter on PATH.
-`run.ps1` and `run.bat` reuse `%USERPROFILE%\dnd`; for creation they try `py -3`
-and then `python` on PATH, accepting 3.10 and newer rather than one exact minor.
-All launchers reject an existing environment below 3.10 before pip installation.
-They do not automatically replace or downgrade an existing supported environment.
-Back up any files before manually recreating an old environment.
-
-SQLite checks, dependencies, config path and server invocation remain unchanged.
-Linux retains its dependency marker; Windows retains installation on each launch.
-The manual installation example uses `python3.10`; a newer compatible executable
-may be substituted. The systemd guide also uses 3.10 in its environment-creation
-example and runs that environment directly, without launcher discovery or guards.
-Actual Python 3.10 application startup and Windows execution still require testing;
-launcher regression tests use simulated versions and mocked external commands.
-
-## Configuration
+## Configuration and interfaces
 
 ```yaml
 network:
@@ -88,93 +115,82 @@ display:
   dndbeyond_image_lookup: true
 ```
 
-Accounts live in SQLite, not new configuration files. Legacy security.users is imported once only. Relative storage paths resolve from the working directory; use absolute paths for services. Saved encounter display settings override the configured fallback.
+Relative storage paths resolve from the working directory; use absolute paths for
+services. Saved encounter display settings override configured fallbacks. Accounts
+live in SQLite; legacy `security.users` imports only once. CLI overrides are
+`--config`, `--bind`, `--admin-port`, `--client-port`, `--storage-dir`.
 
-CLI overrides: --config, --bind, --admin-port, --client-port, --storage-dir.
-
-## Validate and run
-
-```bash
-.venv/bin/python -c "import sqlite3; print(sqlite3.sqlite_version)"
-.venv/bin/python -m compileall -q scrying_glass_server.py python web_html
-.venv/bin/python -c "from web_html.admin_html import ADMIN_HTML; print(len(ADMIN_HTML))"
-.venv/bin/python -c "import scrying_glass_server"
-.venv/bin/python scrying_glass_server.py --config config.yaml
-```
-
-Import checks do not initialize deployment storage, run application lifespans or test listeners. Launch the root script directly; external uvicorn module:app commands skip main-guard initialization.
-
-| Interface | Default URL | Account |
+| Interface | Default URL | Role |
 |---|---|---|
 | Battle Admin | http://SERVER:3000/ | admin |
 | User Management | http://SERVER:3000/users | superadmin |
-| Client Display | http://SERVER:3100/display | client/admin/superadmin, scoped by permissions |
+| Client Display | http://SERVER:3100/display | permitted client/admin/superadmin |
 
-Fresh installs print a random superadmin password once. Change it immediately, then create admin/client accounts. Superadmins land on /users rather than battle HTML. Use a regular admin for interactive battles. Assign campaign ownership and client viewer grants separately.
+Fresh installs print a random superadmin password once; change it immediately.
+Create regular admin/client accounts and assign ownership and viewer grants
+separately. Superadmins land on /users; use a regular admin for interactive battles.
 
-## Layout and deployment
+## Monster lookup and row controls
 
-Deploy scrying_glass_server.py, python/, web_html/, templates/ and static/ together. Keep package __init__.py files. web_html avoids collision with Python's html module. Admin markup is assembled from ordered templates/admin fragments; user management uses templates/users.html. Restart after imported HTML changes and reload browsers for assets.
+Add monster searches D&D Beyond first, falling back to 5e.tools only after zero
+usable matches. Provider errors stop lookup. One candidate is automatic; multiple
+candidates open a selection dialog. Cancel permits manual entry. The selected
+image snapshot is retained; a missing image does not select another monster's
+image. No account authentication or entitlement filtering is added.
 
-The repository documentation directory is docs/. This set contains four self-contained documents; supplemental feature pages are not required. Package-specific instructions are in DEPLOYMENT.md; exact source identity and checksums are recorded in package-manifest.json.
+Notifications and popup choices share descriptive book/year labels. Raw IDs, URLs
+and selection tokens remain unchanged. Default 5e.tools sources are MM, XMM, PHB,
+XPHB, DMG, XDMG, in that order. An explicit `fivetools_sources` list replaces them;
+`[]` skips 5e.tools without disabling D&D Beyond. Existing explicit MM/XMM settings
+remain two-source overrides. Remove or expand the key, then restart, to use more.
+Sources are case-sensitive; invalid lists fail validation; at most 32 input entries.
+See [source configuration and labels](docs/handover/230-fivetools-sources.md).
 
-## Persistence and backup
+AC accepts numbers/AC objects; HP prefers supported dice then numeric average.
+Names match after case/punctuation normalization. JSON fetches are bounded to
+16 MB, use a five-second socket timeout and an in-process one-hour/32-entry cache.
+Unresolved copy entries and special-only stats are not guessed; missing values
+are not combined across providers/editions. Token URLs are remote, not downloaded
+or cached locally, and availability is not probed. Disable both lookup providers
+to prevent optional provider requests; no credentials are sent to 5e.tools.
+Live-provider data/image availability is separate from intercepted-HTTP fixtures.
 
-storage_dir contains scrying-glass.sqlite3, uploads/ and optional migration backups/archived legacy data. The database includes accounts/password hashes, campaigns, rosters, setups, runtime, logs and recovery state. Legacy JSON remains archival after import.
+The 11 remaining monster-row buttons stay on one line with table-local horizontal
+scrolling and focus exposure. Name/species remain individually unwrapped. Row
+Damage/Heal buttons and HP change columns are removed from both combatant tables
+by the loaded row-layout enhancement; other damage/healing workflows remain.
+Character HP/initiative and monster initiative editors retain compact 7.5ch widths.
+See [row-layout handover](docs/handover/250-monster-button-layout.md).
 
-Stop the application and back up the entire directory, configuration and service unit. Automatic database migration backups omit media/configuration. Campaign bundles omit accounts, other campaigns and accumulated undo/checkpoint collections; they are not full installation backups.
+## Attack statistics and presentation
 
-## Security and limitations
+Battle Actions includes ordered statistics-reduction rows for Max HP and the six
+abilities. Restore statistics appears beside Reset for both combatant kinds; its
+readable view/selector shows only affected statistics. A separate original/base
+editor sets missing ability scores. Schema 8 requires a pre-upgrade storage backup;
+the restoration-layout follow-up adds no migration. See the
+[workflow](docs/User-Guide.md#attack-statistics-reductions) and
+[technical contract](docs/Technical-Documentation.md#attack-statistics-schema-8).
 
-Use a trusted LAN or restricted VPN/HTTPS proxy, not public default HTTP listeners. Sessions are in memory and clear on restart. Account changes invalidate sessions. Player state is filtered, but names, images, public effects, life state and relative ordering are intentionally visible. /media is a static mount without session protection.
+The companion theme coordinates dark surfaces, gold accents and local fonts with
+Looking Glass; it does not merge applications or alter encounter data, permissions,
+combatant colours or configured display backgrounds. Historical delivery details
+and validation limits remain in the indexed handover.
 
-There is one shared live active campaign, not an independent runtime per admin. Serialized transactions do not provide optimistic conflict detection for simultaneous edits. Coordinate administrators. See the other three documents for workflows, internals and operations.
+## Persistence, backup and security
 
-## 5e.tools monster fallback
+Storage contains `scrying-glass.sqlite3`, uploads and optional migration backups/
+archived legacy data. It includes accounts, campaigns, rosters, setups, runtime,
+logs and recovery state. Stop the process and back up the whole storage directory,
+configuration and service unit. Migration backups omit media/configuration;
+campaign bundles omit accounts, other campaigns and accumulated recovery history
+and are not full installation backups.
 
-Optional monster suggestions now try D&D Beyond first, then 5e.tools JSON data.
-AC accepts numeric entries and AC objects; HP prefers a supported dice formula
-and falls back to the numeric average. Names match exactly after case and
-punctuation normalization. The UI labels the provider and source. Existing
-AC/HP overwrite and in-flight edit protection are unchanged.
-
-Image lookup follows the same provider order when creating a monster without an
-uploaded image. 5etools supplies a token URL (explicit `tokenUrl` or a generated
-WebP token path when `hasToken` is set), not necessarily a full illustration.
-Existing monsters' images are not retroactively updated. Image URLs are remote;
-they are not downloaded or cached locally, and availability is not probed.
-
-Configuration under `display`:
-```yaml
-fivetools_fallback: true
-fivetools_sources: ["MM", "XMM"]
-fivetools_data_base_url: "https://5e.tools/data/bestiary"
-fivetools_image_base_url: "https://5e.tools/img"
-```
-
-MM is tried before XMM to retain the older-edition preference. Only configured
-sources are searched: add source identifiers from the bestiary index to extend
-coverage. D&D Beyond and 5etools are independently controlled: disable both
-`dndbeyond_image_lookup` and `fivetools_fallback` to prevent optional provider
-lookups. No credentials are sent to 5etools. Remote JSON is bounded to 16 MB per
-file, fetched with a five-second socket timeout, and cached in-process for one
-hour with at most 32 entries. Restart clears the cache. Source files are loaded
-sequentially; configured source count affects cold-lookup latency.
-
-Unresolved `_copy` entries without their own usable values are skipped for stats;
-this is not a complete implementation of 5etools inheritance. Special-only AC/HP
-is not guessed. Fallback uses a single usable source entry and does not combine
-missing fields across providers/editions. Browser access to remote token hosts
-and server HTTPS access to data endpoints are required. Use third-party data
-and images only where permitted; none are bundled with this patch.
-
-Run offline tests from the repository root:
-```bash
-python -m unittest discover -s tests -p 'test_fivetools_fallback.py' -v
-```
-
-Live validation: enter Crawling Claw and check that the notification identifies
-5e.tools after D&D Beyond fails. Add a monster without uploading an image and
-check its token in the player view. If no result appears, inspect WARNING logs
-and verify index/source URL reachability from the service account. Token paths
-and live endpoints could not be verified from the patch-build environment.
+Use a trusted LAN or restricted VPN/HTTPS proxy, not public default HTTP listeners.
+Sessions are in memory and clear on restart; account changes revoke sessions.
+Player projections omit private state, but visible names/images/effects/life state
+and relative order are intentional. `/media` is a static mount without sessions.
+One shared live active campaign remains, not independent runtime per admin. Most
+serialized transactions do not detect simultaneous stale edits; reduction and
+restoration/base operations additionally use a scope/revision token. Coordinate
+administrators and consult the technical/security and deployment documentation.
