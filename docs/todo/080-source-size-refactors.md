@@ -4,7 +4,7 @@
 
 ## SG-TODO-008 - Split oversized code without behavior changes
 
-- Status: in progress; Admin activation delivered/CI verified; Storage fields increment 1 delivered; schema increment 2 prepared, approval/CI pending.
+- Status: in progress; Admin activation delivered/CI verified; Storage fields/schema delivered; records increment 3 prepared, delivery/CI pending.
 - Requested and five-commit Admin plan approved: 2026-11-02.
 - Activation: 9f1b14ae99d3b297f4557f05f7f72485ab674d56 on features/perplexity.
 - Priority, owner and deadline: not assigned.
@@ -23,7 +23,7 @@ identities: [handover](../handover/050-admin-script-split.md).
 - [ ] Review detailed static HTTP and browser/startup evidence as needed for acceptance.
 - [ ] Verify deployed permissions and complete source-reader/test compatibility.
 - [ ] Obtain acceptance before declaring the Admin refactor completed.
-- [ ] Prepare and separately validate python/scrying_glass_storage.py splitting next.
+- [ ] Finish and separately validate python/scrying_glass_storage.py splitting.
 
 Seven source/reader/runner methods passed locally during preparation. FastAPI HTTP
 fixtures compiled but were not run locally. On 2026-11-03 the assistant inspected
@@ -58,20 +58,27 @@ Storage increment 1 was delivered as a9da32439b01529ab6deba8242b48593d95be594.
 Its seven field definitions and five preparation tests remain unchanged. Their
 local preparation checks passed, but no Storage CI result has been inspected.
 
-Current increment 2 stages a 10,076-byte StorageSchemaMixin with the original
-_create_schema, convert_campaign_references and _upgrade bodies/signatures/static
-decorator unchanged. Seven local tests passed: AST/descriptor parity, real SQLite
-base-schema parity, empty v1/v2-to-v3 upgrade parity, post-DDL migration rollback,
-reference deep-copy/error parity and size/dependency/original-source guards.
-The constructor, backup files, populated legacy migration and later v4-v8 upgrades
-are not covered by these new local fixtures. Full CI/activation coverage is pending.
+Increment 2 was delivered as 2a651004a7870de461cce32f5dcffd56b91a2aa6, staging a
+10,076-byte StorageSchemaMixin with original bodies/signatures/static descriptor.
+Seven local tests passed in limited base-schema and empty-legacy fixtures; constructor,
+backup files, populated migration and later upgrades remain outside those fixtures.
 
-- [ ] Review fields increment CI for its exact commit.
-- [ ] Deliver and review schema increment CI for its exact commit.
-- [ ] Stage records and operations with unchanged method bodies/equivalence checks.
+Increment 3 prepares a 13,067-byte StorageRecordsMixin with all ten original methods
+AST-equivalent. Eight new local preparation methods passed using the original base
+schema and real in-memory SQLite at user_version=3, without feature/lair mocks.
+Coverage: scalar/presence/NULL, IDs/order/deletion, logs, repeated occurrences,
+runtime setup references/turn markers, rollback and source/descriptor guards.
+Full v8 storage, migrations, backup, effects/lair persistence and application/CI
+validation remain pending. See the handover for exact fixture limits and identities.
+The malformed earlier empty-bound approval was not executed; a complete corrected
+payload requires fresh bound approval before delivery. No increment-3 SHA yet.
+
+- [ ] Review fields/schema increment CI for their exact delivered commits.
+- [ ] Deliver records increment after valid bound approval and review its CI.
+- [ ] Stage operations with unchanged method bodies/equivalence checks.
 - [ ] Activate compatibility facade and keep complete source files below the limit.
 - [ ] Validate full storage/migration/transaction/service behavior and obtain acceptance.
 
 See [Storage handover](../handover/240-sqlite-storage-split.md) for evidence and
-activation constraints. Runtime and consumers remain unchanged in increment 2.
+activation constraints. Runtime and consumers remain unchanged in increment 3.
 Use normal CI; each stage needs its own bound approval. This does not complete SG-TODO-008.
