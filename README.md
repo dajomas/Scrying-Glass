@@ -12,6 +12,7 @@ and reload browsers. The service account needs a writable temporary directory
 for the generated bundle; `/media` handling is unchanged. The initial split was
 byte-identical to its 114,205-byte baseline. SG-TODO-006 stage 2A intentionally
 updates notification labels: the current generated script is 114,814 bytes.
+Stage 2B changes the separate candidate-popup script, not that assembled bundle.
 
 Legacy tests that read `static/admin.js` directly run against an assembled
 temporary repository copy, not the tracked marker. Prefix test commands in this
@@ -27,11 +28,13 @@ python tools/run_split_tests.py -- python tests/browser_smoke_272cc73.py
 The runner leaves the real checkout untouched. Normal CI uses it for Python,
 Node and standalone browser/audit fixtures. Separate tests exercise the production
 static adapter; fixture results are not authenticated/live-server verification.
-For stage 2A, seven source/reader/runner methods and three Node fixture subtests
-passed locally. Its full CI, HTTP/browser and live-provider validation remain pending.
+Stage 2A had seven source/reader/runner methods and three Node fixture subtests
+pass locally. Stage 2B had seven candidate-browser and three typing/focus-browser
+methods pass in real Chromium with intercepted HTTP. Full CI, authenticated server
+and live-provider validation remain pending for these increments.
 See [split handover](docs/handover/050-admin-script-split.md) and
-[source-label handover](docs/handover/230-fivetools-sources.md). Popup source labels
-remain raw until the second approved stage-2 commit; provider behavior is unchanged.
+[source-label handover](docs/handover/230-fivetools-sources.md). Notifications and
+popup choices use the same descriptive labels; provider behavior is unchanged.
 
 ## Monster candidate selection (SG-TODO-001 increment)
 
@@ -197,12 +200,12 @@ The Add monster form uses the candidate-selection rules above; the legacy stats
 endpoint remains first-result based for existing API callers.
 AC accepts numeric entries and AC objects; HP prefers a supported dice formula
 and falls back to the numeric average. Names match exactly after case and
-punctuation normalization. Stage 2A notifications show descriptive 5e.tools book/year
-names; popup choices still show raw codes until stage 2B. Raw IDs remain unchanged
+punctuation normalization. Lookup notifications and popup choices show descriptive
+5e.tools book/year names through the same formatter. Raw IDs remain unchanged
 internally. Existing AC/HP overwrite and in-flight edit protection are unchanged.
 The six labels are documented in the [source task](docs/todo/060-fivetools-source-configuration.md).
-Unknown/custom IDs retain their raw text without invented names or edition years.
-D&D Beyond wording is unchanged.
+Unknown/custom IDs retain their raw text without invented names or edition years;
+unavailable popup sources show Source unavailable. D&D Beyond wording is unchanged.
 
 Without a selection token, image lookup follows the same provider order when
 creating a monster without an uploaded image. The Add monster form instead
@@ -248,12 +251,13 @@ Run offline tests from the repository root (use the split-test runner above):
 python tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_fivetools_fallback.py' -v
 python tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_monster_candidate*.py' -v
 python tools/run_split_tests.py -- node --test tests/fivetools-source-labels.test.cjs
+python tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_monster_lookup_focus_browser.py' -v
 ```
 
 Live validation: enter Crawling Claw and check the lookup outcome. If D&D Beyond
 successfully returns no usable matches, check the 5e.tools result or selection
-popup. Add a monster without uploading an image and check its selected token in
-the player view. If lookup fails, inspect WARNING logs and verify index/source
-URL reachability from the service account. Provider errors no longer silently
-trigger fallback in the candidate-selection UI. Live endpoints and token paths
-remain unverified for this increment.
+popup. Verify the descriptive book/year, choose a candidate and check its AC/HP,
+source link and selected image in the player view. Custom codes must remain raw.
+If lookup fails, inspect WARNING logs and verify index/source URL reachability from
+the service account. Provider errors do not silently trigger fallback in the UI.
+Local browser fixtures intercept HTTP and do not prove live data/image availability.

@@ -53,8 +53,7 @@
                 const button = document.createElement('button');
                 button.type = 'button';
                 button.textContent = `${index + 1}. ${candidate.name || candidate.species} — ` +
-                    `${candidate.provider} / ${candidate.source || 'Source unavailable'} / ` +
-                    `${candidate.legacy ? 'legacy' : 'current'} — ` +
+                    `${monsterSourceLabel(candidate, true)} — ` +
                     `AC ${candidate.ac ?? '—'}, HP ${candidate.hp ?? '—'}`;
                 button.addEventListener('click', () => finish(candidate));
                 row.append(button);
