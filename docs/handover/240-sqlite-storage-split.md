@@ -2,60 +2,71 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Prepared 2026-11-03. Task: [SG-TODO-008](../todo/080-source-size-refactors.md).
-Base: f3cfea4a557a02136dbbfd7a4ae73695636d621d on features/perplexity.
+Last updated: 2026-11-03. Task: [SG-TODO-008](../todo/080-source-size-refactors.md).
+Current preparation base: a9da32439b01529ab6deba8242b48593d95be594 on features/perplexity.
 Original storage: 39,486 bytes / 527 lines, Git blob
 ea80b59cca80c6885f6ba1ba4d32b759beb187b5. The uploaded file matches this identity.
 
-## Increment 1: unused shared fields module
+## Delivered foundation and staged architecture
 
 The user approved five Storage commits: fields, schema/migration, records/encounters,
 campaign/setup/application-state operations, then facade activation. Commits 1-4
 stage unused implementation modules and their tests. Commit 5 changes runtime imports.
+Increment 1 was delivered as a9da32439b01529ab6deba8242b48593d95be594, adding the
+984-byte fields module and five preparation tests. Its module and test blobs were
+verified after pushing. No Storage CI result has been inspected or claimed yet.
 
-This increment adds python/scrying_glass_storage_fields.py (984 bytes), containing
-TEXT_FIELDS, INT_FIELDS, BOOL_FIELDS, ENTITY_FIELDS, LOG_FIELDS, LIST_FIELDS and
-STATE_FIELDS. Assignment expressions, tuple ordering, values and types match the
-original. It has no imports, database work or application initialization. Its mutable
-STATE_FIELDS set is independent of the original definitions during preparation.
-It is not imported by the original storage module or production consumers yet.
-The duplicated definitions are temporary staged material, not a competing runtime
-configuration. Original storage, SQL, schema version 8, transactions and callers
-remain unchanged; this increment alone does not provide a working split runtime.
+Shared fields retain the original assignment expressions, tuple ordering, values
+and types. STATE_FIELDS is an independent mutable set during preparation. Neither
+the staged fields nor schema mixin is imported by the original storage module or
+production consumers yet. Original storage, callers, SQL, schema version 8 and
+transactions remain unchanged. These stages do not yet provide a split runtime.
 
-## Architecture and remaining work
+## Increment 2: schema/migration mixin prepared
 
-Keep SQLiteStorage in python/scrying_glass_storage.py, retaining connection lifecycle,
-constructor, backup/transaction handling and compatibility field exports. Native
-Python mixins/modules hold the extracted method groups; no production exec/eval or
-source concatenation. Current method-source groups (before new headers/imports):
-connection 3,933 bytes, schema/migration 9,760, records/encounters 12,707, operations
-11,924. Measure actual complete files before every stage; maximum is 20,000 bytes.
+python/scrying_glass_storage_schema.py is 10,076 bytes, expected Git blob
+ea70b84536f7a4918a6923ae5068d34fe9c85674. StorageSchemaMixin contains exactly
+_create_schema, static convert_campaign_references and _upgrade. Bodies, signatures,
+decorators, SQL strings and call ordering are AST-equivalent to the original methods.
+Imports are copy/json/time and shared TEXT_FIELDS/INT_FIELDS/BOOL_FIELDS only.
+No facade wiring, constructor changes, new migration or production exec/eval.
 
-Preserve public imports, method signatures/static decorators, SQL ordering, savepoint
-and rollback behavior, migration backups and stable record identities. FeatureStorage
-calls underscore-prefixed methods and imports field constants from the original
-module. Keep those entry points available. New modules import shared fields rather
-than creating a circular import through the facade. Preserve existing lazy feature,
-lair, setup-lair and statistics imports. Check module patch/introspection dependencies
-before activation. The opening Schema v4 docstring is historical; do not change the
-actual SCHEMA_VERSION=8 or introduce a database migration for this refactor.
+Seven new standard-library methods passed locally in test_storage_schema_preparation.py:
+AST equivalence, signatures/static descriptor, base-schema parity, empty v1/v2 legacy
+upgrade parity, rollback after failed legacy migration, reference conversion/deep-copy
+parity, and source-size/dependency/original-blob guards. Both sources compile.
+The mixin executes real in-memory SQLite, compared with AST-extracted original schema,
+transaction/check helpers and set_value in a fixture harness. The clock is fixed
+only for deterministic migration-log comparison; SQL/transaction calls are not mocked.
+Rollback fixtures fail on an unknown active setup after old tables were dropped and
+the new base schema created, and verify restoration of the old schema/data/version.
 
-## Checks and delivery limits
+Limits: empty v1/v2 success fixtures stop at the original base schema version 3.
+They do not run the original constructor, create backup files, migrate populated
+rosters/setups or execute later v4-v8 upgrades. Full application/storage CI and
+activation integration remain pending. Do not present these limited fixtures as
+complete migration validation. Increment-1 tests passed during its preparation;
+they were not rerun locally for increment 2. Existing normal CI discovers both
+modules without workflow changes. Do not claim increment-1 CI passed without evidence.
 
-Five new standard-library unittest methods passed locally: original-storage Git blob
-identity, field values/types/order, AST assignment equivalence, mutable-set isolation,
-and module size/import/export checks. The proposed module and test source compiled.
-The tests execute the real staged module and only the original seven AST-extracted
-assignments, not the complete storage/application module. No database, migrations,
-authenticated server or full-suite execution is claimed. Normal CI discovery picks
-up test_storage_fields_preparation.py without workflow changes. CI remains pending
-for this preparation increment. Remove/adapt the original-monolith identity guard
-and AST comparison at activation, when the facade deliberately replaces that file.
+## Remaining work and compatibility
 
-README, existing Admin handover, workflow and consumers were reviewed and are not
-changed by this increment: runtime and deployment behavior are unchanged. HANDOVER.md
-adds this section link; TODO tracking adds the agreed Storage stages. No package
-manifest refresh, archive, workflow dispatch or CI skip is included. Each external
-write still needs complete exact-content approval. SG-TODO-004 remains on hold;
-SG-TODO-006 UI labels are outside this refactor. Other task close-outs are separate.
+Next: records/encounters (3), operations (4), native facade activation (5). Keep
+SQLiteStorage in python/scrying_glass_storage.py with constructor, connection lifecycle,
+backups/transactions and compatibility field exports. Method-source groups before
+headers/imports: connection 3,933 bytes, schema/migration 9,760, records 12,707,
+operations 11,924. Measure complete files at every stage; maximum is 20,000 bytes.
+
+FeatureStorage calls underscore methods and imports field constants from the old
+module; retain these entry points. Import shared fields in new modules rather than
+creating circular facade imports. Preserve lazy feature/lair/setup-lair/statistics
+imports, savepoints, rollback, backup ordering and record identity. Check patch and
+introspection dependencies before activation. The old Schema v4 docstring does not
+change the actual SCHEMA_VERSION=8. Adapt preparation AST/original-monolith guards
+at activation, when replacing the monolith is intentional; retain behavioral checks.
+
+README, HANDOVER.md, workflow, existing field tests/module and production consumers
+were reviewed and left unchanged in increment 2: runtime/deployment and index links
+are unaffected. The existing task/index summarize progress. No archive, package
+manifest refresh, workflow dispatch or CI skip. Each write needs bound approval.
+SG-TODO-004 remains on hold; SG-TODO-006 labels and other task close-outs are separate.
