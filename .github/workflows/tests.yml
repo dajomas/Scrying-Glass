@@ -31,15 +31,15 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Python syntax and server import checks
         run: |
-          python -m compileall -q scrying_glass_server.py python web_html tests
+          python -m compileall -q scrying_glass_server.py python web_html tests tools
           python -c "import scrying_glass_server"
       - name: Python test suite (including browser fixtures)
         if: ${{ !cancelled() }}
-        run: python -m unittest discover -s tests -p 'test_*.py' -v
+        run: python tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Pytest regression modules
         if: ${{ !cancelled() }}
         run: >-
-          python -m pytest -q
+          python tools/run_split_tests.py -- python -m pytest -q
           tests/test_death_save_validation_2ba6607.py
           tests/test_slug_truncation_82860c4.py
       - name: JavaScript tests
@@ -49,7 +49,7 @@ jobs:
           status=0
           while IFS= read -r -d '' test; do
             echo "::group::$test"
-            node --test "$test" || status=1
+            python tools/run_split_tests.py -- node --test "$test" || status=1
             echo "::endgroup::"
           done < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)
           exit "$status"
@@ -64,7 +64,7 @@ jobs:
             if [[ "$test" == tests/audit_log_clear.py ]]; then
               args=(patched)
             fi
-            python "$test" "${args[@]}" || status=1
+            python tools/run_split_tests.py -- python "$test" "${args[@]}" || status=1
             echo "::endgroup::"
           done < <(find tests -type f -name '*.py' ! -name 'test_*.py' ! -name '__init__.py' -print0 | sort -z)
           exit "$status"

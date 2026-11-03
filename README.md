@@ -1,5 +1,36 @@
 # Scrying Glass
 
+## Split Admin source delivery
+
+Admin source now lives in eight ordered UTF-8 files under `static/admin/`, each
+no larger than 20,000 bytes. The server's existing static adapter assembles these
+without separators and serves one classic script at the unchanged deferred
+`/static/admin.js` URL on both interfaces. The tracked `static/admin.js` is only
+a small failure marker: do not edit it as application source or deploy it alone.
+Deploy the matching server, `python/` and entire `static/` tree together, restart
+and reload browsers. The service account needs a writable temporary directory
+for the generated bundle; `/media` handling is unchanged. The generated HTTP
+script remains 114,205 bytes and is byte-identical to the pre-split source.
+
+Legacy tests that read `static/admin.js` directly run against an assembled
+temporary repository copy, not the tracked marker. Prefix test commands in this
+README and historical documentation with the following runner, using the same
+Python environment as the test dependencies:
+
+```bash
+python tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_*.py' -v
+python tools/run_split_tests.py -- node --test tests/battle-action-apply.test.cjs
+python tools/run_split_tests.py -- python tests/browser_smoke_272cc73.py
+```
+
+The runner leaves the real checkout untouched. Normal CI uses it for Python,
+Node and standalone browser/audit fixtures. Separate tests exercise the production
+static adapter; fixture results are not authenticated/live-server verification.
+Seven local reader/source/runner methods passed during preparation. Full CI,
+FastAPI HTTP checks and deployed browser/startup validation remain pending.
+See [split handover](docs/handover/050-admin-script-split.md). This refactor does
+not implement SG-TODO-006 stage 2 or change lookup behavior.
+
 ## Monster candidate selection (SG-TODO-001 increment)
 
 The Add monster form now enumerates usable public-provider matches. One match
@@ -200,10 +231,10 @@ providers/editions. Browser access to remote token hosts and server HTTPS access
 to data endpoints are required. Use third-party data and images only where
 permitted; none are bundled with this patch.
 
-Run offline tests from the repository root:
+Run offline tests from the repository root (use the split-test runner above):
 ```bash
-python -m unittest discover -s tests -p 'test_fivetools_fallback.py' -v
-python -m unittest discover -s tests -p 'test_monster_candidate*.py' -v
+python tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_fivetools_fallback.py' -v
+python tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_monster_candidate*.py' -v
 ```
 
 Live validation: enter Crawling Claw and check the lookup outcome. If D&D Beyond

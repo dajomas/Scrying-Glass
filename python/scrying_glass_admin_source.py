@@ -2,22 +2,14 @@
 from pathlib import Path
 
 ADMIN_SCRIPT_PARTS = (
-    "010-source.js",
-    "020-source.js",
-    "030-source.js",
-    "040-source.js",
-    "050-source.js",
+    "010-source.js", "020-source.js", "030-source.js", "040-source.js",
+    "050-source.js", "060-source.js", "070-source.js", "080-source.js",
 )
-MAX_SOURCE_BYTES = 25_000
+MAX_SOURCE_BYTES = 20_000
 
 
 def read_admin_script(static_directory: Path) -> bytes:
-    """Concatenate trusted source fragments in their explicit original order.
-
-    The resulting HTTP response is one classic script, not five independently
-    executed scripts. Do not insert separators: the fragments retain every
-    original byte, including whitespace and comments at their boundaries.
-    """
+    """Join trusted UTF-8 fragments without inserting separators."""
     directory = Path(static_directory) / "admin"
     parts = []
     for name in ADMIN_SCRIPT_PARTS:
