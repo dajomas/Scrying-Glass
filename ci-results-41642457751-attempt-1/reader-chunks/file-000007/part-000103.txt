@@ -1,0 +1,28 @@
+13:16:49.0093673Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0094750Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0095911Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0096624Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0097953Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0099127Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0099836Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0100918Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0101619Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0101898Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0102263Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0102680Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0103475Z   File "/tmp/scrying-tests-jsje6g36/repo/python/scrying_glass_monster_selection.py", line 84, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0104270Z     html = context.dnd_monster_detail_html(href)
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0105069Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0105778Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0106183Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0107067Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0107725Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0108122Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0108831Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0109682Z     raise result
+tests	Standalone Python browser and audit checks	2026-11-03T13:16:49.0109938Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4323861Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4325708Z FAIL: test_keyboard_reaches_every_button_and_scrolls_locally (test_monster_button_layout.MonsterButtonLayoutTests.test_keyboard_reaches_every_button_and_scrolls_locally) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4327470Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4328067Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4329185Z   File "/tmp/scrying-tests-jsje6g36/repo/tests/test_monster_button_layout.py", line 143, in test_keyboard_reaches_every_button_and_scr

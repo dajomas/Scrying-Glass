@@ -1,0 +1,31 @@
+olls_locally
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4330328Z     self.assertTrue(buttons.nth(index).evaluate("""node => {
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4331029Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4331630Z         const b = node.getBoundingClientRect();
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4332172Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4332850Z         const r = document.querySelector('#monsters').getBoundingClientRect();
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4333577Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4334207Z         return b.left >= r.left - 1 && b.right <= r.right + 1;
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4335145Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4335576Z     }"""))
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4335847Z     ^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4336223Z AssertionError: False is not true
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4336504Z 
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4337048Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4338660Z FAIL: test_keyboard_reaches_every_button_and_scrolls_locally (test_monster_button_layout.MonsterButtonLayoutTests.test_keyboard_reaches_every_button_and_scrolls_locally) (width=768)
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4340152Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4340791Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4341966Z   File "/tmp/scrying-tests-jsje6g36/repo/tests/test_monster_button_layout.py", line 143, in test_keyboard_reaches_every_button_and_scrolls_locally
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4343153Z     self.assertTrue(buttons.nth(index).evaluate("""node => {
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4343778Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4344349Z         const b = node.getBoundingClientRect();
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4344881Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4345554Z         const r = document.querySelector('#monsters').getBoundingClientRect();
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4346274Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4347100Z         return b.left >= r.left - 1 && b.right <= r.right + 1;
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4347675Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4348104Z     }"""))
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4348380Z     ^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4348747Z AssertionError: False is not true
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4349003Z 
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:09.4349305Z =======================

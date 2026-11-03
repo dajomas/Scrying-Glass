@@ -1,0 +1,31 @@
+-11-03T13:17:10.2097229Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:13.0735535Z {
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:13.0735973Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:13.0736390Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:13.0737158Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:13.0737858Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:13.0738579Z     "client card has a positive layout width at mobile viewport"
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:13.0738989Z   ],
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:13.0739220Z   "page_errors": [],
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:13.0739600Z   "transport": "mocked HTTP/WS, real Chromium rendering"
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:13.0739997Z }
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:13.1497407Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:13.1498109Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:13.2737602Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-03T13:17:13.2744071Z ##[error]Process completed with exit code 1.
+tests	Post Run actions/checkout@v4	﻿2026-11-03T13:17:13.2876122Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-03T13:17:13.3776545Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-03T13:17:13.3847500Z git version 2.56.0
+tests	Post Run actions/checkout@v4	2026-11-03T13:17:13.3892960Z Temporarily overriding HOME='/home/runner/work/_temp/d00cc48a-35e7-4a0c-8b06-d5c9d8b165dd' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-03T13:17:13.3894491Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-03T13:17:13.3898796Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-03T13:17:13.3942744Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-03T13:17:13.3982578Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-03T13:17:13.4253364Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-03T13:17:13.4296887Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-03T13:17:13.4309856Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-03T13:17:13.4350358Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Post Run actions/checkout@v4	2026-11-03T13:17:13.4632119Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	Post Run actions/checkout@v4	2026-11-03T13:17:13.4683806Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+tests	Complete job	﻿2026-11-03T13:17:13.5138840Z Cleaning up orphan processes
+tests	Complete job	2026-11-03T13:17:13.5513846Z ##[warnin
