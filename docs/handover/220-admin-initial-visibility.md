@@ -2,73 +2,69 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-## Completion - 2026-11-02
+## Reopened corrective increment - 2026-11-03
 
-[SG-TODO-005](../todo/050-admin-initial-visibility.md) is completed at the user's
-request after their green-CI confirmation on 2026-11-02 at 22:37 CET.
-Implementation: ee9a4bd56439d8a5e7d5a94e5d9d1c1788c4c9e4, prepared against
-6637a39ef21e0e035b849a7848ad0302c7ac7c33 on features/perplexity.
+[SG-TODO-005](../todo/050-admin-initial-visibility.md) is reopened after the user
+reported Show character input and Show monster input remaining visible beneath
+hidden Campaign input and Battle setup parents. Preparation base:
+430574c584162099c61168cd680b0422479c1541 on features/perplexity.
 
-The user did not supply a workflow ID, logs or tested SHA with this confirmation.
-Record user-reported CI success rather than inventing an independently verified
-run or borrowing a previous task's workflow. Deployed first-opening/reload/manual
-checks were not separately reported; closure records the user's CI-based acceptance,
-not a claim that the assistant ran authenticated live checks. The former pending
-status is superseded on this explicit acceptance basis. Documentation only; no
-runtime, tests or workflow changes and no new test execution for this close-out.
+### Diagnosis and prepared change
 
-## Accepted scope and user behavior
+Individual parent handlers hide dependent buttons and save child preferences.
+However, setAllHideablePanesHidden resets every button.hidden flag to false while
+collapsing all panes for battle. This exposes child controls under hidden parents.
+The original assembled-page regression checked pane hidden/aria states, not the
+rendered visibility of these buttons; earlier green CI did not cover the invariant.
 
-The user accepted related input groups: active campaign hides Campaign setup and
-Character input; active saved setup hides Battle setup, Monster input and Lair
-input. Battle controls, Character/Monster display and Activity log are unaffected.
-This applies once after initial authoritative state on every page opening/reload,
-not on each refresh or subsequent campaign/setup change. Manual Show/Hide choices
-remain usable, including choices made while waiting for initial data. No stored
-browser/database preference is introduced. False conditions keep existing defaults.
+Two scoped :has() selectors in static/admin-shell.css enforce rendered unavailability:
+- Campaign input [hidden] -> toggleCharacterPane display:none.
+- Battle setup [hidden] -> toggleMonsterPane display:none.
 
-## Implementation
+The rules respond to the actual parent DOM state, including direct/global collapse,
+without adding a second JavaScript state model, polling, observers or wrappers.
+Reopening a parent removes this CSS constraint; the existing child preference and
+button.hidden restoration still apply. Independent lair gating and display controls
+are untouched. This retains the modern-browser requirement (including :has()).
+No source fragments or bundle bytes change; split identity tests remain valid.
 
-admin-initial-visibility.js is included once at the end of fragment 190 after
-Admin/lair extensions, preserving the dependency order learned from SG-TODO-003.
-It chains scryingLairsRender with receiver/arguments/return value preserved, then
-initializes from the snapshot; it also catches up from latest if already populated.
-No extra API requests, polling, MutationObservers or mutations are introduced.
-Missing/malformed state waits for a later valid render. A valid null/null initial
-state consumes the decision so a later activation does not unexpectedly collapse.
+### New checks and limitations
 
-The script clicks only currently expanded, enabled existing input toggles. This
-updates the Admin's own per-page hidden model, button label and aria-expanded;
-it does not create conflicting hidden flags. A capture listener tracks any prior
-non-initializer interaction per input. Already-collapsed inputs are left alone.
-An enabled lair toggle can record the collapsed preference even when CSS hides
-its button; the independent has-lair gate is not changed. The install guard makes
-accidental repeat asset evaluation harmless. No large admin.js rewrite, server,
-authorization, schema, configuration or migration changes are included.
+Five local real-Chromium methods in test_admin_dependent_controls.py passed against
+the correction. Three failed against the original CSS. They use the production
+reader, actual extracted pane-controller block, real stylesheet and original
+initial-visibility controller, with minimal DOM/state fixtures. Tests assert
+is_visible()/computed display, not merely hidden flags; they cover manual hiding,
+child preference restoration, automatic battle collapse, repeated renders, initial
+collapse and unaffected lair/display controls. No API requests or authenticated
+server/browser checks were performed. Full corrective CI remains pending.
 
-## Validation evidence and boundaries
+The user-supplied evidence in ci-results-41584927496-attempt-1/run.json at the
+preparation base identifies databaseId 41584927496, attempt 1, completed/success,
+head SHA 9f1b14ae99d3b297f4557f05f7f72485ab674d56. Syntax/import, unittest,
+pytest, JavaScript and standalone browser/audit steps all report success.
+This verifies the previous Admin split CI, not the new CSS correction, and does
+not prove authenticated live behavior or undelivered SG-TODO-006 UI labels.
 
-Eight focused Chromium unittest methods passed locally (four initial-condition
-subtests included in that count). They cover cached/delayed/invalid state, manual
-choices before/after initialization, later scopes, hidden lair controls, already
-collapsed panes, no-active initial state and duplicate install. Pane handlers and
-state transport are stubs; these are not full production-script integration checks.
-Both prepared Python test sources compiled.
+### Delivery and continuity
 
-The separate test_admin_initial_visibility_page.py uses the real assembled HTML,
-all real static scripts and intercepted HTTP with the established SQLite feature
-fixture. It verifies real toggle/model integration and load(true) behavior, captures
-pageerrors and forbids unexpected API mutations. The assistant did not run that
-fixture or the full suite locally. User-confirmed green CI is recorded separately
-above and does not turn mocked HTTP into authenticated live coverage. Existing
-layout, visibility, setup/lair and complete-page smoke checks were left unchanged.
+One proposed commit includes CSS, regressions and existing task/index updates.
+Use normal CI and bound approval. Deploy the stylesheet and reload Admin; no
+server restart, markup, config or schema change is required for this CSS-only
+runtime change. README and HANDOVER.md were reviewed and left unchanged because
+their deployment/index descriptions remain accurate. Do not close the reopened
+task until corrective evidence and acceptance. SG-TODO-004 stays on hold.
 
-## Operation and continuity
+## Historical completion - 2026-11-02
 
-Deploy the new script with the changed document-end fragment, restart and reload.
-No migration or configuration change is needed. Per-page defaults do not imply
-persistent browser preferences. README and HANDOVER.md index were reviewed and
-remain accurate; the existing TODO index and section record completion. Other task
-statuses, including the SG-TODO-004 hold, are unchanged. The next requested task is
-SG-TODO-006; its XPBH/XPHB identifier discrepancy must be resolved before defaults
-are implemented. No SG-TODO-006 runtime work is claimed by this close-out.
+The user previously accepted the initial related-group scope after their green-CI
+confirmation at 22:37 CET. Implementation: ee9a4bd56439d8a5e7d5a94e5d9d1c1788c4c9e4,
+prepared against 6637a39ef21e0e035b849a7848ad0302c7ac7c33. No run identifier was
+provided then; that closure recorded user-reported CI, not independently inspected
+logs. Eight focused mocked-handler Chromium methods passed locally; a separate
+assembled-page fixture was prepared but not executed by the assistant locally.
+The controller initializes once per page from valid active_campaign_id/active_setup,
+preserves prior manual choices, chains scryingLairsRender and catches up from latest.
+There are no persistent preferences, added API mutations or polling. False initial
+conditions preserve defaults. Missing/malformed data waits for an authoritative
+snapshot. The new rendered-button invariant supplements this original scope.

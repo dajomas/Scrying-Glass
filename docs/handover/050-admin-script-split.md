@@ -4,8 +4,9 @@
 
 Last updated: 2026-11-03. Task: [SG-TODO-008](../todo/080-source-size-refactors.md).
 
-## Activation prepared; validation pending
+## Activation delivered; CI outcome verified; live validation pending
 
+Activation: 9f1b14ae99d3b297f4557f05f7f72485ab674d56.
 Preparation base: 76f9f7ffa9f28ccfcedb2570c413b76052e1fe11 (increment 4).
 Earlier increments: 4b50a5c5f9bf21b679dd568a85f838827fb9700c (010/020),
 db8b567704b3b5d77357200b122f298ad18d2dd7 (030/040),
@@ -16,7 +17,7 @@ were verified against the original slices before activation preparation.
 
 Both /static mounts now use the existing AdminScriptStaticFiles adapter; /media
 retains StaticFiles. The reader uses eight explicit ordered parts and enforces
-20,000 UTF-8 bytes per source. The tracked admin.js becomes a small failure marker.
+20,000 UTF-8 bytes per source. The tracked admin.js is a small failure marker.
 The same deferred /static/admin.js URL returns one assembled classic script;
 no application logic, HTML script order, provider behavior or browser scope changes.
 The generated response is 114,205 bytes, not a tracked source file. Fragment sizes:
@@ -34,17 +35,21 @@ assertions are not weakened. Both split-source test modules now use the producti
 reader rather than comparing against the tracked marker. New static-adapter tests
 exercise fixture FastAPI apps and inspect actual server mount wiring separately.
 
-Seven reader/source/runner test methods passed locally, covering original identity,
-fragment and assembled Node parsing, size/UTF-8/missing-part errors, and temporary
-fixture isolation. New HTTP/mount tests compiled but were not executed locally:
-FastAPI is absent. GET/HEAD, ETag/304, ranges, delegation, traversal and refresh
-checks are configured for normal CI. Full suite, authenticated startup/browser,
-service-account permissions and CI results remain unverified. No live-provider
-or full end-to-end success is claimed. Accept completion only after evidence review.
+Seven reader/source/runner methods passed locally during preparation. HTTP/mount
+tests compiled but were not run locally because FastAPI was absent. On 2026-11-03,
+run metadata in ci-results-41584927496-attempt-1/run.json at evidence commit
+430574c584162099c61168cd680b0422479c1541 was inspected: databaseId 41584927496,
+attempt 1, push on features/perplexity, head SHA 9f1b14ae99d3b297f4557f05f7f72485ab674d56,
+workflow/tests job completed/success. Syntax/import, unittest, pytest, JavaScript
+and standalone browser/audit steps all report success. No individual test count
+or authenticated live-provider success is inferred from that metadata. Deployed
+permissions and startup/browser acceptance remain separate validation.
 
 Deploy server, python/ and static/ together, restart, and reload browsers. The service
 account needs a writable temporary directory. Deploying only the marker breaks Admin;
 loading fragments independently is unsupported. See README for test invocation.
-SG-TODO-006 stage 2 stays paused; SG-TODO-004 stays on hold. SQLite splitting follows
-separately. Root handover index links are unchanged. No package-manifest refresh,
-SQLite migration, workflow dispatch or CI skip is part of this increment.
+SG-TODO-006 stage 2 stays undelivered; the user-reported completion wording does
+not describe delivered book-label code. The dependent-button report is handled
+under [SG-TODO-005](../todo/050-admin-initial-visibility.md), not a change to the
+assembled JavaScript. SG-TODO-004 stays on hold. SQLite splitting follows separately.
+Root handover index links are unchanged. No package-manifest refresh or migration.

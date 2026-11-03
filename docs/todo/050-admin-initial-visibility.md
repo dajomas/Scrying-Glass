@@ -4,7 +4,8 @@
 
 ## SG-TODO-005 - Hide already-active campaign/setup sections on initial opening
 
-- Status: completed, 2026-11-02, at the user's request after user-confirmed green CI.
+- Status: reopened/in progress, 2026-11-03; dependent-button correction prepared, approval/CI/live validation pending.
+- Prior closure: 2026-11-02, at the user's request after user-confirmed green CI.
 - Requested: 2026-11-02. Group scope and per-page behavior accepted: 2026-11-02.
 - Implementation: ee9a4bd56439d8a5e7d5a94e5d9d1c1788c4c9e4 on features/perplexity.
 - Priority, owner and deadline: not assigned.
@@ -65,3 +66,29 @@ reload browsers. No migration or configuration change. Defaults are per page;
 no persistent preferences are claimed. This close-out changes documentation only
 and runs no new tests. Other tasks and the SG-TODO-004 hold are unchanged.
 See [handover](../handover/220-admin-initial-visibility.md).
+
+### Reopened dependent controls - 2026-11-03
+
+The preceding closure/validation paragraphs are historical. The user reports
+visible Show character/monster input buttons beneath hidden Campaign/Battle setup
+parents. Automatic battle collapse resets all button.hidden flags, unlike the
+individual parent handlers. New CSS in admin-shell.css makes each dependent
+button display:none whenever its parent pane has [hidden]. It does not modify
+child preferences, accessibility labels, initialization or independent lair gating.
+It uses :has() and retains the existing modern-browser requirement.
+
+Five new Chromium methods extract the actual pane controller from the production
+assembled source and use the real stylesheet and initial-visibility script with
+a minimal DOM/state fixture. Three methods failed on the original CSS; all five
+passed with the correction. They check actual rendered visibility, manual/global
+collapse, repeated refresh, initial boot, restore, child preferences and unaffected
+controls. This is not authenticated live/full-server coverage.
+
+- [ ] Deliver correction with bound approval and normal CI.
+- [ ] Review corrective CI against its exact commit.
+- [ ] Confirm parent/child buttons behave correctly in deployed Admin, then accept close-out.
+
+Preparation base: 430574c584162099c61168cd680b0422479c1541.
+Run 41584927496 attempt 1 is verified successful for the earlier Admin-split SHA
+9f1b14ae99d3b297f4557f05f7f72485ab674d56; it does not validate this correction.
+No split JavaScript bytes, provider behavior, workflow or backend are changed here.
