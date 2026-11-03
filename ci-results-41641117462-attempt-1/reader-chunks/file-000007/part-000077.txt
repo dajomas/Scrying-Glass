@@ -1,0 +1,28 @@
+===========================
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3351850Z FAIL: test_keyboard_reaches_every_button_and_scrolls_locally (test_monster_button_layout.MonsterButtonLayoutTests.test_keyboard_reaches_every_button_and_scrolls_locally) (width=768)
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3352595Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3352920Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3353665Z   File "/tmp/scrying-tests-enk6dro7/repo/tests/test_monster_button_layout.py", line 143, in test_keyboard_reaches_every_button_and_scrolls_locally
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3354253Z     self.assertTrue(buttons.nth(index).evaluate("""node => {
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3354577Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3354927Z         const b = node.getBoundingClientRect();
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3355193Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3355549Z         const r = document.querySelector('#monsters').getBoundingClientRect();
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3355934Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3356464Z         return b.left >= r.left - 1 && b.right <= r.right + 1;
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3356781Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3357006Z     }"""))
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3357156Z     ^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3357360Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3357500Z 
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3357660Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3358477Z FAIL: test_keyboard_reaches_every_button_and_scrolls_locally (test_monster_button_layout.MonsterButtonLayoutTests.test_keyboard_reaches_every_button_and_scrolls_locally) (width=375)
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3359210Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3359528Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3360130Z   File "/tmp/scrying-tests-enk6dro7/repo/tests/test_monster_button_layout.py", line 143, in test_keyboard_reaches_every_button_and_scrolls_locally
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3360730Z     self.assertTrue(buttons.nth(index).evaluate("""node => {
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3361051Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3361335Z         const b = node.getBoundingClientRect();
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3361597Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3361938Z         const r = document.querySelector('#monsters').getBoundingClientRect();
+tests	Python test suite (including browser 

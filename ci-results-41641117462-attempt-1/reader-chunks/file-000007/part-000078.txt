@@ -1,0 +1,35 @@
+fixtures)	2026-11-03T13:06:22.3362327Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3362659Z         return b.left >= r.left - 1 && b.right <= r.right + 1;
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3362967Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3363326Z     }"""))
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3363479Z     ^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3363672Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3363816Z 
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3364003Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3364306Z Ran 1015 tests in 62.668s
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3364432Z 
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3364516Z FAILED (failures=3)
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.6292863Z ##[error]Process completed with exit code 1.
+tests	Pytest regression modules	﻿2026-11-03T13:06:22.6332519Z ##[group]Run python tools/run_split_tests.py -- python -m pytest -q tests/test_death_save_validation_2ba6607.py tests/test_slug_truncation_82860c4.py
+tests	Pytest regression modules	2026-11-03T13:06:22.6333245Z ^[[36;1mpython tools/run_split_tests.py -- python -m pytest -q tests/test_death_save_validation_2ba6607.py tests/test_slug_truncation_82860c4.py^[[0m
+tests	Pytest regression modules	2026-11-03T13:06:22.6351029Z shell: /usr/bin/bash -e {0}
+tests	Pytest regression modules	2026-11-03T13:06:22.6351184Z env:
+tests	Pytest regression modules	2026-11-03T13:06:22.6351448Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Pytest regression modules	2026-11-03T13:06:22.6351780Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	Pytest regression modules	2026-11-03T13:06:22.6352023Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.9/x64/lib/pkgconfig
+tests	Pytest regression modules	2026-11-03T13:06:22.6352256Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	Pytest regression modules	2026-11-03T13:06:22.6352489Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	Pytest regression modules	2026-11-03T13:06:22.6352706Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.9/x64
+tests	Pytest regression modules	2026-11-03T13:06:22.6352957Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.9/x64/lib
+tests	Pytest regression modules	2026-11-03T13:06:22.6353828Z ##[endgroup]
+tests	Pytest regression modules	2026-11-03T13:06:24.2059384Z ...........................................                              [100%]
+tests	Pytest regression modules	2026-11-03T13:06:24.2059865Z 43 passed in 1.00s
+tests	JavaScript tests	﻿2026-11-03T13:06:24.3373944Z ##[group]Run status=0
+tests	JavaScript tests	2026-11-03T13:06:24.3374145Z ^[[36;1mstatus=0^[[0m
+tests	JavaScript tests	2026-11-03T13:06:24.3374284Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	JavaScript tests	2026-11-03T13:06:24.3374448Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	JavaScript tests	2026-11-03T13:06:24.3374658Z ^[[36;1m  python tools/run_split_tests.py -- node --test "$test" || status=1^[[0m
+tests	JavaScript tests	2026-11-03T13:06:24.3374876Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	JavaScript tests	2026-11-03T13:06:24.3375098Z ^[[36;1mdone < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)^[[0m
+tests	JavaScript tests	2026-11-03T13:06:24.3375455Z ^[[36;1mexit "$status"^[[0m
+tests	JavaScript tests	2026-11-03T13:06:24.3394391Z shell: /usr/b

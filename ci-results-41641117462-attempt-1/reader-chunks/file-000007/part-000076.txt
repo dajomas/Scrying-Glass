@@ -1,0 +1,27 @@
+serves_turn (test_turn_eligibility.TurnTests.test_down_damage_preserves_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.1853831Z test_down_takes_next_turn (test_turn_eligibility.TurnTests.test_down_takes_next_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.2160633Z test_manual_down_turn (test_turn_eligibility.TurnTests.test_manual_down_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.2422011Z test_negative_maximum_no_longer_means_death (test_turn_eligibility.TurnTests.test_negative_maximum_no_longer_means_death) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.2792735Z test_round_wrap (test_turn_eligibility.TurnTests.test_round_wrap) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3005949Z test_stable_takes_next_turn (test_turn_eligibility.TurnTests.test_stable_takes_next_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3172865Z test_third_failure_removed (test_turn_eligibility.TurnTests.test_third_failure_removed) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3343310Z test_zero_hp_monster_excluded (test_turn_eligibility.TurnTests.test_zero_hp_monster_excluded) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3343803Z 
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3343994Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3344999Z FAIL: test_keyboard_reaches_every_button_and_scrolls_locally (test_monster_button_layout.MonsterButtonLayoutTests.test_keyboard_reaches_every_button_and_scrolls_locally) (width=1440)
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3345795Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3346167Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3346787Z   File "/tmp/scrying-tests-enk6dro7/repo/tests/test_monster_button_layout.py", line 143, in test_keyboard_reaches_every_button_and_scrolls_locally
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3347431Z     self.assertTrue(buttons.nth(index).evaluate("""node => {
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3347774Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3348067Z         const b = node.getBoundingClientRect();
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3348348Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3348712Z         const r = document.querySelector('#monsters').getBoundingClientRect();
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3349089Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3349814Z         return b.left >= r.left - 1 && b.right <= r.right + 1;
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3350135Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3350365Z     }"""))
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3350523Z     ^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3350729Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3350874Z 
+tests	Python test suite (including browser fixtures)	2026-11-03T13:06:22.3351033Z ===========================================
