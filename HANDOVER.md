@@ -29,6 +29,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 22. [Initial Admin input visibility](docs/handover/220-admin-initial-visibility.md)
 23. [Configurable 5e.tools source stages](docs/handover/230-fivetools-sources.md)
 24. [SQLite storage source split](docs/handover/240-sqlite-storage-split.md)
+25. [Single-line monster row controls](docs/handover/250-monster-button-layout.md)
 
 ## Required update convention
 
