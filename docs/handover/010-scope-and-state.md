@@ -30,7 +30,8 @@ requirements.txt; Python, Node and browser fixtures are under tests/.
 The user accepted the Admin and Storage refactors as done. The live size audit at
 9703102f1929aedd1887c17f1d7b4a8996dfc04b found no code files above the agreed
 25,000-byte existing-file allowance. Temporary CI logs are excluded from refactor
-targets and are not deleted by this maintenance. SG-TODO-004 remains on hold.
+targets and are not deleted by this maintenance. SG-TODO-004's subsequent
+cancellation is recorded below.
 
 Technical-Documentation.md is an index to three files under docs/technical/, all
 below 20,000 bytes. The draft split reconstructed the exact 31,226-byte source
@@ -52,6 +53,24 @@ test delivery, then a separately confirmed deletion of the unused manifest. The
 physical presence of any legacy manifest is not a dependency of the new tooling.
 No separate workflow is dispatched, and this skip request is limited to those two
 maintenance commits. No application runtime or storage behavior is changed.
+
+## SG-TODO-004 cancelled - 2026-11-03
+
+After a user-requested integration-options review, the user concluded that none
+of the investigated approaches were viable for this project and explicitly
+requested cancellation. [SG-TODO-004](../todo/040-dndbeyond-account-access.md) is
+cancelled, not completed; older hold/deferred references are historical and
+superseded by that decision. Its archived requirements and unfulfilled acceptance
+criteria are preserved. No account-backed implementation or live account
+verification was started, and no credentials were collected or account accessed.
+Do not resume this work without a new explicit user request.
+
+The delivered public-provider candidate selection, imports and manual entry remain
+unchanged. This is a documentation-only cancellation: no code/test/workflow/data
+changes, no automated tests executed and no new CI result claimed. The user
+explicitly requested [skip ci] for this cancellation push; no workflow is
+separately dispatched. The TODO index now contains seven completed tasks and one
+cancelled task, with none active or on hold.
 
 ## Documentation entry points
 
