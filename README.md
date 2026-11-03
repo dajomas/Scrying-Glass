@@ -30,8 +30,11 @@ Node and standalone browser/audit fixtures. Separate tests exercise the producti
 static adapter; fixture results are not authenticated/live-server verification.
 Stage 2A had seven source/reader/runner methods and three Node fixture subtests
 pass locally. Stage 2B had seven candidate-browser and three typing/focus-browser
-methods pass in real Chromium with intercepted HTTP. Full CI, authenticated server
-and live-provider validation remain pending for these increments.
+methods pass in real Chromium with intercepted HTTP. Combined CI run 41622079200,
+attempt 1, succeeded for f2f63c1fc28238fb2c32b27ce180c54863b30fa5; workflow and
+configured check/test steps were verified from committed run metadata. SG-TODO-006
+was closed at the user's request on 2026-11-03. This is not a claim that every
+individual assertion was reviewed or that live-provider checks were performed.
 See [split handover](docs/handover/050-admin-script-split.md) and
 [source-label handover](docs/handover/230-fivetools-sources.md). Notifications and
 popup choices use the same descriptive labels; provider behavior is unchanged.

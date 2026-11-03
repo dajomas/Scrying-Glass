@@ -20,28 +20,39 @@ part. At split activation the response was byte-identical to original blob
 cdec53064a1a9855bf2d140830d33cf0b33e54f2: 114,205 bytes, SHA-256
 b97c2a3fda01aa8d3fa4cfa619939909a3c797c678c60a19512aa50c0d05fef5.
 
-## Intentional SG-TODO-006 stage 2A update
+## Intentional SG-TODO-006 updates and close-out
 
-The notification-label increment deliberately changes 010-source.js only; the other
-seven parts remain unchanged. The first part is 18,214 bytes, SHA-256
+The notification-label increment c49a890d198098622f40f1d22e5e92db6e8914c4 deliberately
+changes 010-source.js only; the other seven parts remain unchanged. The first part
+is 18,214 bytes, SHA-256
 85e469e2073cd957bddd54b4de5e979b516fe6efc8e4c56a09244e49886b15d2.
 Current assembled size is 114,814 bytes, SHA-256
 40fca092f989bcd85eaf7f06dc02b962b662a28827864df68c998919cdf87b46.
 Identity tests intentionally update these values, retaining all size, syntax,
 UTF-8, ordered assembly and runner-isolation checks. There is no re-split, scope
 change, new script include or change to the production adapter/reader/marker.
-Popup rendering is unchanged until the second approved label commit. See
+
+The separate popup script was updated in f2f63c1fc28238fb2c32b27ce180c54863b30fa5;
+it uses the shared label formatter without changing the assembled bundle. Combined
+CI run 41622079200 attempt 1, exact head f2f63c1fc28238fb2c32b27ce180c54863b30fa5,
+was verified completed/success from ci-results-41622079200-attempt-1/run.json at
+21f5de181659458c763672b2b871a21fd2baebb9. Configured test/check steps all report
+success. SG-TODO-006 is closed at the user's request on 2026-11-03; no unreported
+live-provider/authenticated-browser checks are inferred. See
 [label handover](230-fivetools-sources.md) and [task](../todo/060-fivetools-source-configuration.md).
+This feature close-out does not itself close the separate Admin-split SG-TODO-008.
 
 ## Validation and deployment
 
-Seven source/reader/runner methods passed locally for stage 2A. Node label fixtures
-also passed; these are not authenticated browser or live-provider checks. Stage 2A
-CI and manual acceptance remain pending. Historical Admin activation CI metadata
-was verified at 430574c584162099c61168cd680b0422479c1541, run 41584927496 attempt 1,
-head 9f1b14ae99d3b297f4557f05f7f72485ab674d56: workflow/tests and configured steps
-reported success. HTTP/mount fixture and deployed service-account/browser acceptance
-remain distinct. Do not infer a new feature's validation from an earlier green run.
+Seven source/reader/runner methods and three Node label-fixture subtests passed
+locally for stage 2A. Stage 2B had ten local Chromium browser methods pass with
+intercepted HTTP. These are not authenticated server or live-provider checks.
+Combined CI and label-feature acceptance are recorded above. Historical Admin
+activation CI metadata was verified at 430574c584162099c61168cd680b0422479c1541,
+run 41584927496 attempt 1, head 9f1b14ae99d3b297f4557f05f7f72485ab674d56:
+workflow/tests and configured steps reported success. HTTP/mount fixtures and
+deployed service-account/browser acceptance for the source-split task remain
+distinct; do not infer a feature's full live validation from a green workflow.
 
 Legacy fixtures use tools/run_split_tests.py to assemble admin.js in a disposable
 checkout, never overwriting the real marker. Normal CI wraps Python/pytest/Node
@@ -49,5 +60,6 @@ and standalone audit/browser checks. Static adapter tests use fixture FastAPI ap
 and inspect server wiring separately. Deploy server, python/ and the complete
 static/ tree together, restart and reload browsers. The service account needs a
 writable temporary directory; deploying the marker alone or loading individual
-fragments is unsupported. No manifest refresh, migration, workflow dispatch or CI skip.
-SG-TODO-005 dependent-button work and SG-TODO-004's hold remain separate.
+fragments is unsupported. No manifest refresh, migration or workflow changes.
+This documentation-only close-out requests no CI skip or workflow dispatch.
+SG-TODO-005 closure and SG-TODO-004's hold remain separate and unchanged.
