@@ -12,7 +12,7 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 5. [Initial Admin section visibility](docs/todo/050-admin-initial-visibility.md) - SG-TODO-005, reopened/in progress (dependent input buttons remain visible under hidden parents; corrective CSS/tests prepared, 2026-11-03).
 6. [5e.tools sources and descriptive names](docs/todo/060-fivetools-source-configuration.md) - SG-TODO-006, in progress (stage 1 delivered; validation pending; stage 2 paused for the Admin source split).
 7. [Single-line monster buttons](docs/todo/070-monster-button-layout.md) - SG-TODO-007, proposed/requested.
-8. [Source-size refactors](docs/todo/080-source-size-refactors.md) - SG-TODO-008, in progress (Admin split delivered/CI verified; Storage stages 1-3 delivered; operations stage 4 prepared; runtime unchanged).
+8. [Source-size refactors](docs/todo/080-source-size-refactors.md) - SG-TODO-008, in progress (Admin split delivered/CI verified; Storage stages 1-4 delivered; activation stage 5 prepared; CI/acceptance pending).
 
 ## Maintenance
 

@@ -4,74 +4,63 @@
 
 ## SG-TODO-008 - Split oversized code without behavior changes
 
-- Status: in progress; Admin activation delivered/CI verified; Storage stages 1-3 delivered; operations stage 4 prepared, delivery/CI pending.
+- Status: in progress; Admin activation delivered/CI verified; Storage stages 1-4 delivered; activation stage 5 prepared, delivery/CI pending.
 - Requested and five-commit Admin plan approved: 2026-11-02.
-- Activation: 9f1b14ae99d3b297f4557f05f7f72485ab674d56 on features/perplexity.
+- Admin activation: 9f1b14ae99d3b297f4557f05f7f72485ab674d56, features/perplexity.
 - Priority, owner and deadline: not assigned.
 
-All eight Admin fragments are committed below 20,000 bytes. Increment 5 activates
-one identical classic-script response at /static/admin.js, adjusts both static
-mounts and source-reading test infrastructure, and replaces the tracked monolith
-with a small marker. Legacy fixtures use an assembled temporary checkout; separate
-HTTP tests exercise the production adapter. Details, hashes and earlier commit
-identities: [handover](../handover/050-admin-script-split.md).
+All eight Admin fragments are below 20,000 bytes. Activation serves one identical
+classic-script response at /static/admin.js using both static mounts. The tracked
+monolith is a marker; legacy source-reading fixtures use an assembled temporary
+checkout and separate HTTP tests exercise the production adapter. Details and hashes:
+[Admin handover](../handover/050-admin-script-split.md).
 
-### Acceptance and remaining work
+### Admin acceptance remains separate
 
-- [x] Deliver eight unchanged parts; verify their blobs and exact original reassembly.
-- [x] Deliver activation and verify run 41584927496 attempt 1 reports success for its exact SHA.
-- [ ] Review detailed static HTTP and browser/startup evidence as needed for acceptance.
+- [x] Deliver eight unchanged parts and verify exact original reassembly.
+- [x] Verify run 41584927496 attempt 1 reports success for exact Admin activation SHA.
+- [ ] Review detailed static HTTP/browser/startup evidence for acceptance.
 - [ ] Verify deployed permissions and complete source-reader/test compatibility.
-- [ ] Obtain acceptance before declaring the Admin refactor completed.
-- [ ] Finish and separately validate python/scrying_glass_storage.py splitting.
+- [ ] Obtain final Admin refactor acceptance.
 
-Seven source/reader/runner methods passed locally during preparation. FastAPI HTTP
-fixtures compiled but were not run locally. On 2026-11-03 the assistant inspected
-ci-results-41584927496-attempt-1/run.json at 430574c584162099c61168cd680b0422479c1541:
-workflow and tests job completed/success, head SHA 9f1b14ae99d3b297f4557f05f7f72485ab674d56.
-Syntax/import, unittest, pytest, JavaScript and standalone browser/audit steps report
-success. This is inspected workflow metadata, not a claim that every individual
-log assertion or authenticated live path was reviewed. No new CI dispatch is needed.
+Seven local source/reader/runner methods passed; FastAPI HTTP fixtures only compiled
+locally. On 2026-11-03 run.json at
+430574c584162099c61168cd680b0422479c1541/ci-results-41584927496-attempt-1 reported
+workflow/tests-job success for 9f1b14ae99d3b297f4557f05f7f72485ab674d56. Syntax/import,
+unittest, pytest, JavaScript and standalone browser/audit steps report success.
+This is inspected workflow metadata, not review of every assertion/authenticated path.
+No new CI dispatch is needed. SG-TODO-005 is separately reopened for dependent-button
+visibility. SG-TODO-006 descriptive labels remain undelivered here; SG-TODO-004 stays
+on hold. Manifest, documentation and CI logs are not code-refactor targets.
 
-The reported dependent-button issue reopens SG-TODO-005 separately; see its task.
-SG-TODO-006's descriptive-label stage remains undelivered despite the user's
-completion wording; do not confuse its scope with the Admin split. SG-TODO-004
-remains on hold. Manifest, documentation and CI logs are not code-refactor targets.
-Each external write still needs bound approval.
+### Storage sequence and activation
 
-### Approved Storage sequence - 2026-11-03
+1. Fields: a9da32439b01529ab6deba8242b48593d95be594.
+2. Schema/migration: 2a651004a7870de461cce32f5dcffd56b91a2aa6.
+3. Records/encounters: 8ed072c3cd3be53474a77cc9267bd7708f0d7638.
+4. Operations: 0c8f1c9a95763bf8729d775f4596de68835cabf6.
+5. Native compatibility facade and adapted/integrated tests: prepared, approval and CI pending.
 
-1. Shared fields and five preparation tests: delivered as
-   a9da32439b01529ab6deba8242b48593d95be594; unused by runtime.
-2. Schema/migration and seven preparation tests: delivered as
-   2a651004a7870de461cce32f5dcffd56b91a2aa6; unused by runtime.
-3. Typed records/encounters and eight preparation tests: delivered as
-   8ed072c3cd3be53474a77cc9267bd7708f0d7638; unused by runtime.
-4. Campaign/roster/setup/application-state operations and tests: prepared; unused.
-5. Activate small SQLiteStorage facade with native modules, compatibility exports,
-   integrated regressions and operational docs; pending.
+Stages 1-4 left runtime unchanged; stage 5 intentionally activates the staged methods.
+Original 38 method bodies and seven field definitions remain pinned to pre-split ASTs;
+SCHEMA_VERSION=8, SQL, transaction boundaries and backup order do not change.
+New test-only reference builder replaces monolith blob guards; production uses native
+imports/inheritance only. Each complete Storage source file is <=20,000 UTF-8 bytes.
 
-Local tests passed during preparation of delivered stages; no Storage CI evidence
-has been inspected. Those limited fixtures do not cover constructor/file backups,
-populated legacy migration, effects/lair persistence or later v4-v8 upgrades fully.
-Do not infer full storage validation from source equivalence or successful delivery.
+Thirteen local methods passed: eleven consolidated preparation methods, native
+dispatch/file-size checks and constructor-failure cleanup. The new file-backed v8
+persistence/reopen test compiled but was not run locally. Existing full migration,
+backup, feature, SQLite/domain and service suites remain configured in normal CI.
+No Storage CI evidence has been inspected. Limited fixtures and mocked effect
+boundaries are not full application or migration acceptance.
 
-Stage 4 prepares a 12,218-byte operations mixin with 20 original bodies/signatures
-unchanged. Eight local methods passed: AST/source/dependency guards; campaigns,
-rosters/savepoints, setup naming/ordering/deletion, checkpoint rename, empty setup
-copy/move/identity conflicts, mocked-boundary effect rewrites, application state.
-Real SQLite fixtures bypass constructor and use original v3 base schema with the
-actual snapshot table DDL for rename only, not a complete v5/v8 database. The
-mocked effects test is not persistence/integration evidence. Details and hashes:
-[Storage handover](../handover/240-sqlite-storage-split.md).
+- [ ] Deliver stage 5 after exact bound approval; record actual SHA after success.
+- [ ] Inspect activation CI for its exact SHA, including migration/backup and v8 tests.
+- [ ] Diagnose/fix failures through separately approved corrective commits.
+- [ ] Verify deployed whole-tree startup, persistence and upgrade behavior.
+- [ ] Obtain Storage acceptance and retain unfinished Admin checks.
+- [ ] Review remaining oversized source files before closing SG-TODO-008.
 
-Every new code file <=20,000 UTF-8 bytes. Original 39,486-byte storage and callers
-remain authoritative through stages 1-4. No SQL/schema/transaction/migration behavior
-changes are authorized. Use normal CI, no workflow dispatch or skip directive.
-
-- [ ] Review Storage CI for exact stage 1-3 commits.
-- [ ] Deliver operations after exact bound approval, then review its CI.
-- [ ] Activate facade, preserve public/underscore methods, field exports and lazy imports.
-- [ ] Adapt preparation guards at activation; keep complete code files below the limit.
-- [ ] Validate full storage/migrations/backups/transactions and service integration.
-- [ ] Obtain final acceptance before closing SG-TODO-008; retain unfinished Admin checks.
+See [Storage handover](../handover/240-sqlite-storage-split.md) for architecture,
+fixture limitations, deployment instructions and validation evidence. Use normal CI;
+no skip directive or workflow dispatch. Each external write needs bound approval.
