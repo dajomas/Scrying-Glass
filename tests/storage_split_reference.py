@@ -21,7 +21,23 @@ FIELD_PIN = "063001ad08bedc2ce2a57f37483b383ad5ed212a85b2f5461ff45b4db0642f23"
 
 
 def canonical(node):
-    return ast.dump(node, include_attributes=False).replace(', type_params=[]', '')
+    """Freeze the original dump format instead of using version-dependent ast.dump.
+
+    Keep empty lists and semantic fields; omit optional None defaults as in 3.12.
+    Only empty type_params (introduced in 3.12) and location attributes are ignored.
+    """
+    if isinstance(node, ast.AST):
+        fields = []
+        for name, value in ast.iter_fields(node):
+            if name == 'type_params' and value == []:
+                continue
+            if value is None and getattr(type(node), name, ...) is None:
+                continue
+            fields.append(f'{name}={canonical(value)}')
+        return f'{type(node).__name__}(' + ', '.join(fields) + ')'
+    if isinstance(node, list):
+        return '[' + ', '.join(canonical(value) for value in node) + ']'
+    return repr(node)
 
 
 def field_nodes():

@@ -4,7 +4,7 @@
 
 ## SG-TODO-008 - Split oversized code without behavior changes
 
-- Status: in progress; Admin activation delivered/CI verified; Storage stages 1-4 delivered; activation stage 5 prepared, delivery/CI pending.
+- Status: in progress; Admin activation delivered/CI verified; Storage five stages delivered; user reports manual runbook passed; activation CI failed on AST fixture compatibility; corrective tests/docs prepared.
 - Requested and five-commit Admin plan approved: 2026-11-02.
 - Admin activation: 9f1b14ae99d3b297f4557f05f7f72485ab674d56, features/perplexity.
 - Priority, owner and deadline: not assigned.
@@ -33,34 +33,40 @@ No new CI dispatch is needed. SG-TODO-005 is separately reopened for dependent-b
 visibility. SG-TODO-006 descriptive labels remain undelivered here; SG-TODO-004 stays
 on hold. Manifest, documentation and CI logs are not code-refactor targets.
 
-### Storage sequence and activation
+### Storage sequence and validation
 
 1. Fields: a9da32439b01529ab6deba8242b48593d95be594.
 2. Schema/migration: 2a651004a7870de461cce32f5dcffd56b91a2aa6.
 3. Records/encounters: 8ed072c3cd3be53474a77cc9267bd7708f0d7638.
 4. Operations: 0c8f1c9a95763bf8729d775f4596de68835cabf6.
-5. Native compatibility facade and adapted/integrated tests: prepared, approval and CI pending.
+5. Native facade activation: 266487f8d8b605610db11e837f3f26fcdfc7f7f3.
 
-Stages 1-4 left runtime unchanged; stage 5 intentionally activates the staged methods.
-Original 38 method bodies and seven field definitions remain pinned to pre-split ASTs;
-SCHEMA_VERSION=8, SQL, transaction boundaries and backup order do not change.
-New test-only reference builder replaces monolith blob guards; production uses native
-imports/inheritance only. Each complete Storage source file is <=20,000 UTF-8 bytes.
+Stages 1-4 left runtime unchanged; stage 5 activates native modules. Original 38
+method bodies and seven field expressions are pinned; schema v8, SQL, transactions
+and backups do not change. Each complete Storage source file <=20,000 UTF-8 bytes.
 
-Thirteen local methods passed: eleven consolidated preparation methods, native
-dispatch/file-size checks and constructor-failure cleanup. The new file-backed v8
-persistence/reopen test compiled but was not run locally. Existing full migration,
-backup, feature, SQLite/domain and service suites remain configured in normal CI.
-No Storage CI evidence has been inspected. Limited fixtures and mocked effect
-boundaries are not full application or migration acceptance.
+On 2026-11-03 the user reported successful manual Admin runbook execution. Inspected
+CI run 41602398857 attempt 1 tested exact activation SHA above and failed: 1,004
+unittest tests, 12 AST-reference failures. The standalone connection audit repeated
+the same failures, with zero unclosed connections. Syntax/import, pytest and JS steps
+passed; inspected v1/v2 migration and file-backed v8/reopen tests passed. Details:
+[Storage handover](../handover/240-sqlite-storage-split.md). Evidence lives in
+ci-results-41602398857-attempt-1 at 2e5d1d4ecedc3e88fa5bd3a565e49fbaa11660fb.
 
-- [ ] Deliver stage 5 after exact bound approval; record actual SHA after success.
-- [ ] Inspect activation CI for its exact SHA, including migration/backup and v8 tests.
-- [ ] Diagnose/fix failures through separately approved corrective commits.
-- [ ] Verify deployed whole-tree startup, persistence and upgrade behavior.
-- [ ] Obtain Storage acceptance and retain unfinished Admin checks.
+The fixed fingerprints depended on ast.dump's Python-version-specific treatment of
+empty lists. Failure reproduced on 3.14. Prepared test-only stable serializer keeps
+both original pins unchanged. Four regression methods passed on each of Python
+3.12 and 3.14, including rejection of changed SQL/field definitions. This is eight
+focused test executions, not a rerun of the full corrected CI/application suite.
+
+- [x] Deliver all five agreed Storage stages.
+- [x] Record user-reported successful manual runbook execution.
+- [x] Inspect activation CI and diagnose the reference-fixture failure.
+- [ ] Deliver test-only canonicalization fix after exact bound approval.
+- [ ] Inspect corrected CI for its exact SHA; diagnose any remaining failures.
+- [ ] Obtain final Storage acceptance after green CI; retain unfinished Admin checks.
 - [ ] Review remaining oversized source files before closing SG-TODO-008.
 
-See [Storage handover](../handover/240-sqlite-storage-split.md) for architecture,
-fixture limitations, deployment instructions and validation evidence. Use normal CI;
-no skip directive or workflow dispatch. Each external write needs bound approval.
+Use normal CI; do not downgrade Python, replace accepted hashes, remove guards or
+skip tests to obtain green results. No workflow dispatch or skip directive. Each
+external write needs bound approval; no corrective SHA exists before delivery.

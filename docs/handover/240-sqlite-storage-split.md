@@ -3,62 +3,80 @@
 [Back to handover index](../../HANDOVER.md)
 
 Updated 2026-11-03. Task: [SG-TODO-008](../todo/080-source-size-refactors.md).
-Activation preparation base: 0c8f1c9a95763bf8729d775f4596de68835cabf6, features/perplexity.
+Corrective preparation base: 2e5d1d4ecedc3e88fa5bd3a565e49fbaa11660fb, features/perplexity.
 
-## Delivery history and scope
+## Delivery and architecture
 
-The agreed five stages are fields, schema/migration, records/encounters, operations,
-and native facade activation. Stages 1-4 were deliberately unused preparations:
+The five stages were delivered:
+1. Fields: a9da32439b01529ab6deba8242b48593d95be594.
+2. Schema/migration: 2a651004a7870de461cce32f5dcffd56b91a2aa6.
+3. Records/encounters: 8ed072c3cd3be53474a77cc9267bd7708f0d7638.
+4. Operations: 0c8f1c9a95763bf8729d775f4596de68835cabf6.
+5. Activation: 266487f8d8b605610db11e837f3f26fcdfc7f7f3.
 
-- 1: a9da32439b01529ab6deba8242b48593d95be594; fields and five local checks.
-- 2: 2a651004a7870de461cce32f5dcffd56b91a2aa6; schema and seven local checks.
-- 3: 8ed072c3cd3be53474a77cc9267bd7708f0d7638; records and eight local checks.
-- 4: 0c8f1c9a95763bf8729d775f4596de68835cabf6; operations and eight local checks.
+Stages 1-4 were unused preparations; stage 5 activates native mixins behind the
+4,710-byte SQLiteStorage facade. Five lifecycle, three schema, ten record and twenty
+operation methods retain their original bodies/signatures/decorators/SQL. Seven
+field expressions retain their values/types/order. Reference: original 39,486-byte
+blob ea80b59cca80c6885f6ba1ba4d32b759beb187b5. SCHEMA_VERSION=8, transactions,
+savepoints, backups, lazy migrations, compatibility exports and callers remain.
+STATE_FIELDS is the shared runtime export. Stage-module staging comments are
+historical provenance; the facade activates their methods. All five source files
+are below 20,000 bytes (records is actually 13,068 bytes, including final whitespace).
 
-Each delivery was verified after pushing. No Storage CI result has been reviewed.
-Earlier tests were limited original-base-schema fixtures; stage 4's effect rewrite
-used mocked snapshot boundaries and did not validate effects persistence. Earlier
-schema tests used empty v1/v2-to-v3 upgrades, not constructor/backups/full upgrades.
+## Manual validation and inspected CI
 
-## Stage 5 activation draft
+On 2026-11-03 the user reported the Admin click-by-click runbook completed
+successfully. This is user-reported manual evidence, not an assistant execution or
+a claim about unspecified optional checks. Final task closure still requires CI.
 
-The 4,710-byte python/scrying_glass_storage.py facade imports the existing shared
-fields and three native mixins. Five lifecycle methods remain on SQLiteStorage;
-three schema, ten record and twenty operation methods dispatch through inheritance.
-All 38 original method ASTs, signatures/decorators/SQL and seven field expressions
-match the 39,486-byte original blob ea80b59cca80c6885f6ba1ba4d32b759beb187b5.
-No schema/version/configuration change: SCHEMA_VERSION remains 8. Existing callers,
-FeatureStorage underscore entry points, lazy migrations, transaction/savepoints,
-backup ordering and compatibility exports remain. Shared STATE_FIELDS now aliases
-the facade export, as the single runtime definition. Stage-module staging comments
-are historical provenance; their methods are now activated by the facade.
+Evidence at ci-results-41602398857-attempt-1, committed in
+2e5d1d4ecedc3e88fa5bd3a565e49fbaa11660fb, identifies Branch tests run
+41602398857 attempt 1, head 266487f8d8b605610db11e837f3f26fcdfc7f7f3, completed/failure.
+Setup/dependencies and syntax/server import passed. Main unittest ran 1,004 tests
+with 12 failures, all at Storage reference AST pins before the guarded fixture
+bodies. The inspected v1/v2 upgrade tests and new file-backed v8 persistence/reopen
+and constructor-cleanup tests passed. Pytest and JavaScript steps report success.
+Standalone connection audit reran 1,004 tests with the same 12 failures; it reported
+652 connections and zero without explicit close. Log-clear and round-3 audits
+reported passes; browser smoke reported no page errors with mocked HTTP/WS and real
+Chromium rendering. These are not full authenticated live-server browser checks.
 
-Test-only storage_split_reference.py checks pinned original AST fingerprints and
-builds an independent reference class for fixture comparisons. It is not production
-source assembly. Old monolith-blob assertions are deliberately replaced, not waived:
-complete method/field pins, native-dispatch and per-file <=20,000-byte guards remain.
-The four preparation suites consolidate assertions into eleven methods. Ops rename
-uses a limited snapshot-table fixture; effect rewrite still mocks load/save only.
+## AST fixture correction prepared
 
-Local results: eleven preparation methods, one native-dispatch/size test and one
-constructor-failure/connection-close test passed (13 total). Proposed sources compile.
-The new file-backed v8 persistence/effects/lair/reopen/rollback test was compiled but
-not executed locally. Full v1/v2 populated migrations, backups, full service/server,
-feature/snapshot suites and that new test remain CI validation, not claimed passes.
-Existing unittest discovery includes all tests without workflow edits. GitHub search
-is default-branch indexed, not an exhaustive working-branch source-reader audit;
-existing inspected SQLite regression tests exercise runtime APIs and stay unchanged.
+The test oracle used ast.dump formatting to calculate fixed hashes. Python 3.14 CI
+omits optional empty lists that the local 3.12 format included. This was reproduced
+locally with an available 3.14 interpreter on the verified original source. Both
+method and field hashes differed despite unchanged AST semantics. This explains
+why the manual run and runtime tests passed while reference guards failed.
 
-## Deployment and acceptance
+Replace only the test helper canonical serializer with explicit recursive AST/list
+serialization matching the original format. Preserve optional empty lists, semantic
+values and nonempty type parameters; omit location attributes, optional None
+defaults and empty type_params as before. METHOD_PIN and FIELD_PIN remain unchanged;
+no accepted hashes, production code, schema, workflow or assertions are weakened.
 
-Deploy the entire matching python/ tree, including all four storage support modules,
-with the facade and package __init__.py; restart the single process. Do not deploy
-the facade alone or mix pre-split and split files. Existing README deployment/backup
-instructions already require the whole tree and remain applicable. Back up data as
-usual. This source-only change adds no migration or special database conversion.
+Four new regression methods passed on Python 3.12 and 3.14 (eight test executions):
+original 38-method/seven-field pins and reference class with real base SQLite,
+independence from ast.dump/line numbers, semantic-value/nonempty-type-parameter
+sensitivity, and rejection of deliberately changed SQL/field definitions in copied
+fixtures. They used methods reconstructed from the verified original source, not a
+full application checkout. Full corrected workflow has not run or passed locally.
+Normal CI discovers the new test automatically; no workflow changes or skip.
 
-README, HANDOVER index, maintenance conventions and existing CI were reviewed/reused
-unchanged; no path/index or command changes. No archive, manifest refresh, CI skip or
-workflow dispatch. The five Storage source files are each below 20,000 bytes; other
-oversized sources and Admin acceptance are separate SG-TODO-008 work. Keep task open
-until exact activation CI evidence and deployment/user acceptance are reviewed.
+Historical activation preparation: eleven consolidated fixture tests plus native
+dispatch and constructor cleanup passed locally on 3.12, not proof of cross-version
+pins. Fixtures use base v3, limited rename tables and mocked effect boundaries;
+complete migrations/services/feature coverage belongs to the configured CI suites.
+
+## Deployment and remaining acceptance
+
+Deploy the complete matching python/ tree with facade, all four support modules and
+__init__.py, and restart the single process; do not deploy the facade alone. Existing
+README deployment/backup instructions remain applicable. No new migration or special
+conversion was introduced. This corrective draft changes tests/documentation only.
+
+README, HANDOVER index/maintenance rules and workflow were reviewed or identity-
+verified unchanged; paths and runtime commands remain valid. No archive, manifest
+refresh, workflow dispatch or CI skip. Keep SG-TODO-008 open until corrected exact-SHA
+CI is reviewed and remaining Admin/oversized-source acceptance is addressed.
