@@ -1,0 +1,25 @@
+ts (test_storage_split_runtime.StorageSplitRuntimeTests.test_native_dispatch_surface_and_complete_file_limits) ... FAIL
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:16.5831294Z test_v8_persistence_reopen_and_transaction_rollback (test_storage_split_runtime.StorageSplitRuntimeTests.test_v8_persistence_reopen_and_transaction_rollback) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:16.6011544Z test_down_damage_preserves_turn (test_turn_eligibility.TurnTests.test_down_damage_preserves_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:16.7817907Z test_down_takes_next_turn (test_turn_eligibility.TurnTests.test_down_takes_next_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.1349893Z test_manual_down_turn (test_turn_eligibility.TurnTests.test_manual_down_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.1573528Z test_negative_maximum_no_longer_means_death (test_turn_eligibility.TurnTests.test_negative_maximum_no_longer_means_death) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.2684232Z test_round_wrap (test_turn_eligibility.TurnTests.test_round_wrap) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.2883444Z test_stable_takes_next_turn (test_turn_eligibility.TurnTests.test_stable_takes_next_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3187888Z test_third_failure_removed (test_turn_eligibility.TurnTests.test_third_failure_removed) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3419312Z test_zero_hp_monster_excluded (test_turn_eligibility.TurnTests.test_zero_hp_monster_excluded) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3419899Z 
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3420177Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3421176Z FAIL: test_exports_and_mutability (test_storage_fields_preparation.StorageFieldsPreparationTests.test_exports_and_mutability)
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3422057Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3422594Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3423573Z   File "/tmp/scrying-tests-64mq_ufu/repo/tests/test_storage_fields_preparation.py", line 18, in test_exports_and_mutability
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3424571Z     exec(compile(ast.Module(body=field_nodes(), type_ignores=[]), '<field fixture>', 'exec'), namespace)
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3425154Z                                  ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3425804Z   File "/tmp/scrying-tests-64mq_ufu/repo/tests/storage_split_reference.py", line 32, in field_nodes
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3452639Z ##[error]    raise AssertionError('Original field expressions changed')
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3460222Z AssertionError: Original field expressions changed
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3460534Z 
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3460760Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3461762Z FAIL: test_original_fields_and_method_surface (test_storage_fields_preparation.StorageFieldsPreparationTests.test_original_fields_and_method_surface)
+tests	Python test suite (i

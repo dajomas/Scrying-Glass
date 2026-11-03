@@ -1,0 +1,26 @@
+s	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3524988Z   File "/tmp/scrying-tests-64mq_ufu/repo/tests/storage_split_reference.py", line 52, in reference_methods
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3526148Z ##[error]    raise AssertionError('Original method bodies/signatures/decorators changed')
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3527302Z AssertionError: Original method bodies/signatures/decorators changed
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3527638Z 
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3527858Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3528838Z FAIL: test_scalar_encodings_and_rejections (test_storage_records_preparation.StorageRecordsPreparationTests.test_scalar_encodings_and_rejections)
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3529791Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3530220Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3530991Z   File "/tmp/scrying-tests-64mq_ufu/repo/tests/test_storage_records_preparation.py", line 9, in test_scalar_encodings_and_rejections
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3531738Z     for kind in (reference_class(), SQLiteStorage):
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3532105Z                  ~~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3532707Z   File "/tmp/scrying-tests-64mq_ufu/repo/tests/storage_split_reference.py", line 59, in reference_class
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3533567Z     body=[ast.parse('SCHEMA_VERSION = 8').body[0], *reference_methods().values()])
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3534096Z                                                     ~~~~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3534776Z   File "/tmp/scrying-tests-64mq_ufu/repo/tests/storage_split_reference.py", line 52, in reference_methods
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3535844Z ##[error]    raise AssertionError('Original method bodies/signatures/decorators changed')
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3536994Z AssertionError: Original method bodies/signatures/decorators changed
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3537316Z 
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3537539Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3538573Z FAIL: test_failed_legacy_upgrade_restores_schema (test_storage_schema_preparation.StorageSchemaPreparationTests.test_failed_legacy_upgrade_restores_schema)
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3539538Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3539972Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3540772Z   File "/tmp/scrying-tests-64mq_ufu/repo/tests/test_storage_schema_preparation.py", line 44, in test_failed_legacy_upgrade_restores_schema
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3541529Z     for kind in (reference_class(), SQLiteStorage):
+tests	Python test suite (including browser fixtures)	2026-11-03T08:21:17.3541892Z                  ~~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-

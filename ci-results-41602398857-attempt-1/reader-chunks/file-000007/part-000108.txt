@@ -1,0 +1,26 @@
+browser and audit checks	2026-11-03T08:23:29.7813999Z   File "/tmp/scrying-tests-sw7_hix4/repo/tests/test_storage_operations_preparation.py", line 20, in test_campaign_roster_state_and_nested_rollback
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7814787Z     for kind in (reference_class(), SQLiteStorage):
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7815150Z                  ~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7815727Z   File "/tmp/scrying-tests-sw7_hix4/repo/tests/storage_split_reference.py", line 59, in reference_class
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7816462Z     body=[ast.parse('SCHEMA_VERSION = 8').body[0], *reference_methods().values()])
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7816995Z                                                     ~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7817661Z   File "/tmp/scrying-tests-sw7_hix4/repo/tests/storage_split_reference.py", line 52, in reference_methods
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7818771Z ##[error]    raise AssertionError('Original method bodies/signatures/decorators changed')
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7819935Z AssertionError: Original method bodies/signatures/decorators changed
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7820260Z 
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7820481Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7821671Z FAIL: test_effect_rewrite_at_mocked_snapshot_boundary (test_storage_operations_preparation.StorageOperationsPreparationTests.test_effect_rewrite_at_mocked_snapshot_boundary)
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7822725Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7823319Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7824170Z   File "/tmp/scrying-tests-sw7_hix4/repo/tests/test_storage_operations_preparation.py", line 79, in test_effect_rewrite_at_mocked_snapshot_boundary
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7825145Z     for kind in (reference_class(), SQLiteStorage):
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7825509Z                  ~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7826089Z   File "/tmp/scrying-tests-sw7_hix4/repo/tests/storage_split_reference.py", line 59, in reference_class
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7826819Z     body=[ast.parse('SCHEMA_VERSION = 8').body[0], *reference_methods().values()])
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7827340Z                                                     ~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7827989Z   File "/tmp/scrying-tests-sw7_hix4/repo/tests/storage_split_reference.py", line 52, in reference_methods
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7829104Z ##[error]    raise AssertionError('Original method bodies/signatures/decorators changed')
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7830229Z AssertionError: Original method bodies/signatures/decorators changed
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7830549Z 
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7830768Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7831980Z FAIL: test_setup_names_checkpoint_references_move_and_c

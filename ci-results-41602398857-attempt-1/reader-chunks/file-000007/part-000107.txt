@@ -1,0 +1,27 @@
+er and audit checks	2026-11-03T08:23:29.7792704Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7794003Z FAIL: test_exports_and_mutability (test_storage_fields_preparation.StorageFieldsPreparationTests.test_exports_and_mutability)
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7795188Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7795684Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7796520Z   File "/tmp/scrying-tests-sw7_hix4/repo/tests/test_storage_fields_preparation.py", line 18, in test_exports_and_mutability
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7797516Z     exec(compile(ast.Module(body=field_nodes(), type_ignores=[]), '<field fixture>', 'exec'), namespace)
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7798113Z                                  ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7798739Z   File "/tmp/scrying-tests-sw7_hix4/repo/tests/storage_split_reference.py", line 32, in field_nodes
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7800294Z ##[error]    raise AssertionError('Original field expressions changed')
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7801673Z AssertionError: Original field expressions changed
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7801937Z 
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7802165Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7803349Z FAIL: test_original_fields_and_method_surface (test_storage_fields_preparation.StorageFieldsPreparationTests.test_original_fields_and_method_surface)
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7804543Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7804975Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7805760Z   File "/tmp/scrying-tests-sw7_hix4/repo/tests/test_storage_fields_preparation.py", line 13, in test_original_fields_and_method_surface
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7806506Z     self.assertEqual(len(reference_methods()), 38)
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7806875Z                          ~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7807504Z   File "/tmp/scrying-tests-sw7_hix4/repo/tests/storage_split_reference.py", line 52, in reference_methods
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7808584Z ##[error]    raise AssertionError('Original method bodies/signatures/decorators changed')
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7809721Z AssertionError: Original method bodies/signatures/decorators changed
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7810080Z 
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7810305Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7811476Z FAIL: test_campaign_roster_state_and_nested_rollback (test_storage_operations_preparation.StorageOperationsPreparationTests.test_campaign_roster_state_and_nested_rollback)
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7812574Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7813027Z Traceback (most recent call last):
+tests	Standalone Python 

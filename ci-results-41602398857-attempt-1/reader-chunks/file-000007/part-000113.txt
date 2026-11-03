@@ -1,0 +1,35 @@
+t_reference.py", line 52, in reference_methods
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7907503Z ##[error]    raise AssertionError('Original method bodies/signatures/decorators changed')
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7908857Z AssertionError: Original method bodies/signatures/decorators changed
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7909180Z 
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7909436Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7909839Z Ran 1004 tests in 115.669s
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7910012Z 
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7910127Z FAILED (failures=12)
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7910549Z Connections opened: 652; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:30.0398936Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:30.0399337Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:30.4849853Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:30.4850736Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:30.5144390Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:30.5144974Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:30.7176870Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:30.7461855Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:30.7462306Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:33.5504148Z {
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:33.5504478Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:33.5504936Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:33.5505461Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:33.5506106Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:33.5506837Z     "client card has a positive layout width at mobile viewport"
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:33.5507210Z   ],
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:33.5507434Z   "page_errors": [],
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:33.5507788Z   "transport": "mocked HTTP/WS, real Chromium rendering"
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:33.5508138Z }
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:33.6262225Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:33.6262689Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:33.7332330Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:33.7336896Z ##[error]Process completed with exit code 1.
+tests	Post Run actions/checkout@v4	﻿2026-11-03T08:23:33.7424114Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-03T08:23:33.8141455Z [command]/usr/bin/git version
+tests	Post Run a

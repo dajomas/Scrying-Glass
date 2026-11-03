@@ -1,0 +1,26 @@
+opy (test_storage_operations_preparation.StorageOperationsPreparationTests.test_setup_names_checkpoint_references_move_and_copy)
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7833392Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7833841Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7834689Z   File "/tmp/scrying-tests-sw7_hix4/repo/tests/test_storage_operations_preparation.py", line 50, in test_setup_names_checkpoint_references_move_and_copy
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7835503Z     for kind in (reference_class(), SQLiteStorage):
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7835863Z                  ~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7836456Z   File "/tmp/scrying-tests-sw7_hix4/repo/tests/storage_split_reference.py", line 59, in reference_class
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7837191Z     body=[ast.parse('SCHEMA_VERSION = 8').body[0], *reference_methods().values()])
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7837722Z                                                     ~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7838387Z   File "/tmp/scrying-tests-sw7_hix4/repo/tests/storage_split_reference.py", line 52, in reference_methods
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7839513Z ##[error]    raise AssertionError('Original method bodies/signatures/decorators changed')
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7841507Z AssertionError: Original method bodies/signatures/decorators changed
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7841854Z 
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7842072Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7843230Z FAIL: test_logs_occurrences_and_runtime_marker (test_storage_records_preparation.StorageRecordsPreparationTests.test_logs_occurrences_and_runtime_marker)
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7844215Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7844651Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7845430Z   File "/tmp/scrying-tests-sw7_hix4/repo/tests/test_storage_records_preparation.py", line 37, in test_logs_occurrences_and_runtime_marker
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7846192Z     for kind in (reference_class(), SQLiteStorage):
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7846557Z                  ~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7847154Z   File "/tmp/scrying-tests-sw7_hix4/repo/tests/storage_split_reference.py", line 59, in reference_class
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7847873Z     body=[ast.parse('SCHEMA_VERSION = 8').body[0], *reference_methods().values()])
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7848403Z                                                     ~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7849053Z   File "/tmp/scrying-tests-sw7_hix4/repo/tests/storage_split_reference.py", line 52, in reference_methods
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7850091Z ##[error]    raise AssertionError('Original method bodies/signatures/decorators changed')
+tests	Standalone Python browser and audit checks	2026-11-03T08:23:29.7851253Z AssertionError: Original method bodies/
