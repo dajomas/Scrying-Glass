@@ -4,7 +4,7 @@
 
 ## SG-TODO-008 - Split oversized code without behavior changes
 
-- Status: in progress; Admin activation delivered and CI outcome verified; live acceptance and SQLite split pending.
+- Status: in progress; Admin activation delivered/CI verified; Storage fields increment 1 prepared, approval/CI pending.
 - Requested and five-commit Admin plan approved: 2026-11-02.
 - Activation: 9f1b14ae99d3b297f4557f05f7f72485ab674d56 on features/perplexity.
 - Priority, owner and deadline: not assigned.
@@ -38,3 +38,33 @@ SG-TODO-006's descriptive-label stage remains undelivered despite the user's
 completion wording; do not confuse its scope with the Admin split. SG-TODO-004
 remains on hold. Manifest, documentation and CI logs are not code-refactor targets.
 Each external write still needs bound approval.
+
+### Approved Storage sequence - 2026-11-03
+
+1. Stage scrying_glass_storage_fields.py and field equivalence/isolation tests;
+   original storage and all callers remain unchanged.
+2. Stage schema/migration module with extraction-equivalence tests; unused.
+3. Stage typed-record/encounter module with equivalence tests; unused.
+4. Stage campaign/setup/application-state module with equivalence tests; unused.
+5. Activate the small SQLiteStorage facade using native Python modules, preserve
+   original imports/field exports, add integration regressions and update operations.
+
+The user approved this five-commit sequence and requested increment 1 on 2026-11-03.
+Every new code file must be at most 20,000 UTF-8 bytes. The original 39,486-byte
+module stays authoritative through increments 1-4; it is replaced at activation.
+No schema version, SQL, transaction or migration behavior changes are authorized.
+
+Current increment adds seven identical field definitions only, not runtime wiring.
+Five offline preparation methods passed locally: original blob guard, values/types/
+order, AST expression equivalence, mutable STATE_FIELDS isolation, and size/import/
+export checks. They execute only AST-extracted original field assignments and the
+new module, not SQLiteStorage, SQL or application startup. Full CI is pending for
+this increment; use normal CI. Each stage needs its own bound write approval.
+
+- [ ] Deliver and review CI for the fields preparation increment.
+- [ ] Stage remaining modules with unchanged method bodies and equivalence checks.
+- [ ] Activate compatibility facade, keep each resulting source file below the limit.
+- [ ] Validate storage/migration/transaction/service regressions and obtain acceptance.
+
+See [Storage handover](../handover/240-sqlite-storage-split.md) for identities and
+circular-import/activation constraints. This does not complete SG-TODO-008.
