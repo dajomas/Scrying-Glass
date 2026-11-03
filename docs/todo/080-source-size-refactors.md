@@ -4,69 +4,54 @@
 
 ## SG-TODO-008 - Split oversized code without behavior changes
 
-- Status: in progress; Admin activation delivered/CI verified; Storage five stages delivered; user reports manual runbook passed; activation CI failed on AST fixture compatibility; corrective tests/docs prepared.
+- Status: completed for the agreed Admin/Storage code-refactor scope; user accepted both as done on 2026-11-03.
 - Requested and five-commit Admin plan approved: 2026-11-02.
-- Admin activation: 9f1b14ae99d3b297f4557f05f7f72485ab674d56, features/perplexity.
 - Priority, owner and deadline: not assigned.
 
-All eight Admin fragments are below 20,000 bytes. Activation serves one identical
-classic-script response at /static/admin.js using both static mounts. The tracked
-monolith is a marker; legacy source-reading fixtures use an assembled temporary
-checkout and separate HTTP tests exercise the production adapter. Details and hashes:
-[Admin handover](../handover/050-admin-script-split.md).
+### Delivered code and acceptance
 
-### Admin acceptance remains separate
+Admin activation: 9f1b14ae99d3b297f4557f05f7f72485ab674d56. Eight ordered UTF-8
+fragments remain below the native 20,000-byte reader cap, with one classic-script
+response and a tracked failure marker. Legacy source-reading tests use a disposable
+assembled checkout. See [Admin handover](../handover/050-admin-script-split.md).
 
-- [x] Deliver eight unchanged parts and verify exact original reassembly.
-- [x] Verify run 41584927496 attempt 1 reports success for exact Admin activation SHA.
-- [ ] Review detailed static HTTP/browser/startup evidence for acceptance.
-- [ ] Verify deployed permissions and complete source-reader/test compatibility.
-- [ ] Obtain final Admin refactor acceptance.
-
-Seven local source/reader/runner methods passed; FastAPI HTTP fixtures only compiled
-locally. On 2026-11-03 run.json at
-430574c584162099c61168cd680b0422479c1541/ci-results-41584927496-attempt-1 reported
-workflow/tests-job success for 9f1b14ae99d3b297f4557f05f7f72485ab674d56. Syntax/import,
-unittest, pytest, JavaScript and standalone browser/audit steps report success.
-This is inspected workflow metadata, not review of every assertion/authenticated path.
-No new CI dispatch is needed. SG-TODO-005 is separately reopened for dependent-button
-visibility. SG-TODO-006 descriptive labels remain undelivered here; SG-TODO-004 stays
-on hold. Manifest, documentation and CI logs are not code-refactor targets.
-
-### Storage sequence and validation
+Storage sequence:
 
 1. Fields: a9da32439b01529ab6deba8242b48593d95be594.
-2. Schema/migration: 2a651004a7870de461cce32f5dcffd56b91a2aa6.
-3. Records/encounters: 8ed072c3cd3be53474a77cc9267bd7708f0d7638.
+2. Schema: 2a651004a7870de461cce32f5dcffd56b91a2aa6.
+3. Records: 8ed072c3cd3be53474a77cc9267bd7708f0d7638.
 4. Operations: 0c8f1c9a95763bf8729d775f4596de68835cabf6.
-5. Native facade activation: 266487f8d8b605610db11e837f3f26fcdfc7f7f3.
+5. Activation: 266487f8d8b605610db11e837f3f26fcdfc7f7f3.
 
-Stages 1-4 left runtime unchanged; stage 5 activates native modules. Original 38
-method bodies and seven field expressions are pinned; schema v8, SQL, transactions
-and backups do not change. Each complete Storage source file <=20,000 UTF-8 bytes.
+The activation's AST-reference fixture failure was corrected in
+75b870ef9a204981bc778ccbaaea23f96b3fcb56; continuity records report successful
+corrective CI run 41608182802 against that SHA. The user reported the Storage
+Admin runbook passed and subsequently accepted both refactors. This update does
+not invent new authenticated/deployed checks or a fresh review of every assertion.
+See [Storage handover](../handover/240-sqlite-storage-split.md). The earlier
+prepared/undelivered-fix and final-acceptance checklist entries are superseded.
 
-On 2026-11-03 the user reported successful manual Admin runbook execution. Inspected
-CI run 41602398857 attempt 1 tested exact activation SHA above and failed: 1,004
-unittest tests, 12 AST-reference failures. The standalone connection audit repeated
-the same failures, with zero unclosed connections. Syntax/import, pytest and JS steps
-passed; inspected v1/v2 migration and file-backed v8/reopen tests passed. Details:
-[Storage handover](../handover/240-sqlite-storage-split.md). Evidence lives in
-ci-results-41602398857-attempt-1 at 2e5d1d4ecedc3e88fa5bd3a565e49fbaa11660fb.
+### Size policy and final code audit
 
-The fixed fingerprints depended on ast.dump's Python-version-specific treatment of
-empty lists. Failure reproduced on 3.14. Prepared test-only stable serializer keeps
-both original pins unchanged. Four regression methods passed on each of Python
-3.12 and 3.14, including rejection of changed SQL/field definitions. This is eight
-focused test executions, not a rerun of the full corrected CI/application suite.
+New code files: maximum 20,000 bytes. Existing code files: tolerated up to 25,000
+bytes; the 5,000-byte margin is tolerance, not a target. The native Admin reader
+still requires at most 20,000 bytes per fragment.
 
-- [x] Deliver all five agreed Storage stages.
-- [x] Record user-reported successful manual runbook execution.
-- [x] Inspect activation CI and diagnose the reference-fixture failure.
-- [ ] Deliver test-only canonicalization fix after exact bound approval.
-- [ ] Inspect corrected CI for its exact SHA; diagnose any remaining failures.
-- [ ] Obtain final Storage acceptance after green CI; retain unfinished Admin checks.
-- [ ] Review remaining oversized source files before closing SG-TODO-008.
+The live audit at 9703102f1929aedd1887c17f1d7b4a8996dfc04b found no code above
+25,000 bytes. Existing service_state.py (20,578) and test_sqlite_storage.py
+(22,281) are within tolerance and need no size-only split. CI logs are temporary
+evidence, not code-refactor targets. No additional code refactor remains in the
+accepted scope; SG-TODO-004 remains on hold.
 
-Use normal CI; do not downgrade Python, replace accepted hashes, remove guards or
-skip tests to obtain green results. No workflow dispatch or skip directive. Each
-external write needs bound approval; no corrective SHA exists before delivery.
+### Follow-up documentation and packaging maintenance
+
+The user requested the technical-document split and retirement/removal of the
+historical package manifest in a separately agreed two-commit maintenance
+sequence. The documentation index and three topic files preserve the original
+content/anchors; runtime preflight no longer depends on any manifest. Its physical
+deletion is a separately bound housekeeping action, not unfinished Admin/Storage
+refactoring. Four mocked preflight methods passed locally; documentation
+reassembly/anchor checks were performed during preparation. New regression tests
+are included, but full application/CI/live validation was not rerun for this
+maintenance. Both agreed maintenance commits explicitly use [skip ci].
+See [current-state handover](../handover/010-scope-and-state.md).

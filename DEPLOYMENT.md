@@ -1,58 +1,39 @@
-# Scrying Glass deployment package
+# Scrying Glass deployment
 
-## Incremental compact-input follow-up
+## Current checkout versus historical packages
 
-Apply this changed-files overlay to Scrying Glass baseline
-`3c1cb54c197fa530fb7f0cfe971152ccbf50bb08`, optionally with the companion-theme
-pass already installed. It does not replace the theme or `static/admin.css`.
-Back up local edits first, review the included file list, restart the service
-and hard-refresh the Admin page. No data migration or dependency change is needed.
-See [application and rollback](Patch/Compact-Inputs-Apply.md).
+Deploy a reviewed Git revision and record that revision with your backup. The old
+root package manifest described a historical deployment archive, not the current
+working tree. Manifest-based verification is retired. `deployment/check.py` is
+now runtime-only preflight: no arguments and `--runtime` perform the same check.
+It does not verify hashes, package completeness, authenticity or provenance. A
+legacy manifest, if present during staged cleanup, is unused; its physical
+deletion is a separate housekeeping commit. Use release-specific checksums or
+Git identity when you need source/package integrity.
 
-The historical `package-manifest.json` below describes an older full deployment,
-not this overlay or the restyling. Its checksums cannot validate the modified tree.
-Use `Patch/Compact-Inputs-Manifest.json` for this overlay's payload checksums.
-Historical deployment validation reports do not validate these new changes.
+Historical overlay instructions and validation reports belong to their original
+Git revisions/packages. Do not assume old Patch/ paths exist in this checkout or
+that their recorded results validate today's code. The technical reference is
+an [index](docs/Technical-Documentation.md) with required topic files under
+`docs/technical/`; keep those files together when copying documentation.
 
-## Looking Glass companion styling
+## Requirements and layout
 
-The preceding presentation-only restyling aligns Scrying Glass with Looking Glass
-using shared dark surfaces, gold accents, local font fallbacks and coordinated
-controls. It does not merge the applications or change encounter data, permissions,
-combatant colours or configured player-display backgrounds. See
-`Patch/Restyling-Changes.md`, `Patch/Restyling-Apply.md` and
-`Patch/Restyling-Validation.md` from that package for its scope and checks.
+Use Python 3.10 or newer with venv/pip and working standard-library sqlite3. The
+launcher minimum is not proof of compatibility for every Python/dependency pair.
+Run one application process per storage directory; multiple workers/replicas are
+unsupported. Runtime dependencies are in requirements.txt, not a lockfile. Node
+and Playwright are test dependencies, not server runtime requirements.
 
-Source: features/development, commit 4d3e3b6946024025854af01329b6c363510c1f0a.
-This is a complete source deployment, not an incremental patch or offline installer.
-Read [release notes](Patch/Deployment-Release-Notes.md) and
-[validation](Patch/Deployment-Validation.md) before use.
+Deploy `scrying_glass_server.py`, `python/`, `web_html/`, `templates/` and the
+complete `static/` tree together. Keep package __init__.py files. Do not deploy the
+tracked static/admin.js marker alone: the matching adapter assembles eight source
+fragments at runtime. The service account needs a writable temporary directory.
+Restart after imported Python/HTML changes and reload browsers for matching assets.
 
-## Contents and integrity
+## Fresh installation with an explicit environment
 
-The package contains the source tree, example configuration, documentation,
-launchers and tests. Live config, databases, uploaded media, accounts, virtualenvs,
-Git history and cached bytecode are not included. Python/runtime packages must
-be installed separately; requirements.txt is intentionally not a lockfile.
-No application runtime code was changed during packaging.
-
-After extracting, enter the top-level package directory and run:
-
-```bash
-python3 deployment/check.py
-```
-
-On Windows, use `py -3 deployment/check.py`. This checks hashes/sizes of the
-listed files; it is not a cryptographic signature and ignores extra local files
-such as config.yaml. The manifest excludes itself to avoid circular hashing.
-An external SHA-256 file accompanies the ZIP for transfer-integrity checking.
-
-## Fresh installation: explicit environment
-
-Install Python 3.10 or newer with venv/pip and standard-library sqlite3 using your
-platform's supported mechanism. Python 3.10 is the launcher minimum, not a claim
-of completed end-to-end 3.10 validation. Use the intended interpreter consistently.
-For a manual Linux installation from this extracted tree:
+From the reviewed source checkout on Linux:
 
 ```bash
 python3.10 -m venv .venv
@@ -60,9 +41,10 @@ python3.10 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
 .venv/bin/python deployment/check.py --runtime
 cp config.example.yaml config.yaml
+.venv/bin/python scrying_glass_server.py --config config.yaml
 ```
 
-For Windows PowerShell:
+A newer compatible interpreter may replace python3.10. For Windows PowerShell:
 
 ```powershell
 py -3 -m venv .venv
@@ -70,157 +52,75 @@ py -3 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe deployment/check.py --runtime
 Copy-Item config.example.yaml config.yaml
+.\.venv\Scripts\python.exe scrying_glass_server.py --config config.yaml
 ```
 
-Only copy the example configuration for a fresh installation. Edit network,
-storage and display settings before starting; protect the config appropriately.
-Use an explicit existing storage path when migrating an installation. Start
-manually using the same environment:
+Copy the configuration only on a fresh install. Set network, storage and display
+settings before startup; preserve existing config/storage during upgrades. Use an
+absolute storage path for services. Start the root script directly, not external
+uvicorn module:app imports that skip main-guard initialization.
 
-```bash
-.venv/bin/python scrying_glass_server.py --config config.yaml
-```
+Preflight checks the interpreter, sqlite3, installed runtime dependencies and a
+server import/route-construction subprocess. It does not run application
+lifespans, initialize deployment storage, bind listeners, authenticate users or
+exercise browser workflows. A successful result is not deployment certification.
 
-On Windows use `.\.venv\Scripts\python.exe scrying_glass_server.py --config config.yaml`.
-Keep first-start console output private: new installations print a generated
-superadmin password. Follow [Accounts and sign-in](docs/User-Guide.md#accounts-and-sign-in)
-to configure account roles and grants. Restrict ports to trusted networks.
+The interactive launchers use ~/dnd or %USERPROFILE%\dnd, not the .venv above.
+They reuse compatible environments and reject older ones rather than replacing
+or downgrading them. Systemd runs its explicitly configured interpreter directly,
+without launcher discovery/guards; see [Systemd Deployment](docs/Systemd-Deployment.md).
+Create service environments at their final path and do not move virtualenvs.
 
-The supplied ./run.sh, .\run.ps1 and run.bat remain alternative interactive
-launchers: they use ~/dnd or %USERPROFILE%\dnd, not the .venv created above.
-Do not assume running a launcher selects this manual environment. Compatible
-existing launcher environments are reused; older environments are rejected.
+## Accounts and exposure
 
-## systemd deployment
+New installs print a generated superadmin password once; keep that output private
+and change the password. Create regular admin/client accounts and separately
+assign campaign ownership and client viewer grants. Use a regular admin for
+interactive battles; superadmins land on user management. See the
+[User Guide](docs/User-Guide.md#accounts-and-sign-in).
 
-Use [Systemd Deployment](docs/Systemd-Deployment.md), but supply the extracted
-source tree in place of its git clone/checkout steps. Do not checkout main when
-using this commit-pinned package. Create the service virtualenv at its final
-/opt/scrying-glass/.venv path, install requirements with that interpreter, and run
-its deployment/check.py --runtime. Do not move an existing virtualenv.
-The service invokes its interpreter directly, bypassing launcher selection/guards.
-Run one application process per storage directory; do not expose HTTP publicly
-without the access/proxy protections described in the documentation.
+Restrict ports to a trusted LAN/VPN or protected HTTPS proxy. Sessions are in
+memory and clear on restart. Media is a static mount without session protection.
+Coordinate admins because one shared active runtime remains. Review proxy/TLS
+and WebSocket handling before exposing listeners.
 
 ## Upgrade and rollback
 
-1. Record the current code revision, Python, installed dependency versions,
-   systemd unit, configuration and absolute storage path. Save the current
-   environment's pip freeze output with the operator's backup, not as a package lock.
-2. Stop the service/process before making a consistent backup. Back up the whole
-   configured storage directory, including SQLite and any -wal/-shm companions
-   if present, media and migration backups; preserve config and service-unit copies.
-3. Retain the prior code tree and a reproducible way to rebuild its environment.
-   Verify that the backup can be read/restored before changing the installation.
-4. Stage/extract this package separately, verify checksums, and review release notes.
-   Promote the complete source tree into the intended code location while stopped.
-   Do not overwrite live config or delete storage; no automated destructive copy
-   or data-directory replacement is performed by this package.
-5. Create/rebuild an environment at its final path if needed. Install dependencies,
-   run runtime preflight with that interpreter, and preserve storage permissions.
-6. Start the service, inspect startup/migration logs, then reload Admin and Client
-   browsers to match the imported HTML and new JavaScript assets.
-7. Complete the smoke test below before reopening the encounter to other users.
+1. Record the current Git revision, Python/dependency versions, configuration,
+   service unit and absolute storage path. Preserve operator pip-freeze output
+   with the backup; do not mistake it for a repository dependency lock.
+2. Stop the process before a consistent backup. Back up the entire storage
+   directory, SQLite and any WAL/SHM companions, uploaded media, migration backups,
+   configuration and service-unit copies. Verify that the backup is restorable.
+3. Keep matching prior code and a reproducible way to rebuild its environment.
+   Stage the new reviewed source separately; do not overwrite config or storage.
+4. Promote the complete matching source tree while stopped. Install requirements
+   in the intended environment and run runtime preflight with that interpreter.
+   Preserve storage permissions and the generated-bundle temporary-directory access.
+5. Start, inspect migration/startup logs and reload Admin and Client browsers.
+   Run the copied-data smoke checks below before reopening the encounter.
 
-If validation fails, stop the process. Restore the matching prior code/config/unit
-and environment. If initialization changed stored data or schema, restore the
-matching stopped-storage backup too; do not assume a code-only rollback is safe.
-Restoring a backup discards changes made after that backup. No new database
-migration is introduced by the packaging additions; the source's own startup
-migration behavior still applies.
+If validation fails, stop and restore matching prior code/config/unit/environment.
+If startup changed schema or data, restore the matching stopped-storage backup
+too; code-only rollback is not necessarily safe. Restoring a backup discards
+subsequent edits. Automatic database migration backups omit media/configuration.
+Never fake a downgrade by editing PRAGMA user_version. Older code rejects schema 8;
+see [attack statistics](docs/Technical-Documentation.md#attack-statistics-schema-8).
 
-## Required live smoke test
+## Copied-data live smoke checks
 
-- Sign in with the relevant roles; check campaign ownership and client grants.
-- Load a copied encounter and verify persistence and live Client updates.
-- Start combat, check character-first tie defaults and manual position swaps.
-- Open actions, apply a mixed action/reaction batch, and verify the window remains
-  open with locked Applied rows. Apply again unchanged: no duplicate HP/log entry.
-- Add another action/reaction and apply: only new rows resolve in displayed order.
-- Add an unfinished row then Close: no pending changes apply and earlier changes
-  are not undone. Reopen and test explicit target/source selection.
-- Verify start-of-turn controls remain separate and Next advances as expected.
-- Check log export, backgrounds, restart recovery and intended player display.
+- Sign in with relevant roles; check ownership, grants and cross-owner denial.
+- Load an encounter, verify persistence and live Client updates.
+- Start combat; check initiative ties, manual position swaps, rounds and Next.
+- Apply mixed actions/reactions and statistic reductions. Confirm Applied rows
+  stay locked, the window remains open and applying unchanged rows does not replay.
+- Add a pending row then Close; no draft applies and earlier changes are not undone.
+- Check restoration/base editing, HP and life states, effects and lairs.
+- Check row controls, readable names, table-local keyboard scrolling and retained
+  alternate damage/healing workflows.
+- Check log export, backgrounds, restart recovery, backups/bundles/media and proxy
+  WebSockets. Validate Windows and the chosen Python version on the actual target.
 
-## Release status
-
-Static checks and selected mocked/unit suites passed during packaging. Two of
-19 additional standalone JavaScript scripts fail with window is not defined in
-their VM contexts; see the validation report for exact filenames. These failures
-were reproduced on the supplied source and were not silently repaired. This is
-not a fully runtime-certified release: FastAPI, Uvicorn and python-multipart are
-not installed in the packaging environment, so full server startup/HTTP/browser,
-Windows execution, full Python suite and Python 3.10 application tests remain
-outstanding. Complete target-machine preflight and smoke tests before live use.
-
-## 5e.tools monster fallback
-
-Optional monster suggestions now try D&D Beyond first, then 5e.tools JSON data.
-AC accepts numeric entries and AC objects; HP prefers a supported dice formula
-and falls back to the numeric average. Names match exactly after case and
-punctuation normalization. The UI labels the provider and source. Existing
-AC/HP overwrite and in-flight edit protection are unchanged.
-
-Image lookup follows the same provider order when creating a monster without an
-uploaded image. 5etools supplies a token URL (explicit `tokenUrl` or a generated
-WebP token path when `hasToken` is set), not necessarily a full illustration.
-Existing monsters' images are not retroactively updated. Image URLs are remote;
-they are not downloaded or cached locally, and availability is not probed.
-
-Configuration under `display`:
-```yaml
-fivetools_fallback: true
-fivetools_sources: ["MM", "XMM"]
-fivetools_data_base_url: "https://5e.tools/data/bestiary"
-fivetools_image_base_url: "https://5e.tools/img"
-```
-
-MM is tried before XMM to retain the older-edition preference. Only configured
-sources are searched: add source identifiers from the bestiary index to extend
-coverage. D&D Beyond and 5etools are independently controlled: disable both
-`dndbeyond_image_lookup` and `fivetools_fallback` to prevent optional provider
-lookups. No credentials are sent to 5etools. Remote JSON is bounded to 16 MB per
-file, fetched with a five-second socket timeout, and cached in-process for one
-hour with at most 32 entries. Restart clears the cache. Source files are loaded
-sequentially; configured source count affects cold-lookup latency.
-
-Unresolved `_copy` entries without their own usable values are skipped for stats;
-this is not a complete implementation of 5etools inheritance. Special-only AC/HP
-is not guessed. Fallback uses a single usable source entry and does not combine
-missing fields across providers/editions. Browser access to remote token hosts
-and server HTTPS access to data endpoints are required. Use third-party data
-and images only where permitted; none are bundled with this patch.
-
-Run offline tests from the repository root:
-```bash
-python -m unittest discover -s tests -p 'test_fivetools_fallback.py' -v
-```
-
-Live validation: enter Crawling Claw and check that the notification identifies
-5e.tools after D&D Beyond fails. Add a monster without uploading an image and
-check its token in the player view. If no result appears, inspect WARNING logs
-and verify index/source URL reachability from the service account. Token paths
-and live endpoints could not be verified from the patch-build environment.
-
-
-## SG-TODO-002 attack-statistics overlay
-
-This replacement-file archive is built directly from the original supplied
-`scrying-glass-source-e0c321a-base64.txt`. Do not stack it on the earlier assistant
-patch: use the original baseline, or review/merge differences explicitly. Its
-manifest records original and replacement hashes. Stop the server, back up all
-storage/media/configuration and deploy Python, templates and static files together.
-Keep Patch/ out of application deployment and Git staging. No deletions/renames or
-manual SQL are required. Restart and reload admin browsers after overlaying.
-
-Startup upgrades supported storage to schema 8 with the normal database backup.
-See [technical details](docs/Technical-Documentation.md#attack-statistics-schema-8)
-and [workflow](docs/User-Guide.md#attack-statistics-reductions). Roll back only with
-matching pre-upgrade code and the full backup; never fake a downgrade by changing
-user_version. Root package-manifest.json still describes the historical full
-package, not this overlay; Patch/FILE_MANIFEST.json inventories this delivery.
-
-Local service/SQLite and mocked DOM tests are recorded in Patch/Validation/.
-Application startup, authenticated HTTP and real-browser deployment validation
-remain pending because FastAPI/Uvicorn are unavailable in the build environment.
-No GitHub commit, workflow dispatch or CI outcome is claimed for archive delivery.
+These are instructions, not claims that this maintenance change executed live
+validation. Local preflight tests mock dependencies and the server-import process.
+CI is skipped only as explicitly requested for the agreed two maintenance commits.
