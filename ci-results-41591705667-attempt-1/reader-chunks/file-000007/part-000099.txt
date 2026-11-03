@@ -1,0 +1,30 @@
+s	2026-11-03T06:46:31.2852374Z   File "/tmp/scrying-tests-ffmfwksu/repo/python/scrying_glass_monster_selection.py", line 112, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2853011Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2853621Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2854151Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2854489Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2855362Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2855964Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2856319Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2856928Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2857452Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2857665Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2860317Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2860777Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2861397Z   File "/tmp/scrying-tests-ffmfwksu/repo/python/scrying_glass_monster_selection.py", line 84, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2861988Z     html = context.dnd_monster_detail_html(href)
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2862580Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2863366Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2863680Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2864228Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2864778Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2865504Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2866123Z   File "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2866658Z     raise result
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:31.2866872Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:49.1142399Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:49.1143198Z Ran 990 tests in 66.777s
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:49.1143510Z 
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:49.1143652Z OK
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:49.1144299Z Connections opened: 648; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-03T06:46:49.1145648Z PASS: failed PRAGMA initialization closes connection; suite c
