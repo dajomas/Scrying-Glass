@@ -2,75 +2,75 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Last updated: 2026-11-03. Task: [SG-TODO-008](../todo/080-source-size-refactors.md).
-Preparation base: 2a651004a7870de461cce32f5dcffd56b91a2aa6 on features/perplexity.
-Original storage: 39,486 bytes / 527 lines, Git blob
-ea80b59cca80c6885f6ba1ba4d32b759beb187b5; the uploaded source matches.
+Updated 2026-11-03. Task: [SG-TODO-008](../todo/080-source-size-refactors.md).
+Preparation base: 8ed072c3cd3be53474a77cc9267bd7708f0d7638, features/perplexity.
+Original storage remains 39,486 bytes / 527 lines, blob
+ea80b59cca80c6885f6ba1ba4d32b759beb187b5; uploaded source matches.
 
-## Architecture and delivery
+## Agreed architecture and delivered stages
 
-The user approved five commits: fields, schema/migration, records/encounters,
-campaign/setup/application-state operations, then native facade activation.
-Commits 1-4 stage unused modules and tests; only commit 5 changes runtime imports.
+Five commits: shared fields, schema/migration, records/encounters, operations,
+then native facade activation. Stages 1-4 are unused preparations; only 5 changes
+production imports. No SQL, schema version, backup or behavior change is authorized.
 
-Increment 1 was delivered as a9da32439b01529ab6deba8242b48593d95be594: 984-byte
-fields module and five preparation methods, with post-push blob verification.
-The original assignment expressions, ordering, values and scalar types remain;
-STATE_FIELDS is an independent mutable set during preparation.
+1. a9da32439b01529ab6deba8242b48593d95be594: 984-byte fields module and five local
+   preparation tests. Assignment expressions, types, order and values retained;
+   STATE_FIELDS remains independently mutable during staging. Blobs verified.
+2. 2a651004a7870de461cce32f5dcffd56b91a2aa6: 10,076-byte schema mixin, blob
+   ea70b84536f7a4918a6923ae5068d34fe9c85674; _create_schema, static reference
+   conversion and _upgrade unchanged. Seven local tests: AST/signatures, base
+   schema, empty v1/v2-to-v3 upgrades, rollback after DDL, deep copy/errors and
+   source guards. Real SQLite, fixed migration clock. No populated migration,
+   constructor, file backups or later upgrades. Field tests were not rerun for 2.
+3. 8ed072c3cd3be53474a77cc9267bd7708f0d7638: unused 13,067-byte records mixin;
+   ten original methods. Eight local tests cover AST/descriptor, typed fields,
+   NULL/presence, IDs/order/deletion, logs/occurrences, runtime setup/turn markers,
+   rollback and source guards. Real original base schema, SQLite/FKs, version 3;
+   unchanged lair imports, but no v6 persistence branch or effects persistence.
+   Original methods were AST-extracted in fixtures. Delivery and five changed paths
+   verified after push. Stage 3 superseded an unexecuted malformed approval draft.
 
-Increment 2 was delivered as 2a651004a7870de461cce32f5dcffd56b91a2aa6:
-10,076-byte StorageSchemaMixin, blob ea70b84536f7a4918a6923ae5068d34fe9c85674.
-_create_schema, static convert_campaign_references and _upgrade are AST-equivalent.
-Seven preparation methods passed locally: AST/signatures, base-schema parity,
-empty v1/v2-to-v3 upgrade parity, post-DDL rollback, reference deep copy/errors,
-and size/dependency/original-source guards. Real SQLite was used with a fixed
-clock for migration-log comparison. Constructor, backups, populated legacy data
-and later v4-v8 upgrades were not executed. Increment-1 tests were not rerun for 2.
-No Storage CI result has been inspected for either delivered increment.
+No Storage CI result for stages 1-3 has been inspected. Their local checks are not
+full application or v8 migration/backup validation.
 
-## Increment 3: unused records/encounter mixin
+## Stage 4: unused operations mixin
 
-python/scrying_glass_storage_records.py is 13,067 bytes, expected Git blob
-c0632d7c34ceac8089f54e541299df396dc4af62. StorageRecordsMixin contains the original
-ten methods: _typed, _attributes, _read_attributes, _save_entities, _load_entities,
-_save_log, _load_log, _save_lists, _save_encounter and _load_encounter. AST bodies,
-signatures, _typed static descriptor, SQL and call ordering remain unchanged.
-Top-level dependencies are uuid and shared fields; lazy feature/lair imports stay
-in their original methods. No constructor changes, runtime wiring or production
-exec/eval. Original storage and all callers remain authoritative and unchanged.
+python/scrying_glass_storage_operations.py: 12,218 bytes, expected blob
+9f16de18019464def7e5bea811b711f0dfd7ceda. StorageOperationsMixin contains 20 original
+methods for campaigns, rosters, setups and application state. All AST bodies,
+signatures, SQL and transaction boundaries match. Dependencies are time and the
+existing validate_roster_setup_ids; no circular facade imports, runtime wiring,
+constructor changes or production exec/eval. Original storage/callers unchanged.
 
-Eight methods in tests/test_storage_records_preparation.py passed locally against
-the proposed module (9,396 bytes; expected test blob
-5564bcb16b97a591a71ae37f833e3fee7986158d). Tests cover AST/signatures/descriptor,
-scalar tags and rejection, entity presence/NULL/order/IDs/deletion, log updates and
-IDs, repeated ordered IDs/occurrences, runtime reference/marker round trips,
-partial-write rollback and validation, and size/dependency/original-blob guards.
+Eight tests in test_storage_operations_preparation.py passed locally (11,740 bytes;
+expected blob 8179a7d80d50a17a45348fb92391b01042ddde4f): method/source guards,
+campaign metadata and atomic failure, rosters and nested rollback, setup names/
+ordering/updates/deletion, checkpoint rename/conflict rollback, empty setup copy/
+move and identity conflict, effect-reference rewriting, and runtime/import-map state.
 
-Fixtures use the original AST-extracted base-schema/transaction/check helpers and
-real in-memory SQLite with foreign keys enabled and user_version=3. Existing lair
-modules are imported unchanged, not stubbed; their v6 persistence branch is not
-executed. No feature/lair mocks, fabricated schema or global sys.modules changes.
-These checks do not execute the constructor, file backups, effects/lair persistence,
-later migrations or full application integration. Full suite/CI remains pending.
-The earlier malformed empty-bound approval was not executed; this corrected draft
-supersedes it, including replacement of the earlier limited test draft.
+Fixtures use native original SQLiteStorage methods and a staged test subclass,
+bypassing __init__, with original base schema, FKs and user_version=3. The actual
+encounter_snapshots CREATE TABLE statement from upgrade_features is added solely
+for rename checks; the full v5 upgrade is not run. Empty transfers exercise real
+SQLite. The effects rewrite test mocks load_setup/save_setup boundaries and does
+not prove effects persistence or full v8 transfer integration. Constructor, backups,
+populated migrations, full v8, server/service and combined-facade tests remain pending.
+Existing CI unittest discovery includes this test without workflow edits.
 
-## Remaining work and compatibility
+## Activation requirements
 
-Next: operations (4), native facade activation (5). Keep SQLiteStorage in
-python/scrying_glass_storage.py with constructor, lifecycle, backups/transactions
-and compatibility field exports. Complete new files must stay <=20,000 bytes.
-Original method-group sizes before headers/imports: connection 3,933, schema 9,760,
-records 12,707, operations 11,924 bytes. Measure complete modules at each stage.
-FeatureStorage imports old field constants and calls underscore methods: retain
-these entry points. Avoid circular facade imports. Preserve lazy feature/lair/
-setup-lair/statistics imports, savepoints, rollback, backup ordering and record IDs.
-Check patch/introspection dependencies before activation. The old v4 docstring
-never changed actual SCHEMA_VERSION=8. Adapt monolith/AST guards at activation
-while retaining behavioral tests. Obtain final validation/acceptance before closure.
+Next is stage 5. Preserve SQLiteStorage at python/scrying_glass_storage.py with
+constructor/lifecycle/backups/transactions and compatibility field exports.
+Preserve underscore entry points used by FeatureStorage, lazy feature/lair/
+setup-lair/statistics imports, savepoints, backup ordering and stable record IDs.
+Keep actual SCHEMA_VERSION=8 despite the old v4 docstring. Check patch/introspection
+dependencies; adapt original-monolith/AST guards when activation deliberately
+replaces it while retaining behavior checks. Complete code files <=20,000 bytes.
+Pre-header group estimates: lifecycle 3,933; schema 9,760; records 12,707;
+operations 11,924 bytes. Measure complete final files, not group estimates.
 
-README, HANDOVER.md and workflow were reviewed and left unchanged for increment 3:
-runtime/deployment, index links and test discovery are unaffected. Relevant task
-and TODO index statuses are updated. No archive, manifest refresh, workflow dispatch
-or CI skip. Each write needs exact bound approval. SG-TODO-004 stays on hold;
-SG-TODO-005 and SG-TODO-006 work and acceptance remain separate.
+README, HANDOVER index, maintenance rules and workflow were reviewed/reused unchanged:
+no runtime/deployment, linked-path or discovery change. Task section and TODO index
+reflect progress; SG-TODO-008 stays open. No archive, manifest refresh, CI skip or
+workflow dispatch. Each write needs bound approval. Other tasks remain separate:
+SG-TODO-004 on hold, SG-TODO-005 reopened, SG-TODO-006 labels not delivered here.

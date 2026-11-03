@@ -4,7 +4,7 @@
 
 ## SG-TODO-008 - Split oversized code without behavior changes
 
-- Status: in progress; Admin activation delivered/CI verified; Storage fields/schema delivered; records increment 3 prepared, delivery/CI pending.
+- Status: in progress; Admin activation delivered/CI verified; Storage stages 1-3 delivered; operations stage 4 prepared, delivery/CI pending.
 - Requested and five-commit Admin plan approved: 2026-11-02.
 - Activation: 9f1b14ae99d3b297f4557f05f7f72485ab674d56 on features/perplexity.
 - Priority, owner and deadline: not assigned.
@@ -41,44 +41,37 @@ Each external write still needs bound approval.
 
 ### Approved Storage sequence - 2026-11-03
 
-1. Stage scrying_glass_storage_fields.py and field equivalence/isolation tests;
-   original storage and all callers remain unchanged.
-2. Stage schema/migration module with extraction-equivalence tests; unused.
-3. Stage typed-record/encounter module with equivalence tests; unused.
-4. Stage campaign/setup/application-state module with equivalence tests; unused.
-5. Activate the small SQLiteStorage facade using native Python modules, preserve
-   original imports/field exports, add integration regressions and update operations.
+1. Shared fields and five preparation tests: delivered as
+   a9da32439b01529ab6deba8242b48593d95be594; unused by runtime.
+2. Schema/migration and seven preparation tests: delivered as
+   2a651004a7870de461cce32f5dcffd56b91a2aa6; unused by runtime.
+3. Typed records/encounters and eight preparation tests: delivered as
+   8ed072c3cd3be53474a77cc9267bd7708f0d7638; unused by runtime.
+4. Campaign/roster/setup/application-state operations and tests: prepared; unused.
+5. Activate small SQLiteStorage facade with native modules, compatibility exports,
+   integrated regressions and operational docs; pending.
 
-The user approved this five-commit sequence and requested increment 1 on 2026-11-03.
-Every new code file must be at most 20,000 UTF-8 bytes. The original 39,486-byte
-module stays authoritative through increments 1-4; it is replaced at activation.
-No schema version, SQL, transaction or migration behavior changes are authorized.
+Local tests passed during preparation of delivered stages; no Storage CI evidence
+has been inspected. Those limited fixtures do not cover constructor/file backups,
+populated legacy migration, effects/lair persistence or later v4-v8 upgrades fully.
+Do not infer full storage validation from source equivalence or successful delivery.
 
-Storage increment 1 was delivered as a9da32439b01529ab6deba8242b48593d95be594.
-Its seven field definitions and five preparation tests remain unchanged. Their
-local preparation checks passed, but no Storage CI result has been inspected.
+Stage 4 prepares a 12,218-byte operations mixin with 20 original bodies/signatures
+unchanged. Eight local methods passed: AST/source/dependency guards; campaigns,
+rosters/savepoints, setup naming/ordering/deletion, checkpoint rename, empty setup
+copy/move/identity conflicts, mocked-boundary effect rewrites, application state.
+Real SQLite fixtures bypass constructor and use original v3 base schema with the
+actual snapshot table DDL for rename only, not a complete v5/v8 database. The
+mocked effects test is not persistence/integration evidence. Details and hashes:
+[Storage handover](../handover/240-sqlite-storage-split.md).
 
-Increment 2 was delivered as 2a651004a7870de461cce32f5dcffd56b91a2aa6, staging a
-10,076-byte StorageSchemaMixin with original bodies/signatures/static descriptor.
-Seven local tests passed in limited base-schema and empty-legacy fixtures; constructor,
-backup files, populated migration and later upgrades remain outside those fixtures.
+Every new code file <=20,000 UTF-8 bytes. Original 39,486-byte storage and callers
+remain authoritative through stages 1-4. No SQL/schema/transaction/migration behavior
+changes are authorized. Use normal CI, no workflow dispatch or skip directive.
 
-Increment 3 prepares a 13,067-byte StorageRecordsMixin with all ten original methods
-AST-equivalent. Eight new local preparation methods passed using the original base
-schema and real in-memory SQLite at user_version=3, without feature/lair mocks.
-Coverage: scalar/presence/NULL, IDs/order/deletion, logs, repeated occurrences,
-runtime setup references/turn markers, rollback and source/descriptor guards.
-Full v8 storage, migrations, backup, effects/lair persistence and application/CI
-validation remain pending. See the handover for exact fixture limits and identities.
-The malformed earlier empty-bound approval was not executed; a complete corrected
-payload requires fresh bound approval before delivery. No increment-3 SHA yet.
-
-- [ ] Review fields/schema increment CI for their exact delivered commits.
-- [ ] Deliver records increment after valid bound approval and review its CI.
-- [ ] Stage operations with unchanged method bodies/equivalence checks.
-- [ ] Activate compatibility facade and keep complete source files below the limit.
-- [ ] Validate full storage/migration/transaction/service behavior and obtain acceptance.
-
-See [Storage handover](../handover/240-sqlite-storage-split.md) for evidence and
-activation constraints. Runtime and consumers remain unchanged in increment 3.
-Use normal CI; each stage needs its own bound approval. This does not complete SG-TODO-008.
+- [ ] Review Storage CI for exact stage 1-3 commits.
+- [ ] Deliver operations after exact bound approval, then review its CI.
+- [ ] Activate facade, preserve public/underscore methods, field exports and lazy imports.
+- [ ] Adapt preparation guards at activation; keep complete code files below the limit.
+- [ ] Validate full storage/migrations/backups/transactions and service integration.
+- [ ] Obtain final acceptance before closing SG-TODO-008; retain unfinished Admin checks.
