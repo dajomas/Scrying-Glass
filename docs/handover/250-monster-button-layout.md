@@ -3,7 +3,8 @@
 [Back to handover index](../../HANDOVER.md)
 
 Date: 2026-11-03. Task: [SG-TODO-007](../todo/070-monster-button-layout.md).
-Preparation base: `5bcc1cc99fd49615d38c9853951b8ec6424efd82`.
+Initial preparation base: `5bcc1cc99fd49615d38c9853951b8ec6424efd82`.
+Initial delivery: `da8e7352fee0b504628aeed94aae6687341e2c35`.
 
 ## Decision and implementation
 
@@ -18,10 +19,16 @@ width and prevents wrapping in its two action cells and button labels. The Admin
 head loads that stylesheet. The existing `#monsters` container is a named region
 with `tabindex=0`, a focus outline and an accessible scrolling hint. Tab continues
 through selection, initiative and the 13 existing buttons; browser focus scrolling
-can expose off-screen operations. This behavior still requires browser evidence.
+can expose off-screen operations. This behavior still requires full-page evidence.
 
-The selectors target columns 6 and 7 of the existing monster table only. If that
-column structure changes, update the scoped selectors and layout tests together.
+The user subsequently reported word-by-word wrapping of the name and species.
+The initial change protected action cells but not the name column. The correction
+adds `min-width: 16ch` and `white-space: nowrap` to column 2, preserving the explicit
+break between name and species and leaving additional width in the local scroller.
+The original button-only geometry tests missed this readability regression.
+
+Selectors target name column 2 and action columns 6 and 7 of the existing monster
+table only. If that structure changes, update the selectors and tests together.
 
 ## Source architecture and size policy
 
@@ -38,23 +45,29 @@ This change does not reconcile SG-TODO-008 records or alter SG-TODO-004's hold.
 
 ## Validation and remaining work
 
-Preparation executed Python AST parsing of the new browser module and byte counts:
-476-byte CSS and 9,201-byte test module. Three browser methods are prepared for
-normal unittest CI discovery, using Playwright Chromium and intercepted HTTP
-with the assembled Admin page. They cover six geometry/state cases (1440, 768,
-375 pixels; active/inactive), Tab traversal at all three widths, local scroll
-geometry and keyboard opening/closing of Edit and Restore statistics.
+Initial preparation executed Python AST parsing and byte counts: 476-byte initial
+CSS and 9,201-byte original browser module. Its three methods cover six geometry/
+state cases (1440, 768, 375 pixels; active/inactive), Tab traversal at all three
+widths, local scroll geometry and keyboard opening/closing of Edit and Restore
+statistics. These methods were prepared, not executed here.
 
-No browser test, existing interaction regression, authenticated server check or
-live-provider check was executed here. No CI run or successful assertion result
-is claimed. The normal workflow already installs Chromium and discovers the new
-test filename through `tools/run_split_tests.py`; no workflow edit is needed.
-Retain validation-pending task status until evidence is reviewed and acceptance
-criteria are satisfied. User-collected CI evidence will be reviewed against its
-exact tested SHA and attempt, separately from deployed-interface acceptance.
+Corrective preparation executed AST parsing of a new 2,941-byte regression module.
+It reuses the assembled-page intercepted-HTTP harness for six name/species cases,
+including Crawling Claw and a longer name with the Ally suffix. The original
+three methods remain intact. A separate simplified Chromium reproducer at 768
+pixels observed species wrapping change from two lines to one, cell width from
+97.375 to 174.375 pixels and table width from 1370.09375 to 1447.09375 pixels;
+document width remained 768 pixels. This isolates the CSS issue but is not an
+assembled-page, authenticated-server or deployed-interface test.
 
-Deploy the matching templates and complete static tree, restart and reload the
-browser. README was reviewed and left unchanged because its existing source and
-deployment descriptions remain accurate; this section and the linked task carry
-the new layout details. The root handover index gains this section; the TODO index
-reflects work in progress. No unrelated backlog cleanup is included.
+No full-page browser method, existing interaction regression, authenticated
+server check or live-provider check was executed during these preparations.
+No CI result is claimed. The normal workflow installs Chromium and discovers
+both test modules through `tools/run_split_tests.py`; no workflow edit or skip
+is requested. Review user-collected evidence against its exact SHA and attempt,
+separately from deployed-interface acceptance. Task status remains in progress.
+
+Deploy matching templates and the complete static tree, restart and reload the
+browser. README and root indexes were reviewed and remain accurate for this
+correction; the existing task and handover sections carry the regression details.
+No unrelated backlog cleanup is included.
