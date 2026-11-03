@@ -2,10 +2,12 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated: 2026-11-03. Task: [SG-TODO-007](../todo/070-monster-button-layout.md).
+Updated: 2026-11-03. Task: [SG-TODO-007](../todo/070-monster-button-layout.md),
+completed at the user's request after covering CI verification.
 Initial delivery: da8e7352fee0b504628aeed94aae6687341e2c35.
 Name correction: 49aed0cbf074d63930ce29a8d64ef2d9cc970226.
-Current corrective preparation base: aff0ff459a2aae1e8f4301c40d162097068a711d.
+Final row-removal/focus correction: c19f49b9b5f79093d7bd69768f3eb14eaeabd762.
+Corrective preparation base: aff0ff459a2aae1e8f4301c40d162097068a711d.
 
 ## Decisions and delivered history
 
@@ -13,7 +15,7 @@ The user agreed one-line monster controls and table-local horizontal scrolling.
 The initial 13-button implementation left name/species wrapping word by word;
 the name correction protected column 2 with min-width:16ch and nowrap while
 retaining their explicit line break. The user subsequently requested removal of
-Damage and Heal from both combatant rows. The current scope is 11 monster-row
+Damage and Heal from both combatant rows. The accepted scope is 11 monster-row
 buttons and removal of both HP change columns, preserving alternate workflows.
 
 ## Corrective implementation
@@ -53,10 +55,10 @@ retained unchanged; no claim that they were rerun locally. No source fragment is
 loaded independently. The new standalone module is 2,125 bytes; the updated
 browser module is 10,940 bytes, below the agreed code limits. The native reader's
 20,000-byte fragment cap is not relaxed. SG-TODO-008 cleanup and SG-TODO-004's hold
-remain untouched. README and root indexes were reviewed and remain accurate;
-these existing task/handover sections carry the corrective scope and evidence.
+remain untouched. README and the handover index were reviewed and left unchanged;
+the TODO index and existing task/handover sections record closure.
 
-## CI diagnosis
+## Historical CI diagnosis
 
 Run 41641117462 attempt 1 tested 49aed0cbf074d63930ce29a8d64ef2d9cc970226.
 Evidence commit aff0ff459a2aae1e8f4301c40d162097068a711d, folder
@@ -66,9 +68,10 @@ Parts 76-78 show three viewport failures at the keyboard test's line 143; the
 same suite/failures, not a separate connection leak: 673 opened, zero without
 explicit close. Part 78 reports 43 pytest passes. Run metadata reports successful
 syntax/import and JavaScript steps. Parts 106-107 show later audit/smoke completion.
-The failed run is not acceptance and does not validate the new correction.
+Run 41642457751 attempt 1 also failed and covered Cleanup commit
+571c48ff4814331dd13829dc835eaa56a9b7ffd8. Neither earlier run is closure evidence.
 
-## Preparation checks and remaining validation
+## Preparation checks
 
 Node --check passed for the exact new module; Python AST parsing passed for the
 updated four-method browser module. A simplified real-Chromium fixture exercised
@@ -84,8 +87,25 @@ labels, geometry, ancestor-overflow and Edit/Restore keyboard regressions, and
 add refreshed-table removal, idempotence and Battle Actions damage/heal choices.
 The strict focused-button visibility assertion remains and covers both traversal
 directions. Desktop need not overflow if all remaining controls fit; narrower
-widths must use the local scroller. Full assembled-page tests were not executed
-here. New CI, individual assertion results and authenticated/deployed validation
-remain pending. Normal push-triggered CI is requested, with no skip or workflow
-configuration change. User-collected evidence must identify tested SHA and attempt
-before task completion is considered.
+widths use the local scroller. These full-page methods were not executed locally
+during preparation; the covering CI status is recorded below.
+
+## Verified CI and close-out - 2026-11-03
+
+Run 41648384259 attempt 1, workflow Branch tests, tested exact corrective SHA
+c19f49b9b5f79093d7bd69768f3eb14eaeabd762. Evidence is committed at
+0f9b08732648715ebbcfc3675d49572c50032147 under
+ci-results-41648384259-attempt-1. The reviewed run.json reports workflow and
+tests job completed/success. All configured syntax/import, Python/browser suite,
+pytest, JavaScript and standalone browser/audit steps report success.
+
+This review verifies run/job/step metadata, not every individual assertion. It
+does not establish authenticated/live-server or deployed-browser validation.
+The user reported green CI and requested closure; that request is recorded as
+feature acceptance, without inventing a detailed manual runbook or deployment
+check. SG-TODO-007 is closed on that basis. The earlier pending-CI statements are
+superseded by this verified covering run.
+
+The close-out changes documentation only. The user explicitly requested [skip ci]
+for this push; no tests were rerun, no workflow configuration is changed and no
+separate workflow is dispatched. The skip request does not apply to later pushes.
