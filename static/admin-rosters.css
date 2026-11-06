@@ -1,0 +1,24 @@
+/* Roster-local presentation; preserve original actions and inline HP in increment 1. */
+body.admin-shell .sg-roster-pane { min-width: 0; }
+body.admin-shell .sg-roster-region { overflow-x: auto; max-width: 100%; min-width: 0; }
+body.admin-shell #characters.sg-roster-region table { min-width: 48rem; }
+body.admin-shell .sg-roster-pane :is(th, td) { vertical-align: middle; }
+body.admin-shell .sg-roster-pane :is(th, td) { font-variant-numeric: tabular-nums; }
+body.admin-shell .sg-roster-state {
+    display: block;
+    margin-top: .25rem;
+    font-size: .8rem;
+    color: var(--admin-muted);
+    white-space: normal;
+}
+body.admin-shell .sg-roster-pane .bulk-action-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+}
+body.admin-shell .sg-selected-count { white-space: nowrap; color: var(--admin-text); }
+body.admin-shell .sg-roster-pane .sg-row-selected {
+    outline: 1px solid var(--admin-campaign);
+    outline-offset: -1px;
+}
