@@ -49,3 +49,21 @@ Installing pytest fixes the two module imports but does not make unittest execut
 ## Coverage limitations
 
 The workflow is configured to cover the existing test categories; successful execution has not yet been confirmed. Browser fixtures and smoke scripts do not imply full live-server end-to-end coverage. The connection-lifetime audit runs unittest discovery again, so some tests are intentionally repeated. Future helper files under `tests/` may require refining standalone discovery rather than treating helpers as executable checks.
+
+## Local test runner - 2026-11-06
+
+The root [runlocaltests.sh](../../runlocaltests.sh) adapts the supplied Looking Glass runner to Scrying Glass. Invoke it with Bash; executable file mode is not required. It uses a disposable detached local clone of committed HEAD, excluding accumulated local-tests-* and ci-results-* evidence from the working tree. Uncommitted changes are not tested. The original checkout and tracked Admin script marker are not overwritten; relevant test commands use tools/run_split_tests.py.
+
+```bash
+bash runlocaltests.sh --no-publish
+bash runlocaltests.sh --suite javascript --python .venv/bin/python --no-publish
+bash runlocaltests.sh
+```
+
+Groups are syntax, python (unittest, including browser fixtures), pytest (the two configured modules), javascript and standalone. all runs those five groups; browser aliases standalone and is not a browser-only filter. There are no separate live or recovery groups. No Looking Glass workspace helper or container dependency is introduced.
+
+Install requirements.txt plus httpx, playwright and pytest, Node and Playwright Chromium before running. The script does not install dependencies. SG_LOCAL_TEST_TMPDIR selects the scratch parent, default /tmp. Later groups continue after test-command failures. Each run records environment metadata, command logs and exit codes, script inventories and summary.tsv under local-tests-<short-hash>/run-<UTC>-<unique>/. Pytest also writes JUnit XML. Exit codes do not certify that tests ran without skips. Browser fixtures are not authenticated live-server verification.
+
+Publication is enabled by default; use --no-publish to prevent staging, committing and pushing. Completed failed-test runs are eligible for publication so diagnostics can be reviewed. Setup failures and interruptions are not published automatically. Publication requires the original checkout to remain on features/perplexity at the tested HEAD with no staged changes. Only the run directory is staged and committed; the result commit message includes [skip ci], then HEAD is pushed to origin features/perplexity. Publication status is logged outside the committed run directory and affects the process exit separately from exit-code.txt. Interrupted scratch is retained; completed scratch is removed. Logs can contain application diagnostics and local paths: review sensitive output before choosing publication.
+
+Validation during script preparation: bash -n and --help execution passed for the supplied adapted file. The complete suites, clone lifecycle, failure paths and Git publication were not executed. These remain pending local validation; no passing suite or end-to-end result is claimed. The user explicitly requested [skip ci] for this delivery; no workflow configuration change or separate dispatch is included, and workflow-run state is not inferred from the marker. README and the handover/TODO indexes were reviewed and remain unchanged because their existing descriptions, links and task statuses are unaffected. The Admin redesign task is unrelated and remains proposed.
