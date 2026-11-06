@@ -43,7 +43,7 @@ class InitiativeNavigationFixtures(unittest.TestCase):
     def focused(self, kind, ident):
         self.assertTrue(self.field(kind, ident).evaluate('n=>n===document.activeElement'))
 
-    def test_forward_reverse_boundaries_and_idempotence(self):
+    def test_forward_reverse_wrapping_escape_and_idempotence(self):
         for width in (1440, 375):
             self.page.set_viewport_size({'width':width,'height':900})
             self.page.add_script_tag(path=str(SCRIPT))
@@ -51,12 +51,22 @@ class InitiativeNavigationFixtures(unittest.TestCase):
                 self.field(kind,'a').focus()
                 self.page.keyboard.press('Tab'); self.focused(kind,'b')
                 self.page.keyboard.press('Tab'); self.focused(kind,'c')
+                self.page.keyboard.press('Tab'); self.focused(kind,'a')
+                self.page.keyboard.press('Shift+Tab'); self.focused(kind,'c')
                 self.page.keyboard.press('Shift+Tab'); self.focused(kind,'b')
                 self.page.keyboard.press('Shift+Tab'); self.focused(kind,'a')
-                self.page.keyboard.press('Shift+Tab')
-                self.assertFalse(self.page.locator(':focus').evaluate('n=>n.matches("input[data-ci],input[data-mi]")'))
-                self.field(kind,'c').focus(); self.page.keyboard.press('Tab')
+                self.page.keyboard.press('Escape')
+                self.assertEqual(self.page.locator(':focus').get_attribute('id'),kind)
+                self.page.evaluate('(kind)=>renderRoster(kind)',kind)
+                self.assertEqual(self.page.locator(':focus').get_attribute('id'),kind)
+                self.page.keyboard.press('Tab'); self.focused(kind,'a')
+                self.page.keyboard.press('Tab')
                 self.assertEqual(self.page.locator(':focus').inner_text(),'Edit')
+                self.page.locator('#outside').focus()
+                self.field(kind,'c').focus(); self.page.keyboard.press('Tab'); self.focused(kind,'a')
+                self.page.keyboard.press('Escape'); self.page.keyboard.press('Shift+Tab')
+                self.assertEqual(self.page.locator(':focus').get_attribute('id'),'before' if kind=='characters' else 'outside')
+                self.field(kind,'c').click(); self.page.keyboard.press('Tab'); self.focused(kind,'a')
         self.assertEqual(self.page.evaluate('saves'),[])
         self.assertEqual(self.errors,[])
 
@@ -79,9 +89,15 @@ class InitiativeNavigationFixtures(unittest.TestCase):
         self.field('characters','a').focus(); self.page.keyboard.press('Tab'); self.focused('characters','c')
         self.field('characters','b').evaluate('n=>{n.readOnly=false;n.hidden=true;}')
         self.field('characters','a').focus(); self.page.keyboard.press('Tab'); self.focused('characters','c')
-        self.assertFalse(self.field('characters','c').evaluate('n=>{const e=new KeyboardEvent("keydown",{key:"Tab",ctrlKey:true,bubbles:true,cancelable:true});n.dispatchEvent(e);return e.defaultPrevented;}'))
+        self.page.keyboard.press('Tab'); self.focused('characters','a')
+        self.assertFalse(self.field('characters','a').evaluate('n=>{const e=new KeyboardEvent("keydown",{key:"Tab",ctrlKey:true,bubbles:true,cancelable:true});n.dispatchEvent(e);return e.defaultPrevented;}'))
         self.page.evaluate('renderRoster("characters",["a"])')
-        self.field('characters','a').focus(); self.page.keyboard.press('Tab')
+        self.field('characters','a').focus(); self.page.keyboard.press('Tab'); self.focused('characters','a')
+        self.page.keyboard.press('Shift+Tab'); self.focused('characters','a')
+        self.page.keyboard.press('Escape')
+        self.assertEqual(self.page.locator(':focus').get_attribute('id'),'characters')
+        self.page.keyboard.press('Tab'); self.focused('characters','a')
+        self.page.keyboard.press('Tab')
         self.assertEqual(self.page.locator(':focus').inner_text(),'Edit')
         self.page.evaluate('renderRoster("characters",[])')
         self.assertEqual(self.errors,[])
@@ -130,6 +146,28 @@ class InitiativeNavigationAdminTests(unittest.TestCase):
         source=SCRIPT.read_text()
         for forbidden in ('fetch(', 'localStorage', 'subtree: true'):
             self.assertNotIn(forbidden,source)
+
+    def test_wrapping_and_escape_exit_on_full_admin(self):
+        for width in (1440,375):
+            page,errors,mutations=self.rows.open_page(self,width)
+            for kind,attr in (('characters','data-ci'),('monsters','data-mi')):
+                editor=page.locator('#'+kind+' input['+attr+']').first
+                ident=editor.get_attribute(attr)
+                editor.focus(); page.keyboard.press('Tab')
+                self.assertEqual(page.locator(':focus').get_attribute(attr),ident)
+                page.keyboard.press('Shift+Tab')
+                self.assertEqual(page.locator(':focus').get_attribute(attr),ident)
+                page.keyboard.press('Escape')
+                self.assertEqual(page.locator(':focus').get_attribute('id'),kind)
+                page.keyboard.press('Tab')
+                self.assertEqual(page.locator(':focus').get_attribute('data-select-kind'),kind)
+                page.keyboard.press('Tab')
+                self.assertEqual(page.locator(':focus').get_attribute(attr),ident)
+                page.keyboard.press('Tab')
+                self.assertEqual(page.locator(':focus').inner_text(),'Edit')
+            self.assertEqual(errors,[])
+            self.assertEqual(mutations,[])
+            page.close()
 
     def test_native_change_save_refresh_and_rejection(self):
         for width in (1440,375):

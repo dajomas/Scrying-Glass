@@ -4,6 +4,7 @@
     if (window.scryingInitiativeNavigationInstalled) return;
     window.scryingInitiativeNavigationInstalled = true;
     let anchor = null;
+    let nativeRegion = null;
     const restored = new WeakMap();
     const changed = new WeakMap();
     const selectors = {characters: 'input[data-ci]', monsters: 'input[data-mi]'};
@@ -19,9 +20,10 @@
             !node.closest('[inert]') && node.getClientRects().length > 0 &&
             getComputedStyle(node).visibility === 'visible');
     }
-    document.addEventListener('pointerdown', () => { anchor = null; }, true);
+    document.addEventListener('pointerdown', () => { anchor = null; nativeRegion = null; }, true);
     document.addEventListener('focusin', event => {
         if (anchor && event.target !== anchor.node) anchor = null;
+        if (nativeRegion && !nativeRegion.contains(event.target)) nativeRegion = null;
     });
     window.addEventListener('blur', () => { anchor = null; });
     document.addEventListener('change', event => {
@@ -44,14 +46,23 @@
     for (const kind of Object.keys(selectors)) {
         const region = document.getElementById(kind);
         if (!region) continue;
+        if (!region.hasAttribute('tabindex')) region.tabIndex = 0;
         region.addEventListener('keydown', event => {
-            if (event.key !== 'Tab' || event.altKey || event.ctrlKey || event.metaKey ||
+            if (event.altKey || event.ctrlKey || event.metaKey ||
                 event.isComposing || event.defaultPrevented) return;
+            if (event.key !== 'Tab' && event.key !== 'Escape') return;
             const list = fields(region, kind);
             const index = list.indexOf(event.target);
             if (index < 0) return;
-            const next = list[index + (event.shiftKey ? -1 : 1)];
-            if (!next) { anchor = null; return; }
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                anchor = null;
+                nativeRegion = region;
+                region.focus();
+                return;
+            }
+            if (nativeRegion === region) return;
+            const next = list[(index + (event.shiftKey ? -1 : 1) + list.length) % list.length];
             event.preventDefault();
             anchor = {region, kind, id: identity(next, kind), scope: scope(), node: next};
             next.focus();

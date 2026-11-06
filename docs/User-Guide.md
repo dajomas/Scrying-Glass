@@ -121,18 +121,24 @@ Characters/monsters require whole-number initiative before joining. Zero/negativ
 ### Initiative keyboard navigation
 
 Within Characters or Monsters, Tab moves to the next available initiative editor
-and Shift+Tab to the previous in the displayed row order, skipping other row
-controls. Navigation stays within that roster and does not wrap. At the last
-editor Tab resumes normal page navigation; at the first, Shift+Tab does likewise.
-Single-editor and empty rosters introduce no keyboard trap. Hidden, disabled and
-readonly editors are skipped. Other controls and modified shortcuts retain their
-normal keyboard behaviour.
+and Shift+Tab to the previous in displayed row order, skipping other row controls.
+The last editor wraps to the first, and Shift+Tab at the first wraps to the last.
+The loop never jumps between the two rosters. With one editor, either key keeps
+focus there. Hidden, disabled and readonly editors are skipped; empty rosters
+introduce no navigation interception.
+
+Press Escape from an initiative editor to leave the loop and focus that roster's
+scroll region. Tab/Shift+Tab then follow normal page order, including other row
+controls, even when you pass through another initiative editor. This normal mode
+lasts until you leave and re-enter the roster or use the pointer to interact again.
+Thus Escape provides an exit without immediately trapping focus back in the loop.
+Other controls and modified shortcuts retain their normal keyboard behaviour.
 
 Existing change/save validation still applies. After a same-campaign/setup refresh,
-focus follows the destination combatant even if rows reorder, and a draft typed
-there while the preceding save completes is retained without replaying an already
-emitted save. Moving focus elsewhere or changing campaign/setup cancels restoration.
-The enhancement does not change initiative values or combat ordering.
+loop focus follows the destination combatant even if rows reorder, and a draft
+typed there while the preceding save completes is retained without replaying an
+already emitted save. Escape, moving focus elsewhere or changing campaign/setup
+cancels restoration. Initiative values and combat ordering are unchanged.
 
 Select all selects the list; Unselect all clears. Select dead replaces selection: characters match explicit death/three failures, monsters also match alive=False. Selection does not mutate. Reset restores baselines/runtime flags; Remove permanently deletes.
 

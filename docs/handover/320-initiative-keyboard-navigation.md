@@ -3,62 +3,69 @@
 [Back to handover index](../../HANDOVER.md)
 
 Updated: 2026-11-06. Task: [SG-TODO-013](../todo/130-initiative-keyboard-navigation.md).
-Status: implementation included; covering local/CI and user acceptance pending.
-Preparation base: a80a64ec29ad5c8bf3ca2e7220b3f150a8f0bd74 on features/perplexity.
+Status: wrapping/Escape correction included; covering local/CI and acceptance pending.
+Initial delivery: d23ee70d6beea3f6c5031f0102c27e5f537edbc8. Correction base:
+5992362c478c7763432268b8fd0b33d72140ddab; relevant tree/blob identities match d23ee70.
 
-## Decision and implementation
+## Current decision and implementation
 
-The user approved within-roster, displayed-row-order navigation without wrapping
-or forced cross-panel movement. Tab/Shift+Tab skip unrelated controls only between
-eligible initiative editors. At either boundary the event remains native, retaining
-normal access to surrounding controls. Hidden/disabled/readonly/inert/negative-
-tabindex fields are excluded; modified shortcuts and composition are untouched.
+The user initially approved native first/last exit, then reported it unintuitive
+and requested first/last wrapping. They approved Escape as the loop exit. The
+current rule is within-roster, displayed-row-order cyclic Tab/Shift+Tab, never a
+forced jump between Characters and Monsters. Single-editor Tab stays on that field.
+Hidden/disabled/readonly/inert/negative-tabindex fields are skipped; modified keys
+and composition remain native. Empty rosters do not intercept navigation.
 
-The deferred initiative-keyboard-navigation.js loads after character-hp-display.js.
-It delegates keydown within each roster and observes only direct table replacement.
-A navigation anchor stores destination combatant ID and campaign/setup identity,
-so a save-triggered reorder restores the intended editor rather than a row index.
-It restores only after the old editor disconnects and focus falls to the body or
-region. Pointer interaction, external focus, window blur, changed scope or removed
-destination cancel restoration. Local focus exposure continues through the existing
-roster focus handlers. Installation is guarded against duplication.
+Escape from an initiative editor focuses the roster scroll region, clears the
+refresh anchor and enables normal Tab/Shift+Tab within that roster. This pass-
+through survives table replacement, so Tab through the first editor can reach Edit
+and other controls instead of re-entering the loop immediately. Leaving/re-entering
+the roster or pointer interaction re-enables looping. The enhancement supplies a
+tabindex only if the region lacks one; existing roster labels/focus remain.
 
-Destination drafts survive a preceding save's rerender. WeakMaps track restored
-drafts and values whose change was already emitted. If a restored draft did not
-emit its native change, a microtask after blur emits one bubbling change through
-the original handler; a native change clears that fallback. Attempt tracking is
-propagated to replacement nodes to prevent replay or automatic retry of a rejected
-value. No network code, replacement API or changed initiative validation/order is
-introduced. The original delegated change handler remains the save authority.
+The enhancement still loads after character-hp-display.js and observes only direct
+table replacement. Its navigation anchor identifies destination combatant and
+campaign/setup, restoring focus after reorder only if the old node disconnected
+and focus fell to body/region. Pointer/external focus, window blur, changed scope
+or missing destination cancel restoration; Escape explicitly cancels it as well.
+Existing local focus exposure is retained, and installation is idempotent.
 
-Admin core fragments, marker, assembly identities, backend rules, permissions,
-HP workflow and Turn-control removal remain unchanged. This is not 009.5 navigation.
-Deploy the matching end fragment and full static tree, restart for assembled HTML,
-and reload Admin browsers. No migration or dependency change is needed.
+WeakMaps retain destination drafts and track emitted/attempted values. A restored
+draft missing native change emits one bubbling change in a blur microtask through
+the original delegated handler; native change clears the fallback, and attempt
+tracking propagates across replacements to avoid replay/automatic rejected-value
+retry. No network code, replacement save API, validation or combat-order rule is
+added. Admin core fragments, marker/assembly identities, backend rules, permissions,
+HP workflow and Turn removal remain unchanged. This is not 009.5 navigation.
 
-## Validation and limits
+## Validation, history and limits
 
-Executed node --check on the exact enhancement and Python AST parsing of the
-regression module: passed. Five isolated Chromium unittest methods passed. They
-cover both rosters, 1440/375 traversal, normal boundaries, idempotence, unavailable/
-single/empty fields, modified-key noninterception, reordered refresh identity,
-destination drafts, exact change counts, pointer/scope/deletion cancellation and
-the one-missing-change fallback. An intermediate duplicate-change assertion exposed
-a preparation defect; propagating attempted-value tracking corrected it, and all
-five methods were rerun successfully. These are isolated DOM fixtures, not a
-complete application or authenticated server.
+Initial preparation passed syntax/AST and five isolated Chromium methods. An
+intermediate duplicate-change assertion exposed a defect, corrected by propagating
+attempt tracking before all five methods passed. Those original checks and the
+initially prepared seven-method suite did not validate the later wrapping change.
 
-The same new test module prepares two additional full-Admin methods: asset/order/
-size contracts and original native change/PATCH, successful refresh with retained
-destination focus, and rejected fractional initiative at 1440/375 for both rosters.
-HTTP state and saves are intercepted, not real persistence or backend validation.
-Those two methods and the complete application suite were not run in preparation.
-Existing CI test_*.py discovery includes all seven methods without workflow edits.
-CI-first delivery omits [skip ci]; no dispatch, triggered-run state or pass result
-is claimed until evidence is reviewed. User manually publishes local/CI evidence.
+Correction preparation passed node --check, regression AST parsing and all five
+updated isolated Chromium methods. They cover 1440/375 navigation in both rosters,
+forward/reverse wrap, Escape to region, normal forward/reverse navigation after
+Escape, pass-through across rerender, re-entry/pointer reactivation, single/empty/
+unavailable fields, modifier noninterception, refresh identity/drafts, exact change
+counts, missing-change fallback and pointer/scope/deletion cancellation. These are
+isolated DOM fixtures, not the full application or an authenticated server.
 
-User Guide documents the approved keys and boundaries; TODO index/task status and
-HANDOVER index are updated. README was reviewed and remains accurate without edits.
-The sequencing document's unresolved-boundary wording is historical; the explicit
-approved decision is now recorded in the task and here. 009.4 and 012 remain closed;
-013 remains in progress until covering results and user workflow acceptance.
+The module now prepares three additional full-Admin methods: asset/order/size,
+native change/PATCH/save-refresh/rejected-fraction checks, and new single-editor
+wrapping/Escape/checkbox/initiative/Edit access at 1440/375 in both rosters. HTTP
+state and saves are intercepted, not real storage or backend validation. Those
+three methods and the complete application suite were not executed in correction
+preparation. Existing CI test_*.py discovery covers all eight without workflow edits.
+Covering local/CI results and user workflow acceptance remain pending for this
+revision; no CI pass or triggered-run state is inferred. Normal push-triggered CI
+is allowed by omitting [skip ci], with no separate dispatch.
+
+Deploy the full matching static tree, reload Admin browsers and retain matching
+templates; no migration/dependency change is needed. User Guide and task/index now
+state wrapping/Escape, superseding native-boundary exit. README and HANDOVER index
+were reviewed/reused and remain accurate without edits. 009.4/012 remain closed;
+013 stays in progress. Preparation notes are not a claim of live persistence,
+exhaustive screen-reader testing or full manual combat acceptance.

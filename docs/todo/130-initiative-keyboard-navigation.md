@@ -3,46 +3,47 @@
 [Back to TODO index](../../TODO.md)
 
 - Task: SG-TODO-013
-- Status: in progress; agreed boundaries implemented, covering local/CI validation and user acceptance pending.
-- Recorded: 2026-11-06. Boundaries and implementation requested: 2026-11-06.
+- Status: in progress; wrapping and Escape exit implemented, covering local/CI validation and user acceptance pending.
+- Recorded: 2026-11-06. Wrapping/Escape revision approved: 2026-11-06.
 - Priority, owner and deadline: not assigned.
-- Coordination: follows completed 009.4/012 and precedes 009.5 in the agreed sequence.
+- Coordination: follows completed 009.4/012 and precedes 009.5.
 
-## Approved behaviour
+## Current approved behaviour
 
-Within either Characters or Monsters, Tab moves to the next available initiative
-editor and Shift+Tab to the previous, following displayed row order and skipping
-unrelated row controls. Navigation does not cross roster boundaries or wrap. At
-the first/last editor, native Shift+Tab/Tab resumes normal page navigation. The
-user explicitly approved these boundaries before implementation. Hidden, disabled,
-readonly, inert and negative-tabindex editors are excluded. Modified shortcuts and
-composition are not intercepted.
+Within Characters or Monsters, Tab moves to the next available initiative editor
+and Shift+Tab to the previous in displayed row order. Last and first wrap to each
+other in both directions. Navigation stays within the current roster and skips
+unrelated controls and hidden/disabled/readonly/inert/negative-tabindex editors.
+A single editor keeps focus on itself; empty rosters introduce no interception.
+Modified shortcuts and composition are not intercepted.
 
-Existing initiative change/save/validation and combat ordering remain authoritative.
-Focus restoration after a same-scope table replacement follows combatant identity,
-not an old row index. A draft typed in the destination while a preceding save
-refreshes rows is retained. Already emitted changes are tracked to avoid replay;
-a restored draft missing its native change emits one change on later blur through
-the original delegated handler. There is no new network/save implementation.
-Pointer/external focus, window blur, changed campaign/setup or a missing target
-cancel restoration rather than move focus to another combatant or scope.
+Escape from an initiative editor focuses the roster's scroll region and clears
+refresh restoration. Normal Tab/Shift+Tab navigation remains active within that
+roster, allowing access to other row controls instead of immediately looping again.
+Leaving the roster and re-entering, or pointer interaction, re-enables wrapping.
+The user explicitly approved wrapping and Escape exit after finding the initial
+native-boundary exit unintuitive. This supersedes the original non-wrapping rule
+in initial implementation d23ee70d6beea3f6c5031f0102c27e5f537edbc8.
 
-## Acceptance and validation
+Existing change/save validation, permissions, API payloads and combat ordering
+remain authoritative. Same-scope refresh follows destination combatant identity,
+retains destination drafts and avoids replaying emitted changes. A restored draft
+missing native change emits one change on later blur through the original handler.
+Pointer/external focus, window blur, changed scope or a missing target cancel
+restoration. No new network/save implementation is introduced.
 
-Verify forward/reverse navigation in both panels, displayed order after reorder,
-normal first/last exit, no cross-panel jump/trap, single/empty/unavailable fields,
-native save/rejection and save-triggered rerenders, draft retention, no duplicate
-save, and access to other controls at desktop/narrow widths. Initiative validation,
-permissions, API payloads and battle ordering must remain unchanged.
+## Validation and remaining acceptance
 
-Executed preparation: JavaScript node --check and regression Python AST parsing
-passed; all five isolated real-Chromium fixture methods passed, including
-desktop/narrow traversal, boundaries, identity/draft restoration and exact change
-counts. An intermediate duplicate-change fixture failed, then passed after
-propagating already-attempted values across replacements. Full-Admin asset/save/
-refresh/rejection regressions are prepared in the same test module, but have not
-been executed during preparation. Existing CI discovery covers all seven methods.
-Covering local/CI results and manual workflow acceptance remain pending; earlier
-009.4/012 results do not validate this increment.
+Executed correction preparation: node --check, regression AST parsing and all five
+isolated real-Chromium fixture methods passed. Checks include both wrap directions,
+1440/375 traversal, Escape focus, pass-through after Escape across rerender, normal
+forward/reverse exit, re-entry, single/unavailable fields, draft identity/change
+counts and cancellation. Three full-Admin methods are prepared, including new
+wrapping/Escape/access-to-other-controls coverage plus retained asset/save/refresh/
+rejection checks. Those full-Admin methods and the complete suite were not run
+during preparation. Existing CI discovery covers all eight methods.
 
-See [implementation and validation handover](../handover/320-initiative-keyboard-navigation.md).
+Covering local/CI results and desktop/narrow user workflow acceptance remain
+pending. Results for the original non-wrapping revision would not validate this
+correction. Earlier 009.4/012 results are not 013 evidence.
+See [implementation and history](../handover/320-initiative-keyboard-navigation.md).
