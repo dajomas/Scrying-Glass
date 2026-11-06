@@ -1,0 +1,31 @@
+ts	Standalone Python browser and audit checks	2026-11-06T16:24:09.1462801Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:09.1463159Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:09.1463768Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:09.1464306Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:09.1464531Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:09.1466190Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:09.1466689Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:09.1467318Z   File "/tmp/scrying-tests-k37b47pa/repo/python/scrying_glass_monster_selection.py", line 84, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:09.1467923Z     html = context.dnd_monster_detail_html(href)
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:09.1468733Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:09.1469552Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:09.1469876Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:09.1470444Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:09.1471024Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:09.1471375Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:09.1472026Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:09.1472559Z     raise result
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:09.1472783Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:34.8813801Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:34.8814352Z Ran 1059 tests in 98.098s
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:34.8814552Z 
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:34.8814663Z OK
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:34.8817841Z Connections opened: 678; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:34.8818617Z PASS: failed PRAGMA initialization closes connection; suite closes all tracked connections
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:35.1497089Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:35.1497550Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:35.4663692Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:35.4664827Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:35.5095173Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:35.5095833Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-06T16:24:35.8320504Z PASS: bounded setup suffixes, unknown state rejection, mal

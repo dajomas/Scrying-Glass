@@ -1,0 +1,23 @@
+n/scrying_glass_monster_selection.py", line 84, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:08.9427000Z     html = context.dnd_monster_detail_html(href)
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:08.9428094Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:08.9429315Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:08.9429867Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:08.9430855Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:08.9431901Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:08.9432511Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:08.9433646Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:08.9434614Z     raise result
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:08.9434995Z OSError: secret
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:08.9435386Z ok
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:08.9436220Z test_tokens (test_monster_candidate_selection.CandidateTests.test_tokens) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:08.9437832Z test_unusable_duplicates_and_image (test_monster_candidate_selection.CandidateTests.test_unusable_duplicates_and_image) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:08.9454328Z test_selection_and_manual_never_relookup (test_monster_candidate_selection.CreationTests.test_selection_and_manual_never_relookup) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:10.7180619Z test_fields_and_preview_boxes_align_loaded_and_empty (test_monster_image_preview_alignment.PreviewAlignmentTests.test_fields_and_preview_boxes_align_loaded_and_empty) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:12.2214246Z test_boot_layout_failed_submission_and_screenshots (test_monster_image_previews.FullAdminPreviewTests.test_boot_layout_failed_submission_and_screenshots) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:12.2559230Z test_asset_order_and_sizes (test_monster_image_previews.PreviewSourceTests.test_asset_order_and_sizes) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:12.9437155Z test_both_providers_local_precedence_separate_replacement_and_reset (test_monster_image_previews.ProviderPreviewTests.test_both_providers_local_precedence_separate_replacement_and_reset) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:13.5565653Z test_load_failure_safe_url_and_idempotence (test_monster_image_previews.ProviderPreviewTests.test_load_failure_safe_url_and_idempotence) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:14.3582194Z test_popup_choice_late_file_cancel_stale_and_no_image (test_monster_image_previews.ProviderPreviewTests.test_popup_choice_late_file_cancel_stale_and_no_image) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:19.0179671Z test_cancel_restores_focus_without_relookup (test_monster_lookup_focus_browser.LookupFocusRegressionTests.test_cancel_restores_focus_without_relookup) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T16:22:23.6480163Z test_escape_restores_focus_without_relookup (test_monster_lookup_focus_br
