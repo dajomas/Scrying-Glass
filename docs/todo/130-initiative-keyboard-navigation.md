@@ -3,11 +3,12 @@
 [Back to TODO index](../../TODO.md)
 
 - Task: SG-TODO-013
-- Status: completed for feature scope at the user's explicit direction, 2026-11-06; overall-suite validation exception and test-only correction remain open below. This is not a green full-suite sign-off.
+- Status: completed for feature scope at the user's explicit direction, 2026-11-06; test-only correction included, covering green local/CI rerun still pending. This is not a green full-suite sign-off.
 - Recorded: 2026-11-06. Wrapping/Escape revision approved: 2026-11-06.
 - Priority, owner and deadline: not assigned.
 - Coordination: follows completed 009.4/012 and precedes 009.5.
 - Delivered wrapping/Escape implementation: 8a5fa937cecd8563d5fe79a28a32a73fcd0babd1.
+- User-directed documentation close-out: eb936e2421712e6e8c871b923d08a44bc3caa900, with [skip ci].
 
 ## Current approved behaviour
 
@@ -55,27 +56,33 @@ widths, and 682/0 connections. Completion/publication does not mean test success
 
 After reviewing these results, the user explicitly requested finishing/closing 013
 and pushing a documentation-only close-out with [skip ci], then making the test
-correction. Record that as user-directed feature acceptance/closure with a known
-validation exception, not as proof of a fully passing local/CI suite or an
-assistant-executed authenticated-server, live persistence or accessibility audit.
+correction. That feature close-out was delivered at eb936e2421712e6e8c871b923d08a44bc3caa900.
+It records user-directed acceptance/closure with a known validation exception,
+not a fully passing suite or assistant-executed authenticated/live persistence audit.
 
-## Open test-maintenance follow-up
+## Test-maintenance correction - included; rerun pending
 
-Status: outstanding; correction not yet applied by this documentation close-out.
-Update test_keyboard_reaches_every_button_and_scrolls_locally in
-tests/test_monster_button_layout.py to press Escape from the initiative editor,
-assert roster-region focus, then navigate natively back through checkbox/initiative
-before retaining all existing forward/reverse button-order, local-focus visibility,
-overflow and no-mutation checks. Do not disable wrapping, force button focus or
-weaken the assertions to obtain a pass. The current fixture incorrectly expects
-Tab to leave the single-editor loop without Escape.
+The subsequent test-changing delivery updates only the precondition in
+test_keyboard_reaches_every_button_and_scrolls_locally, tests/test_monster_button_layout.py.
+From initiative it presses Escape, asserts roster-region focus, then Tabs through
+checkbox and initiative before the original button traversal. This uses the
+approved exit instead of expecting Tab to leave a single-editor wrap.
 
-Deliver this test correction in a separate subsequent commit with proportionate
-documentation updates and normal CI, then review covering local/CI results before
-resolving the validation exception. No green rerun or corrective commit is claimed
-here. Earlier 009.4/012 results do not validate 013.
-See [implementation, reviewed evidence and limits](../handover/320-initiative-keyboard-navigation.md).
+Seven precondition lines are added, including three assertions. Static parsing of
+the corrected method and AST comparison passed: all eight original assertion calls
+remain and the corrected method has eleven. The remaining method body is unchanged
+when the insertion is removed. Ten forward/nine reverse button visits, strict
+focus/local visibility, scroll checks, viewport coverage, errors and mutations
+assertions are retained. Wrapping is not disabled and button focus is not forced.
 
-This close-out changes documentation only and executes no new tests. Application,
-tests and workflows remain unchanged; commit message includes [skip ci] and no
-separate workflow is dispatched.
+The assembled-Admin method and full suite were not executed during this preparation;
+these static checks are not a test pass. Existing CI discovers the corrected test.
+This mixed test/documentation commit omits [skip ci] for normal push-triggered CI;
+no separate dispatch or unobserved run status/result is claimed. Application code,
+user behaviour and workflows remain unchanged.
+
+Open action: run/review covering local and CI evidence for the corrective commit,
+verify the three viewport subtests and full suite/audit pass, then resolve the
+validation exception. The known failed results remain historical failure evidence,
+not validation of this unverified correction. Earlier 009.4/012 results are not 013
+evidence. See [implementation, reviewed evidence and limits](../handover/320-initiative-keyboard-navigation.md).

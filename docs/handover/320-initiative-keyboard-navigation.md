@@ -3,9 +3,9 @@
 [Back to handover index](../../HANDOVER.md)
 
 Updated: 2026-11-06. Task: [SG-TODO-013](../todo/130-initiative-keyboard-navigation.md).
-Status: feature scope closed at the user's explicit direction with a known overall-
-suite validation exception; the separate test correction and green rerun remain
-outstanding. Do not represent this close-out as successful full-suite validation.
+Status: feature scope closed at the user's explicit direction; separate test-only
+correction included, but covering green local/CI rerun remains outstanding.
+Do not represent this as successful full-suite validation.
 Initial delivery: d23ee70d6beea3f6c5031f0102c27e5f537edbc8. Wrapping/Escape delivery:
 8a5fa937cecd8563d5fe79a28a32a73fcd0babd1, based on
 5992362c478c7763432268b8fd0b33d72140ddab.
@@ -86,28 +86,41 @@ and 682/0 connections. Main unittest output retrieved for review was truncated;
 its failure status is verified by its command exit, with the complete repeated
 audit supplying counts and failure details. Published/completed is not passed.
 
-## User-directed feature close-out and outstanding correction
+## User-directed feature close-out
 
 After these findings were explained, the user explicitly requested finishing and
 closing 013, updating/pushing documentation with [skip ci], then making the test
-correction. This records user-directed feature acceptance and scope closure with
-a disclosed validation exception. It does not waive or complete the requested
-test repair, claim green full-suite results, or establish an assistant-executed
-authenticated-server, live persistence or exhaustive accessibility/combat audit.
-HTTP state/saves in the dedicated browser methods are intercepted.
+correction. Documentation-only close-out eb936e2421712e6e8c871b923d08a44bc3caa900
+was published first, changing only the index and these task/handover documents.
+It ran no tests and changed no application/tests/workflows, with [skip ci] and no
+separate dispatch. This records user-directed feature acceptance and closure with
+a disclosed validation exception, not green full-suite validation or a waiver of
+the requested test repair. Dedicated browser HTTP state/saves remain intercepted.
 
-Open follow-up: the old monster-button fixture focuses initiative and immediately
-expects Tab to reach Edit. With the approved single-editor wrap this expectation
-is stale. In a separate next commit, press Escape, verify region focus, navigate
-natively through checkbox and initiative, then retain the full existing 10-button
-forward/9-button reverse traversal, strict local-focus visibility, overflow and
-no-mutation assertions. Do not bypass the enhancement or force focus onto buttons.
-Run normal CI for the test-changing commit and review a covering rerun; no result
-for an unmade correction is claimed. Track resolution in the 013 task and here.
+## Subsequent test-maintenance correction - 2026-11-06
 
-This first close-out changes only TODO.md and these existing task/handover sections;
-it runs no new tests and leaves application, tests, dependencies and workflows
-unchanged. Commit message includes [skip ci], with no separate workflow dispatch.
+The old fixture entered initiative and immediately expected Tab to reach Edit.
+With the approved single-editor wrap that precondition was stale. The separate
+corrective delivery adds seven lines before button traversal: Escape, assert
+roster-region focus, Tab/assert checkbox, Tab/assert initiative. It uses normal
+keyboard events, does not force button focus, and leaves application code untouched.
+All existing 10-forward/9-reverse visits, strict local-focus visibility and scroll
+checks at 1440/768/375, error/no-mutation assertions and other layout methods remain.
+
+Executed preparation: corrected-method AST parsing and assertion-preservation
+comparison passed. The method retains all eight original assertion calls and adds
+three, with its remainder identical when the insertion is removed. The assembled-
+Admin browser method and full application suite were not executed in preparation;
+static checks are not substitute pass evidence. The existing CI discovery covers
+the changed method. No workflow changes, skips or weakened checks are introduced.
+
+This mixed commit changes tests/test_monster_button_layout.py and proportionate
+TODO/task/handover status notes only. It omits [skip ci] for normal push-triggered
+CI, with no separate dispatch or inferred triggered/pass state. A covering green
+local/CI rerun and audit review are still required to resolve the validation
+exception; old failed evidence remains historical and does not validate the fix.
+Feature scope stays closed at user direction while that follow-up stays open.
+
 README, User Guide and HANDOVER index were reviewed/reused and remain accurate
-without edits. Preserve the newly added 018 backlog entry and other tasks.
+without edits. The 018 backlog addition and other task statuses are preserved.
 009.4/012 stay closed, overall 009 remains in progress, and later tasks are unchanged.
