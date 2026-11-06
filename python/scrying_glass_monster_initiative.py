@@ -41,3 +41,19 @@ def initiative_patch(monster: Mapping, *, roll=_MISSING, bonus=_MISSING,
         if roll is None:
             candidate["initiative"] = None
     return normalize_initiative(candidate)
+
+
+def reset_initiative_patch(monster: Mapping) -> dict:
+    """Restore the original total without retaining an unrelated current roll.
+
+    Reset retains the assigned bonus. An original total has no historical raw
+    roll, so it is retained as legacy until the next explicit roll. Old records
+    without the new fields retain their existing representation.
+    """
+    original = _integer(monster.get("original_initiative"),
+                        "original_initiative", nullable=True)
+    fields = {"initiative_roll", "initiative_bonus", "initiative_bonus_origin"}
+    if not fields.intersection(monster):
+        return {"initiative": original}
+    candidate = dict(monster, initiative=original, initiative_roll=None)
+    return normalize_initiative(candidate)

@@ -3,7 +3,7 @@
 [Back to TODO index](../../TODO.md)
 
 - Task: SG-TODO-018
-- Status: in progress; foundation-only delivery, runtime integration and full validation outstanding.
+- Status: in progress; foundation delivered, reset/setup-import integration increment prepared for delivery; full feature integration and validation outstanding.
 - Updated: 2026-11-06
 - Working branch: features/perplexity-018 for all 018 work until user sign-off. Do not merge back or write 018 changes to features/perplexity without fresh approval.
 - Priority: next before SG-TODO-009.5 in the [agreed sequence](115-admin-delivery-sequence.md). No owner or deadline assigned.
@@ -42,7 +42,8 @@ raw rolls. Distinguish legacy totals from unset raw rolls in the roster. Changin
 or retrieving a bonus without a retained raw roll preserves the legacy total;
 the next manual/automatic raw roll establishes the normal relationship. Persist
 bonus, origin, raw roll and legacy/total semantics through save/reload and supported
-setup reuse. Reset/original initiative handling still requires integration tests.
+setup reuse. The reset increment below covers stale-roll clearing; full setup/
+storage route validation remains outstanding.
 
 | Action | Raw roll | Bonus | Total |
 |---|---:|---:|---:|
@@ -96,7 +97,7 @@ only affect review selections; Apply remains required.
 
 - Wire creation, .monster import, manual correction, source bonuses and explicit/default zero provenance; reject invalid manual/import values.
 - Wire Edit, individual/shared rolls and raw/total roster UI. Verify signed bonuses, exactly-once application, repeated entry, clearing, legacy transition and unchanged character totals.
-- Verify database round-trips, state normalization, reset/original values, supported setup reuse/import and reload without reroll/compounding.
+- Verify complete database/state/setup route round-trips, normalization, reset/original values and reload without reroll/compounding. Isolated entity-record/reset tests below are partial coverage only.
 - Verify ties and active ordering changes without turn/round advancement or unrelated state loss; retain Tab/Shift+Tab navigation.
 - Implement validated source identity, provider extraction, candidate review and authenticated preview/apply. Review data must be server-owned or authenticated, not browser-trusted.
 - Reject stale scope, deleted/changed monsters and intervening edits; bind review lifetime/replay protection in the eventual route layer.
@@ -104,23 +105,41 @@ only affect review selections; Apply remains required.
 - Implement desktop grid/narrow cards, header/individual selection and keyboard/accessibility controls; disabled source failures cannot be applied.
 - Prepare route/storage/provider/browser regressions and manually verify creation/import, refresh, save/reload and desktop/narrow workflows. Isolated helpers are not end-to-end coverage.
 
-## Delivery and evidence
+## Foundation delivery and evidence
 
 Historical requirements clarification: da484d68d5ad39ef371ec8eeecb958149778fd8a.
 Expanded agreement was recorded on features/perplexity in
-d96048f852b32cd2fb32c2307595eb85e17b61e3; this task carries those decisions onto
-the dedicated branch without merging branches. Workflow commit
-3baf032c1e16a8b05befc2847f4e2dca98ffb049 added features/perplexity-018 to
-.github/workflows/tests.yml with [skip ci]; its workflow status was not checked.
+d96048f852b32cd2fb32c2307595eb85e17b61e3; the foundation carried those decisions
+onto the dedicated branch without merging. Workflow branch-filter commit:
+3baf032c1e16a8b05befc2847f4e2dca98ffb049, with [skip ci]; workflow status unchecked.
 
-The user requested pushing the foundation separately with [skip ci], then
-continuing integration. This stage adds initiative rules, pure refresh planning,
-a pure selection controller and tests only; no route/template wiring, provider
-capability, schema migration or usable feature is delivered. Exact prepared
-repository-path copies previously passed 22 Python and 10 Node tests in an
-isolated temporary checkout. Full application/storage/browser suites and GitHub
-CI were not run. See the handover for limitations and continuation contracts.
-The explicit skip applies to this foundation push, not automatically to later
-code commits. No workflow is changed or separately dispatched by this commit.
-README remains accurate without changes because runtime behaviour is unchanged;
-the task remains in progress and cannot be marked completed by this push.
+Foundation commit 539697fabdde7e564b198104739870760032d638 added initiative rules,
+pure refresh planning, a pure selection controller and tests. Prepared copies
+passed 22 Python and 10 Node isolated helper tests before that user-requested
+[skip ci] push. No runtime integration or usable feature was claimed at that
+commit; no full application/storage/browser suite or CI run was checked.
+
+## Reset/setup-import integration increment - 2026-11-06
+
+Prepared for the user's requested push: reset_initiative_patch and calls from
+reset_entity/reset_imported_monster clear the current raw roll while restoring
+the original total as legacy and retaining assigned bonus/origin. Character reset
+is unchanged. Setup import preserves source HP/Max HP, new identity and deep-copy
+behaviour. Existing setup snapshots retain current roll/bonus/total data.
+
+Sixteen new tests passed twice during preparation: ten reset/setup/character
+methods and six native SQLite entity-record fixture methods. The suite against
+the original reset implementation reported eight failures, including three
+invalid-input subtest failures. Local SQLite checks used a minimal schema and
+copied record methods, not the complete storage facade/production schema or
+application transactions. The committed tests import the repository mixin.
+Source identity values in the fixtures are illustrative scalars, not a delivered
+provider mapping. No schema migration or storage implementation change is made.
+Full integration and validation remain outstanding; do not mark 018 completed.
+
+This code/test increment uses normal CI, without [skip ci], workflow changes or
+separate dispatch. The earlier skip applied only to the foundation. CI execution
+and results remain unverified until supplied artifacts are reviewed. The existing
+32 helper tests were not rerun for this preparation. See the linked handover for
+execution limitations and remaining work. README and both root indexes were
+reviewed/reused unchanged: links and the overall in-progress status remain valid.
