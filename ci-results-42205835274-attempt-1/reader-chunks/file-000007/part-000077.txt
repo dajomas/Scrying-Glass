@@ -1,0 +1,33 @@
+t_turn_eligibility.TurnTests.test_manual_down_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T10:53:08.6559851Z test_negative_maximum_no_longer_means_death (test_turn_eligibility.TurnTests.test_negative_maximum_no_longer_means_death) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T10:53:08.6753690Z test_round_wrap (test_turn_eligibility.TurnTests.test_round_wrap) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T10:53:08.6913005Z test_stable_takes_next_turn (test_turn_eligibility.TurnTests.test_stable_takes_next_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T10:53:08.7079285Z test_third_failure_removed (test_turn_eligibility.TurnTests.test_third_failure_removed) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T10:53:08.7358806Z test_zero_hp_monster_excluded (test_turn_eligibility.TurnTests.test_zero_hp_monster_excluded) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T10:53:08.7359312Z 
+tests	Python test suite (including browser fixtures)	2026-11-06T10:53:08.7359575Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-06T10:53:08.7359959Z Ran 1029 tests in 70.459s
+tests	Python test suite (including browser fixtures)	2026-11-06T10:53:08.7360108Z 
+tests	Python test suite (including browser fixtures)	2026-11-06T10:53:08.7360190Z OK
+tests	Pytest regression modules	﻿2026-11-06T10:53:09.0307600Z ##[group]Run python tools/run_split_tests.py -- python -m pytest -q tests/test_death_save_validation_2ba6607.py tests/test_slug_truncation_82860c4.py
+tests	Pytest regression modules	2026-11-06T10:53:09.0308824Z ^[[36;1mpython tools/run_split_tests.py -- python -m pytest -q tests/test_death_save_validation_2ba6607.py tests/test_slug_truncation_82860c4.py^[[0m
+tests	Pytest regression modules	2026-11-06T10:53:09.0370059Z shell: /usr/bin/bash -e {0}
+tests	Pytest regression modules	2026-11-06T10:53:09.0370362Z env:
+tests	Pytest regression modules	2026-11-06T10:53:09.0370832Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Pytest regression modules	2026-11-06T10:53:09.0371373Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-06T10:53:09.0371781Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Pytest regression modules	2026-11-06T10:53:09.0372178Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-06T10:53:09.0372547Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-06T10:53:09.0372957Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-06T10:53:09.0373378Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Pytest regression modules	2026-11-06T10:53:09.0373691Z ##[endgroup]
+tests	Pytest regression modules	2026-11-06T10:53:10.5916027Z ...........................................                              [100%]
+tests	Pytest regression modules	2026-11-06T10:53:10.5916383Z 43 passed in 0.96s
+tests	JavaScript tests	﻿2026-11-06T10:53:10.7291290Z ##[group]Run status=0
+tests	JavaScript tests	2026-11-06T10:53:10.7291567Z ^[[36;1mstatus=0^[[0m
+tests	JavaScript tests	2026-11-06T10:53:10.7291775Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	JavaScript tests	2026-11-06T10:53:10.7292021Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	JavaScript tests	2026-11-06T10:53:10.7292360Z ^[[36;1m  python tools/run_split_tests.py -- node --test "$test" || status=1^[[0m
+tests	JavaScript tests	2026-11-06T10:53:10.7292723Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	JavaScript tests	2026-11-06T10:53:10.7293070Z ^[[36;1mdone < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)^[[0m
+tests	JavaScript tests	2026-1
