@@ -1,0 +1,1 @@
+/home/boywonder/GIT/Scrying-Glass/.venv/bin/python tools/run_split_tests.py -- /home/boywonder/GIT/Scrying-Glass/.venv/bin/python -m pytest -q tests/test_death_save_validation_2ba6607.py tests/test_slug_truncation_82860c4.py --junitxml=/mnt/d/git/Scrying-Glass/local-tests-e7b229c/run-20261106T103855Z-QWqmWA/suites/pytest/results.xml 

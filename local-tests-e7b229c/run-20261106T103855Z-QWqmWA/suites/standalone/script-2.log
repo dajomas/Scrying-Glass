@@ -1,0 +1,120 @@
+Executing <Task pending name='Task-949' coro=<AdminSplitRuntimeTests.test_get_head_conditional_range_and_delegation() running at /tmp/scrying-local-tests-HLeYIb/tmp/scrying-tests-04xpjduo/repo/tests/test_admin_split_runtime.py:42> cb=[_run_until_complete_cb() at /usr/lib64/python3.14/asyncio/base_events.py:181] created at /usr/lib64/python3.14/asyncio/runners.py:110> took 0.123 seconds
+D&D Beyond candidate unavailable (/monsters/old): Unavailable
+D&D Beyond candidate unavailable (/monsters/new): Unavailable
+D&D Beyond candidate unavailable (/monsters/old): Unavailable
+D&D Beyond candidate unavailable (/monsters/new): Unavailable
+D&D Beyond candidate unavailable (/monsters/old): Unavailable
+D&D Beyond candidate unavailable (/monsters/old): Bad candidate
+D&D Beyond candidate has no usable AC/HP (/monsters/old)
+D&D Beyond candidate unavailable (/monsters/old): Unavailable
+D&D Beyond candidate unavailable (/monsters/new): Unavailable
+D&D Beyond candidate lookup failed
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-HLeYIb/tmp/scrying-tests-04xpjduo/repo/python/scrying_glass_monster_selection.py", line 84, in dnd_candidates
+    html = context.dnd_monster_detail_html(href)
+  File "/tmp/scrying-local-tests-HLeYIb/tmp/scrying-tests-04xpjduo/repo/python/scrying_glass_dndbeyond.py", line 128, in dnd_monster_detail_html
+    response = urlopen(request, timeout=15)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+urllib.error.HTTPError: HTTP Error 403: fixture
+D&D Beyond candidate lookup failed
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-HLeYIb/tmp/scrying-tests-04xpjduo/repo/python/scrying_glass_monster_selection.py", line 73, in dnd_candidates
+    hits = context.dnd_monster_candidates(species)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+TimeoutError: fixture
+5e.tools candidate lookup failed
+Traceback (most recent call last):
+  File "python/scrying_glass_monster_selection.py", line 112, in fivetools_candidates
+    index = ft.load_json(root + "/index.json")
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+OSError: private detail
+5e.tools candidate lookup failed
+Traceback (most recent call last):
+  File "python/scrying_glass_monster_selection.py", line 109, in fivetools_candidates
+    sources = ft.configured_sources(display)
+  File "/tmp/scrying-local-tests-HLeYIb/tmp/scrying-tests-04xpjduo/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+    raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+ValueError: fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace
+D&D Beyond candidate lookup failed
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-HLeYIb/tmp/scrying-tests-04xpjduo/repo/python/scrying_glass_monster_selection.py", line 73, in dnd_candidates
+    hits = context.dnd_monster_candidates(species)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+OSError: secret
+5e.tools candidate lookup failed
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-HLeYIb/tmp/scrying-tests-04xpjduo/repo/python/scrying_glass_monster_selection.py", line 112, in fivetools_candidates
+    index = ft.load_json(root + "/index.json")
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+OSError: secret
+D&D Beyond candidate lookup failed
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-HLeYIb/tmp/scrying-tests-04xpjduo/repo/python/scrying_glass_monster_selection.py", line 84, in dnd_candidates
+    html = context.dnd_monster_detail_html(href)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+    raise result
+OSError: secret
+======================================================================
+FAIL: test_name_and_species_each_keep_their_own_line (test_monster_name_layout.MonsterNameLayoutTests.test_name_and_species_each_keep_their_own_line) (width=768, name='Crawling Claw', active=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-HLeYIb/tmp/scrying-tests-04xpjduo/repo/tests/test_monster_name_layout.py", line 41, in test_name_and_species_each_keep_their_own_line
+    self.assertGreaterEqual(geometry['width'], geometry['minimum'])
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 137.265625 not greater than or equal to 137.281
+
+======================================================================
+FAIL: test_name_and_species_each_keep_their_own_line (test_monster_name_layout.MonsterNameLayoutTests.test_name_and_species_each_keep_their_own_line) (width=375, name='Crawling Claw', active=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-HLeYIb/tmp/scrying-tests-04xpjduo/repo/tests/test_monster_name_layout.py", line 41, in test_name_and_species_each_keep_their_own_line
+    self.assertGreaterEqual(geometry['width'], geometry['minimum'])
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 137.265625 not greater than or equal to 137.281
+
+----------------------------------------------------------------------
+Ran 1022 tests in 98.665s
+
+FAILED (failures=2)
+Connections opened: 673; without explicit close: 0
