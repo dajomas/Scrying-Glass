@@ -1,4 +1,4 @@
-"""SG-TODO-009.4 increment 1: full Admin with intercepted HTTP, not live server."""
+"""SG-TODO-009.4/012: full Admin with intercepted HTTP, not live server."""
 import os
 from pathlib import Path
 import tempfile
@@ -36,7 +36,7 @@ class RosterBrowserTests(unittest.TestCase):
 
     def open_page(self, width=1440):
         page, errors, mutations = self.rows.open_page(self, width)
-        page.wait_for_function("document.querySelector('#charactersSelectedCount')?.textContent === '0 selected' && document.querySelectorAll('#monsters .sg-roster-state').length > 0")
+        page.wait_for_function("document.querySelector('#charactersSelectedCount')?.textContent === '0 selected' && document.querySelectorAll('#monsters .sg-roster-state').length > 0 && document.querySelectorAll('#characters .sg-character-hp').length > 0")
         return page, errors, mutations
 
     def test_selection_context_and_refresh_preserve_original_selection_sets(self):
@@ -65,7 +65,7 @@ class RosterBrowserTests(unittest.TestCase):
         self.assertEqual(errors, [])
         self.assertEqual(mutations, [])
 
-    def test_row_actions_inline_hp_focus_and_visual_fixtures(self):
+    def test_row_actions_read_only_hp_focus_and_visual_fixtures(self):
         directory = Path(os.environ.get('SG_VISUAL_ARTIFACTS', str(Path(tempfile.gettempdir())/'sg-admin-foundations')))
         directory.mkdir(parents=True, exist_ok=True)
         for width in (1440,375):
@@ -73,8 +73,9 @@ class RosterBrowserTests(unittest.TestCase):
                 page, errors, mutations = self.open_page(width)
                 self.assertEqual(page.locator('#monsters td button').count(), 11)
                 self.assertEqual(page.locator('#characters td button').count(), 8)
-                self.assertEqual(page.locator('#characters input[data-chp]').count(), 1)
-                self.assertEqual(page.locator('#characters input[data-cmaxhp]').count(), 1)
+                self.assertEqual(page.locator('#characters input[data-chp]').count(), 0)
+                self.assertEqual(page.locator('#characters input[data-cmaxhp]').count(), 0)
+                self.assertEqual(page.locator('#characters .sg-character-hp').count(), 1)
                 self.assertEqual(page.locator('#characters input[data-ci]').count(), 1)
                 for kind in ('characters', 'monsters'):
                     self.assertIn('battle', page.locator('#'+kind+' .sg-roster-state').first.inner_text())

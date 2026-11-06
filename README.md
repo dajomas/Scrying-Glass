@@ -159,8 +159,11 @@ The 11 remaining monster-row buttons stay on one line with table-local horizonta
 scrolling and focus exposure. Name/species remain individually unwrapped. Row
 Damage/Heal buttons and HP change columns are removed from both combatant tables
 by the loaded row-layout enhancement; other damage/healing workflows remain.
-Character HP/initiative and monster initiative editors retain compact 7.5ch widths.
-See [row-layout handover](docs/handover/250-monster-button-layout.md).
+Characters and Monsters show read-only current/max HP in their rosters. Use the
+existing row Edit dialog to change character Current HP and Max HP, then Save
+character. Character and monster initiative editors retain compact 7.5ch widths.
+See [row-layout handover](docs/handover/250-monster-button-layout.md) and
+[roster/HP delivery and validation limits](docs/handover/310-admin-rosters.md).
 
 ## Attack statistics and presentation
 

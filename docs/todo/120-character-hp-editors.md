@@ -3,25 +3,21 @@
 [Back to TODO index](../../TODO.md)
 
 - Task: SG-TODO-012
-- Status: proposed
-- Recorded: 2026-11-06
+- Status: in progress; option 2 implementation included, covering local/CI validation and user acceptance pending.
+- Updated: 2026-11-06
 - Priority: not assigned.
-- Dependencies: none established; coordinate with SG-TODO-009 Admin usability work.
+- Dependencies: coordinated with SG-TODO-009.4 as the second of two approved increments.
 
-## Requested change
+## Agreed change
 
-Make the Current/Max HP edit boxes in the Characters pane the same as the HP column in the Monsters pane.
+Option 2: show read-only character current/max HP like the Monsters roster, with both values editable through the existing row Edit dialog. Retain compact inline initiative, existing row actions, HP rules, APIs, validation and persistence. SG-TODO-013 keyboard navigation and later Admin phases are not included.
 
-## Acceptance criteria
+## Implementation and acceptance
 
-- Character Current HP and Max HP editors match the corresponding Monsters HP presentation and editor styling.
-- Both values remain editable with existing save and validation behavior preserved.
-- The change does not alter HP calculation, damage, healing or persistence semantics.
+The loaded character-hp-display enhancement replaces only the rendered character HP cell inputs with current/max text, initially and after direct roster table replacement. Existing Edit and save handlers remain authoritative; no fetch or replacement save implementation is introduced. The assembled Admin core and tracked failure marker remain untouched. See [delivery and validation record](../handover/310-admin-rosters.md).
 
-## Validation required
+Before closure, verify desktop/narrow read-only HP, keyboard access to Edit, both values editable, successful save and reload, rejected/invalid save and retry, and unchanged initiative/selection/bulk/damage/healing workflows. Confirm actual stored persistence on a copied live installation; intercepted-HTTP fixtures are not database persistence evidence.
 
-Compare both panes in the browser, edit and save character Current/Max HP, and verify persistence after reload. Add or update relevant UI regression coverage during implementation.
+## Validation status
 
-## Delivery status
-
-Backlog entry only. Implementation and validation have not been performed for this task.
+Preparation passed node syntax and regression Python AST parsing. A simplified Chromium fixture passed zero/large HP, zero maximum, roster replacement, duplicate installation, unchanged initiative/dialog fields and retained Edit click with no page errors. Full-Admin tests are prepared under existing CI discovery, including rejection/retry/native validation/save/reload at 1440 and 375 pixels, but have not been executed during preparation. Covering CI, fresh fixture screenshot review and user workflow acceptance remain pending. The earlier successful local evidence for 720f876 predates this increment and does not validate it.

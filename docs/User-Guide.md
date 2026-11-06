@@ -1,13 +1,20 @@
 # Scrying Glass User Guide
 
-## Compact Characters and Monsters table inputs
+## Character HP display and compact initiative inputs
 
-In the Characters table, Current HP, Max HP and Initiative inputs are narrower.
-The Monsters table Initiative inputs are narrower too. Each is half its previous
-CSS width; height and editing behaviour are unchanged. Setup fields and edit
-modals retain their existing sizes. Large values may need horizontal cursor
-movement inside a narrow input; use the Edit dialog for more room.
-Restart the server and hard-refresh the Admin page after installing the update.
+The Characters roster shows read-only current/max HP, such as 12/20, like the
+Monsters roster. To change either character HP value, choose that row's Edit,
+change Current HP and/or Max HP, then Save character. Cancel makes no change.
+Existing validation and HP rules still apply; a rejected save leaves the dialog
+and draft available for correction. Refresh after a successful save to check the
+stored values. Maximum HP affected by statistics reductions retains its existing
+original/base-editor restrictions described below.
+
+Character and monster Initiative inputs remain compact inline editors at 7.5ch.
+This increment does not remap Tab/Shift+Tab or change initiative behaviour.
+Setup fields and edit modals retain their existing sizes. Restart the correct
+server process and hard-refresh the Admin page after installing the matching
+HTML/static update.
 
 ## Looking Glass companion styling
 
@@ -47,7 +54,7 @@ Usernames are case-sensitive and unique, 1–64 characters, without surrounding 
 
 ## Campaign ownership and shared runtime
 
-Each campaign has at most one regular-admin owner; an admin may own many campaigns. Admin-created/imported campaigns belong to that admin. Superadmin-created campaigns remain unassigned. Superadmins reassign them in Campaign ownership on /users. Removing an admin or changing its role clears ownership, not transfers it.
+Each campaign has at most one regular-admin owner; an admin may own many campaigns. Admin-created/imported campaigns belong to that admin. Superadmins reassign them in Campaign ownership on /users. Removing an admin or changing its role clears ownership, not transfers it.
 
 At first ownership migration, exactly one regular admin receives all existing campaigns. With zero/multiple regular admins they remain unassigned. Superadmins are excluded from this count. Migration does not repeat after later account changes.
 
@@ -67,7 +74,7 @@ Clients with no grants see an access message; one campaign opens automatically; 
 
 ## Characters and setups
 
-Characters belong to the campaign, not setup snapshots. Add/edit name, color, HP, maximum HP and initiative. CSV imports append to the roster. Removing a character changes the roster across that campaign's setups.
+Characters belong to the campaign, not setup snapshots. Add/edit name, color, HP, maximum HP and initiative. CSV imports append to the roster. Removing a character changes the roster across that campaign's setups. In the roster, HP is read-only; use Edit to change Current HP and Max HP. Initiative remains editable inline.
 
 | Setup action | Result |
 |---|---|
