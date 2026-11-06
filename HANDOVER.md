@@ -1,6 +1,6 @@
 # Scrying Glass handover
 
-This file is the handover index. Detailed sections live in `docs/handover/`; do not expand this index into a monolithic document.
+This file is the handover index. Detailed sections live in `docs/handover/`; do not expand this index into a monolithic handover document.
 
 ## Index
 
@@ -30,7 +30,8 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 23. [Configurable 5e.tools source stages](docs/handover/230-fivetools-sources.md)
 24. [SQLite storage source split](docs/handover/240-sqlite-storage-split.md)
 25. [Single-line monster row controls](docs/handover/250-monster-button-layout.md)
+26. [Admin visual foundations](docs/handover/260-admin-visual-foundations.md)
 
 ## Required update convention
 
-All future handover additions must follow the same indexed structure: update the relevant section or create a numbered Markdown file under `docs/handover/`, and update this index in the same commit. Read the [maintenance rules](docs/handover/040-maintenance-rules.md) before making changes.
+All future handover additions must follow the same indexed structure: update the relevant existing section or create a numbered Markdown file under `docs/handover/`, and update this index in the same commit. Read the [maintenance rules](docs/handover/040-maintenance-rules.md) before making changes.

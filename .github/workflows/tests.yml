@@ -38,7 +38,16 @@ jobs:
           python -c "import scrying_glass_server"
       - name: Python test suite (including browser fixtures)
         if: ${{ !cancelled() }}
+        env:
+          SG_VISUAL_ARTIFACTS: ${{ runner.temp }}/sg-admin-foundations
         run: python tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Upload Admin foundations visual fixtures
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: admin-foundations-visual-fixtures
+          path: ${{ runner.temp }}/sg-admin-foundations
+          if-no-files-found: warn
       - name: Pytest regression modules
         if: ${{ !cancelled() }}
         run: >-

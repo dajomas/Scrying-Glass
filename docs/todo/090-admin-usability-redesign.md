@@ -4,12 +4,12 @@
 
 ## SG-TODO-009 - Professional, task-focused Admin interface
 
-- Status: proposed; no redesign implementation delivered.
-- Requested: 2026-11-06. The user requested recording the preceding design suggestions and a processing order in the TODO list.
-- Priority: proposed incremental usability improvement; no priority relative to other tasks agreed.
+- Status: in progress; 009.1 visual foundations implementation included, with CI and visual acceptance pending. No later redesign phase is implemented.
+- Requested: 2026-11-06. The user requested recording the preceding design suggestions and a processing order in the TODO list, then agreed staged delivery and requested starting 009.1.
+- Priority: incremental usability improvement; no priority relative to other tasks agreed.
 - Owner and deadline: not assigned.
 - Scope: Admin presentation, navigation and interaction clarity; do not change encounter rules, API semantics, permissions or persistence merely to redesign the interface.
-- The phases and visual values below are recommendations, not approval of every design decision or authorization to implement them.
+- Later phases and their visual values remain recommendations, not approval of every design decision or authorization to implement them.
 
 ## Preparation and compatibility gates
 
@@ -25,9 +25,9 @@ Related accepted work:
 - [SG-TODO-007: single-line monster buttons](070-monster-button-layout.md) and [row-layout handover](../handover/250-monster-button-layout.md): the accepted 11 monster-row buttons, local horizontal scrolling, focus exposure and removal of row Damage/Heal controls must not be silently reversed. Moving actions into menus or details is a proposed alternative requiring explicit agreement.
 - [SG-TODO-008: source-size refactors](080-source-size-refactors.md): preserve source assembly and code-size constraints; do not overwrite the tracked Admin script failure marker.
 
-## Proposed processing order
+## Agreed staged processing order
 
-Process phases 1 through 7 in order. Each phase has a stable subtask ID and remains proposed. Review the result of each coherent increment before proceeding to structural changes. Dependencies indicate the recommended sequence, not a requirement to implement the entire redesign in one commit.
+Process phases 1 through 7 in order. Each phase has a stable subtask ID. Stage 009.1 is in progress; later stages remain proposed. Review the result of each coherent increment before proceeding to structural changes. Dependencies indicate the recommended sequence, not a requirement to implement the entire redesign in one commit.
 
 | Order | Subtask | Deliverable | Dependencies |
 |---|---|---|---|
@@ -43,7 +43,7 @@ Accessibility and responsive checks apply to every phase; phase 7 is final conso
 
 ### SG-TODO-009.1 - Shared visual foundations
 
-Status: proposed.
+Status: in progress; implementation included, CI/browser execution and user visual acceptance pending. See [implementation and validation record](../handover/260-admin-visual-foundations.md).
 
 - Establish reusable tokens for surfaces, borders, typography, spacing, control heights and corner radii.
 - Use quieter panels with subtle borders and minimal shadows; use campaign/character teal and battle/monster amber as restrained accents rather than dominant panel fills. Retain appropriate fantasy branding without decorating operational controls excessively.
@@ -127,6 +127,14 @@ Record executed checks and observed results separately from unexecuted, pending 
 
 ## Planning-only change - 2026-11-06
 
-This addition records suggestions and a recommended processing order only. No application, test or workflow code is changed; no redesign or browser validation is claimed. README and relevant indexed handover/TODO documentation were reviewed. README and handover remain unchanged because current delivered behaviour has not changed.
+The original addition recorded suggestions and a recommended processing order only. No application, test or workflow code was changed by that addition; no redesign or browser validation was claimed. README and relevant indexed handover/TODO documentation were reviewed. README and handover remained unchanged because current delivered behaviour had not changed.
 
-The user explicitly requested [skip ci] for this documentation push. Include that marker in the commit message, do not modify or separately dispatch workflows, and do not claim the workflow-run state has been verified merely from the marker. The skip request does not apply to later implementation pushes.
+The user explicitly requested [skip ci] for that documentation push. The skip request does not apply to later implementation pushes.
+
+## Stage 009.1 implementation - 2026-11-06
+
+The user agreed seven-stage delivery and explicitly requested starting 009.1. This increment adds Admin-scoped foundation tokens and styling without moving controls, changing navigation or modifying JavaScript, API, encounter state or persistence. Existing action classifications are retained; stage 009.2 remains responsible for action hierarchy.
+
+Preparation executed CSS parsing, selected nominal colour-contrast calculations, Python AST parsing and the two new source-contract tests against drafted files. Full browser/suite execution is pending. The new fixture prepares before/after screenshots at 1440 and 375 pixels by disabling only the foundation stylesheet for the baseline; no baseline screenshot has yet been executed or visually reviewed. CI is configured to retain those fixture screenshots. This is not authenticated live-server evidence or a full accessibility audit.
+
+Do not close 009.1 before reviewing covering CI, representative visual results and user acceptance. Review header/workspace geometry, compact inputs, roster scrolling/focus, modals and unchanged colour semantics. See the linked handover for exact preparation results and outstanding checks.
