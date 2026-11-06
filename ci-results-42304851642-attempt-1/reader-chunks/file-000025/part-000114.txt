@@ -1,0 +1,30 @@
+ browser and audit checks	2026-11-06T22:32:05.8308843Z     self.assertEqual(self.action(["a", "b"]), {"count": 2})
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8309404Z                      ~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8310247Z   File "/tmp/scrying-tests-i3btkiz4/repo/tests/test_shared_monster_initiative.py", line 32, in action
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8311534Z     return asyncio.run(self.method(SimpleNamespace(context=self.context), SimpleNamespace(action=action, ids=ids)))
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8312637Z            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8313627Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 205, in run
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8314383Z     return runner.run(main)
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8314753Z            ~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8315515Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8316337Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8316987Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8317939Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8318776Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8319145Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8319625Z   File "bulk_monsters", line 469, in bulk_monsters
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8320196Z KeyError: "'__name__' not in globals"
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8320482Z 
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8320834Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8321460Z Ran 1119 tests in 108.032s
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8321694Z 
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8321843Z FAILED (errors=2)
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:05.8322362Z Connections opened: 689; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:06.1577369Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:06.1578203Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:06.4812407Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:06.4813253Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:06.5263613Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:06.8551840Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:06.8553701Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-06T22:32:06.9005300Z

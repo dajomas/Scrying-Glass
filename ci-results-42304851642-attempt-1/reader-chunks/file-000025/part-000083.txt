@@ -1,0 +1,29 @@
+ers.py", line 205, in run
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4882752Z     return runner.run(main)
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4883008Z            ~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4883535Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4884097Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4884445Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4885114Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4885702Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4885960Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4886286Z   File "bulk_monsters", line 469, in bulk_monsters
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4886671Z KeyError: "'__name__' not in globals"
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4887183Z 
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4887412Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4888210Z ERROR: test_single_roll_selected_only (test_shared_monster_initiative.SharedInitiativeTests.test_single_roll_selected_only)
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4888979Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4889401Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4890072Z   File "/tmp/scrying-tests-vma7e071/repo/tests/test_shared_monster_initiative.py", line 35, in test_single_roll_selected_only
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4890761Z     self.assertEqual(self.action(["a", "b"]), {"count": 2})
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4891128Z                      ~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4891703Z   File "/tmp/scrying-tests-vma7e071/repo/tests/test_shared_monster_initiative.py", line 32, in action
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4892521Z     return asyncio.run(self.method(SimpleNamespace(context=self.context), SimpleNamespace(action=action, ids=ids)))
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4893202Z            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4893832Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 205, in run
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4894321Z     return runner.run(main)
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4894564Z            ~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4895051Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4895565Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-06T22:29:56.4895897Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (in
