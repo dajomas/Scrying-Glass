@@ -1,1 +1,0 @@
-/mnt/d/git/Scrying-Glass/.venv/bin/python tools/run_split_tests.py -- /mnt/d/git/Scrying-Glass/.venv/bin/python tests/audit_round3_check.py 
