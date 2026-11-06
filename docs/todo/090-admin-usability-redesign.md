@@ -4,7 +4,7 @@
 
 ## SG-TODO-009 - Professional, task-focused Admin interface
 
-- Status: in progress; SG-TODO-009.1 is closed. SG-TODO-009.2 header/action implementation is included with full CI/browser validation and user acceptance pending. Phases 009.3-009.7 remain proposed and are not implemented.
+- Status: in progress; SG-TODO-009.1 and SG-TODO-009.2 are closed (completed) after verified validation and user acceptance. Phases 009.3-009.7 remain proposed and are not implemented.
 - Requested: 2026-11-06. The user requested recording the preceding design suggestions and a processing order in the TODO list, then agreed staged delivery and requested starting 009.1.
 - Priority: incremental usability improvement; no priority relative to other tasks agreed.
 - Owner and deadline: not assigned.
@@ -27,12 +27,12 @@ Related accepted work:
 
 ## Agreed staged processing order
 
-Process phases 1 through 7 in order. Each phase has a stable subtask ID. Stage 009.1 is closed; 009.2 is in progress; later stages remain proposed. Review the result of each coherent increment before proceeding to structural changes. Dependencies indicate the recommended sequence, not a requirement to implement the entire redesign in one commit.
+Process phases 1 through 7 in order. Each phase has a stable subtask ID. Stages 009.1 and 009.2 are closed; later stages remain proposed. Review the result of each coherent increment before proceeding to structural changes. Dependencies indicate the recommended sequence, not a requirement to implement the entire redesign in one commit.
 
 | Order | Subtask | Deliverable | Dependencies |
 |---|---|---|---|
 | 1 | SG-TODO-009.1 | Shared visual foundations (closed) | Baseline inspection |
-| 2 | SG-TODO-009.2 | Header and action hierarchy (in progress) | 009.1 |
+| 2 | SG-TODO-009.2 | Header and action hierarchy (closed) | 009.1 |
 | 3 | SG-TODO-009.3 | Consistent panels and forms | 009.1, 009.2 |
 | 4 | SG-TODO-009.4 | Scannable rosters and contextual bulk actions | 009.3; agreement for changed row controls |
 | 5 | SG-TODO-009.5 | Workflow-based navigation | 009.2-009.4; agreed visibility mapping |
@@ -54,7 +54,7 @@ Acceptance: representative panels, tables, forms and modals share the same visua
 
 ### SG-TODO-009.2 - Header and action hierarchy
 
-Status: in progress; implementation included, full application CI/browser validation and user visual/workflow acceptance pending. See [header implementation and validation record](../handover/270-admin-header-hierarchy.md).
+Status: closed (completed), 2026-11-06, at the user's explicit request after covering corrective local/CI success and visual/workflow acceptance. Initial implementation: a6b910d94c3b846e128d01bc6baa10b48228770f. Test-only correction: aa82b45629cce7b49164d5ad7c1304481f20bbd7. See [header implementation, verification and close-out record](../handover/270-admin-header-hierarchy.md).
 
 - Keep a compact fixed header with product identity, active campaign, active battle setup and explicit encounter state.
 - Separate context, navigation, global actions and feedback into predictable areas. Move infrequent global actions into a labelled More menu where appropriate.
@@ -155,6 +155,18 @@ This closes only 009.1. SG-TODO-009 remains in progress. No full screen-reader a
 
 The user requested continuing with 009.2 after 009.1 closure. The implementation mirrors active context in the fixed header, moves original Start/Next/End controls there, gives Start or Next primary emphasis according to existing encounter state, places viewer controls/logout in More, keeps pane toggles in a keyboard-exposed local scroller, and separates Reset All in a closed Danger zone with its existing confirmation. Entity-local setup and campaign-backup controls remain local. Pane preferences, lair gating, source assembly and roster actions are not replaced.
 
-Preparation passed JavaScript syntax, CSS parsing, Python AST and a drafted-asset source test, plus simplified Chromium fixtures at 1440/768/375 for moved handlers, state styling, context, disclosures, focus/scroll and header geometry. These are not full application or authenticated live-server checks. Full-Admin browser regressions and six desktop/narrow fixture screenshots are prepared for existing CI discovery/upload. No workflow change or CI skip is included. See the linked header handover for executed checks, fixture limitations and user-facing locations.
+Preparation passed JavaScript syntax, CSS parsing, Python AST and a drafted-asset source test, plus simplified Chromium fixtures at 1440/768/375 for moved handlers, state styling, context, disclosures, focus/scroll and header geometry. These were not full application or authenticated live-server checks. Full-Admin browser regressions and six desktop/narrow fixture screenshots were prepared for existing CI discovery/upload. No workflow change or CI skip was included. See the linked header handover for executed checks, fixture limitations and user-facing locations.
 
-009.2 remains in progress until covering CI and visual/workflow acceptance. Verify campaign/setup transitions, missing/delayed context, real encounter actions and confirmations, manual pane state, lair gates, messages, keyboard, zoom and long labels. 009.3-009.7 remain proposed; no workflow tabs or live-workspace redesign is delivered here.
+At implementation delivery, 009.2 remained pending covering CI and visual/workflow acceptance. The close-out below supersedes that pending status. 009.3-009.7 remain proposed; no workflow tabs or live-workspace redesign is delivered by 009.2.
+
+## SG-TODO-009.2 verified close-out - 2026-11-06
+
+Closed (completed) at the user's request after visual and workflow acceptance and verified successful local/CI validation of corrective commit aa82b45629cce7b49164d5ad7c1304481f20bbd7. This correction fixes the test's visibility precondition, not application behaviour. The earlier failed results against a6b910d94c3b846e128d01bc6baa10b48228770f are retained as historical diagnosis, not closure evidence.
+
+Local evidence: commit 1fcf6f726ccdad8b6315ca2f24cd91fc94d206d0, folder local-tests-aa82b45/run-20261106T141733Z-jal8gK. Full-run summary and overall exit are zero; all six header methods explicitly pass; the repeated connection-audit suite reports 1,041 tests OK, 675 connections opened and zero without explicit close; pytest reports 43 passes.
+
+CI evidence: run 42232501137 attempt 1, exact corrective SHA above, published at b4d1f5f69519066ccab88709f93aa1eef643c42f under ci-results-42232501137-attempt-1. Workflow/job/configured steps succeed; all six header methods explicitly pass; unittest reports 1,041 tests OK and pytest 43 passes. Ten fixture screenshots were uploaded. See the handover for inspected log locations and coverage limits.
+
+Only 009.2 is closed by this update; 009.1 remains closed and SG-TODO-009 remains in progress. Stages 009.3-009.7 remain proposed. The user's visual/workflow acceptance is not an assistant-executed live-server or exhaustive accessibility/combat audit. The later independent runner-cleanup commit d0a1f3c2781e882cb651a4cf9f6a2b85e22ebc71 is outside this corrective run's coverage.
+
+This close-out updates documentation only and executes no new tests during preparation. Application, test and workflow code are unchanged. No skip was requested for this close-out; the previous skip instruction applied to the runner update only. Normal push-triggered CI remains enabled; no separate workflow dispatch or unverified new run result is claimed.
