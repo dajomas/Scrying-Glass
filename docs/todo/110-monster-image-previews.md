@@ -4,10 +4,10 @@
 
 ## SG-TODO-011 - Preview images beside Add Monsters image fields
 
-- Status: proposed; not implemented by this TODO addition.
-- Requested: 2026-11-06.
-- Priority, owner and deadline: not assigned.
-- Scope: image previews in the Add Monsters panel, including manual entry and the .monster import form. This is a separate backlog item, not an expansion or completion of SG-TODO-009.3.
+- Status: in progress; implementation included, covering CI and visual/workflow acceptance pending.
+- Requested: 2026-11-06. Implementation requested subsequently on the same date.
+- Priority, owner and deadline: not assigned. Delivery order is agreed in [Admin delivery sequence](115-admin-delivery-sequence.md): 011 precedes 009.4.
+- Scope: image previews in the Add Monsters panel, including manual entry and the .monster import form. This remains separate from accepted SG-TODO-009.3.
 
 ### Requested behaviour
 
@@ -24,23 +24,23 @@ Display the actual collected or selected image, not only a filename or URL. Upda
 - Both D&D Beyond and 5e.tools image results can populate the preview beside Image.
 - Selecting a local file in Image shows that file beside Image.
 - Selecting a local file in Replace image shows that file beside Replace image.
-- Previews appear to the right of the corresponding field at widths with sufficient space. Define and verify a usable narrow-screen layout without page-wide overflow or obscuring controls.
+- Previews appear to the right of the corresponding field at widths with sufficient space. Narrow-screen stacking must avoid page-wide overflow or obscuring controls.
 - Previews remain consistent with the image that will actually be submitted/imported, preserving existing upload precedence and selected-candidate continuity.
 - Existing form IDs, handlers, validation, entered values, image upload/import behaviour and provider-selection semantics remain intact.
 
-### Implementation considerations and validation to resolve
+### Implementation and pending verification - 2026-11-06
 
-These are preparation requirements and safeguards, not claims of existing implementation or separately requested features:
+The existing candidate lookup already exposes image_url. The implementation publishes selection/invalidation notifications from that guarded flow without changing the signed token or adding another lookup. Separate preview containers retain original file inputs. Local files take precedence; clearing Image restores a still-selected provider result. Species edits, new lookup, Cancel and reset invalidate provider previews. The replacement-file preview stays independent. Load failure reports unavailable without changing submission data. HTTPS provider URLs without embedded credentials are rendered directly by the browser with no referrer; local files use temporary object URLs released on replacement/reset/page hide. Narrow layouts stack the preview below its field.
 
-- Inspect when provider images become available to the browser; do not assume an image exists before the current lookup/import pipeline has obtained it. Identify any pipeline changes needed for the requested preview.
-- Define behaviour for replacement, clearing a file selection, form reset, failed submission, no-image results and image-load failures; prevent stale previews from representing the wrong image.
-- Preserve in-flight edit protection so a delayed provider result does not overwrite a newer selected file/preview. Release temporary object URLs when replaced or cleared if that preview mechanism is used.
-- Use bounded image dimensions, preserve aspect ratio, and provide an accessible preview description and clear unavailable-image handling.
-- Prepare automated browser coverage for the three requested cases (testing both providers), image replacement/reset, upload precedence, delayed results, load failures and desktop/narrow layouts. Obtain visual/workflow acceptance before closure. Provider fixtures must be distinguished from live-provider evidence.
+Matching stylesheet/script references and DOMContentLoaded initialization preserve 009.3 grouping before preview wrapping, including deferred scripts executing while readyState is interactive. See [implementation, deployment and validation record](../handover/290-monster-image-previews.md).
 
-### Related work and recording scope
+Executed preparation: JavaScript syntax, CSS stylesheet parsing, regression Python AST parsing, template inclusion/order checks and simplified real-Chromium smoke/boot-order fixtures. These are not execution of the complete prepared regression module or authenticated live-server checks. The first synthetic boot-order attempt failed; its initialization condition was corrected and the repeated fixture passed.
 
-- [SG-TODO-001: monster lookup and candidate selection](010-monster-lookup.md) and [candidate-selection handover](../handover/200-monster-candidate-selection.md): preserve selected-image continuity, local-upload precedence and edit protection.
-- [SG-TODO-009: Admin redesign](090-admin-usability-redesign.md) and [panel/forms handover](../handover/280-admin-panel-forms.md): integrate with the Add Monsters field groups and .monster import disclosure without changing unrelated redesign status.
+Prepared regressions cover both provider labels, selected image/token continuity, local precedence, replacement/reset/URL cleanup, popup choice, a newer local file during pending selection, cancellation/stale selection, missing/failed/unsafe image URLs, idempotence, full-Admin boot/group compatibility, failed-submit retention and desktop/narrow geometry/screenshots. Existing CI discovery and artifact upload cover the new module; workflow configuration is unchanged. Full module/suite/CI execution and visual/workflow acceptance remain pending. Define no completed status until those gates are reviewed. Live remote-image availability is distinct from intercepted fixture responses.
 
-This addition records requested work only. No application, test or workflow code is changed, and no tests are executed for this documentation-only addition. README.md and HANDOVER.md were reviewed and remain unchanged because no delivered runtime behaviour or handover index entry changes. The commit includes [skip ci]; no separate workflow dispatch or verified workflow-run outcome is implied.
+### Related work
+
+- [SG-TODO-001: monster lookup and candidate selection](010-monster-lookup.md) and [candidate-selection handover](../handover/200-monster-candidate-selection.md): selected-image continuity, local-upload precedence and edit protection.
+- [SG-TODO-009: Admin redesign](090-admin-usability-redesign.md) and [panel/forms handover](../handover/280-admin-panel-forms.md): preserve field groups and .monster disclosure without changing unrelated redesign status.
+
+The original TODO addition was planning only and used [skip ci]. This mixed implementation delivery does not use that marker and relies on normal branch-push CI; no run result is inferred. SG-TODO-012/013/014 are not implemented by this increment.

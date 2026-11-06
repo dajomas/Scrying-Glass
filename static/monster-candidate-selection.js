@@ -10,9 +10,16 @@
     let cancelPopup = null;
     let generation = 0;
     let pending = 0;
+    function publishSelection() {
+        document.dispatchEvent(new CustomEvent('scrying:monster-selection', {
+            detail: selected ? {species: selected.species, provider: selected.provider,
+                image_url: selected.image_url || null} : null
+        }));
+    }
     function invalidate() {
         generation++;
         selected = null;
+        publishSelection();
         if (cancelPopup) cancelPopup();
     }
     speciesInput.addEventListener('input', invalidate, true);
@@ -85,6 +92,7 @@
         const current = ++generation;
         const requestId = monsterSpeciesLookupRequest;
         selected = null;
+        publishSelection();
         if (cancelPopup) cancelPopup();
         const isCurrent = () => current === generation && requestId === monsterSpeciesLookupRequest &&
             speciesInput.value.trim() === species;
@@ -102,6 +110,7 @@
             if (!candidate) return {found: false,
                 reason: 'Monster selection cancelled; manual entry remains available.'};
             selected = candidate;
+            publishSelection();
             return candidate;
         } finally {
             pending--;

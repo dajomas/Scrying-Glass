@@ -33,6 +33,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 26. [Admin visual foundations](docs/handover/260-admin-visual-foundations.md)
 27. [Admin header and action hierarchy](docs/handover/270-admin-header-hierarchy.md)
 28. [Consistent Admin panels and forms](docs/handover/280-admin-panel-forms.md)
+29. [Add Monsters image previews](docs/handover/290-monster-image-previews.md)
 
 ## Required update convention
 
