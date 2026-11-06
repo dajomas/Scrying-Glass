@@ -96,7 +96,10 @@ finish() {
         publication_log=$OUT/publication-$(basename -- "$RUN").log
         if publish_results > "$publication_log" 2>&1; then
             printf 'publication_exit=0\n' >> "$publication_log"
-            printf 'Published results at commit %s\n' "$(git -C "$ROOT" rev-parse HEAD)"
+            # printf 'Published results at commit %s\n' "$(git -C "$ROOT" rev-parse HEAD)"
+            printf 'Published completed local evidence for %s in %s at commit %s\n' \
+              "$HASH" "${RUN#"$ROOT/"}" "$(git -C "$ROOT" rev-parse HEAD)"
+
         else
             rc=1
             printf 'publication_exit=1\n' >> "$publication_log"
