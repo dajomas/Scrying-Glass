@@ -11,7 +11,8 @@ stored values. Maximum HP affected by statistics reductions retains its existing
 original/base-editor restrictions described below.
 
 Character and monster Initiative inputs remain compact inline editors at 7.5ch.
-This increment does not remap Tab/Shift+Tab or change initiative behaviour.
+Tab/Shift+Tab navigation within each roster is described under Participation and
+initiative below; initiative values and combat ordering rules are unchanged.
 Setup fields and edit modals retain their existing sizes. Restart the correct
 server process and hard-refresh the Admin page after installing the matching
 HTML/static update.
@@ -54,7 +55,7 @@ Usernames are case-sensitive and unique, 1–64 characters, without surrounding 
 
 ## Campaign ownership and shared runtime
 
-Each campaign has at most one regular-admin owner; an admin may own many campaigns. Admin-created/imported campaigns belong to that admin. Superadmins reassign them in Campaign ownership on /users. Removing an admin or changing its role clears ownership, not transfers it.
+Each campaign has at most one regular-admin owner; an admin may own many campaigns. Admin-created/imported campaigns belong to that admin. Superadmin-created campaigns remain unassigned. Superadmins reassign them in Campaign ownership on /users. Removing an admin or changing its role clears ownership, not transfers it.
 
 At first ownership migration, exactly one regular admin receives all existing campaigns. With zero/multiple regular admins they remain unassigned. Superadmins are excluded from this count. Migration does not repeat after later account changes.
 
@@ -116,6 +117,22 @@ Aelwyn,34,34,16,#1f4e79
 Active/Join Battle controls participation; Visible controls the player strip. Pane visibility is presentation only. Monsters additionally support Ally and Show AC/HP/Init. Ally changes the rendered label, not stored name.
 
 Characters/monsters require whole-number initiative before joining. Zero/negative values are valid; unset is not. Mixed bulk joins fail atomically if anyone lacks initiative. Leave before clearing initiative, or deactivate and clear in the same API update. Lair initiative is fixed.
+
+### Initiative keyboard navigation
+
+Within Characters or Monsters, Tab moves to the next available initiative editor
+and Shift+Tab to the previous in the displayed row order, skipping other row
+controls. Navigation stays within that roster and does not wrap. At the last
+editor Tab resumes normal page navigation; at the first, Shift+Tab does likewise.
+Single-editor and empty rosters introduce no keyboard trap. Hidden, disabled and
+readonly editors are skipped. Other controls and modified shortcuts retain their
+normal keyboard behaviour.
+
+Existing change/save validation still applies. After a same-campaign/setup refresh,
+focus follows the destination combatant even if rows reorder, and a draft typed
+there while the preceding save completes is retained without replaying an already
+emitted save. Moving focus elsewhere or changing campaign/setup cancels restoration.
+The enhancement does not change initiative values or combat ordering.
 
 Select all selects the list; Unselect all clears. Select dead replaces selection: characters match explicit death/three failures, monsters also match alive=False. Selection does not mutate. Reset restores baselines/runtime flags; Remove permanently deletes.
 
