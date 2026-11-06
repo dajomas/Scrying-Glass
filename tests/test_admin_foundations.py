@@ -15,6 +15,14 @@ class FoundationSourceTests(unittest.TestCase):
         self.assertLess(head.index('/static/admin-shell.css'), head.index(asset))
         self.assertLess(head.index(asset), head.index('/static/monster-button-layout.css'))
 
+    def test_notification_layout_asset(self):
+        end = (ROOT / 'templates/admin/190_document_end.html').read_text(encoding='utf-8')
+        asset = '/static/admin-notification-layout.js?v=1'
+        self.assertEqual(end.count(asset), 1)
+        self.assertIn(f'<script src="{asset}" defer></script>', end)
+        self.assertLess(end.index('/static/admin.js'), end.index(asset))
+        self.assertLess(end.index(asset), end.index('/static/combatant-row-layout.js'))
+
     def test_scoped_rules_and_compatibility_boundaries(self):
         import re
         css = (ROOT / 'static/admin-foundations.css').read_text(encoding='utf-8')
@@ -67,6 +75,18 @@ class FoundationBrowserTests(unittest.TestCase):
             colours: [...document.querySelectorAll('input[type=color]')].map(n => [n.id, n.value])
         })""")
 
+    def screenshot_at_top(self, page, target):
+        page.evaluate("document.querySelector('#adminScroll').scrollTop = 0")
+        page.wait_for_function("document.querySelector('#adminScroll').scrollTop === 0")
+        geometry = page.evaluate("""() => ({
+            headerBottom: document.querySelector('#adminHeader').getBoundingClientRect().bottom,
+            workspaceTop: document.querySelector('#adminScroll').getBoundingClientRect().top,
+            scrollTop: document.querySelector('#adminScroll').scrollTop
+        })""")
+        self.assertEqual(geometry['scrollTop'], 0)
+        self.assertGreaterEqual(geometry['workspaceTop'], geometry['headerBottom'] - 1)
+        page.screenshot(path=str(target))
+
     def test_visual_fixture_and_css_only_state_preservation(self):
         directory = Path(os.environ.get('SG_VISUAL_ARTIFACTS',
                          str(Path(tempfile.gettempdir()) / 'sg-admin-foundations')))
@@ -87,12 +107,49 @@ class FoundationBrowserTests(unittest.TestCase):
                 page.locator('#characterName').fill('Unsaved visual-review character')
                 before = self.state(page)
                 self.set_foundations(page, False)
-                page.screenshot(path=str(directory / f'{width}-before.png'))
+                self.screenshot_at_top(page, directory / f'{width}-before.png')
                 self.set_foundations(page, True)
-                page.screenshot(path=str(directory / f'{width}-after.png'))
+                self.screenshot_at_top(page, directory / f'{width}-after.png')
                 self.assertEqual(self.state(page), before)
                 self.assertEqual(page.locator('#monsters td button').count(), 11)
                 self.assertEqual(page.locator('#monsters [data-d], #monsters [data-h]').count(), 0)
+                self.assertEqual(errors, [])
+                self.assertEqual(mutations, [])
+                page.close()
+
+    def test_blank_notices_collapse_and_real_messages_reappear(self):
+        ids = ['campaignNotification', 'characterAddNotification',
+               'battleSetupNotification', 'monsterAddNotification']
+        for width in (1440, 375):
+            with self.subTest(width=width):
+                page, errors, mutations = self.open_page(width)
+                for toggle in ('#toggleCampaignPane', '#toggleCharacterPane',
+                               '#toggleBattleSetupPane', '#toggleMonsterPane'):
+                    button = page.locator(toggle)
+                    if button.is_visible() and button.get_attribute('aria-expanded') == 'false':
+                        button.click()
+                page.wait_for_function("ids => ids.every(id => document.getElementById(id).hidden)", arg=ids)
+                for id in ids:
+                    notice = page.locator('#' + id)
+                    self.assertEqual(notice.get_attribute('role'), 'status')
+                    self.assertEqual(notice.get_attribute('aria-live'), 'polite')
+                    self.assertEqual(notice.evaluate('n => n.getBoundingClientRect().height'), 0)
+                page.evaluate("""() => {
+                    for (const kind of ['campaign', 'characters', 'battleSetup', 'monsters']) {
+                        paneNotification(kind, '  Visual review: message remains readable.  ');
+                    }
+                }""")
+                page.wait_for_function("ids => ids.every(id => !document.getElementById(id).hidden)", arg=ids)
+                for id in ids:
+                    notice = page.locator('#' + id)
+                    self.assertTrue(notice.is_visible())
+                    self.assertEqual(notice.text_content(), '  Visual review: message remains readable.  ')
+                page.wait_for_function("ids => ids.every(id => document.getElementById(id).hidden)", arg=ids)
+                page.evaluate("setMonsterSpeciesLookupStatus('Looking up a monster...')")
+                page.wait_for_function("!document.querySelector('#monsterAddNotification').hidden")
+                page.evaluate("document.querySelector('#monsterAddNotification').firstChild.data = ' '")
+                page.wait_for_function("document.querySelector('#monsterAddNotification').hidden")
+                page.add_script_tag(content=(ROOT / 'static/admin-notification-layout.js').read_text(encoding='utf-8'))
                 self.assertEqual(errors, [])
                 self.assertEqual(mutations, [])
                 page.close()

@@ -4,7 +4,7 @@
 
 ## SG-TODO-009 - Professional, task-focused Admin interface
 
-- Status: in progress; 009.1 visual foundations implementation included, with CI and visual acceptance pending. No later redesign phase is implemented.
+- Status: in progress; initial 009.1 foundations CI verified, with blank-notice/screenshot corrections included and covering validation plus user visual acceptance pending. No later redesign phase is implemented.
 - Requested: 2026-11-06. The user requested recording the preceding design suggestions and a processing order in the TODO list, then agreed staged delivery and requested starting 009.1.
 - Priority: incremental usability improvement; no priority relative to other tasks agreed.
 - Owner and deadline: not assigned.
@@ -43,7 +43,7 @@ Accessibility and responsive checks apply to every phase; phase 7 is final conso
 
 ### SG-TODO-009.1 - Shared visual foundations
 
-Status: in progress; implementation included, CI/browser execution and user visual acceptance pending. See [implementation and validation record](../handover/260-admin-visual-foundations.md).
+Status: in progress; initial covering CI verified, corrective notice/layout validation and user visual acceptance pending. See [implementation and validation record](../handover/260-admin-visual-foundations.md).
 
 - Establish reusable tokens for surfaces, borders, typography, spacing, control heights and corner radii.
 - Use quieter panels with subtle borders and minimal shadows; use campaign/character teal and battle/monster amber as restrained accents rather than dominant panel fills. Retain appropriate fantasy branding without decorating operational controls excessively.
@@ -131,10 +131,14 @@ The original addition recorded suggestions and a recommended processing order on
 
 The user explicitly requested [skip ci] for that documentation push. The skip request does not apply to later implementation pushes.
 
-## Stage 009.1 implementation - 2026-11-06
+## Stage 009.1 implementation and correction - 2026-11-06
 
-The user agreed seven-stage delivery and explicitly requested starting 009.1. This increment adds Admin-scoped foundation tokens and styling without moving controls, changing navigation or modifying JavaScript, API, encounter state or persistence. Existing action classifications are retained; stage 009.2 remains responsible for action hierarchy.
+The user agreed seven-stage delivery and explicitly requested starting 009.1. The initial increment added Admin-scoped foundation tokens and styling without moving controls, changing navigation or modifying JavaScript, API, encounter state or persistence. Existing action classifications are retained; stage 009.2 remains responsible for action hierarchy.
 
-Preparation executed CSS parsing, selected nominal colour-contrast calculations, Python AST parsing and the two new source-contract tests against drafted files. Full browser/suite execution is pending. The new fixture prepares before/after screenshots at 1440 and 375 pixels by disabling only the foundation stylesheet for the baseline; no baseline screenshot has yet been executed or visually reviewed. CI is configured to retain those fixture screenshots. This is not authenticated live-server evidence or a full accessibility audit.
+Initial preparation executed CSS parsing, selected nominal colour-contrast calculations, Python AST parsing and two source-contract tests against drafted files. Subsequent run 42209803055 attempt 1 verified initial implementation e632eba99e00695c7f002148bde8c0aee386d4fe; evidence commit 21aa823a6381768c7f2a081597262b7b57d0bfc5 contains ci-results-42209803055-attempt-1. Workflow/job/steps succeeded; the four original foundations tests explicitly passed, unittest reported 1,033 tests OK and pytest reported 43 passes. Four screenshots were uploaded. See the handover for reviewed log locations and coverage limits.
 
-Do not close 009.1 before reviewing covering CI, representative visual results and user acceptance. Review header/workspace geometry, compact inputs, roster scrolling/focus, modals and unchanged colour semantics. See the linked handover for exact preparation results and outstanding checks.
+Desktop screenshot review supported the neutral panels, teal edges and brighter headings/labels but identified empty coloured notification strips and an ambiguously scrolled top-of-workspace capture. The user requested necessary 009.1 corrections. A new presentation enhancement collapses whitespace-only pane notifications, preserving real message text, existing timers and ARIA attributes. The screenshot test resets the workspace scroll to zero before each capture and asserts header/workspace separation; it does not change production header positioning or claim a proven overlap bug. Before/after remains a foundation-CSS comparison, with the notice correction active in both.
+
+Corrective preparation passed JavaScript syntax checking, four isolated Node VM tests, Python AST parsing and the new script-inclusion source test against a drafted fragment. Corrective full browser/suite execution and CI are pending. Existing CI discovery covers the new Node test and expanded browser/source module; no workflow change is necessary. Initial green CI is not validation of this correction.
+
+Do not close 009.1 before reviewing covering corrective CI, fresh desktop/narrow visual results and user acceptance. Review notification appearance/clearing, manual screen-reader announcements, header/workspace geometry, compact inputs, roster scrolling/focus, modals and unchanged colour semantics. Header crowding/action hierarchy remains 009.2, and tabs/live-workspace restructuring remains later work. The generated final-interface impression is a concept, not an approved implementation specification.
