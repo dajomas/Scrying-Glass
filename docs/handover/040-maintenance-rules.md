@@ -15,7 +15,7 @@
 
 ## Publishing changes
 
-Use branch `features/perplexity` unless a different target is explicitly requested. When the user asks for a documentation-only push without CI, include `[skip ci]` in the commit message and do not dispatch a separate workflow. Do not automatically skip CI for application or workflow changes.
+Use branch `features/perplexity` unless a different target is explicitly requested. Every documentation-only commit must always contain `[skip ci]` in the proposed, approved and actual commit message, without needing a separate user skip request. Do not modify workflows or separately dispatch CI for that push. This includes handover, TODO, README/guide and project-instruction changes that contain documentation only. Mixed commits containing application code, scripts, tests, templates, styles, runtime configuration, dependencies or workflows are not documentation-only; run CI normally unless the user explicitly requests otherwise. See [root instructions, section 5](../../PERPLEXITY_INSTRUCTIONS.md#5-ci-execution-and-documentation-only-commits).
 
 ## Scope of this convention
 
@@ -28,3 +28,9 @@ The [root project instructions](../../PERPLEXITY_INSTRUCTIONS.md) now clarify ea
 Review relevant documentation rather than touching every document mechanically. Update indexes when their entries change, not merely because section content changes. Every agreed delivery stage still includes its appropriate documentation and TODO status updates.
 
 This is a workflow-documentation update only. README, HANDOVER.md and TODO.md were reviewed and remain unchanged; their application descriptions, index entries and task statuses are unaffected. No application code, tests or CI configuration are changed. No automated tests were executed for this update, and no workflow outcome is claimed. SG-TODO-002 implementation remains undelivered by this change.
+
+## Standing documentation-only CI rule - 2026-11-06
+
+The user explicitly requested that documentation-only commits always contain `[skip ci]`. Section 5 of the root instructions and the active publishing/CI handover guidance now reflect that standing rule, replacing the earlier requirement for a separate skip request each time. This policy update is itself documentation-only and includes the marker in its proposed commit message.
+
+The rule does not classify mixed code/documentation changes as documentation-only, waive external-write approval, change workflow configuration, imply automated commit-message enforcement or establish an observed workflow result. Historical dated delivery notes remain historical; prior commits are not rewritten. README, HANDOVER.md and TODO.md were reviewed and left unchanged because runtime descriptions, index links and task statuses remain accurate. No tests were executed for this documentation-only update; no separate workflow is dispatched.

@@ -225,19 +225,34 @@ Treat this structure as a required maintenance convention for future edits.
 Do not claim it is automatically enforced unless an enforcement mechanism
 has actually been implemented and verified.
 
-## 5. CI execution and explicit skip requests
+## 5. CI execution and documentation-only commits
 
-Run CI normally unless the user explicitly requests otherwise.
+Every documentation-only commit must always contain the exact marker
+`[skip ci]` in its proposed, approved and actual commit message. This is a
+standing user instruction from 2026-11-06; no separate skip request is needed
+for each documentation-only commit. It applies to task close-outs, handover,
+README/guide and project-instruction updates, including this policy update.
 
-When a push without CI is requested:
+A documentation-only commit changes exclusively human-readable documentation.
+A commit containing application code, scripts, tests, templates, styles,
+runtime configuration, dependencies or workflow changes is not documentation-only,
+even if it also updates documentation or has a docs-prefixed message. Run CI
+normally for such non-documentation-only commits unless the user explicitly
+requests otherwise.
 
-- Include `[skip ci]` in the proposed and approved commit message.
+For documentation-only commits, and for other pushes explicitly requested
+without CI:
+
+- Include `[skip ci]` in the proposed, approved and actual commit message.
 - Do not disable or modify the CI workflow merely to skip that push.
 - Do not separately dispatch a workflow for that push.
 
-Do not automatically skip CI merely because a change is documentation-only.
-Do not assume a previous skip request applies to subsequent pushes unless
-the user explicitly gave it that scope.
+Do not assume a one-off skip request applies to subsequent non-documentation-only
+pushes unless the user explicitly gave it that scope. The standing
+documentation-only rule above does apply to future documentation-only commits.
+This is a required authoring convention, not a newly implemented automatic
+commit-message enforcement mechanism. Earlier dated delivery notes describe
+the policy applicable at those historical deliveries.
 
 Distinguish between:
 
@@ -309,11 +324,13 @@ test and any necessary workflow update as part of the proposed changes,
 or explicitly identify the uncovered requirement. Do not silently
 describe an unconfigured check as delegated to CI.
 
-When relying on push-triggered CI, omit [skip ci] from the proposed
-commit message. A previous skip request does not apply to a delivery
-for which the user has subsequently selected CI validation. If the
-current instruction explicitly requires skipping CI, record CI
-validation as pending until the user specifies how it will be run.
+For non-documentation-only deliveries relying on push-triggered CI, omit
+[skip ci] from the proposed commit message. A previous one-off skip request
+does not apply to a delivery for which the user subsequently selected CI
+validation. If the current instruction explicitly requires skipping CI for
+such a delivery, record CI validation as pending until the user specifies
+how it will be run. Documentation-only commits always follow section 5
+and must not be described as relying on push-triggered CI validation.
 
 Lack of local execution does not waive implementation, test preparation,
 documentation, approval or truthful-reporting requirements. It changes

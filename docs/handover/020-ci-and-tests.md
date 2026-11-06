@@ -7,9 +7,10 @@
 Workflow: `Branch tests`, defined in [tests.yml](../../.github/workflows/tests.yml).
 
 - Trigger: pushes to `features/perplexity` only.
-- No path filter: documentation changes also trigger it unless skipped.
+- No path filter: changes to documentation also match the push trigger, but the standing project instruction requires every documentation-only commit to contain `[skip ci]`.
 - GitHub's native push-workflow skip behavior honors `[skip ci]` in commit messages. No custom skip job is used.
-- For documentation-only pushes explicitly requested without CI, include `[skip ci]` in the commit message.
+- Every documentation-only commit must always include `[skip ci]` in its proposed, approved and actual commit message. No separate user skip request is needed. Do not modify or separately dispatch workflows to bypass that skip.
+- Mixed commits containing code, scripts, tests, templates, styles, runtime configuration, dependencies or workflow changes are not documentation-only; normal CI applies unless the user explicitly requests otherwise.
 - No pull-request, scheduled or manual-dispatch trigger is configured.
 
 Example documentation commit message:
@@ -17,6 +18,8 @@ Example documentation commit message:
 ```text
 docs: update indexed handover [skip ci]
 ```
+
+This is a standing authoring rule, not a newly added enforcement mechanism. See [root instructions, section 5](../../PERPLEXITY_INSTRUCTIONS.md#5-ci-execution-and-documentation-only-commits). Historical dated skip/run notes below describe their original deliveries.
 
 GitHub skip-workflow documentation: https://docs.github.com/en/actions/how-tos/manage-workflow-runs/skip-workflow-runs
 
@@ -123,3 +126,9 @@ Executed preparation: verified the reconstructed original runner against live bl
 This is publication-lifecycle validation, not execution of the application suites, authenticated server behaviour or a real GitHub push by the runner. Existing historical suite evidence above is unchanged. README, HANDOVER.md and TODO.md were reviewed and left unchanged because this independent runner maintenance change does not alter application behaviour, indexed links or SG-TODO-009.2's pending CI state. No new backlog item is created.
 
 The approved delivery is intended to include [skip ci]; no workflow configuration is changed and no separate workflow is dispatched. Do not infer a checked workflow-run state from the marker. This skip request applies to this update, not subsequent implementation pushes.
+
+## Standing documentation-only skip policy - 2026-11-06
+
+The user instructed that documentation-only commits always contain `[skip ci]`. The active rules above and [root instructions section 5](../../PERPLEXITY_INSTRUCTIONS.md#5-ci-execution-and-documentation-only-commits) now require that marker in proposed, approved and actual messages without a separate request. Mixed executable/configuration/test/workflow changes are not documentation-only. No workflow or enforcement code changes are included. Historical delivery records remain unchanged rather than retroactively altering their skip decisions.
+
+This policy update changes only the root instructions and existing CI/maintenance handover guidance. README, HANDOVER.md and TODO.md were reviewed and remain accurate and unchanged; SG-TODO-009.1/009.2 closure and later proposed stages are unaffected. No automated tests were executed for this documentation-only update, no separate workflow is dispatched, and no run-state claim is inferred from the marker.
