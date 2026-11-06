@@ -1,0 +1,31 @@
+:34:32.6782472Z {
+tests	Standalone Python browser and audit checks	2026-11-06T20:34:32.6782933Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-06T20:34:32.6783398Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-06T20:34:32.6783984Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-11-06T20:34:32.6784763Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	Standalone Python browser and audit checks	2026-11-06T20:34:32.6785601Z     "client card has a positive layout width at mobile viewport"
+tests	Standalone Python browser and audit checks	2026-11-06T20:34:32.6786380Z   ],
+tests	Standalone Python browser and audit checks	2026-11-06T20:34:32.6786643Z   "page_errors": [],
+tests	Standalone Python browser and audit checks	2026-11-06T20:34:32.6787062Z   "transport": "mocked HTTP/WS, real Chromium rendering"
+tests	Standalone Python browser and audit checks	2026-11-06T20:34:32.6787484Z }
+tests	Standalone Python browser and audit checks	2026-11-06T20:34:32.7650310Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-06T20:34:32.7651178Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-06T20:34:32.9979118Z ##[endgroup]
+tests	Post Run actions/setup-node@v4	﻿2026-11-06T20:34:33.0076439Z Post job cleanup.
+tests	Post Run actions/setup-node@v4	2026-11-06T20:34:33.1321101Z (node:16224) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-node@v4	2026-11-06T20:34:33.1322095Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/setup-python@v5	﻿2026-11-06T20:34:33.1548805Z Post job cleanup.
+tests	Post Run actions/setup-python@v5	2026-11-06T20:34:33.2811735Z Cache hit occurred on the primary key setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e, not saving cache.
+tests	Post Run actions/setup-python@v5	2026-11-06T20:34:33.2814281Z (node:16232) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-python@v5	2026-11-06T20:34:33.2815760Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/checkout@v4	﻿2026-11-06T20:34:33.2951540Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-06T20:34:33.3796924Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-06T20:34:33.3841459Z git version 2.56.0
+tests	Post Run actions/checkout@v4	2026-11-06T20:34:33.3881665Z Temporarily overriding HOME='/home/runner/work/_temp/dbbf524b-717e-404b-831a-0d5c85e09b82' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-06T20:34:33.3883174Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-06T20:34:33.3886566Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-06T20:34:33.3925753Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-06T20:34:33.3977445Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-06T20:34:33.4260965Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-06T20:34:33.4286971Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-06T20:34:33.4299633Z [command]/usr/bin/
