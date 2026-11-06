@@ -13,6 +13,7 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 6. [5e.tools sources and descriptive names](docs/todo/060-fivetools-source-configuration.md) - SG-TODO-006, completed (configuration and notification/popup labels delivered; combined CI verified; user-requested close-out, 2026-11-03).
 7. [Single-line monster buttons](docs/todo/070-monster-button-layout.md) - SG-TODO-007, completed (row HP controls removed and keyboard scrolling corrected; covering CI verified; user-requested close-out, 2026-11-03).
 8. [Source-size refactors](docs/todo/080-source-size-refactors.md) - SG-TODO-008, completed (Admin and Storage accepted by user; no code above the existing-file allowance, 2026-11-03).
+9. [Admin usability and visual redesign](docs/todo/090-admin-usability-redesign.md) - SG-TODO-009, proposed (suggestions recorded at user request; seven-phase processing order, dependencies and validation criteria, 2026-11-06).
 
 ## Maintenance
 
