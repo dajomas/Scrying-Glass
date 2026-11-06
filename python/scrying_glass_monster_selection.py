@@ -64,7 +64,7 @@ class MonsterImage(HTMLParser):
             src = attrs.get("src")
             if src:
                 url = urljoin("https://www.dndbeyond.com", src)
-                if ft.https_url(url):
+                if ft.https_url(src):
                     self.url = url
 
 def dnd_candidates(context, species):
@@ -174,9 +174,19 @@ class CandidateMonstersMixin(AdminMonstersMixin):
                              ac: int = Form(...), hprangestart: str = Form(...),
                              hprangeend: str = Form(''), color: str = Form(...),
                              quantity: int = Form(1, ge=1, le=50),
-                             image: UploadFile | None = File(None), selection_token: str = Form('')):
+                             image: UploadFile | None = File(None), selection_token: str = Form(''),
+                             initiative_bonus: str = Form('')):
+        from fastapi.params import Form as FormParameter
+        from .scrying_glass_initiative_input import creation_bonus_fields
+        if isinstance(initiative_bonus, FormParameter):
+            initiative_bonus = initiative_bonus.default
+        try:
+            bonus_fields = creation_bonus_fields(initiative_bonus)
+        except ValueError as exc:
+            raise self.context.HTTPException(422, str(exc)) from exc
         next_hp = self.context.hp_value_factory(hprangestart, hprangeend)
-        fields = {"name": name.strip(), "monster_species": monster_species.strip(), "ac": ac}
+        fields = {"name": name.strip(), "monster_species": monster_species.strip(), "ac": ac,
+                  "initiative_roll": None, **bonus_fields}
         from .scrying_glass_monster_names import numbered_monster_name
         try:
             names = [numbered_monster_name(fields["name"], quantity, number) for number in range(1, quantity + 1)]
