@@ -44,3 +44,11 @@ Prepared regressions cover both provider labels, selected image/token continuity
 - [SG-TODO-009: Admin redesign](090-admin-usability-redesign.md) and [panel/forms handover](../handover/280-admin-panel-forms.md): preserve field groups and .monster disclosure without changing unrelated redesign status.
 
 The original TODO addition was planning only and used [skip ci]. This mixed implementation delivery does not use that marker and relies on normal branch-push CI; no run result is inferred. SG-TODO-012/013/014 are not implemented by this increment.
+
+### Loaded and empty preview alignment correction - 2026-11-06
+
+The user supplied screenshots showing two alignment defects in initial implementation f8e2018f7c08b3e44011e6d2fcdecd26ab99a6bf: sibling fields bottom-aligned against a tall image preview, and the No image selected box aligned with the field label instead of the file input. The earlier sibling-only proposal was not committed and is superseded by this combined correction.
+
+The scoped stylesheet top-aligns preview-containing group rows and uses a two-row grid with the original image label spanning shared subgrid tracks. Both loaded previews and empty-state boxes start on the file-input row, without a fixed label-height offset. Narrow layouts put the preview in a separate row below the input. Original labels, inputs, handlers and image-selection behaviour are unchanged. Modern browser support for CSS :has and subgrid is required.
+
+Prepared tests/test_monster_image_preview_alignment.py explicitly checks both Appearance and Import options at 1440/375, loaded and empty, including desktop label-top equality, preview/input top equality, right-side placement, narrow stacking/bounds and unchanged unrelated-row alignment. Executed preparation passed stylesheet parsing, test Python AST parsing and simplified Chromium geometry checks for both groups in all four width/state combinations; desktop preview/input and sibling-label offsets were 0 px. Full-Admin regression execution, covering corrective CI and user visual/workflow acceptance remain pending. SG-TODO-011 stays in progress; see the handover correction record.

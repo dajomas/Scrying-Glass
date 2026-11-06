@@ -1,14 +1,27 @@
 /* Preview styling is local to Add Monsters, never combatant rows. */
 body.admin-shell .sg-image-field {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 10rem;
+    grid-template-rows: auto auto;
     align-items: start;
-    gap: var(--admin-space-3, .75rem);
+    column-gap: var(--admin-space-3, .75rem);
+    row-gap: var(--admin-space-1, .25rem);
     min-width: 0;
     max-width: 100%;
 }
-body.admin-shell .sg-image-field > .field { min-width: 0; max-width: 100%; }
+body.admin-shell .sg-image-field > .field {
+    min-width: 0;
+    max-width: 100%;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    grid-template-rows: subgrid;
+    row-gap: var(--admin-space-1, .25rem);
+}
+body.admin-shell .sg-image-field > .field > input { align-self: start; }
 body.admin-shell .sg-image-preview {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: start;
     box-sizing: border-box;
     width: 10rem;
     max-width: 100%;
@@ -31,8 +44,16 @@ body.admin-shell .sg-image-preview figcaption {
     line-height: 1.4;
     overflow-wrap: anywhere;
 }
+body.admin-shell .sg-field-group:has(.sg-image-field) > .sg-group-row {
+    align-items: flex-start;
+}
 @media (max-width: 600px) {
-    body.admin-shell .sg-image-field { flex: 1 1 100%; }
+    body.admin-shell .sg-image-field {
+        flex: 1 1 100%;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto auto auto;
+    }
     body.admin-shell .sg-image-field > .field { width: 100%; }
     body.admin-shell .sg-image-field input[type="file"] { width: 100%; min-width: 0; }
+    body.admin-shell .sg-image-preview { grid-column: 1; grid-row: 3; }
 }
