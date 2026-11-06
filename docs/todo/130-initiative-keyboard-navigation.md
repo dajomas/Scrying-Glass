@@ -3,12 +3,13 @@
 [Back to TODO index](../../TODO.md)
 
 - Task: SG-TODO-013
-- Status: completed for feature scope at the user's explicit direction, 2026-11-06; test-only correction included, covering green local/CI rerun still pending. This is not a green full-suite sign-off.
+- Status: completed, 2026-11-06. User-directed feature acceptance retained; the test-maintenance follow-up has covering successful local/CI suite and audit evidence, resolving the former validation exception. Fixture results are not authenticated live-server validation.
 - Recorded: 2026-11-06. Wrapping/Escape revision approved: 2026-11-06.
 - Priority, owner and deadline: not assigned.
 - Coordination: follows completed 009.4/012 and precedes 009.5.
 - Delivered wrapping/Escape implementation: 8a5fa937cecd8563d5fe79a28a32a73fcd0babd1.
 - User-directed documentation close-out: eb936e2421712e6e8c871b923d08a44bc3caa900, with [skip ci].
+- Verified corrective test revision: 3709341013dcef483a11975b5c6a5dd3f1c2603c.
 
 ## Current approved behaviour
 
@@ -57,36 +58,52 @@ widths, and 682/0 connections. Completion/publication does not mean test success
 After reviewing these results, the user explicitly requested finishing/closing 013
 and pushing a documentation-only close-out with [skip ci], then making the test
 correction. That feature close-out was delivered at eb936e2421712e6e8c871b923d08a44bc3caa900.
-It records user-directed acceptance/closure with a known validation exception,
+It recorded user-directed acceptance/closure with a known validation exception,
 not a fully passing suite or assistant-executed authenticated/live persistence audit.
+The later covering results below resolve that exception, without rewriting these
+historical failures as successes.
 
-## Test-maintenance correction - included; rerun pending
+## Test-maintenance correction - delivered and verified
 
-The existing test exits initiative wrapping with Escape, asserts roster-region
-focus, and Tabs through checkbox and initiative. The updated test adds four lines:
-Tab/assert Edit, then Shift+Tab/assert initiative. The existing button loop starts
-from initiative, not checkbox, so its next Tab is expected to reach Edit.
-The discarded draft that moved backward again to checkbox is not used.
+The test exits initiative wrapping with Escape, asserts roster-region focus, and
+Tabs through checkbox and initiative. Corrective commit
+3709341013dcef483a11975b5c6a5dd3f1c2603c adds Tab/assert Edit, then Shift+Tab/assert
+initiative before the original button loop. The loop starts from initiative, not
+checkbox; the discarded draft that moved backward again to checkbox was not used.
 
-Relative to the live test at b510d4269d9d41ae71cf913d117214796199bea0, this adds two
-assertion calls without removing any existing checks. The method now has thirteen
-assertion calls; the original eight plus the existing three Escape-precondition
-assertions and these two native-order assertions. Ten forward/nine reverse button
-visits, strict focus/local visibility, scroll checks, viewport coverage, errors and
-mutations assertions are retained. Wrapping is not disabled and focus is not forced.
+Relative to b510d4269d9d41ae71cf913d117214796199bea0, four lines and two assertions
+were added without removing existing checks. The method has thirteen assertion
+calls: the original eight, three Escape-precondition assertions and two native-order
+assertions. Ten forward/nine reverse button visits, local visibility, scroll,
+viewport, errors and mutations checks remain. Wrapping and application behaviour
+were not changed; focus was not forced. Preparation fragment AST/comparison checks
+were static checks, not the subsequent full-suite execution evidence.
 
-Executed preparation for this revision: Python AST parsing of a representative
-precondition/loop fragment and removal-of-insertion comparison passed. These are
-static fragment checks, not execution of the complete repository test. The earlier
-minimal browser fixture checked native order only, not the assembled Admin method.
-The assembled-Admin method, full suite and audit were not executed for this revision.
-Existing CI unittest discovery includes this test; workflows are unchanged.
-This mixed test/documentation commit omits [skip ci] for normal push-triggered CI;
-no separate dispatch or observed workflow result is claimed. Application behaviour
-is unchanged. README and the TODO/HANDOVER indexes remain accurate without edits.
+## Covering validation close-out - 2026-11-06
 
-Open action: run/review covering local and CI evidence for this corrective commit,
-verify all three viewport subtests and the full suite/audit pass, then resolve the
-validation exception. Historical failed evidence does not validate this revision.
-Earlier 009.4/012 results are not 013 evidence. See
-[implementation, reviewed evidence and limits](../handover/320-initiative-keyboard-navigation.md).
+Both reviewed runs cover exact 3709341013dcef483a11975b5c6a5dd3f1c2603c:
+
+- Local suite=all: publication c44a0c43d53f0a32f7c96fa2417955388252008a,
+  folder local-tests-3709341/run-20261106T205300Z-tsCSj8. completed=1 and overall
+  exit=0; every summary.tsv command exits zero, including syntax/import, unittest,
+  pytest, 38 JavaScript entries and six standalone entries. The repeated audit
+  reports 1,074 tests OK and 682 connections/zero without explicit close.
+- CI: Branch tests run 42292006888 attempt 1, published at
+  8723a4c9451cfd334287a00fd5023e8c44b8e236 under ci-results-42292006888-attempt-1.
+  Workflow and tests job are completed/success. The corrected roster keyboard test
+  and all eight dedicated initiative-navigation methods explicitly pass. The main
+  suite and repeated audit each report 1,074 tests OK; audit reports 682/0
+  connections and PASS. Syntax/import, pytest, JavaScript, standalone checks and
+  visual-artifact upload succeed.
+
+The outstanding local/CI suite-and-audit validation action is resolved. Detailed
+log locations and review limitations are recorded in the
+[handover close-out](../handover/320-initiative-keyboard-navigation.md#covering-validation-close-out---2026-11-06).
+Earlier 009.4/012 evidence is not substituted for these covering results. Browser
+fixtures remain distinct from authenticated live-server verification.
+
+This close-out changes documentation only, with [skip ci] in the commit message.
+No new tests were executed for the documentation update, no workflow is modified
+or separately dispatched, and no new workflow state is inferred from the marker.
+README and HANDOVER index remain accurate without edits; unrelated tasks and
+prior acceptance decisions are unchanged.

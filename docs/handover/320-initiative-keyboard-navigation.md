@@ -3,9 +3,10 @@
 [Back to handover index](../../HANDOVER.md)
 
 Updated: 2026-11-06. Task: [SG-TODO-013](../todo/130-initiative-keyboard-navigation.md).
-Status: feature scope closed at the user's explicit direction; separate test-only
-correction included, but covering green local/CI rerun remains outstanding.
-Do not represent this as successful full-suite validation.
+Status: completed; user-directed feature acceptance retained and corrective test
+revision 3709341013dcef483a11975b5c6a5dd3f1c2603c has covering successful local/CI
+suite and audit evidence. The former validation exception is resolved. This does
+not establish authenticated live-server verification.
 Initial delivery: d23ee70d6beea3f6c5031f0102c27e5f537edbc8. Wrapping/Escape delivery:
 8a5fa937cecd8563d5fe79a28a32a73fcd0babd1, based on
 5992362c478c7763432268b8fd0b33d72140ddab.
@@ -93,36 +94,83 @@ closing 013, updating/pushing documentation with [skip ci], then making the test
 correction. Documentation-only close-out eb936e2421712e6e8c871b923d08a44bc3caa900
 was published first, changing only the index and these task/handover documents.
 It ran no tests and changed no application/tests/workflows, with [skip ci] and no
-separate dispatch. This records user-directed feature acceptance and closure with
+separate dispatch. This recorded user-directed feature acceptance and closure with
 a disclosed validation exception, not green full-suite validation or a waiver of
 the requested test repair. Dedicated browser HTTP state/saves remain intercepted.
+The later covering results below resolve that exception; historical failures remain
+failure evidence for their original tested revision.
 
 ## Subsequent test-maintenance correction - 2026-11-06
 
-The existing Escape precondition is retained. Relative to the live test at
-b510d4269d9d41ae71cf913d117214796199bea0, this revision adds four lines:
-Tab/assert Edit, then Shift+Tab/assert initiative. The original button loop then
-starts from initiative so its first Tab can reach Edit. The discarded draft that
-continued backward to checkbox would have made that first assertion fail and is
-not delivered. No application code or workflow is changed and focus is not forced.
+Corrective commit 3709341013dcef483a11975b5c6a5dd3f1c2603c retained the existing
+Escape precondition. Relative to b510d4269d9d41ae71cf913d117214796199bea0, it added
+four lines: Tab/assert Edit, then Shift+Tab/assert initiative. The original button
+loop starts from initiative so its first Tab can reach Edit. The discarded draft
+that continued backward to checkbox was not delivered. Application code and
+workflows were unchanged and focus was not forced.
 
 All existing 10-forward/9-reverse visits, strict local-focus visibility and scroll
 checks at 1440/768/375, error/no-mutation assertions and other layout methods remain.
-This revision adds two assertion calls to the existing eleven, yielding thirteen.
-The original eight checks and three Escape-precondition checks remain intact.
+Two assertions were added to the existing eleven, yielding thirteen. The original
+eight checks and three Escape-precondition checks remain intact.
 
-Executed preparation for this revision: AST parsing of a representative Python
-precondition/loop fragment and removal-of-insertion comparison passed. This does
-not establish full-file execution or assembled-Admin success. The earlier minimal
-browser fixture demonstrated native order only, not the production application.
-The assembled-Admin method, full suite and audit were not executed for this revision.
-Existing unittest discovery in .github/workflows/tests.yml includes this test.
-The commit omits [skip ci] for normal push-triggered CI; no separate dispatch or
-observed triggered/completed/pass state is claimed. Covering local/CI results and
-audit review remain required to resolve the validation exception. Historical failed
-results do not validate this revision. Feature scope stays closed at user direction.
+Preparation AST parsing of a representative Python precondition/loop fragment and
+removal-of-insertion comparison passed. Those static fragment checks and the earlier
+minimal native-order browser fixture were not assembled-Admin/full-suite evidence.
+The test-containing commit omitted [skip ci] for normal push-triggered CI without
+workflow changes or separate dispatch. Subsequent execution results follow.
 
-This corrective commit changes only tests/test_monster_button_layout.py and these
-existing task/handover sections. README and the TODO/HANDOVER indexes were reviewed
-and remain accurate without edits; links and task statuses are unchanged. The 018
-backlog addition, closed 009.4/012 and overall in-progress 009 are preserved.
+## Covering validation close-out - 2026-11-06
+
+Tested revision for both runs: 3709341013dcef483a11975b5c6a5dd3f1c2603c.
+Evidence publication commits identify stored results, not additional tested code.
+
+### Local execution
+
+Publication: c44a0c43d53f0a32f7c96fa2417955388252008a.
+Folder: local-tests-3709341/run-20261106T205300Z-tsCSj8.
+
+- environment.txt identifies exact commit, suite=all, a detached local clone,
+  Python 3.14.7/Node 22.23.2 and completed=1, 20:53:00Z to 20:59:12Z.
+- exit-code.txt is 0. Every summary.tsv command exits zero: syntax/import,
+  unittest, pytest, 38 JavaScript entries and six standalone entries.
+- suites/standalone/script-2.log reports 1,074 tests in 157.369s, OK;
+  682 connections opened, zero without explicit close, and connection-audit PASS.
+- The main unittest log returned during review was truncated. Its command success
+  is supported by summary.tsv; counts and audit details come from the complete
+  repeated-suite log, not from an invented reading of the truncated portion.
+
+### GitHub Actions execution
+
+Workflow: Branch tests, run 42292006888 attempt 1, push on features/perplexity.
+Publication: 8723a4c9451cfd334287a00fd5023e8c44b8e236.
+Folder: ci-results-42292006888-attempt-1.
+Run: https://github.com/dajomas/Scrying-Glass/actions/runs/42292006888.
+
+- run.json identifies exact headSha, completed/success for workflow and tests job
+  128147529059. Syntax/import, Python/browser suite, pytest, JavaScript, standalone
+  checks, visual-artifact upload and cleanup steps all succeed.
+- workflow.log, reader-chunks/file-000025/part-000065.txt and part-000066.txt,
+  explicitly reports all eight dedicated initiative-navigation methods OK,
+  including full-Admin wrapping/Escape and native save/refresh/rejection.
+- part-000070.txt explicitly reports the corrected
+  test_keyboard_reaches_every_button_and_scrolls_locally OK. Its retained test
+  covers 1440/768/375; the other roster-layout methods also pass in parts 70-71.
+- part-000080.txt reports the main suite: 1,074 tests in 108.092s, OK.
+- part-000107.txt reports the repeated suite: 1,074 tests in 105.817s, OK;
+  682 opened connections, zero without explicit close, and connection-audit PASS.
+
+The covering local/CI suite-and-audit validation exception is resolved. No further
+corrective code is indicated by these results. Prior failed runs are retained as
+historical evidence, not relabelled as passes. These fixtures, including mocked
+HTTP/WS with real Chromium rendering, do not establish authenticated live-server
+or complete end-to-end validation.
+
+### Documentation-only recording
+
+This update changes TODO.md and the existing task/handover sections only. The
+commit message includes [skip ci]; no workflow is modified or separately dispatched.
+No new tests were executed for this documentation update and no new workflow state
+is inferred from the skip marker. README and HANDOVER index were reviewed/reused
+and remain accurate without edits. The 018 backlog addition, closed 009.4/012,
+overall in-progress 009 and other task statuses are preserved.
