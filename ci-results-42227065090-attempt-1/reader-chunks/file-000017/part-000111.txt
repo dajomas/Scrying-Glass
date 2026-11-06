@@ -1,0 +1,31 @@
+edtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:05.2587708Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:05.2588030Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:05.2588589Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:05.2589156Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:05.2589723Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:05.2590350Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:05.2590879Z     raise result
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:05.2601848Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6891539Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6893494Z ERROR: test_header_scrolling_feedback_and_pane_preferences (test_admin_header_hierarchy.HeaderHierarchyBrowserTests.test_header_scrolling_feedback_and_pane_preferences) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6895050Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6895646Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6896738Z   File "/tmp/scrying-tests-c0ck6ojq/repo/tests/test_admin_header_hierarchy.py", line 123, in test_header_scrolling_feedback_and_pane_preferences
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6897814Z     page.locator('#characterName').fill('Keep my draft')
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6898739Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6900150Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11640, in fill
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6901120Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6901438Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6901766Z         self._impl_obj.fill(
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6902142Z         ^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6902489Z     ...<4 lines>...
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6902816Z         )
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6903098Z         ^
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6903375Z     )
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6903648Z     ^
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6904575Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6905455Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6905816Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:25.6907023Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 228, in fill
+tests

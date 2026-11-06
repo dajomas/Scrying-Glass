@@ -1,0 +1,37 @@
+# tests 1
+tests	JavaScript tests	2026-11-06T13:40:35.3672004Z # suites 0
+tests	JavaScript tests	2026-11-06T13:40:35.3672948Z # pass 1
+tests	JavaScript tests	2026-11-06T13:40:35.3675749Z # fail 0
+tests	JavaScript tests	2026-11-06T13:40:35.3676371Z # cancelled 0
+tests	JavaScript tests	2026-11-06T13:40:35.3677061Z # skipped 0
+tests	JavaScript tests	2026-11-06T13:40:35.3677706Z # todo 0
+tests	JavaScript tests	2026-11-06T13:40:35.3679539Z # duration_ms 50.927152
+tests	JavaScript tests	2026-11-06T13:40:35.3974767Z ##[endgroup]
+tests	Standalone Python browser and audit checks	﻿2026-11-06T13:40:35.4011269Z ##[group]Run status=0
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4011574Z ^[[36;1mstatus=0^[[0m
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4011825Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4012144Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4012400Z ^[[36;1m  args=()^[[0m
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4012674Z ^[[36;1m  if [[ "$test" == tests/audit_log_clear.py ]]; then^[[0m
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4013001Z ^[[36;1m    args=(patched)^[[0m
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4013241Z ^[[36;1m  fi^[[0m
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4013588Z ^[[36;1m  python tools/run_split_tests.py -- python "$test" "${args[@]}" || status=1^[[0m
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4014012Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4014465Z ^[[36;1mdone < <(find tests -type f -name '*.py' ! -name 'test_*.py' ! -name '__init__.py' -print0 | sort -z)^[[0m
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4014928Z ^[[36;1mexit "$status"^[[0m
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4064189Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4064558Z env:
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4065027Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4065773Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4066224Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4066669Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4067059Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4067457Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4067851Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4068186Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:35.4191148Z ##[group]tests/admin-message-timeout-browser.py
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:41.3696583Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-06T13:40:41.3697371Z ##[group]tests/audit_connection_lifetime.py
+tests	Standalone Python browser and audit checks	2026-11-06T13:41:34.5441947Z D&D Beyond candidate unavailable (/monsters/old): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-06T13:41:34.5442951Z D&D Beyond candidate unavailable (/monsters/new): Unavailable
+tests	Standalone Python browser and au

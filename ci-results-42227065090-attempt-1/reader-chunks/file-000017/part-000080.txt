@@ -1,0 +1,30 @@
+-11-06T13:40:22.1640276Z        - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1640538Z      - retrying fill action
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1640783Z        - waiting 500ms
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1640928Z 
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1640936Z 
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1641128Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1642136Z ERROR: test_header_scrolling_feedback_and_pane_preferences (test_admin_header_hierarchy.HeaderHierarchyBrowserTests.test_header_scrolling_feedback_and_pane_preferences) (width=768)
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1643221Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1643737Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1644487Z   File "/tmp/scrying-tests-kznu7y14/repo/tests/test_admin_header_hierarchy.py", line 123, in test_header_scrolling_feedback_and_pane_preferences
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1645201Z     page.locator('#characterName').fill('Keep my draft')
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1645587Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1646276Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11640, in fill
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1646855Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1647058Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1647270Z         self._impl_obj.fill(
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1647510Z         ^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1647740Z     ...<4 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1647946Z         )
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1648124Z         ^
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1648305Z     )
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1648479Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1649038Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1649867Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1650105Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1650691Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 228, in fill
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1651401Z     return await self._frame.fill(self._selector, strict=True, **params)
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1651845Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1652506Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 641, in fill
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1653128Z     await self._fill(**locals_to_params(local

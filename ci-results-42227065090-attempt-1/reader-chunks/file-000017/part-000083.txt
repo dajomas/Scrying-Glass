@@ -1,0 +1,34 @@
+ion.py", line 78, in send
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1691029Z     return await self._connection.wrap_api_call(
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1691382Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1691658Z     ...<3 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1691895Z     )
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1692078Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1692709Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1693528Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1694175Z playwright._impl._errors.TimeoutError: Locator.fill: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1694590Z Call log:
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1694842Z   - waiting for locator("#characterName")
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1695425Z     - locator resolved to <input name="name" required="" id="characterName" placeholder="For example: Aelwyn"/>
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1695938Z     - fill("Keep my draft")
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1696196Z   - attempting fill action
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1696667Z     2 × waiting for element to be visible, enabled and editable
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1697060Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1697321Z     - retrying fill action
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1697763Z     - waiting 20ms
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1698134Z     2 × waiting for element to be visible, enabled and editable
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1698504Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1698881Z     - retrying fill action
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1699118Z       - waiting 100ms
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1699737Z     10 × waiting for element to be visible, enabled and editable
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1700119Z        - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1700380Z      - retrying fill action
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1700631Z        - waiting 500ms
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1700769Z 
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1700778Z 
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1701038Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1701417Z Ran 1041 tests in 103.434s
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1701580Z 
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1701710Z FAILED (errors=3)
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.4764580Z ##[error]Process completed with exit code 1.
+tests	Upload Admin foundations visual fixtures	﻿2026-11-06T13:40:22.4837033Z ##[group]Run actions/upload-a

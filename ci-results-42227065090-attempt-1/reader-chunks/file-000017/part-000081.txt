@@ -1,0 +1,32 @@
+s()))
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1653984Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 653, in _fill
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1654731Z     await self._channel.send("fill", self._timeout, locals_to_params(locals()))
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1655508Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1656142Z     return await self._connection.wrap_api_call(
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1656480Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1656749Z     ...<3 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1656960Z     )
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1657144Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1657751Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1658548Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1659154Z playwright._impl._errors.TimeoutError: Locator.fill: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1659773Z Call log:
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1660030Z   - waiting for locator("#characterName")
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1660597Z     - locator resolved to <input name="name" required="" id="characterName" placeholder="For example: Aelwyn"/>
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1661106Z     - fill("Keep my draft")
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1661364Z   - attempting fill action
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1662011Z     2 × waiting for element to be visible, enabled and editable
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1662389Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1662651Z     - retrying fill action
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1662890Z     - waiting 20ms
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1663251Z     2 × waiting for element to be visible, enabled and editable
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1663619Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1663870Z     - retrying fill action
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1664103Z       - waiting 100ms
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1664583Z     10 × waiting for element to be visible, enabled and editable
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1665259Z        - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1665517Z      - retrying fill action
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1665763Z        - waiting 500ms
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1665895Z 
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1666022Z 
+tests	Python test suite (including browser fixtures)	2026-11-06T13:40:22.1666224Z =======================================

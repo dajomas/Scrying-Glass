@@ -1,0 +1,30 @@
+Python browser and audit checks	2026-11-06T13:42:26.3436479Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:26.6496710Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:26.6912764Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:26.6913485Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:29.4359569Z {
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:29.4360005Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:29.4360458Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:29.4360974Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:29.4361638Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:29.4362346Z     "client card has a positive layout width at mobile viewport"
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:29.4362747Z   ],
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:29.4362974Z   "page_errors": [],
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:29.4363336Z   "transport": "mocked HTTP/WS, real Chromium rendering"
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:29.4363697Z }
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:29.5462701Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:29.5463203Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:29.7466305Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-06T13:42:29.7474555Z ##[error]Process completed with exit code 1.
+tests	Post Run actions/checkout@v4	﻿2026-11-06T13:42:29.7583918Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-06T13:42:29.8513982Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-06T13:42:29.8564883Z git version 2.56.0
+tests	Post Run actions/checkout@v4	2026-11-06T13:42:29.8611036Z Temporarily overriding HOME='/home/runner/work/_temp/790a0a45-6fba-4143-a14c-d0de30b7a5db' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-06T13:42:29.8612216Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-06T13:42:29.8617454Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-06T13:42:29.8665615Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-06T13:42:29.8712390Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-06T13:42:29.9048449Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-06T13:42:29.9084864Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-06T13:42:29.9102576Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-06T13:42:29.9146487Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local 
