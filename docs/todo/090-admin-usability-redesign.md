@@ -4,7 +4,7 @@
 
 ## SG-TODO-009 - Professional, task-focused Admin interface
 
-- Status: in progress; initial 009.1 foundations CI verified, with blank-notice/screenshot corrections included and covering validation plus user visual acceptance pending. No later redesign phase is implemented.
+- Status: in progress; SG-TODO-009.1 closed (completed) after verified local/CI validation and user acceptance on 2026-11-06. Phases 009.2-009.7 remain proposed and are not implemented.
 - Requested: 2026-11-06. The user requested recording the preceding design suggestions and a processing order in the TODO list, then agreed staged delivery and requested starting 009.1.
 - Priority: incremental usability improvement; no priority relative to other tasks agreed.
 - Owner and deadline: not assigned.
@@ -27,11 +27,11 @@ Related accepted work:
 
 ## Agreed staged processing order
 
-Process phases 1 through 7 in order. Each phase has a stable subtask ID. Stage 009.1 is in progress; later stages remain proposed. Review the result of each coherent increment before proceeding to structural changes. Dependencies indicate the recommended sequence, not a requirement to implement the entire redesign in one commit.
+Process phases 1 through 7 in order. Each phase has a stable subtask ID. Stage 009.1 is closed; later stages remain proposed. Review the result of each coherent increment before proceeding to structural changes. Dependencies indicate the recommended sequence, not a requirement to implement the entire redesign in one commit.
 
 | Order | Subtask | Deliverable | Dependencies |
 |---|---|---|---|
-| 1 | SG-TODO-009.1 | Shared visual foundations | Baseline inspection |
+| 1 | SG-TODO-009.1 | Shared visual foundations (closed) | Baseline inspection |
 | 2 | SG-TODO-009.2 | Header and action hierarchy | 009.1 |
 | 3 | SG-TODO-009.3 | Consistent panels and forms | 009.1, 009.2 |
 | 4 | SG-TODO-009.4 | Scannable rosters and contextual bulk actions | 009.3; agreement for changed row controls |
@@ -43,7 +43,7 @@ Accessibility and responsive checks apply to every phase; phase 7 is final conso
 
 ### SG-TODO-009.1 - Shared visual foundations
 
-Status: in progress; initial covering CI verified, corrective notice/layout validation and user visual acceptance pending. See [implementation and validation record](../handover/260-admin-visual-foundations.md).
+Status: closed (completed), 2026-11-06, at the user's explicit request after verified corrective local/CI results and confirmation of notification behaviour and foundation consistency on the correct server. Initial implementation: e632eba99e00695c7f002148bde8c0aee386d4fe. Corrective implementation: 9a96b5a125c0b22b18218769c9c5cf2508a60ac0. See [implementation, verification and close-out record](../handover/260-admin-visual-foundations.md).
 
 - Establish reusable tokens for surfaces, borders, typography, spacing, control heights and corner radii.
 - Use quieter panels with subtle borders and minimal shadows; use campaign/character teal and battle/monster amber as restrained accents rather than dominant panel fills. Retain appropriate fantasy branding without decorating operational controls excessively.
@@ -139,6 +139,14 @@ Initial preparation executed CSS parsing, selected nominal colour-contrast calcu
 
 Desktop screenshot review supported the neutral panels, teal edges and brighter headings/labels but identified empty coloured notification strips and an ambiguously scrolled top-of-workspace capture. The user requested necessary 009.1 corrections. A new presentation enhancement collapses whitespace-only pane notifications, preserving real message text, existing timers and ARIA attributes. The screenshot test resets the workspace scroll to zero before each capture and asserts header/workspace separation; it does not change production header positioning or claim a proven overlap bug. Before/after remains a foundation-CSS comparison, with the notice correction active in both.
 
-Corrective preparation passed JavaScript syntax checking, four isolated Node VM tests, Python AST parsing and the new script-inclusion source test against a drafted fragment. Corrective full browser/suite execution and CI are pending. Existing CI discovery covers the new Node test and expanded browser/source module; no workflow change is necessary. Initial green CI is not validation of this correction.
+Corrective preparation passed JavaScript syntax checking, four isolated Node VM tests, Python AST parsing and the new script-inclusion source test against a drafted fragment. Full corrective browser/suite execution and CI were pending at that preparation stage; the close-out below supersedes that pending status. Existing CI discovery covers the new Node test and expanded browser/source module; no workflow change was necessary. Initial green CI alone was not validation of the correction.
 
-Do not close 009.1 before reviewing covering corrective CI, fresh desktop/narrow visual results and user acceptance. Review notification appearance/clearing, manual screen-reader announcements, header/workspace geometry, compact inputs, roster scrolling/focus, modals and unchanged colour semantics. Header crowding/action hierarchy remains 009.2, and tabs/live-workspace restructuring remains later work. The generated final-interface impression is a concept, not an approved implementation specification.
+Header crowding/action hierarchy remains 009.2, and tabs/live-workspace restructuring remains later work. The generated final-interface impression is a concept, not an approved implementation specification.
+
+## SG-TODO-009.1 verified close-out - 2026-11-06
+
+Closed (completed) at the user's explicit request after confirmation on the correct server that notification areas appear only for messages and foundation consistency is accepted. The earlier report of persistent blank strips was traced by the user to viewing the wrong server; no additional code correction was needed.
+
+Corrective source 9a96b5a125c0b22b18218769c9c5cf2508a60ac0 passed the reviewed full local run local-tests-9a96b5a/run-20261106T122845Z-ogPIRn, published at 01bd4b232c51aefb7ee185c4099b0e3c381692c7, and CI run 42216373147 attempt 1, published at 7adfe04748b300a3f6686af6714121ea8a0853bb under ci-results-42216373147-attempt-1. CI workflow/job/configured steps succeeded; all six foundations tests and four notification-module Node tests explicitly passed; unittest reported 1,035 tests OK and pytest 43 passes. See the handover for local summaries, additional standalone evidence and exact review limits.
+
+This closes only 009.1. SG-TODO-009 remains in progress; 009.2-009.7 remain proposed. No full screen-reader audit, exhaustive live encounter runbook or broader redesign acceptance is implied. This close-out changes documentation only, reruns no tests during preparation and leaves application/tests/workflow code unchanged. No CI skip was requested; normal push-triggered CI remains enabled, with no separate workflow dispatch or unverified run-state claim.
