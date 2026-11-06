@@ -21,6 +21,7 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 14. [Initiative keyboard navigation](docs/todo/130-initiative-keyboard-navigation.md) - SG-TODO-013, proposed (Tab and Shift+Tab navigate between initiative edit boxes in Characters and Monsters, 2026-11-06).
 15. [Add Monsters source help text](docs/todo/140-monster-source-help-text.md) - SG-TODO-014, proposed (mention D&D Beyond first and 5e.tools as the no-match fallback in Add Monsters help texts, 2026-11-06).
 16. [Battle Actions combatant statistics](docs/todo/150-battle-actions-combatant-statistics.md) - SG-TODO-015, proposed (show available AC, HP and HP MAX below the selected target and Reaction source dropdowns, 2026-11-06).
+17. [Source-based monster selection](docs/todo/160-source-based-monster-selection.md) - SG-TODO-016, proposed (source dropdown defaulting to None and a dependent dropdown of all available monsters from the selected source, 2026-11-06).
 
 ## Maintenance
 
