@@ -1,0 +1,32 @@
+etup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:47.2627199Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:47.2627939Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:47.5052608Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:47.5373518Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:47.5374379Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:50.4002684Z {
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:50.4003138Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:50.4003645Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:50.4004140Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:50.4004758Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:50.4005655Z     "client card has a positive layout width at mobile viewport"
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:50.4006375Z   ],
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:50.4006597Z   "page_errors": [],
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:50.4006939Z   "transport": "mocked HTTP/WS, real Chromium rendering"
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:50.4007287Z }
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:50.4746619Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:50.4747114Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-06T17:29:50.6011696Z ##[endgroup]
+tests	Post Run actions/setup-node@v4	﻿2026-11-06T17:29:50.6097046Z Post job cleanup.
+tests	Post Run actions/setup-node@v4	2026-11-06T17:29:50.7365397Z (node:15216) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-node@v4	2026-11-06T17:29:50.7366758Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/setup-python@v5	﻿2026-11-06T17:29:50.7534604Z Post job cleanup.
+tests	Post Run actions/setup-python@v5	2026-11-06T17:29:50.8783258Z Cache hit occurred on the primary key setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e, not saving cache.
+tests	Post Run actions/setup-python@v5	2026-11-06T17:29:50.8785560Z (node:15224) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-python@v5	2026-11-06T17:29:50.8787034Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/checkout@v4	﻿2026-11-06T17:29:50.8923075Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-06T17:29:50.9782387Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-06T17:29:50.9828549Z git version 2.56.0
+tests	Post Run actions/checkout@v4	2026-11-06T17:29:50.9868326Z Temporarily overriding HOME='/home/runner/work/_temp/aaafef29-baec-4340-a027-cc1167367a31' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-06T17:29:50.9869879Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-06T17:29:50.9873539Z [command]/usr/bin/git confi
