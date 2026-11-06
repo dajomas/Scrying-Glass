@@ -57,3 +57,14 @@ def reset_initiative_patch(monster: Mapping) -> dict:
         return {"initiative": original}
     candidate = dict(monster, initiative=original, initiative_roll=None)
     return normalize_initiative(candidate)
+
+
+def legacy_total_patch(monster: Mapping, total) -> dict:
+    """Bridge existing final-total APIs until the raw-roll UI is connected.
+
+    Preserve the assigned bonus but detach the old raw roll. Do not derive a raw
+    roll from the incoming total or add the bonus to an already calculated total.
+    """
+    total = _integer(total, "initiative", nullable=True)
+    candidate = dict(monster, initiative=total, initiative_roll=None)
+    return normalize_initiative(candidate)

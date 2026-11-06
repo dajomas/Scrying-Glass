@@ -3,143 +3,117 @@
 [Back to TODO index](../../TODO.md)
 
 - Task: SG-TODO-018
-- Status: in progress; foundation delivered, reset/setup-import integration increment prepared for delivery; full feature integration and validation outstanding.
+- Status: in progress; foundation/reset delivered with covering CI; handler compatibility stage prepared, remaining feature integration outstanding.
 - Updated: 2026-11-06
-- Working branch: features/perplexity-018 for all 018 work until user sign-off. Do not merge back or write 018 changes to features/perplexity without fresh approval.
+- Working branch: features/perplexity-018 until user sign-off; no merge/write-back to features/perplexity without fresh approval.
 - Priority: next before SG-TODO-009.5 in the [agreed sequence](115-admin-delivery-sequence.md). No owner or deadline assigned.
 - Related: [initiative navigation](130-initiative-keyboard-navigation.md), [source selection](160-source-based-monster-selection.md), [Open5e](170-open5e-monster-source.md).
-- Continuity and validation: [foundation handover](../handover/330-monster-initiative-foundations.md).
+- Delivery/evidence: [handover](../handover/330-monster-initiative-foundations.md).
 
-## Agreed initiative behaviour - 2026-11-06
+## Agreed initiative contract - 2026-11-06
 
-Support a separate signed monster initiative bonus in manual Add Monster and
-.monster import, populated from the selected source when available and manually
-correctable. Missing bonuses default to 0 and do not block rolling. Distinguish
-a defaulted zero from an explicit zero internally; do not invent provider evidence
-or derive a bonus from Dexterity. Reject malformed manual/import input.
+Monsters have a separate negative, zero or positive initiative bonus. Manual Add
+Monster and .monster import must support it; source values can populate creation
+and remain manually correctable. Missing bonuses default to 0 without blocking
+rolling. Internally distinguish defaulted zero from explicit zero; do not invent
+provider evidence or infer initiative from Dexterity. Reject malformed manual/
+import values. Characters keep their announced final totals with no bonus UI
+or additional calculation.
 
-Show the assigned bonus read-only between roster HP/Max HP and the raw-roll
-editor. Existing-monster bonus editing belongs in the Edit modal, not inline;
-the reviewed source-refresh action below is another explicit replacement path.
-Show editable raw roll and calculated total separately. Calculate total as raw
-roll plus stored bonus exactly once. Each entered roll replaces the old raw
-roll, not the total. Saving a bonus change with a retained raw roll immediately
-recalculates total and ordering. Reload must not reroll or compound the bonus.
-Without a raw roll, the total is unset except for a retained legacy total.
+The monster roster shows read-only signed bonus between HP/Max HP and the editable
+raw-roll input, plus a separate calculated total used for ordering. Existing bonus
+edits belong in the Edit modal, not inline, with reviewed source refresh another
+explicit replacement path. Each new raw roll replaces the old roll. Apply the
+bonus exactly once; saving a bonus change with a retained roll recalculates total
+and order. Reload never rerolls or compounds. An unset raw roll has no calculated
+total except for a retained legacy total.
 
-Characters continue to enter announced final totals with no added calculation
-or bonus UI. Automatic individual rolls use each monster's bonus. Shared
-initiative uses one shared raw d20 roll plus individual bonuses, so totals and
-positions can differ. Equal totals retain existing tie resolution. Reordering
-preserves current turn owner, round and unrelated state without advancing turns.
-Retain existing initiative keyboard navigation. No new raw-roll bounds, manual
-final-total override or fallback ordering was agreed.
+Existing totals remain unchanged when missing bonuses default to 0; never invent
+old raw rolls. Distinguish legacy totals from unset roll inputs. Changing/retrieving
+a bonus without a roll preserves a legacy total; the next manual/automatic roll
+establishes roll-plus-bonus. Persist bonus/origin, roll and legacy/total semantics
+through reload and supported setup reuse. Shared rolling uses one shared d20 raw
+roll plus each selected monster's own bonus, so totals/positions can differ.
+Retain tie resolution and initiative keyboard navigation. Reordering must preserve
+current turn owner, round and unrelated state without advancing turns. No new
+raw-roll bounds, new dice roller, manual final-total override or fallback order
+was agreed; existing final-total API compatibility is temporary until UI integration.
 
-## Legacy compatibility and examples
-
-Default existing bonuses to 0 without changing stored totals or inventing old
-raw rolls. Distinguish legacy totals from unset raw rolls in the roster. Changing
-or retrieving a bonus without a retained raw roll preserves the legacy total;
-the next manual/automatic raw roll establishes the normal relationship. Persist
-bonus, origin, raw roll and legacy/total semantics through save/reload and supported
-setup reuse. The reset increment below covers stale-roll clearing; full setup/
-storage route validation remains outstanding.
-
-| Action | Raw roll | Bonus | Total |
-|---|---:|---:|---:|
-| Illustrative dragon input | 16 | +12 | 28 |
-| Replace roll | 10 | +12 | 22 |
-| Enter 16 again / reload unchanged | 16 | +12 | 28 |
-| Save bonus edit | 16 | +10 | 26 |
-| Negative bonus | 16 | -2 | 14 |
-| Zero/default bonus | 16 | 0 | 16 |
-
+Examples: raw 16 plus +12 gives 28; replace raw with 10 gives 22; enter 16 again
+or reload gives 28; edit bonus to +10 gives 26. Raw 16 plus -2 gives 14, plus 0
+(including default) gives 16. Shared raw 16 with +12/+3/-2 gives 28/19/14.
 The Adult Blue Dragon +12 input is illustrative user input, not a verified
-edition/source statistic. Shared raw 16 with bonuses +12/+3/-2 yields 28/19/14.
+edition/provider statistic.
 
-## Selected-monster source refresh - agreed 2026-11-06
+## Agreed selected-monster source refresh
 
-Include Refresh from source in the monster bulk dropdown. Disable it without a
-selection. Review only monsters selected when opening, never the entire roster.
-Retrieve the original selected source identity without silently substituting
-another edition/candidate. Without retained identity, use existing lookup and
-candidate selection, requiring selection before applying. Resolve candidates per
-row and return to the same review without losing other selections. Verify actual
-provider representations; no new Open5e/source-selection capability is assumed.
-Tasks 016/017 remain separate, not prerequisites.
+Add Refresh from source to the monster bulk dropdown, disabled without selection.
+Capture only the originally selected monsters, never the entire roster. Retrieve
+the original selected source identity without silently substituting another
+edition/candidate. Without retained identity, use existing lookup/candidate
+selection and require selection before applying. Resolve candidates per row and
+return without losing other review selections. Verify actual provider formats;
+016/017 remain separate, not prerequisites or newly delivered capabilities.
 
-Use one desktop grid with per-monster rows and equivalent narrow-screen cards,
-not a wizard. Show source/lookup status and current-to-proposed initiative bonus,
-AC, Max HP and Current HP. Each available field has an independent checkbox.
-Missing, invalid and failed retrievals are marked/disabled and cannot overwrite
-existing values. A missing refreshed bonus does not overwrite an assigned bonus
-with default 0. Only checked fields and originally selected monsters can change.
+One desktop review grid, with equivalent narrow-screen cards, shows per-monster
+source/status and current-to-proposed initiative bonus, AC, Max HP and Current HP.
+Each available field has an independent checkbox. Missing/invalid/failed retrievals
+are marked and disabled and never overwrite existing values. A missing refreshed
+bonus does not replace an assigned bonus with 0. Apply only checked fields for
+originally selected monsters; preserve all other values and unselected monsters.
+Current HP starts unchecked and changes only when explicitly selected. Show HP
+dice formulas during review and generate one value per monster only on HP apply,
+not on open/review. Current HP and Max HP are independent; selecting both uses
+one generated value. One Apply selected changes commits choices. Review/header/
+checkbox operations mutate no live state. Refreshed bonuses recalculate only
+with an existing roll; legacy totals remain unchanged without one.
 
-Current HP starts unchecked. Preserve it unless explicitly selected. Show HP dice
-formulas during review; generate one value per monster only on HP apply, not on
-open/review. Max HP and Current HP are independent; when both are selected use the
-same generated source HP value. A single Apply selected changes saves chosen
-updates. Review and selection alone mutate no live state. Initiative refresh
-recalculates only with an existing raw roll; otherwise preserve legacy totals.
+Column headers select all enabled cells in their column; row headers select all
+enabled cells in their row. Clicking an already fully selected header clears its
+cells; a partial selection selects the remainder. Individual checkboxes remain
+independently selectable/deselectable; skip disabled fields. Expose unchecked,
+partial and checked states with keyboard activation and narrow-layout equivalents.
+Explicit row or Current HP header selection may select Current HP despite its
+initial unchecked default. Apply remains required.
 
-### Row and column header controls
+## Delivery and validation
 
-Click a field column header to select all enabled cells in that column; click a
-monster row header to select all enabled cells in that row. If all enabled cells
-are selected, the next header click clears them; a partial selection selects the
-remainder. Individual cells remain independently selectable/deselectable. Skip
-disabled fields. Expose unchecked/partial/checked states and keyboard activation,
-with equivalent narrow-layout controls. Explicit row/Current HP column selection
-can select Current HP despite its initially unchecked default. Header controls
-only affect review selections; Apply remains required.
+Foundation 539697fabdde7e564b198104739870760032d638 added pure modules and 32 helper
+tests with the user's one-off [skip ci]. Reset/setup import increment
+44e5c7640007601f801858d740dfdf66ab61e541 clears stale current rolls while preserving
+bonus/origin and restoring original totals as legacy. Snapshots retain current
+relationships; setup import keeps source HP/Max HP, new IDs and deep-copy isolation.
+Characters remain unchanged. No schema/storage implementation changes were needed.
 
-## Acceptance criteria and outstanding integration
+CI run 42302058360 attempt 1 completed successfully against exact 44e5c764 on the
+dedicated branch. Evidence publication: 88461cc2891a935e541e881884ef6b1a6fabde5b,
+ci-results-42302058360-attempt-1. Verified main suite 1,112 tests OK, pytest 43
+passed, all 22+16 dedicated Python and 10 selection tests passed; repeated audit
+suite OK with 689 opened connections and zero without explicit close. All job
+steps succeeded. Repeated execution is not another unique test set. See handover
+for chunk paths, fixture coverage and live-server/storage limitations.
 
-- Wire creation, .monster import, manual correction, source bonuses and explicit/default zero provenance; reject invalid manual/import values.
-- Wire Edit, individual/shared rolls and raw/total roster UI. Verify signed bonuses, exactly-once application, repeated entry, clearing, legacy transition and unchanged character totals.
-- Verify complete database/state/setup route round-trips, normalization, reset/original values and reload without reroll/compounding. Isolated entity-record/reset tests below are partial coverage only.
-- Verify ties and active ordering changes without turn/round advancement or unrelated state loss; retain Tab/Shift+Tab navigation.
-- Implement validated source identity, provider extraction, candidate review and authenticated preview/apply. Review data must be server-owned or authenticated, not browser-trusted.
-- Reject stale scope, deleted/changed monsters and intervening edits; bind review lifetime/replay protection in the eventual route layer.
-- Integrate health/statistics reconciliation, source HP validation and atomic apply through existing transaction boundaries. HP dice must not roll during preview.
-- Implement desktop grid/narrow cards, header/individual selection and keyboard/accessibility controls; disabled source failures cannot be applied.
-- Prepare route/storage/provider/browser regressions and manually verify creation/import, refresh, save/reload and desktop/narrow workflows. Isolated helpers are not end-to-end coverage.
+Revised staged delivery: this stage wires existing final-total edit compatibility
+and individual/shared automatic raw-roll calculation. It does not wire state
+normalization or the raw-roll UI. Seven direct handler regressions are prepared;
+AST parsing passed, execution is pending normal CI. The prior 16-test isolated
+normalization/bridge fixture is not full-handler evidence or shipped state wiring.
+No passing CI is claimed for this stage before results review. Normal CI applies;
+no [skip ci], workflow modification or separate dispatch. Root indexes remain
+accurate at the overall in-progress level and are left unchanged.
 
-## Foundation delivery and evidence
+## Outstanding acceptance work
 
-Historical requirements clarification: da484d68d5ad39ef371ec8eeecb958149778fd8a.
-Expanded agreement was recorded on features/perplexity in
-d96048f852b32cd2fb32c2307595eb85e17b61e3; the foundation carried those decisions
-onto the dedicated branch without merging. Workflow branch-filter commit:
-3baf032c1e16a8b05befc2847f4e2dca98ffb049, with [skip ci]; workflow status unchecked.
+- Wire monster-only state defaults/validation and complete state/storage/setup route tests; retain character/lair isolation, legacy totals and no compounding.
+- Wire creation, .monster import, manual/source bonus assignment and correction, signed roster presentation, Edit-modal bonus input and raw-roll/total UI.
+- Validate repeated raw entry, bonus edits, shared rolls, reload/reset/setup reuse, explicit/default zero and invalid input through real application paths.
+- Implement active ordering updates while preserving ties, turn owner, round, unrelated state and Tab/Shift+Tab navigation.
+- Implement provider extraction, retained validated source identity, candidate review and authenticated source-refresh preview/apply.
+- Bind server-owned/authenticated reviews to scope/lifetime and prevent stale/deleted/changed/replayed apply; use existing atomic transactions and health/statistics reconciliation.
+- Implement desktop/narrow review, per-field/header selection, disabled-source handling, keyboard/accessibility, no preview mutation and HP generation only on apply.
+- Prepare and execute remaining HTTP/storage/provider/browser regressions and manual creation/import/refresh/reload/usability checks. Do not mark 018 completed solely because a stage was pushed.
 
-Foundation commit 539697fabdde7e564b198104739870760032d638 added initiative rules,
-pure refresh planning, a pure selection controller and tests. Prepared copies
-passed 22 Python and 10 Node isolated helper tests before that user-requested
-[skip ci] push. No runtime integration or usable feature was claimed at that
-commit; no full application/storage/browser suite or CI run was checked.
-
-## Reset/setup-import integration increment - 2026-11-06
-
-Prepared for the user's requested push: reset_initiative_patch and calls from
-reset_entity/reset_imported_monster clear the current raw roll while restoring
-the original total as legacy and retaining assigned bonus/origin. Character reset
-is unchanged. Setup import preserves source HP/Max HP, new identity and deep-copy
-behaviour. Existing setup snapshots retain current roll/bonus/total data.
-
-Sixteen new tests passed twice during preparation: ten reset/setup/character
-methods and six native SQLite entity-record fixture methods. The suite against
-the original reset implementation reported eight failures, including three
-invalid-input subtest failures. Local SQLite checks used a minimal schema and
-copied record methods, not the complete storage facade/production schema or
-application transactions. The committed tests import the repository mixin.
-Source identity values in the fixtures are illustrative scalars, not a delivered
-provider mapping. No schema migration or storage implementation change is made.
-Full integration and validation remain outstanding; do not mark 018 completed.
-
-This code/test increment uses normal CI, without [skip ci], workflow changes or
-separate dispatch. The earlier skip applied only to the foundation. CI execution
-and results remain unverified until supplied artifacts are reviewed. The existing
-32 helper tests were not rerun for this preparation. See the linked handover for
-execution limitations and remaining work. README and both root indexes were
-reviewed/reused unchanged: links and the overall in-progress status remain valid.
+Historical clarification: da484d68d5ad39ef371ec8eeecb958149778fd8a; expanded agreement
+on features/perplexity: d96048f852b32cd2fb32c2307595eb85e17b61e3. Decisions were
+carried onto the dedicated branch without merging. Branch-filter workflow commit:
+3baf032c1e16a8b05befc2847f4e2dca98ffb049. No deadline or owner is invented.

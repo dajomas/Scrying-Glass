@@ -3,98 +3,77 @@
 [Back to handover index](../../HANDOVER.md)
 
 Updated: 2026-11-06. Task: [SG-TODO-018](../todo/180-monster-initiative-bonus.md).
-Status: foundation delivered; reset/setup-import integration increment prepared
-for delivery with full validation pending. Other runtime integration remains
-outstanding. All 018 writes target features/perplexity-018 until user sign-off;
-no merge or write-back to features/perplexity is authorized.
+Status: in progress. Foundation and reset/setup-import increment delivered with
+covering CI; handler compatibility stage prepared with execution pending.
+All 018 writes target features/perplexity-018 until user sign-off. No merge or
+write-back to features/perplexity is authorized.
 
-## Foundation scope and decisions
+## Delivered history
 
-Foundation commit: 539697fabdde7e564b198104739870760032d638.
-It added two pure Python modules for monster initiative/source-refresh planning,
-a standalone JavaScript selection controller and regression tests. At that commit
-the modules were not wired into runtime paths. That historical foundation-only
-status is superseded only for reset/setup import by the increment below; there
-is still no usable complete SG-TODO-018 feature or changed character initiative.
+Foundation: 539697fabdde7e564b198104739870760032d638, containing pure initiative
+rules, refresh planning, selection controller and 32 helper tests. It used the
+user-requested [skip ci]. Reset/setup integration:
+44e5c7640007601f801858d740dfdf66ab61e541, containing reset_initiative_patch,
+reset_entity/reset_imported_monster wiring and 16 regressions. Reset clears a
+stale current roll, retains bonus/origin and restores original totals as legacy.
+Characters remain unchanged. Snapshots preserve current values; setup import
+retains existing reset-on-import semantics, HP/Max HP and deep-copy isolation.
+No schema migration or storage implementation change has been made.
 
-Initiative retains the existing total plus separate raw roll, signed bonus and
-origin scalars. Legacy totals survive bonus edits without an invented raw roll.
-The refresh planner captures selected snapshots and prepares replacement candidates
-without modifying live state. It validates selections before generating HP and
-uses one value when HP and Max HP are both selected. The selection controller
-implements individual/row/column selection and partial states; DOM, keyboard and
-accessibility wiring remain outstanding.
+## Verified covering CI
 
-## Historical foundation preparation evidence
+Run 42302058360 attempt 1 tested exact 44e5c7640007601f801858d740dfdf66ab61e541
+on features/perplexity-018. Results publication:
+88461cc2891a935e541e881884ef6b1a6fabde5b, folder ci-results-42302058360-attempt-1.
+run.json reports completed/success for workflow and tests job. All configured
+steps, artifact upload and cleanup succeeded. Workflow chunks under
+reader-chunks/file-000025 explicitly show:
 
-Exact prepared repository-path copies passed 22 Python and 10 Node helper tests
-in an isolated temporary checkout before the foundation push. Code/test files
-were below 20,000 bytes. Those checks were controlled helper/JSON fixtures, not
-SQLite, provider, HTTP, browser or end-to-end verification. They were not rerun
-for this reset increment. The foundation used the user's one-off [skip ci] request;
-no full suite or observed CI result is claimed for that push.
+- Parts 73-75: all 22 foundation Python and 16 reset/storage methods OK.
+- Part 82: main Python suite, 1,112 tests in 106.131s, OK.
+- Part 83: pytest, 43 passed in 1.29s.
+- Parts 93-94: all 10 selection-controller tests passed, none skipped/cancelled.
+- Parts 110-111: repeated 1,112-test suite, OK; 689 connections opened, zero
+  without explicit close, connection audit PASS.
 
-## Reset/setup-import integration - 2026-11-06
+The repeated suite is not another set of unique tests. The publication commit
+is evidence storage, not the tested code revision. Browser smoke explicitly uses
+mocked HTTP/WS with real Chromium. Entity persistence tests use a minimal native
+SQLite fixture, not full production schema/migration or authenticated live-server
+verification. These results validate the delivered increment, not all of 018.
 
-The existing reset functions restored original_initiative but retained the current
-initiative_roll. Later normalization could reconstruct the pre-reset initiative
-from that stale roll. reset_initiative_patch now restores the original total,
-clears the current raw roll and retains the assigned bonus/origin. Original totals
-remain legacy, not invented historical raw rolls. Records without the new fields
-retain their legacy representation. Invalid monster original totals are rejected
-before reset_entity changes live flags. Character reset semantics are unchanged.
+## Handler compatibility stage
 
-reset_entity and reset_imported_monster call the helper. Imported monsters still
-receive new IDs, retain source HP/Max HP and deep-copy their source. setup_snapshot
-remains unchanged and preserves the current initiative relationship; importing
-from a snapshot retains the existing reset-on-import semantics. No new original
-raw-roll field, provider capability or schema migration is added.
+Revised delivery sequence: handler compatibility and automatic rolling first;
+state normalization and its tests follow separately. This commit does not change
+StateService, add a raw-roll UI or enable source refresh. Existing manual APIs
+still accept final totals: changed/cleared totals detach stale raw rolls and keep
+bonus/origin, while unchanged totals and unrelated edits keep the existing roll.
+This is a temporary compatibility bridge, not a new user-facing total override.
+Individual automatic rolls and selected shared rolls now retain raw rolls and add
+each monster's own bonus once. Candidate changes are validated before assigning
+the rolled values. Existing routes, authentication and character handlers stay.
+Active-battle reordering remains outstanding; no new ordering claim is made.
 
-## Executed reset/persistence preparation checks
+Seven direct handler tests are prepared in test_monster_initiative_handlers.py.
+Their AST parsing passed in preparation; they were not executed locally. The
+previous 16-test normalization/bridge fixture passed with stub feature rules and
+a condensed normalization copy; it is not handler or full-application validation
+and is not shipped in this stage. Full handler/application execution is delegated
+to normal CI. No successful CI result is claimed for this new stage in advance.
 
-Prepared tests: tests/test_monster_initiative_reset_storage.py, 16 methods:
-10 reset/setup/character cases and six native SQLite entity-record cases.
-They passed twice in an isolated temporary checkout. Against the original reset
-implementation, the same suite reported eight failures, including three invalid-
-input subtest failures; restoring the prepared reset code yielded 16 passes.
+## Continuation and policy
 
-The SQLite fixture uses a real temporary file and a minimal entity/attribute
-schema. Locally it exercised copies of the repository's entity-record methods;
-the committed test imports StorageRecordsMixin normally. No storage implementation
-changes are proposed. Round-trip/reopen/reset tests cover signed bonuses, explicit
-and default zero, null roll, legacy totals and illustrative source identity
-scalars. This is not verification of the complete SQLiteStorage facade, production
-schema/constraints, migrations, effects storage or application transactions.
-The scalar tests support the existing extra-attribute mechanism, not a claim that
-all persistence acceptance criteria are complete. Source identity samples are
-fixture values, not an implemented provider contract.
+Next wire monster state defaults/validation with complete-file tests, then manual
+creation/.monster input, bonus editing, raw-roll roster UI, provider/source
+identity, refresh preview/apply and active ordering. The refresh planner still
+requires server-owned/authenticated review data, scope/lifetime/replay guards,
+atomic health/statistics reconciliation and sanitized UI offers. It is not a
+security boundary. Source identity fixtures are illustrative, not provider mappings.
 
-No full application suite, authenticated routes, state normalization, provider,
-ordering or browser checks were run for this increment. Normal CI should discover
-the new test module. The proposed runtime files are 2,697 and 3,524 bytes; the new
-test is 8,672 bytes, below the file limit and existing-file growth allowance.
-
-## Required continuation
-
-Integrate validated source identity/provider extraction, creation/.monster import,
-Edit and rolling, state normalization and full storage/setup routes, active-battle
-ordering and the review UI. The refresh caller must authenticate or retain review
-data server-side, bind campaign/encounter generation and lifetime, prevent stale/
-replayed apply, and execute atomic updates with normal health/statistics/order
-reconciliation. The planner is not a security boundary or complete transaction.
-Its scalar validation does not replace route/storage range checks. Sanitize
-controller offers and disable invalid/missing fields before rendering.
-
-## Delivery policy and reviewed documentation
-
-This reset increment uses normal push-triggered CI with no skip marker, workflow
-change or separate dispatch. The earlier skip applied only to the foundation.
-Workflow branch-filter commit: 3baf032c1e16a8b05befc2847f4e2dca98ffb049.
-No workflow state, passing CI or completion is claimed before results are reviewed.
-The user will provide result locations for the CI-feedback cycle.
-
-README, TODO.md and HANDOVER.md identities were verified against prior complete
-reads. README has no new user-facing workflow to document; indexes and in-progress
-task identity remain valid without edits. The task detail and this existing
-handover section record partial integration and validation limitations. No new
-section, link or application feature completion is claimed.
+Normal CI applies to this code/test commit; no skip marker, workflow change or
+separate dispatch. Branch-filter commit: 3baf032c1e16a8b05befc2847f4e2dca98ffb049.
+README and both root indexes were reviewed/reused: links and overall in-progress
+status remain valid. No completed feature, current CI pass or live-server
+validation is claimed by this delivery. Earlier local preparation limitations
+are superseded only where the covering CI evidence above actually extends them.
