@@ -4,7 +4,7 @@
 
 ## SG-TODO-009 - Professional, task-focused Admin interface
 
-- Status: in progress; SG-TODO-009.1, SG-TODO-009.2 and SG-TODO-009.3 are closed after verified validation and user acceptance. SG-TODO-009.4 increment 1 is included with validation and its HP follow-up pending. Phases 009.5-009.7 remain proposed and are not implemented.
+- Status: in progress; SG-TODO-009.1 through SG-TODO-009.4 are closed after verified validation and user acceptance. Coordinated SG-TODO-012 is also closed. Phases 009.5-009.7 remain proposed and are not implemented.
 - Requested: 2026-11-06. The user requested recording the design suggestions and processing order, agreed staged delivery, and explicitly requested implementation through 009.4 with SG-TODO-012. The user chose option 2 for character HP and approved the two-commit split described below.
 - Priority: incremental usability improvement; no priority relative to other tasks agreed.
 - Owner and deadline: not assigned.
@@ -20,7 +20,7 @@ Retain the dark/gold companion identity. Evaluate quieter neutral surfaces and t
 Related accepted work:
 
 - [SG-TODO-005: initial section visibility](050-admin-initial-visibility.md): preserve parent/child controls and per-page initial collapse. Replacing toggles requires an explicit visibility mapping.
-- [SG-TODO-007: single-line monster buttons](070-monster-button-layout.md) and [row-layout handover](../handover/250-monster-button-layout.md): preserve 11 monster-row buttons, local scrolling/focus exposure and removed row Damage/Heal controls. Menus/details as alternatives require agreement.
+- [SG-TODO-007: single-line monster buttons](070-monster-button-layout.md) and [row-layout handover](../handover/250-monster-button-layout.md): preserve single-line controls, local scrolling/focus exposure and removed row Damage/Heal controls. The subsequent user-requested Turn removal leaves 10 visible monster-row controls and 7 visible character-row controls. Menus/details as alternatives require agreement.
 - [SG-TODO-008: source-size refactors](080-source-size-refactors.md): preserve source assembly and code-size constraints; do not overwrite the tracked Admin script failure marker.
 
 ## Agreed staged processing order
@@ -32,7 +32,7 @@ Process phases 1 through 7 in order, reviewing each coherent increment before st
 | 1 | SG-TODO-009.1 | Shared visual foundations (closed) | Baseline inspection |
 | 2 | SG-TODO-009.2 | Header and action hierarchy (closed) | 009.1 |
 | 3 | SG-TODO-009.3 | Consistent panels and forms (closed) | 009.1, 009.2 |
-| 4 | SG-TODO-009.4 | Scannable rosters and contextual bulk actions (in progress) | 009.3; agreement for changed row controls |
+| 4 | SG-TODO-009.4 | Scannable rosters and contextual bulk actions (closed) | 009.3; agreed row-control scope |
 | 5 | SG-TODO-009.5 | Workflow-based navigation | 009.2-009.4; agreed visibility mapping |
 | 6 | SG-TODO-009.6 | Focused live encounter workspace | 009.4, 009.5 |
 | 7 | SG-TODO-009.7 | Feedback, responsive and accessibility hardening | 009.1-009.6 |
@@ -74,18 +74,18 @@ Acceptance: purposes/required values are clear; disclosures expose accurate acce
 
 ### SG-TODO-009.4 - Scannable rosters and contextual bulk actions
 
-Status: in progress, 2026-11-06; increment 1 is included with covering CI and acceptance pending. Alternative action-menu design still requires agreement against SG-TODO-007. See [roster delivery record](../handover/310-admin-rosters.md).
+Status: closed (completed), 2026-11-06, at the user's explicit request after covering successful local/CI verification and desktop/narrow visual/workflow acceptance, together with SG-TODO-012. See [roster delivery, verification and close-out](../handover/310-admin-rosters.md).
 
 - Structured rows with clear names, aligned numeric values, concise textual status and immediately visible relevant HP/initiative/combat state.
 - Consider search/filter and collection-level Add; separate table-wide and row controls.
 - Show selected counts/contextual bulk actions, retaining Select all/Clear selection.
 - Evaluate row expansion/details for secondary information. A frequent visible action plus overflow is an option, not approval to replace accepted single-line controls.
 
-Approved two-commit delivery: (1) roster presentation, selected counts/Clear selection, contextual mutation availability and local scrolling, preserving current HP editing; (2) SG-TODO-012 option 2, read-only character current/max HP like Monsters, with both values editable through the existing Edit dialog, save/reload coverage and corrected README/User Guide instructions. The user explicitly selected option 2 and approved this split. Increment 1 does not remove inline HP inputs or implement 012. No character HP mechanics, provider/API/persistence behaviour or SG-TODO-013 keyboard remapping is changed by it.
+Approved two-commit delivery: (1) roster presentation, selected counts/Clear selection, contextual mutation availability and local scrolling, preserving current HP editing; (2) SG-TODO-012 option 2, read-only character current/max HP like Monsters, with both values editable through the existing Edit dialog, save/reload coverage and corrected README/User Guide instructions. The user explicitly selected option 2 and approved this split. Increment 1 alone did not remove inline HP inputs or implement 012; the second increment now supplies that workflow. No character HP mechanics, provider/API/persistence behaviour or SG-TODO-013 keyboard remapping is changed.
 
-Search/filter, collection Add relocation, row expansion and action menus were considered but not added in increment 1; existing access and original row controls are retained. No filtered selection scope is introduced. Selection commands remain available at zero selected while mutation options are disabled. Both task acceptance and remaining work must be reviewed before 009.4/012 closure; this partial delivery is not completion.
+Search/filter, collection Add relocation, row expansion and action menus were considered and not included in the accepted delivery; they are not unfinished requirements for this closed scope. No filtered selection scope is introduced. Selection commands remain available at zero selected while mutation options are disabled. The subsequently requested Turn-control removal is accepted and leaves other row actions intact. Both approved increments and the Turn follow-up now have covering local/CI results and explicit user acceptance.
 
-Acceptance: scan/select/edit/bulk workflows remain without accidental mutations; selection survives or resets predictably on refresh/filter; keyboard focus is exposed within local scrollers; removed row HP-change controls stay removed.
+Acceptance: scan/select/edit/bulk workflows remain without accidental mutations; selection survives or resets predictably on refresh; keyboard focus is exposed within local scrollers; removed row HP-change controls stay removed. The user accepted the roster presentation, selection/bulk workflows, Edit-dialog HP save/reload and absence of Turn, then requested closure of both tasks.
 
 ### SG-TODO-009.5 - Workflow-based navigation
 
@@ -153,4 +153,14 @@ That close-out changed documentation only, ran no new tests and left application
 
 ## SG-TODO-009.4 increment 1 - 2026-11-06
 
-The first of two user-approved commits includes roster presentation and selection context only, retaining inline character HP. New assets, source/browser regressions, template wiring and the indexed handover accompany it. Preparation passed JavaScript syntax, stylesheet parsing, regression AST and simplified Chromium checks of native option availability, selected count, underlying selection clearing, focus return, inline HP and existing Edit handler/idempotence. The full new module/suite, covering CI, fresh full-Admin screenshots and user visual/workflow acceptance remain pending. README/User Guide inline-HP descriptions remain correct for increment 1; they must change with the second increment. No SG-TODO-012 completion or SG-TODO-013 implementation is claimed. See the 310 handover for exact checks, fixture limitations and remaining work.
+The first of two user-approved commits includes roster presentation and selection context only, retaining inline character HP. New assets, source/browser regressions, template wiring and the indexed handover accompany it. Preparation passed JavaScript syntax, stylesheet parsing, regression AST and simplified Chromium checks of native option availability, selected count, underlying selection clearing, focus return, inline HP and existing Edit handler/idempotence. At that preparation stage, the full new module/suite, covering CI, fresh full-Admin screenshots and user visual/workflow acceptance were pending. README/User Guide inline-HP descriptions remained correct for increment 1 and were subsequently updated with the second increment. This historical first increment alone did not complete SG-TODO-012 or implement SG-TODO-013. The verified close-out below supersedes that pending status.
+
+## SG-TODO-009.4 and SG-TODO-012 verified close-out - 2026-11-06
+
+Roster increment 1: 834c4c3d0a7d963bb44b17dc6346447ec18dc21b. HP increment 2: 90dcfab919556ac94d05c44c0ec0e775fab32f9d. Turn-control follow-up: d91f73bfe121870296a1df79f58c58c21bcaeb59. Covering CI run 42276181187 attempt 1 succeeded against d91f73b; evidence 386beabbcd6e39378014d4a86df24dd4d68f5b75 under ci-results-42276181187-attempt-1. Main unittest and repeated audit report 1,066 tests OK; pytest 43 passed; audit 681 connections/zero without explicit close. Relevant roster, HP save/rejection/retry/reload, keyboard and Turn-removal methods explicitly passed. Eighteen fixture images were uploaded, including both roster widths; upload is not assistant visual inspection.
+
+Completed local suite=all tested 386beabbcd6e39378014d4a86df24dd4d68f5b75; evidence 423ab05f08b4ec9f8d5e7c30d1bf600ea07ffb63 under local-tests-386beab/run-20261106T191207Z-NSLlFY. completed=1 and overall/all 48 command exits zero; pytest 43 passed; complete repeated audit reports 1,066 tests OK and 681/0 connections.
+
+The user explicitly accepted desktop/narrow presentation, selection/bulk workflows, Edit-dialog character HP save/reload and absence of Turn, then requested both items completed and closed. This is user acceptance, not assistant authenticated-server, database persistence or exhaustive accessibility/combat execution. Both 009.4 and 012 are closed for the agreed scope. Overall 009 remains in progress; 013 and 009.5-009.7 remain separate and unchanged.
+
+This close-out changes documentation only and runs no new tests. README/User Guide and HANDOVER.md remain accurate without edits; application, tests and workflows are unchanged. Commit message includes [skip ci]; no separate dispatch or inferred new run result. Detailed evidence paths, limitations and implementation history remain in the [310 handover](../handover/310-admin-rosters.md).

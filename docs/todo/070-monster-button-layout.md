@@ -4,7 +4,7 @@
 
 ## SG-TODO-007 - Restructure monster buttons into one line
 
-- Status: completed; closed at the user's request on 2026-11-03 after verification of covering green CI. The separately requested 2026-11-06 Turn-control follow-up below has validation pending.
+- Status: completed; original closure at the user's request on 2026-11-03 after covering green CI. The 2026-11-06 Turn-control follow-up also has verified local/CI results and user acceptance, recorded below.
 - Requested: 2026-11-02. Single-line/local-scroll scope approved: 2026-11-03.
 - Scope updated by user on 2026-11-03: remove Damage and Heal from both Character and Monster rows.
 - Priority, owner and deadline: not assigned.
@@ -14,25 +14,33 @@
 
 ### Turn-control follow-up - 2026-11-06
 
-User requested removal of Turn from both roster UIs. Implementation is included,
-with covering local/CI and user acceptance pending, independently of the original
-007 closure. Scoped roster CSS uses display:none for monster data-mt and character
-data-ct buttons, excluding them from visual, keyboard and accessibility navigation
-on initial load and refresh. Legacy markup/API handlers remain; this is UI removal,
-not deletion of manual-turn API capability. There are now 10 visible monster-row
-buttons and 7 visible character-row buttons; historical 11-button statements below
-describe the previously accepted version. Other controls, initiative, Start/Next/End,
-turn highlighting, battle progression, HP rules and persistence are unchanged.
+User requested removal of Turn from both roster UIs. Delivered at
+d91f73bfe121870296a1df79f58c58c21bcaeb59; verified covering local/CI results
+and explicit user acceptance now conclude this follow-up alongside 009.4/012,
+independently of the original 007 closure. Scoped roster CSS uses display:none for
+monster data-mt and character data-ct buttons, excluding them from visual, keyboard
+and accessibility navigation on initial load and refresh. Legacy markup/API
+handlers remain; this is UI removal, not deletion of manual-turn API capability.
+There are now 10 visible monster-row buttons and 7 visible character-row buttons;
+historical 11-button statements below describe the previously accepted version.
+Other controls, initiative, Start/Next/End, turn highlighting, progression, HP rules
+and persistence are unchanged.
 
-Acceptance: no accessible roster Turn buttons after repeated refreshes at desktop
-and narrow widths; remaining controls retain labels, keyboard order/local focus
-exposure and original handlers without unintended mutations. CSS parsing and a
-simplified Chromium fixture passed at 1440/768/375 pixels across three table
-replacement cycles each, with forward/reverse focus skipping Turn and zero
-mutations. Full-Admin regressions are prepared under existing test discovery but
-not executed during preparation; covering CI and live workflow acceptance remain
-pending. Earlier HP-increment/local evidence does not validate this follow-up.
-See [current implementation/validation](../handover/310-admin-rosters.md).
+Acceptance covers no accessible roster Turn after refresh at desktop/narrow widths
+and retained labels, keyboard order/local focus exposure and handlers without
+unintended mutations. Preparation passed CSS parsing and simplified Chromium at
+1440/768/375 across three replacements per width. Later covering CI 42276181187
+attempt 1 against d91f73b explicitly passed all four row-layout methods; its
+main/repeated suites report 1,066 tests OK, pytest 43 passes and audit 681/0
+connections. CI evidence: 386beabbcd6e39378014d4a86df24dd4d68f5b75 under
+ci-results-42276181187-attempt-1. Completed local suite=all against 386beab has
+overall/all 48 exits zero, pytest 43 passes and complete audit 1,066 tests OK/681/0;
+evidence 423ab05f08b4ec9f8d5e7c30d1bf600ea07ffb63 under
+local-tests-386beab/run-20261106T191207Z-NSLlFY. The user accepted absence of Turn
+and related roster workflows and requested 009.4/012 closure on 2026-11-06.
+These results supersede the follow-up's pending status, not the original history.
+Fixture tests remain distinct from authenticated live-server execution. See
+[current implementation, evidence and close-out](../handover/310-admin-rosters.md).
 
 ### Accepted scope
 
