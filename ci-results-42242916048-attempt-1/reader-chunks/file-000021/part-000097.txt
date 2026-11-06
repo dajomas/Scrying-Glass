@@ -1,0 +1,45 @@
+27:22.7120262Z ##[endgroup]
+tests	JavaScript tests	2026-11-06T15:27:22.7120628Z ##[group]tests/test_feature_async_scope.js
+tests	JavaScript tests	2026-11-06T15:27:22.7818967Z TAP version 13
+tests	JavaScript tests	2026-11-06T15:27:22.8006351Z # PASS: new draft entered during a save survives its acknowledgement
+tests	JavaScript tests	2026-11-06T15:27:22.8011544Z # PASS: old target save acknowledgement does not clear new target draft
+tests	JavaScript tests	2026-11-06T15:27:22.8018331Z # PASS: ordinary save still clears the submitted draft
+tests	JavaScript tests	2026-11-06T15:27:22.8030918Z # PASS: campaign switch resets drafts even when combatant IDs match
+tests	JavaScript tests	2026-11-06T15:27:22.8038069Z # PASS: setup switch resets drafts even when combatant IDs match
+tests	JavaScript tests	2026-11-06T15:27:22.8046119Z # PASS: campaign switch with no named setup resets drafts
+tests	JavaScript tests	2026-11-06T15:27:22.8053903Z # PASS: same encounter polling continues to preserve edits
+tests	JavaScript tests	2026-11-06T15:27:22.8062617Z # PASS: subsequent save after campaign switch uses replacement values
+tests	JavaScript tests	2026-11-06T15:27:22.8065685Z # 8 checks, 0 failures
+tests	JavaScript tests	2026-11-06T15:27:22.8110539Z # Subtest: tests/test_feature_async_scope.js
+tests	JavaScript tests	2026-11-06T15:27:22.8113466Z ok 1 - tests/test_feature_async_scope.js
+tests	JavaScript tests	2026-11-06T15:27:22.8113770Z   ---
+tests	JavaScript tests	2026-11-06T15:27:22.8113984Z   duration_ms: 31.88244
+tests	JavaScript tests	2026-11-06T15:27:22.8114636Z   type: 'test'
+tests	JavaScript tests	2026-11-06T15:27:22.8114835Z   ...
+tests	JavaScript tests	2026-11-06T15:27:22.8115023Z 1..1
+tests	JavaScript tests	2026-11-06T15:27:22.8115195Z # tests 1
+tests	JavaScript tests	2026-11-06T15:27:22.8115534Z # suites 0
+tests	JavaScript tests	2026-11-06T15:27:22.8115726Z # pass 1
+tests	JavaScript tests	2026-11-06T15:27:22.8115913Z # fail 0
+tests	JavaScript tests	2026-11-06T15:27:22.8116102Z # cancelled 0
+tests	JavaScript tests	2026-11-06T15:27:22.8116314Z # skipped 0
+tests	JavaScript tests	2026-11-06T15:27:22.8116507Z # todo 0
+tests	JavaScript tests	2026-11-06T15:27:22.8116843Z # duration_ms 36.514538
+tests	JavaScript tests	2026-11-06T15:27:22.8269758Z ##[endgroup]
+tests	JavaScript tests	2026-11-06T15:27:22.8270038Z ##[group]tests/test_feature_edit_preservation.js
+tests	JavaScript tests	2026-11-06T15:27:22.8992403Z TAP version 13
+tests	JavaScript tests	2026-11-06T15:27:22.9180949Z # PASS: confirmed undo deliberately resets feature drafts
+tests	JavaScript tests	2026-11-06T15:27:22.9277563Z # PASS: confirmed checkpoint restore deliberately resets feature drafts
+tests	JavaScript tests	2026-11-06T15:27:22.9284074Z # PASS: confirmed life-state save clears only its own draft
+tests	JavaScript tests	2026-11-06T15:27:22.9297085Z # PASS: cancelled bundle import preserves drafts
+tests	JavaScript tests	2026-11-06T15:27:22.9303860Z # PASS: saving temporary HP preserves unsaved death saves
+tests	JavaScript tests	2026-11-06T15:27:22.9311653Z # PASS: saving death saves preserves unsaved temporary HP
+tests	JavaScript tests	2026-11-06T15:27:22.9320024Z # PASS: saving a checkpoint preserves feature edits
+tests	JavaScript tests	2026-11-06T15:27:22.9327486Z # PASS: starting concentration preserves feature edits
+tests	JavaScript tests	2026-11-06T15:27:22.9335106Z # PASS: cancelled death marking preserves edits and is not reported saved
+tests	JavaScript tests	2026-11-06T15:27:22.9346459Z # PASS: cancelled HP confirmation preserves feature edits
+tests	JavaScript tests	2026-11-06T15:27:22.9351760Z # PASS: cancelled checkpoint restore preserves edits
+tests	JavaScript tests	2026-11-06T15:27:22.9357941Z # PASS: cancelled checkpoint deletion preserves edits
+tests	JavaScript tests	2026-11-06T15:27:22.9364046Z # PASS: failed request preserves edits
+tests	JavaScript tests	2026-11-06T15:27:22.9364359Z # 13 checks, 0 failures
+tests	JavaScript tests	2026-11-06T15:27:22.9419408Z # Subt
