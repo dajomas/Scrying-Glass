@@ -1,0 +1,34 @@
+TAP version 13
+# Subtest: initial whitespace is hidden and meaningful messages are preserved
+ok 1 - initial whitespace is hidden and meaningful messages are preserved
+  ---
+  duration_ms: 2.790779
+  type: 'test'
+  ...
+# Subtest: each notice reappears for content and collapses after text is cleared
+ok 2 - each notice reappears for content and collapses after text is cleared
+  ---
+  duration_ms: 1.500956
+  type: 'test'
+  ...
+# Subtest: duplicate installation does not add observers
+ok 3 - duplicate installation does not add observers
+  ---
+  duration_ms: 0.493739
+  type: 'test'
+  ...
+# Subtest: missing elements are tolerated
+ok 4 - missing elements are tolerated
+  ---
+  duration_ms: 0.468322
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 94.812383
