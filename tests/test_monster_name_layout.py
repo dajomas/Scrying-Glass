@@ -1,7 +1,55 @@
 """Name-column regression checks on the intercepted-HTTP Admin page."""
 import copy
+import math
 import unittest
 import test_monster_button_layout as layout
+
+
+# Bound numerical measurement slack; keep meaningful layout deficits failing.
+WIDTH_TOLERANCE_PX = 1 / 32
+
+
+def assert_minimum_width(case, actual, minimum):
+    case.assertTrue(math.isfinite(actual) and math.isfinite(minimum),
+                    "Width measurements must be finite")
+    case.assertGreater(minimum, 0)
+    case.assertGreaterEqual(
+        actual + WIDTH_TOLERANCE_PX, minimum,
+        f"Rendered width {actual}px is below minimum {minimum}px "
+        f"beyond {WIDTH_TOLERANCE_PX}px measurement tolerance",
+    )
+
+
+class MinimumWidthToleranceTests(unittest.TestCase):
+    def test_observed_fractional_rounding_is_accepted(self):
+        assert_minimum_width(self, 137.265625, 137.281)
+
+    def test_exact_and_wider_values_are_accepted(self):
+        for width in (137.281, 140):
+            with self.subTest(width=width):
+                assert_minimum_width(self, width, 137.281)
+
+    def test_tolerance_boundary_is_accepted(self):
+        assert_minimum_width(self, 100 - WIDTH_TOLERANCE_PX, 100)
+
+    def test_just_beyond_tolerance_is_rejected(self):
+        with self.assertRaises(AssertionError):
+            assert_minimum_width(self, 100 - WIDTH_TOLERANCE_PX - 0.001, 100)
+
+    def test_real_width_deficits_are_rejected(self):
+        for width in (99.9, 99, 0):
+            with self.subTest(width=width), self.assertRaises(AssertionError):
+                assert_minimum_width(self, width, 100)
+
+    def test_nonfinite_measurements_are_rejected(self):
+        for actual, minimum in ((math.nan, 100), (math.inf, 100),
+                                (100, math.nan), (100, math.inf)):
+            with self.subTest(actual=actual, minimum=minimum), self.assertRaises(AssertionError):
+                assert_minimum_width(self, actual, minimum)
+
+    def test_missing_minimum_is_rejected(self):
+        with self.assertRaises(AssertionError):
+            assert_minimum_width(self, 100, 0)
 
 
 class MonsterNameLayoutTests(unittest.TestCase):
@@ -38,7 +86,7 @@ class MonsterNameLayoutTests(unittest.TestCase):
                     self.assertEqual(len(geometry['name']), 1)
                     self.assertEqual(len(geometry['species']), 1)
                     self.assertGreater(geometry['species'][0]['y'], geometry['name'][0]['y'])
-                    self.assertGreaterEqual(geometry['width'], geometry['minimum'])
+                    assert_minimum_width(self, geometry['width'], geometry['minimum'])
                     self.assertEqual(cell.locator('small').inner_text(), name)
                     expected_name = name + (' - Ally' if active else '')
                     self.assertIn(expected_name, cell.inner_text())
