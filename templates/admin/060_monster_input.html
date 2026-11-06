@@ -21,7 +21,11 @@
               The dice expression can be a simple roll such as <code>2d6</code> or dice notation such as <code>3d8+9</code>.</br>
               Spaces around <code>+</code> or <code>-</code> are optional.</li>
           </ul>
-          If no image is provided, an attempt is made to find an image on D&D Beyond based on the monster species (against Monster Name on D&D Beyond).
+          Monster lookup searches D&amp;D Beyond first. If it returns no usable matches,
+          5e.tools is tried when enabled and configured. Provider errors stop the lookup;
+          they do not trigger fallback. If D&amp;D Beyond lookup is disabled,
+          enabled 5e.tools lookup may be used directly. When a selected result includes
+          an image, that image is used unless you choose an Image file.
         </p>
 
         <label class="monster-species-lookup-option">
@@ -30,7 +34,7 @@
             type="checkbox"
           >
           <span>
-            Overwrite Armor Class and HP Range with found D&amp;D Beyond values
+            Overwrite Armor Class and HP Range with values from the selected D&amp;D Beyond or 5e.tools result
           </span>
         </label>
 
