@@ -23,7 +23,7 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 16. [Battle Actions combatant statistics](docs/todo/150-battle-actions-combatant-statistics.md) - SG-TODO-015, proposed (show available AC, HP and HP MAX below the selected target and Reaction source dropdowns, 2026-11-06).
 17. [Source-based monster selection](docs/todo/160-source-based-monster-selection.md) - SG-TODO-016, proposed (source dropdown defaulting to None and a dependent dropdown of all available monsters from the selected source, 2026-11-06).
 18. [Open5e API monster source](docs/todo/170-open5e-monster-source.md) - SG-TODO-017, proposed (add Open5e.com through its API as a monster source, 2026-11-06).
-19. [Monster initiative bonus](docs/todo/180-monster-initiative-bonus.md) - SG-TODO-018, proposed (monster-only raw roll plus bonus exactly once; bonus read-only in roster/editable in Edit modal; agreed next before 009.5, 2026-11-06; implementation outstanding).
+19. [Monster initiative bonus](docs/todo/180-monster-initiative-bonus.md) - SG-TODO-018, in progress (implementation inspection started; agreed default-zero/legacy/shared-roll semantics and selected-monster source-refresh review with row/column checkbox controls recorded, 2026-11-06; application delivery and validation outstanding).
 
 ## Maintenance
 

@@ -3,124 +3,164 @@
 [Back to TODO index](../../TODO.md)
 
 - Task: SG-TODO-018
-- Status: proposed; user clarified the required behaviour on 2026-11-06. Implementation and validation have not started.
-- Recorded: 2026-11-06
-- Priority: next in the agreed remaining-work delivery sequence, before SG-TODO-009.5; user agreement recorded 2026-11-06. No owner or deadline assigned.
-- Dependencies: inspect current provider mappings, .monster import, persistence and initiative assignment paths during implementation planning.
+- Status: in progress; implementation inspection started. Requirements agreed 2026-11-06; application changes, tests and validation remain outstanding.
+- Recorded/updated: 2026-11-06
+- Priority: next in the agreed remaining-work delivery sequence, before SG-TODO-009.5. No owner or deadline assigned.
+- Dependencies: inspect provider mappings, .monster import, source identity, persistence, initiative assignment and refresh review paths.
 - Related tasks: [initiative keyboard navigation](130-initiative-keyboard-navigation.md), [source-based monster selection](160-source-based-monster-selection.md), [Open5e integration](170-open5e-monster-source.md), [Admin delivery sequence](115-admin-delivery-sequence.md).
 
-## Requested change and agreed scope
+## Agreed scope and calculation
 
-Support a separately stored monster initiative bonus, populated from the selected
-monster source where available or entered manually. Support assignment through
-both manual Add Monster and .monster import. The bonus can be negative, zero or
-positive. Missing provider data is not a verified zero and must not be invented.
+Support a separately stored monster initiative bonus, supplied by the selected
+source where available or entered manually through Add Monster and .monster
+import. Bonuses may be negative, zero or positive. Missing bonuses default to 0
+and do not block manual or automatic rolling. Preserve the distinction between
+a defaulted zero and an explicitly supplied zero internally; a default is not
+evidence that a provider returned zero. Do not infer a bonus from Dexterity.
+Reject malformed manually entered/imported bonuses rather than replacing them
+with zero. Source-derived values remain manually correctable.
 
-These calculation changes apply to monsters only. Characters announce their
-already calculated roll-plus-bonus total; their Initiative editor continues to
-accept that final total without additional calculation.
+These calculation changes apply to monsters only. Characters continue to enter
+their announced final initiative totals without any additional bonus calculation
+or bonus UI.
 
-## User-agreed interaction and calculation - 2026-11-06
+- Set the bonus during creation in Add Monster or .monster import.
+- Display it read-only in the Monsters roster between HP/Max HP and the raw-roll
+  editor, with unambiguous signed presentation. No inline bonus editor.
+- Edit an existing bonus in the monster Edit modal; the separately agreed reviewed
+  source-refresh action can also replace it.
+- The monster initiative editor accepts a raw roll. Display the calculated total
+  separately and use that total for ordering.
+- Calculate total = raw roll + bonus exactly once. Every entered roll replaces
+  the previous raw roll, never the previous total.
+- Refresh/reload preserves the relationship and neither rerolls nor compounds.
+- Editing or refreshing the bonus with a retained raw roll immediately recalculates
+  the total on save/apply and updates ordering.
+- A known bonus without a raw roll leaves the calculated total unset, except for
+  a preserved legacy total described below.
+- Automatic individual rolls apply each monster's bonus. Shared initiative uses
+  one shared raw d20 roll plus each selected monster's own bonus; totals and
+  positions may differ. Equal totals retain the existing tie-resolution workflow.
+- Reordering must preserve the current turn owner and round, without advancing a
+  turn or replacing unrelated combat state. Retain initiative keyboard navigation.
 
-- Set the monster bonus during creation in the Add Monster section, through manual
-  entry or .monster import. Source-derived values can be corrected manually.
-- Display the assigned bonus read-only in the Monsters roster, between HP/Max HP
-  and the initiative roll editor. Do not make the bonus editable in the row.
-- Edit an existing monster's bonus only in the monster Edit modal.
-- The monster initiative editor accepts the raw dice roll, not a bonus or a final
-  total. Display the calculated total separately and use it for turn ordering.
-- Calculate monster initiative total as raw roll + stored bonus exactly once.
-  Each entered roll replaces the previous raw roll; calculate from that new roll,
-  not from the previous total. Re-entering a value is equivalent to rerolling.
-- Refreshing or reloading must preserve the assigned roll/bonus/total relationship
-  and must not add the bonus again or cause a new roll.
-- Saving a changed bonus in the Edit modal immediately recalculates the total
-  from the existing raw roll and updates turn ordering. Changing the raw roll
-  likewise updates the calculated total and order.
-- Leave character initiative entry and calculation unchanged.
+## Agreed legacy compatibility
 
-Examples supplied or confirmed during clarification:
+Existing monsters receive a default bonus of 0 without changing stored initiative
+totals or inventing historical raw rolls. Distinguish a retained legacy total
+from an unset raw roll in the roster. Setting or retrieving a bonus when no raw
+roll exists preserves the legacy total. The next manual or automatic raw roll
+replaces legacy state with the normal roll-plus-bonus relationship. Persist the
+bonus, its default/source distinction, raw roll and legacy/total relationship
+through save/reload and supported encounter/setup reuse.
 
-| Action | Raw roll | Bonus | Final total |
+## Agreed examples
+
+| Action | Raw roll | Bonus | Total |
 |---|---:|---:|---:|
-| Adult Blue Dragon example | 16 | +12 | 28 |
-| Replace the roll with 10 | 10 | +12 | 22 |
+| Adult Blue Dragon illustrative input | 16 | +12 | 28 |
+| Replace roll with 10 | 10 | +12 | 22 |
 | Enter 16 again | 16 | +12 | 28 |
-| Refresh without editing | 16 | +12 | 28 |
+| Reload without editing | 16 | +12 | 28 |
 | Save bonus change to +10 | 16 | +10 | 26 |
-| Negative-bonus example | 16 | -2 | 14 |
-| Zero-bonus example | 16 | 0 | 16 |
+| Negative bonus | 16 | -2 | 14 |
+| Zero/default bonus | 16 | 0 | 16 |
 
-The Adult Blue Dragon modifier is the user's illustrative input, not an
-independently verified provider mapping or edition-specific stat claim.
+The dragon modifier is user-supplied illustrative input, not a verified
+provider/edition-specific statistic. With a shared roll of 16, bonuses +12, +3
+and -2 produce totals 28, 19 and 14 respectively.
 
-## Acceptance criteria
+## Selected-monster source refresh - agreed 2026-11-06
 
-- Manual monster creation and .monster import support a separate initiative bonus.
-- Available source bonuses can populate creation; manual correction remains usable.
-- Positive, zero and negative bonuses have unambiguous signed presentation.
-- The roster bonus is read-only in the agreed position; existing-monster bonus
-  changes are made in the Edit modal, not inline.
-- The monster row distinguishes editable raw roll from displayed calculated total;
-  ordering uses the total. Every new roll applies the bonus exactly once.
-- Bonus edits recalculate from the retained raw roll and update ordering on save.
-- Refresh/save/reload does not compound the bonus, reroll or lose assigned values.
-- The bonus and required roll/total data persist across saving, reloading and
-  supported encounter/setup reuse.
-- Character announced-total input receives no additional calculation or bonus UI
-  changes from this task.
-- Existing monsters remain usable after any required migration; existing stored
-  initiative totals are not silently reinterpreted as raw rolls or modified.
-- Shared/group initiative, tie handling and initiative keyboard navigation remain
-  consistent with explicitly agreed semantics; unresolved cases below must be
-  settled before implementing affected behaviour.
+Include a Refresh from source action in the existing monster bulk dropdown.
+It acts only on monsters selected when the action opens, never the whole roster.
+Disable it without a selection. One selected monster yields one review row;
+multiple selections yield a per-monster review in one dialog.
 
-## Remaining implementation decisions and compatibility gates
+Retrieve the original selected source record where its identity is available,
+without silently substituting another edition/candidate. Without recorded source
+identity, use the existing lookup/candidate-selection interaction and require a
+selection before applying changes. Resolve candidate selection for its row and
+return to the same review without losing other selections. No Open5e or new
+source-selection capability is assumed; 016/017 remain separate tasks.
 
-The raw-roll versus final-total question and roster-versus-modal bonus editing are
-settled above; do not reopen them as unspecified design choices.
+Show current and retrieved/proposed initiative bonus, AC, Max HP and Current HP,
+plus each monster's source and lookup status. Each available field has its own
+checkbox. Only checked fields are updated; all other values and all unselected
+monsters remain untouched. Missing, invalid or failed retrievals are marked and
+disabled; they must not overwrite existing values. In particular, a missing
+bonus during refresh does not overwrite a previously assigned bonus with 0.
 
-Inspect how each provider and .monster format represents initiative modifiers.
-Define handling of absent/invalid bonuses, including whether any derivation is
-allowed; do not assume the bonus always equals a Dexterity modifier. Agree legacy
-and missing-value defaults and migration representation without silently converting
-existing final totals into raw rolls. Specify behaviour when the raw roll is unset.
+Current HP replacement is unchecked initially. Preserve current HP unless the
+user explicitly selects its replacement. For a source supplying HP dice, show
+the formula and generate one HP value only when applying an HP refresh, not
+when opening/reviewing the dialog. Max HP and Current HP are independently
+selectable; ensure coherent treatment when both use the same HP refresh value.
 
-Inspect existing automatic/shared initiative assignment. Agree how a shared raw
-roll interacts with different monster bonuses and grouping; the user's clarification
-does not decide those potentially conflicting semantics. Review tie resolution and
-active-battle reordering so the required total/order update does not silently
-advance turns or replace unrelated combat state. No raw-roll bounds, new dice
-roller, manual final-total override or automatic fallback order is agreed here.
+Use a grid on wider screens and equivalent per-monster cards within the same
+dialog on narrow screens, not a one-monster-at-a-time wizard. A single Apply
+selected changes button commits chosen changes; review/selection alone saves
+nothing. Recalculate initiative using a retained raw roll, preserving legacy
+totals when the raw roll is absent.
 
-Coordinate provider mapping with SG-TODO-016/017 without making their delivery an
-assumed prerequisite. No new provider capability is claimed by this clarification.
+### Grid header selection
 
-## Validation required
+- Clicking a field column header selects all enabled checkboxes in that column.
+- Clicking a monster row header selects all enabled checkboxes in that row.
+- When all enabled checkboxes in that row/column are selected, clicking its header
+  clears them; a partially selected header selects the remainder.
+- Individual checkboxes remain independently selectable and deselectable.
+- Skip disabled/missing/invalid/failed fields.
+- Header controls expose unchecked, partial and checked states and support
+  keyboard activation. Provide equivalent controls in the narrow layout.
+- Current HP starts unchecked, but explicitly activating its column header or a
+  row header can select an available Current HP replacement.
+- Header controls change review selections only; Apply selected changes is still
+  required. The review contains only the originally selected monsters.
 
-Prepare provider/import, persistence and initiative regressions covering explicit
-source bonuses, missing values, manual entry/correction, .monster import,
-positive/zero/negative modifiers, exactly-once application, repeated raw-roll entry,
-bonus edits with an existing roll, refresh/reload, legacy records, shared initiative
-and tie/order behaviour. Retain character final-total regression coverage.
+## Acceptance criteria and required validation
 
-Verify the agreed examples, read-only roster placement, Edit-modal-only bonus
-editing, distinct raw-roll/total presentation and recalculation/order updates.
-Manually verify creation, import, save/reload and desktop/narrow usability, including
-Tab/Shift+Tab initiative navigation without adding an inline bonus editor.
+- Cover manual creation/correction, explicit source bonuses, .monster import,
+  missing default 0, explicit zero provenance and invalid input rejection.
+- Cover positive/zero/negative bonuses, exactly-once application, repeated entry,
+  automatic and shared raw rolls with different bonuses, and character totals.
+- Cover bonus edits/refresh with and without a raw roll; legacy migration must
+  preserve totals, with no invented roll, reroll or compounding on reload.
+- Cover persistence, supported setup reuse/reset/import, tie resolution and
+  ordering changes without turn/round advancement or unrelated state loss.
+- Verify read-only bonus placement, Edit modal, distinct roll/total presentation
+  and Tab/Shift+Tab navigation without an inline bonus editor.
+- Cover original-source identity, missing identity/candidate selection, source
+  failures, missing/invalid fields and isolation to the selected monsters.
+- Cover per-field and bulk header selection/toggling, partial states, disabled
+  skipping, independent overrides, keyboard controls and narrow cards.
+- Cover no mutation during review, explicit Apply, current HP preservation by
+  default, independent HP/Max HP choices and dice generation only on HP apply.
+- Inspect refresh apply against changed/deleted monsters, campaign/setup changes
+  and intervening edits so stale review cannot overwrite unrelated state.
+- Prepare automated regressions and manually verify creation/import, refresh,
+  save/reload and desktop/narrow usability. Report actual coverage limitations.
 
-## Delivery status
+## Implementation work and delivery status
 
-Requirements clarification only. Implementation, migration planning, tests and
-validation remain outstanding. The user subsequently agreed to place 018 next,
-before 009.5, in the remaining-work sequence on 2026-11-06; see the
-[agreed delivery order](115-admin-delivery-sequence.md). Scheduling does not start
-implementation or resolve the remaining compatibility decisions above.
+The user requested implementation on 2026-11-06. Initial live inspection covered
+monster create/edit/update, individual/shared rolling, battle ordering, reset/setup
+reuse and existing provider extraction. Further persistence/schema, imports, UI,
+source identity, test and workflow inspection remains necessary before code
+delivery. No new raw-roll bounds, manual total override or fallback ordering
+is introduced by this agreement. Confirm actual provider representations through
+code/fixtures; do not assume an initiative modifier equals Dexterity.
 
-The clarified behaviour was recorded in documentation-only commit
-da484d68d5ad39ef371ec8eeecb958149778fd8a. This subsequent sequence update changes
-only TODO documentation. README and HANDOVER index were reviewed/reused and remain
-accurate without edits; runtime behaviour and index links are unchanged. No
-application code, tests, imports, persistence or workflows change, and no new tests
-were executed. The commit message includes [skip ci]; no separate workflow is
-dispatched or observed workflow state inferred from that marker.
+This update records agreed requirements and implementation commencement only.
+It does not deliver the feature or claim passing tests. No application code, tests,
+configuration or workflow changes are included. No tests were run for this
+documentation update. The commit message includes [skip ci]; no workflow is
+modified or separately dispatched, and no workflow state is inferred from it.
+The later application/test delivery should run normal CI with separate exact
+write approval, followed by review of user-provided result artifacts.
+
+README and HANDOVER index were verified unchanged against their previously read
+blob identities and remain accurate: no runtime delivery or new handover section
+is claimed. TODO.md is updated to match this in-progress status. Historical
+clarification commit da484d68d5ad39ef371ec8eeecb958149778fd8a preceded the
+compatibility and source-refresh agreements recorded here.
