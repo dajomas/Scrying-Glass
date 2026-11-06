@@ -1,0 +1,22 @@
+rolls_locally) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:05.0522011Z test_removed_row_controls_stay_unavailable_after_refresh (test_monster_button_layout.MonsterButtonLayoutTests.test_removed_row_controls_stay_unavailable_after_refresh) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:06.1845016Z test_single_line_geometry_and_local_overflow (test_monster_button_layout.MonsterButtonLayoutTests.test_single_line_geometry_and_local_overflow) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:06.6587828Z test_choose_cancel_and_error (test_monster_candidate_browser.CandidateBrowserTests.test_choose_cancel_and_error) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:07.0946984Z test_dnd_beyond_popup_wording_and_cancel_stay_unchanged (test_monster_candidate_browser.CandidateBrowserTests.test_dnd_beyond_popup_wording_and_cancel_stay_unchanged) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:07.5511101Z test_edit_preservation_and_pending_submit (test_monster_candidate_browser.CandidateBrowserTests.test_edit_preservation_and_pending_submit) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:07.9184223Z test_single_and_zero (test_monster_candidate_browser.CandidateBrowserTests.test_single_and_zero) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:08.3727628Z test_six_book_labels_links_and_selected_raw_identity (test_monster_candidate_browser.CandidateBrowserTests.test_six_book_labels_links_and_selected_raw_identity) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:08.7527128Z test_species_change_closes_popup (test_monster_candidate_browser.CandidateBrowserTests.test_species_change_closes_popup) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:09.1851440Z test_unknown_codes_are_literal_without_invented_editions (test_monster_candidate_browser.CandidateBrowserTests.test_unknown_codes_are_literal_without_invented_editions) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:09.2440674Z test_count_table (test_monster_candidate_selection.CandidateTests.test_count_table) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:09.2441551Z test_disabled_and_invalid_link (test_monster_candidate_selection.CandidateTests.test_disabled_and_invalid_link) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:09.2448161Z test_errors_do_not_fallback_or_leak (test_monster_candidate_selection.CandidateTests.test_errors_do_not_fallback_or_leak) ... D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:09.2449022Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:09.2449601Z   File "/tmp/scrying-tests-779mib18/repo/python/scrying_glass_monster_selection.py", line 73, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:09.2450131Z     hits = context.dnd_monster_candidates(species)
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:09.2450693Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:09.2451168Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:09.2451455Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:09.2451938Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:09.2452412Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-06T22:50:09.24
