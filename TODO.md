@@ -13,7 +13,7 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 6. [5e.tools sources and descriptive names](docs/todo/060-fivetools-source-configuration.md) - SG-TODO-006, completed (configuration and notification/popup labels delivered; combined CI verified; user-requested close-out, 2026-11-03).
 7. [Single-line monster buttons](docs/todo/070-monster-button-layout.md) - SG-TODO-007, completed (row HP controls removed and keyboard scrolling corrected; covering CI verified; user-requested close-out, 2026-11-03).
 8. [Source-size refactors](docs/todo/080-source-size-refactors.md) - SG-TODO-008, completed (Admin and Storage accepted by user; no code above the existing-file allowance, 2026-11-03).
-9. [Admin usability and visual redesign](docs/todo/090-admin-usability-redesign.md) - SG-TODO-009, in progress (009.1 and 009.2 closed; 009.3 implementation included with validation and visual/workflow acceptance pending; 009.4-009.7 proposed, 2026-11-06).
+9. [Admin usability and visual redesign](docs/todo/090-admin-usability-redesign.md) - SG-TODO-009, in progress (009.1-009.3 closed after verified validation and user acceptance; 009.4-009.7 proposed, 2026-11-06).
 10. [HTTPX2 test migration](docs/todo/100-httpx2-test-migration.md) - SG-TODO-010, completed (verified successful local run and covering CI run 42205835274 attempt 1; user-requested close-out, 2026-11-06).
 11. [Add Monsters image previews](docs/todo/110-monster-image-previews.md) - SG-TODO-011, proposed (preview provider and selected local images beside the corresponding Image or Replace image field, 2026-11-06).
 

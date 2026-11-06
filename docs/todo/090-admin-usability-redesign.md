@@ -4,7 +4,7 @@
 
 ## SG-TODO-009 - Professional, task-focused Admin interface
 
-- Status: in progress; SG-TODO-009.1 and SG-TODO-009.2 are closed after verified validation and user acceptance. SG-TODO-009.3 implementation is included with covering validation and visual/workflow acceptance pending. Phases 009.4-009.7 remain proposed and are not implemented.
+- Status: in progress; SG-TODO-009.1, SG-TODO-009.2 and SG-TODO-009.3 are closed after verified validation and user acceptance. Phases 009.4-009.7 remain proposed and are not implemented.
 - Requested: 2026-11-06. The user requested recording the design suggestions and processing order, agreed staged delivery, and explicitly requested implementation of 009.1, 009.2 and subsequently 009.3.
 - Priority: incremental usability improvement; no priority relative to other tasks agreed.
 - Owner and deadline: not assigned.
@@ -31,7 +31,7 @@ Process phases 1 through 7 in order, reviewing each coherent increment before st
 |---|---|---|---|
 | 1 | SG-TODO-009.1 | Shared visual foundations (closed) | Baseline inspection |
 | 2 | SG-TODO-009.2 | Header and action hierarchy (closed) | 009.1 |
-| 3 | SG-TODO-009.3 | Consistent panels and forms (in progress) | 009.1, 009.2 |
+| 3 | SG-TODO-009.3 | Consistent panels and forms (closed) | 009.1, 009.2 |
 | 4 | SG-TODO-009.4 | Scannable rosters and contextual bulk actions | 009.3; agreement for changed row controls |
 | 5 | SG-TODO-009.5 | Workflow-based navigation | 009.2-009.4; agreed visibility mapping |
 | 6 | SG-TODO-009.6 | Focused live encounter workspace | 009.4, 009.5 |
@@ -61,7 +61,7 @@ Acceptance: context/feedback remain visible while scrolling; wrapped controls/me
 
 ### SG-TODO-009.3 - Consistent panels and forms
 
-Status: in progress, 2026-11-06. Implementation and six regression methods are included; full-Admin browser/suite/CI results, screenshots and user visual/workflow acceptance remain pending. See [implementation, deployment and validation limits](../handover/280-admin-panel-forms.md).
+Status: closed (completed), 2026-11-06, after verified successful local and CI validation of implementation 588831fb1ece198fefee3a2422410123a8f1f175 and the user's explicit desktop/narrow visual and workflow acceptance. See [implementation, verification and close-out](../handover/280-admin-panel-forms.md).
 
 - Standardize anatomy: concise title, optional description, related fields, main action and secondary actions.
 - Task-oriented labels: Add character for entry; Characters for the roster.
@@ -70,7 +70,7 @@ Status: in progress, 2026-11-06. Implementation and six regression methods are i
 
 The increment groups entry/setup controls using existing nodes, adds descriptions/action areas and native background/.monster disclosures initially open. Existing viewer/backup disclosure defaults and visible CSV/setup import controls remain. It does not implement roster restructuring, tabs, encounter-workspace restructuring or revised feedback timing.
 
-Acceptance: purposes/required values are clear; disclosures expose accurate accessible state; forms retain values, validation, existing IDs/handlers and submit behaviour. Review covering CI and desktop/narrow visual/workflow acceptance before closure. Syntax/parsing checks do not satisfy these gates.
+Acceptance: purposes/required values are clear; disclosures expose accurate accessible state; forms retain values, validation, existing IDs/handlers and submit behaviour. These phase gates are accepted on covering local/CI evidence and user visual/workflow confirmation, not on syntax checks alone. Retained fixture/live-server limitations are documented in the handover.
 
 ### SG-TODO-009.4 - Scannable rosters and contextual bulk actions
 
@@ -135,4 +135,14 @@ Original planning on 2026-11-06 changed documentation only and explicitly used [
 
 009.2 corrective source aa82b45629cce7b49164d5ad7c1304481f20bbd7 passed local evidence 1fcf6f726ccdad8b6315ca2f24cd91fc94d206d0, folder local-tests-aa82b45/run-20261106T141733Z-jal8gK, with overall/full-run summary exits zero, all six header methods passed, repeated suite 1,041 tests OK, 675 connections/zero without explicit close and 43 pytest passes. CI 42232501137 attempt 1 covered that exact source; evidence b4d1f5f69519066ccab88709f93aa1eef643c42f under ci-results-42232501137-attempt-1 reports workflow/job/configured-step success, six header methods passed, 1,041 unittest tests OK, 43 pytest passes and ten uploaded screenshots. Upload/collection is not assistant visual inspection. User visual/workflow acceptance was already given and was not requested again. Original failed results are historical diagnosis, not closure evidence. Later runner cleanup d0a1f3c2781e882cb651a4cf9f6a2b85e22ebc71 is outside that corrective run's coverage. Original close-outs were documentation-only, executed no fresh tests and did not request a skip under the then-applicable policy; no new run outcome was inferred.
 
-009.3 preparation on 2026-11-06 passed enhancement JavaScript syntax, CSS stylesheet parsing and regression Python AST parsing. Full application/browser execution and visual baseline/after review have not been performed during preparation. Existing CI discovery/upload covers the new regression module and screenshot paths. The user requested implementation and subsequently a commit with CI. This mixed delivery omits [skip ci]; no workflow state is claimed until observed. Detailed checks, coverage limits, deployment and pending acceptance are recorded in the 280 handover.
+009.3 preparation on 2026-11-06 passed enhancement JavaScript syntax, CSS stylesheet parsing and regression Python AST parsing. Full application/browser execution and visual baseline/after review were not performed during preparation. Existing CI discovery/upload covers the new regression module and screenshot paths. The user requested implementation and subsequently a commit with CI. That mixed delivery omitted [skip ci]; its later verified results and acceptance are recorded below and in the 280 handover.
+
+## SG-TODO-009.3 verified close-out - 2026-11-06
+
+Implementation: 588831fb1ece198fefee3a2422410123a8f1f175. Successful local evidence: b000d0fc753ce6b6d430b10b6e32f07c6c8482bd, folder local-tests-588831f/run-20261106T152634Z-3P6S1l. Completed full run and overall exit are zero; all six panel/forms methods explicitly passed; repeated connection-audit suite reports 1,053 tests OK, 676 connections and zero without explicit close; pytest reports 43 passes. Main unittest log was truncated before its final summary, so that count comes from the complete repeated audit log.
+
+Successful CI: Branch tests run 42242916048 attempt 1, covering the exact implementation SHA on features/perplexity. Evidence: 6f57c24e37e65b15675548d1cd411be0f3a69ea7 under ci-results-42242916048-attempt-1. Workflow/job/configured steps succeeded; six panel/forms methods explicitly passed; main unittest reports 1,053 tests OK, pytest 43 passes and repeated connection audit 1,053 tests OK with 676/0 connections. Four new 009.3 screenshots were included in 14 uploaded/collected fixture images. See the handover for reviewed log locations and limits.
+
+The user explicitly accepted SG-TODO-009.3 in response to desktop/narrow visual and workflow acceptance on 2026-11-06. This is user acceptance, not an assistant-executed authenticated live-server or exhaustive accessibility/combat audit. Only 009.3 closes here; 009.1/009.2 stay closed, overall SG-TODO-009 stays in progress, and 009.4-009.7 remain proposed. SG-TODO-011 image previews remain a separate proposed task.
+
+This close-out changes documentation only, runs no new tests and leaves application/tests/workflows unchanged. README.md and HANDOVER.md remain accurate without edits. The commit includes [skip ci], with no separate workflow dispatch or inferred new workflow outcome.
