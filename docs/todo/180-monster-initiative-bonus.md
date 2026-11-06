@@ -3,7 +3,7 @@
 [Back to TODO index](../../TODO.md)
 
 - Task: SG-TODO-018
-- Status: in progress; foundation/reset delivered with covering CI; handler compatibility stage prepared, remaining feature integration outstanding.
+- Status: in progress; foundation/reset have covering CI; handler compatibility delivered with failed full-suite validation; fixture correction prepared and awaiting covering CI.
 - Updated: 2026-11-06
 - Working branch: features/perplexity-018 until user sign-off; no merge/write-back to features/perplexity without fresh approval.
 - Priority: next before SG-TODO-009.5 in the [agreed sequence](115-admin-delivery-sequence.md). No owner or deadline assigned.
@@ -93,17 +93,45 @@ suite OK with 689 opened connections and zero without explicit close. All job
 steps succeeded. Repeated execution is not another unique test set. See handover
 for chunk paths, fixture coverage and live-server/storage limitations.
 
-Revised staged delivery: this stage wires existing final-total edit compatibility
-and individual/shared automatic raw-roll calculation. It does not wire state
-normalization or the raw-roll UI. Seven direct handler regressions are prepared;
-AST parsing passed, execution is pending normal CI. The prior 16-test isolated
-normalization/bridge fixture is not full-handler evidence or shipped state wiring.
-No passing CI is claimed for this stage before results review. Normal CI applies;
-no [skip ci], workflow modification or separate dispatch. Root indexes remain
-accurate at the overall in-progress level and are left unchanged.
+Handler compatibility commit 4e7128eb3e5349c186f0a80d34031031762a3d89 wires existing
+final-total edit compatibility and individual/shared automatic raw-roll calculation.
+It does not wire state normalization or the raw-roll UI. Its seven direct-handler
+methods passed in CI, but the full workflow did not pass; details below. The prior
+16-test isolated normalization/bridge fixture is not shipped state wiring or
+full-application evidence. Root indexes remain accurate at the in-progress level.
+
+## Failed compatibility CI and prepared fixture correction
+
+Run 42304851642 attempt 1 tested exact 4e7128eb3e5349c186f0a80d34031031762a3d89.
+Evidence publication: ea9804a2ebf43fc26bdb2554601f0d8923518933, folder
+ci-results-42304851642-attempt-1. Workflow and tests job completed/failure.
+Syntax/import, pytest, JavaScript and artifact upload passed. Main Python suite:
+1,119 tests, FAILED (errors=2). The repeated audit suite hit the same two errors;
+689 opened connections, zero without explicit close. Cleanup for setup-node and
+setup-python was skipped, not passed. All seven new direct-handler methods passed.
+
+The two errors are test_duplicates and test_single_roll_selected_only in
+SharedInitiativeTests. Its AST-extracted bulk_monsters method executes with empty
+globals, so the relative helper import raises KeyError: "'__name__' not in globals"
+before initiative assertions run. Preserve these errors as failure evidence,
+not as calculation assertion failures or a passing workflow.
+
+The corrective test change supplies __name__ and __package__ in the AST namespace.
+All five methods and existing assertions remain. No application, template or
+workflow changes are included. Local narrow reproduction against copied bulk/
+helper logic reproduced two errors in four behavioural methods, then all four
+passed with the fix. AST parsing passed. The menu/template method and full suite
+were not executed locally. Covering CI remains required. See the handover for
+source chunk locations and limitations; no passing correction result is claimed.
+
+The corrective commit uses normal CI, without [skip ci], workflow modification or
+separate dispatch. After its approved push, continue preparing state normalization;
+that preparation does not close the outstanding validation exception or complete
+018. Each later external write still needs exact-content approval.
 
 ## Outstanding acceptance work
 
+- Review covering fixture-repair CI and resolve any remaining failures before claiming green compatibility validation.
 - Wire monster-only state defaults/validation and complete state/storage/setup route tests; retain character/lair isolation, legacy totals and no compounding.
 - Wire creation, .monster import, manual/source bonus assignment and correction, signed roster presentation, Edit-modal bonus input and raw-roll/total UI.
 - Validate repeated raw entry, bonus edits, shared rolls, reload/reset/setup reuse, explicit/default zero and invalid input through real application paths.
@@ -117,3 +145,5 @@ Historical clarification: da484d68d5ad39ef371ec8eeecb958149778fd8a; expanded agr
 on features/perplexity: d96048f852b32cd2fb32c2307595eb85e17b61e3. Decisions were
 carried onto the dedicated branch without merging. Branch-filter workflow commit:
 3baf032c1e16a8b05befc2847f4e2dca98ffb049. No deadline or owner is invented.
+README and root indexes were verified unchanged and require no edits for this
+fixture-only correction; the task remains in progress and its links are unchanged.
