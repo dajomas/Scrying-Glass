@@ -15,7 +15,7 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 8. [Source-size refactors](docs/todo/080-source-size-refactors.md) - SG-TODO-008, completed (Admin and Storage accepted by user; no code above the existing-file allowance, 2026-11-03).
 9. [Admin usability and visual redesign](docs/todo/090-admin-usability-redesign.md) - SG-TODO-009, in progress (009.1-009.3 closed after verified validation and user acceptance; 009.4-009.7 proposed, 2026-11-06).
 10. [HTTPX2 test migration](docs/todo/100-httpx2-test-migration.md) - SG-TODO-010, completed (verified successful local run and covering CI run 42205835274 attempt 1; user-requested close-out, 2026-11-06).
-11. [Add Monsters image previews](docs/todo/110-monster-image-previews.md) - SG-TODO-011, in progress (implementation included; covering CI and visual/workflow acceptance pending, 2026-11-06).
+11. [Add Monsters image previews](docs/todo/110-monster-image-previews.md) - SG-TODO-011, completed (corrective local validation and CI run 42251417154 attempt 1 verified; user visual/workflow acceptance and close-out request, 2026-11-06).
 12. [Agreed Admin delivery sequence](docs/todo/115-admin-delivery-sequence.md) - sequencing decision agreed 2026-11-06: 011 first; 009.4 with 012 and 013; then 009.5-009.7. This planning section does not create another task ID or change implementation statuses.
 13. [Character HP editor consistency](docs/todo/120-character-hp-editors.md) - SG-TODO-012, proposed (match Characters Current/Max HP edit boxes to the Monsters HP column, 2026-11-06).
 14. [Initiative keyboard navigation](docs/todo/130-initiative-keyboard-navigation.md) - SG-TODO-013, proposed (Tab and Shift+Tab navigate between initiative edit boxes in Characters and Monsters, 2026-11-06).
