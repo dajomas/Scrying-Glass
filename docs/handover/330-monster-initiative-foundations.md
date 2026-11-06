@@ -2,120 +2,94 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated: 2026-11-06. Task: [SG-TODO-018](../todo/180-monster-initiative-bonus.md).
-Status: in progress. Foundation/reset have covering CI. Handler compatibility
-is delivered; its fixture correction is delivered but covering CI is unreviewed.
-State normalization is prepared with 20 passing component tests and full CI pending.
-All 018 writes target features/perplexity-018 until user sign-off. No merge or
-write-back to features/perplexity is authorized.
+Updated: 2026-11-07. Task: [SG-TODO-018](../todo/180-monster-initiative-bonus.md).
+Status: in progress. Delivered runtime through state normalization has covering
+successful CI; the agreed .monster import stage is prepared with validation
+pending. All 018 writes stay on features/perplexity-018 until user sign-off;
+no merge/write-back to features/perplexity is authorized.
 
-## Delivered history
+## Delivered history and evidence
 
-Foundation: 539697fabdde7e564b198104739870760032d638, pure initiative/refresh rules,
-selection controller and 32 helper tests, with user-requested [skip ci]. Reset/setup
-integration: 44e5c7640007601f801858d740dfdf66ab61e541, reset helper and two reset-path
-hooks plus 16 tests. Reset clears the current raw roll, preserves bonus/origin,
-restores original totals as legacy and does not invent historical rolls. Characters
-are unchanged. Snapshots preserve current values; setup import retains reset-on-
-import semantics, HP/Max HP and copy isolation. No storage schema change was made.
+Foundation 539697fabdde7e564b198104739870760032d638: pure initiative/refresh rules,
+selection controller and 32 helper tests, with requested [skip ci]. Reset
+44e5c7640007601f801858d740dfdf66ab61e541: reset helper, two reset hooks, 16 tests.
+Compatibility 4e7128eb3e5349c186f0a80d34031031762a3d89: legacy-total bridge,
+automatic raw/bonus rolling, seven handler tests. Fixture correction
+bb866bd457f42e4a60a14e18c0c90177109e2db0: package globals for the AST-extracted
+shared-roll fixture, preserving all five methods/assertions. State normalization
+cdd9957642a6754675dc7ace466def69c702b211: monster-only hook and 20 regressions.
 
-Handler compatibility: 4e7128eb3e5349c186f0a80d34031031762a3d89. Changed/cleared
-final-total edits detach stale raw rolls; unchanged totals/unrelated edits retain
-them. Automatic individual/shared rolling stores raw roll plus individual bonus.
-The bridge preserves the old UI temporarily, not a new manual-total override.
-Seven direct-handler regressions were added. No raw-roll UI, creation bonus input,
-source refresh or active-battle reordering was delivered by those stages.
+Reset clears stale raw rolls, preserves bonus/origin and restores original totals
+as legacy. Snapshots preserve current relationships; setup import retains reset-
+on-import, HP/Max HP and copy isolation. Changed/cleared legacy totals detach old
+rolls; unchanged/unrelated edits retain them. Individual/shared rolling stores raw
+rolls plus individual bonuses. Normalization supplies default zero and preserves
+legacy totals without invented rolls. Characters/lairs are not bonus-calculated.
+No schema migration has been introduced. Full feature/UI delivery remains open.
 
-## Verified reset/setup covering CI
+CI 42302058360 attempt 1 passed exact 44e5c764; publication
+88461cc2891a935e541e881884ef6b1a6fabde5b, ci-results-42302058360-attempt-1:
+1,112-test main/repeated suites OK, pytest 43 passed, 689 opened connections and
+zero without explicit close. CI 42304851642 attempt 1 failed exact 4e7128eb;
+publication ea9804a2ebf43fc26bdb2554601f0d8923518933,
+ci-results-42304851642-attempt-1. Both 1,119-test executions hit the same two
+AST namespace import errors before shared-roll assertions, not four defects or
+calculation assertion failures. Seven new handlers passed; syntax/import, pytest,
+JavaScript and upload passed, setup-node/setup-python cleanup was skipped.
+Connection tracking 689/0 did not make the failed suite pass. That run stays failed.
 
-Run 42302058360 attempt 1 tested exact 44e5c7640007601f801858d740dfdf66ab61e541.
-Evidence publication: 88461cc2891a935e541e881884ef6b1a6fabde5b, folder
-ci-results-42302058360-attempt-1. Workflow/tests job and all steps succeeded.
-Workflow reader-chunks/file-000025 parts 73-75 show all 22+16 dedicated Python
-methods OK; part 82 reports 1,112 tests in 106.131s, OK; part 83 reports pytest
-43 passed in 1.29s; parts 93-94 show ten selection tests passed, no skips/cancels;
-parts 110-111 show the repeated 1,112-test suite OK, 689 connections opened,
-zero without explicit close, connection audit PASS. Repeated execution is not
-another unique test set; the publication commit is not the tested code revision.
-Browser smoke uses mocked HTTP/WS with real Chromium. Entity storage fixtures
-use a minimal SQLite schema, not complete production schema/migration or live-
-authentication coverage. These results do not complete SG-TODO-018.
+## Verified covering state/fixture CI
 
-## Failed compatibility CI and fixture correction
+Run 42307450451 attempt 1 tested exact cdd9957642a6754675dc7ace466def69c702b211
+on features/perplexity-018. Publication 5d218b4497391fc4fb52da2dd4ed2e823e29fe5c,
+ci-results-42307450451-attempt-1. run.json reports completed/success for workflow
+and tests job 128200269724; all steps, upload and cleanup succeeded.
+Workflow reader-chunks/file-000025 parts 76-77 explicitly report all 20 state
+methods OK; part 80 all five repaired shared-roll methods OK; part 83 main
+1,139 tests in 80.641s OK; part 85 pytest 43 passed in 0.79s; part 112 repeated
+1,139 tests in 76.828s OK, 689 connections opened and zero without explicit close,
+audit PASS. JavaScript/standalone steps succeeded. This resolves the prior covering
+validation exception without relabelling the failed run. Repetition is not another
+unique test set; publication is not tested code. Mocked HTTP/WS Chromium fixtures,
+minimal SQLite record tests and component checks are not complete production-
+storage, authenticated live-server or full end-to-end validation.
 
-Run 42304851642 attempt 1 tested exact 4e7128eb3e5349c186f0a80d34031031762a3d89.
-Publication: ea9804a2ebf43fc26bdb2554601f0d8923518933, folder
-ci-results-42304851642-attempt-1. run.json reports completed/failure for workflow
-and job 128191490047. Syntax/import, pytest, JavaScript and visual upload passed.
-Main Python and standalone audit steps failed. Post setup-node/setup-python
-cleanup was skipped, not passed; checkout cleanup passed.
+## Agreed import-only stage
 
-Workflow reader-chunks/file-000025 parts 73-74 show all seven new handler methods
-OK. Parts 82-84 show test_duplicates and test_single_roll_selected_only failing
-with KeyError: "'__name__' not in globals"; 1,119 tests in 109.161s, errors=2.
-Parts 113-114 show the same two errors during the 1,119-test audit rerun, 108.032s.
-They are repeated errors, not four defects. Part 114 tracks 689 opened connections
-and zero without explicit close; that does not make the failed suite a pass.
+Support the explicit .monster initiative_bonus key as a signed integer or integer
+text. Supplied nonblank values carry import origin; blank becomes default zero.
+Absent-key parser output remains its existing four fields; delivered normalization/
+calculation paths supply missing zero. Explicit null, booleans, floats, containers,
+malformed text and out-of-signed-64-bit-storage values are rejected. These storage
+limits are not new gameplay roll bounds. No Dexterity/ambiguous initiative-field
+derivation, provider evidence, source identity or schema change is added. A file
+cannot override the assigned import origin. Duplicate-key, HP/AC and CSV behaviour
+remain. Help identifies this as a Scrying Glass field, not guaranteed exporter data.
 
-The older fixture AST-extracts bulk_monsters into empty globals. The new relative
-helper import needs module/package globals, so it fails before shared-roll
-assertions. No calculation assertion failed in those two cases. The failed run
-remains failed evidence despite the dedicated tests passing.
+Existing make_monster/make_monsters preserve additional scalar fields, so this
+stage does not alter constructors or handlers. The inherited import handler parses
+before image lookup/save and append. New records have no assigned total/raw roll;
+existing helpers treat an absent roll key as unset. Quantity copies retain bonus
+with distinct IDs. Manual Add Monster parameter/form and explicit constructor
+initialization follow as the separately agreed next stage. Existing-monster bonus
+editing, raw-roll roster UI, provider extraction, refresh and ordering stay open.
 
-Fixture correction: bb866bd457f42e4a60a14e18c0c90177109e2db0. It sets __name__ and
-__package__ in tests/test_shared_monster_initiative.py. All five methods/assertions
-remain; application/templates/workflows are unchanged. A Python 3.12 isolated
-reproduction using copied bulk/helper logic reproduced two errors in four
-behavioural methods, then all four passed. AST parsing passed. The menu/template
-method and full suite were not run locally. Covering corrective CI is still
-unreviewed; no green-validation claim is made for that repair.
+## Prepared checks and continuation
 
-## State-normalization increment - prepared 2026-11-06
+Seven framework-independent methods passed locally in this preparation. Both new
+test modules/helper passed AST parsing. Thirteen parser/construction/direct-import
+methods are prepared but were not executed: collection stopped with
+ModuleNotFoundError: No module named 'fastapi'. This is an environment/collection
+failure, not passing tests or executed assertion failures. No fake FastAPI package
+was substituted. The prior broader 30-case creation draft is not this stage's
+payload. Normal CI discovers the two test_*.py modules and supplies dependencies;
+HTTP/browser/storage/manual acceptance remains distinct from these unit fixtures.
 
-Adds a 325-byte monster-only hook to StateService.normalize_state, calling the
-existing initiative normalizer before feature normalization. Missing bonuses
-become 0 with default origin and absent raw rolls remain null. Legacy totals are
-preserved without invented rolls. A retained raw roll determines the derived
-total exactly once, including repair of a stale derived total. Explicit-zero
-origin persists; malformed initiative fields produce contextual monster-location
-errors. Character/lair normalization is unchanged. The existing final-total bridge
-allows edited legacy totals to survive subsequent full state normalization.
-
-The rest of StateService source is unchanged. Its original blob was verified as
-525b898f5cfb376cbdffdb1505764bd169186fcf before applying the hook. Five dependency
-copies (feature/statistics/lair/turn/health rules) were verified against repository
-blob SHAs. The tests use the complete StateService and real dependency modules,
-not the earlier condensed method/stub feature fixture. Only a minimal context
-object/display callback is supplied; these remain component-level checks.
-
-Twenty regressions passed in preparation: 15 full-state cases and five bridge
-cases, including real Max HP reduction normalization, rejection of invalid effects,
-nonmutation, character/lair isolation, retained turn/round/tie state, JSON reload,
-legacy-edit reload and stale-derived-total repair. The earlier 18-case form of
-this suite produced five failures and two errors against the unmodified state
-service, then passed with the hook; the final expanded 20-case suite passed.
-Do not describe that baseline as a new failure of the delivered requirements.
-
-Prepared state source: 20,903 bytes (20,578 plus 325), within the documented
-25,000-byte existing-file tolerance; new test: 7,966 bytes, below 20,000. See
-[source-size policy](../todo/080-source-size-refactors.md). No size-only refactor,
-schema migration, helper change or new gameplay bounds are included. No full
-server, SQLite lifecycle, HTTP, ordering or browser validation ran for this
-increment. Normal CI should discover tests/test_monster_initiative_state.py.
-
-## Continuation and delivery policy
-
-Review covering fixture/state CI when the user supplies results; neither a push
-nor the 20 component passes closes the outstanding validation exception. Next
-wire creation/.monster bonus input, bonus editing, raw-roll roster UI, validated
-provider/source identity, source-refresh preview/apply and active-order updates.
-The planner still needs server-owned/authenticated review data, scope/lifetime/
-replay guards, atomic health/statistics reconciliation and sanitized UI offers.
-It is not a security boundary; source identity samples are illustrative.
-
-This runtime/test/documentation increment uses normal CI, no [skip ci], workflow
-change or separate dispatch. Branch filter: 3baf032c1e16a8b05befc2847f4e2dca98ffb049.
-README and root indexes were verified against prior complete reads and left
-unchanged: links, overall in-progress status and existing user workflows remain
-accurate. Task detail records partial delivery/validation. No complete feature,
-new workflow result or authenticated live-server success is claimed.
+The live parser was verified as 742908fd67ad34dc6f21a6d9c0532f5d31da4a98 before
+preparing the optional-field extension. New code/tests remain below 20,000 bytes;
+existing parser remains below its allowance. Normal CI applies: no [skip ci],
+workflow changes or separate dispatch. No stage CI result or completion is invented.
+README and root indexes were reviewed/reused; overall task identity/status and
+links remain in progress. Task details carry authoritative stage scope. No new
+handover section/index link is needed. Continue manual creation next, then remaining
+Edit/UI/provider/refresh/order integration with exact approval for each write.
