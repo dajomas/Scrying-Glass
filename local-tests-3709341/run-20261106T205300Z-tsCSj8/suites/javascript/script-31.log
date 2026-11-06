@@ -1,0 +1,30 @@
+TAP version 13
+# PASS: confirmed undo deliberately resets feature drafts
+# PASS: confirmed checkpoint restore deliberately resets feature drafts
+# PASS: confirmed life-state save clears only its own draft
+# PASS: cancelled bundle import preserves drafts
+# PASS: saving temporary HP preserves unsaved death saves
+# PASS: saving death saves preserves unsaved temporary HP
+# PASS: saving a checkpoint preserves feature edits
+# PASS: starting concentration preserves feature edits
+# PASS: cancelled death marking preserves edits and is not reported saved
+# PASS: cancelled HP confirmation preserves feature edits
+# PASS: cancelled checkpoint restore preserves edits
+# PASS: cancelled checkpoint deletion preserves edits
+# PASS: failed request preserves edits
+# 13 checks, 0 failures
+# Subtest: tests/test_feature_edit_preservation.js
+ok 1 - tests/test_feature_edit_preservation.js
+  ---
+  duration_ms: 92.159182
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 99.079315
