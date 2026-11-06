@@ -1,4 +1,4 @@
-/* Roster-local presentation; preserve original actions and inline HP in increment 1. */
+/* Roster-local presentation; retain existing encounter and editing handlers. */
 body.admin-shell .sg-roster-pane { min-width: 0; }
 body.admin-shell .sg-roster-region { overflow-x: auto; max-width: 100%; min-width: 0; }
 body.admin-shell #characters.sg-roster-region table { min-width: 48rem; }
@@ -22,3 +22,6 @@ body.admin-shell .sg-roster-pane .sg-row-selected {
     outline: 1px solid var(--admin-campaign);
     outline-offset: -1px;
 }
+/* Remove manual Turn controls from roster UI and keyboard/accessibility navigation. */
+body.admin-shell #monsters button[data-mt],
+body.admin-shell #characters button[data-ct] { display: none; }

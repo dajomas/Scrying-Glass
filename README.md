@@ -155,10 +155,13 @@ or cached locally, and availability is not probed. Disable both lookup providers
 to prevent optional provider requests; no credentials are sent to 5e.tools.
 Live-provider data/image availability is separate from intercepted-HTTP fixtures.
 
-The 11 remaining monster-row buttons stay on one line with table-local horizontal
-scrolling and focus exposure. Name/species remain individually unwrapped. Row
-Damage/Heal buttons and HP change columns are removed from both combatant tables
-by the loaded row-layout enhancement; other damage/healing workflows remain.
+The 10 remaining visible monster-row buttons stay on one line with table-local
+horizontal scrolling and focus exposure. Name/species remain individually
+unwrapped. Manual Turn buttons are excluded from both roster UIs, keyboard
+navigation and accessibility navigation by scoped CSS; the legacy DOM and turn
+APIs remain unchanged. Start/Next/End, turn highlighting and progression remain.
+Row Damage/Heal buttons and HP change columns are removed from both combatant
+tables by the loaded row-layout enhancement; other damage/healing workflows remain.
 Characters and Monsters show read-only current/max HP in their rosters. Use the
 existing row Edit dialog to change character Current HP and Max HP, then Save
 character. Character and monster initiative editors retain compact 7.5ch widths.

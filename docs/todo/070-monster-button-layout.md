@@ -4,13 +4,35 @@
 
 ## SG-TODO-007 - Restructure monster buttons into one line
 
-- Status: completed; closed at the user's request on 2026-11-03 after verification of covering green CI.
+- Status: completed; closed at the user's request on 2026-11-03 after verification of covering green CI. The separately requested 2026-11-06 Turn-control follow-up below has validation pending.
 - Requested: 2026-11-02. Single-line/local-scroll scope approved: 2026-11-03.
 - Scope updated by user on 2026-11-03: remove Damage and Heal from both Character and Monster rows.
 - Priority, owner and deadline: not assigned.
 - Initial delivery: `da8e7352fee0b504628aeed94aae6687341e2c35`.
 - Name-column correction: `49aed0cbf074d63930ce29a8d64ef2d9cc970226`.
 - Final row-removal/focus correction: `c19f49b9b5f79093d7bd69768f3eb14eaeabd762`.
+
+### Turn-control follow-up - 2026-11-06
+
+User requested removal of Turn from both roster UIs. Implementation is included,
+with covering local/CI and user acceptance pending, independently of the original
+007 closure. Scoped roster CSS uses display:none for monster data-mt and character
+data-ct buttons, excluding them from visual, keyboard and accessibility navigation
+on initial load and refresh. Legacy markup/API handlers remain; this is UI removal,
+not deletion of manual-turn API capability. There are now 10 visible monster-row
+buttons and 7 visible character-row buttons; historical 11-button statements below
+describe the previously accepted version. Other controls, initiative, Start/Next/End,
+turn highlighting, battle progression, HP rules and persistence are unchanged.
+
+Acceptance: no accessible roster Turn buttons after repeated refreshes at desktop
+and narrow widths; remaining controls retain labels, keyboard order/local focus
+exposure and original handlers without unintended mutations. CSS parsing and a
+simplified Chromium fixture passed at 1440/768/375 pixels across three table
+replacement cycles each, with forward/reverse focus skipping Turn and zero
+mutations. Full-Admin regressions are prepared under existing test discovery but
+not executed during preparation; covering CI and live workflow acceptance remain
+pending. Earlier HP-increment/local evidence does not validate this follow-up.
+See [current implementation/validation](../handover/310-admin-rosters.md).
 
 ### Accepted scope
 
