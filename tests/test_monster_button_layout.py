@@ -144,6 +144,10 @@ class MonsterButtonLayoutTests(unittest.TestCase):
                 self.assertEqual(page.locator(':focus').get_attribute('data-select-kind'), 'monsters')
                 page.keyboard.press('Tab')
                 self.assertIsNotNone(page.locator(':focus').get_attribute('data-mi'))
+                page.keyboard.press('Tab')
+                self.assertEqual(page.locator(':focus').inner_text(), 'Edit')
+                page.keyboard.press('Shift+Tab')
+                self.assertIsNotNone(page.locator(':focus').get_attribute('data-mi'))
                 buttons = page.locator('#monsters td button:visible')
                 self.assertEqual(buttons.count(), 10)
                 for key, indexes in (('Tab', range(10)), ('Shift+Tab', range(8, -1, -1))):

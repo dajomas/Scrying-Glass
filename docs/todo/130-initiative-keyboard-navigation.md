@@ -62,27 +62,31 @@ not a fully passing suite or assistant-executed authenticated/live persistence a
 
 ## Test-maintenance correction - included; rerun pending
 
-The subsequent test-changing delivery updates only the precondition in
-test_keyboard_reaches_every_button_and_scrolls_locally, tests/test_monster_button_layout.py.
-From initiative it presses Escape, asserts roster-region focus, then Tabs through
-checkbox and initiative before the original button traversal. This uses the
-approved exit instead of expecting Tab to leave a single-editor wrap.
+The existing test exits initiative wrapping with Escape, asserts roster-region
+focus, and Tabs through checkbox and initiative. The updated test adds four lines:
+Tab/assert Edit, then Shift+Tab/assert initiative. The existing button loop starts
+from initiative, not checkbox, so its next Tab is expected to reach Edit.
+The discarded draft that moved backward again to checkbox is not used.
 
-Seven precondition lines are added, including three assertions. Static parsing of
-the corrected method and AST comparison passed: all eight original assertion calls
-remain and the corrected method has eleven. The remaining method body is unchanged
-when the insertion is removed. Ten forward/nine reverse button visits, strict
-focus/local visibility, scroll checks, viewport coverage, errors and mutations
-assertions are retained. Wrapping is not disabled and button focus is not forced.
+Relative to the live test at b510d4269d9d41ae71cf913d117214796199bea0, this adds two
+assertion calls without removing any existing checks. The method now has thirteen
+assertion calls; the original eight plus the existing three Escape-precondition
+assertions and these two native-order assertions. Ten forward/nine reverse button
+visits, strict focus/local visibility, scroll checks, viewport coverage, errors and
+mutations assertions are retained. Wrapping is not disabled and focus is not forced.
 
-The assembled-Admin method and full suite were not executed during this preparation;
-these static checks are not a test pass. Existing CI discovers the corrected test.
+Executed preparation for this revision: Python AST parsing of a representative
+precondition/loop fragment and removal-of-insertion comparison passed. These are
+static fragment checks, not execution of the complete repository test. The earlier
+minimal browser fixture checked native order only, not the assembled Admin method.
+The assembled-Admin method, full suite and audit were not executed for this revision.
+Existing CI unittest discovery includes this test; workflows are unchanged.
 This mixed test/documentation commit omits [skip ci] for normal push-triggered CI;
-no separate dispatch or unobserved run status/result is claimed. Application code,
-user behaviour and workflows remain unchanged.
+no separate dispatch or observed workflow result is claimed. Application behaviour
+is unchanged. README and the TODO/HANDOVER indexes remain accurate without edits.
 
-Open action: run/review covering local and CI evidence for the corrective commit,
-verify the three viewport subtests and full suite/audit pass, then resolve the
-validation exception. The known failed results remain historical failure evidence,
-not validation of this unverified correction. Earlier 009.4/012 results are not 013
-evidence. See [implementation, reviewed evidence and limits](../handover/320-initiative-keyboard-navigation.md).
+Open action: run/review covering local and CI evidence for this corrective commit,
+verify all three viewport subtests and the full suite/audit pass, then resolve the
+validation exception. Historical failed evidence does not validate this revision.
+Earlier 009.4/012 results are not 013 evidence. See
+[implementation, reviewed evidence and limits](../handover/320-initiative-keyboard-navigation.md).

@@ -99,28 +99,30 @@ the requested test repair. Dedicated browser HTTP state/saves remain intercepted
 
 ## Subsequent test-maintenance correction - 2026-11-06
 
-The old fixture entered initiative and immediately expected Tab to reach Edit.
-With the approved single-editor wrap that precondition was stale. The separate
-corrective delivery adds seven lines before button traversal: Escape, assert
-roster-region focus, Tab/assert checkbox, Tab/assert initiative. It uses normal
-keyboard events, does not force button focus, and leaves application code untouched.
+The existing Escape precondition is retained. Relative to the live test at
+b510d4269d9d41ae71cf913d117214796199bea0, this revision adds four lines:
+Tab/assert Edit, then Shift+Tab/assert initiative. The original button loop then
+starts from initiative so its first Tab can reach Edit. The discarded draft that
+continued backward to checkbox would have made that first assertion fail and is
+not delivered. No application code or workflow is changed and focus is not forced.
+
 All existing 10-forward/9-reverse visits, strict local-focus visibility and scroll
 checks at 1440/768/375, error/no-mutation assertions and other layout methods remain.
+This revision adds two assertion calls to the existing eleven, yielding thirteen.
+The original eight checks and three Escape-precondition checks remain intact.
 
-Executed preparation: corrected-method AST parsing and assertion-preservation
-comparison passed. The method retains all eight original assertion calls and adds
-three, with its remainder identical when the insertion is removed. The assembled-
-Admin browser method and full application suite were not executed in preparation;
-static checks are not substitute pass evidence. The existing CI discovery covers
-the changed method. No workflow changes, skips or weakened checks are introduced.
+Executed preparation for this revision: AST parsing of a representative Python
+precondition/loop fragment and removal-of-insertion comparison passed. This does
+not establish full-file execution or assembled-Admin success. The earlier minimal
+browser fixture demonstrated native order only, not the production application.
+The assembled-Admin method, full suite and audit were not executed for this revision.
+Existing unittest discovery in .github/workflows/tests.yml includes this test.
+The commit omits [skip ci] for normal push-triggered CI; no separate dispatch or
+observed triggered/completed/pass state is claimed. Covering local/CI results and
+audit review remain required to resolve the validation exception. Historical failed
+results do not validate this revision. Feature scope stays closed at user direction.
 
-This mixed commit changes tests/test_monster_button_layout.py and proportionate
-TODO/task/handover status notes only. It omits [skip ci] for normal push-triggered
-CI, with no separate dispatch or inferred triggered/pass state. A covering green
-local/CI rerun and audit review are still required to resolve the validation
-exception; old failed evidence remains historical and does not validate the fix.
-Feature scope stays closed at user direction while that follow-up stays open.
-
-README, User Guide and HANDOVER index were reviewed/reused and remain accurate
-without edits. The 018 backlog addition and other task statuses are preserved.
-009.4/012 stay closed, overall 009 remains in progress, and later tasks are unchanged.
+This corrective commit changes only tests/test_monster_button_layout.py and these
+existing task/handover sections. README and the TODO/HANDOVER indexes were reviewed
+and remain accurate without edits; links and task statuses are unchanged. The 018
+backlog addition, closed 009.4/012 and overall in-progress 009 are preserved.
