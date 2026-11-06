@@ -1,0 +1,29 @@
+ -m pip install --upgrade pip^[[0m
+tests	Install Python and browser test dependencies	2026-11-06T22:06:17.0127169Z ^[[36;1mpython -m pip install -r requirements-test.txt^[[0m
+tests	Install Python and browser test dependencies	2026-11-06T22:06:17.0127571Z ^[[36;1mpython -m playwright install --with-deps chromium^[[0m
+tests	Install Python and browser test dependencies	2026-11-06T22:06:17.0191400Z shell: /usr/bin/bash -e {0}
+tests	Install Python and browser test dependencies	2026-11-06T22:06:17.0191752Z env:
+tests	Install Python and browser test dependencies	2026-11-06T22:06:17.0192323Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Install Python and browser test dependencies	2026-11-06T22:06:17.0193074Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python and browser test dependencies	2026-11-06T22:06:17.0193613Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Install Python and browser test dependencies	2026-11-06T22:06:17.0194135Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python and browser test dependencies	2026-11-06T22:06:17.0194598Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python and browser test dependencies	2026-11-06T22:06:17.0195621Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python and browser test dependencies	2026-11-06T22:06:17.0196101Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Install Python and browser test dependencies	2026-11-06T22:06:17.0196530Z ##[endgroup]
+tests	Install Python and browser test dependencies	2026-11-06T22:06:18.1058044Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages (26.2.2)
+tests	Install Python and browser test dependencies	2026-11-06T22:06:18.1606881Z Collecting pip
+tests	Install Python and browser test dependencies	2026-11-06T22:06:18.1837968Z   Downloading pip-26.3-py3-none-any.whl.metadata (4.6 kB)
+tests	Install Python and browser test dependencies	2026-11-06T22:06:18.1929726Z Downloading pip-26.3-py3-none-any.whl (2.0 MB)
+tests	Install Python and browser test dependencies	2026-11-06T22:06:18.2146170Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 145.5 MB/s  0:00:00
+tests	Install Python and browser test dependencies	2026-11-06T22:06:18.4190992Z Installing collected packages: pip
+tests	Install Python and browser test dependencies	2026-11-06T22:06:18.4192387Z   Attempting uninstall: pip
+tests	Install Python and browser test dependencies	2026-11-06T22:06:18.4228020Z     Found existing installation: pip 26.2.2
+tests	Install Python and browser test dependencies	2026-11-06T22:06:18.5007790Z     Uninstalling pip-26.2.2:
+tests	Install Python and browser test dependencies	2026-11-06T22:06:18.5063492Z       Successfully uninstalled pip-26.2.2
+tests	Install Python and browser test dependencies	2026-11-06T22:06:19.8141376Z Successfully installed pip-26.3
+tests	Install Python and browser test dependencies	2026-11-06T22:06:20.2954744Z Collecting fastapi>=0.115 (from -r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 3))
+tests	Install Python and browser test dependencies	2026-11-06T22:06:20.3851752Z   Downloading fastapi-0.162.0-py3-none-any.whl.metadata (26 kB)
+tests	Install Python and browser test dependencies	2026-11-06T22:06:20.4181798Z Collecting uvicorn>=0.30 (from uvicorn[standard]>=0.30->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 4))
+tests	Install Python and browser test dependencies	2026-11-06T22:06:20.4391233Z   Downloading uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+tests	Install Python and browser test dependencies	2026-11-06T22:06:20.4827108Z Collecting PyYAML>=6.0 (from -r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 5

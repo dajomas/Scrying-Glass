@@ -1,0 +1,52 @@
+2:08:42.5852977Z ##[group]tests/monster-refresh-selection.test.cjs
+tests	JavaScript tests	2026-11-06T22:08:42.7036596Z TAP version 13
+tests	JavaScript tests	2026-11-06T22:08:42.7441593Z # Subtest: initially unchecked including current HP
+tests	JavaScript tests	2026-11-06T22:08:42.7447717Z ok 1 - initially unchecked including current HP
+tests	JavaScript tests	2026-11-06T22:08:42.7448437Z   ---
+tests	JavaScript tests	2026-11-06T22:08:42.7448835Z   duration_ms: 1.884598
+tests	JavaScript tests	2026-11-06T22:08:42.7449278Z   type: 'test'
+tests	JavaScript tests	2026-11-06T22:08:42.7449676Z   ...
+tests	JavaScript tests	2026-11-06T22:08:42.7454715Z # Subtest: column toggle skips unavailable cells
+tests	JavaScript tests	2026-11-06T22:08:42.7465981Z ok 2 - column toggle skips unavailable cells
+tests	JavaScript tests	2026-11-06T22:08:42.7466534Z   ---
+tests	JavaScript tests	2026-11-06T22:08:42.7466890Z   duration_ms: 0.376586
+tests	JavaScript tests	2026-11-06T22:08:42.7467334Z   type: 'test'
+tests	JavaScript tests	2026-11-06T22:08:42.7467680Z   ...
+tests	JavaScript tests	2026-11-06T22:08:42.7468405Z # Subtest: row toggle selects current HP explicitly and skips disabled
+tests	JavaScript tests	2026-11-06T22:08:42.7469402Z ok 3 - row toggle selects current HP explicitly and skips disabled
+tests	JavaScript tests	2026-11-06T22:08:42.7470094Z   ---
+tests	JavaScript tests	2026-11-06T22:08:42.7470479Z   duration_ms: 0.307545
+tests	JavaScript tests	2026-11-06T22:08:42.7470951Z   type: 'test'
+tests	JavaScript tests	2026-11-06T22:08:42.7471324Z   ...
+tests	JavaScript tests	2026-11-06T22:08:42.7472159Z # Subtest: individual deselection creates partial column and header fills remainder
+tests	JavaScript tests	2026-11-06T22:08:42.7473428Z ok 4 - individual deselection creates partial column and header fills remainder
+tests	JavaScript tests	2026-11-06T22:08:42.7474223Z   ---
+tests	JavaScript tests	2026-11-06T22:08:42.7474596Z   duration_ms: 0.306023
+tests	JavaScript tests	2026-11-06T22:08:42.7475446Z   type: 'test'
+tests	JavaScript tests	2026-11-06T22:08:42.7475832Z   ...
+tests	JavaScript tests	2026-11-06T22:08:42.7476480Z # Subtest: partial row selects remainder then clears whole row
+tests	JavaScript tests	2026-11-06T22:08:42.7486237Z ok 5 - partial row selects remainder then clears whole row
+tests	JavaScript tests	2026-11-06T22:08:42.7486916Z   ---
+tests	JavaScript tests	2026-11-06T22:08:42.7487315Z   duration_ms: 0.906487
+tests	JavaScript tests	2026-11-06T22:08:42.7487760Z   type: 'test'
+tests	JavaScript tests	2026-11-06T22:08:42.7488134Z   ...
+tests	JavaScript tests	2026-11-06T22:08:42.7488609Z # Subtest: empty row is disabled
+tests	JavaScript tests	2026-11-06T22:08:42.7489181Z ok 6 - empty row is disabled
+tests	JavaScript tests	2026-11-06T22:08:42.7489668Z   ---
+tests	JavaScript tests	2026-11-06T22:08:42.7490060Z   duration_ms: 0.219461
+tests	JavaScript tests	2026-11-06T22:08:42.7490514Z   type: 'test'
+tests	JavaScript tests	2026-11-06T22:08:42.7490893Z   ...
+tests	JavaScript tests	2026-11-06T22:08:42.7491539Z # Subtest: unavailable and unknown cells cannot be selected
+tests	JavaScript tests	2026-11-06T22:08:42.7492419Z ok 7 - unavailable and unknown cells cannot be selected
+tests	JavaScript tests	2026-11-06T22:08:42.7493037Z   ---
+tests	JavaScript tests	2026-11-06T22:08:42.7493432Z   duration_ms: 0.366696
+tests	JavaScript tests	2026-11-06T22:08:42.7493860Z   type: 'test'
+tests	JavaScript tests	2026-11-06T22:08:42.7494226Z   ...
+tests	JavaScript tests	2026-11-06T22:08:42.7494676Z # Subtest: payload is detached
+tests	JavaScript tests	2026-11-06T22:08:42.7495663Z ok 8 - payload is detached
+tests	JavaScript tests	2026-11-06T22:08:42.7496125Z   ---
+tests	JavaScript tests	2026-11-06T22:08:42.7496506Z   duration_ms: 0.242834
+tests	JavaScript tests	2026-11-06T22:08:42.7496955Z   type: 'test'
+tests	JavaScript tests	2026-11-06T22:08:42.7497827Z   ...
+tests	JavaScript tests	2026-11-06T22:08:42.7498331Z # Subtest: no mutation of supplied rows
+tests	JavaScript
