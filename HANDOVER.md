@@ -37,6 +37,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 30. [Add Monsters source help text](docs/handover/300-monster-source-help-text.md)
 31. [Admin roster presentation](docs/handover/310-admin-rosters.md)
 32. [Initiative keyboard navigation](docs/handover/320-initiative-keyboard-navigation.md)
+33. [Monster initiative and refresh foundations](docs/handover/330-monster-initiative-foundations.md)
 
 ## Required update convention
 
