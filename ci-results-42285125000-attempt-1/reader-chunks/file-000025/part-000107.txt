@@ -1,0 +1,30 @@
+~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:32.4578470Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:32.4578930Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:32.4579241Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:32.4580005Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:32.4580457Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:32.4580688Z OSError: private detail
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:32.4580979Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:32.4581260Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:32.4581666Z   File "python/scrying_glass_monster_selection.py", line 109, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:32.4582075Z     sources = ft.configured_sources(display)
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:32.4582562Z   File "/tmp/scrying-tests-waidqfxm/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:32.4583261Z     raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:32.4583976Z ValueError: fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:47.7807399Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:47.7808065Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:47.7808900Z   File "/tmp/scrying-tests-waidqfxm/repo/python/scrying_glass_monster_selection.py", line 73, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:47.7810462Z     hits = context.dnd_monster_candidates(species)
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:47.7811257Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:47.7811964Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:47.7812389Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:47.7813101Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:47.7813820Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:47.7814299Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:47.7815060Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:47.7816041Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:47.7816356Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:47.7818879Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-06T20:07:47.7819365Z Traceback (most recent call last):
+tests	Standalone Pyth
