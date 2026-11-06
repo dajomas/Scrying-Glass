@@ -4,8 +4,8 @@
 
 ## SG-TODO-009 - Professional, task-focused Admin interface
 
-- Status: in progress; SG-TODO-009.1 and SG-TODO-009.2 are closed (completed) after verified validation and user acceptance. Phases 009.3-009.7 remain proposed and are not implemented.
-- Requested: 2026-11-06. The user requested recording the preceding design suggestions and a processing order in the TODO list, then agreed staged delivery and requested starting 009.1.
+- Status: in progress; SG-TODO-009.1 and SG-TODO-009.2 are closed after verified validation and user acceptance. SG-TODO-009.3 implementation is included with covering validation and visual/workflow acceptance pending. Phases 009.4-009.7 remain proposed and are not implemented.
+- Requested: 2026-11-06. The user requested recording the design suggestions and processing order, agreed staged delivery, and explicitly requested implementation of 009.1, 009.2 and subsequently 009.3.
 - Priority: incremental usability improvement; no priority relative to other tasks agreed.
 - Owner and deadline: not assigned.
 - Scope: Admin presentation, navigation and interaction clarity; do not change encounter rules, API semantics, permissions or persistence merely to redesign the interface.
@@ -13,160 +13,126 @@
 
 ## Preparation and compatibility gates
 
-Before implementation, inspect the live templates, stylesheets, loaded enhancement modules, source assembly, tests and CI configuration. Capture representative current screenshots and baseline interactions at desktop and narrow widths; the original suggestions were not a fresh visual audit of the current screen.
+Before implementation, inspect live templates, stylesheets, loaded enhancement modules, source assembly, tests and CI. Capture representative current screenshots and baseline interactions at desktop and narrow widths; the original suggestions were not a fresh visual audit. Record explicitly when these checks are pending rather than claiming they ran.
 
-Retain the established dark/gold companion identity where appropriate. A quieter neutral surface system and teal/amber grouping accents must be evaluated against that existing theme rather than introducing a conflicting theme by assumption.
-
-Preserve fixed controls and visible global feedback above a shared scrolling workspace. Preserve campaign/setup context, manual pane choices, independent lair gating, form values and existing action availability across navigation and refresh.
+Retain the dark/gold companion identity. Evaluate quieter neutral surfaces and teal/amber grouping accents against the existing theme. Preserve fixed controls and visible global feedback above the scrolling workspace, active campaign/setup context, manual pane choices, independent lair gating, form values and existing actions across navigation and refresh.
 
 Related accepted work:
 
-- [SG-TODO-005: initial section visibility](050-admin-initial-visibility.md): parent/child controls and per-page initial collapse must not regress. Replacing pane toggles with views requires an explicit behaviour mapping.
-- [SG-TODO-007: single-line monster buttons](070-monster-button-layout.md) and [row-layout handover](../handover/250-monster-button-layout.md): the accepted 11 monster-row buttons, local horizontal scrolling, focus exposure and removal of row Damage/Heal controls must not be silently reversed. Moving actions into menus or details is a proposed alternative requiring explicit agreement.
+- [SG-TODO-005: initial section visibility](050-admin-initial-visibility.md): preserve parent/child controls and per-page initial collapse. Replacing toggles requires an explicit visibility mapping.
+- [SG-TODO-007: single-line monster buttons](070-monster-button-layout.md) and [row-layout handover](../handover/250-monster-button-layout.md): preserve 11 monster-row buttons, local scrolling/focus exposure and removed row Damage/Heal controls. Menus/details as alternatives require agreement.
 - [SG-TODO-008: source-size refactors](080-source-size-refactors.md): preserve source assembly and code-size constraints; do not overwrite the tracked Admin script failure marker.
 
 ## Agreed staged processing order
 
-Process phases 1 through 7 in order. Each phase has a stable subtask ID. Stages 009.1 and 009.2 are closed; later stages remain proposed. Review the result of each coherent increment before proceeding to structural changes. Dependencies indicate the recommended sequence, not a requirement to implement the entire redesign in one commit.
+Process phases 1 through 7 in order, reviewing each coherent increment before structural changes. Dependencies recommend sequence, not delivery of the whole redesign in one commit. Accessibility and responsive checks apply to every phase; phase 7 is consolidation, not permission to defer basic usability.
 
 | Order | Subtask | Deliverable | Dependencies |
 |---|---|---|---|
 | 1 | SG-TODO-009.1 | Shared visual foundations (closed) | Baseline inspection |
 | 2 | SG-TODO-009.2 | Header and action hierarchy (closed) | 009.1 |
-| 3 | SG-TODO-009.3 | Consistent panels and forms | 009.1, 009.2 |
+| 3 | SG-TODO-009.3 | Consistent panels and forms (in progress) | 009.1, 009.2 |
 | 4 | SG-TODO-009.4 | Scannable rosters and contextual bulk actions | 009.3; agreement for changed row controls |
 | 5 | SG-TODO-009.5 | Workflow-based navigation | 009.2-009.4; agreed visibility mapping |
 | 6 | SG-TODO-009.6 | Focused live encounter workspace | 009.4, 009.5 |
 | 7 | SG-TODO-009.7 | Feedback, responsive and accessibility hardening | 009.1-009.6 |
 
-Accessibility and responsive checks apply to every phase; phase 7 is final consolidation, not permission to postpone basic usability.
-
 ### SG-TODO-009.1 - Shared visual foundations
 
-Status: closed (completed), 2026-11-06, at the user's explicit request after verified corrective local/CI results and confirmation of notification behaviour and foundation consistency on the correct server. Initial implementation: e632eba99e00695c7f002148bde8c0aee386d4fe. Corrective implementation: 9a96b5a125c0b22b18218769c9c5cf2508a60ac0. See [implementation, verification and close-out record](../handover/260-admin-visual-foundations.md).
+Status: closed (completed), 2026-11-06, at the user's explicit request after corrective local/CI verification and acceptance of notification behaviour/foundation consistency on the correct server. Initial implementation e632eba99e00695c7f002148bde8c0aee386d4fe; correction 9a96b5a125c0b22b18218769c9c5cf2508a60ac0. See [full implementation and close-out history](../handover/260-admin-visual-foundations.md).
 
-- Establish reusable tokens for surfaces, borders, typography, spacing, control heights and corner radii.
-- Use quieter panels with subtle borders and minimal shadows; use campaign/character teal and battle/monster amber as restrained accents rather than dominant panel fills. Retain appropriate fantasy branding without decorating operational controls excessively.
-- Proposed spacing scale: 4, 8, 12, 16, 24 and 32 px. Use one coherent UI type system and consistent button/input geometry. Values remain subject to visual review.
-- Reserve a consistent accent for primary actions and red for destructive operations; do not rely on colour alone for grouping or status.
+- Reusable tokens for surfaces, borders, typography, spacing, control heights and radii.
+- Quieter panels, subtle borders/minimal shadows and restrained campaign/character teal and battle/monster amber. Preserve appropriate fantasy branding without decorating operational controls excessively.
+- Proposed spacing scale 4/8/12/16/24/32 px, coherent UI type and geometry, subject to visual review.
+- Consistent primary accent, red destructive operations and non-colour-only grouping/state.
 
-Acceptance: representative panels, tables, forms and modals share the same visual rules; text, focus and state indicators remain readable; existing theme and combatant/display colours are not accidentally overridden.
+Acceptance: panels, tables, forms and modals share visual rules; text/focus/state remain readable; theme and combatant/display colours are not accidentally overridden.
 
 ### SG-TODO-009.2 - Header and action hierarchy
 
-Status: closed (completed), 2026-11-06, at the user's explicit request after covering corrective local/CI success and visual/workflow acceptance. Initial implementation: a6b910d94c3b846e128d01bc6baa10b48228770f. Test-only correction: aa82b45629cce7b49164d5ad7c1304481f20bbd7. See [header implementation, verification and close-out record](../handover/270-admin-header-hierarchy.md).
+Status: closed (completed), 2026-11-06, at the user's request after covering corrective local/CI success and visual/workflow acceptance. Initial implementation a6b910d94c3b846e128d01bc6baa10b48228770f; test-only correction aa82b45629cce7b49164d5ad7c1304481f20bbd7. See [full implementation and close-out history](../handover/270-admin-header-hierarchy.md).
 
-- Keep a compact fixed header with product identity, active campaign, active battle setup and explicit encounter state.
-- Separate context, navigation, global actions and feedback into predictable areas. Move infrequent global actions into a labelled More menu where appropriate.
-- Keep entity-specific actions local: campaign backups with campaign management, setup actions with setup management.
-- Give the current task one dominant action; visually quiet secondary actions. Separate End encounter from routine controls and put Reset all in a clearly labelled danger section.
+- Compact fixed header: product, active campaign, saved setup and encounter state/round.
+- Predictable context/navigation/global-actions/feedback areas; infrequent global actions in labelled More where appropriate.
+- Entity-local setup and backup operations remain local.
+- One dominant current-task action, quieter secondary actions, separated End and Reset All in a labelled danger section.
 
-Acceptance: context and feedback remain visible while scrolling; wrapped controls/messages never overlap the workspace; global and local actions are distinguishable and keyboard accessible.
+Acceptance: context/feedback remain visible while scrolling; wrapped controls/messages do not overlap the workspace; global/local actions are distinct and keyboard accessible.
 
 ### SG-TODO-009.3 - Consistent panels and forms
 
-Status: proposed.
+Status: in progress, 2026-11-06. Implementation and six regression methods are included; full-Admin browser/suite/CI results, screenshots and user visual/workflow acceptance remain pending. See [implementation, deployment and validation limits](../handover/280-admin-panel-forms.md).
 
-- Standardize panel anatomy: concise title, optional description, related fields, main action and secondary actions.
-- Use task-oriented labels such as Add character for an entry form and Characters for a roster.
-- Keep labels consistently above inputs, clarify mandatory fields and group related controls.
-- Keep common actions visible; place import/export, backups and advanced settings in clearly named expandable areas when appropriate. Do not hide frequently needed controls merely to reduce button counts.
+- Standardize anatomy: concise title, optional description, related fields, main action and secondary actions.
+- Task-oriented labels: Add character for entry; Characters for the roster.
+- Labels above inputs, clear mandatory fields and related control groups.
+- Keep common actions visible; use clearly named expandable import/export, backup or advanced sections where appropriate, not concealment merely to reduce button counts.
 
-Acceptance: field purposes and required values are clear; expand/collapse exposes accurate accessible state; forms retain values, validation, existing IDs/handlers and expected submit behaviour.
+The increment groups entry/setup controls using existing nodes, adds descriptions/action areas and native background/.monster disclosures initially open. Existing viewer/backup disclosure defaults and visible CSV/setup import controls remain. It does not implement roster restructuring, tabs, encounter-workspace restructuring or revised feedback timing.
+
+Acceptance: purposes/required values are clear; disclosures expose accurate accessible state; forms retain values, validation, existing IDs/handlers and submit behaviour. Review covering CI and desktop/narrow visual/workflow acceptance before closure. Syntax/parsing checks do not satisfy these gates.
 
 ### SG-TODO-009.4 - Scannable rosters and contextual bulk actions
 
 Status: proposed; alternative action-menu design requires agreement against SG-TODO-007.
 
-- Present characters and monsters as structured rows with clear names, aligned numeric values and concise textual status indicators. Keep HP, initiative and combat state immediately visible where relevant.
-- Consider search/filter and a collection-level Add action. Keep table-wide controls separate from row actions.
-- Show selected counts and contextual bulk actions after selection, retaining clear Select all and Clear selection behaviour.
-- Evaluate row expansion or a details panel for secondary information. A frequent visible action plus an overflow menu is a design option, not an approved replacement for accepted single-line controls.
+- Structured rows with clear names, aligned numeric values, concise textual status and immediately visible relevant HP/initiative/combat state.
+- Consider search/filter and collection-level Add; separate table-wide and row controls.
+- Show selected counts/contextual bulk actions, retaining Select all/Clear selection.
+- Evaluate row expansion/details for secondary information. A frequent visible action plus overflow is an option, not approval to replace accepted single-line controls.
 
-Acceptance: scan, select, edit and bulk workflows remain available without accidental mutations; selection survives or resets predictably on refresh/filter changes; keyboard focus is exposed within local scrollers; removed row HP-change controls do not reappear.
+Acceptance: scan/select/edit/bulk workflows remain without accidental mutations; selection survives or resets predictably on refresh/filter; keyboard focus is exposed within local scrollers; removed row HP-change controls stay removed.
 
 ### SG-TODO-009.5 - Workflow-based navigation
 
-Status: proposed; tab model and visibility replacement require design agreement.
+Status: proposed; tabs and visibility replacement require agreement.
 
-- Proposed views: Campaign (campaign selection, characters, backups), Battle preparation (setups, monsters, initiative, lair configuration) and Live encounter (turn order, participants, encounter tools, log).
-- Prefer compact tabs initially over a large sidebar; keep active campaign/setup context visible in every view.
-- Reduce global pane-toggle clutter through workflow views and local disclosure, after explicitly mapping existing manual visibility and automatic battle-related behaviour.
+- Proposed Campaign (selection, characters, backups), Battle preparation (setups, monsters, initiative, lair) and Live encounter (order, participants, tools, log) views.
+- Prefer compact tabs over a large sidebar initially; active campaign/setup context visible in every view.
+- Reduce global toggle clutter only after explicitly mapping manual visibility and automatic battle behaviour.
 
-Acceptance: every existing capability has a discoverable destination; changing views does not submit forms, lose edits or mutate encounters; active tab and focus state are accessible; initial collapse, dependent controls, lair gating and encounter-tools restoration are preserved or intentionally replaced by an explicitly agreed specification.
+Acceptance: discoverable destination for every capability; changing views does not submit/lose edits/mutate encounters; active tab/focus accessible; initial collapse, dependent controls, lair gating and tools restoration preserved or replaced under explicit agreement.
 
 ### SG-TODO-009.6 - Focused live encounter workspace
 
 Status: proposed.
 
-- Give turn order/participants the largest area, with encounter tools beside it on wide screens and below it on narrow screens.
-- Clearly identify round and active participant, emphasize Next turn and keep HP/conditions and upcoming turns scannable.
-- Place a collapsible activity log below the main workspace and remove setup forms from the primary combat view without removing access to them.
-- Preserve the existing Next from Battle Actions workflow and all alternate damage/healing/statistics workflows.
+- Turn order/participants get the largest area; tools alongside on wide screens and below on narrow.
+- Identify round/active participant, emphasize Next and keep HP/conditions/upcoming turns scannable.
+- Collapsible activity log below; setup forms outside the primary combat view without losing access.
+- Preserve Next from Battle Actions and alternate damage/healing/statistics workflows.
 
-Acceptance: combat operations remain efficient and correctly scoped; turn advancement, end/reset, lair behaviour, tools visibility restoration and activity history regressions are covered; narrow layouts do not conceal essential controls.
+Acceptance: efficient/correctly scoped combat; cover advancement, end/reset, lair behaviour, tools restoration and activity history; narrow layouts retain essential controls.
 
 ### SG-TODO-009.7 - Feedback and final usability hardening
 
 Status: proposed.
 
-- Distinguish brief success notices from actionable errors. Proposed change: success messages may expire, while actionable errors persist until corrected or dismissed; review the existing five-second global-message rule explicitly.
-- Show field validation near the field. A rejected Join battle should explain the missing initiative and identify the affected combatant/field, not merely display a generic failure.
-- Show connection problems persistently until resolved and confirm destructive operations with specific affected targets.
-- Check responsive stacking, local table overflow, zoom, labels, contrast, focus visibility/order, tab/menu semantics and appropriate announcement of feedback. Avoid disruptive page movement when messages appear.
+- Distinguish brief success from actionable errors. Proposed success expiry and persistent errors require explicit review of the current five-second global-message rule.
+- Near-field validation; rejected Join battle identifies missing initiative and the affected combatant/field.
+- Persistent connection problems until resolved; destructive confirmations identify affected targets.
+- Check responsive stacking, local overflow, zoom, labels, contrast, focus/order, tab/menu semantics and announcements; avoid disruptive movement when feedback appears.
 
-Acceptance: feedback is visible and actionable without depending solely on colour or a short timeout; messages do not overlap content; keyboard-only operation and representative desktop/narrow layouts remain usable.
+Acceptance: actionable visible feedback without colour/short-timeout dependence or overlap; keyboard-only and desktop/narrow usability.
 
 ## Validation and delivery requirements
 
-For implementation increments, prepare targeted automated regressions for the affected behaviours and retain existing tests. Verify actual CI coverage before delegating checks to it. Browser fixtures are not authenticated live-server evidence.
+Prepare targeted regressions, retain existing tests and verify actual CI coverage. Fixtures are not authenticated live-server evidence. Review campaign/setup active/inactive; initial/delayed state; manual panes; start/end/reset; lair enabled/disabled; refresh/rerender; row selection/filter/bulk; missing initiative; successful/failed saves; connection loss/recovery; destructive confirmations; keyboard/narrow layouts.
 
-Required review scenarios include: campaign/setup active and inactive; initial/delayed state; manual pane changes; battle start/end/reset; lair enabled/disabled; refresh and rerender; row selection/filter/bulk actions; missing initiative; successful/failed saves; connection loss/recovery; destructive confirmations; keyboard traversal and narrow screens.
+Separate executed results from pending/manual checks. Obtain user visual/workflow acceptance before closing; commits alone do not complete phases. Update user documentation, TODO and handover proportionally with each increment.
 
-Record executed checks and observed results separately from unexecuted, pending or manual checks. Obtain user visual/workflow acceptance before closing the redesign. Do not mark phases completed merely because code is committed. Update relevant user documentation, TODO status and handover with implementation deliveries.
+## Retained delivery and verification history
 
-## Planning-only change - 2026-11-06
+This section consolidates duplicated narrative; the linked 260/270 handovers retain detailed preparation checks, failures, corrective reasoning, reviewed log locations and limits. Earlier statements that 009.3-009.7 were proposed describe the state at 009.1/009.2 delivery, not current 009.3 status.
 
-The original addition recorded suggestions and a recommended processing order only. No application, test or workflow code was changed by that addition; no redesign or browser validation was claimed. README and relevant indexed handover/TODO documentation were reviewed. README and handover remained unchanged because current delivered behaviour had not changed.
+Original planning on 2026-11-06 changed documentation only and explicitly used [skip ci]. It did not implement the design or validate a browser. The generated final-interface impression remained a concept, not an approved specification. The standing documentation-only skip rule was adopted later; historical deliveries follow their then-applicable instructions.
 
-The user explicitly requested [skip ci] for that documentation push. The skip request does not apply to later implementation pushes.
+009.1 initial CI run 42209803055 attempt 1 covered e632eba99e00695c7f002148bde8c0aee386d4fe; evidence 21aa823a6381768c7f2a081597262b7b57d0bfc5 under ci-results-42209803055-attempt-1 reported 1,033 unittest tests OK, 43 pytest passes and four uploaded screenshots. Review identified blank notice strips and ambiguous scroll position. The correction collapses whitespace-only notices without changing timers/ARIA and resets screenshot scroll/asserts header separation; it did not establish a production header-overlap bug.
 
-## Stage 009.1 implementation and correction - 2026-11-06
+009.1 corrective source 9a96b5a125c0b22b18218769c9c5cf2508a60ac0 passed local-tests-9a96b5a/run-20261106T122845Z-ogPIRn at 01bd4b232c51aefb7ee185c4099b0e3c381692c7 and CI 42216373147 attempt 1, evidence 7adfe04748b300a3f6686af6714121ea8a0853bb under ci-results-42216373147-attempt-1: configured steps successful, six foundations and four notice Node tests passed, 1,035 unittest tests OK and 43 pytest passes. User confirmed correct-server notification behaviour and foundation consistency. The earlier persistent-strip report came from viewing the wrong server; no extra correction was needed. Closure implied neither a full screen-reader nor exhaustive live-combat audit.
 
-The user agreed seven-stage delivery and explicitly requested starting 009.1. The initial increment added Admin-scoped foundation tokens and styling without moving controls, changing navigation or modifying JavaScript, API, encounter state or persistence. Existing action classifications are retained; stage 009.2 remains responsible for action hierarchy.
+009.2 delivered fixed-header context, original moved Start/Next/End, state-dependent primary emphasis, More, a single-line pane scroller and a closed Reset All danger section. Local evidence eeff8880bceb9e63b2e8a4f8ad9ab40f48878abe and original CI 42227065090 attempt 1 at 42deda5a3f884a9e480b6d37808da59eb7bb5d48 showed a test visibility-precondition error, not an application defect. The correction conditionally opens Campaign/Character based on aria-expanded, verifies visibility, then retains the draft/feedback/layout assertions rather than forcing fields or changing visibility semantics.
 
-Initial preparation executed CSS parsing, selected nominal colour-contrast calculations, Python AST parsing and two source-contract tests against drafted files. Subsequent run 42209803055 attempt 1 verified initial implementation e632eba99e00695c7f002148bde8c0aee386d4fe; evidence commit 21aa823a6381768c7f2a081597262b7b57d0bfc5 contains ci-results-42209803055-attempt-1. Workflow/job/steps succeeded; the four original foundations tests explicitly passed, unittest reported 1,033 tests OK and pytest reported 43 passes. Four screenshots were uploaded. See the handover for reviewed log locations and coverage limits.
+009.2 corrective source aa82b45629cce7b49164d5ad7c1304481f20bbd7 passed local evidence 1fcf6f726ccdad8b6315ca2f24cd91fc94d206d0, folder local-tests-aa82b45/run-20261106T141733Z-jal8gK, with overall/full-run summary exits zero, all six header methods passed, repeated suite 1,041 tests OK, 675 connections/zero without explicit close and 43 pytest passes. CI 42232501137 attempt 1 covered that exact source; evidence b4d1f5f69519066ccab88709f93aa1eef643c42f under ci-results-42232501137-attempt-1 reports workflow/job/configured-step success, six header methods passed, 1,041 unittest tests OK, 43 pytest passes and ten uploaded screenshots. Upload/collection is not assistant visual inspection. User visual/workflow acceptance was already given and was not requested again. Original failed results are historical diagnosis, not closure evidence. Later runner cleanup d0a1f3c2781e882cb651a4cf9f6a2b85e22ebc71 is outside that corrective run's coverage. Original close-outs were documentation-only, executed no fresh tests and did not request a skip under the then-applicable policy; no new run outcome was inferred.
 
-Desktop screenshot review supported the neutral panels, teal edges and brighter headings/labels but identified empty coloured notification strips and an ambiguously scrolled top-of-workspace capture. The user requested necessary 009.1 corrections. A new presentation enhancement collapses whitespace-only pane notifications, preserving real message text, existing timers and ARIA attributes. The screenshot test resets the workspace scroll to zero before each capture and asserts header/workspace separation; it does not change production header positioning or claim a proven overlap bug. Before/after remains a foundation-CSS comparison, with the notice correction active in both.
-
-Corrective preparation passed JavaScript syntax checking, four isolated Node VM tests, Python AST parsing and the new script-inclusion source test against a drafted fragment. Full corrective browser/suite execution and CI were pending at that preparation stage; the close-out below supersedes that pending status. Existing CI discovery covers the new Node test and expanded browser/source module; no workflow change was necessary. Initial green CI alone was not validation of the correction.
-
-Header crowding/action hierarchy is addressed by 009.2, and tabs/live-workspace restructuring remains later work. The generated final-interface impression is a concept, not an approved implementation specification.
-
-## SG-TODO-009.1 verified close-out - 2026-11-06
-
-Closed (completed) at the user's explicit request after confirmation on the correct server that notification areas appear only for messages and foundation consistency is accepted. The earlier report of persistent blank strips was traced by the user to viewing the wrong server; no additional code correction was needed.
-
-Corrective source 9a96b5a125c0b22b18218769c9c5cf2508a60ac0 passed the reviewed full local run local-tests-9a96b5a/run-20261106T122845Z-ogPIRn, published at 01bd4b232c51aefb7ee185c4099b0e3c381692c7, and CI run 42216373147 attempt 1, published at 7adfe04748b300a3f6686af6714121ea8a0853bb under ci-results-42216373147-attempt-1. CI workflow/job/configured steps succeeded; all six foundations tests and four notification-module Node tests explicitly passed; unittest reported 1,035 tests OK and pytest 43 passes. See the handover for local summaries, additional standalone evidence and exact review limits.
-
-This closes only 009.1. SG-TODO-009 remains in progress. No full screen-reader audit, exhaustive live encounter runbook or broader redesign acceptance is implied. That close-out changed documentation only, reran no tests during preparation and left application/tests/workflow code unchanged. No CI skip was requested.
-
-## SG-TODO-009.2 implementation - 2026-11-06
-
-The user requested continuing with 009.2 after 009.1 closure. The implementation mirrors active context in the fixed header, moves original Start/Next/End controls there, gives Start or Next primary emphasis according to existing encounter state, places viewer controls/logout in More, keeps pane toggles in a keyboard-exposed local scroller, and separates Reset All in a closed Danger zone with its existing confirmation. Entity-local setup and campaign-backup controls remain local. Pane preferences, lair gating, source assembly and roster actions are not replaced.
-
-Preparation passed JavaScript syntax, CSS parsing, Python AST and a drafted-asset source test, plus simplified Chromium fixtures at 1440/768/375 for moved handlers, state styling, context, disclosures, focus/scroll and header geometry. These were not full application or authenticated live-server checks. Full-Admin browser regressions and six desktop/narrow fixture screenshots were prepared for existing CI discovery/upload. No workflow change or CI skip was included. See the linked header handover for executed checks, fixture limitations and user-facing locations.
-
-At implementation delivery, 009.2 remained pending covering CI and visual/workflow acceptance. The close-out below supersedes that pending status. 009.3-009.7 remain proposed; no workflow tabs or live-workspace redesign is delivered by 009.2.
-
-## SG-TODO-009.2 verified close-out - 2026-11-06
-
-Closed (completed) at the user's request after visual and workflow acceptance and verified successful local/CI validation of corrective commit aa82b45629cce7b49164d5ad7c1304481f20bbd7. This correction fixes the test's visibility precondition, not application behaviour. The earlier failed results against a6b910d94c3b846e128d01bc6baa10b48228770f are retained as historical diagnosis, not closure evidence.
-
-Local evidence: commit 1fcf6f726ccdad8b6315ca2f24cd91fc94d206d0, folder local-tests-aa82b45/run-20261106T141733Z-jal8gK. Full-run summary and overall exit are zero; all six header methods explicitly pass; the repeated connection-audit suite reports 1,041 tests OK, 675 connections opened and zero without explicit close; pytest reports 43 passes.
-
-CI evidence: run 42232501137 attempt 1, exact corrective SHA above, published at b4d1f5f69519066ccab88709f93aa1eef643c42f under ci-results-42232501137-attempt-1. Workflow/job/configured steps succeed; all six header methods explicitly pass; unittest reports 1,041 tests OK and pytest 43 passes. Ten fixture screenshots were uploaded. See the handover for inspected log locations and coverage limits.
-
-Only 009.2 is closed by this update; 009.1 remains closed and SG-TODO-009 remains in progress. Stages 009.3-009.7 remain proposed. The user's visual/workflow acceptance is not an assistant-executed live-server or exhaustive accessibility/combat audit. The later independent runner-cleanup commit d0a1f3c2781e882cb651a4cf9f6a2b85e22ebc71 is outside this corrective run's coverage.
-
-This close-out updates documentation only and executes no new tests during preparation. Application, test and workflow code are unchanged. No skip was requested for this close-out; the previous skip instruction applied to the runner update only. Normal push-triggered CI remains enabled; no separate workflow dispatch or unverified new run result is claimed.
+009.3 preparation on 2026-11-06 passed enhancement JavaScript syntax, CSS stylesheet parsing and regression Python AST parsing. Full application/browser execution and visual baseline/after review have not been performed during preparation. Existing CI discovery/upload covers the new regression module and screenshot paths. The user requested implementation and subsequently a commit with CI. This mixed delivery omits [skip ci]; no workflow state is claimed until observed. Detailed checks, coverage limits, deployment and pending acceptance are recorded in the 280 handover.
