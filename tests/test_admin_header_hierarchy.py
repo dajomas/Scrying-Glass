@@ -118,8 +118,13 @@ class HeaderHierarchyBrowserTests(unittest.TestCase):
                         const b = n.getBoundingClientRect(), r = n.parentElement.getBoundingClientRect();
                         return b.left >= r.left - 1 && b.right <= r.right + 1;
                     }"""))
-                page.locator('#toggleCampaignPane').click()
-                page.locator('#toggleCharacterPane').click()
+                for selector in ('#toggleCampaignPane', '#toggleCharacterPane'):
+                    button = page.locator(selector)
+                    if button.get_attribute('aria-expanded') == 'false':
+                        button.click()
+                self.assertFalse(page.locator('#campaignInputPane').evaluate('n => n.hidden'))
+                self.assertFalse(page.locator('#characterInputPane').evaluate('n => n.hidden'))
+                self.assertTrue(page.locator('#characterName').is_visible())
                 page.locator('#characterName').fill('Keep my draft')
                 page.locator('#toggleCampaignPane').click()
                 page.locator('#toggleCampaignPane').click()
