@@ -5,7 +5,7 @@
 - Task: SG-TODO-018
 - Status: proposed; user clarified the required behaviour on 2026-11-06. Implementation and validation have not started.
 - Recorded: 2026-11-06
-- Priority: not assigned; delivery-order placement remains undecided and existing sequencing is unchanged by this clarification.
+- Priority: next in the agreed remaining-work delivery sequence, before SG-TODO-009.5; user agreement recorded 2026-11-06. No owner or deadline assigned.
 - Dependencies: inspect current provider mappings, .monster import, persistence and initiative assignment paths during implementation planning.
 - Related tasks: [initiative keyboard navigation](130-initiative-keyboard-navigation.md), [source-based monster selection](160-source-based-monster-selection.md), [Open5e integration](170-open5e-monster-source.md), [Admin delivery sequence](115-admin-delivery-sequence.md).
 
@@ -112,12 +112,15 @@ Tab/Shift+Tab initiative navigation without adding an inline bonus editor.
 ## Delivery status
 
 Requirements clarification only. Implementation, migration planning, tests and
-validation remain outstanding. Placement in the delivery sequence is not changed
-or approved by saving these clarifications.
+validation remain outstanding. The user subsequently agreed to place 018 next,
+before 009.5, in the remaining-work sequence on 2026-11-06; see the
+[agreed delivery order](115-admin-delivery-sequence.md). Scheduling does not start
+implementation or resolve the remaining compatibility decisions above.
 
-This update changes only this existing task document. README, TODO index and
-HANDOVER index were reviewed/reused and remain accurate without edits: current
-runtime behaviour, task status and links are unchanged. No application code, tests,
-imports, persistence or workflows change, and no new tests were executed. The
-commit message includes [skip ci]; no separate workflow is dispatched or observed
-workflow state inferred from that marker.
+The clarified behaviour was recorded in documentation-only commit
+da484d68d5ad39ef371ec8eeecb958149778fd8a. This subsequent sequence update changes
+only TODO documentation. README and HANDOVER index were reviewed/reused and remain
+accurate without edits; runtime behaviour and index links are unchanged. No
+application code, tests, imports, persistence or workflows change, and no new tests
+were executed. The commit message includes [skip ci]; no separate workflow is
+dispatched or observed workflow state inferred from that marker.
