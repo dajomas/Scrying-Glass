@@ -138,6 +138,7 @@ def fivetools_candidates(species, display):
         raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
 
 def lookup_candidates(context, species):
+    from .scrying_glass_source_bonus_offer import issue_bonus_offer
     display = context.CONFIG["display"]
     try:
         results = dnd_candidates(context, species) if display.get("dndbeyond_image_lookup", True) else []
@@ -145,6 +146,9 @@ def lookup_candidates(context, species):
             results = fivetools_candidates(species, display)
         for candidate in results:
             candidate["selection_token"] = issue_token(candidate)
+            offer = issue_bonus_offer(candidate, _KEY, now=time.time())
+            if offer is not None:
+                candidate["initiative_bonus_offer_token"] = offer
         return {"status": "ok", "candidates": results}
     except ProviderError as exc:
         return {"status": "error", "candidates": [], "reason": str(exc)}
