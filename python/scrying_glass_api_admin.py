@@ -8,7 +8,7 @@ from .scrying_glass_admin_pages import AdminPagesMixin
 from .scrying_glass_admin_display import AdminDisplayMixin
 from .scrying_glass_admin_setups import AdminSetupsMixin
 from .scrying_glass_admin_campaigns import AdminCampaignsMixin
-from .scrying_glass_monster_selection import CandidateMonstersMixin as AdminMonstersMixin
+from .scrying_glass_monster_initiative_edit import InitiativeEditMonstersMixin as AdminMonstersMixin
 from .scrying_glass_admin_characters import AdminCharactersMixin
 from .scrying_glass_admin_combatants import AdminCombatantsMixin
 from .scrying_glass_admin_battle import AdminBattleMixin
