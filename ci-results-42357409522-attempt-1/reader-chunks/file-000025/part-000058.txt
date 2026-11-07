@@ -1,0 +1,23 @@
+essible_stats_unchanged) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.3626353Z test_gate_redirects_and_untrusted_redirects (test_dndbeyond_locked_pages.LockedPageTests.test_gate_redirects_and_untrusted_redirects) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.3636797Z test_generic_denials_and_server_errors_still_raise (test_dndbeyond_locked_pages.LockedPageTests.test_generic_denials_and_server_errors_still_raise) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.3644713Z test_locked_success_and_confirmed_http_denials (test_dndbeyond_locked_pages.LockedPageTests.test_locked_success_and_confirmed_http_denials) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.3647282Z test_oversized_denial_is_not_classified (test_dndbeyond_locked_pages.LockedPageTests.test_oversized_denial_is_not_classified) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.3651846Z test_visible_gate_text (test_dndbeyond_locked_pages.LockedPageTests.test_visible_gate_text) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.3902191Z test_all_locked_falls_back (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_all_locked_falls_back) ... /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/tempfile.py:538: ResourceWarning: Implicitly cleaning up <HTTPError 429: 'fixture'>
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.3904851Z   _warnings.warn(self.warn_message, ResourceWarning)
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.3906348Z /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/tempfile.py:538: ResourceWarning: Implicitly cleaning up <HTTPError 500: 'fixture'>
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.3907529Z   _warnings.warn(self.warn_message, ResourceWarning)
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.3917642Z ok
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.3965811Z test_locked_then_usable_keeps_primary (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_locked_then_usable_keeps_primary) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.4021698Z test_unclassified_failure_and_search_failure_do_not_fallback (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_unclassified_failure_and_search_failure_do_not_fallback) ... D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.4024366Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.4025607Z   File "/tmp/scrying-tests-paeu67xl/repo/python/scrying_glass_monster_selection.py", line 84, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.4027092Z     html = context.dnd_monster_detail_html(href)
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.4028342Z   File "/tmp/scrying-tests-paeu67xl/repo/python/scrying_glass_dndbeyond.py", line 128, in dnd_monster_detail_html
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.4029401Z     response = urlopen(request, timeout=15)
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.4030402Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.4031598Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.4032231Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T08:55:39.4033254Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11

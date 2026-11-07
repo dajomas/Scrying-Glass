@@ -1,0 +1,33 @@
+on browser and audit checks	2026-11-07T08:58:56.2741699Z 
+tests	Standalone Python browser and audit checks	2026-11-07T08:58:56.2741898Z FAILED (failures=6, errors=1)
+tests	Standalone Python browser and audit checks	2026-11-07T08:58:56.2742357Z Connections opened: 689; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-07T08:58:56.5813113Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-07T08:58:56.5813727Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-07T08:58:56.9110507Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-07T08:58:56.9111771Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-07T08:58:56.9599733Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-07T08:58:56.9600430Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-07T08:58:57.2902544Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-07T08:58:57.3367098Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-07T08:58:57.3367751Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-07T08:59:00.2090787Z {
+tests	Standalone Python browser and audit checks	2026-11-07T08:59:00.2091257Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-07T08:59:00.2091990Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-07T08:59:00.2092523Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-11-07T08:59:00.2093195Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	Standalone Python browser and audit checks	2026-11-07T08:59:00.2094335Z     "client card has a positive layout width at mobile viewport"
+tests	Standalone Python browser and audit checks	2026-11-07T08:59:00.2094736Z   ],
+tests	Standalone Python browser and audit checks	2026-11-07T08:59:00.2094965Z   "page_errors": [],
+tests	Standalone Python browser and audit checks	2026-11-07T08:59:00.2095331Z   "transport": "mocked HTTP/WS, real Chromium rendering"
+tests	Standalone Python browser and audit checks	2026-11-07T08:59:00.2095696Z }
+tests	Standalone Python browser and audit checks	2026-11-07T08:59:00.3151868Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-07T08:59:00.3152774Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-07T08:59:00.5384067Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-07T08:59:00.5393766Z ##[error]Process completed with exit code 1.
+tests	Post Run actions/checkout@v4	﻿2026-11-07T08:59:00.5503781Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-07T08:59:00.6389604Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-07T08:59:00.6434982Z git version 2.56.0
+tests	Post Run actions/checkout@v4	2026-11-07T08:59:00.6475983Z Temporarily overriding HOME='/home/runner/work/_temp/9b583eb8-f1fc-4580-8c50-5c6c8034da8a' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-07T08:59:00.6477627Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-07T08:59:00.6481156Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-07T08:59:00.6526868Z [command]/usr/bin/git config --local --name-only --get-regexp cor

@@ -1,0 +1,27 @@
+test_down_takes_next_turn (test_turn_eligibility.TurnTests.test_down_takes_next_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.7067665Z test_manual_down_turn (test_turn_eligibility.TurnTests.test_manual_down_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.7264648Z test_negative_maximum_no_longer_means_death (test_turn_eligibility.TurnTests.test_negative_maximum_no_longer_means_death) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.7477667Z test_round_wrap (test_turn_eligibility.TurnTests.test_round_wrap) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.7672042Z test_stable_takes_next_turn (test_turn_eligibility.TurnTests.test_stable_takes_next_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.7867685Z test_third_failure_removed (test_turn_eligibility.TurnTests.test_third_failure_removed) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8076881Z test_zero_hp_monster_excluded (test_turn_eligibility.TurnTests.test_zero_hp_monster_excluded) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8077675Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8078087Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8079784Z ERROR: test_removed_row_controls_stay_unavailable_after_refresh (test_monster_button_layout.MonsterButtonLayoutTests.test_removed_row_controls_stay_unavailable_after_refresh)
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8082527Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8083334Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8084711Z   File "/tmp/scrying-tests-paeu67xl/repo/tests/test_monster_button_layout.py", line 192, in test_removed_row_controls_stay_unavailable_after_refresh
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8086706Z     page.wait_for_function("([kind, count]) => document.querySelectorAll('#' + kind + ' th').length === count", arg=[kind, columns])
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8088205Z     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8089821Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 21235, in wait_for_function
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8090974Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8091317Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8091966Z         self._impl_obj.wait_for_function(
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8092505Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8092949Z     ...<4 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8093300Z         )
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8093607Z         ^
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8094314Z     )
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8094622Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8095612Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-07T08

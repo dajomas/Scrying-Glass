@@ -1,0 +1,26 @@
+=============================
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8111668Z FAIL: test_single_line_geometry_and_local_overflow (test_monster_button_layout.MonsterButtonLayoutTests.test_single_line_geometry_and_local_overflow) (width=1440, active=True)
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8112556Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8112950Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8113639Z   File "/tmp/scrying-tests-paeu67xl/repo/tests/test_monster_button_layout.py", line 98, in test_single_line_geometry_and_local_overflow
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8114367Z     self.assertAlmostEqual(box['y'], boxes[0]['y'], delta=1)
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8114761Z     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8115251Z AssertionError: 1318.15625 != 1270.3125 within 1 delta (47.84375 difference)
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8115554Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8115748Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8116699Z FAIL: test_single_line_geometry_and_local_overflow (test_monster_button_layout.MonsterButtonLayoutTests.test_single_line_geometry_and_local_overflow) (width=768, active=False)
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8117565Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8118112Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8118808Z   File "/tmp/scrying-tests-paeu67xl/repo/tests/test_monster_button_layout.py", line 98, in test_single_line_geometry_and_local_overflow
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8119502Z     self.assertAlmostEqual(box['y'], boxes[0]['y'], delta=1)
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8120009Z     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8120511Z AssertionError: 1721.671875 != 1673.828125 within 1 delta (47.84375 difference)
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8120824Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8121018Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8122188Z FAIL: test_single_line_geometry_and_local_overflow (test_monster_button_layout.MonsterButtonLayoutTests.test_single_line_geometry_and_local_overflow) (width=768, active=True)
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8123062Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8123458Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8124167Z   File "/tmp/scrying-tests-paeu67xl/repo/tests/test_monster_button_layout.py", line 98, in test_single_line_geometry_and_local_overflow
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8124870Z     self.assertAlmostEqual(box['y'], boxes[0]['y'], delta=1)
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8125268Z     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T08:56:35.8125777Z 
