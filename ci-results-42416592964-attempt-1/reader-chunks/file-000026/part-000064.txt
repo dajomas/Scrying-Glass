@@ -1,0 +1,27 @@
+ack.ProviderTests.test_exact_and_source_order) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7657144Z test_explicit_token (test_fivetools_fallback.ProviderTests.test_explicit_token) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7689837Z test_image_fallback (test_fivetools_fallback.ProviderTests.test_image_fallback) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7730416Z test_image_primary_wins (test_fivetools_fallback.ProviderTests.test_image_primary_wins) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7732986Z test_no_fuzzy (test_fivetools_fallback.ProviderTests.test_no_fuzzy) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7733870Z test_no_token (test_fivetools_fallback.ProviderTests.test_no_token) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7734679Z test_special (test_fivetools_fallback.ProviderTests.test_special) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7735623Z test_token (test_fivetools_fallback.ProviderTests.test_token) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7737128Z test_unresolved_copy (test_fivetools_fallback.ProviderTests.test_unresolved_copy) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7798533Z test_candidate_errors_are_not_zero_matches (test_fivetools_source_configuration.SourceConfigurationTests.test_candidate_errors_are_not_zero_matches) ... 5e.tools candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7799548Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7800379Z   File "python/scrying_glass_monster_selection.py", line 100, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7800963Z     index = ft.load_json(root + "/index.json")
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7801656Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7802541Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7803090Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7803736Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7804393Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7804792Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7805479Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7806082Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7806349Z OSError: private detail
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7806674Z 5e.tools candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7807026Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7807576Z   File "python/scrying_glass_monster_selection.py", line 97, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7808124Z     sources = ft.configured_sources(display)
+tests	Python test suite (including browser fixtures)	2026-11-07T21:37:14.7808822Z   File "/tmp/scrying-tests-khqqxh94/repo/python/scry
