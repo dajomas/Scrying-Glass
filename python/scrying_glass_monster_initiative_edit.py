@@ -4,6 +4,7 @@ from fastapi.params import Form as FormParameter
 from pydantic import ValidationError
 import copy
 from .scrying_glass_monster_selection import CandidateMonstersMixin
+from .scrying_glass_classes import BulkCombatantAction
 from .scrying_glass_initiative_input import creation_bonus_fields
 from .scrying_glass_monster_initiative import initiative_patch, legacy_total_patch
 
@@ -87,3 +88,16 @@ class InitiativeEditMonstersMixin(CandidateMonstersMixin):
         self.context.clean_order()
         await self.context.combatants_changed(monsters=True, characters=False)
         return monster
+
+    async def roll_monster_initiative(self):
+        """Roll once per monster and update the existing active order atomically."""
+        from .scrying_glass_monster_roll_order import roll_monsters_with_order
+        return await roll_monsters_with_order(self.context, self.context.STATE["monsters"])
+
+    async def bulk_monsters(self, body: BulkCombatantAction):
+        """Use one shared raw roll only for selected monsters; delegate other actions."""
+        if body.action != "roll-shared-initiative":
+            return await super().bulk_monsters(body)
+        targets = self.context.selected_entities("monsters", body.ids)
+        from .scrying_glass_monster_roll_order import roll_monsters_with_order
+        return await roll_monsters_with_order(self.context, targets, shared=True)
