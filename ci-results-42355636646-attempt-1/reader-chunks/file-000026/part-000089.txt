@@ -1,0 +1,48 @@
+s' \) -print0 | sort -z)^[[0m
+tests	JavaScript tests	2026-11-07T08:31:12.7457067Z ^[[36;1mexit "$status"^[[0m
+tests	JavaScript tests	2026-11-07T08:31:12.7502700Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	JavaScript tests	2026-11-07T08:31:12.7503009Z env:
+tests	JavaScript tests	2026-11-07T08:31:12.7503377Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	JavaScript tests	2026-11-07T08:31:12.7503855Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-07T08:31:12.7504212Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	JavaScript tests	2026-11-07T08:31:12.7504598Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-07T08:31:12.7504914Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-07T08:31:12.7505216Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-07T08:31:12.7505524Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	JavaScript tests	2026-11-07T08:31:12.7505797Z ##[endgroup]
+tests	JavaScript tests	2026-11-07T08:31:12.7613164Z ##[group]tests/admin-message-timeout.test.cjs
+tests	JavaScript tests	2026-11-07T08:31:12.9062769Z TAP version 13
+tests	JavaScript tests	2026-11-07T08:31:12.9396691Z # Subtest: clears at five seconds, not earlier
+tests	JavaScript tests	2026-11-07T08:31:12.9404844Z ok 1 - clears at five seconds, not earlier
+tests	JavaScript tests	2026-11-07T08:31:12.9405872Z   ---
+tests	JavaScript tests	2026-11-07T08:31:12.9406170Z   duration_ms: 1.633954
+tests	JavaScript tests	2026-11-07T08:31:12.9406503Z   type: 'test'
+tests	JavaScript tests	2026-11-07T08:31:12.9406770Z   ...
+tests	JavaScript tests	2026-11-07T08:31:12.9407867Z # Subtest: replacement message gets its own full timeout
+tests	JavaScript tests	2026-11-07T08:31:12.9408490Z ok 2 - replacement message gets its own full timeout
+tests	JavaScript tests	2026-11-07T08:31:12.9409431Z   ---
+tests	JavaScript tests	2026-11-07T08:31:12.9409735Z   duration_ms: 0.511238
+tests	JavaScript tests	2026-11-07T08:31:12.9410045Z   type: 'test'
+tests	JavaScript tests	2026-11-07T08:31:12.9410318Z   ...
+tests	JavaScript tests	2026-11-07T08:31:12.9411054Z # Subtest: repeating the same text restarts the timer
+tests	JavaScript tests	2026-11-07T08:31:12.9414102Z ok 3 - repeating the same text restarts the timer
+tests	JavaScript tests	2026-11-07T08:31:12.9414622Z   ---
+tests	JavaScript tests	2026-11-07T08:31:12.9414923Z   duration_ms: 0.564057
+tests	JavaScript tests	2026-11-07T08:31:12.9415306Z   type: 'test'
+tests	JavaScript tests	2026-11-07T08:31:12.9415629Z   ...
+tests	JavaScript tests	2026-11-07T08:31:12.9416012Z # Subtest: manual clearing cancels the timeout
+tests	JavaScript tests	2026-11-07T08:31:12.9416665Z ok 4 - manual clearing cancels the timeout
+tests	JavaScript tests	2026-11-07T08:31:12.9417043Z   ---
+tests	JavaScript tests	2026-11-07T08:31:12.9417410Z   duration_ms: 0.507804
+tests	JavaScript tests	2026-11-07T08:31:12.9417938Z   type: 'test'
+tests	JavaScript tests	2026-11-07T08:31:12.9418276Z   ...
+tests	JavaScript tests	2026-11-07T08:31:12.9419277Z # Subtest: pre-existing message gets a timeout on installation
+tests	JavaScript tests	2026-11-07T08:31:12.9419970Z ok 5 - pre-existing message gets a timeout on installation
+tests	JavaScript tests	2026-11-07T08:31:12.9420539Z   ---
+tests	JavaScript tests	2026-11-07T08:31:12.9420916Z   duration_ms: 1.137227
+tests	JavaScript tests	2026-11-07T08:31:12.9421320Z   type: 'test'
+tests	JavaScript tests	2026-11-07T08:31:12.9421620Z   ...
+tests	JavaScript tests	2026-11-07T08:31:12.9422122Z # Subtest: empty or missing message element creates no timeout
+tests	JavaScript tests	2026-11-07T08:31:12.9422854Z ok 6 - empty or missing message element creates no timeout
+tests	JavaScript tests	2026-11-07T08:31:12.9423360Z   ---
+tests	JavaScript tests	2026-
