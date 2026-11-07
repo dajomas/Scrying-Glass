@@ -15,7 +15,7 @@
 }
 
 /* The obsolete HP-change column is removed by combatant-row-layout.js. */
-#monsters td:nth-child(6),
+#monsters td:has(button[data-edit]),
 #monsters td button {
     white-space: nowrap;
 }

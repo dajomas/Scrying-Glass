@@ -75,6 +75,7 @@ class MonsterButtonLayoutTests(unittest.TestCase):
         page.goto('http://fixture.test/', wait_until='load')
         # Legacy DOM includes the CSS-excluded Turn control; visible counts differ.
         page.wait_for_function("document.querySelectorAll('#monsters td button').length === 11")
+        page.wait_for_function("document.querySelectorAll('#monsters th').length === 7")
         self.assertEqual(errors, [])
         self.assertEqual(mutations, [])
         return page, errors, mutations
@@ -100,8 +101,8 @@ class MonsterButtonLayoutTests(unittest.TestCase):
                         self.assertGreater(box['width'], 20)
                         if index:
                             self.assertGreaterEqual(box['x'], boxes[index-1]['x'] + boxes[index-1]['width'])
-                    self.assertEqual(page.locator('#monsters td:nth-child(6) button:visible').count(), 10)
-                    self.assertEqual(page.locator('#monsters th').count(), 6)
+                    self.assertEqual(page.locator('#monsters td:has(button[data-edit]) button:visible').count(), 10)
+                    self.assertEqual(page.locator('#monsters th').count(), 7)
                     for attr in ('data-ma', 'data-mally', 'data-mv'):
                         classes = page.locator('#monsters [' + attr + ']').get_attribute('class') or ''
                         self.assertEqual('on' in classes.split(), active)
@@ -188,7 +189,7 @@ class MonsterButtonLayoutTests(unittest.TestCase):
     def test_removed_row_controls_stay_unavailable_after_refresh(self):
         page, errors, mutations = self.open_page(768)
         for cycle in range(3):
-            for kind, columns, buttons in (('monsters', 6, 10), ('characters', 5, 7)):
+            for kind, columns, buttons in (('monsters', 7, 10), ('characters', 5, 7)):
                 page.wait_for_function("([kind, count]) => document.querySelectorAll('#' + kind + ' th').length === count", arg=[kind, columns])
                 self.assertEqual(page.locator(f'#{kind} td button:visible').count(), buttons)
                 self.assertEqual(page.locator('#' + kind).get_by_role('button', name='Turn', exact=True).count(), 0)
@@ -200,7 +201,7 @@ class MonsterButtonLayoutTests(unittest.TestCase):
                 page.evaluate('load(true)')
         page.add_script_tag(content=(ROOT / 'static/combatant-row-layout.js').read_text())
         page.evaluate('load(true)')
-        page.wait_for_function("document.querySelectorAll('#monsters th').length === 6 && document.querySelectorAll('#characters th').length === 5")
+        page.wait_for_function("document.querySelectorAll('#monsters th').length === 7 && document.querySelectorAll('#characters th').length === 5")
         page.evaluate('closeBattleActions(); addBattleActionRow()')
         for action in ('damage', 'heal'):
             self.assertEqual(page.locator(f'#battleActionRows [data-action-kind] option[value="{action}"]').count(), 1)
