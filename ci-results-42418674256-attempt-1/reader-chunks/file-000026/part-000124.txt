@@ -1,0 +1,34 @@
+64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T22:06:48.4277001Z     raise result
+tests	Standalone Python browser and audit checks	2026-11-07T22:06:48.4277212Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:22.8345440Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:22.8346384Z Ran 1333 tests in 124.436s
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:22.8346810Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:22.8347055Z OK
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:22.8353041Z Connections opened: 702; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:22.8354222Z PASS: failed PRAGMA initialization closes connection; suite closes all tracked connections
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:23.1707550Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:23.1708631Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:23.5323704Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:23.5324893Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:23.5793103Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:23.5793986Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:23.9358937Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:23.9806728Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:23.9807206Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:26.8053799Z {
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:26.8054131Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:26.8054560Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:26.8055069Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:26.8055727Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:26.8056406Z     "client card has a positive layout width at mobile viewport"
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:26.8057162Z   ],
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:26.8057391Z   "page_errors": [],
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:26.8057749Z   "transport": "mocked HTTP/WS, real Chromium rendering"
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:26.8059443Z }
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:26.9240683Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:26.9241540Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-07T22:07:27.1842655Z ##[endgroup]
+tests	Post Run actions/setup-node@v4	﻿2026-11-07T22:07:27.1935466Z Post job cleanup.
+tests	Post Run actions/setup-node@v4	2026-11-07T22:07:27.3275692Z (node:18843) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-node@v4	2026-11-07T22:07:27.3277150Z (Use `n
