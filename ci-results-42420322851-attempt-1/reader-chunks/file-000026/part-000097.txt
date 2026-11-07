@@ -1,0 +1,26 @@
+SplitTests.test_compatibility_links) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.4552273Z test_content_and_size (test_technical_documentation_split.TechnicalDocumentationSplitTests.test_content_and_size) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.4735176Z test_down_damage_preserves_turn (test_turn_eligibility.TurnTests.test_down_damage_preserves_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.4894180Z test_down_takes_next_turn (test_turn_eligibility.TurnTests.test_down_takes_next_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.5051072Z test_manual_down_turn (test_turn_eligibility.TurnTests.test_manual_down_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.5212008Z test_negative_maximum_no_longer_means_death (test_turn_eligibility.TurnTests.test_negative_maximum_no_longer_means_death) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.5531395Z test_round_wrap (test_turn_eligibility.TurnTests.test_round_wrap) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.5686909Z test_stable_takes_next_turn (test_turn_eligibility.TurnTests.test_stable_takes_next_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.5850185Z test_third_failure_removed (test_turn_eligibility.TurnTests.test_third_failure_removed) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.6002780Z test_zero_hp_monster_excluded (test_turn_eligibility.TurnTests.test_zero_hp_monster_excluded) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.6003348Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.6003612Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.6004971Z FAIL: test_unknown_rows_fields_and_client_values_are_rejected (test_monster_refresh_review.MonsterRefreshReviewTests.test_unknown_rows_fields_and_client_values_are_rejected)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.6006113Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.6006644Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.6007341Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.6008013Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.6008294Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.6008786Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.6009234Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.6009437Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.6009992Z   File "/tmp/scrying-tests-oi8hwhzy/repo/tests/test_monster_refresh_review.py", line 124, in test_unknown_rows_fields_and_client_values_are_rejected
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.6010577Z     self.assertEqual((await self.apply(review, selected))[0], 422)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.6010911Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:59.6011175Z AssertionError: 409 != 422
+tests	Python test suite (including browser fixtures)	2026-

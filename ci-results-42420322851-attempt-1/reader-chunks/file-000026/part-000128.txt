@@ -1,0 +1,32 @@
+2:27:06.1569559Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.1570006Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.1570915Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.1571512Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.1571867Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.1572536Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.1573195Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.1573481Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.1574565Z   File "/tmp/scrying-tests-g16cuj5_/repo/tests/test_monster_refresh_review.py", line 124, in test_unknown_rows_fields_and_client_values_are_rejected
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.1575459Z     self.assertEqual((await self.apply(review, selected))[0], 422)
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.1575970Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.1576355Z AssertionError: 409 != 422
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.1576533Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.1576802Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.1577225Z Ran 1349 tests in 106.302s
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.1577405Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.1577524Z FAILED (failures=1)
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.1577974Z Connections opened: 718; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.5316246Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.5316830Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.8922976Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.8923851Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.9297266Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:06.9297760Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:07.2038735Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:07.2416859Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:07.2417388Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:09.7419600Z {
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:09.7419974Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:09.7420362Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-07T22:27:09.7420745Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit

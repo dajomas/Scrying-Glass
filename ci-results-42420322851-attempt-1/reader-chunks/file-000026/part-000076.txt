@@ -1,0 +1,27 @@
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4866364Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4867105Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4867561Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4868352Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4869027Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4869310Z OSError: secret
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4869573Z ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4870565Z test_incomplete_search_is_error (test_monster_candidate_selection.CandidateTests.test_incomplete_search_is_error) ... D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4875080Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4875912Z   File "/tmp/scrying-tests-oi8hwhzy/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4876397Z     html = context.dnd_monster_detail_html(href)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4876886Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4877314Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4877564Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4878002Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4878445Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4878726Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4879212Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4879620Z     raise result
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4879805Z OSError: secret
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4879984Z ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4880325Z test_tokens (test_monster_candidate_selection.CandidateTests.test_tokens) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4880983Z test_unusable_duplicates_and_image (test_monster_candidate_selection.CandidateTests.test_unusable_duplicates_and_image) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4895073Z test_selection_and_manual_never_relookup (test_monster_candidate_selection.CreationTests.test_selection_and_manual_never_relookup) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4912804Z test_bonus_edit_reorders_and_keeps_turn_round_and_character (test_monster_edit_order.MonsterEditOrderTests.test_bonus_edit_reorders_and_keeps_turn_round_and_character) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:28.4926766Z test_invalid_order_rejected_before_im

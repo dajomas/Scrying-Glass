@@ -1,0 +1,27 @@
+s_fallback.ProviderTests.test_image_primary_wins) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0213577Z test_no_fuzzy (test_fivetools_fallback.ProviderTests.test_no_fuzzy) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0214436Z test_no_token (test_fivetools_fallback.ProviderTests.test_no_token) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0215173Z test_special (test_fivetools_fallback.ProviderTests.test_special) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0215785Z test_token (test_fivetools_fallback.ProviderTests.test_token) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0216841Z test_unresolved_copy (test_fivetools_fallback.ProviderTests.test_unresolved_copy) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0263934Z test_candidate_errors_are_not_zero_matches (test_fivetools_source_configuration.SourceConfigurationTests.test_candidate_errors_are_not_zero_matches) ... 5e.tools candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0264794Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0265204Z   File "python/scrying_glass_monster_selection.py", line 100, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0266018Z     index = ft.load_json(root + "/index.json")
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0266768Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0267420Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0267812Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0268243Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0268684Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0268966Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0269445Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0269849Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0270047Z OSError: private detail
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0270282Z 5e.tools candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0270538Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0270915Z   File "python/scrying_glass_monster_selection.py", line 97, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0271309Z     sources = ft.configured_sources(display)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0271776Z   File "/tmp/scrying-tests-oi8hwhzy/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0272486Z     raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+tests	Python test suite (including browser fixtures)	2026-11-07T22:24:06.0273199Z ValueError: fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace
+tests	Python test suite (including browser f
