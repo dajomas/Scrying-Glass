@@ -1,0 +1,26 @@
+ocked_pages.LockedPageTests.test_oversized_denial_is_not_classified) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7124802Z test_visible_gate_text (test_dndbeyond_locked_pages.LockedPageTests.test_visible_gate_text) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7167671Z test_all_locked_falls_back (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_all_locked_falls_back) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7209903Z test_locked_then_usable_keeps_primary (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_locked_then_usable_keeps_primary) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7239147Z test_unclassified_failure_and_search_failure_do_not_fallback (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_unclassified_failure_and_search_failure_do_not_fallback) ... /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/tempfile.py:538: ResourceWarning: Implicitly cleaning up <HTTPError 500: 'fixture'>
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7241312Z   _warnings.warn(self.warn_message, ResourceWarning)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7262231Z D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7262943Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7264054Z   File "/tmp/scrying-tests-kpmw_d7p/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7265128Z     html = context.dnd_monster_detail_html(href)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7265969Z   File "/tmp/scrying-tests-kpmw_d7p/repo/python/scrying_glass_dndbeyond.py", line 128, in dnd_monster_detail_html
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7266726Z     response = urlopen(request, timeout=15)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7267462Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7268335Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7269030Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7270029Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7270727Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7271151Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7271886Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7272524Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7272895Z urllib.error.HTTPError: HTTP Error 403: fixture
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7273342Z D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7273719Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7274633Z   File "/tmp/scrying-tests-kpmw_d7p/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-07T22:41:52.7275374Z     hits = context.dnd_monster_candidates(species)
+tests	Python test sui

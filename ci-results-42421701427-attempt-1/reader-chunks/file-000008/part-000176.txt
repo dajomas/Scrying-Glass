@@ -1,0 +1,31 @@
+r}") from None
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0019461Z playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0020282Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0020906Z   - waiting for get_by_label("Source candidate for Beta", exact=True)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0021430Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0021455Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0021816Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0023537Z FAIL: test_blank_notices_collapse_and_real_messages_reappear (test_admin_foundations.FoundationBrowserTests.test_blank_notices_collapse_and_real_messages_reappear) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0025188Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0025852Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0026971Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_foundations.py", line 125, in test_blank_notices_collapse_and_real_messages_reappear
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0027976Z     page, errors, mutations = self.open_page(width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0028492Z                               ~~~~~~~~~~~~~~^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0029282Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_foundations.py", line 57, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0030031Z     return self.rows.open_page(self, width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0030734Z            ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0031594Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0032525Z     self.assertEqual(errors, [])
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0032964Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0033830Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0034626Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0034888Z First list contains 1 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0035372Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0035938Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0036317Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0036694Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0037210Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0037369Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0037683Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0039276Z FAIL: test_blank_notices_collapse_and_real_messages_reappear (test_admin_foundations.FoundationBrowserTests.test_blank_notices_collapse_and_real_messages_reappear) (width=375)
+tests	Standalone Python browser and audit checks	2026-11-07T2

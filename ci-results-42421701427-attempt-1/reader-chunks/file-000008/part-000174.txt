@@ -1,0 +1,26 @@
+cks	2026-11-07T22:45:07.9812286Z   File "/tmp/scrying-tests-0y3osowi/repo/python/scrying_glass_monster_refresh_sources.py", line 137, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9812973Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9813658Z   File "/tmp/scrying-tests-0y3osowi/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9814843Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9815810Z ValueError: Retained source missing or ambiguous
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9834724Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9835364Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9836142Z   File "/tmp/scrying-tests-0y3osowi/repo/python/scrying_glass_monster_refresh_sources.py", line 137, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9837090Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9837768Z   File "/tmp/scrying-tests-0y3osowi/repo/python/scrying_glass_monster_refresh_sources.py", line 73, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9838474Z     html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9839183Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9839736Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9840068Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9840643Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9841209Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9841566Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9842164Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9842698Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9842913Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:15.9984849Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:15.9987047Z ERROR: test_candidate_resolution_preserves_other_checked_fields (test_monster_refresh_review_browser.RefreshReviewBrowserTests.test_candidate_resolution_preserves_other_checked_fields)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:15.9988831Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:15.9989588Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:15.9991489Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_refresh_review_browser.py", line 115, in test_candidate_resolution_preserves_other_checked_fields
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:15.9993127Z     self.page.get_by_label('Source candidate for Beta', exact=True).s

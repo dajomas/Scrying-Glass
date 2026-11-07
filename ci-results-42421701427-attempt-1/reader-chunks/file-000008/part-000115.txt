@@ -1,0 +1,30 @@
+s)	2026-11-07T22:42:59.9807473Z First list contains 1 additional elements.
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9807770Z First extra element 0:
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9808125Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9808367Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9808595Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9808920Z + []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9809028Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9809216Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9810212Z FAIL: test_real_page_boot_and_refresh_preserve_manual_visibility (test_admin_initial_visibility_page.InitialVisibilityPageTests.test_real_page_boot_and_refresh_preserve_manual_visibility)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9811134Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9811523Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9812292Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_admin_initial_visibility_page.py", line 60, in test_real_page_boot_and_refresh_preserve_manual_visibility
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9812983Z     self.assertEqual(errors, [])
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9813257Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9813778Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9814156Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9814325Z First list contains 1 additional elements.
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9814740Z First extra element 0:
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9815103Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9815360Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9815726Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9816066Z + []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9816175Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9816364Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9817391Z FAIL: test_disclosures_drafts_files_and_common_controls (test_admin_panel_forms.PanelFormsBrowserTests.test_disclosures_drafts_files_and_common_controls) (width=1440)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9818241Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9818625Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9819322Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_admin_panel_forms.py", line 66, in test_disclosures_drafts_files_and_common_controls
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9819980Z     page, errors, mutations = self.open_page(width)
+tests	Python test suite (including browser fixtures)	2026-11-0

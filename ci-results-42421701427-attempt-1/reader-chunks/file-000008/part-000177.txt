@@ -1,0 +1,30 @@
+2:45:16.0040720Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0041313Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0042447Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_foundations.py", line 125, in test_blank_notices_collapse_and_real_messages_reappear
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0043556Z     page, errors, mutations = self.open_page(width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0044096Z                               ~~~~~~~~~~~~~~^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0045138Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_foundations.py", line 57, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0045981Z     return self.rows.open_page(self, width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0046456Z            ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0047288Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0048121Z     self.assertEqual(errors, [])
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0048532Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0049360Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0049947Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0050205Z First list contains 1 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0050896Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0051442Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0051826Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0052196Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0052728Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0052890Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0053190Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0054703Z FAIL: test_computed_foundations_focus_and_modal (test_admin_foundations.FoundationBrowserTests.test_computed_foundations_focus_and_modal) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0055970Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0056560Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0057578Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_foundations.py", line 160, in test_computed_foundations_focus_and_modal
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0058574Z     page, errors, mutations = self.open_page(width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0059112Z                               ~~~~~~~~~~~~~~^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0059936Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_foundations.py", line 57, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0060745Z     return self.rows.open_page(self, width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0061218Z            ~~~~~~~~~

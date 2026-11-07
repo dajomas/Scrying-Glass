@@ -1,0 +1,31 @@
+xtures)	2026-11-07T22:43:00.0105291Z     self.assertEqual(errors, [])
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0105575Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0106112Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0106496Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0106668Z First list contains 1 additional elements.
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0106975Z First extra element 0:
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0107581Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0107840Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0108077Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0108411Z + []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0108712Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0108906Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0109966Z FAIL: test_fields_and_preview_boxes_align_loaded_and_empty (test_monster_image_preview_alignment.PreviewAlignmentTests.test_fields_and_preview_boxes_align_loaded_and_empty) (width=375, loaded=False)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0110907Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0111297Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0112072Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_monster_image_preview_alignment.py", line 23, in test_fields_and_preview_boxes_align_loaded_and_empty
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0112853Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0113263Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0113841Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0114464Z     self.assertEqual(errors, [])
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0114757Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0115302Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0115694Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0115859Z First list contains 1 additional elements.
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0116178Z First extra element 0:
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0116537Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0116795Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0117017Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0117359Z + []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0117462Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0117663Z ============================

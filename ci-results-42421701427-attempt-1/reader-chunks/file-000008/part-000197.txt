@@ -1,0 +1,32 @@
+acter_hp_display.py", line 33, in test_edit_rejection_retry_and_reload
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0398618Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0399005Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0399566Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0400075Z     self.assertEqual(errors, [])
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0400347Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0400863Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0401240Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0401397Z First list contains 1 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0401703Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0402055Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0402306Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0402526Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0402982Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0403084Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0403276Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0404074Z FAIL: test_edit_rejection_retry_and_reload (test_character_hp_display.CharacterHpDisplayTests.test_edit_rejection_retry_and_reload) (width=375)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0404972Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0405351Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0405989Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_character_hp_display.py", line 33, in test_edit_rejection_retry_and_reload
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0406654Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0407040Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0407627Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0408137Z     self.assertEqual(errors, [])
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0408402Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0409002Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0409554Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0409723Z First list contains 1 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0410019Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0410380Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0410621Z 
+tests	Standalone Python browser and au

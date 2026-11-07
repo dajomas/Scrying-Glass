@@ -1,0 +1,29 @@
+863Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_header_hierarchy.py", line 51, in test_context_uses_active_labels_and_primary_action_tracks_state
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0165960Z     page, errors, mutations = self.open_page(width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0166484Z                               ~~~~~~~~~~~~~~^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0167309Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_header_hierarchy.py", line 35, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0168200Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0168785Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0169622Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0170434Z     self.assertEqual(errors, [])
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0170843Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0171690Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0172285Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0172553Z First list contains 1 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0173014Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0173576Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0173966Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0174334Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0174997Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0175158Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0175463Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0177079Z FAIL: test_header_scrolling_feedback_and_pane_preferences (test_admin_header_hierarchy.HeaderHierarchyBrowserTests.test_header_scrolling_feedback_and_pane_preferences) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0178527Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0179134Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0180269Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_header_hierarchy.py", line 110, in test_header_scrolling_feedback_and_pane_preferences
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0181407Z     page, errors, mutations = self.open_page(width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0181945Z                               ~~~~~~~~~~~~~~^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0182838Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_header_hierarchy.py", line 35, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0184193Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0184981Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0185874Z   File "/tmp/scrying-tests-0

@@ -1,0 +1,30 @@
+ []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9845259Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9845451Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9846321Z FAIL: test_invalid_monster_hp_keeps_draft_without_mutation (test_admin_panel_forms.PanelFormsBrowserTests.test_invalid_monster_hp_keeps_draft_without_mutation)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9847153Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9847531Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9848226Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_admin_panel_forms.py", line 114, in test_invalid_monster_hp_keeps_draft_without_mutation
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9848886Z     page, errors, mutations = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9849222Z                               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9849742Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_admin_panel_forms.py", line 37, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9850306Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9850695Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9851251Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9851763Z     self.assertEqual(errors, [])
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9852038Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9852578Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9852962Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9853124Z First list contains 1 additional elements.
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9853441Z First extra element 0:
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9853802Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9854061Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9854285Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9854729Z + []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9854833Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9855026Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9855825Z FAIL: test_panel_geometry_and_screenshots (test_admin_panel_forms.PanelFormsBrowserTests.test_panel_geometry_and_screenshots) (width=1440)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9856580Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9856966Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9857609Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_admin_panel_forms.py", line 129, in test_panel_geometry_and_screenshots
+test

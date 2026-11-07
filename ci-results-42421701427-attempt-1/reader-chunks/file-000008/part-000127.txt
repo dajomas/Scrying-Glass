@@ -1,0 +1,30 @@
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9961312Z     page,errors,mutations=self.rows.open_page(self,width)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9961694Z                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9962266Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9962791Z     self.assertEqual(errors, [])
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9963069Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9963607Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9964155Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9964328Z First list contains 1 additional elements.
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9964788Z First extra element 0:
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9965169Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9965537Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9965772Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9966108Z + []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9966216Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9966407Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9967462Z FAIL: test_native_change_save_refresh_and_rejection (test_initiative_keyboard_navigation.InitiativeNavigationAdminTests.test_native_change_save_refresh_and_rejection) (width=375, kind='monsters')
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9968421Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9968807Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9969542Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_initiative_keyboard_navigation.py", line 176, in test_native_change_save_refresh_and_rejection
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9970282Z     page,errors,mutations=self.rows.open_page(self,width)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9970659Z                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9971219Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9971735Z     self.assertEqual(errors, [])
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9972008Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9972543Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9972917Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9973084Z First list contains 1 additional elements.
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9973387Z First extra element 0:
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9973745Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Python test su

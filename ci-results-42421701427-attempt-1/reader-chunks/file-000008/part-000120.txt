@@ -1,0 +1,31 @@
+026-11-07T22:42:59.9870847Z     self.assertEqual(errors, [])
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9871123Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9871651Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9872022Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9872189Z First list contains 1 additional elements.
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9872495Z First extra element 0:
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9872857Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9873103Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9873330Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9873664Z + []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9873775Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9873965Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9874845Z FAIL: test_panel_geometry_and_screenshots (test_admin_panel_forms.PanelFormsBrowserTests.test_panel_geometry_and_screenshots) (width=375)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9875592Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9875979Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9876613Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_admin_panel_forms.py", line 129, in test_panel_geometry_and_screenshots
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9877254Z     page, errors, mutations = self.open_page(width)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9877600Z                               ~~~~~~~~~~~~~~^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9878124Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_admin_panel_forms.py", line 37, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9878837Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9879231Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9879929Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9880445Z     self.assertEqual(errors, [])
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9880717Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9881237Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9881610Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9881775Z First list contains 1 additional elements.
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9882075Z First extra element 0:
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9882427Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9882675Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.98829

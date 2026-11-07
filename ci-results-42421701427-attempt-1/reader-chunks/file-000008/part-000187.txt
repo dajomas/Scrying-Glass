@@ -1,0 +1,30 @@
+ests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0249240Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0250033Z     self.assertEqual(errors, [])
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0250645Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0251471Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0252078Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0252340Z First list contains 1 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0252811Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0253372Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0253759Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0254123Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0254843Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0254976Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0255185Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0256196Z FAIL: test_original_next_handler_and_cancelled_end_remain_intact (test_admin_header_hierarchy.HeaderHierarchyBrowserTests.test_original_next_handler_and_cancelled_end_remain_intact)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0257199Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0257601Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0258371Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_header_hierarchy.py", line 145, in test_original_next_handler_and_cancelled_end_remain_intact
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0259088Z     page, errors, mutations = self.open_page(1440)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0259442Z                               ~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0259996Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_header_hierarchy.py", line 35, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0260589Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0261150Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0261713Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0262228Z     self.assertEqual(errors, [])
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0262501Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0263027Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0263411Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0263578Z First list contains 1 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0263884Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0264240Z "Cannot read properties of un

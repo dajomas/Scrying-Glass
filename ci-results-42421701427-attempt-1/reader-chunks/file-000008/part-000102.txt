@@ -1,0 +1,29 @@
+(including browser fixtures)	2026-11-07T22:42:59.9614596Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9615632Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9616675Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9617077Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9618199Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 652, in select_option
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9619356Z     return await self._frame.select_option(
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9619904Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9620237Z     ...<3 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9620450Z     )
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9620632Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9621240Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 819, in select_option
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9621990Z     return await self._channel.send("selectOption", self._timeout, params)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9622467Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9623176Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9624165Z     return await self._connection.wrap_api_call(
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9625148Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9625453Z     ...<3 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9625665Z     )
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9625844Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9626918Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9628385Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9629547Z playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9630306Z Call log:
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9630875Z   - waiting for get_by_label("Source candidate for Beta", exact=True)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9631336Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9631345Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9631553Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9632538Z FAIL: test_blank_notices_collapse_and_real_messages_reappear (test_admin_foundations.FoundationBrowserTests.test_blank_notices_collapse_and_real_messages_reappear) (width=1440)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9633431Z ---------------------------------

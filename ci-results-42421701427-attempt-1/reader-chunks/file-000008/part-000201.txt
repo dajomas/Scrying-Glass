@@ -1,0 +1,32 @@
+rtEqual(errors, [])
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0451218Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0451738Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0452109Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0452270Z First list contains 1 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0452567Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0452927Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0453168Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0453394Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0453723Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0453831Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0454022Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0455037Z FAIL: test_edit_and_statistics_remain_keyboard_activatable (test_monster_button_layout.MonsterButtonLayoutTests.test_edit_and_statistics_remain_keyboard_activatable)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0455878Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0456263Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0456970Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_button_layout.py", line 171, in test_edit_and_statistics_remain_keyboard_activatable
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0457655Z     page, errors, mutations = self.open_page(375)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0457996Z                               ~~~~~~~~~~~~~~^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0458675Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0459193Z     self.assertEqual(errors, [])
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0459460Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0459979Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0460354Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0460516Z First list contains 1 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0460816Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0461165Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0461419Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0461646Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0461979Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0462084Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0462266Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0463238Z FAIL: test_keyboard_reaches_every_button_and_scrolls_locally (test_monster_button_layout.MonsterButtonLayoutTests.tes

@@ -1,0 +1,30 @@
+9922238Z First extra element 0:
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9922704Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9922953Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9923175Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9923510Z + []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9923612Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9923806Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9924741Z FAIL: test_edit_rejection_retry_and_reload (test_character_hp_display.CharacterHpDisplayTests.test_edit_rejection_retry_and_reload) (width=1440)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9925524Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9925905Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9926552Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_character_hp_display.py", line 33, in test_edit_rejection_retry_and_reload
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9927229Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9927619Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9928180Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9928683Z     self.assertEqual(errors, [])
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9928952Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9929483Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9929857Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9930021Z First list contains 1 additional elements.
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9930320Z First extra element 0:
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9930672Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9930914Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9931143Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9931477Z + []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9931585Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9931775Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9932587Z FAIL: test_edit_rejection_retry_and_reload (test_character_hp_display.CharacterHpDisplayTests.test_edit_rejection_retry_and_reload) (width=375)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9933357Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9933749Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9934644Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_character_hp_display.py", line 33, in test_edit_rejec

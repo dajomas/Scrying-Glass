@@ -1,0 +1,30 @@
+s.open_page(self, width)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9794976Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9795533Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9796234Z     self.assertEqual(errors, [])
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9796512Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9797046Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9797419Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9797586Z First list contains 1 additional elements.
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9797882Z First extra element 0:
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9798236Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9798480Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9798708Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9799039Z + []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9799149Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9799340Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9800323Z FAIL: test_original_next_handler_and_cancelled_end_remain_intact (test_admin_header_hierarchy.HeaderHierarchyBrowserTests.test_original_next_handler_and_cancelled_end_remain_intact)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9801231Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9801621Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9802369Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_admin_header_hierarchy.py", line 145, in test_original_next_handler_and_cancelled_end_remain_intact
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9803085Z     page, errors, mutations = self.open_page(1440)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9803429Z                               ~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9803969Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_admin_header_hierarchy.py", line 35, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9804681Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9805072Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9805637Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9806138Z     self.assertEqual(errors, [])
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9806412Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9806940Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9807310Z 
+tests	Python test suite (including browser fixture

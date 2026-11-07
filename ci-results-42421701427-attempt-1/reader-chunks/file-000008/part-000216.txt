@@ -1,0 +1,29 @@
+one Python browser and audit checks	2026-11-07T22:45:16.0655960Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0656094Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0656291Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0657039Z FAIL: test_help_and_checkbox_label_render_without_mutation (test_monster_source_help_text.SourceHelpBrowserTests.test_help_and_checkbox_label_render_without_mutation) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0657259Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0657403Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0657977Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_source_help_text.py", line 49, in test_help_and_checkbox_label_render_without_mutation
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0658196Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0658339Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0658702Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0658829Z     self.assertEqual(errors, [])
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0658942Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0659313Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0659322Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0659484Z First list contains 1 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0659592Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0659806Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0659818Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0660036Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0660120Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0660128Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0660433Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0661173Z FAIL: test_help_and_checkbox_label_render_without_mutation (test_monster_source_help_text.SourceHelpBrowserTests.test_help_and_checkbox_label_render_without_mutation) (width=375)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0661395Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0661550Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0662098Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_source_help_text.py", line 49, in test_help_and_checkbox_label_render_without_mutation
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0662303Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0662446Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0662816Z   File "/tmp/scrying-tests

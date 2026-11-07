@@ -1,0 +1,30 @@
+lone Python browser and audit checks	2026-11-07T22:45:16.0319271Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0319983Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_panel_forms.py", line 114, in test_invalid_monster_hp_keeps_draft_without_mutation
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0320651Z     page, errors, mutations = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0320990Z                               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0321522Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_panel_forms.py", line 37, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0322103Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0322499Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0323057Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0323575Z     self.assertEqual(errors, [])
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0323852Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0324555Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0324952Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0325120Z First list contains 1 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0325421Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0325776Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0326032Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0326270Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0326605Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0326712Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0326898Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0327699Z FAIL: test_panel_geometry_and_screenshots (test_admin_panel_forms.PanelFormsBrowserTests.test_panel_geometry_and_screenshots) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0328445Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0328820Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0329467Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_panel_forms.py", line 129, in test_panel_geometry_and_screenshots
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0330095Z     page, errors, mutations = self.open_page(width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0330450Z                               ~~~~~~~~~~~~~~^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0330982Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_panel_forms.py", line 37, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0331694Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0332098Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Standalone Python browse

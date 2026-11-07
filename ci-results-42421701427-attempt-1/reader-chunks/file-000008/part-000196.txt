@@ -1,0 +1,30 @@
+384847Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0385178Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0385286Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0385471Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0386441Z FAIL: test_selection_context_and_refresh_preserve_original_selection_sets (test_admin_rosters.RosterBrowserTests.test_selection_context_and_refresh_preserve_original_selection_sets)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0387337Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0387716Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0388461Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_rosters.py", line 43, in test_selection_context_and_refresh_preserve_original_selection_sets
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0389152Z     page, errors, mutations = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0389491Z                               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0390000Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_rosters.py", line 38, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0390551Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0390943Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0391493Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0392003Z     self.assertEqual(errors, [])
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0392270Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0392789Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0393166Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0393329Z First list contains 1 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0393624Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0393969Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0394500Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0394728Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0395053Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0395160Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0395343Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0396162Z FAIL: test_edit_rejection_retry_and_reload (test_character_hp_display.CharacterHpDisplayTests.test_edit_rejection_retry_and_reload) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0396928Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0397301Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0397953Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_char

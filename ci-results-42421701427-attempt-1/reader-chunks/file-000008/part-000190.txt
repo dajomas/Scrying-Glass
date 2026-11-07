@@ -1,0 +1,31 @@
+dalone Python browser and audit checks	2026-11-07T22:45:16.0306066Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0306312Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0306541Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0306876Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0306984Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0307180Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0308048Z FAIL: test_groups_required_labels_and_idempotence (test_admin_panel_forms.PanelFormsBrowserTests.test_groups_required_labels_and_idempotence)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0308822Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0309221Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0309901Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_panel_forms.py", line 48, in test_groups_required_labels_and_idempotence
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0310740Z     page, errors, mutations = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0311076Z                               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0311606Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_panel_forms.py", line 37, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0312185Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0312578Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0313138Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0313661Z     self.assertEqual(errors, [])
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0313941Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0314658Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0315047Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0315221Z First list contains 1 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0315533Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0315894Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0316146Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0316379Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0316713Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0316822Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0317016Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0317904Z FAIL: test_invalid_monster_hp_keeps_draft_without_mutation (test_admin_panel_forms.PanelFormsBrowserTests.test_invalid_monster_hp_keeps_draft_without_mutation)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0318879Z ----------------------------------------------------------------------
+tests	Standa

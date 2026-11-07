@@ -1,0 +1,32 @@
+elect_option('0')
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:15.9994134Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:15.9995843Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 13173, in select_option
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:15.9997009Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:15.9997390Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:15.9997838Z         self._impl_obj.select_option(
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:15.9998390Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:15.9998868Z     ...<7 lines>...
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:15.9999255Z         )
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:15.9999593Z         ^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:15.9999926Z     )
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0000247Z     ^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0001347Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0002420Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0002862Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0004051Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 652, in select_option
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0005518Z     return await self._frame.select_option(
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0006128Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0006620Z     ...<3 lines>...
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0006992Z     )
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0007321Z     ^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0008507Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 819, in select_option
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0009889Z     return await self._channel.send("selectOption", self._timeout, params)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0010750Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0012036Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0013239Z     return await self._connection.wrap_api_call(
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0013866Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0014519Z     ...<3 lines>...
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0015223Z     )
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0015558Z     ^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0016710Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0018238Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {erro

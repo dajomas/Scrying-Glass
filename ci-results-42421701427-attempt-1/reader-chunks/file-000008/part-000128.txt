@@ -1,0 +1,29 @@
+ite (including browser fixtures)	2026-11-07T22:42:59.9973989Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9974219Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9974651Z + []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9974765Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9974958Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9975866Z FAIL: test_wrapping_and_escape_exit_on_full_admin (test_initiative_keyboard_navigation.InitiativeNavigationAdminTests.test_wrapping_and_escape_exit_on_full_admin)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9976712Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9977103Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9977826Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_initiative_keyboard_navigation.py", line 152, in test_wrapping_and_escape_exit_on_full_admin
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9978550Z     page,errors,mutations=self.rows.open_page(self,width)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9978928Z                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9979475Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9980031Z     self.assertEqual(errors, [])
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9980315Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9980838Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9981220Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9981392Z First list contains 1 additional elements.
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9981697Z First extra element 0:
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9982053Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9982300Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9982527Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9982860Z + []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9982971Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9983157Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9984069Z FAIL: test_edit_and_statistics_remain_keyboard_activatable (test_monster_button_layout.MonsterButtonLayoutTests.test_edit_and_statistics_remain_keyboard_activatable)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9985034Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9985546Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9986266Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_monster_button_layout.py", line 171, in test_edit_and_statistics_remain_keyboard_activatable
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9987055Z     page, errors, mutat

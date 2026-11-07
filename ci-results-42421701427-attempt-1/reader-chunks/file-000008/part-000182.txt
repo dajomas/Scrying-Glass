@@ -1,0 +1,30 @@
+ed (reading 'monsters')"]
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0142931Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0143084Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0143391Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0145316Z FAIL: test_context_uses_active_labels_and_primary_action_tracks_state (test_admin_header_hierarchy.HeaderHierarchyBrowserTests.test_context_uses_active_labels_and_primary_action_tracks_state) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0146925Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0147522Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0148738Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_header_hierarchy.py", line 51, in test_context_uses_active_labels_and_primary_action_tracks_state
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0149859Z     page, errors, mutations = self.open_page(width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0150564Z                               ~~~~~~~~~~~~~~^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0151409Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_admin_header_hierarchy.py", line 35, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0152321Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0152920Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0153774Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0154707Z     self.assertEqual(errors, [])
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0155121Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0155941Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0156523Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0156772Z First list contains 1 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0157221Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0157756Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0158147Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0158508Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0159003Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0159157Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0159456Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0161198Z FAIL: test_context_uses_active_labels_and_primary_action_tracks_state (test_admin_header_hierarchy.HeaderHierarchyBrowserTests.test_context_uses_active_labels_and_primary_action_tracks_state) (width=375)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0162767Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0163544Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0164

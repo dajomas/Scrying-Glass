@@ -1,0 +1,30 @@
+audit checks	2026-11-07T22:44:34.4027118Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4027725Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4028332Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4028704Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4029350Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4029904Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4030128Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4032299Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4032862Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4033598Z   File "/tmp/scrying-tests-0y3osowi/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4034219Z     html = context.dnd_monster_detail_html(href)
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4035387Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4035927Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4036242Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4036801Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4037364Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4037721Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4038340Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4038862Z     raise result
+tests	Standalone Python browser and audit checks	2026-11-07T22:44:34.4039082Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9794101Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9795197Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9796721Z   File "/tmp/scrying-tests-0y3osowi/repo/python/scrying_glass_monster_refresh_sources.py", line 137, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9797657Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9798502Z   File "/tmp/scrying-tests-0y3osowi/repo/python/scrying_glass_monster_refresh_sources.py", line 72, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9800114Z ##[error]    raise ValueError('Provider disabled')
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9801370Z ValueError: Provider disabled
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9810886Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:07.9811519Z Traceback (most recent call last):
+tests	Standalone Python browser and audit che

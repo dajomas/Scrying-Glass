@@ -1,0 +1,32 @@
+~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0425216Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0425735Z     self.assertEqual(errors, [])
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0426003Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0426520Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0426899Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0427061Z First list contains 1 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0427357Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0427706Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0427952Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0428179Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0428507Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0428609Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0428792Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0429845Z FAIL: test_native_change_save_refresh_and_rejection (test_initiative_keyboard_navigation.InitiativeNavigationAdminTests.test_native_change_save_refresh_and_rejection) (width=375, kind='characters')
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0430792Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0431169Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0431903Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_initiative_keyboard_navigation.py", line 176, in test_native_change_save_refresh_and_rejection
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0432633Z     page,errors,mutations=self.rows.open_page(self,width)
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0433013Z                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0433564Z   File "/tmp/scrying-tests-0y3osowi/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0434076Z     self.assertEqual(errors, [])
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0434348Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0434969Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0435348Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0435503Z First list contains 1 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0435806Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0436154Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0436402Z 
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0436623Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.0437085Z + []
+tests	Standalone Python browser and audit checks	2026-11-07T22:45:16.04371

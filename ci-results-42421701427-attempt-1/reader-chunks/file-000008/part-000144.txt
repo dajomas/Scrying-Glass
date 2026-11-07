@@ -1,0 +1,28 @@
+5Z FAIL: test_help_and_checkbox_label_render_without_mutation (test_monster_source_help_text.SourceHelpBrowserTests.test_help_and_checkbox_label_render_without_mutation) (width=1440)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0186980Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0187121Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0187672Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_monster_source_help_text.py", line 49, in test_help_and_checkbox_label_render_without_mutation
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0187882Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0188039Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0188396Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0188527Z     self.assertEqual(errors, [])
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0188639Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0189013Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0189023Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0189177Z First list contains 1 additional elements.
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0189292Z First extra element 0:
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0189513Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0189521Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0189752Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0189831Z + []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0189839Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0190026Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0190772Z FAIL: test_help_and_checkbox_label_render_without_mutation (test_monster_source_help_text.SourceHelpBrowserTests.test_help_and_checkbox_label_render_without_mutation) (width=375)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0190999Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0191138Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0191679Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_monster_source_help_text.py", line 49, in test_help_and_checkbox_label_render_without_mutation
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0191880Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0192030Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0192379Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0192506Z     self.assertEqual(errors, [])
+tests	Python test suite (including browser fixtures)	2026-11-07T22:43:00.0192617Z  

@@ -1,0 +1,27 @@
+6-11-07T22:42:59.9714132Z FAIL: test_context_uses_active_labels_and_primary_action_tracks_state (test_admin_header_hierarchy.HeaderHierarchyBrowserTests.test_context_uses_active_labels_and_primary_action_tracks_state) (width=1440)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9715367Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9715925Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9716703Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_admin_header_hierarchy.py", line 51, in test_context_uses_active_labels_and_primary_action_tracks_state
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9717582Z     page, errors, mutations = self.open_page(width)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9717932Z                               ~~~~~~~~~~~~~~^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9718491Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_admin_header_hierarchy.py", line 35, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9719096Z     page, errors, mutations = self.rows.open_page(self, width)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9719490Z                               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9720049Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_monster_button_layout.py", line 79, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9720556Z     self.assertEqual(errors, [])
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9720828Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9721360Z AssertionError: Lists differ: ["Cannot read properties of undefined (reading 'monsters')"] != []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9721729Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9721896Z First list contains 1 additional elements.
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9722202Z First extra element 0:
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9722559Z "Cannot read properties of undefined (reading 'monsters')"
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9722802Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9723029Z - ["Cannot read properties of undefined (reading 'monsters')"]
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9723356Z + []
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9723464Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9723658Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9724874Z FAIL: test_context_uses_active_labels_and_primary_action_tracks_state (test_admin_header_hierarchy.HeaderHierarchyBrowserTests.test_context_uses_active_labels_and_primary_action_tracks_state) (width=375)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9725846Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9726237Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9727005Z   File "/tmp/scrying-tests-kpmw_d7p/repo/tests/test_admin_header_hierarchy.py", line 51, in test_context_uses_active_labels_and_primary_action_tracks_state
+tests	Python test suite (including browser fixtures)	2026-11-07T22:42:59.9727735Z     page, errors, mutations = self.open_page(w
