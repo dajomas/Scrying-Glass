@@ -1,0 +1,29 @@
+s	2026-11-07T23:09:13.2997003Z   File "/tmp/scrying-tests-a3btogwp/repo/tests/test_monster_refresh_end_to_end.py", line 235, in test_active_max_hp_reduction_conflict_is_atomic
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.2998493Z     asyncio.run(self.context.combatants_changed(monsters=True))
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.2999120Z     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3000006Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 201, in run
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3000940Z     raise RuntimeError(
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3001556Z         "asyncio.run() cannot be called from a running event loop")
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3002413Z RuntimeError: asyncio.run() cannot be called from a running event loop
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3002897Z 
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3003225Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3005176Z ERROR: test_desktop_and_narrow_apply_preserve_turn_ties_unselected_and_restart (test_monster_refresh_end_to_end.MonsterRefreshEndToEndTests.test_desktop_and_narrow_apply_preserve_turn_ties_unselected_and_restart) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3007086Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3007722Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3009072Z   File "/tmp/scrying-tests-a3btogwp/repo/tests/test_monster_refresh_end_to_end.py", line 166, in test_desktop_and_narrow_apply_preserve_turn_ties_unselected_and_restart
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3010202Z     self.review(page)
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3010544Z     ~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3011346Z   File "/tmp/scrying-tests-a3btogwp/repo/tests/test_monster_refresh_end_to_end.py", line 148, in review
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3012686Z     page.locator('#monsterBulkAction').select_option('refresh-source-review')
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3013487Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3014762Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 13173, in select_option
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3015742Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3016055Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3016448Z         self._impl_obj.select_option(
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3017111Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3017517Z     ...<7 lines>...
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3017833Z         )
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3018126Z         ^
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3018398Z     )
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3018686Z     ^
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3019647Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-p

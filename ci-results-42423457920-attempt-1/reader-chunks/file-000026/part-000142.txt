@@ -1,0 +1,35 @@
+ror: Locator.select_option: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3127871Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3128256Z   - waiting for locator("#monsterBulkAction")
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3129476Z     - locator resolved to <select id="monsterBulkAction" class="bulk-action-select" aria-describedby="monstersSelectedCount">…</select>
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3130463Z   - attempting select option action
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3131039Z     2 × waiting for element to be visible and enabled
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3131556Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3131993Z     - retrying select option action
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3132407Z     - waiting 20ms
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3132895Z     2 × waiting for element to be visible and enabled
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3133402Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3133837Z     - retrying select option action
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3134239Z       - waiting 100ms
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3134755Z     10 × waiting for element to be visible and enabled
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3135247Z        - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3135681Z      - retrying select option action
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3136088Z        - waiting 500ms
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3136519Z 
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3136530Z 
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3137018Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3137554Z Ran 1363 tests in 144.745s
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3137782Z 
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3137938Z FAILED (errors=5)
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3138516Z Connections opened: 732; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.6464523Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.6464981Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.9975793Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.9976692Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:14.0456748Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:14.0457638Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:14.4054387Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:14.4505225Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:14.4506155Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:17.2452877Z {
+tests	Standalone Python 

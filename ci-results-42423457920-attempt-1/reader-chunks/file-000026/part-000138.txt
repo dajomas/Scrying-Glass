@@ -1,0 +1,33 @@
+ible
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3041769Z     - retrying select option action
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3042175Z       - waiting 100ms
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3042707Z     10 × waiting for element to be visible and enabled
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3043221Z        - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3043662Z      - retrying select option action
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3044090Z        - waiting 500ms
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3044301Z 
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3044312Z 
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3044617Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3046537Z ERROR: test_desktop_and_narrow_apply_preserve_turn_ties_unselected_and_restart (test_monster_refresh_end_to_end.MonsterRefreshEndToEndTests.test_desktop_and_narrow_apply_preserve_turn_ties_unselected_and_restart) (width=375)
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3048605Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3049221Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3050533Z   File "/tmp/scrying-tests-a3btogwp/repo/tests/test_monster_refresh_end_to_end.py", line 166, in test_desktop_and_narrow_apply_preserve_turn_ties_unselected_and_restart
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3051665Z     self.review(page)
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3051996Z     ~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3052795Z   File "/tmp/scrying-tests-a3btogwp/repo/tests/test_monster_refresh_end_to_end.py", line 148, in review
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3053854Z     page.locator('#monsterBulkAction').select_option('refresh-source-review')
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3054653Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3055858Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 13173, in select_option
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3057000Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3057322Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3057689Z         self._impl_obj.select_option(
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3058138Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3058515Z     ...<7 lines>...
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3058828Z         )
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3059109Z         ^
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3059382Z     )
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3059656Z     ^
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3060540Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3061438Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:13.3061796Z            ~~~~~~~~~~~^^
+tests	Standal

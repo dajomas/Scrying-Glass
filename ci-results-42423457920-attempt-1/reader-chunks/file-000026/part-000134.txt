@@ -1,0 +1,29 @@
+hon3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:16.6899755Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:16.6900117Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:16.6900592Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:16.6901159Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:16.6902227Z   File "/tmp/scrying-tests-a3btogwp/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:16.6902965Z     html = context.dnd_monster_detail_html(href)
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:16.6903560Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:16.6904086Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:16.6904402Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:16.6904948Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:16.6905509Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:16.6905865Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:16.6906470Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:16.6907202Z     raise result
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:16.6907668Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:43.0689318Z /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/case.py:668: RuntimeWarning: coroutine 'NotificationsService.combatants_changed' was never awaited
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:43.0713142Z   with outcome.testPartExecutor(self):
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:43.0738103Z RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:54.5249468Z /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/case.py:668: RuntimeWarning: coroutine 'NotificationsService.combatants_changed' was never awaited
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:54.5255394Z   with outcome.testPartExecutor(self):
+tests	Standalone Python browser and audit checks	2026-11-07T23:08:54.5275314Z RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:04.3569442Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:04.3570159Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:04.3571138Z   File "/tmp/scrying-tests-a3btogwp/repo/python/scrying_glass_monster_refresh_sources.py", line 137, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:04.3572116Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:04.3573022Z   File "/tmp/scrying-tests-a3btogwp/repo/python/scrying_glass_monster_refresh_sources.py", line 72, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-07T23:09:04.3576287Z ##[error]    raise ValueError('Provider disabled')
+tests	Standalone Python browser a

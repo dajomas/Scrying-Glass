@@ -1,0 +1,30 @@
+thon test suite (including browser fixtures)	2026-11-07T23:06:25.8375995Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8376229Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8377034Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 652, in select_option
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8377701Z     return await self._frame.select_option(
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8378017Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8378273Z     ...<3 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8378468Z     )
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8378643Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8379228Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 819, in select_option
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8379955Z     return await self._channel.send("selectOption", self._timeout, params)
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8380413Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8381084Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8381725Z     return await self._connection.wrap_api_call(
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8382059Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8382321Z     ...<3 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8382516Z     )
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8382697Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8383309Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8384096Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8384750Z playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8385185Z Call log:
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8385443Z   - waiting for locator("#monsterBulkAction")
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8386243Z     - locator resolved to <select id="monsterBulkAction" class="bulk-action-select" aria-describedby="monstersSelectedCount">…</select>
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8387055Z   - attempting select option action
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8387472Z     2 × waiting for element to be visible and enabled
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8387812Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8388088Z     - retrying select option action
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8388352Z     - waiting 20ms
+tests	Python test suite (including browser fixtures)	2026-11-07T23:06:25.8388678Z     2 × waiting for element to be visible and enabled
+tests	Python test suite (including browser fixtures)	202
