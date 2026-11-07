@@ -1,0 +1,49 @@
+undo deliberately resets feature drafts
+tests	JavaScript tests	2026-11-07T13:20:36.6246033Z # PASS: confirmed checkpoint restore deliberately resets feature drafts
+tests	JavaScript tests	2026-11-07T13:20:36.6257716Z # PASS: confirmed life-state save clears only its own draft
+tests	JavaScript tests	2026-11-07T13:20:36.6274715Z # PASS: cancelled bundle import preserves drafts
+tests	JavaScript tests	2026-11-07T13:20:36.6286693Z # PASS: saving temporary HP preserves unsaved death saves
+tests	JavaScript tests	2026-11-07T13:20:36.6298624Z # PASS: saving death saves preserves unsaved temporary HP
+tests	JavaScript tests	2026-11-07T13:20:36.6311820Z # PASS: saving a checkpoint preserves feature edits
+tests	JavaScript tests	2026-11-07T13:20:36.6323830Z # PASS: starting concentration preserves feature edits
+tests	JavaScript tests	2026-11-07T13:20:36.6340677Z # PASS: cancelled death marking preserves edits and is not reported saved
+tests	JavaScript tests	2026-11-07T13:20:36.6351093Z # PASS: cancelled HP confirmation preserves feature edits
+tests	JavaScript tests	2026-11-07T13:20:36.6359805Z # PASS: cancelled checkpoint restore preserves edits
+tests	JavaScript tests	2026-11-07T13:20:36.6368887Z # PASS: cancelled checkpoint deletion preserves edits
+tests	JavaScript tests	2026-11-07T13:20:36.6378138Z # PASS: failed request preserves edits
+tests	JavaScript tests	2026-11-07T13:20:36.6379890Z # 13 checks, 0 failures
+tests	JavaScript tests	2026-11-07T13:20:36.6448626Z # Subtest: tests/test_feature_edit_preservation.js
+tests	JavaScript tests	2026-11-07T13:20:36.6453784Z ok 1 - tests/test_feature_edit_preservation.js
+tests	JavaScript tests	2026-11-07T13:20:36.6454433Z   ---
+tests	JavaScript tests	2026-11-07T13:20:36.6454836Z   duration_ms: 64.661454
+tests	JavaScript tests	2026-11-07T13:20:36.6455314Z   type: 'test'
+tests	JavaScript tests	2026-11-07T13:20:36.6455704Z   ...
+tests	JavaScript tests	2026-11-07T13:20:36.6456063Z 1..1
+tests	JavaScript tests	2026-11-07T13:20:36.6456410Z # tests 1
+tests	JavaScript tests	2026-11-07T13:20:36.6456768Z # suites 0
+tests	JavaScript tests	2026-11-07T13:20:36.6457143Z # pass 1
+tests	JavaScript tests	2026-11-07T13:20:36.6460209Z # fail 0
+tests	JavaScript tests	2026-11-07T13:20:36.6460602Z # cancelled 0
+tests	JavaScript tests	2026-11-07T13:20:36.6460968Z # skipped 0
+tests	JavaScript tests	2026-11-07T13:20:36.6461476Z # todo 0
+tests	JavaScript tests	2026-11-07T13:20:36.6461708Z # duration_ms 72.550995
+tests	JavaScript tests	2026-11-07T13:20:36.6785521Z ##[endgroup]
+tests	JavaScript tests	2026-11-07T13:20:36.6786391Z ##[group]tests/test_feature_manual_refresh.js
+tests	JavaScript tests	2026-11-07T13:20:36.8738231Z TAP version 13
+tests	JavaScript tests	2026-11-07T13:20:36.9004486Z # PASS: manual refresh clears the obsolete dirty marker
+tests	JavaScript tests	2026-11-07T13:20:36.9012317Z # PASS: manual refresh does not overwrite a draft entered after the click
+tests	JavaScript tests	2026-11-07T13:20:36.9025693Z # PASS: failed manual refresh restores the discarded draft marker
+tests	JavaScript tests	2026-11-07T13:20:36.9043886Z # PASS: failed refresh does not overwrite a newer draft
+tests	JavaScript tests	2026-11-07T13:20:36.9046362Z # 4 checks, 0 failures
+tests	JavaScript tests	2026-11-07T13:20:36.9107329Z # Subtest: tests/test_feature_manual_refresh.js
+tests	JavaScript tests	2026-11-07T13:20:36.9112554Z ok 1 - tests/test_feature_manual_refresh.js
+tests	JavaScript tests	2026-11-07T13:20:36.9114240Z   ---
+tests	JavaScript tests	2026-11-07T13:20:36.9114622Z   duration_ms: 40.754299
+tests	JavaScript tests	2026-11-07T13:20:36.9115033Z   type: 'test'
+tests	JavaScript tests	2026-11-07T13:20:36.9115381Z   ...
+tests	JavaScript tests	2026-11-07T13:20:36.9115698Z 1..1
+tests	JavaScript tests	2026-11-07T13:20:36.9116031Z # tests 1
+tests	JavaScript tests	2026-11-07T13:20:36.9117107Z # suites 0
+tests	JavaScript tests	2026-11-07T13:20:36.9117811Z # pass 1
+tests	JavaScript tests	2026-11-07T13:20:36.9118518Z # fail 0
+tests	JavaScript tes
