@@ -1,0 +1,29 @@
+Standalone Python browser and audit checks	2026-11-07T09:12:16.8693281Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:16.8693602Z OSError: private detail
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:16.8693989Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:16.8694408Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:16.8695068Z   File "python/scrying_glass_monster_selection.py", line 109, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:16.8695707Z     sources = ft.configured_sources(display)
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:16.8696507Z   File "/tmp/scrying-tests-hjbhpvqi/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:16.8697743Z     raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:16.8699002Z ValueError: fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9707670Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9708235Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9709057Z   File "/tmp/scrying-tests-hjbhpvqi/repo/python/scrying_glass_monster_selection.py", line 73, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9709867Z     hits = context.dnd_monster_candidates(species)
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9710484Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9710919Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9711187Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9711644Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9712338Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9712641Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9713126Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9713933Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9714127Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9716399Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9716898Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9717790Z   File "/tmp/scrying-tests-hjbhpvqi/repo/python/scrying_glass_monster_selection.py", line 112, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9718592Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9719392Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-07T09:12:35.9720099Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-0
