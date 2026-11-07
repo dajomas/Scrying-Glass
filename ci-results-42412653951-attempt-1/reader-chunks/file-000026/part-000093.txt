@@ -1,0 +1,28 @@
+death) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:34.9728814Z test_round_wrap (test_turn_eligibility.TurnTests.test_round_wrap) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:34.9868150Z test_stable_takes_next_turn (test_turn_eligibility.TurnTests.test_stable_takes_next_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0007698Z test_third_failure_removed (test_turn_eligibility.TurnTests.test_third_failure_removed) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0148829Z test_zero_hp_monster_excluded (test_turn_eligibility.TurnTests.test_zero_hp_monster_excluded) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0149200Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0149388Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0150134Z ERROR: test_typing_opens_stable_popup_and_selection_does_not_relookup (test_monster_lookup_focus_browser.LookupFocusRegressionTests.test_typing_opens_stable_popup_and_selection_does_not_relookup)
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0151049Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0151439Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0152153Z   File "/tmp/scrying-tests-puor9xuq/repo/tests/test_monster_lookup_focus_browser.py", line 81, in test_typing_opens_stable_popup_and_selection_does_not_relookup
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0152927Z     self.page.wait_for_function("document.querySelector('#monsterAc').value === '13'")
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0153401Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0154083Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 21235, in wait_for_function
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0154627Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0154815Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0155039Z         self._impl_obj.wait_for_function(
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0155315Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0155498Z     ...<4 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0155627Z         )
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0155739Z         ^
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0155853Z     )
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0155962Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0156274Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0156601Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0156747Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0157090Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_page.py", line 1158, in wait_for_function
+tests	Python test suite (including browser fixtures)	2026-11-07T20:48:35.0157519Z     return await self._main_frame.wait_for_function(**locals_to_par

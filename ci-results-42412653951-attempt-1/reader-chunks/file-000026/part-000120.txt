@@ -1,0 +1,30 @@
+: Unavailable
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:20.7165347Z D&D Beyond candidate unavailable (/monsters/old): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:20.7165801Z D&D Beyond candidate unavailable (/monsters/new): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:20.7197742Z D&D Beyond candidate unavailable (/monsters/old): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:20.7204517Z D&D Beyond candidate unavailable (/monsters/old): Bad candidate
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:20.7216218Z D&D Beyond candidate has no usable AC/HP (/monsters/old)
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:20.7227370Z D&D Beyond candidate unavailable (/monsters/old): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:20.7227666Z D&D Beyond candidate unavailable (/monsters/new): Unavailable
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8402531Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8402897Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8403289Z   File "/tmp/scrying-tests-ltz85ou_/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8403669Z     html = context.dnd_monster_detail_html(href)
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8404047Z   File "/tmp/scrying-tests-ltz85ou_/repo/python/scrying_glass_dndbeyond.py", line 128, in dnd_monster_detail_html
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8404418Z     response = urlopen(request, timeout=15)
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8404762Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8405231Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8405529Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8406045Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8406550Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8406880Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8407435Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8407903Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8408208Z urllib.error.HTTPError: HTTP Error 403: fixture
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8408850Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8409161Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8409723Z   File "/tmp/scrying-tests-ltz85ou_/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8410419Z     hits = context.dnd_monster_candidates(species)
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8410802Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-07T20:49:32.8411256Z     return self._mock_call(*args, **kwargs)
+tests	Standalone
