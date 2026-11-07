@@ -56,11 +56,11 @@ class LookupFocusRegressionTests(unittest.TestCase):
         }""")
         self.assertEqual(self.page.evaluate('window.dialogOpens'), 0)
 
-    def assert_no_extra_requests(self):
+    def assert_no_extra_requests(self, expected_dialog_opens=1):
         # Longer than two 600 ms debounce periods; allow blur work to surface.
         self.page.wait_for_timeout(1500)
         self.assertEqual(len(self.calls), 1)
-        self.assertEqual(self.page.evaluate('window.dialogOpens'), 1)
+        self.assertEqual(self.page.evaluate('window.dialogOpens'), expected_dialog_opens)
         self.assertEqual(self.errors, [])
 
     def type_and_open(self):
@@ -78,14 +78,23 @@ class LookupFocusRegressionTests(unittest.TestCase):
     def test_typing_opens_stable_popup_and_selection_does_not_relookup(self):
         self.type_and_open()
         self.page.get_by_role('button', name='2. Crawling Claw', exact=False).click()
+        review = self.page.get_by_role(
+            'dialog', name='Review monster initiative bonus', exact=True)
+        review.wait_for(state='visible')
+        self.assertEqual(self.page.locator('#monsterAc').input_value(), '')
+        self.assertEqual(self.token(), 'manual')
+        self.assert_no_extra_requests(expected_dialog_opens=2)
+        self.assertEqual(self.page.get_by_role('dialog').count(), 1)
+        review.get_by_role(
+            'button', name='Keep current bonus and use candidate', exact=True).click()
         self.page.wait_for_function("document.querySelector('#monsterAc').value === '13'")
         self.assertEqual(self.page.locator('#monsterHpRangeStart').input_value(), '8')
         self.assertEqual(self.token(), 'token-1')
-        self.assert_no_extra_requests()
+        self.assert_no_extra_requests(expected_dialog_opens=2)
         self.assertEqual(self.page.get_by_role('dialog').count(), 0)
         self.assertTrue(self.page.locator('#monsterSpecies').evaluate('node => node === document.activeElement'))
         self.page.locator('#outside').click()
-        self.assert_no_extra_requests()
+        self.assert_no_extra_requests(expected_dialog_opens=2)
 
     def test_cancel_restores_focus_without_relookup(self):
         self.type_and_open()
