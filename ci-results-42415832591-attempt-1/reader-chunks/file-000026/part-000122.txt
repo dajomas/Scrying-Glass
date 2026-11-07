@@ -1,0 +1,31 @@
+~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T21:30:43.5836286Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T21:30:43.5837344Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-07T21:30:43.5837756Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-07T21:30:43.5838238Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-07T21:30:43.5838823Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T21:30:43.5840179Z   File "/tmp/scrying-tests-w3nma9cr/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-07T21:30:43.5841339Z     html = context.dnd_monster_detail_html(href)
+tests	Standalone Python browser and audit checks	2026-11-07T21:30:43.5842476Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-07T21:30:43.5843574Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T21:30:43.5844190Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T21:30:43.5845263Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T21:30:43.5846733Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T21:30:43.5847492Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T21:30:43.5848713Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T21:30:43.5849941Z     raise result
+tests	Standalone Python browser and audit checks	2026-11-07T21:30:43.5850315Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-07T21:31:14.6720855Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T21:31:14.6721669Z Ran 1311 tests in 124.657s
+tests	Standalone Python browser and audit checks	2026-11-07T21:31:14.6721969Z 
+tests	Standalone Python browser and audit checks	2026-11-07T21:31:14.6722141Z OK
+tests	Standalone Python browser and audit checks	2026-11-07T21:31:14.6726860Z Connections opened: 689; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-07T21:31:14.6727887Z PASS: failed PRAGMA initialization closes connection; suite closes all tracked connections
+tests	Standalone Python browser and audit checks	2026-11-07T21:31:15.0464422Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-07T21:31:15.0464953Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-07T21:31:15.4206113Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-07T21:31:15.4207129Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-07T21:31:15.4741009Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-07T21:31:15.4741489Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-07T21:31:15.8487878Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-07T21:31:15.8988
