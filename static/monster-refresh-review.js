@@ -11,8 +11,11 @@
     option.textContent = 'Refresh from source';
     bulk.append(option);
     let opened = false;
+    function rosterReady() {
+        return typeof latest !== 'undefined' && Array.isArray(latest?.monsters);
+    }
     function syncOption() {
-        option.disabled = opened || selectedIds('monsters').length === 0;
+        option.disabled = opened || !rosterReady() || selectedIds('monsters').length === 0;
     }
     for (const name of ['updateRowSelection', 'setAllSelected']) {
         // These bindings are declared by the assembled Admin script.
@@ -28,8 +31,9 @@
     const originalBulk = runBulkAction;
     runBulkAction = async function(kind, action) {
         if (kind !== 'monsters' || action !== option.value) return originalBulk(kind, action);
+        if (!rosterReady() || opened) return;
         const ids = selectedIds('monsters');
-        if (!ids.length || opened) return;
+        if (!ids.length) return;
         await openReview([...ids]);
     };
     syncOption();
@@ -153,6 +157,7 @@
                 if (row.candidates?.length) {
                     const label = document.createElement('label'); label.textContent = `Source candidate for ${name}`;
                     const select = document.createElement('select');
+                    select.setAttribute('aria-label', `Source candidate for ${name}`);
                     const placeholder = document.createElement('option'); placeholder.value = ''; placeholder.textContent = 'Choose candidate'; select.append(placeholder);
                     row.candidates.forEach((candidate, index) => {
                         const entry = document.createElement('option'); entry.value = String(index);
