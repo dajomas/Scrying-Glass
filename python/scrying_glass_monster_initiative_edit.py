@@ -69,10 +69,19 @@ class InitiativeEditMonstersMixin(CandidateMonstersMixin):
         sync_health(candidate)
         if not candidate.get("active"):
             candidate["in_turn"] = False
+        proposed_order = None
+        if candidate.get("initiative") != monster.get("initiative"):
+            from .scrying_glass_monster_initiative_order import order_for_monster_change
+            try:
+                proposed_order = order_for_monster_change(self.context.STATE, ident, candidate)
+            except ValueError as exc:
+                raise self.context.HTTPException(409, str(exc)) from exc
         if image is not None and image.filename:
             candidate["image_url"] = self.context.save_image(image)
         self.context.remember_turn_successors()
         monster.update(candidate)
+        if proposed_order is not None:
+            self.context.STATE["battle_order"] = proposed_order
         if monster.get("active") and monster.get("alive"):
             self.context.insert_into_battle_order(monster)
         self.context.clean_order()
