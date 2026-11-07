@@ -6,6 +6,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 
 1. [Scope and current state](docs/handover/010-scope-and-state.md)
 2. [CI workflow and test coverage](docs/handover/020-ci-and-tests.md)
+   - [Automatic CI evidence publication](docs/handover/025-automatic-ci-publication.md)
 3. [Open validation and next steps](docs/handover/030-validation-and-next-steps.md)
 4. [Maintaining this handover](docs/handover/040-maintenance-rules.md)
 5. [Admin script source split](docs/handover/050-admin-script-split.md)
