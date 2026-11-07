@@ -1,0 +1,26 @@
+owser fixtures)	2026-11-07T09:21:13.8019468Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8020336Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8021103Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8021600Z urllib.error.HTTPError: HTTP Error 403: fixture
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8022197Z D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8022719Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8023552Z   File "/tmp/scrying-tests-787p3c0_/repo/python/scrying_glass_monster_selection.py", line 73, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8024408Z     hits = context.dnd_monster_candidates(species)
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8025289Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8026065Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8026817Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8027626Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8028481Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8029004Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8029902Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8030717Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8031089Z TimeoutError: fixture
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8031413Z ok
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8263422Z test_all_retrieval_failures (test_dndbeyond_lookup_diagnostics.LookupTests.test_all_retrieval_failures) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8286661Z test_blank_species_is_rejected_before_providers (test_dndbeyond_lookup_diagnostics.LookupTests.test_blank_species_is_rejected_before_providers) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8305100Z test_both_providers_disabled_do_no_lookup (test_dndbeyond_lookup_diagnostics.LookupTests.test_both_providers_disabled_do_no_lookup) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8331518Z test_cancellation (test_dndbeyond_lookup_diagnostics.LookupTests.test_cancellation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8358069Z test_candidate_failure_falls_back (test_dndbeyond_lookup_diagnostics.LookupTests.test_candidate_failure_falls_back) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8382474Z test_disabled (test_dndbeyond_lookup_diagnostics.LookupTests.test_disabled) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8408302Z test_disabled_primary_can_still_use_fallback (test_dndbeyond_lookup_diagnostics.LookupTests.test_disabled_primary_can_still_use_fallback) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T09:21:13.8440527Z test_empty_primary_search_can_still_
