@@ -1,0 +1,30 @@
+24087Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:10.5324924Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:10.5325491Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:10.5326215Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:10.5326551Z urllib.error.HTTPError: HTTP Error 403: fixture
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:10.5327566Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:10.5327766Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:10.5328333Z   File "/tmp/scrying-tests-zkbyx__2/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:10.5328775Z     hits = context.dnd_monster_candidates(species)
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:10.5329431Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:10.5329733Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:10.5329916Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:10.5331219Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:10.5332503Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:10.5332788Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:10.5334132Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:10.5334788Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:10.5334983Z TimeoutError: fixture
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:11.6993586Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:11.6993960Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:11.6994276Z   File "python/scrying_glass_monster_selection.py", line 100, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:11.6994576Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:11.6994910Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:11.6995202Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:11.6995392Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:11.6995811Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:11.6996276Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:11.6996581Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T18:51:11.6997014Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalo
