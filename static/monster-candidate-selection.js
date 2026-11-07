@@ -8,9 +8,15 @@
     const bonusInput = document.querySelector('#monsterInitiativeBonus');
     if (!form || !speciesInput) return;
     let selected = null;
+    let appliedOffer = null;
     let cancelPopup = null;
     let generation = 0;
     let pending = 0;
+    function clearAppliedOffer() {
+        appliedOffer = null;
+    }
+    bonusInput?.addEventListener('input', clearAppliedOffer);
+    bonusInput?.addEventListener('change', clearAppliedOffer);
     function publishSelection() {
         document.dispatchEvent(new CustomEvent('scrying:monster-selection', {
             detail: selected ? {species: selected.species, provider: selected.provider,
@@ -20,6 +26,7 @@
     function invalidate() {
         generation++;
         selected = null;
+        clearAppliedOffer();
         publishSelection();
         if (cancelPopup) cancelPopup();
     }
@@ -34,12 +41,25 @@
         }
     }, true);
     form.addEventListener('formdata', event => {
-        event.formData.set('selection_token', selected && selected.species === speciesInput.value.trim()
-            ? selected.selection_token : 'manual');
+        const currentSelection = selected && selected.species === speciesInput.value.trim();
+        event.formData.set('selection_token', currentSelection ? selected.selection_token : 'manual');
+        event.formData.delete('initiative_bonus_offer_token');
+        if (currentSelection && appliedOffer &&
+                appliedOffer.selectionToken === selected.selection_token &&
+                appliedOffer.species === speciesInput.value.trim() &&
+                bonusInput?.value === appliedOffer.value) {
+            event.formData.set('initiative_bonus_offer_token', appliedOffer.token);
+        }
     });
     function offerAvailable(candidate) {
         return candidate.initiative_bonus_status === 'available' &&
             Number.isSafeInteger(candidate.initiative_bonus);
+    }
+    function signedOfferAvailable(candidate) {
+        return offerAvailable(candidate) &&
+            typeof candidate.initiative_bonus_offer_token === 'string' &&
+            candidate.initiative_bonus_offer_token.length > 0 &&
+            candidate.initiative_bonus_offer_token.length <= 8192;
     }
     function offerText(candidate) {
         if (offerAvailable(candidate)) {
@@ -110,9 +130,12 @@
             summary.textContent = `${candidate.name || candidate.species} — ` +
                 `${monsterSourceLabel(candidate, true)} — ${offerText(candidate)}`;
             const explanation = document.createElement('p');
-            explanation.textContent = 'Nothing is assigned by opening this review. Copying an offer replaces ' +
-                'the creation-form bonus only, as an editable manual value; it does not create a monster ' +
-                'or verify source provenance. The Armor Class/HP overwrite option does not apply to this bonus.';
+            explanation.textContent = 'Nothing is assigned by opening this review. ' +
+                (signedOfferAvailable(candidate)
+                    ? 'Copying retains a signed source offer for server validation when you add the monster. ' +
+                      'Editing the bonus or changing selection clears source attribution. '
+                    : 'Copying sets an editable manual value; no signed source offer is available. ') +
+                'This does not create a monster. The Armor Class/HP overwrite option does not apply to this bonus.';
             const current = document.createElement('p');
             current.textContent = `Current creation bonus: ${bonusInput?.value || 'blank (default 0)'}.`;
             dialog.append(heading, summary, explanation, current);
@@ -159,6 +182,7 @@
         const current = ++generation;
         const requestId = monsterSpeciesLookupRequest;
         selected = null;
+        clearAppliedOffer();
         publishSelection();
         if (cancelPopup) cancelPopup();
         const isCurrent = () => current === generation && requestId === monsterSpeciesLookupRequest &&
@@ -186,6 +210,11 @@
                     bonusInput.value = String(candidate.initiative_bonus);
                     bonusInput.dispatchEvent(new Event('input', {bubbles: true}));
                     bonusInput.dispatchEvent(new Event('change', {bubbles: true}));
+                    if (signedOfferAvailable(candidate)) {
+                        appliedOffer = {token: candidate.initiative_bonus_offer_token,
+                            selectionToken: candidate.selection_token, species,
+                            value: bonusInput.value};
+                    }
                 } else {
                     paneNotification('monsters', 'Bonus changed during review; your current value was kept.');
                 }
