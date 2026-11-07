@@ -1,0 +1,17 @@
+.sg-refresh-review { width: min(76rem, 94vw); max-height: 90vh; overflow: auto; box-sizing: border-box; }
+.sg-refresh-review table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.sg-refresh-review th, .sg-refresh-review td { padding: .6rem; border: 1px solid #777; vertical-align: top; overflow-wrap: anywhere; }
+.sg-refresh-review label { display: flex; gap: .4rem; align-items: flex-start; }
+.sg-refresh-review input[type=checkbox] { flex: 0 0 auto; width: 1.2rem; height: 1.2rem; }
+.sg-refresh-review select { max-width: 100%; width: 100%; }
+.sg-refresh-review td label:has(select) { display: block; }
+.sg-refresh-review small { display: block; }
+.sg-refresh-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+.sg-refresh-review :focus-visible { outline: 3px solid #4da3ff; outline-offset: 2px; }
+@media (max-width: 700px) {
+  .sg-refresh-review { width: 96vw; padding: .7rem; }
+  .sg-refresh-review table, .sg-refresh-review thead, .sg-refresh-review tbody { display: block; }
+  .sg-refresh-review tr { display: grid; grid-template-columns: minmax(0, 1fr); margin-bottom: 1rem; border: 1px solid #777; }
+  .sg-refresh-review th, .sg-refresh-review td { display: block; width: auto; border: 0; }
+  .sg-refresh-review thead tr { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
