@@ -1,0 +1,32 @@
+2026-11-07T18:36:09.1321477Z     results = dnd_candidates(context, species) if display.get("dndbeyond_image_lookup", True) else []
+tests	Python test suite (including browser fixtures)	2026-11-07T18:36:09.1321890Z               ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T18:36:09.1322362Z   File "/tmp/scrying-tests-2t5tg7yt/repo/python/scrying_glass_monster_selection.py", line 57, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-07T18:36:09.1323118Z     from .scrying_glass_dnd_initiative_offer import dnd_initiative_offer
+tests	Python test suite (including browser fixtures)	2026-11-07T18:36:09.1323484Z KeyError: "'__name__' not in globals"
+tests	Python test suite (including browser fixtures)	2026-11-07T18:36:09.1323635Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T18:36:09.1323828Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T18:36:09.1324136Z Ran 1297 tests in 99.675s
+tests	Python test suite (including browser fixtures)	2026-11-07T18:36:09.1324279Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T18:36:09.1324380Z FAILED (errors=3)
+tests	Python test suite (including browser fixtures)	2026-11-07T18:36:09.4452047Z ##[error]Process completed with exit code 1.
+tests	Upload Admin foundations visual fixtures	﻿2026-11-07T18:36:09.4510936Z ##[group]Run actions/upload-artifact@v4
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.4511195Z with:
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.4511403Z   name: admin-foundations-visual-fixtures
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.4511693Z   path: /home/runner/work/_temp/sg-admin-foundations
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.4511966Z   if-no-files-found: warn
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.4512190Z   compression-level: 6
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.4512385Z   overwrite: false
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.4512875Z   include-hidden-files: false
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.4513108Z env:
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.4513491Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.4514096Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.4514465Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.4514823Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.4515161Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.4515484Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.4515845Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.4516122Z ##[endgroup]
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.5915473Z (node:9572) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.5916585Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.5998972Z With the provided path, there will be 18 files uploaded
+tests	Upload Admin foundations visual fixtures	2026-11-07T18:36:09.5999758Z Artifact name is valid!
