@@ -1,0 +1,30 @@
+lookup()
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0139562Z   File "/tmp/scrying-tests-5j545xcy/repo/tests/test_dndbeyond_locked_pages.py", line 107, in lookup
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0140062Z     return self.ns['lookup_candidates'](self.ctx, 'Crawling Claw')
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0140627Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0141147Z   File "/tmp/scrying-tests-5j545xcy/repo/python/scrying_glass_monster_selection.py", line 149, in lookup_candidates
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0141663Z     offer = issue_bonus_offer(candidate, _KEY, now=time.time())
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0141965Z                                          ^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0142239Z NameError: name '_KEY' is not defined
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0142393Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0142552Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0143180Z ERROR: test_locked_then_usable_keeps_primary (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_locked_then_usable_keeps_primary)
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0143763Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0144082Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0144601Z   File "/tmp/scrying-tests-5j545xcy/repo/tests/test_dndbeyond_locked_pages.py", line 118, in test_locked_then_usable_keeps_primary
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0145307Z     result = self.lookup()
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0145701Z   File "/tmp/scrying-tests-5j545xcy/repo/tests/test_dndbeyond_locked_pages.py", line 107, in lookup
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0146294Z     return self.ns['lookup_candidates'](self.ctx, 'Crawling Claw')
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0146629Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0147122Z   File "/tmp/scrying-tests-5j545xcy/repo/python/scrying_glass_monster_selection.py", line 149, in lookup_candidates
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0147617Z     offer = issue_bonus_offer(candidate, _KEY, now=time.time())
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0147911Z                                          ^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0148191Z NameError: name '_KEY' is not defined
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0148333Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0148512Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0148795Z Ran 1311 tests in 102.324s
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0148929Z 
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.0149022Z FAILED (errors=2)
+tests	Python test suite (including browser fixtures)	2026-11-07T21:14:52.3393838Z ##[error]Process completed with exit code 1.
+tests	Upload Admin foundations visual fixtures	﻿2026-11-07T21:14:52.3449158Z ##[group]Run actions/upload-artifact@v4
+tests	Upload Admin found

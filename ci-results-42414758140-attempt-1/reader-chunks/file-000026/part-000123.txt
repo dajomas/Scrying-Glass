@@ -1,0 +1,29 @@
+16:25.1869791Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1870228Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1870727Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1871200Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1871598Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1871784Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1872545Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1872950Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1873696Z   File "/tmp/scrying-tests-0fsrm1np/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1874425Z     html = context.dnd_monster_detail_html(href)
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1875139Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1875802Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1876070Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1876501Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1876948Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1877222Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1877697Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1878104Z     raise result
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:25.1878284Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:52.1070074Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:52.1071008Z ERROR: test_all_locked_falls_back (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_all_locked_falls_back)
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:52.1071584Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:52.1071921Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:52.1072465Z   File "/tmp/scrying-tests-0fsrm1np/repo/tests/test_dndbeyond_locked_pages.py", line 111, in test_all_locked_falls_back
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:52.1072934Z     result = self.lookup()
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:52.1073392Z   File "/tmp/scrying-tests-0fsrm1np/repo/tests/test_dndbeyond_locked_pages.py", line 107, in lookup
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:52.1073873Z     return self.ns['lookup_candidates'](self.ctx, 'Crawling Claw')
+tests	Standalone Python browser and audit checks	2026-11-07T21:16:52.1074472Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-07T21
