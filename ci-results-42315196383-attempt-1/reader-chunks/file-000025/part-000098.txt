@@ -1,0 +1,38 @@
+WN STEP	2026-11-07T00:08:32.9835364Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-07T00:08:32.9835747Z ##[group]tests/audit_log_clear.py
+tests	UNKNOWN STEP	2026-11-07T00:08:33.2394796Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	UNKNOWN STEP	2026-11-07T00:08:33.2395637Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	UNKNOWN STEP	2026-11-07T00:08:33.2798086Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-07T00:08:33.2798723Z ##[group]tests/audit_round3_check.py
+tests	UNKNOWN STEP	2026-11-07T00:08:33.5338867Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	UNKNOWN STEP	2026-11-07T00:08:33.5744076Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-07T00:08:33.5744567Z ##[group]tests/browser_smoke_272cc73.py
+tests	UNKNOWN STEP	2026-11-07T00:08:36.3088232Z {
+tests	UNKNOWN STEP	2026-11-07T00:08:36.3088543Z   "checks": [
+tests	UNKNOWN STEP	2026-11-07T00:08:36.3088994Z     "admin assembled page, scripts, state load and select-all",
+tests	UNKNOWN STEP	2026-11-07T00:08:36.3089530Z     "user-management page load and edit selection",
+tests	UNKNOWN STEP	2026-11-07T00:08:36.3090202Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	UNKNOWN STEP	2026-11-07T00:08:36.3091345Z     "client card has a positive layout width at mobile viewport"
+tests	UNKNOWN STEP	2026-11-07T00:08:36.3091733Z   ],
+tests	UNKNOWN STEP	2026-11-07T00:08:36.3091958Z   "page_errors": [],
+tests	UNKNOWN STEP	2026-11-07T00:08:36.3092318Z   "transport": "mocked HTTP/WS, real Chromium rendering"
+tests	UNKNOWN STEP	2026-11-07T00:08:36.3092670Z }
+tests	UNKNOWN STEP	2026-11-07T00:08:36.4202746Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-07T00:08:36.4203436Z ##[group]tests/storage_split_reference.py
+tests	UNKNOWN STEP	2026-11-07T00:08:36.5890252Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-07T00:08:36.5964610Z Post job cleanup.
+tests	UNKNOWN STEP	2026-11-07T00:08:36.6992168Z (node:16384) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	UNKNOWN STEP	2026-11-07T00:08:36.6992831Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	UNKNOWN STEP	2026-11-07T00:08:36.7186557Z Post job cleanup.
+tests	UNKNOWN STEP	2026-11-07T00:08:36.8256935Z Cache hit occurred on the primary key setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e, not saving cache.
+tests	UNKNOWN STEP	2026-11-07T00:08:36.8258729Z (node:16392) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	UNKNOWN STEP	2026-11-07T00:08:36.8259708Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	UNKNOWN STEP	2026-11-07T00:08:36.8414829Z Post job cleanup.
+tests	UNKNOWN STEP	2026-11-07T00:08:36.9163201Z [command]/usr/bin/git version
+tests	UNKNOWN STEP	2026-11-07T00:08:36.9202704Z git version 2.56.0
+tests	UNKNOWN STEP	2026-11-07T00:08:36.9237622Z Temporarily overriding HOME='/home/runner/work/_temp/8de57231-8b66-4c69-aebb-ad6486486e68' before making global git config changes
+tests	UNKNOWN STEP	2026-11-07T00:08:36.9238655Z Adding repository directory to the temporary git global config as a safe directory
+tests	UNKNOWN STEP	2026-11-07T00:08:36.9242487Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	UNKNOWN STEP	2026-11-07T00:08:36.9283611Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	UNKNOWN STEP	2026-11-07T00:08:36.9318268Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	UNKNOWN STE

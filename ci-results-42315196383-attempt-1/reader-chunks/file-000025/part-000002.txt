@@ -1,0 +1,40 @@
+P	2026-11-06T23:57:25.5500051Z   allow-unsafe-pr-checkout: false
+tests	UNKNOWN STEP	2026-11-06T23:57:25.5501113Z env:
+tests	UNKNOWN STEP	2026-11-06T23:57:25.5502451Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	UNKNOWN STEP	2026-11-06T23:57:25.5504162Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-06T23:57:25.7838609Z Syncing repository: dajomas/Scrying-Glass
+tests	UNKNOWN STEP	2026-11-06T23:57:25.7841278Z ##[group]Getting Git version info
+tests	UNKNOWN STEP	2026-11-06T23:57:25.7842727Z Working directory is '/home/runner/work/Scrying-Glass/Scrying-Glass'
+tests	UNKNOWN STEP	2026-11-06T23:57:25.7845063Z [command]/usr/bin/git version
+tests	UNKNOWN STEP	2026-11-06T23:57:25.7846118Z git version 2.56.0
+tests	UNKNOWN STEP	2026-11-06T23:57:25.7865496Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-06T23:57:25.7879685Z Temporarily overriding HOME='/home/runner/work/_temp/1858989d-e5e0-43ef-a836-376f139592a2' before making global git config changes
+tests	UNKNOWN STEP	2026-11-06T23:57:25.7882375Z Adding repository directory to the temporary git global config as a safe directory
+tests	UNKNOWN STEP	2026-11-06T23:57:25.7885251Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	UNKNOWN STEP	2026-11-06T23:57:25.7946683Z Deleting the contents of '/home/runner/work/Scrying-Glass/Scrying-Glass'
+tests	UNKNOWN STEP	2026-11-06T23:57:25.7949463Z ##[group]Initializing the repository
+tests	UNKNOWN STEP	2026-11-06T23:57:25.7953572Z [command]/usr/bin/git init /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8041844Z hint: Using 'master' as the name for the initial branch. This default branch name
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8044743Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8046995Z hint: to use in all of your new repositories, which will suppress this warning,
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8048738Z hint: call:
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8049608Z hint:
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8050733Z hint: 	git config --global init.defaultBranch <name>
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8052112Z hint:
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8053571Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8055791Z hint: 'development'. The just-created branch can be renamed via this command:
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8057508Z hint:
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8058469Z hint: 	git branch -m <name>
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8059541Z hint:
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8060965Z hint: Disable this message with "git config set advice.defaultBranchName false"
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8063670Z Initialized empty Git repository in /home/runner/work/Scrying-Glass/Scrying-Glass/.git/
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8074692Z [command]/usr/bin/git remote add origin https://github.com/dajomas/Scrying-Glass
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8118960Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8120185Z ##[group]Disabling automatic garbage collection
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8121916Z [command]/usr/bin/git config --local gc.auto 0
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8155135Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8156332Z ##[group]Setting up auth
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8160726Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8191567Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	UNKNOWN STEP	2026-11-06T23:57:25.8603220Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	

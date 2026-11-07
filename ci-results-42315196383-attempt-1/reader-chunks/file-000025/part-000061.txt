@@ -1,0 +1,29 @@
+controls_stay_unavailable_after_refresh) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:06:02.5783561Z test_single_line_geometry_and_local_overflow (test_monster_button_layout.MonsterButtonLayoutTests.test_single_line_geometry_and_local_overflow) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:06:03.1824756Z test_choose_cancel_and_error (test_monster_candidate_browser.CandidateBrowserTests.test_choose_cancel_and_error) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:06:03.7165876Z test_dnd_beyond_popup_wording_and_cancel_stay_unchanged (test_monster_candidate_browser.CandidateBrowserTests.test_dnd_beyond_popup_wording_and_cancel_stay_unchanged) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:06:04.2732114Z test_edit_preservation_and_pending_submit (test_monster_candidate_browser.CandidateBrowserTests.test_edit_preservation_and_pending_submit) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:06:04.7499282Z test_single_and_zero (test_monster_candidate_browser.CandidateBrowserTests.test_single_and_zero) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:06:05.3424172Z test_six_book_labels_links_and_selected_raw_identity (test_monster_candidate_browser.CandidateBrowserTests.test_six_book_labels_links_and_selected_raw_identity) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:06:06.5154181Z test_species_change_closes_popup (test_monster_candidate_browser.CandidateBrowserTests.test_species_change_closes_popup) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2029272Z test_unknown_codes_are_literal_without_invented_editions (test_monster_candidate_browser.CandidateBrowserTests.test_unknown_codes_are_literal_without_invented_editions) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2925420Z test_count_table (test_monster_candidate_selection.CandidateTests.test_count_table) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2926592Z test_disabled_and_invalid_link (test_monster_candidate_selection.CandidateTests.test_disabled_and_invalid_link) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2935928Z test_errors_do_not_fallback_or_leak (test_monster_candidate_selection.CandidateTests.test_errors_do_not_fallback_or_leak) ... D&D Beyond candidate lookup failed
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2936923Z Traceback (most recent call last):
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2937691Z   File "/tmp/scrying-tests-31o5qtuv/repo/python/scrying_glass_monster_selection.py", line 73, in dnd_candidates
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2938447Z     hits = context.dnd_monster_candidates(species)
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2939206Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2939899Z     return self._mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2940308Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2940957Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2941652Z     return self._execute_mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2942083Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2942819Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2943727Z     raise effect
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2943985Z OSError: secret
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2944242Z ok
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2947800Z test_fivetools_sources_and_deduplication (test_monster_candidate_selection.CandidateTests.test_fivetools_sources_and_deduplication) ... 5e.tools candidate lookup failed
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2949286Z Traceback (most recent call last):
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2950321Z   File "/tmp/scrying-tests-31o5qtuv/repo/python/scrying_glass_monster_selection.py", line 112, in fivetools_candidates
+tests	UNKNOWN STEP	2026-11-07T00:06:07.295

@@ -1,0 +1,27 @@
+9427Z     return self._mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1159820Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1160497Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1161151Z     return self._execute_mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1161571Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1162126Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1162544Z     raise effect
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1162745Z OSError: private detail
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1163164Z 5e.tools candidate lookup failed
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1163433Z Traceback (most recent call last):
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1163822Z   File "python/scrying_glass_monster_selection.py", line 109, in fivetools_candidates
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1164207Z     sources = ft.configured_sources(display)
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1164674Z   File "/tmp/scrying-tests-31o5qtuv/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1165382Z     raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1166075Z ValueError: fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1166472Z ok
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1200609Z test_candidate_explicit_order_and_duplicates (test_fivetools_source_configuration.SourceConfigurationTests.test_candidate_explicit_order_and_duplicates) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1240937Z test_candidates_enumerate_six_sources_in_order (test_fivetools_source_configuration.SourceConfigurationTests.test_candidates_enumerate_six_sources_in_order) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1283153Z test_config_omitted_defaults_and_no_aliasing (test_fivetools_source_configuration.SourceConfigurationTests.test_config_omitted_defaults_and_no_aliasing) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1322247Z test_empty_list_does_not_even_fetch_index (test_fivetools_source_configuration.SourceConfigurationTests.test_empty_list_does_not_even_fetch_index) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1370540Z test_invalid_configuration_fails_loading (test_fivetools_source_configuration.SourceConfigurationTests.test_invalid_configuration_fails_loading) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1409663Z test_invalid_lists_are_rejected (test_fivetools_source_configuration.SourceConfigurationTests.test_invalid_lists_are_rejected) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1479639Z test_json_and_yaml_explicit_override_and_empty (test_fivetools_source_configuration.SourceConfigurationTests.test_json_and_yaml_explicit_override_and_empty) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1518796Z test_legacy_disabled_does_not_fetch (test_fivetools_source_configuration.SourceConfigurationTests.test_legacy_disabled_does_not_fetch) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1566157Z test_legacy_image_can_reach_each_default_source (test_fivetools_source_configuration.SourceConfigurationTests.test_legacy_image_can_reach_each_default_source) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1614314Z test_legacy_stats_can_reach_each_default_source (test_fivetools_source_configuration.SourceConfigurationTests.test_legacy_stats_can_reach_each_default_source) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:05:48.1654789Z test_shared_default_override_order_and_independence (test_fivetools_source_configuration.SourceConfigurationTests.test_shared_default_override_order_and_independence) ... 

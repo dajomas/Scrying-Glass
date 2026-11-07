@@ -1,0 +1,39 @@
+OWN STEP	2026-11-06T23:57:26.8172748Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-06T23:57:26.8743972Z [command]/opt/hostedtoolcache/Python/3.14.10/x64/bin/pip cache dir
+tests	UNKNOWN STEP	2026-11-06T23:57:28.9119106Z /home/runner/.cache/pip
+tests	UNKNOWN STEP	2026-11-06T23:57:29.1878371Z Cache hit for: setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e
+tests	UNKNOWN STEP	2026-11-06T23:57:29.1964865Z (node:2187) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+tests	UNKNOWN STEP	2026-11-06T23:57:30.4883850Z Received 4194304 of 66067006 (6.3%), 4.0 MBs/sec
+tests	UNKNOWN STEP	2026-11-06T23:57:31.1096562Z Received 66067006 of 66067006 (100.0%), 38.7 MBs/sec
+tests	UNKNOWN STEP	2026-11-06T23:57:31.1097121Z Cache Size: ~63 MB (66067006 B)
+tests	UNKNOWN STEP	2026-11-06T23:57:31.1119665Z [command]/usr/bin/tar -xf /home/runner/work/_temp/be61dc9b-ea13-46f6-8118-19d6323ef8cc/cache.tzst -P -C /home/runner/work/Scrying-Glass/Scrying-Glass --use-compress-program unzstd
+tests	UNKNOWN STEP	2026-11-06T23:57:31.2024629Z Cache restored successfully
+tests	UNKNOWN STEP	2026-11-06T23:57:31.2056520Z Cache restored from key: setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e
+tests	UNKNOWN STEP	2026-11-06T23:57:31.2328816Z ##[group]Run actions/setup-node@v4
+tests	UNKNOWN STEP	2026-11-06T23:57:31.2329070Z with:
+tests	UNKNOWN STEP	2026-11-06T23:57:31.2329246Z   node-version: 22
+tests	UNKNOWN STEP	2026-11-06T23:57:31.2329437Z   always-auth: false
+tests	UNKNOWN STEP	2026-11-06T23:57:31.2329627Z   check-latest: false
+tests	UNKNOWN STEP	2026-11-06T23:57:31.2331568Z   token: ***
+tests	UNKNOWN STEP	2026-11-06T23:57:31.2331764Z env:
+tests	UNKNOWN STEP	2026-11-06T23:57:31.2332120Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	UNKNOWN STEP	2026-11-06T23:57:31.2332591Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	UNKNOWN STEP	2026-11-06T23:57:31.2333130Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	UNKNOWN STEP	2026-11-06T23:57:31.2333505Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	UNKNOWN STEP	2026-11-06T23:57:31.2333812Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	UNKNOWN STEP	2026-11-06T23:57:31.2334118Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	UNKNOWN STEP	2026-11-06T23:57:31.2334426Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	UNKNOWN STEP	2026-11-06T23:57:31.2334723Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-06T23:57:31.4231696Z (node:2223) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	UNKNOWN STEP	2026-11-06T23:57:31.4233143Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	UNKNOWN STEP	2026-11-06T23:57:31.4233742Z Found in cache @ /opt/hostedtoolcache/node/22.23.4/x64
+tests	UNKNOWN STEP	2026-11-06T23:57:31.4234679Z ##[group]Environment details
+tests	UNKNOWN STEP	2026-11-06T23:57:32.6139454Z node: v22.23.4
+tests	UNKNOWN STEP	2026-11-06T23:57:32.6140507Z npm: 10.9.9
+tests	UNKNOWN STEP	2026-11-06T23:57:32.6140823Z yarn: 1.22.22
+tests	UNKNOWN STEP	2026-11-06T23:57:32.6141848Z ##[endgroup]
+tests	UNKNOWN STEP	2026-11-06T23:57:32.6263427Z ##[group]Run python -m pip install --upgrade pip
+tests	UNKNOWN STEP	2026-11-06T23:57:32.6263811Z ^[[36;1mpython -m pip install --upgrade pip^[[0m
+tests	UNKNOWN STEP	2026-11-06T23:57:32.6264128Z ^[[36;1mpython -m pip install -r requirements-test.txt^[[0m
+tests	UNKNOWN STEP	2026-11-06T23:57:32.6264459Z ^[[36;1mpython -m playwright install --with-deps chromium^[[0m
+tests	UNKNOWN STEP	2026-11-06T23:57:32.6318204Z shell: /usr/

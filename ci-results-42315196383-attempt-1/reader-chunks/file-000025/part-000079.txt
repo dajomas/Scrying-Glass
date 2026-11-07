@@ -1,0 +1,52 @@
+nitiative-tie-defaults.test.cjs
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3259555Z TAP version 13
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3649975Z # Subtest: mixed ties default to characters first with stable within-kind order
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3653758Z ok 1 - mixed ties default to characters first with stable within-kind order
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3654430Z   ---
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3654755Z   duration_ms: 2.704261
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3655075Z   type: 'test'
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3655340Z   ...
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3658935Z # Subtest: monster-only ties retain order
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3663437Z ok 2 - monster-only ties retain order
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3673803Z   ---
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3674114Z   duration_ms: 0.609752
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3674431Z   type: 'test'
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3674701Z   ...
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3675063Z # Subtest: character-only ties retain order
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3675538Z ok 3 - character-only ties retain order
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3675884Z   ---
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3676173Z   duration_ms: 1.300764
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3676470Z   type: 'test'
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3676736Z   ...
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3677072Z # Subtest: empty ties render no controls
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3677499Z ok 4 - empty ties render no controls
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3677844Z   ---
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3678099Z   duration_ms: 0.874464
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3678398Z   type: 'test'
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3678654Z   ...
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3679167Z # Subtest: each initiative bucket receives independent one-based positions
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3679887Z ok 5 - each initiative bucket receives independent one-based positions
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3680382Z   ---
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3680641Z   duration_ms: 0.722089
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3680944Z   type: 'test'
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3681191Z   ...
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3681684Z # Subtest: rendering accepts frozen input without reordering source members
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3682421Z ok 6 - rendering accepts frozen input without reordering source members
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3683065Z   ---
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3683632Z   duration_ms: 0.566178
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3683951Z   type: 'test'
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3684219Z   ...
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3684701Z # Subtest: position parser tolerates attributes after the combatant ID
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3685390Z ok 7 - position parser tolerates attributes after the combatant ID
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3685824Z   ---
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3686077Z   duration_ms: 0.161899
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3686380Z   type: 'test'
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3686632Z   ...
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3687153Z # Subtest: position parser rejects missing or ambiguous selected positions
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3693892Z ok 8 - position parser rejects missing or ambiguous selected positions
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3694367Z   ---
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3695339Z   duration_ms: 0.947271
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3695618Z   type: 'test'
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3695879Z   ...
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3696448Z # Subtest: isolated renderer excludes swap handler and browser event registration
+tests	UNKNOWN STEP	2026-11-07T00:06:40.3697253Z ok 9 - isolated renderer excludes swap 

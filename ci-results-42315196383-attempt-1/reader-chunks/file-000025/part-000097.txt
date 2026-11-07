@@ -1,0 +1,39 @@
+UNKNOWN STEP	2026-11-07T00:08:07.3165396Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3165828Z     return self._execute_mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3166112Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3166930Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3167363Z     raise effect
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3167557Z OSError: secret
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3170293Z 5e.tools candidate lookup failed
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3170668Z Traceback (most recent call last):
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3171456Z   File "/tmp/scrying-tests-fx6encsp/repo/python/scrying_glass_monster_selection.py", line 112, in fivetools_candidates
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3172075Z     index = ft.load_json(root + "/index.json")
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3172534Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3175391Z     return self._mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3175679Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3176114Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3176554Z     return self._execute_mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3176846Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3177558Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3178056Z     raise effect
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3178242Z OSError: secret
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3178474Z D&D Beyond candidate lookup failed
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3178733Z Traceback (most recent call last):
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3179195Z   File "/tmp/scrying-tests-fx6encsp/repo/python/scrying_glass_monster_selection.py", line 84, in dnd_candidates
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3179653Z     html = context.dnd_monster_detail_html(href)
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3180103Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3180508Z     return self._mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3180758Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3181183Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3181608Z     return self._execute_mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3181878Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3182354Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3182757Z     raise result
+tests	UNKNOWN STEP	2026-11-07T00:08:07.3183104Z OSError: secret
+tests	UNKNOWN STEP	2026-11-07T00:08:32.5628367Z ----------------------------------------------------------------------
+tests	UNKNOWN STEP	2026-11-07T00:08:32.5628761Z Ran 1171 tests in 99.963s
+tests	UNKNOWN STEP	2026-11-07T00:08:32.5628908Z 
+tests	UNKNOWN STEP	2026-11-07T00:08:32.5628989Z OK
+tests	UNKNOWN STEP	2026-11-07T00:08:32.5633564Z Connections opened: 689; without explicit close: 0
+tests	UNKNOWN STEP	2026-11-07T00:08:32.5634363Z PASS: failed PRAGMA initialization closes connection; suite closes all tracked connections
+tests	UNKNO

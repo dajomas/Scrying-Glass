@@ -1,0 +1,33 @@
+1113Z     index = ft.load_json(root + "/index.json")
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2951847Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2952509Z     return self._mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2953074Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2953800Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2954493Z     return self._execute_mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2954940Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2955697Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2956349Z     raise effect
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2956621Z OSError: secret
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2956889Z ok
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2957774Z test_incomplete_search_is_error (test_monster_candidate_selection.CandidateTests.test_incomplete_search_is_error) ... D&D Beyond candidate lookup failed
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2958587Z Traceback (most recent call last):
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2959349Z   File "/tmp/scrying-tests-31o5qtuv/repo/python/scrying_glass_monster_selection.py", line 84, in dnd_candidates
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2960102Z     html = context.dnd_monster_detail_html(href)
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2960837Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2961487Z     return self._mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2961882Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2962579Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2963426Z     return self._execute_mock_call(*args, **kwargs)
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2963853Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2964590Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2965204Z     raise result
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2965475Z OSError: secret
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2965716Z ok
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2966205Z test_tokens (test_monster_candidate_selection.CandidateTests.test_tokens) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2968479Z test_unusable_duplicates_and_image (test_monster_candidate_selection.CandidateTests.test_unusable_duplicates_and_image) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:06:07.2984028Z test_selection_and_manual_never_relookup (test_monster_candidate_selection.CreationTests.test_selection_and_manual_never_relookup) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:06:08.9899374Z test_fields_and_preview_boxes_align_loaded_and_empty (test_monster_image_preview_alignment.PreviewAlignmentTests.test_fields_and_preview_boxes_align_loaded_and_empty) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:06:10.2841406Z test_boot_layout_failed_submission_and_screenshots (test_monster_image_previews.FullAdminPreviewTests.test_boot_layout_failed_submission_and_screenshots) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:06:10.3141972Z test_asset_order_and_sizes (test_monster_image_previews.PreviewSourceTests.test_asset_order_and_sizes) ... ok
+tests	UNKNOWN STEP	2026-11-07T00:06:10.9048610Z test_both_providers_local_precedence_separate_replacement_and_reset (test_monster_image_previews.ProviderPreviewTests.test_both_providers_local_precedence_separate_replacement_and_reset) ... ok
+tests	UNKNOWN S
