@@ -5,6 +5,7 @@
     const form = document.querySelector('#monsterForm');
     const speciesInput = document.querySelector('#monsterSpecies');
     const overwrite = document.querySelector('#monsterSpeciesLookupOverwrite');
+    const bonusInput = document.querySelector('#monsterInitiativeBonus');
     if (!form || !speciesInput) return;
     let selected = null;
     let cancelPopup = null;
@@ -36,6 +37,18 @@
         event.formData.set('selection_token', selected && selected.species === speciesInput.value.trim()
             ? selected.selection_token : 'manual');
     });
+    function offerAvailable(candidate) {
+        return candidate.initiative_bonus_status === 'available' &&
+            Number.isSafeInteger(candidate.initiative_bonus);
+    }
+    function offerText(candidate) {
+        if (offerAvailable(candidate)) {
+            const value = candidate.initiative_bonus;
+            return `Initiative bonus ${value >= 0 ? '+' : ''}${value}`;
+        }
+        return `Initiative bonus unavailable: ${candidate.initiative_bonus_reason ||
+            'No supported explicit source modifier.'}`;
+    }
     function choose(candidates) {
         return new Promise(resolve => {
             const previousFocus = document.activeElement;
@@ -61,7 +74,7 @@
                 button.type = 'button';
                 button.textContent = `${index + 1}. ${candidate.name || candidate.species} — ` +
                     `${monsterSourceLabel(candidate, true)} — ` +
-                    `AC ${candidate.ac ?? '—'}, HP ${candidate.hp ?? '—'}`;
+                    `AC ${candidate.ac ?? '—'}, HP ${candidate.hp ?? '—'} — ${offerText(candidate)}`;
                 button.addEventListener('click', () => finish(candidate));
                 row.append(button);
                 if (candidate.source_url && candidate.source_url.startsWith('https://')) {
@@ -83,6 +96,60 @@
             document.body.append(dialog);
             cancelPopup = () => finish(null);
             dialog.showModal();
+        });
+    }
+    function reviewOffer(candidate) {
+        return new Promise(resolve => {
+            const previousFocus = document.activeElement;
+            const dialog = document.createElement('dialog');
+            dialog.setAttribute('aria-label', 'Review monster initiative bonus');
+            dialog.style.maxWidth = 'min(40rem, 90vw)';
+            const heading = document.createElement('h2');
+            heading.textContent = 'Review initiative bonus';
+            const summary = document.createElement('p');
+            summary.textContent = `${candidate.name || candidate.species} — ` +
+                `${monsterSourceLabel(candidate, true)} — ${offerText(candidate)}`;
+            const explanation = document.createElement('p');
+            explanation.textContent = 'Nothing is assigned by opening this review. Copying an offer replaces ' +
+                'the creation-form bonus only, as an editable manual value; it does not create a monster ' +
+                'or verify source provenance. The Armor Class/HP overwrite option does not apply to this bonus.';
+            const current = document.createElement('p');
+            current.textContent = `Current creation bonus: ${bonusInput?.value || 'blank (default 0)'}.`;
+            dialog.append(heading, summary, explanation, current);
+            if (candidate.initiative_bonus_evidence) {
+                const evidence = document.createElement('p');
+                evidence.textContent = `Source excerpt: ${candidate.initiative_bonus_evidence}`;
+                dialog.append(evidence);
+            }
+            let finished = false;
+            function finish(decision) {
+                if (finished) return;
+                finished = true;
+                cancelPopup = null;
+                dialog.close();
+                dialog.remove();
+                previousFocus?.focus();
+                resolve(decision);
+            }
+            const apply = document.createElement('button');
+            apply.type = 'button';
+            apply.textContent = 'Copy offered bonus to creation form';
+            apply.disabled = !bonusInput || !offerAvailable(candidate);
+            apply.addEventListener('click', () => finish('apply'));
+            const keep = document.createElement('button');
+            keep.type = 'button';
+            keep.textContent = 'Keep current bonus and use candidate';
+            keep.addEventListener('click', () => finish('keep'));
+            const cancel = document.createElement('button');
+            cancel.type = 'button';
+            cancel.textContent = 'Cancel selection';
+            cancel.addEventListener('click', () => finish('cancel'));
+            dialog.addEventListener('cancel', event => {event.preventDefault(); finish('cancel');});
+            dialog.append(apply, keep, cancel);
+            document.body.append(dialog);
+            cancelPopup = () => finish('cancel');
+            dialog.showModal();
+            keep.focus();
         });
     }
     request = async function(url, options = {}) {
@@ -109,6 +176,20 @@
             if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
             if (!candidate) return {found: false,
                 reason: 'Monster selection cancelled; manual entry remains available.'};
+            const previousBonus = bonusInput?.value;
+            const decision = await reviewOffer(candidate);
+            if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
+            if (decision === 'cancel') return {found: false,
+                reason: 'Monster selection cancelled; manual entry remains available.'};
+            if (decision === 'apply' && bonusInput && offerAvailable(candidate)) {
+                if (bonusInput.value === previousBonus) {
+                    bonusInput.value = String(candidate.initiative_bonus);
+                    bonusInput.dispatchEvent(new Event('input', {bubbles: true}));
+                    bonusInput.dispatchEvent(new Event('change', {bubbles: true}));
+                } else {
+                    paneNotification('monsters', 'Bonus changed during review; your current value was kept.');
+                }
+            }
             selected = candidate;
             publishSelection();
             return candidate;
