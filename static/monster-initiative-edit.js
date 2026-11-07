@@ -19,6 +19,7 @@
         bonus.inputMode = 'numeric';
         bonus.pattern = '([+]|-)?[0-9]+';
         bonus.value = String(monster.initiative_bonus ?? 0);
+        bonus.defaultValue = bonus.value;
         bonus.dataset.assignedBonus = bonus.value;
         bonus.setAttribute('aria-describedby', 'editMonsterBonusHelp');
         label.appendChild(bonus);
