@@ -81,5 +81,5 @@ class EditCompositionRuntimeTests(unittest.TestCase):
                          [auth, api.same_origin])
         bonus = next(field for field in route.dependant.body_params if field.name == "initiative_bonus")
         self.assertIsInstance(bonus.field_info, FormParameter)
-        self.assertFalse(bonus.required)
-        self.assertEqual(bonus.default, "")
+        self.assertFalse(bonus.field_info.is_required())
+        self.assertEqual(bonus.field_info.default, "")
