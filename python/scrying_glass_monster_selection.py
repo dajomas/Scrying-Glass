@@ -54,6 +54,7 @@ class MonsterImage(HTMLParser):
                     self.url = url
 
 def dnd_candidates(context, species):
+    from .scrying_glass_dnd_initiative_offer import dnd_initiative_offer
     results, seen = [], set()
     try:
         hits = context.dnd_monster_candidates(species)
@@ -81,7 +82,8 @@ def dnd_candidates(context, species):
                             "provider": "D&D Beyond", "legacy": legacy,
                             "source": "Source book unavailable",
                             "source_url": "https://www.dndbeyond.com" + href,
-                            "ac": ac, "hp": hp, "hp_source": hp_source, "image_url": image.url})
+                            "ac": ac, "hp": hp, "hp_source": hp_source, "image_url": image.url,
+                            **dnd_initiative_offer(html)})
         return results
     except ProviderError:
         raise
