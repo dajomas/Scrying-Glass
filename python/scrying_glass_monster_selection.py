@@ -25,33 +25,19 @@ class ProviderError(Exception):
     """Failed or incomplete lookup, not a successful zero-match search."""
 
 def issue_token(candidate):
-    payload = json.dumps({"species": candidate["species"],
-                          "image_url": candidate.get("image_url"),
-                          "issued": int(time.time())}, separators=(",", ":")).encode()
-    data = base64.urlsafe_b64encode(payload).decode()
-    return data + "." + hmac.new(_KEY, data.encode(), hashlib.sha256).hexdigest()
+    from .scrying_glass_monster_source_snapshot import issue_selection
+    return issue_selection(candidate, _KEY, now=time.time())
+
+
+def selected_snapshot(token, species):
+    from .scrying_glass_monster_source_snapshot import read_selection
+    return read_selection(token, species, _KEY, now=time.time(), max_age=TOKEN_AGE,
+                          image_validator=ft.https_url)
+
 
 def selected_image(token, species):
-    """Validate a snapshot without fetching any browser-supplied URL."""
-    if token == "manual":
-        return None
-    try:
-        if not isinstance(token, str) or len(token) > 8192:
-            raise ValueError()
-        data, signature = token.rsplit(".", 1)
-        expected = hmac.new(_KEY, data.encode(), hashlib.sha256).hexdigest()
-        if not hmac.compare_digest(signature, expected):
-            raise ValueError()
-        payload = json.loads(base64.urlsafe_b64decode(data))
-        age = time.time() - payload["issued"]
-        if age < -60 or age > TOKEN_AGE or payload["species"] != species.strip():
-            raise ValueError()
-        image = payload.get("image_url")
-        if image is not None and not ft.https_url(image):
-            raise ValueError()
-        return image
-    except Exception as exc:
-        raise ValueError("Monster selection expired or invalid; repeat lookup or use manual entry.") from exc
+    """Keep the existing image-only interface; never fetch a browser-supplied URL."""
+    return selected_snapshot(token, species)[0]
 
 class MonsterImage(HTMLParser):
     def __init__(self):
@@ -193,17 +179,24 @@ class CandidateMonstersMixin(AdminMonstersMixin):
         except ValueError as exc:
             raise self.context.HTTPException(422, str(exc)) from exc
         working_state = self.context.STATE
+        source_fields = {}
         if image is not None and image.filename:
             image_url = self.context.save_image(image)
+            if selection_token:
+                try:
+                    _, source_fields = selected_snapshot(selection_token, fields["monster_species"])
+                except ValueError:
+                    pass  # Preserve upload precedence; invalid tokens cannot supply identity.
         elif selection_token:
             try:
-                image_url = selected_image(selection_token, fields["monster_species"])
+                image_url, source_fields = selected_snapshot(selection_token, fields["monster_species"])
             except ValueError as exc:
                 raise self.context.HTTPException(422, str(exc)) from exc
         else:
             image_url = await asyncio.to_thread(self.context.dnd_image, fields["monster_species"])
         if self.context.STATE is not working_state:
             raise self.context.HTTPException(409, "The encounter changed while this request was running. Retry.")
+        fields.update(source_fields)
         created = [self.context.make_monster({**fields, "name": item, "hp": next_hp()}, color, None, image_url) for item in names]
         working_state["monsters"].extend(created)
         await self.context.combatants_changed(monsters=True, characters=False)
