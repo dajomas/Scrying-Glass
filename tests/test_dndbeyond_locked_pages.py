@@ -95,6 +95,7 @@ class SelectionIntegrationTests(unittest.TestCase):
         self.ns = dict(HTTPError=HTTPError, urlsplit=dnd.urlsplit, MAX_CANDIDATES=32,
                        LOG=logging.getLogger(__name__), HTMLParser=HTMLParser, urljoin=urljoin,
                        ft=SimpleNamespace(https_url=lambda value: value.startswith('https://')),
+                       _KEY=b'locked-page-fixture-only-key', time=SimpleNamespace(time=lambda: 1000),
                        issue_token=lambda candidate: 'fixture-token', fivetools_candidates=self.fallback)
         self.ns.update(__name__='python.scrying_glass_monster_selection', __package__='python')
         exec(compile(subset, str(source), 'exec'), self.ns)

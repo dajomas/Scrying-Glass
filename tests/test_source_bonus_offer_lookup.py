@@ -32,8 +32,11 @@ class SourceBonusOfferLookupTests(unittest.TestCase):
                 self.assertEqual(fields["initiative_bonus"], value)
                 self.assertEqual(fields["initiative_bonus_origin"], "source")
                 self.assertEqual(fields["monster_source_url"], candidate["source_url"])
-                self.assertEqual(selection.selected_snapshot(candidate["selection_token"], "Goblin")[1][
-                    "monster_source_url"], candidate["source_url"]) if False else None
+                with patch.object(selection.time, "time", return_value=1000):
+                    _, snapshot = selection.selected_snapshot(candidate["selection_token"], "Goblin")
+                self.assertEqual(snapshot["monster_source_url"], candidate["source_url"])
+                self.assertEqual(snapshot, {key: item for key, item in fields.items()
+                                           if key.startswith("monster_source_")})
                 self.assertIn("selection_token", candidate)
                 self.assertNotIn("initiative_bonus_origin", candidate)
                 with self.assertRaises(ValueError):
