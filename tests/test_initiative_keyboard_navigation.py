@@ -176,6 +176,10 @@ class InitiativeNavigationAdminTests(unittest.TestCase):
                     page,errors,mutations=self.rows.open_page(self,width)
                     state=copy.deepcopy(self.snapshot)
                     state[kind]=[dict(state[kind][0],id='sg013-'+str(i),initiative=10-i,active=False) for i in range(3)]
+                    field='initiative_roll' if kind=='monsters' else 'initiative'
+                    if kind=='monsters':
+                        for i,item in enumerate(state[kind]):
+                            item.update(initiative_roll=10-i,initiative_bonus=0,initiative_bonus_origin='default')
                     calls=[]
                     reject=[False]
                     def serve(route):
@@ -183,7 +187,7 @@ class InitiativeNavigationAdminTests(unittest.TestCase):
                     def save(route):
                         self.assertEqual(route.request.method,'PATCH')
                         payload=route.request.post_data_json
-                        ident=route.request.url.rsplit('/',1)[-1]
+                        ident=route.request.url.rsplit('/',2)[-2] if kind=='monsters' else route.request.url.rsplit('/',1)[-1]
                         calls.append((ident,payload))
                         if reject[0]:
                             route.fulfill(status=400,json={'detail':'Fixture initiative rejection'})
@@ -191,7 +195,7 @@ class InitiativeNavigationAdminTests(unittest.TestCase):
                             next(item for item in state[kind] if item['id']==ident).update(payload)
                             route.fulfill(json={})
                     page.route('**/api/state',serve)
-                    page.route('**/api/'+kind+'/sg013-*',save)
+                    page.route('**/api/'+kind+'/sg013-*'+('/initiative-roll' if kind=='monsters' else ''),save)
                     page.evaluate('load(true)')
                     fields=page.locator('#'+kind+' input['+attr+']')
                     self.assertEqual(fields.count(),3)
@@ -201,14 +205,14 @@ class InitiativeNavigationAdminTests(unittest.TestCase):
                     with page.expect_response(lambda r: '/api/'+kind+'/sg013-' in r.url and r.request.method=='PATCH'):
                         page.keyboard.press('Tab')
                     page.wait_for_function('([kind,attr,id])=>document.querySelector("#"+kind+" table")!==oldTable && document.activeElement?.getAttribute(attr)===id',arg=[kind,attr,ids[1]])
-                    self.assertEqual(calls,[(ids[0],{'initiative':17})])
+                    self.assertEqual(calls,[(ids[0],{field:17})])
                     reject[0]=True
-                    page.locator('#'+kind+' input['+attr+'="'+ids[1]+'"]').fill('1.5')
+                    page.locator('#'+kind+' input['+attr+'="'+ids[1]+'"]').fill('18' if kind=='monsters' else '1.5')
                     with page.expect_response(lambda r: '/api/'+kind+'/sg013-' in r.url and r.request.method=='PATCH'):
                         page.keyboard.press('Tab')
                     page.wait_for_function('(id)=>document.getElementById(id).textContent.includes("Fixture initiative rejection")',arg=notice)
                     self.assertEqual(page.locator(':focus').get_attribute(attr),ids[2])
-                    self.assertEqual(calls[-1],(ids[1],{'initiative':1.5}))
+                    self.assertEqual(calls[-1],(ids[1],{field:18 if kind=='monsters' else 1.5}))
                     self.assertEqual(len(calls),2)
                     self.assertEqual(errors,[])
                     self.assertEqual(mutations,[])
