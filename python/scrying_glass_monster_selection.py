@@ -167,13 +167,30 @@ class CandidateMonstersMixin(AdminMonstersMixin):
                              hprangeend: str = Form(''), color: str = Form(...),
                              quantity: int = Form(1, ge=1, le=50),
                              image: UploadFile | None = File(None), selection_token: str = Form(''),
-                             initiative_bonus: str = Form('')):
+                             initiative_bonus: str = Form(''),
+                             initiative_bonus_offer_token: str = Form('')):
         from fastapi.params import Form as FormParameter
         from .scrying_glass_initiative_input import creation_bonus_fields
+        from .scrying_glass_source_bonus_offer import read_bonus_offer
+        from .scrying_glass_monster_source_snapshot import FIELDS as SOURCE_FIELDS
         if isinstance(initiative_bonus, FormParameter):
             initiative_bonus = initiative_bonus.default
+        if isinstance(initiative_bonus_offer_token, FormParameter):
+            initiative_bonus_offer_token = initiative_bonus_offer_token.default
         try:
             bonus_fields = creation_bonus_fields(initiative_bonus)
+            if initiative_bonus_offer_token:
+                offered = read_bonus_offer(initiative_bonus_offer_token, monster_species, _KEY,
+                                          now=time.time(), max_age=TOKEN_AGE)
+                _, identity = selected_snapshot(selection_token, monster_species)
+                offered_identity = {key: value for key, value in offered.items() if key in SOURCE_FIELDS}
+                if not identity or identity != offered_identity:
+                    raise ValueError("Initiative offer does not match the selected source; repeat lookup.")
+                if (bonus_fields["initiative_bonus_origin"] == "default"
+                        or bonus_fields["initiative_bonus"] != offered["initiative_bonus"]):
+                    raise ValueError("Initiative bonus changed; use manual entry or repeat offer review.")
+                bonus_fields = {"initiative_bonus": offered["initiative_bonus"],
+                                "initiative_bonus_origin": "source"}
         except ValueError as exc:
             raise self.context.HTTPException(422, str(exc)) from exc
         next_hp = self.context.hp_value_factory(hprangestart, hprangeend)
