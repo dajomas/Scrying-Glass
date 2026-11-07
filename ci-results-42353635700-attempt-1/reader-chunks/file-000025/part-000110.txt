@@ -1,0 +1,45 @@
+ initial marker matches picker
+tests	JavaScript tests	2026-11-07T08:03:25.6912135Z # PASS: input edits update marker immediately
+tests	JavaScript tests	2026-11-07T08:03:25.6914926Z # PASS: change events update marker
+tests	JavaScript tests	2026-11-07T08:03:25.6920621Z # PASS: programmatic setup refresh updates marker and preserves renderer contract
+tests	JavaScript tests	2026-11-07T08:03:25.6925681Z # PASS: refresh respects unsaved picker color
+tests	JavaScript tests	2026-11-07T08:03:25.6929903Z # PASS: duplicate script evaluation does not duplicate listeners
+tests	JavaScript tests	2026-11-07T08:03:25.6935993Z # PASS: missing preview elements are harmless
+tests	JavaScript tests	2026-11-07T08:03:25.6945104Z # PASS: lair content is exactly its escaped name
+tests	JavaScript tests	2026-11-07T08:03:25.6951218Z # PASS: lair names are escaped
+tests	JavaScript tests	2026-11-07T08:03:25.6960179Z # PASS: actual viewer token contains only lair name while retaining turn/color
+tests	JavaScript tests	2026-11-07T08:03:25.6964674Z # PASS: hidden lair is omitted
+tests	JavaScript tests	2026-11-07T08:03:25.6969508Z # PASS: character status and effects remain unchanged
+tests	JavaScript tests	2026-11-07T08:03:25.6974704Z # PASS: ally monster label remains unchanged
+tests	JavaScript tests	2026-11-07T08:03:25.6976174Z # PASS: template uses shared marker styles and preview script follows lair script
+tests	JavaScript tests	2026-11-07T08:03:25.6977258Z # 14 lair-presentation checks passed
+tests	JavaScript tests	2026-11-07T08:03:25.7025200Z # Subtest: tests/test_lair_presentation.js
+tests	JavaScript tests	2026-11-07T08:03:25.7028688Z ok 1 - tests/test_lair_presentation.js
+tests	JavaScript tests	2026-11-07T08:03:25.7029403Z   ---
+tests	JavaScript tests	2026-11-07T08:03:25.7029701Z   duration_ms: 32.541236
+tests	JavaScript tests	2026-11-07T08:03:25.7030034Z   type: 'test'
+tests	JavaScript tests	2026-11-07T08:03:25.7030308Z   ...
+tests	JavaScript tests	2026-11-07T08:03:25.7030655Z 1..1
+tests	JavaScript tests	2026-11-07T08:03:25.7030924Z # tests 1
+tests	JavaScript tests	2026-11-07T08:03:25.7031173Z # suites 0
+tests	JavaScript tests	2026-11-07T08:03:25.7031420Z # pass 1
+tests	JavaScript tests	2026-11-07T08:03:25.7031741Z # fail 0
+tests	JavaScript tests	2026-11-07T08:03:25.7032000Z # cancelled 0
+tests	JavaScript tests	2026-11-07T08:03:25.7032336Z # skipped 0
+tests	JavaScript tests	2026-11-07T08:03:25.7032600Z # todo 0
+tests	JavaScript tests	2026-11-07T08:03:25.7032904Z # duration_ms 38.366169
+tests	JavaScript tests	2026-11-07T08:03:25.7298923Z ##[endgroup]
+tests	JavaScript tests	2026-11-07T08:03:25.7299430Z ##[group]tests/test_lair_state_buttons.js
+tests	JavaScript tests	2026-11-07T08:03:25.8696946Z TAP version 13
+tests	JavaScript tests	2026-11-07T08:03:25.8901858Z # PASS: inactive lair shows Join Battle; neutral Visible/Turn buttons
+tests	JavaScript tests	2026-11-07T08:03:25.8911602Z # PASS: join patches active immediately and updates In Battle styling
+tests	JavaScript tests	2026-11-07T08:03:25.8916227Z # PASS: leave patches active false
+tests	JavaScript tests	2026-11-07T08:03:25.8923611Z # PASS: visible toggle patches only visibility
+tests	JavaScript tests	2026-11-07T08:03:25.8930013Z # PASS: turn toggle patches in_turn and reflects automatic visibility
+tests	JavaScript tests	2026-11-07T08:03:25.8934749Z # PASS: inactive turn cannot submit
+tests	JavaScript tests	2026-11-07T08:03:25.8940608Z # PASS: no lair disables state controls but preserves create defaults
+tests	JavaScript tests	2026-11-07T08:03:25.8946911Z # PASS: server errors preserve old styling and show notice
+tests	JavaScript tests	2026-11-07T08:03:25.8954458Z # PASS: busy guard suppresses duplicate requests
+tests	JavaScript tests	2026-11-07T08:03:25.8959217Z # PASS: renderer return value is preserved and hidden bridges reflect current state
+tests	JavaScript tests	2026-11-07T08:03:25.8960265Z # PASS: template replaces configuration checkboxes with non-submit buttons
+tests	JavaScript tests	2026-11-0
