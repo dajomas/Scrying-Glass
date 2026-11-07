@@ -1,0 +1,45 @@
+ests	JavaScript tests	2026-11-07T08:45:18.0774395Z # cancelled 0
+tests	JavaScript tests	2026-11-07T08:45:18.0774760Z # skipped 0
+tests	JavaScript tests	2026-11-07T08:45:18.0775072Z # todo 0
+tests	JavaScript tests	2026-11-07T08:45:18.0775379Z # duration_ms 31.614372
+tests	JavaScript tests	2026-11-07T08:45:18.0927448Z ##[endgroup]
+tests	JavaScript tests	2026-11-07T08:45:18.0927812Z ##[group]tests/test_lair_pane_visibility.js
+tests	JavaScript tests	2026-11-07T08:45:18.1795293Z TAP version 13
+tests	JavaScript tests	2026-11-07T08:45:18.1982038Z # PASS: lair toggles independently with synchronized label and aria
+tests	JavaScript tests	2026-11-07T08:45:18.1984684Z # PASS: hiding setup hides both children and their toggle buttons
+tests	JavaScript tests	2026-11-07T08:45:18.1990013Z # PASS: setup reopening restores independent preferences: lair=false, monster=false
+tests	JavaScript tests	2026-11-07T08:45:18.1994940Z # PASS: setup reopening restores independent preferences: lair=false, monster=true
+tests	JavaScript tests	2026-11-07T08:45:18.1998927Z # PASS: setup reopening restores independent preferences: lair=true, monster=false
+tests	JavaScript tests	2026-11-07T08:45:18.2003783Z # PASS: setup reopening restores independent preferences: lair=true, monster=true
+tests	JavaScript tests	2026-11-07T08:45:18.2008757Z # PASS: parent restores previously hidden child buttons exactly
+tests	JavaScript tests	2026-11-07T08:45:18.2015059Z # PASS: battle start collapses lair and monster equally, retaining toggle access
+tests	JavaScript tests	2026-11-07T08:45:18.2020536Z # PASS: manual reopening during battle survives repeated updates
+tests	JavaScript tests	2026-11-07T08:45:18.2025698Z # PASS: battle end restores normal layout and clears parent snapshots
+tests	JavaScript tests	2026-11-07T08:45:18.2030295Z # PASS: second battle repeats automatic collapse
+tests	JavaScript tests	2026-11-07T08:45:18.2034789Z # PASS: manual setup hide/show during battle preserves child choices
+tests	JavaScript tests	2026-11-07T08:45:18.2040003Z # PASS: campaign-character dependency remains unchanged
+tests	JavaScript tests	2026-11-07T08:45:18.2050105Z # PASS: initial active encounter collapses; idle refresh preserves choices
+tests	JavaScript tests	2026-11-07T08:45:18.2053242Z # PASS: template and toggle order place lair between setup and monster
+tests	JavaScript tests	2026-11-07T08:45:18.2053638Z # 15 lair-pane checks passed
+tests	JavaScript tests	2026-11-07T08:45:18.2090336Z # Subtest: tests/test_lair_pane_visibility.js
+tests	JavaScript tests	2026-11-07T08:45:18.2092922Z ok 1 - tests/test_lair_pane_visibility.js
+tests	JavaScript tests	2026-11-07T08:45:18.2093195Z   ---
+tests	JavaScript tests	2026-11-07T08:45:18.2093676Z   duration_ms: 32.116558
+tests	JavaScript tests	2026-11-07T08:45:18.2093896Z   type: 'test'
+tests	JavaScript tests	2026-11-07T08:45:18.2094100Z   ...
+tests	JavaScript tests	2026-11-07T08:45:18.2094271Z 1..1
+tests	JavaScript tests	2026-11-07T08:45:18.2094456Z # tests 1
+tests	JavaScript tests	2026-11-07T08:45:18.2094627Z # suites 0
+tests	JavaScript tests	2026-11-07T08:45:18.2094799Z # pass 1
+tests	JavaScript tests	2026-11-07T08:45:18.2094978Z # fail 0
+tests	JavaScript tests	2026-11-07T08:45:18.2095148Z # cancelled 0
+tests	JavaScript tests	2026-11-07T08:45:18.2095351Z # skipped 0
+tests	JavaScript tests	2026-11-07T08:45:18.2095531Z # todo 0
+tests	JavaScript tests	2026-11-07T08:45:18.2095736Z # duration_ms 37.000351
+tests	JavaScript tests	2026-11-07T08:45:18.2248976Z ##[endgroup]
+tests	JavaScript tests	2026-11-07T08:45:18.2249330Z ##[group]tests/test_lair_presentation.js
+tests	JavaScript tests	2026-11-07T08:45:18.3092907Z TAP version 13
+tests	JavaScript tests	2026-11-07T08:45:18.3273432Z # PASS: initial marker matches picker
+tests	JavaScript tests	2026-11-07T08:45:18.3275685Z # PASS: input edits update marker immediately
+tests	JavaScript tests	2026-11-07T08:45:18.3278953Z # PASS: change events update marker
+tests	JavaScript tests	2026-11-07T08:45:18.3284204Z # P
