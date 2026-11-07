@@ -96,6 +96,7 @@ class SelectionIntegrationTests(unittest.TestCase):
                        LOG=logging.getLogger(__name__), HTMLParser=HTMLParser, urljoin=urljoin,
                        ft=SimpleNamespace(https_url=lambda value: value.startswith('https://')),
                        issue_token=lambda candidate: 'fixture-token', fivetools_candidates=self.fallback)
+        self.ns.update(__name__='python.scrying_glass_monster_selection', __package__='python')
         exec(compile(subset, str(source), 'exec'), self.ns)
         self.ctx = SimpleNamespace(CONFIG={'display': {}},
             dnd_monster_candidates=Mock(return_value=[(True, '/monsters/old-claw'), (False, '/monsters/new-claw')]),
