@@ -1,0 +1,22 @@
+784Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5983048Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5983650Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5984095Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5984383Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5984903Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5985423Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5985622Z OSError: secret
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5985921Z ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5986681Z test_automatic_uses_one_die_per_monster_and_final_totals (test_monster_roll_order.MonsterRollOrderTests.test_automatic_uses_one_die_per_monster_and_final_totals) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5987717Z test_duplicate_or_detached_targets_are_rejected_before_dice (test_monster_roll_order.MonsterRollOrderTests.test_duplicate_or_detached_targets_are_rejected_before_dice) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5988974Z test_empty_shared_selection_uses_no_die (test_monster_roll_order.MonsterRollOrderTests.test_empty_shared_selection_uses_no_die) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5990129Z test_final_ties_retain_original_order_not_intermediate_sort_order (test_monster_roll_order.MonsterRollOrderTests.test_final_ties_retain_original_order_not_intermediate_sort_order) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5991267Z test_invalid_bonus_is_rejected_before_any_die (test_monster_roll_order.MonsterRollOrderTests.test_invalid_bonus_is_rejected_before_any_die) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5992491Z test_invalid_generated_die_cannot_clear_or_corrupt_initiative (test_monster_roll_order.MonsterRollOrderTests.test_invalid_generated_die_cannot_clear_or_corrupt_initiative) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5993421Z test_lair_loses_twenty_tie_to_creatures (test_monster_roll_order.MonsterRollOrderTests.test_lair_loses_twenty_tie_to_creatures) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5994246Z test_late_overflow_has_no_partial_mutation (test_monster_roll_order.MonsterRollOrderTests.test_late_overflow_has_no_partial_mutation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5995344Z test_membership_and_all_unrelated_state_are_preserved (test_monster_roll_order.MonsterRollOrderTests.test_membership_and_all_unrelated_state_are_preserved) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5996118Z test_no_order_is_started (test_monster_roll_order.MonsterRollOrderTests.test_no_order_is_started) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5997073Z test_only_outside_order_targets_leave_other_order_untouched (test_monster_roll_order.MonsterRollOrderTests.test_only_outside_order_targets_leave_other_order_untouched) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-07T22:33:26.5998035Z test_repeat_roll_replaces_raw_without_compounding (test_monster_roll_order.MonsterRollOrderTests.test_repeat_roll_replaces_raw_without_compounding) ... ok
+tests	Python test suite (including brow

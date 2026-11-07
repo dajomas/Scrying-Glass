@@ -1,0 +1,50 @@
+t tests	2026-11-07T22:33:46.6722260Z # PASS: automatic polling coalesces behind a slow request
+tests	JavaScript tests	2026-11-07T22:33:46.6733005Z # PASS: save queues a fresh snapshot behind an existing poll
+tests	JavaScript tests	2026-11-07T22:33:46.6742719Z # PASS: manual refresh is awaited and not dropped behind a poll
+tests	JavaScript tests	2026-11-07T22:33:46.6759291Z # PASS: queued refresh recovers after the earlier poll fails
+tests	JavaScript tests	2026-11-07T22:33:46.6767844Z # PASS: ordinary save without a concurrent poll still refreshes
+tests	JavaScript tests	2026-11-07T22:33:46.6780493Z # PASS: concurrent manual refreshes complete without a stuck gate
+tests	JavaScript tests	2026-11-07T22:33:46.6782320Z # 6 checks, 0 failures
+tests	JavaScript tests	2026-11-07T22:33:46.6837705Z # Subtest: tests/test_feature_refresh_queue.js
+tests	JavaScript tests	2026-11-07T22:33:46.6841700Z ok 1 - tests/test_feature_refresh_queue.js
+tests	JavaScript tests	2026-11-07T22:33:46.6842117Z   ---
+tests	JavaScript tests	2026-11-07T22:33:46.6842390Z   duration_ms: 38.538078
+tests	JavaScript tests	2026-11-07T22:33:46.6842697Z   type: 'test'
+tests	JavaScript tests	2026-11-07T22:33:46.6842980Z   ...
+tests	JavaScript tests	2026-11-07T22:33:46.6843210Z 1..1
+tests	JavaScript tests	2026-11-07T22:33:46.6843456Z # tests 1
+tests	JavaScript tests	2026-11-07T22:33:46.6844069Z # suites 0
+tests	JavaScript tests	2026-11-07T22:33:46.6844436Z # pass 1
+tests	JavaScript tests	2026-11-07T22:33:46.6844766Z # fail 0
+tests	JavaScript tests	2026-11-07T22:33:46.6845123Z # cancelled 0
+tests	JavaScript tests	2026-11-07T22:33:46.6845489Z # skipped 0
+tests	JavaScript tests	2026-11-07T22:33:46.6845808Z # todo 0
+tests	JavaScript tests	2026-11-07T22:33:46.6846200Z # duration_ms 44.442646
+tests	JavaScript tests	2026-11-07T22:33:46.7134994Z ##[endgroup]
+tests	JavaScript tests	2026-11-07T22:33:46.7135554Z ##[group]tests/test_feature_target_polling.js
+tests	JavaScript tests	2026-11-07T22:33:46.8784158Z TAP version 13
+tests	JavaScript tests	2026-11-07T22:33:46.9000207Z # PASS: automatic target replacement resets dirty fields
+tests	JavaScript tests	2026-11-07T22:33:46.9005014Z # PASS: same-target polling preserves edits
+tests	JavaScript tests	2026-11-07T22:33:46.9015272Z # PASS: subsequent save uses replacement target values
+tests	JavaScript tests	2026-11-07T22:33:46.9024514Z # PASS: removing all targets clears dirty flags
+tests	JavaScript tests	2026-11-07T22:33:46.9079739Z # Subtest: tests/test_feature_target_polling.js
+tests	JavaScript tests	2026-11-07T22:33:46.9083445Z ok 1 - tests/test_feature_target_polling.js
+tests	JavaScript tests	2026-11-07T22:33:46.9084212Z   ---
+tests	JavaScript tests	2026-11-07T22:33:46.9084478Z   duration_ms: 32.628667
+tests	JavaScript tests	2026-11-07T22:33:46.9084790Z   type: 'test'
+tests	JavaScript tests	2026-11-07T22:33:46.9085047Z   ...
+tests	JavaScript tests	2026-11-07T22:33:46.9085377Z 1..1
+tests	JavaScript tests	2026-11-07T22:33:46.9085998Z # tests 1
+tests	JavaScript tests	2026-11-07T22:33:46.9086462Z # suites 0
+tests	JavaScript tests	2026-11-07T22:33:46.9087261Z # pass 1
+tests	JavaScript tests	2026-11-07T22:33:46.9087692Z # fail 0
+tests	JavaScript tests	2026-11-07T22:33:46.9088642Z # cancelled 0
+tests	JavaScript tests	2026-11-07T22:33:46.9089067Z # skipped 0
+tests	JavaScript tests	2026-11-07T22:33:46.9089391Z # todo 0
+tests	JavaScript tests	2026-11-07T22:33:46.9089762Z # duration_ms 38.627875
+tests	JavaScript tests	2026-11-07T22:33:46.9375021Z ##[endgroup]
+tests	JavaScript tests	2026-11-07T22:33:46.9375578Z ##[group]tests/test_lair_pane_visibility.js
+tests	JavaScript tests	2026-11-07T22:33:47.1025490Z TAP version 13
+tests	JavaScript tests	2026-11-07T22:33:47.1224112Z # PASS: lair toggles independently with synchronized label and aria
+tests	JavaScript tests	2026-11-07T22:33:47.1226257Z # PASS: hiding setup hides both children and their toggle buttons
+tests	JavaScript tests	2026-11-07T22:33:47.1231654Z # PASS: setup reopening restores independe
