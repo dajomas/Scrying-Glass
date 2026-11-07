@@ -24,8 +24,12 @@ def _scope(context):
     user = actor(context)
     if not user or user.get('role') not in {'admin', 'superadmin'}:
         raise context.HTTPException(401, 'Authenticated refresh context required')
+    # Transaction rollback replaces STATE with an equal deep copy. Object identity
+    # is not an encounter version; use the transactional revision when available.
+    features = getattr(context, 'features', None)
+    revision = features.store.revision() if features is not None else None
     return (str(user['id']), user['username'], str(context.active_campaign()),
-            copy.deepcopy(context.STATE.get('active_setup')), id(context.STATE))
+            copy.deepcopy(context.STATE.get('active_setup')), revision)
 
 
 def _store(context):
