@@ -1,0 +1,45 @@
+tion_ms 52.409084
+tests	JavaScript tests	2026-11-08T16:06:22.6400525Z ##[endgroup]
+tests	JavaScript tests	2026-11-08T16:06:22.6401240Z ##[group]tests/test_bughunt_985b4b2.js
+tests	JavaScript tests	2026-11-08T16:06:22.8668360Z TAP version 13
+tests	JavaScript tests	2026-11-08T16:06:22.8919966Z # PASS card created during failed update is retired after old snapshot recovery
+tests	JavaScript tests	2026-11-08T16:06:22.8926311Z # PASS failed initial render cards are retired on replacement snapshot
+tests	JavaScript tests	2026-11-08T16:06:22.8937211Z # PASS different recovery snapshot removes both tracked and untracked stale cards
+tests	JavaScript tests	2026-11-08T16:06:22.8949016Z # PASS orphan exit uses one existing animation timer
+tests	JavaScript tests	2026-11-08T16:06:22.8959315Z # PASS normal removal retains exit animation and removes card
+tests	JavaScript tests	2026-11-08T16:06:22.8968778Z # PASS reappearing card cancels its pending removal and retains element identity
+tests	JavaScript tests	2026-11-08T16:06:22.8980948Z # PASS partial card included by recovery snapshot is repaired rather than removed
+tests	JavaScript tests	2026-11-08T16:06:22.8990147Z # PASS empty snapshot removes partial cards and pending timers
+tests	JavaScript tests	2026-11-08T16:06:22.8996121Z # 8 tests; 8 passed; 0 failed
+tests	JavaScript tests	2026-11-08T16:06:22.9058205Z # Subtest: tests/test_bughunt_985b4b2.js
+tests	JavaScript tests	2026-11-08T16:06:22.9063559Z ok 1 - tests/test_bughunt_985b4b2.js
+tests	JavaScript tests	2026-11-08T16:06:22.9064129Z   ---
+tests	JavaScript tests	2026-11-08T16:06:22.9064536Z   duration_ms: 43.094511
+tests	JavaScript tests	2026-11-08T16:06:22.9064998Z   type: 'test'
+tests	JavaScript tests	2026-11-08T16:06:22.9065401Z   ...
+tests	JavaScript tests	2026-11-08T16:06:22.9065764Z 1..1
+tests	JavaScript tests	2026-11-08T16:06:22.9066125Z # tests 1
+tests	JavaScript tests	2026-11-08T16:06:22.9066504Z # suites 0
+tests	JavaScript tests	2026-11-08T16:06:22.9066885Z # pass 1
+tests	JavaScript tests	2026-11-08T16:06:22.9067363Z # fail 0
+tests	JavaScript tests	2026-11-08T16:06:22.9068777Z # cancelled 0
+tests	JavaScript tests	2026-11-08T16:06:22.9069407Z # skipped 0
+tests	JavaScript tests	2026-11-08T16:06:22.9069930Z # todo 0
+tests	JavaScript tests	2026-11-08T16:06:22.9070616Z # duration_ms 51.107807
+tests	JavaScript tests	2026-11-08T16:06:22.9399371Z ##[endgroup]
+tests	JavaScript tests	2026-11-08T16:06:22.9399977Z ##[group]tests/test_bughunt_ec8f202.js
+tests	JavaScript tests	2026-11-08T16:06:23.1718647Z TAP version 13
+tests	JavaScript tests	2026-11-08T16:06:23.1965420Z # PASS new name entered during save survives reload
+tests	JavaScript tests	2026-11-08T16:06:23.1968697Z # PASS new notes entered during save survive reload
+tests	JavaScript tests	2026-11-08T16:06:23.1976428Z # PASS new color entered during save survives reload
+tests	JavaScript tests	2026-11-08T16:06:23.1987286Z # PASS unchanged submitted field clears while newer field stays dirty
+tests	JavaScript tests	2026-11-08T16:06:23.1997762Z # PASS response for previous lair cannot clear replacement draft
+tests	JavaScript tests	2026-11-08T16:06:23.2006227Z # PASS campaign switch resets old drafts even for same lair ID
+tests	JavaScript tests	2026-11-08T16:06:23.2015564Z # PASS setup switch resets old drafts even for same lair ID
+tests	JavaScript tests	2026-11-08T16:06:23.2024720Z # PASS unnamed encounter campaign switch resets drafts
+tests	JavaScript tests	2026-11-08T16:06:23.2037954Z # PASS old-scope response preserves a new-scope draft
+tests	JavaScript tests	2026-11-08T16:06:23.2051642Z # PASS ordinary successful save clears unchanged draft
+tests	JavaScript tests	2026-11-08T16:06:23.2060468Z # PASS failed save preserves drafts
+tests	JavaScript tests	2026-11-08T16:06:23.2067062Z # PASS same-encounter polling preserves drafts
+tests	JavaScript tests	2026-11-08T16:06:23.2075160Z # PASS save controls remain guarded and are restored
+tests	JavaScript tests	2026-11-08T16:06:23.2076759Z # 13 tes

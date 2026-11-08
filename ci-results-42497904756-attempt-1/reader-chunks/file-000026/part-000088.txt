@@ -1,0 +1,22 @@
+test suite (including browser fixtures)	2026-11-08T16:06:02.3482926Z test_identityless_single_result_requires_explicit_choice (test_monster_refresh_sources.MonsterRefreshSourceTests.test_identityless_single_result_requires_explicit_choice) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3485933Z test_invalid_signed_choice_does_not_fetch_and_other_rows_are_preserved (test_monster_refresh_sources.MonsterRefreshSourceTests.test_invalid_signed_choice_does_not_fetch_and_other_rows_are_preserved) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3489163Z test_missing_and_invalid_fields_are_independent_and_do_not_default_bonus (test_monster_refresh_sources.MonsterRefreshSourceTests.test_missing_and_invalid_fields_are_independent_and_do_not_default_bonus) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3492591Z test_retained_dnd_url_is_fetched_without_search_or_fallback_or_mutation (test_monster_refresh_sources.MonsterRefreshSourceTests.test_retained_dnd_url_is_fetched_without_search_or_fallback_or_mutation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3503835Z test_retained_failure_never_uses_alternate_candidate (test_monster_refresh_sources.MonsterRefreshSourceTests.test_retained_failure_never_uses_alternate_candidate) ... Selected monster source refresh failed for m
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3505746Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3507077Z   File "/tmp/scrying-tests-qkbnbz9e/repo/python/scrying_glass_monster_refresh_sources.py", line 137, in resolve_selected_sources
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3508433Z     candidate = _fetch_exact(context, monster, identity)
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3509678Z   File "/tmp/scrying-tests-qkbnbz9e/repo/python/scrying_glass_monster_refresh_sources.py", line 73, in _fetch_exact
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3510696Z     html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3511708Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3512263Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3512592Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3513615Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3514651Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3515291Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3516425Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3517428Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3517686Z OSError: secret
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.3517892Z ok
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.9385398Z test_unready_states_do_not_prune_selection_or_dispatch_requests (test_monster_refresh_startup_browser.RefreshStartupBrowserTests.test_unready_states_do_not_prune_selection_or_dispatch_requests) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T16:06:02.9387904Z test_automatic_uses_one_die_p
