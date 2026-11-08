@@ -1,0 +1,50 @@
+tests	Set up job	﻿2026-11-08T07:30:20.4164326Z Current runner version: '2.338.2'
+tests	Set up job	2026-11-08T07:30:20.4200832Z ##[group]Runner Image Provisioner
+tests	Set up job	2026-11-08T07:30:20.4202225Z Hosted Compute Agent
+tests	Set up job	2026-11-08T07:30:20.4203339Z Version: 20261028.624
+tests	Set up job	2026-11-08T07:30:20.4204733Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+tests	Set up job	2026-11-08T07:30:20.4206596Z Build Date: 2026-10-28T21:51:42Z
+tests	Set up job	2026-11-08T07:30:20.4207835Z Worker ID: {f81837e6-2e31-4ee5-9244-fdc8e37523a5}
+tests	Set up job	2026-11-08T07:30:20.4209112Z Region: eastus
+tests	Set up job	2026-11-08T07:30:20.4210104Z Cloud: Azure
+tests	Set up job	2026-11-08T07:30:20.4211065Z ##[endgroup]
+tests	Set up job	2026-11-08T07:30:20.4213968Z ##[group]Operating System
+tests	Set up job	2026-11-08T07:30:20.4215082Z Ubuntu
+tests	Set up job	2026-11-08T07:30:20.4216087Z 26.04.1
+tests	Set up job	2026-11-08T07:30:20.4217119Z LTS
+tests	Set up job	2026-11-08T07:30:20.4218114Z ##[endgroup]
+tests	Set up job	2026-11-08T07:30:20.4219163Z ##[group]Runner Image
+tests	Set up job	2026-11-08T07:30:20.4220281Z Image: ubuntu-26.04
+tests	Set up job	2026-11-08T07:30:20.4221406Z Version: 20261101.186.1
+tests	Set up job	2026-11-08T07:30:20.4223306Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+tests	Set up job	2026-11-08T07:30:20.4226702Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+tests	Set up job	2026-11-08T07:30:20.4228611Z ##[endgroup]
+tests	Set up job	2026-11-08T07:30:20.4230562Z ##[group]GITHUB_TOKEN Permissions
+tests	Set up job	2026-11-08T07:30:20.4233840Z Contents: read
+tests	Set up job	2026-11-08T07:30:20.4234882Z Metadata: read
+tests	Set up job	2026-11-08T07:30:20.4235990Z ##[endgroup]
+tests	Set up job	2026-11-08T07:30:20.4239120Z Secret source: Actions
+tests	Set up job	2026-11-08T07:30:20.4240835Z Cache mode: write
+tests	Set up job	2026-11-08T07:30:20.4242425Z Prepare workflow directory
+tests	Set up job	2026-11-08T07:30:20.5074066Z Prepare all required actions
+tests	Set up job	2026-11-08T07:30:20.5148897Z Getting action download info
+tests	Set up job	2026-11-08T07:30:20.6649629Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+tests	Set up job	2026-11-08T07:30:20.7861555Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+tests	Set up job	2026-11-08T07:30:20.8463522Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+tests	Set up job	2026-11-08T07:30:20.9182744Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+tests	Set up job	2026-11-08T07:30:21.1033296Z Complete job name: tests
+tests	Run actions/checkout@v4	﻿2026-11-08T07:30:21.1957808Z ##[group]Run actions/checkout@v4
+tests	Run actions/checkout@v4	2026-11-08T07:30:21.1958736Z with:
+tests	Run actions/checkout@v4	2026-11-08T07:30:21.1959205Z   repository: dajomas/Scrying-Glass
+tests	Run actions/checkout@v4	2026-11-08T07:30:21.1962963Z   token: ***
+tests	Run actions/checkout@v4	2026-11-08T07:30:21.1963405Z   ssh-strict: true
+tests	Run actions/checkout@v4	2026-11-08T07:30:21.1964016Z   ssh-user: git
+tests	Run actions/checkout@v4	2026-11-08T07:30:21.1964481Z   persist-credentials: true
+tests	Run actions/checkout@v4	2026-11-08T07:30:21.1964973Z   clean: true
+tests	Run actions/checkout@v4	2026-11-08T07:30:21.1965427Z   sparse-checkout-cone-mode: true
+tests	Run actions/checkout@v4	2026-11-08T07:30:21.1965955Z   fetch-depth: 1
+tests	Run actions/checkout@v4	2026-11-08T07:30:21.1966385Z   fetch-tags: false
+tests	Run actions/checkout@v4	2026-11-08T07:30:21.1966828Z   show-progress: true
+tests	Run actions/checkout@v4	2026-11-08T07:30:21.1967276Z   lfs: false
+tests	Run actions/checkout@v4	2026-11-08T07:30:21.1967681Z   submodules: false
+tests	
