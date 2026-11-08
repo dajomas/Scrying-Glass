@@ -193,6 +193,8 @@ class MonsterRefreshEndToEndTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(self.errors, [])
 
     async def test_real_candidate_resolution_keeps_other_checks_and_unchecked_hp(self):
+        self.context.dnd_monster_candidates.return_value = [
+            (False, '/monsters/example'), (True, '/monsters/legacy-example')]
         for item in self.context.STATE['monsters']:
             for field in FIELDS:
                 item.pop(field, None)
@@ -201,9 +203,13 @@ class MonsterRefreshEndToEndTests(unittest.IsolatedAsyncioTestCase):
         page = await self.open_page()
         await self.review(page, (0, 1))
         for name in ('Alpha', 'Beta'):
-            await page.get_by_label('Source candidate for '+name, exact=True).select_option('0')
+            chooser = page.get_by_label('Source candidate for '+name, exact=True)
+            self.assertEqual(await chooser.locator('option').count(), 3)
+            self.assertFalse(await page.get_by_role('checkbox', name='Current HP for '+name, exact=True).is_checked())
+            await chooser.select_option('0')
             await page.get_by_role('button', name='Use candidate for '+name, exact=True).click()
             await page.wait_for_function("document.querySelector('.sg-refresh-review').getAttribute('aria-busy') === 'false'")
+            self.assertEqual(self.context.STATE, before)
             if name == 'Alpha':
                 await page.get_by_role('checkbox', name='Armor Class for Alpha', exact=True).check()
         self.assertTrue(await page.get_by_role('checkbox', name='Armor Class for Alpha', exact=True).is_checked())
@@ -212,6 +218,39 @@ class MonsterRefreshEndToEndTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(self.context.STATE['monsters'][0]['hp'], before['monsters'][0]['hp'])
         self.assertEqual(self.context.STATE['monsters'][1], before['monsters'][1])
         self.context.hp_value_factory.assert_not_called()
+        self.assertEqual(self.errors, [])
+
+    async def test_real_sole_candidate_auto_resolution_requires_explicit_apply(self):
+        for width in (1440, 375):
+            with self.subTest(width=width):
+                for item in self.context.STATE['monsters']:
+                    for field in FIELDS:
+                        item.pop(field, None)
+                await self.context.combatants_changed(monsters=True)
+                before = self.snapshot()
+                calls_before = len(self.calls)
+                page = await self.open_page(width)
+                await self.review(page, (0, 1))
+                dialog = page.locator('.sg-refresh-review')
+                self.assertEqual(await dialog.locator('select').count(), 0)
+                self.assertEqual(await dialog.locator('input:checked').count(), 0)
+                self.assertTrue(await page.get_by_role('button', name='Apply selected changes', exact=True).is_disabled())
+                self.assertEqual(self.snapshot(), before)
+                self.assertEqual(len(self.calls), calls_before + 1)
+                self.assertEqual(self.calls[-1][0], '/api/monsters/refresh/preview')
+                await page.get_by_role('checkbox', name='Armor Class for Alpha', exact=True).check()
+                self.assertEqual(self.snapshot(), before)
+                await self.apply(page)
+                self.assertEqual(self.calls[-1][1]['selected'], {self.ids[0]: ['ac']})
+                first = self.context.STATE['monsters'][0]
+                self.assertEqual(first['ac'], 18)
+                self.assertEqual(first['monster_source_url'], 'https://www.dndbeyond.com/monsters/example')
+                self.assertIs(first['monster_source_legacy'], False)
+                self.assertEqual(first['hp'], before[0]['monsters'][0]['hp'])
+                self.assertEqual(self.context.STATE['monsters'][1], before[0]['monsters'][1])
+                self.context.hp_value_factory.assert_not_called()
+                self.hp_roll.assert_not_called()
+                await page.close()
         self.assertEqual(self.errors, [])
 
     async def test_real_stale_review_is_rejected_without_apply_or_hp_generation(self):

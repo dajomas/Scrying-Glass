@@ -3,7 +3,7 @@
 [Back to TODO index](../../TODO.md)
 
 - Updated: 2026-11-08. Tracking: SG-TODO-018 follow-up and adjacent lookup/roster corrections.
-- Status: in progress. A.1 accepted; all four A.2 increments and commit 5 delivered, commit-5 covering CI verified, A.2 manual acceptance pending. A.3 implementation included in this increment; covering CI/manual acceptance pending. Stage B remains pending.
+- Status: in progress. A.1 accepted; all four A.2 increments and commit 5 delivered, commit-5 covering CI verified, A.2 manual acceptance pending. A.3 delivered as c62d203d3b92aa277eb7e34f4c90da789ab0e58b; first covering CI failed, fixture correction prepared, corrective CI/manual acceptance pending. Stage B remains pending.
 - Branch: features/perplexity-018. No overall close-out, merge or write-back authorized.
 - Related: [018 contract](180-monster-initiative-bonus.md), [lookup](010-monster-lookup.md), [configuration](060-fivetools-source-configuration.md), [rosters](../handover/310-admin-rosters.md), [A.1 history](../handover/335-fivetools-initiative-correction.md), [current A.2/A.3 delivery](../handover/340-combined-monster-lookup.md).
 
@@ -40,11 +40,12 @@ approval, appropriate tests/docs and review of covering CI before validation cla
    - Commit 4 aligns in-UI help/config comments and adds browser/application checks.
      Later covering commit-5 CI is verified; deployed workflow acceptance is still
      required before A.2 closure.
-3. A.3 sole-candidate Refresh auto-resolution: implementation included in this
-   increment; validation/acceptance pending. Multiple candidates still require
-   selection; zero stay unresolved. Never substitute another retained identity.
-   Auto-resolution must not select fields, mutate state or bypass Apply; retain
-   other rows' choices. See the separate gate below.
+3. A.3 sole-candidate Refresh auto-resolution: implementation delivered; first CI
+   failed on a stale browser expectation. Fixture correction and fresh covering CI/
+   acceptance remain pending. Multiple candidates still require selection; zero stay
+   unresolved. Never substitute another retained identity. Auto-resolution must not
+   select fields, mutate state or bypass Apply; retain other rows' choices.
+   See the separate gate below.
 
 ### Stage B: compact and consistent roster presentation
 
@@ -122,8 +123,9 @@ in progress with unchanged stable task links. Stage B and merge are not started.
 
 ## A.3 implementation and validation - 2026-11-08
 
-- Status: implementation and regressions included in this increment; covering CI
-  and deployed acceptance pending. Delivery SHA must be recorded after push.
+- Status: implementation delivered as c62d203d3b92aa277eb7e34f4c90da789ab0e58b.
+  First covering CI failed; fixture correction prepared, corrective CI and deployed
+  acceptance pending. This is not completion or overall manual acceptance.
 - Behavior: identity-less sole signed candidate resolves automatically; multiple
   require choice, zero remain unavailable. Invalid retained identity/conflicting
   signed choice cannot substitute source. Exact-source fetch/token failure stays
@@ -136,10 +138,33 @@ in progress with unchanged stable task links. Stage B and merge are not started.
   discovers the updated source tests and new ASGI/SQLite/Chromium regressions; no
   skip marker, workflow modification or separate dispatch. Fixture limits and
   coverage are recorded in [handover](../handover/340-combined-monster-lookup.md#a3-sole-candidate-refresh---2026-11-08).
-- Required follow-up: inspect covering CI by exact SHA/run/attempt, diagnose failures
-  without relabelling history, then deployed desktop/narrow acceptance for sole/
-  multiple/zero, retained-source failure, other-row choices, unchecked defaults,
-  explicit Apply/HP generation/persistence, stale rejection and cancellation.
-  Recheck commit-5 Add Monster behavior unchanged.
+- Required follow-up: inspect corrective covering CI by exact SHA/run/attempt,
+  diagnose failures without relabelling history, then deployed desktop/narrow
+  acceptance for sole/multiple/zero, retained-source failure, other-row choices,
+  unchecked defaults, explicit Apply/HP generation/persistence, stale rejection and
+  cancellation. Recheck commit-5 Add Monster behavior unchanged.
 - Stage B, overall SG-TODO-018 close-out, manual acceptance and merging remain
   outside this delivery.
+
+### First A.3 CI failure and fixture correction
+
+Run 42516636403 attempt 1 failed for the exact A.3 implementation SHA above, on
+features/perplexity-018. Publication 5c8cd561b46a8694fe3da267771927f31ff7b45c /
+ci-results-42516636403-attempt-1 was inspected. Each main/repeated 1,406-test run
+has one browser timeout in the same existing explicit-choice test, which offered
+one candidate and expected the chooser A.3 now correctly omits. This is not a
+collection/setup error or two distinct defects. New A.3 ASGI/isolated-browser
+methods explicitly passed, but the overall run remains failed. Syntax/import,
+pytest, JavaScript/upload succeeded; Node/Python post-setup cleanup skipped.
+Connection tracking: 759 opened/0 without explicit close; the audit step still
+failed with its repeated suite. Detailed paths and limits are in the
+[handover correction record](../handover/340-combined-monster-lookup.md#a3-first-covering-ci-and-fixture-correction---2026-11-08).
+
+Prepared correction supplies two distinct candidates in the explicit-choice
+fixture and preserves other-row/unchecked-HP/no-mutation assertions. A new
+assembled-browser/secured-ASGI/SQLite method covers sole-candidate review and
+explicit Apply at desktop/narrow widths. Production behavior is unchanged.
+The revised test module compiles/parses and remains under 20,000 bytes; these
+methods were not run locally because FastAPI/HTTPX2 are absent. Fresh bound
+approval, delivery and normal covering CI are required before claiming a fix
+validated. No skip/workflow change/dispatch, task close-out, stage B or merge.

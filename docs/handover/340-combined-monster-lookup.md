@@ -5,8 +5,10 @@
 2026-11-08. [SG-TODO-018 correction plan](../todo/185-monster-correction-plan.md).
 Branch features/perplexity-018. All four A.2 implementation increments and commit 5
 are delivered; covering commit-5 CI is verified below. A.2 manual acceptance remains
-pending. A.3 implementation is included in this increment, with covering validation
-pending. A.1 remains accepted. No overall close-out, merge or write-back authorized.
+pending. A.3 implementation is delivered as c62d203d3b92aa277eb7e34f4c90da789ab0e58b;
+first covering CI failed on a stale browser expectation. Fixture correction is
+prepared below; corrective CI and manual acceptance remain pending. A.1 remains
+accepted. No overall close-out, merge or write-back authorized.
 
 ## Runtime and compatibility
 
@@ -99,7 +101,7 @@ Deployed acceptance remains pending; see the [commit-5 gate](../todo/185-monster
 
 ## A.3 sole-candidate Refresh - 2026-11-08
 
-Implementation included in this increment; delivery SHA is assigned only on push.
+Implementation delivered as c62d203d3b92aa277eb7e34f4c90da789ab0e58b.
 Identity-less Refresh rows resolve exactly one candidate through the existing
 signed snapshot validation and exact-source fetch. Multiple candidates retain
 explicit choice; zero remain unavailable with an unresolved status. Failed combined
@@ -126,8 +128,45 @@ review mutation, HP only on explicit Apply, storage reopen, replay, malformed ID
 stale response/configuration/expiry and 1440/375 review behavior. Provider transport/
 HP and browser endpoints are mocked as described in fixtures; no live-provider,
 password-login, browser-to-server, new-process restart or deployed acceptance claim.
-Covering A.3 CI and manual acceptance remain pending, not passed by delivery.
-README and correction-plan status are updated together. Existing index links remain
+The first covering A.3 run failed as recorded below; corrective CI and manual
+acceptance remain pending, not passed by delivery.
+README and correction-plan status were updated together. Existing index links remain
 unchanged; their A.3 pending wording is a validation/acceptance gate, not a claim
 that this increment is absent. See the [A.3 gate](../todo/185-monster-correction-plan.md#a3-implementation-and-validation---2026-11-08).
 Stage B, overall SG-TODO-018 close-out, merging and other-branch writes are excluded.
+
+## A.3 first covering CI and fixture correction - 2026-11-08
+
+Run 42516636403 attempt 1 failed on exact tested SHA
+c62d203d3b92aa277eb7e34f4c90da789ab0e58b, branch features/perplexity-018.
+Evidence read at publication 5c8cd561b46a8694fe3da267771927f31ff7b45c /
+ci-results-42516636403-attempt-1. Run and job metadata agree. Main suite and
+connection-audit repeat each ran 1,406 tests with one error: the same assembled
+Chromium method test_real_candidate_resolution_keeps_other_checks_and_unchecked_hp
+timed out waiting for Source candidate for Alpha. Two executions are not two
+independent defects. The fixture supplied one candidate, so A.3 correctly omitted
+the redundant chooser. This is a stale browser expectation, not setup/collection
+failure or evidence of a production auto-resolution defect. The five new A.3
+ASGI/isolated-browser methods explicitly report OK. Syntax/server import, pytest,
+JavaScript, artifact upload and checkout cleanup succeeded. Node/Python post-setup
+cleanup steps were skipped. Connection tracking reports 759 opened/0 without
+explicit close, but the audit step remains failed because its repeated suite failed.
+Subsequent standalone log/round audits and browser smoke completed; smoke reports
+no page errors. No deployed/manual or live-provider acceptance was executed by CI.
+
+Correction changes tests only: give the explicit-choice fixture two distinct
+provider URLs/edition flags, assert both candidates and unchecked HP, retain
+other-row checkbox and no-review-mutation assertions. Add an assembled Chromium
+1440/375 sole-candidate method forwarded through the real secured ASGI/SQLite
+review/apply path: no chooser, no automatic checks, no state/persistence mutation
+or HP generation during review, one preview request, explicit AC Apply, exact
+source identity and unchanged other row/HP. Existing stale/apply/health checks
+remain. No production, Add Monster, asset, schema or workflow changes.
+
+Correction preparation: reconstructed original test matches live blob
+1b583d9dada1cb3aee7ddc85f1bf196f5d3a3e82; revised 16,382-byte module compiles
+and parses. Its five methods were not executed locally: FastAPI/HTTPX2 absent.
+Normal CI discovers it; no skip marker/workflow edit/dispatch. Corrective delivery
+and covering results remain separate; no new SHA/run is invented. README and
+root index links/overall open status need no change for this fixture correction.
+All failed runs above remain failed historical evidence.
