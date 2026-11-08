@@ -1,0 +1,150 @@
+[
+  {
+    "check_run_url": "https://api.github.com/repos/dajomas/Scrying-Glass/check-runs/128840977534",
+    "completed_at": "2026-11-08T19:51:29Z",
+    "conclusion": "failure",
+    "created_at": "2026-11-08T19:45:37Z",
+    "head_branch": "features/perplexity-018",
+    "head_sha": "c62d203d3b92aa277eb7e34f4c90da789ab0e58b",
+    "html_url": "https://github.com/dajomas/Scrying-Glass/actions/runs/42516636403/job/128840977534",
+    "id": 128840977534,
+    "labels": [
+      "ubuntu-latest"
+    ],
+    "name": "tests",
+    "node_id": "CR_kwDOUq6MkM8AAAAd_4VMfg",
+    "run_attempt": 1,
+    "run_id": 42516636403,
+    "run_url": "https://api.github.com/repos/dajomas/Scrying-Glass/actions/runs/42516636403",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions",
+    "runner_id": 1000000706,
+    "runner_name": "GitHub Actions 1000000706",
+    "started_at": "2026-11-08T19:45:39Z",
+    "status": "completed",
+    "steps": [
+      {
+        "completed_at": "2026-11-08T19:45:41Z",
+        "conclusion": "success",
+        "name": "Set up job",
+        "number": 1,
+        "started_at": "2026-11-08T19:45:40Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-08T19:45:42Z",
+        "conclusion": "success",
+        "name": "Run actions/checkout@v4",
+        "number": 2,
+        "started_at": "2026-11-08T19:45:41Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-08T19:45:43Z",
+        "conclusion": "success",
+        "name": "Run actions/setup-python@v5",
+        "number": 3,
+        "started_at": "2026-11-08T19:45:42Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-08T19:45:44Z",
+        "conclusion": "success",
+        "name": "Run actions/setup-node@v4",
+        "number": 4,
+        "started_at": "2026-11-08T19:45:43Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-08T19:46:11Z",
+        "conclusion": "success",
+        "name": "Install Python and browser test dependencies",
+        "number": 5,
+        "started_at": "2026-11-08T19:45:44Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-08T19:46:13Z",
+        "conclusion": "success",
+        "name": "Python syntax and server import checks",
+        "number": 6,
+        "started_at": "2026-11-08T19:46:11Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-08T19:48:37Z",
+        "conclusion": "failure",
+        "name": "Python test suite (including browser fixtures)",
+        "number": 7,
+        "started_at": "2026-11-08T19:46:13Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-08T19:48:39Z",
+        "conclusion": "success",
+        "name": "Upload Admin foundations visual fixtures",
+        "number": 8,
+        "started_at": "2026-11-08T19:48:37Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-08T19:48:41Z",
+        "conclusion": "success",
+        "name": "Pytest regression modules",
+        "number": 9,
+        "started_at": "2026-11-08T19:48:39Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-08T19:48:50Z",
+        "conclusion": "success",
+        "name": "JavaScript tests",
+        "number": 10,
+        "started_at": "2026-11-08T19:48:41Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-08T19:51:27Z",
+        "conclusion": "failure",
+        "name": "Standalone Python browser and audit checks",
+        "number": 11,
+        "started_at": "2026-11-08T19:48:50Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-08T19:51:27Z",
+        "conclusion": "skipped",
+        "name": "Post Run actions/setup-node@v4",
+        "number": 20,
+        "started_at": "2026-11-08T19:51:27Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-08T19:51:27Z",
+        "conclusion": "skipped",
+        "name": "Post Run actions/setup-python@v5",
+        "number": 21,
+        "started_at": "2026-11-08T19:51:27Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-08T19:51:28Z",
+        "conclusion": "success",
+        "name": "Post Run actions/checkout@v4",
+        "number": 22,
+        "started_at": "2026-11-08T19:51:27Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-08T19:51:28Z",
+        "conclusion": "success",
+        "name": "Complete job",
+        "number": 23,
+        "started_at": "2026-11-08T19:51:28Z",
+        "status": "completed"
+      }
+    ],
+    "url": "https://api.github.com/repos/dajomas/Scrying-Glass/actions/jobs/128840977534",
+    "workflow_name": "Branch tests"
+  }
+]

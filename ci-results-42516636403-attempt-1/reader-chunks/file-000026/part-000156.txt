@@ -1,0 +1,27 @@
+sts	Standalone Python browser and audit checks	2026-11-08T19:51:09.2594566Z   File "/tmp/scrying-tests-sloeji6h/repo/python/scrying_glass_monster_refresh_sources.py", line 73, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:09.2595314Z     html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:09.2596077Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:09.2596686Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:09.2597059Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:09.2597602Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:09.2598131Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:09.2598475Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:09.2599046Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:09.2599527Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:09.2599759Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:23.3510249Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:23.3511832Z ERROR: test_real_candidate_resolution_keeps_other_checks_and_unchecked_hp (test_monster_refresh_end_to_end.MonsterRefreshEndToEndTests.test_real_candidate_resolution_keeps_other_checks_and_unchecked_hp)
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:23.3513356Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:23.3514083Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:23.3515042Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:23.3515657Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:23.3515983Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:23.3516571Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:23.3517179Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:23.3517575Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:23.3518457Z   File "/tmp/scrying-tests-sloeji6h/repo/tests/test_monster_refresh_end_to_end.py", line 204, in test_real_candidate_resolution_keeps_other_checks_and_unchecked_hp
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:23.3519654Z     await page.get_by_label('Source candidate for '+name, exact=True).select_option('0')
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:23.3520894Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/async_api/_generated.py", line 13143, in select_option
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:23.3522137Z     await self._impl_obj.select_option(
+tests	Standalone Python browser and audit checks	2026-11-08T19:51:23.3522450Z     ...<7 lines>...
+tests	Standalone Python brow
