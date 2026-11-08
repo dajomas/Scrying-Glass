@@ -1,0 +1,51 @@
+:49.6013723Z ok 1 - tests/test_feature_edit_preservation.js
+tests	JavaScript tests	2026-11-08T17:24:49.6014340Z   ---
+tests	JavaScript tests	2026-11-08T17:24:49.6014560Z   duration_ms: 51.701073
+tests	JavaScript tests	2026-11-08T17:24:49.6014774Z   type: 'test'
+tests	JavaScript tests	2026-11-08T17:24:49.6014957Z   ...
+tests	JavaScript tests	2026-11-08T17:24:49.6020738Z 1..1
+tests	JavaScript tests	2026-11-08T17:24:49.6030569Z # tests 1
+tests	JavaScript tests	2026-11-08T17:24:49.6030844Z # suites 0
+tests	JavaScript tests	2026-11-08T17:24:49.6031080Z # pass 1
+tests	JavaScript tests	2026-11-08T17:24:49.6031395Z # fail 0
+tests	JavaScript tests	2026-11-08T17:24:49.6031731Z # cancelled 0
+tests	JavaScript tests	2026-11-08T17:24:49.6032101Z # skipped 0
+tests	JavaScript tests	2026-11-08T17:24:49.6032415Z # todo 0
+tests	JavaScript tests	2026-11-08T17:24:49.6032827Z # duration_ms 57.386626
+tests	JavaScript tests	2026-11-08T17:24:49.6177958Z ##[endgroup]
+tests	JavaScript tests	2026-11-08T17:24:49.6178401Z ##[group]tests/test_feature_manual_refresh.js
+tests	JavaScript tests	2026-11-08T17:24:49.7256703Z TAP version 13
+tests	JavaScript tests	2026-11-08T17:24:49.7465490Z # PASS: manual refresh clears the obsolete dirty marker
+tests	JavaScript tests	2026-11-08T17:24:49.7473773Z # PASS: manual refresh does not overwrite a draft entered after the click
+tests	JavaScript tests	2026-11-08T17:24:49.7483732Z # PASS: failed manual refresh restores the discarded draft marker
+tests	JavaScript tests	2026-11-08T17:24:49.7499408Z # PASS: failed refresh does not overwrite a newer draft
+tests	JavaScript tests	2026-11-08T17:24:49.7501631Z # 4 checks, 0 failures
+tests	JavaScript tests	2026-11-08T17:24:49.7538235Z # Subtest: tests/test_feature_manual_refresh.js
+tests	JavaScript tests	2026-11-08T17:24:49.7542256Z ok 1 - tests/test_feature_manual_refresh.js
+tests	JavaScript tests	2026-11-08T17:24:49.7543686Z   ---
+tests	JavaScript tests	2026-11-08T17:24:49.7543983Z   duration_ms: 31.074424
+tests	JavaScript tests	2026-11-08T17:24:49.7544331Z   type: 'test'
+tests	JavaScript tests	2026-11-08T17:24:49.7544606Z   ...
+tests	JavaScript tests	2026-11-08T17:24:49.7544860Z 1..1
+tests	JavaScript tests	2026-11-08T17:24:49.7545103Z # tests 1
+tests	JavaScript tests	2026-11-08T17:24:49.7545507Z # suites 0
+tests	JavaScript tests	2026-11-08T17:24:49.7545936Z # pass 1
+tests	JavaScript tests	2026-11-08T17:24:49.7546425Z # fail 0
+tests	JavaScript tests	2026-11-08T17:24:49.7547169Z # cancelled 0
+tests	JavaScript tests	2026-11-08T17:24:49.7547800Z # skipped 0
+tests	JavaScript tests	2026-11-08T17:24:49.7548105Z # todo 0
+tests	JavaScript tests	2026-11-08T17:24:49.7548317Z # duration_ms 36.859938
+tests	JavaScript tests	2026-11-08T17:24:49.7699437Z ##[endgroup]
+tests	JavaScript tests	2026-11-08T17:24:49.7700143Z ##[group]tests/test_feature_refresh_queue.js
+tests	JavaScript tests	2026-11-08T17:24:49.8803684Z TAP version 13
+tests	JavaScript tests	2026-11-08T17:24:49.9012961Z # PASS: automatic polling coalesces behind a slow request
+tests	JavaScript tests	2026-11-08T17:24:49.9024699Z # PASS: save queues a fresh snapshot behind an existing poll
+tests	JavaScript tests	2026-11-08T17:24:49.9034110Z # PASS: manual refresh is awaited and not dropped behind a poll
+tests	JavaScript tests	2026-11-08T17:24:49.9050990Z # PASS: queued refresh recovers after the earlier poll fails
+tests	JavaScript tests	2026-11-08T17:24:49.9059251Z # PASS: ordinary save without a concurrent poll still refreshes
+tests	JavaScript tests	2026-11-08T17:24:49.9070694Z # PASS: concurrent manual refreshes complete without a stuck gate
+tests	JavaScript tests	2026-11-08T17:24:49.9073956Z # 6 checks, 0 failures
+tests	JavaScript tests	2026-11-08T17:24:49.9120933Z # Subtest: tests/test_feature_refresh_queue.js
+tests	JavaScript tests	2026-11-08T17:24:49.9131119Z ok 1 - tests/test_feature_refresh_queue.js
+tests	JavaScript tests	2026-11-08T17:24:49.9131797Z   ---
+tests	JavaScript tests	2026-11-08T17:24:49.9132326Z   duration_ms: 33.60499
