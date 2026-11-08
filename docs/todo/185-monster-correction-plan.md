@@ -3,7 +3,7 @@
 [Back to TODO index](../../TODO.md)
 
 - Updated: 2026-11-08. Tracking: SG-TODO-018 follow-up and adjacent lookup/roster corrections.
-- Status: in progress. A.1 remains accepted; A.2 and A.3 accepted after covering corrective CI and user manual sign-off on 2026-11-08. Stage B implementation/tests/docs included in this increment; covering CI and manual acceptance pending. SG-TODO-018 is not closed.
+- Status: in progress. A.1 remains accepted; A.2 and A.3 accepted after covering corrective CI and user manual sign-off on 2026-11-08. Initial stage B delivered as 11f104058efb2a56365b0309ce8c6ee829d84c18; first CI failed and visual corrections requested. Colour-only/single-line follow-up included here; corrective CI/manual acceptance pending. SG-TODO-018 is not closed.
 - Branch: features/perplexity-018. No overall close-out, merge or write-back authorized.
 - Related: [018 contract](180-monster-initiative-bonus.md), [lookup](010-monster-lookup.md), [configuration](060-fivetools-source-configuration.md), [rosters](../handover/310-admin-rosters.md), [A.1 history](../handover/335-fivetools-initiative-correction.md), [current A.2/A.3/B delivery](../handover/340-combined-monster-lookup.md).
 
@@ -13,8 +13,8 @@ Do not push the rejected step-6 close-out draft. SG-TODO-018 is not accepted ove
 A.1 remains accepted. The user manually tested and signed off A.2 and A.3 on
 2026-11-08, after successful covering corrective CI recorded below. The user chose
 blocking incomplete lookup and approved four A.2 increments, superseding the
-initial two. Stage B preparation is now authorized and included here; acceptance
-is separate. No owner/deadline is assigned. Historical records and failed/passing
+initial two. Stage B delivery and its visual/fixture correction are separate from
+acceptance. No owner/deadline is assigned. Historical records and failed/passing
 evidence remain in linked handovers and the immutable
 [pre-finalization snapshot](https://github.com/dajomas/Scrying-Glass/blob/ce44afba0e12cd4b46125e735e935753ccb41be0/docs/todo/185-monster-correction-plan.md).
 No pending action is removed by this consolidation. Earlier dated pending gates
@@ -51,25 +51,28 @@ approval, appropriate tests/docs and review of covering CI before validation cla
 
 ### Stage B: compact and consistent roster presentation
 
-Status: implementation included in this increment; covering CI/manual acceptance
-pending. No delivery SHA is invented before push.
+Status: initial implementation delivered; first covering CI failed. Colour-only
+controls/single-line status and fixture correction included here, with corrective
+CI/manual acceptance pending. No corrective delivery SHA invented before push.
 
 4. Remove Roll heading and (legacy) suffix; retain accessible raw-input labels,
    separate totals and internal legacy semantics. No data migration.
-5. Fix status/control wrapping without blanket nowrap/viewport overflow; test long
-   names/statuses and narrow UI. Fixed AC/HP/Init labels omit on/off wording; style
-   state consistently with Join Battle/Ally/Visible. Retain programmatic state
-   (such as aria-pressed), keyboard/focus access and non-colour-only indication.
+5. Status is one line, allowed to continue beneath AC/HP without covering values
+   or controls or creating page-level overflow. Test short and long names/narrow UI.
+   Fixed AC/HP/Init captions omit on/off wording, consistent with Join Battle/Ally/
+   Visible colours. By the user's follow-up, remove dashes/checkmarks and use
+   colour-only visual state, superseding the earlier non-colour visual-marker
+   requirement. Retain aria-pressed, fixed accessible names and keyboard/focus.
 6. Replace displayed standing with alive in Characters/Monsters, without needless
    stored-identifier renames or life-state rule changes.
 
 ### Final validation and acceptance
 
-Review stage-B CI and desktop/narrow workflows against all three roster actions.
-Keep format/unit/ASGI/browser/live-provider/manual evidence distinct; disclose
-skipped, unexecuted and fixture limits. A.2/A.3 are accepted, but stage B needs its
-own workflow/visual acceptance before step-6 reconciliation. Overall completion
-and merging remain separate approvals.
+Review corrective stage-B CI and desktop/narrow workflows against all three roster
+actions. Keep format/unit/ASGI/browser/live-provider/manual evidence distinct;
+disclose skipped, unexecuted and fixture limits. A.2/A.3 are accepted, but stage B
+needs its own workflow/visual acceptance before step-6 reconciliation. Overall
+completion and merging remain separate approvals.
 
 ## Current four-commit plan and validation - 2026-11-08
 
@@ -186,24 +189,48 @@ A.2/A.3 accepted, not overall SG-TODO-018 completion or an assistant-run live au
 
 ## Stage B delivery and validation gate - 2026-11-08
 
-- Implementation/tests/docs included in this increment; delivery SHA only after
-  push. Covering stage-B CI and deployed manual acceptance pending.
-- Fixed captions and pressed states, scoped action/status layout, display-only
-  alive wording and removal of visible Roll/legacy text preserve underlying values
-  and semantics. The fixed-stat handler must use boolean state, not label suffixes,
-  and send exactly one existing PATCH. No optimistic state mutation.
-- Preparation: Node syntax and isolated Chromium passed 375/768/1440 with three
-  replacements each, 18 keyboard activations, one helper call each, zero old
-  delegate calls and no page errors. Updated existing layout and new full-Admin
-  test modules compile/parse; original layout blob verified. Full-Admin/application
-  tests not executed locally (FastAPI absent); normal CI discovers both modules.
-  See [stage-B handover](../handover/340-combined-monster-lookup.md#stage-b-roster-presentation---2026-11-08) for fixture limits.
-- Required acceptance: desktop/narrow/long-name status and control geometry, local
-  scrolling and focus, fixed AC/HP/Init on/off state with mouse/Enter/Space, rejected
-  saves and reload persistence, preserved selection/bulk/Edit/statistics actions,
-  raw-roll labels/separate totals and unchanged legacy totals, standing stored but
-  alive displayed, and unchanged down/stable/dead behavior. Recheck Add Monster and
-  Refresh remain unchanged.
-- Normal CI, no skip/workflow edit/dispatch. Review exact covering SHA/run/attempt,
+- Initial implementation delivered as 11f104058efb2a56365b0309ce8c6ee829d84c18.
+  Its first CI failed and visual follow-up was requested. The colour-only controls,
+  single-line status lane and fixture correction are included here; corrective
+  delivery SHA only after push. Corrective CI/manual acceptance pending.
+- Fixed captions/pressed states, scoped actions, alive wording and removal of
+  visible Roll/legacy text preserve underlying values/semantics. The fixed-stat
+  handler uses boolean state, not label suffixes, and one existing PATCH. No
+  optimistic mutation. User follow-up removes the initial minus/check decorations
+  in both rosters while retaining pressed semantics and colours.
+- Initial preparation: Node syntax and isolated Chromium passed 375/768/1440 with
+  three replacements each, 18 keyboard activations, one helper call each, zero old
+  delegate calls and no page errors. Layout/new full-Admin modules compiled/parsed;
+  original layout blob verified. Full-Admin/application tests were not run locally.
+- First covering evidence: run 42520146312 attempt 1 failed for exact initial
+  implementation SHA above on features/perplexity-018; publication
+  cdccf96fb0e0abd23d82783c0d38c43c3e0ff921 / ci-results-42520146312-attempt-1.
+  Each main/repeated suite ran 1,409 tests with one runtime timeout waiting for
+  a visible rejection message emitted in a collapsed input pane. No setup/collection
+  error. Post-wait state assertions were unexecuted. Syntax/import, pytest,
+  JavaScript/upload/checkout cleanup succeeded; Node/Python post-setup cleanup
+  skipped. Connection tracking 762 opened/0 without explicit close does not turn
+  the failed audit repeat into a pass. Keep this run failed historically.
+- Follow-up preparation: CSS-only production change reserves a lower strip in
+  every main roster data cell and positions a nonwrapping status line there,
+  allowed past the name cell beneath adjacent columns without covering values.
+  Revised three-method test compiles/parses; all 15 embedded JS expressions pass
+  Node syntax. Isolated Chromium geometry at 375/768/1440, both rosters and three
+  replacements passed one-line/spill/non-overlap/no-glyph/no-viewport-widening/no-
+  page-error checks. This is synthetic markup/component CSS, not full Admin or
+  live-server validation. Full-Admin tests not run locally (FastAPI absent).
+- The rejection fixture opens the existing input pane through normal UI toggles
+  before asserting visible feedback and unchanged state. Production notification
+  placement is unchanged; it can remain hidden if that input pane is closed.
+  Updated regressions measure the whole line for short/long names and check colour
+  difference, glyph absence and retained exact PATCH count/payload/pressed state.
+  See [follow-up evidence and limits](../handover/340-combined-monster-lookup.md#stage-b-ci-failure-and-colour-onlysingle-line-follow-up---2026-11-08).
+- Required acceptance: desktop/narrow/short and long names, status one line under
+  AC/HP with no value/control/next-row overlap, local scrolling/focus, no dash/check
+  decorations, fixed controls distinguished by colour, mouse/Enter/Space toggling,
+  rejected saves and persistence, preserved selection/bulk/Edit/statistics, raw
+  labels/totals and legacy semantics, alive display with unchanged stored states
+  and down/stable/dead behavior. Add Monster/Refresh remain unchanged.
+- Normal CI, no skip/workflow edit/dispatch. Review exact corrective SHA/run/attempt,
   correct failures with fresh approval, then obtain user stage-B acceptance before
-  overall close-out reconciliation. Merging/other-branch writes are not authorized.
+  overall close-out reconciliation. Merging/other-branch writes not authorized.

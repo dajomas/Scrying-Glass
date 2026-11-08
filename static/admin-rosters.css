@@ -4,14 +4,25 @@ body.admin-shell .sg-roster-region { overflow-x: auto; max-width: 100%; min-widt
 body.admin-shell #characters.sg-roster-region table { min-width: 48rem; }
 body.admin-shell .sg-roster-pane :is(th, td) { vertical-align: middle; }
 body.admin-shell .sg-roster-pane :is(th, td) { font-variant-numeric: tabular-nums; }
+/* Reserve a footer lane in every cell, so status can extend under AC/HP
+   without covering their values or another row's controls. */
+body.admin-shell .sg-roster-region > table > tbody > tr > td { padding-bottom: 1.85rem; }
+body.admin-shell .sg-roster-region > table > tbody > tr > td:nth-child(2) { position: relative; }
 body.admin-shell .sg-roster-state {
+    position: absolute;
+    left: .45rem;
+    bottom: .35rem;
+    z-index: 1;
     display: flex;
-    flex-wrap: wrap;
-    gap: .15rem .5rem;
-    margin-top: .25rem;
+    flex-wrap: nowrap;
+    width: max-content;
+    gap: 0 .5rem;
+    margin: 0;
     font-size: .8rem;
+    line-height: 1.35;
     color: var(--admin-muted);
-    white-space: normal;
+    white-space: nowrap;
+    pointer-events: none;
 }
 body.admin-shell .sg-roster-state-item { white-space: nowrap; }
 body.admin-shell .sg-roster-state-item + .sg-roster-state-item::before { content: '· '; }
@@ -23,12 +34,7 @@ body.admin-shell .sg-roster-actions {
     gap: .25rem;
 }
 body.admin-shell .sg-roster-actions button { margin: 0; white-space: nowrap; flex: 0 0 auto; }
-body.admin-shell .sg-roster-actions button[aria-pressed]::before {
-    content: '− ';
-    display: inline-block;
-    width: 1.1em;
-}
-body.admin-shell .sg-roster-actions button[aria-pressed="true"]::before { content: '✓ '; }
+/* Visual state is colour-only by user request; aria-pressed remains semantic. */
 body.admin-shell .sg-roster-actions button[aria-pressed="false"] {
     background: var(--surface-2);
     color: var(--text);

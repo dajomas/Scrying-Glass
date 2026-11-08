@@ -4,9 +4,11 @@
 
 2026-11-08. [SG-TODO-018 correction plan](../todo/185-monster-correction-plan.md).
 Branch features/perplexity-018. A.1 remains accepted. A.2 and A.3 have covering
-corrective CI and the user's manual test/sign-off on 2026-11-08. Stage B roster
-presentation is included in this increment; its covering CI and manual acceptance
-remain pending. No overall SG-TODO-018 close-out, merge or write-back authorized.
+corrective CI and the user's manual test/sign-off on 2026-11-08. Initial stage B
+was delivered as 11f104058efb2a56365b0309ce8c6ee829d84c18; its first covering CI
+failed and the user requested visual corrections. The colour-only/single-line
+status follow-up is included here; corrective CI and manual acceptance remain
+pending. No overall SG-TODO-018 close-out, merge or write-back authorized.
 Earlier dated preparation/delivery gates below are historical and superseded only
 where the later acceptance record explicitly says so.
 
@@ -55,9 +57,10 @@ Historical data is linked rather than discarded.
 
 ## Remaining gate
 
-A.2/A.3 manual acceptance is now recorded below. Review stage-B covering CI and
-obtain its desktop/narrow visual/workflow acceptance before overall reconciliation.
-Stage-B delivery is not validation or task completion. Merging remains separate.
+A.2/A.3 manual acceptance is recorded below. Review covering CI for the stage-B
+visual/fixture correction, then obtain desktop/narrow visual/workflow acceptance
+before overall reconciliation. Stage-B delivery is not validation or completion.
+Merging remains separate.
 
 ## Commit 5 initiative overwrite follow-up - 2026-11-08
 
@@ -186,7 +189,9 @@ assistant-executed deployed/live-provider audit or overall SG-TODO-018 close-out
 
 ## Stage B roster presentation - 2026-11-08
 
-Implementation included in this increment; delivery SHA is assigned only on push.
+Initial implementation delivered as 11f104058efb2a56365b0309ce8c6ee829d84c18. The
+following initial behavior/preparation record is retained; the later follow-up
+supersedes its wrapping and visual-marker choices.
 The existing loaded roster enhancement removes visible Roll label text and the
 (legacy) suffix, preserving the input's raw-roll accessible label and separate
 Total output. Retained totals still have no invented raw roll; a tooltip explains
@@ -196,41 +201,94 @@ child writes to avoid an observer feedback loop. Character initiative labels rem
 combatant-specific; monster raw-roll labels are no longer overwritten by the
 generic roster label. No values, origins, calculation/order or Tab rules change.
 
-Roster status maps standing to alive for display only, including the character
-life-state button. Down/stable/dead and stored identifiers/rules remain unchanged.
-Status phrases use individual nonbreaking spans inside a wrapping status group.
-The explicit single-line action group retains table-local scrolling and button
-order/focus exposure. Blanket action-cell nowrap is removed; names/species and
-individual button captions remain intentionally unwrapped. No page-level overflow
-is introduced by intent; full-Admin geometry checks remain required.
+Initial roster status mapped standing to alive for display only, including the
+character life-state button. Down/stable/dead and stored identifiers/rules remain
+unchanged. Initial status phrases used individual nonbreaking spans inside a
+wrapping status group. The explicit single-line action group retained table-local
+scrolling and button order/focus exposure. Blanket action-cell nowrap was removed;
+names/species and individual button captions remained intentionally unwrapped.
 
 AC/HP/Init have fixed captions and server-derived on classes/aria-pressed. Join
-Battle/Ally/Visible share pressed semantics and scoped active styling. Minus/check
-markers distinguish states without colour alone; aria-labels keep accessible
-button names stable. The old document delegate infers fixed-stat state from the
-visible on suffix, so the roster-local fixed-stat handler stops that delegate and
-uses the same patch helper once with boolean state. It does not optimistically
-change state. Existing PATCH URLs, payload keys, authentication, server validation,
-error notices and reload behavior remain. Other button handlers are untouched.
+Battle/Ally/Visible share pressed semantics and scoped active styling. The initial
+minus/check markers are now superseded by the user's colour-only request below;
+aria-labels keep accessible button names stable. The old document delegate infers
+fixed-stat state from the visible on suffix, so the roster-local fixed-stat handler
+stops that delegate and uses the same patch helper once with boolean state. It
+does not optimistically change state. Existing PATCH URLs, payload keys,
+authentication, server validation, error notices and reload behavior remain.
+Other button handlers are untouched.
 
-Preparation across this continuation: Node syntax passed for the roster draft.
-Isolated Chromium at 375/768/1440 passed three replacements per width and 18
-keyboard toggle activations overall: one helper call each, zero old-delegate calls,
-no page errors. This fixture used copied production enhancement code with a stub
-patch helper/minimal markup, not full Admin, HTTP/SQLite or deployed acceptance.
-The existing layout test's original blob 731b81475012ffcb61cf252d505dc0cdfbe50249
-was verified; only its three fixed-caption expectations change. Updated layout
-and new full-Admin regression modules compile/parse. Full-Admin tests were prepared
-not executed locally (FastAPI absent). New intercepted-HTTP tests cover long names,
-three widths, replacements, raw labels/retained totals, display-only life mapping,
-read-only rendering, each fixed toggle in both directions with Enter/Space, one
-PATCH per activation, state markers and rejected requests preserving state. Existing
-geometry, all-button keyboard/local scrolling, Edit/statistics and removed-control
-checks remain. Normal CI discovers both modules; no workflow edit/skip/dispatch.
+Initial preparation: Node syntax passed for the roster draft. Isolated Chromium
+at 375/768/1440 passed three replacements per width and 18 keyboard toggle
+activations overall: one helper call each, zero old-delegate calls, no page errors.
+This fixture used copied production enhancement code with a stub patch helper/
+minimal markup, not full Admin, HTTP/SQLite or deployed acceptance. The existing
+layout test's original blob 731b81475012ffcb61cf252d505dc0cdfbe50249 was verified;
+only its three fixed-caption expectations changed. Updated layout and new full-
+Admin regression modules compiled/parsed. Full-Admin tests were prepared not
+executed locally (FastAPI absent). Initial intercepted-HTTP tests covered long
+names, three widths, replacements, raw labels/retained totals, life mapping,
+read-only rendering and fixed toggles; they checked individual status phrases,
+not the complete status line, so missed the screenshot's short-name wrap defect.
+Existing geometry, all-button keyboard/local scrolling, Edit/statistics and
+removed-control checks remain. Normal CI discovers them; no workflow changes.
 
-Stage-B covering CI and user visual/workflow acceptance remain pending. Deploy the
-matching static files and reload browsers; no schema, Python/server, core bundle
+Its first covering CI failed as recorded below. Corrective CI and user stage-B
+visual/workflow acceptance remain pending. No schema, Python/server, core bundle
 identity, creation or Refresh change. README/User Guide and roster handover 310
-were reviewed; their existing workflows/single-line controls remain accurate. Root
-HANDOVER and correction-plan status are updated; TODO index stable links and overall
-in-progress state remain. No overall task close-out, merge or other-branch write.
+were reviewed; their existing workflows/single-line controls remain accurate.
+Root index links/overall open status remain accurate for this corrective increment.
+No overall task close-out, merge or other-branch write.
+
+## Stage B CI failure and colour-only/single-line follow-up - 2026-11-08
+
+Run 42520146312 attempt 1 failed for exact tested SHA
+11f104058efb2a56365b0309ce8c6ee829d84c18 on features/perplexity-018. Evidence read
+at publication cdccf96fb0e0abd23d82783c0d38c43c3e0ff921 /
+ci-results-42520146312-attempt-1. Run/job metadata agrees. Main and connection-
+audit repeat each ran 1,409 tests with one error in the same method
+test_fixed_toggles_use_state_not_labels_and_rejection_keeps_state. It waited for
+visible fixture rejected text already emitted into monsterAddNotification inside
+the collapsed monsterInputPane. This is a runtime fixture-visibility timeout, not
+a setup/collection error or two independent defects. Post-wait state assertions
+were not reached. Syntax/server import, pytest, JavaScript, artifact upload and
+checkout cleanup succeeded; Node/Python post-setup cleanup was skipped. Tracking
+reports 762 opened/0 without explicit close, but the audit step remains failed
+because its repeated suite failed. Later log/round audits and browser smoke
+completed; smoke reports no page errors. This failed run stays failed.
+
+The user rejected the minus/check visual decorations and supplied a screenshot
+showing alive wrapping. The request explicitly supersedes the prior non-colour
+visual-marker requirement: colours only for active/inactive controls in both
+rosters, retaining aria-pressed, fixed accessible names, titles and keyboard
+behavior. Status must be one line and may continue beneath AC/HP.
+
+Correction changes production CSS only. Remove both button pseudo-element marker
+rules; keep pressed-state colours. Reserve a lower lane using bottom padding in
+each main roster data cell. Position the name-cell status in that lane with
+nonwrapping flex/max-content width so it can extend beneath adjacent columns
+without widening the name cell or covering their values/controls. It remains
+inside the roster scroll region, ignores pointer events and stays within the row.
+Status separator dots are retained; no dash/check decorations remain. JavaScript,
+PATCH behavior, data/statistics/life states, Add Monster and Refresh are unchanged.
+
+The full-Admin fixture opens Battle setup/Monster input using normal toggle UI
+before rejection, retaining its visible-error and unchanged-state assertions. The
+production pane-specific notification location is unchanged and may be hidden
+when that input pane is closed; no broader notification UX change is claimed.
+Tests now measure complete-line height, equal phrase baselines, extension past
+the short name cell and separation from other cell content; add the Poddy/noble
+prodigy case at 375/768/1440 over three replacements. Assert absence of glyphs and
+different on/off colours while retaining exact PATCH count/payload/state checks.
+
+Preparation: reconstructed original test matches live blob
+6e22b1225f9fa197765bae3c271acdd585338e9c. Revised three-method module compiles/
+parses; all 15 embedded JavaScript expressions pass Node syntax checking. Local
+isolated Chromium with synthetic two-row tables passed both rosters at three
+widths/three replacements: one line extending past the name cell, no adjacent-
+content overlap, no glyphs, no viewport widening and no page errors. This is
+component CSS geometry, not assembled Admin/server/deployed acceptance. Full-Admin
+methods were not executed locally because FastAPI is absent; existing normal CI
+discovers them. No skip marker, workflow edit or separate dispatch. Correction
+delivery and covering validation remain separate; no new SHA/run invented.
+Manual visual acceptance and overall close-out remain outstanding.
