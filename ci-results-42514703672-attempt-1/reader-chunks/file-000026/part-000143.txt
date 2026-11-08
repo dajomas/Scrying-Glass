@@ -1,0 +1,29 @@
+:26:36.9585970Z OSError: secret 5e.tools endpoint
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9587516Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9587925Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9588836Z   File "/tmp/scrying-tests-imnaf05f/repo/python/scrying_glass_monster_selection.py", line 101, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9589473Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9590103Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9590646Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9591153Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9591734Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9592292Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9592645Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9593226Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9594012Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9594302Z OSError: secret 5e.tools endpoint
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9594495Z 
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9594767Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9595072Z 
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9595230Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9595862Z   File "/tmp/scrying-tests-imnaf05f/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9596396Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9596913Z   File "/tmp/scrying-tests-imnaf05f/repo/python/scrying_glass_monster_selection.py", line 152, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9597629Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9598200Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9598874Z   File "/tmp/scrying-tests-imnaf05f/repo/python/scrying_glass_monster_selection.py", line 144, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9599666Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:36.9600463Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:37.8146095Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:37.8146767Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-08T19:26:37.8147452Z   File "/tmp/scrying-tests-imnaf05f/repo/python/scrying_glass_combined_lookup.py", line 28, in combine
