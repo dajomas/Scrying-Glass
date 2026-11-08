@@ -86,17 +86,18 @@ class LockedPageTests(unittest.TestCase):
 
 class SelectionIntegrationTests(unittest.TestCase):
     def setUp(self):
-        # Extract unchanged production selection functions to avoid requiring FastAPI.
+        # Extract production selection functions to avoid requiring FastAPI.
         source = ROOT / 'python/scrying_glass_monster_selection.py'
         tree = ast.parse(source.read_text(encoding='utf-8'))
         names = {'ProviderError', 'dnd_candidates', 'lookup_candidates', 'MonsterImage'}
         subset = ast.Module(body=[n for n in tree.body if getattr(n, 'name', None) in names], type_ignores=[])
         self.fallback = Mock(return_value=[{'found': True, 'species': 'Crawling Claw', 'provider': '5e.tools'}])
+        self.sign = Mock(return_value='fixture-token')
         self.ns = dict(HTTPError=HTTPError, urlsplit=dnd.urlsplit, MAX_CANDIDATES=32,
                        LOG=logging.getLogger(__name__), HTMLParser=HTMLParser, urljoin=urljoin,
                        ft=SimpleNamespace(https_url=lambda value: value.startswith('https://')),
                        _KEY=b'locked-page-fixture-only-key', time=SimpleNamespace(time=lambda: 1000),
-                       issue_token=lambda candidate: 'fixture-token', fivetools_candidates=self.fallback)
+                       issue_token=self.sign, fivetools_candidates=self.fallback)
         self.ns.update(__name__='python.scrying_glass_monster_selection', __package__='python')
         exec(compile(subset, str(source), 'exec'), self.ns)
         self.ctx = SimpleNamespace(CONFIG={'display': {}},
@@ -107,27 +108,45 @@ class SelectionIntegrationTests(unittest.TestCase):
     def lookup(self):
         return self.ns['lookup_candidates'](self.ctx, 'Crawling Claw')
 
-    def test_all_locked_falls_back(self):
+    def test_all_locked_keeps_fivetools_results(self):
         with patch.object(dnd, 'urlopen', side_effect=[Response(LOCKED), error(403)]):
             result = self.lookup()
         self.assertEqual(result['status'], 'ok')
+        self.assertEqual(len(result['candidates']), 1)
         self.assertEqual(result['candidates'][0]['provider'], '5e.tools')
         self.fallback.assert_called_once_with('Crawling Claw', self.ctx.CONFIG['display'])
+        self.sign.assert_called_once()
 
-    def test_locked_then_usable_keeps_primary(self):
+    def test_locked_then_usable_keeps_both_providers(self):
         with patch.object(dnd, 'urlopen', side_effect=[Response(LOCKED), Response(STATS)]):
             result = self.lookup()
         self.assertEqual(result['status'], 'ok')
-        self.assertEqual(len(result['candidates']), 1)
-        self.assertEqual(result['candidates'][0]['provider'], 'D&D Beyond')
-        self.fallback.assert_not_called()
+        self.assertEqual([item['provider'] for item in result['candidates']], ['D&D Beyond', '5e.tools'])
+        self.assertEqual((result['candidates'][0]['ac'], result['candidates'][0]['hp']), (12, '7'))
+        self.fallback.assert_called_once_with('Crawling Claw', self.ctx.CONFIG['display'])
+        self.assertEqual(self.sign.call_count, 2)
 
-    def test_unclassified_failure_and_search_failure_do_not_fallback(self):
+    def test_unclassified_failure_and_search_failure_block_all_results(self):
         with patch.object(dnd, 'urlopen', side_effect=error(403, b'Generic forbidden')):
-            self.assertEqual(self.lookup()['status'], 'error')
+            result = self.lookup()
+        self.assertEqual((result['status'], result['candidates']), ('error', []))
+        self.fallback.assert_called_once_with('Crawling Claw', self.ctx.CONFIG['display'])
+        self.sign.assert_not_called()
+        self.fallback.reset_mock()
         self.ctx.dnd_monster_candidates.side_effect = TimeoutError('fixture')
-        self.assertEqual(self.lookup()['status'], 'error')
-        self.fallback.assert_not_called()
+        result = self.lookup()
+        self.assertEqual((result['status'], result['candidates']), ('error', []))
+        self.fallback.assert_called_once_with('Crawling Claw', self.ctx.CONFIG['display'])
+        self.sign.assert_not_called()
+
+    def test_secondary_failure_blocks_accessible_primary_without_signing(self):
+        self.fallback.side_effect = TimeoutError('private endpoint')
+        with patch.object(dnd, 'urlopen', side_effect=[Response(LOCKED), Response(STATS)]):
+            result = self.lookup()
+        self.assertEqual((result['status'], result['candidates']), ('error', []))
+        self.assertNotIn('private endpoint', result['reason'])
+        self.fallback.assert_called_once_with('Crawling Claw', self.ctx.CONFIG['display'])
+        self.sign.assert_not_called()
 
 if __name__ == '__main__':
     unittest.main()

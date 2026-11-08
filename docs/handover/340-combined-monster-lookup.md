@@ -3,8 +3,8 @@
 [Back to handover index](../../HANDOVER.md)
 
 2026-11-08. [SG-TODO-018 correction A.2](../todo/185-monster-correction-plan.md).
-Branch features/perplexity-018. Commit 3 backend included; covering CI, commit 4
-and A.2 workflow acceptance pending. A.1 remains accepted; no overall close-out/merge.
+Branch features/perplexity-018. Backend delivered; first commit-3 CI failed.
+Locked-page fixture correction included with covering CI, commit 4 and A.2 acceptance pending. A.1 remains accepted; no overall close-out/merge.
 
 ## Runtime and compatibility
 
@@ -47,3 +47,31 @@ unfinished/accepted actions retained. Closed delivery detail remains in 335 and
 its linked immutable pre-activation snapshot. Root TODO's overall SG-TODO-018
 in-progress status and stable links are unchanged. No task completion is inferred
 from code preparation or push. Commit 4, A.3, stage B and merge remain pending.
+
+## Failed activation CI and locked-page correction - 2026-11-08
+
+Verified run 42503436253 attempt 1 tested exact
+5414f1359808fdc07c75b94b1ca3ffe15c078d70. Publication:
+a06ac1fad20816ff3403506eca070cc1b101cc83 / ci-results-42503436253-attempt-1.
+Both main and repeated runs report 1,391 tests with two failures, not four defects.
+The stale locked-page fixture expected one candidate (actual two) and no 5e.tools
+calls (actual two across the two failure cases). Syntax/server import, pytest,
+JavaScript and artifact upload succeeded. Standalone step failed; connection
+tracking 742 opened/0 without explicit close does not make it pass. Python/Node
+post-setup cleanup was skipped. The original failed run remains failed history.
+Log file-000026 parts 109 and 148 contain main/repeated failure summaries.
+
+The correction migrates the remaining fallback-only assertions, retains exact
+provider order/stat checks and adds observable no-signing guards plus a secondary-
+failure regression. LockedPageTests (all six access-gate methods) is AST-identical;
+no production/security classifier is modified. The original test blob was verified.
+
+An isolated reconstructed package reproduced 9 original methods with two failures,
+then passed all 10 corrected methods. Six unchanged pure dependency blobs were
+verified; the local selection source contains the same four production AST nodes
+that this fixture extracts, not the full FastAPI module. HTTP is mocked and signing
+is a fixture Mock; no server/package initialization, actual signing/ASGI/browser/
+live-provider or full-suite proof is claimed. Corrected syntax checks passed.
+Covering CI and A.2 acceptance are pending. README/root indexes/workflows remain
+unchanged: runtime behavior, overall status and links are unaffected. This is a
+commit-3 corrective increment, not commit 4 or an authorization to merge/close.

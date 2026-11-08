@@ -3,7 +3,7 @@
 [Back to TODO index](../../TODO.md)
 
 - Updated: 2026-11-08. Tracking: SG-TODO-018 follow-up and adjacent lookup/roster corrections.
-- Status: A.1 accepted; A.2 commit 3 backend activation included with covering CI/acceptance pending. Commit 4, A.3 and stage B remain pending.
+- Status: A.1 accepted; A.2 backend delivered, first CI failed on two stale locked-page expectations; focused test correction included with covering CI pending. Commit 4, A.3 and stage B remain pending.
 - Branch: features/perplexity-018. No merge/write-back or overall close-out authorized.
 - Related: [018 initiative/refresh contract](180-monster-initiative-bonus.md), [lookup](010-monster-lookup.md), [source configuration](060-fivetools-source-configuration.md), [rosters](../handover/310-admin-rosters.md), [A.1 history](../handover/335-fivetools-initiative-correction.md), [current A.2 delivery](../handover/340-combined-monster-lookup.md).
 
@@ -77,8 +77,10 @@ separate approvals. A.1 acceptance does not close A.2 or SG-TODO-018.
 2. Fixture isolation/expired-offer restoration: 22e0f08f27bf0a340fbfb0f269d330513ca7569a;
    successful CI 42501718072 attempt 1, publication d4757545a857f57b541659e860e52272b5d1fafc.
    Run/job metadata confirms every listed step/cleanup succeeded for that tested SHA.
-3. Backend activation and fallback-expectation migration: included here, new CI pending.
+3. Backend activation: 5414f1359808fdc07c75b94b1ca3ffe15c078d70; first CI failed, targeted fixture correction included, covering CI pending.
 4. Help/config wording and browser/application/final validation: pending.
+
+### Initial activation preparation (historical)
 
 Prepared commit-3 source and both migrated test modules parse/compile. Thirty-six
 isolated cases passed using the actual combiner and extracted lookup body with
@@ -107,3 +109,23 @@ A.1 covering run 42497904756 attempt 1 passed exact
 9417cf7d0c8fc2f4d45606708c5312ef508d96a6; publication
 8fdf41731ad42a936721a841e26c82d2aaa9e479. The user confirmed all three manual checks.
 The initial two-commit A.2 plan is superseded by the four-commit plan above.
+
+## Commit 3 locked-page CI correction - 2026-11-08
+
+Run 42503436253 attempt 1 failed for exact tested SHA
+5414f1359808fdc07c75b94b1ca3ffe15c078d70; publication
+a06ac1fad20816ff3403506eca070cc1b101cc83 / ci-results-42503436253-attempt-1.
+Main/repeated suites each ran 1,391 tests with the same two assertion failures in
+test_dndbeyond_locked_pages.SelectionIntegrationTests, not four distinct defects.
+The expectations of one candidate and no secondary call contradict combined lookup.
+
+This correction updates only that fixture and tracking documents. It retains both
+provider candidates after an accessible primary result and verifies both providers
+are queried on failure while all results/signing remain blocked. A new secondary-
+failure case strengthens this contract; the six access-gate methods are unchanged.
+Local isolated reconstruction reproduced the original two failures (9 methods),
+then passed all 10 corrected methods using unchanged production D&D/pure helpers
+and the four production selection nodes already extracted by the fixture. This is
+not server/package initialization, real signing, ASGI, browser, live-provider or
+full-suite verification. Covering normal CI must pass before commit 4. Production
+code, access-gate classification and workflows are unchanged; no A.2 completion.
