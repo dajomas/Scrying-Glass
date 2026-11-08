@@ -40,6 +40,10 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 32. [Initiative keyboard navigation](docs/handover/320-initiative-keyboard-navigation.md)
 33. [Monster initiative and refresh foundations](docs/handover/330-monster-initiative-foundations.md)
 
+## Current pending corrections - 2026-11-08
+
+SG-TODO-018 is not accepted. The user declined the proposed close-out reconciliation; do not push that rejected draft. Follow the [monster provider and roster correction plan](docs/todo/185-monster-correction-plan.md) for the six reported actions, processing order, changed candidate/search requirements and acceptance checks. That plan is the current corrective queue, not an implementation or validation claim.
+
 ## Required update convention
 
 All future handover additions must follow the same indexed structure: update the relevant existing section or create a numbered Markdown file under `docs/handover/`, and update this index in the same commit. Read the [maintenance rules](docs/handover/040-maintenance-rules.md) before making changes.
