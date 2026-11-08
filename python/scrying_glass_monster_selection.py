@@ -92,6 +92,7 @@ def dnd_candidates(context, species):
         raise ProviderError("D&D Beyond lookup failed; no fallback was attempted. Enter stats manually or retry.") from exc
 
 def fivetools_candidates(species, display):
+    from .scrying_glass_fivetools_initiative import fivetools_initiative_offer
     try:
         root = display.get("fivetools_data_base_url", "https://5e.tools/data/bestiary").rstrip("/")
         sources = ft.configured_sources(display)
@@ -127,7 +128,8 @@ def fivetools_candidates(species, display):
                 results.append({"found": True, "name": str(monster["name"]), "species": species,
                                 "provider": "5e.tools", "source": source_name,
                                 "legacy": source_name == "MM", "source_url": url,
-                                "ac": ac, "hp": hp, "hp_source": hp_source, "image_url": image})
+                                "ac": ac, "hp": hp, "hp_source": hp_source, "image_url": image,
+                                **fivetools_initiative_offer(monster)})
                 if len(results) > MAX_CANDIDATES:
                     raise ProviderError("5e.tools returned too many candidates; refine the configured sources.")
         return results

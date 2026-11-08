@@ -4,7 +4,7 @@
 
 - Updated: 2026-11-08.
 - Tracking: SG-TODO-018 follow-up and adjacent roster/lookup corrections; not a new completed task.
-- Status: planned corrections; implementation and validation pending.
+- Status: A.1 implementation included with covering CI/acceptance pending; A.2/A.3 and stage B remain planned.
 - Branch: features/perplexity-018. No merge or write-back authorized.
 - Related: [018 initiative/refresh contract](180-monster-initiative-bonus.md), [lookup](010-monster-lookup.md), [5e.tools configuration](060-fivetools-source-configuration.md), [roster presentation](../handover/310-admin-rosters.md), [initiative handover](../handover/330-monster-initiative-foundations.md).
 
@@ -15,8 +15,8 @@ implementation defects and adjacent usability issues. SG-TODO-018 is not accepte
 or completed. The rejected reconciliation must not be pushed. Earlier passing CI
 is scoped evidence, not proof that these reported behaviors work.
 
-This document records the requested actions and processing order for later work;
-it does not implement them. The single-candidate rule below supersedes the earlier
+The original plan records the requested actions and processing order. The A.1
+implementation update below records the first corrective increment. The single-candidate rule below supersedes the earlier
 requirement to ask for candidate selection even when only one is available. The
 combined-source requirement supersedes fallback-only search. Earlier delivery and
 foundation notes remain history, not the current corrective work queue.
@@ -32,8 +32,8 @@ validated. This documentation-only skip request does not apply to later code pus
 
 1. Fix 5e.tools initiative extraction for creation and refresh.
    - Verify the actual provider data/rendering format before implementation.
-   - User-reported acceptance example: Noble Prodigy, XMM, initiative +7. This
-     value has not yet been independently verified against retrieved source data.
+   - Noble Prodigy, XMM, initiative +7 is now verified from the supplied JSON
+     and renderer: explicit proficiency multiplier 1, Dexterity 16 and CR 10.
    - Handle validated provider representations rather than guessing from Dexterity
      or silently defaulting unsupported source data to a source-backed zero.
    - Preserve signed value, source identity and provenance through lookup, creation,
@@ -80,7 +80,7 @@ checks distinct; report unexecuted checks and fixture limits honestly. Obtain us
 workflow/visual acceptance, resolve remaining agreed checks, then revisit step 6
 tracking reconciliation. Completion and merge remain separate approvals.
 
-## Inspection basis and validation status
+## Original planning inspection and validation status (historical)
 
 The inspected python/scrying_glass_monster_selection.py has no 5e.tools initiative
 field in candidate construction and calls 5e.tools only when D&D Beyond returns
@@ -92,3 +92,19 @@ This planning commit changes human-readable documentation only. No application
 code, tests, configuration or workflows change; no tests were run for it. Use
 [skip ci]; do not modify workflows or separately dispatch CI. README continues to
 describe existing fallback behavior until that implementation changes.
+
+## A.1 implementation increment - 2026-11-08
+
+Explicit signed totals, object totals and proficiency multipliers 0/1/2 now feed
+creation offers and exact-source Refresh. Missing initiative has no Dexterity-only
+fallback; explicit zero remains available. Unknown/malformed/out-of-range/copy
+values cannot overwrite assigned bonuses. Existing source binding, explicit Apply
+and persistence remain unchanged. A.2/A.3 and stage B are still pending.
+
+Ten pure unit methods passed; all 503 supplied XMM entries were scanned offline:
+187 available, 316 missing; Noble Prodigy +7. Python AST parsing passed. Two secured
+ASGI/SQLite regression methods are prepared but unexecuted locally (FastAPI absent).
+Normal CI discovers them; covering CI, live-provider and desktop/narrow acceptance
+remain pending. See [A.1 handover](../handover/335-fivetools-initiative-correction.md).
+The historical documentation-only skip rule above does not apply to this mixed
+commit. Do not close SG-TODO-018 or merge/write back.

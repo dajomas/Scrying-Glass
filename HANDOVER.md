@@ -40,9 +40,11 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 32. [Initiative keyboard navigation](docs/handover/320-initiative-keyboard-navigation.md)
 33. [Monster initiative and refresh foundations](docs/handover/330-monster-initiative-foundations.md)
 
+34. [5e.tools initiative extraction correction](docs/handover/335-fivetools-initiative-correction.md)
+
 ## Current pending corrections - 2026-11-08
 
-SG-TODO-018 is not accepted. The user declined the proposed close-out reconciliation; do not push that rejected draft. Follow the [monster provider and roster correction plan](docs/todo/185-monster-correction-plan.md) for the six reported actions, processing order, changed candidate/search requirements and acceptance checks. That plan is the current corrective queue, not an implementation or validation claim.
+SG-TODO-018 is not accepted. The user declined the proposed close-out reconciliation; do not push that rejected draft. Follow the [monster provider and roster correction plan](docs/todo/185-monster-correction-plan.md) for the six reported actions, processing order, changed candidate/search requirements and acceptance checks. That plan is the current corrective queue. The A.1 extractor is included with validation pending; see the linked correction handover. A.2/A.3 and stage B remain planned. No close-out or merge is authorized.
 
 ## Required update convention
 
