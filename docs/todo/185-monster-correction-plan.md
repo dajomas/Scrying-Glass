@@ -91,3 +91,21 @@ A.1's source hashes, failed CI, covering run 42497904756 and manual acceptance a
 preserved in 335. The immutable snapshot above retains the earlier per-stage task
 records/anchors; 340 records current A.2 delivery and limits. Root TODO remains
 in progress with unchanged stable task links. A.3, stage B and merge are not started.
+
+## Commit 5 initiative overwrite follow-up - 2026-11-08
+
+- Tracking: SG-TODO-018 follow-up before A.3.
+- Status: in progress; implementation, README, browser regressions and continuity
+  updates prepared; covering CI and deployed workflow acceptance pending.
+- Agreed scope: remove the separate Add Monster bonus confirmation, not candidate
+  choice or Refresh Apply. Available bonuses follow the existing AC/HP overwrite
+  option; preserve intervening edits, missing/invalid values and exact signed offers.
+- Evidence: 21 local Chromium fixture methods and Node syntax passed; see
+  [handover limits](../handover/340-combined-monster-lookup.md#commit-5-initiative-overwrite-follow-up---2026-11-08).
+- Acceptance gate: review covering normal CI, then verify deployed desktop/narrow
+  blank fills, checked/unchecked replacement, explicit zero/negative bonuses, edits
+  during request/choice (including revert), missing/invalid source values, exact
+  selected-provider attribution, cancellation/reset and no repeat popup/lookup.
+  Verify source creation/Refresh persistence with server validation intact.
+- Existing AC/HP assignments, Refresh review/Apply, A.3 and stage B stay separate.
+  No task close-out, overall acceptance, merge or write-back is inferred.

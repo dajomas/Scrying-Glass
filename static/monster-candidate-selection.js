@@ -12,11 +12,22 @@
     let cancelPopup = null;
     let generation = 0;
     let pending = 0;
+    let bonusRevision = 0;
     function clearAppliedOffer() {
         appliedOffer = null;
     }
-    bonusInput?.addEventListener('input', clearAppliedOffer);
-    bonusInput?.addEventListener('change', clearAppliedOffer);
+    function bonusEdited() {
+        bonusRevision++;
+        clearAppliedOffer();
+    }
+    bonusInput?.addEventListener('input', bonusEdited);
+    bonusInput?.addEventListener('change', bonusEdited);
+    const bonusHelp = document.querySelector('#monsterInitiativeBonusHelp');
+    if (bonusHelp) {
+        bonusHelp.append(' The overwrite option above also applies to available source initiative bonuses. ' +
+            'Blank bonuses are filled automatically; existing values are replaced only when overwrite is enabled. ' +
+            'Missing or invalid source bonuses and values edited during lookup are kept unchanged.');
+    }
     function publishSelection() {
         document.dispatchEvent(new CustomEvent('scrying:monster-selection', {
             detail: selected ? {species: selected.species, provider: selected.provider,
@@ -118,75 +129,21 @@
             dialog.showModal();
         });
     }
-    function reviewOffer(candidate) {
-        return new Promise(resolve => {
-            const previousFocus = document.activeElement;
-            const dialog = document.createElement('dialog');
-            dialog.setAttribute('aria-label', 'Review monster initiative bonus');
-            dialog.style.maxWidth = 'min(40rem, 90vw)';
-            const heading = document.createElement('h2');
-            heading.textContent = 'Review initiative bonus';
-            const summary = document.createElement('p');
-            summary.textContent = `${candidate.name || candidate.species} — ` +
-                `${monsterSourceLabel(candidate, true)} — ${offerText(candidate)}`;
-            const explanation = document.createElement('p');
-            explanation.textContent = 'Nothing is assigned by opening this review. ' +
-                (signedOfferAvailable(candidate)
-                    ? 'Copying retains a signed source offer for server validation when you add the monster. ' +
-                      'Editing the bonus or changing selection clears source attribution. '
-                    : 'Copying sets an editable manual value; no signed source offer is available. ') +
-                'This does not create a monster. The Armor Class/HP overwrite option does not apply to this bonus.';
-            const current = document.createElement('p');
-            current.textContent = `Current creation bonus: ${bonusInput?.value || 'blank (default 0)'}.`;
-            dialog.append(heading, summary, explanation, current);
-            if (candidate.initiative_bonus_evidence) {
-                const evidence = document.createElement('p');
-                evidence.textContent = `Source excerpt: ${candidate.initiative_bonus_evidence}`;
-                dialog.append(evidence);
-            }
-            let finished = false;
-            function finish(decision) {
-                if (finished) return;
-                finished = true;
-                cancelPopup = null;
-                dialog.close();
-                dialog.remove();
-                previousFocus?.focus();
-                resolve(decision);
-            }
-            const apply = document.createElement('button');
-            apply.type = 'button';
-            apply.textContent = 'Copy offered bonus to creation form';
-            apply.disabled = !bonusInput || !offerAvailable(candidate);
-            apply.addEventListener('click', () => finish('apply'));
-            const keep = document.createElement('button');
-            keep.type = 'button';
-            keep.textContent = 'Keep current bonus and use candidate';
-            keep.addEventListener('click', () => finish('keep'));
-            const cancel = document.createElement('button');
-            cancel.type = 'button';
-            cancel.textContent = 'Cancel selection';
-            cancel.addEventListener('click', () => finish('cancel'));
-            dialog.addEventListener('cancel', event => {event.preventDefault(); finish('cancel');});
-            dialog.append(apply, keep, cancel);
-            document.body.append(dialog);
-            cancelPopup = () => finish('cancel');
-            dialog.showModal();
-            keep.focus();
-        });
-    }
     request = async function(url, options = {}) {
         const prefix = '/api/dndbeyond/monster-stats?species=';
         if (typeof url !== 'string' || !url.startsWith(prefix)) return originalRequest(url, options);
         const species = new URLSearchParams(url.split('?')[1]).get('species');
         const current = ++generation;
         const requestId = monsterSpeciesLookupRequest;
+        const originalBonus = bonusInput?.value;
+        const originalBonusRevision = bonusRevision;
+        const overwriteBonus = Boolean(overwrite?.checked);
         selected = null;
         clearAppliedOffer();
         publishSelection();
         if (cancelPopup) cancelPopup();
         const isCurrent = () => current === generation && requestId === monsterSpeciesLookupRequest &&
-            speciesInput.value.trim() === species;
+            speciesInput.value.trim() === species && Boolean(overwrite?.checked) === overwriteBonus;
         pending++;
         try {
             const result = await originalRequest(`/api/monsters/lookup?species=${encodeURIComponent(species)}`, options);
@@ -200,23 +157,19 @@
             if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
             if (!candidate) return {found: false,
                 reason: 'Monster selection cancelled; manual entry remains available.'};
-            const previousBonus = bonusInput?.value;
-            const decision = await reviewOffer(candidate);
-            if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
-            if (decision === 'cancel') return {found: false,
-                reason: 'Monster selection cancelled; manual entry remains available.'};
-            if (decision === 'apply' && bonusInput && offerAvailable(candidate)) {
-                if (bonusInput.value === previousBonus) {
-                    bonusInput.value = String(candidate.initiative_bonus);
-                    bonusInput.dispatchEvent(new Event('input', {bubbles: true}));
-                    bonusInput.dispatchEvent(new Event('change', {bubbles: true}));
-                    if (signedOfferAvailable(candidate)) {
-                        appliedOffer = {token: candidate.initiative_bonus_offer_token,
-                            selectionToken: candidate.selection_token, species,
-                            value: bonusInput.value};
-                    }
-                } else {
-                    paneNotification('monsters', 'Bonus changed during review; your current value was kept.');
+            const bonusUnchanged = bonusInput && bonusInput.value === originalBonus &&
+                bonusRevision === originalBonusRevision;
+            if (bonusUnchanged && offerAvailable(candidate) &&
+                    (overwriteBonus || !bonusInput.value.trim())) {
+                const value = String(candidate.initiative_bonus);
+                bonusInput.value = value;
+                // Clear old attribution before binding this exact offer after application events.
+                bonusInput.dispatchEvent(new Event('input', {bubbles: true}));
+                bonusInput.dispatchEvent(new Event('change', {bubbles: true}));
+                if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
+                if (bonusInput.value === value && signedOfferAvailable(candidate)) {
+                    appliedOffer = {token: candidate.initiative_bonus_offer_token,
+                        selectionToken: candidate.selection_token, species, value};
                 }
             }
             selected = candidate;

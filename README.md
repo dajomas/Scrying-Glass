@@ -143,8 +143,14 @@ remains explicitly unavailable rather than guessed. No account authentication or
 entitlement filtering is added.
 
 In Add monster, one candidate is automatic and multiple candidates open a selection
-dialog, followed by the existing initiative-offer review. Cancel permits manual
-entry. Refresh retains exact source identities without silently selecting another
+dialog. There is no separate initiative-bonus confirmation. Available source
+bonuses fill blank fields; the existing AC/HP overwrite checkbox also permits
+replacing a populated bonus. Initiative help explains this shared option. Values
+edited during lookup or candidate selection remain unchanged, including edit then
+revert. Missing or invalid source bonuses never fill or overwrite a field. Signed
+offers stay bound to the selected candidate and assigned value; a later manual
+edit, reset or changed selection clears attribution. Unsigned values remain manual.
+Cancel permits manual entry. Refresh retains exact source identities without silently selecting another
 edition; identity-less rows still require candidate choice, even for one match.
 The selected image snapshot is retained; a missing image does not select another
 monster's image. Review does not mutate live statistics; explicit Apply remains

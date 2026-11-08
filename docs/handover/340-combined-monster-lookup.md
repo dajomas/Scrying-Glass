@@ -55,3 +55,32 @@ Review commit-4 CI, fix any failures, then obtain deployed desktop/narrow accept
 for both provider versions, chosen-source persistence/Refresh and fail-closed
 lookup without partial offers. Only then reconcile A.2 status. No A.3, stage B,
 SG-TODO-018 completion or merge is inferred from this delivery.
+
+## Commit 5 initiative overwrite follow-up - 2026-11-08
+
+Prepared before A.3: remove only the Add Monster initiative-bonus confirmation.
+Keep the source/version chooser, its cancellation/focus behavior, and Refresh
+review/Apply. Available bonuses fill blanks or replace existing values when the
+existing AC/HP overwrite checkbox is enabled. Initiative help explains this shared
+option without changing template IDs or checkbox labels. Missing/invalid bonuses
+never fill or overwrite. Lookup-start value and edit-revision guards preserve edits,
+including edit then revert. Bind the exact signed offer after application events;
+later edits, reset, changed species/selection or a new lookup clear attribution.
+Unsigned copies remain manual. Server authentication/signature checks are unchanged.
+The existing AC/HP handler remains responsible for its own assignments.
+
+Preparation validation: Node syntax passed; seven candidate, eleven source-offer
+and three typing/focus Chromium methods passed (21 methods, subcases not counted
+as separate methods). Tests use intercepted HTTP, opaque offer tokens and copied
+production lookup/listener code in isolated fixtures. This is not full Admin/CSS,
+browser-to-server, authentication, live-provider, persistence or deployed desktop/
+narrow acceptance. Initial preparation exposed fixture issues: modal-inert fields
+needed explicit programmatic edit events; the delayed-response test must intercept
+fetch rather than the already wrapped request. Corrected fixtures passed; no
+production assertion was relaxed to accept overwriting intervening bonus edits.
+
+README is updated. Root HANDOVER/TODO indexes and workflow were reviewed and remain
+unchanged: existing links and overall in-progress status remain accurate. Normal
+push CI applies, without skip/workflow changes/dispatch. Covering CI and deployed
+acceptance remain pending; see the [commit-5 gate](../todo/185-monster-correction-plan.md#commit-5-initiative-overwrite-follow-up---2026-11-08).
+A.3, stage B, overall close-out and merge remain excluded.
