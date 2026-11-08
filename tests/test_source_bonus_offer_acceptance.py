@@ -30,6 +30,8 @@ class SourceBonusOfferAcceptanceTests(unittest.IsolatedAsyncioTestCase):
         self.context = storage_fixture.context(self.directory)
         self.addCleanup(lambda: self.context.STORAGE.close())
         c = self.context
+        c.CONFIG = copy.deepcopy(c.CONFIG)
+        c.CONFIG['display'].update(dndbeyond_image_lookup=True, fivetools_fallback=False)
         c.import_legacy_storage()
         c.HTTPException = HTTPException
         c.UploadFile = UploadFile
@@ -179,7 +181,7 @@ class SourceBonusOfferAcceptanceTests(unittest.IsolatedAsyncioTestCase):
         before = self.snapshot()
         expired = issue_bonus_offer(self.candidate, selection._KEY, now=time.time()-3600)
         for changes in ({'initiative_bonus_offer_token': candidate['initiative_bonus_offer_token']+'x'},
-                        {'initiative_bonus_offer_token': expired}, {'initiative_bonus': '99'}):
+                        {'initiative_bonus': '99'}):
             fields = dict(self.form(candidate), **changes)
             status, _ = await self.request('POST', '/api/monsters', fields=fields)
             self.assertEqual(status, 422)

@@ -4,7 +4,7 @@
 
 2026-11-08. [SG-TODO-018 A.1](../todo/185-monster-correction-plan.md).
 Branch features/perplexity-018; baseline 3486eaee2303d1caa3f031bf0867e4fb3710b3b3.
-Implementation delivered; first CI failed, fixture correction included with new CI/acceptance pending. No close-out or merge/write-back.
+A.1 accepted; A.2 preparation included with CI pending and active lookup unchanged. No overall close-out or merge/write-back.
 
 ## Evidence and behavior
 
@@ -64,3 +64,28 @@ checks passed locally. FastAPI is still absent, so no corrected ASGI/full-suite
 execution or new CI pass is claimed. Existing CI runs both modules normally.
 README, root indexes and workflow remain unchanged; links, task scope and pending
 status remain accurate. A.1 acceptance, A.2/A.3, stage B and merge remain pending.
+
+## A.1 accepted and A.2 preparation - 2026-11-08
+
+A.1 covering run 42497904756 attempt 1 passed exact
+9417cf7d0c8fc2f4d45606708c5312ef508d96a6. Publication:
+8fdf41731ad42a936721a841e26c82d2aaa9e479 / ci-results-42497904756-attempt-1.
+Main/repeated suites: 1,375 tests OK; ten pure initiative and both creation/Refresh
+flow methods passed. All job steps/cleanup succeeded; connection audit 742 opened,
+0 without explicit close PASS. Reader file-000026 parts 64-66 cover focused methods,
+99 main summary and 129 repeated/audit summary. This resolves the A.1 CI exception,
+not the historical failed result. The user confirmed all three manual acceptance
+checks on 2026-11-08. A.1 is accepted; no overall SG-TODO-018 close-out or merge.
+
+The agreed two-commit A.2 plan starts with an unused fail-closed combiner, twelve
+pure regression tests and shared secured-fixture configuration isolation. Twelve
+tests passed locally; no new full/ASGI or CI pass is claimed (FastAPI absent).
+The combiner returns no candidates when any enabled callback fails or is malformed,
+still queries other enabled callbacks, and never collapses versions or combines
+statistics. Source-book completeness remains the adapters' responsibility.
+
+Activation, direct HTTP/adapter fixture migration, fallback-contract tests, help/
+README/config compatibility wording and application validation belong in commit 2.
+No active lookup, signing, Refresh selection, UI, schema or workflow changes in
+this preparation commit. A.3 and stage B remain pending. The existing README and
+TODO index remain accurate for the unchanged runtime; detailed status is in 185.

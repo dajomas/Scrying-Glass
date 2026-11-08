@@ -4,7 +4,7 @@
 
 - Updated: 2026-11-08.
 - Tracking: SG-TODO-018 follow-up and adjacent roster/lookup corrections; not a new completed task.
-- Status: A.1 delivered; first CI failed with fixture errors, corrective tests included with covering CI/acceptance pending. A.2/A.3 and stage B remain planned.
+- Status: A.1 accepted; A.2 preparation included with CI pending and active lookup unchanged. A.2 activation, A.3 and stage B remain pending.
 - Branch: features/perplexity-018. No merge or write-back authorized.
 - Related: [018 initiative/refresh contract](180-monster-initiative-bonus.md), [lookup](010-monster-lookup.md), [5e.tools configuration](060-fivetools-source-configuration.md), [roster presentation](../handover/310-admin-rosters.md), [initiative handover](../handover/330-monster-initiative-foundations.md).
 
@@ -127,3 +127,37 @@ passed AST parsing and assertion-preservation checks; runtime/full-suite checks
 remain pending because FastAPI is unavailable locally. Normal CI must cover the
 correction, and failed run 42496852926 remains failed historical evidence.
 See the linked 335 handover for log locations. No acceptance, close-out or merge.
+
+## A.1 acceptance and A.2 staged preparation - 2026-11-08
+
+A.1 is accepted: run 42497904756 attempt 1 passed tested commit
+9417cf7d0c8fc2f4d45606708c5312ef508d96a6, publication
+8fdf41731ad42a936721a841e26c82d2aaa9e479 / ci-results-42497904756-attempt-1.
+All 1,375 main/repeated tests passed; ten initiative unit and both flow methods
+passed, all workflow/cleanup steps succeeded, and connection audit was 742/0 PASS.
+On 2026-11-08 the user confirmed creation +7, Refresh/apply/persistence and retained
+raw 16 + bonus 7 = total 23. The earlier failed run remains failed history.
+This accepts A.1 only; SG-TODO-018 and merge remain open.
+
+The user chose blocking incomplete lookup and agreed two A.2 commits. This first
+commit adds an unused pure combiner and twelve offline tests, and isolates the
+shared secured creation/Refresh fixture by copying its configuration and explicitly
+selecting D&D-only lookup. Existing 5e.tools flow fixtures explicitly re-enable it.
+Active lookup still uses fallback-only behavior. README, help, config semantics,
+source adapters, signing and Refresh resolution are not changed in this stage.
+
+The combiner queries both enabled callbacks, preserves provider/book versions and
+separate statistics, deep-copies results and reports fixed provider statuses.
+Any exception, malformed provider list or per-provider limit breach returns an
+explicit incomplete error and no candidates. Disabled callbacks are not invoked.
+Public errors do not include exception details. Callbacks must raise for incomplete
+source-book searches; the pure combiner itself does not fetch books or sign tokens.
+
+Executed: twelve pure unit tests passed locally. The new module/tests passed local
+import/execution. Shared ASGI fixture changes were reviewed, not runtime-tested:
+FastAPI is unavailable. Existing CI discovers the new test module normally; covering
+CI and application acceptance for A.2 are pending. Commit 2 must activate the engine,
+migrate remaining direct HTTP/adapter fixtures and fallback-only expectations,
+update help/README and fivetools_fallback compatibility wording, and verify signing,
+identity retention, configured-book enumeration and blocked incomplete lookup across
+creation/Refresh. A.3 and stage B are excluded. No workflow changes or skip marker.

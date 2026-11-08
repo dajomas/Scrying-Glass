@@ -44,7 +44,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 
 ## Current pending corrections - 2026-11-08
 
-SG-TODO-018 is not accepted. The user declined the proposed close-out reconciliation; do not push that rejected draft. Follow the [monster provider and roster correction plan](docs/todo/185-monster-correction-plan.md) for the six reported actions, processing order, changed candidate/search requirements and acceptance checks. That plan is the current corrective queue. The A.1 extractor is included with validation pending; see the linked correction handover. A.2/A.3 and stage B remain planned. No close-out or merge is authorized.
+SG-TODO-018 is not accepted. The user declined the proposed close-out reconciliation; do not push that rejected draft. Follow the [monster provider and roster correction plan](docs/todo/185-monster-correction-plan.md) for the six reported actions, processing order, changed candidate/search requirements and acceptance checks. A.1 is accepted after verified covering CI and user-confirmed manual checks. A.2 preparation is included with CI pending and active lookup unchanged; activation, A.3 and stage B remain pending. No overall close-out or merge is authorized.
 
 ## Required update convention
 
