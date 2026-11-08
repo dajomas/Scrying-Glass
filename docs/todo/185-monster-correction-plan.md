@@ -3,7 +3,7 @@
 [Back to TODO index](../../TODO.md)
 
 - Updated: 2026-11-08. Tracking: SG-TODO-018 follow-up and adjacent lookup/roster corrections.
-- Status: in progress. A.1 remains accepted; A.2/A.3 accepted after covering CI and user sign-off. Stage B through spacing commit 9cfcbb26106fa95c5e28f58cba45e7234b47220f has verified successful covering CI 42522294918 attempt 1. Primary-row alignment correction included here; covering alignment CI and stage-B manual acceptance pending. SG-TODO-018 is not closed.
+- Status: in progress. A.1 remains accepted; A.2/A.3 accepted after covering CI and user sign-off. Stage B through spacing commit 9cfcbb26106fa95c5e28f58cba45e7234b47220f has verified successful CI 42522294918 attempt 1. Alignment commit 96adeb4012492b6618aabfa0f9dd803cc9b5d58d has failed CI 42525208958 attempt 1; wrapped-name measurement correction included here, with corrective CI and stage-B manual acceptance pending. SG-TODO-018 is not closed.
 - Branch: features/perplexity-018. No overall close-out, merge or write-back authorized.
 - Related: [018 contract](180-monster-initiative-bonus.md), [lookup](010-monster-lookup.md), [configuration](060-fivetools-source-configuration.md), [rosters](../handover/310-admin-rosters.md), [A.1 history](../handover/335-fivetools-initiative-correction.md), [A.2/A.3/B history](../handover/340-combined-monster-lookup.md).
 
@@ -52,10 +52,10 @@ approval, appropriate tests/docs and review of covering CI before validation cla
 
 ### Stage B: compact and consistent roster presentation
 
-Status: initial CI failed; colour-only/single-line and compact spacing corrections
-were delivered. Covering spacing CI succeeded. Primary alignment is included in
-this increment; its delivery SHA only after push. Alignment CI/manual acceptance
-remain pending.
+Status: earlier visual corrections have successful covering spacing CI. Alignment
+was delivered, but first covering CI failed on wrapped-character-name measurement.
+Fixture correction included here; new SHA only after push. Corrective alignment
+CI/manual acceptance remain pending.
 
 4. Remove Roll heading and (legacy) suffix; retain accessible raw-input labels,
    separate totals and internal legacy semantics. No data migration.
@@ -73,11 +73,11 @@ remain pending.
 
 ### Final validation and acceptance
 
-Review covering alignment CI and desktop/narrow workflows against all three roster
-actions. Keep format/unit/ASGI/browser/live-provider/manual evidence distinct;
-disclose skipped, unexecuted and fixture limits. A.2/A.3 are accepted, but stage B
-needs its own workflow/visual acceptance before step-6 reconciliation. Overall
-completion and merging remain separate approvals.
+Review corrective covering alignment CI and desktop/narrow workflows against all
+three roster actions. Keep format/unit/ASGI/browser/live-provider/manual evidence
+distinct; disclose skipped, unexecuted and fixture limits. A.2/A.3 are accepted,
+but stage B needs its own workflow/visual acceptance before step-6 reconciliation.
+Overall completion and merging remain separate approvals.
 
 ## Current four-commit plan and validation - 2026-11-08
 
@@ -198,9 +198,11 @@ A.2/A.3 accepted, not overall SG-TODO-018 completion or an assistant-run live au
 - Initial implementation delivered as 11f104058efb2a56365b0309ce8c6ee829d84c18.
   Its first CI failed and visual follow-up was requested. Colour-only/single-line
   correction 1d4815d8f0e89840687ba13136ce88b3b631b9f3 and compact spacing
-  9cfcbb26106fa95c5e28f58cba45e7234b47220f have later covering successful CI
-  42522294918 attempt 1. Primary alignment below is included here, with a new
-  delivery SHA only after push; alignment CI and manual acceptance pending.
+  9cfcbb26106fa95c5e28f58cba45e7234b47220f have later successful covering CI
+  42522294918 attempt 1. Alignment 96adeb4012492b6618aabfa0f9dd803cc9b5d58d was
+  delivered but its first covering CI failed. Wrapped-name measurement correction
+  below is included here, with new SHA only after push; corrective CI/manual
+  acceptance remain pending.
 - Fixed captions/pressed states, scoped actions, alive wording and removal of
   visible Roll/legacy text preserve underlying values/semantics. The fixed-stat
   handler uses boolean state, not label suffixes, and one existing PATCH. No
@@ -265,22 +267,42 @@ connections 763 opened/0 without explicit close, PASS. No setup/collection failu
 reported. This resolves covering automated validation for the earlier delivered
 corrections without relabelling failed runs or granting manual stage-B acceptance.
 
-The latest screenshots/request require primary-row centres rather than centring
-whole name/species and input/Total blocks. Align main data cells on their first
-baseline; remove bottom alignment of the name cell. Keep footer padding, single-
-line status, colour-only controls, input sizes and all JS/data/API behavior.
-The modified regression now checks requested primary centres against the Edit
-button within .2rem, plus footer clearance/gap measured from the lowest occupied
-row content within half a rem. Existing line/non-overlap/no-mutation checks remain.
-This explicitly replaces the earlier name-glyph gap bound so shorter centred text
-can coexist with taller controls without forcing it down toward the footer.
+The alignment request requires primary-row centres rather than centring whole
+name/species and input/Total blocks. Main data cells align on their first baseline,
+with no name-cell bottom alignment. Footer padding, single-line status, colour-only
+controls, input sizes and all JS/data/API behavior remain. Regression tolerance
+stays .2rem against the Edit button, with a half-rem footer gap from the lowest
+occupied row content and unchanged line/non-overlap/no-mutation checks. This
+replaced the earlier name-glyph gap bound so shorter centred text can coexist
+with taller controls. Original component preparation reported 0-1 px centre
+offsets and at least 2.7 px clearance at six viewport/font configurations, with
+Python/embedded-JS syntax passing, not a full-Admin execution claim.
 
-Preparation: original CSS/test blobs verified, isolated Chromium comparison in
-both rosters at six viewport/font configurations showed primary centre offsets
-reduced to 0-1 px, with at least 2.7 px footer clearance. Python compilation/AST
-parsing and both embedded JavaScript syntax checks passed. Full-Admin method not
-executed locally (FastAPI absent); normal CI discovers it. Detailed scope/limits
-and remaining gates are in the [alignment handover](../handover/310-admin-rosters.md#sg-todo-018-primary-row-alignment---2026-11-08).
-Delivery and new covering CI remain separate; no new SHA/run invented. Obtain
-user alignment/stage-B visual acceptance before close-out. No skip marker,
-workflow modification, dispatch, merge or other-branch write.
+### Alignment CI failure and wrapped-name fixture correction - 2026-11-08
+
+Run 42525208958 attempt 1 failed for exact alignment SHA above; evidence publication
+fcc2e5133c289b2b4f237e866cf8b1f1db992c08 / ci-results-42525208958-attempt-1.
+Run/job metadata agrees on features/perplexity-018. Each main/repeated suite ran
+1,411 tests with six subcase assertion failures in the same method, all characters
+name, across three widths/two root sizes. It measured the union of all wrapped
+name lines rather than the first line. Later assertions/refreshes in those
+subcases were unexecuted. No setup/collection failure; syntax/server import,
+pytest, JavaScript/upload/checkout cleanup succeeded; Node/Python post-setup cleanup
+skipped. Tracking 763 opened/0 without explicit close does not make the failed
+audit repeat pass. Keep this run failed historically.
+
+Correction is test-only plus documentation: measure the first nonempty rendered
+name fragment using getClientRects, require genuine wrapping in narrow long-name
+cases, and keep all tolerances/other geometry/mutation checks. No production
+style/behavior change, forced character nowrap or assertion widening. Reconstructed
+original test blob verified; revised Python compiles/parses and both embedded JS
+expressions pass syntax. An isolated Chromium range fixture reproduced union-only
+false offsets at six viewport/font configurations while first-line centres aligned;
+an intentional 12 px shift still failed the metric. Short names passed, no page
+errors. Full-Admin execution remains unavailable locally (FastAPI absent); normal
+CI discovers the correction. Detailed evidence and limitations are in the
+[fixture correction handover](../handover/310-admin-rosters.md#alignment-ci-failure-and-wrapped-name-measurement-correction---2026-11-08).
+
+Corrective delivery/covering CI and manual stage-B visual acceptance remain
+required before close-out. No new SHA/run invented, skip marker, workflow edit/
+dispatch, merge or other-branch write. A.1/A.2/A.3 acceptance remains unchanged.

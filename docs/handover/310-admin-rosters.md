@@ -134,18 +134,60 @@ monster input about 9.5 px above; after, measured primary centres were within
 font/markup stub limits remain: this is component geometry, not full Admin,
 authenticated server, persistence or deployed acceptance.
 
-The existing assembled-Admin spacing regression now checks primary centres for
-selection, first-line name, initiative input, available monster AC/HP/bonus and
-character HP against the Edit-button centre, within .2rem. It retains short/long
-names, six viewport/font configurations, three refreshes, no mutations/page errors
-and shared one-line/non-overlap checks. A half-rem maximum footer gap is measured
-from the lowest occupied row content, excluding the status itself. Python
-compilation/AST parsing and both embedded JS expressions pass Node syntax checks.
-Full-Admin execution was not available locally (FastAPI absent); normal CI discovers
-the revised method. No skip marker, workflow change or dispatch.
+The assembled-Admin regression checks primary centres for selection, first-line
+name, initiative input, available monster AC/HP/bonus and character HP against the
+Edit-button centre within .2rem. It retains short/long names, six viewport/font
+configurations, three refreshes, no mutations/page errors and shared one-line/
+non-overlap checks. A half-rem maximum footer gap is measured from the lowest
+occupied row content, excluding status. Initial Python parsing and both embedded
+JS syntax checks passed, but the first CI exposed the wrapped-name measurement
+error below. The correction uses the first nonempty rendered text fragment without
+changing tolerance, production CSS or the first-line contract.
 
-Implementation/tests/notes are included in this increment; its SHA only after push.
-Covering alignment CI and user visual/workflow acceptance remain pending. Deploy
-the stylesheet and reload Admin. README/User Guide, root indexes and 340 were
-reviewed/reused unchanged: links, workflows and overall open status remain accurate.
-SG-TODO-018 is not closed; no merge or other-branch write is authorized.
+Alignment implementation was delivered as 96adeb4012492b6618aabfa0f9dd803cc9b5d58d.
+Its first covering run failed. This increment includes the fixture correction and
+evidence/status notes; its SHA only after push. Corrective CI and user stage-B
+visual/workflow acceptance remain pending. README/User Guide, root indexes and
+340 were reviewed/reused unchanged: links, workflows and overall open status
+remain accurate. SG-TODO-018 is not closed; no merge or other-branch write.
+
+## Alignment CI failure and wrapped-name measurement correction - 2026-11-08
+
+Branch tests 42525208958 attempt 1 failed for exact
+96adeb4012492b6618aabfa0f9dd803cc9b5d58d on features/perplexity-018. Evidence
+was read at publication fcc2e5133c289b2b4f237e866cf8b1f1db992c08 /
+ci-results-42525208958-attempt-1. Run/job metadata agrees. Main and audit-repeat
+suites each ran 1,411 tests with six subcase assertion failures in one method:
+test_primary_centres_and_compact_status_after_refresh, characters name, for
+375/768/1440 and 16/20 px root sizes. Narrow cases reported 258.5 px differences;
+desktop reported 33.5/44.75 px. These repeat executions are not twelve independent
+defects. This is not a setup/collection error. Later assertions/refreshes in the
+failed subcases were not reached. Syntax/server import, pytest, JavaScript, upload
+and checkout cleanup succeeded; Node/Python post-setup cleanup was skipped.
+Connection tracking reports 763 opened/0 without explicit close, but the audit
+step remains failed because its repeated suite failed. Subsequent log/round audits
+and mocked-transport browser smoke completed; smoke reports no page errors.
+Keep the historical run failed, regardless of later corrections.
+
+The existing metric selected the long character-name text node and used its
+getBoundingClientRect union. A wrapped name's whole-block centre is below its
+first line even when that line is correctly aligned. Correction selects the first
+nonzero-width/height getClientRects fragment for name alignment, errors explicitly
+if none exists, and asserts the narrow long-character-name case really wraps.
+Do not force character names onto one line or widen .2rem tolerance. All numeric/
+input/checkbox centres, footer/line/non-overlap, mutation and page-error checks
+remain. No production file, style, server/API or workflow changes are included.
+
+Preparation: the original test matches live blob
+2d1275ba9c27d0392b1dd62a6904212386e680a8. Revised Python compiles/parses; both
+embedded JavaScript expressions pass Node syntax. An isolated native-Chromium
+text-range fixture at the six viewport/root-size configurations reproduced the
+union error for wrapped names: 17 narrow/4 wide fragments gave false offsets of
+152/28.5 px, while the first-line metric gave 0 px; a deliberate 12 px shift was
+still detected. Short single-line names passed and there were no page errors.
+These are minimal-markup geometry checks, not exact CI typography reproduction,
+full Admin, authenticated HTTP, provider, persistence or deployed acceptance.
+The full-Admin regression was not executed locally (FastAPI absent); normal CI
+discovers it. Fresh covering CI and manual visual acceptance remain required.
+No skip marker, workflow edit/dispatch, overall close-out, merge or other-branch
+write. Earlier successful CI remains tied to its earlier exact tested SHA.

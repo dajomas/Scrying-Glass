@@ -36,7 +36,10 @@ class CompactRosterSpacingTests(unittest.TestCase):
                                     return mid(range.getBoundingClientRect());
                                 };
                                 const name=[...cell.childNodes].find(n=>n.nodeType===Node.TEXT_NODE&&n.textContent.trim());
-                                const centres={name:textMid(name),
+                                const nameRange=document.createRange();nameRange.selectNodeContents(name);
+                                const nameBoxes=[...nameRange.getClientRects()].filter(box=>box.width>0&&box.height>0);
+                                if(!nameBoxes.length)throw new Error('Name has no rendered text fragment');
+                                const centres={name:mid(nameBoxes[0]),
                                     selection:mid(row.querySelector('input[data-select-id]').getBoundingClientRect()),
                                     initiative:mid(row.querySelector('input.initiative-edit').getBoundingClientRect())};
                                 const headers=[...row.closest('table').rows[0].cells].map(n=>n.textContent.trim());
@@ -53,9 +56,11 @@ class CompactRosterSpacingTests(unittest.TestCase):
                                 });
                                 const root=parseFloat(getComputedStyle(document.documentElement).fontSize);
                                 return {gap:node.getBoundingClientRect().top-Math.max(...bottoms),maxGap:root*.5,
-                                    centres,tolerance:root*.2,
+                                    centres,nameLines:nameBoxes.length,tolerance:root*.2,
                                     reference:mid(row.querySelector('button[data-edit]').getBoundingClientRect())};
                             }""")
+                            if kind == 'characters' and cycle == 1 and width <= 768:
+                                self.assertGreater(metrics['nameLines'], 1, 'Long-name case must exercise wrapping')
                             self.assertGreaterEqual(metrics['gap'], 0)
                             self.assertLessEqual(metrics['gap'], metrics['maxGap'])
                             for label, centre in metrics['centres'].items():
