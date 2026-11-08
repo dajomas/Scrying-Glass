@@ -45,11 +45,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 
 ## Current validation status - 2026-11-08
 
-SG-TODO-018 remains open pending overall close-out reconciliation. Do not push the rejected close-out draft. Follow the [correction plan](docs/todo/185-monster-correction-plan.md). A.1 remains accepted; the user manually tested and signed off A.2 and A.3 on 2026-11-08. Their covering corrective CI 42517614512 attempt 1 succeeded for exact 1c289d485bffcf8197fb32238349729e52b822ed.
-
-Stage B corrective automated validation is now satisfied: Branch tests 42526295799 attempt 1 completed successfully on features/perplexity-018 for exact f5808a2dfbc9b8d8bd4de9706956dbe8312815a5. Published evidence: 790a32b0f86eb60a86319d7c3158f9a7c22f489b, ci-results-42526295799-attempt-1. The workflow log explicitly records test_primary_centres_and_compact_status_after_refresh as OK. The user confirmed the roster visual check successful on 2026-11-08. This is user-reported visual acceptance, not assistant-executed live-server or persistence verification, and does not independently enumerate every workflow acceptance check. These current CI/visual statuses supersede the earlier pending statements in [310](docs/handover/310-admin-rosters.md), [340](docs/handover/340-combined-monster-lookup.md) and [185](docs/todo/185-monster-correction-plan.md); their delivery-time evidence and remaining workflow criteria stay historical/actionable respectively. Failed run 42525208958 remains failed. No overall completion, merge or other-branch write is authorized by this update.
-
-This update changes documentation only. No new tests are executed, no workflow is edited or dispatched, and no new workflow outcome is inferred. The commit message contains [skip ci].
+SG-TODO-018 is completed and closed at the user's explicit request after review of the remaining actions. A.1/A.2/A.3 acceptance remains; corrective CI 42526295799 attempt 1 and the user's successful roster visual check cover the final correction. See the [completed contract](docs/todo/180-monster-initiative-bonus.md), [reconciled correction plan](docs/todo/185-monster-correction-plan.md) and [close-out evidence and limitations](docs/handover/340-combined-monster-lookup.md#sg-todo-018-close-out---2026-11-08). This supersedes earlier in-progress/pending wording, not historical failed results. No merge or other-branch write is included.
 
 ## Required update convention
 

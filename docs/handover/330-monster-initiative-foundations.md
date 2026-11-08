@@ -2,103 +2,24 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated: 2026-11-07. Task: [SG-TODO-018](../todo/180-monster-initiative-bonus.md).
-Status: in progress. Runtime through state normalization has covering CI. Import
-stage delivered with CI unreviewed; manual creation component is included in this
-increment with direct-handler/full-suite validation pending. All 018 writes stay
-on features/perplexity-018 until user sign-off; no merge/write-back authorized.
+Updated: 2026-11-08. [SG-TODO-018](../todo/180-monster-initiative-bonus.md) is completed and closed at the user's explicit request after covering CI, staged acceptance and reconciliation. Branch features/perplexity-018; no merge/write-back included. The previous foundation-only pending descriptions are historical, not missing current implementation.
 
 ## History and covering evidence
 
-Foundation 539697fabdde7e564b198104739870760032d638: pure rules/selection controller,
-32 helpers, requested [skip ci]. Reset 44e5c7640007601f801858d740dfdf66ab61e541:
-reset hooks/16 tests. Compatibility 4e7128eb3e5349c186f0a80d34031031762a3d89:
-legacy-total bridge, automatic raw/bonus rolling, seven handlers. Fixture repair
-bb866bd457f42e4a60a14e18c0c90177109e2db0: AST package context, assertions retained.
-State cdd9957642a6754675dc7ace466def69c702b211: monster normalization/20 tests.
+Foundation 539697fabdde7e564b198104739870760032d638, reset 44e5c7640007601f801858d740dfdf66ab61e541, compatibility 4e7128eb3e5349c186f0a80d34031031762a3d89, fixture repair bb866bd457f42e4a60a14e18c0c90177109e2db0 and state normalization cdd9957642a6754675dc7ace466def69c702b211 established the signed-bonus/raw/legacy semantics. Reset clears raw while retaining bonus/origin and legacy originals; shared raw rolls add individual bonuses once. Characters/lairs remain unchanged.
 
-Reset retains bonus/origin and clears stale raw rolls, restoring original totals
-as legacy. Snapshot/import semantics preserve current relationships or reset-on-
-import as appropriate, HP/Max HP and copy isolation. Changed legacy totals detach
-old rolls, unrelated edits retain them. Automatic rolls add individual bonuses
-once. State normalization defaults missing bonuses, preserves legacy totals and
-leaves character/lair initiative unchanged. No schema migration was introduced.
-
-CI42302058360 attempt1 passed exact44e5c764, publication
-88461cc2891a935e541e881884ef6b1a6fabde5b / ci-results-42302058360-attempt-1:
-1,112-test main/repeated suites OK, pytest43, connection tracking689/0.
-CI42304851642 attempt1 failed exact4e7128eb, publication
-ea9804a2ebf43fc26bdb2554601f0d8923518933 / ci-results-42304851642-attempt-1:
-1,119-test executions repeated two AST import-context errors before assertions,
-not four defects or calculation failures. Seven handlers and syntax/import,
-pytest, JavaScript/upload passed; setup-node/setup-python cleanup skipped.
-Tracking689/0 did not make the failed suite pass. That run remains failed evidence.
-
-Covering CI42307450451 attempt1 passed exactcdd995764, publication
-5d218b4497391fc4fb32da2dd4ed2e823e29fe5c / ci-results-42307450451-attempt-1.
-All steps/cleanup succeeded. reader-chunks/file-000025 parts76-77: all20 state
-methods OK; part80 all5 repaired shared-roll methods OK; part83 main 1,139 tests
-in 80.641s OK; part85 pytest43 in0.79s; part112 repeated1,139 in76.828s OK,
-689 opened/0 without explicit close, audit PASS. This resolves the prior exception
-without relabelling the failed run. Repetition is not unique tests; publication
-is not tested code. Mocked-transport Chromium and minimal SQLite/component tests
-are not authenticated live-server/full-production-storage proof.
+42304851642 remains failed for its AST import-context errors. Covering 42307450451 attempt 1 succeeded for cdd9957642a6754675dc7ace466def69c702b211. Full original increment hashes, counts, preparation details and evidence paths remain in the [immutable delivery record](https://github.com/dajomas/Scrying-Glass/blob/17932b9b5ac1f02ccdc4cb53e39277fb589e6d96/docs/handover/330-monster-initiative-foundations.md).
 
 ## Import stage
 
-Delivered4a1685cbe811c478ae44021ceb255fc1f8f964d8: optional .monster
-initiative_bonus with strict signed integer/storage validation and import/default
-provenance. Missing key leaves legacy parser output; normalization supplies zero.
-No Dexterity/ambiguous-field derivation and no provider-origin spoofing. Existing
-constructor preserves scalar bonus through quantity copies. Help documents the
-optional Scrying Glass field, not a guaranteed export. Seven pure input tests passed;
-13 parser/construction/direct-import methods could not collect locally without FastAPI.
-Covering import CI is not reviewed. Its parser/CSV/schema paths are not changed
-by this manual component.
+4a1685cbe811c478ae44021ceb255fc1f8f964d8 introduced optional .monster initiative_bonus with strict integer/storage validation and import/default provenance. Missing does not imply provider-backed zero; origin cannot be spoofed. Quantity copies preserve scalar bonus without inventing rolls. Earlier unavailable local collection is retained in the immutable record, not described as newly executed or still undelivered.
 
 ## Manual creation component
 
-Adds an optional signed bonus field to Add Monster and a Form string parameter
-on the active CandidateMonstersMixin.create_monster override. Blank is default
-zero; explicit 0 is manual zero. The committed strict helper is reused. Validation
-precedes HP factory creation, image lookup/save and append. Default FastAPI Form
-descriptors are handled for backward-compatible direct handler calls. Quantity
-copies carry bonus/origin and distinct IDs. The existing scope guard and signed
-image/upload precedence paths remain. No client-supplied origin is trusted.
-
-Manual creation explicitly initializes bonus/origin and initiative_roll=None in
-the payload passed to the existing constructor, which already preserves fields
-and leaves initiative/original_initiative unset. Therefore no image-service rewrite
-is required. This initialization applies to this active manual workflow; broader
-constructor behaviour is unchanged. No new roll is generated by bonus entry.
-
-The input is blank initially, step1, with no gameplay min/max and help text linked
-by aria-describedby. Existing FormData submission carries the raw string; no Admin
-JavaScript fragments or bundle identities change. Successful form reset returns
-the field to blank. The .monster upload form remains byte-identical. No roster,
-existing-monster Edit bonus control, provider bonus extraction, refresh UI or
-active-order rule is added; those remain required for complete SG-TODO-018.
+Add Monster accepts a signed optional bonus: blank defaults, explicit zero is manual. Validation precedes HP/image/append side effects. Scope, quantity IDs and image/token/upload handling remain. Creation starts with raw unset and no generated total; reset returns the form field blank. Later Edit, roster raw/bonus UI, active-order and Refresh integration supersede the old foundation-only exclusions.
 
 ## Executed checks and limits
 
-Original candidate module blob184ff01482db0bf8be487e54db1a2a52a63e4712 and form
-blobc634340eded234c1961179013b0ac47af949fa92 were verified before targeted edits.
-AST parsing passed. Three static methods passed (field/help/optional Form metadata
-and unchanged upload-form hash). One real Chromium native FormData fixture passed
-for blank/positive/negative/zero strings, reset-to-blank and import-form isolation,
-using the full form template at viewport375x900. It is not assembled Admin/CSS,
-HTTP, authenticated server or visual/responsive usability validation.
+Current test families include test_monster_bonus_import, test_manual_monster_bonus_creation/form, test_monster_initiative_bonus_edit, test_monster_bonus_edit_ui/roster, test_monster_raw_roll_rules/handler/composition/ui, test_monster_edit_order and test_monster_roll_order/handlers. The original contract remains authoritative; existence of tests alone is not an execution result.
 
-Eight direct-handler methods are prepared for manual/default/zero input, unset
-roll/total, rejection before side effects, quantity, changed scope and selected/
-uploaded image paths. Local collection stopped because FastAPI is absent; they
-were not executed and no framework stand-in was used. Normal CI installs FastAPI,
-Playwright/Chromium and discovers both test_*.py modules. No new-stage CI pass or
-completion is claimed. Prepared candidate10,085 bytes, form8,011, static/native
-tests4,086 and handler tests5,445 are below20,000.
-
-Normal CI applies, no [skip ci], workflow change or separate dispatch. README and
-root indexes were reviewed/reused unchanged: stable links and overall in-progress
-status remain; this detail records the current stage. Continue existing-monster
-bonus editing/raw-roll roster integration, providers/source refresh, active-order
-updates and covering validation, with exact approval for each external write.
+Final covering Branch tests 42526295799 attempt 1 succeeded for exact f5808a2dfbc9b8d8bd4de9706956dbe8312815a5, publication 790a32b0f86eb60a86319d7c3158f9a7c22f489b. See [overall close-out](340-combined-monster-lookup.md#sg-todo-018-close-out---2026-11-08) for acceptance attribution and fixture limits. No tests are run by this documentation-only reconciliation and no new live-provider, password-login, TCP or OS-process restart result is claimed.
