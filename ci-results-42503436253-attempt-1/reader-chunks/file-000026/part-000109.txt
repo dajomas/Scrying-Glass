@@ -1,0 +1,32 @@
+p/scrying-tests-2c9psv2f/repo/tests/test_dndbeyond_locked_pages.py", line 121, in test_locked_then_usable_keeps_primary
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3049194Z     self.assertEqual(len(result['candidates']), 1)
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3049485Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3049738Z AssertionError: 2 != 1
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3049855Z 
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3050017Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3050799Z FAIL: test_unclassified_failure_and_search_failure_do_not_fallback (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_unclassified_failure_and_search_failure_do_not_fallback)
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3051775Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3052087Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3052693Z   File "/tmp/scrying-tests-2c9psv2f/repo/tests/test_dndbeyond_locked_pages.py", line 130, in test_unclassified_failure_and_search_failure_do_not_fallback
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3053652Z     self.fallback.assert_not_called()
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3053891Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3054345Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 947, in assert_not_called
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3054763Z     raise AssertionError(msg)
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3055109Z AssertionError: Expected 'mock' to not have been called. Called 2 times.
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3055522Z Calls: [call('Crawling Claw', {}), call('Crawling Claw', {})].
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3055724Z 
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3055898Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3056195Z Ran 1391 tests in 118.922s
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3056321Z 
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.3056415Z FAILED (failures=2)
+tests	Python test suite (including browser fixtures)	2026-11-08T17:10:58.7223835Z ##[error]Process completed with exit code 1.
+tests	Upload Admin foundations visual fixtures	﻿2026-11-08T17:10:58.7293659Z ##[group]Run actions/upload-artifact@v4
+tests	Upload Admin foundations visual fixtures	2026-11-08T17:10:58.7293934Z with:
+tests	Upload Admin foundations visual fixtures	2026-11-08T17:10:58.7294137Z   name: admin-foundations-visual-fixtures
+tests	Upload Admin foundations visual fixtures	2026-11-08T17:10:58.7294418Z   path: /home/runner/work/_temp/sg-admin-foundations
+tests	Upload Admin foundations visual fixtures	2026-11-08T17:10:58.7294695Z   if-no-files-found: warn
+tests	Upload Admin foundations visual fixtures	2026-11-08T17:10:58.7294896Z   compression-level: 6
+tests	Upload Admin foundations visual fixtures	2026-11-08T17:10:58.7295080Z   overwrite: false
+tests	Upload Admin foundations visual fixtures	2026-11-08T17:10:58.7295263Z   include-hidden-files: false
+tests	Upload Admin foundations visual fixtures	2026-11-08T17:10:58.7295467Z env:
+tests	Upload Admin foundations visual fixtures	2026-11-08T17:10:58
