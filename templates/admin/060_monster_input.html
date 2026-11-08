@@ -21,11 +21,14 @@
               The dice expression can be a simple roll such as <code>2d6</code> or dice notation such as <code>3d8+9</code>.</br>
               Spaces around <code>+</code> or <code>-</code> are optional.</li>
           </ul>
-          Monster lookup searches D&amp;D Beyond first. If it returns no usable matches,
-          5e.tools is tried when enabled and configured. Provider errors stop the lookup;
-          they do not trigger fallback. If D&amp;D Beyond lookup is disabled,
-          enabled 5e.tools lookup may be used directly. When a selected result includes
-          an image, that image is used unless you choose an Image file.
+          Monster lookup searches all enabled providers: D&amp;D Beyond and configured 5e.tools sources.
+          Both enabled providers are searched even when D&amp;D Beyond returns usable matches.
+          Disabled providers and unconfigured books are not searched.
+          If any enabled provider or configured-book search fails or is incomplete,
+          no candidates are offered; retry or enter stats manually.
+          Versions keep their own statistics; select the provider/book/edition you want.
+          The <code>fivetools_fallback</code> setting independently enables 5e.tools candidate lookup.
+          When a selected result includes an image, that image is used unless you choose an Image file.
         </p>
 
         <label class="monster-species-lookup-option">

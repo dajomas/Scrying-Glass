@@ -163,10 +163,9 @@ not offered.
 For compatibility, `dndbeyond_image_lookup` and `fivetools_fallback` retain their
 names/defaults. In candidate lookup, `fivetools_fallback` independently enables
 5e.tools rather than restricting it to D&D Beyond zero matches. Legacy stats/image
-fallback interfaces are otherwise unchanged. This backend increment does not yet
-update the old ordering text in the Admin source help or config-example comments;
-those wording/browser checks are scheduled for A.2 commit 4. Follow this README
-for current candidate behavior. See [combined lookup delivery](docs/handover/340-combined-monster-lookup.md)
+fallback interfaces are otherwise unchanged. Admin source help and config-example
+comments describe combined search and fail-closed behavior. See
+[combined lookup delivery](docs/handover/340-combined-monster-lookup.md)
 and [source configuration and labels](docs/handover/230-fivetools-sources.md).
 
 AC accepts numbers/AC objects; HP prefers supported dice then numeric average.

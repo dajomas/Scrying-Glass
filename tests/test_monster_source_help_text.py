@@ -22,14 +22,29 @@ class SourceHelpTests(unittest.TestCase):
         parser = Text()
         parser.feed(source)
         text = ' '.join(' '.join(parser.parts).split())
-        for phrase in ('Monster lookup searches D&D Beyond first.', 'If it returns no usable matches, 5e.tools is tried when enabled and configured.',
-                       'Provider errors stop the lookup; they do not trigger fallback.',
-                       'If D&D Beyond lookup is disabled, enabled 5e.tools lookup may be used directly.',
-                       'When a selected result includes an image, that image is used unless you choose an Image file.', LABEL):
+        for phrase in (
+                'Monster lookup searches all enabled providers: D&D Beyond and configured 5e.tools sources.',
+                'Both enabled providers are searched even when D&D Beyond returns usable matches.',
+                'Disabled providers and unconfigured books are not searched.',
+                'If any enabled provider or configured-book search fails or is incomplete, no candidates are offered; retry or enter stats manually.',
+                'Versions keep their own statistics; select the provider/book/edition you want.',
+                'The fivetools_fallback setting independently enables 5e.tools candidate lookup.',
+                'When a selected result includes an image, that image is used unless you choose an Image file.',
+                LABEL):
             self.assertIn(phrase, text)
         self.assertNotIn('with found D&amp;D Beyond values', source)
+        self.assertNotIn('D&D Beyond first.', text)
+        self.assertNotIn('they do not trigger fallback.', text)
         for id in ('monsterForm', 'monsterUpload', 'monsterSpeciesLookupOverwrite', 'monsterHpRangeHelp', 'monsterImage', 'monsterFileImage'):
             self.assertEqual(source.count('id="' + id + '"'), 1)
+
+
+    def test_config_comments_explain_compatibility_without_changing_defaults(self):
+        config = (ROOT / 'config.example.yaml').read_text(encoding='utf-8')
+        self.assertIn('Independently enable 5e.tools for combined candidate lookup', config)
+        self.assertIn('failures block all candidates.', config)
+        self.assertIn('fivetools_fallback: true', config)
+        self.assertIn('fivetools_sources: ["MM", "XMM", "PHB", "XPHB", "DMG", "XDMG"]', config)
 
 
 class SourceHelpBrowserTests(unittest.TestCase):
@@ -53,9 +68,14 @@ class SourceHelpBrowserTests(unittest.TestCase):
                         button.click()
                 pane = page.locator('#monsterInputPane')
                 text = ' '.join(pane.inner_text().split())
-                self.assertIn('Monster lookup searches D&D Beyond first.', text)
-                self.assertIn('no usable matches, 5e.tools is tried when enabled and configured.', text)
-                self.assertIn('Provider errors stop the lookup; they do not trigger fallback.', text)
+                self.assertIn('Monster lookup searches all enabled providers: D&D Beyond and configured 5e.tools sources.', text)
+                self.assertIn('Both enabled providers are searched even when D&D Beyond returns usable matches.', text)
+                self.assertIn('Disabled providers and unconfigured books are not searched.', text)
+                self.assertIn('If any enabled provider or configured-book search fails or is incomplete, no candidates are offered; retry or enter stats manually.', text)
+                self.assertIn('Versions keep their own statistics; select the provider/book/edition you want.', text)
+                self.assertIn('The fivetools_fallback setting independently enables 5e.tools candidate lookup.', text)
+                self.assertIn('When a selected result includes an image, that image is used unless you choose an Image file.', text)
+                self.assertNotIn('D&D Beyond first.', text)
                 checkbox = page.get_by_role('checkbox', name=LABEL, exact=True)
                 self.assertTrue(checkbox.is_visible())
                 self.assertEqual(checkbox.get_attribute('id'), 'monsterSpeciesLookupOverwrite')
