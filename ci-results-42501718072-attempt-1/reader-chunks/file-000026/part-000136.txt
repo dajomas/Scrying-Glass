@@ -1,0 +1,32 @@
+nd audit checks	2026-11-08T16:52:23.2567381Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:25.1986957Z Executing <Task finished name='Task-21444' coro=<SourceBonusOfferAcceptanceTests.test_invalid_offer_rolls_back_without_constructing_or_persisting() done, defined at /tmp/scrying-tests-c4h09ux9/repo/tests/test_source_bonus_offer_acceptance.py:179> result=None created at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py:110> took 0.145 seconds
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:29.6551785Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:29.6552260Z Ran 1387 tests in 104.757s
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:29.6552418Z 
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:29.6552506Z OK
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:29.6555974Z Connections opened: 742; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:29.6556572Z PASS: failed PRAGMA initialization closes connection; suite closes all tracked connections
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:30.2058312Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:30.2058632Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:30.4251874Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:30.4252600Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:30.4608804Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:30.4609238Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:30.7044907Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:30.7542515Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:30.7542844Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:33.1762118Z {
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:33.1762372Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:33.1762635Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:33.1762940Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:33.1763261Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:33.1763607Z     "client card has a positive layout width at mobile viewport"
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:33.1763803Z   ],
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:33.1763940Z   "page_errors": [],
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:33.1764136Z   "transport": "mocked HTTP/WS, real Chromium rendering"
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:33.1764321Z }
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:33.2489399Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:33.2489940Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-08T16:52:33.3952879Z ##[endgroup]
+tests	Post Run actions/setup-node@v4	﻿2026-11-08T16:52:33.4013310Z Post job cleanup.
+tests	Post Run
