@@ -1,0 +1,31 @@
+_sources_in_order
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7786881Z     result = self.candidates('Claw',{})
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7787648Z   File "python/scrying_glass_monster_selection.py", line 95, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7788623Z     from .scrying_glass_fivetools_initiative import fivetools_initiative_offer
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7789341Z KeyError: "'__name__' not in globals"
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7789627Z 
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7789924Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7791333Z ERROR: test_empty_list_does_not_even_fetch_index (test_fivetools_source_configuration.SourceConfigurationTests.test_empty_list_does_not_even_fetch_index)
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7792668Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7793444Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7794608Z   File "/tmp/scrying-tests-svjgdy5i/repo/tests/test_fivetools_source_configuration.py", line 115, in test_empty_list_does_not_even_fetch_index
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7795804Z     self.assertEqual(self.candidates('Claw',display),[])
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7796395Z                      ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7797217Z   File "python/scrying_glass_monster_selection.py", line 95, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7798190Z     from .scrying_glass_fivetools_initiative import fivetools_initiative_offer
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7798929Z KeyError: "'__name__' not in globals"
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7799210Z 
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7799553Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7800108Z Ran 1375 tests in 131.545s
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7800347Z 
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7800501Z FAILED (errors=6)
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:12.7801097Z Connections opened: 738; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:13.1324001Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:13.1324532Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:13.4855055Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:13.4855934Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:13.5301047Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:13.5301965Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:13.8871220Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-08T15:56:13.9320774Z ##[endgroup]
+tests	Standalone Python browser and audit checks

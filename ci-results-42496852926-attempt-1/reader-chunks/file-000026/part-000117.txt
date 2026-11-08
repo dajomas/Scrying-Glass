@@ -1,0 +1,47 @@
+Script tests	2026-11-08T15:53:48.5768902Z # todo 0
+tests	JavaScript tests	2026-11-08T15:53:48.5769619Z # duration_ms 93.938209
+tests	JavaScript tests	2026-11-08T15:53:48.6104345Z ##[endgroup]
+tests	JavaScript tests	2026-11-08T15:53:48.6106348Z ##[group]tests/test_bughunt_504cb25.js
+tests	JavaScript tests	2026-11-08T15:53:48.8364858Z TAP version 13
+tests	JavaScript tests	2026-11-08T15:53:48.8744760Z # PASS failed resync can be retried on next heartbeat
+tests	JavaScript tests	2026-11-08T15:53:48.8748576Z # PASS manual resync can retry after render failure
+tests	JavaScript tests	2026-11-08T15:53:48.8753912Z # PASS old valid snapshot is rerendered after partial failure
+tests	JavaScript tests	2026-11-08T15:53:48.8763401Z # PASS reconnect also repairs old snapshot after partial failure
+tests	JavaScript tests	2026-11-08T15:53:48.8770268Z # PASS error status does not falsely promise a retained screen
+tests	JavaScript tests	2026-11-08T15:53:48.8777472Z # PASS healthy unchanged snapshots still skip duplicate rendering
+tests	JavaScript tests	2026-11-08T15:53:48.8785068Z # PASS failed state is not acknowledged
+tests	JavaScript tests	2026-11-08T15:53:48.8792616Z # PASS pending resync requests remain deduplicated
+tests	JavaScript tests	2026-11-08T15:53:48.8801398Z # PASS successful repair is acknowledged at its revision
+tests	JavaScript tests	2026-11-08T15:53:48.8808396Z # PASS healthy reconnect still preserves unchanged stage
+tests	JavaScript tests	2026-11-08T15:53:48.8810083Z # 10 tests; 10 passed; 0 failed
+tests	JavaScript tests	2026-11-08T15:53:48.8880405Z # Subtest: tests/test_bughunt_504cb25.js
+tests	JavaScript tests	2026-11-08T15:53:48.8886346Z ok 1 - tests/test_bughunt_504cb25.js
+tests	JavaScript tests	2026-11-08T15:53:48.8886919Z   ---
+tests	JavaScript tests	2026-11-08T15:53:48.8887347Z   duration_ms: 55.701815
+tests	JavaScript tests	2026-11-08T15:53:48.8887830Z   type: 'test'
+tests	JavaScript tests	2026-11-08T15:53:48.8888240Z   ...
+tests	JavaScript tests	2026-11-08T15:53:48.8888595Z 1..1
+tests	JavaScript tests	2026-11-08T15:53:48.8888954Z # tests 1
+tests	JavaScript tests	2026-11-08T15:53:48.8889318Z # suites 0
+tests	JavaScript tests	2026-11-08T15:53:48.8889698Z # pass 1
+tests	JavaScript tests	2026-11-08T15:53:48.8890061Z # fail 0
+tests	JavaScript tests	2026-11-08T15:53:48.8890539Z # cancelled 0
+tests	JavaScript tests	2026-11-08T15:53:48.8891263Z # skipped 0
+tests	JavaScript tests	2026-11-08T15:53:48.8891745Z # todo 0
+tests	JavaScript tests	2026-11-08T15:53:48.8892511Z # duration_ms 63.658354
+tests	JavaScript tests	2026-11-08T15:53:48.9224351Z ##[endgroup]
+tests	JavaScript tests	2026-11-08T15:53:48.9225069Z ##[group]tests/test_bughunt_757fd9d.js
+tests	JavaScript tests	2026-11-08T15:53:49.1486681Z TAP version 13
+tests	JavaScript tests	2026-11-08T15:53:49.1753190Z # PASS switching account cannot change PATCH target
+tests	JavaScript tests	2026-11-08T15:53:49.1758044Z # PASS cancel cannot turn PATCH into POST
+tests	JavaScript tests	2026-11-08T15:53:49.1771478Z # PASS switching to self cannot redirect a non-self save
+tests	JavaScript tests	2026-11-08T15:53:49.1781919Z # PASS switching away from self still redirects after self save
+tests	JavaScript tests	2026-11-08T15:53:49.1791146Z # PASS newly selected edit form is preserved
+tests	JavaScript tests	2026-11-08T15:53:49.1800262Z # PASS new typing for same account is preserved
+tests	JavaScript tests	2026-11-08T15:53:49.1809874Z # PASS new password typing is preserved
+tests	JavaScript tests	2026-11-08T15:53:49.1825257Z # PASS new role selection is preserved
+tests	JavaScript tests	2026-11-08T15:53:49.1836015Z # PASS unchanged successful edit resets form
+tests	JavaScript tests	2026-11-08T15:53:49.1844964Z # PASS normal create remains POST with password
+tests	JavaScript tests	2026-11-08T15:53:49.1852976Z # PASS blank edit password stays omitted
+tests	JavaScript tests	2026-11-08T15:53:49.1860454Z # PASS failed write preserves editing form
+tests	JavaScript tests	2026-11-08T15:53:49.1863389Z # 1

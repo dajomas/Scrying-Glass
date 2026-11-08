@@ -1,0 +1,28 @@
+    return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4950508Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4951220Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4951859Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4952124Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4953228Z   File "/tmp/scrying-tests-ninuhl7o/repo/tests/test_fivetools_initiative_flow.py", line 68, in test_creation_signed_values_source_identity_and_storage_reopen
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4954083Z     candidate = await self.candidate()
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4954418Z                       ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4954765Z TypeError: 'dict' object is not callable
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4954956Z 
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4955151Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4956182Z ERROR: test_refresh_recalculation_missing_invalid_and_exact_edition (test_fivetools_initiative_flow.FivetoolsInitiativeFlowTests.test_refresh_recalculation_missing_invalid_and_exact_edition)
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4957115Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4957500Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4958023Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4958552Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4958875Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4959482Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4960017Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4960257Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4960983Z   File "/tmp/scrying-tests-ninuhl7o/repo/tests/test_fivetools_initiative_flow.py", line 80, in test_refresh_recalculation_missing_invalid_and_exact_edition
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4961915Z     created = await self.create()
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4962199Z               ^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4962723Z   File "/tmp/scrying-tests-ninuhl7o/repo/tests/test_fivetools_initiative_flow.py", line 43, in create
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4963910Z     fields = dict(self.form(await self.candidate()), name="Noble Prodigy", monster_species="Noble Prodigy")
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4964454Z                                   ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4964801Z TypeError: 'dict' object is not callable
+tests	Python test suite (including browser fixtures)	2026-1

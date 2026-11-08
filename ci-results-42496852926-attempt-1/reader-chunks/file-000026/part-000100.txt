@@ -1,0 +1,27 @@
+1-08T15:53:38.4965004Z 
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4965196Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4966084Z ERROR: test_candidate_errors_are_not_zero_matches (test_fivetools_source_configuration.SourceConfigurationTests.test_candidate_errors_are_not_zero_matches)
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4966894Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4967282Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4968017Z   File "/tmp/scrying-tests-ninuhl7o/repo/tests/test_fivetools_source_configuration.py", line 127, in test_candidate_errors_are_not_zero_matches
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4968671Z     self.candidates('Claw',{})
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4968946Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4969403Z   File "python/scrying_glass_monster_selection.py", line 95, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4970007Z     from .scrying_glass_fivetools_initiative import fivetools_initiative_offer
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4970491Z KeyError: "'__name__' not in globals"
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4970674Z 
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4970868Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4971769Z ERROR: test_candidate_explicit_order_and_duplicates (test_fivetools_source_configuration.SourceConfigurationTests.test_candidate_explicit_order_and_duplicates)
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4972606Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4973120Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4973865Z   File "/tmp/scrying-tests-ninuhl7o/repo/tests/test_fivetools_source_configuration.py", line 120, in test_candidate_explicit_order_and_duplicates
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4974681Z     result = self.candidates('Claw',{'fivetools_sources':['XPHB','DMG','XPHB']})
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4975282Z   File "python/scrying_glass_monster_selection.py", line 95, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4975864Z     from .scrying_glass_fivetools_initiative import fivetools_initiative_offer
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4976310Z KeyError: "'__name__' not in globals"
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4976492Z 
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4976677Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4977582Z ERROR: test_candidates_enumerate_six_sources_in_order (test_fivetools_source_configuration.SourceConfigurationTests.test_candidates_enumerate_six_sources_in_order)
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4978423Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4978804Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.497

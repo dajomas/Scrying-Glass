@@ -1,0 +1,32 @@
+9534Z   File "/tmp/scrying-tests-ninuhl7o/repo/tests/test_fivetools_source_configuration.py", line 106, in test_candidates_enumerate_six_sources_in_order
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4980208Z     result = self.candidates('Claw',{})
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4980694Z   File "python/scrying_glass_monster_selection.py", line 95, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4981274Z     from .scrying_glass_fivetools_initiative import fivetools_initiative_offer
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4981721Z KeyError: "'__name__' not in globals"
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4981897Z 
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4982088Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4983055Z ERROR: test_empty_list_does_not_even_fetch_index (test_fivetools_source_configuration.SourceConfigurationTests.test_empty_list_does_not_even_fetch_index)
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4984014Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4984413Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4985139Z   File "/tmp/scrying-tests-ninuhl7o/repo/tests/test_fivetools_source_configuration.py", line 115, in test_empty_list_does_not_even_fetch_index
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4985977Z     self.assertEqual(self.candidates('Claw',display),[])
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4986351Z                      ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4986839Z   File "python/scrying_glass_monster_selection.py", line 95, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4987426Z     from .scrying_glass_fivetools_initiative import fivetools_initiative_offer
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4987911Z KeyError: "'__name__' not in globals"
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4988095Z 
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4988324Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4988678Z Ran 1375 tests in 136.250s
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4988833Z 
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.4988933Z FAILED (errors=6)
+tests	Python test suite (including browser fixtures)	2026-11-08T15:53:38.8192297Z ##[error]Process completed with exit code 1.
+tests	Upload Admin foundations visual fixtures	﻿2026-11-08T15:53:38.8258661Z ##[group]Run actions/upload-artifact@v4
+tests	Upload Admin foundations visual fixtures	2026-11-08T15:53:38.8258992Z with:
+tests	Upload Admin foundations visual fixtures	2026-11-08T15:53:38.8259228Z   name: admin-foundations-visual-fixtures
+tests	Upload Admin foundations visual fixtures	2026-11-08T15:53:38.8259571Z   path: /home/runner/work/_temp/sg-admin-foundations
+tests	Upload Admin foundations visual fixtures	2026-11-08T15:53:38.8259893Z   if-no-files-found: warn
+tests	Upload Admin foundations visual fixtures	2026-11-08T15:53:38.8260140Z   compression-level: 6
+tests	Upload Admin foundations visual fixtures	2026-11-08T15:53:38.8260365Z   overwrite: false
+tests	Upload Admin foundations visual fixtures	2026-11-08T15:53:38.8260606Z   include-hidden-files: false
+tests	Upload Admin foundations visual fixtures	2026-11-08T15:53:38.8260850Z env:
+t
