@@ -4,10 +4,10 @@ body.admin-shell .sg-roster-region { overflow-x: auto; max-width: 100%; min-widt
 body.admin-shell #characters.sg-roster-region table { min-width: 48rem; }
 body.admin-shell .sg-roster-pane :is(th, td) { vertical-align: middle; }
 body.admin-shell .sg-roster-pane :is(th, td) { font-variant-numeric: tabular-nums; }
-/* Reserve a footer lane in every cell, so status can extend under AC/HP
-   without covering their values or another row's controls. */
-body.admin-shell .sg-roster-region > table > tbody > tr > td { padding-bottom: 1.85rem; }
-body.admin-shell .sg-roster-region > table > tbody > tr > td:nth-child(2) { position: relative; }
+/* Keep a compact footer lane clear beneath values and controls. Align the
+   name/species block against it instead of centering it above a blank gap. */
+body.admin-shell .sg-roster-region > table > tbody > tr > td { padding-bottom: 1.6rem; }
+body.admin-shell .sg-roster-region > table > tbody > tr > td:nth-child(2) { position: relative; vertical-align: bottom; }
 body.admin-shell .sg-roster-state {
     position: absolute;
     left: .45rem;

@@ -3,7 +3,7 @@
 [Back to TODO index](../../TODO.md)
 
 - Updated: 2026-11-08. Tracking: SG-TODO-018 follow-up and adjacent lookup/roster corrections.
-- Status: in progress. A.1 remains accepted; A.2 and A.3 accepted after covering corrective CI and user manual sign-off on 2026-11-08. Initial stage B delivered as 11f104058efb2a56365b0309ce8c6ee829d84c18; first CI failed and visual corrections requested. Colour-only/single-line follow-up included here; corrective CI/manual acceptance pending. SG-TODO-018 is not closed.
+- Status: in progress. A.1 remains accepted; A.2 and A.3 accepted after covering corrective CI and user manual sign-off on 2026-11-08. Initial stage B delivered as 11f104058efb2a56365b0309ce8c6ee829d84c18; first CI failed. Colour-only/single-line correction delivered as 1d4815d8f0e89840687ba13136ce88b3b631b9f3; its covering CI is unreviewed. Compact status-spacing follow-up included here, with covering CI/manual acceptance pending. SG-TODO-018 is not closed.
 - Branch: features/perplexity-018. No overall close-out, merge or write-back authorized.
 - Related: [018 contract](180-monster-initiative-bonus.md), [lookup](010-monster-lookup.md), [configuration](060-fivetools-source-configuration.md), [rosters](../handover/310-admin-rosters.md), [A.1 history](../handover/335-fivetools-initiative-correction.md), [current A.2/A.3/B delivery](../handover/340-combined-monster-lookup.md).
 
@@ -13,7 +13,7 @@ Do not push the rejected step-6 close-out draft. SG-TODO-018 is not accepted ove
 A.1 remains accepted. The user manually tested and signed off A.2 and A.3 on
 2026-11-08, after successful covering corrective CI recorded below. The user chose
 blocking incomplete lookup and approved four A.2 increments, superseding the
-initial two. Stage B delivery and its visual/fixture correction are separate from
+initial two. Stage B delivery and its visual/fixture corrections are separate from
 acceptance. No owner/deadline is assigned. Historical records and failed/passing
 evidence remain in linked handovers and the immutable
 [pre-finalization snapshot](https://github.com/dajomas/Scrying-Glass/blob/ce44afba0e12cd4b46125e735e935753ccb41be0/docs/todo/185-monster-correction-plan.md).
@@ -28,7 +28,7 @@ approval, appropriate tests/docs and review of covering CI before validation cla
 ### Stage A: provider correctness and candidate selection
 
 1. A.1 initiative extraction: accepted. Noble Prodigy XMM +7, creation, Refresh/
-   apply/reload and raw16+bonus7=23 were confirmed by the user. Signed values, exact
+   apply/reload and raw16+7=23 were confirmed by the user. Signed values, exact
    identity/provenance and explicit-zero versus missing remain required; no absent-
    field Dexterity guess/source-backed zero. The linked 180 contract is authoritative.
 2. A.2 combined search: accepted after covering CI and user manual sign-off.
@@ -51,18 +51,19 @@ approval, appropriate tests/docs and review of covering CI before validation cla
 
 ### Stage B: compact and consistent roster presentation
 
-Status: initial implementation delivered; first covering CI failed. Colour-only
-controls/single-line status and fixture correction included here, with corrective
-CI/manual acceptance pending. No corrective delivery SHA invented before push.
+Status: initial implementation delivered; first covering CI failed. Colour-only/
+single-line correction delivered; covering CI unreviewed. Compact spacing follow-
+up included here; its delivery SHA only after push. CI/manual acceptance pending.
 
 4. Remove Roll heading and (legacy) suffix; retain accessible raw-input labels,
    separate totals and internal legacy semantics. No data migration.
 5. Status is one line, allowed to continue beneath AC/HP without covering values
-   or controls or creating page-level overflow. Test short and long names/narrow UI.
-   Fixed AC/HP/Init captions omit on/off wording, consistent with Join Battle/Ally/
-   Visible colours. By the user's follow-up, remove dashes/checkmarks and use
-   colour-only visual state, superseding the earlier non-colour visual-marker
-   requirement. Retain aria-pressed, fixed accessible names and keyboard/focus.
+   or controls or creating page-level overflow, and follows the name/species block
+   with a small gap rather than an empty-looking line. Test short/long names and
+   narrow UI. Fixed AC/HP/Init captions omit on/off wording, consistent with Join
+   Battle/Ally/Visible colours. By the user's follow-up, remove dashes/checkmarks
+   and use colour-only visual state, superseding the earlier non-colour visual-
+   marker requirement. Retain aria-pressed, fixed accessible names and keyboard/focus.
 6. Replace displayed standing with alive in Characters/Monsters, without needless
    stored-identifier renames or life-state rule changes.
 
@@ -191,7 +192,9 @@ A.2/A.3 accepted, not overall SG-TODO-018 completion or an assistant-run live au
 
 - Initial implementation delivered as 11f104058efb2a56365b0309ce8c6ee829d84c18.
   Its first CI failed and visual follow-up was requested. The colour-only controls,
-  single-line status lane and fixture correction are included here; corrective
+  single-line status lane and fixture correction were delivered as
+  1d4815d8f0e89840687ba13136ce88b3b631b9f3; its covering CI has not been reviewed
+  in this request. The compact spacing correction below is included here, with
   delivery SHA only after push. Corrective CI/manual acceptance pending.
 - Fixed captions/pressed states, scoped actions, alive wording and removal of
   visible Roll/legacy text preserve underlying values/semantics. The fixed-stat
@@ -211,26 +214,48 @@ A.2/A.3 accepted, not overall SG-TODO-018 completion or an assistant-run live au
   JavaScript/upload/checkout cleanup succeeded; Node/Python post-setup cleanup
   skipped. Connection tracking 762 opened/0 without explicit close does not turn
   the failed audit repeat into a pass. Keep this run failed historically.
-- Follow-up preparation: CSS-only production change reserves a lower strip in
-  every main roster data cell and positions a nonwrapping status line there,
-  allowed past the name cell beneath adjacent columns without covering values.
-  Revised three-method test compiles/parses; all 15 embedded JS expressions pass
-  Node syntax. Isolated Chromium geometry at 375/768/1440, both rosters and three
-  replacements passed one-line/spill/non-overlap/no-glyph/no-viewport-widening/no-
-  page-error checks. This is synthetic markup/component CSS, not full Admin or
-  live-server validation. Full-Admin tests not run locally (FastAPI absent).
+- Colour-only/single-line follow-up preparation: CSS-only production change
+  reserved a lower strip and positioned a nonwrapping status line there, allowed
+  past the name cell beneath adjacent columns. Revised three-method test compiled/
+  parsed; all 15 embedded JS expressions passed Node syntax. Isolated Chromium
+  geometry at 375/768/1440, both rosters and three replacements passed one-line/
+  spill/non-overlap/no-glyph/no-viewport-widening/no-page-error checks. This is
+  synthetic markup/component CSS, not full Admin/live-server validation.
 - The rejection fixture opens the existing input pane through normal UI toggles
   before asserting visible feedback and unchanged state. Production notification
   placement is unchanged; it can remain hidden if that input pane is closed.
-  Updated regressions measure the whole line for short/long names and check colour
+  Regressions measure the whole line for short/long names and check colour
   difference, glyph absence and retained exact PATCH count/payload/pressed state.
   See [follow-up evidence and limits](../handover/340-combined-monster-lookup.md#stage-b-ci-failure-and-colour-onlysingle-line-follow-up---2026-11-08).
-- Required acceptance: desktop/narrow/short and long names, status one line under
-  AC/HP with no value/control/next-row overlap, local scrolling/focus, no dash/check
-  decorations, fixed controls distinguished by colour, mouse/Enter/Space toggling,
-  rejected saves and persistence, preserved selection/bulk/Edit/statistics, raw
-  labels/totals and legacy semantics, alive display with unchanged stored states
-  and down/stable/dead behavior. Add Monster/Refresh remain unchanged.
+- Required acceptance: desktop/narrow/short and long names, compact name/species-
+  to-status gap without an empty-looking line, status one line under AC/HP with no
+  value/control/next-row overlap, local scrolling/focus, no dash/check decorations,
+  fixed controls distinguished by colour, mouse/Enter/Space toggling, rejected
+  saves and persistence, preserved selection/bulk/Edit/statistics, raw labels/totals
+  and legacy semantics, alive display with unchanged stored states and down/stable/
+  dead behavior. Add Monster/Refresh remain unchanged.
 - Normal CI, no skip/workflow edit/dispatch. Review exact corrective SHA/run/attempt,
   correct failures with fresh approval, then obtain user stage-B acceptance before
   overall close-out reconciliation. Merging/other-branch writes not authorized.
+
+### Compact spacing follow-up - 2026-11-08
+
+The user reported an empty line above status in both rosters and requested a CSS
+spacing fix. Bottom-align the name/species cell against the status strip and
+reduce main data-cell bottom padding to 1.6rem, retaining a small gap and all
+existing single-line/non-overlap/colour-only behavior. This is CSS-only production
+work, not a data/JavaScript/API change. Details and execution limits are in the
+[roster handover](../handover/310-admin-rosters.md#sg-todo-018-stage-b-compact-status-spacing---2026-11-08).
+
+Preparation: verified original stylesheet blob, isolated Chromium comparison at
+375/768/1440 and 16/20 px root fonts over three replacements in both rosters;
+gaps reduced from about 25-28 px to 2.7-3.4 px, rows 4-5 px shorter in the synthetic
+fixture, with no overlap/widening/glyphs/page errors. New regression compiles/parses
+and its two embedded JS expressions pass Node syntax. Its full-Admin method is
+prepared, not executed locally (FastAPI absent); normal CI discovers it. It reuses
+existing line/non-overlap checks and adds a half-rem maximum gap over short/long
+names, both rosters, six viewport/font configurations and three refreshes.
+
+Delivery and covering CI remain separate; no SHA/run invented before delivery.
+Review covering results and obtain stage-B visual acceptance before close-out.
+No skip marker, workflow modification, dispatch, merge or other-branch write.

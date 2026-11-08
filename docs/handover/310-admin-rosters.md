@@ -58,3 +58,45 @@ Local: completed suite=all tested 386beabbcd6e39378014d4a86df24dd4d68f5b75, evid
 The user explicitly accepted desktop/narrow roster presentation, selection/bulk workflows, Edit-dialog HP values retained after reload and absence of Turn, then requested 009.4 and 012 completed and closed on 2026-11-06. This is user visual/workflow acceptance. It is not an assistant-executed authenticated live-server, real database persistence, screenshot inspection or exhaustive screen-reader/combat audit; fixture transports remain mocked/intercepted. Both tasks and the accepted Turn follow-up are concluded for their agreed scope. Overall 009 remains in progress; 013 and later phases remain separate.
 
 This close-out changes five documentation files only, runs no new tests and changes no application, test, dependency or workflow files. README/User Guide and HANDOVER.md remain accurate and unchanged. Commit message contains [skip ci]; no separate workflow is dispatched and no new run outcome is inferred.
+
+## SG-TODO-018 stage B compact status spacing - 2026-11-08
+
+This later correction is separate from the accepted 009.4/012 scope above.
+Branch features/perplexity-018 only. [Current correction plan](../todo/185-monster-correction-plan.md) and [stage-B history](340-combined-monster-lookup.md).
+The colour-only/single-line correction was delivered as
+1d4815d8f0e89840687ba13136ce88b3b631b9f3. Its covering CI has not been reviewed
+in this spacing request; delivery is not validation or stage-B acceptance. The
+user's follow-up screenshot shows an empty-looking line above the status.
+
+The shared CSS now bottom-aligns the name/species cell and reduces all main-row
+data-cell bottom padding from 1.85rem to 1.6rem. This brings the name block against
+the status strip rather than centering it beside taller initiative controls.
+Status remains a single line allowed beneath AC/HP, with a small gap and enough
+reserved space to avoid covering adjacent values/controls or the next row.
+Colour-only controls, pressed semantics, local scrolling and all JavaScript/API/
+initiative/HP/life-state/creation/Refresh behavior remain unchanged. No migration
+or new dependency; deploy the stylesheet and reload the Admin page.
+
+Preparation: the original stylesheet was reconstructed and verified against blob
+23d8e79ee7a990081d9bab3b1fafa457774a299e. Local isolated Chromium compared old/new
+CSS using synthetic two-row tables in both rosters at 375/768/1440 and 16/20 px
+root font sizes, three replacements per configuration. Gaps fell from about
+25-28 px to 2.7-3.4 px; rows shrank by 4-5 px in this fixture. Single-line status,
+clearance from adjacent cell content, within-row bounds, no glyphs, no page
+widening and no page errors passed. These are component geometry measurements,
+not deployed or full-Admin results.
+
+The new assembled-Admin/intercepted-HTTP regression checks short/long names in
+both rosters at those six viewport/font configurations over three refreshes,
+reuses existing single-line/non-overlap assertions and limits name-to-status gap
+to half a rem. Python compilation/AST parsing and Node syntax checks on both
+embedded JavaScript expressions passed. This full-Admin method was prepared,
+not executed locally: FastAPI is absent. Existing normal CI discovers it.
+
+Implementation, regression and status notes are included in this increment; its
+SHA is assigned only on push. Covering CI and user visual acceptance remain
+pending. Normal CI applies with no skip marker, workflow change or dispatch.
+README/User Guide, root indexes and 340 were reviewed/reused unchanged: their
+workflows, links, reserved status lane and overall open status remain accurate.
+Historical failed runs stay failed. No SG-TODO-018 close-out, merge or other-
+branch write is authorized.
