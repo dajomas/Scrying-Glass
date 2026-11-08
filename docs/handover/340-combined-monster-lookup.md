@@ -3,12 +3,12 @@
 [Back to handover index](../../HANDOVER.md)
 
 2026-11-08. [SG-TODO-018 correction plan](../todo/185-monster-correction-plan.md).
-Branch features/perplexity-018. All four A.2 implementation increments and commit 5
-are delivered; covering commit-5 CI is verified below. A.2 manual acceptance remains
-pending. A.3 implementation is delivered as c62d203d3b92aa277eb7e34f4c90da789ab0e58b;
-first covering CI failed on a stale browser expectation. Fixture correction is
-prepared below; corrective CI and manual acceptance remain pending. A.1 remains
-accepted. No overall close-out, merge or write-back authorized.
+Branch features/perplexity-018. A.1 remains accepted. A.2 and A.3 have covering
+corrective CI and the user's manual test/sign-off on 2026-11-08. Stage B roster
+presentation is included in this increment; its covering CI and manual acceptance
+remain pending. No overall SG-TODO-018 close-out, merge or write-back authorized.
+Earlier dated preparation/delivery gates below are historical and superseded only
+where the later acceptance record explicitly says so.
 
 ## Runtime and compatibility
 
@@ -50,15 +50,14 @@ HP/unselected state, retained identity, and disabled providers/empty sources.
 These methods were prepared, not executed locally: FastAPI is absent. No framework
 stand-in or browser-to-server, password login, TCP, live-provider or OS-restart proof.
 Existing CI discovers both modules normally; the later commit-5 run below covers
-the branch containing these tests. Manual workflow acceptance remains pending.
+the branch containing these tests. Manual workflow acceptance was pending then.
 Historical data is linked rather than discarded.
 
 ## Remaining gate
 
-Obtain deployed desktop/narrow acceptance for both provider versions, chosen-source
-persistence/Refresh and fail-closed lookup without partial offers. Only then
-reconcile A.2 status. No stage B, SG-TODO-018 completion or merge is inferred.
-A.3 has its separate implementation and validation record below.
+A.2/A.3 manual acceptance is now recorded below. Review stage-B covering CI and
+obtain its desktop/narrow visual/workflow acceptance before overall reconciliation.
+Stage-B delivery is not validation or task completion. Merging remains separate.
 
 ## Commit 5 initiative overwrite follow-up - 2026-11-08
 
@@ -97,7 +96,7 @@ browser/audit and artifact-upload steps succeeded. Inspected error-labelled
 tracebacks are negative-path logging followed by passing assertions, not failing
 checks. No setup/collection failure is reported; individual test-level skips were
 not independently enumerated across the entire log. Historical failures stay failed.
-Deployed acceptance remains pending; see the [commit-5 gate](../todo/185-monster-correction-plan.md#commit-5-initiative-overwrite-follow-up---2026-11-08).
+Deployed acceptance gate at that delivery is retained in the [commit-5 record](../todo/185-monster-correction-plan.md#commit-5-initiative-overwrite-follow-up---2026-11-08); the later explicit sign-off is A.2/A.3, not invented broader acceptance.
 
 ## A.3 sole-candidate Refresh - 2026-11-08
 
@@ -117,7 +116,7 @@ The unchanged browser retains individual selections across continuation. No fiel
 are auto-checked; no live statistics/image change or HP generation occurs in review.
 Explicit Apply and all existing authorization, scope/revision/state/configuration,
 expiry, signed identity, single-use and transactional guards remain. Add Monster
-commit-5 code, Admin assets, schema and CI workflows are unchanged.
+commit-5 code, Admin assets, schema and CI workflows were unchanged by A.3.
 
 Preparation validation: four prepared Python code/test files compiled and parsed.
 Framework application and browser tests were not executed locally: FastAPI and
@@ -128,12 +127,10 @@ review mutation, HP only on explicit Apply, storage reopen, replay, malformed ID
 stale response/configuration/expiry and 1440/375 review behavior. Provider transport/
 HP and browser endpoints are mocked as described in fixtures; no live-provider,
 password-login, browser-to-server, new-process restart or deployed acceptance claim.
-The first covering A.3 run failed as recorded below; corrective CI and manual
-acceptance remain pending, not passed by delivery.
-README and correction-plan status were updated together. Existing index links remain
-unchanged; their A.3 pending wording is a validation/acceptance gate, not a claim
-that this increment is absent. See the [A.3 gate](../todo/185-monster-correction-plan.md#a3-implementation-and-validation---2026-11-08).
-Stage B, overall SG-TODO-018 close-out, merging and other-branch writes are excluded.
+The first covering A.3 run failed as recorded below; the later corrective CI and
+manual acceptance record supersedes its pending gate without relabelling failure.
+README and correction-plan status were updated together. See the [A.3 record](../todo/185-monster-correction-plan.md#a3-implementation-and-validation---2026-11-08).
+Stage B, overall close-out, merging and other-branch writes were excluded from A.3.
 
 ## A.3 first covering CI and fixture correction - 2026-11-08
 
@@ -167,6 +164,73 @@ Correction preparation: reconstructed original test matches live blob
 1b583d9dada1cb3aee7ddc85f1bf196f5d3a3e82; revised 16,382-byte module compiles
 and parses. Its five methods were not executed locally: FastAPI/HTTPX2 absent.
 Normal CI discovers it; no skip marker/workflow edit/dispatch. Corrective delivery
-and covering results remain separate; no new SHA/run is invented. README and
-root index links/overall open status need no change for this fixture correction.
-All failed runs above remain failed historical evidence.
+and covering results remain separate. README and root index links/overall open
+status needed no change for that fixture correction. All failed runs stay failed.
+
+## Corrective CI and A.2/A.3 acceptance - 2026-11-08
+
+Correction delivered as 1c289d485bffcf8197fb32238349729e52b822ed. Branch tests
+42517614512 attempt 1 succeeded for that exact SHA on features/perplexity-018.
+Evidence was read at publication 73183fd70d6111083b2ca0048c6a029c0c04fed8 /
+ci-results-42517614512-attempt-1. Run/job metadata agrees; every listed step and
+cleanup succeeded, no skipped workflow steps or reported setup/collection failures.
+Main suite: 1,407 tests OK; connection-audit repeat: 1,407 tests OK, 761 connections
+opened/0 without explicit close. Repetition is not unique tests. The repaired
+multiple-candidate method and new assembled sole-candidate method explicitly
+report OK, along with stale/apply/health-conflict checks. Other syntax/import,
+pytest, JavaScript, standalone checks and artifact upload succeeded.
+
+The user stated: manually tested A2 and A3 and signs off on them (2026-11-08).
+A.2 and A.3 are accepted; A.1 acceptance remains. This is user acceptance, not an
+assistant-executed deployed/live-provider audit or overall SG-TODO-018 close-out.
+
+## Stage B roster presentation - 2026-11-08
+
+Implementation included in this increment; delivery SHA is assigned only on push.
+The existing loaded roster enhancement removes visible Roll label text and the
+(legacy) suffix, preserving the input's raw-roll accessible label and separate
+Total output. Retained totals still have no invented raw roll; a tooltip explains
+them. The lower-level raw renderer/calculations remain unchanged. Subtree
+observation catches late decorators as well as replacements, with idempotent
+child writes to avoid an observer feedback loop. Character initiative labels remain
+combatant-specific; monster raw-roll labels are no longer overwritten by the
+generic roster label. No values, origins, calculation/order or Tab rules change.
+
+Roster status maps standing to alive for display only, including the character
+life-state button. Down/stable/dead and stored identifiers/rules remain unchanged.
+Status phrases use individual nonbreaking spans inside a wrapping status group.
+The explicit single-line action group retains table-local scrolling and button
+order/focus exposure. Blanket action-cell nowrap is removed; names/species and
+individual button captions remain intentionally unwrapped. No page-level overflow
+is introduced by intent; full-Admin geometry checks remain required.
+
+AC/HP/Init have fixed captions and server-derived on classes/aria-pressed. Join
+Battle/Ally/Visible share pressed semantics and scoped active styling. Minus/check
+markers distinguish states without colour alone; aria-labels keep accessible
+button names stable. The old document delegate infers fixed-stat state from the
+visible on suffix, so the roster-local fixed-stat handler stops that delegate and
+uses the same patch helper once with boolean state. It does not optimistically
+change state. Existing PATCH URLs, payload keys, authentication, server validation,
+error notices and reload behavior remain. Other button handlers are untouched.
+
+Preparation across this continuation: Node syntax passed for the roster draft.
+Isolated Chromium at 375/768/1440 passed three replacements per width and 18
+keyboard toggle activations overall: one helper call each, zero old-delegate calls,
+no page errors. This fixture used copied production enhancement code with a stub
+patch helper/minimal markup, not full Admin, HTTP/SQLite or deployed acceptance.
+The existing layout test's original blob 731b81475012ffcb61cf252d505dc0cdfbe50249
+was verified; only its three fixed-caption expectations change. Updated layout
+and new full-Admin regression modules compile/parse. Full-Admin tests were prepared
+not executed locally (FastAPI absent). New intercepted-HTTP tests cover long names,
+three widths, replacements, raw labels/retained totals, display-only life mapping,
+read-only rendering, each fixed toggle in both directions with Enter/Space, one
+PATCH per activation, state markers and rejected requests preserving state. Existing
+geometry, all-button keyboard/local scrolling, Edit/statistics and removed-control
+checks remain. Normal CI discovers both modules; no workflow edit/skip/dispatch.
+
+Stage-B covering CI and user visual/workflow acceptance remain pending. Deploy the
+matching static files and reload browsers; no schema, Python/server, core bundle
+identity, creation or Refresh change. README/User Guide and roster handover 310
+were reviewed; their existing workflows/single-line controls remain accurate. Root
+HANDOVER and correction-plan status are updated; TODO index stable links and overall
+in-progress state remain. No overall task close-out, merge or other-branch write.

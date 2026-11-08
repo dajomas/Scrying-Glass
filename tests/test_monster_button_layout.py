@@ -88,9 +88,9 @@ class MonsterButtonLayoutTests(unittest.TestCase):
                     buttons = page.locator('#monsters td button:visible')
                     expected = ['Edit', 'In Battle' if active else 'Join Battle',
                                 'Ally', 'Visible',
-                                'AC on' if active else 'AC off',
-                                'HP on' if active else 'HP off',
-                                'Init on' if active else 'Init off',
+                                'AC',
+                                'HP',
+                                'Init',
                                 'Reset', 'Restore statistics', 'Remove']
                     self.assertEqual([s.strip() for s in buttons.all_text_contents()], expected)
                     boxes = [buttons.nth(i).bounding_box() for i in range(len(expected))]

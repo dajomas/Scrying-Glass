@@ -5,11 +5,37 @@ body.admin-shell #characters.sg-roster-region table { min-width: 48rem; }
 body.admin-shell .sg-roster-pane :is(th, td) { vertical-align: middle; }
 body.admin-shell .sg-roster-pane :is(th, td) { font-variant-numeric: tabular-nums; }
 body.admin-shell .sg-roster-state {
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .15rem .5rem;
     margin-top: .25rem;
     font-size: .8rem;
     color: var(--admin-muted);
     white-space: normal;
+}
+body.admin-shell .sg-roster-state-item { white-space: nowrap; }
+body.admin-shell .sg-roster-state-item + .sg-roster-state-item::before { content: '· '; }
+body.admin-shell .sg-roster-actions {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: max-content;
+    gap: .25rem;
+}
+body.admin-shell .sg-roster-actions button { margin: 0; white-space: nowrap; flex: 0 0 auto; }
+body.admin-shell .sg-roster-actions button[aria-pressed]::before {
+    content: '− ';
+    display: inline-block;
+    width: 1.1em;
+}
+body.admin-shell .sg-roster-actions button[aria-pressed="true"]::before { content: '✓ '; }
+body.admin-shell .sg-roster-actions button[aria-pressed="false"] {
+    background: var(--surface-2);
+    color: var(--text);
+}
+body.admin-shell .sg-roster-actions button[aria-pressed="true"] {
+    background: #2d5640;
+    color: #e2f5e9;
 }
 body.admin-shell .sg-roster-pane .bulk-action-toolbar {
     display: flex;

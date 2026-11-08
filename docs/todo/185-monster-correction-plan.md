@@ -3,19 +3,22 @@
 [Back to TODO index](../../TODO.md)
 
 - Updated: 2026-11-08. Tracking: SG-TODO-018 follow-up and adjacent lookup/roster corrections.
-- Status: in progress. A.1 accepted; all four A.2 increments and commit 5 delivered, commit-5 covering CI verified, A.2 manual acceptance pending. A.3 delivered as c62d203d3b92aa277eb7e34f4c90da789ab0e58b; first covering CI failed, fixture correction prepared, corrective CI/manual acceptance pending. Stage B remains pending.
+- Status: in progress. A.1 remains accepted; A.2 and A.3 accepted after covering corrective CI and user manual sign-off on 2026-11-08. Stage B implementation/tests/docs included in this increment; covering CI and manual acceptance pending. SG-TODO-018 is not closed.
 - Branch: features/perplexity-018. No overall close-out, merge or write-back authorized.
-- Related: [018 contract](180-monster-initiative-bonus.md), [lookup](010-monster-lookup.md), [configuration](060-fivetools-source-configuration.md), [rosters](../handover/310-admin-rosters.md), [A.1 history](../handover/335-fivetools-initiative-correction.md), [current A.2/A.3 delivery](../handover/340-combined-monster-lookup.md).
+- Related: [018 contract](180-monster-initiative-bonus.md), [lookup](010-monster-lookup.md), [configuration](060-fivetools-source-configuration.md), [rosters](../handover/310-admin-rosters.md), [A.1 history](../handover/335-fivetools-initiative-correction.md), [current A.2/A.3/B delivery](../handover/340-combined-monster-lookup.md).
 
 ## Decision and current state
 
 Do not push the rejected step-6 close-out draft. SG-TODO-018 is not accepted overall.
-A.1 alone has covering CI and explicit manual acceptance. The user chose blocking
-incomplete lookup and approved four A.2 increments, superseding the initial two.
-No owner/deadline is assigned. This is the current task scope; historical delivery
-records and failed/passing evidence remain in the linked handovers and immutable
+A.1 remains accepted. The user manually tested and signed off A.2 and A.3 on
+2026-11-08, after successful covering corrective CI recorded below. The user chose
+blocking incomplete lookup and approved four A.2 increments, superseding the
+initial two. Stage B preparation is now authorized and included here; acceptance
+is separate. No owner/deadline is assigned. Historical records and failed/passing
+evidence remain in linked handovers and the immutable
 [pre-finalization snapshot](https://github.com/dajomas/Scrying-Glass/blob/ce44afba0e12cd4b46125e735e935753ccb41be0/docs/todo/185-monster-correction-plan.md).
-No pending action is removed by this consolidation.
+No pending action is removed by this consolidation. Earlier dated pending gates
+below describe those deliveries, not a reversal of the later explicit sign-off.
 
 ## Processing order
 
@@ -28,7 +31,7 @@ approval, appropriate tests/docs and review of covering CI before validation cla
    apply/reload and raw16+bonus7=23 were confirmed by the user. Signed values, exact
    identity/provenance and explicit-zero versus missing remain required; no absent-
    field Dexterity guess/source-backed zero. The linked 180 contract is authoritative.
-2. A.2 combined search: implementation included; acceptance pending.
+2. A.2 combined search: accepted after covering CI and user manual sign-off.
    - Search enabled providers and configured books only. Keep provider/book/edition
      versions and their statistics separate; do not collapse editions or mix fields.
      Acceptance example: D&D Beyond 2014 and 5e.tools 2024 both selectable.
@@ -38,16 +41,18 @@ approval, appropriate tests/docs and review of covering CI before validation cla
    - Keep keys/defaults and document fivetools_fallback as independent enablement
      for candidate search; legacy image/stats fallback behavior stays unchanged.
    - Commit 4 aligns in-UI help/config comments and adds browser/application checks.
-     Later covering commit-5 CI is verified; deployed workflow acceptance is still
-     required before A.2 closure.
-3. A.3 sole-candidate Refresh auto-resolution: implementation delivered; first CI
-   failed on a stale browser expectation. Fixture correction and fresh covering CI/
-   acceptance remain pending. Multiple candidates still require selection; zero stay
-   unresolved. Never substitute another retained identity. Auto-resolution must not
-   select fields, mutate state or bypass Apply; retain other rows' choices.
-   See the separate gate below.
+     Commit-5 and later corrective CI are verified; the A.2 manual gate is satisfied
+     by the user's explicit sign-off below.
+3. A.3 sole-candidate Refresh auto-resolution: accepted. Multiple candidates still
+   require selection; zero stay unresolved. Never substitute another retained
+   identity. Auto-resolution must not select fields, mutate state or bypass Apply;
+   retain other rows' choices. The first failed run remains failed; corrective
+   delivery/CI and manual acceptance are recorded separately below.
 
 ### Stage B: compact and consistent roster presentation
+
+Status: implementation included in this increment; covering CI/manual acceptance
+pending. No delivery SHA is invented before push.
 
 4. Remove Roll heading and (legacy) suffix; retain accessible raw-input labels,
    separate totals and internal legacy semantics. No data migration.
@@ -60,11 +65,11 @@ approval, appropriate tests/docs and review of covering CI before validation cla
 
 ### Final validation and acceptance
 
-After A/B, review CI and desktop/narrow workflows against all six actions. Keep
-format/unit/ASGI/browser/live-provider/manual evidence distinct; disclose skipped,
-unexecuted and fixture limits. Obtain workflow/visual acceptance and resolve agreed
-checks before step-6 reconciliation. Completion and merge are separate approvals.
-A.1 acceptance and code delivery do not close A.2 or SG-TODO-018.
+Review stage-B CI and desktop/narrow workflows against all three roster actions.
+Keep format/unit/ASGI/browser/live-provider/manual evidence distinct; disclose
+skipped, unexecuted and fixture limits. A.2/A.3 are accepted, but stage B needs its
+own workflow/visual acceptance before step-6 reconciliation. Overall completion
+and merging remain separate approvals.
 
 ## Current four-commit plan and validation - 2026-11-08
 
@@ -76,7 +81,8 @@ A.1 acceptance and code delivery do not close A.2 or SG-TODO-018.
    Run/job metadata confirms every listed step/cleanup succeeded for that exact SHA.
    Earlier failed runs remain failed historical evidence.
 4. Help/config wording and added browser/application regressions: delivered; later
-   commit-5 CI covers these files, while manual acceptance remains pending.
+   commit-5 CI covers these files. Manual acceptance was pending at that delivery
+   and is now satisfied by the later A.2 sign-off.
 
 Commit-4 preparation: two static tests passed. Creation/import form blocks remain
 byte-identical; every non-comment YAML line is identical. Updated/new Python tests
@@ -92,15 +98,16 @@ discovers both modules; no workflow change, skip or dispatch.
 ## Historical references
 
 A.1's source hashes, failed CI, covering run 42497904756 and manual acceptance are
-preserved in 335. The immutable snapshot above retains the earlier per-stage task
-records/anchors; 340 records current delivery and limits. Root TODO remains
-in progress with unchanged stable task links. Stage B and merge are not started.
+preserved in 335. The immutable snapshot above retains earlier per-stage records/
+anchors; 340 records current delivery and limits. Root TODO remains in progress
+with stable task links. Overall close-out and merge are not authorized.
 
 ## Commit 5 initiative overwrite follow-up - 2026-11-08
 
 - Tracking: SG-TODO-018 follow-up before A.3.
 - Status: implementation delivered as 7c760064aaa3484974362fb423f89245e4eb55fa; covering
-  CI verified, deployed workflow acceptance pending.
+  CI verified. The deployed workflow gate listed here was pending at that delivery;
+  the later explicit user sign-off is A.2/A.3, not invented broader acceptance.
 - Agreed scope: remove the separate Add Monster bonus confirmation, not candidate
   choice or Refresh Apply. Available bonuses follow the existing AC/HP overwrite
   option; preserve intervening edits, missing/invalid values and exact signed offers.
@@ -113,19 +120,19 @@ in progress with unchanged stable task links. Stage B and merge are not started.
   without explicit close. All listed job steps succeeded; no skipped job steps or
   reported setup/collection failure. Individual test skips were not independently
   enumerated. Historical failed runs are not relabelled.
-- Remaining acceptance gate: verify deployed desktop/narrow blank fills, checked/
+- Acceptance checklist retained: deployed desktop/narrow blank fills, checked/
   unchecked replacement, explicit zero/negative bonuses, edits during request/choice
   (including revert), missing/invalid source values, exact selected-provider
-  attribution, cancellation/reset and no repeat popup/lookup. Verify source creation/
-  Refresh persistence with server validation intact.
+  attribution, cancellation/reset and no repeat popup/lookup; source creation/
+  Refresh persistence with server validation intact. Stage B does not change it.
 - Existing AC/HP assignments, Refresh review/Apply, A.3 and stage B stay separate.
   No task close-out, overall acceptance, merge or write-back is inferred.
 
 ## A.3 implementation and validation - 2026-11-08
 
-- Status: implementation delivered as c62d203d3b92aa277eb7e34f4c90da789ab0e58b.
-  First covering CI failed; fixture correction prepared, corrective CI and deployed
-  acceptance pending. This is not completion or overall manual acceptance.
+- Status: accepted. Implementation c62d203d3b92aa277eb7e34f4c90da789ab0e58b; fixture
+  correction 1c289d485bffcf8197fb32238349729e52b822ed has verified successful covering
+  CI and the user's manual sign-off below. The first covering run stays failed.
 - Behavior: identity-less sole signed candidate resolves automatically; multiple
   require choice, zero remain unavailable. Invalid retained identity/conflicting
   signed choice cannot substitute source. Exact-source fetch/token failure stays
@@ -138,13 +145,8 @@ in progress with unchanged stable task links. Stage B and merge are not started.
   discovers the updated source tests and new ASGI/SQLite/Chromium regressions; no
   skip marker, workflow modification or separate dispatch. Fixture limits and
   coverage are recorded in [handover](../handover/340-combined-monster-lookup.md#a3-sole-candidate-refresh---2026-11-08).
-- Required follow-up: inspect corrective covering CI by exact SHA/run/attempt,
-  diagnose failures without relabelling history, then deployed desktop/narrow
-  acceptance for sole/multiple/zero, retained-source failure, other-row choices,
-  unchecked defaults, explicit Apply/HP generation/persistence, stale rejection and
-  cancellation. Recheck commit-5 Add Monster behavior unchanged.
-- Stage B, overall SG-TODO-018 close-out, manual acceptance and merging remain
-  outside this delivery.
+- The corrective CI/manual gates below are now satisfied for A.2/A.3 only. Stage B,
+  overall SG-TODO-018 close-out and merging remain separate.
 
 ### First A.3 CI failure and fixture correction
 
@@ -160,11 +162,48 @@ Connection tracking: 759 opened/0 without explicit close; the audit step still
 failed with its repeated suite. Detailed paths and limits are in the
 [handover correction record](../handover/340-combined-monster-lookup.md#a3-first-covering-ci-and-fixture-correction---2026-11-08).
 
-Prepared correction supplies two distinct candidates in the explicit-choice
-fixture and preserves other-row/unchecked-HP/no-mutation assertions. A new
-assembled-browser/secured-ASGI/SQLite method covers sole-candidate review and
-explicit Apply at desktop/narrow widths. Production behavior is unchanged.
-The revised test module compiles/parses and remains under 20,000 bytes; these
-methods were not run locally because FastAPI/HTTPX2 are absent. Fresh bound
-approval, delivery and normal covering CI are required before claiming a fix
-validated. No skip/workflow change/dispatch, task close-out, stage B or merge.
+The correction supplies two distinct candidates in the explicit-choice fixture
+and preserves other-row/unchecked-HP/no-mutation assertions. A new assembled-
+browser/secured-ASGI/SQLite method covers sole-candidate review and explicit Apply
+at desktop/narrow widths. Production behavior is unchanged. Its preparation
+compiled/parsed under 20,000 bytes; methods were not run locally because FastAPI/
+HTTPX2 were absent. Delivery and successful covering CI are recorded below; the
+old failure is not relabelled. No skip/workflow change/dispatch, close-out or merge.
+
+### Corrective CI and user acceptance - 2026-11-08
+
+Run 42517614512 attempt 1 succeeded for exact
+1c289d485bffcf8197fb32238349729e52b822ed on features/perplexity-018. Evidence
+publication 73183fd70d6111083b2ca0048c6a029c0c04fed8 /
+ci-results-42517614512-attempt-1 was inspected. All listed steps and cleanup
+succeeded, none skipped; no reported setup/collection failure. Main and repeated
+suites each report 1,407 tests OK; connections 761 opened/0 without explicit close.
+Repaired multiple-candidate and new assembled sole-candidate methods explicitly
+passed. Detailed evidence/fixture limits are in the [handover acceptance record](../handover/340-combined-monster-lookup.md#corrective-ci-and-a2a3-acceptance---2026-11-08).
+
+The user manually tested A2 and A3 and signed off on both on 2026-11-08. Record
+A.2/A.3 accepted, not overall SG-TODO-018 completion or an assistant-run live audit.
+
+## Stage B delivery and validation gate - 2026-11-08
+
+- Implementation/tests/docs included in this increment; delivery SHA only after
+  push. Covering stage-B CI and deployed manual acceptance pending.
+- Fixed captions and pressed states, scoped action/status layout, display-only
+  alive wording and removal of visible Roll/legacy text preserve underlying values
+  and semantics. The fixed-stat handler must use boolean state, not label suffixes,
+  and send exactly one existing PATCH. No optimistic state mutation.
+- Preparation: Node syntax and isolated Chromium passed 375/768/1440 with three
+  replacements each, 18 keyboard activations, one helper call each, zero old
+  delegate calls and no page errors. Updated existing layout and new full-Admin
+  test modules compile/parse; original layout blob verified. Full-Admin/application
+  tests not executed locally (FastAPI absent); normal CI discovers both modules.
+  See [stage-B handover](../handover/340-combined-monster-lookup.md#stage-b-roster-presentation---2026-11-08) for fixture limits.
+- Required acceptance: desktop/narrow/long-name status and control geometry, local
+  scrolling and focus, fixed AC/HP/Init on/off state with mouse/Enter/Space, rejected
+  saves and reload persistence, preserved selection/bulk/Edit/statistics actions,
+  raw-roll labels/separate totals and unchanged legacy totals, standing stored but
+  alive displayed, and unchanged down/stable/dead behavior. Recheck Add Monster and
+  Refresh remain unchanged.
+- Normal CI, no skip/workflow edit/dispatch. Review exact covering SHA/run/attempt,
+  correct failures with fresh approval, then obtain user stage-B acceptance before
+  overall close-out reconciliation. Merging/other-branch writes are not authorized.

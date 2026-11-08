@@ -41,11 +41,11 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 33. [Monster initiative and refresh foundations](docs/handover/330-monster-initiative-foundations.md)
 
 34. [5e.tools initiative extraction correction: A.1 accepted, historical A.2 preparation](docs/handover/335-fivetools-initiative-correction.md)
-35. [Combined monster lookup delivery and validation gates](docs/handover/340-combined-monster-lookup.md)
+35. [Combined lookup, Refresh and roster correction delivery/validation](docs/handover/340-combined-monster-lookup.md)
 
 ## Current pending corrections - 2026-11-08
 
-SG-TODO-018 remains open. Do not push the rejected close-out draft. Follow the [current correction plan](docs/todo/185-monster-correction-plan.md). A.1 is accepted. All four A.2 implementation increments are included, with commit-4 covering CI and manual workflow acceptance pending; see 340 for exact evidence/limits. A.3 and stage B remain pending. No overall completion, merge or write-back is authorized.
+SG-TODO-018 remains open. Do not push the rejected close-out draft. Follow the [current correction plan](docs/todo/185-monster-correction-plan.md). A.1 remains accepted; the user manually tested and signed off A.2 and A.3 on 2026-11-08. Covering corrective CI 42517614512 attempt 1 succeeded for exact 1c289d485bffcf8197fb32238349729e52b822ed. Stage B roster presentation is included in this increment; its covering CI and manual acceptance remain pending. See 340 for evidence and limits. No overall completion, merge or write-back is authorized.
 
 ## Required update convention
 
