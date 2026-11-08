@@ -1,0 +1,47 @@
+6-11-08T16:32:47.3388353Z # cancelled 0
+tests	JavaScript tests	2026-11-08T16:32:47.3388878Z # skipped 0
+tests	JavaScript tests	2026-11-08T16:32:47.3389380Z # todo 0
+tests	JavaScript tests	2026-11-08T16:32:47.3389920Z # duration_ms 65.541929
+tests	JavaScript tests	2026-11-08T16:32:47.3732051Z ##[endgroup]
+tests	JavaScript tests	2026-11-08T16:32:47.3732978Z ##[group]tests/test_bughunt_757fd9d.js
+tests	JavaScript tests	2026-11-08T16:32:47.5984458Z TAP version 13
+tests	JavaScript tests	2026-11-08T16:32:47.6227940Z # PASS switching account cannot change PATCH target
+tests	JavaScript tests	2026-11-08T16:32:47.6233621Z # PASS cancel cannot turn PATCH into POST
+tests	JavaScript tests	2026-11-08T16:32:47.6245581Z # PASS switching to self cannot redirect a non-self save
+tests	JavaScript tests	2026-11-08T16:32:47.6255795Z # PASS switching away from self still redirects after self save
+tests	JavaScript tests	2026-11-08T16:32:47.6264635Z # PASS newly selected edit form is preserved
+tests	JavaScript tests	2026-11-08T16:32:47.6273243Z # PASS new typing for same account is preserved
+tests	JavaScript tests	2026-11-08T16:32:47.6281707Z # PASS new password typing is preserved
+tests	JavaScript tests	2026-11-08T16:32:47.6296878Z # PASS new role selection is preserved
+tests	JavaScript tests	2026-11-08T16:32:47.6307064Z # PASS unchanged successful edit resets form
+tests	JavaScript tests	2026-11-08T16:32:47.6315440Z # PASS normal create remains POST with password
+tests	JavaScript tests	2026-11-08T16:32:47.6323101Z # PASS blank edit password stays omitted
+tests	JavaScript tests	2026-11-08T16:32:47.6330002Z # PASS failed write preserves editing form
+tests	JavaScript tests	2026-11-08T16:32:47.6333152Z # 12 tests; 12 passed; 0 failed
+tests	JavaScript tests	2026-11-08T16:32:47.6395931Z # Subtest: tests/test_bughunt_757fd9d.js
+tests	JavaScript tests	2026-11-08T16:32:47.6400068Z ok 1 - tests/test_bughunt_757fd9d.js
+tests	JavaScript tests	2026-11-08T16:32:47.6400596Z   ---
+tests	JavaScript tests	2026-11-08T16:32:47.6401006Z   duration_ms: 45.15386
+tests	JavaScript tests	2026-11-08T16:32:47.6401628Z   type: 'test'
+tests	JavaScript tests	2026-11-08T16:32:47.6402031Z   ...
+tests	JavaScript tests	2026-11-08T16:32:47.6402402Z 1..1
+tests	JavaScript tests	2026-11-08T16:32:47.6402763Z # tests 1
+tests	JavaScript tests	2026-11-08T16:32:47.6403253Z # suites 0
+tests	JavaScript tests	2026-11-08T16:32:47.6403639Z # pass 1
+tests	JavaScript tests	2026-11-08T16:32:47.6404035Z # fail 0
+tests	JavaScript tests	2026-11-08T16:32:47.6404551Z # cancelled 0
+tests	JavaScript tests	2026-11-08T16:32:47.6405176Z # skipped 0
+tests	JavaScript tests	2026-11-08T16:32:47.6405765Z # todo 0
+tests	JavaScript tests	2026-11-08T16:32:47.6406392Z # duration_ms 53.033132
+tests	JavaScript tests	2026-11-08T16:32:47.6761209Z ##[endgroup]
+tests	JavaScript tests	2026-11-08T16:32:47.6761939Z ##[group]tests/test_bughunt_985b4b2.js
+tests	JavaScript tests	2026-11-08T16:32:47.9000234Z TAP version 13
+tests	JavaScript tests	2026-11-08T16:32:47.9261108Z # PASS card created during failed update is retired after old snapshot recovery
+tests	JavaScript tests	2026-11-08T16:32:47.9268263Z # PASS failed initial render cards are retired on replacement snapshot
+tests	JavaScript tests	2026-11-08T16:32:47.9276698Z # PASS different recovery snapshot removes both tracked and untracked stale cards
+tests	JavaScript tests	2026-11-08T16:32:47.9288176Z # PASS orphan exit uses one existing animation timer
+tests	JavaScript tests	2026-11-08T16:32:47.9297167Z # PASS normal removal retains exit animation and removes card
+tests	JavaScript tests	2026-11-08T16:32:47.9306383Z # PASS reappearing card cancels its pending removal and retains element identity
+tests	JavaScript tests	2026-11-08T16:32:47.9317208Z # PASS partial card included by recovery snapshot is repaired rather than removed
+tests	JavaScript tests	2026-11-08T16:32:47.9326476Z # PASS empty snapshot removes partial cards and pending timers
+tests	JavaScript tests	2026-11-08T16:32
