@@ -11,7 +11,7 @@ def markup(value):
 
 class DndInitiativeCandidateTests(unittest.TestCase):
     def setUp(self):
-        self.context=SimpleNamespace(CONFIG={"display":{}},
+        self.context=SimpleNamespace(CONFIG={"display":{"dndbeyond_image_lookup":True,"fivetools_fallback":False}},
             dnd_monster_candidates=Mock(return_value=[(False,"/monsters/example")]),
             dnd_monster_detail_html=Mock(return_value=markup("+2")),
             dnd_monster_stats_from_html=Mock(return_value=(15,"10","average")))
@@ -42,6 +42,7 @@ class DndInitiativeCandidateTests(unittest.TestCase):
             self.assertEqual(result["candidates"][0]["initiative_bonus_status"],status)
 
     def test_unusable_ac_hp_filter_is_unchanged(self):
+        self.context.CONFIG["display"]["fivetools_fallback"]=True
         self.context.dnd_monster_stats_from_html.return_value=(None,None,None)
         with patch.object(selection,"fivetools_candidates",return_value=[]) as fallback:
             result=selection.lookup_candidates(self.context,"Goblin")

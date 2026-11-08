@@ -8,7 +8,7 @@ from python.scrying_glass_source_bonus_offer import read_bonus_offer
 
 class SourceBonusOfferLookupTests(unittest.TestCase):
     def setUp(self):
-        self.context = SimpleNamespace(CONFIG={"display": {}},
+        self.context = SimpleNamespace(CONFIG={"display": {"dndbeyond_image_lookup": True, "fivetools_fallback": False}},
             dnd_monster_candidates=Mock(return_value=[(False, "/monsters/example")]),
             dnd_monster_detail_html=Mock(),
             dnd_monster_stats_from_html=Mock(return_value=(15, "10", "average")))
@@ -53,6 +53,7 @@ class SourceBonusOfferLookupTests(unittest.TestCase):
             self.assertIn("selection_token", candidate)
 
     def test_fallback_without_modifier_does_not_gain_a_bonus_offer(self):
+        self.context.CONFIG["display"]["fivetools_fallback"] = True
         self.context.dnd_monster_candidates.return_value = []
         candidate = dict(species="Goblin", name="Goblin", provider="5e.tools", source="MM",
             source_url="https://5e.tools/bestiary.html#goblin_mm", ac=12, hp="7")

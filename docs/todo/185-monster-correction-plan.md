@@ -4,7 +4,7 @@
 
 - Updated: 2026-11-08.
 - Tracking: SG-TODO-018 follow-up and adjacent roster/lookup corrections; not a new completed task.
-- Status: A.1 accepted; A.2 preparation included with CI pending and active lookup unchanged. A.2 activation, A.3 and stage B remain pending.
+- Status: A.1 accepted; A.2 commit 1 has successful CI; commit 2 fixture readiness included with new CI pending. Active lookup is unchanged; activation, A.3 and stage B remain pending.
 - Branch: features/perplexity-018. No merge or write-back authorized.
 - Related: [018 initiative/refresh contract](180-monster-initiative-bonus.md), [lookup](010-monster-lookup.md), [5e.tools configuration](060-fivetools-source-configuration.md), [roster presentation](../handover/310-admin-rosters.md), [initiative handover](../handover/330-monster-initiative-foundations.md).
 
@@ -128,7 +128,7 @@ remain pending because FastAPI is unavailable locally. Normal CI must cover the
 correction, and failed run 42496852926 remains failed historical evidence.
 See the linked 335 handover for log locations. No acceptance, close-out or merge.
 
-## A.1 acceptance and A.2 staged preparation - 2026-11-08
+## A.1 acceptance and initial A.2 staged preparation (historical) - 2026-11-08
 
 A.1 is accepted: run 42497904756 attempt 1 passed tested commit
 9417cf7d0c8fc2f4d45606708c5312ef508d96a6, publication
@@ -161,3 +161,26 @@ migrate remaining direct HTTP/adapter fixtures and fallback-only expectations,
 update help/README and fivetools_fallback compatibility wording, and verify signing,
 identity retention, configured-book enumeration and blocked incomplete lookup across
 creation/Refresh. A.3 and stage B are excluded. No workflow changes or skip marker.
+
+## Current four-commit plan and fixture readiness - 2026-11-08
+
+The user approved four A.2 commits, superseding the historical two-commit plan:
+1. Combiner preparation (bc28cd96f47c4a86f2e9d7a47eaef8744672ff68).
+2. Provider-specific fixture isolation and restored expired-offer coverage (this increment).
+3. Active combined lookup, fallback-expectation migration and runtime documentation.
+4. Help/config wording, associated browser/application checks and final validation.
+
+Commit 1 has verified successful run 42500152371 attempt 1 for exact tested SHA
+bc28cd96f47c4a86f2e9d7a47eaef8744672ff68; publication
+aa12c783e426ab4e326a023772d2a37bd51996b1 / ci-results-42500152371-attempt-1.
+All listed workflow and cleanup steps succeeded. That result does not cover this increment.
+
+Commit 2 explicitly disables 5e.tools in D&D-only HTTP/signing fixtures and enables
+it in their dedicated 5e.tools cases. It restores the expired-token rejection input
+in the shared secured acceptance test, inadvertently omitted from commit 1.
+The three provider-specific modules compiled locally with all 60 assertion calls
+unchanged; two isolated fixture setup checks passed. The restored rejection method
+parses and has three inputs. Actual suites/full ASGI validation remain unexecuted
+locally (FastAPI absent) and require covering normal CI. Active lookup, signing,
+UI, runtime configuration, production code and workflows are unchanged. A.1 remains
+accepted; A.2, A.3, stage B, overall close-out and merge remain pending.

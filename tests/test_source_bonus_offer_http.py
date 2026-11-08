@@ -16,7 +16,7 @@ class SourceBonusOfferHTTPTests(unittest.IsolatedAsyncioTestCase):
         self.app = FastAPI()
         self.app.add_api_route('/api/monsters/lookup', self.handler.monster_lookup_candidates, methods=['GET'])
         self.app.add_api_route('/api/monsters', self.handler.create_monster, methods=['POST'])
-        self.context.CONFIG = {'display': {}}
+        self.context.CONFIG = {'display': {'dndbeyond_image_lookup': True, 'fivetools_fallback': False}}
         self.candidate = dict(found=True, species='Goblin', name='Goblin', provider='D&D Beyond',
             source_url='https://www.dndbeyond.com/monsters/example', legacy=False,
             image_url=None, ac=15, hp='10', initiative_bonus=12,

@@ -4,7 +4,7 @@
 
 2026-11-08. [SG-TODO-018 A.1](../todo/185-monster-correction-plan.md).
 Branch features/perplexity-018; baseline 3486eaee2303d1caa3f031bf0867e4fb3710b3b3.
-A.1 accepted; A.2 preparation included with CI pending and active lookup unchanged. No overall close-out or merge/write-back.
+A.1 accepted; A.2 commit 1 CI succeeded; commit 2 fixture readiness included with new CI pending. Active lookup unchanged; no overall close-out or merge/write-back.
 
 ## Evidence and behavior
 
@@ -65,7 +65,7 @@ execution or new CI pass is claimed. Existing CI runs both modules normally.
 README, root indexes and workflow remain unchanged; links, task scope and pending
 status remain accurate. A.1 acceptance, A.2/A.3, stage B and merge remain pending.
 
-## A.1 accepted and A.2 preparation - 2026-11-08
+## A.1 accepted and initial A.2 preparation (historical) - 2026-11-08
 
 A.1 covering run 42497904756 attempt 1 passed exact
 9417cf7d0c8fc2f4d45606708c5312ef508d96a6. Publication:
@@ -89,3 +89,22 @@ README/config compatibility wording and application validation belong in commit 
 No active lookup, signing, Refresh selection, UI, schema or workflow changes in
 this preparation commit. A.3 and stage B remain pending. The existing README and
 TODO index remain accurate for the unchanged runtime; detailed status is in 185.
+
+## A.2 commit 2 fixture readiness - 2026-11-08
+
+Run 42500152371 attempt 1 succeeded for bc28cd96f47c4a86f2e9d7a47eaef8744672ff68;
+publication aa12c783e426ab4e326a023772d2a37bd51996b1 /
+ci-results-42500152371-attempt-1. Run/job metadata confirms every listed step and
+cleanup succeeded. This covers commit 1 only, not these subsequent fixture edits.
+
+The user approved a revised four-commit plan; see the current 185 section. This
+commit isolates D&D-only HTTP/signing fixtures with explicit provider flags,
+re-enables 5e.tools in dedicated cases and restores the expired-offer rejection
+case inadvertently omitted from the shared acceptance test in commit 1.
+Three corrected modules compiled and retained all 60 assertion calls; two isolated
+fixture setup checks passed. The restored rejection method parses with three cases.
+No actual corrected suites/full ASGI tests ran locally because FastAPI is absent.
+Covering normal CI is pending. Production lookup, combiner wiring, signing, UI,
+configuration and workflow are unchanged. README and root indexes were reviewed
+and left unchanged for the unchanged runtime/overall status. Commit 3 activates;
+commit 4 updates help/config wording and validation. A.3/stage B/merge remain excluded.
