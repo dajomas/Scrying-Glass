@@ -4,10 +4,10 @@ body.admin-shell .sg-roster-region { overflow-x: auto; max-width: 100%; min-widt
 body.admin-shell #characters.sg-roster-region table { min-width: 48rem; }
 body.admin-shell .sg-roster-pane :is(th, td) { vertical-align: middle; }
 body.admin-shell .sg-roster-pane :is(th, td) { font-variant-numeric: tabular-nums; }
-/* Keep a compact footer lane clear beneath values and controls. Align the
-   name/species block against it instead of centering it above a blank gap. */
-body.admin-shell .sg-roster-region > table > tbody > tr > td { padding-bottom: 1.6rem; }
-body.admin-shell .sg-roster-region > table > tbody > tr > td:nth-child(2) { position: relative; vertical-align: bottom; }
+/* Align the first content line, not the complete name/species or input/total
+   block. Keep the compact footer lane clear beneath all row content. */
+body.admin-shell .sg-roster-region > table > tbody > tr > td { padding-bottom: 1.6rem; vertical-align: baseline; }
+body.admin-shell .sg-roster-region > table > tbody > tr > td:nth-child(2) { position: relative; }
 body.admin-shell .sg-roster-state {
     position: absolute;
     left: .45rem;

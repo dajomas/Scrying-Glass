@@ -3,9 +3,9 @@
 [Back to TODO index](../../TODO.md)
 
 - Updated: 2026-11-08. Tracking: SG-TODO-018 follow-up and adjacent lookup/roster corrections.
-- Status: in progress. A.1 remains accepted; A.2 and A.3 accepted after covering corrective CI and user manual sign-off on 2026-11-08. Initial stage B delivered as 11f104058efb2a56365b0309ce8c6ee829d84c18; first CI failed. Colour-only/single-line correction delivered as 1d4815d8f0e89840687ba13136ce88b3b631b9f3; its covering CI is unreviewed. Compact status-spacing follow-up included here, with covering CI/manual acceptance pending. SG-TODO-018 is not closed.
+- Status: in progress. A.1 remains accepted; A.2/A.3 accepted after covering CI and user sign-off. Stage B through spacing commit 9cfcbb26106fa95c5e28f58cba45e7234b47220f has verified successful covering CI 42522294918 attempt 1. Primary-row alignment correction included here; covering alignment CI and stage-B manual acceptance pending. SG-TODO-018 is not closed.
 - Branch: features/perplexity-018. No overall close-out, merge or write-back authorized.
-- Related: [018 contract](180-monster-initiative-bonus.md), [lookup](010-monster-lookup.md), [configuration](060-fivetools-source-configuration.md), [rosters](../handover/310-admin-rosters.md), [A.1 history](../handover/335-fivetools-initiative-correction.md), [current A.2/A.3/B delivery](../handover/340-combined-monster-lookup.md).
+- Related: [018 contract](180-monster-initiative-bonus.md), [lookup](010-monster-lookup.md), [configuration](060-fivetools-source-configuration.md), [rosters](../handover/310-admin-rosters.md), [A.1 history](../handover/335-fivetools-initiative-correction.md), [A.2/A.3/B history](../handover/340-combined-monster-lookup.md).
 
 ## Decision and current state
 
@@ -18,7 +18,8 @@ acceptance. No owner/deadline is assigned. Historical records and failed/passing
 evidence remain in linked handovers and the immutable
 [pre-finalization snapshot](https://github.com/dajomas/Scrying-Glass/blob/ce44afba0e12cd4b46125e735e935753ccb41be0/docs/todo/185-monster-correction-plan.md).
 No pending action is removed by this consolidation. Earlier dated pending gates
-below describe those deliveries, not a reversal of the later explicit sign-off.
+below describe those deliveries, not a reversal of later explicit sign-off or
+primary-alignment requirements.
 
 ## Processing order
 
@@ -51,25 +52,28 @@ approval, appropriate tests/docs and review of covering CI before validation cla
 
 ### Stage B: compact and consistent roster presentation
 
-Status: initial implementation delivered; first covering CI failed. Colour-only/
-single-line correction delivered; covering CI unreviewed. Compact spacing follow-
-up included here; its delivery SHA only after push. CI/manual acceptance pending.
+Status: initial CI failed; colour-only/single-line and compact spacing corrections
+were delivered. Covering spacing CI succeeded. Primary alignment is included in
+this increment; its delivery SHA only after push. Alignment CI/manual acceptance
+remain pending.
 
 4. Remove Roll heading and (legacy) suffix; retain accessible raw-input labels,
    separate totals and internal legacy semantics. No data migration.
-5. Status is one line, allowed to continue beneath AC/HP without covering values
-   or controls or creating page-level overflow, and follows the name/species block
-   with a small gap rather than an empty-looking line. Test short/long names and
-   narrow UI. Fixed AC/HP/Init captions omit on/off wording, consistent with Join
-   Battle/Ally/Visible colours. By the user's follow-up, remove dashes/checkmarks
-   and use colour-only visual state, superseding the earlier non-colour visual-
-   marker requirement. Retain aria-pressed, fixed accessible names and keyboard/focus.
+5. Status is one line, allowed beneath AC/HP without covering values/controls or
+   creating page overflow, with compact spacing after the row content. Primary
+   checkbox/name/HP in Characters and checkbox/name/AC/HP/bonus/raw input in Monsters
+   align with the action-button line; species, Total and status remain secondary.
+   Test short/long names and narrow UI. Fixed AC/HP/Init captions omit on/off wording,
+   consistent with Join Battle/Ally/Visible colours. User follow-up removes visual
+   dashes/checkmarks in favour of colour only, retaining aria-pressed, fixed names
+   and keyboard/focus. Do not bottom-align the character name or centre an entire
+   input/Total block as a substitute for aligning the primary elements.
 6. Replace displayed standing with alive in Characters/Monsters, without needless
    stored-identifier renames or life-state rule changes.
 
 ### Final validation and acceptance
 
-Review corrective stage-B CI and desktop/narrow workflows against all three roster
+Review covering alignment CI and desktop/narrow workflows against all three roster
 actions. Keep format/unit/ASGI/browser/live-provider/manual evidence distinct;
 disclose skipped, unexecuted and fixture limits. A.2/A.3 are accepted, but stage B
 needs its own workflow/visual acceptance before step-6 reconciliation. Overall
@@ -103,8 +107,9 @@ discovers both modules; no workflow change, skip or dispatch.
 
 A.1's source hashes, failed CI, covering run 42497904756 and manual acceptance are
 preserved in 335. The immutable snapshot above retains earlier per-stage records/
-anchors; 340 records current delivery and limits. Root TODO remains in progress
-with stable task links. Overall close-out and merge are not authorized.
+anchors; 340 records lookup/Refresh/stage-B history and 310 the later roster
+geometry corrections. Root TODO remains in progress with stable task links.
+Overall close-out and merge are not authorized.
 
 ## Commit 5 initiative overwrite follow-up - 2026-11-08
 
@@ -191,11 +196,11 @@ A.2/A.3 accepted, not overall SG-TODO-018 completion or an assistant-run live au
 ## Stage B delivery and validation gate - 2026-11-08
 
 - Initial implementation delivered as 11f104058efb2a56365b0309ce8c6ee829d84c18.
-  Its first CI failed and visual follow-up was requested. The colour-only controls,
-  single-line status lane and fixture correction were delivered as
-  1d4815d8f0e89840687ba13136ce88b3b631b9f3; its covering CI has not been reviewed
-  in this request. The compact spacing correction below is included here, with
-  delivery SHA only after push. Corrective CI/manual acceptance pending.
+  Its first CI failed and visual follow-up was requested. Colour-only/single-line
+  correction 1d4815d8f0e89840687ba13136ce88b3b631b9f3 and compact spacing
+  9cfcbb26106fa95c5e28f58cba45e7234b47220f have later covering successful CI
+  42522294918 attempt 1. Primary alignment below is included here, with a new
+  delivery SHA only after push; alignment CI and manual acceptance pending.
 - Fixed captions/pressed states, scoped actions, alive wording and removal of
   visible Roll/legacy text preserve underlying values/semantics. The fixed-stat
   handler uses boolean state, not label suffixes, and one existing PATCH. No
@@ -227,35 +232,55 @@ A.2/A.3 accepted, not overall SG-TODO-018 completion or an assistant-run live au
   Regressions measure the whole line for short/long names and check colour
   difference, glyph absence and retained exact PATCH count/payload/pressed state.
   See [follow-up evidence and limits](../handover/340-combined-monster-lookup.md#stage-b-ci-failure-and-colour-onlysingle-line-follow-up---2026-11-08).
-- Required acceptance: desktop/narrow/short and long names, compact name/species-
-  to-status gap without an empty-looking line, status one line under AC/HP with no
-  value/control/next-row overlap, local scrolling/focus, no dash/check decorations,
-  fixed controls distinguished by colour, mouse/Enter/Space toggling, rejected
-  saves and persistence, preserved selection/bulk/Edit/statistics, raw labels/totals
-  and legacy semantics, alive display with unchanged stored states and down/stable/
-  dead behavior. Add Monster/Refresh remain unchanged.
+- Required acceptance: desktop/narrow/short and long names, primary name/selection/
+  numeric/input alignment with action controls, compact footer after occupied row
+  content, status one line under AC/HP with no value/control/next-row overlap, local
+  scrolling/focus, no dash/check decorations, colour states, mouse/Enter/Space,
+  rejected saves/persistence, preserved selection/bulk/Edit/statistics, raw labels/
+  totals and legacy semantics, alive display with unchanged stored states and
+  down/stable/dead behavior. Add Monster/Refresh remain unchanged.
 - Normal CI, no skip/workflow edit/dispatch. Review exact corrective SHA/run/attempt,
   correct failures with fresh approval, then obtain user stage-B acceptance before
   overall close-out reconciliation. Merging/other-branch writes not authorized.
 
 ### Compact spacing follow-up - 2026-11-08
 
-The user reported an empty line above status in both rosters and requested a CSS
-spacing fix. Bottom-align the name/species cell against the status strip and
-reduce main data-cell bottom padding to 1.6rem, retaining a small gap and all
-existing single-line/non-overlap/colour-only behavior. This is CSS-only production
-work, not a data/JavaScript/API change. Details and execution limits are in the
-[roster handover](../handover/310-admin-rosters.md#sg-todo-018-stage-b-compact-status-spacing---2026-11-08).
+Spacing commit 9cfcbb26106fa95c5e28f58cba45e7234b47220f bottom-aligned the name/
+species cell and reduced padding to 1.6rem, after the user reported an empty line.
+Its historical component gap measurements were about 25-28 px before and 2.7-3.4 px
+after, with rows 4-5 px shorter. The original half-rem name-glyph gap regression
+compiled/parsed; two embedded JS expressions passed syntax. It was not run locally
+(FastAPI absent). Existing CI later ran it successfully as recorded below.
+The primary-alignment follow-up supersedes bottom alignment and the strict name-
+glyph gap criterion, not its historical evidence.
 
-Preparation: verified original stylesheet blob, isolated Chromium comparison at
-375/768/1440 and 16/20 px root fonts over three replacements in both rosters;
-gaps reduced from about 25-28 px to 2.7-3.4 px, rows 4-5 px shorter in the synthetic
-fixture, with no overlap/widening/glyphs/page errors. New regression compiles/parses
-and its two embedded JS expressions pass Node syntax. Its full-Admin method is
-prepared, not executed locally (FastAPI absent); normal CI discovers it. It reuses
-existing line/non-overlap checks and adds a half-rem maximum gap over short/long
-names, both rosters, six viewport/font configurations and three refreshes.
+### Covering spacing CI and primary alignment - 2026-11-08
 
-Delivery and covering CI remain separate; no SHA/run invented before delivery.
-Review covering results and obtain stage-B visual acceptance before close-out.
-No skip marker, workflow modification, dispatch, merge or other-branch write.
+Run 42522294918 attempt 1 succeeded for exact tested
+9cfcbb26106fa95c5e28f58cba45e7234b47220f on features/perplexity-018. Evidence
+publication 883f1c832815789e8faebd265821a359402d3784 /
+ci-results-42522294918-attempt-1 was inspected. All listed steps and cleanup
+succeeded, none skipped. Main and repeated suites each report 1,411 tests OK;
+connections 763 opened/0 without explicit close, PASS. No setup/collection failure
+reported. This resolves covering automated validation for the earlier delivered
+corrections without relabelling failed runs or granting manual stage-B acceptance.
+
+The latest screenshots/request require primary-row centres rather than centring
+whole name/species and input/Total blocks. Align main data cells on their first
+baseline; remove bottom alignment of the name cell. Keep footer padding, single-
+line status, colour-only controls, input sizes and all JS/data/API behavior.
+The modified regression now checks requested primary centres against the Edit
+button within .2rem, plus footer clearance/gap measured from the lowest occupied
+row content within half a rem. Existing line/non-overlap/no-mutation checks remain.
+This explicitly replaces the earlier name-glyph gap bound so shorter centred text
+can coexist with taller controls without forcing it down toward the footer.
+
+Preparation: original CSS/test blobs verified, isolated Chromium comparison in
+both rosters at six viewport/font configurations showed primary centre offsets
+reduced to 0-1 px, with at least 2.7 px footer clearance. Python compilation/AST
+parsing and both embedded JavaScript syntax checks passed. Full-Admin method not
+executed locally (FastAPI absent); normal CI discovers it. Detailed scope/limits
+and remaining gates are in the [alignment handover](../handover/310-admin-rosters.md#sg-todo-018-primary-row-alignment---2026-11-08).
+Delivery and new covering CI remain separate; no new SHA/run invented. Obtain
+user alignment/stage-B visual acceptance before close-out. No skip marker,
+workflow modification, dispatch, merge or other-branch write.

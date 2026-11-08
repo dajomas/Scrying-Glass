@@ -64,39 +64,88 @@ This close-out changes five documentation files only, runs no new tests and chan
 This later correction is separate from the accepted 009.4/012 scope above.
 Branch features/perplexity-018 only. [Current correction plan](../todo/185-monster-correction-plan.md) and [stage-B history](340-combined-monster-lookup.md).
 The colour-only/single-line correction was delivered as
-1d4815d8f0e89840687ba13136ce88b3b631b9f3. Its covering CI has not been reviewed
-in this spacing request; delivery is not validation or stage-B acceptance. The
-user's follow-up screenshot shows an empty-looking line above the status.
+1d4815d8f0e89840687ba13136ce88b3b631b9f3. Its covering CI was unreviewed at the
+spacing delivery; the subsequent covering run is verified below. Delivery is not
+stage-B acceptance. The user's follow-up screenshot showed an empty-looking line
+above the status.
 
-The shared CSS now bottom-aligns the name/species cell and reduces all main-row
-data-cell bottom padding from 1.85rem to 1.6rem. This brings the name block against
-the status strip rather than centering it beside taller initiative controls.
-Status remains a single line allowed beneath AC/HP, with a small gap and enough
-reserved space to avoid covering adjacent values/controls or the next row.
-Colour-only controls, pressed semantics, local scrolling and all JavaScript/API/
-initiative/HP/life-state/creation/Refresh behavior remain unchanged. No migration
-or new dependency; deploy the stylesheet and reload the Admin page.
+At spacing commit 9cfcbb26106fa95c5e28f58cba45e7234b47220f the shared CSS bottom-
+aligned the name/species cell and reduced all main-row data-cell bottom padding
+from 1.85rem to 1.6rem. This brought the name block against the status strip rather
+than centering it beside taller initiative controls. The later primary-alignment
+request below supersedes that bottom-alignment choice, while keeping the compact
+footer lane, single-line status and colour-only controls. No data or API change.
 
-Preparation: the original stylesheet was reconstructed and verified against blob
-23d8e79ee7a990081d9bab3b1fafa457774a299e. Local isolated Chromium compared old/new
-CSS using synthetic two-row tables in both rosters at 375/768/1440 and 16/20 px
-root font sizes, three replacements per configuration. Gaps fell from about
-25-28 px to 2.7-3.4 px; rows shrank by 4-5 px in this fixture. Single-line status,
-clearance from adjacent cell content, within-row bounds, no glyphs, no page
-widening and no page errors passed. These are component geometry measurements,
+Spacing preparation: the original stylesheet was reconstructed and verified against
+blob 23d8e79ee7a990081d9bab3b1fafa457774a299e. Local isolated Chromium compared
+old/new CSS using synthetic two-row tables in both rosters at 375/768/1440 and
+16/20 px root font sizes, three replacements per configuration. Gaps fell from
+about 25-28 px to 2.7-3.4 px; rows shrank by 4-5 px in that fixture. Single-line
+status, clearance from adjacent content, within-row bounds, no glyphs, no page
+widening and no page errors passed. These are historical component measurements,
 not deployed or full-Admin results.
 
-The new assembled-Admin/intercepted-HTTP regression checks short/long names in
-both rosters at those six viewport/font configurations over three refreshes,
-reuses existing single-line/non-overlap assertions and limits name-to-status gap
-to half a rem. Python compilation/AST parsing and Node syntax checks on both
-embedded JavaScript expressions passed. This full-Admin method was prepared,
-not executed locally: FastAPI is absent. Existing normal CI discovers it.
+The original assembled-Admin/intercepted-HTTP spacing method checked short/long
+names in both rosters at six viewport/font configurations over three refreshes,
+reused line/non-overlap assertions and limited name-glyph-to-status gap to half
+a rem. Python compilation/AST parsing and both embedded JS syntax checks passed.
+It was not run locally because FastAPI was absent. Its covering CI is below.
+The primary-alignment follow-up deliberately replaces the name-glyph gap criterion
+with a compact gap after the lowest occupied row content plus measured primary
+centres; shorter text cannot be forced against the footer while also centred
+beside taller controls. Historical preparation is not relabelled.
 
-Implementation, regression and status notes are included in this increment; its
-SHA is assigned only on push. Covering CI and user visual acceptance remain
-pending. Normal CI applies with no skip marker, workflow change or dispatch.
-README/User Guide, root indexes and 340 were reviewed/reused unchanged: their
-workflows, links, reserved status lane and overall open status remain accurate.
-Historical failed runs stay failed. No SG-TODO-018 close-out, merge or other-
-branch write is authorized.
+## Covering spacing CI - 2026-11-08
+
+Branch tests run 42522294918 attempt 1 succeeded on features/perplexity-018 for
+exact tested SHA 9cfcbb26106fa95c5e28f58cba45e7234b47220f. Evidence read at
+publication 883f1c832815789e8faebd265821a359402d3784 /
+ci-results-42522294918-attempt-1. Run/job metadata agrees; all listed steps and
+cleanup succeeded, none skipped. Main and repeated suites each report 1,411 tests
+OK. Connection audit: 763 opened/0 without explicit close, PASS. Syntax/server
+import, pytest, JavaScript, artifact upload and standalone checks succeeded.
+No setup/collection failure is reported. Repetition is not unique tests and green
+fixture CI is not deployed visual acceptance. Older failed runs remain failed.
+
+## SG-TODO-018 primary row alignment - 2026-11-08
+
+The user requested vertical centring of the primary checkbox/name/HP items in
+Characters and checkbox/name/AC/HP/bonus/raw-input items in Monsters against the
+main action-button line. Species, Total output and status are secondary lines,
+not part of the primary alignment reference. The screenshots show the character
+name too low and the monster input above the primary line.
+
+Production changes CSS only: align main roster data cells on their first content
+baseline and remove the name cell's bottom-alignment override. Native text/input/
+button baselines then align the primary content rather than centring complete
+name/species or input/Total blocks. The 1.6rem footer padding, absolute single-line
+status, local scrolling, colour-only states, input sizes and all HTML/JS/data/API
+semantics remain unchanged. No per-monster pixel offsets, new renderer or migration.
+Short text may have normal air below it beside a taller control; the footer must
+not add an empty strip after the row's lowest content or overlap values/controls.
+
+Preparation: original CSS/test reconstructed against live blobs
+83e7858fe5e3233e389dd40e2a05004f76b0c3ee and
+b7f160ae3222bdcc83886d61f3fbaad97d055986. Isolated Chromium compared old/new
+CSS in synthetic Characters/Monsters tables at 375/768/1440 and 16/20 px root
+fonts. Before, character name centres were about 13-17 px below buttons and the
+monster input about 9.5 px above; after, measured primary centres were within
+0-1 px of the buttons and footer clearance remained at least 2.7 px. The original
+font/markup stub limits remain: this is component geometry, not full Admin,
+authenticated server, persistence or deployed acceptance.
+
+The existing assembled-Admin spacing regression now checks primary centres for
+selection, first-line name, initiative input, available monster AC/HP/bonus and
+character HP against the Edit-button centre, within .2rem. It retains short/long
+names, six viewport/font configurations, three refreshes, no mutations/page errors
+and shared one-line/non-overlap checks. A half-rem maximum footer gap is measured
+from the lowest occupied row content, excluding the status itself. Python
+compilation/AST parsing and both embedded JS expressions pass Node syntax checks.
+Full-Admin execution was not available locally (FastAPI absent); normal CI discovers
+the revised method. No skip marker, workflow change or dispatch.
+
+Implementation/tests/notes are included in this increment; its SHA only after push.
+Covering alignment CI and user visual/workflow acceptance remain pending. Deploy
+the stylesheet and reload Admin. README/User Guide, root indexes and 340 were
+reviewed/reused unchanged: links, workflows and overall open status remain accurate.
+SG-TODO-018 is not closed; no merge or other-branch write is authorized.

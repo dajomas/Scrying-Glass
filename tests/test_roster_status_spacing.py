@@ -1,4 +1,4 @@
-"""Compact roster status-gap checks in assembled Admin with intercepted HTTP."""
+"""Primary row alignment and compact status checks in assembled Admin with intercepted HTTP."""
 import unittest
 import test_stage_b_rosters as fixture
 
@@ -15,7 +15,7 @@ class CompactRosterSpacingTests(unittest.TestCase):
     open_page = fixture.StageBRosterTests.open_page
     assert_status_line = fixture.StageBRosterTests.assert_status_line
 
-    def test_status_follows_name_block_without_a_blank_line(self):
+    def test_primary_centres_and_compact_status_after_refresh(self):
         for width in (375, 768, 1440):
             for root_size in (16, 20):
                 with self.subTest(width=width, root_size=root_size):
@@ -29,13 +29,37 @@ class CompactRosterSpacingTests(unittest.TestCase):
                         for kind in ('monsters', 'characters'):
                             self.assert_status_line(page, kind)
                             metrics = page.locator('#'+kind+' .sg-roster-state').first.evaluate("""node => {
-                                const cell=node.closest('td'), range=document.createRange();
-                                range.selectNodeContents(cell);range.setEndBefore(node);
-                                return {gap:node.getBoundingClientRect().top-range.getBoundingClientRect().bottom,
-                                    maxGap:parseFloat(getComputedStyle(document.documentElement).fontSize)*.5};
+                                const cell=node.closest('td'), row=cell.closest('tr');
+                                const mid=box=>(box.top+box.bottom)/2;
+                                const textMid=target=>{
+                                    const range=document.createRange();range.selectNodeContents(target);
+                                    return mid(range.getBoundingClientRect());
+                                };
+                                const name=[...cell.childNodes].find(n=>n.nodeType===Node.TEXT_NODE&&n.textContent.trim());
+                                const centres={name:textMid(name),
+                                    selection:mid(row.querySelector('input[data-select-id]').getBoundingClientRect()),
+                                    initiative:mid(row.querySelector('input.initiative-edit').getBoundingClientRect())};
+                                const headers=[...row.closest('table').rows[0].cells].map(n=>n.textContent.trim());
+                                for(const caption of ['AC','HP','Initiative bonus']){
+                                    const index=headers.indexOf(caption);
+                                    if(index>=0)centres[caption]=textMid(row.cells[index]);
+                                }
+                                const hp=row.querySelector('.sg-character-hp');
+                                if(hp)centres.hp=textMid(hp);
+                                const bottoms=[...row.cells].map(target=>{
+                                    const range=document.createRange();range.selectNodeContents(target);
+                                    if(target===cell)range.setEndBefore(node);
+                                    return range.getBoundingClientRect().bottom;
+                                });
+                                const root=parseFloat(getComputedStyle(document.documentElement).fontSize);
+                                return {gap:node.getBoundingClientRect().top-Math.max(...bottoms),maxGap:root*.5,
+                                    centres,tolerance:root*.2,
+                                    reference:mid(row.querySelector('button[data-edit]').getBoundingClientRect())};
                             }""")
                             self.assertGreaterEqual(metrics['gap'], 0)
                             self.assertLessEqual(metrics['gap'], metrics['maxGap'])
+                            for label, centre in metrics['centres'].items():
+                                self.assertAlmostEqual(centre, metrics['reference'], delta=metrics['tolerance'], msg=kind+' '+label)
                     self.assertEqual(calls, [])
                     self.assertEqual(mutations, [])
                     self.assertEqual(errors, [])
