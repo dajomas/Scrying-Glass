@@ -1,0 +1,31 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4447085Z     )
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4447246Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4447688Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4448150Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4448357Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4448828Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 767, in wait_for
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4449309Z     await self._frame.wait_for_selector(
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4449628Z         self._selector, strict=True, timeout=timeout, state=state
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4449896Z     )
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4450361Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 395, in wait_for_selector
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4450822Z     await self._channel.send(
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4451123Z         "waitForSelector", self._timeout, locals_to_params(locals())
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4451408Z     )
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4451841Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4452323Z     return await self._connection.wrap_api_call(
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4452759Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4453005Z     ...<3 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4453183Z     )
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4453343Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4453810Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4454445Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4454945Z playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4455275Z Call log:
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4455565Z   - waiting for get_by_text("fixture rejected", exact=True) to be visible
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4456529Z     9 × locator resolved to hidden <p role="status" aria-live="polite" id="monsterAddNotification" class="pane-notification-battleSetup">fixture rejected</p>
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4457013Z 
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4457021Z 
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4457209Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-08T20:29:21.4457514Z Ran 1409 tests in 125.217s
+tests	Pyth

@@ -1,0 +1,31 @@
+   ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1779864Z         self._impl_obj.wait_for(state=state, timeout=to_milliseconds(timeout))
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1780465Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1780850Z     )
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1781090Z     ^
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1781641Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1782129Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1782335Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1783001Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 767, in wait_for
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1783671Z     await self._frame.wait_for_selector(
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1784009Z         self._selector, strict=True, timeout=timeout, state=state
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1784298Z     )
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1784786Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 395, in wait_for_selector
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1785258Z     await self._channel.send(
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1785579Z         "waitForSelector", self._timeout, locals_to_params(locals())
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1785855Z     )
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1786315Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1786803Z     return await self._connection.wrap_api_call(
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1787092Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1787314Z     ...<3 lines>...
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1787501Z     )
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1787655Z     ^
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1788146Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1788756Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1789248Z playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1789574Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1789865Z   - waiting for get_by_text("fixture rejected", exact=True) to be visible
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1790836Z     9 × locator resolved to hidden <p role="status" aria-live="polite" id="monsterAddNotification" class="pane-notification-battleSetup">fixture rejected</p>
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1791298Z 
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1791305Z 
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1791499Z -----------

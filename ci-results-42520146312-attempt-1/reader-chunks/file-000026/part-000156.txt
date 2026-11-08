@@ -1,0 +1,27 @@
+ browser and audit checks	2026-11-08T20:31:26.6059212Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:26.6060578Z ValueError: Retained source missing or ambiguous
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:26.6085755Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:26.6086326Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:26.6087284Z   File "/tmp/scrying-tests-mr6fm1ks/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:26.6088202Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:26.6089099Z   File "/tmp/scrying-tests-mr6fm1ks/repo/python/scrying_glass_monster_refresh_sources.py", line 73, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:26.6090015Z     html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:26.6090911Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:26.6091653Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:26.6092079Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:26.6093025Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:26.6093781Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:26.6094271Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:26.6095072Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:26.6095778Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:26.6096063Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1772045Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1773559Z ERROR: test_fixed_toggles_use_state_not_labels_and_rejection_keeps_state (test_stage_b_rosters.StageBRosterTests.test_fixed_toggles_use_state_not_labels_and_rejection_keeps_state)
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1774750Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1775284Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1776296Z   File "/tmp/scrying-tests-mr6fm1ks/repo/tests/test_stage_b_rosters.py", line 100, in test_fixed_toggles_use_state_not_labels_and_rejection_keeps_state
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1777280Z     page.get_by_text('fixture rejected', exact=True).wait_for()
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1777612Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1778386Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 13635, in wait_for
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1779148Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-08T20:31:44.1779410Z  
