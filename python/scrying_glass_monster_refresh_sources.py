@@ -85,11 +85,10 @@ def _fetch_exact(context, monster, identity):
 
 
 def resolve_selected_sources(context, roster, ids, *, choices=None):
-    """Return selected rows in requested order; choices are signed selection tokens.
+    """Resolve exact retained identities or a sole signed lookup candidate.
 
-    No candidate is auto-selected for an identity-less monster, even for one match.
-    Repeating this function with row choices preserves choices for other rows when
-    callers pass the same mapping. Applying changes is deliberately separate.
+    Multiple lookup candidates require explicit choice; zero remain unavailable.
+    Applying fields and retaining earlier review rows are separate responsibilities.
     """
     from . import scrying_glass_monster_selection as selection
     if (not isinstance(ids, list) or any(not isinstance(ident, str) or not ident for ident in ids)
@@ -117,21 +116,32 @@ def resolve_selected_sources(context, roster, ids, *, choices=None):
         try:
             identity = validate_source_fields(retained)
         except ValueError:
-            identity = {}
-        if ident in choices:
-            try:
-                _, identity = selection.selected_snapshot(choices[ident], species)
-                if not identity:
-                    raise ValueError()
-            except ValueError:
-                row.update(status='invalid_choice', reason='Candidate choice expired or invalid; repeat lookup.')
-                continue
-        if not identity:
-            result = selection.lookup_candidates(context, species.strip())
-            row.update(status='selection_required' if result.get('status') == 'ok' else 'failed',
-                       candidates=copy.deepcopy(result.get('candidates', [])),
-                       reason=result.get('reason', 'Choose a source candidate explicitly.'))
+            row.update(status='failed', reason='Retained source identity invalid; no substitute was used.')
             continue
+        token = choices.get(ident)
+        if ident not in choices and not identity:
+            result = selection.lookup_candidates(context, species.strip())
+            if result.get('status') != 'ok':
+                row.update(status='failed', reason=result.get('reason', 'Source lookup failed; retry.'))
+                continue
+            candidates = copy.deepcopy(result.get('candidates', []))
+            if not candidates:
+                row['reason'] = 'No usable source candidates found; row remains unresolved.'
+                continue
+            if len(candidates) > 1:
+                row.update(status='selection_required', candidates=candidates,
+                           reason='Choose a source candidate explicitly.')
+                continue
+            token = candidates[0].get('selection_token')
+        if ident in choices or not identity:
+            try:
+                _, selected = selection.selected_snapshot(token, species)
+                if not selected or (identity and selected != identity):
+                    raise ValueError()
+                identity = selected
+            except ValueError:
+                row.update(status='invalid_choice', reason='Candidate choice expired, invalid or differs from retained source; repeat lookup.')
+                continue
         row['source_fields'] = copy.deepcopy(identity)
         try:
             candidate = _fetch_exact(context, monster, identity)

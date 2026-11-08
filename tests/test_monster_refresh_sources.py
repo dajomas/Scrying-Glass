@@ -66,19 +66,61 @@ class MonsterRefreshSourceTests(unittest.TestCase):
         with patch.object(selection, 'fivetools_candidates', return_value=[other]):
             self.assertEqual(resolve_selected_sources(self.context, [monster], ['m'])[0]['status'], 'failed')
 
-    def test_identityless_single_result_requires_explicit_choice(self):
+    def test_identityless_single_result_resolves_signed_identity_without_mutation(self):
         monster = {key: value for key, value in self.monster.items() if not key.startswith('monster_source_')}
         candidate = dict(species='Goblin', name='Goblin', provider='D&D Beyond', legacy=False,
             source_url='https://www.dndbeyond.com/monsters/chosen')
         candidate['selection_token'] = selection.issue_token(candidate)
+        before = copy.deepcopy(monster)
         with patch.object(selection, 'lookup_candidates', return_value={'status': 'ok', 'candidates': [candidate]}):
             row = resolve_selected_sources(self.context, [monster], ['m'])[0]
-        self.assertEqual(row['status'], 'selection_required')
-        self.context.dnd_monster_detail_html.assert_not_called()
-        row = resolve_selected_sources(self.context, [monster], ['m'],
-            choices={'m': candidate['selection_token']})[0]
         self.assertEqual(row['status'], 'resolved')
+        self.assertNotIn('candidates', row)
+        self.assertEqual(row['source_fields']['monster_source_url'], candidate['source_url'])
+        self.assertTrue(all(not field['checked'] for field in row['fields'].values()))
+        self.assertEqual(monster, before)
         self.context.dnd_monster_detail_html.assert_called_once_with('/monsters/chosen')
+
+    def test_multiple_zero_and_failed_lookup_never_fetch_or_offer_partial_results(self):
+        monster = {key: value for key, value in self.monster.items() if not key.startswith('monster_source_')}
+        for result, expected in (({'status': 'ok', 'candidates': [{}, {}]}, 'selection_required'),
+                                 ({'status': 'ok', 'candidates': []}, 'unavailable'),
+                                 ({'status': 'error', 'candidates': [{}], 'reason': 'Incomplete'}, 'failed')):
+            with self.subTest(expected=expected), patch.object(selection, 'lookup_candidates', return_value=result):
+                row = resolve_selected_sources(self.context, [monster], ['m'])[0]
+            self.assertEqual(row['status'], expected)
+            if expected != 'selection_required':
+                self.assertNotIn('candidates', row)
+            self.assertTrue(row['reason'])
+        self.context.dnd_monster_detail_html.assert_not_called()
+
+    def test_sole_invalid_expired_wrong_species_or_identityless_token_cannot_resolve(self):
+        monster = {key: value for key, value in self.monster.items() if not key.startswith('monster_source_')}
+        candidate = dict(species='Goblin', provider='D&D Beyond',
+            source_url='https://www.dndbeyond.com/monsters/chosen')
+        with patch.object(selection.time, 'time', return_value=1):
+            expired = selection.issue_token(candidate)
+        wrong = selection.issue_token(dict(candidate, species='Orc'))
+        for token in ('bad', expired, wrong, 'manual', None):
+            with self.subTest(token=token), patch.object(selection, 'lookup_candidates',
+                    return_value={'status': 'ok', 'candidates': [{'selection_token': token}]}):
+                row = resolve_selected_sources(self.context, [monster], ['m'])[0]
+            self.assertEqual(row['status'], 'invalid_choice')
+            self.assertEqual(row['fields'], {})
+        self.context.dnd_monster_detail_html.assert_not_called()
+
+    def test_invalid_retained_identity_and_conflicting_signed_choice_never_search(self):
+        other = dict(species='Goblin', provider='5e.tools', source='XMM', legacy=False,
+            source_url='https://5e.tools/bestiary.html#goblin_xmm')
+        with patch.object(selection, 'lookup_candidates') as lookup:
+            invalid = dict(self.monster, monster_source_url='not-a-provider-url')
+            row = resolve_selected_sources(self.context, [invalid], ['m'])[0]
+            self.assertEqual(row['status'], 'failed')
+            row = resolve_selected_sources(self.context, [self.monster], ['m'],
+                choices={'m': selection.issue_token(other)})[0]
+            self.assertEqual(row['status'], 'invalid_choice')
+        lookup.assert_not_called()
+        self.context.dnd_monster_detail_html.assert_not_called()
 
     def test_invalid_signed_choice_does_not_fetch_and_other_rows_are_preserved(self):
         other = dict(self.monster, id='n')

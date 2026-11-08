@@ -150,11 +150,16 @@ edited during lookup or candidate selection remain unchanged, including edit the
 revert. Missing or invalid source bonuses never fill or overwrite a field. Signed
 offers stay bound to the selected candidate and assigned value; a later manual
 edit, reset or changed selection clears attribution. Unsigned values remain manual.
-Cancel permits manual entry. Refresh retains exact source identities without silently selecting another
-edition; identity-less rows still require candidate choice, even for one match.
-The selected image snapshot is retained; a missing image does not select another
-monster's image. Review does not mutate live statistics; explicit Apply remains
-required in Refresh.
+Cancel permits manual entry. Refresh retains exact source identities without silently
+selecting another provider, book or edition. For identity-less rows, exactly one
+usable signed candidate resolves automatically; multiple candidates require explicit
+selection and zero remain unresolved with a status. Invalid retained identities or
+failed exact-source fetches never trigger substitution. Resolving another row keeps
+other rows' candidates, proposals and individual field choices. Reload review starts
+a fresh lookup; continuation does not refetch unaffected rows. Auto-resolution selects
+no fields, changes no live statistics and generates no HP. The selected image snapshot
+is retained; a missing image does not select another monster's image. Explicit Apply
+remains required in Refresh. See [A.3 delivery and validation](docs/handover/340-combined-monster-lookup.md#a3-sole-candidate-refresh---2026-11-08).
 
 Notifications and popup choices share descriptive book/year labels. Raw IDs, URLs
 and selection tokens remain unchanged. Default 5e.tools sources are MM, XMM, PHB,

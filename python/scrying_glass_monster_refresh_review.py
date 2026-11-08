@@ -78,12 +78,20 @@ def install_monster_refresh(context, app):
         updates = body.get('choices', {})
         if not isinstance(updates, dict):
             raise context.HTTPException(422, 'Expected candidate choices by row ID')
+        if (not isinstance(ids, list) or not ids
+                or any(not isinstance(ident, str) or not ident for ident in ids)
+                or len(set(ids)) != len(ids)):
+            raise context.HTTPException(422, 'Select distinct monster IDs')
+        if set(updates) - set(ids):
+            raise context.HTTPException(422, 'Candidate choices must belong to the original selection')
         choices.update(updates)
-        if not isinstance(ids, list) or not ids:
-            raise context.HTTPException(422, 'Select at least one monster')
+        # A continuation resolves only explicitly updated rows. Keep server-owned
+        # automatic/explicit resolutions and proposals for every other row intact.
+        resolving = ids if previous is None else [ident for ident in ids if ident in updates]
         try:
-            rows = await asyncio.to_thread(resolve_selected_sources, context,
-                copy.deepcopy(context.STATE['monsters']), ids, choices=choices)
+            changed = await asyncio.to_thread(resolve_selected_sources, context,
+                copy.deepcopy(context.STATE['monsters']), resolving,
+                choices={ident: choices[ident] for ident in resolving if ident in choices})
         except ValueError as exc:
             raise context.HTTPException(422, str(exc)) from exc
         if (review['scope'] != _scope(context) or review['state'] != context.STATE
@@ -91,6 +99,9 @@ def install_monster_refresh(context, app):
             raise context.HTTPException(409, 'Encounter changed while resolving sources')
         if time.monotonic() >= review['expires']:
             raise context.HTTPException(410, 'Review expired while resolving sources')
+        rows_by_id = {row['id']: copy.deepcopy(row) for row in review.get('rows', [])}
+        rows_by_id.update({row['id']: row for row in changed})
+        rows = [rows_by_id[ident] for ident in ids]
         review.update(ids=list(ids), choices=copy.deepcopy(choices), rows=rows)
         store = _store(context)
         for key in list(store):
