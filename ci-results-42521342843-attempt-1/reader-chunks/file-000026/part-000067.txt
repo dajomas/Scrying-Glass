@@ -1,0 +1,27 @@
+vate endpoint
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5506091Z ok
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5545009Z test_unclassified_failure_and_search_failure_block_all_results (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_unclassified_failure_and_search_failure_block_all_results) ... D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5546908Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5548078Z   File "/tmp/scrying-tests-po19jx44/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5549245Z     html = context.dnd_monster_detail_html(href)
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5550470Z   File "/tmp/scrying-tests-po19jx44/repo/python/scrying_glass_dndbeyond.py", line 128, in dnd_monster_detail_html
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5551589Z     response = urlopen(request, timeout=15)
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5552923Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5553992Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5554592Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5555647Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5556741Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5557436Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5558618Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5559642Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5560251Z urllib.error.HTTPError: HTTP Error 403: fixture
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5561035Z Combined monster lookup failed for D&D Beyond
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5561722Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5563077Z   File "/tmp/scrying-tests-po19jx44/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5564233Z     html = context.dnd_monster_detail_html(href)
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5565917Z   File "/tmp/scrying-tests-po19jx44/repo/python/scrying_glass_dndbeyond.py", line 128, in dnd_monster_detail_html
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5567059Z     response = urlopen(request, timeout=15)
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5568408Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5569422Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5570016Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T20:42:24.5571082Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mo
