@@ -33,14 +33,14 @@ class FivetoolsInitiativeFlowTests(unittest.IsolatedAsyncioTestCase):
         patcher.start()
         self.addCleanup(patcher.stop)
 
-    async def candidate(self):
+    async def lookup_fivetools_candidate(self):
         status, result = await self.request("GET", "/api/monsters/lookup",
             query=urlencode({"species": "Noble Prodigy"}))
         self.assertEqual((status, result["status"], len(result["candidates"])), (200, "ok", 1))
         return result["candidates"][0]
 
     async def create(self):
-        fields = dict(self.form(await self.candidate()), name="Noble Prodigy", monster_species="Noble Prodigy")
+        fields = dict(self.form(await self.lookup_fivetools_candidate()), name="Noble Prodigy", monster_species="Noble Prodigy")
         status, created = await self.request("POST", "/api/monsters", fields=fields)
         self.assertEqual(status, 200)
         return created[0]
@@ -65,7 +65,7 @@ class FivetoolsInitiativeFlowTests(unittest.IsolatedAsyncioTestCase):
     async def test_creation_signed_values_source_identity_and_storage_reopen(self):
         for value in (7, 0, -2):
             self.source["initiative"] = {"proficiency": 1} if value == 7 else {"initiative": value}
-            candidate = await self.candidate()
+            candidate = await self.lookup_fivetools_candidate()
             self.assertEqual(candidate["initiative_bonus"], value)
             self.assertIn("initiative_bonus_offer_token", candidate)
             created = await self.create()
@@ -99,7 +99,7 @@ class FivetoolsInitiativeFlowTests(unittest.IsolatedAsyncioTestCase):
             self.source.pop("initiative", None)
             if raw is not None:
                 self.source["initiative"] = raw
-            candidate = await self.candidate()
+            candidate = await self.lookup_fivetools_candidate()
             self.assertIsNone(candidate["initiative_bonus"])
             self.assertNotIn("initiative_bonus_offer_token", candidate)
             before = self.snapshot()

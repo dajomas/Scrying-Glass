@@ -4,7 +4,7 @@
 
 2026-11-08. [SG-TODO-018 A.1](../todo/185-monster-correction-plan.md).
 Branch features/perplexity-018; baseline 3486eaee2303d1caa3f031bf0867e4fb3710b3b3.
-Implementation included; CI/acceptance pending. No close-out or merge/write-back.
+Implementation delivered; first CI failed, fixture correction included with new CI/acceptance pending. No close-out or merge/write-back.
 
 ## Evidence and behavior
 
@@ -24,7 +24,7 @@ HP-generation, provider-enable or character changes; A.2/A.3 and stage B remain.
 README, 180/330 history, TODO index and CI were reviewed and remain unchanged:
 existing contracts, fallback-only lookup, links and overall pending status remain.
 
-## Validation
+## Initial preparation validation (historical)
 
 Ten pure unit methods passed. Offline supplied-XMM scan: 503 entries, 187 available,
 316 missing; Noble Prodigy +7. Prepared Python AST parsing passed; files are below
@@ -36,3 +36,31 @@ zero/negative, raw recalculation, unchecked fields, missing/invalid and exact ed
 This is not live-provider, login, browser, TCP or new-process restart evidence.
 Existing CI discovers both new test modules; covering CI and visual/workflow
 acceptance remain pending. Normal CI applies, without skip/workflow changes/dispatch.
+
+## Failed CI and fixture correction - 2026-11-08
+
+Verified run 42496852926 attempt 1, branch features/perplexity-018, tested
+7fb5c1ce9c2cddd2275dac4520b6b3b10ad2fcfd. Publication:
+6d4b882e0c9591c8d7172a57a9322605dbcb881d / ci-results-42496852926-attempt-1.
+The ten pure initiative methods passed. Both new ASGI/SQLite methods errored
+before their intended workflows: the reused fixture assigns self.candidate to a
+dict, shadowing candidate(). Four extracted source-configuration methods errored
+at the new relative import because their exec namespace lacked package metadata.
+Main suite: 1,375 tests, six errors; repeated suite reports the same six errors.
+Syntax/server import, pytest and JavaScript steps succeeded. Standalone audit
+step failed; connection tracking 738 opened/0 without explicit close does not
+make it pass. Python/Node post-setup steps were skipped. No green-CI claim.
+
+Evidence under reader-chunks/file-000026: parts 64-65 show test outcomes;
+98-101 show exceptions/main summary; 133 shows repeated summary/connection count.
+The original failed run remains failed after later corrections.
+
+This corrective increment only renames candidate() to lookup_fivetools_candidate()
+and supplies __name__="python.scrying_glass_monster_selection", __package__="python"
+in the existing extracted-function fixture. No production code or assertions are
+removed/relaxed; all 24 flow and 30 configuration assertion calls are identical.
+Original file blobs were verified; corrected AST parsing and assertion-preservation
+checks passed locally. FastAPI is still absent, so no corrected ASGI/full-suite
+execution or new CI pass is claimed. Existing CI runs both modules normally.
+README, root indexes and workflow remain unchanged; links, task scope and pending
+status remain accurate. A.1 acceptance, A.2/A.3, stage B and merge remain pending.

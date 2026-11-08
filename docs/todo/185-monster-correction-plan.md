@@ -4,7 +4,7 @@
 
 - Updated: 2026-11-08.
 - Tracking: SG-TODO-018 follow-up and adjacent roster/lookup corrections; not a new completed task.
-- Status: A.1 implementation included with covering CI/acceptance pending; A.2/A.3 and stage B remain planned.
+- Status: A.1 delivered; first CI failed with fixture errors, corrective tests included with covering CI/acceptance pending. A.2/A.3 and stage B remain planned.
 - Branch: features/perplexity-018. No merge or write-back authorized.
 - Related: [018 initiative/refresh contract](180-monster-initiative-bonus.md), [lookup](010-monster-lookup.md), [5e.tools configuration](060-fivetools-source-configuration.md), [roster presentation](../handover/310-admin-rosters.md), [initiative handover](../handover/330-monster-initiative-foundations.md).
 
@@ -108,3 +108,22 @@ Normal CI discovers them; covering CI, live-provider and desktop/narrow acceptan
 remain pending. See [A.1 handover](../handover/335-fivetools-initiative-correction.md).
 The historical documentation-only skip rule above does not apply to this mixed
 commit. Do not close SG-TODO-018 or merge/write back.
+
+## A.1 CI fixture correction - 2026-11-08
+
+Run 42496852926 attempt 1 failed for tested commit
+7fb5c1ce9c2cddd2275dac4520b6b3b10ad2fcfd; publication
+6d4b882e0c9591c8d7172a57a9322605dbcb881d,
+ci-results-42496852926-attempt-1. Ten pure initiative tests passed, but two new
+flow methods errored because fixture data shadowed candidate(), and four existing
+source-configuration methods errored because extracted functions lacked package
+metadata. Main and repeated suites each ran 1,375 tests with the same six errors.
+These are not twelve distinct defects or completed end-to-end checks.
+
+Rename the flow lookup helper and provide __name__/__package__ in the existing
+source-configuration fixture; all 54 assertion calls are preserved. Production
+code, initiative arithmetic and workflows are unchanged. Both corrected files
+passed AST parsing and assertion-preservation checks; runtime/full-suite checks
+remain pending because FastAPI is unavailable locally. Normal CI must cover the
+correction, and failed run 42496852926 remains failed historical evidence.
+See the linked 335 handover for log locations. No acceptance, close-out or merge.
