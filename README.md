@@ -132,19 +132,42 @@ separately. Superadmins land on /users; use a regular admin for interactive batt
 
 ## Monster lookup and row controls
 
-Add monster searches D&D Beyond first, falling back to 5e.tools only after zero
-usable matches. Provider errors stop lookup. One candidate is automatic; multiple
-candidates open a selection dialog. Cancel permits manual entry. The selected
-image snapshot is retained; a missing image does not select another monster's
-image. No account authentication or entitlement filtering is added.
+Add monster and source-candidate lookup for Refresh search all enabled public
+providers, retaining D&D Beyond and configured 5e.tools versions together even
+when D&D Beyond returns usable matches. Distinct provider/book/edition candidates
+keep their own statistics and signed source identities; statistics are not merged.
+Any enabled-provider failure or incomplete configured-book search blocks the
+combined lookup and returns no candidates. Retry or enter stats manually; partial
+results are not offered as exhaustive. D&D Beyond book metadata that is unavailable
+remains explicitly unavailable rather than guessed. No account authentication or
+entitlement filtering is added.
+
+In Add monster, one candidate is automatic and multiple candidates open a selection
+dialog, followed by the existing initiative-offer review. Cancel permits manual
+entry. Refresh retains exact source identities without silently selecting another
+edition; identity-less rows still require candidate choice, even for one match.
+The selected image snapshot is retained; a missing image does not select another
+monster's image. Review does not mutate live statistics; explicit Apply remains
+required in Refresh.
 
 Notifications and popup choices share descriptive book/year labels. Raw IDs, URLs
 and selection tokens remain unchanged. Default 5e.tools sources are MM, XMM, PHB,
 XPHB, DMG, XDMG, in that order. An explicit `fivetools_sources` list replaces them;
-`[]` skips 5e.tools without disabling D&D Beyond. Existing explicit MM/XMM settings
-remain two-source overrides. Remove or expand the key, then restart, to use more.
-Sources are case-sensitive; invalid lists fail validation; at most 32 input entries.
-See [source configuration and labels](docs/handover/230-fivetools-sources.md).
+`[]` skips 5e.tools data requests without disabling D&D Beyond. Existing explicit
+MM/XMM settings remain two-source overrides. Remove or expand the key, then restart,
+to use more. Sources are case-sensitive; invalid lists fail validation; at most 32
+input entries. A configured book absent from the provider index is an incomplete
+search, not a successful zero-match result. Entries from unconfigured books are
+not offered.
+
+For compatibility, `dndbeyond_image_lookup` and `fivetools_fallback` retain their
+names/defaults. In candidate lookup, `fivetools_fallback` independently enables
+5e.tools rather than restricting it to D&D Beyond zero matches. Legacy stats/image
+fallback interfaces are otherwise unchanged. This backend increment does not yet
+update the old ordering text in the Admin source help or config-example comments;
+those wording/browser checks are scheduled for A.2 commit 4. Follow this README
+for current candidate behavior. See [combined lookup delivery](docs/handover/340-combined-monster-lookup.md)
+and [source configuration and labels](docs/handover/230-fivetools-sources.md).
 
 AC accepts numbers/AC objects; HP prefers supported dice then numeric average.
 Names match after case/punctuation normalization. JSON fetches are bounded to

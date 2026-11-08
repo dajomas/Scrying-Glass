@@ -40,11 +40,12 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 32. [Initiative keyboard navigation](docs/handover/320-initiative-keyboard-navigation.md)
 33. [Monster initiative and refresh foundations](docs/handover/330-monster-initiative-foundations.md)
 
-34. [5e.tools initiative extraction correction](docs/handover/335-fivetools-initiative-correction.md)
+34. [5e.tools initiative extraction correction: A.1 accepted, historical A.2 preparation](docs/handover/335-fivetools-initiative-correction.md)
+35. [Combined monster lookup activation](docs/handover/340-combined-monster-lookup.md)
 
 ## Current pending corrections - 2026-11-08
 
-SG-TODO-018 is not accepted. The user declined the proposed close-out reconciliation; do not push that rejected draft. Follow the [monster provider and roster correction plan](docs/todo/185-monster-correction-plan.md) for the six reported actions, processing order, changed candidate/search requirements and acceptance checks. A.1 is accepted after verified covering CI and user-confirmed manual checks. A.2 preparation is included with CI pending and active lookup unchanged; activation, A.3 and stage B remain pending. No overall close-out or merge is authorized.
+SG-TODO-018 is not accepted overall. The rejected close-out draft must not be pushed. Follow the [current correction plan](docs/todo/185-monster-correction-plan.md) for the six actions and acceptance gates. A.1 is accepted. A.2 commit 3 backend activation is included with covering CI/acceptance pending; see the current 340 handover. Commit 4 help/config/browser work, A.3 and stage B remain pending. No overall close-out or merge is authorized.
 
 ## Required update convention
 
