@@ -1,0 +1,25 @@
+t
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2751077Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2753139Z FAIL: test_primary_centres_and_compact_status_after_refresh (test_roster_status_spacing.CompactRosterSpacingTests.test_primary_centres_and_compact_status_after_refresh) (width=375, root_size=16)
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2754751Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2755395Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2756513Z   File "/tmp/scrying-tests-qvgoxwe8/repo/tests/test_roster_status_spacing.py", line 62, in test_primary_centres_and_compact_status_after_refresh
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2758465Z     self.assertAlmostEqual(centre, metrics['reference'], delta=metrics['tolerance'], msg=kind+' '+label)
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2759403Z     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2760348Z AssertionError: 1984.40625 != 1725.90625 within 3.2 delta (258.5 difference) : characters name
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2774401Z 
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2774779Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2776602Z FAIL: test_primary_centres_and_compact_status_after_refresh (test_roster_status_spacing.CompactRosterSpacingTests.test_primary_centres_and_compact_status_after_refresh) (width=375, root_size=20)
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2778687Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2779329Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2780523Z   File "/tmp/scrying-tests-qvgoxwe8/repo/tests/test_roster_status_spacing.py", line 62, in test_primary_centres_and_compact_status_after_refresh
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2781974Z     self.assertAlmostEqual(centre, metrics['reference'], delta=metrics['tolerance'], msg=kind+' '+label)
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2783029Z     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2784038Z AssertionError: 2551.65625 != 2293.15625 within 4 delta (258.5 difference) : characters name
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2784597Z 
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2784920Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2786618Z FAIL: test_primary_centres_and_compact_status_after_refresh (test_roster_status_spacing.CompactRosterSpacingTests.test_primary_centres_and_compact_status_after_refresh) (width=768, root_size=16)
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2788332Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2788943Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-08T21:32:14.2790110Z   File "/tmp/scrying-tests-qvgoxwe8/repo/tests/test_roster_status_spacing.py", line 62, in test_primary_centres_and_compact_status_after_refresh
+tests	Standalone Python browser and audit c

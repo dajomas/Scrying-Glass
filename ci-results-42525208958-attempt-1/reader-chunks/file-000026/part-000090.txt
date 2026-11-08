@@ -1,0 +1,24 @@
+)	2026-11-08T21:28:33.4158628Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4159151Z   File "/tmp/scrying-tests-q52ol6db/repo/python/scrying_glass_monster_selection.py", line 152, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4159715Z     lambda: fivetools_candidates(species, display),
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4160069Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4161015Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4161547Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4161863Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4162397Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4162940Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4163277Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4164098Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4164632Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4164990Z python.scrying_glass_monster_selection.ProviderError: secret
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4165331Z ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4165750Z test_tokens (test_monster_candidate_selection.CandidateTests.test_tokens) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4166678Z test_unconfigured_entry_source_is_not_offered (test_monster_candidate_selection.CandidateTests.test_unconfigured_entry_source_is_not_offered) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4170294Z test_unusable_duplicates_and_image (test_monster_candidate_selection.CandidateTests.test_unusable_duplicates_and_image) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4195127Z test_selection_and_manual_never_relookup (test_monster_candidate_selection.CreationTests.test_selection_and_manual_never_relookup) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4218393Z test_bonus_edit_reorders_and_keeps_turn_round_and_character (test_monster_edit_order.MonsterEditOrderTests.test_bonus_edit_reorders_and_keeps_turn_round_and_character) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4237297Z test_invalid_order_rejected_before_image_and_mutation (test_monster_edit_order.MonsterEditOrderTests.test_invalid_order_rejected_before_image_and_mutation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:33.4258959Z test_retained_legacy_total_does_not_reorder (test_monster_edit_order.MonsterEditOrderTests.test_retained_legacy_total_does_not_reorder) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:35.2054759Z test_fields_and_preview_boxes_align_loaded_and_empty (test_monster_image_preview_alignment.PreviewAlignmentTests.test_fields_and_preview_boxes_align_loaded_and_empty) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:36.7270199Z test_boot_layout_failed_submission_and_screenshots (test_monster_image_previews.FullAdminPreviewTests.test_boot_layout_failed_submission_and_screenshots) ... ok
+tests	Python test suite 

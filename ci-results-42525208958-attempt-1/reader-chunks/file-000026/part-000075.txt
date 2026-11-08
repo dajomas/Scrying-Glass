@@ -1,0 +1,20 @@
+e (including browser fixtures)	2026-11-08T21:28:10.1856075Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.1856547Z   File "python/scrying_glass_monster_selection.py", line 98, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.1857055Z     sources = ft.configured_sources(display)
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.1857909Z   File "/tmp/scrying-tests-q52ol6db/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.1858861Z     raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.1860028Z ValueError: fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.1860689Z ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.1906404Z test_candidate_explicit_order_and_duplicates (test_fivetools_source_configuration.SourceConfigurationTests.test_candidate_explicit_order_and_duplicates) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.1959977Z test_candidates_enumerate_six_sources_in_order (test_fivetools_source_configuration.SourceConfigurationTests.test_candidates_enumerate_six_sources_in_order) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.2014029Z test_config_omitted_defaults_and_no_aliasing (test_fivetools_source_configuration.SourceConfigurationTests.test_config_omitted_defaults_and_no_aliasing) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.2071657Z test_empty_list_does_not_even_fetch_index (test_fivetools_source_configuration.SourceConfigurationTests.test_empty_list_does_not_even_fetch_index) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.2133720Z test_invalid_configuration_fails_loading (test_fivetools_source_configuration.SourceConfigurationTests.test_invalid_configuration_fails_loading) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.2184318Z test_invalid_lists_are_rejected (test_fivetools_source_configuration.SourceConfigurationTests.test_invalid_lists_are_rejected) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.2277851Z test_json_and_yaml_explicit_override_and_empty (test_fivetools_source_configuration.SourceConfigurationTests.test_json_and_yaml_explicit_override_and_empty) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.2328314Z test_legacy_disabled_does_not_fetch (test_fivetools_source_configuration.SourceConfigurationTests.test_legacy_disabled_does_not_fetch) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.2391073Z test_legacy_image_can_reach_each_default_source (test_fivetools_source_configuration.SourceConfigurationTests.test_legacy_image_can_reach_each_default_source) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.2453593Z test_legacy_stats_can_reach_each_default_source (test_fivetools_source_configuration.SourceConfigurationTests.test_legacy_stats_can_reach_each_default_source) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.2505637Z test_shared_default_override_order_and_independence (test_fivetools_source_configuration.SourceConfigurationTests.test_shared_default_override_order_and_independence) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.2508263Z test_damage_then_healing (test_healing_max_hp_cap.HealingCapTests.test_damage_then_healing) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-08T21:28:10.2509921Z test_dead_character_not

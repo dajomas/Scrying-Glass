@@ -1,0 +1,31 @@
+sts.test_primary_centres_and_compact_status_after_refresh) (width=1440, root_size=20)
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0198580Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0198955Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0199662Z   File "/tmp/scrying-tests-q52ol6db/repo/tests/test_roster_status_spacing.py", line 62, in test_primary_centres_and_compact_status_after_refresh
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0200528Z     self.assertAlmostEqual(centre, metrics['reference'], delta=metrics['tolerance'], msg=kind+' '+label)
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0201135Z     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0201739Z AssertionError: 1362.328125 != 1317.578125 within 4 delta (44.75 difference) : characters name
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0202105Z 
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0202321Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0202671Z Ran 1411 tests in 142.528s
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0202820Z 
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0202924Z FAILED (failures=6)
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.3709967Z ##[error]Process completed with exit code 1.
+tests	Upload Admin foundations visual fixtures	﻿2026-11-08T21:29:30.3774986Z ##[group]Run actions/upload-artifact@v4
+tests	Upload Admin foundations visual fixtures	2026-11-08T21:29:30.3775297Z with:
+tests	Upload Admin foundations visual fixtures	2026-11-08T21:29:30.3775520Z   name: admin-foundations-visual-fixtures
+tests	Upload Admin foundations visual fixtures	2026-11-08T21:29:30.3775867Z   path: /home/runner/work/_temp/sg-admin-foundations
+tests	Upload Admin foundations visual fixtures	2026-11-08T21:29:30.3776184Z   if-no-files-found: warn
+tests	Upload Admin foundations visual fixtures	2026-11-08T21:29:30.3776418Z   compression-level: 6
+tests	Upload Admin foundations visual fixtures	2026-11-08T21:29:30.3776633Z   overwrite: false
+tests	Upload Admin foundations visual fixtures	2026-11-08T21:29:30.3777033Z   include-hidden-files: false
+tests	Upload Admin foundations visual fixtures	2026-11-08T21:29:30.3777275Z env:
+tests	Upload Admin foundations visual fixtures	2026-11-08T21:29:30.3777937Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Upload Admin foundations visual fixtures	2026-11-08T21:29:30.3778525Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-08T21:29:30.3778959Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Upload Admin foundations visual fixtures	2026-11-08T21:29:30.3779387Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-08T21:29:30.3779771Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-08T21:29:30.3780155Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-08T21:29:30.3780580Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Upload Admin foundations visual fixtures	2026-11-08T21:29:30.3780903Z ##[endgroup]
+tests	Upload Admin foundations visual fixtures	2026-11-08T21:29:30.5458599Z (node:11986) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a use

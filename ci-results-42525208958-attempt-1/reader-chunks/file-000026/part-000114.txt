@@ -1,0 +1,24 @@
+
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0137604Z FAIL: test_primary_centres_and_compact_status_after_refresh (test_roster_status_spacing.CompactRosterSpacingTests.test_primary_centres_and_compact_status_after_refresh) (width=375, root_size=16)
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0139664Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0140303Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0141451Z   File "/tmp/scrying-tests-q52ol6db/repo/tests/test_roster_status_spacing.py", line 62, in test_primary_centres_and_compact_status_after_refresh
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0142684Z     self.assertAlmostEqual(centre, metrics['reference'], delta=metrics['tolerance'], msg=kind+' '+label)
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0143406Z     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0144119Z AssertionError: 1984.40625 != 1725.90625 within 3.2 delta (258.5 difference) : characters name
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0144532Z 
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0144760Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0145986Z FAIL: test_primary_centres_and_compact_status_after_refresh (test_roster_status_spacing.CompactRosterSpacingTests.test_primary_centres_and_compact_status_after_refresh) (width=375, root_size=20)
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0147131Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0147574Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0148661Z   File "/tmp/scrying-tests-q52ol6db/repo/tests/test_roster_status_spacing.py", line 62, in test_primary_centres_and_compact_status_after_refresh
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0149702Z     self.assertAlmostEqual(centre, metrics['reference'], delta=metrics['tolerance'], msg=kind+' '+label)
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0150411Z     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0151104Z AssertionError: 2551.65625 != 2293.15625 within 4 delta (258.5 difference) : characters name
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0151510Z 
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0151742Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0159477Z FAIL: test_primary_centres_and_compact_status_after_refresh (test_roster_status_spacing.CompactRosterSpacingTests.test_primary_centres_and_compact_status_after_refresh) (width=768, root_size=16)
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0178642Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0179371Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0180699Z   File "/tmp/scrying-tests-q52ol6db/repo/tests/test_roster_status_spacing.py", line 62, in test_primary_centres_and_compact_status_after_refresh
+tests	Python test suite (including browser fixtures)	2026-11-08T21:29:30.0182324Z     self.assertAlmostEq

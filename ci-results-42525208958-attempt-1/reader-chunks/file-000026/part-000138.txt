@@ -1,0 +1,45 @@
+08T21:29:44.7591881Z # fail 0
+tests	JavaScript tests	2026-11-08T21:29:44.7592493Z # cancelled 0
+tests	JavaScript tests	2026-11-08T21:29:44.7593133Z # skipped 0
+tests	JavaScript tests	2026-11-08T21:29:44.7593739Z # todo 0
+tests	JavaScript tests	2026-11-08T21:29:44.7594379Z # duration_ms 50.451186
+tests	JavaScript tests	2026-11-08T21:29:44.7933601Z ##[endgroup]
+tests	JavaScript tests	2026-11-08T21:29:44.7934448Z ##[group]tests/test_feature_target_polling.js
+tests	JavaScript tests	2026-11-08T21:29:45.0270005Z TAP version 13
+tests	JavaScript tests	2026-11-08T21:29:45.0507517Z # PASS: automatic target replacement resets dirty fields
+tests	JavaScript tests	2026-11-08T21:29:45.0514169Z # PASS: same-target polling preserves edits
+tests	JavaScript tests	2026-11-08T21:29:45.0528343Z # PASS: subsequent save uses replacement target values
+tests	JavaScript tests	2026-11-08T21:29:45.0540576Z # PASS: removing all targets clears dirty flags
+tests	JavaScript tests	2026-11-08T21:29:45.0602102Z # Subtest: tests/test_feature_target_polling.js
+tests	JavaScript tests	2026-11-08T21:29:45.0607373Z ok 1 - tests/test_feature_target_polling.js
+tests	JavaScript tests	2026-11-08T21:29:45.0608623Z   ---
+tests	JavaScript tests	2026-11-08T21:29:45.0609006Z   duration_ms: 37.011671
+tests	JavaScript tests	2026-11-08T21:29:45.0609440Z   type: 'test'
+tests	JavaScript tests	2026-11-08T21:29:45.0609813Z   ...
+tests	JavaScript tests	2026-11-08T21:29:45.0610425Z 1..1
+tests	JavaScript tests	2026-11-08T21:29:45.0611548Z # tests 1
+tests	JavaScript tests	2026-11-08T21:29:45.0612264Z # suites 0
+tests	JavaScript tests	2026-11-08T21:29:45.0613731Z # pass 1
+tests	JavaScript tests	2026-11-08T21:29:45.0614321Z # fail 0
+tests	JavaScript tests	2026-11-08T21:29:45.0615877Z # cancelled 0
+tests	JavaScript tests	2026-11-08T21:29:45.0616473Z # skipped 0
+tests	JavaScript tests	2026-11-08T21:29:45.0617007Z # todo 0
+tests	JavaScript tests	2026-11-08T21:29:45.0617928Z # duration_ms 44.894794
+tests	JavaScript tests	2026-11-08T21:29:45.0959690Z ##[endgroup]
+tests	JavaScript tests	2026-11-08T21:29:45.0960632Z ##[group]tests/test_lair_pane_visibility.js
+tests	JavaScript tests	2026-11-08T21:29:45.3298603Z TAP version 13
+tests	JavaScript tests	2026-11-08T21:29:45.3527794Z # PASS: lair toggles independently with synchronized label and aria
+tests	JavaScript tests	2026-11-08T21:29:45.3532769Z # PASS: hiding setup hides both children and their toggle buttons
+tests	JavaScript tests	2026-11-08T21:29:45.3541197Z # PASS: setup reopening restores independent preferences: lair=false, monster=false
+tests	JavaScript tests	2026-11-08T21:29:45.3549894Z # PASS: setup reopening restores independent preferences: lair=false, monster=true
+tests	JavaScript tests	2026-11-08T21:29:45.3557155Z # PASS: setup reopening restores independent preferences: lair=true, monster=false
+tests	JavaScript tests	2026-11-08T21:29:45.3565317Z # PASS: setup reopening restores independent preferences: lair=true, monster=true
+tests	JavaScript tests	2026-11-08T21:29:45.3574113Z # PASS: parent restores previously hidden child buttons exactly
+tests	JavaScript tests	2026-11-08T21:29:45.3584006Z # PASS: battle start collapses lair and monster equally, retaining toggle access
+tests	JavaScript tests	2026-11-08T21:29:45.3593888Z # PASS: manual reopening during battle survives repeated updates
+tests	JavaScript tests	2026-11-08T21:29:45.3602300Z # PASS: battle end restores normal layout and clears parent snapshots
+tests	JavaScript tests	2026-11-08T21:29:45.3609560Z # PASS: second battle repeats automatic collapse
+tests	JavaScript tests	2026-11-08T21:29:45.3616707Z # PASS: manual setup hide/show during battle preserves child choices
+tests	JavaScript tests	2026-11-08T21:29:45.3624709Z # PASS: campaign-character dependency remains unchanged
+tests	JavaScript tests	2026-11-08T21:29:45.3637487Z # PASS: initial active encounter collapses; idle refresh preserves choices
+tests	JavaScript tests	2026-11-08T21:29:45.3643196Z # PASS: template and toggle ord

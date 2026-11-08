@@ -1,0 +1,29 @@
+  found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8838462Z   File "/tmp/scrying-tests-qvgoxwe8/repo/python/scrying_glass_monster_selection.py", line 151, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8839557Z     lambda: dnd_candidates(context, species),
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8840508Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8841656Z   File "/tmp/scrying-tests-qvgoxwe8/repo/python/scrying_glass_monster_selection.py", line 92, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8843178Z     raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8844754Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8881566Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8882189Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8883171Z   File "/tmp/scrying-tests-qvgoxwe8/repo/python/scrying_glass_monster_selection.py", line 101, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8883987Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8884613Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8885165Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8885504Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8886076Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8886641Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8887067Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8887942Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8888505Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8888779Z OSError: secret 5e.tools endpoint
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8891802Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8892484Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8893703Z   File "/tmp/scrying-tests-qvgoxwe8/repo/python/scrying_glass_monster_selection.py", line 101, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8894884Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8896005Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8897036Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8897835Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-08T21:30:51.8898961Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standal
