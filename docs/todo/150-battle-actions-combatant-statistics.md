@@ -30,3 +30,9 @@ Prepared full-Admin intercepted-HTTP coverage uses production assets and native 
 - Obtain task-specific user visual/workflow acceptance before closure. Simplified/intercepted fixtures are not password-login, live TCP/provider, database/process-restart or exhaustive accessibility evidence.
 
 The 009.5 transition was documentation-only and ran no tests; this mixed feature proposal supersedes inspection-only delivery status, not historical evidence. 009.5 stays closed. Overall 009 remains in progress and 009.6/009.7 stay proposed.
+
+## Alignment follow-up - 2026-11-09
+
+Status remains in progress: CSS-only correction and two full-Admin regression methods prepared for bound approval; covering execution/CI and user visual acceptance pending. Shared label/control/summary tracks keep controls aligned independently of summary length or absence. Reaction source uses the same arrangement; mobile fields stack with their summaries. No JavaScript wrapper or control replacement is included. See [correction evidence and limits](../handover/360-battle-actions-combatant-statistics.md#alignment-correction---2026-11-09).
+
+Executed: stylesheet parsing, regression AST parsing and isolated Chromium ordinary/reaction layout checks at 1440/375. Not executed: new full-Admin regression module, existing full suite or covering CI. Normal CI remains required. Acceptance must verify aligned label baselines and control edges/heights, centered Critical hit, Remove placement, readable wrapped/missing summaries, statistics-reduction rows, retained drafts/Applied locks and narrow keyboard operation. Do not close SG-TODO-015 solely on push or isolated fixture success.
