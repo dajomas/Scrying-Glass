@@ -1,0 +1,11 @@
+/* SG-TODO-015: summaries stay directly below their original selectors. */
+#battleActionModal .sg-action-stats {
+    margin: 0;
+    min-width: 0;
+    max-width: 100%;
+    color: var(--muted, #b7bfcc);
+    font-size: .8rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+#battleActionModal .sg-action-stats[hidden] { display: none !important; }

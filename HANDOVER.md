@@ -43,6 +43,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 34. [5e.tools initiative extraction correction: A.1 accepted, historical A.2 preparation](docs/handover/335-fivetools-initiative-correction.md)
 35. [Combined lookup, Refresh and roster correction delivery/validation](docs/handover/340-combined-monster-lookup.md)
 36. [Admin workflow navigation: closed after CI and user sign-off](docs/handover/350-admin-workflow-navigation.md)
+37. [Battle Actions combatant statistics: implementation prepared, validation pending](docs/handover/360-battle-actions-combatant-statistics.md)
 
 ## Current validation status - 2026-11-09
 
@@ -50,7 +51,7 @@ SG-TODO-018 is completed and closed at the user's explicit request after review 
 
 SG-TODO-009.5 is completed/closed on the user's 2026-11-09 sign-off and request to close. Successful CI 42616924220 attempt 1 covers c7c51725, including the form/overwrite/copy refinements. The accepted later manual copy revision cfc7b0f1 updates template and matching test expectation; no separate covering CI result for that revision was supplied. See [350](docs/handover/350-admin-workflow-navigation.md) for full evidence and limits. Overall SG-TODO-009 remains in progress; 009.6/009.7 remain proposed.
 
-The next scheduled item is [SG-TODO-015](docs/todo/150-battle-actions-combatant-statistics.md). Live selector/row inspection has started at the user's request; no application/test implementation or validation is delivered by this documentation-only transition.
+SG-TODO-015 now has a prepared implementation/test/documentation increment for read-only selector summaries. Complete-module syntax/AST and simplified Chromium preparation checks passed as detailed in [360](docs/handover/360-battle-actions-combatant-statistics.md). Full-Admin regression execution, covering CI and user acceptance remain pending; no completion or new workflow outcome is claimed.
 
 ## Required update convention
 
