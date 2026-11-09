@@ -1,11 +1,11 @@
-"""SG-TODO-009.6: full Admin/assets with intercepted HTTP, not live-server evidence."""
+"""Revised 009.6: production Admin/assets with intercepted HTTP, not live-server evidence."""
 import os
 from pathlib import Path
 import tempfile
 import unittest
 import test_admin_workflow_navigation as navigation
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT=Path(__file__).resolve().parents[1]
 
 
 class LiveWorkspaceTests(unittest.TestCase):
@@ -17,129 +17,133 @@ class LiveWorkspaceTests(unittest.TestCase):
     def tearDownClass(cls):
         navigation.WorkflowNavigationTests.tearDownClass.__func__(cls)
 
-    choose = navigation.WorkflowNavigationTests.choose
+    choose=navigation.WorkflowNavigationTests.choose
 
-    def open_page(self, width=1440):
-        page, errors, mutations = navigation.WorkflowNavigationTests.open_page(self, width)
-        page.wait_for_function("document.body.dataset.liveWorkspace === 'ready'")
-        return page, errors, mutations
+    def open_page(self,width=1440):
+        page,errors,mutations=navigation.WorkflowNavigationTests.open_page(self,width)
+        page.wait_for_function("document.body.dataset.liveWorkspace==='ready'")
+        return page,errors,mutations
 
-    def active_state(self, page):
-        state = page.evaluate('latest')
-        monster, character = state['monsters'][0], state['characters'][0]
-        monster.update(active=True, in_turn=True, hp=0, max_hp=20, initiative=19,
-                       life_state='down', concentrating=True,
-                       effects=[{'name':'<Poisoned>', 'mechanical':False}])
-        character.update(active=True, in_turn=False, initiative=12)
-        state.update(battle_order=[monster['id'], character['id']], battle_round=2)
-        page.route('**/api/state', lambda route: route.fulfill(json=state))
+    def active_state(self,page):
+        state=page.evaluate('latest')
+        monster,character=state['monsters'][0],state['characters'][0]
+        monster.update(active=True,in_turn=True,hp=0,max_hp=20,initiative=19,
+                       life_state='down',concentrating=True,
+                       effects=[{'name':'<Poisoned>','mechanical':False}])
+        character.update(active=True,in_turn=False,initiative=12)
+        state.update(battle_order=[monster['id'],character['id']],battle_round=2)
+        page.route('**/api/state',lambda route:route.fulfill(json=state))
         page.evaluate('() => load(true)')
         return state
 
-    def test_live_geometry_history_keyboard_and_screenshots(self):
-        directory = Path(os.environ.get('SG_VISUAL_ARTIFACTS', str(Path(tempfile.gettempdir()) / 'sg-admin-foundations')))
-        directory.mkdir(parents=True, exist_ok=True)
-        for width in (1440, 375):
-            with self.subTest(width=width):
-                page, errors, mutations = self.open_page(width)
-                self.active_state(page)
-                self.choose(page, 'live')
-                primary = page.locator('.sg-live-primary').bounding_box()
-                side = page.locator('.sg-live-tools').bounding_box()
-                if width > 1000:
-                    self.assertGreater(primary['width'], side['width'])
-                    self.assertGreaterEqual(side['x'], primary['x'] + primary['width'] - 1)
-                    self.assertAlmostEqual(side['y'], primary['y'], delta=1)
-                else:
-                    self.assertGreaterEqual(side['y'], primary['y'] + primary['height'] - 1)
-                    self.assertTrue(page.locator('#liveEncounterWorkspace').evaluate('n => n.scrollWidth<=n.clientWidth+1'))
-                self.assertTrue(page.locator('#encounterFeatures').is_visible())
-                self.assertFalse(page.locator('#battleSetupInputPane').is_visible())
-                self.assertTrue(page.locator('#nextBattle').is_visible())
-                self.assertIn('sg-primary-action', page.locator('#nextBattle').get_attribute('class'))
-                history = page.locator('#liveActivityDisclosure')
-                self.assertTrue(page.locator('#activityLog').is_visible())
-                history.locator(':scope > summary').focus()
-                page.keyboard.press('Enter')
-                self.assertFalse(history.evaluate('n => n.open'))
-                page.evaluate('() => load(true)')
-                self.assertFalse(history.evaluate('n => n.open'))
-                page.keyboard.press('Enter')
-                self.assertTrue(history.evaluate('n => n.open'))
-                boundary = page.evaluate("({h:document.querySelector('#adminHeader').getBoundingClientRect().bottom,m:document.querySelector('#adminScroll').getBoundingClientRect().top})")
-                self.assertAlmostEqual(boundary['h'], boundary['m'], delta=1)
-                page.screenshot(path=str(directory / f'0096-{width}-live.png'))
-                self.assertEqual(errors, [])
-                self.assertEqual(mutations, [])
-                page.close()
+    def test_full_width_no_duplicate_overview_and_dialog_geometry(self):
+        directory=Path(os.environ.get('SG_VISUAL_ARTIFACTS',str(Path(tempfile.gettempdir())/'sg-admin-foundations')))
+        directory.mkdir(parents=True,exist_ok=True)
+        for width in (1440,375):
+            page,errors,mutations=self.open_page(width)
+            self.active_state(page)
+            self.choose(page,'live')
+            self.assertEqual(page.locator('#liveEncounterWorkspace,#liveTurnOrder,#liveCurrentTurn').count(),0)
+            self.assertFalse(page.locator('#encounterToolsModal').is_visible())
+            self.assertTrue(page.evaluate("!document.querySelector('#adminScroll').contains(document.querySelector('#encounterFeatures'))"))
+            self.assertTrue(page.evaluate("""() => {
+                const battle=document.querySelector('#battleInfo').closest('section').getBoundingClientRect();
+                const log=document.querySelector('#activityLog').closest('section').getBoundingClientRect();
+                return Math.abs(battle.left-log.left)<=1 && Math.abs(battle.right-log.right)<=1;
+            }"""))
+            page.locator('#toggleEncounterTools').click()
+            self.assertTrue(page.locator('#encounterToolsModal').is_visible())
+            box=page.locator('.sg-tools-dialog').bounding_box()
+            self.assertGreaterEqual(box['x'],0)
+            self.assertLessEqual(box['x']+box['width'],width+1)
+            self.assertLessEqual(box['height'],1000*.94)
+            page.screenshot(path=str(directory/f'0096-{width}-tools-dialog.png'))
+            page.locator('#closeEncounterTools').click()
+            page.evaluate("document.querySelector('#adminScroll').scrollTop=0")
+            page.screenshot(path=str(directory/f'0096-{width}-full-width-main.png'))
+            self.assertEqual(errors,[])
+            self.assertEqual(mutations,[])
+            page.close()
 
-    def test_original_nodes_drafts_hidden_state_and_idempotence_survive(self):
-        page, errors, mutations = self.open_page()
-        page.evaluate("""() => {
-            const ids=['encounterFeatures','characterDisplayPane','monsterDisplayPane','lairTools'];
-            window.liveHomes=ids.map(id=>{const n=document.getElementById(id);return [n,n.parentNode,n.hidden];});
-            window.liveNext=document.getElementById('nextBattle');window.liveNextHandler=liveNext.onclick;
-            document.querySelector('#effectName').value='Unsaved condition';
-            document.querySelector('#setupName').value='Unsaved setup';
-        }""")
-        for key in ('live', 'preparation', 'live', 'campaign'):
-            self.choose(page, key)
-        self.assertTrue(page.evaluate("liveHomes.every(([n,p,h])=>n.parentNode===p&&n.hidden===h)"))
-        self.assertTrue(page.evaluate("liveNext===document.querySelector('#nextBattle')&&liveNext.onclick===liveNextHandler"))
-        self.assertEqual(page.locator('#effectName').input_value(), 'Unsaved condition')
-        self.assertEqual(page.locator('#setupName').input_value(), 'Unsaved setup')
-        page.add_script_tag(content=(ROOT / 'static/admin-live-workspace.js').read_text(encoding='utf-8'))
-        self.assertEqual(page.locator('#liveEncounterWorkspace').count(), 1)
-        self.assertEqual(page.locator('#liveActivityDisclosure').count(), 1)
-        self.assertEqual(errors, [])
-        self.assertEqual(mutations, [])
+    def test_original_controls_drafts_focus_and_idempotence(self):
+        page,errors,mutations=self.open_page()
+        self.choose(page,'live')
+        page.evaluate("window.originalTools=document.querySelector('#encounterFeatures');window.originalEffect=document.querySelector('#effectName')")
+        opener=page.locator('#toggleEncounterTools')
+        opener.click()
+        self.assertTrue(page.locator('#closeEncounterTools').evaluate('n=>n===document.activeElement'))
+        self.assertTrue(page.locator('#adminScroll').evaluate('n=>n.inert'))
+        page.locator('#encounterFeatures .et-effects-panel > summary').click()
+        page.locator('#effectName').fill('Unsaved condition')
+        page.locator('#closeEncounterTools').focus()
+        page.keyboard.press('Shift+Tab')
+        self.assertTrue(page.locator('#encounterToolsModal').evaluate('n=>n.contains(document.activeElement)'))
+        page.keyboard.press('Escape')
+        self.assertFalse(page.locator('#encounterToolsModal').is_visible())
+        self.assertFalse(page.locator('#adminScroll').evaluate('n=>n.inert'))
+        self.assertTrue(opener.evaluate('n=>n===document.activeElement'))
+        opener.click()
+        self.assertEqual(page.locator('#effectName').input_value(),'Unsaved condition')
+        self.assertTrue(page.evaluate("originalTools===document.querySelector('#encounterFeatures')&&originalEffect===document.querySelector('#effectName')"))
+        page.locator('#closeEncounterTools').click()
+        page.add_script_tag(content=(ROOT/'static/admin-live-workspace.js').read_text(encoding='utf-8'))
+        self.assertEqual(page.locator('#encounterToolsModal').count(),1)
+        self.assertEqual(page.locator('#liveActivityDisclosure').count(),1)
+        self.assertEqual(errors,[])
+        self.assertEqual(mutations,[])
 
-    def test_authoritative_order_zero_effect_text_lair_and_end(self):
-        page, errors, mutations = self.open_page()
-        self.choose(page, 'live')
-        self.assertIn('No battle order set', page.locator('#liveCurrentTurn').inner_text())
-        state = self.active_state(page)
-        self.assertEqual(page.locator('#liveTurnOrder > li').count(), 2)
-        self.assertIn('HP 0/20', page.locator('#liveTurnOrder > li').first.inner_text())
-        self.assertIn('<Poisoned>', page.locator('#liveTurnOrder > li').first.inner_text())
-        self.assertEqual(page.locator('#liveTurnOrder poisoned').count(), 0)
-        self.assertEqual(page.locator('#liveTurnOrder [aria-current=step]').count(), 1)
-        self.assertIn(state['monsters'][0]['name'], page.locator('#liveCurrentTurn').inner_text())
-        lair = {'id':'workspace-lair','name':'Lair','active':True,'in_turn':True,'visible':True,'color':'#8064a2'}
-        state['monsters'][0]['in_turn'] = False
-        state['lairs'] = [lair]
-        state['battle_order'].insert(0, lair['id'])
-        page.evaluate('() => load(true)')
-        self.assertIn('No HP or AC', page.locator('#liveTurnOrder > li').first.inner_text())
-        self.assertEqual(page.locator('#liveTurnOrder > li').first.get_attribute('data-combatant-id'), lair['id'])
-        state.update(battle_order=[], battle_round=0)
-        page.evaluate('() => load(true)')
-        self.assertEqual(page.locator('#liveTurnOrder > li').count(), 0)
-        self.assertIn('No battle order set', page.locator('#liveCurrentTurn').inner_text())
-        self.assertEqual(page.locator('body').get_attribute('data-workflow-view'), 'live')
-        self.assertEqual(errors, [])
-        self.assertEqual(mutations, [])
+    def test_busy_and_nested_modal_block_parent_dismissal(self):
+        page,errors,mutations=self.open_page()
+        self.choose(page,'live')
+        page.locator('#toggleEncounterTools').click()
+        page.locator('#encounterFeatures .et-health-panel > summary').click()
+        held=[]
+        page.route('**/api/combatants/*/features',lambda route:held.append(route))
+        page.locator('#setTempHp').click()
+        page.wait_for_function('window.scryingEncounterToolsBusy()')
+        page.locator('#closeEncounterTools').click()
+        self.assertTrue(page.locator('#encounterToolsModal').is_visible())
+        page.keyboard.press('Escape')
+        self.assertTrue(page.locator('#encounterToolsModal').is_visible())
+        self.assertEqual(len(held),1)
+        held[0].fulfill(json={})
+        page.wait_for_function('!window.scryingEncounterToolsBusy()')
+        page.evaluate("document.querySelector('#editModal').hidden=false")
+        self.assertFalse(page.evaluate('scryingCloseEncounterTools()'))
+        page.keyboard.press('Escape')
+        self.assertFalse(page.locator('#editModal').is_visible())
+        self.assertTrue(page.locator('#encounterToolsModal').is_visible())
+        page.keyboard.press('Escape')
+        self.assertFalse(page.locator('#encounterToolsModal').is_visible())
+        self.assertEqual(errors,[])
+        self.assertEqual(mutations,[])
 
-    def test_native_next_keeps_single_request_and_battle_actions(self):
-        page, errors, mutations = self.open_page()
-        state = self.active_state(page)
-        self.choose(page, 'live')
-        posts = []
+    def test_native_next_and_history_behavior_retained(self):
+        page,errors,mutations=self.open_page()
+        state=self.active_state(page)
+        self.choose(page,'live')
+        posts=[]
         def advance(route):
             posts.append(route.request.method)
-            state['monsters'][0]['in_turn'] = False
-            state['characters'][0]['in_turn'] = True
+            state['monsters'][0]['in_turn']=False
+            state['characters'][0]['in_turn']=True
             route.fulfill(json={})
-        page.route('**/api/battle/next', advance)
+        page.route('**/api/battle/next',advance)
         page.locator('#nextBattle').click()
-        page.wait_for_function("name => document.querySelector('#liveCurrentTurn').textContent.includes(name)", arg=state['characters'][0]['name'])
-        self.assertEqual(posts, ['POST'])
+        page.wait_for_function("id=>document.querySelector('#battleInfo [data-battle-actor]')?.dataset.battleActor===id",arg=state['characters'][0]['id'])
+        self.assertEqual(posts,['POST'])
+        self.assertFalse(page.locator('#encounterToolsModal').is_visible())
         page.locator('#battleInfo [data-battle-actor]').click()
         self.assertTrue(page.locator('#battleActionModal').is_visible())
         self.assertTrue(page.locator('#nextBattleActions').is_visible())
-        self.assertEqual(errors, [])
-        self.assertEqual(mutations, [])
+        page.locator('#closeBattleActions').click()
+        page.locator('#liveActivityDisclosure > summary').focus()
+        page.keyboard.press('Enter')
+        self.assertFalse(page.locator('#liveActivityDisclosure').evaluate('n=>n.open'))
+        page.evaluate('() => load(true)')
+        self.assertFalse(page.locator('#liveActivityDisclosure').evaluate('n=>n.open'))
+        self.assertEqual(errors,[])
+        self.assertEqual(mutations,[])
 
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__=='__main__':unittest.main()

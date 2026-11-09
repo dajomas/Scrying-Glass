@@ -1,40 +1,29 @@
-/* Live encounter geometry; original hidden/filter state remains authoritative. */
-body.admin-shell #liveEncounterWorkspace[hidden] { display: none !important; }
-body.admin-shell[data-workflow-view="live"] #liveEncounterWorkspace {
-    display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(20rem, 1fr);
-    gap: 1rem;
-    align-items: start;
+/* No split workspace: Battle and both native rosters keep their original full-width flow. */
+body.admin-shell #adminScroll > section { min-width: 0; }
+#encounterToolsModal { z-index: 20; }
+#encounterToolsModal > .sg-tools-dialog {
+    box-sizing: border-box;
+    width: min(960px, 94vw);
+    max-height: 92vh;
+    max-height: 92dvh;
+    padding: 0 1rem 1rem;
+    overflow: auto;
+    overscroll-behavior: contain;
 }
-.sg-live-primary, .sg-live-tools { min-width: 0; }
-.sg-live-primary > section, .sg-live-tools > section { min-width: 0; max-width: 100%; }
-body.admin-shell[data-workflow-view="live"] #encounterFeatures .et-panels,
-body.admin-shell[data-workflow-view="live"] #encounterFeatures .et-control-action,
-body.admin-shell[data-workflow-view="live"] #encounterFeatures .et-quick-actions,
-body.admin-shell[data-workflow-view="live"] .sg-live-tools .lair-config { grid-template-columns: minmax(0, 1fr); }
-body.admin-shell[data-workflow-view="live"] #encounterFeatures .et-header { flex-direction: column; }
-body.admin-shell[data-workflow-view="live"] #encounterFeatures .et-connection {
-    flex: none;
-    width: 100%;
-    min-height: 0;
-    height: auto;
-    align-content: start;
+.sg-tools-dialog-bar {
+    position: sticky; top: 0; z-index: 1;
+    display: flex; justify-content: flex-end;
+    padding: .75rem 0; background: var(--bg-2);
 }
-/* The disclosure summary is the visible/accessible log heading; keep native buttons. */
+#encounterToolsModal #encounterFeatures { margin: 0; min-width: 0; }
+#encounterToolsModal #encounterFeatures .et-header { flex-direction: column; }
+#encounterToolsModal #encounterFeatures .et-connection { flex: none; width: 100%; height: auto; min-height: 0; }
+#encounterToolsDialogNotice:empty { display: none; }
+#encounterToolsDialogNotice { overflow-wrap: anywhere; }
+body[data-encounter-tools-open="true"] .modal:not(#encounterToolsModal) { z-index: 30; }
 #liveActivityDisclosure > .row > h2 { display: none; }
-.sg-live-overview { border: 1px solid var(--border); background: var(--surface-1, var(--bg-2)); padding: 1rem; margin-bottom: 1rem; }
-.sg-live-current { color: var(--text); font-weight: 600; overflow-wrap: anywhere; }
-.sg-live-participants { display: grid; gap: .5rem; padding-left: 1.75rem; }
-.sg-live-participant { border: 1px solid var(--border); padding: .75rem; min-width: 0; overflow-wrap: anywhere; }
-.sg-live-participant[aria-current="step"] { border-color: var(--accent); border-left: 4px solid var(--accent); }
-.sg-live-participant-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; }
-.sg-live-turn-badge { color: var(--accent); font-weight: 600; }
-.sg-live-stat-line, .sg-live-condition-line { margin: .35rem 0 0; }
-.sg-live-condition-line { color: var(--muted); }
-.sg-live-history { min-width: 0; }
 .sg-live-history > summary { cursor: pointer; font-weight: 600; padding: .75rem; }
 .sg-live-history > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
-body.admin-shell[data-workflow-view="live"] #nextBattle.sg-primary-action { font-weight: 700; }
-@media (max-width: 1000px) {
-    body.admin-shell[data-workflow-view="live"] #liveEncounterWorkspace { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 480px) {
+    #encounterToolsModal > .sg-tools-dialog { padding: 0 .5rem .5rem; }
 }

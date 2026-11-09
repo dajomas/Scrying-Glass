@@ -2,6 +2,7 @@
     'use strict';
     const $=id=>document.getElementById(id);
     let state=null,summary=null,busy=false,polling=null;
+    window.scryingEncounterToolsBusy=()=>busy;
     const editable=['featureTempHp','featureLifeState','deathSuccesses','deathFailures'];
     const notice=text=>{$('featureNotice').textContent=text;};
     function connectionText(summary,state) {

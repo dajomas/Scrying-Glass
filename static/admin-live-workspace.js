@@ -1,100 +1,96 @@
-/* SG-TODO-009.6: presentation only; native sections and controllers retain ownership. */
+/* SG-TODO-009.6 revision: full-width main page and on-demand Encounter tools. */
 (() => {
     'use strict';
     function install() {
         if (document.body.dataset.liveWorkspace === 'ready') return;
         const byId = id => document.getElementById(id);
-        const main = byId('adminScroll');
-        const battle = byId('battleInfo')?.closest('section');
-        const tools = byId('encounterFeatures');
-        const characters = byId('characterDisplayPane'), monsters = byId('monsterDisplayPane');
-        const lair = byId('lairTools'), log = byId('activityLog')?.closest('section');
-        if (![main, battle, tools, characters, monsters, lair, log].every(Boolean)) return;
-        const make = (tag, className, text) => {
-            const n = document.createElement(tag);
-            if (className) n.className = className;
-            if (text !== undefined) n.textContent = text;
-            return n;
+        const main = byId('adminScroll'), pane = byId('encounterFeatures');
+        const opener = byId('toggleEncounterTools');
+        const log = byId('activityLog')?.closest('section');
+        if (!main || !pane || !opener || !log) return;
+        const make = (tag, text) => {
+            const node = document.createElement(tag);
+            if (text !== undefined) node.textContent = text;
+            return node;
         };
-        const workspace = make('div', 'sg-live-workspace');
-        workspace.id = 'liveEncounterWorkspace'; workspace.hidden = true;
-        const primary = make('div', 'sg-live-primary');
-        const side = make('aside', 'sg-live-tools');
-        side.setAttribute('aria-label', 'Encounter and lair tools');
-        const overview = make('section', 'sg-live-overview');
-        overview.setAttribute('aria-labelledby', 'liveTurnTitle');
-        const title = make('h2', '', 'Participants in turn order'); title.id = 'liveTurnTitle';
-        const current = make('p', 'sg-live-current'); current.id = 'liveCurrentTurn';
-        current.setAttribute('role', 'status'); current.setAttribute('aria-live', 'polite');
-        const list = make('ol', 'sg-live-participants'); list.id = 'liveTurnOrder';
-        overview.append(title, current, list); primary.append(overview);
-        workspace.append(primary, side); main.prepend(workspace);
-        const placements = [battle, characters, monsters, tools, lair].map(node => {
-            const anchor = document.createComment('live workspace home: ' + (node.id || 'battle'));
-            node.before(anchor); return {node, anchor};
-        });
-        const history = make('details', 'sg-live-history'); history.id = 'liveActivityDisclosure';
-        history.open = true; history.append(make('summary', '', 'Activity log'));
+        // No split grid, duplicate participant list or roster/battle reparenting.
+        const modal = make('div'); modal.id = 'encounterToolsModal';
+        modal.className = 'modal'; modal.hidden = true;
+        modal.setAttribute('role', 'dialog'); modal.setAttribute('aria-modal', 'true');
+        modal.setAttribute('aria-labelledby', 'encounterToolsTitle');
+        const content = make('div'); content.className = 'sg-tools-dialog'; content.tabIndex = -1;
+        const bar = make('div'); bar.className = 'sg-tools-dialog-bar';
+        const closeButton = make('button', 'Close encounter tools'); closeButton.type = 'button';
+        closeButton.id = 'closeEncounterTools';
+        const notice = make('p'); notice.id = 'encounterToolsDialogNotice';
+        notice.setAttribute('role', 'status'); notice.setAttribute('aria-live', 'polite');
+        bar.append(closeButton); content.append(bar, notice, pane); modal.append(content);
+        document.body.append(modal);
+        pane.hidden = false; pane.dataset.etVisible = 'true';
+        opener.textContent = 'Encounter tools';
+        opener.setAttribute('aria-controls', modal.id);
+        opener.setAttribute('aria-haspopup', 'dialog'); opener.setAttribute('aria-expanded', 'false');
+        const history = make('details'); history.id = 'liveActivityDisclosure';
+        history.className = 'sg-live-history'; history.open = true;
+        history.append(make('summary', 'Activity log'));
         while (log.firstChild) history.append(log.firstChild);
         log.append(history);
-        let mounted = false;
-        function arrange() {
-            const live = document.body.dataset.workflowView === 'live';
-            if (live === mounted) return;
-            if (live) {
-                primary.prepend(battle);
-                // Rosters share the log's full-width parent, never the tools grid.
-                workspace.after(characters, monsters);
-                side.append(tools, lair);
-            } else {
-                for (const {node, anchor} of placements) anchor.after(node);
+        const backgrounds = new Map();
+        let returnFocus = opener;
+        const nested = () => [...document.querySelectorAll('.modal:not([hidden]), dialog[open]')]
+            .some(n => n !== modal && n.getClientRects().length > 0);
+        const focusables = () => [...content.querySelectorAll(
+            'button,input,select,textarea,a[href],[tabindex]')].filter(n =>
+                !n.disabled && n.tabIndex >= 0 && n.getClientRects().length > 0 && !n.closest('[inert]'));
+        const focusFirst = () => (focusables()[0] || content).focus({preventScroll: true});
+        function close() {
+            if (modal.hidden) return true;
+            if (nested()) return false;
+            if (window.scryingEncounterToolsBusy?.()) {
+                notice.textContent = 'An encounter-tools operation is still running. Wait before closing.';
+                return false;
             }
-            mounted = live; workspace.hidden = !live;
+            modal.hidden = true; opener.setAttribute('aria-expanded', 'false');
+            delete document.body.dataset.encounterToolsOpen;
+            for (const [node, inert] of backgrounds) node.inert = inert;
+            backgrounds.clear(); notice.textContent = '';
+            const target = returnFocus?.isConnected && returnFocus.getClientRects().length
+                ? returnFocus : document.querySelector('#adminWorkflowTabs [aria-selected="true"]');
+            target?.focus({preventScroll: true});
+            return true;
         }
-        const number = value => typeof value === 'number' && Number.isFinite(value) ? String(value) : '—';
-        function render(state) {
-            const combatants = [...(state?.characters || []), ...(state?.monsters || [])];
-            const lairs = state?.lairs || [];
-            const items = new Map([...combatants, ...lairs].map(item => [item.id, item]));
-            const order = Array.isArray(state?.battle_order) ? state.battle_order : [];
-            const ordered = order.map(id => items.get(id)).filter(Boolean);
-            const names = ordered.filter(x => x.active && x.in_turn).map(x => x.name);
-            const text = !order.length ? 'No battle order set. Use Battle preparation and Start battle.'
-                : 'Round ' + number(state.battle_round) + ' · ' + (names.length ? 'Current turn: ' + names.join(', ') : 'No current participant');
-            if (current.textContent !== text) current.textContent = text;
-            const nodes = ordered.map(item => {
-                const row = make('li', 'sg-live-participant'); row.dataset.combatantId = String(item.id);
-                if (item.active && item.in_turn) row.setAttribute('aria-current', 'step');
-                const heading = make('div', 'sg-live-participant-heading');
-                heading.append(make('strong', '', item.name || 'Unnamed participant'));
-                if (item.active && item.in_turn) heading.append(make('span', 'sg-live-turn-badge', 'Current turn'));
-                const isLair = lairs.some(x => x.id === item.id);
-                const stats = isLair ? 'Lair · Initiative 20 · No HP or AC'
-                    : 'HP ' + number(item.hp) + '/' + number(item.max_hp) +
-                      (typeof item.temp_hp === 'number' && item.temp_hp ? ' · Temp HP ' + number(item.temp_hp) : '') +
-                      ' · Initiative ' + number(item.initiative);
-                row.append(heading, make('p', 'sg-live-stat-line', stats));
-                if (!isLair) {
-                    const conditions = (Array.isArray(item.effects) ? item.effects : [])
-                        .filter(e => !e.mechanical && typeof e.name === 'string').map(e => e.name);
-                    if (item.concentrating) conditions.unshift('Concentrating');
-                    if (item.life_state) conditions.unshift(item.life_state);
-                    row.append(make('p', 'sg-live-condition-line', conditions.join(' · ') || 'No conditions recorded'));
+        function open() {
+            if (!modal.hidden) { focusFirst(); return; }
+            if (pane.dataset.workflowExcluded === 'true' || nested()) return;
+            returnFocus = document.activeElement;
+            for (const node of document.body.children) {
+                if (node === modal || node.matches('.modal,dialog,script,style,link')) continue;
+                backgrounds.set(node, node.inert); node.inert = true;
+            }
+            modal.hidden = false; document.body.dataset.encounterToolsOpen = 'true';
+            opener.setAttribute('aria-expanded', 'true'); notice.textContent = ''; focusFirst();
+        }
+        window.scryingOpenEncounterTools = open;
+        window.scryingCloseEncounterTools = close;
+        closeButton.addEventListener('click', close);
+        document.addEventListener('keydown', event => {
+            if (modal.hidden || nested()) return;
+            if (event.key === 'Escape') {
+                event.preventDefault(); event.stopImmediatePropagation(); close();
+            } else if (event.key === 'Tab') {
+                const nodes = focusables(), first = nodes[0], last = nodes[nodes.length - 1];
+                if (!first) { event.preventDefault(); content.focus(); }
+                else if (event.shiftKey && (document.activeElement === first || !content.contains(document.activeElement))) {
+                    event.preventDefault(); last.focus();
+                } else if (!event.shiftKey && (document.activeElement === last || !content.contains(document.activeElement))) {
+                    event.preventDefault(); first.focus();
                 }
-                return row;
-            });
-            list.replaceChildren(...nodes);
-        }
-        const previous = window.scryingLairsRender;
-        window.scryingLairsRender = function(state) {
-            const result = typeof previous === 'function' ? previous.apply(this, arguments) : undefined;
-            render(state); return result;
-        };
-        new MutationObserver(arrange).observe(document.body, {
-            attributes: true, attributeFilter: ['data-workflow-view'],
+            }
+        }, true);
+        document.addEventListener('focusin', event => {
+            if (!modal.hidden && !nested() && !content.contains(event.target)) focusFirst();
         });
-        render(typeof latest === 'undefined' ? null : latest);
-        arrange(); document.body.dataset.liveWorkspace = 'ready';
+        document.body.dataset.liveWorkspace = 'ready';
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', install, {once: true});
     else install();
