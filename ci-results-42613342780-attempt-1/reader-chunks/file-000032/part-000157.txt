@@ -1,0 +1,31 @@
+rowser and audit checks	2026-11-09T12:05:47.2044046Z Connections opened: 765; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:47.2044808Z PASS: failed PRAGMA initialization closes connection; suite closes all tracked connections
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:47.7076523Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:47.7077042Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:48.0099098Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:48.0099811Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:48.0515652Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:48.0516025Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:48.3375339Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:48.3800498Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:48.3800910Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:50.8496381Z {
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:50.8496734Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:50.8497179Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:50.8497769Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:50.8498586Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:50.8499296Z     "client card has a positive layout width at mobile viewport"
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:50.8499694Z   ],
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:50.8499911Z   "page_errors": [],
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:50.8500610Z   "transport": "mocked HTTP/WS, real Chromium rendering"
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:50.8500968Z }
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:50.9309279Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:50.9309804Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-09T12:05:51.1492820Z ##[endgroup]
+tests	Post Run actions/setup-node@v4	﻿2026-11-09T12:05:51.1580942Z Post job cleanup.
+tests	Post Run actions/setup-node@v4	2026-11-09T12:05:51.2566558Z (node:22471) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-node@v4	2026-11-09T12:05:51.2567260Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/setup-python@v5	﻿2026-11-09T12:05:51.2703915Z Post job cleanup.
+tests	Post Run actions/setup-python@v5	2026-11-09T12:05:51.3690181Z Cache hit occurred on the primary key setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e, not saving cache.
+tests	Post Run actions/setup-python@v5	2026-11-09T12:05:51.3692111Z (node:22479) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-python@v5	2026-11-09T12:05:51.3693059Z (Use `node --trace-deprecation ...` t
