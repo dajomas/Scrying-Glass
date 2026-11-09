@@ -132,6 +132,9 @@ class MonsterRefreshEndToEndTests(unittest.IsolatedAsyncioTestCase):
         await page.route('**/*', route)
         await page.goto('http://fixture.test/', wait_until='load')
         await page.wait_for_function("document.querySelectorAll('#monsters input[data-select-id]').length === 2")
+        await page.wait_for_function("document.body.dataset.workflowNavigation === 'ready'")
+        await page.locator('#adminWorkflow-preparation').click()
+        self.assertEqual(await page.locator('body').get_attribute('data-workflow-view'), 'preparation')
         toggle = page.locator('#toggleMonsterDisplayPane')
         if await toggle.get_attribute('aria-expanded') == 'false':
             await toggle.click()

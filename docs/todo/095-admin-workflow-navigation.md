@@ -4,30 +4,30 @@
 
 ## SG-TODO-009.5
 
-- Status: in progress; implementation delivered in 1beff730580b17551ae5c95115ad31badf39b3f1, first covering CI failed. Corrective stage 1 of 2 prepared; corrected validation and user acceptance pending. This entry supersedes the proposed status for 009.5 in the historical [090 redesign plan](090-admin-usability-redesign.md).
-- Agreement: 2026-11-09, compact Campaign / Battle preparation / Live encounter views retaining original pane controls, DOM, drafts and native visibility state. User requested implementation and subsequently approved the two-commit correction split.
-- Baseline: features/perplexity after SG-TODO-018 merge b0630effbe99db8a40b27bb00cca007b198d4055. 018 is no longer an outstanding prerequisite on this branch. No new owner/deadline assigned.
-- Evidence: failed Branch tests 42586178034 attempt 1, exact implementation SHA above; publication c01beaf5dcfdb931ab1c2a271e717f02cc7d4b6b. See [350 handover](../handover/350-admin-workflow-navigation.md#first-covering-ci-and-approved-correction-split---2026-11-09) for reviewed results, diagnosis and limitations. No corrective commit SHA or successful corrective CI result is invented.
+- Status: in progress; implementation 1beff730580b17551ae5c95115ad31badf39b3f1 delivered with failed first CI. Corrective stage 1 delivered as c490943d5921b8abbec65fbeba0c012df39d2619; stage 2 prepared for exact-content approval. Corrected covering validation and user acceptance remain pending. This supersedes 090's earlier proposed wording for 009.5.
+- Agreement: 2026-11-09, compact Campaign / Battle preparation / Live encounter views retaining original pane controls, DOM, drafts and native visibility state; user approved implementation and the two-commit correction split. No owner/deadline assigned.
+- Baseline: features/perplexity after SG-TODO-018 merge b0630effbe99db8a40b27bb00cca007b198d4055.
+- Evidence: failed run 42586178034 attempt 1 covers the implementation SHA, publication c01beaf5dcfdb931ab1c2a271e717f02cc7d4b6b. See [350 handover](../handover/350-admin-workflow-navigation.md#first-covering-ci-and-approved-correction-split---2026-11-09). No successful correction CI is claimed.
 
 ## Visibility mapping
 
-Campaign contains campaign selection/access/backups, Add character and Characters. Preparation contains setups/background/imports, Add monsters, both rosters for initiative/participation and gated lair configuration. Live contains existing rosters, tools, gated lair and log. Battle/order/Danger zone and fixed header actions/context/feedback remain shared. Rosters are not cloned or filtered. Focused encounter layout is 009.6, not this increment.
+Campaign contains selection/access/backups, Add character and Characters. Preparation contains setups/background/imports, Add monsters, both rosters and gated lair configuration. Live contains existing rosters, tools, gated lair and log. Battle/order/Danger zone and fixed header context/actions/feedback remain shared. No cloned/filtered rosters or 009.6 focused layout.
 
-Tabs filter rendered destinations independently of pane.hidden and aria-expanded. Existing per-page collapse, parent-child preferences, automatic battle collapse/restoration, independent Has lair gate and tools restoration remain. Campaign is the initial tab; selecting another tab is per-page only. No automatic battle navigation, persistent tab setting, form submit or encounter mutation is introduced. Current-view pane controls remain discoverable in View panels.
+Tabs filter rendering independently of hidden/aria-expanded. Existing initial collapse, parent-child preferences, battle collapse/restoration, Has lair and tools restoration remain. Campaign is the initial per-page tab; no persistent tab setting, automatic navigation, form submit or encounter mutation is added.
 
 ## Approved corrective delivery
 
-1. Stage 1: shared roster fixtures select preparation through the UI after asserting Campaign startup; header fixtures explicitly select Campaign; navigation fixtures retain startup without synthetic selection. Tools restoration uses inactive baselines, both saved preferences, awaited real refresh and desktop/narrow view changes. Original roster/header assertions remain. Production behavior is unchanged. Four changed method/signature snippets passed Python AST parsing; complete corrected modules/browser/full suite and covering CI remain unexecuted.
-2. Stage 2: foundation/form assertions traverse their actual workflow destinations, retaining drafts, selected files, notices, focus, validation, save/rejection and geometry checks. The secured Refresh fixture selects preparation before its existing controls and retains all review/Apply/security/persistence assertions. Not included in stage 1.
+1. Stage 1 delivered: shared roster entry selects preparation through the actual UI after asserting Campaign startup; header explicitly selects Campaign; navigation retains untouched startup. Tools restoration establishes inactive baselines/both saved preferences and awaits refresh. Original roster/header assertions and production behavior remain. Four changed snippets passed AST parsing; full corrected execution/CI remains pending.
+2. Stage 2 prepared: foundation/forms traverse actual destinations; retain blank/visible/expired notice, ARIA, focus/modal, CSS-state, required-label, geometry/screenshot, character/background/file draft, disclosure, idempotence, validation and save/rejection assertions. Secured Refresh adds preparation entry before its normal toggle; review/Apply/security/storage/HP/order assertions remain unchanged. Five helper/traversal snippets passed AST parsing; complete modules/browser/full suite were not executed locally.
 
-Each stage has its own exact-content write approval, normal CI and proportionate documentation. Stage 1 is intentionally partial and may still have failing full-suite results until stage 2. Do not force hidden controls, disable navigation, skip tests or remove behavioral assertions to obtain green CI.
+Each stage requires its own exact write approval and normal CI with proportionate documentation. This stage is not task completion. No forced clicks, disabled navigation, skipped tests or discarded behavioral checks. [Prior task detail](https://github.com/dajomas/Scrying-Glass/blob/c490943d5921b8abbec65fbeba0c012df39d2619/docs/todo/095-admin-workflow-navigation.md) retains the stage-1 plan/history.
 
-## Acceptance and remaining work
+## Remaining acceptance
 
-- Deliver the approved stages and review covering CI. The original failed run remains failed, not closure evidence.
-- Preserve selection/bulk/Edit and SG-TODO-018 raw/bonus/total/source-refresh semantics.
-- Check initial/delayed state, campaign/setup absent/present, parent/child manual choices, start/end/reset, lair enabled/disabled and tools restoration without tab stealing.
-- Check drafts/file values, modal and initiative-focus continuation, no navigation requests/mutations, accessible active/focus state and keyboard/viewport behavior.
-- Obtain user desktop/narrow visual/workflow acceptance before closure. Snippet parsing and intercepted fixtures do not establish authenticated live-server or exhaustive accessibility validation.
+- Deliver stage 2 and review covering CI for both stages. Original failed results remain failed; classify any remaining failures against the tested revision.
+- The supplied successful 42526295799 attempt 1 covers f5808a2 on features/perplexity-018 only, not either 009.5 correction.
+- Preserve selection/bulk/Edit and 018 raw/bonus/total/source-refresh semantics; check initial/delayed/missing context, parent/child choices, start/end/reset, lair gating and tools restoration without tab stealing.
+- Verify file/draft/modal/initiative continuation, keyboard/focus/viewport operation and absence of navigation mutations; review screenshots and obtain desktop/narrow user acceptance before closure.
+- Snippet parsing/intercepted fixtures do not establish authenticated live-server, live-provider, process-restart or exhaustive accessibility validation.
 
-009.6 and 009.7 remain proposed. This entry does not close overall SG-TODO-009 or reopen completed phases. Previous redesign history remains in 090 and linked handovers.
+009.6/009.7 remain proposed; overall 009 stays in progress. Existing 090 and indexed handovers retain previous redesign history.

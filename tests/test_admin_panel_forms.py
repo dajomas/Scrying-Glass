@@ -33,25 +33,38 @@ class PanelFormsBrowserTests(unittest.TestCase):
     def tearDownClass(cls):
         cls.rows.tearDownClass.__func__(cls)
 
+    def choose(self, page, workflow):
+        page.locator('#adminWorkflow-' + workflow).click()
+        self.assertEqual(page.locator('body').get_attribute('data-workflow-view'), workflow)
+
     def open_page(self, width=1440):
-        page, errors, mutations = self.rows.open_page(self, width)
+        page, errors, mutations = self.rows.open_page(self, width, workflow='campaign')
         page.wait_for_function("document.body.dataset.panelForms === 'ready'")
-        for id in ('toggleCampaignPane', 'toggleCharacterPane', 'toggleBattleSetupPane', 'toggleMonsterPane'):
-            button = page.locator('#' + id)
-            if button.get_attribute('aria-expanded') == 'false':
-                button.click()
-        for id in ('campaignInputPane', 'characterInputPane', 'battleSetupInputPane', 'monsterInputPane'):
-            self.assertTrue(page.locator('#' + id).is_visible())
+        for workflow, controls, panes in (
+            ('campaign', ('toggleCampaignPane', 'toggleCharacterPane'), ('campaignInputPane', 'characterInputPane')),
+            ('preparation', ('toggleBattleSetupPane', 'toggleMonsterPane'), ('battleSetupInputPane', 'monsterInputPane')),
+        ):
+            self.choose(page, workflow)
+            for ident in controls:
+                button = page.locator('#' + ident)
+                if button.get_attribute('aria-expanded') == 'false':
+                    button.click()
+            for ident in panes:
+                self.assertTrue(page.locator('#' + ident).is_visible())
         return page, errors, mutations
 
     def test_groups_required_labels_and_idempotence(self):
         page, errors, mutations = self.open_page()
+        self.choose(page, 'campaign')
         self.assertEqual(page.locator('#characterInputPane h2').inner_text(), 'Add character')
-        self.assertEqual(page.locator('#monsterInputPane h2').inner_text(), 'Add monsters')
         self.assertEqual(page.locator('#characterForm legend').all_text_contents(), ['Character details', 'Starting statistics'])
+        self.choose(page, 'preparation')
+        self.assertEqual(page.locator('#monsterInputPane h2').inner_text(), 'Add monsters')
         self.assertEqual(page.locator('#monsterForm legend').all_text_contents(), ['Monster identity', 'Combat statistics', 'Appearance'])
-        for id in ('characterName', 'characterHp', 'monsterName', 'monsterSpecies', 'monsterAc', 'monsterHpRangeStart', 'monsterFile'):
-            self.assertTrue(page.locator('#' + id).evaluate("n => n.required && n.labels.length > 0 && n.labels[0].querySelector('.field-label').getBoundingClientRect().bottom <= n.getBoundingClientRect().top + 1"))
+        for ident in ('characterName', 'characterHp', 'monsterName', 'monsterSpecies', 'monsterAc', 'monsterHpRangeStart', 'monsterFile'):
+            self.choose(page, 'campaign' if ident.startswith('character') else 'preparation')
+            self.assertTrue(page.locator('#' + ident).is_visible())
+            self.assertTrue(page.locator('#' + ident).evaluate("n => n.required && n.labels.length > 0 && n.labels[0].querySelector('.field-label').getBoundingClientRect().bottom <= n.getBoundingClientRect().top + 1"))
         page.evaluate("window.sgSaved = [...document.querySelectorAll('.sg-input-panel input, .sg-input-panel button, .sg-input-panel form')].map(n => ({n, form:n.form, submit:n.onsubmit, click:n.onclick}))")
         page.add_script_tag(content=(ROOT / 'static/admin-panel-forms.js').read_text(encoding='utf-8'))
         self.assertTrue(page.evaluate('sgSaved.every(x => x.n.isConnected && x.n.form === x.form && x.n.onsubmit === x.submit && x.n.onclick === x.click)'))
@@ -64,11 +77,13 @@ class PanelFormsBrowserTests(unittest.TestCase):
         for width in (1440, 375):
             with self.subTest(width=width):
                 page, errors, mutations = self.open_page(width)
+                self.choose(page, 'campaign')
                 page.locator('#characterName').fill('Unsaved character')
+                self.choose(page, 'preparation')
                 page.locator('#backgroundValue').fill('Keep background draft')
                 page.locator('#monsterFile').set_input_files({'name':'draft.monster', 'mimeType':'application/json', 'buffer':b'{}'})
-                for id in ('sgBackgroundOptions', 'sgMonsterFileImport'):
-                    details = page.locator('#' + id)
+                for ident in ('sgBackgroundOptions', 'sgMonsterFileImport'):
+                    details = page.locator('#' + ident)
                     summary = details.locator(':scope > summary')
                     self.assertTrue(details.evaluate('n => n.open'))
                     summary.focus()
@@ -78,18 +93,27 @@ class PanelFormsBrowserTests(unittest.TestCase):
                     self.assertTrue(details.evaluate('n => n.open'))
                     self.assertIsNone(summary.get_attribute('aria-expanded'))
                 self.assertEqual(page.locator('#backgroundValue').input_value(), 'Keep background draft')
-                page.evaluate('load(true)')
-                page.wait_for_function("document.querySelectorAll('#monsters td button').length === 11")
+                self.choose(page, 'campaign')
                 self.assertEqual(page.locator('#characterName').input_value(), 'Unsaved character')
+                self.choose(page, 'preparation')
+                self.assertEqual(page.locator('#backgroundValue').input_value(), 'Keep background draft')
                 self.assertEqual(page.locator('#monsterFile').evaluate('n => n.files[0].name'), 'draft.monster')
-                for id in ('openCharacterCsvImport', 'openImport', 'openMonsterCsvImport', 'saveSetup', 'setupSelect'):
-                    self.assertTrue(page.locator('#' + id).is_visible())
+                page.evaluate('() => load(true)')
+                page.wait_for_function("document.querySelectorAll('#monsters td button').length === 11")
+                self.choose(page, 'campaign')
+                self.assertEqual(page.locator('#characterName').input_value(), 'Unsaved character')
+                self.assertTrue(page.locator('#openCharacterCsvImport').is_visible())
+                self.choose(page, 'preparation')
+                self.assertEqual(page.locator('#monsterFile').evaluate('n => n.files[0].name'), 'draft.monster')
+                for ident in ('openImport', 'openMonsterCsvImport', 'saveSetup', 'setupSelect'):
+                    self.assertTrue(page.locator('#' + ident).is_visible())
                 self.assertEqual(errors, [])
                 self.assertEqual(mutations, [])
                 page.close()
 
     def test_required_validation_and_character_submit_failure_then_success(self):
         page, errors, mutations = self.open_page()
+        self.choose(page, 'campaign')
         page.locator('#characterForm .sg-form-actions button').click()
         self.assertFalse(page.locator('#characterForm').evaluate('n => n.checkValidity()'))
         self.assertEqual(mutations, [])
@@ -112,8 +136,8 @@ class PanelFormsBrowserTests(unittest.TestCase):
 
     def test_invalid_monster_hp_keeps_draft_without_mutation(self):
         page, errors, mutations = self.open_page()
-        for id, value in (('monsterName','Draft'), ('monsterSpecies','goblin'), ('monsterAc','12'), ('monsterHpRangeStart','not dice')):
-            page.locator('#' + id).fill(value)
+        for ident, value in (('monsterName','Draft'), ('monsterSpecies','goblin'), ('monsterAc','12'), ('monsterHpRangeStart','not dice')):
+            page.locator('#' + ident).fill(value)
         page.locator('#monsterForm .sg-form-actions button').click()
         page.wait_for_function("document.querySelector('#monsterAddNotification').textContent.trim().length > 0")
         self.assertEqual(page.locator('#monsterHpRangeStart').input_value(), 'not dice')
@@ -127,10 +151,15 @@ class PanelFormsBrowserTests(unittest.TestCase):
         for width in (1440, 768, 375):
             with self.subTest(width=width):
                 page, errors, mutations = self.open_page(width)
-                for group in page.locator('.sg-input-panel .sg-field-group').all():
-                    self.assertTrue(group.evaluate("n => { const b=n.getBoundingClientRect(), p=n.closest('.pane').getBoundingClientRect(); return b.left >= p.left && b.right <= p.right + 1; }"))
-                if width != 768:
-                    for kind in ('character', 'monster'):
+                for workflow, pane_ids in (('campaign', ('campaignInputPane', 'characterInputPane')), ('preparation', ('battleSetupInputPane', 'monsterInputPane'))):
+                    self.choose(page, workflow)
+                    for ident in pane_ids:
+                        self.assertTrue(page.locator('#' + ident).is_visible())
+                        for group in page.locator('#' + ident + ' .sg-field-group').all():
+                            self.assertTrue(group.is_visible())
+                            self.assertTrue(group.evaluate("n => { const b=n.getBoundingClientRect(), p=n.closest('.pane').getBoundingClientRect(); return b.left >= p.left && b.right <= p.right + 1; }"))
+                    if width != 768:
+                        kind = 'character' if workflow == 'campaign' else 'monster'
                         page.locator('#' + kind + 'InputPane').scroll_into_view_if_needed()
                         page.screenshot(path=str(directory / f'0093-{width}-{kind}.png'))
                 self.assertEqual(errors, [])

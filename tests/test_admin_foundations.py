@@ -54,7 +54,18 @@ class FoundationBrowserTests(unittest.TestCase):
         cls.rows.tearDownClass.__func__(cls)
 
     def open_page(self, width):
-        return self.rows.open_page(self, width)
+        return self.rows.open_page(self, width, workflow='campaign')
+
+    def open_inputs(self, page, workflow):
+        page.locator('#adminWorkflow-' + workflow).click()
+        self.assertEqual(page.locator('body').get_attribute('data-workflow-view'), workflow)
+        ids = ('Campaign', 'Character') if workflow == 'campaign' else ('BattleSetup', 'Monster')
+        for name in ids:
+            button = page.locator('#toggle' + name + 'Pane')
+            if button.get_attribute('aria-expanded') == 'false':
+                button.click()
+            pane = button.get_attribute('aria-controls')
+            self.assertTrue(page.locator('#' + pane).is_visible())
 
     def set_foundations(self, page, enabled):
         page.evaluate("""enabled => {
@@ -99,11 +110,9 @@ class FoundationBrowserTests(unittest.TestCase):
                 self.assertEqual(self.state(page), initial)
                 self.set_foundations(page, True)
                 self.assertEqual(self.state(page), initial)
-                for toggle in ('#toggleCampaignPane', '#toggleCharacterPane',
-                               '#toggleBattleSetupPane', '#toggleMonsterPane'):
-                    button = page.locator(toggle)
-                    if button.is_visible() and button.get_attribute('aria-expanded') == 'false':
-                        button.click()
+                self.open_inputs(page, 'campaign')
+                self.open_inputs(page, 'preparation')
+                self.open_inputs(page, 'campaign')
                 page.locator('#characterName').fill('Unsaved visual-review character')
                 before = self.state(page)
                 self.set_foundations(page, False)
@@ -118,35 +127,32 @@ class FoundationBrowserTests(unittest.TestCase):
                 page.close()
 
     def test_blank_notices_collapse_and_real_messages_reappear(self):
-        ids = ['campaignNotification', 'characterAddNotification',
-               'battleSetupNotification', 'monsterAddNotification']
+        groups = (
+            ('campaign', ['campaignNotification', 'characterAddNotification'], ['campaign', 'characters']),
+            ('preparation', ['battleSetupNotification', 'monsterAddNotification'], ['battleSetup', 'monsters']),
+        )
         for width in (1440, 375):
             with self.subTest(width=width):
                 page, errors, mutations = self.open_page(width)
-                for toggle in ('#toggleCampaignPane', '#toggleCharacterPane',
-                               '#toggleBattleSetupPane', '#toggleMonsterPane'):
-                    button = page.locator(toggle)
-                    if button.is_visible() and button.get_attribute('aria-expanded') == 'false':
-                        button.click()
-                page.wait_for_function("ids => ids.every(id => document.getElementById(id).hidden)", arg=ids)
-                for id in ids:
-                    notice = page.locator('#' + id)
-                    self.assertEqual(notice.get_attribute('role'), 'status')
-                    self.assertEqual(notice.get_attribute('aria-live'), 'polite')
-                    self.assertEqual(notice.evaluate('n => n.getBoundingClientRect().height'), 0)
-                page.evaluate("""() => {
-                    for (const kind of ['campaign', 'characters', 'battleSetup', 'monsters']) {
-                        paneNotification(kind, '  Visual review: message remains readable.  ');
-                    }
-                }""")
-                page.wait_for_function("ids => ids.every(id => !document.getElementById(id).hidden)", arg=ids)
-                for id in ids:
-                    notice = page.locator('#' + id)
-                    self.assertTrue(notice.is_visible())
-                    self.assertEqual(notice.text_content(), '  Visual review: message remains readable.  ')
-                page.wait_for_function("ids => ids.every(id => document.getElementById(id).hidden)", arg=ids)
+                # Exercise each notice in its rendered destination, not a hidden view.
+                for workflow, ids, kinds in groups:
+                    self.open_inputs(page, workflow)
+                    page.wait_for_function("ids => ids.every(id => document.getElementById(id).hidden)", arg=ids)
+                    for ident in ids:
+                        notice = page.locator('#' + ident)
+                        self.assertEqual(notice.get_attribute('role'), 'status')
+                        self.assertEqual(notice.get_attribute('aria-live'), 'polite')
+                        self.assertEqual(notice.evaluate('n => n.getBoundingClientRect().height'), 0)
+                    page.evaluate("kinds => kinds.forEach(kind => paneNotification(kind, '  Visual review: message remains readable.  '))", kinds)
+                    page.wait_for_function("ids => ids.every(id => !document.getElementById(id).hidden)", arg=ids)
+                    for ident in ids:
+                        notice = page.locator('#' + ident)
+                        self.assertTrue(notice.is_visible())
+                        self.assertEqual(notice.text_content(), '  Visual review: message remains readable.  ')
+                    page.wait_for_function("ids => ids.every(id => document.getElementById(id).hidden)", arg=ids)
                 page.evaluate("setMonsterSpeciesLookupStatus('Looking up a monster...')")
                 page.wait_for_function("!document.querySelector('#monsterAddNotification').hidden")
+                self.assertTrue(page.locator('#monsterAddNotification').is_visible())
                 page.evaluate("document.querySelector('#monsterAddNotification').firstChild.data = ' '")
                 page.wait_for_function("document.querySelector('#monsterAddNotification').hidden")
                 page.add_script_tag(content=(ROOT / 'static/admin-notification-layout.js').read_text(encoding='utf-8'))
@@ -158,13 +164,16 @@ class FoundationBrowserTests(unittest.TestCase):
         for width in (1440, 375):
             with self.subTest(width=width):
                 page, errors, mutations = self.open_page(width)
+                self.open_inputs(page, 'campaign')
                 panel = page.locator('#campaignInputPane')
                 values = panel.evaluate("""n => {
                     const s = getComputedStyle(n);
                     return [s.backgroundColor, s.borderLeftColor, s.boxShadow, s.borderRadius];
                 }""")
                 self.assertEqual(values, ['rgb(26, 32, 44)', 'rgb(132, 197, 192)', 'none', '8px'])
+                self.open_inputs(page, 'preparation')
                 button = page.locator('#monsters [data-edit]')
+                self.assertTrue(button.is_visible())
                 button.focus()
                 page.keyboard.press('Tab')
                 page.keyboard.press('Shift+Tab')
