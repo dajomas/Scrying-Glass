@@ -4,31 +4,31 @@
 
 ## SG-TODO-009.5
 
-- Status: in progress; implementation 1beff730580b17551ae5c95115ad31badf39b3f1 and corrective stages c490943d5921b8abbec65fbeba0c012df39d2619 / ef07efbc9373fb62fecaeab727e4996acdd58660 are delivered. Covering unittest/audit suites pass, but run 42590952958 attempt 1 remains failed in the standalone smoke. Smoke follow-up prepared; corrected complete CI and user acceptance pending. This supersedes 090's earlier proposed wording for 009.5.
-- Agreement: 2026-11-09, compact Campaign / Battle preparation / Live encounter views retaining original pane controls, DOM, drafts and native visibility state; user approved implementation, the two-commit correction split and subsequently requested the standalone smoke fix. No owner/deadline assigned.
+- Status: in progress; navigation and all test corrections delivered with successful covering CI on 7df8cbe67b62b4df772dd192f2ac38d19c4cfad8. Subsequent user-requested Add Monsters form refinement prepared; its delivery/validation and user acceptance remain pending. This supersedes 090's earlier proposed wording for 009.5.
+- Agreement: 2026-11-09, compact Campaign / Battle preparation / Live encounter views retaining original controls, DOM, drafts and native visibility. User approved implementation/corrections and subsequently requested the form changes below. No owner/deadline assigned.
 - Baseline: features/perplexity after SG-TODO-018 merge b0630effbe99db8a40b27bb00cca007b198d4055.
-- Evidence: original failed run 42586178034 attempt 1 covers implementation 1beff730, publication c01beaf5dcfdb931ab1c2a271e717f02cc7d4b6b. Run 42590952958 attempt 1 covers ef07efbc, publication 86a515cd5bb2d94abce7aa7c2715cdc2018a7279: 1,416 main tests OK and repeated 1,416-test audit OK, 764 connections/zero unclosed; standalone smoke still fails. See [350 handover](../handover/350-admin-workflow-navigation.md#covering-stage-2-ci-and-standalone-smoke-follow-up---2026-11-09). No overall successful correction CI is claimed.
+- Evidence: successful run 42594146455 attempt 1 covers exact 7df8cbe; publication 07b12ed92b2d1c292381685611a41a7e9c1ded90. Main/repeated suites 1,416 tests OK, audit 764/0 connections, 43 pytest passes, configured steps and full smoke successful. This does not cover the new form refinement. See [350 handover](../handover/350-admin-workflow-navigation.md).
 
-## Visibility mapping
+## Scope and retained history
 
-Campaign contains selection/access/backups, Add character and Characters. Preparation contains setups/background/imports, Add monsters, both rosters and gated lair configuration. Live contains existing rosters, tools, gated lair and log. Battle/order/Danger zone and fixed header context/actions/feedback remain shared. No cloned/filtered rosters or 009.6 focused layout.
+Campaign contains selection/access/backups, Add character and Characters. Preparation contains setups/background/imports, Add monsters, both rosters and gated lair configuration. Live contains existing rosters, tools, gated lair and log. Battle/order/Danger zone and fixed header context/actions/feedback remain shared. Native initial/parent-child/battle collapse, Has lair and tools restoration remain; no automatic tab switching, persistent tab preference or navigation mutation. No cloned/filtered rosters or 009.6 focused workspace.
 
-Tabs filter rendering independently of hidden/aria-expanded. Existing initial collapse, parent-child preferences, battle collapse/restoration, Has lair and tools restoration remain. Campaign is the initial per-page tab; no persistent tab setting, automatic navigation, form submit or encounter mutation is added.
+Implementation 1beff730, user-approved corrective stages c490943 / ef07efbc and smoke follow-up 7df8cbe are delivered. Failed runs 42586178034 and 42590952958 remain failed historical evidence; the later successful covering run resolves their CI gate, not user acceptance. [Immutable prior task record](https://github.com/dajomas/Scrying-Glass/blob/7df8cbe67b62b4df772dd192f2ac38d19c4cfad8/docs/todo/095-admin-workflow-navigation.md) and linked handovers retain full diagnosis/history.
 
-## Corrective delivery and smoke follow-up
+## Requested form refinement - 2026-11-09
 
-1. Stage 1 delivered: shared roster entry selects preparation through the UI after asserting Campaign startup; header selects Campaign; navigation retains untouched startup. Tools restoration establishes inactive baselines/both saved preferences and awaits refresh. Original roster/header assertions and production behavior remain.
-2. Stage 2 delivered: foundation/forms traverse destinations and retain notices/ARIA, focus/modal, CSS-state, required-label, geometry/screenshot, drafts/files, disclosure, idempotence, validation and save/rejection checks. Secured Refresh adds preparation entry; existing review/Apply/security/storage/HP/order assertions remain. Covering main unittest and repeated audit execution pass; this does not make the overall failed run successful.
-3. Standalone smoke fix prepared: wait for navigation readiness, assert Campaign startup, click preparation and assert it selected before the existing conditional monster-pane toggle/select-all. Assert pane visibility afterward. Five added lines, all original 12 assertions retained (15 total), users/client suffix unchanged. Complete corrected file AST/compile, assertion-retention and original blob identity checks passed; actual corrected browser execution remains pending.
+- Remove the complete initiative-bonus help paragraph and its input reference.
+- Put Initiative bonus between HP Range end and Quantity in raw markup and the rendered Combat statistics group; retain original input identity and signed optional/default semantics.
+- On species blur, copy trimmed nonempty species into a currently blank/whitespace-only Monster name. Preserve existing names and allow later editing; do not copy on typing alone or mutate/save an encounter.
+- Prepare static/native and assembled desktop/narrow regressions for absence/order/grouping, idempotence, blank/custom/repeated/whitespace blur behavior and no accidental mutation. Preserve original import/FormData/backend/source-offer contracts.
 
-Each external write requires exact approval and normal CI. No forced clicks, disabled navigation, skipped tests or discarded behavioral assertions. [Prior stage-1 task detail](https://github.com/dajomas/Scrying-Glass/blob/c490943d5921b8abbec65fbeba0c012df39d2619/docs/todo/095-admin-workflow-navigation.md) retains earlier plan/history.
+The implementation/tests and proportionate handover updates are prepared for exact write approval and normal CI. Changed JavaScript block syntax and changed Python-test-snippet AST checks passed; complete modules/browser/full-suite execution remains pending. No new corrective CI or acceptance is claimed.
 
 ## Remaining acceptance
 
-- Deliver the requested standalone smoke correction and review complete covering CI, including the later users/client checks that were not reached in the failed standalone execution. Both historical failed runs remain failed.
-- The successful 42526295799 attempt 1 covers f5808a2 on features/perplexity-018 only, not 009.5.
-- Preserve selection/bulk/Edit and 018 raw/bonus/total/source-refresh semantics; check initial/delayed/missing context, parent/child choices, start/end/reset, lair gating and tools restoration without tab stealing.
-- Verify file/draft/modal/initiative continuation, keyboard/focus/viewport operation and absence of navigation mutations; review screenshots and obtain desktop/narrow user acceptance before closure.
-- Static parsing and intercepted fixtures do not establish authenticated live-server, live-provider, process-restart or exhaustive accessibility validation.
+- Deliver this refinement and review its covering CI; prior navigation CI is not coverage of application edits.
+- Confirm desktop/narrow field placement, keyboard flow and species-to-name behavior, alongside drafts/files, pane preferences, initial/delayed context, battle/lair/tools restoration and modal/initiative continuation.
+- Retain selection/bulk/Edit and 018 source/bonus/raw/total semantics. Review source/manual monster creation without regressions.
+- Obtain user visual/workflow acceptance before closing 009.5. Static/intercepted fixtures do not establish authenticated live-server, live-provider, restart or exhaustive accessibility validation.
 
-009.6/009.7 remain proposed; overall 009 stays in progress. Existing 090 and indexed handovers retain previous redesign history.
+009.6/009.7 remain proposed; overall 009 stays in progress. Original 090 and indexed handovers retain previous redesign history.

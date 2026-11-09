@@ -1,4 +1,4 @@
-/* SG-TODO-009.3: presentation only; move original nodes, never clone controls. */
+/* SG-TODO-009.3: group original controls; default an empty name on species blur. */
 (() => {
     'use strict';
     const byId = id => document.getElementById(id);
@@ -78,9 +78,18 @@
         group(byId('characterForm'), 'Character details', ['characterName', 'characterColor']);
         group(byId('characterForm'), 'Starting statistics', ['characterHp', 'characterInitiative']);
         group(byId('monsterForm'), 'Monster identity', ['monsterName', 'monsterSpecies']);
-        group(byId('monsterForm'), 'Combat statistics', ['monsterAc', 'monsterHpRangeStart', 'monsterHpRangeEnd', 'monsterQuantity']);
+        group(byId('monsterForm'), 'Combat statistics', ['monsterAc', 'monsterHpRangeStart', 'monsterHpRangeEnd', 'monsterInitiativeBonus', 'monsterQuantity']);
         group(byId('monsterForm'), 'Appearance', ['monsterColor', 'monsterImage']);
         group(byId('monsterUpload'), 'Import options', ['monsterFile', 'monsterFileQuantity', 'monsterFileColor', 'monsterFileImage']);
+        const monsterName = byId('monsterName');
+        const monsterSpecies = byId('monsterSpecies');
+        if (monsterName && monsterSpecies) {
+            monsterSpecies.addEventListener('blur', () => {
+                if (!monsterName.value.trim() && monsterSpecies.value.trim()) {
+                    monsterName.value = monsterSpecies.value.trim();
+                }
+            });
+        }
         const setup = byId('battleSetupInputPane');
         group(setup, 'Save a setup', ['setupName', 'newSetup', 'saveSetup']);
         group(setup, 'Saved setups', ['setupSelect', 'loadSetup', 'renameSetup', 'deleteSetup']);

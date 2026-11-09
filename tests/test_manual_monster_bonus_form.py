@@ -1,4 +1,4 @@
-"""Static and native-DOM checks for the manual creation bonus field."""
+"""Static, native-DOM and assembled Admin checks for monster entry."""
 import ast
 import hashlib
 from html.parser import HTMLParser
@@ -31,7 +31,7 @@ class FormInputs(HTMLParser):
 
 
 class StaticFormTests(unittest.TestCase):
-    def test_optional_signed_field_and_help(self):
+    def test_optional_signed_field_and_order_without_help(self):
         parser = FormInputs()
         parser.feed(TEMPLATE.read_text(encoding="utf-8"))
         fields = [(form, values) for form, values in parser.inputs if values.get("name") == "initiative_bonus"]
@@ -46,8 +46,11 @@ class StaticFormTests(unittest.TestCase):
         self.assertNotIn("min", field)
         self.assertNotIn("max", field)
         self.assertEqual(field.get("value", ""), "")
-        self.assertEqual(field["aria-describedby"], "monsterInitiativeBonusHelp")
-        self.assertIn(field["aria-describedby"], parser.ids)
+        self.assertNotIn("aria-describedby", field)
+        self.assertNotIn("monsterInitiativeBonusHelp", parser.ids)
+        ids = [values.get("id") for owner, values in parser.inputs if owner == "monsterForm"]
+        index = ids.index("monsterInitiativeBonus")
+        self.assertEqual(ids[index-1:index+2], ["monsterHpRangeEnd", "monsterInitiativeBonus", "monsterQuantity"])
 
     def test_bonus_parameter_is_optional_form_input(self):
         tree = ast.parse((ROOT / "python/scrying_glass_monster_selection.py").read_text(encoding="utf-8"))
@@ -84,3 +87,73 @@ class NativeFormDataTests(unittest.TestCase):
                 self.assertEqual(page.input_value("#monsterInitiativeBonus"), "")
             finally:
                 browser.close()
+
+
+class AssembledMonsterEntryTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        import test_monster_button_layout as rows
+        cls.rows = rows.MonsterButtonLayoutTests
+        cls.rows.setUpClass.__func__(cls)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.rows.tearDownClass.__func__(cls)
+
+    def open_page(self, width=1440):
+        page, errors, mutations = self.rows.open_page(self, width)
+        for ident in ('toggleBattleSetupPane', 'toggleMonsterPane'):
+            button = page.locator('#' + ident)
+            if button.get_attribute('aria-expanded') == 'false':
+                button.click()
+        self.assertTrue(page.locator('#monsterForm').is_visible())
+        return page, errors, mutations
+
+    def test_bonus_in_combat_statistics_without_help_and_idempotence(self):
+        for width in (1440, 375):
+            with self.subTest(width=width):
+                page, errors, mutations = self.open_page(width)
+                bonus = page.locator('#monsterInitiativeBonus')
+                self.assertTrue(bonus.is_visible())
+                expected = ['monsterAc', 'monsterHpRangeStart', 'monsterHpRangeEnd', 'monsterInitiativeBonus', 'monsterQuantity']
+                self.assertEqual(bonus.evaluate("n => [...n.closest('fieldset').querySelectorAll('input')].map(field => field.id)"), expected)
+                self.assertEqual(bonus.evaluate("n => n.closest('fieldset').querySelector('legend').textContent"), 'Combat statistics')
+                self.assertEqual(page.locator('#monsterInitiativeBonusHelp').count(), 0)
+                self.assertIsNone(bonus.get_attribute('aria-describedby'))
+                bonus.fill('-2')
+                page.add_script_tag(content=(ROOT / 'static/admin-panel-forms.js').read_text(encoding='utf-8'))
+                self.assertEqual(page.locator('#monsterInitiativeBonus').count(), 1)
+                self.assertEqual(bonus.input_value(), '-2')
+                self.assertEqual(bonus.evaluate("n => [...n.closest('fieldset').querySelectorAll('input')].map(field => field.id)"), expected)
+                self.assertEqual(errors, [])
+                self.assertEqual(mutations, [])
+                page.close()
+
+    def test_species_blur_defaults_only_blank_name(self):
+        for width in (1440, 375):
+            with self.subTest(width=width):
+                page, errors, mutations = self.open_page(width)
+                name = page.locator('#monsterName')
+                species = page.locator('#monsterSpecies')
+                species.fill('Goblin')
+                self.assertEqual(name.input_value(), '')
+                species.press('Tab')
+                self.assertEqual(name.input_value(), 'Goblin')
+                species.fill('Orc')
+                species.press('Tab')
+                self.assertEqual(name.input_value(), 'Goblin')
+                name.fill('Custom name')
+                species.fill('Dragon')
+                species.press('Tab')
+                self.assertEqual(name.input_value(), 'Custom name')
+                name.fill('   ')
+                species.fill('  Kobold  ')
+                species.press('Tab')
+                self.assertEqual(name.input_value(), 'Kobold')
+                name.fill('')
+                species.fill('   ')
+                species.press('Tab')
+                self.assertEqual(name.input_value(), '')
+                self.assertEqual(errors, [])
+                self.assertEqual(mutations, [])
+                page.close()

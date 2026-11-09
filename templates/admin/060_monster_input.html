@@ -41,12 +41,6 @@
           </span>
         </label>
 
-        <p id="monsterInitiativeBonusHelp" class="field-help">
-          Initiative bonus is separate from the dice roll. Leave it blank to use
-          default 0, or enter a negative, zero or positive whole number.
-          Automatic initiative rolls add the assigned bonus once.
-        </p>
-
         <form id="monsterForm" class="row">
           <label class="field">
             <span class="field-label">
@@ -87,18 +81,6 @@
           </label>
 
           <label class="field field-compact">
-            <span class="field-label">Initiative bonus</span>
-            <input
-              id="monsterInitiativeBonus"
-              name="initiative_bonus"
-              type="number"
-              step="1"
-              placeholder="0"
-              aria-describedby="monsterInitiativeBonusHelp"
-            >
-          </label>
-
-          <label class="field field-compact">
             <span class="field-label">
               HP Range start <span class="required-marker" aria-hidden="true">*</span>
             </span>
@@ -124,6 +106,17 @@
               min="0"
               placeholder="Optional"
               aria-describedby="monsterHpRangeHelp"
+            >
+          </label>
+
+          <label class="field field-compact">
+            <span class="field-label">Initiative bonus</span>
+            <input
+              id="monsterInitiativeBonus"
+              name="initiative_bonus"
+              type="number"
+              step="1"
+              placeholder="0"
             >
           </label>
 
