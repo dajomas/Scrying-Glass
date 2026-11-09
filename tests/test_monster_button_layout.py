@@ -30,7 +30,7 @@ class MonsterButtonLayoutTests(unittest.TestCase):
         cls.browser.close()
         cls.playwright.stop()
 
-    def open_page(self, width, active=False):
+    def open_page(self, width, active=False, workflow='preparation'):
         snapshot = copy.deepcopy(self.snapshot)
         snapshot['monsters'][0].update(
             active=active, ally=active, visible=active, in_turn=active,
@@ -76,6 +76,14 @@ class MonsterButtonLayoutTests(unittest.TestCase):
         # Legacy DOM includes the CSS-excluded Turn control; visible counts differ.
         page.wait_for_function("document.querySelectorAll('#monsters td button').length === 11")
         page.wait_for_function("document.querySelectorAll('#monsters th').length === 7")
+        page.wait_for_function("document.body.dataset.workflowNavigation === 'ready'")
+        self.assertEqual(page.locator('#adminWorkflow-campaign').get_attribute('aria-selected'), 'true')
+        # Roster consumers explicitly enter their destination through the real UI.
+        # None retains the production initial view for navigation-contract tests.
+        if workflow is not None:
+            self.assertIn(workflow, ('campaign', 'preparation', 'live'))
+            page.locator('#adminWorkflow-' + workflow).click()
+            self.assertEqual(page.locator('body').get_attribute('data-workflow-view'), workflow)
         self.assertEqual(errors, [])
         self.assertEqual(mutations, [])
         return page, errors, mutations

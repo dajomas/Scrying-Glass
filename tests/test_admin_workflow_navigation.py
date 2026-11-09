@@ -1,4 +1,5 @@
 """SG-TODO-009.5: production HTML/assets with intercepted HTTP, not live-server evidence."""
+import copy
 import os
 from pathlib import Path
 import tempfile
@@ -19,8 +20,9 @@ class WorkflowNavigationTests(unittest.TestCase):
         cls.rows.tearDownClass.__func__(cls)
 
     def open_page(self, width=1440):
-        page, errors, mutations = self.rows.open_page(self, width)
+        page, errors, mutations = self.rows.open_page(self, width, workflow=None)
         page.wait_for_function("document.body.dataset.workflowNavigation === 'ready'")
+        self.assertEqual(page.locator('body').get_attribute('data-workflow-view'), 'campaign')
         return page, errors, mutations
 
     def choose(self, page, key):
@@ -92,22 +94,48 @@ class WorkflowNavigationTests(unittest.TestCase):
         self.assertEqual(mutations, [])
 
     def test_refresh_and_encounter_tools_restore_without_tab_stealing(self):
-        page, errors, mutations = self.open_page()
-        self.choose(page, 'live')
-        before = page.locator('#toggleEncounterTools').get_attribute('aria-expanded')
-        page.evaluate('window.updateEncounterToolsVisibility({battle_round: 1})')
-        self.assertTrue(page.locator('#encounterFeatures').is_visible())
-        self.choose(page, 'preparation')
-        self.assertFalse(page.locator('#encounterFeatures').is_visible())
-        page.evaluate('window.updateEncounterToolsVisibility({battle_round: 0})')
-        self.assertEqual(page.locator('#toggleEncounterTools').get_attribute('aria-expanded'), before)
-        page.evaluate('load(true)')
-        page.wait_for_function("document.querySelector('#monsters table') !== null")
-        self.assertEqual(page.locator('body').get_attribute('data-workflow-view'), 'preparation')
-        self.choose(page, 'live')
-        self.assertEqual(page.locator('#toggleEncounterTools').get_attribute('aria-expanded'), before)
-        self.assertEqual(errors, [])
-        self.assertEqual(mutations, [])
+        for width in (1440, 375):
+            for preferred in (False, True):
+                with self.subTest(width=width, preferred=preferred):
+                    page, errors, mutations = self.open_page(width)
+                    state = copy.deepcopy(self.snapshot)
+                    state.update(battle_round=0, battle_order=[])
+                    page.route('**/api/state', lambda route: route.fulfill(json=state))
+                    page.evaluate('() => load(true)')
+                    self.choose(page, 'live')
+                    expected = str(preferred).lower()
+                    toggle = page.locator('#toggleEncounterTools')
+                    if toggle.get_attribute('aria-expanded') != expected:
+                        toggle.click()
+                    self.assertEqual(toggle.get_attribute('aria-expanded'), expected)
+                    self.assertEqual(page.locator('#encounterFeatures').is_visible(), preferred)
+                    state['battle_round'] = 1
+                    page.evaluate('() => load(true)')
+                    self.assertEqual(toggle.get_attribute('aria-expanded'), 'true')
+                    self.assertTrue(page.locator('#encounterFeatures').is_visible())
+                    self.assertEqual(page.locator('body').get_attribute('data-workflow-view'), 'live')
+                    self.choose(page, 'preparation')
+                    self.assertFalse(page.locator('#encounterFeatures').is_visible())
+                    state['battle_round'] = 2
+                    page.evaluate('() => load(true)')
+                    self.assertEqual(toggle.get_attribute('aria-expanded'), 'true')
+                    self.assertEqual(page.locator('body').get_attribute('data-workflow-view'), 'preparation')
+                    self.assertFalse(page.locator('#encounterFeatures').is_visible())
+                    state['battle_round'] = 0
+                    page.evaluate('() => load(true)')
+                    self.assertEqual(toggle.get_attribute('aria-expanded'), expected)
+                    self.assertEqual(page.locator('body').get_attribute('data-workflow-view'), 'preparation')
+                    self.assertFalse(page.locator('#encounterFeatures').is_visible())
+                    self.choose(page, 'live')
+                    self.assertEqual(toggle.get_attribute('aria-expanded'), expected)
+                    self.assertEqual(page.locator('#encounterFeatures').is_visible(), preferred)
+                    page.evaluate('() => load(true)')
+                    self.assertEqual(toggle.get_attribute('aria-expanded'), expected)
+                    self.assertEqual(page.locator('#encounterFeatures').is_visible(), preferred)
+                    self.assertEqual(page.locator('body').get_attribute('data-workflow-view'), 'live')
+                    self.assertEqual(errors, [])
+                    self.assertEqual(mutations, [])
+                    page.close()
 
     def test_lair_gate_remains_independent_and_header_boundary(self):
         directory = Path(os.environ.get('SG_VISUAL_ARTIFACTS', str(Path(tempfile.gettempdir()) / 'sg-admin-foundations')))

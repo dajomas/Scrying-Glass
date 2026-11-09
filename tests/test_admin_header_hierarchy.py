@@ -32,7 +32,7 @@ class HeaderHierarchyBrowserTests(unittest.TestCase):
         cls.rows.tearDownClass.__func__(cls)
 
     def open_page(self, width):
-        page, errors, mutations = self.rows.open_page(self, width)
+        page, errors, mutations = self.rows.open_page(self, width, workflow='campaign')
         page.wait_for_function("document.body.dataset.headerHierarchy === 'ready'")
         return page, errors, mutations
 
