@@ -1,0 +1,23 @@
+edirects_and_untrusted_redirects (test_dndbeyond_locked_pages.LockedPageTests.test_gate_redirects_and_untrusted_redirects) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2356557Z test_generic_denials_and_server_errors_still_raise (test_dndbeyond_locked_pages.LockedPageTests.test_generic_denials_and_server_errors_still_raise) ... /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/tempfile.py:538: ResourceWarning: Implicitly cleaning up <HTTPError 429: 'fixture'>
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2357576Z   _warnings.warn(self.warn_message, ResourceWarning)
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2359890Z ok
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2367463Z test_locked_success_and_confirmed_http_denials (test_dndbeyond_locked_pages.LockedPageTests.test_locked_success_and_confirmed_http_denials) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2369333Z test_oversized_denial_is_not_classified (test_dndbeyond_locked_pages.LockedPageTests.test_oversized_denial_is_not_classified) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2372641Z test_visible_gate_text (test_dndbeyond_locked_pages.LockedPageTests.test_visible_gate_text) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2408541Z test_all_locked_keeps_fivetools_results (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_all_locked_keeps_fivetools_results) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2445102Z test_locked_then_usable_keeps_both_providers (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_locked_then_usable_keeps_both_providers) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2485196Z test_secondary_failure_blocks_accessible_primary_without_signing (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_secondary_failure_blocks_accessible_primary_without_signing) ... Combined monster lookup failed for 5e.tools
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2486895Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2487732Z   File "/tmp/scrying-tests-vwx681iy/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2488572Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2489265Z   File "/tmp/scrying-tests-vwx681iy/repo/python/scrying_glass_monster_selection.py", line 152, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2490003Z     lambda: fivetools_candidates(species, display),
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2490477Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2491233Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2492145Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2492563Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2493279Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2494010Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2494468Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T13:44:22.2495177Z   File "/opt/hostedtoolcac
