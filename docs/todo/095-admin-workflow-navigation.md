@@ -4,31 +4,26 @@
 
 ## SG-TODO-009.5
 
-- Status: in progress; navigation and all test corrections delivered with successful covering CI on 7df8cbe67b62b4df772dd192f2ac38d19c4cfad8. Subsequent user-requested Add Monsters form refinement prepared; its delivery/validation and user acceptance remain pending. This supersedes 090's earlier proposed wording for 009.5.
-- Agreement: 2026-11-09, compact Campaign / Battle preparation / Live encounter views retaining original controls, DOM, drafts and native visibility. User approved implementation/corrections and subsequently requested the form changes below. No owner/deadline assigned.
-- Baseline: features/perplexity after SG-TODO-018 merge b0630effbe99db8a40b27bb00cca007b198d4055.
-- Evidence: successful run 42594146455 attempt 1 covers exact 7df8cbe; publication 07b12ed92b2d1c292381685611a41a7e9c1ded90. Main/repeated suites 1,416 tests OK, audit 764/0 connections, 43 pytest passes, configured steps and full smoke successful. This does not cover the new form refinement. See [350 handover](../handover/350-admin-workflow-navigation.md).
+- Status: in progress, user acceptance pending. Navigation corrections through 7df8cbe have successful covering CI; form refinement 8262863cc0a226e02b040eafb6827fb96af736a4 is delivered with validation not established by the earlier run. The subsequent agreed overwrite change is prepared, not pushed or validated.
+- Agreement: 2026-11-09, compact workflow navigation and subsequent Add Monsters UI refinements. No owner/deadline assigned. Branch: features/perplexity, retaining the merged 018 baseline.
+- Evidence/history: [350 handover](../handover/350-admin-workflow-navigation.md). Successful run 42594146455 attempt 1 covers 7df8cbe only; failed historical runs stay failed. No closure or new CI outcome is inferred.
 
-## Scope and retained history
+## Scope
 
-Campaign contains selection/access/backups, Add character and Characters. Preparation contains setups/background/imports, Add monsters, both rosters and gated lair configuration. Live contains existing rosters, tools, gated lair and log. Battle/order/Danger zone and fixed header context/actions/feedback remain shared. Native initial/parent-child/battle collapse, Has lair and tools restoration remain; no automatic tab switching, persistent tab preference or navigation mutation. No cloned/filtered rosters or 009.6 focused workspace.
+Campaign: selection/access/backups, Add character and Characters. Preparation: setups/background/imports, Add monsters, both rosters and gated lair. Live: existing rosters, tools, lair and log. Header/actions/context/feedback and Battle/order/Danger zone remain shared. Preserve initial/manual/dependent/battle collapse, lair/tools restoration, drafts/files, source/bonus/total rules and keyboard operation. No automatic tab switching, persistent view preference, roster filtering or 009.6 workspace is introduced.
 
-Implementation 1beff730, user-approved corrective stages c490943 / ef07efbc and smoke follow-up 7df8cbe are delivered. Failed runs 42586178034 and 42590952958 remain failed historical evidence; the later successful covering run resolves their CI gate, not user acceptance. [Immutable prior task record](https://github.com/dajomas/Scrying-Glass/blob/7df8cbe67b62b4df772dd192f2ac38d19c4cfad8/docs/todo/095-admin-workflow-navigation.md) and linked handovers retain full diagnosis/history.
+8262863 delivers bonus-help removal, Combat statistics placement between HP Range end and Quantity, and species-blur filling of a currently blank name without replacing existing names. [Immutable prior task detail](https://github.com/dajomas/Scrying-Glass/blob/8262863cc0a226e02b040eafb6827fb96af736a4/docs/todo/095-admin-workflow-navigation.md) preserves earlier requests/history and acceptance requirements.
 
-## Requested form refinement - 2026-11-09
+## Agreed overwrite follow-up
 
-- Remove the complete initiative-bonus help paragraph and its input reference.
-- Put Initiative bonus between HP Range end and Quantity in raw markup and the rendered Combat statistics group; retain original input identity and signed optional/default semantics.
-- On species blur, copy trimmed nonempty species into a currently blank/whitespace-only Monster name. Preserve existing names and allow later editing; do not copy on typing alone or mutate/save an encounter.
-- Prepare static/native and assembled desktop/narrow regressions for absence/order/grouping, idempotence, blank/custom/repeated/whitespace blur behavior and no accidental mutation. Preserve original import/FormData/backend/source-offer contracts.
+- Loaded checkbox label: Overwrite AC, HP range and initiative bonus with source values. Missing initiative bonus defaults to 0.
+- With overwrite enabled, available bonuses replace existing values; explicitly missing/null bonuses clear the field to the existing default-zero path, without source-bonus attribution. Keep candidate identity, and distinguish default zero from explicit source zero.
+- With overwrite disabled, retain existing bonuses; available bonuses may fill blanks. Invalid/ambiguous/malformed data, failed/empty/cancelled/stale lookup and intervening edits must not clear or overwrite the bonus.
+- Retain edit/revert and chooser/HTTP revision guards. Do not change bulk Refresh's missing-field preservation or explicit Apply, backend/schema/provider calculations, completed 018 scope or delivered field/name behavior.
+- Prepared tests: provider/checkbox/value fallback matrix, missing prior-offer removal, failure/no-match preservation, invalid protection, missing/available chooser and delayed edit/revert, actual loaded label and absent help at desktop/narrow widths.
 
-The implementation/tests and proportionate handover updates are prepared for exact write approval and normal CI. Changed JavaScript block syntax and changed Python-test-snippet AST checks passed; complete modules/browser/full-suite execution remains pending. No new corrective CI or acceptance is claimed.
+Changed-block JavaScript syntax and missing-matrix-snippet Python AST parsing passed during preparation. Complete final-module/browser/full-suite execution and covering CI remain pending. Normal CI and exact-content approval apply; do not claim earlier green CI covers these application edits.
 
 ## Remaining acceptance
 
-- Deliver this refinement and review its covering CI; prior navigation CI is not coverage of application edits.
-- Confirm desktop/narrow field placement, keyboard flow and species-to-name behavior, alongside drafts/files, pane preferences, initial/delayed context, battle/lair/tools restoration and modal/initiative continuation.
-- Retain selection/bulk/Edit and 018 source/bonus/raw/total semantics. Review source/manual monster creation without regressions.
-- Obtain user visual/workflow acceptance before closing 009.5. Static/intercepted fixtures do not establish authenticated live-server, live-provider, restart or exhaustive accessibility validation.
-
-009.6/009.7 remain proposed; overall 009 stays in progress. Original 090 and indexed handovers retain previous redesign history.
+Deliver this follow-up, review covering CI and any remaining failures, and obtain desktop/narrow visual/workflow acceptance including overwrite/default-zero, candidate/manual creation, form order/name default, draft/file retention, keyboard/focus, context/battle/lair/tools restoration and modal/initiative continuation. No live provider/login/process-restart or exhaustive accessibility audit is claimed by static/intercepted checks. Overall 009 stays in progress; 009.6/009.7 remain proposed.

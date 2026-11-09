@@ -7,6 +7,8 @@
     const overwrite = document.querySelector('#monsterSpeciesLookupOverwrite');
     const bonusInput = document.querySelector('#monsterInitiativeBonus');
     if (!form || !speciesInput) return;
+    const label = overwrite?.closest('label')?.querySelector('span');
+    if (label) label.textContent = 'Overwrite AC, HP range and initiative bonus with source values. Missing initiative bonus defaults to 0.';
     let selected = null;
     let appliedOffer = null;
     let cancelPopup = null;
@@ -26,7 +28,8 @@
     if (bonusHelp) {
         bonusHelp.append(' The overwrite option above also applies to available source initiative bonuses. ' +
             'Blank bonuses are filled automatically; existing values are replaced only when overwrite is enabled. ' +
-            'Missing or invalid source bonuses and values edited during lookup are kept unchanged.');
+            'Missing bonuses default to 0 when overwrite is enabled. ' +
+            'Invalid source bonuses and values edited during lookup are kept unchanged.');
     }
     function publishSelection() {
         document.dispatchEvent(new CustomEvent('scrying:monster-selection', {
@@ -171,6 +174,13 @@
                     appliedOffer = {token: candidate.initiative_bonus_offer_token,
                         selectionToken: candidate.selection_token, species, value};
                 }
+            } else if (bonusUnchanged && overwriteBonus &&
+                    candidate.initiative_bonus_status === 'missing' && candidate.initiative_bonus == null) {
+                // Blank submits through the existing default-zero path, never as source-backed zero.
+                bonusInput.value = '';
+                bonusInput.dispatchEvent(new Event('input', {bubbles: true}));
+                bonusInput.dispatchEvent(new Event('change', {bubbles: true}));
+                if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
             }
             selected = candidate;
             publishSelection();

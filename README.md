@@ -68,7 +68,7 @@ See the User Guide for workflows and the numbered handover for delivery history.
 
 ## Requirements and installation
 
-Launchers accept Python 3.10 or newer with working standard-library sqlite3. This
+Launchers accept Python 3.10 or newer and require working standard-library sqlite3. This
 minimum is not a full dependency/Python compatibility matrix. Run exactly one
 application process per storage directory; workers/replicas are unsupported.
 A modern browser is required. Node and Playwright are test tooling, not runtime
@@ -78,6 +78,7 @@ requirements. Choose a reviewed code revision before deployment.
 python3.10 -m venv .venv
 .venv/bin/python -m pip install --upgrade pip
 .venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python -m playwright install chromium
 .venv/bin/python deployment/check.py --runtime
 cp config.example.yaml config.yaml
 .venv/bin/python scrying_glass_server.py --config config.yaml
@@ -144,12 +145,18 @@ entitlement filtering is added.
 
 In Add monster, one candidate is automatic and multiple candidates open a selection
 dialog. There is no separate initiative-bonus confirmation. Available source
-bonuses fill blank fields; the existing AC/HP overwrite checkbox also permits
-replacing a populated bonus. Initiative help explains this shared option. Values
+bonuses fill blank fields; the overwrite checkbox covers AC, HP range and initiative
+bonus. With overwrite enabled, an explicitly missing source bonus clears the input
+to blank, using the existing default-zero path without source-bonus attribution.
+With overwrite disabled, an existing bonus is preserved. Invalid/ambiguous source
+bonuses and failed/empty/cancelled lookups do not erase the current bonus. Values
 edited during lookup or candidate selection remain unchanged, including edit then
-revert. Missing or invalid source bonuses never fill or overwrite a field. Signed
+revert. An explicit source zero remains distinct from a defaulted zero. Signed
 offers stay bound to the selected candidate and assigned value; a later manual
 edit, reset or changed selection clears attribution. Unsigned values remain manual.
+Initiative bonus is in Combat statistics between HP Range end and Quantity; its
+long help paragraph is removed. Leaving Monster species fills a blank Monster name
+from trimmed species without replacing existing names.
 Cancel permits manual entry. Refresh retains exact source identities without silently
 selecting another provider, book or edition. For identity-less rows, exactly one
 usable signed candidate resolves automatically; multiple candidates require explicit
@@ -213,7 +220,7 @@ the restoration-layout follow-up adds no migration. See the
 
 The companion theme coordinates dark surfaces, gold accents and local fonts with
 Looking Glass; it does not merge applications or alter encounter data, permissions,
-combatant colours or configured display backgrounds. Historical delivery details
+combatant colours or configured player-display backgrounds. Historical delivery details
 and validation limits remain in the indexed handover.
 
 ## Persistence, backup and security

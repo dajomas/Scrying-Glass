@@ -54,10 +54,40 @@ class SourceBonusOfferBrowserTests(unittest.TestCase):
         self.assertEqual(self.payload()['initiative_bonus'], '12')
         self.assertNotIn('initiative_bonus_offer_token', self.payload())
 
-    def test_unavailable_and_invalid_never_fill_or_overwrite(self):
+    def test_missing_defaults_only_when_checked(self):
+        for provider in ('D&D Beyond', '5e.tools'):
+            for checked in (False, True):
+                for current in ('', '5', '0', '-2'):
+                    with self.subTest(provider=provider, checked=checked, current=current):
+                        self.page.locator('#monsterSpeciesLookupOverwrite').set_checked(checked)
+                        self.page.locator('#monsterInitiativeBonus').fill(current)
+                        self.start(value=None, provider=provider, initiative_bonus_status='missing')
+                        payload = self.payload()
+                        self.assertEqual(payload['initiative_bonus'], '' if checked else current)
+                        self.assertEqual(payload['selection_token'], 'selected-A')
+                        self.assertNotIn('initiative_bonus_offer_token', payload)
+
+    def test_missing_clears_old_offer_but_lookup_failure_does_not_clear(self):
         self.page.locator('#monsterSpeciesLookupOverwrite').check()
-        for status, value in [('missing', None), ('invalid', None), ('ambiguous', None),
-                              ('available', '12'), ('available', 1.5), ('available', True)]:
+        self.start()
+        self.assertIn('initiative_bonus_offer_token', self.payload())
+        self.start(value=None, initiative_bonus_status='missing')
+        self.assertEqual(self.payload()['initiative_bonus'], '')
+        self.assertNotIn('initiative_bonus_offer_token', self.payload())
+        for result in ({'status':'error', 'reason':'Provider failed'}, {'status':'ok', 'candidates':[]}):
+            with self.subTest(result=result):
+                self.page.locator('#monsterInitiativeBonus').fill('5')
+                self.fixture.result = result
+                self.fixture.launch_lookup()
+                self.fixture.finish()
+                self.assertEqual(self.payload()['initiative_bonus'], '5')
+                self.assertEqual(self.payload()['selection_token'], 'manual')
+                self.assertNotIn('initiative_bonus_offer_token', self.payload())
+
+    def test_invalid_and_ambiguous_never_fill_or_overwrite(self):
+        self.page.locator('#monsterSpeciesLookupOverwrite').check()
+        for status, value in [('invalid', None), ('ambiguous', None),
+                              ('available', '12'), ('available', 1.5), ('available', True), ('missing', 12)]:
             for current in ('', '5'):
                 with self.subTest(status=status, value=value, current=current):
                     self.page.locator('#monsterInitiativeBonus').fill(current)
@@ -95,25 +125,26 @@ class SourceBonusOfferBrowserTests(unittest.TestCase):
 
     def test_edits_during_chooser_preserved_including_edit_then_revert(self):
         self.page.locator('#monsterSpeciesLookupOverwrite').check()
-        for revert in (False, True):
-            self.page.locator('#monsterInitiativeBonus').fill('4')
-            self.fixture.start_candidates([self.candidate(), self.candidate(value=7, selection_token='B')])
-            self.page.evaluate("document.querySelector('#monsterAc').value='20'; document.querySelector('#monsterHpRangeStart').value='88';")
-            self.page.evaluate("const b=document.querySelector('#monsterInitiativeBonus'); b.value='9'; b.dispatchEvent(new Event('input', {bubbles:true}));")
-            if revert:
-                self.page.evaluate("const b=document.querySelector('#monsterInitiativeBonus'); b.value='4'; b.dispatchEvent(new Event('input', {bubbles:true}));")
-            self.page.get_by_role('button', name='1. Goblin', exact=False).click()
-            self.fixture.finish()
-            self.assertEqual(self.payload()['initiative_bonus'], '4' if revert else '9')
-            self.assertEqual(self.page.locator('#monsterAc').input_value(), '20')
-            self.assertEqual(self.page.locator('#monsterHpRangeStart').input_value(), '88')
-            self.assertNotIn('initiative_bonus_offer_token', self.payload())
-            self.page.locator('#monsterAc').fill('')
-            self.page.locator('#monsterHpRangeStart').fill('')
+        for status, value in (('available', 12), ('missing', None)):
+            for revert in (False, True):
+                with self.subTest(status=status, revert=revert):
+                    self.page.locator('#monsterInitiativeBonus').fill('4')
+                    self.fixture.start_candidates([self.candidate(value=value, initiative_bonus_status=status), self.candidate(value=7, selection_token='B')])
+                    self.page.evaluate("document.querySelector('#monsterAc').value='20'; document.querySelector('#monsterHpRangeStart').value='88';")
+                    self.page.evaluate("const b=document.querySelector('#monsterInitiativeBonus'); b.value='9'; b.dispatchEvent(new Event('input', {bubbles:true}));")
+                    if revert:
+                        self.page.evaluate("const b=document.querySelector('#monsterInitiativeBonus'); b.value='4'; b.dispatchEvent(new Event('input', {bubbles:true}));")
+                    self.page.get_by_role('button', name='1. Goblin', exact=False).click()
+                    self.fixture.finish()
+                    self.assertEqual(self.payload()['initiative_bonus'], '4' if revert else '9')
+                    self.assertEqual(self.page.locator('#monsterAc').input_value(), '20')
+                    self.assertEqual(self.page.locator('#monsterHpRangeStart').input_value(), '88')
+                    self.assertNotIn('initiative_bonus_offer_token', self.payload())
+                    self.page.locator('#monsterAc').fill('')
+                    self.page.locator('#monsterHpRangeStart').fill('')
 
     def test_delayed_http_edits_are_preserved(self):
         self.page.locator('#monsterSpeciesLookupOverwrite').check()
-        self.page.locator('#monsterInitiativeBonus').fill('4')
         self.page.evaluate("""
             window.realFetch = window.fetch;
             window.fetch = async function(url, options) {
@@ -124,15 +155,19 @@ class SourceBonusOfferBrowserTests(unittest.TestCase):
             };
             void 0;
         """)
-        self.fixture.result = {'status': 'ok', 'candidates': [self.candidate()]}
-        self.fixture.launch_lookup()
-        self.page.wait_for_function('() => typeof releaseLookup === "function"')
-        self.page.locator('#monsterInitiativeBonus').fill('9')
-        self.page.locator('#monsterInitiativeBonus').fill('4')
-        self.page.evaluate('releaseLookup()')
-        self.fixture.finish()
-        self.assertEqual(self.payload()['initiative_bonus'], '4')
-        self.assertNotIn('initiative_bonus_offer_token', self.payload())
+        for status, value in (('available', 12), ('missing', None)):
+            with self.subTest(status=status):
+                self.page.locator('#monsterInitiativeBonus').fill('4')
+                self.page.evaluate('delete window.releaseLookup')
+                self.fixture.result = {'status': 'ok', 'candidates': [self.candidate(value=value, initiative_bonus_status=status)]}
+                self.fixture.launch_lookup()
+                self.page.wait_for_function('() => typeof releaseLookup === "function"')
+                self.page.locator('#monsterInitiativeBonus').fill('9')
+                self.page.locator('#monsterInitiativeBonus').fill('4')
+                self.page.evaluate('releaseLookup()')
+                self.fixture.finish()
+                self.assertEqual(self.payload()['initiative_bonus'], '4')
+                self.assertNotIn('initiative_bonus_offer_token', self.payload())
 
     def test_cancel_species_reset_and_overwrite_change_during_chooser(self):
         for action in ('cancel', 'species', 'reset', 'overwrite'):
@@ -163,6 +198,35 @@ class SourceBonusOfferBrowserTests(unittest.TestCase):
         self.assertEqual(self.payload()['initiative_bonus'], '7')
         self.assertEqual(self.payload()['selection_token'], 'selected-B')
         self.assertEqual(self.payload()['initiative_bonus_offer_token'], 'offer-B')
+
+
+class ProductionOverwriteLabelTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        import test_monster_button_layout as rows
+        cls.rows = rows.MonsterButtonLayoutTests
+        cls.rows.setUpClass.__func__(cls)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.rows.tearDownClass.__func__(cls)
+
+    def test_loaded_label_matches_overwrite_contract(self):
+        for width in (1440, 375):
+            with self.subTest(width=width):
+                page, errors, mutations = self.rows.open_page(self, width)
+                for ident in ('toggleBattleSetupPane', 'toggleMonsterPane'):
+                    button = page.locator('#' + ident)
+                    if button.get_attribute('aria-expanded') == 'false':
+                        button.click()
+                box = page.locator('#monsterSpeciesLookupOverwrite')
+                self.assertTrue(box.is_visible())
+                self.assertEqual(box.evaluate("n => n.closest('label').querySelector('span').textContent"),
+                    'Overwrite AC, HP range and initiative bonus with source values. Missing initiative bonus defaults to 0.')
+                self.assertEqual(page.locator('#monsterInitiativeBonusHelp').count(), 0)
+                self.assertEqual(errors, [])
+                self.assertEqual(mutations, [])
+                page.close()
 
 if __name__ == '__main__':
     unittest.main()
