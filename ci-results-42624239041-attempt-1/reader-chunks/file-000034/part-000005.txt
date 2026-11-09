@@ -1,0 +1,33 @@
+Run actions/setup-node@v4	2026-11-09T13:18:07.3226089Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Run actions/setup-node@v4	2026-11-09T13:18:07.3226357Z ##[endgroup]
+tests	Run actions/setup-node@v4	2026-11-09T13:18:07.4391788Z (node:2226) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Run actions/setup-node@v4	2026-11-09T13:18:07.4392782Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Run actions/setup-node@v4	2026-11-09T13:18:07.4400841Z Found in cache @ /opt/hostedtoolcache/node/22.23.4/x64
+tests	Run actions/setup-node@v4	2026-11-09T13:18:07.4401596Z ##[group]Environment details
+tests	Run actions/setup-node@v4	2026-11-09T13:18:10.8202030Z node: v22.23.4
+tests	Run actions/setup-node@v4	2026-11-09T13:18:10.8202635Z npm: 10.9.9
+tests	Run actions/setup-node@v4	2026-11-09T13:18:10.8203364Z yarn: 1.22.22
+tests	Run actions/setup-node@v4	2026-11-09T13:18:10.8204316Z ##[endgroup]
+tests	Install Python and browser test dependencies	﻿2026-11-09T13:18:10.8327718Z ##[group]Run python -m pip install --upgrade pip
+tests	Install Python and browser test dependencies	2026-11-09T13:18:10.8328115Z ^[[36;1mpython -m pip install --upgrade pip^[[0m
+tests	Install Python and browser test dependencies	2026-11-09T13:18:10.8328643Z ^[[36;1mpython -m pip install -r requirements-test.txt^[[0m
+tests	Install Python and browser test dependencies	2026-11-09T13:18:10.8329002Z ^[[36;1mpython -m playwright install --with-deps chromium^[[0m
+tests	Install Python and browser test dependencies	2026-11-09T13:18:10.8424246Z shell: /usr/bin/bash -e {0}
+tests	Install Python and browser test dependencies	2026-11-09T13:18:10.8424501Z env:
+tests	Install Python and browser test dependencies	2026-11-09T13:18:10.8424891Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Install Python and browser test dependencies	2026-11-09T13:18:10.8425363Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python and browser test dependencies	2026-11-09T13:18:10.8425720Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Install Python and browser test dependencies	2026-11-09T13:18:10.8426062Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python and browser test dependencies	2026-11-09T13:18:10.8426386Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python and browser test dependencies	2026-11-09T13:18:10.8426703Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python and browser test dependencies	2026-11-09T13:18:10.8427005Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Install Python and browser test dependencies	2026-11-09T13:18:10.8427305Z ##[endgroup]
+tests	Install Python and browser test dependencies	2026-11-09T13:18:13.1577770Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages (26.2.2)
+tests	Install Python and browser test dependencies	2026-11-09T13:18:13.2745439Z Collecting pip
+tests	Install Python and browser test dependencies	2026-11-09T13:18:13.2757548Z   Using cached pip-26.3-py3-none-any.whl.metadata (4.6 kB)
+tests	Install Python and browser test dependencies	2026-11-09T13:18:13.2790647Z Using cached pip-26.3-py3-none-any.whl (2.0 MB)
+tests	Install Python and browser test dependencies	2026-11-09T13:18:13.5606685Z Installing collected packages: pip
+tests	Install Python and browser test dependencies	2026-11-09T13:18:13.5607067Z   Attempting uninstall: pip
+tests	Install Python and browser test dependencies	2026-11-09T13:18:13.5634382Z     Found existing installation: pip 26.2.2
+tests	Install Python and browser test dependencies	2026-11-09T13:18:13.6590083Z     Uninstalling pip-26.2.2:
+tests	Install Python and browser test dependencies	2026-11-09T13:18:13.6635321Z       Successful
