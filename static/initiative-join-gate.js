@@ -1,9 +1,11 @@
 /* UI feedback only; the server independently validates every join request. */
 (() => {
     'use strict';
-    function showRejection(text) {
-        const area = document.getElementById('message');
-        if (area) area.textContent = text;
+    const feedback = window.scryingAdminFeedback;
+    const joinTicket = (kind, id) => feedback.begin({region: 'global', operation: 'roster.join',
+        target: JSON.stringify([kind, id]), label: 'Join battle'});
+    function showRejection(text, ticket) {
+        feedback.publish(ticket, {severity: 'error', text});
     }
     function itemFor(button) {
         if (typeof latest === 'undefined' || !latest) return null;
@@ -37,12 +39,13 @@
         if (!item || item.active || Number.isInteger(item.initiative)) return;
         event.preventDefault();
         event.stopImmediatePropagation();
-        showRejection('Enter initiative before joining battle: ' + (item.name || item.id));
+        showRejection('Enter initiative before joining battle: ' + (item.name || item.id),
+            joinTicket(button.hasAttribute('data-ca') ? 'characters' : 'monsters', item.id));
     }, true);
 
     const originalFetch = window.fetch.bind(window);
     window.fetch = async function (input, options = {}) {
-        let joining = false;
+        let joining = false, ticket = null;
         try {
             const url = new URL(typeof input === 'string' ? input : input.url, window.location.href);
             const body = typeof options.body === 'string' ? JSON.parse(options.body) : null;
@@ -50,20 +53,24 @@
                 /^\/api\/(characters|monsters)(\/[^/]+)?$/.test(url.pathname) &&
                 (options.method || 'GET').toUpperCase() !== 'GET' &&
                 (body?.active === true || body?.action === 'join-battle');
+            if (joining) ticket = joinTicket(url.pathname.split('/')[2],
+                url.pathname.split('/')[3] ? decodeURIComponent(url.pathname.split('/')[3])
+                    : [...(body.ids || [])].map(String).sort());
         } catch { /* Non-JSON and unrelated requests keep their original behavior. */ }
         let response;
         try {
             response = await originalFetch(input, options);
         } catch (error) {
-            if (joining) showRejection('Unable to join battle: ' + error.message);
+            if (joining) showRejection('Unable to join battle: ' + error.message, ticket);
             throw error;
         }
         if (joining && !response.ok) {
             let detail;
             try { detail = (await response.clone().json()).detail; } catch { /* Use HTTP fallback. */ }
             showRejection(typeof detail === 'string' && detail.trim()
-                ? detail : `Join Battle rejected (HTTP ${response.status}).`);
+                ? detail : `Join Battle rejected (HTTP ${response.status}).`, ticket);
         }
+        if (joining && response.ok) feedback.resolve(ticket);
         return response;
     };
     for (const id of ['characters', 'monsters']) {

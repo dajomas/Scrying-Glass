@@ -22,27 +22,12 @@ const selectedMonsterIds = new Set();
 let monsterSpeciesLookupTimer = null;
 let monsterSpeciesLookupRequest = 0;
 
-function setMonsterSpeciesLookupStatus(text, options = {}) {
-    const {
-        timed = false,
-    } = options;
-
-    const notification = document.querySelector(
-        '#monsterAddNotification',
-    );
-
-    if (!notification) {
+function setMonsterSpeciesLookupStatus(text, options) {
+    if (text === '') {
+        window.scryingAdminFeedback.invalidateLookup();
         return;
     }
-
-    if (timed) {
-        paneNotification('monsters', text);
-        return;
-    }
-
-    clearTimeout(paneNotificationTimeouts.monsters);
-    paneNotificationTimeouts.monsters = null;
-    notification.textContent = (text === '') ? ' ' : text;
+    paneNotification('monsters', text, options);
 }
 
 async function lookupMonsterSpeciesStats() {
@@ -76,6 +61,9 @@ async function lookupMonsterSpeciesStats() {
     }
 
     const overwriteFoundStats = Boolean(overwriteInput?.checked);
+    const feedback = window.scryingAdminFeedback.beginLookup(species);
+    const lookupNotice = (kind, text, severity = 'success') =>
+        paneNotification(kind, text, {ticket: feedback, severity});
 
     const originalAc = acInput.value;
     const originalHpStart = hpStartInput.value;
@@ -83,6 +71,7 @@ async function lookupMonsterSpeciesStats() {
 
     function isCurrentRequest() {
         return (
+            window.scryingAdminFeedback.isCurrent(feedback) &&
             requestId === monsterSpeciesLookupRequest &&
             speciesInput.value.trim() === species &&
             Boolean(overwriteInput?.checked) === overwriteFoundStats
@@ -91,6 +80,7 @@ async function lookupMonsterSpeciesStats() {
 
     setMonsterSpeciesLookupStatus(
         `Looking up ${species} (D&D Beyond, then 5e.tools)…`,
+        {ticket: feedback, severity: 'info'},
     );
 
     try {
@@ -103,12 +93,13 @@ async function lookupMonsterSpeciesStats() {
         }
 
         if (!suggestion || suggestion.found !== true) {
-            paneNotification(
+            lookupNotice(
                 'monsters',
                 suggestion?.reason
                     ? String(suggestion.reason)
                     : `No usable monster stats found for ${species}; ` +
                       'enter AC and HP manually.',
+                'info',
             );
             return;
         }
@@ -171,7 +162,7 @@ async function lookupMonsterSpeciesStats() {
         const provider = monsterSourceLabel(suggestion);
 
         if (changes.length) {
-            paneNotification(
+            lookupNotice(
                 'monsters',
                 `Loaded ${changes.join(', ')} from the ` +
                 `${provider} result.`,
@@ -180,7 +171,7 @@ async function lookupMonsterSpeciesStats() {
         }
 
         if (!acUnchanged || !hpUnchanged) {
-            paneNotification(
+            lookupNotice(
                 'monsters',
                 `Found ${provider} stats; values edited ` +
                 'while the lookup was running were left unchanged.',
@@ -189,13 +180,14 @@ async function lookupMonsterSpeciesStats() {
         }
 
         if (overwriteFoundStats) {
-            paneNotification(
+            lookupNotice(
                 'monsters',
                 `Found ${provider} stats, but no usable ` +
                 'AC or HP values were returned.',
+                'info',
             );
         } else {
-            paneNotification(
+            lookupNotice(
                 'monsters',
                 `Found ${provider} stats; existing AC ` +
                 'and HP were left unchanged. Enable overwrite to replace them.',
@@ -213,6 +205,7 @@ async function lookupMonsterSpeciesStats() {
 
         setMonsterSpeciesLookupStatus(
             'Monster lookup is unavailable; enter AC and HP manually.',
+            {ticket: feedback, severity: 'error'},
         );
     }
 }
@@ -243,45 +236,11 @@ function installColorPreview(inputSelector, previewSelector) {
     input.addEventListener('change', update);
 }
 
-const message = text => {
-    document.querySelector('#message').textContent = text;
-};
+const message = (text, options) =>
+    window.scryingAdminFeedback.deliver('global', text, options);
 
-const paneNotificationTimeouts = {
-    characters: null,
-    monsters: null,
-    campaign: null,
-    battleSetup: null,
-};
-
-const paneNotificationIds = {
-    characters: '#characterAddNotification',
-    monsters: '#monsterAddNotification',
-    campaign: '#campaignNotification',
-    battleSetup: '#battleSetupNotification',
-};
-
-const paneNotification = (kind, text) => {
-    const notification = document.querySelector(
-        paneNotificationIds[kind],
-    );
-
-    if (!notification) {
-        console.error(
-            `Missing notification element for pane: ${kind}`,
-        );
-        return;
-    }
-
-    clearTimeout(paneNotificationTimeouts[kind]);
-
-    notification.textContent = text;
-
-    paneNotificationTimeouts[kind] = setTimeout(() => {
-        notification.textContent = ' ';
-        paneNotificationTimeouts[kind] = null;
-    }, 3_000);
-};
+const paneNotification = (kind, text, options) =>
+    window.scryingAdminFeedback.deliver(kind, text, options);
 
 const all = () => [
     ...latest.monsters,
@@ -391,10 +350,13 @@ function closeImport() {
 }
 
 async function request(url, options = {}) {
+    const feedbackState = url === '/api/state' ? window.scryingAdminFeedback.stateRequest() : null;
     const response = await fetch(url, options);
 
     if (response.ok) {
-        return response.json().catch(() => null);
+        const result = await response.json().catch(() => null);
+        if (feedbackState !== null) window.scryingAdminFeedback.observeState(result, feedbackState);
+        return result;
     }
 
     const fallbackMessage = response.statusText

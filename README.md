@@ -20,11 +20,19 @@ Admin source lives in eight ordered UTF-8 files under `static/admin/`, each at
 most 20,000 bytes. The static adapter assembles them without separators and serves
 one classic deferred script at `/static/admin.js` on both interfaces. The tracked
 `static/admin.js` is a failure marker, not application source: do not overwrite it,
-deploy it alone or load fragments independently. The current assembled core is
+deploy it alone or load fragments independently. The accepted pre-009.7 core was
 114,814 bytes, SHA-256
 `40fca092f989bcd85eaf7f06dc02b962b662a28827864df68c998919cdf87b46`.
+That is a historical baseline, not the modified 009.7 checkpoint's identity.
 The service account needs a writable temporary directory for the generated bundle.
 See [Admin split details](docs/handover/050-admin-script-split.md).
+
+The features/perplexity-009.7 branch contains an explicitly incomplete feedback
+checkpoint. Controller-backed wiring is loaded, but remaining callers use a
+temporary neutral compatibility route and do not yet implement the approved
+policy end to end. Do not deploy it as a completed increment. Producer migration,
+legacy fixture/bundle-identity reconciliation and covering validation remain
+pending. See [checkpoint scope and limits](docs/handover/380-feedback-delivery-plan.md).
 
 Legacy source-reading tests use a disposable assembled checkout:
 
