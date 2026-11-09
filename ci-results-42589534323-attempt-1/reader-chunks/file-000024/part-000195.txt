@@ -1,0 +1,31 @@
+ser and audit checks	2026-11-09T09:04:37.1997305Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1997312Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1997520Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1998355Z ERROR: test_groups_required_labels_and_idempotence (test_admin_panel_forms.PanelFormsBrowserTests.test_groups_required_labels_and_idempotence)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1999291Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1999710Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2000399Z   File "/tmp/scrying-tests-oiyw3bdg/repo/tests/test_admin_panel_forms.py", line 48, in test_groups_required_labels_and_idempotence
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2001169Z     page, errors, mutations = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2001517Z                               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2002062Z   File "/tmp/scrying-tests-oiyw3bdg/repo/tests/test_admin_panel_forms.py", line 42, in open_page
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2002557Z     button.click()
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2002785Z     ~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2003414Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11021, in click
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2004009Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2004239Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2004461Z         self._impl_obj.click(
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2004721Z         ^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2004963Z     ...<11 lines>...
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2005178Z         )
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2005370Z         ^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2005563Z     )
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2005756Z     ^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2006338Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2006923Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2007168Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2007772Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 174, in click
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2008505Z     return await self._frame._click(self._selector, strict=True, **params)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2008971Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2023094Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 598, in _click
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2024456Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+tests	Standalone Python browser and audit checks	2026-11-09T09:0

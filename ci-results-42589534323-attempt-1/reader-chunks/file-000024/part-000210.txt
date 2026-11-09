@@ -1,0 +1,31 @@
+r and audit checks	2026-11-09T09:04:37.2224012Z     return await self._connection.wrap_api_call(
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2224362Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2224644Z     ...<3 lines>...
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2224864Z     )
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2225077Z     ^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2225693Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2226487Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2227103Z playwright._impl._errors.TimeoutError: Locator.click: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2227519Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2227834Z   - waiting for locator("#toggleMonsterDisplayPane")
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2228874Z     - locator resolved to <button type="button" class="pane-toggle" aria-expanded="false" id="toggleMonsterDisplayPane" data-workflow-excluded="true" aria-controls="monsterDisplayPane">Show monster display</button>
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2229770Z   - attempting click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2230196Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2230591Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2230994Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2231253Z     - waiting 20ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2231622Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2231990Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2232254Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2232500Z       - waiting 100ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2232953Z     10 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2233328Z        - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2233595Z      - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2233850Z        - waiting 500ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2234146Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2234153Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2234362Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2235444Z ERROR: test_real_candidate_resolution_keeps_other_checks_and_unchecked_hp (test_monster_refresh_end_to_end.MonsterRefreshEndToEndTests.test_real_candidate_resolution_keeps_other_checks_and_unchecked_hp)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2236427Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2236829Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2237369Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyn

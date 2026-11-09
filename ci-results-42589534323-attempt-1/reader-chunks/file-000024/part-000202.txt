@@ -1,0 +1,34 @@
+browser and audit checks	2026-11-09T09:04:37.2110319Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2110599Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2110965Z       - waiting 100ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2111340Z     9 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2111697Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2111961Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2112215Z       - waiting 500ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2112527Z     - waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2112780Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2112787Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2112994Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2113801Z ERROR: test_panel_geometry_and_screenshots (test_admin_panel_forms.PanelFormsBrowserTests.test_panel_geometry_and_screenshots) (width=375)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2114573Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2114968Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2115632Z   File "/tmp/scrying-tests-oiyw3bdg/repo/tests/test_admin_panel_forms.py", line 129, in test_panel_geometry_and_screenshots
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2116284Z     page, errors, mutations = self.open_page(width)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2116662Z                               ~~~~~~~~~~~~~~^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2117212Z   File "/tmp/scrying-tests-oiyw3bdg/repo/tests/test_admin_panel_forms.py", line 42, in open_page
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2117702Z     button.click()
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2117924Z     ~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2118553Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11021, in click
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2119150Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2119374Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2119758Z         self._impl_obj.click(
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2120021Z         ^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2120267Z     ...<11 lines>...
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2120495Z         )
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2120686Z         ^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2120987Z     )
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2121180Z     ^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2121765Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2122345Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2122589Z            ~~~~~~~~~~~^^
+tests	Standalone Python br

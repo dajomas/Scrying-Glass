@@ -1,0 +1,30 @@
+ 2 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8410992Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8411274Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8411517Z     - waiting 20ms
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8411886Z     2 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8412385Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8412643Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8412885Z       - waiting 100ms
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8413256Z     10 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8413624Z        - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8413892Z      - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8414139Z        - waiting 500ms
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8414288Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8414295Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8414492Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8415610Z ERROR: test_real_sole_candidate_auto_resolution_requires_explicit_apply (test_monster_refresh_end_to_end.MonsterRefreshEndToEndTests.test_real_sole_candidate_auto_resolution_requires_explicit_apply) (width=1440)
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8416623Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8417016Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8417815Z   File "/tmp/scrying-tests-rx30lvq7/repo/tests/test_monster_refresh_end_to_end.py", line 232, in test_real_sole_candidate_auto_resolution_requires_explicit_apply
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8418532Z     page = await self.open_page(width)
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8418827Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8419382Z   File "/tmp/scrying-tests-rx30lvq7/repo/tests/test_monster_refresh_end_to_end.py", line 137, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8419887Z     await toggle.click()
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8420526Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/async_api/_generated.py", line 11018, in click
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8421303Z     await self._impl_obj.click(
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8421562Z     ...<11 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8421780Z     )
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8422344Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 174, in click
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8423063Z     return await self._frame._click(self._selector, strict=True, **params)
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8423529Z            ^^^^^^^^^^^^^^^^^^^^^^

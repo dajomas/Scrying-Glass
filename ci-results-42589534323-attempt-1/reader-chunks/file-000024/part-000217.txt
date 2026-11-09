@@ -1,0 +1,31 @@
+="false" id="toggleMonsterDisplayPane" data-workflow-excluded="true" aria-controls="monsterDisplayPane">Show monster display</button>
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2393474Z   - attempting click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2394466Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2394869Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2395146Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2395407Z     - waiting 20ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2395793Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2396183Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2396448Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2396711Z       - waiting 100ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2397106Z     10 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2397493Z        - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2397773Z      - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2398039Z        - waiting 500ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2398197Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2398206Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2398429Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2399541Z FAIL: test_blank_notices_collapse_and_real_messages_reappear (test_admin_foundations.FoundationBrowserTests.test_blank_notices_collapse_and_real_messages_reappear) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2400456Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2401207Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2402196Z   File "/tmp/scrying-tests-oiyw3bdg/repo/tests/test_admin_foundations.py", line 145, in test_blank_notices_collapse_and_real_messages_reappear
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2402870Z     self.assertTrue(notice.is_visible())
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2403192Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2403520Z AssertionError: False is not true
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2403715Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2403922Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2404901Z FAIL: test_blank_notices_collapse_and_real_messages_reappear (test_admin_foundations.FoundationBrowserTests.test_blank_notices_collapse_and_real_messages_reappear) (width=375)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2405799Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2406210Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2406949Z   File "/tmp/scrying-tests-oiyw3bdg/repo/tests/test_admin_foundations.py", line 145, in test_blank_notices_collapse_and_real_messages_reappear
+tests	Standalone Python browser

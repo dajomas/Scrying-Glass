@@ -1,0 +1,30 @@
+4:37.1928481Z     ...<4 lines>...
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1928698Z         )
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1928894Z         ^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1929090Z     )
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1929286Z     ^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1929863Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1930481Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1930730Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1931839Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 228, in fill
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1932584Z     return await self._frame.fill(self._selector, strict=True, **params)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1933042Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1933722Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 641, in fill
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1934356Z     await self._fill(**locals_to_params(locals()))
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1935050Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 653, in _fill
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1935787Z     await self._channel.send("fill", self._timeout, locals_to_params(locals()))
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1936570Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1937223Z     return await self._connection.wrap_api_call(
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1937571Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1937854Z     ...<3 lines>...
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1938070Z     )
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1938256Z     ^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1938871Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1939677Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1940292Z playwright._impl._errors.TimeoutError: Locator.fill: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1940700Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1941195Z   - waiting for locator("#characterName")
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1941786Z     - locator resolved to <input name="name" required="" id="characterName" placeholder="For example: Aelwyn"/>
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1942350Z     - fill("Unsaved visual-review character")
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1942663Z   - attempting fill action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1943156Z     2 × waiting for element to be visible, enabled a

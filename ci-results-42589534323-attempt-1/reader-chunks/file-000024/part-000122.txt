@@ -1,0 +1,33 @@
+Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8159459Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8159701Z       - waiting 100ms
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8160065Z     9 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8160425Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8160679Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8161067Z       - waiting 500ms
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8161371Z     - waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8161617Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8161630Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8161826Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8162644Z ERROR: test_groups_required_labels_and_idempotence (test_admin_panel_forms.PanelFormsBrowserTests.test_groups_required_labels_and_idempotence)
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8163423Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8163811Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8164500Z   File "/tmp/scrying-tests-rx30lvq7/repo/tests/test_admin_panel_forms.py", line 48, in test_groups_required_labels_and_idempotence
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8165140Z     page, errors, mutations = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8165469Z                               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8166000Z   File "/tmp/scrying-tests-rx30lvq7/repo/tests/test_admin_panel_forms.py", line 42, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8166469Z     button.click()
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8166681Z     ~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8167295Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11021, in click
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8167891Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8168095Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8168314Z         self._impl_obj.click(
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8168565Z         ^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8168795Z     ...<11 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8169009Z         )
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8169200Z         ^
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8169391Z     )
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8169578Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8170151Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8170723Z     return task.result()
+tests	Python test suite (including browser fixtures)	202

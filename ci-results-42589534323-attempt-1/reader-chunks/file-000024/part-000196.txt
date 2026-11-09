@@ -1,0 +1,32 @@
+4:37.2025556Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2026703Z     return await self._connection.wrap_api_call(
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2027119Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2027409Z     ...<3 lines>...
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2027637Z     )
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2027835Z     ^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2028483Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2029540Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2030178Z playwright._impl._errors.TimeoutError: Locator.click: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2030603Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2031155Z   - waiting for locator("#toggleCampaignPane")
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2032265Z     - locator resolved to <button type="button" class="pane-toggle" aria-expanded="false" id="toggleCampaignPane" data-workflow-excluded="true" aria-controls="campaignInputPane">Show campaign input</button>
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2033127Z   - attempting click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2033650Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2034044Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2034325Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2034584Z     - waiting 20ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2034966Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2035361Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2035633Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2035881Z       - waiting 100ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2036258Z     9 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2036799Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2037071Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2037330Z       - waiting 500ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2037473Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2037482Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2037690Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2038604Z ERROR: test_invalid_monster_hp_keeps_draft_without_mutation (test_admin_panel_forms.PanelFormsBrowserTests.test_invalid_monster_hp_keeps_draft_without_mutation)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2039455Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2039867Z Traceback (most recent call last):
+tests	Standalone Python browser a

@@ -1,0 +1,29 @@
+ext.dnd_monster_candidates(species)
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6563001Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6564109Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6564612Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6565619Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6566614Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6567220Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6568373Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6569763Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6570235Z TimeoutError: fixture
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6570520Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6571284Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6571878Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6572179Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6573424Z   File "/tmp/scrying-tests-oiyw3bdg/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6574547Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6575593Z   File "/tmp/scrying-tests-oiyw3bdg/repo/python/scrying_glass_monster_selection.py", line 151, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6576742Z     lambda: dnd_candidates(context, species),
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6577394Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6578589Z   File "/tmp/scrying-tests-oiyw3bdg/repo/python/scrying_glass_monster_selection.py", line 92, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6580211Z     raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:39.6582073Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:41.3610154Z Selected monster source refresh failed for 6b59488c706a4a7fbcd89b741bbcfad8
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:41.3611957Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:41.3613331Z   File "/tmp/scrying-tests-oiyw3bdg/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:41.3614682Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:41.3615982Z   File "/tmp/scrying-tests-oiyw3bdg/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-09T09:02:41.3618396Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Standalone Python browser and audit checks	2026-11-09T09

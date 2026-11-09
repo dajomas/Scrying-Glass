@@ -1,0 +1,32 @@
+ython browser and audit checks	2026-11-09T09:04:37.1914473Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1914731Z   - waiting for locator("#characterName")
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1915313Z     - locator resolved to <input name="name" required="" id="characterName" placeholder="For example: Aelwyn"/>
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1915874Z     - fill("Unsaved visual-review character")
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1916194Z   - attempting fill action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1916809Z     2 × waiting for element to be visible, enabled and editable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1917214Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1917492Z     - retrying fill action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1917744Z     - waiting 20ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1918120Z     2 × waiting for element to be visible, enabled and editable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1918502Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1918764Z     - retrying fill action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1919034Z       - waiting 100ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1919435Z     10 × waiting for element to be visible, enabled and editable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1919826Z        - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1920099Z      - retrying fill action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1920347Z        - waiting 500ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1920497Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1920506Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1920717Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1922589Z ERROR: test_visual_fixture_and_css_only_state_preservation (test_admin_foundations.FoundationBrowserTests.test_visual_fixture_and_css_only_state_preservation) (width=375)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1923516Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1924155Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1924913Z   File "/tmp/scrying-tests-oiyw3bdg/repo/tests/test_admin_foundations.py", line 107, in test_visual_fixture_and_css_only_state_preservation
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1925718Z     page.locator('#characterName').fill('Unsaved visual-review character')
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1926201Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1926950Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11640, in fill
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1927550Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1927770Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1927988Z         self._impl_obj.fill(
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1928246Z         ^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:0

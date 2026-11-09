@@ -1,0 +1,30 @@
+ playwright._impl._errors.TimeoutError: Locator.click: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2252893Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2253213Z   - waiting for locator("#toggleMonsterDisplayPane")
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2254268Z     - locator resolved to <button type="button" class="pane-toggle" aria-expanded="false" id="toggleMonsterDisplayPane" data-workflow-excluded="true" aria-controls="monsterDisplayPane">Show monster display</button>
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2255171Z   - attempting click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2255597Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2255973Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2256242Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2256488Z     - waiting 20ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2256857Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2257368Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2257632Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2257881Z       - waiting 100ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2258261Z     10 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2258628Z        - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2258910Z      - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2259165Z        - waiting 500ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2259311Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2259318Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2259522Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2260650Z ERROR: test_real_sole_candidate_auto_resolution_requires_explicit_apply (test_monster_refresh_end_to_end.MonsterRefreshEndToEndTests.test_real_sole_candidate_auto_resolution_requires_explicit_apply) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2261807Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2262213Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2263037Z   File "/tmp/scrying-tests-oiyw3bdg/repo/tests/test_monster_refresh_end_to_end.py", line 232, in test_real_sole_candidate_auto_resolution_requires_explicit_apply
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2263767Z     page = await self.open_page(width)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2264087Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2264801Z   File "/tmp/scrying-tests-oiyw3bdg/repo/tests/test_monster_refresh_end_to_end.py", line 137, in open_page
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2265326Z     await toggle.click()
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2265979Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/async_api/_generated.py", line 11018, in click
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2266616Z     await self._impl_

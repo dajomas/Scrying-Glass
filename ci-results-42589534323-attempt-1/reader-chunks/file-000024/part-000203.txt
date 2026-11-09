@@ -1,0 +1,30 @@
+owser and audit checks	2026-11-09T09:04:37.2123177Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 174, in click
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2123902Z     return await self._frame._click(self._selector, strict=True, **params)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2124361Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2125044Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 598, in _click
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2125772Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2126551Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2127339Z     return await self._connection.wrap_api_call(
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2127682Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2127957Z     ...<3 lines>...
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2128171Z     )
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2128361Z     ^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2128971Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2129757Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2130379Z playwright._impl._errors.TimeoutError: Locator.click: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2130791Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2131212Z   - waiting for locator("#toggleCampaignPane")
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2132190Z     - locator resolved to <button type="button" class="pane-toggle" aria-expanded="false" id="toggleCampaignPane" data-workflow-excluded="true" aria-controls="campaignInputPane">Show campaign input</button>
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2133052Z   - attempting click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2133472Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2133847Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2134113Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2134371Z     - waiting 20ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2134734Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2135105Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2135370Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2135630Z       - waiting 100ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2136005Z     10 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2136388Z        - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2136674Z      - retrying click action
+tests	Standalone Python br

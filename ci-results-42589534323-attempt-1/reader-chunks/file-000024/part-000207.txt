@@ -1,0 +1,29 @@
+ audit checks	2026-11-09T09:04:37.2180530Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2181474Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2182089Z playwright._impl._errors.TimeoutError: Locator.click: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2182499Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2182801Z   - waiting for locator("#toggleMonsterDisplayPane")
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2183844Z     - locator resolved to <button type="button" class="pane-toggle" aria-expanded="false" id="toggleMonsterDisplayPane" data-workflow-excluded="true" aria-controls="monsterDisplayPane">Show monster display</button>
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2184733Z   - attempting click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2185168Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2185549Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2185822Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2186071Z     - waiting 20ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2186447Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2186816Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2187089Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2187341Z       - waiting 100ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2187722Z     10 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2188105Z        - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2188385Z      - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2188796Z        - waiting 500ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2188944Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2188951Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2189152Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2190329Z ERROR: test_desktop_and_narrow_apply_preserve_turn_ties_unselected_and_restart (test_monster_refresh_end_to_end.MonsterRefreshEndToEndTests.test_desktop_and_narrow_apply_preserve_turn_ties_unselected_and_restart) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2191528Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2191924Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2192756Z   File "/tmp/scrying-tests-oiyw3bdg/repo/tests/test_monster_refresh_end_to_end.py", line 164, in test_desktop_and_narrow_apply_preserve_turn_ties_unselected_and_restart
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2193499Z     page = await self.open_page(width)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2193814Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.2194372Z   File "/tmp/scrying-tests-oiyw3bdg/repo/tests/test_monster_refresh_end_to_end.py", line

@@ -1,0 +1,27 @@
+bdg/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7869541Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7871020Z   File "/tmp/scrying-tests-oiyw3bdg/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7872775Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7874808Z ValueError: Retained source missing or ambiguous
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7901843Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7902591Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7903913Z   File "/tmp/scrying-tests-oiyw3bdg/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7905293Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7906598Z   File "/tmp/scrying-tests-oiyw3bdg/repo/python/scrying_glass_monster_refresh_sources.py", line 73, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7907804Z     html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7908868Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7909752Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7910242Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7911299Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7912197Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7912855Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7913827Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7914650Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:16.7914980Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1892072Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1894174Z ERROR: test_visual_fixture_and_css_only_state_preservation (test_admin_foundations.FoundationBrowserTests.test_visual_fixture_and_css_only_state_preservation) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1895836Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1896562Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1897710Z   File "/tmp/scrying-tests-oiyw3bdg/repo/tests/test_admin_foundations.py", line 107, in test_visual_fixture_and_css_only_state_preservation
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1898549Z     page.locator('#characterName').fill('Unsaved visual-review character')
+tests	Standalone Python browser and audit checks	2026-11-09T09:04:37.1899072Z     ~~~~~~~~

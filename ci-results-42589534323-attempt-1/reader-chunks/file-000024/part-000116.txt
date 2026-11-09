@@ -1,0 +1,31 @@
+including browser fixtures)	2026-11-09T09:00:28.8080461Z playwright._impl._errors.TimeoutError: Locator.fill: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8081115Z Call log:
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8081389Z   - waiting for locator("#characterName")
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8081983Z     - locator resolved to <input name="name" required="" id="characterName" placeholder="For example: Aelwyn"/>
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8082544Z     - fill("Unsaved visual-review character")
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8082855Z   - attempting fill action
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8083451Z     2 × waiting for element to be visible, enabled and editable
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8083852Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8084121Z     - retrying fill action
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8084366Z     - waiting 20ms
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8084741Z     2 × waiting for element to be visible, enabled and editable
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8085120Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8085374Z     - retrying fill action
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8085619Z       - waiting 100ms
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8086008Z     10 × waiting for element to be visible, enabled and editable
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8086375Z        - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8086639Z      - retrying fill action
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8086892Z        - waiting 500ms
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8087036Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8087044Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8087253Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8088210Z ERROR: test_visual_fixture_and_css_only_state_preservation (test_admin_foundations.FoundationBrowserTests.test_visual_fixture_and_css_only_state_preservation) (width=375)
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8089271Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8089681Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8090602Z   File "/tmp/scrying-tests-rx30lvq7/repo/tests/test_admin_foundations.py", line 107, in test_visual_fixture_and_css_only_state_preservation
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8091528Z     page.locator('#characterName').fill('Unsaved visual-review character')
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8092021Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8092736Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11640, in fill
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8093325Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-09T09:00:28.8093527Z     ~~~~~~~~~~^
+tests	Pyt
