@@ -1,0 +1,29 @@
+tandalone Python browser and audit checks	2026-11-09T09:38:12.3445415Z     "client card has a positive layout width at mobile viewport"
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:12.3445963Z   ],
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:12.3446270Z   "page_errors": [],
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:12.3446800Z   "transport": "mocked HTTP/WS, real Chromium rendering"
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:12.3447295Z }
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:12.4246344Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:12.4246881Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:12.5712519Z ##[endgroup]
+tests	Post Run actions/setup-node@v4	﻿2026-11-09T09:38:12.5807222Z Post job cleanup.
+tests	Post Run actions/setup-node@v4	2026-11-09T09:38:12.7049125Z (node:22271) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-node@v4	2026-11-09T09:38:12.7050077Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/setup-python@v5	﻿2026-11-09T09:38:12.7208871Z Post job cleanup.
+tests	Post Run actions/setup-python@v5	2026-11-09T09:38:12.8461531Z Cache hit occurred on the primary key setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e, not saving cache.
+tests	Post Run actions/setup-python@v5	2026-11-09T09:38:12.8463943Z (node:22279) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-python@v5	2026-11-09T09:38:12.8464902Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/checkout@v4	﻿2026-11-09T09:38:12.8599807Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-09T09:38:12.9490716Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-09T09:38:12.9541925Z git version 2.56.0
+tests	Post Run actions/checkout@v4	2026-11-09T09:38:12.9588577Z Temporarily overriding HOME='/home/runner/work/_temp/7b79be60-36d0-4266-9f8b-1067628fec58' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-09T09:38:12.9590155Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-09T09:38:12.9595204Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-09T09:38:12.9640497Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-09T09:38:12.9679320Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-09T09:38:13.0096038Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-09T09:38:13.0151637Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-09T09:38:13.0178449Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-09T09:38:13.0226526Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Post Run actions/checkout@v4	2026-11-09T09:38:13.0640649Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	Post Run actions/checkout@v4	2026-11-09T09:38:13.068265

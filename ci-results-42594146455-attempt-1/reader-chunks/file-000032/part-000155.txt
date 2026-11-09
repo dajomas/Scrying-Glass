@@ -1,0 +1,32 @@
+sources.py", line 73, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-09T09:37:48.7608384Z     html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+tests	Standalone Python browser and audit checks	2026-11-09T09:37:48.7609477Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-09T09:37:48.7610645Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-09T09:37:48.7611170Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:37:48.7612161Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-09T09:37:48.7613146Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-09T09:37:48.7613792Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:37:48.7614919Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-09T09:37:48.7615979Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-09T09:37:48.7616395Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:08.7125223Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:08.7125979Z Ran 1416 tests in 156.446s
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:08.7126256Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:08.7126376Z OK
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:08.7130754Z Connections opened: 764; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:08.7131694Z PASS: failed PRAGMA initialization closes connection; suite closes all tracked connections
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:09.0318981Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:09.0332826Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:09.2928562Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:09.2929681Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:09.3246418Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:09.3246902Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:09.5916815Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:09.6258045Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:09.6258546Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:12.3441822Z {
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:12.3442262Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:12.3442835Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:12.3443540Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-11-09T09:38:12.3444467Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	S
