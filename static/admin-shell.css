@@ -63,12 +63,3 @@ body.admin-shell {
 #adminHeader h1 { color: var(--text); }
 #adminButtonBar { background: transparent; border: 0; border-radius: 0; }
 #adminButtonBar button { font-size: .85rem; }
-
-/* Dependent input controls are unavailable whenever their parent pane is hidden.
- * Also covers global battle collapse, which resets individual button.hidden flags.
- * Do not change the independent child preference or the separate lair gate.
- */
-body.admin-shell:has(#campaignInputPane[hidden]) #toggleCharacterPane,
-body.admin-shell:has(#battleSetupInputPane[hidden]) #toggleMonsterPane {
-    display: none !important;
-}

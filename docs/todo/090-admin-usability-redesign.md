@@ -4,12 +4,12 @@
 
 ## SG-TODO-009 - Professional, task-focused Admin interface
 
-- Status: in progress; SG-TODO-009.1-009.5 are closed after their recorded validation and user acceptance. Coordinated SG-TODO-012 is also closed. 009.6 is in progress; its sidebar/duplicate-list design is superseded by the user's 2026-11-09 full-width/dialog direction. 009.7 remains proposed.
+- Status: in progress; SG-TODO-009.1-009.5 are closed after their recorded validation and user acceptance. Coordinated SG-TODO-012 is also closed. 009.6 is in progress with full-width sections, an on-demand tools dialog and the user's new independent-panel requirement. 009.7 remains proposed.
 - Requested: 2026-11-06; incremental redesign, with staged deliveries and subsequent task-specific agreements. 009.5 close-out/sign-off: 2026-11-09.
 - Priority: incremental usability improvement; no priority relative to unrelated work agreed. Owner/deadline not assigned.
 - Scope: Admin presentation, navigation and interaction clarity. Do not change encounter rules, API semantics, permissions or persistence merely to redesign the interface.
 
-The original phase proposals and detailed 009.1-009.4 history remain in the [immutable pre-009.5-close-out plan](https://github.com/dajomas/Scrying-Glass/blob/cfc7b0f16f929041bc6107dd1f895d24492261c5/docs/todo/090-admin-usability-redesign.md) and phase handovers. The [pre-dialog 009.6 task](https://github.com/dajomas/Scrying-Glass/blob/73de987ba87fbc63af4766f379bdf366c13db80f/docs/todo/090-admin-usability-redesign.md) retains the earlier sidebar/width preparation and evidence boundaries; those UI requirements are superseded, not silently claimed completed.
+The original phase proposals and detailed 009.1-009.4 history remain in the [immutable pre-009.5-close-out plan](https://github.com/dajomas/Scrying-Glass/blob/cfc7b0f16f929041bc6107dd1f895d24492261c5/docs/todo/090-admin-usability-redesign.md) and phase handovers. The [pre-dialog 009.6 task](https://github.com/dajomas/Scrying-Glass/blob/73de987ba87fbc63af4766f379bdf366c13db80f/docs/todo/090-admin-usability-redesign.md) retains earlier sidebar/width preparation; those UI requirements are superseded, not silently claimed completed.
 
 ## Preparation and compatibility gates
 
@@ -17,7 +17,7 @@ Inspect live templates, stylesheets, loaded modules, source assembly, tests and 
 
 Related accepted boundaries:
 
-- [SG-TODO-005](050-admin-initial-visibility.md): native input/roster collapse and parent/child controls remain. The user's new dialog requirement explicitly replaces inline Encounter tools automatic visibility, not the independent lair controller.
+- [SG-TODO-005](050-admin-initial-visibility.md): retain one-shot initial input collapse and manual choices. The user's explicit new requirement supersedes Campaign-to-character and Battle Setup-to-monster/lair visibility dependencies; it does not reopen the closed task or remove independent lair eligibility.
 - [SG-TODO-007](070-monster-button-layout.md): single-line roster controls, local overflow/focus exposure and removed Damage/Heal/Turn controls remain; replacement action menus are not introduced.
 - [SG-TODO-008](080-source-size-refactors.md): preserve source assembly/size constraints and tracked Admin failure marker.
 
@@ -53,32 +53,32 @@ Closed 2026-11-06 with coordinated 012. [310 handover](../handover/310-admin-ros
 
 ### SG-TODO-009.5 - Workflow-based navigation
 
-Closed 2026-11-09 on explicit user sign-off/request. [Completed contract](095-admin-workflow-navigation.md) and [350 handover](../handover/350-admin-workflow-navigation.md) retain scope/history. Tabs retain contexts, original forms, drafts/files/selections, input/roster collapse and independent lair gating. The later 009.6 dialog intentionally supersedes inline tools visibility; it does not reopen 009.5.
+Closed 2026-11-09 on explicit user sign-off/request. [Completed contract](095-admin-workflow-navigation.md) and [350 handover](../handover/350-admin-workflow-navigation.md) retain scope/history. Tabs retain contexts, original forms, drafts/files/selections, input/roster collapse and independent lair gating. Later explicit 009.6 requirements supersede inline tools visibility and parent-dependent panel availability; they do not reopen 009.5.
 
 Successful CI 42616924220 attempt 1 covers c7c51725c5ac7724fc78ffd1931173cd1d19e0b8; publication 1c1c6323b119b1a7e71a93571985c214183819de. The user's accepted later wording cfc7b0f16f929041bc6107dd1f895d24492261c5 has matching template/test text but no separately supplied covering CI; that boundary remains historical. Preserve the user's copy and accepted bonus/name form behavior.
 
 ### SG-TODO-009.6 - Focused live encounter workspace
 
-Status: in progress. The user revoked Admin-page verification and subsequently requested removal of the Participants in turn order section and sidebar, a full-width Battle section, and on-demand Encounter tools. Code/tests/documentation for that revised direction are prepared for bound approval; covering CI and renewed user acceptance remain pending. [370 handover](../handover/370-live-encounter-workspace.md) records implementation and limits.
+Status: in progress. Full-width/dialog revision delivered at 540ab598d65bb7002d3e8184e59cd5c596e2c90f. The user subsequently required independent panel buttons and retained Start-collapse behavior. That code/test/documentation increment is prepared for bound approval; covering CI and renewed acceptance remain pending. [370 handover](../handover/370-live-encounter-workspace.md) records implementation and limits. Previously revoked verification remains revoked.
 
 Current contract:
 
-- Remove the duplicate participant overview and split workspace completely. Original Battle/current-turn action access, Characters, Monsters and Activity log keep their normal full-width flow, without reserved sidebar space.
-- The existing Live-view Encounter tools opener opens a closed-by-default dialog, not an inline panel. Battle start, Next, End and refresh never open it automatically.
-- Move the original tools section once; retain IDs, handlers, native details, draft inputs/files, selected target, scoped viewer status, Undo, health/effects/checkpoint/backup operations and existing polling. Closing is not Save or Reset.
-- Provide a named modal dialog, internal scrolling, sticky Close, focus containment/background inertness, Escape and focus return. Busy tool operations and visible nested modals block parent dismissal; nested modals remain above it and handle their own Escape.
-- Preserve independent lair placement/controller, roster visibility/actions/local overflow, header Next/End/Reset semantics, Battle Actions/Next and SG-TODO-015 summaries. No combat, permissions, schema, provider or socket changes.
-- Keep the activity disclosure and a single visible heading. Existing tab selection and native roster/input preferences remain stable.
+- Original Battle/current-turn action access, Characters, Monsters and Activity log retain full-width flow. No duplicate participant overview, split grid or reserved sidebar space.
+- Campaign always exposes its three input/roster panel controls. Campaign Input affects only Campaign Setup; Character Input affects only Add Character; Character Display affects only the Characters roster.
+- Battle Preparation exposes all its mapped panel controls independently. Battle Setup no longer closes Add Monsters or hides its button, nor imposes a parent visibility dependency on lair controls. The separate has-lair eligibility gate still applies; workflows still exclude controls belonging to other tabs.
+- Successful Start battle closes all native Campaign/Battle input and roster panes, including an explicit restart while active. Failed Start does not collapse them. Native eligibility/tie handling and POST method/headers/order payload/error notice are unchanged. Ordinary refresh/Next does not reclose manually reopened panels; native End/Reset restoration is retained.
+- Tools remains an explicit closed-by-default Live-view dialog; transitions never open it automatically. Original controls/drafts/files, scoped status and operations, focus/inert/Close/Escape/busy/nested handling remain unchanged.
+- Retain native roster/input toggles, labels/aria-expanded, full-width geometry, local overflow, selections/drafts, independent lairs, header controls, Battle Actions/Next and 015 summaries. No backend, permissions, schema, provider or socket change.
 
-The inline createEncounterVisibility helper remains available for compatibility, but the Admin shell no longer uses it; updateEncounterToolsVisibility is a non-opening compatibility hook. features.js exposes only a readonly busy-state function for the dialog guard. Matching assets are versioned together.
+Implementation: admin-initial-visibility.js retires the two paneDependencies entries before its existing one-shot initialization and restores only the six ordinary buttons' availability. Original handlers dynamically consult the map and now affect one panel. It mirrors the inspected native startBattle submit helper with setAllHideablePanesHidden(true) added after a successful POST and before load, not on failed requests or ordinary refresh. admin-shell.css removes the two parent-hidden selectors. The initial-visibility asset is version 2. No core fragment/assembly/failure-marker changes or second panel-state model.
 
-Executed: complete revised workspace and visibility modules passed Node syntax checks; revised CSS parsed; all four updated Python regression files passed AST parsing. Isolated Chromium at 1440/375 passed closed-by-default/transition behavior, bounded dialog size/scroll, original input retention, focus return/background inertness, busy/nested guards and idempotence, with no page errors. Small Node compatibility-helper checks passed. These fixtures use synthetic DOM/state and a stub busy getter, not the full features module, real saves or authenticated server.
+Executed for this increment: complete 3,865-byte JavaScript Node syntax check, 1,312-byte CSS parse, and AST parsing of both updated/new regression modules. Isolated real Chromium at 1440/375 with actual proposed initial module and representative native-controller/DOM fixtures passed independent buttons, retained availability, initial collapse, one-time battle collapse, manual reopening across refresh, end restoration, idempotence and prior-hook return with no page errors. Further mocked-request Chromium checks passed successful Start/restart collapse, same endpoint/method/order, and failure retaining panels/error reporting. These are not full Admin, real server or authenticated transport checks.
 
-Prepared full-Admin/intercepted-HTTP tests replace deliberately obsolete split-list/inline-auto-open expectations, retaining navigation, lair gates, drafts/selections, equal Battle/roster/log widths, scoped viewer one/zero/unavailable/failure/recovery, native Next/Battle Actions and history assertions. Added dialog keyboard/focus/draft checks and a held real-feature-save fixture for busy dismissal. No tests are skipped to hide obsolete behavior; unrelated suites remain. The full revised modules and existing suite have not run locally; existing CI discovery/visual upload covers them, without workflow changes. Use normal CI, no [skip ci].
+Prepared five actual-native-controller/CSS browser methods replace obsolete dependent-control expectations; two production-Admin/intercepted-HTTP methods cover Campaign/Preparation button availability/independent drafts and actual Start/restart/failure plus collapse/manual reopen. These complete modules and full suite are not executed locally; existing discovery covers them, no workflow changes. Normal CI, no [skip ci]. Existing initial-visibility, dialog, navigation, lair, combat and security coverage remains.
 
-Historical delivery: 8228b649c47f5df2b293608bd88e8153248c93bb had successful run 42627843410 attempt 1; 110e210e16bcabe002718805443af807f210ef88 added scoped display status/sidebar fixes; 73de987ba87fbc63af4766f379bdf366c13db80f delivered full-width rosters. The initial green result is not evidence for the new dialog design. Previously revoked verification remains revoked.
+Historical delivery: initial 8228b649c47f5df2b293608bd88e8153248c93bb had successful run 42627843410 attempt 1; 110e210e16bcabe002718805443af807f210ef88 added scoped display status; 73de987ba87fbc63af4766f379bdf366c13db80f delivered full-width rosters; 540ab598d65bb7002d3e8184e59cd5c596e2c90f replaced the sidebar/list with the tools dialog. Older green CI is not covering evidence for this panel increment.
 
-Remaining gates: covering CI and fresh main-page/dialog screenshots; real campaign viewer count; desktop/narrow/keyboard review, nested and busy behavior, close/reopen drafts, native roster and combat actions and independent lairs. Require renewed task-specific user acceptance before closure, not an inference from a push, fixtures or older green CI.
+Remaining gates: covering CI; desktop/narrow Campaign/Preparation controls, independent panels/drafts, successful Start/restart collapse, failed Start preservation, refresh reopening, lair eligibility and tools-dialog behavior; real campaign viewer count and renewed task-specific acceptance before closure.
 
 ### SG-TODO-009.7 - Feedback and final usability hardening
 
