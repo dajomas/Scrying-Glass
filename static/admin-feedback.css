@@ -1,0 +1,11 @@
+/* SG-TODO-009.7: no sidebar or changes to the accepted workspace geometry. */
+.sg-feedback-region[hidden] { display: none !important; }
+.sg-feedback-region { overflow-wrap: anywhere; }
+.sg-feedback-record { display: flex; align-items: flex-start; gap: .5rem; padding: .35rem .5rem; border-inline-start: 3px solid var(--admin-muted, #b1bacb); }
+.sg-feedback-record + .sg-feedback-record { margin-block-start: .35rem; }
+.sg-feedback-text { flex: 1 1 auto; min-width: 0; white-space: pre-wrap; }
+.sg-feedback-record[data-severity="error"] { border-color: #e7a4a4; }
+.sg-feedback-record[data-severity="success"] { border-color: var(--admin-campaign, #84c5c0); }
+.sg-feedback-dismiss { flex: 0 0 auto; }
+#adminHeader > .sg-feedback-region { max-height: min(28dvh, 14rem); overflow: auto; scrollbar-gutter: stable; }
+@media (max-width: 480px) { .sg-feedback-record { flex-wrap: wrap; } }
