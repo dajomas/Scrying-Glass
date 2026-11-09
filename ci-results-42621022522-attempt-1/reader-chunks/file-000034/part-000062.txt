@@ -1,0 +1,25 @@
+suite (including browser fixtures)	2026-11-09T12:57:34.8015067Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8015421Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8016030Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8016676Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8016946Z OSError: secret 5e.tools endpoint
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8017133Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8017406Z The above exception was the direct cause of the following exception:
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8017695Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8017851Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8018488Z   File "/tmp/scrying-tests-hr5mtncc/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8019043Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8019561Z   File "/tmp/scrying-tests-hr5mtncc/repo/python/scrying_glass_monster_selection.py", line 152, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8020151Z     lambda: fivetools_candidates(species, display),
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8020505Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8021151Z   File "/tmp/scrying-tests-hr5mtncc/repo/python/scrying_glass_monster_selection.py", line 144, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8021957Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8022749Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8037709Z ok
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:34.8557401Z test_refresh_choice_apply_retains_identity_raw_roll_and_unselected_state (test_combined_monster_lookup_application.CombinedLookupApplicationTests.test_refresh_choice_apply_retains_identity_raw_roll_and_unselected_state) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:35.4088448Z test_width_halved_without_height_or_unrelated_field_changes (test_compact_combatant_inputs.CompactInputsTests.test_width_halved_without_height_or_unrelated_field_changes) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:35.4146203Z test_actual_battle_critical_flag (test_damage_logic.DamageTests.test_actual_battle_critical_flag) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:35.4197167Z test_actual_battle_handler_accepts_downed_target (test_damage_logic.DamageTests.test_actual_battle_handler_accepts_downed_target) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:35.4233702Z test_actual_character_delta_handler (test_damage_logic.DamageTests.test_actual_character_delta_handler) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:35.4261645Z test_all_damage_results_nonnegative (test_damage_logic.DamageTests.test_all_damage_results_nonnegative) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T12:57:35.4263429Z test_critical_hit_two_failures (test_damage_logic.Damage
