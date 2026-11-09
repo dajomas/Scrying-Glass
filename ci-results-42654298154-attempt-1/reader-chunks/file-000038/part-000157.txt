@@ -1,0 +1,30 @@
+.path)
+tests	Standalone Python browser and audit checks	2026-11-09T16:30:44.8837240Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-09T16:30:44.8838163Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-09T16:30:44.8838705Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T16:30:44.8839709Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-09T16:30:44.8840711Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-09T16:30:44.8841323Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T16:30:44.8842428Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-09T16:30:44.8843423Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-09T16:30:44.8843846Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:02.6236478Z Executing <Task finished name='Task-35543' coro=<SourceBonusOfferHTTPTests.test_tampered_token_and_changed_form_value_are_422_before_side_effects() done, defined at /tmp/scrying-tests-2o27ek6x/repo/tests/test_source_bonus_offer_http.py:93> result=None created at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py:110> took 0.114 seconds
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:08.7429938Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:08.7430690Z Ran 1444 tests in 179.899s
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:08.7430943Z 
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:08.7434956Z OK
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:08.7435529Z Connections opened: 782; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:08.7436849Z PASS: failed PRAGMA initialization closes connection; suite closes all tracked connections
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:09.1960877Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:09.1961739Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:09.5935197Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:09.6453207Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:09.6454152Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:09.6455148Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:10.0463444Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:10.0975525Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:10.0976418Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:13.1132245Z {
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:13.1132656Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-09T16:31:13.1133281Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-0
