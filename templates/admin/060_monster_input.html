@@ -21,14 +21,12 @@
               The dice expression can be a simple roll such as <code>2d6</code> or dice notation such as <code>3d8+9</code>.</br>
               Spaces around <code>+</code> or <code>-</code> are optional.</li>
           </ul>
-          Monster lookup searches all enabled providers: D&amp;D Beyond and configured 5e.tools sources.
-          Both enabled providers are searched even when D&amp;D Beyond returns usable matches.
-          Disabled providers and unconfigured books are not searched.
-          If any enabled provider or configured-book search fails or is incomplete,
-          no candidates are offered; retry or enter stats manually.
-          Versions keep their own statistics; select the provider/book/edition you want.
-          The <code>fivetools_fallback</code> setting independently enables 5e.tools candidate lookup.
-          When a selected result includes an image, that image is used unless you choose an Image file.
+        </p>
+
+        <p id="monsterLookupHelp" class="field-help">
+          Searches enabled D&amp;D Beyond and configured 5e.tools sources.
+          Choose a version when prompted. Failed or incomplete searches return
+          no results—retry or enter stats manually. Uploaded images override source images.
         </p>
 
         <label class="monster-species-lookup-option">
@@ -37,7 +35,7 @@
             type="checkbox"
           >
           <span>
-            Overwrite Armor Class and HP Range with values from the selected D&amp;D Beyond or 5e.tools result
+            Overwrite AC, HP range and initiative bonus with source values. Missing initiative bonus defaults to 0.
           </span>
         </label>
 

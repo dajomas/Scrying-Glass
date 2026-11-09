@@ -1,10 +1,13 @@
-"""SG-TODO-014: source wording and full-Admin intercepted-HTTP fixture."""
+"""SG-TODO-014/009.5: concise source wording and intercepted full Admin."""
 from html.parser import HTMLParser
 from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-LABEL = 'Overwrite Armor Class and HP Range with values from the selected D&D Beyond or 5e.tools result'
+LABEL = 'Overwrite AC, HP range and initiative bonus with source values. Missing initiative bonus defaults to 0.'
+LOOKUP_HELP = ('Searches enabled D&D Beyond and configured 5e.tools sources. '
+               'Choose a version when prompted. Failed or incomplete searches return '
+               'no results—retry or enter stats manually. Uploaded images override source images.')
 
 
 class Text(HTMLParser):
@@ -17,27 +20,25 @@ class Text(HTMLParser):
 
 
 class SourceHelpTests(unittest.TestCase):
-    def test_lookup_help_explains_order_configuration_errors_and_images(self):
+    def test_lookup_help_is_concise_and_preserves_essential_guidance(self):
         source = (ROOT / 'templates/admin/060_monster_input.html').read_text(encoding='utf-8')
         parser = Text()
         parser.feed(source)
         text = ' '.join(' '.join(parser.parts).split())
-        for phrase in (
-                'Monster lookup searches all enabled providers: D&D Beyond and configured 5e.tools sources.',
-                'Both enabled providers are searched even when D&D Beyond returns usable matches.',
-                'Disabled providers and unconfigured books are not searched.',
-                'If any enabled provider or configured-book search fails or is incomplete, no candidates are offered; retry or enter stats manually.',
-                'Versions keep their own statistics; select the provider/book/edition you want.',
-                'The fivetools_fallback setting independently enables 5e.tools candidate lookup.',
-                'When a selected result includes an image, that image is used unless you choose an Image file.',
-                LABEL):
-            self.assertIn(phrase, text)
+        self.assertIn(LOOKUP_HELP, text)
+        self.assertIn(LABEL, text)
+        fragment = source.split('<p id="monsterLookupHelp" class="field-help">', 1)[1].split('</p>', 1)[0]
+        lookup_parser = Text()
+        lookup_parser.feed(fragment)
+        lookup = ' '.join(' '.join(lookup_parser.parts).split())
+        self.assertEqual(lookup, LOOKUP_HELP)
+        self.assertLessEqual(len(lookup.split()), 40)
+        self.assertNotIn('fivetools_fallback', lookup)
         self.assertNotIn('with found D&amp;D Beyond values', source)
         self.assertNotIn('D&D Beyond first.', text)
         self.assertNotIn('they do not trigger fallback.', text)
-        for id in ('monsterForm', 'monsterUpload', 'monsterSpeciesLookupOverwrite', 'monsterHpRangeHelp', 'monsterImage', 'monsterFileImage'):
-            self.assertEqual(source.count('id="' + id + '"'), 1)
-
+        for ident in ('monsterForm', 'monsterUpload', 'monsterSpeciesLookupOverwrite', 'monsterHpRangeHelp', 'monsterLookupHelp', 'monsterImage', 'monsterFileImage'):
+            self.assertEqual(source.count('id="' + ident + '"'), 1)
 
     def test_config_comments_explain_compatibility_without_changing_defaults(self):
         config = (ROOT / 'config.example.yaml').read_text(encoding='utf-8')
@@ -62,25 +63,25 @@ class SourceHelpBrowserTests(unittest.TestCase):
         for width in (1440, 375):
             with self.subTest(width=width):
                 page, errors, mutations = self.rows.open_page(self, width)
-                for id in ('toggleBattleSetupPane', 'toggleMonsterPane'):
-                    button = page.locator('#' + id)
+                for ident in ('toggleBattleSetupPane', 'toggleMonsterPane'):
+                    button = page.locator('#' + ident)
                     if button.get_attribute('aria-expanded') == 'false':
                         button.click()
                 pane = page.locator('#monsterInputPane')
                 text = ' '.join(pane.inner_text().split())
-                self.assertIn('Monster lookup searches all enabled providers: D&D Beyond and configured 5e.tools sources.', text)
-                self.assertIn('Both enabled providers are searched even when D&D Beyond returns usable matches.', text)
-                self.assertIn('Disabled providers and unconfigured books are not searched.', text)
-                self.assertIn('If any enabled provider or configured-book search fails or is incomplete, no candidates are offered; retry or enter stats manually.', text)
-                self.assertIn('Versions keep their own statistics; select the provider/book/edition you want.', text)
-                self.assertIn('The fivetools_fallback setting independently enables 5e.tools candidate lookup.', text)
-                self.assertIn('When a selected result includes an image, that image is used unless you choose an Image file.', text)
+                lookup = page.locator('#monsterLookupHelp')
+                self.assertTrue(lookup.is_visible())
+                self.assertEqual(' '.join(lookup.inner_text().split()), LOOKUP_HELP)
+                self.assertLessEqual(len(lookup.inner_text().split()), 40)
+                self.assertIn(LOOKUP_HELP, text)
+                self.assertNotIn('The fivetools_fallback setting', text)
                 self.assertNotIn('D&D Beyond first.', text)
                 checkbox = page.get_by_role('checkbox', name=LABEL, exact=True)
                 self.assertTrue(checkbox.is_visible())
                 self.assertEqual(checkbox.get_attribute('id'), 'monsterSpeciesLookupOverwrite')
                 self.assertEqual(page.locator('#monsterForm').count(), 1)
                 self.assertEqual(page.locator('#monsterUpload').count(), 1)
+                self.assertEqual(page.locator('#monsterInitiativeBonusHelp').count(), 0)
                 self.assertEqual(errors, [])
                 self.assertEqual(mutations, [])
                 page.close()
