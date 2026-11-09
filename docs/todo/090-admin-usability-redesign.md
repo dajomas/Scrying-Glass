@@ -4,7 +4,7 @@
 
 ## SG-TODO-009 - Professional, task-focused Admin interface
 
-- Status: in progress; SG-TODO-009.1-009.5 are closed after their recorded validation and user acceptance. Coordinated SG-TODO-012 is also closed. 009.6/009.7 remain proposed.
+- Status: in progress; SG-TODO-009.1-009.5 are closed after their recorded validation and user acceptance. Coordinated SG-TODO-012 is also closed. 009.6 is in progress at the user's 2026-11-09 implementation request; 009.7 remains proposed.
 - Requested: 2026-11-06; incremental redesign, with staged deliveries and subsequent task-specific agreements. 009.5 close-out/sign-off: 2026-11-09.
 - Priority: incremental usability improvement; no priority relative to unrelated work agreed. Owner/deadline not assigned.
 - Scope: Admin presentation, navigation and interaction clarity. Do not change encounter rules, API semantics, permissions or persistence merely to redesign the interface.
@@ -30,10 +30,10 @@ Related accepted boundaries:
 | 3 | SG-TODO-009.3 | Consistent panels/forms - closed | 009.1/009.2 |
 | 4 | SG-TODO-009.4 | Rosters/contextual bulk actions - closed | 009.3; agreed row-control scope |
 | 5 | SG-TODO-009.5 | Workflow navigation - closed 2026-11-09 | 009.2-009.4; agreed visibility mapping; merged 018 baseline |
-| 6 | SG-TODO-009.6 | Focused live encounter workspace - proposed | 009.4/009.5; scheduled 015 first |
+| 6 | SG-TODO-009.6 | Focused live encounter workspace - in progress | 009.4/009.5 and closed 015 baseline |
 | 7 | SG-TODO-009.7 | Feedback/responsive/accessibility consolidation - proposed | 009.1-009.6 |
 
-The [agreed cross-task sequence](115-admin-delivery-sequence.md) is 018, 009.5, 015, 009.6, 009.7, coordinated 016/017. 018 and 009.5 are now closed; the user explicitly requested moving to 015. Sequencing alone is not approval of unspecified designs or later external writes.
+The [agreed cross-task sequence](115-admin-delivery-sequence.md) is 018, 009.5, 015, 009.6, 009.7, coordinated 016/017. 018, 009.5 and 015 are closed; the user explicitly requested starting and implementing 009.6. Sequencing alone is not approval of unspecified designs or later external writes.
 
 ### SG-TODO-009.1 - Shared visual foundations
 
@@ -59,14 +59,17 @@ Successful CI 42616924220 attempt 1 covers c7c51725c5ac7724fc78ffd1931173cd1d19e
 
 ### SG-TODO-009.6 - Focused live encounter workspace
 
-Status: proposed; not started by 009.5 closure.
+Status: in progress, 2026-11-09. Implementation/tests/documentation prepared for bound GitHub approval after the user's start and implement/push requests. Covering full-Admin execution/CI and task-specific user acceptance remain pending; not completed. [370 handover](../handover/370-live-encounter-workspace.md) records implementation, checks and limitations.
 
-- Give turn order/participants the largest area; tools alongside on wide screens and below on narrow.
-- Identify round/current participant, emphasize Next, and keep HP/conditions/upcoming turns scannable.
-- Collapsible activity log below, setup forms outside the primary combat view without losing access.
-- Preserve Next from Battle Actions and alternate damage/healing/statistics workflows.
+- Live encounter has a larger main column for existing battle/order, read-only participant summaries and original roster panels; encounter/lair tools sit alongside above 1000px and below at narrower widths.
+- Round/current participant, HP/current max/temp values, initiative, life state, concentration and nonmechanical effect names are read-only snapshots of authoritative state/order. Missing numbers are not invented zeroes; lairs have no HP/AC.
+- Existing fixed Next emphasis, End/Reset separation, Battle Actions/Next and alternate health/statistics workflows remain. Setup forms remain accessible through existing tabs outside the primary combat view.
+- Original sections use comment anchors for restoration when leaving Live; no cloned native controls, pane-hidden writes, new requests/polling or combat/API/persistence changes.
+- Activity history uses a native keyboard-operable disclosure, initially open to preserve existing visibility; its choice survives state refresh and view changes.
 
-Acceptance: efficient/correctly scoped combat; cover advancement/end/reset, lair/tools restoration and history; essential controls remain on narrow screens. Follow the settled navigation/initiative workflow and scheduled 015 summaries first.
+Executed: complete new JavaScript syntax check, CSS parsing, Python regression AST parsing and isolated Chromium checks at 1440/375 for responsive geometry, draft/hidden-state/node restoration, idempotence, hook context/return, zero HP, safe effect text and lair representation. These are synthetic fixtures, not the full Admin/backend. Prepared four-method full-Admin intercepted-HTTP regressions include native Next single-request/Battle Actions access, authoritative order/empty/end state, history keyboard/refresh and visual captures; they and the full existing suite have not run locally. Existing CI discovery/artifact collection covers them; normal CI applies without [skip ci].
+
+Remaining gates: review covering CI and screenshots; manually accept efficient/scoped combat, current/upcoming readability, advancement/end/reset, independent lair/tools restoration, history, narrow/keyboard operation and retained drafts/roster actions. Existing regressions are retained, not replaced by fixture claims. No authenticated live-server or exhaustive accessibility verification is claimed. Do not close on push alone.
 
 ### SG-TODO-009.7 - Feedback and final usability hardening
 
@@ -83,4 +86,4 @@ Acceptance: actionable visible feedback independent of color/short timeout, keyb
 
 Prepare targeted regressions, retain existing coverage and inspect actual CI. Fixtures are not authenticated/live-server evidence. Record executed checks separately from pending/manual checks, and obtain user acceptance before closing a phase. Review absent/active campaign/setup, initial/delayed state, manual panes, battle transitions, lair gating, refresh/rerender, selection/bulk, missing initiative, saves/failures, connection loss/recovery, destructive confirmations and keyboard/narrow operation as relevant. Do not infer exhaustive per-scenario execution from overall acceptance.
 
-This close-out is documentation-only, runs no fresh tests and includes [skip ci]; no workflow modification or dispatch. No 009.6/009.7 implementation or overall-009 closure is included. Earlier detailed numerical results and failures remain in the immutable history and indexed handovers, not silently relabelled.
+The earlier 009.5 close-out was documentation-only and ran no fresh tests. This 009.6 proposal includes application assets and regressions and therefore uses normal CI, without [skip ci]. No workflow modification/dispatch or overall-009 closure is included. Earlier detailed numerical results and failures remain in the immutable history and indexed handovers, not silently relabelled.

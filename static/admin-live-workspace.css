@@ -1,0 +1,32 @@
+/* Only the Live encounter view changes geometry. Original hidden/filter state wins. */
+body.admin-shell #liveEncounterWorkspace[hidden] { display: none !important; }
+body.admin-shell[data-workflow-view="live"] #liveEncounterWorkspace {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(20rem, 1fr);
+    gap: 1rem;
+    align-items: start;
+}
+.sg-live-primary, .sg-live-tools { min-width: 0; }
+.sg-live-primary > section, .sg-live-tools > section { min-width: 0; max-width: 100%; }
+body.admin-shell[data-workflow-view="live"] .sg-live-tools .et-panels { grid-template-columns: minmax(0, 1fr); }
+body.admin-shell[data-workflow-view="live"] .sg-live-tools .et-header { flex-direction: column; }
+body.admin-shell[data-workflow-view="live"] .sg-live-tools .et-connection { flex: none; width: 100%; }
+body.admin-shell[data-workflow-view="live"] .sg-live-tools .et-control-action,
+body.admin-shell[data-workflow-view="live"] .sg-live-tools .et-quick-actions,
+body.admin-shell[data-workflow-view="live"] .sg-live-tools .lair-config { grid-template-columns: minmax(0, 1fr); }
+.sg-live-overview { border: 1px solid var(--border); background: var(--surface-1, var(--bg-2)); padding: 1rem; margin-bottom: 1rem; }
+.sg-live-current { color: var(--text); font-weight: 600; overflow-wrap: anywhere; }
+.sg-live-participants { display: grid; gap: .5rem; padding-left: 1.75rem; }
+.sg-live-participant { border: 1px solid var(--border); padding: .75rem; min-width: 0; overflow-wrap: anywhere; }
+.sg-live-participant[aria-current="step"] { border-color: var(--accent); border-left: 4px solid var(--accent); }
+.sg-live-participant-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; }
+.sg-live-turn-badge { color: var(--accent); font-weight: 600; }
+.sg-live-stat-line, .sg-live-condition-line { margin: .35rem 0 0; }
+.sg-live-condition-line { color: var(--muted); }
+.sg-live-history { min-width: 0; }
+.sg-live-history > summary { cursor: pointer; font-weight: 600; padding: .75rem; }
+.sg-live-history > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+body.admin-shell[data-workflow-view="live"] #nextBattle.sg-primary-action { font-weight: 700; }
+@media (max-width: 1000px) {
+    body.admin-shell[data-workflow-view="live"] #liveEncounterWorkspace { grid-template-columns: minmax(0, 1fr); }
+}
