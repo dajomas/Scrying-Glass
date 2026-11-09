@@ -31,8 +31,9 @@ def serialized_handler(context, handler, *, role=None, cookie_name=None):
                 result = handler(*args, **kwargs)
                 if inspect.isawaitable(result):
                     result = await result
-                if handler.__name__ == 'feature_summary' and actor(context) and actor(context)['role'] == 'admin' and isinstance(result, dict):
-                    result['displays'] = []
+                if handler.__name__ == 'feature_summary' and isinstance(result, dict):
+                    from .scrying_glass_display_status import campaign_display_status
+                    result.update(campaign_display_status(context, result.get('revision')))
                 if handler.__name__ == 'admin_get_state':
                     result = admin_state(context, result)
                 return copy.deepcopy(result) if isinstance(result, (dict, list)) else result
@@ -92,4 +93,3 @@ def transactional_handler(context, handler, *, role=None, cookie_name=None):
             await context.broadcast()
         return result
     return serialized_handler(context, transaction, role=role, cookie_name=cookie_name)
-

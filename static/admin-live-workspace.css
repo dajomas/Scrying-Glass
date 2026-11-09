@@ -1,4 +1,4 @@
-/* Only the Live encounter view changes geometry. Original hidden/filter state wins. */
+/* Live encounter geometry; original hidden/filter state remains authoritative. */
 body.admin-shell #liveEncounterWorkspace[hidden] { display: none !important; }
 body.admin-shell[data-workflow-view="live"] #liveEncounterWorkspace {
     display: grid;
@@ -8,12 +8,20 @@ body.admin-shell[data-workflow-view="live"] #liveEncounterWorkspace {
 }
 .sg-live-primary, .sg-live-tools { min-width: 0; }
 .sg-live-primary > section, .sg-live-tools > section { min-width: 0; max-width: 100%; }
-body.admin-shell[data-workflow-view="live"] .sg-live-tools .et-panels { grid-template-columns: minmax(0, 1fr); }
-body.admin-shell[data-workflow-view="live"] .sg-live-tools .et-header { flex-direction: column; }
-body.admin-shell[data-workflow-view="live"] .sg-live-tools .et-connection { flex: none; width: 100%; }
-body.admin-shell[data-workflow-view="live"] .sg-live-tools .et-control-action,
-body.admin-shell[data-workflow-view="live"] .sg-live-tools .et-quick-actions,
+body.admin-shell[data-workflow-view="live"] #encounterFeatures .et-panels,
+body.admin-shell[data-workflow-view="live"] #encounterFeatures .et-control-action,
+body.admin-shell[data-workflow-view="live"] #encounterFeatures .et-quick-actions,
 body.admin-shell[data-workflow-view="live"] .sg-live-tools .lair-config { grid-template-columns: minmax(0, 1fr); }
+body.admin-shell[data-workflow-view="live"] #encounterFeatures .et-header { flex-direction: column; }
+body.admin-shell[data-workflow-view="live"] #encounterFeatures .et-connection {
+    flex: none;
+    width: 100%;
+    min-height: 0;
+    height: auto;
+    align-content: start;
+}
+/* The disclosure summary is the visible/accessible log heading; keep native buttons. */
+#liveActivityDisclosure > .row > h2 { display: none; }
 .sg-live-overview { border: 1px solid var(--border); background: var(--surface-1, var(--bg-2)); padding: 1rem; margin-bottom: 1rem; }
 .sg-live-current { color: var(--text); font-weight: 600; overflow-wrap: anywhere; }
 .sg-live-participants { display: grid; gap: .5rem; padding-left: 1.75rem; }

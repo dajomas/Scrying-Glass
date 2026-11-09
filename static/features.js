@@ -4,6 +4,13 @@
     let state=null,summary=null,busy=false,polling=null;
     const editable=['featureTempHp','featureLifeState','deathSuccesses','deathFailures'];
     const notice=text=>{$('featureNotice').textContent=text;};
+    function connectionText(summary,state) {
+        const campaign=state?.active_campaign_id??state?.active_setup?.campaign_id??null;
+        if(summary.display_scope_available===false||!Array.isArray(summary.displays)||
+            (summary.display_campaign_id!==undefined&&summary.display_campaign_id!==String(campaign??'')))
+            return 'Connection status unavailable';
+        return `${summary.displays.length} display(s) connected${summary.displays.length?': '+summary.displays.map(x=>x.username+' ('+x.status+')').join(', '):''}`;
+    }
     async function api(url,method='GET',body) {
         const options={method,cache:'no-store'};
         if(body instanceof FormData) options.body=body;
@@ -67,7 +74,7 @@
             choices($('effectSource'),[...combatants(),...(state?.lairs||[])],true);choices($('effectAnchor'),[...combatants(),...(state?.lairs||[])],true);
             choices($('checkpointSelect'),summary.checkpoints.map(x=>({...x,name:x.name+' — '+new Date(x.created*1000).toLocaleString()})));
             $('featureUndo').disabled=!summary.undo||busy;$('featureUndo').textContent=summary.undo?'Undo: '+summary.undo.label:'Nothing to undo';
-            $('displayConnections').textContent=`${summary.displays.length} display(s) connected${summary.displays.length?': '+summary.displays.map(x=>x.username+' ('+x.status+')').join(', '):''}`;
+            $('displayConnections').textContent=connectionText(summary,state);
             $('downedReminder').hidden=!summary.downed.length;
             $('downedReminder').textContent='Death-save reminder: '+summary.downed.map(x=>x.name).join(', ')+'. Downed characters keep their initiative turns. Damage at 0 HP adds failed saves automatically; record rolled saves manually.';
             if(discardDrafts&&targetScope()===discardDrafts.target){
@@ -77,7 +84,7 @@
             }
             draw(force||targetChanged);
             return true;
-        }catch(error){notice(error.message);return false;}finally{polling=null;finishPoll();}
+        }catch(error){$('displayConnections').textContent='Connection status unavailable';notice(error.message);return false;}finally{polling=null;finishPoll();}
     }
     async function perform(action, savedFields=[]) {
         if(busy)return;busy=true;
