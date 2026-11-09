@@ -4,163 +4,83 @@
 
 ## SG-TODO-009 - Professional, task-focused Admin interface
 
-- Status: in progress; SG-TODO-009.1 through SG-TODO-009.4 are closed after verified validation and user acceptance. Coordinated SG-TODO-012 is also closed. Phases 009.5-009.7 remain proposed and are not implemented.
-- Requested: 2026-11-06. The user requested recording the design suggestions and processing order, agreed staged delivery, and explicitly requested implementation through 009.4 with SG-TODO-012. The user chose option 2 for character HP and approved the two-commit split described below.
-- Priority: incremental usability improvement; no priority relative to other tasks agreed.
-- Owner and deadline: not assigned.
-- Scope: Admin presentation, navigation and interaction clarity; do not change encounter rules, API semantics, permissions or persistence merely to redesign the interface.
-- Later phases and their visual values remain recommendations, not approval of every design decision or authorization to implement them.
+- Status: in progress; SG-TODO-009.1-009.5 are closed after their recorded validation and user acceptance. Coordinated SG-TODO-012 is also closed. 009.6/009.7 remain proposed.
+- Requested: 2026-11-06; incremental redesign, with staged deliveries and subsequent task-specific agreements. 009.5 close-out/sign-off: 2026-11-09.
+- Priority: incremental usability improvement; no priority relative to unrelated work agreed. Owner/deadline not assigned.
+- Scope: Admin presentation, navigation and interaction clarity. Do not change encounter rules, API semantics, permissions or persistence merely to redesign the interface.
+
+The original phase proposals, detailed 009.1-009.4 delivery/verification chronology, numerical evidence, failures and close-out notes remain in the [immutable pre-009.5-close-out plan](https://github.com/dajomas/Scrying-Glass/blob/cfc7b0f16f929041bc6107dd1f895d24492261c5/docs/todo/090-admin-usability-redesign.md) and linked phase handovers below. This current consolidation supersedes stale phase-status wording, not historical evidence or outstanding proposed scope.
 
 ## Preparation and compatibility gates
 
-Before implementation, inspect live templates, stylesheets, loaded enhancement modules, source assembly, tests and CI. Capture representative current screenshots and baseline interactions at desktop and narrow widths; the original suggestions were not a fresh visual audit. Record explicitly when these checks are pending rather than claiming they ran.
+Inspect live templates, stylesheets, loaded modules, source assembly, tests and CI before changes. Capture representative desktop/narrow behavior and report checks not executed rather than inventing a visual audit. Retain dark/gold identity, fixed controls and feedback above the scrolling workspace, active campaign/setup context, drafts/manual preferences and action availability across refresh. Accessibility/responsive checks apply to each phase; 009.7 is consolidation, not permission to defer them.
 
-Retain the dark/gold companion identity. Evaluate quieter neutral surfaces and teal/amber grouping accents against the existing theme. Preserve fixed controls and visible global feedback above the scrolling workspace, active campaign/setup context, manual pane choices, independent lair gating, form values and existing actions across navigation and refresh.
+Related accepted boundaries:
 
-Related accepted work:
+- [SG-TODO-005](050-admin-initial-visibility.md): preserve initial collapse and parent/child controls; replacing visibility behavior needs explicit mapping. 009.5 retains native controllers under a separate workflow filter.
+- [SG-TODO-007](070-monster-button-layout.md) / [250 handover](../handover/250-monster-button-layout.md): accepted single-line row controls, local overflow/focus exposure and removed Damage/Heal/Turn controls stay. Subsequent accepted presentation leaves 10 visible monster and 7 character controls; menus/details as replacements need agreement.
+- [SG-TODO-008](080-source-size-refactors.md): preserve source assembly/size constraints and tracked Admin failure marker.
 
-- [SG-TODO-005: initial section visibility](050-admin-initial-visibility.md): preserve parent/child controls and per-page initial collapse. Replacing toggles requires an explicit visibility mapping.
-- [SG-TODO-007: single-line monster buttons](070-monster-button-layout.md) and [row-layout handover](../handover/250-monster-button-layout.md): preserve single-line controls, local scrolling/focus exposure and removed row Damage/Heal controls. The subsequent user-requested Turn removal leaves 10 visible monster-row controls and 7 visible character-row controls. Menus/details as alternatives require agreement.
-- [SG-TODO-008: source-size refactors](080-source-size-refactors.md): preserve source assembly and code-size constraints; do not overwrite the tracked Admin script failure marker.
+## Processing order and phase status
 
-## Agreed staged processing order
-
-Process phases 1 through 7 in order, reviewing each coherent increment before structural changes. Dependencies recommend sequence, not delivery of the whole redesign in one commit. Accessibility and responsive checks apply to every phase; phase 7 is consolidation, not permission to defer basic usability.
-
-| Order | Subtask | Deliverable | Dependencies |
+| Order | Subtask | Deliverable/status | Dependencies |
 |---|---|---|---|
-| 1 | SG-TODO-009.1 | Shared visual foundations (closed) | Baseline inspection |
-| 2 | SG-TODO-009.2 | Header and action hierarchy (closed) | 009.1 |
-| 3 | SG-TODO-009.3 | Consistent panels and forms (closed) | 009.1, 009.2 |
-| 4 | SG-TODO-009.4 | Scannable rosters and contextual bulk actions (closed) | 009.3; agreed row-control scope |
-| 5 | SG-TODO-009.5 | Workflow-based navigation | 009.2-009.4; agreed visibility mapping |
-| 6 | SG-TODO-009.6 | Focused live encounter workspace | 009.4, 009.5 |
-| 7 | SG-TODO-009.7 | Feedback, responsive and accessibility hardening | 009.1-009.6 |
+| 1 | SG-TODO-009.1 | Shared visual foundations - closed | Baseline inspection |
+| 2 | SG-TODO-009.2 | Header/action hierarchy - closed | 009.1 |
+| 3 | SG-TODO-009.3 | Consistent panels/forms - closed | 009.1/009.2 |
+| 4 | SG-TODO-009.4 | Rosters/contextual bulk actions - closed | 009.3; agreed row-control scope |
+| 5 | SG-TODO-009.5 | Workflow navigation - closed 2026-11-09 | 009.2-009.4; agreed visibility mapping; merged 018 baseline |
+| 6 | SG-TODO-009.6 | Focused live encounter workspace - proposed | 009.4/009.5; scheduled 015 first |
+| 7 | SG-TODO-009.7 | Feedback/responsive/accessibility consolidation - proposed | 009.1-009.6 |
+
+The [agreed cross-task sequence](115-admin-delivery-sequence.md) is 018, 009.5, 015, 009.6, 009.7, coordinated 016/017. 018 and 009.5 are now closed; the user explicitly requested moving to 015. Sequencing alone is not approval of unspecified designs or later external writes.
 
 ### SG-TODO-009.1 - Shared visual foundations
 
-Status: closed (completed), 2026-11-06, at the user's explicit request after corrective local/CI verification and acceptance of notification behaviour/foundation consistency on the correct server. Initial implementation e632eba99e00695c7f002148bde8c0aee386d4fe; correction 9a96b5a125c0b22b18218769c9c5cf2508a60ac0. See [full implementation and close-out history](../handover/260-admin-visual-foundations.md).
-
-- Reusable tokens for surfaces, borders, typography, spacing, control heights and radii.
-- Quieter panels, subtle borders/minimal shadows and restrained campaign/character teal and battle/monster amber. Preserve appropriate fantasy branding without decorating operational controls excessively.
-- Proposed spacing scale 4/8/12/16/24/32 px, coherent UI type and geometry, subject to visual review.
-- Consistent primary accent, red destructive operations and non-colour-only grouping/state.
-
-Acceptance: panels, tables, forms and modals share visual rules; text/focus/state remain readable; theme and combatant/display colours are not accidentally overridden.
+Closed 2026-11-06 on verified corrective local/CI evidence and user acceptance. Original implementation e632eba99e00695c7f002148bde8c0aee386d4fe; correction 9a96b5a125c0b22b18218769c9c5cf2508a60ac0. [260 handover](../handover/260-admin-visual-foundations.md) retains full evidence. Accepted tokens/surfaces/borders/type/spacing/control geometry, restrained teal/amber and dark/gold identity, readable focus/states, and unchanged combatant/display colors. The proposed 4/8/12/16/24/32 spacing scale remains part of that historical design record, not a new requirement.
 
 ### SG-TODO-009.2 - Header and action hierarchy
 
-Status: closed (completed), 2026-11-06, at the user's request after covering corrective local/CI success and visual/workflow acceptance. Initial implementation a6b910d94c3b846e128d01bc6baa10b48228770f; test-only correction aa82b45629cce7b49164d5ad7c1304481f20bbd7. See [full implementation and close-out history](../handover/270-admin-header-hierarchy.md).
-
-- Compact fixed header: product, active campaign, saved setup and encounter state/round.
-- Predictable context/navigation/global-actions/feedback areas; infrequent global actions in labelled More where appropriate.
-- Entity-local setup and backup operations remain local.
-- One dominant current-task action, quieter secondary actions, separated End and Reset All in a labelled danger section.
-
-Acceptance: context/feedback remain visible while scrolling; wrapped controls/messages do not overlap the workspace; global/local actions are distinct and keyboard accessible.
+Closed 2026-11-06 after verified correction and user acceptance. Implementation a6b910d94c3b846e128d01bc6baa10b48228770f; test correction aa82b45629cce7b49164d5ad7c1304481f20bbd7. [270 handover](../handover/270-admin-header-hierarchy.md) retains full history. Compact fixed context/actions/feedback, More disclosure, local entity operations, state-dependent primary emphasis and separate End/Reset danger behavior are accepted; preserve keyboard access and workspace separation.
 
 ### SG-TODO-009.3 - Consistent panels and forms
 
-Status: closed (completed), 2026-11-06, after verified successful local and CI validation of implementation 588831fb1ece198fefee3a2422410123a8f1f175 and the user's explicit desktop/narrow visual and workflow acceptance. See [implementation, verification and close-out](../handover/280-admin-panel-forms.md).
-
-- Standardize anatomy: concise title, optional description, related fields, main action and secondary actions.
-- Task-oriented labels: Add character for entry; Characters for the roster.
-- Labels above inputs, clear mandatory fields and related control groups.
-- Keep common actions visible; use clearly named expandable import/export, backup or advanced sections where appropriate, not concealment merely to reduce button counts.
-
-The increment groups entry/setup controls using existing nodes, adds descriptions/action areas and native background/.monster disclosures initially open. Existing viewer/backup disclosure defaults and visible CSV/setup import controls remain. It does not implement roster restructuring, tabs, encounter-workspace restructuring or revised feedback timing.
-
-Acceptance: purposes/required values are clear; disclosures expose accurate accessible state; forms retain values, validation, existing IDs/handlers and submit behaviour. These phase gates are accepted on covering local/CI evidence and user visual/workflow confirmation, not on syntax checks alone. Retained fixture/live-server limitations are documented in the handover.
+Closed 2026-11-06 after covering local/CI and desktop/narrow user acceptance of 588831fb1ece198fefee3a2422410123a8f1f175. [280 handover](../handover/280-admin-panel-forms.md). Accepted anatomy, task labels, labels/required markers, original-node grouping and accessible native disclosures preserve values/validation/IDs/handlers. Common import controls remain discoverable. This phase did not itself deliver tabs or focused live layout.
 
 ### SG-TODO-009.4 - Scannable rosters and contextual bulk actions
 
-Status: closed (completed), 2026-11-06, at the user's explicit request after covering successful local/CI verification and desktop/narrow visual/workflow acceptance, together with SG-TODO-012. See [roster delivery, verification and close-out](../handover/310-admin-rosters.md).
-
-- Structured rows with clear names, aligned numeric values, concise textual status and immediately visible relevant HP/initiative/combat state.
-- Consider search/filter and collection-level Add; separate table-wide and row controls.
-- Show selected counts/contextual bulk actions, retaining Select all/Clear selection.
-- Evaluate row expansion/details for secondary information. A frequent visible action plus overflow is an option, not approval to replace accepted single-line controls.
-
-Approved two-commit delivery: (1) roster presentation, selected counts/Clear selection, contextual mutation availability and local scrolling, preserving current HP editing; (2) SG-TODO-012 option 2, read-only character current/max HP like Monsters, with both values editable through the existing Edit dialog, save/reload coverage and corrected README/User Guide instructions. The user explicitly selected option 2 and approved this split. Increment 1 alone did not remove inline HP inputs or implement 012; the second increment now supplies that workflow. No character HP mechanics, provider/API/persistence behaviour or SG-TODO-013 keyboard remapping is changed.
-
-Search/filter, collection Add relocation, row expansion and action menus were considered and not included in the accepted delivery; they are not unfinished requirements for this closed scope. No filtered selection scope is introduced. Selection commands remain available at zero selected while mutation options are disabled. The subsequently requested Turn-control removal is accepted and leaves other row actions intact. Both approved increments and the Turn follow-up now have covering local/CI results and explicit user acceptance.
-
-Acceptance: scan/select/edit/bulk workflows remain without accidental mutations; selection survives or resets predictably on refresh; keyboard focus is exposed within local scrollers; removed row HP-change controls stay removed. The user accepted the roster presentation, selection/bulk workflows, Edit-dialog HP save/reload and absence of Turn, then requested closure of both tasks.
+Closed 2026-11-06 with coordinated 012 after covering local/CI, user desktop/narrow acceptance and explicit closure. [310 handover](../handover/310-admin-rosters.md). First roster increment 834c4c3d0a7d963bb44b17dc6346447ec18dc21b; 012 option-2 HP increment 90dcfab919556ac94d05c44c0ec0e775fab32f9d; Turn removal d91f73bfe121870296a1df79f58c58c21bcaeb59. Accepted read-only current/max character HP with existing Edit-dialog editing, structured/scannable rows, counts/Clear selection, contextual mutation availability and local scrolling. Selection commands stay available at zero selected. Search/filter, Add relocation, row expansion and action menus were considered but excluded from the closed agreed scope; do not manufacture unfinished requirements. HP mechanics/provider/API/persistence and later 013 keyboard mapping were not changed by these deliveries.
 
 ### SG-TODO-009.5 - Workflow-based navigation
 
-Status: proposed; tabs and visibility replacement require agreement.
+Closed 2026-11-09 on the user's explicit sign-off and request to close/move on. [Current completed contract](095-admin-workflow-navigation.md) and [350 close-out](../handover/350-admin-workflow-navigation.md) retain scope/evidence. Campaign/preparation/live tabs use a separate view filter, native pane controls and independent lair/tools behavior, retained context/drafts/files/selections, keyboard semantics and local scrolling. Accepted follow-ups cover bonus placement/help removal, species-to-blank-name default, missing-bonus overwrite/default zero and concise lookup copy.
 
-- Proposed Campaign (selection, characters, backups), Battle preparation (setups, monsters, initiative, lair) and Live encounter (order, participants, tools, log) views.
-- Prefer compact tabs over a large sidebar initially; active campaign/setup context visible in every view.
-- Reduce global toggle clutter only after explicitly mapping manual visibility and automatic battle behaviour.
-
-Acceptance: discoverable destination for every capability; changing views does not submit/lose edits/mutate encounters; active tab/focus accessible; initial collapse, dependent controls, lair gating and tools restoration preserved or replaced under explicit agreement.
+Successful CI 42616924220 attempt 1 covers c7c51725c5ac7724fc78ffd1931173cd1d19e0b8; publication 1c1c6323b119b1a7e71a93571985c214183819de. The user's later accepted wording revision cfc7b0f16f929041bc6107dd1f895d24492261c5 changes template and matching test constant; no separate covering CI for that revision is supplied or claimed. Closure records user acceptance of that copy revision, not invented post-edit test execution.
 
 ### SG-TODO-009.6 - Focused live encounter workspace
 
-Status: proposed.
+Status: proposed; not started by 009.5 closure.
 
-- Turn order/participants get the largest area; tools alongside on wide screens and below on narrow.
-- Identify round/active participant, emphasize Next and keep HP/conditions/upcoming turns scannable.
-- Collapsible activity log below; setup forms outside the primary combat view without losing access.
+- Give turn order/participants the largest area; tools alongside on wide screens and below on narrow.
+- Identify round/current participant, emphasize Next, and keep HP/conditions/upcoming turns scannable.
+- Collapsible activity log below, setup forms outside the primary combat view without losing access.
 - Preserve Next from Battle Actions and alternate damage/healing/statistics workflows.
 
-Acceptance: efficient/correctly scoped combat; cover advancement, end/reset, lair behaviour, tools restoration and activity history; narrow layouts retain essential controls.
+Acceptance: efficient/correctly scoped combat; cover advancement/end/reset, lair/tools restoration and history; essential controls remain on narrow screens. Follow the settled navigation/initiative workflow and scheduled 015 summaries first.
 
 ### SG-TODO-009.7 - Feedback and final usability hardening
 
 Status: proposed.
 
-- Distinguish brief success from actionable errors. Proposed success expiry and persistent errors require explicit review of the current five-second global-message rule.
-- Near-field validation; rejected Join battle identifies missing initiative and the affected combatant/field.
-- Persistent connection problems until resolved; destructive confirmations identify affected targets.
-- Check responsive stacking, local overflow, zoom, labels, contrast, focus/order, tab/menu semantics and announcements; avoid disruptive movement when feedback appears.
+- Distinguish brief success from actionable errors; proposed expiry/persistence changes need explicit review of existing five-second global-message behavior.
+- Near-field validation, including affected combatant/missing initiative for rejected Join battle.
+- Persistent connection problems until resolved and target-specific destructive confirmations.
+- Responsive/local overflow/zoom/labels/contrast/focus/tab/menu/announcement checks; avoid message-induced overlap or disruptive movement.
 
-Acceptance: actionable visible feedback without colour/short-timeout dependence or overlap; keyboard-only and desktop/narrow usability.
+Acceptance: actionable visible feedback independent of color/short timeout, keyboard-only and desktop/narrow usability.
 
 ## Validation and delivery requirements
 
-Prepare targeted regressions, retain existing tests and verify actual CI coverage. Fixtures are not authenticated live-server evidence. Review campaign/setup active/inactive; initial/delayed state; manual panes; start/end/reset; lair enabled/disabled; refresh/rerender; row selection/filter/bulk; missing initiative; successful/failed saves; connection loss/recovery; destructive confirmations; keyboard/narrow layouts.
+Prepare targeted regressions, retain existing coverage and inspect actual CI. Fixtures are not authenticated/live-server evidence. Record executed checks separately from pending/manual checks, and obtain user acceptance before closing a phase. Review absent/active campaign/setup, initial/delayed state, manual panes, battle transitions, lair gating, refresh/rerender, selection/bulk, missing initiative, saves/failures, connection loss/recovery, destructive confirmations and keyboard/narrow operation as relevant. Do not infer exhaustive per-scenario execution from overall acceptance.
 
-Separate executed results from pending/manual checks. Obtain user visual/workflow acceptance before closing; commits alone do not complete phases. Update user documentation, TODO and handover proportionally with each increment.
-
-## Retained delivery and verification history
-
-This section consolidates duplicated narrative; the linked 260/270 handovers retain detailed preparation checks, failures, corrective reasoning, reviewed log locations and limits. Earlier statements that 009.3-009.7 were proposed describe the state at 009.1/009.2 delivery, not current phase status.
-
-Original planning on 2026-11-06 changed documentation only and explicitly used [skip ci]. It did not implement the design or validate a browser. The generated final-interface impression remained a concept, not an approved specification. The standing documentation-only skip rule was adopted later; historical deliveries follow their then-applicable instructions.
-
-009.1 initial CI run 42209803055 attempt 1 covered e632eba99e00695c7f002148bde8c0aee386d4fe; evidence 21aa823a6381768c7f2a081597262b7b57d0bfc5 under ci-results-42209803055-attempt-1 reported 1,033 unittest tests OK, 43 pytest passes and four uploaded screenshots. Review identified blank notice strips and ambiguous scroll position. The correction collapses whitespace-only notices without changing timers/ARIA and resets screenshot scroll/asserts header separation; it did not establish a production header-overlap bug.
-
-009.1 corrective source 9a96b5a125c0b22b18218769c9c5cf2508a60ac0 passed local-tests-9a96b5a/run-20261106T122845Z-ogPIRn at 01bd4b232c51aefb7ee185c4099b0e3c381692c7 and CI 42216373147 attempt 1, evidence 7adfe04748b300a3f6686af6714121ea8a0853bb under ci-results-42216373147-attempt-1: configured steps successful, six foundations and four notice Node tests passed, 1,035 unittest tests OK and 43 pytest passes. User confirmed correct-server notification behaviour and foundation consistency. The earlier persistent-strip report came from viewing the wrong server; no extra correction was needed. Closure implied neither a full screen-reader nor exhaustive live-combat audit.
-
-009.2 delivered fixed-header context, original moved Start/Next/End, state-dependent primary emphasis, More, a single-line pane scroller and a closed Reset All danger section. Local evidence eeff8880bceb9e63b2e8a4f8ad9ab40f48878abe and original CI 42227065090 attempt 1 at 42deda5a3f884a9e480b6d37808da59eb7bb5d48 showed a test visibility-precondition error, not an application defect. The correction conditionally opens Campaign/Character based on aria-expanded, verifies visibility, then retains the draft/feedback/layout assertions rather than forcing fields or changing visibility semantics.
-
-009.2 corrective source aa82b45629cce7b49164d5ad7c1304481f20bbd7 passed local evidence 1fcf6f726ccdad8b6315ca2f24cd91fc94d206d0, folder local-tests-aa82b45/run-20261106T141733Z-jal8gK, with overall/full-run summary exits zero, all six header methods passed, repeated suite 1,041 tests OK, 675 connections/zero without explicit close and 43 pytest passes. CI 42232501137 attempt 1 covered that exact source; evidence b4d1f5f69519066ccab88709f93aa1eef643c42f under ci-results-42232501137-attempt-1 reports workflow/job/configured-step success, six header methods passed, 1,041 unittest tests OK, 43 pytest passes and ten uploaded screenshots. Upload/collection is not assistant visual inspection. User visual/workflow acceptance was already given and was not requested again. Original failed results are historical diagnosis, not closure evidence. Later runner cleanup d0a1f3c2781e882cb651a4cf9f6a2b85e22ebc71 is outside that corrective run's coverage. Original close-outs were documentation-only, executed no fresh tests and did not request a skip under the then-applicable policy; no new run outcome was inferred.
-
-009.3 preparation on 2026-11-06 passed enhancement JavaScript syntax, CSS stylesheet parsing and regression Python AST parsing. Full application/browser execution and visual baseline/after review were not performed during preparation. Existing CI discovery/upload covers the new regression module and screenshot paths. The user requested implementation and subsequently a commit with CI. That mixed delivery omitted [skip ci]; its later verified results and acceptance are recorded below and in the 280 handover.
-
-## SG-TODO-009.3 verified close-out - 2026-11-06
-
-Implementation: 588831fb1ece198fefee3a2422410123a8f1f175. Successful local evidence: b000d0fc753ce6b6d430b10b6e32f07c6c8482bd, folder local-tests-588831f/run-20261106T152634Z-3P6S1l. Completed full run and overall exit are zero; all six panel/forms methods explicitly passed; repeated connection-audit suite reports 1,053 tests OK, 676 connections and zero without explicit close; pytest reports 43 passes. Main unittest log was truncated before its final summary, so that count comes from the complete repeated audit log.
-
-Successful CI: Branch tests run 42242916048 attempt 1, covering the exact implementation SHA on features/perplexity. Evidence: 6f57c24e37e65b15675548d1cd411be0f3a69ea7 under ci-results-42242916048-attempt-1. Workflow/job/configured steps succeeded; six panel/forms methods explicitly passed; main unittest reports 1,053 tests OK, pytest 43 passes and repeated connection audit 1,053 tests OK with 676/0 connections. Four new 009.3 screenshots were included in 14 uploaded/collected fixture images. See the handover for reviewed log locations and limits.
-
-The user explicitly accepted SG-TODO-009.3 in response to desktop/narrow visual and workflow acceptance on 2026-11-06. This is user acceptance, not an assistant-executed authenticated live-server or exhaustive accessibility/combat audit. Only 009.3 closed in that update; 009.1/009.2 stayed closed and overall SG-TODO-009 stayed in progress. Statements at that close-out that 009.4-009.7 and SG-TODO-011 were proposed describe that historical point; subsequent task records supersede them.
-
-That close-out changed documentation only, ran no new tests and left application/tests/workflows unchanged. README.md and HANDOVER.md remained accurate without edits. Its commit included [skip ci], with no separate workflow dispatch or inferred new outcome.
-
-## SG-TODO-009.4 increment 1 - 2026-11-06
-
-The first of two user-approved commits includes roster presentation and selection context only, retaining inline character HP. New assets, source/browser regressions, template wiring and the indexed handover accompany it. Preparation passed JavaScript syntax, stylesheet parsing, regression AST and simplified Chromium checks of native option availability, selected count, underlying selection clearing, focus return, inline HP and existing Edit handler/idempotence. At that preparation stage, the full new module/suite, covering CI, fresh full-Admin screenshots and user visual/workflow acceptance were pending. README/User Guide inline-HP descriptions remained correct for increment 1 and were subsequently updated with the second increment. This historical first increment alone did not complete SG-TODO-012 or implement SG-TODO-013. The verified close-out below supersedes that pending status.
-
-## SG-TODO-009.4 and SG-TODO-012 verified close-out - 2026-11-06
-
-Roster increment 1: 834c4c3d0a7d963bb44b17dc6346447ec18dc21b. HP increment 2: 90dcfab919556ac94d05c44c0ec0e775fab32f9d. Turn-control follow-up: d91f73bfe121870296a1df79f58c58c21bcaeb59. Covering CI run 42276181187 attempt 1 succeeded against d91f73b; evidence 386beabbcd6e39378014d4a86df24dd4d68f5b75 under ci-results-42276181187-attempt-1. Main unittest and repeated audit report 1,066 tests OK; pytest 43 passed; audit 681 connections/zero without explicit close. Relevant roster, HP save/rejection/retry/reload, keyboard and Turn-removal methods explicitly passed. Eighteen fixture images were uploaded, including both roster widths; upload is not assistant visual inspection.
-
-Completed local suite=all tested 386beabbcd6e39378014d4a86df24dd4d68f5b75; evidence 423ab05f08b4ec9f8d5e7c30d1bf600ea07ffb63 under local-tests-386beab/run-20261106T191207Z-NSLlFY. completed=1 and overall/all 48 command exits zero; pytest 43 passed; complete repeated audit reports 1,066 tests OK and 681/0 connections.
-
-The user explicitly accepted desktop/narrow presentation, selection/bulk workflows, Edit-dialog character HP save/reload and absence of Turn, then requested both items completed and closed. This is user acceptance, not assistant authenticated-server, database persistence or exhaustive accessibility/combat execution. Both 009.4 and 012 are closed for the agreed scope. Overall 009 remains in progress; 013 and 009.5-009.7 remain separate and unchanged.
-
-This close-out changes documentation only and runs no new tests. README/User Guide and HANDOVER.md remain accurate without edits; application, tests and workflows are unchanged. Commit message includes [skip ci]; no separate dispatch or inferred new run result. Detailed evidence paths, limitations and implementation history remain in the [310 handover](../handover/310-admin-rosters.md).
+This close-out is documentation-only, runs no fresh tests and includes [skip ci]; no workflow modification or dispatch. No 009.6/009.7 implementation or overall-009 closure is included. Earlier detailed numerical results and failures remain in the immutable history and indexed handovers, not silently relabelled.

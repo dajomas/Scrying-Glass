@@ -42,13 +42,15 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 
 34. [5e.tools initiative extraction correction: A.1 accepted, historical A.2 preparation](docs/handover/335-fivetools-initiative-correction.md)
 35. [Combined lookup, Refresh and roster correction delivery/validation](docs/handover/340-combined-monster-lookup.md)
-36. [Admin workflow navigation: implementation prepared, validation pending](docs/handover/350-admin-workflow-navigation.md)
+36. [Admin workflow navigation: closed after CI and user sign-off](docs/handover/350-admin-workflow-navigation.md)
 
 ## Current validation status - 2026-11-09
 
 SG-TODO-018 is completed and closed at the user's explicit request after review of the remaining actions. A.1/A.2/A.3 acceptance remains; corrective CI 42526295799 attempt 1 and the user's successful roster visual check cover the final correction. See the [completed contract](docs/todo/180-monster-initiative-bonus.md), [reconciled correction plan](docs/todo/185-monster-correction-plan.md) and [close-out evidence and limitations](docs/handover/340-combined-monster-lookup.md#sg-todo-018-close-out---2026-11-08). The completed branch was subsequently merged into features/perplexity at b0630effbe99db8a40b27bb00cca007b198d4055; the earlier close-out itself did not perform that merge. No new merge-CI result is claimed here.
 
-SG-TODO-009.5 implementation is prepared against that baseline, with execution, covering CI and user acceptance pending. See [350](docs/handover/350-admin-workflow-navigation.md). No phase is closed by this delivery proposal.
+SG-TODO-009.5 is completed/closed on the user's 2026-11-09 sign-off and request to close. Successful CI 42616924220 attempt 1 covers c7c51725, including the form/overwrite/copy refinements. The accepted later manual copy revision cfc7b0f1 updates template and matching test expectation; no separate covering CI result for that revision was supplied. See [350](docs/handover/350-admin-workflow-navigation.md) for full evidence and limits. Overall SG-TODO-009 remains in progress; 009.6/009.7 remain proposed.
+
+The next scheduled item is [SG-TODO-015](docs/todo/150-battle-actions-combatant-statistics.md). Live selector/row inspection has started at the user's request; no application/test implementation or validation is delivered by this documentation-only transition.
 
 ## Required update convention
 
