@@ -43,7 +43,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 34. [5e.tools initiative extraction correction: A.1 accepted, historical A.2 preparation](docs/handover/335-fivetools-initiative-correction.md)
 35. [Combined lookup, Refresh and roster correction delivery/validation](docs/handover/340-combined-monster-lookup.md)
 36. [Admin workflow navigation: closed after CI and user sign-off](docs/handover/350-admin-workflow-navigation.md)
-37. [Battle Actions combatant statistics: implementation prepared, validation pending](docs/handover/360-battle-actions-combatant-statistics.md)
+37. [Battle Actions combatant statistics: closed after CI and user sign-off](docs/handover/360-battle-actions-combatant-statistics.md)
 
 ## Current validation status - 2026-11-09
 
@@ -51,7 +51,7 @@ SG-TODO-018 is completed and closed at the user's explicit request after review 
 
 SG-TODO-009.5 is completed/closed on the user's 2026-11-09 sign-off and request to close. Successful CI 42616924220 attempt 1 covers c7c51725, including the form/overwrite/copy refinements. The accepted later manual copy revision cfc7b0f1 updates template and matching test expectation; no separate covering CI result for that revision was supplied. See [350](docs/handover/350-admin-workflow-navigation.md) for full evidence and limits. Overall SG-TODO-009 remains in progress; 009.6/009.7 remain proposed.
 
-SG-TODO-015 now has a prepared implementation/test/documentation increment for read-only selector summaries. Complete-module syntax/AST and simplified Chromium preparation checks passed as detailed in [360](docs/handover/360-battle-actions-combatant-statistics.md). Full-Admin regression execution, covering CI and user acceptance remain pending; no completion or new workflow outcome is claimed.
+SG-TODO-015 is completed/closed after successful CI 42624239041 attempt 1 covering d8f4f57b26325623fa662388102094cc1cb35fcd on features/perplexity, including the alignment correction, and the user's explicit 2026-11-09 sign-off and TODO close-out request. Evidence was published at 1214020a14e9e99b75a9ce8444eb7ce6051b2671 under ci-results-42624239041-attempt-1. See [360 close-out and evidence limits](docs/handover/360-battle-actions-combatant-statistics.md#close-out---2026-11-09). The documentation-only close-out includes [skip ci] and claims no new test execution. 009.6 is next in the agreed sequence but is not started by this update.
 
 ## Required update convention
 

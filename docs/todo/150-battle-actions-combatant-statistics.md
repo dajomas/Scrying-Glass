@@ -3,36 +3,29 @@
 [Back to TODO index](../../TODO.md)
 
 - Task: SG-TODO-015
-- Status: in progress; implementation, targeted regressions and documentation prepared for exact GitHub approval. Full-Admin execution, covering CI and user acceptance remain pending; not completed.
-- Recorded: 2026-11-06; implementation preparation 2026-11-09 after 009.5 closure and the user's explicit request to implement/push.
-- Priority: current in the [agreed sequence](115-admin-delivery-sequence.md), after closed 018/009.5 and before 009.6. No owner/deadline assigned.
-- Delivery/evidence: [360 handover](../handover/360-battle-actions-combatant-statistics.md). No implementation SHA or successful covering CI is invented before delivery.
+- Status: completed and closed, 2026-11-09, after verified covering CI, explicit user sign-off and the user's request to update/commit the TODO list.
+- Recorded: 2026-11-06; implementation and alignment correction delivered on features/perplexity, 2026-11-09.
+- Delivery: d8f4f57b26325623fa662388102094cc1cb35fcd includes the final alignment correction and regression coverage.
+- Covering CI: Branch tests run 42624239041, attempt 1, completed successfully on that exact SHA and branch.
+- Published evidence: ci-results-42624239041-attempt-1 at 1214020a14e9e99b75a9ce8444eb7ce6051b2671.
+- Detailed evidence and limits: [360 handover](../handover/360-battle-actions-combatant-statistics.md#close-out---2026-11-09).
 
-## Implemented scope in this proposal
+## Accepted scope
 
-Show available AC, current HP and HP MAX immediately below each selected Battle Actions target and Reaction source. Ordinary/reaction/statistics-reduction target rows share the same enhancement. Example: AC 14 · HP 0 · HP MAX 20. Omit unavailable/null/undefined/non-numeric/non-finite fields; preserve numeric zero. Empty selection, removed combatant, all-unavailable data, hidden modal and a changed campaign/setup clear the summary rather than retaining stale values.
+Show available AC, current HP and HP MAX immediately below each selected Battle Actions target and Reaction source. Ordinary, reaction and statistics-reduction target rows share the enhancement. Missing/null/undefined/non-numeric/non-finite fields are omitted; actual numeric zero is preserved. Cleared selections, removed combatants and entirely unavailable data leave no stale summary.
 
-Summaries are read-only text, linked descriptions/live regions with stable selector names. Selection changes, dynamic rows, same-scope state refresh, Apply refresh and modal reopen are handled without rebuilding controls, changing selected values, disabled/Applied state, input drafts, action payloads, eligibility or resolution. Existing native scope-close behavior remains; the enhancement also suppresses cross-scope statistics until a new modal session. No backend/API/schema/persistence/provider/initiative change, core fragment edit or failure-marker overwrite.
+Read-only summaries retain selector names and description/live-region associations. Selection changes, dynamic rows, same-scope refresh, Apply refresh, reopen and scope changes are handled without changing drafts, selected values, existing Applied locks, eligibility, action serialization or resolution. No backend/API/schema/persistence/provider/initiative change or core fragment/failure-marker edit is part of this task.
 
-## Inspection and preparation
+The final CSS correction aligns labels, control tops and control heights independently of summary presence or wrapping. Critical hit is centered, Remove sits on the control track, Applied has a separate track and narrow fields stack with their own summaries. Target and Reaction source keep their original controls; no wrapper/control replacement is delivered.
 
-Reviewed live action/reaction/reduction row builders in static/admin/060-source.js, core load/Apply behavior, modal markup, admin/modal styles, statistics scope-close and lair render hooks, battle-turn and Next extensions, existing browser fixtures, asset ordering and CI discovery. New deferred assets compose the existing scryingLairsRender hook, preserving its arguments/context/return, and use bounded DOM observers with self-observation disconnected. No polling, network requests or control-value writes.
+## Acceptance and evidence
 
-Executed checks: complete new JavaScript module Node syntax check; new stylesheet parsing; AST parsing of the complete six-method regression module. Isolated real Chromium checks passed for partial/missing/zero fields, independent selectors, clearing, refresh, scope suppression, draft/disabled retention, existing description preservation, hook return, idempotence, dynamic row insertion/removal and below-selector geometry at 1440/375, with no page errors. These are simplified synthetic DOM/state fixtures, not the full Admin/backend.
+The user explicitly signed off on SG-TODO-015 on 2026-11-09 after supplying the covering evidence, then requested TODO close-out with skip CI. Published run.json confirms completed/success for the exact implementation SHA; jobs.json confirms successful syntax/import, Python suite including browser fixtures, pytest, JavaScript, standalone browser/audit and visual-artifact-upload steps. The prior covering-CI and user-acceptance gates are therefore resolved for the agreed task scope.
 
-Prepared full-Admin intercepted-HTTP coverage uses production assets and native row/open/Apply helpers: selection/clearing, reaction/reduction rows, missing/invalid/zero/deleted cases, idempotence, actual Apply payload plus refreshed locked row/draft retention, scope/reopen/removal and desktop/narrow placement/description/screenshot checks. The six methods (one source, five browser) were not executed as a complete module locally. Existing unittest/standalone audit discovery and SG_VISUAL_ARTIFACTS upload include them; no workflow edits required.
+Preparation syntax/AST and isolated Chromium checks remain historical preparation evidence, not the basis for claiming full live-server coverage. Full-Admin tests use intercepted HTTP/fixtures; neither CI metadata nor user sign-off is described as password-login, live TCP/provider, process-restart or exhaustive accessibility verification. No new tests are run for this documentation-only close-out.
 
-## Acceptance and delivery gates
+## Sequence and retained history
 
-- Approve/deliver the complete implementation/test/documentation payload on features/perplexity with normal CI, without [skip ci].
-- Review covering full-suite/CI results and fixture screenshots; fix any regressions while retaining existing Apply/Next/modal/turn/security tests.
-- Manually verify readable placement for character/monster selections, multiple independent rows, missing and zero values, selection changes/clearing, refresh/Apply locking and narrow keyboard operation.
-- Obtain task-specific user visual/workflow acceptance before closure. Simplified/intercepted fixtures are not password-login, live TCP/provider, database/process-restart or exhaustive accessibility evidence.
+018 and 009.5 remain closed. Overall SG-TODO-009 remains in progress; 009.6/009.7 remain proposed. Under the [agreed sequence](115-admin-delivery-sequence.md), 009.6 is next; this close-out does not start it or approve its implementation.
 
-The 009.5 transition was documentation-only and ran no tests; this mixed feature proposal supersedes inspection-only delivery status, not historical evidence. 009.5 stays closed. Overall 009 remains in progress and 009.6/009.7 stay proposed.
-
-## Alignment follow-up - 2026-11-09
-
-Status remains in progress: CSS-only correction and two full-Admin regression methods prepared for bound approval; covering execution/CI and user visual acceptance pending. Shared label/control/summary tracks keep controls aligned independently of summary length or absence. Reaction source uses the same arrangement; mobile fields stack with their summaries. No JavaScript wrapper or control replacement is included. See [correction evidence and limits](../handover/360-battle-actions-combatant-statistics.md#alignment-correction---2026-11-09).
-
-Executed: stylesheet parsing, regression AST parsing and isolated Chromium ordinary/reaction layout checks at 1440/375. Not executed: new full-Admin regression module, existing full suite or covering CI. Normal CI remains required. Acceptance must verify aligned label baselines and control edges/heights, centered Critical hit, Remove placement, readable wrapped/missing summaries, statistics-reduction rows, retained drafts/Applied locks and narrow keyboard operation. Do not close SG-TODO-015 solely on push or isolated fixture success.
+The [pre-close-out task record](https://github.com/dajomas/Scrying-Glass/blob/1214020a14e9e99b75a9ce8444eb7ce6051b2671/docs/todo/150-battle-actions-combatant-statistics.md) retains the detailed preparation history and formerly pending gates. They are superseded by this dated close-out, not silently treated as earlier verified results. No owner or deadline is added. The close-out commit is documentation-only and includes [skip ci].

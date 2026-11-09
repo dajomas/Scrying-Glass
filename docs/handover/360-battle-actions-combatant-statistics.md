@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated: 2026-11-09. Task: [SG-TODO-015](../todo/150-battle-actions-combatant-statistics.md). Status: implementation prepared for GitHub delivery; covering full-Admin execution/CI and user acceptance pending. No completed status, implementation commit SHA or workflow outcome is claimed before it exists.
+Updated: 2026-11-09. Task: [SG-TODO-015](../todo/150-battle-actions-combatant-statistics.md). Status: completed and closed after covering CI, explicit user sign-off and the user's request to commit the TODO close-out.
 
 ## User workflow
 
@@ -12,37 +12,31 @@ Cleared selection, deleted combatants and entirely unavailable statistics leave 
 
 ## Implementation and compatibility
 
-New static/battle-action-statistics.js and .css load after existing enhancements in 190_document_end.html. The module uses original selectors/labels, adds a text-only paragraph immediately after each target/source select, and preserves existing aria-describedby references. Each summary is a polite atomic status region. Where no explicit selector name exists, Target/Reaction source aria-label preserves that name instead of letting statistics become part of the label. Existing explicit aria-label/labelledby is retained.
+static/battle-action-statistics.js and .css load after existing enhancements in 190_document_end.html. The module uses original selectors/labels, adds a text-only paragraph immediately after each target/source select, and preserves existing aria-describedby references. Each summary is a polite atomic status region. Where no explicit selector name exists, Target/Reaction source aria-label preserves that name instead of letting statistics become part of the label. Existing explicit aria-label/labelledby is retained.
 
 A WeakMap owns one summary per selector and monotonically assigned IDs avoid collisions. Delegated changes and row/option observers cover dynamic rows and selection updates; observers disconnect around their own render to avoid recursive DOM churn. Modal visibility tracks sessions. The module composes scryingLairsRender, preserving original context/arguments/return, to consume authoritative load snapshots; it catches up from latest when initial load already completed. It filters to finite numeric ac/hp/max_hp and checks campaign/setup identity. Missing roots leave prior UI intact; installation is guarded. No fetch/polling, input/selection/disabled writes, cloned/replaced controls or action serialization changes.
 
 No backend, API, permissions, SQLite, provider, combat rules or initiative behavior changes. Eight Admin source fragments, assembly adapter and tracked failure marker remain unchanged. Preserve 009.5 closure and the user's cfc7b0f1 lookup wording. Deploy matching template/static files, restart the correct process for assembled HTML and reload Admin; no migration/configuration change.
 
-## Executed preparation
-
-- Node --check passed for the complete new 4,137-byte JavaScript module.
-- Stylesheet parsing passed for the complete 350-byte stylesheet.
-- Python AST parsing passed for the complete 9,891-byte regression module (six methods: one source contract and five browser methods).
-- Simplified real Chromium fixtures passed partial/zero statistics, independent target/source selection, clearing, refreshed fields, scope suppression, retained draft, preserved prior-hook return and idempotence, with no page errors. Further fixtures at 1440/375 passed dynamic insertion, all-zero values, existing description preservation, below-selector geometry, disabled/draft retention and row removal, with no page errors.
-
-These browser checks load the actual new module but use synthetic minimal DOM/state and representative grid CSS, not the whole application or backend. They do not validate real Apply, native row builders, authenticated state, full modal layout or live-server behavior.
-
-## Prepared full-Admin regressions and CI
-
-tests/test_battle_action_statistics.py reuses the existing assembled Admin/intercepted-HTTP fixture with production assets and native open/row/Apply helpers. It checks ordinary/reaction/reduction selectors, independent rows, initial/cleared selection, character/monster values, partial/invalid/zero/deleted data, idempotence, expected Apply JSON, refreshed locked-row/draft retention, reopen, scope suppression, row removal and desktop/narrow selector-summary geometry/descriptions. Two 015-WIDTH-summaries.png fixtures write to SG_VISUAL_ARTIFACTS for existing artifact collection. 
-
-The complete new full-Admin regression module, existing suite and covering CI were not executed during preparation. Actual .github/workflows/tests.yml discovers test_*.py, JavaScript scripts and standalone browser/audit checks and uploads the configured visual directory; no workflow changes are needed. Normal CI applies to this mixed delivery. Fixture capture/upload is not user visual acceptance.
-
-## Remaining gates and reviewed documentation
-
-Review covering CI/test outcomes, screenshot appearance and user desktop/narrow operation; preserve existing Apply/Next/turn/row/security assertions if corrections are needed. Require task-specific user acceptance before closure. No password-login, real TCP session, provider, process restart or exhaustive accessibility audit has been performed here.
-
-README/User Guide and existing indexed docs were reviewed/reused; existing combat contracts remain accurate without edits. This section documents the additive user workflow. HANDOVER.md gains this numbered section and current 015 state; TODO/task status changes accompany the feature. No unrelated 009.6/009.7 or source-integration work is included.
-
 ## Alignment correction - 2026-11-09
 
-The user reported misalignment after selector statistics were added. Live inspection confirms the summary is already inside the selector's existing label, not a separate action-row grid item. The previous assistant's wrapper diagnosis/preparation was not a delivered change. This correction uses CSS only: shared label/control/summary tracks via row subgrid, equal 2.5rem control heights, Critical hit and Remove on the control track, and Applied on its own full-width track. Target and Reaction source summaries stay directly below their original selectors, including wrapped or missing summaries. At 700px and below, natural single-column field stacking resumes. No wrappers, JavaScript/control moves, handlers, drafts, disabled states or action payload changes are introduced. Modern-browser CSS subgrid is used.
+The user reported misalignment after selector statistics were added. Live inspection confirmed the summary was already inside the selector's existing label, not a separate action-row grid item. The previous assistant's wrapper diagnosis/preparation was not a delivered change. The correction delivered in d8f4f57b26325623fa662388102094cc1cb35fcd uses CSS only: shared label/control/summary tracks via row subgrid, equal 2.5rem control heights, Critical hit and Remove on the control track, and Applied on its own full-width track. Target and Reaction source summaries stay directly below their original selectors, including wrapped or missing summaries. At 700px and below, natural single-column field stacking resumes. No wrappers, JavaScript/control moves, handlers, drafts, disabled states or action payload changes are introduced. Modern-browser CSS subgrid is used.
 
-Executed for this corrective payload: parsing the complete 1,806-byte stylesheet and Python AST parsing the new 5,232-byte tests/test_battle_action_alignment.py both passed. Isolated real Chromium geometry checks using the proposed stylesheet and representative existing row CSS passed ordinary/reaction layouts at 1440/375: desktop control tops/heights match, Critical hit is centered, summaries remain below their selectors and rows do not overflow. These are synthetic layout checks, not full-Admin or live-server verification.
+## Preparation history and regression scope
 
-Prepared full-Admin/intercepted-HTTP regressions cover initially empty and selected summaries, ordinary/reaction/reduction rows, longer statistics, hidden critical/amount fields and mobile grouping. These new regressions, the existing suite and covering CI remain unexecuted locally. Existing CI discovery covers the new test_*.py module; no workflow change or skip marker is proposed. Task acceptance remains pending. README and both root indexes were reviewed and remain unchanged because runtime contracts, links and in-progress status remain accurate. Reload Admin after deploying the stylesheet.
+Preparation included JavaScript syntax, CSS parsing and Python AST checks, plus isolated Chromium tests of summary behavior and ordinary/reaction geometry at 1440/375. Those synthetic checks were not full-Admin/backend verification. The detailed dated preparation record, including exact file sizes and originally pending gates, is retained in the [pre-close-out handover](https://github.com/dajomas/Scrying-Glass/blob/1214020a14e9e99b75a9ce8444eb7ce6051b2671/docs/handover/360-battle-actions-combatant-statistics.md). Its pending-CI/acceptance wording is superseded by the close-out below, not retroactively claimed as results available during preparation.
+
+tests/test_battle_action_statistics.py uses the assembled Admin/intercepted-HTTP fixture and production assets/native helpers for ordinary/reaction/reduction selectors, independent rows, selection clearing, missing/invalid/zero/deleted values, idempotence, expected Apply JSON, refreshed locked drafts, reopen, scope suppression, removal and desktop/narrow summary placement/descriptions. tests/test_battle_action_alignment.py adds desktop control geometry for empty/selected/longer summaries, reaction/reduction rows and hidden critical/amount fields, plus narrow field grouping. The existing workflow discovers these test modules and uploads configured visual fixtures; no workflow changes were needed.
+
+## Close-out - 2026-11-09
+
+- Implementation/alignment SHA: d8f4f57b26325623fa662388102094cc1cb35fcd on features/perplexity.
+- Covering workflow: Branch tests, run 42624239041, attempt 1; run.json confirms completed/success on that exact SHA and branch.
+- Publication SHA: 1214020a14e9e99b75a9ce8444eb7ce6051b2671.
+- Evidence directory: [ci-results-42624239041-attempt-1](../../ci-results-42624239041-attempt-1/).
+- Reviewed evidence: [run.json](../../ci-results-42624239041-attempt-1/run.json) and [jobs.json](../../ci-results-42624239041-attempt-1/jobs.json). The job report confirms successful syntax/server import, Python suite including browser fixtures, pytest regression modules, JavaScript tests, standalone Python browser/audit checks and visual-artifact upload.
+- User acceptance: explicit SG-TODO-015 sign-off on 2026-11-09, followed by a request to update and commit the TODO list with skip CI.
+
+The covering-CI and task-specific user-acceptance gates are resolved for the agreed scope. CI job metadata and intercepted fixtures are not password-login, live TCP/provider, process-restart or exhaustive accessibility verification; user sign-off is not an invented checklist of individually performed manual checks. No new tests are executed for this documentation-only close-out. The proposed commit contains [skip ci]; no workflow is modified or separately dispatched and no close-out workflow outcome is inferred.
+
+The TODO index/task and handover index/section are updated together. README was reviewed and left unchanged because runtime/deployment descriptions remain accurate. The dated sequence document remains a historical agreement; its order is unchanged. Overall 009 remains in progress and 009.6/009.7 remain proposed. 009.6 is next in the agreed sequence; this close-out neither starts it nor approves an implementation payload. No unrelated task is closed.
