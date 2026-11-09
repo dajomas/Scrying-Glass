@@ -1,0 +1,30 @@
+browser and audit checks	2026-11-09T12:31:14.8851009Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8851363Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8851969Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8852502Z     raise result
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8852710Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8852961Z 
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8853455Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8853971Z 
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8854225Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8855485Z   File "/tmp/scrying-tests-rax2c59u/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8856446Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8857046Z   File "/tmp/scrying-tests-rax2c59u/repo/python/scrying_glass_monster_selection.py", line 151, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8857808Z     lambda: dnd_candidates(context, species),
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8858141Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8858741Z   File "/tmp/scrying-tests-rax2c59u/repo/python/scrying_glass_monster_selection.py", line 92, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8859799Z     raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8860927Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8861523Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8861849Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8862477Z   File "/tmp/scrying-tests-rax2c59u/repo/python/scrying_glass_monster_selection.py", line 108, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8863222Z     raise ValueError("Configured source is missing from the provider index")
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8863780Z ValueError: Configured source is missing from the provider index
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8864218Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8864765Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8865532Z   File "/tmp/scrying-tests-rax2c59u/repo/python/scrying_glass_monster_selection.py", line 108, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8866291Z     raise ValueError("Configured source is missing from the provider index")
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8867048Z ValueError: Configured source is missing from the provider index
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8867326Z 
+tests	Standalone Python browser and audit checks	2026-11-09T12:31:14.8867587Z The above exception was the direct cause of the following exception:
+tests	Standalone
