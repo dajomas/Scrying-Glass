@@ -1,0 +1,32 @@
+ aria-expanded="false" id="toggleMonsterDisplayPane" data-workflow-excluded="true" aria-controls="monsterDisplayPane">Show monster display</button>
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9235952Z   - attempting click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9236581Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9236970Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9237248Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9237498Z     - waiting 20ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9238382Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9238783Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9239064Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9239320Z       - waiting 100ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9240035Z     8 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9240412Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9240679Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9240928Z       - waiting 500ms
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9241073Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:14.0155811Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:14.0156779Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:14.2922574Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:14.2931320Z ##[error]Process completed with exit code 1.
+tests	Post Run actions/checkout@v4	﻿2026-11-09T09:14:14.3042255Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-09T09:14:14.3928664Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-09T09:14:14.3980246Z git version 2.56.0
+tests	Post Run actions/checkout@v4	2026-11-09T09:14:14.4025897Z Temporarily overriding HOME='/home/runner/work/_temp/0d7c9075-c996-456e-861d-cd1e20fd823e' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-09T09:14:14.4027660Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-09T09:14:14.4031711Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-09T09:14:14.4078688Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-09T09:14:14.4118222Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-09T09:14:14.4462209Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-09T09:14:14.4497052Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-09T09:14:14.4510133Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-09T09:14:14.4550308Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+test

@@ -1,0 +1,30 @@
+hecks	2026-11-09T09:13:47.4622341Z   File "/tmp/scrying-tests-4rcht58f/repo/python/scrying_glass_monster_refresh_sources.py", line 73, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-09T09:13:47.4623914Z     html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+tests	Standalone Python browser and audit checks	2026-11-09T09:13:47.4625404Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-09T09:13:47.4626487Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-09T09:13:47.4627171Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:13:47.4628752Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-09T09:13:47.4630163Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-09T09:13:47.4643714Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T09:13:47.4644566Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-09T09:13:47.4645189Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-09T09:13:47.4645439Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:07.2850609Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:07.2851357Z Ran 1416 tests in 158.457s
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:07.2851694Z 
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:07.2851836Z OK
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:07.2857480Z Connections opened: 764; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:07.2858863Z PASS: failed PRAGMA initialization closes connection; suite closes all tracked connections
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:07.6829316Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:07.6830500Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:08.0614536Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:08.0615623Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:08.1106166Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:08.1106676Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:08.4796076Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:08.5242726Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:08.5243524Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9203466Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9214287Z   File "/tmp/scrying-tests-3bv7z_6t/repo/tests/browser_smoke_272cc73.py", line 60, in <module>
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9215351Z     admin.locator('#toggleMonsterDisplayPane').click()
+tests	Standalone Python browser and audit checks	2026-11-09T09:14:13.9216085Z     ~~~~~~~~~~~~~~~
