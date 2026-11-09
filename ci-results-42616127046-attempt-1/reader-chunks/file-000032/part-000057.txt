@@ -1,0 +1,29 @@
+8, in combined_candidates
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8298606Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8299236Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8299894Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8300312Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8300985Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8301655Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8302086Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8302817Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8303444Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8303813Z OSError: private endpoint or credentials
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8304337Z ok
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8305605Z test_malformed_or_over_limit_result_blocks_whole_lookup (test_combined_monster_lookup.CombinedLookupTests.test_malformed_or_over_limit_result_blocks_whole_lookup) ... Combined monster lookup failed for 5e.tools
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8306906Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8307672Z   File "/tmp/scrying-tests-fxccah4n/repo/python/scrying_glass_combined_lookup.py", line 32, in combined_candidates
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8308834Z     raise ValueError("Incomplete or unsupported candidate list")
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8309502Z ValueError: Incomplete or unsupported candidate list
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8310115Z Combined monster lookup failed for 5e.tools
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8310636Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8321126Z   File "/tmp/scrying-tests-fxccah4n/repo/python/scrying_glass_combined_lookup.py", line 32, in combined_candidates
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8322020Z     raise ValueError("Incomplete or unsupported candidate list")
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8322626Z ValueError: Incomplete or unsupported candidate list
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8323151Z Combined monster lookup failed for 5e.tools
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8323582Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8324121Z   File "/tmp/scrying-tests-fxccah4n/repo/python/scrying_glass_combined_lookup.py", line 32, in combined_candidates
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8324665Z     raise ValueError("Incomplete or unsupported candidate list")
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8325036Z ValueError: Incomplete or unsupported candidate list
+tests	Python test suite (including browser fixtures)	2026-11-09T12:21:46.8325347Z Combined monster lookup failed for 5e.tools
+tests	Python 

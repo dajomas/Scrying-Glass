@@ -1,0 +1,32 @@
+on test suite (including browser fixtures)	2026-11-09T12:23:06.5046069Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T12:23:06.5046428Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-09T12:23:06.5046620Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T12:23:06.5046844Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T12:23:06.5047974Z FAIL: test_help_and_checkbox_label_render_without_mutation (test_monster_source_help_text.SourceHelpBrowserTests.test_help_and_checkbox_label_render_without_mutation) (width=375)
+tests	Python test suite (including browser fixtures)	2026-11-09T12:23:06.5049180Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T12:23:06.5049630Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T12:23:06.5050460Z   File "/tmp/scrying-tests-fxccah4n/repo/tests/test_monster_source_help_text.py", line 80, in test_help_and_checkbox_label_render_without_mutation
+tests	Python test suite (including browser fixtures)	2026-11-09T12:23:06.5051220Z     self.assertTrue(checkbox.is_visible())
+tests	Python test suite (including browser fixtures)	2026-11-09T12:23:06.5051569Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T12:23:06.5051908Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-09T12:23:06.5052112Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T12:23:06.5052441Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T12:23:06.5052845Z Ran 1421 tests in 146.184s
+tests	Python test suite (including browser fixtures)	2026-11-09T12:23:06.5053023Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T12:23:06.5053139Z FAILED (failures=2)
+tests	Python test suite (including browser fixtures)	2026-11-09T12:23:06.9861937Z ##[error]Process completed with exit code 1.
+tests	Upload Admin foundations visual fixtures	﻿2026-11-09T12:23:06.9918971Z ##[group]Run actions/upload-artifact@v4
+tests	Upload Admin foundations visual fixtures	2026-11-09T12:23:06.9919227Z with:
+tests	Upload Admin foundations visual fixtures	2026-11-09T12:23:06.9919419Z   name: admin-foundations-visual-fixtures
+tests	Upload Admin foundations visual fixtures	2026-11-09T12:23:06.9919691Z   path: /home/runner/work/_temp/sg-admin-foundations
+tests	Upload Admin foundations visual fixtures	2026-11-09T12:23:06.9919950Z   if-no-files-found: warn
+tests	Upload Admin foundations visual fixtures	2026-11-09T12:23:06.9920157Z   compression-level: 6
+tests	Upload Admin foundations visual fixtures	2026-11-09T12:23:06.9920346Z   overwrite: false
+tests	Upload Admin foundations visual fixtures	2026-11-09T12:23:06.9920528Z   include-hidden-files: false
+tests	Upload Admin foundations visual fixtures	2026-11-09T12:23:06.9920742Z env:
+tests	Upload Admin foundations visual fixtures	2026-11-09T12:23:06.9921097Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Upload Admin foundations visual fixtures	2026-11-09T12:23:06.9921544Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-09T12:23:06.9921883Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Upload Admin foundations visual fixtures	2026-11-09T12:23:06.9922222Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-09T12:23:06.9922520Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-09T12:23:06.9922818Z  

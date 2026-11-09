@@ -1,0 +1,28 @@
+selected_sources
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:31.3573569Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:31.3574456Z   File "/tmp/scrying-tests-ok73wmtf/repo/python/scrying_glass_monster_refresh_sources.py", line 73, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:31.3575351Z     html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:31.3576103Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:31.3576743Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:31.3577425Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:31.3578046Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:31.3578837Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:31.3579241Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:31.3579914Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:31.3580563Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:31.3580830Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:51.9510876Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:51.9512086Z FAIL: test_help_and_checkbox_label_render_without_mutation (test_monster_source_help_text.SourceHelpBrowserTests.test_help_and_checkbox_label_render_without_mutation) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:51.9513193Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:51.9513644Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:51.9514454Z   File "/tmp/scrying-tests-ok73wmtf/repo/tests/test_monster_source_help_text.py", line 80, in test_help_and_checkbox_label_render_without_mutation
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:51.9515185Z     self.assertTrue(checkbox.is_visible())
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:51.9515514Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:51.9515859Z AssertionError: False is not true
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:51.9516052Z 
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:51.9516276Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:51.9517315Z FAIL: test_help_and_checkbox_label_render_without_mutation (test_monster_source_help_text.SourceHelpBrowserTests.test_help_and_checkbox_label_render_without_mutation) (width=375)
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:51.9518508Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:51.9518992Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T12:25:51.9519881Z   File "/tmp/scrying-tests-ok73wmtf/repo/tests/test_monster_source_help_text.py", line 80, in test_help_and_checkbox_label_render_without_mutation
+tests	Standalone Python brows

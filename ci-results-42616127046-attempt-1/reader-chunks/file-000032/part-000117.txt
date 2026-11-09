@@ -1,0 +1,45 @@
+n modules	2026-11-09T12:23:08.3251796Z ##[endgroup]
+tests	Pytest regression modules	2026-11-09T12:23:09.9970244Z ...........................................                              [100%]
+tests	Pytest regression modules	2026-11-09T12:23:09.9970845Z 43 passed in 1.01s
+tests	JavaScript tests	﻿2026-11-09T12:23:10.1052045Z ##[group]Run status=0
+tests	JavaScript tests	2026-11-09T12:23:10.1052318Z ^[[36;1mstatus=0^[[0m
+tests	JavaScript tests	2026-11-09T12:23:10.1052526Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	JavaScript tests	2026-11-09T12:23:10.1052783Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	JavaScript tests	2026-11-09T12:23:10.1053089Z ^[[36;1m  python tools/run_split_tests.py -- node --test "$test" || status=1^[[0m
+tests	JavaScript tests	2026-11-09T12:23:10.1053403Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	JavaScript tests	2026-11-09T12:23:10.1053759Z ^[[36;1mdone < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)^[[0m
+tests	JavaScript tests	2026-11-09T12:23:10.1054108Z ^[[36;1mexit "$status"^[[0m
+tests	JavaScript tests	2026-11-09T12:23:10.1099994Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	JavaScript tests	2026-11-09T12:23:10.1100283Z env:
+tests	JavaScript tests	2026-11-09T12:23:10.1100654Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	JavaScript tests	2026-11-09T12:23:10.1101115Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-09T12:23:10.1101469Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	JavaScript tests	2026-11-09T12:23:10.1101865Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-09T12:23:10.1102173Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-09T12:23:10.1102483Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-09T12:23:10.1102789Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	JavaScript tests	2026-11-09T12:23:10.1103059Z ##[endgroup]
+tests	JavaScript tests	2026-11-09T12:23:10.1198945Z ##[group]tests/admin-message-timeout.test.cjs
+tests	JavaScript tests	2026-11-09T12:23:10.3019873Z TAP version 13
+tests	JavaScript tests	2026-11-09T12:23:10.3374551Z # Subtest: clears at five seconds, not earlier
+tests	JavaScript tests	2026-11-09T12:23:10.3382637Z ok 1 - clears at five seconds, not earlier
+tests	JavaScript tests	2026-11-09T12:23:10.3383079Z   ---
+tests	JavaScript tests	2026-11-09T12:23:10.3398923Z   duration_ms: 1.667838
+tests	JavaScript tests	2026-11-09T12:23:10.3403540Z   type: 'test'
+tests	JavaScript tests	2026-11-09T12:23:10.3403946Z   ...
+tests	JavaScript tests	2026-11-09T12:23:10.3404405Z # Subtest: replacement message gets its own full timeout
+tests	JavaScript tests	2026-11-09T12:23:10.3405089Z ok 2 - replacement message gets its own full timeout
+tests	JavaScript tests	2026-11-09T12:23:10.3405564Z   ---
+tests	JavaScript tests	2026-11-09T12:23:10.3405951Z   duration_ms: 0.52957
+tests	JavaScript tests	2026-11-09T12:23:10.3406309Z   type: 'test'
+tests	JavaScript tests	2026-11-09T12:23:10.3406643Z   ...
+tests	JavaScript tests	2026-11-09T12:23:10.3407102Z # Subtest: repeating the same text restarts the timer
+tests	JavaScript tests	2026-11-09T12:23:10.3407733Z ok 3 - repeating the same text restarts the timer
+tests	JavaScript tests	2026-11-09T12:23:10.3408307Z   ---
+tests	JavaScript tests	2026-11-09T12:23:10.3408606Z   duration_ms: 0.601997
+tests	JavaScript tests	2026-11-09T12:23:10.3408917Z   type: 'test'
+tests	JavaScript tests	2026-11-09T12:23:10.3409651Z   ...
+tests	JavaScript tests	2026-11-09T12:23:10.3410023Z # Subtest: manual clearing cancels the timeout
+tests	JavaScript tests	2026-11-09T12:23:10.3410574Z ok 4 - manual clearing cancels the timeout
+tests	JavaScript tests	2026-11-09T12:23:10.3410956Z   ---
+tests	JavaScript tests	2026-11-09T12:23:10.34112
