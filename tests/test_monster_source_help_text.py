@@ -5,9 +5,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 LABEL = 'Overwrite AC, HP range and initiative bonus with source values. Missing initiative bonus defaults to 0.'
-LOOKUP_HELP = ('Searches enabled D&D Beyond and configured 5e.tools sources. '
-               'Choose a version when prompted. Failed or incomplete searches return '
-               'no results—retry or enter stats manually. Uploaded images override source images.')
+LOOKUP_HELP = ('While entering Monster species, D&D Beyond and configured 5e.tools sources will be searched. '
+               'Choose a version when prompted. Uploaded images override source images.')
 
 
 class Text(HTMLParser):
