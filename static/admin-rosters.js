@@ -1,9 +1,11 @@
-/* SG-TODO-009.4, increment 1: presentation and selection context only. */
+/* SG-TODO-009.4 and SG-TODO-018 B: roster presentation; existing mutation helpers remain authoritative. */
 (() => {
     'use strict';
     if (window.scryingRosterPresentationInstalled) return;
     window.scryingRosterPresentationInstalled = true;
     const selectionActions = new Set(['', 'select-all', 'unselect-all', 'select-dead']);
+    const displayLife = value => value === 'standing' ? 'alive' : value;
+    const fixedFields = {show_ac: 'AC', show_hp: 'HP', show_initiative: 'Init'};
     for (const kind of ['characters', 'monsters']) {
         const region = document.getElementById(kind);
         const select = document.getElementById(kind === 'characters' ? 'characterBulkAction' : 'monsterBulkAction');
@@ -54,23 +56,88 @@
                 row.classList.toggle('sg-row-selected', box.checked);
                 const item = byId.get(box.dataset.selectId);
                 const nameCell = row.cells[1];
-                if (item && nameCell) {
-                    let status = nameCell.querySelector('.sg-roster-state');
-                    if (!status) {
-                        status = document.createElement('span');
-                        status.className = 'sg-roster-state';
-                        nameCell.append(status);
+                if (!item || !nameCell) continue;
+                let status = nameCell.querySelector('.sg-roster-state');
+                if (!status) {
+                    status = document.createElement('span');
+                    status.className = 'sg-roster-state';
+                    nameCell.append(status);
+                }
+                const parts = [item.active ? 'In battle' : 'Not in battle', item.visible ? 'Visible' : 'Hidden'];
+                if (typeof item.life_state === 'string' && item.life_state) parts.push(displayLife(item.life_state));
+                const key = JSON.stringify(parts);
+                if (status.dataset.rosterState !== key) {
+                    status.textContent = '';
+                    for (const text of parts) {
+                        const part = document.createElement('span');
+                        part.className = 'sg-roster-state-item';
+                        part.textContent = text;
+                        status.append(part);
                     }
-                    const parts = [item.active ? 'In battle' : 'Not in battle', item.visible ? 'Visible' : 'Hidden'];
-                    if (typeof item.life_state === 'string' && item.life_state) parts.push(item.life_state);
-                    status.textContent = parts.join(' · ');
-                    row.querySelector('input.initiative-edit')?.setAttribute('aria-label', item.name + ' initiative');
+                    status.dataset.rosterState = key;
+                }
+                const input = row.querySelector('input.initiative-edit');
+                if (kind === 'characters') input?.setAttribute('aria-label', item.name + ' initiative');
+                if (kind === 'monsters') {
+                    const label = input?.closest('label');
+                    if (label?.firstChild?.nodeType === Node.TEXT_NODE && label.firstChild.textContent.trim() === 'Roll') {
+                        label.firstChild.remove();
+                    }
+                    const total = row.querySelector('.sg-monster-initiative-total');
+                    if (total?.textContent.endsWith(' (legacy)')) {
+                        total.textContent = total.textContent.replace(/ \(legacy\)$/, '');
+                        total.title = 'Retained total; no raw roll recorded.';
+                    }
+                }
+                const life = row.querySelector('button[data-cl]');
+                if (life?.textContent === 'standing') life.textContent = 'alive';
+                const toggles = kind === 'monsters'
+                    ? [['data-ma', 'active'], ['data-mally', 'ally'], ['data-mv', 'visible']]
+                    : [['data-ca', 'active'], ['data-cv', 'visible']];
+                for (const [attribute, field] of toggles) {
+                    const button = row.querySelector(`button[${attribute}]`);
+                    if (button) {
+                        button.setAttribute('aria-pressed', String(Boolean(item[field])));
+                        button.setAttribute('aria-label', button.textContent.trim());
+                    }
+                }
+                for (const button of row.querySelectorAll('button[data-t][data-f]')) {
+                    const field = button.dataset.f;
+                    if (!Object.hasOwn(fixedFields, field)) continue;
+                    const enabled = Boolean(item[field]);
+                    if (button.textContent !== fixedFields[field]) button.textContent = fixedFields[field];
+                    button.classList.toggle('on', enabled);
+                    button.setAttribute('aria-pressed', String(enabled));
+                    button.setAttribute('aria-label', fixedFields[field]);
+                    button.title = `${fixedFields[field]} display ${enabled ? 'enabled' : 'disabled'}`;
+                }
+                const actionCell = row.querySelector('button[data-edit]')?.closest('td');
+                if (actionCell && !actionCell.querySelector(':scope > .sg-roster-actions')) {
+                    const actions = document.createElement('div');
+                    actions.className = 'sg-roster-actions';
+                    actions.append(...actionCell.querySelectorAll(':scope > button'));
+                    actionCell.append(actions);
                 }
             }
         }
-        new MutationObserver(update).observe(region, {childList: true});
+        // Observe late decorators as well as table replacement; all writes above
+        // are idempotent, so subtree decoration cannot create an observer loop.
+        new MutationObserver(update).observe(region, {childList: true, subtree: true});
         pane.addEventListener('change', () => queueMicrotask(update));
         pane.addEventListener('click', () => queueMicrotask(update));
+        if (kind === 'monsters') {
+            // The legacy document delegate reads a visible on/off suffix. Fixed
+            // labels instead use server-derived aria-pressed; stop that delegate
+            // and call the same patch helper exactly once, without optimistic edits.
+            region.addEventListener('click', event => {
+                const button = event.target.closest('button[data-t][data-f]');
+                if (!button || !region.contains(button) || !Object.hasOwn(fixedFields, button.dataset.f)) return;
+                event.stopPropagation();
+                patch('monsters', button.dataset.t, {
+                    [button.dataset.f]: button.getAttribute('aria-pressed') !== 'true',
+                });
+            });
+        }
         if (kind === 'characters') {
             region.addEventListener('focusin', event => {
                 const target = event.target;

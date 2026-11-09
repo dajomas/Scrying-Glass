@@ -4,12 +4,44 @@ body.admin-shell .sg-roster-region { overflow-x: auto; max-width: 100%; min-widt
 body.admin-shell #characters.sg-roster-region table { min-width: 48rem; }
 body.admin-shell .sg-roster-pane :is(th, td) { vertical-align: middle; }
 body.admin-shell .sg-roster-pane :is(th, td) { font-variant-numeric: tabular-nums; }
+/* Align the first content line, not the complete name/species or input/total
+   block. Keep the compact footer lane clear beneath all row content. */
+body.admin-shell .sg-roster-region > table > tbody > tr > td { padding-bottom: 1.6rem; vertical-align: baseline; }
+body.admin-shell .sg-roster-region > table > tbody > tr > td:nth-child(2) { position: relative; }
 body.admin-shell .sg-roster-state {
-    display: block;
-    margin-top: .25rem;
+    position: absolute;
+    left: .45rem;
+    bottom: .35rem;
+    z-index: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+    gap: 0 .5rem;
+    margin: 0;
     font-size: .8rem;
+    line-height: 1.35;
     color: var(--admin-muted);
-    white-space: normal;
+    white-space: nowrap;
+    pointer-events: none;
+}
+body.admin-shell .sg-roster-state-item { white-space: nowrap; }
+body.admin-shell .sg-roster-state-item + .sg-roster-state-item::before { content: '· '; }
+body.admin-shell .sg-roster-actions {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: max-content;
+    gap: .25rem;
+}
+body.admin-shell .sg-roster-actions button { margin: 0; white-space: nowrap; flex: 0 0 auto; }
+/* Visual state is colour-only by user request; aria-pressed remains semantic. */
+body.admin-shell .sg-roster-actions button[aria-pressed="false"] {
+    background: var(--surface-2);
+    color: var(--text);
+}
+body.admin-shell .sg-roster-actions button[aria-pressed="true"] {
+    background: #2d5640;
+    color: #e2f5e9;
 }
 body.admin-shell .sg-roster-pane .bulk-action-toolbar {
     display: flex;

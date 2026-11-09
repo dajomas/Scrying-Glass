@@ -45,9 +45,33 @@ class ProviderPreviewTests(unittest.TestCase):
 
     def begin(self, candidates):
         self.result={'status':'ok', 'candidates':candidates}
-        self.page.evaluate('window.done = lookupMonsterSpeciesStats(); void 0')
+        self.page.evaluate("""
+            window.previewLookupSettled = false;
+            window.done = lookupMonsterSpeciesStats().finally(() => {
+                window.previewLookupSettled = true;
+            });
+            void 0;
+        """)
 
     def finish(self):
+        self.page.wait_for_function("""
+            () => window.previewLookupSettled ||
+                document.querySelector(
+                    'dialog[aria-label="Review monster initiative bonus"][open]'
+                ) !== null
+        """, timeout=5000)
+        review = self.page.get_by_role(
+            'dialog', name='Review monster initiative bonus', exact=True)
+        if review.count():
+            review.get_by_role(
+                'button',
+                name='Keep current bonus and use candidate',
+                exact=True,
+            ).click()
+        self.page.wait_for_function(
+            '() => window.previewLookupSettled === true',
+            timeout=5000,
+        )
         self.page.evaluate('window.done')
 
     def file(self, id, name):

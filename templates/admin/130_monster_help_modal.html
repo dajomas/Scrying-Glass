@@ -63,8 +63,20 @@
             </td>
             <td>The first available value containing a number is used.</td>
           </tr>
+          <tr>
+            <td>Initiative bonus</td>
+            <td><code>initiative_bonus</code></td>
+            <td>Optional signed whole number or integer text, such as <code>2</code> or <code>"-2"</code>. Missing or blank uses default 0. No Dexterity derivation.</td>
+          </tr>
         </tbody>
       </table>
+
+      <p>
+        <code>initiative_bonus</code> is a field supported by Scrying Glass.
+        An external generator may not export it; you can add it to the JSON file.
+        An explicit value is recorded as imported, not as a verified provider value.
+        Invalid values are rejected rather than silently changed to 0.
+      </p>
 
       <h3>Example supported file</h3>
 
@@ -72,7 +84,8 @@
     "name": "Goblin",
     "type": "humanoid",
     "ac": 15,
-    "hp": 7
+    "hp": 7,
+    "initiative_bonus": 2
   }</pre>
 
       <p>

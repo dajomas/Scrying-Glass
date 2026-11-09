@@ -5,11 +5,29 @@
     const form = document.querySelector('#monsterForm');
     const speciesInput = document.querySelector('#monsterSpecies');
     const overwrite = document.querySelector('#monsterSpeciesLookupOverwrite');
+    const bonusInput = document.querySelector('#monsterInitiativeBonus');
     if (!form || !speciesInput) return;
     let selected = null;
+    let appliedOffer = null;
     let cancelPopup = null;
     let generation = 0;
     let pending = 0;
+    let bonusRevision = 0;
+    function clearAppliedOffer() {
+        appliedOffer = null;
+    }
+    function bonusEdited() {
+        bonusRevision++;
+        clearAppliedOffer();
+    }
+    bonusInput?.addEventListener('input', bonusEdited);
+    bonusInput?.addEventListener('change', bonusEdited);
+    const bonusHelp = document.querySelector('#monsterInitiativeBonusHelp');
+    if (bonusHelp) {
+        bonusHelp.append(' The overwrite option above also applies to available source initiative bonuses. ' +
+            'Blank bonuses are filled automatically; existing values are replaced only when overwrite is enabled. ' +
+            'Missing or invalid source bonuses and values edited during lookup are kept unchanged.');
+    }
     function publishSelection() {
         document.dispatchEvent(new CustomEvent('scrying:monster-selection', {
             detail: selected ? {species: selected.species, provider: selected.provider,
@@ -19,6 +37,7 @@
     function invalidate() {
         generation++;
         selected = null;
+        clearAppliedOffer();
         publishSelection();
         if (cancelPopup) cancelPopup();
     }
@@ -33,9 +52,34 @@
         }
     }, true);
     form.addEventListener('formdata', event => {
-        event.formData.set('selection_token', selected && selected.species === speciesInput.value.trim()
-            ? selected.selection_token : 'manual');
+        const currentSelection = selected && selected.species === speciesInput.value.trim();
+        event.formData.set('selection_token', currentSelection ? selected.selection_token : 'manual');
+        event.formData.delete('initiative_bonus_offer_token');
+        if (currentSelection && appliedOffer &&
+                appliedOffer.selectionToken === selected.selection_token &&
+                appliedOffer.species === speciesInput.value.trim() &&
+                bonusInput?.value === appliedOffer.value) {
+            event.formData.set('initiative_bonus_offer_token', appliedOffer.token);
+        }
     });
+    function offerAvailable(candidate) {
+        return candidate.initiative_bonus_status === 'available' &&
+            Number.isSafeInteger(candidate.initiative_bonus);
+    }
+    function signedOfferAvailable(candidate) {
+        return offerAvailable(candidate) &&
+            typeof candidate.initiative_bonus_offer_token === 'string' &&
+            candidate.initiative_bonus_offer_token.length > 0 &&
+            candidate.initiative_bonus_offer_token.length <= 8192;
+    }
+    function offerText(candidate) {
+        if (offerAvailable(candidate)) {
+            const value = candidate.initiative_bonus;
+            return `Initiative bonus ${value >= 0 ? '+' : ''}${value}`;
+        }
+        return `Initiative bonus unavailable: ${candidate.initiative_bonus_reason ||
+            'No supported explicit source modifier.'}`;
+    }
     function choose(candidates) {
         return new Promise(resolve => {
             const previousFocus = document.activeElement;
@@ -61,7 +105,7 @@
                 button.type = 'button';
                 button.textContent = `${index + 1}. ${candidate.name || candidate.species} — ` +
                     `${monsterSourceLabel(candidate, true)} — ` +
-                    `AC ${candidate.ac ?? '—'}, HP ${candidate.hp ?? '—'}`;
+                    `AC ${candidate.ac ?? '—'}, HP ${candidate.hp ?? '—'} — ${offerText(candidate)}`;
                 button.addEventListener('click', () => finish(candidate));
                 row.append(button);
                 if (candidate.source_url && candidate.source_url.startsWith('https://')) {
@@ -91,11 +135,15 @@
         const species = new URLSearchParams(url.split('?')[1]).get('species');
         const current = ++generation;
         const requestId = monsterSpeciesLookupRequest;
+        const originalBonus = bonusInput?.value;
+        const originalBonusRevision = bonusRevision;
+        const overwriteBonus = Boolean(overwrite?.checked);
         selected = null;
+        clearAppliedOffer();
         publishSelection();
         if (cancelPopup) cancelPopup();
         const isCurrent = () => current === generation && requestId === monsterSpeciesLookupRequest &&
-            speciesInput.value.trim() === species;
+            speciesInput.value.trim() === species && Boolean(overwrite?.checked) === overwriteBonus;
         pending++;
         try {
             const result = await originalRequest(`/api/monsters/lookup?species=${encodeURIComponent(species)}`, options);
@@ -109,6 +157,21 @@
             if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
             if (!candidate) return {found: false,
                 reason: 'Monster selection cancelled; manual entry remains available.'};
+            const bonusUnchanged = bonusInput && bonusInput.value === originalBonus &&
+                bonusRevision === originalBonusRevision;
+            if (bonusUnchanged && offerAvailable(candidate) &&
+                    (overwriteBonus || !bonusInput.value.trim())) {
+                const value = String(candidate.initiative_bonus);
+                bonusInput.value = value;
+                // Clear old attribution before binding this exact offer after application events.
+                bonusInput.dispatchEvent(new Event('input', {bubbles: true}));
+                bonusInput.dispatchEvent(new Event('change', {bubbles: true}));
+                if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
+                if (bonusInput.value === value && signedOfferAvailable(candidate)) {
+                    appliedOffer = {token: candidate.initiative_bonus_offer_token,
+                        selectionToken: candidate.selection_token, species, value};
+                }
+            }
             selected = candidate;
             publishSelection();
             return candidate;

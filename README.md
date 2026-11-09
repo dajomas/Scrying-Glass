@@ -132,19 +132,52 @@ separately. Superadmins land on /users; use a regular admin for interactive batt
 
 ## Monster lookup and row controls
 
-Add monster searches D&D Beyond first, falling back to 5e.tools only after zero
-usable matches. Provider errors stop lookup. One candidate is automatic; multiple
-candidates open a selection dialog. Cancel permits manual entry. The selected
-image snapshot is retained; a missing image does not select another monster's
-image. No account authentication or entitlement filtering is added.
+Add monster and source-candidate lookup for Refresh search all enabled public
+providers, retaining D&D Beyond and configured 5e.tools versions together even
+when D&D Beyond returns usable matches. Distinct provider/book/edition candidates
+keep their own statistics and signed source identities; statistics are not merged.
+Any enabled-provider failure or incomplete configured-book search blocks the
+combined lookup and returns no candidates. Retry or enter stats manually; partial
+results are not offered as exhaustive. D&D Beyond book metadata that is unavailable
+remains explicitly unavailable rather than guessed. No account authentication or
+entitlement filtering is added.
+
+In Add monster, one candidate is automatic and multiple candidates open a selection
+dialog. There is no separate initiative-bonus confirmation. Available source
+bonuses fill blank fields; the existing AC/HP overwrite checkbox also permits
+replacing a populated bonus. Initiative help explains this shared option. Values
+edited during lookup or candidate selection remain unchanged, including edit then
+revert. Missing or invalid source bonuses never fill or overwrite a field. Signed
+offers stay bound to the selected candidate and assigned value; a later manual
+edit, reset or changed selection clears attribution. Unsigned values remain manual.
+Cancel permits manual entry. Refresh retains exact source identities without silently
+selecting another provider, book or edition. For identity-less rows, exactly one
+usable signed candidate resolves automatically; multiple candidates require explicit
+selection and zero remain unresolved with a status. Invalid retained identities or
+failed exact-source fetches never trigger substitution. Resolving another row keeps
+other rows' candidates, proposals and individual field choices. Reload review starts
+a fresh lookup; continuation does not refetch unaffected rows. Auto-resolution selects
+no fields, changes no live statistics and generates no HP. The selected image snapshot
+is retained; a missing image does not select another monster's image. Explicit Apply
+remains required in Refresh. See [A.3 delivery and validation](docs/handover/340-combined-monster-lookup.md#a3-sole-candidate-refresh---2026-11-08).
 
 Notifications and popup choices share descriptive book/year labels. Raw IDs, URLs
 and selection tokens remain unchanged. Default 5e.tools sources are MM, XMM, PHB,
 XPHB, DMG, XDMG, in that order. An explicit `fivetools_sources` list replaces them;
-`[]` skips 5e.tools without disabling D&D Beyond. Existing explicit MM/XMM settings
-remain two-source overrides. Remove or expand the key, then restart, to use more.
-Sources are case-sensitive; invalid lists fail validation; at most 32 input entries.
-See [source configuration and labels](docs/handover/230-fivetools-sources.md).
+`[]` skips 5e.tools data requests without disabling D&D Beyond. Existing explicit
+MM/XMM settings remain two-source overrides. Remove or expand the key, then restart,
+to use more. Sources are case-sensitive; invalid lists fail validation; at most 32
+input entries. A configured book absent from the provider index is an incomplete
+search, not a successful zero-match result. Entries from unconfigured books are
+not offered.
+
+For compatibility, `dndbeyond_image_lookup` and `fivetools_fallback` retain their
+names/defaults. In candidate lookup, `fivetools_fallback` independently enables
+5e.tools rather than restricting it to D&D Beyond zero matches. Legacy stats/image
+fallback interfaces are otherwise unchanged. Admin source help and config-example
+comments describe combined search and fail-closed behavior. See
+[combined lookup delivery](docs/handover/340-combined-monster-lookup.md)
+and [source configuration and labels](docs/handover/230-fivetools-sources.md).
 
 AC accepts numbers/AC objects; HP prefers supported dice then numeric average.
 Names match after case/punctuation normalization. JSON fetches are bounded to

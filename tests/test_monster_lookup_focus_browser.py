@@ -20,12 +20,12 @@ class LookupFocusRegressionTests(unittest.TestCase):
         self.calls = []
         self.errors = []
         self.page.on('pageerror', lambda error: self.errors.append(str(error)))
-        self.page.route('http://fixture.test/', lambda route: route.fulfill(content_type='text/html', body='''
+        self.page.route('http://fixture.test/', lambda route: route.fulfill(content_type='text/html', body="""
             <form id="monsterForm"><input id="monsterSpecies" name="monster_species">
             <input id="monsterAc"><input id="monsterHpRangeStart"><input id="monsterHpRangeEnd">
             <button type="button" id="outside">Outside</button></form>
             <input type="checkbox" id="monsterSpeciesLookupOverwrite">
-            <p id="monsterAddNotification"></p>'''))
+            <p id="monsterAddNotification"></p>"""))
         def lookup(route):
             self.calls.append(route.request.url)
             route.fulfill(json={'status': 'ok', 'candidates': [
@@ -56,11 +56,11 @@ class LookupFocusRegressionTests(unittest.TestCase):
         }""")
         self.assertEqual(self.page.evaluate('window.dialogOpens'), 0)
 
-    def assert_no_extra_requests(self):
+    def assert_no_extra_requests(self, expected_dialog_opens=1):
         # Longer than two 600 ms debounce periods; allow blur work to surface.
         self.page.wait_for_timeout(1500)
         self.assertEqual(len(self.calls), 1)
-        self.assertEqual(self.page.evaluate('window.dialogOpens'), 1)
+        self.assertEqual(self.page.evaluate('window.dialogOpens'), expected_dialog_opens)
         self.assertEqual(self.errors, [])
 
     def type_and_open(self):

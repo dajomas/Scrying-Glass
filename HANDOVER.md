@@ -6,6 +6,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 
 1. [Scope and current state](docs/handover/010-scope-and-state.md)
 2. [CI workflow and test coverage](docs/handover/020-ci-and-tests.md)
+   - [Automatic CI evidence publication](docs/handover/025-automatic-ci-publication.md)
 3. [Open validation and next steps](docs/handover/030-validation-and-next-steps.md)
 4. [Maintaining this handover](docs/handover/040-maintenance-rules.md)
 5. [Admin script source split](docs/handover/050-admin-script-split.md)
@@ -37,6 +38,14 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 30. [Add Monsters source help text](docs/handover/300-monster-source-help-text.md)
 31. [Admin roster presentation](docs/handover/310-admin-rosters.md)
 32. [Initiative keyboard navigation](docs/handover/320-initiative-keyboard-navigation.md)
+33. [Monster initiative and refresh foundations](docs/handover/330-monster-initiative-foundations.md)
+
+34. [5e.tools initiative extraction correction: A.1 accepted, historical A.2 preparation](docs/handover/335-fivetools-initiative-correction.md)
+35. [Combined lookup, Refresh and roster correction delivery/validation](docs/handover/340-combined-monster-lookup.md)
+
+## Current validation status - 2026-11-08
+
+SG-TODO-018 is completed and closed at the user's explicit request after review of the remaining actions. A.1/A.2/A.3 acceptance remains; corrective CI 42526295799 attempt 1 and the user's successful roster visual check cover the final correction. See the [completed contract](docs/todo/180-monster-initiative-bonus.md), [reconciled correction plan](docs/todo/185-monster-correction-plan.md) and [close-out evidence and limitations](docs/handover/340-combined-monster-lookup.md#sg-todo-018-close-out---2026-11-08). This supersedes earlier in-progress/pending wording, not historical failed results. No merge or other-branch write is included.
 
 ## Required update convention
 
