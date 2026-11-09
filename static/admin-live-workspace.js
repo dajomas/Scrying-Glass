@@ -43,7 +43,8 @@
             if (live === mounted) return;
             if (live) {
                 primary.prepend(battle);
-                primary.append(characters, monsters);
+                // Rosters share the log's full-width parent, never the tools grid.
+                workspace.after(characters, monsters);
                 side.append(tools, lair);
             } else {
                 for (const {node, anchor} of placements) anchor.after(node);
