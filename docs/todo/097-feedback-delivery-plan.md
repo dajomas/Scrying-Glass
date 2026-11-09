@@ -4,9 +4,9 @@
 
 ## Status and authority - 2026-11-09
 
-SG-TODO-009.7 remains in progress and open. The user approved two independently usable feedback deliverables and requested that the seven Deliverable 1 steps and Deliverable 2 target be retained for future reference. This is the current execution plan for the [parent phase](090-admin-usability-redesign.md#sg-todo-0097---feedback-and-final-usability-hardening). It supersedes that section's earlier statements that expiry policy still needs agreement and that only inspection/scoping is authorized. No implementation, validation or phase acceptance is claimed by this planning record. No owner or deadline is assigned.
+SG-TODO-009.7 remains in progress and open. The user approved two independently usable feedback deliverables and requested that the seven Deliverable 1 steps and Deliverable 2 target be retained for future reference. This is the current execution plan for the [parent phase](090-admin-usability-redesign.md#sg-todo-0097---feedback-and-final-usability-hardening). It supersedes that section's earlier statements that expiry policy still needs agreement and that only inspection/scoping is authorized. No phase acceptance is claimed by this planning record. No owner or deadline is assigned.
 
-See the [continuity record](../handover/380-feedback-delivery-plan.md) for preparation state and evidence limits. Steps are preparation/delivery activities within Deliverable 1, not seven separately approved implementation commits. Prefer one coherent implementation commit containing code, tests and necessary documentation.
+See the [continuity record](../handover/380-feedback-delivery-plan.md) for preparation state and evidence limits. Steps are preparation/delivery activities within Deliverable 1, not seven separately approved implementation commits. The user subsequently approved two work-in-progress checkpoints on features/perplexity-009.7; these do not complete Deliverable 1. The bounded group-4A suggestions below are execution units, not new deliverables or blanket GitHub write approvals.
 
 ## Approved feedback policy
 
@@ -23,7 +23,7 @@ See the [continuity record](../handover/380-feedback-delivery-plan.md) for prepa
 
 ## Deliverable 1 - integrated global and pane feedback
 
-Status: authorized for preparation; not implemented or delivered. Complete all seven steps below. This must be working Admin behavior, not only a standalone controller, renderer, API design or test scaffold.
+Status: in progress; controller/rendering and incomplete Admin-wiring checkpoints are saved, but complete Deliverable 1 is not delivered or validated. Checkpoints: 51e3e3bfcc8e56176b8bcc2559e74bee46e5f493 and 8ba97701a76328909b9570a8bfbf523e80abf4f6. Complete all seven steps below. This must be working Admin behavior, not only a standalone controller, renderer, API design or test scaffold.
 
 ### 1. Finish the integration inventory
 
@@ -57,7 +57,44 @@ In the same proposed implementation commit, document implemented behavior, calle
 
 ### 7. Request exact-content approval, then deliver
 
-After the complete nonempty payload is reviewed, request bound GitHub confirmation for dajomas/Scrying-Glass, features/perplexity, exact commit message and complete file contents. Push only after approval and exactly as approved. Report the actual commit SHA and truthful validation status. Run normal CI for implementation/test commits; do not include [skip ci] without a specific user instruction. A push is delivery, not evidence of passing CI or acceptance. Review supplied covering CI evidence and obtain fresh approval for corrective writes.
+After the complete nonempty payload is reviewed, request bound GitHub confirmation for dajomas/Scrying-Glass, features/perplexity-009.7, exact commit message and complete file contents. Push only after approval and exactly as approved. Report the actual commit SHA and truthful validation status. Run normal CI for implementation/test commits; do not include [skip ci] without a specific user instruction. A push is delivery, not evidence of passing CI or acceptance. Review supplied covering CI evidence and obtain fresh approval for corrective writes. No merge into another branch is implied.
+
+## Bounded group 4A sub-tasks - 2026-11-09
+
+At the user's request, retain the following suggestions for future reference. These are proposed execution units within step 4 of Deliverable 1. All remain proposed/not completed by this documentation update. The first bounded unit is 4A.1. Exact files and effective handlers must be verified against the live branch before each change. Do not treat interrupted or disappeared output as saved implementation or test evidence.
+
+| ID | Bounded scope | Completion criteria |
+|---|---|---|
+| 4A.1 | State-load feedback | Give state loading its own operation identity. A matching successful reload resolves only its load error; stale responses cannot publish feedback or restore an old scope. Preserve the existing return/rethrow contract. |
+| 4A.2 | Start/restart request feedback | Migrate the effective startBattle wrapper. Capture identity before the request, retain persistent failure feedback and resolve it on matching success. Preserve successful collapse and failed-Start visibility. |
+| 4A.3 | Start eligibility and tie-order rejection | Migrate the related global validation producers without changing eligibility, tie ordering or request payloads. Keep these errors distinct from transport and refresh failures. Near-field association remains Deliverable 2. |
+| 4A.4 | Next-turn feedback | Migrate the shared main/modal Next handler. Preserve mutation-versus-refresh distinctions, uncertain-outcome wording, concurrency guards and no automatic POST retry. |
+| 4A.5 | End-battle feedback | Pair End's validation/request failures with its matching successful result. Preserve the existing confirmation and non-resetting behavior. |
+| 4A.6 | Reset-all feedback | Add explicit failure identity and successful resolution for Reset All. Preserve its confirmation, payload and combat behavior. |
+| 4A.7 | Individual combatant reset | Migrate the global reset-error paths for characters and monsters. Scope resolution to the affected combatant; resetting another combatant must not clear the error. |
+| 4A.8 | Global combatant-removal fallback | Migrate the global removal handler separately from pane-based roster removal. Preserve its named confirmation and button-state handling. |
+| 4A.9 | Activity-log clear | Migrate Clear's request error, successful result and already-empty result with explicit severity. Leave navigation-based exports unchanged. |
+| 4A.10 | Viewer font-size adjustment | Give font adjustment its own error/resolution identity. Preserve bounds and pending-control behavior. |
+| 4A.11 | Battle-action global notices | Migrate global action-eligibility/no-target/no-pending messages and the start-of-turn completion notice. Do not redesign modal-local feedback or change action application. |
+| 4A.12 | Join-reporting coordination | Reconcile the fetch gate and core caller so one rejected join does not produce duplicate feedback. A matching successful join resolves only its related error. Preserve both client and server gates. |
+| 4A.13 | Global-feedback reconciliation | Audit remaining global callers, test cross-operation isolation and identify dependencies on later groups. Retire the global compatibility route only when no relevant producer still needs it; keep the pane route until its migrations are complete. |
+
+### Execution boundary for each sub-task
+
+1. Verify and read only the relevant live source, dependencies and tests; reuse verified complete reads rather than restarting the entire inspection.
+2. Prepare the narrowly scoped change. Do not expand into neighboring operations merely because they share a file. State-load feedback, for example, does not include background uploads or character editing.
+3. Run focused checks actually available, with honest results and limitations. Unavailable local checks follow the repository's CI-first workflow rather than blocking an otherwise prepared delivery.
+4. Review the complete diff and record unresolved dependencies and remaining work.
+5. Reach a concise, reviewable result before starting another sub-task; do not rely on a long response or generated attachments as the sole continuation point.
+
+### Saving and validation boundaries
+
+- These are execution units within Deliverable 1, not new deliverables, a mandatory one-commit-per-row plan or automatic phase-completion gates.
+- Every GitHub write requires its own complete bound approval, including exact target, message and file contents. Saving this plan does not approve future write payloads. Necessary implementation, tests and documentation/status updates belong together in each proposed write.
+- Intermediate saves remain explicitly work in progress on features/perplexity-009.7. Do not present partial caller migration as completed feedback behavior or deployment-ready code.
+- The previous one-off [skip ci] instruction applied to checkpoint 2 only. Subsequent implementation/test commits use normal CI unless the user specifies otherwise. Documentation-only commits always retain the standing [skip ci] rule.
+- Focused passing tests do not replace final combined full-Admin regressions, covering CI review or task-specific acceptance.
+- No owner/deadline, new priority or wider scope is assigned. Deliverable 2 and accepted 009.6 behavior are unchanged.
 
 ## Deliverable 2 - connection warnings and near-field validation
 
@@ -69,6 +106,6 @@ Destructive-confirmation review and broader responsive/accessibility hardening r
 
 Preserve accepted 009.6: full-width Battle, Characters, Monsters and Activity log; no duplicate Participants, sidebar or split workspace; on-demand Encounter tools using original controls/drafts and keyboard/focus/busy/nested-dialog behavior; independent Campaign and Preparation controls; successful Start/restart collapse, failed-Start visibility and refresh/Next manual-reopening retention; independent lair eligibility, campaign-scoped viewer status, native roster actions/local scrolling, permissions and combat rules. Historical references never authorize overwriting newer work.
 
-## Planning-commit validation
+## Documentation-only validation
 
-This record and its indexed continuity links are documentation only. No application/test/workflow files change, no automated tests were executed for this planning update, and no workflow is dispatched. The commit message must contain [skip ci]. README was reviewed against its unchanged live blob and needs no planning-only edit. Subsequent implementation commits require fresh relevant documentation and validation records.
+This update retains the suggested bounded 4A breakdown and reconciles checkpoint/working-branch references. It changes human-readable documentation only. No application, tests, dependencies, configuration or workflows change; no automated tests were executed and no workflow is dispatched. The message must contain [skip ci]. Reviewed links point to the existing task/handover indexes and sections. README and root TODO/HANDOVER remain accurate for this planning-only update and need no unrelated edits. No new implementation, passing CI or sub-task completion is claimed.
