@@ -42,10 +42,13 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 
 34. [5e.tools initiative extraction correction: A.1 accepted, historical A.2 preparation](docs/handover/335-fivetools-initiative-correction.md)
 35. [Combined lookup, Refresh and roster correction delivery/validation](docs/handover/340-combined-monster-lookup.md)
+36. [Admin workflow navigation: implementation prepared, validation pending](docs/handover/350-admin-workflow-navigation.md)
 
-## Current validation status - 2026-11-08
+## Current validation status - 2026-11-09
 
-SG-TODO-018 is completed and closed at the user's explicit request after review of the remaining actions. A.1/A.2/A.3 acceptance remains; corrective CI 42526295799 attempt 1 and the user's successful roster visual check cover the final correction. See the [completed contract](docs/todo/180-monster-initiative-bonus.md), [reconciled correction plan](docs/todo/185-monster-correction-plan.md) and [close-out evidence and limitations](docs/handover/340-combined-monster-lookup.md#sg-todo-018-close-out---2026-11-08). This supersedes earlier in-progress/pending wording, not historical failed results. No merge or other-branch write is included.
+SG-TODO-018 is completed and closed at the user's explicit request after review of the remaining actions. A.1/A.2/A.3 acceptance remains; corrective CI 42526295799 attempt 1 and the user's successful roster visual check cover the final correction. See the [completed contract](docs/todo/180-monster-initiative-bonus.md), [reconciled correction plan](docs/todo/185-monster-correction-plan.md) and [close-out evidence and limitations](docs/handover/340-combined-monster-lookup.md#sg-todo-018-close-out---2026-11-08). The completed branch was subsequently merged into features/perplexity at b0630effbe99db8a40b27bb00cca007b198d4055; the earlier close-out itself did not perform that merge. No new merge-CI result is claimed here.
+
+SG-TODO-009.5 implementation is prepared against that baseline, with execution, covering CI and user acceptance pending. See [350](docs/handover/350-admin-workflow-navigation.md). No phase is closed by this delivery proposal.
 
 ## Required update convention
 
