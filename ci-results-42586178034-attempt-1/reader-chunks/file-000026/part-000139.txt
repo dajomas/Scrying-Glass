@@ -1,0 +1,28 @@
+nd
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6225827Z     return await self._connection.wrap_api_call(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6226160Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6226427Z     ...<3 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6226628Z     )
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6226808Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6227418Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6228194Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6228985Z playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6229350Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6229544Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6230755Z ERROR: test_keyboard_reaches_every_button_and_scrolls_locally (test_monster_button_layout.MonsterButtonLayoutTests.test_keyboard_reaches_every_button_and_scrolls_locally) (width=1440)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6231661Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6232049Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6232769Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_monster_button_layout.py", line 136, in test_keyboard_reaches_every_button_and_scrolls_locally
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6233390Z     region.focus()
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6233597Z     ~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6234201Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11744, in focus
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6234931Z     self._sync(self._impl_obj.focus(timeout=to_milliseconds(timeout)))
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6235367Z     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6236053Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6236624Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6236856Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6237448Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 421, in focus
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6238154Z     return await self._frame.focus(self._selector, strict=True, **params)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6238611Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6239270Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 736, in focus
+tests	Python test suite (inclu

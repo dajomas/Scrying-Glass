@@ -1,0 +1,32 @@
+._connection.wrap_api_call(
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2675013Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2675293Z     ...<3 lines>...
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2675506Z     )
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2675703Z     ^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2676319Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2677130Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2677745Z playwright._impl._errors.TimeoutError: Locator.fill: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2678159Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2678463Z   - waiting for locator("#monsters input[data-mi]").first
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2679743Z     - locator resolved to <input step="1" value="10" type="number" data-mi="sg013-0" placeholder="roll" class="initiative-edit" data-raw-initiative="true" aria-label="Goblin initiative raw roll" title="Raw roll only. The server adds the assigned bonus once."/>
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2680748Z     - fill("17")
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2680988Z   - attempting fill action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2681416Z     2 × waiting for element to be visible, enabled and editable
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2681801Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2682065Z     - retrying fill action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2682311Z     - waiting 20ms
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2682837Z     2 × waiting for element to be visible, enabled and editable
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2683218Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2683480Z     - retrying fill action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2683736Z       - waiting 100ms
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2684125Z     10 × waiting for element to be visible, enabled and editable
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2684501Z        - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2684770Z      - retrying fill action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2685014Z        - waiting 500ms
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2685292Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2685300Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2685510Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2686458Z ERROR: test_edit_and_statistics_remain_keyboard_activatable (test_monster_button_layout.MonsterButtonLayoutTests.test_edit_and_statistics_remain_keyboard_activatable)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2687337Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2687732Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2688481Z   File "/tmp/scrying-test

@@ -1,0 +1,32 @@
+erflow (test_monster_button_layout.MonsterButtonLayoutTests.test_single_line_geometry_and_local_overflow) (width=1440, active=False)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6565333Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6565482Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6566001Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_monster_button_layout.py", line 95, in test_single_line_geometry_and_local_overflow
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6566268Z     self.assertEqual([s.strip() for s in buttons.all_text_contents()], expected)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6566447Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6566800Z AssertionError: Lists differ: [] != ['Edit', 'Join Battle', 'Ally', 'Visible',[56 chars]ove']
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6566809Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6566984Z Second list contains 10 additional elements.
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6567100Z First extra element 0:
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6567183Z 'Edit'
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6567191Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6567273Z - []
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6567361Z + ['Edit',
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6567463Z +  'Join Battle',
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6567549Z +  'Ally',
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6567638Z +  'Visible',
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6567725Z +  'AC',
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6567805Z +  'HP',
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6567892Z +  'Init',
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6567976Z +  'Reset',
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6568084Z +  'Restore statistics',
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6568172Z +  'Remove']
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6568180Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6568367Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6569095Z FAIL: test_single_line_geometry_and_local_overflow (test_monster_button_layout.MonsterButtonLayoutTests.test_single_line_geometry_and_local_overflow) (width=1440, active=True)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6569318Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6569602Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6570347Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_monster_button_layout.py", line 95, in test_single_line_geometry_and_local_overflow
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6570756Z     self.assertEqual([s.strip() for s in buttons.all_text_contents()], expected)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6570934Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser

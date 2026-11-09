@@ -1,0 +1,33 @@
+s	2026-11-09T08:38:50.2605033Z   - attempting click action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2605463Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2605846Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2606122Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2606378Z     - waiting 20ms
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2606751Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2607123Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2607389Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2607639Z       - waiting 100ms
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2608012Z     10 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2608379Z        - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2608656Z      - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2608911Z        - waiting 500ms
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2609052Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2609058Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2609264Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2610360Z ERROR: test_selection_context_and_refresh_preserve_original_selection_sets (test_admin_rosters.RosterBrowserTests.test_selection_context_and_refresh_preserve_original_selection_sets)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2611291Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2611688Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2612472Z   File "/tmp/scrying-tests-6hdnszeo/repo/tests/test_admin_rosters.py", line 48, in test_selection_context_and_refresh_preserve_original_selection_sets
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2613353Z     page.locator('#selectAll' + ('Characters' if kind == 'characters' else 'Monsters')).click()
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2613938Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2614860Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11021, in click
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2615458Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2615671Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2615892Z         self._impl_obj.click(
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2616151Z         ^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2616392Z     ...<11 lines>...
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2616767Z         )
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2616963Z         ^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2617156Z     )
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2617353Z     ^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2617934Z   File "/opt/hostedtoolcache

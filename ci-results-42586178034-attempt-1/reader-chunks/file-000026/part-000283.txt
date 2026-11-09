@@ -1,0 +1,34 @@
+ (width=768, active=True)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3058732Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3058879Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3059396Z   File "/tmp/scrying-tests-6hdnszeo/repo/tests/test_monster_button_layout.py", line 95, in test_single_line_geometry_and_local_overflow
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3059845Z     self.assertEqual([s.strip() for s in buttons.all_text_contents()], expected)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3060096Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3060441Z AssertionError: Lists differ: [] != ['Edit', 'In Battle', 'Ally', 'Visible', '[54 chars]ove']
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3060450Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3060625Z Second list contains 10 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3060742Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3060828Z 'Edit'
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3060836Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3060921Z - []
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3061003Z + ['Edit',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3061094Z +  'In Battle',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3061181Z +  'Ally',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3061270Z +  'Visible',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3061350Z +  'AC',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3061439Z +  'HP',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3061525Z +  'Init',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3061612Z +  'Reset',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3061722Z +  'Restore statistics',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3061961Z +  'Remove']
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3061970Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3062166Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3062906Z FAIL: test_single_line_geometry_and_local_overflow (test_monster_button_layout.MonsterButtonLayoutTests.test_single_line_geometry_and_local_overflow) (width=375, active=False)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3063131Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3063386Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3063906Z   File "/tmp/scrying-tests-6hdnszeo/repo/tests/test_monster_button_layout.py", line 95, in test_single_line_geometry_and_local_overflow
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3064178Z     self.assertEqual([s.strip() for s in buttons.all_text_contents()], expected)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3064360Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3064705Z AssertionError: Lists differ: [] != ['Edit', 'Join Battle', 'Ally', 'Visible',[56 chars]ove']
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3064718Z 
+tests	Standalone Pyt

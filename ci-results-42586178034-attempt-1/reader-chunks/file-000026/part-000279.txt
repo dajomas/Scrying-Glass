@@ -1,0 +1,33 @@
+61Z False
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3033649Z True
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3033657Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3033772Z - [False, 'none', '3px']
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3033881Z + [True, 'solid', '2px']
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3033889Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3034084Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3034731Z FAIL: test_computed_foundations_focus_and_modal (test_admin_foundations.FoundationBrowserTests.test_computed_foundations_focus_and_modal) (width=375)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3034955Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3035106Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3035600Z   File "/tmp/scrying-tests-6hdnszeo/repo/tests/test_admin_foundations.py", line 175, in test_computed_foundations_focus_and_modal
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3035772Z     self.assertEqual(focus, [True, 'solid', '2px'])
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3035914Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3036215Z AssertionError: Lists differ: [False, 'none', '3px'] != [True, 'solid', '2px']
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3036224Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3036354Z First differing element 0:
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3036441Z False
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3036522Z True
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3036530Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3036644Z - [False, 'none', '3px']
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3036758Z + [True, 'solid', '2px']
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3036766Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3036955Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3037752Z FAIL: test_refresh_and_encounter_tools_restore_without_tab_stealing (test_admin_workflow_navigation.WorkflowNavigationTests.test_refresh_and_encounter_tools_restore_without_tab_stealing)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3037976Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3038125Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3038734Z   File "/tmp/scrying-tests-6hdnszeo/repo/tests/test_admin_workflow_navigation.py", line 103, in test_refresh_and_encounter_tools_restore_without_tab_stealing
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3039094Z     self.assertEqual(page.locator('#toggleEncounterTools').get_attribute('aria-expanded'), before)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3039309Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3039458Z AssertionError: 'false' != 'true'
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3039542Z - false
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3039630Z + true
+tests	Standalon

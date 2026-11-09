@@ -1,0 +1,28 @@
+	Standalone Python browser and audit checks	2026-11-09T08:38:50.3026820Z FAIL: test_blank_notices_collapse_and_real_messages_reappear (test_admin_foundations.FoundationBrowserTests.test_blank_notices_collapse_and_real_messages_reappear) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3027047Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3027200Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3027756Z   File "/tmp/scrying-tests-6hdnszeo/repo/tests/test_admin_foundations.py", line 145, in test_blank_notices_collapse_and_real_messages_reappear
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3027901Z     self.assertTrue(notice.is_visible())
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3028017Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3028174Z AssertionError: False is not true
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3028184Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3028377Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3029137Z FAIL: test_blank_notices_collapse_and_real_messages_reappear (test_admin_foundations.FoundationBrowserTests.test_blank_notices_collapse_and_real_messages_reappear) (width=375)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3029368Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3029513Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3030304Z   File "/tmp/scrying-tests-6hdnszeo/repo/tests/test_admin_foundations.py", line 145, in test_blank_notices_collapse_and_real_messages_reappear
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3030605Z     self.assertTrue(notice.is_visible())
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3030728Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3030879Z AssertionError: False is not true
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3030888Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3031082Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3031722Z FAIL: test_computed_foundations_focus_and_modal (test_admin_foundations.FoundationBrowserTests.test_computed_foundations_focus_and_modal) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3032059Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3032207Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3032710Z   File "/tmp/scrying-tests-6hdnszeo/repo/tests/test_admin_foundations.py", line 175, in test_computed_foundations_focus_and_modal
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3032885Z     self.assertEqual(focus, [True, 'solid', '2px'])
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3033028Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3033335Z AssertionError: Lists differ: [False, 'none', '3px'] != [True, 'solid', '2px']
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3033344Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3033473Z First differing element 0:
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.30335

@@ -1,0 +1,31 @@
+42.6467301Z   - attempting click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6467545Z     2 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6467667Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6467770Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6467858Z     - waiting 20ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6468092Z     2 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6468218Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6468319Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6468408Z       - waiting 100ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6468651Z     10 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6468773Z        - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6468873Z      - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6468969Z        - waiting 500ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6468978Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6468984Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6469175Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6470156Z ERROR: test_real_candidate_resolution_keeps_other_checks_and_unchecked_hp (test_monster_refresh_end_to_end.MonsterRefreshEndToEndTests.test_real_candidate_resolution_keeps_other_checks_and_unchecked_hp)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6470375Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6470522Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6470888Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6471048Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6471176Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6471617Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6471724Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6471818Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6472443Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_monster_refresh_end_to_end.py", line 203, in test_real_candidate_resolution_keeps_other_checks_and_unchecked_hp
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6472569Z     page = await self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6472681Z            ^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6473066Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_monster_refresh_end_to_end.py", line 137, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6473175Z     await toggle.click()
+tests	Python test suite (including

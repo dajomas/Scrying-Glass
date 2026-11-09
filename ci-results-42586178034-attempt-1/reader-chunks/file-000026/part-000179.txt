@@ -1,0 +1,27 @@
+n test suite (including browser fixtures)	2026-11-09T08:33:42.6600583Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_monster_name_layout.py", line 86, in test_name_and_species_each_keep_their_own_line
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6600896Z     self.assertEqual(len(geometry['name']), 1)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6601030Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6601142Z AssertionError: 0 != 1
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6601255Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6601444Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6602338Z FAIL: test_name_and_species_each_keep_their_own_line (test_monster_name_layout.MonsterNameLayoutTests.test_name_and_species_each_keep_their_own_line) (width=375, name='Ancient Red Dragon Guard Captain', active=True)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6602557Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6602705Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6603212Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_monster_name_layout.py", line 86, in test_name_and_species_each_keep_their_own_line
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6603368Z     self.assertEqual(len(geometry['name']), 1)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6603495Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6603611Z AssertionError: 0 != 1
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6603619Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6603801Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6604622Z FAIL: test_primary_centres_and_compact_status_after_refresh (test_roster_status_spacing.CompactRosterSpacingTests.test_primary_centres_and_compact_status_after_refresh) (width=375, root_size=16)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6604841Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6604986Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6605527Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_roster_status_spacing.py", line 30, in test_primary_centres_and_compact_status_after_refresh
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6605660Z     self.assert_status_line(page, kind)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6605776Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6606164Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_stage_b_rosters.py", line 60, in assert_status_line
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6606398Z     self.assertLessEqual(metrics['contentBottom']+1, metrics['top'])
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6606562Z     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6606744Z AssertionError: 1 not less than or equal to 0
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6606752Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6606940Z ==========

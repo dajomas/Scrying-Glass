@@ -1,0 +1,27 @@
+t_primary_centres_and_compact_status_after_refresh) (width=768, root_size=20)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6614800Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6614944Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6615487Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_roster_status_spacing.py", line 30, in test_primary_centres_and_compact_status_after_refresh
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6615620Z     self.assert_status_line(page, kind)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6615738Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6616111Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_stage_b_rosters.py", line 60, in assert_status_line
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6616335Z     self.assertLessEqual(metrics['contentBottom']+1, metrics['top'])
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6616495Z     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6616671Z AssertionError: 1 not less than or equal to 0
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6616679Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6616866Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6617724Z FAIL: test_primary_centres_and_compact_status_after_refresh (test_roster_status_spacing.CompactRosterSpacingTests.test_primary_centres_and_compact_status_after_refresh) (width=1440, root_size=16)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6617943Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6618089Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6618627Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_roster_status_spacing.py", line 30, in test_primary_centres_and_compact_status_after_refresh
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6618763Z     self.assert_status_line(page, kind)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6618881Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6619243Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_stage_b_rosters.py", line 60, in assert_status_line
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6619470Z     self.assertLessEqual(metrics['contentBottom']+1, metrics['top'])
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6619633Z     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6619931Z AssertionError: 1 not less than or equal to 0
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6619940Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6620124Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6620948Z FAIL: test_primary_centres_and_compact_status_after_refresh (test_roster_status_spacing.CompactRosterSpacingTests.test_primary_centres_and_compact_status_after_refresh) (width=1440, root_size=20)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6621170Z ----------------------------------------------------------------------
+tests	Python test suite (in

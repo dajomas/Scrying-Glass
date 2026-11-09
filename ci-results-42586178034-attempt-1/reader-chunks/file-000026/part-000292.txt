@@ -1,0 +1,30 @@
+026-11-09T08:38:50.3127177Z     self.assertLessEqual(metrics['contentBottom']+1, metrics['top'])
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3127346Z     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3127523Z AssertionError: 1 not less than or equal to 0
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3127531Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3127722Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3128447Z FAIL: test_short_name_status_can_extend_under_adjacent_columns (test_stage_b_rosters.StageBRosterTests.test_short_name_status_can_extend_under_adjacent_columns) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3128664Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3128814Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3129352Z   File "/tmp/scrying-tests-6hdnszeo/repo/tests/test_stage_b_rosters.py", line 115, in test_short_name_status_can_extend_under_adjacent_columns
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3129562Z     self.assert_status_line(page, kind, spill=kind=='monsters')
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3129830Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3130212Z   File "/tmp/scrying-tests-6hdnszeo/repo/tests/test_stage_b_rosters.py", line 60, in assert_status_line
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3130432Z     self.assertLessEqual(metrics['contentBottom']+1, metrics['top'])
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3130603Z     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3130785Z AssertionError: 1 not less than or equal to 0
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3130793Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3131014Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3131138Z Ran 1416 tests in 284.266s
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3131147Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3131292Z FAILED (failures=31, errors=31)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3131589Z Connections opened: 762; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.6332646Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.6333382Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.9917963Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.9919194Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:51.0377078Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:51.0377623Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:51.3987343Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:51.4461185Z ##[endgroup]
+tests	Standalone Python browser and 

@@ -1,0 +1,32 @@
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8428588Z playwright._impl._errors.TimeoutError: Locator.click: Timeout 4000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8429035Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8429341Z   - waiting for locator("#toggleMonsterDisplayPane")
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8431146Z     - locator resolved to <button type="button" class="pane-toggle" aria-expanded="false" id="toggleMonsterDisplayPane" data-workflow-excluded="true" aria-controls="monsterDisplayPane">Show monster display</button>
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8432690Z   - attempting click action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8433576Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8434114Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8434390Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8434640Z     - waiting 20ms
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8435035Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8435405Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8435667Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8435919Z       - waiting 100ms
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8436311Z     8 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8436680Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8436941Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8437186Z       - waiting 500ms
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8437320Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.9378992Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.9379592Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:57.1984067Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:57.1989204Z ##[error]Process completed with exit code 1.
+tests	Post Run actions/checkout@v4	﻿2026-11-09T08:38:57.2095123Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-09T08:38:57.2999331Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-09T08:38:57.3046961Z git version 2.56.0
+tests	Post Run actions/checkout@v4	2026-11-09T08:38:57.3087861Z Temporarily overriding HOME='/home/runner/work/_temp/84e21fac-860b-4f33-b36f-96f2765021d5' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-09T08:38:57.3090151Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-09T08:38:57.3093230Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-09T08:38:57.3137450Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-09T08:38:57.3178654Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-09T08:38:57.3495452Z [command]/usr/bin/git config --local --name-only --get-

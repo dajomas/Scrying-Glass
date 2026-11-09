@@ -1,0 +1,29 @@
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2733060Z     ...<3 lines>...
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2733276Z     )
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2733465Z     ^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2734088Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2734886Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2735509Z playwright._impl._errors.TimeoutError: Locator.focus: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2735921Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2736254Z   - waiting for get_by_role("region", name="Monsters", exact=True)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2736535Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2736542Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2736733Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2737743Z ERROR: test_keyboard_reaches_every_button_and_scrolls_locally (test_monster_button_layout.MonsterButtonLayoutTests.test_keyboard_reaches_every_button_and_scrolls_locally) (width=375)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2738652Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2739053Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2740009Z   File "/tmp/scrying-tests-6hdnszeo/repo/tests/test_monster_button_layout.py", line 136, in test_keyboard_reaches_every_button_and_scrolls_locally
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2740665Z     region.focus()
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2740886Z     ~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2741509Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11744, in focus
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2742262Z     self._sync(self._impl_obj.focus(timeout=to_milliseconds(timeout)))
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2742707Z     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2743402Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2743992Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2744247Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2744846Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 421, in focus
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2745574Z     return await self._frame.focus(self._selector, strict=True, **params)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2746044Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2746719Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 736, in focus
+tests	Standalone Python browser and aud

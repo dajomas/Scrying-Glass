@@ -1,0 +1,31 @@
+audit checks	2026-11-09T08:38:51.4462046Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8402764Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8413839Z   File "/tmp/scrying-tests-ywvx49a5/repo/tests/browser_smoke_272cc73.py", line 60, in <module>
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8414494Z     admin.locator('#toggleMonsterDisplayPane').click()
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8415277Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8416061Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11021, in click
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8416691Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8416905Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8417136Z         self._impl_obj.click(
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8417396Z         ^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8417645Z     ...<11 lines>...
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8417876Z         )
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8418064Z         ^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8418259Z     )
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8418447Z     ^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8419049Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8419921Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8420259Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8420919Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 174, in click
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8421711Z     return await self._frame._click(self._selector, strict=True, **params)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8422209Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8422955Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 598, in _click
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8423748Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8424600Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8425289Z     return await self._connection.wrap_api_call(
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8425655Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8425952Z     ...<3 lines>...
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8426173Z     )
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8426378Z     ^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8427045Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:56.8427924Z 

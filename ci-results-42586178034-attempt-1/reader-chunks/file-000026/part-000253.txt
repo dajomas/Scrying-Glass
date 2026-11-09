@@ -1,0 +1,32 @@
+ 100ms
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2775726Z     10 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2776229Z        - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2776502Z      - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2776761Z        - waiting 500ms
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2776908Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2776914Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2788780Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2790205Z ERROR: test_fields_and_preview_boxes_align_loaded_and_empty (test_monster_image_preview_alignment.PreviewAlignmentTests.test_fields_and_preview_boxes_align_loaded_and_empty) (width=1440, loaded=True)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2791218Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2791640Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2792441Z   File "/tmp/scrying-tests-6hdnszeo/repo/tests/test_monster_image_preview_alignment.py", line 28, in test_fields_and_preview_boxes_align_loaded_and_empty
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2793125Z     button.click()
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2793354Z     ~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2794011Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11021, in click
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2794621Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2794841Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2795063Z         self._impl_obj.click(
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2795323Z         ^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2795562Z     ...<11 lines>...
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2795788Z         )
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2795975Z         ^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2796157Z     )
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2796354Z     ^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2796939Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2797542Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2797786Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2798394Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 174, in click
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2799122Z     return await self._frame._click(self._selector, strict=True, **params)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2799591Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2800381Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 598, in _click
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2801

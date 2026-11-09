@@ -1,0 +1,31 @@
+e 78, in send
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6487139Z     return await self._connection.wrap_api_call(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6487262Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6487358Z     ...<3 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6487442Z     )
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6487517Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6488019Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6488300Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6488612Z playwright._impl._errors.TimeoutError: Locator.click: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6488700Z Call log:
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6488877Z   - waiting for locator("#toggleMonsterDisplayPane")
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6489932Z     - locator resolved to <button type="button" class="pane-toggle" aria-expanded="false" id="toggleMonsterDisplayPane" data-workflow-excluded="true" aria-controls="monsterDisplayPane">Show monster display</button>
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6490074Z   - attempting click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6490353Z     2 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6490481Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6490586Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6490681Z     - waiting 20ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6490915Z     2 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6491035Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6491141Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6491237Z       - waiting 100ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6491470Z     10 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6491597Z        - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6491702Z      - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6491796Z        - waiting 500ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6491804Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6491817Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6492005Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6492921Z ERROR: test_real_sole_candidate_auto_resolution_requires_explicit_apply (test_monster_refresh_end_to_end.MonsterRefreshEndToEndTests.test_real_sole_candidate_auto_resolution_requires_explicit_apply) (width=375)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6493153Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6493299Z Tracebac

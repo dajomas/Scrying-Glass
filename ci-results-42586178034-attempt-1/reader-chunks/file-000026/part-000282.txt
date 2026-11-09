@@ -1,0 +1,35 @@
+	Standalone Python browser and audit checks	2026-11-09T08:38:50.3052703Z +  'Visible',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3052790Z +  'AC',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3052881Z +  'HP',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3052970Z +  'Init',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3053058Z +  'Reset',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3053172Z +  'Restore statistics',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3053256Z +  'Remove']
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3053264Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3053459Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3054197Z FAIL: test_single_line_geometry_and_local_overflow (test_monster_button_layout.MonsterButtonLayoutTests.test_single_line_geometry_and_local_overflow) (width=768, active=False)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3054426Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3054575Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3055373Z   File "/tmp/scrying-tests-6hdnszeo/repo/tests/test_monster_button_layout.py", line 95, in test_single_line_geometry_and_local_overflow
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3055646Z     self.assertEqual([s.strip() for s in buttons.all_text_contents()], expected)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3055836Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3056184Z AssertionError: Lists differ: [] != ['Edit', 'Join Battle', 'Ally', 'Visible',[56 chars]ove']
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3056192Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3056364Z Second list contains 10 additional elements.
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3056476Z First extra element 0:
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3056557Z 'Edit'
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3056565Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3056648Z - []
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3056738Z + ['Edit',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3056843Z +  'Join Battle',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3056926Z +  'Ally',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3057019Z +  'Visible',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3057105Z +  'AC',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3057195Z +  'HP',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3057275Z +  'Init',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3057362Z +  'Reset',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3057482Z +  'Restore statistics',
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3057570Z +  'Remove']
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3057578Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3057773Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.3058500Z FAIL: test_single_line_geometry_and_local_overflow (test_monster_button_layout.MonsterButtonLayoutTests.test_single_line_geometry_and_local_overflow)

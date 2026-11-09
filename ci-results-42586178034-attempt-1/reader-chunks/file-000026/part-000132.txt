@@ -1,0 +1,32 @@
+Pane" data-workflow-excluded="true" aria-controls="battleSetupInputPane">Show battle setup input</button>
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6133162Z   - attempting click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6133622Z     2 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6134011Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6134276Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6134534Z     - waiting 20ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6134880Z     2 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6135233Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6135500Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6135739Z       - waiting 100ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6136108Z     10 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6136472Z        - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6136729Z      - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6136976Z        - waiting 500ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6137117Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6137125Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6137327Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6138328Z ERROR: test_selection_context_and_refresh_preserve_original_selection_sets (test_admin_rosters.RosterBrowserTests.test_selection_context_and_refresh_preserve_original_selection_sets)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6139240Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6139973Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6140741Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_admin_rosters.py", line 48, in test_selection_context_and_refresh_preserve_original_selection_sets
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6141741Z     page.locator('#selectAll' + ('Characters' if kind == 'characters' else 'Monsters')).click()
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6142314Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6143094Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11021, in click
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6143682Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6143885Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6144107Z         self._impl_obj.click(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6144355Z         ^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6144591Z     ...<11 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6144802Z         )
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6144997Z         ^
+t

@@ -1,0 +1,30 @@
+/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11021, in click
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6105940Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6106145Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6106358Z         self._impl_obj.click(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6106604Z         ^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6106833Z     ...<11 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6107046Z         )
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6107224Z         ^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6107403Z     )
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6107591Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6108156Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6108731Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6108965Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6109552Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 174, in click
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6110385Z     return await self._frame._click(self._selector, strict=True, **params)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6110840Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6124892Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 598, in _click
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6125694Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6126499Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6127162Z     return await self._connection.wrap_api_call(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6127515Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6127792Z     ...<3 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6128005Z     )
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6128190Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6128814Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6129621Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6130517Z playwright._impl._errors.TimeoutError: Locator.click: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6130942Z Call log:
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6131229Z   - waiting for locator("#toggleBattleSetupPane")
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6132266Z     - locator resolved to <button type="button" class="pane-toggle" aria-expanded="false" id="toggleBattleSetup

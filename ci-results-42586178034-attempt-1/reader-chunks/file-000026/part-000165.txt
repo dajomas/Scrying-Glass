@@ -1,0 +1,32 @@
+sible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6513512Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6513614Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6513709Z       - waiting 100ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6513948Z     10 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6514073Z        - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6514177Z      - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6514281Z        - waiting 500ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6514289Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6514295Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6514491Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6515244Z ERROR: test_help_and_checkbox_label_render_without_mutation (test_monster_source_help_text.SourceHelpBrowserTests.test_help_and_checkbox_label_render_without_mutation) (width=1440)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6515471Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6515627Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6516179Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_monster_source_help_text.py", line 68, in test_help_and_checkbox_label_render_without_mutation
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6516274Z     button.click()
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6516361Z     ~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6517025Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11021, in click
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6517227Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6517310Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6517418Z         self._impl_obj.click(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6517513Z         ^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6517599Z     ...<11 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6517688Z         )
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6517773Z         ^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6517856Z     )
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6517933Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6518405Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6518510Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6518602Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6519051Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 174, in click
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6519300Z     return await self._frame._click(self._selector, strict=True, **params

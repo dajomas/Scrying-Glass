@@ -1,0 +1,30 @@
+es)	2026-11-09T08:33:42.6057880Z     )
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6058144Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6059071Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6060537Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6061479Z playwright._impl._errors.TimeoutError: Locator.click: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6062099Z Call log:
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6062506Z   - waiting for locator("#toggleBattleSetupPane")
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6064074Z     - locator resolved to <button type="button" class="pane-toggle" aria-expanded="false" id="toggleBattleSetupPane" data-workflow-excluded="true" aria-controls="battleSetupInputPane">Show battle setup input</button>
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6065453Z   - attempting click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6066082Z     2 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6066630Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6066983Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6067325Z     - waiting 20ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6067872Z     2 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6068400Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6068789Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6069153Z       - waiting 100ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6069856Z     10 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6070397Z        - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6070782Z      - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6071131Z        - waiting 500ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6071336Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6071345Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6071628Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6072841Z ERROR: test_panel_geometry_and_screenshots (test_admin_panel_forms.PanelFormsBrowserTests.test_panel_geometry_and_screenshots) (width=375)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6073978Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6074559Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6075573Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_admin_panel_forms.py", line 129, in test_panel_geometry_and_screenshots
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6076547Z     page, errors, mutations = self.open_page(width)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6077122Z                               ~~~~~~~~~~~~~~^^^^^^^

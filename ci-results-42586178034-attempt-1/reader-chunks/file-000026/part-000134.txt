@@ -1,0 +1,32 @@
+nabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6159470Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6159940Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6160198Z       - waiting 100ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6160582Z     10 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6160954Z        - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6161216Z      - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6161470Z        - waiting 500ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6161616Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6161623Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6161826Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6163075Z ERROR: test_native_change_save_refresh_and_rejection (test_initiative_keyboard_navigation.InitiativeNavigationAdminTests.test_native_change_save_refresh_and_rejection) (width=1440, kind='monsters')
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6164157Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6164566Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6165307Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_initiative_keyboard_navigation.py", line 204, in test_native_change_save_refresh_and_rejection
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6165960Z     fields.nth(0).fill('17')
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6166204Z     ~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6166844Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11640, in fill
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6167439Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6167641Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6167848Z         self._impl_obj.fill(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6168097Z         ^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6168320Z     ...<4 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6168521Z         )
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6168700Z         ^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6168890Z     )
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6169068Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6169634Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6170435Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6170675Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6171267Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 228, in fill
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6171972Z     return await self._frame.fill(self._selector,

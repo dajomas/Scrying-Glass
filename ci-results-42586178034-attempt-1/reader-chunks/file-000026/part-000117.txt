@@ -1,0 +1,27 @@
+_technical_documentation_split.TechnicalDocumentationSplitTests.test_compatibility_links) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.4317414Z test_content_and_size (test_technical_documentation_split.TechnicalDocumentationSplitTests.test_content_and_size) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.4511881Z test_down_damage_preserves_turn (test_turn_eligibility.TurnTests.test_down_damage_preserves_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.4701647Z test_down_takes_next_turn (test_turn_eligibility.TurnTests.test_down_takes_next_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.4891809Z test_manual_down_turn (test_turn_eligibility.TurnTests.test_manual_down_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5085516Z test_negative_maximum_no_longer_means_death (test_turn_eligibility.TurnTests.test_negative_maximum_no_longer_means_death) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5277369Z test_round_wrap (test_turn_eligibility.TurnTests.test_round_wrap) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5466572Z test_stable_takes_next_turn (test_turn_eligibility.TurnTests.test_stable_takes_next_turn) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5653651Z test_third_failure_removed (test_turn_eligibility.TurnTests.test_third_failure_removed) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5843992Z test_zero_hp_monster_excluded (test_turn_eligibility.TurnTests.test_zero_hp_monster_excluded) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5844825Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5845549Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5847338Z ERROR: test_disclosures_drafts_files_and_common_controls (test_admin_panel_forms.PanelFormsBrowserTests.test_disclosures_drafts_files_and_common_controls) (width=1440)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5849280Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5850160Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5851201Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_admin_panel_forms.py", line 66, in test_disclosures_drafts_files_and_common_controls
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5851915Z     page, errors, mutations = self.open_page(width)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5852285Z                               ~~~~~~~~~~~~~~^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5853272Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_admin_panel_forms.py", line 42, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5854157Z     button.click()
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5854565Z     ~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5855724Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11021, in click
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5856836Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5857227Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5857608Z         self._impl_obj.click(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5858053Z         ^^^^^^^^^^^^^^^^^^^^^
+tests	

@@ -1,0 +1,26 @@
+cluding browser fixtures)	2026-11-09T08:33:42.6621316Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6621847Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_roster_status_spacing.py", line 30, in test_primary_centres_and_compact_status_after_refresh
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6621981Z     self.assert_status_line(page, kind)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6622100Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6622470Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_stage_b_rosters.py", line 60, in assert_status_line
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6622821Z     self.assertLessEqual(metrics['contentBottom']+1, metrics['top'])
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6622982Z     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6623271Z AssertionError: 1 not less than or equal to 0
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6623279Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6623468Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6624222Z FAIL: test_labels_status_layout_and_repeated_refresh_are_read_only (test_stage_b_rosters.StageBRosterTests.test_labels_status_layout_and_repeated_refresh_are_read_only) (width=375)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6624443Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6624588Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6625134Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_stage_b_rosters.py", line 80, in test_labels_status_layout_and_repeated_refresh_are_read_only
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6625272Z     self.assert_status_line(page, kind)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6625386Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6625754Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_stage_b_rosters.py", line 60, in assert_status_line
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6625983Z     self.assertLessEqual(metrics['contentBottom']+1, metrics['top'])
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6626148Z     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6626315Z AssertionError: 1 not less than or equal to 0
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6626323Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6626508Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6627259Z FAIL: test_labels_status_layout_and_repeated_refresh_are_read_only (test_stage_b_rosters.StageBRosterTests.test_labels_status_layout_and_repeated_refresh_are_read_only) (width=768)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6627478Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6627618Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6628160Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_stage_b_rosters.py", line 80, in test_labels_status_layout_and_

@@ -1,0 +1,27 @@
+-11-09T08:33:42.6545188Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6545543Z playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6545553Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6545748Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6546521Z FAIL: test_blank_notices_collapse_and_real_messages_reappear (test_admin_foundations.FoundationBrowserTests.test_blank_notices_collapse_and_real_messages_reappear) (width=1440)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6546746Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6546898Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6547444Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_admin_foundations.py", line 145, in test_blank_notices_collapse_and_real_messages_reappear
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6547587Z     self.assertTrue(notice.is_visible())
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6547706Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6547854Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6547862Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6548051Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6548797Z FAIL: test_blank_notices_collapse_and_real_messages_reappear (test_admin_foundations.FoundationBrowserTests.test_blank_notices_collapse_and_real_messages_reappear) (width=375)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6549143Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6549393Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6550041Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_admin_foundations.py", line 145, in test_blank_notices_collapse_and_real_messages_reappear
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6550185Z     self.assertTrue(notice.is_visible())
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6550303Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6550444Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6550452Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6550641Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6551277Z FAIL: test_computed_foundations_focus_and_modal (test_admin_foundations.FoundationBrowserTests.test_computed_foundations_focus_and_modal) (width=1440)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6551499Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6551646Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6552139Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_admin_foundations.py", line 175, in test_computed_foundations_focus_and_modal
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6

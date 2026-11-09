@@ -1,0 +1,28 @@
+lcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 421, in focus
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6255067Z     return await self._frame.focus(self._selector, strict=True, **params)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6255516Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6256172Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 736, in focus
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6256889Z     await self._channel.send("focus", self._timeout, locals_to_params(locals()))
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6257682Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6258318Z     return await self._connection.wrap_api_call(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6258659Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6258923Z     ...<3 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6259126Z     )
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6259310Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6260029Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6260824Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6261437Z playwright._impl._errors.TimeoutError: Locator.focus: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6261843Z Call log:
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6262169Z   - waiting for get_by_role("region", name="Monsters", exact=True)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6262444Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6262455Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6262650Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6263637Z ERROR: test_keyboard_reaches_every_button_and_scrolls_locally (test_monster_button_layout.MonsterButtonLayoutTests.test_keyboard_reaches_every_button_and_scrolls_locally) (width=375)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6264542Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6264928Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6265645Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_monster_button_layout.py", line 136, in test_keyboard_reaches_every_button_and_scrolls_locally
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6266269Z     region.focus()
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6266477Z     ~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6267085Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11744, in focus
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6267807Z     self._sync(self._impl_obj.focus(timeout=to_milliseconds(timeout)))
+tests	Python test suite (inc

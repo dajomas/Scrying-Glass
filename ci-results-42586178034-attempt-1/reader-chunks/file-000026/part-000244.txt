@@ -1,0 +1,31 @@
+ts	Standalone Python browser and audit checks	2026-11-09T08:38:50.2646641Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 653, in _fill
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2647379Z     await self._channel.send("fill", self._timeout, locals_to_params(locals()))
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2648165Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2648818Z     return await self._connection.wrap_api_call(
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2649163Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2649437Z     ...<3 lines>...
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2649743Z     )
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2649933Z     ^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2650554Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2651358Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2651977Z playwright._impl._errors.TimeoutError: Locator.fill: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2652391Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2652704Z   - waiting for locator("#monsters input[data-mi]").first
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2653895Z     - locator resolved to <input step="1" value="10" type="number" data-mi="sg013-0" placeholder="roll" class="initiative-edit" data-raw-initiative="true" aria-label="Goblin initiative raw roll" title="Raw roll only. The server adds the assigned bonus once."/>
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2655005Z     - fill("17")
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2655239Z   - attempting fill action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2655665Z     2 × waiting for element to be visible, enabled and editable
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2656049Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2656313Z     - retrying fill action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2656552Z     - waiting 20ms
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2656933Z     2 × waiting for element to be visible, enabled and editable
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2657305Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2657568Z     - retrying fill action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2657811Z       - waiting 100ms
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2658195Z     10 × waiting for element to be visible, enabled and editable
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2658569Z        - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2658834Z      - retrying fill action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2659085Z        - waiting 500ms
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2659235Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2659371Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2659579Z ==================

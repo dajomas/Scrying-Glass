@@ -1,0 +1,31 @@
+wser and audit checks	2026-11-09T08:38:50.2958778Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2958907Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2959010Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2959100Z     - waiting 20ms
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2959340Z     2 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2959470Z       - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2959573Z     - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2959782Z       - waiting 100ms
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2960033Z     10 × waiting for element to be visible, enabled and stable
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2960161Z        - element is not visible
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2960281Z      - retrying click action
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2960404Z        - waiting 500ms
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2960419Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2960425Z 
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2960625Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2961534Z ERROR: test_real_sole_candidate_auto_resolution_requires_explicit_apply (test_monster_refresh_end_to_end.MonsterRefreshEndToEndTests.test_real_sole_candidate_auto_resolution_requires_explicit_apply) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2961763Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2961915Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2962549Z   File "/tmp/scrying-tests-6hdnszeo/repo/tests/test_monster_refresh_end_to_end.py", line 232, in test_real_sole_candidate_auto_resolution_requires_explicit_apply
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2962693Z     page = await self.open_page(width)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2962811Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2963201Z   File "/tmp/scrying-tests-6hdnszeo/repo/tests/test_monster_refresh_end_to_end.py", line 137, in open_page
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2963315Z     await toggle.click()
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2963814Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/async_api/_generated.py", line 11018, in click
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2963946Z     await self._impl_obj.click(
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2964040Z     ...<11 lines>...
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2964130Z     )
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2964586Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 174, in click
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2964833Z     return await self._frame._click(self._selector, strict=True, **params)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2965141Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Pyt

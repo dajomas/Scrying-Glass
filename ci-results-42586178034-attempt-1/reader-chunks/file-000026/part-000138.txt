@@ -1,0 +1,28 @@
+08:33:42.6212133Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6212140Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6212341Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6213274Z ERROR: test_edit_and_statistics_remain_keyboard_activatable (test_monster_button_layout.MonsterButtonLayoutTests.test_edit_and_statistics_remain_keyboard_activatable)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6214136Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6214520Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6215239Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_monster_button_layout.py", line 174, in test_edit_and_statistics_remain_keyboard_activatable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6216005Z     page.wait_for_function("!document.querySelector('#editModal').hidden")
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6216476Z     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6217275Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 21235, in wait_for_function
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6217901Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6218102Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6218340Z         self._impl_obj.wait_for_function(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6218635Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6218889Z     ...<4 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6219087Z         )
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6219258Z         ^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6219440Z     )
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6219617Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6220287Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6220865Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6221101Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6221738Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_page.py", line 1158, in wait_for_function
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6222512Z     return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6222994Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6223726Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 945, in wait_for_function
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6224455Z     await self._channel.send("waitForFunction", self._timeout, params)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6225192Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in se

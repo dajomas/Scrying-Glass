@@ -1,0 +1,33 @@
+fixtures)	2026-11-09T08:33:42.5881886Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5882258Z     - waiting 20ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5882812Z     2 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5883360Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5884031Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5884389Z       - waiting 100ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5884959Z     9 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5885687Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5886059Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5886416Z       - waiting 500ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5886887Z     - waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5887255Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5887266Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5887580Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5889058Z ERROR: test_disclosures_drafts_files_and_common_controls (test_admin_panel_forms.PanelFormsBrowserTests.test_disclosures_drafts_files_and_common_controls) (width=375)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5890597Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5891199Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5892295Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_admin_panel_forms.py", line 66, in test_disclosures_drafts_files_and_common_controls
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5893312Z     page, errors, mutations = self.open_page(width)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5893859Z                               ~~~~~~~~~~~~~~^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5894947Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_admin_panel_forms.py", line 42, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5895646Z     button.click()
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5895951Z     ~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5896899Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11021, in click
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5897812Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5898106Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5898419Z         self._impl_obj.click(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5898782Z         ^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5899123Z     ...<11 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5899415Z         )
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5899816Z         ^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.5900094Z     )
+tests	Python test suite (incl

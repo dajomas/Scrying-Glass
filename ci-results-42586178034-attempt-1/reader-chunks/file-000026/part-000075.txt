@@ -1,0 +1,26 @@
+browser fixtures)	2026-11-09T08:30:39.7683637Z test_refresh_recalculation_missing_invalid_and_exact_edition (test_fivetools_initiative_flow.FivetoolsInitiativeFlowTests.test_refresh_recalculation_missing_invalid_and_exact_edition) ... Selected monster source refresh failed for cb9cf4e8d2ff4d6d9e89165d77d1a680
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7685448Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7686223Z   File "/tmp/scrying-tests-4a_j7xi7/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7686976Z     candidate = _fetch_exact(context, monster, identity)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7687714Z   File "/tmp/scrying-tests-4a_j7xi7/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7710961Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7720314Z ValueError: Retained source missing or ambiguous
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7720946Z ok
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7786798Z test_candidate_errors_are_not_zero_matches (test_fivetools_source_configuration.SourceConfigurationTests.test_candidate_errors_are_not_zero_matches) ... 5e.tools candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7787725Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7788250Z   File "python/scrying_glass_monster_selection.py", line 101, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7788765Z     index = ft.load_json(root + "/index.json")
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7789482Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7790593Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7791077Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7791659Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7792231Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7792584Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7793210Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7793742Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7793977Z OSError: private detail
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7794281Z 5e.tools candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7794606Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7795094Z   File "python/scrying_glass_monster_selection.py", line 98, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7795583Z     sources = ft.configured_sources(display)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:30:39.7796196Z   File "/tmp/scrying-tests-4a_j7xi7/repo/python/scrying_glass_fiveto

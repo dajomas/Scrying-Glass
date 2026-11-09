@@ -1,0 +1,30 @@
+2.6092147Z playwright._impl._errors.TimeoutError: Locator.click: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6092561Z Call log:
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6092836Z   - waiting for locator("#toggleBattleSetupPane")
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6093879Z     - locator resolved to <button type="button" class="pane-toggle" aria-expanded="false" id="toggleBattleSetupPane" data-workflow-excluded="true" aria-controls="battleSetupInputPane">Show battle setup input</button>
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6094788Z   - attempting click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6095226Z     2 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6095592Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6095872Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6096107Z     - waiting 20ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6096461Z     2 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6096817Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6097061Z     - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6097291Z       - waiting 100ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6097650Z     10 × waiting for element to be visible, enabled and stable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6098008Z        - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6098269Z      - retrying click action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6098515Z        - waiting 500ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6098646Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6098656Z 
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6098856Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6100085Z ERROR: test_required_validation_and_character_submit_failure_then_success (test_admin_panel_forms.PanelFormsBrowserTests.test_required_validation_and_character_submit_failure_then_success)
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6101033Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6101427Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6102196Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_admin_panel_forms.py", line 92, in test_required_validation_and_character_submit_failure_then_success
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6102899Z     page, errors, mutations = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6103235Z                               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6103760Z   File "/tmp/scrying-tests-4a_j7xi7/repo/tests/test_admin_panel_forms.py", line 42, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6104395Z     button.click()
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6104603Z     ~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6105227Z   File "/opt/hostedtoolcache/Python/3.14.10

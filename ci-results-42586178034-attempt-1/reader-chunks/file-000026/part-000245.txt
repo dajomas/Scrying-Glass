@@ -1,0 +1,29 @@
+====================================================
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2660904Z ERROR: test_native_change_save_refresh_and_rejection (test_initiative_keyboard_navigation.InitiativeNavigationAdminTests.test_native_change_save_refresh_and_rejection) (width=375, kind='monsters')
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2661890Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2662290Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2663198Z   File "/tmp/scrying-tests-6hdnszeo/repo/tests/test_initiative_keyboard_navigation.py", line 204, in test_native_change_save_refresh_and_rejection
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2663867Z     fields.nth(0).fill('17')
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2664135Z     ~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2664774Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 11640, in fill
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2665375Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2665596Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2665822Z         self._impl_obj.fill(
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2666069Z         ^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2666313Z     ...<4 lines>...
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2666525Z         )
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2666720Z         ^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2666911Z     )
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2667096Z     ^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2667675Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2668268Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2668511Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2669110Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_locator.py", line 228, in fill
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2670044Z     return await self._frame.fill(self._selector, strict=True, **params)
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2670520Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2671189Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 641, in fill
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2671833Z     await self._fill(**locals_to_params(locals()))
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2672506Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 653, in _fill
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2673240Z     await self._channel.send("fill", self._timeout, locals_to_params(locals()))
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2674016Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Standalone Python browser and audit checks	2026-11-09T08:38:50.2674663Z     return await self

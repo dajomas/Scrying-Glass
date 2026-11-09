@@ -1,0 +1,30 @@
+11-09T08:33:42.6198640Z     await self._fill(**locals_to_params(locals()))
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6199312Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 653, in _fill
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6200248Z     await self._channel.send("fill", self._timeout, locals_to_params(locals()))
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6201028Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6201673Z     return await self._connection.wrap_api_call(
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6202011Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6202290Z     ...<3 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6202489Z     )
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6202664Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6203276Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6204068Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6204674Z playwright._impl._errors.TimeoutError: Locator.fill: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6205084Z Call log:
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6205385Z   - waiting for locator("#monsters input[data-mi]").first
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6206554Z     - locator resolved to <input step="1" value="10" type="number" data-mi="sg013-0" placeholder="roll" class="initiative-edit" data-raw-initiative="true" aria-label="Goblin initiative raw roll" title="Raw roll only. The server adds the assigned bonus once."/>
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6207682Z     - fill("17")
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6207908Z   - attempting fill action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6208430Z     2 × waiting for element to be visible, enabled and editable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6208799Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6209050Z     - retrying fill action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6209282Z     - waiting 20ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6209795Z     2 × waiting for element to be visible, enabled and editable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6210233Z       - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6210495Z     - retrying fill action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6210741Z       - waiting 100ms
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6211128Z     10 × waiting for element to be visible, enabled and editable
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6211496Z        - element is not visible
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6211753Z      - retrying fill action
+tests	Python test suite (including browser fixtures)	2026-11-09T08:33:42.6211993Z        - waiting 500ms
+tests	Python test suite (including browser fixtures)	2026-11-09T
