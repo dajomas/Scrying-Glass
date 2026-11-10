@@ -156,24 +156,25 @@ document.addEventListener('click', async event => {
         const row = button.closest('tr');
         const name = row?.querySelector('td')?.textContent.trim() || kind;
 
-        if (!confirm(`Remove ${kind} “${name}” from the current encounter?`)) {
+        if (!confirm(`Remove ${kind} “${name}” from the current encounter?`)) return;
+        const feedback = window.scryingAdminFeedback;
+        const ticket = feedback.begin({region: 'global', operation: 'combatant.remove.fallback',
+            target: id, label: `Remove ${kind}: ${name}`});
+        button.disabled = true;
+        let result;
+        try {
+            result = await request(`/api/combatants/${encodeURIComponent(id)}`, {method: 'DELETE'});
+        } catch (error) {
+            if (feedback.isCurrent(ticket)) {
+                feedback.publish(ticket, {severity: 'error', text: error.message});
+                button.disabled = false;
+            }
             return;
         }
-
-        button.disabled = true;
-
-        try {
-            const result = await request(`/api/combatants/${encodeURIComponent(id)}`, {
-                method: 'DELETE',
-            });
-
-            await load();
-            message(`Removed ${result.name}.`);
-        } catch (error) {
-            message(error.message);
-            button.disabled = false;
-        }
-
+        if (!feedback.isCurrent(ticket)) return;
+        feedback.publish(ticket, {severity: 'success', text: `Removed ${result?.name ?? name}.`});
+        // Deletion succeeded; load() owns refresh errors. Do not replay DELETE.
+        await load();
         return;
     }
 

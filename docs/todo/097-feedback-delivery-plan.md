@@ -4,19 +4,17 @@
 
 ## Current status - 2026-11-10
 
-SG-TODO-009.7, Deliverable 1 and Deliverable 2 remain open. 4A.1-4A.7 are completed and closed for their bounded scopes after reviewed covering CI and explicit user acceptance/close-out requests. 4A.8 global removal fallback feedback is the next proposed bounded unit, not started by this close-out; later units remain proposed. No owner/deadline or new priority is assigned; SG-TODO-019 and the agreed delivery sequence are unchanged.
+SG-TODO-009.7, Deliverable 1 and Deliverable 2 remain open. 4A.1-4A.7 are completed and closed for their bounded scopes after reviewed covering CI and explicit acceptance. 4A.8 is in progress, prepared for delivery; covering CI/full-Admin validation and acceptance remain pending. 4A.9 onward remains proposed. No owner/deadline or new priority is assigned; SG-TODO-019 and the agreed delivery sequence are unchanged.
 
-## 4A.7 individual combatant reset feedback - 2026-11-10
+## 4A.8 global removal fallback feedback - 2026-11-10
 
-Status: completed and closed for bounded character/monster individual-reset feedback at the user's explicit close-out/docs request on 2026-11-10 following reviewed successful covering CI. Implementation ffcca4e9b85a9bc90ba39c495213de608b9a04c2 on features/perplexity-009.7 is covered by successful Branch tests 42852710398 attempt 1; evidence publication 05324088a62b7db78b6cc8834593e9c4001972ac under ci-results-42852710398-attempt-1. Reviewed run.json and jobs.json match that exact tested SHA and all configured validation stages completed successfully. See [400 bounded acceptance and limits](../handover/400-individual-reset-feedback.md#4a7-bounded-acceptance-and-close-out---2026-11-10).
+Prepare one scoped normal-CI commit on features/perplexity-009.7: only the data-remove fallback in 070-source.js, 20 regressions, corresponding digest/size expectations and documentation. Encounter-scoped combatant.remove.fallback feedback targets the endpoint entity ID; kind/name are captured display metadata, not a changing retry identity. Preserve named confirmation, encoded bodyless DELETE and modern pane-removal precedence. Cancellation preserves feedback and control state. Current request errors persist and reenable the original button; stale/superseded failures cannot reenable a newer pending attempt. Matching confirmed success replaces only its related error before load(), with the existing Removed-name message and normal five-second global success expiry. Success tolerates missing response JSON using the confirmed name. Refresh errors stay load-owned and cannot relabel deletion as a failed request or reenable for replay. No automatic retry, new concurrency policy, pane/bulk-removal migration or server change.
 
-The shared helper and two individual-reset branches in 070-source.js capture encounter-scoped combatant.reset identity with JSON [kind,id] targets and submitted-name labels before the unchanged bodyless encoded POST. Persistent request failures and silent matching-success resolution remain target-specific. Resolve before load(); load() owns refresh errors. Reject stale/superseded feedback and old-scope post-response refresh without revoking already-sent mutations. Preserve existing delegated-branch precedence, server reset semantics and current absence of individual-reset confirmation. No automatic retry, toast, bulk reset, Reset All or removal migration.
-
-Historical preparation: slice/test syntax passed; 17 regressions passed with zero failures/skips; four negative controls were detected and restored draft passed all 17. Final integration: original complete fragment reconstruction matched its Git blob; full modified fragment syntax passed; 19,437 bytes is below 20,000. SHA-256 pin and calculated bundle size 115,006 bytes were reconciled; updated pin-file AST parsing passed, and reverse comparison verified surrounding source unchanged. No behavioral tests rerun during final integration. Covering configured CI stages subsequently passed as recorded above, superseding delivery-time pending-CI wording, not establishing exhaustive browser/manual coverage. No new local execution, individual-test log/assertion review, authenticated live-server or manual test is claimed by this close-out. Final combined producer-specific validation remains open at Deliverable 1 level. This documentation-only close-out includes [skip ci], runs no tests and changes/dispatches no workflow; the marker alone does not verify workflow state. No whole-deliverable/phase acceptance, merge or deployment is included.
+Historical preparation passed slice/test syntax, 20 regressions with zero failures/skips, five detected negative controls and restored-draft 20 passes. Final integration reconstructed complete original 070 against its Git blob, passed full-fragment syntax and reverse comparison, verified 19,912 bytes below 20,000, reconciled its SHA-256 and calculated bundle size 115,481 bytes, and passed updated pin-file AST/digest agreement. No behavioral tests rerun during final integration. Full assembled-bundle/reader/isolation tests, browser/combined suites and covering CI remain pending. See [410 evidence/limits](../handover/410-global-removal-fallback-feedback.md). No implementation SHA or passing covering run is invented before evidence.
 
 ## Completed bounded units - 2026-11-10
 
-Detailed delivery, failed-run history, acceptance and limitations remain in the linked handovers and the [pre-4A.7 task-plan revision](https://github.com/dajomas/Scrying-Glass/blob/502cfafa24658cd2b6ca75c9cdbf202a8f51647d/docs/todo/097-feedback-delivery-plan.md). This concise summary replaces duplicated closed-unit narratives, not open work or historical evidence. Original anchors are retained below for incoming links.
+Detailed delivery, failed-run history, acceptance and limitations remain in linked handovers and the [pre-4A.7 task-plan revision](https://github.com/dajomas/Scrying-Glass/blob/502cfafa24658cd2b6ca75c9cdbf202a8f51647d/docs/todo/097-feedback-delivery-plan.md). Closed narratives are summarized, not open work or evidence deleted. Incoming anchors are retained; 4A.7 detail is also preserved in its accepted [pre-4A.8 revision](https://github.com/dajomas/Scrying-Glass/blob/b36ed511e33980448ed0162802d1baee48371007/docs/todo/097-feedback-delivery-plan.md).
 
 <a id="4a1-implementation-checkpoint---2026-11-10"></a>
 <a id="4a2-startrestart-request-feedback---2026-11-10"></a>
@@ -25,6 +23,7 @@ Detailed delivery, failed-run history, acceptance and limitations remain in the 
 <a id="4a4-next-turn-feedback---stage-1-fixture-preparation---2026-11-10"></a>
 <a id="4a5-end-battle-feedback---2026-11-10"></a>
 <a id="4a6-reset-all-feedback---2026-11-10"></a>
+<a id="4a7-individual-combatant-reset-feedback---2026-11-10"></a>
 
 | Unit | Status | Implementation / covering Branch tests (attempt 1) | Evidence and acceptance limits |
 |---|---|---|---|
@@ -100,7 +99,7 @@ Retained execution units within Deliverable 1 step 4; original suggestions were 
 | 4A.5 | End (completed) | Pair validation/request errors and matching success; preserve confirmation/non-resetting behavior. |
 | 4A.6 | Reset All (completed) | Explicit failure/matching resolution; preserve confirmation/payload/combat behavior. |
 | 4A.7 | Individual reset (completed) | Character/monster global errors; target-specific resolution; resetting another combatant cannot clear the first error. |
-| 4A.8 | Global removal fallback | Separate from pane roster removal; preserve named confirmation and button-state handling. |
+| 4A.8 | Global removal fallback (in progress) | Separate from pane roster removal; preserve named confirmation and button-state handling. |
 | 4A.9 | Activity-log clear | Explicit failure/success/already-empty severity; exports unchanged. |
 | 4A.10 | Viewer font adjustment | Own error/resolution identity; preserve bounds and pending controls. |
 | 4A.11 | Battle-action global notices | Eligibility/no-target/no-pending and start-of-turn completion; no modal-local redesign/action changes. |
@@ -127,4 +126,4 @@ Preserve accepted 009.6: full-width Battle/Characters/Monsters/Activity log; no 
 
 ## Documentation and evidence boundaries
 
-Closed-unit narrative detail is cross-linked rather than duplicated; incoming anchors/open work/acceptance criteria are retained. No old failed run is relabelled. The mixed 4A.7 implementation used normal CI; this documentation-only acceptance/close-out follows the standing [skip ci] rule, executes no tests and changes/dispatches no workflow. The marker alone does not establish a workflow-run state. No deliverable/phase acceptance, merge or deployment is included.
+Closed-unit narrative detail is cross-linked rather than duplicated; incoming anchors/open work/acceptance criteria are retained. No old failed run is relabelled. Closed 4A.7 runtime/acceptance detail is retained in 400 and the linked pre-4A.8 revision. The mixed 4A.8 implementation uses normal CI. No deliverable/phase acceptance, merge or deployment is included.
