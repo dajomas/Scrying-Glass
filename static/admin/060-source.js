@@ -313,10 +313,12 @@ function addBattleActionRow(reaction = false) {
     const targets = activeBattleTargets();
 
     if (!targets.length) {
-        message('There are no active combatants available as targets.');
+        battleActionFeedback('targets', 'active', 'Battle-action targets',
+            {severity: 'error', text: 'There are no active combatants available as targets.'});
         return;
     }
 
+    battleActionFeedback('targets', 'active', 'Battle-action targets');
     const row = document.createElement('div');
     row.className = 'battle-action-row' + (reaction ? ' battle-reaction-row' : '');
 
@@ -376,7 +378,12 @@ function addBattleActionRow(reaction = false) {
 function addStatisticsReductionRow() {
     if (battleActionsApplying) return;
     const targets = activeBattleTargets().filter(x => x.alive);
-    if (!targets.length) { message('There are no living active targets.'); return; }
+    if (!targets.length) {
+        battleActionFeedback('targets', 'living', 'Statistics-reduction targets',
+            {severity: 'error', text: 'There are no living active targets.'});
+        return;
+    }
+    battleActionFeedback('targets', 'living', 'Statistics-reduction targets');
     const row = document.createElement('div');
     row.className = 'battle-action-row statistics-reduction-row';
     row.innerHTML = `

@@ -2,40 +2,44 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-## Initial 4A.11 checkpoint - 2026-11-10
+## Initial checkpoint and evidence
 
-Approved stage: shared helper, actor-ID eligibility error/matching resolution,
-openBattleActions relocation, fixtures/tests/pins/docs. Other four notices remain
-deferred: active targets, living targets, no pending actions, async start-of-turn
-completion with scope/session safeguards. WIP, not complete 4A.11 or Deliverable 1.
-Baseline: 9d05e129cc2b85099cf0e3bf394a1fe398d0af24 on features/perplexity-009.7.
+Initial actor-specific eligibility/helper/relocation checkpoint:
+00f065913d1068e4ed13df904cead507573f24eb. Published run 42881717311 attempt 1
+and job 130059406530 succeeded for that SHA; publication
+3b160730e444d028affd66a6379e5daaa952a467. This is not follow-up CI.
+The complete initial scope, 16 regressions, five fault checks, original hashes,
+legacy results and limitations remain in the [initial record](https://github.com/dajomas/Scrying-Glass/blob/00f065913d1068e4ed13df904cead507573f24eb/docs/handover/440-battle-action-global-feedback.md).
 
-battle.actions.eligibility persists; valid opening resolves only its actor error.
-Busy/lair/dead-actor gates, modal/token initialization and combat/Apply behavior
-are preserved. Move opening function from start of 070 to end of 060, preserving
-assembled order/fixture extraction; helper is inside the fixture slice. Reverse
-comparisons retain other 060 code and all 070 remainder. No deferred caller,
-modal-local, server or battle-turn-actions.js changes.
+## Approved two-commit follow-up - 2026-11-10
 
-Executed preparation: verified original Git blobs; full 060/070 and pair syntax;
-16 new real-controller/bootstrap regressions, zero failures/skips; both legacy
-Apply/reaction suites with original assertions and verified production markup;
-five detected faults (severity, collapsed IDs, resolution, busy, lair guards),
-restored 16 passes; changed CJS syntax and revised pin AST/guards preserved.
-Mocked UI/transport, no renderer mounting; legacy runs used a temporary pair,
-not the eight-part bundle. No browser/live-server/manual/accessibility claim.
-Full assembly/identity/reader/isolation/combined/browser and covering CI review
-remain pending. Normal CI; no workflow changes/dispatch or success claimed.
+The user approved two coherent writes, each with tests/docs and separate exact
+approval. Commit 1 migrates active-target and living-target errors to independent
+battle.actions.targets identities, plus actor-specific battle.actions.pending
+info/matching resolution. Preserve eligibility, busy/lair/dead-actor gates,
+modal-local feedback, payloads, applied rows, control restoration and explicit
+retry. No automatic mutation replay. No server/markup/turn-helper changes here.
 
-060: 13,337 bytes, SHA-256
-957faf90d70b8b459ef97771e6bc12750cd476f7e8d69add7ada1320095262a1.
-070: 19,053 bytes, SHA-256
-7c62228bdffcc9deb43495fc9f7b59f59db599e23054e4a43d4efa077000c819.
-Calculated total 116,747 (+557); only these two pins/total change. Other sources,
-eight-part order and tracked admin.js marker unchanged. No delivery SHA invented.
+Commit 2 still required: start-of-turn completion success with encounter-ticket,
+actor and modal-session guards; its tests and final status reconciliation.
+It is not included in this commit. 4A.11 and both deliverables/009.7 remain open.
 
-Instructions/head/path checked; verified prior docs/source/test/workflow reads
-reused. Reduced docs link preserved full criteria/history, not delete unfinished
-work. README/TODO root unchanged. [Task/status](../todo/097-feedback-delivery-plan.md#4a11-battle-action-global-notices---2026-11-10).
-4A.11 stays open; 4A.1-4A.10 closed, 4A.12+ proposed; both deliverables/009.7 open.
-SG-TODO-019/order/009.6 gates unchanged. No archive/Patch/, merge or deployment.
+Core runtime/pins/legacy Apply changes are identical to the materialized follow-up:
+complete 060/070/pair syntax and CJS checks passed; original blobs verified;
+only two digests/total changed, with pin guard AST preserved. The prior combined
+16-test suite passed with real controller/bootstrap, mock DOM/transport and fake
+clock; legacy Apply/reaction passed against the temporary pair and verified
+markup. Those results are not full-bundle or separate-commit CI evidence.
+The new six-case core-only suite reuses the real-controller legacy fixture;
+its separate execution remains pending. Normal configured CI discovers it.
+
+060: 13,711 bytes, SHA-256
+c0dd1752e624f3731c6b89d5821eeb79d0f930c2a8eb8d576fc0191935c45c78.
+070: 19,250 bytes, SHA-256
+68830a8efd3b02716c8253aeb24d4ac978d426880ce4438d1c7e0b0d4283a1ce.
+Calculated total 117,318; six other fragments/order/admin.js marker untouched.
+Full assembly/reader/isolation, initial eligibility/turn-helper reruns, combined/
+browser, applicable manual/accessibility checks and covering CI review remain
+pending. No live-server, renderer, delivery or acceptance claim. No workflow
+edit/dispatch, merge, deployment or archive/Patch/. Roots reviewed, unchanged;
+existing index still points here. [Task](../todo/097-feedback-delivery-plan.md#4a11-battle-action-global-notices---2026-11-10).

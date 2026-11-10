@@ -42,9 +42,14 @@ battleActionForm.onsubmit = async event => {
         };
     });
 
-    if (!actions.length) { message('No pending actions or reactions. Add a new row to apply more.'); return; }
+    if (!actions.length) {
+        battleActionFeedback('pending', battleActionActorId, 'Battle actions',
+            {severity: 'info', text: 'No pending actions or reactions. Add a new row to apply more.'});
+        return;
+    }
     const applyButton = battleActionForm.querySelector('button[type="submit"]');
     if (applyButton.disabled) return;
+    battleActionFeedback('pending', battleActionActorId, 'Battle actions');
     battleActionsApplying = true;
     // Freeze this batch and the separate start-of-turn form until refresh ends.
     const controls = [...battleActionModal.querySelectorAll('input, select, button')];

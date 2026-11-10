@@ -139,7 +139,13 @@ function fixture() {
     const validation = fixture(); validation.ctx.addBattleActionRow(true);
     await validation.submit(); assert.equal(validation.requests.length, 0);
     const empty = fixture(); await empty.submit(); assert.equal(empty.requests.length, 0);
-    assert.match(empty.messages[0], /No pending/);
+    assert.equal(empty.messages.length, 0);
+    const pendingFeedback = empty.ctx.window.scryingAdminFeedback.snapshot();
+    assert.equal(pendingFeedback.length, 1);
+    assert.equal(pendingFeedback[0].operation, 'battle.actions.pending');
+    assert.equal(pendingFeedback[0].severity, 'info');
+    assert.equal(pendingFeedback[0].text,
+        'No pending actions or reactions. Add a new row to apply more.');
     const markup = fs.readFileSync(path.join(__dirname, '../templates/admin/180_battle_action_modal.html'), 'utf8');
     assert.match(markup, /type="button" id="closeBattleActions">Close/);
     assert.match(markup, /id="battleActionNotice" role="status" aria-live="polite"/);
