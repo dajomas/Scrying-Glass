@@ -26,6 +26,7 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 18. [Open5e API monster source](docs/todo/170-open5e-monster-source.md) - SG-TODO-017, proposed (add Open5e.com through its API as a monster source, 2026-11-06).
 19. [Monster initiative bonus](docs/todo/180-monster-initiative-bonus.md) - SG-TODO-018, completed and closed on features/perplexity-018 at the user's explicit request after covering CI, A.1/A.2/A.3 acceptance, roster visual acceptance and remaining-work reconciliation, 2026-11-08. Subsequently merged into features/perplexity at b0630effbe99db8a40b27bb00cca007b198d4055 on 2026-11-09.
 20. [Monster provider and roster correction plan](docs/todo/185-monster-correction-plan.md) - completed for the agreed SG-TODO-018 correction scope; final CI 42526295799 attempt 1 covers f5808a2dfbc9b8d8bd4de9706956dbe8312815a5. See [close-out evidence and limitations](docs/handover/340-combined-monster-lookup.md#sg-todo-018-close-out---2026-11-08).
+21. [Activity log affected unit and resulting value](docs/todo/190-activity-log-result-details.md) - SG-TODO-019, proposed (user-requested backlog addition, 2026-11-10; no implementation or delivery-order change).
 
 ## Maintenance
 
