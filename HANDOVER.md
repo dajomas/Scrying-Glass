@@ -46,6 +46,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 37. [Battle Actions combatant statistics: closed after CI and user sign-off](docs/handover/360-battle-actions-combatant-statistics.md)
 38. [Focused live encounter workspace: closed after corrective CI and renewed sign-off](docs/handover/370-live-encounter-workspace.md)
 39. [Feedback delivery plan and continuity](docs/handover/380-feedback-delivery-plan.md)
+40. [Reset-all feedback: scoped 4A.6 delivery and validation](docs/handover/390-reset-all-feedback.md)
 
 ## Current validation status - 2026-11-09
 
