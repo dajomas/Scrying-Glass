@@ -48,6 +48,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 39. [Feedback delivery plan and continuity](docs/handover/380-feedback-delivery-plan.md)
    - [State-load feedback: bounded 4A.1 acceptance](docs/handover/385-state-load-feedback.md)
 40. [Reset-all feedback: scoped 4A.6 delivery and validation](docs/handover/390-reset-all-feedback.md)
+41. [Individual combatant reset feedback: scoped 4A.7 delivery and validation](docs/handover/400-individual-reset-feedback.md)
 
 ## Current validation status - 2026-11-09
 

@@ -117,6 +117,24 @@ battleActionForm.onsubmit = async event => {
     }
 };
 
+async function resetCombatantWithFeedback(kind, id) {
+    const feedback = window.scryingAdminFeedback;
+    const name = latest?.[kind]?.find(combatant => combatant.id === id)?.name || id;
+    const noun = kind === 'monsters' ? 'monster' : 'character';
+    const ticket = feedback.begin({region: 'global', operation: 'combatant.reset',
+        target: JSON.stringify([kind, id]), label: `Reset ${noun}: ${name}`});
+    try {
+        await request(`/api/combatants/${encodeURIComponent(id)}/reset`, {method: 'POST'});
+    } catch (error) {
+        feedback.publish(ticket, {severity: 'error', text: error.message});
+        return;
+    }
+    if (!feedback.isCurrent(ticket)) return;
+    feedback.resolve(ticket);
+    // Reset succeeded; refresh failures remain owned by load(), not the mutation.
+    await load();
+}
+
 document.addEventListener('click', async event => {
     const button = event.target.closest('button');
 
@@ -211,9 +229,7 @@ document.addEventListener('click', async event => {
     }
 
     if (button.dataset.r) {
-        request(`/api/combatants/${encodeURIComponent(id)}/reset`, { method: 'POST' })
-            .then(load)
-            .catch(error => message(error.message));
+        await resetCombatantWithFeedback('monsters', id);
         return;
     }
 
@@ -301,9 +317,7 @@ document.addEventListener('click', async event => {
     }
 
     if (button.dataset.cr) {
-        request(`/api/combatants/${encodeURIComponent(id)}/reset`, { method: 'POST' })
-            .then(load)
-            .catch(error => message(error.message));
+        await resetCombatantWithFeedback('characters', id);
     }
 });
 
