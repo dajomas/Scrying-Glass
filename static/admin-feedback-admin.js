@@ -4,7 +4,8 @@
     if (window.scryingAdminFeedback) return;
     const controller = ScryingFeedback.createController();
     const scopes = new Map(), views = new Map(), legacyRegions = new Set();
-    let stateSequence = 0, lookupSequence = 0;
+    let stateSequence = 0, lookupSequence = 0, encounterEpoch = 0;
+    let stateRequestEpoch = 0, acceptedStateSequence = 0, acceptedStateEpoch = 0;
     const regions = {
         global: ['message', ['nextBattle', 'startBattle']],
         campaign: ['campaignNotification', ['toggleCampaignPane', 'switchCampaign']],
@@ -15,6 +16,7 @@
     function setScope(lane, scope) {
         const changed = controller.setScope(lane, scope);
         scopes.set(lane, scope);
+        if (changed && lane === 'encounter') encounterEpoch++;
         return changed;
     }
     setScope('page', 'page');
@@ -64,9 +66,12 @@
         const value = String(text ?? '');
         return value.trim() ? controller.publish(ticket, {severity: 'info', text: value}) : controller.resolve(ticket);
     }
-    function stateRequest() { return ++stateSequence; }
+    function stateRequest() {
+        stateRequestEpoch = encounterEpoch;
+        return ++stateSequence;
+    }
     function observeState(snapshot, sequence) {
-        if (sequence !== stateSequence || !snapshot || typeof snapshot !== 'object' ||
+        if (sequence !== stateSequence || stateRequestEpoch !== encounterEpoch || !snapshot || typeof snapshot !== 'object' ||
             !Object.hasOwn(snapshot, 'active_campaign_id') || !Object.hasOwn(snapshot, 'active_setup')) return false;
         const campaign = snapshot.active_campaign_id;
         const setup = snapshot.active_setup;
@@ -75,9 +80,36 @@
             typeof setup.name !== 'string' || typeof setup.campaign_id !== 'string')) return false;
         const scope = JSON.stringify([campaign, setup?.campaign_id ?? null, setup?.name ?? null]);
         if (setScope('encounter', scope)) invalidateLookup();
+        acceptedStateSequence = sequence;
+        acceptedStateEpoch = encounterEpoch;
         return true;
     }
-    const api = Object.freeze({begin, deliver, mount, setScope, stateRequest, observeState, invalidateLookup,
+    async function loadState(fetchState, render, rethrowErrors = false) {
+        const spec = {region: 'global', operation: 'state.load', target: 'state', label: 'Load encounter state'};
+        let ticket = begin(spec), sequence;
+        try {
+            // request() allocates its state identity synchronously, before its first await.
+            const pending = fetchState();
+            sequence = stateSequence;
+            const state = await pending;
+            if (sequence !== stateSequence) return;
+            if (acceptedStateSequence !== sequence) {
+                if (!controller.isCurrent(ticket)) return;
+                throw new Error('State response could not be applied. Reload to retry.');
+            }
+            if (acceptedStateEpoch !== encounterEpoch) return;
+            // An accepted campaign/setup transition invalidates the original encounter ticket.
+            if (!controller.isCurrent(ticket)) ticket = begin(spec);
+            render(state);
+            controller.resolve(ticket);
+        } catch (error) {
+            if ((sequence === undefined || sequence === stateSequence) && controller.isCurrent(ticket)) {
+                controller.publish(ticket, {severity: 'error', text: error.message});
+            }
+            if (rethrowErrors === true) throw error;
+        }
+    }
+    const api = Object.freeze({loadState, begin, deliver, mount, setScope, stateRequest, observeState, invalidateLookup,
         beginLookup(target) {
             invalidateLookup();
             return begin({lane: 'lookup', region: 'monsters', operation: 'monster.lookup', target, label: 'Monster lookup'});

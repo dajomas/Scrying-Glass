@@ -2,6 +2,14 @@
 
 [Back to TODO index](../../TODO.md)
 
+## 4A.1 implementation checkpoint - 2026-11-10
+
+Status: implementation prepared for this commit; covering CI and final combined Admin validation remain pending. This supersedes the proposed-only status below for 4A.1, not the historical planning record. 4A.1, Deliverable 1 and SG-TODO-009.7 remain open; 4A.2-4A.13 remain proposed.
+
+The change adds encounter-scoped state.load errors and silent matching-success resolution. Shared state-request sequencing plus an encounter epoch reject stale state before assigning latest or rendering. Accepted campaign/setup transitions rebind the load ticket. Ordinary load() returns undefined and handles errors; only literal load(true) rethrows the original error, including stale errors whose feedback is suppressed. Current malformed scope responses produce an actionable reload error instead of being rendered as success. No mutation retry or neighboring producer migration is included.
+
+Preparation passed two JavaScript syntax checks and 15 focused Node regressions. Four temporary negative controls were detected. These mocked network/DOM source-slice checks are not full-Admin browser or live-server evidence. See the [4A.1 handover evidence and limits](../handover/380-feedback-delivery-plan.md#4a1-implementation-checkpoint---2026-11-10). The existing JavaScript CI discovery includes the new test file. This mixed implementation/test/documentation commit uses normal CI, not the checkpoint-2 skip instruction. No passing CI, commit SHA or phase acceptance is claimed before evidence exists.
+
 ## Status and authority - 2026-11-09
 
 SG-TODO-009.7 remains in progress and open. The user approved two independently usable feedback deliverables and requested that the seven Deliverable 1 steps and Deliverable 2 target be retained for future reference. This is the current execution plan for the [parent phase](090-admin-usability-redesign.md#sg-todo-0097---feedback-and-final-usability-hardening). It supersedes that section's earlier statements that expiry policy still needs agreement and that only inspection/scoping is authorized. No phase acceptance is claimed by this planning record. No owner or deadline is assigned.

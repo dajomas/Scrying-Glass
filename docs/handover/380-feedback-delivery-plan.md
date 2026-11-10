@@ -2,6 +2,18 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+## 4A.1 implementation checkpoint - 2026-11-10
+
+Prepared for this commit on features/perplexity-009.7: state-load migration in static/admin/030-source.js and static/admin-feedback-admin.js, plus tests/admin-state-load-feedback.test.cjs. The [4A.1 task status](../todo/097-feedback-delivery-plan.md#4a1-implementation-checkpoint---2026-11-10) keeps the unit, deliverable and phase open pending covering validation. No merge or deployment-ready claim is made.
+
+The existing request-start sequence is retained, with an encounter epoch rejecting responses whose original scope changed. load() verifies accepted sequence/epoch before assigning latest or rendering. Persistent errors use the explicit state.load identity; matching successful rendering silently resolves only that operation. A legitimate accepted scope transition rebinds its original ticket. The no-battle early return and strict load(true) original-error rethrowing remain intact, including stale failures whose notices are suppressed. Current malformed scope data produces an actionable reload error instead of rendering or silently resolving an error.
+
+Executed during preparation: two JavaScript syntax checks; 15 passing Node VM regressions using the real controller/bootstrap and production request/load slices; and four detected temporary negative controls for error expiry, unrelated clearing, old-scope acceptance and broken rethrowing. Reconstructed unchanged 030, bootstrap and controller contents matched their live Git blob identities before modification. Modified 030-source.js is 19,565 UTF-8 bytes; the bootstrap is 6,630 bytes. Eight-part source order and the tracked admin.js failure marker are unchanged.
+
+Evidence limits: mocked network/DOM slices, not a complete checkout, full-Admin browser, authenticated/live-server or assistive-technology verification. The local request function was reconstructed from the verified prior read; no complete local 010-file identity is claimed. Existing bundle-identity/legacy-fixture reconciliation, final combined regressions and covering CI review remain pending. Historical preparation results are not a new test run for this approval. The existing JavaScript CI discovery includes the new test. No commit SHA, workflow result or acceptance is invented before evidence exists.
+
+Background uploads, character editing, Start/restart and other producers remain outside 4A.1; Deliverable 2 is unchanged. README and root TODO/HANDOVER were reviewed against unchanged live identities and remain accurate without unrelated edits. This mixed commit uses normal CI without [skip ci]. The older documentation-only and checkpoint-2 skip notes below are historical, not instructions to skip this implementation commit.
+
 ## Current status - 2026-11-09
 
 SG-TODO-009.7 and Deliverable 1 remain in progress/open. The [seven-step plan and ten-point policy](../todo/097-feedback-delivery-plan.md) remain authoritative. The user explicitly approved two work-in-progress checkpoints on features/perplexity-009.7 before continuing step 4. This is not a complete integrated feedback delivery or phase acceptance. The accepted [009.6 baseline](370-live-encounter-workspace.md#sg-todo-0096-close-out---2026-11-09) must remain intact.
