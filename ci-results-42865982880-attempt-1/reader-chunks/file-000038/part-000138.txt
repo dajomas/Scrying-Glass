@@ -1,0 +1,47 @@
+tests	2026-11-10T17:36:05.0347858Z # Subtest: one unchanged POST and refresh, without direct client state mutation
+tests	JavaScript tests	2026-11-10T17:36:05.0349307Z ok 3 - one unchanged POST and refresh, without direct client state mutation
+tests	JavaScript tests	2026-11-10T17:36:05.0350293Z   ---
+tests	JavaScript tests	2026-11-10T17:36:05.0350923Z   duration_ms: 1.048409
+tests	JavaScript tests	2026-11-10T17:36:05.0351642Z   type: 'test'
+tests	JavaScript tests	2026-11-10T17:36:05.0352284Z   ...
+tests	JavaScript tests	2026-11-10T17:36:05.0353421Z # Subtest: failure publishes persistent explicit error and neither refreshes nor retries
+tests	JavaScript tests	2026-11-10T17:36:05.0355021Z ok 4 - failure publishes persistent explicit error and neither refreshes nor retries
+tests	JavaScript tests	2026-11-10T17:36:05.0356413Z   ---
+tests	JavaScript tests	2026-11-10T17:36:05.0357055Z   duration_ms: 0.905283
+tests	JavaScript tests	2026-11-10T17:36:05.0357772Z   type: 'test'
+tests	JavaScript tests	2026-11-10T17:36:05.0358408Z   ...
+tests	JavaScript tests	2026-11-10T17:36:05.0359550Z # Subtest: actual failed attempt followed by success silently resolves only Reset All
+tests	JavaScript tests	2026-11-10T17:36:05.0361095Z ok 5 - actual failed attempt followed by success silently resolves only Reset All
+tests	JavaScript tests	2026-11-10T17:36:05.0362196Z   ---
+tests	JavaScript tests	2026-11-10T17:36:05.0362832Z   duration_ms: 1.145371
+tests	JavaScript tests	2026-11-10T17:36:05.0363548Z   type: 'test'
+tests	JavaScript tests	2026-11-10T17:36:05.0364179Z   ...
+tests	JavaScript tests	2026-11-10T17:36:05.0365042Z # Subtest: refresh alone cannot clear a Reset All error
+tests	JavaScript tests	2026-11-10T17:36:05.0366497Z ok 6 - refresh alone cannot clear a Reset All error
+tests	JavaScript tests	2026-11-10T17:36:05.0367353Z   ---
+tests	JavaScript tests	2026-11-10T17:36:05.0367986Z   duration_ms: 0.803221
+tests	JavaScript tests	2026-11-10T17:36:05.0368684Z   type: 'test'
+tests	JavaScript tests	2026-11-10T17:36:05.0369318Z   ...
+tests	JavaScript tests	2026-11-10T17:36:05.0370425Z # Subtest: unrelated success cannot clear Reset All errors or use the legacy route
+tests	JavaScript tests	2026-11-10T17:36:05.0371974Z ok 7 - unrelated success cannot clear Reset All errors or use the legacy route
+tests	JavaScript tests	2026-11-10T17:36:05.0373025Z   ---
+tests	JavaScript tests	2026-11-10T17:36:05.0373687Z   duration_ms: 0.90415
+tests	JavaScript tests	2026-11-10T17:36:05.0374410Z   type: 'test'
+tests	JavaScript tests	2026-11-10T17:36:05.0375116Z   ...
+tests	JavaScript tests	2026-11-10T17:36:05.0376675Z # Subtest: successful mutation resolves before real loadState publishes its own refresh failure
+tests	JavaScript tests	2026-11-10T17:36:05.0378403Z ok 8 - successful mutation resolves before real loadState publishes its own refresh failure
+tests	JavaScript tests	2026-11-10T17:36:05.0379549Z   ---
+tests	JavaScript tests	2026-11-10T17:36:05.0380173Z   duration_ms: 1.145391
+tests	JavaScript tests	2026-11-10T17:36:05.0380875Z   type: 'test'
+tests	JavaScript tests	2026-11-10T17:36:05.0381504Z   ...
+tests	JavaScript tests	2026-11-10T17:36:05.0382514Z # Subtest: old-setup success cannot resolve or refresh a newer setup
+tests	JavaScript tests	2026-11-10T17:36:05.0392379Z ok 9 - old-setup success cannot resolve or refresh a newer setup
+tests	JavaScript tests	2026-11-10T17:36:05.0393245Z   ---
+tests	JavaScript tests	2026-11-10T17:36:05.0393785Z   duration_ms: 1.900443
+tests	JavaScript tests	2026-11-10T17:36:05.0394366Z   type: 'test'
+tests	JavaScript tests	2026-11-10T17:36:05.0395626Z   ...
+tests	JavaScript tests	2026-11-10T17:36:05.0396571Z # Subtest: old-campaign failure cannot publish into the new campaign
+tests	JavaScript tests	2026-11-10T17:36:05.0397830Z ok 10 - old-campaign failure cannot publish into the new campaign
+tests	JavaScript tests	2026-11-10T17:36:05.0398755Z   ---
+tests	JavaScript tests	2026-11-10T17:36:05.0399407Z   duration_ms: 1.267219
+tests	JavaScri
