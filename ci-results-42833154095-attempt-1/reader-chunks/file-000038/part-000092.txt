@@ -1,0 +1,27 @@
+ython test suite (including browser fixtures)	2026-11-10T14:23:49.9747285Z   File "/tmp/scrying-tests-cgb2_6c7/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9748412Z     html = context.dnd_monster_detail_html(href)
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9749523Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9750565Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9751180Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9752235Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9753341Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9753972Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9755140Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9756189Z     raise result
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9756821Z OSError: secret
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9757071Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9757581Z The above exception was the direct cause of the following exception:
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9758132Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9758421Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9759583Z   File "/tmp/scrying-tests-cgb2_6c7/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9760625Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9761615Z   File "/tmp/scrying-tests-cgb2_6c7/repo/python/scrying_glass_monster_selection.py", line 151, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9762682Z     lambda: dnd_candidates(context, species),
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9763294Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9764410Z   File "/tmp/scrying-tests-cgb2_6c7/repo/python/scrying_glass_monster_selection.py", line 92, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9765869Z     raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9767684Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9768700Z ok
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9770547Z test_missing_configured_book_blocks_partial_candidates (test_monster_candidate_selection.CandidateTests.test_missing_configured_book_blocks_partial_candidates) ... 5e.tools candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9772294Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9773517Z   File "/tmp/scrying-tests-cgb2_6c7/repo/python/scrying_glass_monster_selection.py", line 

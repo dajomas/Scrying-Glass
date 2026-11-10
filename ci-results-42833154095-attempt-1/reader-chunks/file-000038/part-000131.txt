@@ -1,0 +1,49 @@
+sts	2026-11-10T14:24:58.8843699Z # Subtest: successful Start followed by handled refresh failure retains only state.load error, no retry
+tests	JavaScript tests	2026-11-10T14:24:58.8849486Z ok 11 - successful Start followed by handled refresh failure retains only state.load error, no retry
+tests	JavaScript tests	2026-11-10T14:24:58.8850526Z   ---
+tests	JavaScript tests	2026-11-10T14:24:58.8851079Z   duration_ms: 0.937757
+tests	JavaScript tests	2026-11-10T14:24:58.8851535Z   type: 'test'
+tests	JavaScript tests	2026-11-10T14:24:58.8852081Z   ...
+tests	JavaScript tests	2026-11-10T14:24:58.8852960Z # Subtest: duplicate asset installation preserves the installed wrapper
+tests	JavaScript tests	2026-11-10T14:24:58.8854013Z ok 12 - duplicate asset installation preserves the installed wrapper
+tests	JavaScript tests	2026-11-10T14:24:58.8854741Z   ---
+tests	JavaScript tests	2026-11-10T14:24:58.8855107Z   duration_ms: 0.685064
+tests	JavaScript tests	2026-11-10T14:24:58.8855525Z   type: 'test'
+tests	JavaScript tests	2026-11-10T14:24:58.8855905Z   ...
+tests	JavaScript tests	2026-11-10T14:24:58.8922747Z 1..12
+tests	JavaScript tests	2026-11-10T14:24:58.8923314Z # tests 12
+tests	JavaScript tests	2026-11-10T14:24:58.8923960Z # suites 0
+tests	JavaScript tests	2026-11-10T14:24:58.8924542Z # pass 12
+tests	JavaScript tests	2026-11-10T14:24:58.8924993Z # fail 0
+tests	JavaScript tests	2026-11-10T14:24:58.8925552Z # cancelled 0
+tests	JavaScript tests	2026-11-10T14:24:58.8926056Z # skipped 0
+tests	JavaScript tests	2026-11-10T14:24:58.8926953Z # todo 0
+tests	JavaScript tests	2026-11-10T14:24:58.8927540Z # duration_ms 79.201918
+tests	JavaScript tests	2026-11-10T14:24:58.9346208Z ##[endgroup]
+tests	JavaScript tests	2026-11-10T14:24:58.9347381Z ##[group]tests/admin-start-validation.test.cjs
+tests	JavaScript tests	2026-11-10T14:24:59.1853528Z TAP version 13
+tests	JavaScript tests	2026-11-10T14:24:59.2407832Z # Subtest: asset loads once after core and the 4A.2 override
+tests	JavaScript tests	2026-11-10T14:24:59.2417663Z ok 1 - asset loads once after core and the 4A.2 override
+tests	JavaScript tests	2026-11-10T14:24:59.2418349Z   ---
+tests	JavaScript tests	2026-11-10T14:24:59.2418771Z   duration_ms: 2.655144
+tests	JavaScript tests	2026-11-10T14:24:59.2419232Z   type: 'test'
+tests	JavaScript tests	2026-11-10T14:24:59.2419638Z   ...
+tests	JavaScript tests	2026-11-10T14:24:59.2420423Z # Subtest: empty eligibility rejection is persistent and makes no Start call
+tests	JavaScript tests	2026-11-10T14:24:59.2422154Z ok 2 - empty eligibility rejection is persistent and makes no Start call
+tests	JavaScript tests	2026-11-10T14:24:59.2432944Z   ---
+tests	JavaScript tests	2026-11-10T14:24:59.2433544Z   duration_ms: 1.918083
+tests	JavaScript tests	2026-11-10T14:24:59.2436234Z   type: 'test'
+tests	JavaScript tests	2026-11-10T14:24:59.2437090Z   ...
+tests	JavaScript tests	2026-11-10T14:24:59.2438229Z # Subtest: eligible retry resolves only eligibility, preserving request and refresh errors
+tests	JavaScript tests	2026-11-10T14:24:59.2439839Z ok 3 - eligible retry resolves only eligibility, preserving request and refresh errors
+tests	JavaScript tests	2026-11-10T14:24:59.2440929Z   ---
+tests	JavaScript tests	2026-11-10T14:24:59.2441533Z   duration_ms: 1.2757
+tests	JavaScript tests	2026-11-10T14:24:59.2442230Z   type: 'test'
+tests	JavaScript tests	2026-11-10T14:24:59.2442832Z   ...
+tests	JavaScript tests	2026-11-10T14:24:59.2444298Z # Subtest: active lair permits empty order, inactive lair does not
+tests	JavaScript tests	2026-11-10T14:24:59.2445548Z ok 4 - active lair permits empty order, inactive lair does not
+tests	JavaScript tests	2026-11-10T14:24:59.2446741Z   ---
+tests	JavaScript tests	2026-11-10T14:24:59.2447498Z   duration_ms: 1.023898
+tests	JavaScript tests	2026-11-10T14:24:59.2448175Z   type: 'test'
+tests	JavaScript tests	2026-11-10T14:24:59.2448784Z   ...
+tests	JavaScript tests	2026-11-10T14:24:59.2449806Z # Subtest: dead/inactive participants do not bypass the existing

@@ -1,0 +1,30 @@
+4:23:14.8895850Z D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8896583Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8897651Z   File "/tmp/scrying-tests-cgb2_6c7/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8898704Z     hits = context.dnd_monster_candidates(species)
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8899408Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8899940Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8900253Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8900798Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8901353Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8901691Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8902281Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8902878Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8903201Z TimeoutError: fixture
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8903515Z Combined monster lookup failed for D&D Beyond
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8903862Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8904443Z   File "/tmp/scrying-tests-cgb2_6c7/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8905028Z     hits = context.dnd_monster_candidates(species)
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8905598Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8906123Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8906674Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8907291Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8907850Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8908188Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8908765Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8909281Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8909501Z TimeoutError: fixture
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8909642Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8909901Z The above exception was the direct cause of the following exception:
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:14.8910187Z 
+tests	Python test suite

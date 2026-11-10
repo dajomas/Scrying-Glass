@@ -1,0 +1,38 @@
+Run actions/checkout@v4	2026-11-10T14:20:58.8398282Z   set-safe-directory: true
+tests	Run actions/checkout@v4	2026-11-10T14:20:58.8398795Z   allow-unsafe-pr-checkout: false
+tests	Run actions/checkout@v4	2026-11-10T14:20:58.8399598Z env:
+tests	Run actions/checkout@v4	2026-11-10T14:20:58.8400448Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Run actions/checkout@v4	2026-11-10T14:20:58.8401398Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1162374Z Syncing repository: dajomas/Scrying-Glass
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1164711Z ##[group]Getting Git version info
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1165593Z Working directory is '/home/runner/work/Scrying-Glass/Scrying-Glass'
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1167618Z [command]/usr/bin/git version
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1168460Z git version 2.56.0
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1173770Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1197457Z Temporarily overriding HOME='/home/runner/work/_temp/6c6b9bad-bcde-4ab7-9ec1-15fbc88b635b' before making global git config changes
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1199885Z Adding repository directory to the temporary git global config as a safe directory
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1203848Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1280732Z Deleting the contents of '/home/runner/work/Scrying-Glass/Scrying-Glass'
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1284248Z ##[group]Initializing the repository
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1289852Z [command]/usr/bin/git init /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1442625Z hint: Using 'master' as the name for the initial branch. This default branch name
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1444701Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1446655Z hint: to use in all of your new repositories, which will suppress this warning,
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1448083Z hint: call:
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1448886Z hint:
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1449882Z hint: 	git config --global init.defaultBranch <name>
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1451130Z hint:
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1452300Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1453939Z hint: 'development'. The just-created branch can be renamed via this command:
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1455297Z hint:
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1456244Z hint: 	git branch -m <name>
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1457340Z hint:
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1458447Z hint: Disable this message with "git config set advice.defaultBranchName false"
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1460357Z Initialized empty Git repository in /home/runner/work/Scrying-Glass/Scrying-Glass/.git/
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1471533Z [command]/usr/bin/git remote add origin https://github.com/dajomas/Scrying-Glass
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1525186Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1526818Z ##[group]Disabling automatic garbage collection
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1530442Z [command]/usr/bin/git config --local gc.auto 0
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1568132Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-10T14:20:59.1569381Z ##[group]Setting up auth
+tests	Run actions/chec

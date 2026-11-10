@@ -1,0 +1,29 @@
+r fixtures)	2026-11-10T14:23:49.9718946Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9720146Z   File "/tmp/scrying-tests-cgb2_6c7/repo/python/scrying_glass_monster_selection.py", line 101, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9721292Z     index = ft.load_json(root + "/index.json")
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9722406Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9723440Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9724047Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9725110Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9726200Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9727119Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9728299Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9729288Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9729666Z OSError: secret
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9730028Z ok
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9731436Z test_incomplete_search_is_error (test_monster_candidate_selection.CandidateTests.test_incomplete_search_is_error) ... D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9732884Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9734036Z   File "/tmp/scrying-tests-cgb2_6c7/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9735181Z     html = context.dnd_monster_detail_html(href)
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9736318Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9737946Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9738627Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9739697Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9740797Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9741840Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9743339Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9744355Z     raise result
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9744744Z OSError: secret
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9745288Z Combined monster lookup failed for D&D Beyond
+tests	Python test suite (including browser fixtures)	2026-11-10T14:23:49.9745949Z Traceback (most recent call last):
+tests	P
