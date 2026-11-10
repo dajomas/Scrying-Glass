@@ -1,0 +1,31 @@
+tml = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:29.5884407Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:29.5896020Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:29.5896449Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:29.5897086Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:29.5897705Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:29.5898100Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:29.5898771Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:29.5899591Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:29.5899862Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:52.7071034Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:52.7071758Z Ran 1477 tests in 173.049s
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:52.7071996Z 
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:52.7072435Z OK
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:52.7076910Z Connections opened: 782; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:52.7077833Z PASS: failed PRAGMA initialization closes connection; suite closes all tracked connections
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:53.1667063Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:53.1667732Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:53.5502548Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:53.5503643Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:53.6077267Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:53.6077999Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:53.9935678Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:54.0473075Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:54.0474011Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:56.9772589Z {
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:56.9773015Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:56.9773552Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:56.9774199Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:56.9775049Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	Standalone Python browser and audit checks	2026-11-10T11:38:56.9775938Z     "client card has a positive layout width at mo
