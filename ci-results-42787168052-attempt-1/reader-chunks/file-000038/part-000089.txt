@@ -1,0 +1,24 @@
+hon test suite (including browser fixtures)	2026-11-10T09:04:42.5810810Z test_unknown_codes_are_literal_without_invented_editions (test_monster_candidate_browser.CandidateBrowserTests.test_unknown_codes_are_literal_without_invented_editions) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5819715Z test_both_versions_retain_separate_signed_source_identity (test_monster_candidate_selection.CandidateTests.test_both_versions_retain_separate_signed_source_identity) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5837218Z test_count_table (test_monster_candidate_selection.CandidateTests.test_count_table) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5844099Z test_disabled_and_invalid_link (test_monster_candidate_selection.CandidateTests.test_disabled_and_invalid_link) ... Combined monster lookup failed for D&D Beyond
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5845300Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5846137Z   File "/tmp/scrying-tests-biguu9w7/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5846849Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5847530Z   File "/tmp/scrying-tests-biguu9w7/repo/python/scrying_glass_monster_selection.py", line 151, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5848267Z     lambda: dnd_candidates(context, species),
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5848696Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5849486Z   File "/tmp/scrying-tests-biguu9w7/repo/python/scrying_glass_monster_selection.py", line 66, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5850424Z     raise ProviderError("D&D Beyond returned an invalid candidate link.")
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5851359Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond returned an invalid candidate link.
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5852010Z ok
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5853337Z test_errors_block_combined_results_without_leaking_details (test_monster_candidate_selection.CandidateTests.test_errors_block_combined_results_without_leaking_details) ... D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5854820Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5855617Z   File "/tmp/scrying-tests-biguu9w7/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5856419Z     hits = context.dnd_monster_candidates(species)
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5857186Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5857890Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5858290Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5859003Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5859725Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-10T09:04:42.5860172Z            ~~~~~~~~~~~~~

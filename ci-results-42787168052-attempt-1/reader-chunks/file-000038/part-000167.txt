@@ -1,0 +1,26 @@
+Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0725698Z   File "/tmp/scrying-tests-24_pc9ki/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0726392Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0727061Z   File "/tmp/scrying-tests-24_pc9ki/repo/python/scrying_glass_monster_selection.py", line 152, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0727799Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0728260Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0729092Z   File "/tmp/scrying-tests-24_pc9ki/repo/python/scrying_glass_monster_selection.py", line 144, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0730137Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0731170Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0731951Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0732413Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0733191Z   File "/tmp/scrying-tests-24_pc9ki/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0733880Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0734683Z   File "/tmp/scrying-tests-24_pc9ki/repo/python/scrying_glass_monster_selection.py", line 152, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0735343Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0735787Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0736500Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0737157Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0737551Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0738241Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0739153Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0739603Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0740372Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0741036Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-10T09:07:40.0741513Z python.scrying_glass_monster_selection.ProviderError: secret
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:07.0853775Z Executing <Task pending name='Task-40703' coro=<MonsterRefreshEndToEndTests.open_page.<locals>.route() running at /tmp/scrying-tests-24_pc9ki/repo/tests/test_monster_refresh_end_to_end.py:109> wait_for=<Future pending cb=[Task.task_wakeup()] created at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.

@@ -1,0 +1,31 @@
+ and audit checks	2026-11-10T09:08:33.8188107Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8188942Z   File "/tmp/scrying-tests-24_pc9ki/repo/tests/test_admin_foundations.py", line 150, in test_blank_notices_collapse_and_real_messages_reappear
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8189906Z     page.wait_for_function("ids => ids.every(id => !document.getElementById(id).hidden)", arg=ids)
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8190546Z     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8191480Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 21268, in wait_for_function
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8192203Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8192432Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8192706Z         self._impl_obj.wait_for_function(
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8193059Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8193513Z     ...<4 lines>...
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8193746Z         )
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8193952Z         ^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8194151Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8194480Z     ^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8195118Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8195794Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8196051Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8196783Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/page.py", line 1609, in wait_for_function
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8197539Z     return await self._main_frame.wait_for_function(
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8197941Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8198413Z         expression=expression, arg=arg, timeout=timeout, polling=polling
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8198923Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8199254Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8199460Z     ^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8200152Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/frame.py", line 1209, in wait_for_function
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8200915Z     result = await self._channel.waitForFunction(
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8201292Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8201595Z     ...<8 lines>...
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8201817Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8202005Z     ^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8202663Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-package

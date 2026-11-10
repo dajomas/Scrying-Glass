@@ -1,0 +1,32 @@
+s/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8203358Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8203674Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8217031Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8217749Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8218474Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8219234Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8219632Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8220406Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8221279Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8221548Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8222107Z playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8222521Z 
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8222787Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8223191Z Ran 1477 tests in 156.981s
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8223373Z 
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8223493Z FAILED (errors=2)
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8223897Z Connections opened: 782; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:34.3656455Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:34.3656862Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:34.6568105Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:34.6568750Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:34.7015380Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:34.7015924Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:35.0158226Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:35.0606018Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:35.0606430Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:37.7455611Z {
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:37.7455994Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:37.7456342Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:37.7456722Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-

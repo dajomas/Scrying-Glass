@@ -1,0 +1,30 @@
+ock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:14.8314722Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:14.8315139Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:14.8315890Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:14.8317059Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:14.8317516Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:14.8318302Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:14.8318982Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:14.8319262Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8159913Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8161161Z ERROR: test_blank_notices_collapse_and_real_messages_reappear (test_admin_foundations.FoundationBrowserTests.test_blank_notices_collapse_and_real_messages_reappear) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8162268Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8162693Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8163490Z   File "/tmp/scrying-tests-24_pc9ki/repo/tests/test_admin_foundations.py", line 150, in test_blank_notices_collapse_and_real_messages_reappear
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8164608Z     page.wait_for_function("ids => ids.every(id => !document.getElementById(id).hidden)", arg=ids)
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8165269Z     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8166116Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 21268, in wait_for_function
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8166784Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8167022Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8167325Z         self._impl_obj.wait_for_function(
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8168007Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8168326Z     ...<4 lines>...
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8168561Z         )
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8168769Z         ^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8168968Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8169171Z     ^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8169872Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8170562Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8170837Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:33.8171583Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-pa

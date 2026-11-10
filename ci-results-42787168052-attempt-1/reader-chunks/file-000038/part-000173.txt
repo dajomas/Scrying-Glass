@@ -1,0 +1,28 @@
+11-10T09:08:37.7457497Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:37.7457989Z     "client card has a positive layout width at mobile viewport"
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:37.7458273Z   ],
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:37.7458455Z   "page_errors": [],
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:37.7458726Z   "transport": "mocked HTTP/WS, real Chromium rendering"
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:37.7459004Z }
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:37.8344296Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:37.8344755Z ##[group]tests/feedback_browser_fixture.py
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:38.0275066Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:38.0275485Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:38.2304913Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T09:08:38.2311432Z ##[error]Process completed with exit code 1.
+tests	Post Run actions/checkout@v4	﻿2026-11-10T09:08:38.2403629Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-10T09:08:38.3104888Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-10T09:08:38.3144805Z git version 2.56.0
+tests	Post Run actions/checkout@v4	2026-11-10T09:08:38.3176509Z Temporarily overriding HOME='/home/runner/work/_temp/6c631898-1628-43eb-9055-a55bee117124' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-10T09:08:38.3177772Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-10T09:08:38.3181412Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-10T09:08:38.3223400Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-10T09:08:38.3260623Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-10T09:08:38.3519135Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-10T09:08:38.3546487Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-10T09:08:38.3556854Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-10T09:08:38.3605934Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Post Run actions/checkout@v4	2026-11-10T09:08:38.3879347Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	Post Run actions/checkout@v4	2026-11-10T09:08:38.3913861Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+tests	Complete job	﻿2026-11-10T09:08:38.4293173Z Cleaning up orphan processes
+tests	Complete job	2026-11-10T09:08:38.4582445Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

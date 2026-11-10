@@ -1,0 +1,28 @@
+ait_for_function
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4806279Z     result = await self._channel.waitForFunction(
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4806545Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4807009Z     ...<8 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4807174Z     )
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4807316Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4807782Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4808474Z     return mapper(await awaitable)
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4808706Z                   ^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4809209Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4809653Z     raise e from None
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4810108Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4810585Z     result = await zone.run_async(lambda: awaitable)
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4810848Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4811344Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4811777Z     return await func()
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4811968Z            ^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4812336Z playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4812610Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4812762Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4813501Z ERROR: test_blank_notices_collapse_and_real_messages_reappear (test_admin_foundations.FoundationBrowserTests.test_blank_notices_collapse_and_real_messages_reappear) (width=375)
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4814306Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4814641Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4815188Z   File "/tmp/scrying-tests-biguu9w7/repo/tests/test_admin_foundations.py", line 150, in test_blank_notices_collapse_and_real_messages_reappear
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4815814Z     page.wait_for_function("ids => ids.every(id => !document.getElementById(id).hidden)", arg=ids)
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4816259Z     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T09:05:35.4816853Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 21268, in wait_for_function
+tests	Pytho
