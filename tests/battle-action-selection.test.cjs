@@ -2,6 +2,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 const path = require('node:path');
+const {installFeedback} = require('./battle-action-feedback-fixture.cjs');
 const source = fs.readFileSync(path.join(__dirname, '../static/admin.js'), 'utf8');
 const start = source.indexOf('function activeBattleTargets()');
 const end = source.indexOf("document.addEventListener('click', async event => {", start);
@@ -71,8 +72,9 @@ function setup() {
             return {applied:1};
         },
     };
+    const {feedback} = installFeedback(ctx);
     vm.runInNewContext(source.slice(start, end), ctx);
-    return {ctx, rows, form, requests};
+    return {ctx, rows, form, requests, feedback};
 }
 
 async function submit(fixture) {
@@ -125,5 +127,9 @@ async function submit(fixture) {
     assert.equal(multiple.requests.length, 0);
     assert.equal(multiple.rows.children[1].querySelector('[data-action-source]').value, '');
     assert.equal(multiple.rows.children[1].querySelector('[data-action-target]').value, '');
+    for (const fixture of [ordinary, reaction, multiple]) {
+        assert.equal(fixture.feedback.snapshot().length, 0);
+        assert.equal(fixture.feedback.legacyRegions().length, 0);
+    }
     console.log('Explicit target/source selection regression tests passed.');
 })().catch(error => { console.error(error); process.exitCode = 1; });

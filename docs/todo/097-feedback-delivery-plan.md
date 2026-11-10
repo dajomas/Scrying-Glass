@@ -13,7 +13,8 @@ priority, owner, deadline, SG-TODO-019 or delivery order; no unfinished task clo
 
 ## 4A.11 battle-action global notices - 2026-11-10
 
-In progress; implementation delivery and acceptance are separate. Initial
+In progress; implementation delivered, acceptance blocked by failed covering CI.
+Initial
 eligibility checkpoint 00f065913d1068e4ed13df904cead507573f24eb has successful
 covering CI 42881717311 attempt 1, not evidence for later changes. The user
 approved a two-commit follow-up with exact-content approval for each write.
@@ -21,15 +22,23 @@ approved a two-commit follow-up with exact-content approval for each write.
 Commit 1 delivered at 272cfd73aa4c39602ed2dad96c1bd2e02ba28348: independent
 active/living target errors and matching resolution, actor-specific no-pending
 info, core tests, legacy Apply assertion migration, pins and documentation.
-Its covering CI has not been reviewed; the separate core-only suite is retained.
+The combined-state run below reports the separate retained core-only suite passed.
 
-Commit 2 implementation is included in this change set: start-of-turn completion
-success with encounter-ticket/actor/modal-session guards, the previously tested
-combined 16-case regression file, and documentation/index reconciliation. Actual
-delivery is established only by the successful write/commit identity. Preserve
+Commit 2 delivered at 6e4bdd54f73df70bdb263493bf010ef3f0e9a0ad: start-of-turn
+completion success with encounter-ticket/actor/modal-session guards, combined
+16-case regressions and documentation/index reconciliation. Preserve
 modal-local behavior, payloads, busy/duplicate guards, applied history, observer/
 critical-field behavior and explicit retry. No automatic mutation replay. Core
 fragments/pins, commit-1 tests, server and markup remain unchanged by commit 2.
+
+Corrective action: run 42891311319 attempt 1 failed in JavaScript on the combined
+implementation. Selection fixture lacks window/feedback initialization. Repair
+setup with existing installFeedback; retain every original assertion and add
+no-unexpected-feedback/no-legacy-route checks. Focused local correction and
+negative/restoration checks passed; full bundle/CI rerun is pending. See 440 for
+exact evidence, draft-test corrections and limits; other JS faults are not ruled
+out. Obtain fresh exact-content approval, push with normal CI, inspect the
+corrective covering run and address any remaining failures before acceptance.
 
 Remaining acceptance: verify delivery of both commits; review covering CI tied
 to the follow-up SHA(s), both new suites plus initial eligibility, legacy Apply/

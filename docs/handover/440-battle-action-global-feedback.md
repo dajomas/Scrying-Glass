@@ -15,8 +15,8 @@ and job 130059406530 succeeded for that SHA; publication
 Delivered at 272cfd73aa4c39602ed2dad96c1bd2e02ba28348 on features/perplexity-009.7:
 independent active/living target errors and matching resolution, actor-specific
 no-pending info, core regression file, legacy Apply assertion migration and pins.
-Its covering CI has not been reviewed. The six-case core-only suite remains in
-the repository unchanged by commit 2; no separate execution pass is invented.
+The combined-state covering run is reviewed below. The six-case core-only suite
+remains in the repository unchanged by commit 2; that run reports six passes.
 [Complete commit-1 preparation evidence and limits](https://github.com/dajomas/Scrying-Glass/blob/272cfd73aa4c39602ed2dad96c1bd2e02ba28348/docs/handover/440-battle-action-global-feedback.md).
 
 060 remains 13,711 bytes, SHA-256
@@ -59,8 +59,8 @@ CI, renderer, full-eight-fragment, browser or authenticated live-server results.
 Current instructions/head verified; verified complete prior reads reused. README
 and TODO root remain accurate and unchanged; HANDOVER index/status reconciled.
 Normal configured CI discovers the new CJS file. No workflow edit/dispatch, skip,
-archive/Patch/, merge or deployment. Actual delivery identity must come from the
-successful approved write; no commit-2 SHA or CI result is invented here.
+archive/Patch/, merge or deployment. Commit 2 delivered at
+6e4bdd54f73df70bdb263493bf010ef3f0e9a0ad; covering failure reviewed below.
 
 ## Remaining validation and acceptance
 
@@ -72,3 +72,44 @@ required. The complete eight-part bundle was not assembled/executed during
 materialization. Preparation/push or earlier green CI alone does not close 4A.11.
 Both feedback deliverables/009.7 and unrelated acceptance gates remain open.
 [Task/status](../todo/097-feedback-delivery-plan.md#4a11-battle-action-global-notices---2026-11-10).
+
+## Failed covering CI and selection-fixture correction - 2026-11-10
+
+Run 42891311319 attempt 1 (job 130092877349) covers
+6e4bdd54f73df70bdb263493bf010ef3f0e9a0ad and failed in JavaScript tests.
+Publication: 4923005f720e6e95cfabb7de549178565047af0c;
+ci-results-42891311319-attempt-1/run.json and jobs.json agree. Python/import,
+unittest/browser-fixture, pytest and standalone browser/audit steps report
+success; that is step metadata, not exhaustive per-test or visual review.
+
+Lossless workflow reader file-000038/part-000155.txt identifies
+battle-action-selection.test.cjs:84: ReferenceError: window is not defined,
+from battleActionFeedback during addBattleActionRow. The legacy VM setup did
+not install the production feedback dependency. Log chunks 150 and 152-156
+also verify core feedback 6/6, eligibility 16/16, combined follow-up 16/16,
+reaction and turn-helper passes. These passes do not make the run green.
+The complete JavaScript step has not been exhaustively reviewed for other faults.
+
+Correction: import the existing installFeedback fixture, initialize it before
+production VM evaluation, expose its API to the test and assert no unexpected
+feedback records or legacy-route use in all three selection scenarios. Every
+original selection/required-placeholder/request assertion is retained unchanged.
+No application runtime, shared fixture, markup, fragment/pin or workflow change.
+
+Executed correction checks: original selection-test blob verified; reproduced
+missing-window failure using a focused production-function extraction; corrected
+selection suite passed with real controller/bootstrap and mocked DOM/transport;
+removing bootstrap installation reproduced the failure, then restoration passed;
+corrected CJS syntax passed. An added draft deep-array comparison initially failed
+across VM realms; only that new check changed to length === 0, followed by passes.
+This was a test-assertion correction, not a production defect. The first mutation
+probe retained an undefined returned feedback binding; the probe was adjusted to
+remove it and reproduce the original missing-window path. Original assertions
+remain intact.
+
+Local checks used selected production functions, not a complete assembled Admin
+checkout, mounted renderer, browser or authenticated live server. Related suites
+were not rerun locally in this correction session; their cited results are from
+the failed CI run. Fresh exact-content approval, actual corrective delivery and
+normal covering CI/rerun review are required. No corrective SHA or green result
+is invented. 4A.11 acceptance remains blocked; wider scope/order stays unchanged.
