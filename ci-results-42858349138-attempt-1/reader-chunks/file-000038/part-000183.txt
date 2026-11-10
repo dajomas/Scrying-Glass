@@ -1,0 +1,11 @@
+s	Post Run actions/checkout@v4	2026-11-10T16:55:45.6005974Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-10T16:55:45.6055431Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-10T16:55:45.6098756Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-10T16:55:45.6428466Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-10T16:55:45.6459268Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-10T16:55:45.6475870Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-10T16:55:45.6526744Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Post Run actions/checkout@v4	2026-11-10T16:55:45.6874913Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	Post Run actions/checkout@v4	2026-11-10T16:55:45.6914113Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+tests	Complete job	﻿2026-11-10T16:55:45.7410580Z Cleaning up orphan processes
+tests	Complete job	2026-11-10T16:55:45.7861731Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

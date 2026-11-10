@@ -1,0 +1,29 @@
+in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1714224Z     raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1715839Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1717259Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1717875Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1719134Z   File "/tmp/scrying-tests-01mf91hi/repo/python/scrying_glass_monster_selection.py", line 108, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1720642Z     raise ValueError("Configured source is missing from the provider index")
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1721746Z ValueError: Configured source is missing from the provider index
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1722597Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1723264Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1724684Z   File "/tmp/scrying-tests-01mf91hi/repo/python/scrying_glass_monster_selection.py", line 108, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1726162Z     raise ValueError("Configured source is missing from the provider index")
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1727264Z ValueError: Configured source is missing from the provider index
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1727810Z 
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1728329Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1728874Z 
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1729150Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1730364Z   File "/tmp/scrying-tests-01mf91hi/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1731420Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1732445Z   File "/tmp/scrying-tests-01mf91hi/repo/python/scrying_glass_monster_selection.py", line 152, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1733651Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1734582Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1735844Z   File "/tmp/scrying-tests-01mf91hi/repo/python/scrying_glass_monster_selection.py", line 144, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1737385Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1738830Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1740012Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1740668Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T16:54:37.1741812Z   File "/tmp/scrying-tests-01mf91hi/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and aud
