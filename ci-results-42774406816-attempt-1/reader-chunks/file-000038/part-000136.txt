@@ -1,0 +1,27 @@
+st suite (including browser fixtures)	2026-11-10T07:24:19.0167274Z                   ^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0167996Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0168638Z     raise e from None
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0169308Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0170031Z     result = await zone.run_async(lambda: awaitable)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0170415Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0171148Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0171770Z     return await func()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0172176Z            ^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0172880Z playwright._impl._errors.Error: Page.evaluate: TypeError: Cannot read properties of undefined (reading 'beginLookup')
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0173582Z     at lookupMonsterSpeciesStats (<anonymous>:64:50)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0174022Z     at eval (eval at evaluate (:370:30), <anonymous>:2:27)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0174381Z     at eval (<anonymous>)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0174714Z     at UtilityScript.evaluate (<anonymous>:370:30)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0175136Z     at UtilityScript.<anonymous> (<anonymous>:1:44)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0175372Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0175595Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0176603Z ERROR: test_popup_choice_late_file_cancel_stale_and_no_image (test_monster_image_previews.ProviderPreviewTests.test_popup_choice_late_file_cancel_stale_and_no_image)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0177524Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0177958Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0178766Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_monster_image_previews.py", line 105, in test_popup_choice_late_file_cancel_stale_and_no_image
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0179517Z     self.page.get_by_role('dialog').wait_for()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0179871Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0180628Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 13663, in wait_for
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0181282Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0181499Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0181887Z         self._impl_obj.wait_for(state=state, timeout=to_milliseconds(timeout))

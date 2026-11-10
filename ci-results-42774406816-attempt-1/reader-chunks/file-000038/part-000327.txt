@@ -1,0 +1,29 @@
+e.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7309515Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7309712Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7310165Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/locator.py", line 943, in wait_for
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7310654Z     await self._frame._channel.waitForSelector(
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7310895Z     ...<5 lines>...
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7311069Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7311515Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7311989Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7312307Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7312790Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7313239Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7313703Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7314200Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7314488Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7314985Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7315431Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7315619Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7315981Z playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7316302Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7316640Z   - waiting for get_by_role("dialog", name="Select monster candidate", exact=True) to be visible
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7316919Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7316925Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7317079Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7317956Z ERROR: test_cancel_species_reset_and_overwrite_change_during_chooser (test_source_bonus_offer_browser.SourceBonusOfferBrowserTests.test_cancel_species_reset_and_overwrite_change_during_chooser) (action='species')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7318861Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7319278Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7319885Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_source_bonus_offer_browser.py", line 178, in test_cancel_species_reset_and_overwrite_change_during_chooser
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7320522Z     self.fixture.st

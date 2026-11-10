@@ -1,0 +1,28 @@
+didate(value=7, selection_token='B')])
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7398640Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7398956Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_monster_candidate_browser.py", line 68, in start_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7399187Z     self.page.get_by_role('dialog', name='Select monster candidate', exact=True).wait_for()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7399466Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7399937Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 13663, in wait_for
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7400020Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7400091Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7400287Z         self._impl_obj.wait_for(state=state, timeout=to_milliseconds(timeout))
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7400425Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7400501Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7400568Z     ^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7400921Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7401012Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7401091Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7401431Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/locator.py", line 943, in wait_for
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7401563Z     await self._frame._channel.waitForSelector(
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7401644Z     ...<5 lines>...
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7401714Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7402239Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7402380Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7402475Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7402830Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7402918Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7403263Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7403397Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7403508Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7403868Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/util

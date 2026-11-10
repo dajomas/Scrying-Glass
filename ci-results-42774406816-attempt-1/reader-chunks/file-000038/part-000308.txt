@@ -1,0 +1,29 @@
+e Python browser and audit checks	2026-11-10T07:28:31.7091085Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7091564Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7092132Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7092638Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7093137Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7093408Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7093910Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7094352Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7094545Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7095023Z playwright._impl._errors.Error: Page.evaluate: TypeError: Cannot read properties of undefined (reading 'beginLookup')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7095506Z     at lookupMonsterSpeciesStats (<anonymous>:64:50)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7095823Z     at eval (eval at evaluate (:370:30), <anonymous>:2:27)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7096093Z     at eval (<anonymous>)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7096342Z     at UtilityScript.evaluate (<anonymous>:370:30)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7096646Z     at UtilityScript.<anonymous> (<anonymous>:1:44)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7096820Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7096972Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7097620Z ERROR: test_load_failure_safe_url_and_idempotence (test_monster_image_previews.ProviderPreviewTests.test_load_failure_safe_url_and_idempotence)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7098214Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7098535Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7099066Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_monster_image_previews.py", line 139, in test_load_failure_safe_url_and_idempotence
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7099523Z     self.finish()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7099699Z     ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7100066Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_monster_image_previews.py", line 75, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7100459Z     self.page.evaluate('window.done')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7100704Z     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7101212Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 16876, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7101667Z     self._sync(
+tests	Standalone Python browser and audit

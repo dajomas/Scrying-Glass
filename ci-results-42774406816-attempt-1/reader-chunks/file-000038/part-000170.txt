@@ -1,0 +1,29 @@
+uite (including browser fixtures)	2026-11-10T07:24:19.0512847Z            ^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0513220Z playwright._impl._errors.Error: Page.evaluate: TypeError: Cannot read properties of undefined (reading 'beginLookup')
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0513360Z     at lookupMonsterSpeciesStats (<anonymous>:64:50)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0513499Z     at eval (eval at evaluate (:370:30), <anonymous>:2:33)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0513585Z     at eval (<anonymous>)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0513721Z     at UtilityScript.evaluate (<anonymous>:370:30)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0513856Z     at UtilityScript.<anonymous> (<anonymous>:1:44)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0513866Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0514013Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0514772Z ERROR: test_existing_values_preserved_unchecked_and_replaced_checked (test_source_bonus_offer_browser.SourceBonusOfferBrowserTests.test_existing_values_preserved_unchecked_and_replaced_checked) (provider='D&D Beyond', checked=True)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0514958Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0515080Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0515535Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_source_bonus_offer_browser.py", line 46, in test_existing_values_preserved_unchecked_and_replaced_checked
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0515645Z     self.start(provider=provider)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0515739Z     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0516026Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_source_bonus_offer_browser.py", line 22, in start
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0516119Z     self.fixture.finish()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0516196Z     ~~~~~~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0516469Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_monster_candidate_browser.py", line 56, in finish
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0516596Z     self.page.evaluate('window.lookupDone')
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0516699Z     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0517068Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 16876, in evaluate
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0517149Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0517227Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0517429Z         self._impl_obj.evaluate(expression=expression, arg=mapping.to_impl(arg))
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0517560Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0517638Z     )
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0517828Z     ^
+tests	Python test

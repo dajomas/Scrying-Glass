@@ -1,0 +1,29 @@
+checks	2026-11-10T07:28:31.7155684Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7156113Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7156307Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7156658Z playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7156984Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7157206Z   - waiting for get_by_role("dialog") to be visible
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7157380Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7157388Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7157545Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7158349Z ERROR: test_typing_opens_stable_popup_and_selection_does_not_relookup (test_monster_lookup_focus_browser.LookupFocusRegressionTests.test_typing_opens_stable_popup_and_selection_does_not_relookup)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7159074Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7159374Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7159975Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_monster_lookup_focus_browser.py", line 79, in test_typing_opens_stable_popup_and_selection_does_not_relookup
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7160483Z     self.type_and_open()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7160676Z     ~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7161079Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_monster_lookup_focus_browser.py", line 70, in type_and_open
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7161557Z     self.page.get_by_role('dialog').wait_for(state='visible')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7161869Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7162573Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 13663, in wait_for
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7163029Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7163198Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7163481Z         self._impl_obj.wait_for(state=state, timeout=to_milliseconds(timeout))
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7163838Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7164075Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7164237Z     ^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7164661Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7165101Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7165291Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7165749Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/locator.py", line 943

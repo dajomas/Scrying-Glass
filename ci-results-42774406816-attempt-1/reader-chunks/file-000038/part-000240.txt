@@ -1,0 +1,28 @@
+: message remains readable.  Dismiss' != '  Visual review: message remains readable.  '
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0879184Z - Information:   Visual review: message remains readable.  Dismiss
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0879508Z ? -------------                                            -------
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0879648Z +   Visual review: message remains readable.  
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0879803Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0879816Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0879967Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0880444Z FAIL: test_clearing_message_removes_reserved_height (test_admin_shell_layout.AdminShellLayoutTests.test_clearing_message_removes_reserved_height)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0880624Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0880742Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0881144Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_admin_shell_layout.py", line 112, in test_clearing_message_removes_reserved_height
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0881267Z     self.set_message('An error occurred.')
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0881368Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0881650Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_admin_shell_layout.py", line 47, in set_message
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0881759Z     self.assertIsNotNone(setter)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0881858Z     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0881983Z AssertionError: unexpectedly None
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0881991Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0882285Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0882918Z FAIL: test_message_remains_visible_after_scrolling_and_uses_existing_setter (test_admin_shell_layout.AdminShellLayoutTests.test_message_remains_visible_after_scrolling_and_uses_existing_setter)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0883102Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0883223Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0883689Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_admin_shell_layout.py", line 100, in test_message_remains_visible_after_scrolling_and_uses_existing_setter
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0883835Z     self.set_message('The battle could not be started.')
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0883966Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0884243Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_admin_shell_layout.py", line 47, in set_message
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0884353Z     self.assertIsNotNone(setter)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.08

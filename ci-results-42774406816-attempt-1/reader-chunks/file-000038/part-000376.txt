@@ -1,0 +1,28 @@
+-10T07:28:31.7613904Z     ^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7614262Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7614362Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7614459Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7614811Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7614898Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7615245Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7615575Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7615683Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7616030Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7616118Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7616198Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7616573Z playwright._impl._errors.Error: Page.evaluate: TypeError: Cannot read properties of undefined (reading 'beginLookup')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7616711Z     at lookupMonsterSpeciesStats (<anonymous>:64:50)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7616847Z     at eval (eval at evaluate (:370:30), <anonymous>:2:33)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7616933Z     at eval (<anonymous>)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7617065Z     at UtilityScript.evaluate (<anonymous>:370:30)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7617199Z     at UtilityScript.<anonymous> (<anonymous>:1:44)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7617206Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7617363Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7618010Z ERROR: test_missing_defaults_only_when_checked (test_source_bonus_offer_browser.SourceBonusOfferBrowserTests.test_missing_defaults_only_when_checked) (provider='D&D Beyond', checked=False, current='0')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7618188Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7618304Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7618690Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_source_bonus_offer_browser.py", line 64, in test_missing_defaults_only_when_checked
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7618901Z     self.start(value=None, provider=provider, initiative_bonus_status='missing')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7619044Z     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7619322Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_source_bonus_offer_browser.py", line 22, in start
+tests	Standalone Python bro

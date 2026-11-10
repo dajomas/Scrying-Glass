@@ -1,0 +1,29 @@
+-11-10T07:24:19.0609202Z     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0609576Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 16876, in evaluate
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0609658Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0609737Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0609938Z         self._impl_obj.evaluate(expression=expression, arg=mapping.to_impl(arg))
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0610075Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0610162Z     )
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0610240Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0610587Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0610677Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0610750Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0611089Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/page.py", line 894, in evaluate
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0611279Z     return await self._main_frame.evaluate(expression=expression, arg=arg)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0611409Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0611743Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/frame.py", line 380, in evaluate
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0611885Z     result = await self._channel.evaluateExpression(
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0612103Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0612182Z     ...<5 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0612249Z     )
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0612325Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0612693Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0612800Z     return mapper(await awaitable)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0612889Z                   ^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0613246Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0613337Z     raise e from None
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0613691Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0613824Z     result = await zone.run_async(lambda: awaitable)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0613929Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026

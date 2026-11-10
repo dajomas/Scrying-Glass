@@ -1,0 +1,29 @@
+t.<anonymous> (<anonymous>:1:44)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7561680Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7561842Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7562715Z ERROR: test_invalid_and_ambiguous_never_fill_or_overwrite (test_source_bonus_offer_browser.SourceBonusOfferBrowserTests.test_invalid_and_ambiguous_never_fill_or_overwrite) (status='missing', value=12, current='')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7562905Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7563028Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7563449Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_source_bonus_offer_browser.py", line 94, in test_invalid_and_ambiguous_never_fill_or_overwrite
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7563611Z     self.start(value=value, initiative_bonus_status=status)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7563733Z     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7564008Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_source_bonus_offer_browser.py", line 22, in start
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7564102Z     self.fixture.finish()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7564187Z     ~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7564464Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_monster_candidate_browser.py", line 56, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7564592Z     self.page.evaluate('window.lookupDone')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7564692Z     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7565063Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 16876, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7565149Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7565229Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7565438Z         self._impl_obj.evaluate(expression=expression, arg=mapping.to_impl(arg))
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7565579Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7565649Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7565723Z     ^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7566076Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7566277Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7566364Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7566802Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/page.py", line 894, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7566998Z     return await self._main_frame.evaluate(expression=expression, arg=arg)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7567124Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T0

@@ -1,0 +1,48 @@
+t tests	2026-11-10T07:24:25.2460918Z   ---
+tests	JavaScript tests	2026-11-10T07:24:25.2461188Z   duration_ms: 28.593897
+tests	JavaScript tests	2026-11-10T07:24:25.2461483Z   type: 'test'
+tests	JavaScript tests	2026-11-10T07:24:25.2461731Z   ...
+tests	JavaScript tests	2026-11-10T07:24:25.2461954Z 1..1
+tests	JavaScript tests	2026-11-10T07:24:25.2462352Z # tests 1
+tests	JavaScript tests	2026-11-10T07:24:25.2463869Z # suites 0
+tests	JavaScript tests	2026-11-10T07:24:25.2464403Z # pass 1
+tests	JavaScript tests	2026-11-10T07:24:25.2466185Z # fail 0
+tests	JavaScript tests	2026-11-10T07:24:25.2466600Z # cancelled 0
+tests	JavaScript tests	2026-11-10T07:24:25.2466996Z # skipped 0
+tests	JavaScript tests	2026-11-10T07:24:25.2467403Z # todo 0
+tests	JavaScript tests	2026-11-10T07:24:25.2468333Z # duration_ms 34.484438
+tests	JavaScript tests	2026-11-10T07:24:25.2649127Z ##[endgroup]
+tests	JavaScript tests	2026-11-10T07:24:25.2649665Z ##[group]tests/fivetools-source-labels.test.cjs
+tests	JavaScript tests	2026-11-10T07:24:25.3620276Z TAP version 13
+tests	JavaScript tests	2026-11-10T07:24:25.3920860Z # Subtest: six exact labels retain immutable raw source identity
+tests	JavaScript tests	2026-11-10T07:24:25.3925693Z ok 1 - six exact labels retain immutable raw source identity
+tests	JavaScript tests	2026-11-10T07:24:25.3926286Z   ---
+tests	JavaScript tests	2026-11-10T07:24:25.3927030Z   duration_ms: 1.504078
+tests	JavaScript tests	2026-11-10T07:24:25.3927400Z   type: 'test'
+tests	JavaScript tests	2026-11-10T07:24:25.3927753Z   ...
+tests	JavaScript tests	2026-11-10T07:24:25.3931477Z # Subtest: custom codes and D&D Beyond wording remain intact
+tests	JavaScript tests	2026-11-10T07:24:25.3933257Z ok 2 - custom codes and D&D Beyond wording remain intact
+tests	JavaScript tests	2026-11-10T07:24:25.3934300Z   ---
+tests	JavaScript tests	2026-11-10T07:24:25.3934584Z   duration_ms: 0.541917
+tests	JavaScript tests	2026-11-10T07:24:25.3934891Z   type: 'test'
+tests	JavaScript tests	2026-11-10T07:24:25.3935168Z   ...
+tests	JavaScript tests	2026-11-10T07:24:25.3941052Z # Subtest: actual lookup notifications and overwrite/edit guards
+tests	JavaScript tests	2026-11-10T07:24:25.3944203Z not ok 3 - actual lookup notifications and overwrite/edit guards
+tests	JavaScript tests	2026-11-10T07:24:25.3944717Z   ---
+tests	JavaScript tests	2026-11-10T07:24:25.3944996Z   duration_ms: 1.566853
+tests	JavaScript tests	2026-11-10T07:24:25.3945307Z   type: 'test'
+tests	JavaScript tests	2026-11-10T07:24:25.3946042Z   location: '/tmp/scrying-tests-t_h5xw9k/repo/tests/fivetools-source-labels.test.cjs:34:1'
+tests	JavaScript tests	2026-11-10T07:24:25.3946820Z   failureType: 'testCodeFailure'
+tests	JavaScript tests	2026-11-10T07:24:25.3947302Z   error: 'window is not defined'
+tests	JavaScript tests	2026-11-10T07:24:25.3947739Z   code: 'ERR_TEST_FAILURE'
+tests	JavaScript tests	2026-11-10T07:24:25.3948147Z   name: 'ReferenceError'
+tests	JavaScript tests	2026-11-10T07:24:25.3948553Z   stack: |-
+tests	JavaScript tests	2026-11-10T07:24:25.3948969Z     Object.lookupMonsterSpeciesStats (evalmachine.<anonymous>:64:22)
+tests	JavaScript tests	2026-11-10T07:24:25.3949556Z     TestContext.<anonymous> (/tmp/scrying-tests-t_h5xw9k/repo/tests/fivetools-source-labels.test.cjs:38:17)
+tests	JavaScript tests	2026-11-10T07:24:25.3950067Z     Test.runInAsyncScope (node:async_hooks:214:14)
+tests	JavaScript tests	2026-11-10T07:24:25.3950440Z     Test.run (node:internal/test_runner/test:1047:25)
+tests	JavaScript tests	2026-11-10T07:24:25.3950878Z     Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+tests	JavaScript tests	2026-11-10T07:24:25.3951320Z     Test.postRun (node:internal/test_runner/test:1173:19)
+tests	JavaScript tests	2026-11-10T07:24:25.3951690Z     Test.run (node:internal/test_runner/test:1101:12)
+tests	JavaScript tests	2026-11-10T07:24:25.3952338Z     async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+tests	JavaScript tests	2026-11-10T07:24:25.3952946Z   .

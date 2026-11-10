@@ -1,0 +1,28 @@
+glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.0956914Z Selected monster source refresh failed for bd45d924fe0c4dc1aa4c958e10e93a65
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.0957443Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.0958023Z   File "/tmp/scrying-tests-tiaqy38q/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.0958590Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.0959134Z   File "/tmp/scrying-tests-tiaqy38q/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.0960525Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.0961724Z ValueError: Retained source missing or ambiguous
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1041806Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1042409Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1043056Z   File "python/scrying_glass_monster_selection.py", line 101, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1043479Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1043956Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1044389Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1044660Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1045341Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1045974Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1046261Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1046727Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1047143Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1047358Z OSError: private detail
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1047603Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1047872Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1048259Z   File "python/scrying_glass_monster_selection.py", line 98, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1048657Z     sources = ft.configured_sources(display)
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1049141Z   File "/tmp/scrying-tests-tiaqy38q/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1049858Z     raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+tests	Standalone Python browser and audit checks	2026-11-10T07:25:37.1050556Z ValueError: fivetools_sources must be a list of at most 32 nonempty s

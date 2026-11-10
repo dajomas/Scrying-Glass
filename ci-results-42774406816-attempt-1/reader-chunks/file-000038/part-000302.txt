@@ -1,0 +1,29 @@
+026-11-10T07:28:31.7025474Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7025678Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7026171Z playwright._impl._errors.Error: Page.evaluate: TypeError: Cannot read properties of undefined (reading 'beginLookup')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7026656Z     at lookupMonsterSpeciesStats (<anonymous>:64:50)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7026971Z     at eval (eval at evaluate (:370:30), <anonymous>:2:33)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7027238Z     at eval (<anonymous>)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7027500Z     at UtilityScript.evaluate (<anonymous>:370:30)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7027796Z     at UtilityScript.<anonymous> (<anonymous>:1:44)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7027972Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7028133Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7028845Z ERROR: test_six_book_labels_links_and_selected_raw_identity (test_monster_candidate_browser.CandidateBrowserTests.test_six_book_labels_links_and_selected_raw_identity)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7029502Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7029811Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7030398Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_monster_candidate_browser.py", line 123, in test_six_book_labels_links_and_selected_raw_identity
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7030914Z     self.start_candidates(candidates)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7031158Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7031608Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_monster_candidate_browser.py", line 68, in start_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7032269Z     self.page.get_by_role('dialog', name='Select monster candidate', exact=True).wait_for()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7032719Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7033312Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 13663, in wait_for
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7033784Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7034083Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7034389Z         self._impl_obj.wait_for(state=state, timeout=to_milliseconds(timeout))
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7034854Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7035106Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7035268Z     ^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7035727Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7036177Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7036391Z            ~~~~~~~~~~

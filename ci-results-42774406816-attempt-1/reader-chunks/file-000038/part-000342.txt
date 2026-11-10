@@ -1,0 +1,30 @@
+5467Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7425812Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/page.py", line 894, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7426008Z     return await self._main_frame.evaluate(expression=expression, arg=arg)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7426134Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7426473Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/frame.py", line 380, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7426620Z     result = await self._channel.evaluateExpression(
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7426731Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7426811Z     ...<5 lines>...
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7426885Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7426953Z     ^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7427317Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7427427Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7427522Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7427875Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7427962Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7428314Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7428443Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7428549Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7428902Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7428989Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7429068Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7429433Z playwright._impl._errors.Error: Page.evaluate: TypeError: Cannot read properties of undefined (reading 'beginLookup')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7429577Z     at lookupMonsterSpeciesStats (<anonymous>:64:50)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7429722Z     at eval (eval at evaluate (:370:30), <anonymous>:2:33)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7429809Z     at eval (<anonymous>)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7429940Z     at UtilityScript.evaluate (<anonymous>:370:30)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7430064Z     at UtilityScript.<anonymous> (<anonymous>:1:44)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7430077Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7430226Z ======================================================================
+tests	Standalone Python browser and

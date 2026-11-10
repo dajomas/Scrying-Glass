@@ -1,0 +1,30 @@
+ 22, in start
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0853887Z     self.fixture.finish()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0853964Z     ~~~~~~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0854235Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_monster_candidate_browser.py", line 56, in finish
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0854358Z     self.page.evaluate('window.lookupDone')
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0854461Z     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0854835Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 16876, in evaluate
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0854916Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0854993Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0855187Z         self._impl_obj.evaluate(expression=expression, arg=mapping.to_impl(arg))
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0855325Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0855398Z     )
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0855464Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0855813Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0855904Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0855981Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0856329Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/page.py", line 894, in evaluate
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0856521Z     return await self._main_frame.evaluate(expression=expression, arg=arg)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0856651Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0856992Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/frame.py", line 380, in evaluate
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0857132Z     result = await self._channel.evaluateExpression(
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0857238Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0857320Z     ...<5 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0857391Z     )
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0857462Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0857817Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0857925Z     return mapper(await awaitable)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0858138Z                   ^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0858491Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Python test suite (including browser fixtur

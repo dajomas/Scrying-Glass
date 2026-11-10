@@ -1,0 +1,29 @@
+r fixtures)	2026-11-10T07:24:19.0046035Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0046378Z     )
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0046562Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0047173Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0047801Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0048043Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0048690Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/locator.py", line 943, in wait_for
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0049433Z     await self._frame._channel.waitForSelector(
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0049923Z     ...<5 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0050132Z     )
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0050774Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0051565Z     return mapper(await awaitable)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0051877Z                   ^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0052768Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0053418Z     raise e from None
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0054094Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0054795Z     result = await zone.run_async(lambda: awaitable)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0055167Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0055886Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0056520Z     return await func()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0056767Z            ^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0057252Z playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0057691Z Call log:
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0058141Z   - waiting for get_by_role("dialog", name="Select monster candidate", exact=True) to be visible
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0058522Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0058529Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0058741Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0059569Z ERROR: test_species_change_closes_popup (test_monster_candidate_browser.CandidateBrowserTests.test_species_change_closes_popup)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0060349Z ----------------------

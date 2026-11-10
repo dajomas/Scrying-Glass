@@ -1,0 +1,28 @@
+4/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0666182Z     result = await zone.run_async(lambda: awaitable)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0666292Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0666636Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0666728Z     return await func()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0666815Z            ^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0667190Z playwright._impl._errors.Error: Page.evaluate: TypeError: Cannot read properties of undefined (reading 'beginLookup')
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0667323Z     at lookupMonsterSpeciesStats (<anonymous>:64:50)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0667467Z     at eval (eval at evaluate (:370:30), <anonymous>:2:33)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0667554Z     at eval (<anonymous>)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0667679Z     at UtilityScript.evaluate (<anonymous>:370:30)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0667812Z     at UtilityScript.<anonymous> (<anonymous>:1:44)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0667819Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0667976Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0668619Z ERROR: test_missing_clears_old_offer_but_lookup_failure_does_not_clear (test_source_bonus_offer_browser.SourceBonusOfferBrowserTests.test_missing_clears_old_offer_but_lookup_failure_does_not_clear)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0668801Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0668926Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0669385Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_source_bonus_offer_browser.py", line 72, in test_missing_clears_old_offer_but_lookup_failure_does_not_clear
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0669468Z     self.start()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0669546Z     ~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0669820Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_source_bonus_offer_browser.py", line 22, in start
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0669918Z     self.fixture.finish()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0670001Z     ~~~~~~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0670273Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_monster_candidate_browser.py", line 56, in finish
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0670393Z     self.page.evaluate('window.lookupDone')
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0670497Z     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0670967Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 16876, in evaluate
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0671123Z   

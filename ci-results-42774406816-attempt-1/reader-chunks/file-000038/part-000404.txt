@@ -1,0 +1,30 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7768754Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7768820Z     ^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7769169Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7769258Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7769339Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7769680Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/locator.py", line 943, in wait_for
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7769812Z     await self._frame._channel.waitForSelector(
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7769887Z     ...<5 lines>...
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7769961Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7770323Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7770604Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7770700Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7771058Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7771146Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7771510Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7771649Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7771758Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7772279Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7772370Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7772448Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7772708Z playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7772787Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7773035Z   - waiting for get_by_role("dialog", name="Select monster candidate", exact=True) to be visible
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7773042Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7773048Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7773202Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7773783Z ERROR: test_species_reset_and_new_lookup_clear_applied_offer (test_source_bonus_offer_browser.SourceBonusOfferBrowserTests.test_species_reset_and_new_lookup_clear_applied_offer)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7773961Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7774085Z 

@@ -1,0 +1,50 @@
+: successful join does not create rejection message
+tests	JavaScript tests	2026-11-10T07:24:25.5875464Z not ok 10 - successful join does not create rejection message
+tests	JavaScript tests	2026-11-10T07:24:25.5875942Z   ---
+tests	JavaScript tests	2026-11-10T07:24:25.5876225Z   duration_ms: 0.8755
+tests	JavaScript tests	2026-11-10T07:24:25.5876516Z   type: 'test'
+tests	JavaScript tests	2026-11-10T07:24:25.5877021Z   location: '/tmp/scrying-tests-5ct_vash/repo/tests/initiative-join-gate.test.cjs:68:1'
+tests	JavaScript tests	2026-11-10T07:24:25.5877430Z   failureType: 'testCodeFailure'
+tests	JavaScript tests	2026-11-10T07:24:25.5877774Z   error: "Cannot read properties of undefined (reading 'resolve')"
+tests	JavaScript tests	2026-11-10T07:24:25.5878079Z   code: 'ERR_TEST_FAILURE'
+tests	JavaScript tests	2026-11-10T07:24:25.5878284Z   name: 'TypeError'
+tests	JavaScript tests	2026-11-10T07:24:25.5878462Z   stack: |-
+tests	JavaScript tests	2026-11-10T07:24:25.5878700Z     window.fetch (evalmachine.<anonymous>:73:46)
+tests	JavaScript tests	2026-11-10T07:24:25.5879246Z     async TestContext.<anonymous> (/tmp/scrying-tests-5ct_vash/repo/tests/initiative-join-gate.test.cjs:69:23)
+tests	JavaScript tests	2026-11-10T07:24:25.5880069Z     async Test.run (node:internal/test_runner/test:1054:7)
+tests	JavaScript tests	2026-11-10T07:24:25.5880769Z     async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+tests	JavaScript tests	2026-11-10T07:24:25.5881325Z   ...
+tests	JavaScript tests	2026-11-10T07:24:25.5965161Z 1..10
+tests	JavaScript tests	2026-11-10T07:24:25.5965531Z # tests 10
+tests	JavaScript tests	2026-11-10T07:24:25.5965808Z # suites 0
+tests	JavaScript tests	2026-11-10T07:24:25.5966124Z # pass 4
+tests	JavaScript tests	2026-11-10T07:24:25.5966749Z # fail 6
+tests	JavaScript tests	2026-11-10T07:24:25.5967029Z # cancelled 0
+tests	JavaScript tests	2026-11-10T07:24:25.5973061Z # skipped 0
+tests	JavaScript tests	2026-11-10T07:24:25.5973451Z # todo 0
+tests	JavaScript tests	2026-11-10T07:24:25.5973914Z # duration_ms 90.035072
+tests	JavaScript tests	2026-11-10T07:24:25.6175122Z ##[endgroup]
+tests	JavaScript tests	2026-11-10T07:24:25.6175556Z ##[group]tests/initiative-tie-defaults.test.cjs
+tests	JavaScript tests	2026-11-10T07:24:25.7168614Z TAP version 13
+tests	JavaScript tests	2026-11-10T07:24:25.7534900Z # Subtest: mixed ties default to characters first with stable within-kind order
+tests	JavaScript tests	2026-11-10T07:24:25.7538005Z ok 1 - mixed ties default to characters first with stable within-kind order
+tests	JavaScript tests	2026-11-10T07:24:25.7538821Z   ---
+tests	JavaScript tests	2026-11-10T07:24:25.7539111Z   duration_ms: 2.182191
+tests	JavaScript tests	2026-11-10T07:24:25.7539424Z   type: 'test'
+tests	JavaScript tests	2026-11-10T07:24:25.7539697Z   ...
+tests	JavaScript tests	2026-11-10T07:24:25.7541950Z # Subtest: monster-only ties retain order
+tests	JavaScript tests	2026-11-10T07:24:25.7543418Z ok 2 - monster-only ties retain order
+tests	JavaScript tests	2026-11-10T07:24:25.7543837Z   ---
+tests	JavaScript tests	2026-11-10T07:24:25.7544122Z   duration_ms: 0.580055
+tests	JavaScript tests	2026-11-10T07:24:25.7544430Z   type: 'test'
+tests	JavaScript tests	2026-11-10T07:24:25.7544840Z   ...
+tests	JavaScript tests	2026-11-10T07:24:25.7546359Z # Subtest: character-only ties retain order
+tests	JavaScript tests	2026-11-10T07:24:25.7547816Z ok 3 - character-only ties retain order
+tests	JavaScript tests	2026-11-10T07:24:25.7552816Z   ---
+tests	JavaScript tests	2026-11-10T07:24:25.7562825Z   duration_ms: 1.166449
+tests	JavaScript tests	2026-11-10T07:24:25.7563176Z   type: 'test'
+tests	JavaScript tests	2026-11-10T07:24:25.7563462Z   ...
+tests	JavaScript tests	2026-11-10T07:24:25.7563817Z # Subtest: empty ties render no controls
+tests	JavaScript tests	2026-11-10T07:24:25.7564279Z ok 4 - empty ties render no controls
+tests	JavaScript tests	2026-11-10T07:24:25.7564636Z   ---
+tests	JavaScript tests	2026-11-10T07:24:25.7564904Z   durati

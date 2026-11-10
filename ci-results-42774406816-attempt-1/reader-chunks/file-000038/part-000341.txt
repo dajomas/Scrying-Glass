@@ -1,0 +1,30 @@
+026-11-10T07:28:31.7420206Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7420279Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7420531Z playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7420604Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7420841Z   - waiting for get_by_role("dialog", name="Select monster candidate", exact=True) to be visible
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7420848Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7420852Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7421004Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7421760Z ERROR: test_existing_values_preserved_unchecked_and_replaced_checked (test_source_bonus_offer_browser.SourceBonusOfferBrowserTests.test_existing_values_preserved_unchecked_and_replaced_checked) (provider='D&D Beyond', checked=False)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7421938Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7422134Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7422594Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_source_bonus_offer_browser.py", line 46, in test_existing_values_preserved_unchecked_and_replaced_checked
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7422714Z     self.start(provider=provider)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7422807Z     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7423088Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_source_bonus_offer_browser.py", line 22, in start
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7423175Z     self.fixture.finish()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7423254Z     ~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7423525Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_monster_candidate_browser.py", line 56, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7423647Z     self.page.evaluate('window.lookupDone')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7423747Z     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7424120Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 16876, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7424196Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7424271Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7424586Z         self._impl_obj.evaluate(expression=expression, arg=mapping.to_impl(arg))
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7424811Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7424884Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7424950Z     ^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7425299Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7425388Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.742

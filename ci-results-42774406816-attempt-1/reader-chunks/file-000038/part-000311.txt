@@ -1,0 +1,30 @@
+ble)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7123661Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7124142Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7124585Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7125032Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7125509Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7125779Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7126280Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7126720Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7126904Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7127252Z playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7127578Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7127797Z   - waiting for get_by_role("dialog") to be visible
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7127979Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7127986Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7128139Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7128820Z ERROR: test_cancel_restores_focus_without_relookup (test_monster_lookup_focus_browser.LookupFocusRegressionTests.test_cancel_restores_focus_without_relookup)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7129477Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7129774Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7130318Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_monster_lookup_focus_browser.py", line 91, in test_cancel_restores_focus_without_relookup
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7130789Z     self.type_and_open()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7130980Z     ~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7131388Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_monster_lookup_focus_browser.py", line 70, in type_and_open
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7131862Z     self.page.get_by_role('dialog').wait_for(state='visible')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7132353Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7132892Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 13663, in wait_for
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7133356Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7133531Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7133819Z         self._impl_obj.wait_for(state=state, timeout=to_milliseconds(timeout))
+tests	Standalone Python browser and audit che

@@ -1,0 +1,29 @@
+24:19.0105697Z     return await func()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0105943Z            ^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0106436Z playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0106888Z Call log:
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0107355Z   - waiting for get_by_role("dialog", name="Select monster candidate", exact=True) to be visible
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0107740Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0107747Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0107965Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0109123Z ERROR: test_both_providers_local_precedence_separate_replacement_and_reset (test_monster_image_previews.ProviderPreviewTests.test_both_providers_local_precedence_separate_replacement_and_reset)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0110197Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0110618Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0111498Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_monster_image_previews.py", line 83, in test_both_providers_local_precedence_separate_replacement_and_reset
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0112426Z     self.finish()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0112643Z     ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0130666Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_monster_image_previews.py", line 75, in finish
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0131279Z     self.page.evaluate('window.done')
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0131608Z     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0132504Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 16876, in evaluate
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0133170Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0133396Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0133819Z         self._impl_obj.evaluate(expression=expression, arg=mapping.to_impl(arg))
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0134356Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0134686Z     )
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0134885Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0135511Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0136151Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0136400Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0137040Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/page.py", line 894, in evaluate
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0137819Z     return await self._main_frame.evaluate(expression=expres

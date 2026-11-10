@@ -1,0 +1,27 @@
+ncluding browser fixtures)	2026-11-10T07:24:18.9951844Z     raise e from None
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9953650Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9954513Z     result = await zone.run_async(lambda: awaitable)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9954954Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9955794Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9956537Z     return await func()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9956826Z            ^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9957404Z playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9957945Z Call log:
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9958477Z   - waiting for get_by_role("dialog", name="Select monster candidate", exact=True) to be visible
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9958928Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9958938Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9959192Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9960351Z ERROR: test_dnd_beyond_source_wording_and_candidate_cancel (test_monster_candidate_browser.CandidateBrowserTests.test_dnd_beyond_source_wording_and_candidate_cancel)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9961345Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9961815Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9962869Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_monster_candidate_browser.py", line 155, in test_dnd_beyond_source_wording_and_candidate_cancel
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9963894Z     self.start_candidates([dict(found=True, name='Goblin', species='Goblin', provider='D&D Beyond',
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9964556Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9965093Z         source=code, legacy=legacy, ac=12, hp='7', selection_token=code)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9965583Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9966005Z         for code, legacy in [('MM',True), ('XMM',False)]])
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9966403Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9967089Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_monster_candidate_browser.py", line 68, in start_candidates
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9967921Z     self.page.get_by_role('dialog', name='Select monster candidate', exact=True).wait_for()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9968542Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Pyth

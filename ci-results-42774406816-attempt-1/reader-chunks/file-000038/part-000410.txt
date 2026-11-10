@@ -1,0 +1,27 @@
+6-11-10T07:28:31.7800192Z FAIL: test_blank_notices_collapse_and_real_messages_reappear (test_admin_foundations.FoundationBrowserTests.test_blank_notices_collapse_and_real_messages_reappear) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7800373Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7800492Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7800909Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_admin_foundations.py", line 151, in test_blank_notices_collapse_and_real_messages_reappear
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7801154Z     self.assertEqual(notice.text_content(), '  Visual review: message remains readable.  ')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7801315Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7801720Z AssertionError: 'Information:   Visual review: message remains readable.  Dismiss' != '  Visual review: message remains readable.  '
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7801922Z - Information:   Visual review: message remains readable.  Dismiss
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7802276Z ? -------------                                            -------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7802420Z +   Visual review: message remains readable.  
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7802427Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7802432Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7802582Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7803144Z FAIL: test_blank_notices_collapse_and_real_messages_reappear (test_admin_foundations.FoundationBrowserTests.test_blank_notices_collapse_and_real_messages_reappear) (width=375)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7803322Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7803551Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7804052Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_admin_foundations.py", line 151, in test_blank_notices_collapse_and_real_messages_reappear
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7804289Z     self.assertEqual(notice.text_content(), '  Visual review: message remains readable.  ')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7804448Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7804839Z AssertionError: 'Information:   Visual review: message remains readable.  Dismiss' != '  Visual review: message remains readable.  '
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7805033Z - Information:   Visual review: message remains readable.  Dismiss
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7805194Z ? -------------                                            -------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7805331Z +   Visual review: message remains readable.  
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7805337Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7805342Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7805494Z ======================================================================
+tests	Standalone Python browser

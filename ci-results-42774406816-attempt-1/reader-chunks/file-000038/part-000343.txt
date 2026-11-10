@@ -1,0 +1,28 @@
+ audit checks	2026-11-10T07:28:31.7430981Z ERROR: test_existing_values_preserved_unchecked_and_replaced_checked (test_source_bonus_offer_browser.SourceBonusOfferBrowserTests.test_existing_values_preserved_unchecked_and_replaced_checked) (provider='D&D Beyond', checked=True)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7431162Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7431282Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7431739Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_source_bonus_offer_browser.py", line 46, in test_existing_values_preserved_unchecked_and_replaced_checked
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7431847Z     self.start(provider=provider)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7431932Z     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7432292Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_source_bonus_offer_browser.py", line 22, in start
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7432390Z     self.fixture.finish()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7432470Z     ~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7432852Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_monster_candidate_browser.py", line 56, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7433068Z     self.page.evaluate('window.lookupDone')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7433164Z     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7433575Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 16876, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7433661Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7433734Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7433940Z         self._impl_obj.evaluate(expression=expression, arg=mapping.to_impl(arg))
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7434073Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7434148Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7434220Z     ^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7434569Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7434656Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7434740Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7435073Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/page.py", line 894, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7435271Z     return await self._main_frame.evaluate(expression=expression, arg=arg)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7435402Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7435738Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/frame.py", line 380, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7435881Z     result = await self._channel.evaluateExpression(
+tests	Standalone Python browser and audit c

@@ -1,0 +1,29 @@
+^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7789751Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7789839Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7789914Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7790282Z playwright._impl._errors.Error: Page.evaluate: TypeError: Cannot read properties of undefined (reading 'beginLookup')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7790419Z     at lookupMonsterSpeciesStats (<anonymous>:64:50)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7790561Z     at eval (eval at evaluate (:370:30), <anonymous>:2:33)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7790647Z     at eval (<anonymous>)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7790773Z     at UtilityScript.evaluate (<anonymous>:370:30)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7790910Z     at UtilityScript.<anonymous> (<anonymous>:1:44)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7790917Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7791075Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7791653Z ERROR: test_fixed_toggles_use_state_not_labels_and_rejection_keeps_state (test_stage_b_rosters.StageBRosterTests.test_fixed_toggles_use_state_not_labels_and_rejection_keeps_state)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7791832Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7791952Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7792486Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_stage_b_rosters.py", line 150, in test_fixed_toggles_use_state_not_labels_and_rejection_keeps_state
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7792661Z     page.get_by_text('fixture rejected', exact=True).wait_for()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7792792Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7793174Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 13663, in wait_for
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7793264Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7793337Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7793537Z         self._impl_obj.wait_for(state=state, timeout=to_milliseconds(timeout))
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7793676Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7793754Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7793827Z     ^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7794176Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7794262Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7794344Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7794686Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/locator.py", line 9

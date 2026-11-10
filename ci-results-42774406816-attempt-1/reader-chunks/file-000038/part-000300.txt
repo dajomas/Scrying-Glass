@@ -1,0 +1,31 @@
+ght/_impl/locator.py", line 943, in wait_for
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6992836Z     await self._frame._channel.waitForSelector(
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6993104Z     ...<5 lines>...
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6993286Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6993755Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6994233Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6994483Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6994976Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6995436Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6995895Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6996397Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6996676Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6997188Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6997635Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6997827Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6998182Z playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6998519Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6998857Z   - waiting for get_by_role("dialog", name="Select monster candidate", exact=True) to be visible
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6999131Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6999137Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6999297Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6999790Z ERROR: test_single_and_zero (test_monster_candidate_browser.CandidateBrowserTests.test_single_and_zero)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7000296Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7000605Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7001086Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_monster_candidate_browser.py", line 72, in test_single_and_zero
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7001504Z     self.finish()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7001686Z     ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7002206Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_monster_candidate_browser.py", line 56, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7002641Z     self.page.evaluate('window.lookupDone')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7002903Z     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python bro

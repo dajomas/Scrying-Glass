@@ -1,0 +1,28 @@
+ and audit checks	2026-11-10T07:28:31.7805961Z FAIL: test_clearing_message_removes_reserved_height (test_admin_shell_layout.AdminShellLayoutTests.test_clearing_message_removes_reserved_height)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7806133Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7806252Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7806637Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_admin_shell_layout.py", line 112, in test_clearing_message_removes_reserved_height
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7806757Z     self.set_message('An error occurred.')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7806860Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7807134Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_admin_shell_layout.py", line 47, in set_message
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7807240Z     self.assertIsNotNone(setter)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7807334Z     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7807457Z AssertionError: unexpectedly None
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7807466Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7807620Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7808241Z FAIL: test_message_remains_visible_after_scrolling_and_uses_existing_setter (test_admin_shell_layout.AdminShellLayoutTests.test_message_remains_visible_after_scrolling_and_uses_existing_setter)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7808413Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7808530Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7808982Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_admin_shell_layout.py", line 100, in test_message_remains_visible_after_scrolling_and_uses_existing_setter
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7809136Z     self.set_message('The battle could not be started.')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7809259Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7809526Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_admin_shell_layout.py", line 47, in set_message
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7809635Z     self.assertIsNotNone(setter)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7809723Z     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7809857Z AssertionError: unexpectedly None
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7809863Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7810010Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7810507Z FAIL: test_wrapped_message_resizes_header_without_overlap (test_admin_shell_layout.AdminShellLayoutTests.test_wrapped_message_resizes_header_without_overlap)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7810682Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7810798Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.78

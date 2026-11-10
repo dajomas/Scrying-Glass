@@ -1,0 +1,27 @@
+28:31.6953724Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6954545Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6955396Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6955845Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6956694Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6957442Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6957739Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6958350Z playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6958870Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6959423Z   - waiting for get_by_role("dialog", name="Select monster candidate", exact=True) to be visible
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6959875Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6959885Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6960138Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6961310Z ERROR: test_dnd_beyond_source_wording_and_candidate_cancel (test_monster_candidate_browser.CandidateBrowserTests.test_dnd_beyond_source_wording_and_candidate_cancel)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6962525Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6963023Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6963686Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_monster_candidate_browser.py", line 155, in test_dnd_beyond_source_wording_and_candidate_cancel
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6964632Z     self.start_candidates([dict(found=True, name='Goblin', species='Goblin', provider='D&D Beyond',
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6965362Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6965981Z         source=code, legacy=legacy, ac=12, hp='7', selection_token=code)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6966515Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6967004Z         for code, legacy in [('MM',True), ('XMM',False)]])
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6967450Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6967930Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_monster_candidate_browser.py", line 68, in start_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6968504Z     self.page.get_by_role('dialog', name='Select monster candidate', exact=True).wait_for()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6968963Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.6969594Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packa

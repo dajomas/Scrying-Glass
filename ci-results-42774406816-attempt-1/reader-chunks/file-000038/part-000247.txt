@@ -1,0 +1,41 @@
+sts	Pytest regression modules	2026-11-10T07:24:21.2604172Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-10T07:24:21.2604536Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Pytest regression modules	2026-11-10T07:24:21.2604879Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-10T07:24:21.2605208Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-10T07:24:21.2605515Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-10T07:24:21.2605871Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Pytest regression modules	2026-11-10T07:24:21.2606143Z ##[endgroup]
+tests	Pytest regression modules	2026-11-10T07:24:23.4433102Z ...........................................                              [100%]
+tests	Pytest regression modules	2026-11-10T07:24:23.4433566Z 43 passed in 1.48s
+tests	JavaScript tests	﻿2026-11-10T07:24:23.5177414Z ##[group]Run status=0
+tests	JavaScript tests	2026-11-10T07:24:23.5177668Z ^[[36;1mstatus=0^[[0m
+tests	JavaScript tests	2026-11-10T07:24:23.5177873Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	JavaScript tests	2026-11-10T07:24:23.5178121Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	JavaScript tests	2026-11-10T07:24:23.5178445Z ^[[36;1m  python tools/run_split_tests.py -- node --test "$test" || status=1^[[0m
+tests	JavaScript tests	2026-11-10T07:24:23.5178792Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	JavaScript tests	2026-11-10T07:24:23.5179138Z ^[[36;1mdone < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)^[[0m
+tests	JavaScript tests	2026-11-10T07:24:23.5179472Z ^[[36;1mexit "$status"^[[0m
+tests	JavaScript tests	2026-11-10T07:24:23.5224357Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	JavaScript tests	2026-11-10T07:24:23.5224669Z env:
+tests	JavaScript tests	2026-11-10T07:24:23.5225038Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	JavaScript tests	2026-11-10T07:24:23.5225502Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-10T07:24:23.5225866Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	JavaScript tests	2026-11-10T07:24:23.5226246Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-10T07:24:23.5226558Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-10T07:24:23.5226860Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-10T07:24:23.5227166Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	JavaScript tests	2026-11-10T07:24:23.5227435Z ##[endgroup]
+tests	JavaScript tests	2026-11-10T07:24:23.5329209Z ##[group]tests/admin-feedback-controller.test.cjs
+tests	JavaScript tests	2026-11-10T07:24:23.6805379Z TAP version 13
+tests	JavaScript tests	2026-11-10T07:24:23.7172811Z # Subtest: pane success expires at exactly three seconds
+tests	JavaScript tests	2026-11-10T07:24:23.7176872Z ok 1 - pane success expires at exactly three seconds
+tests	JavaScript tests	2026-11-10T07:24:23.7192818Z   ---
+tests	JavaScript tests	2026-11-10T07:24:23.7212787Z   duration_ms: 1.829428
+tests	JavaScript tests	2026-11-10T07:24:23.7213314Z   type: 'test'
+tests	JavaScript tests	2026-11-10T07:24:23.7213753Z   ...
+tests	JavaScript tests	2026-11-10T07:24:23.7214325Z # Subtest: global success expires at exactly five seconds
+tests	JavaScript tests	2026-11-10T07:24:23.7215421Z ok 2 - global success expires at exactly five seconds
+tests	JavaScript tests	2026-11-10T07:24:23.7215968Z   ---
+tests	JavaScript tests	2026-11-10T07:24:23.7216478Z   duration_ms: 0.207142
+tests	JavaScript tests	2026-11-10T07:24:23.7242803Z   type: 'test'
+tests	JavaScript tests	2026-11-10T07:24

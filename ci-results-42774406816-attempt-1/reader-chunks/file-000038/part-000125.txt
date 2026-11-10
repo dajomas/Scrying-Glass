@@ -1,0 +1,28 @@
+ncluding browser fixtures)	2026-11-10T07:24:18.9984983Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9984991Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9985210Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9986174Z ERROR: test_edit_preservation_and_pending_submit (test_monster_candidate_browser.CandidateBrowserTests.test_edit_preservation_and_pending_submit)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9987075Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9987496Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9988266Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_monster_candidate_browser.py", line 99, in test_edit_preservation_and_pending_submit
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9988932Z     self.begin(2)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9989170Z     ~~~~~~~~~~^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9989691Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_monster_candidate_browser.py", line 50, in begin
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9990485Z     self.start_candidates([dict(found=True, name='Goblin', species='Goblin', provider='5e.tools',
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9991122Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9991686Z         source='MM', legacy=True, ac=10+i, hp=str(5+i), selection_token=f'token-{i}')
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9992697Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9993105Z         for i in range(1, count+1)])
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9993415Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9994053Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_monster_candidate_browser.py", line 68, in start_candidates
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9994863Z     self.page.get_by_role('dialog', name='Select monster candidate', exact=True).wait_for()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9995476Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9996330Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 13663, in wait_for
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9996975Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9997198Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9997584Z         self._impl_obj.wait_for(state=state, timeout=to_milliseconds(timeout))
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9998097Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9998429Z     )
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9998626Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:18.9999255Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	P

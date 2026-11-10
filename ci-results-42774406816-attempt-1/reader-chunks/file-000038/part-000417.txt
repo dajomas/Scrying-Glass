@@ -1,0 +1,20 @@
+[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:35.1908122Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:35.2997919Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:35.3002829Z ##[error]Process completed with exit code 1.
+tests	Post Run actions/checkout@v4	﻿2026-11-10T07:28:35.3091233Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-10T07:28:35.3794886Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-10T07:28:35.3832344Z git version 2.56.0
+tests	Post Run actions/checkout@v4	2026-11-10T07:28:35.3863247Z Temporarily overriding HOME='/home/runner/work/_temp/87f4ca2f-20d4-48ce-b0d5-f64a99975395' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-10T07:28:35.3864679Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-10T07:28:35.3867852Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-10T07:28:35.3902578Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-10T07:28:35.3932821Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-10T07:28:35.4209857Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-10T07:28:35.4225336Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-10T07:28:35.4244563Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-10T07:28:35.4284598Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Post Run actions/checkout@v4	2026-11-10T07:28:35.4540354Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	Post Run actions/checkout@v4	2026-11-10T07:28:35.4569105Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+tests	Complete job	﻿2026-11-10T07:28:35.4951274Z Cleaning up orphan processes
+tests	Complete job	2026-11-10T07:28:35.5260206Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

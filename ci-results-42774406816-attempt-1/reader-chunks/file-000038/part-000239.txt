@@ -1,0 +1,26 @@
+ing.py", line 103, in test_success_deadlines
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0868924Z     self.assertTrue(page.locator('#monsterAddNotification').is_visible())
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0869066Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0869189Z AssertionError: False is not true
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0869195Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0869343Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0869913Z FAIL: test_blank_notices_collapse_and_real_messages_reappear (test_admin_foundations.FoundationBrowserTests.test_blank_notices_collapse_and_real_messages_reappear) (width=1440)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0870084Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0870203Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0870615Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_admin_foundations.py", line 151, in test_blank_notices_collapse_and_real_messages_reappear
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0870859Z     self.assertEqual(notice.text_content(), '  Visual review: message remains readable.  ')
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0871008Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0871413Z AssertionError: 'Information:   Visual review: message remains readable.  Dismiss' != '  Visual review: message remains readable.  '
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0871611Z - Information:   Visual review: message remains readable.  Dismiss
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0871814Z ? -------------                                            -------
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0871953Z +   Visual review: message remains readable.  
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0871963Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0871967Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0872205Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0872777Z FAIL: test_blank_notices_collapse_and_real_messages_reappear (test_admin_foundations.FoundationBrowserTests.test_blank_notices_collapse_and_real_messages_reappear) (width=375)
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0872960Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0877665Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0878145Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_admin_foundations.py", line 151, in test_blank_notices_collapse_and_real_messages_reappear
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0878400Z     self.assertEqual(notice.text_content(), '  Visual review: message remains readable.  ')
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0878555Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0878976Z AssertionError: 'Information:   Visual review

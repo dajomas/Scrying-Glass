@@ -1,0 +1,44 @@
+onymous>:43:13
+tests	JavaScript tests	2026-11-10T07:24:25.5774330Z     Object.click (/tmp/scrying-tests-5ct_vash/repo/tests/initiative-join-gate.test.cjs:24:9)
+tests	JavaScript tests	2026-11-10T07:24:25.5775511Z     TestContext.<anonymous> (/tmp/scrying-tests-5ct_vash/repo/tests/initiative-join-gate.test.cjs:30:21)
+tests	JavaScript tests	2026-11-10T07:24:25.5776479Z     Test.runInAsyncScope (node:async_hooks:214:14)
+tests	JavaScript tests	2026-11-10T07:24:25.5777160Z     Test.run (node:internal/test_runner/test:1047:25)
+tests	JavaScript tests	2026-11-10T07:24:25.5777959Z     Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+tests	JavaScript tests	2026-11-10T07:24:25.5778777Z     Test.postRun (node:internal/test_runner/test:1173:19)
+tests	JavaScript tests	2026-11-10T07:24:25.5779471Z     Test.run (node:internal/test_runner/test:1101:12)
+tests	JavaScript tests	2026-11-10T07:24:25.5780272Z     async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+tests	JavaScript tests	2026-11-10T07:24:25.5780996Z   ...
+tests	JavaScript tests	2026-11-10T07:24:25.5781696Z # Subtest: numeric initiative permits joining, including zero and negatives
+tests	JavaScript tests	2026-11-10T07:24:25.5782879Z ok 3 - numeric initiative permits joining, including zero and negatives
+tests	JavaScript tests	2026-11-10T07:24:25.5783859Z   ---
+tests	JavaScript tests	2026-11-10T07:24:25.5784302Z   duration_ms: 1.941107
+tests	JavaScript tests	2026-11-10T07:24:25.5784775Z   type: 'test'
+tests	JavaScript tests	2026-11-10T07:24:25.5785223Z   ...
+tests	JavaScript tests	2026-11-10T07:24:25.5785767Z # Subtest: leaving remains allowed without initiative
+tests	JavaScript tests	2026-11-10T07:24:25.5786446Z ok 4 - leaving remains allowed without initiative
+tests	JavaScript tests	2026-11-10T07:24:25.5786844Z   ---
+tests	JavaScript tests	2026-11-10T07:24:25.5787090Z   duration_ms: 0.507355
+tests	JavaScript tests	2026-11-10T07:24:25.5787380Z   type: 'test'
+tests	JavaScript tests	2026-11-10T07:24:25.5787746Z   ...
+tests	JavaScript tests	2026-11-10T07:24:25.5788137Z # Subtest: saved-state refresh removes blocked metadata
+tests	JavaScript tests	2026-11-10T07:24:25.5788669Z ok 5 - saved-state refresh removes blocked metadata
+tests	JavaScript tests	2026-11-10T07:24:25.5789038Z   ---
+tests	JavaScript tests	2026-11-10T07:24:25.5789285Z   duration_ms: 0.515057
+tests	JavaScript tests	2026-11-10T07:24:25.5789554Z   type: 'test'
+tests	JavaScript tests	2026-11-10T07:24:25.5789794Z   ...
+tests	JavaScript tests	2026-11-10T07:24:25.5790275Z # Subtest: bulk server rejection reaches message without consuming response
+tests	JavaScript tests	2026-11-10T07:24:25.5790990Z not ok 6 - bulk server rejection reaches message without consuming response
+tests	JavaScript tests	2026-11-10T07:24:25.5791452Z   ---
+tests	JavaScript tests	2026-11-10T07:24:25.5791686Z   duration_ms: 21.243783
+tests	JavaScript tests	2026-11-10T07:24:25.5791976Z   type: 'test'
+tests	JavaScript tests	2026-11-10T07:24:25.5792675Z   location: '/tmp/scrying-tests-5ct_vash/repo/tests/initiative-join-gate.test.cjs:47:1'
+tests	JavaScript tests	2026-11-10T07:24:25.5793280Z   failureType: 'testCodeFailure'
+tests	JavaScript tests	2026-11-10T07:24:25.5793768Z   error: "Cannot read properties of undefined (reading 'publish')"
+tests	JavaScript tests	2026-11-10T07:24:25.5794242Z   code: 'ERR_TEST_FAILURE'
+tests	JavaScript tests	2026-11-10T07:24:25.5794541Z   name: 'TypeError'
+tests	JavaScript tests	2026-11-10T07:24:25.5794812Z   stack: |-
+tests	JavaScript tests	2026-11-10T07:24:25.5795146Z     showRejection (evalmachine.<anonymous>:8:18)
+tests	JavaScript tests	2026-11-10T07:24:25.5795614Z     window.fetch (evalmachine.<anonymous>:70:13)
+tests	JavaScript tests	2026-11-10T07:24:25.5796363Z     async TestContext.<anonymous> (/tmp/scrying-tests-5ct_vash/repo/tests/initiative-join-gate.test.cjs:50:20)
+tests	JavaScript tests	2026-11-10T07:24:25.5797119Z     async Test.run (node:internal/test_runner/test:1054:7)
+tes

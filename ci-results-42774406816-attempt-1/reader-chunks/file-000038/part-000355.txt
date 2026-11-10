@@ -1,0 +1,29 @@
+ync(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7503313Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7503665Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7503758Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7503837Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7504219Z playwright._impl._errors.Error: Page.evaluate: TypeError: Cannot read properties of undefined (reading 'beginLookup')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7504362Z     at lookupMonsterSpeciesStats (<anonymous>:64:50)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7504508Z     at eval (eval at evaluate (:370:30), <anonymous>:2:33)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7504598Z     at eval (<anonymous>)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7504724Z     at UtilityScript.evaluate (<anonymous>:370:30)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7504858Z     at UtilityScript.<anonymous> (<anonymous>:1:44)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7504865Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7505028Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7505736Z ERROR: test_invalid_and_ambiguous_never_fill_or_overwrite (test_source_bonus_offer_browser.SourceBonusOfferBrowserTests.test_invalid_and_ambiguous_never_fill_or_overwrite) (status='available', value='12', current='')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7505924Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7506045Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7506470Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_source_bonus_offer_browser.py", line 94, in test_invalid_and_ambiguous_never_fill_or_overwrite
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7506636Z     self.start(value=value, initiative_bonus_status=status)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7506762Z     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7507055Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_source_bonus_offer_browser.py", line 22, in start
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7507151Z     self.fixture.finish()
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7507226Z     ~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7507504Z   File "/tmp/scrying-tests-tiaqy38q/repo/tests/test_monster_candidate_browser.py", line 56, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7507637Z     self.page.evaluate('window.lookupDone')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7507847Z     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7508234Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 16876, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7508415Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7508492Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7508695Z         self._impl_obj.ev

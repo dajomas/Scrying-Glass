@@ -1,0 +1,34 @@
+1.7833068Z     self.assertEqual(group.locator(':scope > .sg-group-row').evaluate('n => getComputedStyle(n).alignItems'), 'flex-start')
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7833268Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7833399Z AssertionError: 'flow-start' != 'flex-start'
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7833478Z - flow-start
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7833553Z ?   ^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7833629Z + flex-start
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7833698Z ?   ^^
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7833709Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7833713Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7833880Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7833978Z Ran 1476 tests in 235.229s
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7833985Z 
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7834100Z FAILED (failures=15, errors=68)
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:31.7834302Z Connections opened: 782; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:32.1203235Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:32.3293043Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:32.3293725Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:32.3294466Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:32.3571940Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:32.3572547Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:32.5630225Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:32.5908506Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:35.1159217Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:35.1159717Z {
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:35.1159951Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:35.1160374Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:35.1160864Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:35.1161543Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:35.1162694Z     "client card has a positive layout width at mobile viewport"
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:35.1163260Z   ],
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:35.1163484Z   "page_errors": [],
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:35.1163842Z   "transport": "mocked HTTP/WS, real Chromium rendering"
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:35.1164201Z }
+tests	Standalone Python browser and audit checks	2026-11-10T07:28:35.1907700Z ##

@@ -1,0 +1,28 @@
+5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0410221Z Call log:
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0410562Z   - waiting for get_by_role("dialog", name="Select monster candidate", exact=True) to be visible
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0418926Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0418937Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0419125Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0420019Z ERROR: test_cancel_species_reset_and_overwrite_change_during_chooser (test_source_bonus_offer_browser.SourceBonusOfferBrowserTests.test_cancel_species_reset_and_overwrite_change_during_chooser) (action='reset')
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0420813Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0421151Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0421772Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_source_bonus_offer_browser.py", line 178, in test_cancel_species_reset_and_overwrite_change_during_chooser
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0422522Z     self.fixture.start_candidates([self.candidate(), self.candidate(value=7)])
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0422919Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0423417Z   File "/tmp/scrying-tests-ei98yua4/repo/tests/test_monster_candidate_browser.py", line 68, in start_candidates
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0423987Z     self.page.get_by_role('dialog', name='Select monster candidate', exact=True).wait_for()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0424419Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0425005Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 13663, in wait_for
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0425737Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0425912Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0426198Z         self._impl_obj.wait_for(state=state, timeout=to_milliseconds(timeout))
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0426569Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0426817Z     )
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0426979Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0427429Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0427869Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0428075Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0428534Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/locator.py", line 943, in wait_for
+tests	Python test suite (including browser fixtures)	2026-11-10T07:24:19.0429023Z     await self._frame._channel.waitForSelector(
+tests	Python test suite (including browser fix
