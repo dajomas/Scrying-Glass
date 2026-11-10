@@ -1,0 +1,53 @@
+bscription and unsubscription expose current state without later callbacks
+tests	JavaScript tests	2026-11-10T20:06:20.3756239Z   ---
+tests	JavaScript tests	2026-11-10T20:06:20.3756479Z   duration_ms: 0.243293
+tests	JavaScript tests	2026-11-10T20:06:20.3756736Z   type: 'test'
+tests	JavaScript tests	2026-11-10T20:06:20.3756964Z   ...
+tests	JavaScript tests	2026-11-10T20:06:20.3757414Z # Subtest: reentrant mutation does not send an older snapshot after a newer one
+tests	JavaScript tests	2026-11-10T20:06:20.3758095Z ok 24 - reentrant mutation does not send an older snapshot after a newer one
+tests	JavaScript tests	2026-11-10T20:06:20.3758513Z   ---
+tests	JavaScript tests	2026-11-10T20:06:20.3758740Z   duration_ms: 0.181599
+tests	JavaScript tests	2026-11-10T20:06:20.3758974Z   type: 'test'
+tests	JavaScript tests	2026-11-10T20:06:20.3759203Z   ...
+tests	JavaScript tests	2026-11-10T20:06:20.3759678Z # Subtest: dispose clears timers and views, and stale timer callbacks are harmless
+tests	JavaScript tests	2026-11-10T20:06:20.3760355Z ok 25 - dispose clears timers and views, and stale timer callbacks are harmless
+tests	JavaScript tests	2026-11-10T20:06:20.3760788Z   ---
+tests	JavaScript tests	2026-11-10T20:06:20.3761019Z   duration_ms: 0.262519
+tests	JavaScript tests	2026-11-10T20:06:20.3761268Z   type: 'test'
+tests	JavaScript tests	2026-11-10T20:06:20.3761504Z   ...
+tests	JavaScript tests	2026-11-10T20:06:20.3821782Z 1..25
+tests	JavaScript tests	2026-11-10T20:06:20.3822431Z # tests 25
+tests	JavaScript tests	2026-11-10T20:06:20.3822987Z # suites 0
+tests	JavaScript tests	2026-11-10T20:06:20.3823262Z # pass 25
+tests	JavaScript tests	2026-11-10T20:06:20.3823719Z # fail 0
+tests	JavaScript tests	2026-11-10T20:06:20.3824340Z # cancelled 0
+tests	JavaScript tests	2026-11-10T20:06:20.3824763Z # skipped 0
+tests	JavaScript tests	2026-11-10T20:06:20.3825328Z # todo 0
+tests	JavaScript tests	2026-11-10T20:06:20.3836259Z # duration_ms 79.580055
+tests	JavaScript tests	2026-11-10T20:06:20.4226701Z ##[endgroup]
+tests	JavaScript tests	2026-11-10T20:06:20.4227412Z ##[group]tests/admin-message-timeout.test.cjs
+tests	JavaScript tests	2026-11-10T20:06:20.7061046Z TAP version 13
+tests	JavaScript tests	2026-11-10T20:06:20.7477168Z # Subtest: clears at five seconds, not earlier
+tests	JavaScript tests	2026-11-10T20:06:20.7483967Z ok 1 - clears at five seconds, not earlier
+tests	JavaScript tests	2026-11-10T20:06:20.7484612Z   ---
+tests	JavaScript tests	2026-11-10T20:06:20.7484989Z   duration_ms: 2.088713
+tests	JavaScript tests	2026-11-10T20:06:20.7496417Z   type: 'test'
+tests	JavaScript tests	2026-11-10T20:06:20.7496952Z   ...
+tests	JavaScript tests	2026-11-10T20:06:20.7497700Z # Subtest: replacement message gets its own full timeout
+tests	JavaScript tests	2026-11-10T20:06:20.7498549Z ok 2 - replacement message gets its own full timeout
+tests	JavaScript tests	2026-11-10T20:06:20.7499110Z   ---
+tests	JavaScript tests	2026-11-10T20:06:20.7499640Z   duration_ms: 0.609316
+tests	JavaScript tests	2026-11-10T20:06:20.7500189Z   type: 'test'
+tests	JavaScript tests	2026-11-10T20:06:20.7500726Z   ...
+tests	JavaScript tests	2026-11-10T20:06:20.7501439Z # Subtest: repeating the same text restarts the timer
+tests	JavaScript tests	2026-11-10T20:06:20.7502207Z ok 3 - repeating the same text restarts the timer
+tests	JavaScript tests	2026-11-10T20:06:20.7502762Z   ---
+tests	JavaScript tests	2026-11-10T20:06:20.7503263Z   duration_ms: 0.718009
+tests	JavaScript tests	2026-11-10T20:06:20.7503773Z   type: 'test'
+tests	JavaScript tests	2026-11-10T20:06:20.7504338Z   ...
+tests	JavaScript tests	2026-11-10T20:06:20.7505287Z # Subtest: manual clearing cancels the timeout
+tests	JavaScript tests	2026-11-10T20:06:20.7509027Z ok 4 - manual clearing cancels the timeout
+tests	JavaScript tests	2026-11-10T20:06:20.7509979Z   ---
+tests	JavaScript tests	2026-11-10T20:06:20.7510353Z   duration_ms: 0.607803
+tests	JavaScript tests	2026-11-10T20:06:20.7510794Z   type: 'test'
+tests	JavaScript tests	2026-
