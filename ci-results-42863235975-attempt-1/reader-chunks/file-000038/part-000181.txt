@@ -1,0 +1,30 @@
+ and audit checks	2026-11-10T17:22:18.7648658Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7649204Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7649525Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7650084Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7650647Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7651009Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7651601Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7652116Z     raise result
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7652356Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7655944Z Combined monster lookup failed for D&D Beyond
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7656366Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7656991Z   File "/tmp/scrying-tests-bm9r7fmw/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7657612Z     html = context.dnd_monster_detail_html(href)
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7658204Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7658755Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7659088Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7659651Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7660235Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7660599Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7661190Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7661712Z     raise result
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7661957Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7662093Z 
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7662495Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7663424Z 
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7663680Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7664674Z   File "/tmp/scrying-tests-bm9r7fmw/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7665236Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.7665767Z   File "/tmp/scrying-tests-bm9r7fmw/repo/python/scrying_glass_monster_selection.py", line 151, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-10T17:22:18.766653
