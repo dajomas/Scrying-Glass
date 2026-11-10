@@ -1,0 +1,29 @@
+ecks	2026-11-10T08:40:18.7644447Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7644454Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7644732Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7645994Z FAIL: test_fragment_sizes_and_identity (test_admin_source_preparation.AdminSourcePreparationTests.test_fragment_sizes_and_identity) (part='030-source.js')
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7647183Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7647738Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7648696Z   File "/tmp/scrying-tests-ngmbh4jp/repo/tests/test_admin_source_preparation.py", line 30, in test_fragment_sizes_and_identity
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7649843Z     self.assertEqual(hashlib.sha256(data).hexdigest(), digest)
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7650427Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7651647Z AssertionError: '943f2c753cd3104842221ed039141647d3010ba1a03f51755dac8eb912b13a66' != 'c8a8904b31b079ee73919d050506a62b57ad984a2be2def36236874ca1344140'
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7652854Z - 943f2c753cd3104842221ed039141647d3010ba1a03f51755dac8eb912b13a66
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7653696Z + c8a8904b31b079ee73919d050506a62b57ad984a2be2def36236874ca1344140
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7654087Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7654094Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7654380Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7655926Z FAIL: test_fields_and_preview_boxes_align_loaded_and_empty (test_monster_image_preview_alignment.PreviewAlignmentTests.test_fields_and_preview_boxes_align_loaded_and_empty) (width=1440, loaded=False)
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7657335Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7657901Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7658994Z   File "/tmp/scrying-tests-ngmbh4jp/repo/tests/test_monster_image_preview_alignment.py", line 38, in test_fields_and_preview_boxes_align_loaded_and_empty
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7660429Z     self.assertEqual(group.locator(':scope > .sg-group-row').evaluate('n => getComputedStyle(n).alignItems'), 'flex-start')
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7661442Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7662127Z AssertionError: 'flow-start' != 'flex-start'
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7662553Z - flow-start
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7662861Z ?   ^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7663133Z + flex-start
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7663499Z ?   ^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7663658Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7663665Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7663960Z ========================================

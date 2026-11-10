@@ -1,0 +1,28 @@
+dentity) (part='030-source.js')
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2694829Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2695405Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2696375Z   File "/tmp/scrying-tests-1rcab_3k/repo/tests/test_admin_source_preparation.py", line 30, in test_fragment_sizes_and_identity
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2697372Z     self.assertEqual(hashlib.sha256(data).hexdigest(), digest)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2697956Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2699181Z AssertionError: '943f2c753cd3104842221ed039141647d3010ba1a03f51755dac8eb912b13a66' != 'c8a8904b31b079ee73919d050506a62b57ad984a2be2def36236874ca1344140'
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2700397Z - 943f2c753cd3104842221ed039141647d3010ba1a03f51755dac8eb912b13a66
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2701125Z + c8a8904b31b079ee73919d050506a62b57ad984a2be2def36236874ca1344140
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2701520Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2701526Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2701789Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2703639Z FAIL: test_fields_and_preview_boxes_align_loaded_and_empty (test_monster_image_preview_alignment.PreviewAlignmentTests.test_fields_and_preview_boxes_align_loaded_and_empty) (width=1440, loaded=False)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2705211Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2705781Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2706868Z   File "/tmp/scrying-tests-1rcab_3k/repo/tests/test_monster_image_preview_alignment.py", line 38, in test_fields_and_preview_boxes_align_loaded_and_empty
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2708285Z     self.assertEqual(group.locator(':scope > .sg-group-row').evaluate('n => getComputedStyle(n).alignItems'), 'flex-start')
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2709305Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2709961Z AssertionError: 'flow-start' != 'flex-start'
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2710404Z - flow-start
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2710686Z ?   ^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2710969Z + flex-start
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2711234Z ?   ^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2711392Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2711399Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2711679Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2713298Z FAIL: test_fields_and_preview_boxes_align_loaded_and_empty (test_monster_image_preview_alignment.PreviewAlignmentTests.test_fields_and_preview_boxes_align_loaded_and_empty) (width=1440, loaded=True)
+tests	Python test suite (including browser fixtures)

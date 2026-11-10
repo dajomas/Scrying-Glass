@@ -1,0 +1,32 @@
+1-10T08:40:18.7684867Z FAIL: test_fields_and_preview_boxes_align_loaded_and_empty (test_monster_image_preview_alignment.PreviewAlignmentTests.test_fields_and_preview_boxes_align_loaded_and_empty) (width=375, loaded=True)
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7686233Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7686791Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7687894Z   File "/tmp/scrying-tests-ngmbh4jp/repo/tests/test_monster_image_preview_alignment.py", line 38, in test_fields_and_preview_boxes_align_loaded_and_empty
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7689349Z     self.assertEqual(group.locator(':scope > .sg-group-row').evaluate('n => getComputedStyle(n).alignItems'), 'flex-start')
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7690384Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7691060Z AssertionError: 'flow-start' != 'flex-start'
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7691473Z - flow-start
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7691760Z ?   ^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7692026Z + flex-start
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7692317Z ?   ^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7692462Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7692468Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7692802Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7693413Z Ran 1476 tests in 195.920s
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7693635Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7693831Z FAILED (failures=14)
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7694400Z Connections opened: 782; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:19.4549911Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:19.4550825Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:19.8574474Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:19.8576020Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:19.9241226Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:19.9242353Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:20.3319765Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:20.4029859Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:20.4030618Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:23.6141146Z {
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:23.6141838Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:23.6142699Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:23.6143980Z     "user-management page load and edit selection",
+tests	Standalone Python bro

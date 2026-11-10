@@ -1,0 +1,28 @@
+eback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2655678Z   File "/tmp/scrying-tests-1rcab_3k/repo/tests/test_admin_shell_layout.py", line 121, in test_wrapped_message_resizes_header_without_overlap
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2656798Z     self.set_message('Long message: ' + 'encounter-data-' * 20)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2657422Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2658280Z   File "/tmp/scrying-tests-1rcab_3k/repo/tests/test_admin_shell_layout.py", line 47, in set_message
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2659058Z     self.assertIsNotNone(setter)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2659463Z     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2659902Z AssertionError: unexpectedly None
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2660170Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2660462Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2661464Z FAIL: test_complete_identity (test_admin_source_complete.AdminSourceCompleteTests.test_complete_identity)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2662451Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2663032Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2664100Z   File "/tmp/scrying-tests-1rcab_3k/repo/tests/test_admin_source_complete.py", line 19, in test_complete_identity
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2665001Z     self.assertEqual(len(data), 114814)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2665460Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2665924Z AssertionError: 114400 != 114814
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2666178Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2666463Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2667575Z FAIL: test_fixture_runner_isolation (test_admin_source_complete.AdminSourceCompleteTests.test_fixture_runner_isolation)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2668638Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2669222Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2670193Z   File "/tmp/scrying-tests-1rcab_3k/repo/tests/test_admin_source_complete.py", line 48, in test_fixture_runner_isolation
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2671104Z     self.assertEqual(result.returncode, 0, result.stderr)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2671890Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2672668Z AssertionError: 1 != 0 : Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2673326Z   File "<string>", line 1, in <module>
+tests	Python test suite (including browser fixtures)	2026-11-10T08:36:35.2674696Z     from pathlib import Path; import hashlib; d=Path('static/admin.js').read_bytes(); assert len(d)==114814; assert hashlib.sha256(d).hexdige

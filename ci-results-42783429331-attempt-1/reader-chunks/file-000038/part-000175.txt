@@ -1,0 +1,29 @@
+e Python browser and audit checks	2026-11-10T08:40:18.7603743Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7604073Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7605522Z FAIL: test_wrapped_message_resizes_header_without_overlap (test_admin_shell_layout.AdminShellLayoutTests.test_wrapped_message_resizes_header_without_overlap)
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7606833Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7607481Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7608636Z   File "/tmp/scrying-tests-ngmbh4jp/repo/tests/test_admin_shell_layout.py", line 121, in test_wrapped_message_resizes_header_without_overlap
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7609800Z     self.set_message('Long message: ' + 'encounter-data-' * 20)
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7610459Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7611361Z   File "/tmp/scrying-tests-ngmbh4jp/repo/tests/test_admin_shell_layout.py", line 47, in set_message
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7612088Z     self.assertIsNotNone(setter)
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7612506Z     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7612934Z AssertionError: unexpectedly None
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7613291Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7613580Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7614501Z FAIL: test_complete_identity (test_admin_source_complete.AdminSourceCompleteTests.test_complete_identity)
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7615428Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7615974Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7616839Z   File "/tmp/scrying-tests-ngmbh4jp/repo/tests/test_admin_source_complete.py", line 19, in test_complete_identity
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7617663Z     self.assertEqual(len(data), 114814)
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7618295Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7618718Z AssertionError: 114400 != 114814
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7618962Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7619244Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7620269Z FAIL: test_fixture_runner_isolation (test_admin_source_complete.AdminSourceCompleteTests.test_fixture_runner_isolation)
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7621284Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7621827Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7622743Z   File "/tmp/scrying-tests-ngmbh4jp/repo/tests/test_admin_source_complete.py", line 48, in test_fixture_runner_isolation
+tests	Standalone Python browser and audit checks	2026-11-10T08:40:18.7623772Z     self.assertEqual(result.returncode, 0, result.stderr)
+tests	Standalone Python browser and au

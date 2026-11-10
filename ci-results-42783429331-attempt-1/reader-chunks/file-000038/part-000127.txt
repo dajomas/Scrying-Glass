@@ -1,0 +1,45 @@
+.................................                              [100%]
+tests	Pytest regression modules	2026-11-10T08:36:39.4654247Z 43 passed in 1.54s
+tests	JavaScript tests	﻿2026-11-10T08:36:39.6160071Z ##[group]Run status=0
+tests	JavaScript tests	2026-11-10T08:36:39.6160739Z ^[[36;1mstatus=0^[[0m
+tests	JavaScript tests	2026-11-10T08:36:39.6161278Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	JavaScript tests	2026-11-10T08:36:39.6161907Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	JavaScript tests	2026-11-10T08:36:39.6162639Z ^[[36;1m  python tools/run_split_tests.py -- node --test "$test" || status=1^[[0m
+tests	JavaScript tests	2026-11-10T08:36:39.6163662Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	JavaScript tests	2026-11-10T08:36:39.6164538Z ^[[36;1mdone < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)^[[0m
+tests	JavaScript tests	2026-11-10T08:36:39.6165520Z ^[[36;1mexit "$status"^[[0m
+tests	JavaScript tests	2026-11-10T08:36:39.6228921Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	JavaScript tests	2026-11-10T08:36:39.6229394Z env:
+tests	JavaScript tests	2026-11-10T08:36:39.6229984Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	JavaScript tests	2026-11-10T08:36:39.6230794Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-10T08:36:39.6231364Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	JavaScript tests	2026-11-10T08:36:39.6232002Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-10T08:36:39.6232527Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-10T08:36:39.6233043Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-10T08:36:39.6233666Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	JavaScript tests	2026-11-10T08:36:39.6234119Z ##[endgroup]
+tests	JavaScript tests	2026-11-10T08:36:39.6930737Z ##[group]tests/admin-feedback-controller.test.cjs
+tests	JavaScript tests	2026-11-10T08:36:39.9616828Z TAP version 13
+tests	JavaScript tests	2026-11-10T08:36:40.0205228Z # Subtest: pane success expires at exactly three seconds
+tests	JavaScript tests	2026-11-10T08:36:40.0207028Z ok 1 - pane success expires at exactly three seconds
+tests	JavaScript tests	2026-11-10T08:36:40.0208039Z   ---
+tests	JavaScript tests	2026-11-10T08:36:40.0208843Z   duration_ms: 3.204319
+tests	JavaScript tests	2026-11-10T08:36:40.0209676Z   type: 'test'
+tests	JavaScript tests	2026-11-10T08:36:40.0234506Z   ...
+tests	JavaScript tests	2026-11-10T08:36:40.0235274Z # Subtest: global success expires at exactly five seconds
+tests	JavaScript tests	2026-11-10T08:36:40.0239893Z ok 2 - global success expires at exactly five seconds
+tests	JavaScript tests	2026-11-10T08:36:40.0240843Z   ---
+tests	JavaScript tests	2026-11-10T08:36:40.0241391Z   duration_ms: 0.285096
+tests	JavaScript tests	2026-11-10T08:36:40.0241947Z   type: 'test'
+tests	JavaScript tests	2026-11-10T08:36:40.0242525Z   ...
+tests	JavaScript tests	2026-11-10T08:36:40.0243642Z # Subtest: actionable errors have no automatic expiry
+tests	JavaScript tests	2026-11-10T08:36:40.0244675Z ok 3 - actionable errors have no automatic expiry
+tests	JavaScript tests	2026-11-10T08:36:40.0245435Z   ---
+tests	JavaScript tests	2026-11-10T08:36:40.0246009Z   duration_ms: 0.294723
+tests	JavaScript tests	2026-11-10T08:36:40.0246616Z   type: 'test'
+tests	JavaScript tests	2026-11-10T08:36:40.0247085Z   ...
+tests	JavaScript tests	2026-11-10T08:36:40.0247915Z # Subtest: severity is explicit and never inferred from wording
+tests	JavaScript tests	2026-11-10T08:36:40.0248921Z ok 4 - severity is explicit and never inferred from wording
+tests	JavaScript tests	2026-11-10T08:36:40.0249729Z   ---
+tests	JavaScript tests	2026-11-10T08:36:40.0250302Z   duration_ms: 0.224271
+tests	JavaScript tests	2026-11-10T
