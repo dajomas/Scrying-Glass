@@ -1,0 +1,20 @@
+4.10/x64/lib/python3.14/asyncio/runners.py:110> took 0.124 seconds
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:23.6588912Z Executing <Task pending name='Task-41150' coro=<MonsterRefreshEndToEndTests.open_page.<locals>.route() running at /tmp/scrying-tests-9h_mmwfx/repo/tests/test_monster_refresh_end_to_end.py:117> wait_for=<Future pending cb=[Task.task_wakeup()] created at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py:460> cb=[gather.<locals>._done_callback() at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/tasks.py:829] created at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/tasks.py:746> took 0.480 seconds
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:24.9931134Z Executing <Task pending name='Task-41569' coro=<MonsterRefreshEndToEndTests.open_page.<locals>.route() running at /tmp/scrying-tests-9h_mmwfx/repo/tests/test_monster_refresh_end_to_end.py:109> wait_for=<Future pending cb=[Task.task_wakeup()] created at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py:460> cb=[gather.<locals>._done_callback() at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/tasks.py:829] created at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/tasks.py:746> took 0.140 seconds
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:28.9501652Z Executing <Task finished name='Task-42851' coro=<MonsterRefreshReviewTests.test_retained_raw_recalculates_and_hp_is_generated_once_only_on_apply() done, defined at /tmp/scrying-tests-9h_mmwfx/repo/tests/test_monster_refresh_review.py:85> result=None created at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py:110> took 0.115 seconds
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:33.7366858Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:33.7367283Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:33.7368168Z   File "/tmp/scrying-tests-9h_mmwfx/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:33.7368967Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:33.7369485Z   File "/tmp/scrying-tests-9h_mmwfx/repo/python/scrying_glass_monster_refresh_sources.py", line 72, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:33.7370448Z ##[error]    raise ValueError('Provider disabled')
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:33.7372643Z ValueError: Provider disabled
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:33.7376542Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:33.7377017Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:33.7377729Z   File "/tmp/scrying-tests-9h_mmwfx/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:33.7378270Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:33.7378843Z   File "/tmp/scrying-tests-9h_mmwfx/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:33.7379722Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:33.7380815Z ValueError: Retained source missing or ambiguous
+tests	Standalone Python browser and audit checks	2026-11-10T16:22:33.7402895Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit
