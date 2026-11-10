@@ -4,7 +4,7 @@ set -Eeuo pipefail
 umask 077
 : "${GH_TOKEN:?}" "${GH_REPO:?}" "${RUN_ID:?}" "${RUN_ATTEMPT:?}" "${BRANCH:?}" "${EXPECTED_SHA:?}" "${RUNNER_TEMP:?}"
 [[ "$RUN_ID" =~ ^[0-9]+$ && "$RUN_ATTEMPT" =~ ^[0-9]+$ ]]
-case "$BRANCH" in features/perplexity|features/perplexity-018) ;; *) exit 1 ;; esac
+case "$BRANCH" in features/perplexity|features/perplexity-018|features/perplexity-009.7) ;; *) exit 1 ;; esac
 HELPER="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/chunk_ci_evidence.py"
 PUBLICATION="$(cd "${1:?publication checkout required}" && pwd)"
 WORK="$RUNNER_TEMP/ci-publication"

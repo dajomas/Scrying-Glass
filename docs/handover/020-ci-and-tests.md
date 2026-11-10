@@ -92,3 +92,28 @@ validated. The deployment-branch push does not itself match Branch tests branch
 filters; no workflow is separately dispatched. README, HANDOVER index and TODO
 index were reviewed and remain unchanged: application behavior/task statuses
 and handover links are unaffected.
+
+## Publisher branch allowlist correction - 2026-11-10
+
+At the user's request, this correction targets main directly and adds
+features/perplexity-009.7 to both the workflow_run branch filter and the trusted
+collector's exact-match Bash allowlist. The two existing branches remain allowed;
+permissions, same-repository/push checks, exact-attempt validation, evidence
+handling and non-force publication behavior are unchanged. No application feature
+branch is merged and no workflow is dispatched or rerun by this change.
+
+Executed during preparation: three local unittest checks passed, covering the
+workflow's exact branch set, the Bash gate's three allowed branches and four
+rejected names, and bash -n for the full collector. The unchanged workflow and
+collector were reconstructed and verified against live Git blob identities
+before applying their one-line changes. These tests do not execute GitHub API
+collection or publication. The new test is discoverable by unittest discovery
+when present in a tested checkout; it is not automatically copied to topic branches.
+
+Live publication remains unverified. Main's Branch tests push filter excludes
+main, so this corrective push does not itself provide a test run. A subsequent
+eligible test completion is required to verify triggering, collection and the
+evidence commit. No retroactive publication, run result or commit SHA is claimed
+here. This mixed workflow/script/test/documentation commit has no skip marker.
+README and root TODO/HANDOVER indexes were reviewed and remain unchanged because
+application behavior, backlog statuses and index links are unaffected.
