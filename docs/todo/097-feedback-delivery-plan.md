@@ -13,24 +13,32 @@ priority, owner, deadline, SG-TODO-019 or delivery order; no unfinished task clo
 
 ## 4A.11 battle-action global notices - 2026-11-10
 
-In progress. Initial eligibility checkpoint delivered at
-00f065913d1068e4ed13df904cead507573f24eb; covering CI 42881717311 attempt 1
-succeeded, not evidence for subsequent changes. The user approved a two-commit
-follow-up on 2026-11-10, with exact-content approval required for each write.
+In progress; implementation delivery and acceptance are separate. Initial
+eligibility checkpoint 00f065913d1068e4ed13df904cead507573f24eb has successful
+covering CI 42881717311 attempt 1, not evidence for later changes. The user
+approved a two-commit follow-up with exact-content approval for each write.
 
-Commit 1: active/living target errors with independent matching resolution;
-actor-specific no-pending informational feedback; core tests, legacy Apply
-assertion migration, pins and documentation. Its separate covering CI is pending.
-Commit 2: start-of-turn completion success with encounter-ticket/actor/modal-
-session guards, corresponding regressions and status/docs; not implemented by
-commit 1. Preserve modal-local behavior, payloads, busy/duplicate guards, applied
-history and explicit retry. No automatic mutation replay.
+Commit 1 delivered at 272cfd73aa4c39602ed2dad96c1bd2e02ba28348: independent
+active/living target errors and matching resolution, actor-specific no-pending
+info, core tests, legacy Apply assertion migration, pins and documentation.
+Its covering CI has not been reviewed; the separate core-only suite is retained.
 
-Acceptance requires both writes, covering real-controller and legacy/initial
-eligibility/reaction/turn-helper results, full assembly/identity/reader/isolation,
-relevant combined/browser checks, CI review tied to the implementation SHAs and
-explicit bounded acceptance. Preparation/push/initial green CI alone cannot close
-4A.11. [Executed evidence and limits](../handover/440-battle-action-global-feedback.md).
+Commit 2 implementation is included in this change set: start-of-turn completion
+success with encounter-ticket/actor/modal-session guards, the previously tested
+combined 16-case regression file, and documentation/index reconciliation. Actual
+delivery is established only by the successful write/commit identity. Preserve
+modal-local behavior, payloads, busy/duplicate guards, applied history, observer/
+critical-field behavior and explicit retry. No automatic mutation replay. Core
+fragments/pins, commit-1 tests, server and markup remain unchanged by commit 2.
+
+Remaining acceptance: verify delivery of both commits; review covering CI tied
+to the follow-up SHA(s), both new suites plus initial eligibility, legacy Apply/
+reaction and turn-helper results; verify full assembly/identity/reader/isolation
+and relevant combined/browser criteria; record applicable manual/accessibility
+evidence and explicit bounded acceptance. The combined suite's 16 preparation
+passes with real controller/bootstrap and mocked UI are not full-Admin or live-
+server coverage. [Executed evidence and limits](../handover/440-battle-action-global-feedback.md).
+Preparing/pushing code or earlier green CI alone cannot close 4A.11.
 4A.12 Join and 4A.13 reconciliation remain proposed under preserved criteria;
 compatibility retires only after the respective callers migrate. No merge,
 deployment or deliverable/phase acceptance is implied.
