@@ -1,0 +1,41 @@
+57.2414388Z ##[group]tests/test_lairs.js
+tests	JavaScript tests	2026-11-10T20:21:57.3688407Z TAP version 13
+tests	JavaScript tests	2026-11-10T20:21:57.3948257Z # Lair DOM-mock integration checks passed
+tests	JavaScript tests	2026-11-10T20:21:57.3982800Z # Subtest: tests/test_lairs.js
+tests	JavaScript tests	2026-11-10T20:21:57.3987834Z ok 1 - tests/test_lairs.js
+tests	JavaScript tests	2026-11-10T20:21:57.3988414Z   ---
+tests	JavaScript tests	2026-11-10T20:21:57.3988846Z   duration_ms: 32.292042
+tests	JavaScript tests	2026-11-10T20:21:57.3989289Z   type: 'test'
+tests	JavaScript tests	2026-11-10T20:21:57.3989644Z   ...
+tests	JavaScript tests	2026-11-10T20:21:57.3990022Z 1..1
+tests	JavaScript tests	2026-11-10T20:21:57.3990318Z # tests 1
+tests	JavaScript tests	2026-11-10T20:21:57.3990974Z # suites 0
+tests	JavaScript tests	2026-11-10T20:21:57.3991542Z # pass 1
+tests	JavaScript tests	2026-11-10T20:21:57.3993269Z # fail 0
+tests	JavaScript tests	2026-11-10T20:21:57.3993958Z # cancelled 0
+tests	JavaScript tests	2026-11-10T20:21:57.3994570Z # skipped 0
+tests	JavaScript tests	2026-11-10T20:21:57.3994867Z # todo 0
+tests	JavaScript tests	2026-11-10T20:21:57.3995195Z # duration_ms 38.016785
+tests	JavaScript tests	2026-11-10T20:21:57.4186304Z ##[endgroup]
+tests	JavaScript tests	2026-11-10T20:21:57.4193930Z ##[error]Process completed with exit code 1.
+tests	Standalone Python browser and audit checks	﻿2026-11-10T20:21:57.4262842Z ##[group]Run status=0
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4263090Z ^[[36;1mstatus=0^[[0m
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4263307Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4263573Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4263796Z ^[[36;1m  args=()^[[0m
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4264040Z ^[[36;1m  if [[ "$test" == tests/audit_log_clear.py ]]; then^[[0m
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4264330Z ^[[36;1m    args=(patched)^[[0m
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4264536Z ^[[36;1m  fi^[[0m
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4264832Z ^[[36;1m  python tools/run_split_tests.py -- python "$test" "${args[@]}" || status=1^[[0m
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4265184Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4265562Z ^[[36;1mdone < <(find tests -type f -name '*.py' ! -name 'test_*.py' ! -name '__init__.py' -print0 | sort -z)^[[0m
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4265942Z ^[[36;1mexit "$status"^[[0m
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4293777Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4294083Z env:
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4294476Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4295010Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4295378Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4295742Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4296082Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser and audit checks	2026-11-10T20:21:57.4296417Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser and audit checks	2026-11-10

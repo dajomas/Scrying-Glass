@@ -1,0 +1,52 @@
+ok 7 - single join server rejection also reaches message
+tests	JavaScript tests	2026-11-10T20:21:52.3521550Z   ---
+tests	JavaScript tests	2026-11-10T20:21:52.3521783Z   duration_ms: 1.20724
+tests	JavaScript tests	2026-11-10T20:21:52.3521984Z   type: 'test'
+tests	JavaScript tests	2026-11-10T20:21:52.3522171Z   ...
+tests	JavaScript tests	2026-11-10T20:21:52.3522775Z # Subtest: non-JSON rejection uses HTTP fallback
+tests	JavaScript tests	2026-11-10T20:21:52.3523350Z ok 8 - non-JSON rejection uses HTTP fallback
+tests	JavaScript tests	2026-11-10T20:21:52.3524073Z   ---
+tests	JavaScript tests	2026-11-10T20:21:52.3524447Z   duration_ms: 1.077125
+tests	JavaScript tests	2026-11-10T20:21:52.3524767Z   type: 'test'
+tests	JavaScript tests	2026-11-10T20:21:52.3525034Z   ...
+tests	JavaScript tests	2026-11-10T20:21:52.3525500Z # Subtest: unrelated rejection does not change global message
+tests	JavaScript tests	2026-11-10T20:21:52.3533907Z ok 9 - unrelated rejection does not change global message
+tests	JavaScript tests	2026-11-10T20:21:52.3534434Z   ---
+tests	JavaScript tests	2026-11-10T20:21:52.3534729Z   duration_ms: 0.84761
+tests	JavaScript tests	2026-11-10T20:21:52.3535077Z   type: 'test'
+tests	JavaScript tests	2026-11-10T20:21:52.3535364Z   ...
+tests	JavaScript tests	2026-11-10T20:21:52.3535866Z # Subtest: successful join does not create rejection message
+tests	JavaScript tests	2026-11-10T20:21:52.3536514Z ok 10 - successful join does not create rejection message
+tests	JavaScript tests	2026-11-10T20:21:52.3536968Z   ---
+tests	JavaScript tests	2026-11-10T20:21:52.3537246Z   duration_ms: 0.915
+tests	JavaScript tests	2026-11-10T20:21:52.3537564Z   type: 'test'
+tests	JavaScript tests	2026-11-10T20:21:52.3537850Z   ...
+tests	JavaScript tests	2026-11-10T20:21:52.3538375Z # Subtest: blocked join publishes an explicit operation-scoped error
+tests	JavaScript tests	2026-11-10T20:21:52.3539119Z ok 11 - blocked join publishes an explicit operation-scoped error
+tests	JavaScript tests	2026-11-10T20:21:52.3539548Z   ---
+tests	JavaScript tests	2026-11-10T20:21:52.3539961Z   duration_ms: 0.630821
+tests	JavaScript tests	2026-11-10T20:21:52.3540285Z   type: 'test'
+tests	JavaScript tests	2026-11-10T20:21:52.3540560Z   ...
+tests	JavaScript tests	2026-11-10T20:21:52.3541112Z # Subtest: successful retry resolves its join error without clearing an unrelated error
+tests	JavaScript tests	2026-11-10T20:21:52.3541700Z ok 12 - successful retry resolves its join error without clearing an unrelated error
+tests	JavaScript tests	2026-11-10T20:21:52.3542039Z   ---
+tests	JavaScript tests	2026-11-10T20:21:52.3542228Z   duration_ms: 0.905681
+tests	JavaScript tests	2026-11-10T20:21:52.3542429Z   type: 'test'
+tests	JavaScript tests	2026-11-10T20:21:52.3542608Z   ...
+tests	JavaScript tests	2026-11-10T20:21:52.3712493Z 1..12
+tests	JavaScript tests	2026-11-10T20:21:52.3712881Z # tests 12
+tests	JavaScript tests	2026-11-10T20:21:52.3713200Z # suites 0
+tests	JavaScript tests	2026-11-10T20:21:52.3713516Z # pass 12
+tests	JavaScript tests	2026-11-10T20:21:52.3715456Z # fail 0
+tests	JavaScript tests	2026-11-10T20:21:52.3715783Z # cancelled 0
+tests	JavaScript tests	2026-11-10T20:21:52.3716089Z # skipped 0
+tests	JavaScript tests	2026-11-10T20:21:52.3716450Z # todo 0
+tests	JavaScript tests	2026-11-10T20:21:52.3716700Z # duration_ms 91.32406
+tests	JavaScript tests	2026-11-10T20:21:52.3916103Z ##[endgroup]
+tests	JavaScript tests	2026-11-10T20:21:52.3917225Z ##[group]tests/initiative-tie-defaults.test.cjs
+tests	JavaScript tests	2026-11-10T20:21:52.5240186Z TAP version 13
+tests	JavaScript tests	2026-11-10T20:21:52.5604163Z # Subtest: mixed ties default to characters first with stable within-kind order
+tests	JavaScript tests	2026-11-10T20:21:52.5609735Z ok 1 - mixed ties default to characters first with stable within-kind order
+tests	JavaScript tests	2026-11-10T20:21:52.5610425Z   ---
+tests	JavaScript tests	2026-11-10T20:21:52.5610735Z   duration_ms: 2.206443
+tests	JavaScript tests	2026-11-10T
