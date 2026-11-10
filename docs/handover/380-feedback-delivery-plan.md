@@ -2,6 +2,56 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+## 4A.5 End-battle feedback delivery - 2026-11-10
+
+Prepared at the user's implementation/push request on features/perplexity-009.7:
+static/admin-end-feedback.js, its deferred include after Start validation, the
+15-test Node fixture and existing task/handover updates. The [4A.5 task](../todo/097-feedback-delivery-plan.md#4a5-end-battle-feedback---2026-11-10)
+remains in progress pending covering CI/full-browser review and bounded acceptance.
+Earlier acceptance intent did not close an unimplemented task. No commit or run
+identifier is invented before the write/results exist.
+
+The small enhancement overrides only End's onclick. Separate encounter-scoped
+battle.end.validation and battle.end identities make actionable errors persistent.
+A confirmed valid attempt silently resolves its validation error. Matching request
+success replaces only its request error with the existing non-resetting success
+message before load(); state.load retains ownership of subsequent refresh errors.
+Cancellation leaves errors intact. Refresh alone, unrelated success and validation
+rejection do not erase End request errors. Scope/attempt guards suppress stale
+publication and post-response refresh in a different encounter, including away/back
+transitions. Preserve the empty-order eligibility gate, exact confirmation, POST
+method/body contract and server behavior. No automatic retry, combatant reset,
+new concurrency policy or migration of Reset All/other producers is included.
+Unexpected load rejection propagates without relabelling the successful End POST;
+ordinary load() already handles and owns refresh failures.
+
+Executed during this preparation: both JavaScript syntax checks passed; 15 Node
+regressions passed with zero failures/skips; three temporary negative controls
+(error severity changed to success, stale-success guard removed, validation
+resolution removed) were detected; the restored draft passed all 15 again. The
+complete End asset executes with the real controller and complete Admin bootstrap,
+but mocked DOM, network and refresh. The refresh error is simulated through the
+real feedback API, not a full loadState/render pipeline. Timers are controlled.
+These are not complete Admin/browser, authenticated server, manual or covering CI
+results. Full browser/combined suites and covering CI remain pending.
+
+Unchanged controller/bootstrap/template reconstructions matched live Git blobs
+c4a82d73b21f4657da651ce45f76003c3348a6ef,
+59553fdd9fc93ac8d23f3ea54536aded1a945ab5 and
+23abc263b69c92a1f85ec3d7d99fd78577a58bd1 before preparation. The End asset is
+1,453 UTF-8 bytes; its Node fixture is 9,072 bytes. Live instructions/write schemas
+were retrieved, complete source/config/index reads reused against unchanged live
+identities, and current task/handover contents reviewed. A truncated handover read
+was supplemented by the complete approved e4fda47eba99e58a921e82630983a8a8437ff80b
+content with the same current blob identity e070ec12bf272773275a1d8bdd20669b2dca5f6d.
+Existing CI discovers the .cjs with no workflow change or separate dispatch. Core
+fragments, bundle identity pins/marker, server routes, styles and previous tests
+are unchanged. README/root indexes retain accurate open-phase scope/links without
+edits; historical notes below remain dated history. This mixed commit has no
+skip marker. 4A.2/4A.3/4A.4 stay closed; 4A.1's formal status, SG-TODO-019 and
+agreed delivery order are unchanged. Deliverable 1, Deliverable 2 and 009.7 remain
+open. No merge, deployment or premature 4A.5 acceptance is included.
+
 ## 4A.4 bounded acceptance and close-out - 2026-11-10
 
 The user explicitly accepted the bounded shared main/modal Next-turn feedback scope
