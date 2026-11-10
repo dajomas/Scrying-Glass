@@ -1,0 +1,29 @@
+e Python browser and audit checks	2026-11-10T09:22:41.6460415Z   File "/tmp/scrying-tests-8m62qa5x/repo/python/scrying_glass_monster_selection.py", line 101, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6460890Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6461329Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6461738Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6461984Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6462397Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6462813Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6463103Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6463794Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6464185Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6464488Z OSError: secret 5e.tools endpoint
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6469064Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6481976Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6482933Z   File "/tmp/scrying-tests-8m62qa5x/repo/python/scrying_glass_monster_selection.py", line 101, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6483522Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6484156Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6484650Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6485000Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6485458Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6485900Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6486180Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6486634Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6487030Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6487286Z OSError: secret 5e.tools endpoint
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6487436Z 
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6487646Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6487882Z 
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6488014Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T09:22:41.6488723Z   File "/tmp/scrying-tests-8m62qa5x/repo/python/scrying_glass_combined_lookup.py", line 28, in c

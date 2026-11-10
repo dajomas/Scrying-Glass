@@ -1,0 +1,21 @@
+crying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:13.2376619Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:13.2377304Z   File "/tmp/scrying-tests-8m62qa5x/repo/python/scrying_glass_monster_selection.py", line 152, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:13.2378288Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:13.2378766Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:13.2379501Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:13.2380186Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:13.2380587Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:13.2381288Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:13.2381985Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:13.2382436Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:13.2383203Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:13.2384100Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:13.2384575Z python.scrying_glass_monster_selection.ProviderError: secret
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:36.4806017Z Executing <Task pending name='Task-39247' coro=<MonsterRefreshEndToEndTests.test_active_max_hp_reduction_conflict_is_atomic() running at /tmp/scrying-tests-8m62qa5x/repo/tests/test_monster_refresh_end_to_end.py:278> wait_for=<Future pending cb=[Connection.send_message_to_server.<locals>.on_done() at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/connection.py:272, Task.task_wakeup()] created at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py:460> cb=[_run_until_complete_cb() at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py:181] created at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py:110> took 0.234 seconds
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:40.8625923Z Executing <Task pending name='Task-40537' coro=<PipeTransport.run() running at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/transport.py:193> cb=[PlaywrightClient._run.<locals>.on_close() at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/out_of_process.py:68] created at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/tasks.py:746> took 0.119 seconds
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:47.7258705Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:47.7259302Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:47.7259882Z   File "/tmp/scrying-tests-8m62qa5x/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:47.7260427Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-10T09:23:47.7260953Z   File "/tmp/scrying-tests-8m62qa5x/repo/python/scrying_glass_monster_refresh_sources.py",
