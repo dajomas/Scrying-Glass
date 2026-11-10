@@ -8,9 +8,9 @@ Delivered as ca4ec4ec64c47d8b865c292e97f01ed4599108f2 on
 features/perplexity-009.7, prepared against baseline
 9bc8aa2c22a6051fec1bad0a823464e51d936ac0 at the user's push request.
 [4A.10 task/status](../todo/097-feedback-delivery-plan.md#4a10-viewer-font-adjustment-feedback---2026-11-10)
-remains in progress: covering CI is verified successful, but bounded acceptance
-and documentation close-out remain pending. Earlier preparation-time pending-CI
-notes are historical, superseded by the review below, not by a new manual test.
+is completed/closed for its bounded scope after reviewed successful covering CI
+and the user's explicit close-out request; see acceptance below. Earlier pending
+CI/acceptance notes are historical, not new manual validation evidence.
 
 Only adjustBattleOrderFont in 080-source.js changes. Explicit persistent errors
 use encounter-scoped display.battle-order-font and stable target battle-order for
@@ -69,7 +69,7 @@ explicit close-out request; see [420 acceptance](420-activity-log-clear-feedback
 Its close-out is 47e0ef56334d5561f6e63e37f041693f9b1e1c5e. The separate 4A.9 run
 covers 4A.9, not 4A.10. The earlier 4A.10-pending-CI note in that close-out was
 historically accurate and is superseded by the independent 4A.10 review below.
-4A.1-4A.9 stay closed. No 4A.10 acceptance or closure is implied.
+4A.1-4A.9 stay closed. The later 4A.10 bounded acceptance is recorded separately.
 
 ## 4A.10 covering CI review - 2026-11-10
 
@@ -96,17 +96,36 @@ exhaustive accessibility coverage or completion of all full-deliverable criteria
 The historical 18-test focused preparation pass remains separate evidence, not a
 newly reviewed CI test count.
 
-The user requested updating documentation and pushing with skip ci, not closing
-4A.10. Record delivered with verified successful covering CI; keep bounded
-acceptance and documentation close-out pending. This documentation-only update
-changes this handover and the existing task plan, prepared against live head
-7ac35d78e4c1a34c1599737c2c4ccb5865b21c6d. Live instructions/head and target docs
-were read; verified complete earlier README/TODO/index reads reused. Existing
-root links and parent open scope remain accurate; no README/index edit or new
-section file is needed. No application, tests, source pins, workflows or CI
-evidence change. No new tests execute. Message includes [skip ci]; no workflow is
-modified or separately dispatched, and no new workflow-run state is claimed.
+At the CI-status documentation checkpoint the user requested updating docs and
+pushing with skip ci, not closing 4A.10. That update was delivered as
+f9b4fa72625dc8eb3a2536d5a91c59fa910a2e7a, prepared against
+7ac35d78e4c1a34c1599737c2c4ccb5865b21c6d, and correctly retained pending bounded
+acceptance. It changed only this handover/task plan, ran no tests, modified or
+dispatched no workflow, and used [skip ci]. Those then-open status notes are
+superseded only by the subsequent explicit close-out below.
 
-4A.11 onward stays proposed. Deliverable 1, Deliverable 2 and SG-TODO-009.7 remain
-open. SG-TODO-019, agreed order and accepted 009.6 gates are unchanged. No bounded
-4A.10 acceptance/closure, whole-deliverable acceptance, merge or deployment.
+## 4A.10 bounded acceptance and close-out - 2026-11-10
+
+After reviewed successful covering CI and the CI-status documentation update,
+the user explicitly requested closing out 4A.10 and pushing the changes. Mark
+4A.10 completed/closed for viewer-font adjustment feedback only. This is bounded
+acceptance, not acceptance of remaining feedback producers, Deliverable 1,
+Deliverable 2 or SG-TODO-009.7. The implementation and covering run identities,
+configured-stage results and evidence limits remain as recorded above; no new
+manual/authenticated live-server or exhaustive accessibility test is claimed.
+
+Documentation-only close-out prepared against live head
+f9b4fa72625dc8eb3a2536d5a91c59fa910a2e7a. Live instructions and head were re-read;
+complete current contents and verified earlier README/TODO/index/source/config
+reads reused. Update this existing handover and task plan with matching completed
+status, stable anchors and evidence links. Root indexes retain accurate paths and
+parent open scope; no new section/path/index entry or README edit is required.
+No application, tests, source pins, workflows or CI evidence change. No new tests
+execute. Message includes [skip ci]; no workflow is modified or separately
+dispatched, and no new workflow-run state is claimed.
+
+4A.1-4A.10 are closed for their bounded scopes. 4A.11 battle-action global notices
+is the next proposed unit and is not started by this close-out. Deliverable 1,
+Deliverable 2 and SG-TODO-009.7 remain open. SG-TODO-019, agreed order and accepted
+009.6 compatibility gates are unchanged. No merge, deployment or broader
+acceptance is authorized or performed.
