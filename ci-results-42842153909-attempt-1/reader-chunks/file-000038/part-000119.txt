@@ -1,0 +1,39 @@
+me/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Pytest regression modules	2026-11-10T15:17:51.9654956Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-10T15:17:51.9655403Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Pytest regression modules	2026-11-10T15:17:51.9655855Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-10T15:17:51.9656447Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-10T15:17:51.9656832Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-10T15:17:51.9657270Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Pytest regression modules	2026-11-10T15:17:51.9657610Z ##[endgroup]
+tests	Pytest regression modules	2026-11-10T15:17:54.0411140Z ...........................................                              [100%]
+tests	Pytest regression modules	2026-11-10T15:17:54.0411897Z 43 passed in 1.27s
+tests	JavaScript tests	﻿2026-11-10T15:17:54.1570663Z ##[group]Run status=0
+tests	JavaScript tests	2026-11-10T15:17:54.1570978Z ^[[36;1mstatus=0^[[0m
+tests	JavaScript tests	2026-11-10T15:17:54.1571221Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	JavaScript tests	2026-11-10T15:17:54.1571531Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	JavaScript tests	2026-11-10T15:17:54.1571918Z ^[[36;1m  python tools/run_split_tests.py -- node --test "$test" || status=1^[[0m
+tests	JavaScript tests	2026-11-10T15:17:54.1572330Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	JavaScript tests	2026-11-10T15:17:54.1572774Z ^[[36;1mdone < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)^[[0m
+tests	JavaScript tests	2026-11-10T15:17:54.1573198Z ^[[36;1mexit "$status"^[[0m
+tests	JavaScript tests	2026-11-10T15:17:54.1623823Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	JavaScript tests	2026-11-10T15:17:54.1624188Z env:
+tests	JavaScript tests	2026-11-10T15:17:54.1624657Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	JavaScript tests	2026-11-10T15:17:54.1625278Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-10T15:17:54.1625732Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	JavaScript tests	2026-11-10T15:17:54.1626209Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-10T15:17:54.1626619Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-10T15:17:54.1627021Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-10T15:17:54.1627412Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	JavaScript tests	2026-11-10T15:17:54.1627747Z ##[endgroup]
+tests	JavaScript tests	2026-11-10T15:17:54.1741255Z ##[group]tests/admin-end-feedback.test.cjs
+tests	JavaScript tests	2026-11-10T15:17:54.4290648Z TAP version 13
+tests	JavaScript tests	2026-11-10T15:17:54.4840659Z # Subtest: End asset is deferred after core and Start validation, exactly once
+tests	JavaScript tests	2026-11-10T15:17:54.4846137Z ok 1 - End asset is deferred after core and Start validation, exactly once
+tests	JavaScript tests	2026-11-10T15:17:54.4847227Z   ---
+tests	JavaScript tests	2026-11-10T15:17:54.4848104Z   duration_ms: 1.173316
+tests	JavaScript tests	2026-11-10T15:17:54.4848883Z   type: 'test'
+tests	JavaScript tests	2026-11-10T15:17:54.4849535Z   ...
+tests	JavaScript tests	2026-11-10T15:17:54.4850937Z # Subtest: empty battle produces a persistent validation error without confirmation or POST
+tests	JavaScript tests	2026-11-10T15:17:54.4852719Z ok 2 - empty battle produces a persistent validation error without confirmation or POST
+tests	JavaScript tests	2026-11-10T15:1
