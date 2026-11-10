@@ -2,6 +2,40 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+## 4A.3 acceptance and close-out - 2026-11-10
+
+The user explicitly requested that 4A.3 acceptance and close-out be recorded after
+successful covering CI. 4A.3 is completed/closed for Start eligibility and tie-order
+rejection feedback only. Implementation: 64101f24e624e1cb7a7f1ea2cea2c933b100fb72,
+features/perplexity-009.7. Branch tests 42808219579 attempt 1 completed/success
+for that exact SHA, published at e70419875322239b3d70373110a7538948a70097 in
+ci-results-42808219579-attempt-1. Reviewed run.json and jobs.json verify the tested
+revision and successful syntax/import, Python/browser, pytest, JavaScript and
+standalone browser/audit stages. No individual-test log review, new local run,
+authenticated live-server or manual test is claimed. The 13 regressions were not
+executed locally; covering configured CI is distinct evidence, not a retroactive
+local result or a claim that every individual log/assertion was inspected.
+
+Acceptance covers persistent operation-specific validation errors, matching
+resolution, cancellation/open-dialog behavior and separation from accepted 4A.2
+request and 4A.1 refresh feedback without changing gates/order/payloads. The small
+ordered enhancement and its template/test integration are accepted for this unit.
+Delivery-time pending statements below are historical and superseded by this
+close-out. See the [completed task](../todo/097-feedback-delivery-plan.md#4a3-start-validation-feedback---2026-11-10).
+
+4A.2 stays closed; 4A.1's formal status, SG-TODO-019 and agreed delivery order are
+unchanged. Deliverable 1, Deliverable 2 and SG-TODO-009.7 remain open. 4A.4 (shared
+main/modal Next-turn feedback) is the next proposed bounded unit, not implemented
+or started by this close-out. Full producer migration and wider phase acceptance
+remain separate. This is not a merge or production-deployment approval.
+
+This update changes only the existing TODO and handover sections. README and root
+indexes were reviewed/reused against verified identities and retain accurate scope
+and links without edits. No code/tests/configuration/workflows change, no tests
+execute and no workflow is separately dispatched. Proposed/approved/actual commit
+message contains [skip ci]; that marker does not establish an observed run state.
+No documentation commit SHA is invented before the write.
+
 ## 4A.3 Start validation delivery - 2026-11-10
 
 Prepared for delivery on features/perplexity-009.7 at the user's integration/push
