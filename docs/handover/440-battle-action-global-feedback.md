@@ -113,3 +113,38 @@ were not rerun locally in this correction session; their cited results are from
 the failed CI run. Fresh exact-content approval, actual corrective delivery and
 normal covering CI/rerun review are required. No corrective SHA or green result
 is invented. 4A.11 acceptance remains blocked; wider scope/order stays unchanged.
+
+## Attack-statistics fixture correction - 2026-11-10
+
+Selection correction delivered at 886056da5f03beb750f2f620b2f02f26e73150f3.
+Covering run 42894039107 attempt 1 (job 130102316599) tested that SHA and failed
+in JavaScript; publication bd38e92f564eb7a2d22b174a3f9896e66095da9d. The newer
+lossless workflow chunk file-000038/part-000155.txt confirms selection now passes;
+core 6/6, combined follow-up 16/16, reaction and turn-helper passes were also
+observed. Earlier pending selection-delivery notes are historical, not green CI.
+
+The newer part-000148.txt identifies attack-statistics.test.cjs:75:8:
+ReferenceError: window is not defined, in battleActionFeedback called by
+addStatisticsReductionRow. This is another legacy VM lacking the production
+feedback bootstrap. This change adds exactly two lines to that test: import
+installFeedback from battle-action-feedback-fixture.cjs and call it immediately
+before VM evaluation. The whole existing test body/assertions remain byte-for-
+byte unchanged, including statistics-token propagation, reductions/amounts,
+ordered mixed batches, applied-row locking/no replay, close/cancellation, seven
+choices, markup and character restore-control location. No new mock, bypass,
+application, shared-fixture, markup, fragment/pin or workflow changes.
+
+Executed preparation: verified original attack-test Git blob
+ e10518835f2f6e729acc56d4d91d1d62fc51a9e9; exact reverse-edit comparison confirms
+only the two installation lines differ; complete corrected CJS node --check
+passed. Full attack-statistics test and related suites were not run locally in
+this correction session; complete assembled checkout/dependencies were not
+reconstructed. Syntax/review is not a behavioral pass. Normal configured CI
+already discovers this test and must execute the complete original assertions.
+
+The remaining JavaScript output/consumer audit is not complete; no claim this
+is the only remaining failure. Exact-content approval, corrective delivery and
+covering rerun review remain required. Both failed runs remain failures. 4A.11
+acceptance and all wider gates stay open. README/HANDOVER/TODO indexes reviewed
+and unchanged: paths and conservative pending-acceptance summaries remain valid.
+No archive/Patch/, skip, workflow dispatch, merge or deployment.

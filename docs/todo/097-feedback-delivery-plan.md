@@ -31,14 +31,21 @@ modal-local behavior, payloads, busy/duplicate guards, applied history, observer
 critical-field behavior and explicit retry. No automatic mutation replay. Core
 fragments/pins, commit-1 tests, server and markup remain unchanged by commit 2.
 
-Corrective action: run 42891311319 attempt 1 failed in JavaScript on the combined
-implementation. Selection fixture lacks window/feedback initialization. Repair
-setup with existing installFeedback; retain every original assertion and add
-no-unexpected-feedback/no-legacy-route checks. Focused local correction and
-negative/restoration checks passed; full bundle/CI rerun is pending. See 440 for
-exact evidence, draft-test corrections and limits; other JS faults are not ruled
-out. Obtain fresh exact-content approval, push with normal CI, inspect the
-corrective covering run and address any remaining failures before acceptance.
+Selection correction delivered at 886056da5f03beb750f2f620b2f02f26e73150f3.
+Covering run 42894039107 attempt 1 still failed in JavaScript, but its selection
+regression passed. The identified remaining failure is attack-statistics.test.cjs
+missing window/feedback initialization in its VM (line 75, reduction-row setup).
+
+Current corrective action: add the existing installFeedback import/initialization
+to the attack-statistics fixture, preserving the entire original test body and
+assertions. Original blob/reverse-edit checks and CJS syntax passed; full test
+execution is pending covering CI, not claimed as a local pass. See 440 for failed
+run/publication/log identities, verified passes, preparation evidence and limits.
+Obtain fresh exact-content approval and push the test/docs correction with normal
+CI. Review the complete JavaScript results and other consumers, execute/review
+the corrective covering run, and resolve any further failures before acceptance.
+No runtime, shared-fixture, markup, pin or workflow changes. No exhaustive audit,
+green run, corrective delivery SHA or acceptance is invented.
 
 Remaining acceptance: verify delivery of both commits; review covering CI tied
 to the follow-up SHA(s), both new suites plus initial eligibility, legacy Apply/
