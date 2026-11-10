@@ -2,6 +2,7 @@
 import copy
 import unittest
 from pathlib import Path
+from urllib.parse import urlsplit
 import test_monster_button_layout as fixture
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -146,8 +147,20 @@ class StageBRosterTests(unittest.TestCase):
         before = copy.deepcopy(state)
         button = page.locator('#monsters [data-f=show_ac]')
         button.focus()
-        page.keyboard.press('Enter')
-        page.get_by_text('fixture rejected', exact=True).wait_for()
+        rejected_path = '/api/monsters/' + state['monsters'][0]['id']
+        calls_before = len(calls)
+        with page.expect_response(lambda response: (
+            urlsplit(response.url).path == rejected_path and response.request.method == 'PATCH'
+        )) as rejected:
+            page.keyboard.press('Enter')
+        response = rejected.value
+        self.assertEqual(response.status, 409)
+        self.assertEqual(response.request.post_data_json, {'show_ac': True})
+        self.assertEqual(response.json(), {'detail': 'fixture rejected'})
+        notice = page.locator('#monsterAddNotification .sg-feedback-text').filter(has_text='fixture rejected')
+        notice.wait_for(state='visible')
+        self.assertEqual(notice.count(), 1)
+        self.assertEqual(calls[calls_before:], [{'show_ac': True}])
         self.assertEqual(state, before)
         self.assertEqual(button.get_attribute('aria-pressed'), 'false')
         self.assertEqual(button.inner_text(), 'AC')
