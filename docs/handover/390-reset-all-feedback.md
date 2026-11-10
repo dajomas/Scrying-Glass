@@ -2,7 +2,52 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+## 4A.6 bounded acceptance and close-out - 2026-11-10
+
+The user explicitly requested closing 4A.6 and updating documentation after review
+of successful covering CI. 4A.6 is completed/closed for Reset-all feedback only.
+Implementation 13ec059da5114f69c5f7613e186f7fb8789c8475 on features/perplexity-009.7
+is covered by successful Branch tests 42842153909 attempt 1, published at
+3b2a379af3b0fdc403a61e02698066b3f511c2a8 under ci-results-42842153909-attempt-1.
+Reviewed run.json and jobs.json match the exact tested SHA and show successful
+syntax/import, Python/browser, pytest, JavaScript and standalone browser/audit
+stages. The evidence-publication commit is not the tested implementation SHA.
+
+Acceptance covers persistent battle.reset-all request errors, silent matching
+success resolution before load(), unrelated-error isolation, cancellation behavior,
+stale scope/attempt suppression and separation of successful reset from refresh
+failure. The original confirmation, bodyless POST, empty-order availability and
+server reset semantics remain intact. No automatic retry, success toast, new
+concurrency policy or individual combatant reset migration is included. Scope
+checks do not revoke an already-sent mutation.
+
+Preparation's two syntax checks, 16 passing focused Node regressions, three detected
+negative controls and restored-draft passes remain historical executed evidence.
+Covering configured CI subsequently passed. This close-out claims no new local
+execution, individual-test log/assertion review, authenticated live-server or
+manual test, and no exhaustive browser/rendering/accessibility validation. Pending
+CI/acceptance wording in the historical delivery section below is superseded by
+this record. See the [completed task](../todo/097-feedback-delivery-plan.md#4a6-reset-all-feedback---2026-11-10).
+
+4A.2-4A.5 stay closed; 4A.1's formal status, SG-TODO-019 and agreed delivery order
+are unchanged. Deliverable 1, Deliverable 2 and SG-TODO-009.7 remain open. 4A.7
+individual combatant reset feedback is the next proposed bounded unit, not started
+by this close-out. No full-deliverable/phase acceptance, merge or deployment.
+
+Only the existing task plan and this handover section change. Live instructions
+were read; complete prior contents were reused against verified identities:
+task b68f9594a840c8452c75f3c99dcadb0fa154048a and handover
+9352f33fbc50e052423b255164a3c149dbbf0331. README/root indexes and maintenance
+rules retain accurate scope/links without edits; no index is touched merely for
+status bookkeeping. No application/test/configuration/workflow changes, no tests
+executed and no workflow separately dispatched. Proposed/approved/actual commit
+message includes [skip ci]; that marker does not itself establish workflow state.
+No documentation commit SHA is invented before the write succeeds.
+
 ## 4A.6 preparation and delivery - 2026-11-10
+
+Historical delivery follows; pending CI/validation/acceptance wording is superseded
+by the bounded close-out above, not a claim of new local executions.
 
 At the user's request, prepare and deliver the bounded Reset All feedback migration
 on features/perplexity-009.7. Baseline: accepted 4A.5 close-out
