@@ -6,6 +6,7 @@ candidate extension, not the entire Admin page or a live provider.
 from pathlib import Path
 import unittest
 from playwright.sync_api import sync_playwright
+from feedback_browser_fixture import install_feedback
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -35,6 +36,8 @@ class LookupFocusRegressionTests(unittest.TestCase):
                 for index, source in enumerate(['MM', 'XMM'])]})
         self.page.route('**/api/monsters/lookup?*', lookup)
         self.page.goto('http://fixture.test/')
+        install_feedback(self.page)
+        self.assertEqual(self.page.locator('[data-sg-feedback-mounted]').count(), 1)
         source = (ROOT / 'static/admin.js').read_text(encoding='utf-8')
         prefix = source.split('function setColorPreview', 1)[0]
         start = source.index("document.querySelector('#monsterSpecies').addEventListener(")
@@ -42,8 +45,7 @@ class LookupFocusRegressionTests(unittest.TestCase):
         # Keep production blur wiring if reintroduced: that is what this test detects.
         listeners = source[start:end]
         self.page.add_script_tag(content=prefix + """
-            const paneNotificationTimeouts = {monsters: null};
-            const paneNotification = (kind, text) => document.querySelector('#monsterAddNotification').textContent = text;
+            const paneNotification = (kind, text, options) => window.scryingAdminFeedback.deliver(kind, text, options);
             async function request(url, options) {return (await fetch(url, options)).json();}
         """ + listeners)
         self.page.add_script_tag(content=(ROOT / 'static/monster-candidate-selection.js').read_text(encoding='utf-8'))

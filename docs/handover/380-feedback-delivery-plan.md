@@ -2,6 +2,46 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+## CI repair stages - 2026-11-10
+
+The user approved all three corrective stages after review of run 42774406816
+attempt 1, tested SHA f8f3918a00b2b863165edbe92cf66fe79c2e1d6c, evidence commit
+4fd1bd2dc19b2a78da20bd9483c670cc84d02581. The failed Python suite reports
+1,476 tests, 15 failures and 68 errors; this is not a count of independent bugs.
+Published JavaScript logs confirm the 15 state-load regressions passed, but the
+combined Python, JavaScript and standalone groups failed. Publication itself
+worked and does not establish application test success.
+
+Stage 1 is prepared in this commit: load the real feedback controller/view/Admin
+bootstrap before the candidate and typing/focus browser source slices; route their
+pane notifier through the actual controller instead of direct DOM writes; and
+supply the real controller through the Join-gate VM fixture's region adapter.
+The shared candidate fixture is also used by the source-bonus-offer browser tests.
+Existing selection, draft/edit, signed-offer, focus, request-count, join prevention,
+server-rejection and response-preservation assertions are retained. No production
+fallback, production code change or validation-gate weakening is included.
+
+Executed preparation: all 12 Join-gate Node tests passed, including two added
+explicit operation/error identity and unrelated-error isolation checks. The exact
+original fixture failed six checks against the same production gate as a negative
+control. Reconstructed controller, gate and original Node fixture matched their
+live blob identities. The new Python helper passed AST parsing. Repaired Chromium
+fixtures and inherited source-offer cases were not executed locally; normal CI
+must validate them. The helper only defines its loader when invoked by standalone
+Python discovery and performs no network, browser launch or external write.
+
+Stage 2 remains authorized/pending: reconcile managed-notification tests and the
+modified bundle identity/isolation contracts while retaining fragment bounds and
+regression assertions. Stage 3 remains authorized/pending: investigate remaining
+layout/behavior failures and review combined corrective CI. Continue preparation
+without requesting plan approval again; every external write still needs its own
+complete exact-content approval. This stage is not a claim that all 68 errors or
+all failed groups are fixed. The task plan at ../todo/097-feedback-delivery-plan.md
+and root TODO still correctly leave 4A.1, Deliverable 1 and 009.7 open, so no task
+closure or unrelated index/README edits are included. Earlier implementation and
+skip notes below remain historical. No covering corrective CI or commit SHA is
+invented before evidence exists.
+
 ## 4A.1 implementation checkpoint - 2026-11-10
 
 Prepared for this commit on features/perplexity-009.7: state-load migration in static/admin/030-source.js and static/admin-feedback-admin.js, plus tests/admin-state-load-feedback.test.cjs. The [4A.1 task status](../todo/097-feedback-delivery-plan.md#4a1-implementation-checkpoint---2026-11-10) keeps the unit, deliverable and phase open pending covering validation. No merge or deployment-ready claim is made.

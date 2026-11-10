@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const test = require('node:test');
 const vm = require('node:vm');
+const {createController} = require('../static/admin-feedback-controller.js');
 const source = fs.readFileSync(path.join(__dirname, '../static/initiative-join-gate.js'), 'utf8');
 function setup(item = {id: 'a', name: 'Alpha', active: false, initiative: null}, kind = 'characters', response) {
     const attribute = kind === 'characters' ? 'data-ca' : 'data-ma';
@@ -10,15 +11,20 @@ function setup(item = {id: 'a', name: 'Alpha', active: false, initiative: null},
         hasAttribute: name => name === attribute, getAttribute: () => item.id,
         setAttribute(name, value) {this.attributes[name] = value;},
         removeAttribute(name) {delete this.attributes[name];if (name === 'title') delete this.title;}};
-    const message = {textContent: ''};let refresh, click;
+    const feedback = createController();
+    feedback.setScope('encounter', 'fixture');
+    const message = {get textContent() {return feedback.snapshot().map(record => record.text).join('\n');}};
+    const api = {begin: spec => feedback.begin({...spec, lane: 'encounter', scope: 'fixture', placement: 'global'}),
+        publish: feedback.publish, resolve: feedback.resolve};
+    let refresh, click;
     const nativeFetch = async () => response || new Response('{}', {status: 200});
     const ctx = {URL, latest: {characters: [], monsters: []}, window: {
-        fetch: nativeFetch, location: {href: 'http://localhost/', origin: 'http://localhost'}}, document: {
+        scryingAdminFeedback: api, fetch: nativeFetch, location: {href: 'http://localhost/', origin: 'http://localhost'}}, document: {
         getElementById: id => id === 'message' ? message : {}, querySelectorAll: () => [button],
         addEventListener(type, fn, capture) {assert.equal(type, 'click');assert.equal(capture, true);click = fn;}},
         MutationObserver: class {constructor(fn) {refresh = fn;} observe() {}}};
     ctx.latest[kind] = [item];vm.createContext(ctx);vm.runInContext(source, ctx);
-    return {button, message, refresh, ctx, click() {
+    return {button, message, refresh, ctx, feedback, click() {
         const event = {target: {closest: () => button}, prevented: false, stopped: false,
             preventDefault() {this.prevented = true;}, stopImmediatePropagation() {this.stopped = true;}};
         click(event);return event;
@@ -68,4 +74,19 @@ test('unrelated rejection does not change global message', async () => {
 test('successful join does not create rejection message', async () => {
     const w = setup();await w.ctx.window.fetch('/api/characters/a', {method: 'PATCH', body: JSON.stringify({active: true})});
     assert.equal(w.message.textContent, '');
+});
+test('blocked join publishes an explicit operation-scoped error', () => {
+    const w = setup();w.click();
+    const record = w.feedback.snapshot()[0];
+    assert.equal(record.operation, 'roster.join');
+    assert.equal(record.severity, 'error');
+    assert.equal(record.target, JSON.stringify(['characters', 'a']));
+});
+test('successful retry resolves its join error without clearing an unrelated error', async () => {
+    const w = setup();w.click();
+    const ticket = w.ctx.window.scryingAdminFeedback.begin({region: 'global', operation: 'independent.edit', target: 'other', label: 'Edit'});
+    w.feedback.publish(ticket, {severity: 'error', text: 'Unrelated edit failed'});
+    await w.ctx.window.fetch('/api/characters/a', {method: 'PATCH', body: JSON.stringify({active: true})});
+    assert.deepEqual(w.feedback.snapshot().map(record => record.operation), ['independent.edit']);
+    assert.equal(w.message.textContent, 'Unrelated edit failed');
 });

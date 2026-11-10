@@ -2,6 +2,7 @@
 from pathlib import Path
 import unittest
 from playwright.sync_api import sync_playwright
+from feedback_browser_fixture import install_feedback
 
 ROOT = Path(__file__).resolve().parents[1]
 UNAVAILABLE_OFFER = ' — Initiative bonus unavailable: No supported explicit source modifier.'
@@ -26,10 +27,11 @@ class CandidateBrowserTests(unittest.TestCase):
             <button>Add</button></form><input type="checkbox" id="monsterSpeciesLookupOverwrite">
             <p id="monsterAddNotification"></p>"""))
         self.page.goto('http://fixture.test/')
+        install_feedback(self.page)
+        self.assertEqual(self.page.locator('[data-sg-feedback-mounted]').count(), 1)
         prefix = (ROOT / 'static/admin.js').read_text().split('function setColorPreview')[0]
         self.page.add_script_tag(content=prefix + """
-            const paneNotificationTimeouts = {monsters: null};
-            const paneNotification = (kind, text) => document.querySelector('#monsterAddNotification').textContent = text;
+            const paneNotification = (kind, text, options) => window.scryingAdminFeedback.deliver(kind, text, options);
             async function request(url, options) {
                 const result = await (await fetch(url, options)).json();
                 window.lastLookupPayload = result;
