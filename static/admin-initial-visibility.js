@@ -20,15 +20,25 @@
     // Preserve its request/error contract, adding collapse only after a successful Start.
     if (typeof startBattle === 'function') {
         startBattle = async function(order) {
+            const feedback = window.scryingAdminFeedback;
+            const ticket = feedback.begin({region: 'global', operation: 'battle.start',
+                target: 'battle', label: 'Start or restart battle'});
             try {
                 await request('/api/battle/start', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({order}),
                 });
-                setAllHideablePanesHidden(true);
-                await load();
-            } catch (error) { message(error.message); }
+            } catch (error) {
+                feedback.publish(ticket, {severity: 'error', text: error.message});
+                return;
+            }
+            // A superseded request must not collapse a different encounter's panels.
+            if (!feedback.isCurrent(ticket)) return;
+            feedback.resolve(ticket);
+            setAllHideablePanesHidden(true);
+            // load() owns refresh errors. The successful POST must not be retried.
+            await load();
         };
     }
     // Lair eligibility and workflow filtering remain owned by their existing controllers/CSS.

@@ -2,6 +2,74 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+## 4A.2 preparation and baseline reconciliation - 2026-11-10
+
+The user authorized continued 4A.2 preparation and compatibility review. This commit
+contains the narrowly scoped Start/restart request migration and its 12-test Node
+regression file, with README and [task status](../todo/097-feedback-delivery-plan.md#4a2-startrestart-request-feedback---2026-11-10)
+reconciled. Implementation is prepared for delivery; covering CI/full-Admin validation
+and acceptance remain pending. Deliverable 1 and SG-TODO-009.7 remain open. No
+commit SHA is invented before the write. 4A.3 eligibility/tie-order producers and
+all other bounded producers remain outside this change.
+
+The effective override in static/admin-initial-visibility.js begins an encounter-scoped
+battle.start ticket before POST /api/battle/start. Request failures publish explicit
+persistent errors without collapse or refresh. Matching success silently resolves
+only its error before the existing collapse and load(). Stale/superseded success
+cannot collapse/refresh another encounter; stale failures cannot publish. load()
+retains ownership of refresh errors, so an applied Start is not presented as a
+failed request. No automatic POST retry, authorization/payload/eligibility change,
+new success toast, controller fallback or source re-split is introduced.
+
+Prior preparation executed two JavaScript syntax checks and 12 passing Node tests,
+with zero failures/skips. Four temporary negative controls were detected: success
+severity for request errors, removed stale-success guard, restored legacy message
+route and delayed resolution after refresh. The restored draft passed all 12 again.
+Unchanged controller and visibility reconstruction matched live Git blobs
+c4a82d73b21f4657da651ce45f76003c3348a6ef and
+59418bb55144693a959aa065c7faaf4683062e33 before modification. Draft sizes are
+4,430 UTF-8 bytes for the visibility asset and 7,423 for the test. These results
+are from preceding preparation, not new executions during the final review. The
+complete visibility asset and real controller execute with mocked DOM/transport
+and bootstrap adapter; they do not establish complete Admin or live-server behavior.
+The refresh test simulates load-owned failure, not the full state-load pipeline.
+
+Compatibility review reused verified complete reads against unchanged live source
+trees and inspected header hierarchy, dependent-control fixtures and asset-cache
+implementation/tests. Feedback bootstrap precedes core Admin; the visibility override
+follows core Admin; main Start and tie confirmation resolve startBattle dynamically.
+The header moves original controls without replacing handlers. Existing independent
+panel page tests cover native Start/restart collapse and rejected-Start visibility;
+minimal initial/dependent-control fixtures do not invoke a Start wrapper without
+its feedback dependency. Their unchanged assertions remain required by CI. Per-render
+cache busting supplies a fresh local script token, so no template-version change
+is required. The eight core fragments, bundle pins/marker, initial visibility logic,
+lair/workflow filtering, drafts and manual-reopening behavior remain unchanged.
+Existing CI discovers all .cjs files and Python page fixtures; no workflow change
+or separate dispatch. Full suites were not executed locally for this change.
+Normal push-triggered CI is required: the mixed commit has no skip marker.
+
+Baseline evidence is separate from the pending 4A.2 result. Most recently, Branch
+tests 42796273382 attempt 1 completed/success for
+ca1600003ac4de0809a348dec7cef18cc6875fc9; run.json was reviewed in publication
+dfd56fbf419a6239cf45b7e2d3d6b42f795289d7 under
+ci-results-42796273382-attempt-1. Earlier successful run 42791962823 attempt 1
+covered add05c64a4d8ef88fdb39c1d589f3704237a1fd4, published at
+ae06a050b439b8c8e4e3f8a2736d889c7c4df1c0. 4A.1 is delivered with covering
+configured CI verified, not awaiting that baseline's CI. Reported fixture/identity
+repair blockers were resolved for that baseline. The pending-CI/repair wording in
+older dated sections below is historical, not a current blocker. Failed earlier
+runs remain failed evidence; no individual-log re-review, manual acceptance or
+formal 4A.1/phase closure is inferred from workflow success.
+
+README now distinguishes the green baseline from pending 4A.2/final producer
+validation. Root TODO/HANDOVER indexes retain correct links/open phase scope and
+need no edits; SG-TODO-019 remains proposed in its own section. The earlier failed
+approval attempts did not save the proposed green-baseline checkpoint. This mixed
+implementation commit performs the necessary reconciliation without another planning
+commit. Final caller migration/compatibility-route retirement, Deliverable 2 and
+broader confirmation/accessibility/responsive acceptance remain outstanding.
+
 ## CI repair stages - 2026-11-10
 
 The user approved all three corrective stages after review of run 42774406816

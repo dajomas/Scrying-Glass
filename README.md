@@ -28,11 +28,13 @@ The service account needs a writable temporary directory for the generated bundl
 See [Admin split details](docs/handover/050-admin-script-split.md).
 
 The features/perplexity-009.7 branch contains an explicitly incomplete feedback
-checkpoint. Controller-backed wiring is loaded, but remaining callers use a
-temporary neutral compatibility route and do not yet implement the approved
-policy end to end. Do not deploy it as a completed increment. Producer migration,
-legacy fixture/bundle-identity reconciliation and covering validation remain
-pending. See [checkpoint scope and limits](docs/handover/380-feedback-delivery-plan.md).
+checkpoint. Controller-backed wiring, state-load feedback and scoped Start/restart
+request feedback are included, but remaining callers still use a temporary neutral
+compatibility route. The baseline before the Start/restart migration has verified
+successful configured CI after fixture/source-identity repairs. Covering CI for
+the Start/restart change and final Deliverable 1 producer coverage/validation remain
+pending. Do not deploy this branch as a completed increment or infer phase acceptance.
+See [checkpoint scope and validation limits](docs/handover/380-feedback-delivery-plan.md).
 
 Legacy source-reading tests use a disposable assembled checkout:
 

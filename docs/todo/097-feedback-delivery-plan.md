@@ -2,13 +2,21 @@
 
 [Back to TODO index](../../TODO.md)
 
+## 4A.2 Start/restart request feedback - 2026-11-10
+
+Status: implementation prepared for this commit; covering CI and full-Admin validation pending. 4A.2 remains in progress, not accepted/completed. Deliverable 1 and SG-TODO-009.7 remain open; 4A.3-4A.13 remain proposed. This supersedes their original proposed-only planning status only for 4A.1/4A.2.
+
+Migrate the effective startBattle override in static/admin-initial-visibility.js with a pre-request encounter-scoped battle.start ticket. Persistent request failures leave panels unchanged; a matching successful POST silently resolves its request error before collapse and refresh. Superseded/old-scope outcomes cannot publish or collapse/refresh another encounter. load() continues to own state refresh errors; no automatic POST retry, payload/permission changes or eligibility/tie-order migration is included. See [compatibility, evidence and limitations](../handover/380-feedback-delivery-plan.md#4a2-preparation-and-baseline-reconciliation---2026-11-10).
+
+Prior preparation passed two JavaScript syntax checks, 12 focused Node regressions and four detected negative controls; the restored draft passed all 12 again. These execute the complete visibility asset and real feedback controller with mocked DOM, transport and bootstrap adapter. They are not full-Admin browser or live-server evidence and were not rerun during the final compatibility review. Existing CI automatically discovers the new .cjs file and existing page-level Start/restart/failed-Start fixtures. Review covering normal CI after delivery; record implementation delivery separately from validation/acceptance. Remaining phase work and SG-TODO-019 are unchanged.
+
 ## 4A.1 implementation checkpoint - 2026-11-10
 
-Status: implementation prepared for this commit; covering CI and final combined Admin validation remain pending. This supersedes the proposed-only status below for 4A.1, not the historical planning record. 4A.1, Deliverable 1 and SG-TODO-009.7 remain open; 4A.2-4A.13 remain proposed.
+Status: implementation delivered at 22b0a6f756c04d9ccda9ed763adb3abed5ab93e6; covering workflow success verified, most recently run 42796273382 attempt 1 testing ca1600003ac4de0809a348dec7cef18cc6875fc9. This supersedes the earlier pending-CI status, not historical failures or acceptance limits. 4A.1 remains open with implementation/CI verified; no formal close-out or live/manual acceptance is inferred. Deliverable 1 and SG-TODO-009.7 remain open.
 
 The change adds encounter-scoped state.load errors and silent matching-success resolution. Shared state-request sequencing plus an encounter epoch reject stale state before assigning latest or rendering. Accepted campaign/setup transitions rebind the load ticket. Ordinary load() returns undefined and handles errors; only literal load(true) rethrows the original error, including stale errors whose feedback is suppressed. Current malformed scope responses produce an actionable reload error instead of being rendered as success. No mutation retry or neighboring producer migration is included.
 
-Preparation passed two JavaScript syntax checks and 15 focused Node regressions. Four temporary negative controls were detected. These mocked network/DOM source-slice checks are not full-Admin browser or live-server evidence. See the [4A.1 handover evidence and limits](../handover/380-feedback-delivery-plan.md#4a1-implementation-checkpoint---2026-11-10). The existing JavaScript CI discovery includes the new test file. This mixed implementation/test/documentation commit uses normal CI, not the checkpoint-2 skip instruction. No passing CI, commit SHA or phase acceptance is claimed before evidence exists.
+Preparation passed two JavaScript syntax checks and 15 focused Node regressions. Four temporary negative controls were detected. These mocked network/DOM source-slice checks are not full-Admin browser or live-server evidence. See the [4A.1 handover evidence and limits](../handover/380-feedback-delivery-plan.md#4a1-implementation-checkpoint---2026-11-10). Historical preparation and the later successful baseline are separate evidence; neither establishes phase acceptance. Final combined producer-specific Admin validation remains outstanding.
 
 ## Status and authority - 2026-11-09
 
@@ -69,7 +77,7 @@ After the complete nonempty payload is reviewed, request bound GitHub confirmati
 
 ## Bounded group 4A sub-tasks - 2026-11-09
 
-At the user's request, retain the following suggestions for future reference. These are proposed execution units within step 4 of Deliverable 1. All remain proposed/not completed by this documentation update. The first bounded unit is 4A.1. Exact files and effective handlers must be verified against the live branch before each change. Do not treat interrupted or disappeared output as saved implementation or test evidence.
+At the user's request, retain the following suggestions for future reference. These were originally proposed execution units within step 4 of Deliverable 1, not completed by that planning update. Subsequent 4A.1/4A.2 status is recorded above. Exact files and effective handlers must be verified against the live branch before each change. Do not treat interrupted or disappeared output as saved implementation or test evidence.
 
 | ID | Bounded scope | Completion criteria |
 |---|---|---|
@@ -116,4 +124,4 @@ Preserve accepted 009.6: full-width Battle, Characters, Monsters and Activity lo
 
 ## Documentation-only validation
 
-This update retains the suggested bounded 4A breakdown and reconciles checkpoint/working-branch references. It changes human-readable documentation only. No application, tests, dependencies, configuration or workflows change; no automated tests were executed and no workflow is dispatched. The message must contain [skip ci]. Reviewed links point to the existing task/handover indexes and sections. README and root TODO/HANDOVER remain accurate for this planning-only update and need no unrelated edits. No new implementation, passing CI or sub-task completion is claimed.
+This historical planning update retained the suggested bounded 4A breakdown and reconciled checkpoint/working-branch references without implementation or test execution. Its documentation-only skip rule does not apply to the later mixed 4A.2 commit above. Root TODO/HANDOVER index links and open phase descriptions remain accurate without edits; SG-TODO-019 is retained unchanged. No phase acceptance or new covering 4A.2 CI result is claimed before evidence exists.
