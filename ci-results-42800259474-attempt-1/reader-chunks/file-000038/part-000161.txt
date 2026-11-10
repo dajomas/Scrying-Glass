@@ -1,0 +1,29 @@
+nittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:10.3414542Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:10.3414955Z OSError: private detail
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:10.3415492Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:10.3416071Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:10.3417170Z   File "python/scrying_glass_monster_selection.py", line 98, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:10.3418074Z     sources = ft.configured_sources(display)
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:10.3419217Z   File "/tmp/scrying-tests-2scsov2j/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:10.3420977Z     raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:10.3422733Z ValueError: fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6927957Z Combined monster lookup failed for D&D Beyond
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6928633Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6929788Z   File "/tmp/scrying-tests-2scsov2j/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6931315Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6932339Z   File "/tmp/scrying-tests-2scsov2j/repo/python/scrying_glass_monster_selection.py", line 151, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6933423Z     lambda: dnd_candidates(context, species),
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6933923Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6934675Z   File "/tmp/scrying-tests-2scsov2j/repo/python/scrying_glass_monster_selection.py", line 66, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6935567Z     raise ProviderError("D&D Beyond returned an invalid candidate link.")
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6936460Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond returned an invalid candidate link.
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6937840Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6938482Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6939595Z   File "/tmp/scrying-tests-2scsov2j/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6940645Z     hits = context.dnd_monster_candidates(species)
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6941536Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6942112Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6942442Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T10:40:42.6943018Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalo
