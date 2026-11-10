@@ -1,0 +1,31 @@
+ser and audit checks	2026-11-10T20:04:09.0709857Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-10T20:04:11.6787364Z {
+tests	Standalone Python browser and audit checks	2026-11-10T20:04:11.6787728Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-10T20:04:11.6788144Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-10T20:04:11.6788535Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-11-10T20:04:11.6788995Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	Standalone Python browser and audit checks	2026-11-10T20:04:11.6789455Z     "client card has a positive layout width at mobile viewport"
+tests	Standalone Python browser and audit checks	2026-11-10T20:04:11.6789769Z   ],
+tests	Standalone Python browser and audit checks	2026-11-10T20:04:11.6789946Z   "page_errors": [],
+tests	Standalone Python browser and audit checks	2026-11-10T20:04:11.6790205Z   "transport": "mocked HTTP/WS, real Chromium rendering"
+tests	Standalone Python browser and audit checks	2026-11-10T20:04:11.6790454Z }
+tests	Standalone Python browser and audit checks	2026-11-10T20:04:11.8099195Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T20:04:11.8099609Z ##[group]tests/feedback_browser_fixture.py
+tests	Standalone Python browser and audit checks	2026-11-10T20:04:12.0437596Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T20:04:12.0438211Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-10T20:04:12.2829522Z ##[endgroup]
+tests	Post Run actions/checkout@v4	﻿2026-11-10T20:04:12.2979351Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-10T20:04:12.3689938Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-10T20:04:12.3733446Z git version 2.56.0
+tests	Post Run actions/checkout@v4	2026-11-10T20:04:12.3765186Z Temporarily overriding HOME='/home/runner/work/_temp/00a6395c-edee-4986-b1e4-2f8aa29feaab' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-10T20:04:12.3766602Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-10T20:04:12.3769743Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-10T20:04:12.3814260Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-10T20:04:12.3865785Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-10T20:04:12.4157514Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-10T20:04:12.4190841Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-10T20:04:12.4202872Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-10T20:04:12.4243922Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Post Run actions/checkout@v4	2026-11-10T20:04:12.4527642Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	Post Run actions/checkout@v4	2026-11-10T20:04:12.4563616Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+tests	Complete job	﻿2
