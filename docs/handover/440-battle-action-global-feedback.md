@@ -2,6 +2,10 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+Current status: completed and closed for the accepted bounded 4A.11 scope on
+2026-11-10. The final close-out section below supersedes earlier pending-status
+notes, not historical failures or evidence limitations. Wider deliverables stay open.
+
 ## Initial checkpoint and evidence
 
 Initial eligibility/helper/relocation checkpoint:
@@ -148,3 +152,66 @@ covering rerun review remain required. Both failed runs remain failures. 4A.11
 acceptance and all wider gates stay open. README/HANDOVER/TODO indexes reviewed
 and unchanged: paths and conservative pending-acceptance summaries remain valid.
 No archive/Patch/, skip, workflow dispatch, merge or deployment.
+
+## 4A.11 bounded close-out - 2026-11-10
+
+Status: completed and closed for the explicitly accepted bounded scope. After
+automated evidence reconciliation, the user explicitly accepted 4A.11 with the
+stated evidence limits and requested close-out/push on 2026-11-10 at 21:45 CET.
+This is not inferred from a push or a green status alone. Earlier pending or
+blocked notes above describe their historical stage and are superseded for this
+accepted unit; neither failed runs nor unperformed checks are relabeled as passed.
+
+Accepted scope: actor-specific eligibility feedback/matching resolution;
+independent active/living target errors/matching resolution; actor-specific
+no-pending information; start-of-turn completion success and stale encounter,
+actor and modal-session safeguards. Existing payloads, modal-local behavior,
+busy/duplicate guards, applied rows and explicit retry/no replay are retained.
+
+Final tested implementation including both repairs:
+1b621c3909e751affc356fbbb98acc53a3f588e3. Attack-statistics repair delivered in
+that commit; selection repair is 886056da5f03beb750f2f620b2f02f26e73150f3.
+Successful covering Branch tests run 42896405201 attempt 1, job 130110564256,
+reports headSha matching that final revision and completed/success in run.json
+and jobs.json. Evidence publication: 477583dc63a6f88d7161bef913a27ca7a931f374;
+source directory ci-results-42896405201-attempt-1/. Both implementation stages
+272cfd73aa4c39602ed2dad96c1bd2e02ba28348 and
+6e4bdd54f73df70bdb263493bf010ef3f0e9a0ad are included in the tested state.
+Runs 42891311319 and 42894039107 remain failed historical runs; immutable earlier
+publication snapshots preserve their evidence after latest-result rotation.
+
+Detailed log evidence reconciled at reader-chunks/file-000038/ in the successful
+publication (part numbers below are not individual test counts):
+- 148-149: attack-statistics and legacy Apply file passes; core suite 6 passes.
+- 149-152: eligibility suite 16 passes, zero failures/skips.
+- 152-154: combined follow-up 16 passes, zero failures/skips, including completion/
+  expiry/payloads, stale scope/session/actor, refresh failure and duplicate guards.
+- 154-155: corrected selection, reaction and turn-helper file passes.
+- 025: full assembled syntax/identity, reader bounds, runner isolation, pinned
+  fragment identities/sizes/syntax and tamper guard, adapter serving/refresh/wiring.
+- 021-022: browser loading/rendering, scope/retry/deadlines, safe text, dismissal/
+  focus recovery, live-region structure, independent records and narrow wrapping.
+- 023-026: relevant workspace/009.6, nested overlays, original controls/drafts/files,
+  selection/visibility, native Next/history, focus/idempotence and navigation.
+- 030: observed deferred-boot/reaction compatibility entries.
+These are direct named-test results, beyond run/step metadata. The combined suite
+includes overlapping core cases; no sum is presented as unique requirements.
+The prior local full-assembly uncertainty is resolved by covering CI, not by
+pretending the local check occurred. Targeted log passages were read; no complete
+raw-log reconstruction, exhaustive log audit or visual-artifact review is claimed.
+
+Acceptance limits retained: focused JavaScript tests use real production feedback
+controller/bootstrap with mock DOM/transport and fake clocks; browser fixtures
+add automated loading/rendering/workflow coverage. No new authenticated live-server
+exercise, human visual/manual combat workflow, screen-reader test or exhaustive
+accessibility/zoom/contrast acceptance was supplied or established. User acceptance
+is explicitly bounded to the delivered unit on the reconciled evidence, not a
+claim that those unperformed checks ran. Wider validation gates remain open.
+
+This close-out is documentation-only: no runtime/test/pin/asset/workflow change,
+new automated test execution or CI dispatch. Commit message contains [skip ci];
+no new workflow outcome is inferred from that marker. Root README and TODO index
+remain accurate and unchanged; HANDOVER status/link and task section reconcile
+only this unit. No archive/Patch/, merge or deployment. 4A.12/4A.13, Deliverables
+1/2, phase 009.7, SG-TODO-019 and agreed delivery order retain their existing
+statuses and criteria. [Closed task](../todo/097-feedback-delivery-plan.md#4a11-battle-action-global-notices---2026-11-10).

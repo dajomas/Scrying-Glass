@@ -4,60 +4,56 @@
 
 ## Current status - 2026-11-10
 
-009.7 and both deliverables remain open. 4A.1-4A.10 are closed for accepted scopes.
+009.7 and both deliverables remain open. 4A.1-4A.11 are closed for accepted scopes.
 All original policy, seven-step criteria, implementation/run/publication and
 acceptance identities, 009.6 safeguards and history remain authoritative in the
 [preserved full plan](https://github.com/dajomas/Scrying-Glass/blob/9d05e129cc2b85099cf0e3bf394a1fe398d0af24/docs/todo/097-feedback-delivery-plan.md)
-and numbered handovers. This concise continuation changes no agreed scope,
-priority, owner, deadline, SG-TODO-019 or delivery order; no unfinished task closes.
+and numbered handovers. This continuation closes only the explicitly accepted
+4A.11 unit; priority, owner, deadline, SG-TODO-019 and delivery order are unchanged.
+No unrelated unfinished task is closed.
 
 ## 4A.11 battle-action global notices - 2026-11-10
 
-In progress; implementation delivered, acceptance blocked by failed covering CI.
-Initial
-eligibility checkpoint 00f065913d1068e4ed13df904cead507573f24eb has successful
-covering CI 42881717311 attempt 1, not evidence for later changes. The user
-approved a two-commit follow-up with exact-content approval for each write.
+Completed and closed for the accepted bounded scope. On 2026-11-10, following
+successful covering CI and detailed evidence reconciliation, the user explicitly
+accepted 4A.11 with the stated evidence limits and requested close-out/push.
+This is feature-scope acceptance, not a claim that unperformed manual checks ran.
 
-Commit 1 delivered at 272cfd73aa4c39602ed2dad96c1bd2e02ba28348: independent
-active/living target errors and matching resolution, actor-specific no-pending
-info, core tests, legacy Apply assertion migration, pins and documentation.
-The combined-state run below reports the separate retained core-only suite passed.
+Delivered scope: actor-specific eligibility errors/matching resolution;
+independent active/living target errors/matching resolution; actor-specific
+no-pending information; start-of-turn completion success with encounter-ticket,
+actor and modal-session guards. Preserve modal-local feedback, payloads,
+busy/duplicate safeguards, applied history and explicit retry; no automatic replay.
 
-Commit 2 delivered at 6e4bdd54f73df70bdb263493bf010ef3f0e9a0ad: start-of-turn
-completion success with encounter-ticket/actor/modal-session guards, combined
-16-case regressions and documentation/index reconciliation. Preserve
-modal-local behavior, payloads, busy/duplicate guards, applied history, observer/
-critical-field behavior and explicit retry. No automatic mutation replay. Core
-fragments/pins, commit-1 tests, server and markup remain unchanged by commit 2.
+Implementation/evidence identities:
+- Initial checkpoint: 00f065913d1068e4ed13df904cead507573f24eb.
+- Core follow-up: 272cfd73aa4c39602ed2dad96c1bd2e02ba28348.
+- Start-of-turn follow-up: 6e4bdd54f73df70bdb263493bf010ef3f0e9a0ad.
+- Selection fixture repair: 886056da5f03beb750f2f620b2f02f26e73150f3.
+- Attack-statistics fixture repair/final tested revision:
+  1b621c3909e751affc356fbbb98acc53a3f588e3.
+- Successful covering run: 42896405201 attempt 1, job 130110564256.
+- Evidence publication: 477583dc63a6f88d7161bef913a27ca7a931f374.
 
-Selection correction delivered at 886056da5f03beb750f2f620b2f02f26e73150f3.
-Covering run 42894039107 attempt 1 still failed in JavaScript, but its selection
-regression passed. The identified remaining failure is attack-statistics.test.cjs
-missing window/feedback initialization in its VM (line 75, reduction-row setup).
+Reconciled detailed evidence: eligibility 16 passes, core 6 passes, combined
+follow-up 16 passes (overlapping core coverage, not unique requirement counts);
+legacy Apply, selection, attack-statistics, reaction and turn-helper files pass;
+full assembly/identity/reader/isolation, pins/tamper guard/runtime adapter and
+relevant feedback/loading/rendering/workspace browser regressions pass.
+Run/job metadata match the tested SHA and success. Runs 42891311319 and
+42894039107 remain historical failures; both fixture corrections are verified by
+the final covering run. [Detailed evidence, history and limits](../handover/440-battle-action-global-feedback.md#4a11-bounded-close-out---2026-11-10).
+Earlier task snapshots remain in the [pre-close-out task record](https://github.com/dajomas/Scrying-Glass/blob/477583dc63a6f88d7161bef913a27ca7a931f374/docs/todo/097-feedback-delivery-plan.md).
 
-Current corrective action: add the existing installFeedback import/initialization
-to the attack-statistics fixture, preserving the entire original test body and
-assertions. Original blob/reverse-edit checks and CJS syntax passed; full test
-execution is pending covering CI, not claimed as a local pass. See 440 for failed
-run/publication/log identities, verified passes, preparation evidence and limits.
-Obtain fresh exact-content approval and push the test/docs correction with normal
-CI. Review the complete JavaScript results and other consumers, execute/review
-the corrective covering run, and resolve any further failures before acceptance.
-No runtime, shared-fixture, markup, pin or workflow changes. No exhaustive audit,
-green run, corrective delivery SHA or acceptance is invented.
-
-Remaining acceptance: verify delivery of both commits; review covering CI tied
-to the follow-up SHA(s), both new suites plus initial eligibility, legacy Apply/
-reaction and turn-helper results; verify full assembly/identity/reader/isolation
-and relevant combined/browser criteria; record applicable manual/accessibility
-evidence and explicit bounded acceptance. The combined suite's 16 preparation
-passes with real controller/bootstrap and mocked UI are not full-Admin or live-
-server coverage. [Executed evidence and limits](../handover/440-battle-action-global-feedback.md).
-Preparing/pushing code or earlier green CI alone cannot close 4A.11.
+No new authenticated live-server exercise, human visual/manual combat workflow,
+screen-reader test or exhaustive accessibility acceptance is inferred. The user
+accepted the bounded unit on the stated evidence; wider validation gates remain
+explicit and open rather than falsely recorded as passed. This documentation-only
+close-out uses [skip ci], with no application/test/pin/workflow change or new
+validation run/dispatch. README and TODO root remain accurate and unchanged.
 4A.12 Join and 4A.13 reconciliation remain proposed under preserved criteria;
-compatibility retires only after the respective callers migrate. No merge,
-deployment or deliverable/phase acceptance is implied.
+compatibility retires only after the respective callers migrate. Neither feedback
+deliverable nor 009.7 closes. No merge/deployment or blanket future write approval.
 
 ## Closed-unit anchors
 
@@ -72,6 +68,7 @@ deployment or deliverable/phase acceptance is implied.
 <a id="4a8-global-removal-fallback-feedback---2026-11-10"></a>
 <a id="4a9-activity-log-clear-feedback---2026-11-10"></a>
 <a id="4a10-viewer-font-adjustment-feedback---2026-11-10"></a>
+<a id="4a11-close-out---2026-11-10"></a>
 
 ## Approved policy and required Deliverable 1 steps
 

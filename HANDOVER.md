@@ -50,19 +50,23 @@ This is the index; substantive handover lives in numbered docs/handover sections
 42. [Global removal fallback feedback](docs/handover/410-global-removal-fallback-feedback.md)
 43. [Activity-log clear feedback](docs/handover/420-activity-log-clear-feedback.md)
 44. [Viewer font adjustment feedback](docs/handover/430-viewer-font-feedback.md)
-45. [Battle-action feedback: 4A.11 checkpoints](docs/handover/440-battle-action-global-feedback.md)
+45. [Battle-action feedback: 4A.11 bounded close-out](docs/handover/440-battle-action-global-feedback.md)
 
 ## Current state - 2026-11-10
 
 018, 009.5, 015 and 009.6 remain closed for accepted scopes; 340/350/360/370 retain
 all CI, failure/correction, manual-check, publication/merge identities and limits.
-009.7/both feedback deliverables remain open; 4A.1-4A.10 bounded units are closed.
-Initial 4A.11 checkpoint CI is verified. Follow-up commit 1 is delivered at
-272cfd73aa4c39602ed2dad96c1bd2e02ba28348; this change set contains follow-up
-commit 2 implementation/tests/docs. Covering follow-up CI and explicit 4A.11
-acceptance remain pending; implementation delivery is not integrated feedback or
-phase acceptance. [Task plan](docs/todo/097-feedback-delivery-plan.md); [440 scope/tests/limits](docs/handover/440-battle-action-global-feedback.md).
-Normal CI for mixed implementation commits; no follow-up CI success claimed.
+009.7/both feedback deliverables remain open; 4A.1-4A.11 bounded units are closed.
+4A.11 was explicitly accepted and close-out requested on 2026-11-10 after evidence
+reconciliation. Successful covering run 42896405201 attempt 1 (job 130110564256)
+tests final corrected revision 1b621c3909e751affc356fbbb98acc53a3f588e3;
+evidence publication 477583dc63a6f88d7161bef913a27ca7a931f374. Both earlier
+failed runs remain failures. Reviewed unit/legacy/assembly/browser evidence and
+manual/live-server/accessibility limits are retained in [440](docs/handover/440-battle-action-global-feedback.md).
+[Task plan](docs/todo/097-feedback-delivery-plan.md) retains 4A.12/4A.13 and wider
+feedback/phase gates; this is not integrated-deliverable or phase acceptance.
+This close-out changes documentation only and uses [skip ci]; no new validation
+run, workflow edit or dispatch is claimed or requested.
 016/017 and SG-TODO-019 remain proposed, agreed order unchanged. No merge/deployment.
 Longer index history is preserved in the [pre-checkpoint index](https://github.com/dajomas/Scrying-Glass/blob/9d05e129cc2b85099cf0e3bf394a1fe398d0af24/HANDOVER.md)
 and numbered sections, not deleted acceptance evidence.
