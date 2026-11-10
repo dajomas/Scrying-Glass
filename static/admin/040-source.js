@@ -83,30 +83,31 @@ document.querySelector('#clearActivityLog').onclick = async () => {
     const currentCount = Array.isArray(latest?.activity_log)
         ? latest.activity_log.length
         : 0;
+    const feedback = window.scryingAdminFeedback;
+    const spec = {region: 'global', operation: 'activity-log.clear',
+        target: 'activity-log', label: 'Clear activity log'};
 
     if (!currentCount) {
-        message('The activity log is already empty.');
-        return;
-    }
-
-    if (!confirm(`Clear all ${currentCount} activity log entries?`)) {
-        return;
-    }
-
-    try {
-        const result = await request('/api/activity-log/clear', {
-            method: 'POST',
+        feedback.publish(feedback.begin(spec), {
+            severity: 'info', text: 'The activity log is already empty.',
         });
-
-        await load();
-
-        message(
-            `Cleared ${result.cleared} activity log ${result.cleared === 1 ? 'entry' : 'entries'
-            }.`,
-        );
-    } catch (error) {
-        message(error.message);
+        return;
     }
+
+    if (!confirm(`Clear all ${currentCount} activity log entries?`)) return;
+    const ticket = feedback.begin(spec);
+    let result;
+    try {
+        result = await request('/api/activity-log/clear', {method: 'POST'});
+    } catch (error) {
+        feedback.publish(ticket, {severity: 'error', text: error.message});
+        return;
+    }
+    if (!feedback.isCurrent(ticket)) return;
+    feedback.publish(ticket, {severity: 'success',
+        text: `Cleared ${result.cleared} activity log ${result.cleared === 1 ? 'entry' : 'entries'}.`});
+    // Clear succeeded; load() owns refresh errors. Never replay POST here.
+    await load();
 };
 
 csvImportModal.addEventListener('click', event => {

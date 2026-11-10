@@ -50,6 +50,7 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 40. [Reset-all feedback: scoped 4A.6 delivery and validation](docs/handover/390-reset-all-feedback.md)
 41. [Individual combatant reset feedback: scoped 4A.7 delivery and validation](docs/handover/400-individual-reset-feedback.md)
 42. [Global removal fallback feedback: scoped 4A.8 delivery and validation](docs/handover/410-global-removal-fallback-feedback.md)
+43. [Activity-log clear feedback: scoped 4A.9 delivery and validation](docs/handover/420-activity-log-clear-feedback.md)
 
 ## Current validation status - 2026-11-09
 
