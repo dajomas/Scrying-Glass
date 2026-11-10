@@ -2,6 +2,49 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+## 4A.4 stage 1 fixture preparation - 2026-11-10
+
+The user approved stage 1 fixture preparation after a two-stage delivery proposal.
+This proposed commit changes tests/test_battle_actions_next.py and its deferred-boot
+fixture, plus the existing [task status](../todo/097-feedback-delivery-plan.md#4a4-next-turn-feedback---stage-1-fixture-preparation---2026-11-10)
+and this record. Production battle-actions-next.js and all runtime assets remain
+unchanged. This foundation stage is not usable new Next feedback or completion
+of 4A.4; the draft handler migration remains separate stage 2 with its own complete
+payload/approval. No stage 2 write is approved here.
+
+Both fixtures load the real feedback controller/view/bootstrap. The interaction
+fixture reuses feedback_browser_fixture.install_feedback; the parser/defer fixture
+serves real feedback scripts in order before its stub Admin. Fixture message()
+uses the real global adapter, not direct DOM writes. Initial, fetched and refreshed
+snapshots pass through the production request-sequence/scope observer with complete
+campaign/setup identities; malformed fixture scope fails explicitly. The scope-
+switch fixture retains its other-setup behavior with a valid campaign reference.
+Other Admin transport/helpers remain stubbed, not authenticated/live-server tests.
+
+All 12 existing interaction methods and boot assertions are retained. A new
+interaction method verifies real dependency availability, a rendered scoped error,
+retirement on a setup transition and zero mutation requests. The boot fixture also
+checks real dependency availability and an initially empty controller snapshot.
+No transport/concurrency/reopening assertion is weakened and no production
+fallback is added merely to accommodate isolated fixtures.
+
+Executed: AST parsing of the added test method and node --check of the added
+scope helper/notice JavaScript snippet passed. This is not full-file Python
+execution or execution of either Chromium fixture. Browser methods, full suites
+and covering CI remain pending. Existing Python discovery includes both modules;
+normal CI is required and no workflow change/dispatch is included. Do not infer
+that the shared Next algorithm or the later feedback migration passed from these
+limited preparation checks. No commit SHA or workflow result is invented.
+
+Preparation reused complete reads against verified unchanged live identities,
+including the original interaction/boot blobs cf947154bc6c87a61c0b4f8bd6d077dffee7016e
+and 59bb1396e8c91e26be71afef1cb0654a60e2c014, shared feedback helper and current
+instructions. README, root indexes and maintenance conventions remain accurate
+without edits. 4A.4, Deliverable 1 and SG-TODO-009.7 remain open; 4A.2/4A.3 stay
+closed, 4A.1's formal status and SG-TODO-019 are unchanged. The two-stage proposal
+was for reviewability, not an observed connector limit. Stage 2 still requires
+the shared Next feedback implementation/regressions, documentation and approval.
+
 ## 4A.3 acceptance and close-out - 2026-11-10
 
 The user explicitly requested that 4A.3 acceptance and close-out be recorded after
