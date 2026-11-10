@@ -1,0 +1,29 @@
+     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:12.9404250Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:12.9405165Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:12.9405579Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7044290Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7045649Z ERROR: test_fixed_toggles_use_state_not_labels_and_rejection_keeps_state (test_stage_b_rosters.StageBRosterTests.test_fixed_toggles_use_state_not_labels_and_rejection_keeps_state)
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7047062Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7047755Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7048919Z   File "/tmp/scrying-tests-euvn00xz/repo/tests/test_stage_b_rosters.py", line 150, in test_fixed_toggles_use_state_not_labels_and_rejection_keeps_state
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7050439Z     page.get_by_text('fixture rejected', exact=True).wait_for()
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7051049Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7052132Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 13663, in wait_for
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7053170Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7053491Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7054272Z         self._impl_obj.wait_for(state=state, timeout=to_milliseconds(timeout))
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7055014Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7055494Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7055797Z     ^
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7056677Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7057617Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7058026Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7058950Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/locator.py", line 943, in wait_for
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7059960Z     await self._frame._channel.waitForSelector(
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7060473Z     ...<5 lines>...
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7060823Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7061813Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7063042Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7063531Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7064566Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.1

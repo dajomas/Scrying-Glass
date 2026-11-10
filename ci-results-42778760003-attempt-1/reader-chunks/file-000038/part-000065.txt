@@ -1,0 +1,24 @@
+ct cause of the following exception:
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:48.4060937Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:48.4061070Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:48.4061637Z   File "/tmp/scrying-tests-atxgykta/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:48.4062134Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:48.4062804Z   File "/tmp/scrying-tests-atxgykta/repo/python/scrying_glass_monster_selection.py", line 152, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:48.4063332Z     lambda: fivetools_candidates(species, display),
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:48.4063659Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:48.4064251Z   File "/tmp/scrying-tests-atxgykta/repo/python/scrying_glass_monster_selection.py", line 144, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:48.4064983Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:48.4065722Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:48.4085790Z ok
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:48.4629034Z test_refresh_choice_apply_retains_identity_raw_roll_and_unselected_state (test_combined_monster_lookup_application.CombinedLookupApplicationTests.test_refresh_choice_apply_retains_identity_raw_roll_and_unselected_state) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:48.9926403Z test_width_halved_without_height_or_unrelated_field_changes (test_compact_combatant_inputs.CompactInputsTests.test_width_halved_without_height_or_unrelated_field_changes) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:48.9984602Z test_actual_battle_critical_flag (test_damage_logic.DamageTests.test_actual_battle_critical_flag) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:49.0052877Z test_actual_battle_handler_accepts_downed_target (test_damage_logic.DamageTests.test_actual_battle_handler_accepts_downed_target) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:49.0089461Z test_actual_character_delta_handler (test_damage_logic.DamageTests.test_actual_character_delta_handler) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:49.0112693Z test_all_damage_results_nonnegative (test_damage_logic.DamageTests.test_all_damage_results_nonnegative) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:49.0113823Z test_critical_hit_two_failures (test_damage_logic.DamageTests.test_critical_hit_two_failures) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:49.0115321Z test_critical_initial_drop_no_extra_failures (test_damage_logic.DamageTests.test_critical_initial_drop_no_extra_failures) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:49.0116954Z test_critical_with_one_failure_kills (test_damage_logic.DamageTests.test_critical_with_one_failure_kills) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:49.0118212Z test_damage_bypass (test_damage_logic.DamageTests.test_damage_bypass) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:49.0119259Z test_dead_not_healed (test_damage_logic.DamageTests.test_dead_not_healed) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T07:58:49.0120625Z test

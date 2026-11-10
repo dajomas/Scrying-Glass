@@ -1,0 +1,29 @@
+4/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7065548Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7066575Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7067620Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7068166Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7069277Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7070221Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7070605Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7071382Z playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7072006Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7072708Z   - waiting for get_by_text("fixture rejected", exact=True) to be visible
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7073138Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7073153Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7073459Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7074467Z FAIL: test_success_deadlines (test_admin_feedback_loading.FeedbackLoadingTests.test_success_deadlines)
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7075531Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7076182Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7077188Z   File "/tmp/scrying-tests-euvn00xz/repo/tests/test_admin_feedback_loading.py", line 103, in test_success_deadlines
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7078390Z     self.assertTrue(page.locator('#monsterAddNotification').is_visible())
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7079152Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7079740Z AssertionError: False is not true
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7080033Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7080334Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7081860Z FAIL: test_blank_notices_collapse_and_real_messages_reappear (test_admin_foundations.FoundationBrowserTests.test_blank_notices_collapse_and_real_messages_reappear) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7083473Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7084174Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7085692Z   File "/tmp/scrying-tests-euvn00xz/repo/tests/test_admin_foundations.py", line 151, in test_blank_notices_collapse_and_real_messages_reappear
+tests	Standalone Python browser and audit checks	2026-11-10T08:03:40.7087036Z     self.assertEqual(notice.text_content(), '  Visual review: message remains readable.  ')
+tests	Standalone Python browser and audit ch

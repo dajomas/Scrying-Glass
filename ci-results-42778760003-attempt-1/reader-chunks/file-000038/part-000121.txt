@@ -1,0 +1,28 @@
+age_removes_reserved_height)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6139464Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6139821Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6140445Z   File "/tmp/scrying-tests-atxgykta/repo/tests/test_admin_shell_layout.py", line 112, in test_clearing_message_removes_reserved_height
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6141030Z     self.set_message('An error occurred.')
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6141332Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6141829Z   File "/tmp/scrying-tests-atxgykta/repo/tests/test_admin_shell_layout.py", line 47, in set_message
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6142305Z     self.assertIsNotNone(setter)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6142829Z     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6143114Z AssertionError: unexpectedly None
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6143286Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6143464Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6144426Z FAIL: test_message_remains_visible_after_scrolling_and_uses_existing_setter (test_admin_shell_layout.AdminShellLayoutTests.test_message_remains_visible_after_scrolling_and_uses_existing_setter)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6145294Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6145667Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6146391Z   File "/tmp/scrying-tests-atxgykta/repo/tests/test_admin_shell_layout.py", line 100, in test_message_remains_visible_after_scrolling_and_uses_existing_setter
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6147084Z     self.set_message('The battle could not be started.')
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6147458Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6148045Z   File "/tmp/scrying-tests-atxgykta/repo/tests/test_admin_shell_layout.py", line 47, in set_message
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6148523Z     self.assertIsNotNone(setter)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6148788Z     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6149077Z AssertionError: unexpectedly None
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6149254Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6149432Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6150227Z FAIL: test_wrapped_message_resizes_header_without_overlap (test_admin_shell_layout.AdminShellLayoutTests.test_wrapped_message_resizes_header_without_overlap)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6150973Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6151338Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T08:00:28.6151969Z   File "/tmp/scrying-tests-atxgykta/repo/tests/te

@@ -1,0 +1,29 @@
+eturn self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1940557Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1941192Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1941809Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1942223Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1943214Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1943804Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1944132Z TimeoutError: private endpoint
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1981254Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1981940Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1982997Z   File "/tmp/scrying-tests-euvn00xz/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1983657Z     html = context.dnd_monster_detail_html(href)
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1984381Z   File "/tmp/scrying-tests-euvn00xz/repo/python/scrying_glass_dndbeyond.py", line 128, in dnd_monster_detail_html
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1985042Z     response = urlopen(request, timeout=15)
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1985672Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1986265Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1986626Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1987245Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1987876Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1988279Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1988948Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1989534Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1990104Z urllib.error.HTTPError: HTTP Error 403: fixture
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1990951Z Combined monster lookup failed for D&D Beyond
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1991711Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1992996Z   File "/tmp/scrying-tests-euvn00xz/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1993657Z     html = context.dnd_monster_detail_html(href)
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1994381Z   File "/tmp/scrying-tests-euvn00xz/repo/python/scrying_glass_dndbeyond.py", line 128, in dnd_monster_detail_html
+tests	Standalone Python browser and audit checks	2026-11-10T08:02:01.1995037Z     response = urlopen(request
