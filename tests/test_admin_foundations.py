@@ -143,17 +143,29 @@ class FoundationBrowserTests(unittest.TestCase):
                         self.assertEqual(notice.get_attribute('role'), 'status')
                         self.assertEqual(notice.get_attribute('aria-live'), 'polite')
                         self.assertEqual(notice.evaluate('n => n.getBoundingClientRect().height'), 0)
-                    page.evaluate("kinds => kinds.forEach(kind => paneNotification(kind, '  Visual review: message remains readable.  '))", kinds)
+                    page.evaluate("""kinds => kinds.forEach(kind => {
+                        const ticket = scryingAdminFeedback.begin({region:kind,operation:'fixture.foundations.notice',target:'notice',label:'Visual review'});
+                        paneNotification(kind, '  Visual review: message remains readable.  ', {ticket,severity:'error'});
+                    })""", kinds)
                     page.wait_for_function("ids => ids.every(id => !document.getElementById(id).hidden)", arg=ids)
                     for ident in ids:
                         notice = page.locator('#' + ident)
                         self.assertTrue(notice.is_visible())
-                        self.assertEqual(notice.text_content(), '  Visual review: message remains readable.  ')
+                        self.assertEqual(notice.locator('.sg-feedback-text').text_content(), 'Error:   Visual review: message remains readable.  ')
+                        self.assertEqual(notice.locator('[data-severity="error"]').count(), 1)
+                        self.assertEqual(notice.locator('.sg-feedback-dismiss').count(), 1)
+                    page.evaluate("""kinds => kinds.forEach(kind => {
+                        const ticket = scryingAdminFeedback.begin({region:kind,operation:'fixture.foundations.notice',target:'notice',label:'Visual review'});
+                        scryingAdminFeedback.resolve(ticket);
+                    })""", kinds)
                     page.wait_for_function("ids => ids.every(id => document.getElementById(id).hidden)", arg=ids)
-                page.evaluate("setMonsterSpeciesLookupStatus('Looking up a monster...')")
+                page.evaluate("""() => {
+                    const ticket = scryingAdminFeedback.beginLookup('fixture monster');
+                    setMonsterSpeciesLookupStatus('Looking up a monster...', {ticket,severity:'info'});
+                }""")
                 page.wait_for_function("!document.querySelector('#monsterAddNotification').hidden")
                 self.assertTrue(page.locator('#monsterAddNotification').is_visible())
-                page.evaluate("document.querySelector('#monsterAddNotification').firstChild.data = ' '")
+                page.evaluate("setMonsterSpeciesLookupStatus('')")
                 page.wait_for_function("document.querySelector('#monsterAddNotification').hidden")
                 page.add_script_tag(content=(ROOT / 'static/admin-notification-layout.js').read_text(encoding='utf-8'))
                 self.assertEqual(errors, [])

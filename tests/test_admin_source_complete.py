@@ -6,6 +6,7 @@ import subprocess
 import tempfile
 import unittest
 from python.scrying_glass_admin_source import ADMIN_SCRIPT_PARTS, read_admin_script
+from test_admin_source_preparation import BUNDLE_BYTES, verified_admin_bundle
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -16,9 +17,10 @@ class AdminSourceCompleteTests(unittest.TestCase):
         self.assertEqual({p.name for p in directory.iterdir()}, set(ADMIN_SCRIPT_PARTS))
         data = read_admin_script(ROOT / "static")
         self.assertEqual(data, b"".join((directory / name).read_bytes() for name in ADMIN_SCRIPT_PARTS))
-        self.assertEqual(len(data), 114814)
-        self.assertEqual(hashlib.sha256(data).hexdigest(),
-                         "40fca092f989bcd85eaf7f06dc02b962b662a28827864df68c998919cdf87b46")
+        expected = verified_admin_bundle()
+        self.assertEqual(len(data), BUNDLE_BYTES)
+        self.assertEqual(data, expected)
+        self.assertEqual(hashlib.sha256(data).hexdigest(), hashlib.sha256(expected).hexdigest())
 
     def test_reader_bounds(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -42,7 +44,10 @@ class AdminSourceCompleteTests(unittest.TestCase):
     def test_fixture_runner_isolation(self):
         import sys
         before = (ROOT / "static/admin.js").read_bytes()
-        command = "from pathlib import Path; import hashlib; d=Path('static/admin.js').read_bytes(); assert len(d)==114814; assert hashlib.sha256(d).hexdigest()=='40fca092f989bcd85eaf7f06dc02b962b662a28827864df68c998919cdf87b46'"
+        expected = verified_admin_bundle()
+        digest = hashlib.sha256(expected).hexdigest()
+        command = ("from pathlib import Path; import hashlib; d=Path('static/admin.js').read_bytes(); "
+                   f"assert len(d)=={BUNDLE_BYTES}; assert hashlib.sha256(d).hexdigest()=={digest!r}")
         result = subprocess.run([sys.executable, str(ROOT / "tools/run_split_tests.py"),
                                  "--", sys.executable, "-c", command], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)

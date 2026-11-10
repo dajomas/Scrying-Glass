@@ -35,7 +35,14 @@ class PreviewAlignmentTests(unittest.TestCase):
                             .closest('label').querySelector('.field-label').getBoundingClientRect().top)""", list(ids))
                         field = page.locator('#' + ids[-1])
                         group = field.locator('xpath=ancestor::fieldset[1]')
-                        self.assertEqual(group.locator(':scope > .sg-group-row').evaluate('n => getComputedStyle(n).alignItems'), 'flex-start')
+                        layout = group.locator(':scope > .sg-group-row').evaluate("""n => {
+                            const s = getComputedStyle(n);
+                            return {display:s.display,direction:s.flexDirection,wrap:s.flexWrap,align:s.alignItems};
+                        }""")
+                        self.assertEqual(layout['display'], 'flex')
+                        self.assertEqual(layout['direction'], 'row')
+                        self.assertEqual(layout['wrap'], 'wrap')
+                        self.assertIn(layout['align'], ('flex-start', 'flow-start'))
                         preview = page.locator('#' + ids[-1] + 'Preview')
                         box = preview.bounding_box()
                         input_box = field.bounding_box()

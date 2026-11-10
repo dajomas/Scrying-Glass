@@ -4,6 +4,7 @@ import runpy
 import unittest
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from feedback_browser_fixture import install_feedback
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -34,6 +35,9 @@ class AdminShellLayoutTests(unittest.TestCase):
     def setUp(self):
         self.page = self.browser.new_page(viewport={'width': 1440, 'height': 900})
         self.page.set_content(self.html)
+        install_feedback(self.page)
+        self.page.add_script_tag(content=(ROOT / 'static/admin/010-source.js').read_text(encoding='utf-8'))
+        self.page.add_script_tag(content=(ROOT / 'static/admin-notification-layout.js').read_text(encoding='utf-8'))
 
     def tearDown(self):
         self.page.close()
@@ -42,10 +46,12 @@ class AdminShellLayoutTests(unittest.TestCase):
         return self.page.locator(selector).bounding_box()
 
     def set_message(self, text):
-        source = (ROOT / 'static/admin.js').read_text()
-        setter = re.search(r'const message = text => \{.*?\n\};', source, re.S)
-        self.assertIsNotNone(setter)
-        self.page.evaluate('(text) => {' + setter.group(0) + 'message(text);}', text)
+        self.page.evaluate("""text => {
+            const a = window.scryingAdminFeedback;
+            const ticket = a.begin({region:'global', operation:'fixture.shell.message', target:'shell', label:'Shell layout'});
+            if (!text.trim()) a.resolve(ticket);
+            else message(text, {ticket, severity:'error'});
+        }""", text)
 
     def assert_scroll_boundary(self):
         header = self.bounds('#adminHeader')
