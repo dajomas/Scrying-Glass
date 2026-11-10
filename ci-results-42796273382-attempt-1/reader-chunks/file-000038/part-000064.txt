@@ -1,0 +1,30 @@
+ex = ft.load_json(root + "/index.json")
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8328999Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8329626Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8329946Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8330508Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8331066Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8331427Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8332296Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8332987Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8333285Z OSError: secret 5e.tools endpoint
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8336981Z Combined monster lookup failed for 5e.tools
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8337669Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8338872Z   File "/tmp/scrying-tests-0q2m6mu2/repo/python/scrying_glass_monster_selection.py", line 101, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8340038Z     index = ft.load_json(root + "/index.json")
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8341142Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8342417Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8343038Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8344112Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8345467Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8346147Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8347523Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8348529Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8349022Z OSError: secret 5e.tools endpoint
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8349354Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8349860Z The above exception was the direct cause of the following exception:
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8350399Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8350679Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8352022Z   File "/tmp/scrying-tests-0q2m6mu2/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Python test suite (including browser fixtures)	2026-11-10T10:08:03.8353057Z     found = fetch()
+tests	Python test suite (including bro

@@ -1,0 +1,30 @@
+secret D&D endpoint
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7812018Z Combined monster lookup failed for D&D Beyond
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7812670Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7813633Z   File "/tmp/scrying-tests-1yourulv/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7814267Z     hits = context.dnd_monster_candidates(species)
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7814882Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7815425Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7815743Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7816296Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7816848Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7817205Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7817813Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7818537Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7818815Z TimeoutError: secret D&D endpoint
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7819002Z 
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7819277Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7819571Z 
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7819717Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7820331Z   File "/tmp/scrying-tests-1yourulv/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7820882Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7821409Z   File "/tmp/scrying-tests-1yourulv/repo/python/scrying_glass_monster_selection.py", line 151, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7822237Z     lambda: dnd_candidates(context, species),
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7822589Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7823197Z   File "/tmp/scrying-tests-1yourulv/repo/python/scrying_glass_monster_selection.py", line 92, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7823992Z     raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7824991Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7862181Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7862744Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T10:11:10.7863582Z   File "/tmp/scrying-tests-1yourulv/repo/python/scrying_glass_monster_selection.py", line 101, in fivetools_candidates
+tests	Standalone Python browser and audi
