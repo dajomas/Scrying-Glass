@@ -96,16 +96,25 @@ class FeedbackLoadingTests(unittest.TestCase):
         self.assertEqual(writes, [])
 
     def test_success_deadlines(self):
-        page, _ = self.open_page()
-        self.emit(page, severity='success', operation='global')
-        self.emit(page, region='monsters', severity='success', operation='pane')
+        page, writes = self.open_page()
+        # install() leaves time running; pause before either success starts its timer.
+        # pause_at() takes Unix seconds, whereas run_for() takes milliseconds.
+        page.clock.pause_at(page.evaluate("Date.now() / 1000 + 60"))
+        self.emit(page, severity='success', operation='global', text='Global success')
+        self.emit(page, region='monsters', severity='success', operation='pane', text='Pane success')
+        self.assertTrue(page.locator('#monsterAddNotification').is_visible())
+        self.assertTrue(page.locator('#message').is_visible())
         page.clock.run_for(2999)
         self.assertTrue(page.locator('#monsterAddNotification').is_visible())
+        self.assertTrue(page.locator('#message').is_visible())
         page.clock.run_for(1)
         self.assertTrue(page.locator('#monsterAddNotification').is_hidden())
         self.assertTrue(page.locator('#message').is_visible())
-        page.clock.run_for(2000)
+        page.clock.run_for(1999)
+        self.assertTrue(page.locator('#message').is_visible())
+        page.clock.run_for(1)
         self.assertTrue(page.locator('#message').is_hidden())
+        self.assertEqual(writes, [])
 
     def test_retired_observer_is_guarded(self):
         page, _ = self.open_page()

@@ -93,3 +93,32 @@ The [13 proposed 4A execution units and per-task boundaries](../todo/097-feedbac
 Each bounded unit should reach a reviewed result with focused executed checks and explicit dependencies before another begins. Every subsequent external write still needs complete bound approval and its relevant tests/documentation. Focused tests are not full-Admin or CI acceptance; temporary artifacts are not the sole recovery point. The normal implementation CI rule resumes after checkpoint 2's one-off skip.
 
 This update changes only the existing task and handover documents and includes [skip ci]. Links, branch/checkpoint references and the proposed scope were reviewed. README and root TODO/HANDOVER were reviewed/reused against the verified baseline and remain accurate without edits. No automated tests were executed, no workflow was modified/dispatched and no 4A implementation or phase closure is claimed.
+
+## Deadline fixture clock correction - 2026-11-10
+
+At the user's request, this narrowly scoped stage-2 correction changes only
+test_success_deadlines in tests/test_admin_feedback_loading.py and this record.
+The fixture installed Playwright's clock without pausing it. Time could advance
+between browser protocol calls, so run_for(2999) did not mean 2,999 milliseconds
+since notice creation. Pause the clock after readiness and before both emits;
+then assert visibility at 0, 2999, 3000, 4999 and 5000 ms. Both notices share the
+frozen start time. Retain the exact three/five-second policy and add a no-write
+assertion. Production timers, rendering and other tests are unchanged.
+
+Executed: Python AST parsing of the revised method; a real Chromium Clock API
+smoke with native timers passed all five boundary states. A controlled 500 ms
+host-delay comparison reproduced the unpaused issue: 516 ms had elapsed before
+run_for(2999), producing 3515 ms and a hidden pane. With pause_at, the same delay
+left elapsed time at zero and the pane visible at 2999 ms. The numeric pause_at
+argument uses Unix seconds; run_for uses milliseconds. The smoke used async
+Playwright because this execution environment has a running asyncio loop.
+
+These are clock-harness checks, not execution of the production feedback-loading
+fixture or its full suite. Covering CI remains pending. Source CI run 42778760003
+attempt 1 covers 122e131a83e0bbd4f314d8f6fd95ace8a6cea6bb and remains failed;
+evidence is at e7130a196ca5211f66596cab03d14c3298928b39. Its Python summary is
+1,476 tests, 15 failures and one error, compared with 68 errors before stage 1.
+This correction does not resolve the other managed-notification, source-identity,
+roster-rejection or layout failures, complete stage 2/3, or close 4A.1/009.7.
+Normal CI applies without a skip marker. README, TODO and handover index links
+remain accurate without edits; existing task statuses stay open.
