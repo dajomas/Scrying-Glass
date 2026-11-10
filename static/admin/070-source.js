@@ -1,28 +1,3 @@
-function openBattleActions(actorId) {
-    if (battleActionsApplying) return;
-    if ((latest.lairs || []).some(x => x.id === actorId)) {
-        window.scryingOpenLairAction?.(actorId);
-        return;
-    }
-    const actor = [...latest.monsters, ...latest.characters]
-        .find(combatant => combatant.id === actorId);
-
-    if (!actor || !actor.active || !actor.in_turn) {
-        message('Only the current active combatant can perform battle actions.');
-        return;
-    }
-
-    document.querySelector('#battleActionNotice').textContent = '';
-    battleActionActorId = actorId;
-    battleStatisticsToken = latest.statistics_token;
-    document.querySelector('#battleActionTitle').textContent =
-        `Battle actions: ${actor.name}`;
-
-    battleActionRows.innerHTML = '';
-    addBattleActionRow(!actor.alive);
-    battleActionModal.hidden = false;
-}
-
 document.querySelector('#addBattleActionTarget').onclick = () => {
     addBattleActionRow();
 };

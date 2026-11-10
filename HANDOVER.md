@@ -1,6 +1,6 @@
 # Scrying Glass handover
 
-This file is the handover index. Detailed sections live in `docs/handover/`; do not expand this index into a monolithic handover document.
+This is the index; substantive handover lives in numbered docs/handover sections.
 
 ## Index
 
@@ -22,7 +22,6 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 15. [Renderer VM window fixture repair](docs/handover/150-renderer-vm-window.md)
 16. [Standalone audit and smoke fixtures](docs/handover/160-standalone-audit-and-smoke.md)
 17. [Manual reductions restart plan](docs/handover/170-manual-reductions-restart.md)
-
 18. [Attack statistics archive implementation](docs/handover/180-attack-statistics-delivery.md)
 19. [Restore statistics readability and affected-only display](docs/handover/190-statistics-restoration-layout.md)
 20. [Monster candidate selection](docs/handover/200-monster-candidate-selection.md)
@@ -39,32 +38,35 @@ This file is the handover index. Detailed sections live in `docs/handover/`; do 
 31. [Admin roster presentation](docs/handover/310-admin-rosters.md)
 32. [Initiative keyboard navigation](docs/handover/320-initiative-keyboard-navigation.md)
 33. [Monster initiative and refresh foundations](docs/handover/330-monster-initiative-foundations.md)
-
-34. [5e.tools initiative extraction correction: A.1 accepted, historical A.2 preparation](docs/handover/335-fivetools-initiative-correction.md)
-35. [Combined lookup, Refresh and roster correction delivery/validation](docs/handover/340-combined-monster-lookup.md)
-36. [Admin workflow navigation: closed after CI and user sign-off](docs/handover/350-admin-workflow-navigation.md)
-37. [Battle Actions combatant statistics: closed after CI and user sign-off](docs/handover/360-battle-actions-combatant-statistics.md)
-38. [Focused live encounter workspace: closed after corrective CI and renewed sign-off](docs/handover/370-live-encounter-workspace.md)
+34. [5e.tools initiative correction](docs/handover/335-fivetools-initiative-correction.md)
+35. [Combined lookup, Refresh and roster correction](docs/handover/340-combined-monster-lookup.md)
+36. [Admin workflow navigation](docs/handover/350-admin-workflow-navigation.md)
+37. [Battle Actions combatant statistics](docs/handover/360-battle-actions-combatant-statistics.md)
+38. [Focused live encounter workspace](docs/handover/370-live-encounter-workspace.md)
 39. [Feedback delivery plan and continuity](docs/handover/380-feedback-delivery-plan.md)
-   - [State-load feedback: bounded 4A.1 acceptance](docs/handover/385-state-load-feedback.md)
-40. [Reset-all feedback: scoped 4A.6 delivery and validation](docs/handover/390-reset-all-feedback.md)
-41. [Individual combatant reset feedback: scoped 4A.7 delivery and validation](docs/handover/400-individual-reset-feedback.md)
-42. [Global removal fallback feedback: scoped 4A.8 delivery and validation](docs/handover/410-global-removal-fallback-feedback.md)
-43. [Activity-log clear feedback: scoped 4A.9 delivery and validation](docs/handover/420-activity-log-clear-feedback.md)
-44. [Viewer font adjustment feedback: scoped 4A.10 delivery and validation](docs/handover/430-viewer-font-feedback.md)
+   - [State-load feedback](docs/handover/385-state-load-feedback.md)
+40. [Reset-all feedback](docs/handover/390-reset-all-feedback.md)
+41. [Individual combatant reset feedback](docs/handover/400-individual-reset-feedback.md)
+42. [Global removal fallback feedback](docs/handover/410-global-removal-fallback-feedback.md)
+43. [Activity-log clear feedback](docs/handover/420-activity-log-clear-feedback.md)
+44. [Viewer font adjustment feedback](docs/handover/430-viewer-font-feedback.md)
+45. [Battle-action feedback: initial 4A.11 checkpoint](docs/handover/440-battle-action-global-feedback.md)
 
-## Current validation status - 2026-11-09
+## Current state - 2026-11-10
 
-SG-TODO-018 is completed and closed at the user's explicit request after review of the remaining actions. A.1/A.2/A.3 acceptance remains; corrective CI 42526295799 attempt 1 and the user's successful roster visual check cover the final correction. See the [completed contract](docs/todo/180-monster-initiative-bonus.md), [reconciled correction plan](docs/todo/185-monster-correction-plan.md) and [close-out evidence and limitations](docs/handover/340-combined-monster-lookup.md#sg-todo-018-close-out---2026-11-08). The completed branch was subsequently merged into features/perplexity at b0630effbe99db8a40b27bb00cca007b198d4055; the earlier close-out itself did not perform that merge. No new merge-CI result is claimed here.
+018, 009.5, 015 and 009.6 remain closed for accepted scopes; 340/350/360/370 retain
+all CI, failure/correction, manual-check, publication/merge identities and limits.
+009.7/both feedback deliverables remain open; 4A.1-4A.10 bounded units are closed.
+Initial 4A.11 is WIP, not the remaining four notices or integrated feedback/phase
+acceptance. [Task plan](docs/todo/097-feedback-delivery-plan.md); [440 scope/tests/limits](docs/handover/440-battle-action-global-feedback.md).
+Normal CI for this mixed checkpoint; no success claimed before covering review.
+016/017 and SG-TODO-019 remain proposed, agreed order unchanged. No merge/deployment.
+Longer index history is preserved in the [pre-checkpoint index](https://github.com/dajomas/Scrying-Glass/blob/9d05e129cc2b85099cf0e3bf394a1fe398d0af24/HANDOVER.md)
+and numbered sections, not deleted acceptance evidence.
 
-SG-TODO-009.5 is completed/closed on the user's 2026-11-09 sign-off and request to close. Successful CI 42616924220 attempt 1 covers c7c51725, including the form/overwrite/copy refinements. The accepted later manual copy revision cfc7b0f1 updates template and matching test expectation; no separate covering CI result for that revision was supplied. See [350](docs/handover/350-admin-workflow-navigation.md) for historical evidence and limits. Overall SG-TODO-009 remains in progress; phases 009.1-009.6 are closed and 009.7 preparation is authorized at the user's request.
+## Maintenance
 
-SG-TODO-015 is completed/closed after successful CI 42624239041 attempt 1 covering d8f4f57b26325623fa662388102094cc1cb35fcd on features/perplexity, including the alignment correction, and the user's explicit 2026-11-09 sign-off and TODO close-out request. Evidence was published at 1214020a14e9e99b75a9ce8444eb7ce6051b2671 under ci-results-42624239041-attempt-1. See [360 close-out and evidence limits](docs/handover/360-battle-actions-combatant-statistics.md#close-out---2026-11-09). The documentation-only close-out included [skip ci] and claimed no new test execution.
-
-SG-TODO-009.6 is completed/closed on renewed user sign-off and explicit close/move-on request, 2026-11-09. Successful corrective Branch tests 42654298154 attempt 1 covers e512dd24a42dde0141193e860b383125248f2f06 on features/perplexity, published at a7c7614f23acb7a502c3e8c48f579faacfe1fc12 under ci-results-42654298154-attempt-1. All configured validation stages passed. The earlier failed run 42649656592 remains failed; the window-global fixture correction and subsequent success resolve that gate. See [370 close-out](docs/handover/370-live-encounter-workspace.md#sg-todo-0096-close-out---2026-11-09) for accepted scope, revocation/renewal history and evidence limits.
-
-SG-TODO-009.7 remains in progress/open. The user approved a two-deliverable feedback split and requested that the seven Deliverable 1 steps and Deliverable 2 target be stored before starting step 1. See the [current delivery plan](docs/todo/097-feedback-delivery-plan.md) and [continuity record](docs/handover/380-feedback-delivery-plan.md). These supersede earlier pending-policy/inspection-only wording, but deliver no application implementation or changed runtime message-expiry behavior. This documentation-only commit includes [skip ci], runs no automated tests and does not modify or dispatch a workflow. 016/017 remain proposed after 009.7.
-
-## Required update convention
-
-All future handover additions must follow the same indexed structure: update the relevant existing section or create a numbered Markdown file under `docs/handover/`, and update this index in the same commit. Read the [maintenance rules](docs/handover/040-maintenance-rules.md) before making changes.
+Update relevant numbered sections, preserve capitalization/ordering and links;
+update this index when adding/renaming/reordering/removing sections. Follow
+[maintenance rules](docs/handover/040-maintenance-rules.md) and live instructions;
+never expand this index into a monolithic handover.

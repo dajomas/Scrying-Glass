@@ -2,6 +2,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 const path = require('node:path');
+const {installFeedback} = require('./battle-action-feedback-fixture.cjs');
 const source = fs.readFileSync(path.join(__dirname, '../static/admin.js'), 'utf8');
 const block = source.slice(source.indexOf('function activeBattleTargets()'), source.indexOf("document.addEventListener('click', async event => {", source.indexOf('function activeBattleTargets()')));
 const controls = {};
@@ -14,6 +15,7 @@ function row() {
 const ctx = {latest:{monsters:[{id:'m',name:'Dead Mephit',active:true,alive:false,in_turn:true}],characters:[{id:'c',name:'Paladin',active:true,alive:true}]},
     battleActionRows:rows,battleActionForm:{},battleActionModal:{addEventListener(){}},battleActionsApplying:false, battleActionActorId:null,
     document:{createElement:row,querySelector:id=>controls[id] ||= {}},esc:x=>String(x),message(){}};
+installFeedback(ctx);
 vm.runInNewContext(block,ctx);
 ctx.addBattleActionRow(true);
 assert.match(rows.children[0].className,/battle-reaction-row/);

@@ -274,6 +274,13 @@ function activeBattleTargets() {
         .sort((left, right) => left.name.localeCompare(right.name));
 }
 
+function battleActionFeedback(operation, target, label, outcome) {
+    const feedback = window.scryingAdminFeedback;
+    const ticket = feedback.begin({region: 'global', operation: `battle.actions.${operation}`,
+        target: String(target), label});
+    return outcome === undefined ? feedback.resolve(ticket) : feedback.publish(ticket, outcome);
+}
+
 function closeBattleActions() {
     if (battleActionsApplying) return;
     battleActionModal.hidden = true;
@@ -390,5 +397,32 @@ function addStatisticsReductionRow() {
         <button data-remove-action-row type="button" class="danger">Remove</button>`;
     row.querySelector('[data-remove-action-row]').addEventListener('click',()=>row.remove());
     battleActionRows.appendChild(row);
+}
+
+function openBattleActions(actorId) {
+    if (battleActionsApplying) return;
+    if ((latest.lairs || []).some(x => x.id === actorId)) {
+        window.scryingOpenLairAction?.(actorId);
+        return;
+    }
+    const actor = [...latest.monsters, ...latest.characters]
+        .find(combatant => combatant.id === actorId);
+
+    if (!actor || !actor.active || !actor.in_turn) {
+        battleActionFeedback('eligibility', actorId, `Battle actions: ${actor?.name || actorId}`,
+            {severity: 'error', text: 'Only the current active combatant can perform battle actions.'});
+        return;
+    }
+
+    battleActionFeedback('eligibility', actorId, `Battle actions: ${actor.name}`);
+    document.querySelector('#battleActionNotice').textContent = '';
+    battleActionActorId = actorId;
+    battleStatisticsToken = latest.statistics_token;
+    document.querySelector('#battleActionTitle').textContent =
+        `Battle actions: ${actor.name}`;
+
+    battleActionRows.innerHTML = '';
+    addBattleActionRow(!actor.alive);
+    battleActionModal.hidden = false;
 }
 
