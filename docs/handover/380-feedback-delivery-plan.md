@@ -2,7 +2,50 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+## 4A.4 bounded acceptance and close-out - 2026-11-10
+
+The user explicitly accepted the bounded shared main/modal Next-turn feedback scope
+following successful stage 2 CI and requested proceeding with bounded acceptance.
+4A.4 is completed/closed, reconciling stage 1 fixture preparation and stage 2 runtime
+migration. Stage 2 implementation baf7ddf4dc9059b11c9df06cd85d5e3e0f81fdcf is covered
+by successful Branch tests 42818381973 attempt 1 on features/perplexity-009.7,
+published at cf43f0373617b3b2a07f0207bc7143adc4ad3bad under
+ci-results-42818381973-attempt-1. Reviewed run.json and jobs.json match that exact
+SHA and show successful syntax/import, Python/browser, pytest, JavaScript and
+standalone browser/audit stages. Stage 1 e07d5eb832ba8d80e02c9d9933ad7c0f5038936d
+also has verified successful covering run 42814023791 attempt 1, evidence
+50e52f692b1d08eb059a785b6937426229cf9934. Neither publication is the tested source SHA.
+
+Acceptance covers persistent operation-specific Next errors, related-success-only
+resolution, guard-safe report replacement, stale global/modal feedback suppression,
+explicit informational no-participant feedback and preservation of the existing
+mutation/refresh distinction, uncertainty wording, concurrency, control restoration,
+actor-reopening safeguards and no automatic POST retry. It does not approve a new
+turn algorithm, unrelated producers or near-field validation scope.
+
+Preparation's two syntax checks, 20 passing focused Node tests, four detected
+negative controls and restored-draft passes remain historical executed evidence.
+The later covering configured CI success is separate evidence. No new local test,
+individual-test log/assertion review, authenticated live-server or manual test is
+claimed by this close-out. Delivery-time pending-CI/acceptance statements below
+are historical and superseded by this record. See the [completed task](../todo/097-feedback-delivery-plan.md#4a4-stage-2-shared-next-feedback---2026-11-10).
+
+4A.2/4A.3 remain closed; 4A.1's formal status, SG-TODO-019 and agreed delivery order
+are unchanged. Deliverable 1, Deliverable 2 and SG-TODO-009.7 remain open. 4A.5
+End-battle feedback is the next proposed bounded unit, not implemented or started
+by this close-out. No full-deliverable/phase acceptance, merge or deployment.
+
+This documentation-only update changes the existing task and continuity sections.
+README/root indexes and maintenance rules were reviewed/reused against verified
+identities; their scope/links remain accurate without edits. No application/tests/
+configuration/workflows change, no tests run and no workflow is separately
+dispatched. Proposed/approved/actual message includes [skip ci]; that token does
+not verify a workflow-run state. No documentation commit SHA is invented.
+
 ## 4A.4 stage 2 shared Next feedback - 2026-11-10
+
+Historical stage 2 delivery follows; its pending validation/acceptance statements
+are superseded by the bounded close-out above.
 
 The user requested stage 2 preparation and push for CI after stage 1 succeeded.
 Stage 1 implementation e07d5eb832ba8d80e02c9d9933ad7c0f5038936d has verified
