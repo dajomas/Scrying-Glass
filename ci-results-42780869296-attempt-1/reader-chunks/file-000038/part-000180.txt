@@ -1,0 +1,29 @@
+dit checks	2026-11-10T08:18:56.1565407Z     self.assertEqual(group.locator(':scope > .sg-group-row').evaluate('n => getComputedStyle(n).alignItems'), 'flex-start')
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1566379Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1566911Z AssertionError: 'flow-start' != 'flex-start'
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1567259Z - flow-start
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1567485Z ?   ^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1567703Z + flex-start
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1567946Z ?   ^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1568072Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1568079Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1568299Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1569579Z FAIL: test_fields_and_preview_boxes_align_loaded_and_empty (test_monster_image_preview_alignment.PreviewAlignmentTests.test_fields_and_preview_boxes_align_loaded_and_empty) (width=375, loaded=False)
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1570691Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1571158Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1572045Z   File "/tmp/scrying-tests-z0su5rav/repo/tests/test_monster_image_preview_alignment.py", line 38, in test_fields_and_preview_boxes_align_loaded_and_empty
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1573185Z     self.assertEqual(group.locator(':scope > .sg-group-row').evaluate('n => getComputedStyle(n).alignItems'), 'flex-start')
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1574001Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1574555Z AssertionError: 'flow-start' != 'flex-start'
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1574919Z - flow-start
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1575147Z ?   ^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1575468Z + flex-start
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1575693Z ?   ^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1575814Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1575820Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1576026Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1577320Z FAIL: test_fields_and_preview_boxes_align_loaded_and_empty (test_monster_image_preview_alignment.PreviewAlignmentTests.test_fields_and_preview_boxes_align_loaded_and_empty) (width=375, loaded=True)
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1578393Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1578849Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1579678Z   File "/tmp/scrying-tests-z0su5rav/repo/tests/test_monster_image_preview_alignment.py", line 38, in test_fields_and_preview_boxes_align_loaded_and_empty
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1580725Z     self.assertEqual(group.locator(':scope > .s

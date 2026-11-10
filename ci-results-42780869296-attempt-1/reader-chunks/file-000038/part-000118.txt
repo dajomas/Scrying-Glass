@@ -1,0 +1,28 @@
+s.test_third_failure_removed) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6505507Z test_zero_hp_monster_excluded (test_turn_eligibility.TurnTests.test_zero_hp_monster_excluded) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6506123Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6506414Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6507658Z ERROR: test_fixed_toggles_use_state_not_labels_and_rejection_keeps_state (test_stage_b_rosters.StageBRosterTests.test_fixed_toggles_use_state_not_labels_and_rejection_keeps_state)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6508747Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6509262Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6510219Z   File "/tmp/scrying-tests-m6jnd3_n/repo/tests/test_stage_b_rosters.py", line 150, in test_fixed_toggles_use_state_not_labels_and_rejection_keeps_state
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6511112Z     page.get_by_text('fixture rejected', exact=True).wait_for()
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6511592Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6512448Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 13663, in wait_for
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6513116Z     self._sync(
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6513354Z     ~~~~~~~~~~^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6513766Z         self._impl_obj.wait_for(state=state, timeout=to_milliseconds(timeout))
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6514291Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6514631Z     )
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6514854Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6515660Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6516339Z     return task.result()
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6516613Z            ~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6517291Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/locator.py", line 943, in wait_for
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6518010Z     await self._frame._channel.waitForSelector(
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6518356Z     ...<5 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6518591Z     )
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6519262Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6519951Z     return mapper(await awaitable)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6520283Z                   ^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6520994Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwrigh

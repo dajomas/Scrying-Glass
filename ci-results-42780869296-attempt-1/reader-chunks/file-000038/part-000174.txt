@@ -1,0 +1,31 @@
+26-11-10T08:18:56.1457382Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1457639Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1458059Z         self._impl_obj.wait_for(state=state, timeout=to_milliseconds(timeout))
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1458598Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1458962Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1459194Z     ^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1459864Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1460542Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1460819Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1461507Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/locator.py", line 943, in wait_for
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1462244Z     await self._frame._channel.waitForSelector(
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1462604Z     ...<5 lines>...
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1462842Z     )
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1463551Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1464273Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1464606Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1465462Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1466138Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1467054Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1467816Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1468220Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1468989Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1469663Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1469928Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1470460Z playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 5000ms exceeded.
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1470954Z Call log:
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1471356Z   - waiting for get_by_text("fixture rejected", exact=True) to be visible
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1471700Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1471709Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1471947Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1473088Z FAIL: test_blank_notices_collaps

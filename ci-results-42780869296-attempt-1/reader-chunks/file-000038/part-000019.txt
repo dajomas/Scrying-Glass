@@ -1,0 +1,26 @@
+thon3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Python syntax and server import checks	2026-11-10T08:13:34.0543770Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Python syntax and server import checks	2026-11-10T08:13:34.0544069Z ##[endgroup]
+tests	Python test suite (including browser fixtures)	﻿2026-11-10T08:13:35.7159015Z ##[group]Run python tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_*.py' -v
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:35.7159612Z ^[[36;1mpython tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_*.py' -v^[[0m
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:35.7204150Z shell: /usr/bin/bash -e {0}
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:35.7204367Z env:
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:35.7204736Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:35.7205310Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:35.7205661Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:35.7205997Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:35.7206308Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:35.7206614Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:35.7206936Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:35.7207313Z   SG_VISUAL_ARTIFACTS: /home/runner/work/_temp/sg-admin-foundations
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:35.7207600Z ##[endgroup]
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:36.9809154Z test_bad_fields_and_passwords (test_accounts.AccountTests.test_bad_fields_and_passwords) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:37.1957658Z test_create_update_delete_and_no_hash_in_response (test_accounts.AccountTests.test_create_update_delete_and_no_hash_in_response) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:37.3132754Z test_duplicate_and_unknown_user (test_accounts.AccountTests.test_duplicate_and_unknown_user) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:37.4633648Z test_failed_import_is_atomic (test_accounts.AccountTests.test_failed_import_is_atomic) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:37.5831671Z test_fresh_bootstrap_only_once (test_accounts.AccountTests.test_fresh_bootstrap_only_once) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:37.7785975Z test_hash_is_retained_on_import (test_accounts.AccountTests.test_hash_is_retained_on_import) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:37.8932349Z test_import_promotes_first_admin_and_hashes (test_accounts.AccountTests.test_import_promotes_first_admin_and_hashes) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:37.9754977Z test_last_superadmin_guard (test_accounts.AccountTests.test_last_superadmin_guard) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:38.0923787Z test_repeat_import_does_not_resurrect_deleted_user (test_accounts.AccountTests.test_repeat_import_does_not_resurrect_deleted_user) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-10T08:13:38.1793436Z test_role_authorization (test_accounts.AccountTest

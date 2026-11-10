@@ -1,0 +1,29 @@
+11-10T08:17:30.1456397Z   File "/tmp/scrying-tests-z0su5rav/repo/python/scrying_glass_combined_lookup.py", line 32, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.1457220Z     raise ValueError("Incomplete or unsupported candidate list")
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.1457577Z ValueError: Incomplete or unsupported candidate list
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.1457899Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.1458172Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.1458632Z   File "/tmp/scrying-tests-z0su5rav/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.1459048Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.1459448Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.1459851Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.1460105Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.1460519Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.1460947Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.1461222Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.1461681Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.1462070Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.1462277Z TimeoutError: secret
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.2288602Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.2289078Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.2289598Z   File "/tmp/scrying-tests-z0su5rav/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.2290143Z     hits = context.dnd_monster_candidates(species)
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.2290630Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.2291060Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.2291319Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.2291745Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.2292176Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.2292474Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.2292947Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.2293365Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-10T08:17:30.2293603Z TimeoutError: secre

@@ -1,0 +1,48 @@
+rror'
+tests	JavaScript tests	2026-11-10T08:16:17.0398262Z   stack: |-
+tests	JavaScript tests	2026-11-10T08:16:17.0398730Z     Object.lookupMonsterSpeciesStats (evalmachine.<anonymous>:64:22)
+tests	JavaScript tests	2026-11-10T08:16:17.0399300Z     TestContext.<anonymous> (/tmp/scrying-tests-5f2tqcm3/repo/tests/fivetools-source-labels.test.cjs:38:17)
+tests	JavaScript tests	2026-11-10T08:16:17.0399784Z     Test.runInAsyncScope (node:async_hooks:214:14)
+tests	JavaScript tests	2026-11-10T08:16:17.0400114Z     Test.run (node:internal/test_runner/test:1047:25)
+tests	JavaScript tests	2026-11-10T08:16:17.0400503Z     Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+tests	JavaScript tests	2026-11-10T08:16:17.0400917Z     Test.postRun (node:internal/test_runner/test:1173:19)
+tests	JavaScript tests	2026-11-10T08:16:17.0401242Z     Test.run (node:internal/test_runner/test:1101:12)
+tests	JavaScript tests	2026-11-10T08:16:17.0401726Z     async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+tests	JavaScript tests	2026-11-10T08:16:17.0402220Z   ...
+tests	JavaScript tests	2026-11-10T08:16:17.0461975Z 1..3
+tests	JavaScript tests	2026-11-10T08:16:17.0462303Z # tests 3
+tests	JavaScript tests	2026-11-10T08:16:17.0462576Z # suites 0
+tests	JavaScript tests	2026-11-10T08:16:17.0462857Z # pass 2
+tests	JavaScript tests	2026-11-10T08:16:17.0463148Z # fail 1
+tests	JavaScript tests	2026-11-10T08:16:17.0463608Z # cancelled 0
+tests	JavaScript tests	2026-11-10T08:16:17.0463906Z # skipped 0
+tests	JavaScript tests	2026-11-10T08:16:17.0464291Z # todo 0
+tests	JavaScript tests	2026-11-10T08:16:17.0464733Z # duration_ms 48.309839
+tests	JavaScript tests	2026-11-10T08:16:17.0806260Z ##[endgroup]
+tests	JavaScript tests	2026-11-10T08:16:17.0806694Z ##[group]tests/initiative-join-gate.test.cjs
+tests	JavaScript tests	2026-11-10T08:16:17.2594903Z TAP version 13
+tests	JavaScript tests	2026-11-10T08:16:17.3746298Z # Subtest: characters: blocked click reports the name and prevents join handler
+tests	JavaScript tests	2026-11-10T08:16:17.3748014Z ok 1 - characters: blocked click reports the name and prevents join handler
+tests	JavaScript tests	2026-11-10T08:16:17.3748717Z   ---
+tests	JavaScript tests	2026-11-10T08:16:17.3749044Z   duration_ms: 2.227865
+tests	JavaScript tests	2026-11-10T08:16:17.3749378Z   type: 'test'
+tests	JavaScript tests	2026-11-10T08:16:17.3749660Z   ...
+tests	JavaScript tests	2026-11-10T08:16:17.3750219Z # Subtest: monsters: blocked click reports the name and prevents join handler
+tests	JavaScript tests	2026-11-10T08:16:17.3750990Z ok 2 - monsters: blocked click reports the name and prevents join handler
+tests	JavaScript tests	2026-11-10T08:16:17.3751501Z   ---
+tests	JavaScript tests	2026-11-10T08:16:17.3751790Z   duration_ms: 0.568335
+tests	JavaScript tests	2026-11-10T08:16:17.3752100Z   type: 'test'
+tests	JavaScript tests	2026-11-10T08:16:17.3752378Z   ...
+tests	JavaScript tests	2026-11-10T08:16:17.3752912Z # Subtest: numeric initiative permits joining, including zero and negatives
+tests	JavaScript tests	2026-11-10T08:16:17.3753657Z ok 3 - numeric initiative permits joining, including zero and negatives
+tests	JavaScript tests	2026-11-10T08:16:17.3754127Z   ---
+tests	JavaScript tests	2026-11-10T08:16:17.3754406Z   duration_ms: 1.436933
+tests	JavaScript tests	2026-11-10T08:16:17.3754716Z   type: 'test'
+tests	JavaScript tests	2026-11-10T08:16:17.3754994Z   ...
+tests	JavaScript tests	2026-11-10T08:16:17.3755896Z # Subtest: leaving remains allowed without initiative
+tests	JavaScript tests	2026-11-10T08:16:17.3756542Z ok 4 - leaving remains allowed without initiative
+tests	JavaScript tests	2026-11-10T08:16:17.3757015Z   ---
+tests	JavaScript tests	2026-11-10T08:16:17.3757369Z   duration_ms: 0.512634
+tests	JavaScript tests	2026-11-10T08:16:17.3757738Z   type: 'test'
+tests	JavaScript tests	2026-11-10T08:16:17.3758078Z   ...
+tests	JavaScript tests	2026-11-10T08:16:17.3758538Z # Subtest: saved-state refresh removes blocked me

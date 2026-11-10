@@ -1,0 +1,28 @@
+le "/tmp/scrying-tests-z0su5rav/repo/tests/test_admin_source_preparation.py", line 30, in test_fragment_sizes_and_identity
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1549383Z     self.assertEqual(hashlib.sha256(data).hexdigest(), digest)
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1549829Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1550827Z AssertionError: '943f2c753cd3104842221ed039141647d3010ba1a03f51755dac8eb912b13a66' != 'c8a8904b31b079ee73919d050506a62b57ad984a2be2def36236874ca1344140'
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1551753Z - 943f2c753cd3104842221ed039141647d3010ba1a03f51755dac8eb912b13a66
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1552477Z + c8a8904b31b079ee73919d050506a62b57ad984a2be2def36236874ca1344140
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1552788Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1552800Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1553013Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1554200Z FAIL: test_fields_and_preview_boxes_align_loaded_and_empty (test_monster_image_preview_alignment.PreviewAlignmentTests.test_fields_and_preview_boxes_align_loaded_and_empty) (width=1440, loaded=False)
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1555402Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1555849Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1556730Z   File "/tmp/scrying-tests-z0su5rav/repo/tests/test_monster_image_preview_alignment.py", line 38, in test_fields_and_preview_boxes_align_loaded_and_empty
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1557812Z     self.assertEqual(group.locator(':scope > .sg-group-row').evaluate('n => getComputedStyle(n).alignItems'), 'flex-start')
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1558619Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1559134Z AssertionError: 'flow-start' != 'flex-start'
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1559481Z - flow-start
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1559712Z ?   ^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1559942Z + flex-start
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1560188Z ?   ^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1560315Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1560322Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1560534Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1561693Z FAIL: test_fields_and_preview_boxes_align_loaded_and_empty (test_monster_image_preview_alignment.PreviewAlignmentTests.test_fields_and_preview_boxes_align_loaded_and_empty) (width=1440, loaded=True)
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1562774Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1563250Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1564135Z   File "/tmp/scrying-tests-z0su5rav/repo/tests/test_monster_image_preview_alignment.py", line 38, in test_fields_and_preview_boxes_align_loaded_and_empty
+tests	Standalone Python browser and au

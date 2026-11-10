@@ -1,0 +1,29 @@
+Z     self.assertEqual(len(data), 114814)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6568055Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6568396Z AssertionError: 114400 != 114814
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6568600Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6568818Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6569604Z FAIL: test_fixture_runner_isolation (test_admin_source_complete.AdminSourceCompleteTests.test_fixture_runner_isolation)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6570372Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6570819Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6571665Z   File "/tmp/scrying-tests-m6jnd3_n/repo/tests/test_admin_source_complete.py", line 48, in test_fixture_runner_isolation
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6572501Z     self.assertEqual(result.returncode, 0, result.stderr)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6572927Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6573418Z AssertionError: 1 != 0 : Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6573862Z   File "<string>", line 1, in <module>
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6574906Z     from pathlib import Path; import hashlib; d=Path('static/admin.js').read_bytes(); assert len(d)==114814; assert hashlib.sha256(d).hexdigest()=='40fca092f989bcd85eaf7f06dc02b962b662a28827864df68c998919cdf87b46'
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6576172Z                                                                                              ^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6576574Z AssertionError
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6576734Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6576741Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6576967Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6577754Z FAIL: test_complete_identity (test_admin_source_preparation.AdminSourcePreparationTests.test_complete_identity)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6578495Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6578932Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6579600Z   File "/tmp/scrying-tests-m6jnd3_n/repo/tests/test_admin_source_preparation.py", line 34, in test_complete_identity
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6580263Z     self.assertEqual(len(data), 114814)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6580595Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6580931Z AssertionError: 114400 != 114814
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6581117Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6581325Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6582305Z FAIL: test_fragment_sizes

@@ -1,0 +1,28 @@
+t/_impl/channel_owner.py", line 387, in finish
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6521661Z     raise e from None
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6522342Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6523426Z     result = await zone.run_async(lambda: awaitable)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6523976Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6524736Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6525527Z     return await func()
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6525782Z            ^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6526305Z playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 5000ms exceeded.
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6526807Z Call log:
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6527199Z   - waiting for get_by_text("fixture rejected", exact=True) to be visible
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6527535Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6527544Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6527766Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6528900Z FAIL: test_blank_notices_collapse_and_real_messages_reappear (test_admin_foundations.FoundationBrowserTests.test_blank_notices_collapse_and_real_messages_reappear) (width=1440)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6529924Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6530372Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6531203Z   File "/tmp/scrying-tests-m6jnd3_n/repo/tests/test_admin_foundations.py", line 151, in test_blank_notices_collapse_and_real_messages_reappear
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6532114Z     self.assertEqual(notice.text_content(), '  Visual review: message remains readable.  ')
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6532735Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6533611Z AssertionError: 'Information:   Visual review: message remains readable.  Dismiss' != '  Visual review: message remains readable.  '
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6534447Z - Information:   Visual review: message remains readable.  Dismiss
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6534975Z ? -------------                                            -------
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6535563Z +   Visual review: message remains readable.  
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6535800Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6535813Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6536032Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6537109Z FAIL: test_blank_notices_collapse_and_real_messages_reappear 

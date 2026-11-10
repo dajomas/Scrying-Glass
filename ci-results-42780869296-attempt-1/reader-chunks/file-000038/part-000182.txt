@@ -1,0 +1,21 @@
+	2026-11-10T08:19:00.0032324Z ##[group]tests/feedback_browser_fixture.py
+tests	Standalone Python browser and audit checks	2026-11-10T08:19:00.1942656Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T08:19:00.1943088Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-10T08:19:00.3953065Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-10T08:19:00.3957735Z ##[error]Process completed with exit code 1.
+tests	Post Run actions/checkout@v4	﻿2026-11-10T08:19:00.4040980Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-10T08:19:00.4763967Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-10T08:19:00.4802648Z git version 2.56.0
+tests	Post Run actions/checkout@v4	2026-11-10T08:19:00.4835511Z Temporarily overriding HOME='/home/runner/work/_temp/89f04a49-1784-47e0-917b-7dd329a23f98' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-10T08:19:00.4836349Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-10T08:19:00.4839739Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-10T08:19:00.4872836Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-10T08:19:00.4904589Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-10T08:19:00.5172162Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-10T08:19:00.5196289Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-10T08:19:00.5206200Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-10T08:19:00.5238325Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Post Run actions/checkout@v4	2026-11-10T08:19:00.5519635Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	Post Run actions/checkout@v4	2026-11-10T08:19:00.5550511Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+tests	Complete job	﻿2026-11-10T08:19:00.5926884Z Cleaning up orphan processes
+tests	Complete job	2026-11-10T08:19:00.6210470Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

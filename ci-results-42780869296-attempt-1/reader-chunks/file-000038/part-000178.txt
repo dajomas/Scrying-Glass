@@ -1,0 +1,29 @@
+ndalone Python browser and audit checks	2026-11-10T08:18:56.1532744Z AssertionError
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1532884Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1532897Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1533129Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1533913Z FAIL: test_complete_identity (test_admin_source_preparation.AdminSourcePreparationTests.test_complete_identity)
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1534704Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1535180Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1536057Z   File "/tmp/scrying-tests-z0su5rav/repo/tests/test_admin_source_preparation.py", line 34, in test_complete_identity
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1536737Z     self.assertEqual(len(data), 114814)
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1537090Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1537443Z AssertionError: 114400 != 114814
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1537633Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1537863Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1538898Z FAIL: test_fragment_sizes_and_identity (test_admin_source_preparation.AdminSourcePreparationTests.test_fragment_sizes_and_identity) (part='010-source.js')
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1539858Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1540438Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1541167Z   File "/tmp/scrying-tests-z0su5rav/repo/tests/test_admin_source_preparation.py", line 30, in test_fragment_sizes_and_identity
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1541919Z     self.assertEqual(hashlib.sha256(data).hexdigest(), digest)
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1542373Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1543329Z AssertionError: '174b907526607ab534c4ec34f04624906fe52a771bda4115807f28462458275f' != '85e469e2073cd957bddd54b4de5e979b516fe6efc8e4c56a09244e49886b15d2'
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1544248Z - 174b907526607ab534c4ec34f04624906fe52a771bda4115807f28462458275f
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1544850Z + 85e469e2073cd957bddd54b4de5e979b516fe6efc8e4c56a09244e49886b15d2
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1545162Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1545178Z 
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1545529Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1546515Z FAIL: test_fragment_sizes_and_identity (test_admin_source_preparation.AdminSourcePreparationTests.test_fragment_sizes_and_identity) (part='030-source.js')
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1547437Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1547883Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-10T08:18:56.1548633Z   Fi

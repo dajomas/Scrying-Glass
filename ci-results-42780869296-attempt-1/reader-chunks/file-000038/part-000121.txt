@@ -1,0 +1,28 @@
+2715Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6553208Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6554094Z   File "/tmp/scrying-tests-m6jnd3_n/repo/tests/test_admin_shell_layout.py", line 100, in test_message_remains_visible_after_scrolling_and_uses_existing_setter
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6554918Z     self.set_message('The battle could not be started.')
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6555473Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6556094Z   File "/tmp/scrying-tests-m6jnd3_n/repo/tests/test_admin_shell_layout.py", line 47, in set_message
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6556648Z     self.assertIsNotNone(setter)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6556958Z     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6557291Z AssertionError: unexpectedly None
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6557496Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6557710Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6558703Z FAIL: test_wrapped_message_resizes_header_without_overlap (test_admin_shell_layout.AdminShellLayoutTests.test_wrapped_message_resizes_header_without_overlap)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6559626Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6560038Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6560833Z   File "/tmp/scrying-tests-m6jnd3_n/repo/tests/test_admin_shell_layout.py", line 121, in test_wrapped_message_resizes_header_without_overlap
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6561625Z     self.set_message('Long message: ' + 'encounter-data-' * 20)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6562085Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6562719Z   File "/tmp/scrying-tests-m6jnd3_n/repo/tests/test_admin_shell_layout.py", line 47, in set_message
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6563270Z     self.assertIsNotNone(setter)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6563593Z     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6563925Z AssertionError: unexpectedly None
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6564131Z 
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6564340Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6565071Z FAIL: test_complete_identity (test_admin_source_complete.AdminSourceCompleteTests.test_complete_identity)
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6565989Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6566428Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6567094Z   File "/tmp/scrying-tests-m6jnd3_n/repo/tests/test_admin_source_complete.py", line 19, in test_complete_identity
+tests	Python test suite (including browser fixtures)	2026-11-10T08:16:09.6567715
