@@ -2,6 +2,43 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+## 4A.2 close-out - 2026-11-10
+
+4A.2 is completed and closed for its bounded Start/restart request-feedback scope
+at the user's explicit request to prepare the close-out after review of remaining
+requirements. Implementation b73908e1368cb38f9ad5f5eb028bcb638a8fbbba is covered by
+successful Branch tests 42800259474 attempt 1 on features/perplexity-009.7.
+Evidence publication: 31b6401daeb93085e131bf144f147330046466b1, directory
+ci-results-42800259474-attempt-1. Reviewed run.json and jobs.json match that exact
+implementation SHA, report completed/success and show successful Python/browser,
+JavaScript, pytest and standalone browser/audit stages. No per-test log re-review,
+new local execution, authenticated live-server or manual test is claimed.
+
+The delivered pre-request battle.start identity, persistent request failures,
+matching-success-only resolution, stale response protection and successful
+collapse/failed-Start visibility satisfy the agreed bounded scope with focused
+preparation regressions and covering configured CI. load() owns subsequent refresh
+failures; no automatic POST retry was introduced. Acceptance is limited to this
+unit by the user's close-out request, not inferred for neighboring producers or
+the phase. No separate mandatory manual-test gate was agreed for 4A.2.
+
+The [task record](../todo/097-feedback-delivery-plan.md#4a2-startrestart-request-feedback---2026-11-10)
+and README remove stale pending-4A.2-validation wording. The preparation section
+below remains historical; its delivery-time pending statements are superseded by
+this close-out, not deleted or applied to the current result. 4A.1's formal status
+is unchanged. Deliverable 1, Deliverable 2 and SG-TODO-009.7 remain open. 4A.3 is
+the next proposed bounded unit: Start eligibility and tie-order rejection feedback,
+without changing gates, ordering or payloads. No 4A.3 implementation is included.
+SG-TODO-019 remains proposed and the agreed delivery order is unchanged.
+
+This is a documentation-only update to README and the existing task/handover
+sections. Root TODO/HANDOVER indexes and maintenance rules were reviewed/reused
+against verified live identities; their links and open phase descriptions need
+no edits. No application, tests, dependencies or workflows change, no tests run
+and no workflow is separately dispatched. Proposed/approved/actual message must
+contain [skip ci]; the marker does not itself verify any workflow-run state.
+No merge, deployment, whole-deliverable acceptance or new commit SHA is claimed.
+
 ## 4A.2 preparation and baseline reconciliation - 2026-11-10
 
 The user authorized continued 4A.2 preparation and compatibility review. This commit
