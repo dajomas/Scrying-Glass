@@ -2,7 +2,52 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+## 4A.5 bounded acceptance and close-out - 2026-11-10
+
+The user explicitly requested bounded acceptance after successful covering CI was
+reviewed. 4A.5 is completed/closed for End-battle feedback only. Implementation
+2b358c7b963640b393fa91875bcfc574c9885ab3 on features/perplexity-009.7 is covered
+by successful Branch tests 42833154095 attempt 1, published at
+b545b2749d1ccf2390b63ce9d3731570db54710e under ci-results-42833154095-attempt-1.
+Reviewed run.json and jobs.json agree on that exact implementation SHA and show
+successful syntax/import, Python/browser, pytest, JavaScript and standalone
+browser/audit stages. The evidence publication is not the tested source SHA.
+
+Acceptance covers persistent operation-specific validation/request errors,
+confirmed-valid validation resolution, matching-request success replacement,
+unrelated-error isolation, stale scope/attempt suppression and separation of
+successful End from subsequent load-owned refresh failure. The existing empty-order
+gate, confirmation and non-resetting request/server behavior are preserved. No
+Reset All migration, automatic POST retry or new concurrency policy is accepted.
+
+Preparation's two syntax checks, 15 passing focused Node regressions, three detected
+negative controls and restored-draft passes remain historical executed evidence.
+The later covering configured CI success is separate evidence. This close-out
+claims no new local execution, individual-test log/assertion review, authenticated
+live-server or manual test. Historical delivery-time pending validation/acceptance
+wording below is superseded by this bounded close-out, not a claim of additional
+coverage. See the [completed task](../todo/097-feedback-delivery-plan.md#4a5-end-battle-feedback---2026-11-10).
+
+4A.2/4A.3/4A.4 stay closed; 4A.1's formal status, SG-TODO-019 and agreed delivery
+order are unchanged. Deliverable 1, Deliverable 2 and SG-TODO-009.7 remain open.
+4A.6 Reset-all feedback is the next proposed bounded unit, not started by this
+close-out. No whole-deliverable/phase acceptance, merge or deployment is implied.
+
+This update changes only existing TODO/handover sections. Complete previously
+approved contents were reused after live blob identities matched implementation
+2b358c7b963640b393fa91875bcfc574c9885ab3: task
+cd1541ae266ad5d9bbb3175de22f7cde8d17ff4b and handover
+e26fbf614c82cf45bac032481176ef2d0838e67b. Live instructions were retrieved;
+README, root indexes and maintenance rules retain accurate open-phase scope/links
+without edits. No application/tests/configuration/workflow changes or new test
+execution; no workflow separately dispatched. Proposed/approved/actual commit
+message includes [skip ci], which does not itself verify a workflow-run state.
+No documentation commit SHA is invented before delivery.
+
 ## 4A.5 End-battle feedback delivery - 2026-11-10
+
+Historical preparation/delivery follows. Pending validation and acceptance wording
+is superseded by the bounded close-out above.
 
 Prepared at the user's implementation/push request on features/perplexity-009.7:
 static/admin-end-feedback.js, its deferred include after Start validation, the
