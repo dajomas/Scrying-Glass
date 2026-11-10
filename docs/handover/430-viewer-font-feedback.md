@@ -54,9 +54,18 @@ prior README/TODO/source/config/workflow reads reused. Existing Branch tests
 discovers the new .cjs and source contracts; no workflow changes or separate
 dispatch. Mixed implementation uses normal CI without a skip marker. Task plan
 and handover index updates accompany code/tests/pins. README/TODO root retain
-accurate open-phase scope/links without edits. 4A.9 implementation
-92183b55707759d57c361cbfe877c44c06af4f02 remains delivered but open pending its
-separate CI review/acceptance; this does not close it or alter 420. 4A.1-4A.8
-stay closed, 4A.11 onward stays proposed. Deliverable 1, Deliverable 2 and
-SG-TODO-009.7 remain open. SG-TODO-019, agreed order and accepted 009.6 gates
-are unchanged. No acceptance, merge or deployment is included.
+accurate open-phase scope/links without edits.
+
+### Related-unit status reconciliation - 2026-11-10
+
+4A.9 implementation 92183b55707759d57c361cbfe877c44c06af4f02 is now completed/
+closed for its bounded scope after reviewed successful covering CI and the user's
+explicit close-out request; see [420 acceptance](420-activity-log-clear-feedback.md#4a9-bounded-acceptance-and-close-out---2026-11-10).
+This supersedes this handover's earlier 4A.9-pending note. That run covers 4A.9,
+not 4A.10. 4A.10 was delivered as ca4ec4ec64c47d8b865c292e97f01ed4599108f2 and
+remains open pending its own covering CI review/full-Admin validation and
+acceptance. This documentation-only status correction runs no tests and changes
+no 4A.10 runtime, tests, source pins or workflow; the close-out message includes
+[skip ci]. 4A.1-4A.9 stay closed, 4A.11 onward stays proposed. Deliverable 1,
+Deliverable 2 and SG-TODO-009.7 remain open. SG-TODO-019, agreed order and accepted
+009.6 gates are unchanged. No 4A.10 acceptance, merge or deployment is included.
