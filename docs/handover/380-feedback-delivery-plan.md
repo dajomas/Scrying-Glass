@@ -2,7 +2,56 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+## 4A.4 stage 2 shared Next feedback - 2026-11-10
+
+The user requested stage 2 preparation and push for CI after stage 1 succeeded.
+Stage 1 implementation e07d5eb832ba8d80e02c9d9933ad7c0f5038936d has verified
+successful covering Branch tests 42814023791 attempt 1, published at
+50e52f692b1d08eb059a785b6937426229cf9934 under ci-results-42814023791-attempt-1.
+Run and job/step metadata match the exact SHA and show all configured test stages
+successful. This is baseline evidence, not covering CI for the new Next handler.
+
+Prepared stage 2 changes only static/battle-actions-next.js, the new 20-test Node
+fixture and current [task/handover status](../todo/097-feedback-delivery-plan.md#4a4-stage-2-shared-next-feedback---2026-11-10).
+The shared main/modal operation publishes explicit battle.next errors and resolves
+only a related error on complete success. An unpublished encounter-scoped lifetime
+guard survives a settled error ticket so failed follow-up reconciliation can
+replace that report, without rebinding into another encounter. Guard retirement
+publishes no notice. Stale global/modal feedback is suppressed; no-active-participant
+is explicit info after related-error resolution. Preparation/uncertain/confirmed-
+advancement wording, existing POST/concurrency/control/reopening safeguards and
+no automatic retry are retained. Normal state refresh alone does not resolve Next.
+
+Executed in the preceding preparation turn: handler and fixture syntax checks;
+20 Node tests passed, zero failed/skipped; four temporary negative controls were
+detected (success severity for errors, removed old-scope guard, removed matching
+resolution, removed settled-ticket rebinding); restored draft passed all 20 again.
+Unchanged source/controller reconstructions matched Git blobs
+dfa305352daf297e87c018879fb48e9fbcb0effd and
+c4a82d73b21f4657da651ce45f76003c3348a6ef. Handler is 7,655 UTF-8 bytes, Node test
+12,075. Tests execute the complete Next asset with real controller but mocked
+DOM, transport, refresh and bootstrap scope adapter. Refresh-error publication is
+simulated, not a full loadState pipeline. These are not full-browser, authenticated
+server or new final-review executions. Full browser/combined suites and covering
+stage 2 CI remain pending. 4A.4, Deliverable 1 and 009.7 remain open.
+
+Compatibility review retains the green stage 1 Python fixtures unchanged: real
+feedback assets/scope observation are already loaded, all existing transport,
+concurrency, drafts, round/lair, reopening and uncertainty assertions remain.
+Modal/global substring assertions accept explicit feedback prefixes; stale-scope
+report suppression does not weaken existing no-reopen/no-retry assertions.
+Deferred boot already supplies feedback before the real Next script. Existing CI
+discovers the new .cjs and Python fixtures, with no workflow edit or dispatch.
+Core fragments, bundle pins/marker, templates and other runtime assets are unchanged.
+README/root indexes retain accurate scope/links without edits. Live instructions,
+write schema and unchanged baseline identities were verified. The mixed commit
+has no skip marker; no commit SHA or covering CI result is invented. 4A.2/4A.3
+stay closed; 4A.1's formal status, SG-TODO-019 and remaining producers are unchanged.
+
 ## 4A.4 stage 1 fixture preparation - 2026-11-10
+
+Historical stage 1 preparation follows; its pending-CI wording is superseded by
+the verified stage 1 result above, not by a new local browser run.
 
 The user approved stage 1 fixture preparation after a two-stage delivery proposal.
 This proposed commit changes tests/test_battle_actions_next.py and its deferred-boot
@@ -164,7 +213,7 @@ No merge, deployment, whole-deliverable acceptance or new commit SHA is claimed.
 
 The user authorized continued 4A.2 preparation and compatibility review. This commit
 contains the narrowly scoped Start/restart request migration and its 12-test Node
-regression file, with README and [task status](../todo/097-feedback-delivery-plan.md#4a2-startrestart-request-feedback---2026-11-10)
+regression file, with README and [task status](../todo/097-feedback-delivery-plan.md#4a2-preparation-and-baseline-reconciliation---2026-11-10)
 reconciled. Implementation is prepared for delivery; covering CI/full-Admin validation
 and acceptance remain pending. Deliverable 1 and SG-TODO-009.7 remain open. No
 commit SHA is invented before the write. 4A.3 eligibility/tie-order producers and

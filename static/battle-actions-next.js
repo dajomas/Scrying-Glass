@@ -6,6 +6,7 @@
         const main = document.getElementById('nextBattle');
         const modal = document.getElementById('battleActionModal');
         if (!button || !main || !modal) return;
+        const feedback = window.scryingAdminFeedback;
         const originalRequest = request;
         let moving = false, writes = 0, advancing = false;
         const scope = state => JSON.stringify([
@@ -14,11 +15,6 @@
         ]);
         const current = state => [...(state?.characters || []), ...(state?.monsters || []),
             ...(state?.lairs || [])].find(item => item.active && item.in_turn);
-        const report = text => {
-            message(text);
-            const notice = document.getElementById('battleActionNotice');
-            if (notice) notice.textContent = text;
-        };
         // Include refresh time: the existing forms keep their submit controls disabled.
         const applying = () => writes > 0 || battleActionsApplying ||
             [...modal.querySelectorAll('button[type="submit"]')].some(control => control.disabled);
@@ -45,6 +41,17 @@
         async function next(fromModal) {
             if (moving || advancing || applying()) return;
             if (fromModal && modal.hidden) return;
+            const spec = {region: 'global', operation: 'battle.next', target: 'battle', label: 'Next turn'};
+            const guard = feedback.begin({...spec, operation: 'battle.next.guard'});
+            let ticket = feedback.begin(spec);
+            const report = (text, severity = 'error') => {
+                if (!feedback.isCurrent(guard)) return;
+                // A preparation report may be followed by failed reconciliation.
+                if (!feedback.isCurrent(ticket)) ticket = feedback.begin(spec);
+                if (!feedback.publish(ticket, {severity, text})) return;
+                const notice = document.getElementById('battleActionNotice');
+                if (notice) notice.textContent = text;
+            };
             const beforeScope = scope(latest);
             const actor = fromModal ? battleActionActorId : null;
             moving = true;
@@ -93,7 +100,12 @@
                         return;
                     }
                     openBattleActions(active.id);
-                } else if (fromModal) report('No active participant remains.');
+                } else if (fromModal) {
+                    if (feedback.isCurrent(guard)) feedback.resolve(ticket);
+                    report('No active participant remains.', 'info');
+                    return;
+                }
+                if (feedback.isCurrent(guard)) feedback.resolve(ticket);
             } catch (error) {
                 // A transport failure can occur after the server has committed. Never retry POST.
                 let reconciled = false;
@@ -107,6 +119,7 @@
             } finally {
                 controls.forEach((control, index) => {control.disabled = disabled[index];});
                 moving = false;
+                feedback.resolve(guard);
             }
         }
         button.onclick = () => next(true);
