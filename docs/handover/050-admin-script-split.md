@@ -114,3 +114,30 @@ other JavaScript/standalone failures are resolved or complete 009.7/4A.1. Keep t
 existing task statuses open pending combined validation and acceptance. README,
 TODO and HANDOVER indexes were reviewed/reused against verified live identities
 and need no unrelated edits; the existing source-split handover link is retained.
+
+## Foundations fixture identity correction - 2026-11-10
+
+Run 42787168052 attempt 1 covers 686792c52d2af37b1bfb103a1dfde20148758c69,
+published at b1827738fffe121fa455e4917380bc6a979ee4e0. Its Python summary is
+1,477 tests, zero assertion failures and two timeout errors in the foundations
+notice method's 1440/375 subcases. The prior fixture repair introduced those
+errors: two destinations used the same lane/operation/target identity, so the
+second error notice replaced the first and both could never be visible together.
+Region is intentionally a destination, not part of the controller operation key.
+
+The correction uses target:kind in both emission and matching resolution. The
+fixture now explicitly checks both region/target records coexist, resolves panes
+one at a time and checks the unresolved pane stays visible. Existing text, ARIA,
+dismissal, blank-height, lookup-clear, browser-error and no-mutation assertions
+remain. No controller, rendering, production source, timeout or CI changes.
+
+Executed: isolated Node checks against the exact production controller passed for
+both campaign/characters and battleSetup/monsters pairs; each retained two records,
+resolved the first without removing the second and emptied after final resolution.
+The original shared target reproduced one-record collisions for both pairs. The
+controller reconstruction matched live blob c4a82d73b21f4657da651ce45f76003c3348a6ef.
+AST parsing of the revised resolution block and two embedded-JavaScript syntax
+checks passed. These are controller-level checks, not the full Admin browser
+fixture. Covering CI remains pending; other JavaScript/standalone failures and
+overall 4A.1/009.7 acceptance remain open. Normal CI applies without a skip marker.
+README, TODO and HANDOVER index identities were rechecked and remain unchanged.

@@ -144,7 +144,7 @@ class FoundationBrowserTests(unittest.TestCase):
                         self.assertEqual(notice.get_attribute('aria-live'), 'polite')
                         self.assertEqual(notice.evaluate('n => n.getBoundingClientRect().height'), 0)
                     page.evaluate("""kinds => kinds.forEach(kind => {
-                        const ticket = scryingAdminFeedback.begin({region:kind,operation:'fixture.foundations.notice',target:'notice',label:'Visual review'});
+                        const ticket = scryingAdminFeedback.begin({region:kind,operation:'fixture.foundations.notice',target:kind,label:'Visual review'});
                         paneNotification(kind, '  Visual review: message remains readable.  ', {ticket,severity:'error'});
                     })""", kinds)
                     page.wait_for_function("ids => ids.every(id => !document.getElementById(id).hidden)", arg=ids)
@@ -154,10 +154,18 @@ class FoundationBrowserTests(unittest.TestCase):
                         self.assertEqual(notice.locator('.sg-feedback-text').text_content(), 'Error:   Visual review: message remains readable.  ')
                         self.assertEqual(notice.locator('[data-severity="error"]').count(), 1)
                         self.assertEqual(notice.locator('.sg-feedback-dismiss').count(), 1)
-                    page.evaluate("""kinds => kinds.forEach(kind => {
-                        const ticket = scryingAdminFeedback.begin({region:kind,operation:'fixture.foundations.notice',target:'notice',label:'Visual review'});
-                        scryingAdminFeedback.resolve(ticket);
-                    })""", kinds)
+                    records = page.evaluate("""() => scryingAdminFeedback.snapshot()
+                        .filter(record => record.operation === 'fixture.foundations.notice')
+                        .map(record => [record.region, record.target])""")
+                    self.assertCountEqual(records, [[kind, kind] for kind in kinds])
+                    for index, kind in enumerate(kinds):
+                        page.evaluate("""kind => {
+                            const ticket = scryingAdminFeedback.begin({region:kind,operation:'fixture.foundations.notice',target:kind,label:'Visual review'});
+                            scryingAdminFeedback.resolve(ticket);
+                        }""", kind)
+                        self.assertTrue(page.locator('#' + ids[index]).is_hidden())
+                        for other in ids[index + 1:]:
+                            self.assertTrue(page.locator('#' + other).is_visible())
                     page.wait_for_function("ids => ids.every(id => document.getElementById(id).hidden)", arg=ids)
                 page.evaluate("""() => {
                     const ticket = scryingAdminFeedback.beginLookup('fixture monster');
