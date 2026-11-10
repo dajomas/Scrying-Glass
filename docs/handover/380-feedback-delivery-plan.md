@@ -2,6 +2,50 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+## 4A.3 Start validation delivery - 2026-11-10
+
+Prepared for delivery on features/perplexity-009.7 at the user's integration/push
+request: static/admin-start-validation.js, its ordered deferred template include,
+13-test Node regression file and existing TODO/handover status updates. The
+[4A.3 task](../todo/097-feedback-delivery-plan.md#4a3-start-validation-feedback---2026-11-10)
+remains in progress pending behavioral/covering CI validation and acceptance.
+No implementation SHA or passing workflow is invented before evidence exists.
+
+The 2,011-byte enhancement replaces only the two synchronous validation handlers;
+it calls the existing normalOrder, tiedBuckets, tieUI, readTieOrder and
+initiativeBuckets helpers. Separate encounter-scoped battle.start.eligibility and
+battle.start.tie-order identities retain actionable errors and resolve only on
+related validation success. Opening/cancelling ties preserves tie errors; a valid
+no-tie Start resolves an obsolete tie error. Request and state-load feedback remain
+owned by 4A.2/4A.1. Existing gates, selected order, payloads and cancellation are
+preserved; near-field associations remain Deliverable 2. No automatic POST retry.
+
+The earlier draft proposed editing 070-source.js (projected 19,531 bytes); the
+integrated design instead loads this small asset immediately after
+admin-initial-visibility.js. Core fragments, bundle pins/marker and the accepted
+4A.2 wrapper remain unchanged, so no source-identity expectation update is needed.
+Header reparenting preserves handlers. No new stylesheet, workflow or runtime
+configuration. Per-render local-asset cache busting continues to apply.
+
+Executed during preparation: node --check for the asset and new regression file
+passed. The test syntax check first detected a malformed regex, corrected to a
+literal include assertion; the final syntax check passed. Thirteen behavioral
+regressions were prepared but NOT executed locally; neither full Admin browser
+nor combined suites ran. The tests load production ordering/validation helper
+slices and the real feedback controller with mocked DOM, transport entry point
+and bootstrap adapter. Existing CI discovers the new .cjs and existing page,
+tie-default/swap and eligibility fixtures. Treat delivery as validation pending
+until covering normal CI is reviewed; syntax checks are not regression success.
+
+Live instructions and available read/write schemas were reviewed. Complete prior
+reads were reused against unchanged live tree identities, including README,
+indexes, feedback/core/template/test contracts and maintenance rules. README's
+separate-4A.3 warning and root index links/open phase scope remain accurate without
+edits. Existing documentation history is retained below. The mixed commit has no
+skip marker and performs no workflow dispatch. 4A.2 remains closed at a58ea25;
+4A.1's formal status, SG-TODO-019, remaining producers, Deliverable 2 and phase
+acceptance are unchanged. No merge or deployment is included.
+
 ## 4A.2 close-out - 2026-11-10
 
 4A.2 is completed and closed for its bounded Start/restart request-feedback scope
