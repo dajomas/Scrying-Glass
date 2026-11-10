@@ -2,7 +2,60 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+## 4A.7 bounded acceptance and close-out - 2026-11-10
+
+The user explicitly requested closing 4A.7 and updating documentation after reviewed
+successful covering CI. 4A.7 is completed/closed for bounded character/monster
+individual-reset feedback. Implementation ffcca4e9b85a9bc90ba39c495213de608b9a04c2
+on features/perplexity-009.7 is covered by successful Branch tests 42852710398
+attempt 1, published at 05324088a62b7db78b6cc8834593e9c4001972ac under
+ci-results-42852710398-attempt-1. Reviewed run.json and jobs.json match the exact
+implementation SHA and show successful syntax/import, Python/browser, pytest,
+JavaScript and standalone browser/audit stages. Publication is not the tested SHA.
+
+Acceptance covers persistent encounter-scoped combatant.reset errors with JSON
+[kind,id] target isolation and submitted-name labels; silent matching-success
+resolution before load(); unrelated/combatant/Reset All/End/load isolation; stale
+scope/attempt suppression; and separation of successful mutation from refresh
+failure. Preserve encoded/bodyless POST, existing server reset semantics, absence
+of an individual-reset confirmation and existing delegated-handler precedence.
+No automatic retry, success toast, new concurrency policy, bulk-reset/removal
+migration or revocation of already-sent mutations is implied. The core-fragment
+integration and corresponding identity/size expectation update are accepted for
+this unit, not a general weakening of identity or fragment-bound contracts.
+
+Preparation's 17 passing Node regressions, four detected negative controls and
+restored-draft passes remain historical executed evidence. Final integration's
+complete-fragment syntax, size/digest agreement, pin-file AST check and reverse
+source comparison remain separate static evidence. Configured covering CI stages
+subsequently passed. No new local test execution, individual-test CI log/assertion
+review, authenticated live-server or manual test is claimed by this close-out.
+Successful configured CI does not establish exhaustive rendering/browser/security/
+accessibility coverage; final combined producer-specific Admin validation remains
+open at Deliverable 1 level. Pending validation/acceptance wording in the historical
+delivery section below is superseded by this record, not an invented extra run.
+See the [completed task](../todo/097-feedback-delivery-plan.md#4a7-individual-combatant-reset-feedback---2026-11-10).
+
+4A.1-4A.6 stay closed. 4A.8 global removal fallback feedback is the next proposed
+bounded unit, not started by this close-out; later units remain proposed. Deliverable
+1, Deliverable 2 and SG-TODO-009.7 remain open. SG-TODO-019, agreed delivery order,
+priorities, owners and deadlines are unchanged. No full-deliverable/phase acceptance,
+merge or deployment is included.
+
+Only the existing task plan and this handover section change. Live instructions
+were retrieved; complete current files reviewed: task blob
+1a622836eed937396233786aedbeecd1a19ae234 and handover blob
+c02d8123693c2257e1652446bfdac44e5ef6a695. README, root indexes and maintenance
+rules retain accurate scope/links without edits; no index is touched merely for
+status bookkeeping. No application/test/configuration/workflow changes, no tests
+executed and no workflow separately dispatched. Proposed/approved/actual message
+includes [skip ci], which does not itself establish workflow-run state. No new
+documentation commit SHA is invented before delivery.
+
 ## 4A.7 preparation and delivery - 2026-11-10
+
+Historical delivery follows; pending CI/validation/acceptance statements are
+superseded by the bounded close-out above, not by a new local behavioral run.
 
 Prepared at the user's finish/push request on features/perplexity-009.7, baseline
 502cfafa24658cd2b6ca75c9cdbf202a8f51647d. [4A.7](../todo/097-feedback-delivery-plan.md#4a7-individual-combatant-reset-feedback---2026-11-10)
