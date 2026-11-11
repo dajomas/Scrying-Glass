@@ -1,0 +1,49 @@
+ retry resolves only its related error
+tests	JavaScript tests	2026-11-11T03:03:48.4135099Z ok 10 - silent successful retry resolves only its related error
+tests	JavaScript tests	2026-11-11T03:03:48.4135542Z   ---
+tests	JavaScript tests	2026-11-11T03:03:48.4135812Z   duration_ms: 0.362615
+tests	JavaScript tests	2026-11-11T03:03:48.4136114Z   type: 'test'
+tests	JavaScript tests	2026-11-11T03:03:48.4136375Z   ...
+tests	JavaScript tests	2026-11-11T03:03:48.4136831Z # Subtest: new failed retry replaces only the related old result
+tests	JavaScript tests	2026-11-11T03:03:48.4137459Z ok 11 - new failed retry replaces only the related old result
+tests	JavaScript tests	2026-11-11T03:03:48.4137905Z   ---
+tests	JavaScript tests	2026-11-11T03:03:48.4138169Z   duration_ms: 0.204017
+tests	JavaScript tests	2026-11-11T03:03:48.4138484Z   type: 'test'
+tests	JavaScript tests	2026-11-11T03:03:48.4138742Z   ...
+tests	JavaScript tests	2026-11-11T03:03:48.4139178Z # Subtest: older response cannot overwrite a newer attempt
+tests	JavaScript tests	2026-11-11T03:03:48.4139756Z ok 12 - older response cannot overwrite a newer attempt
+tests	JavaScript tests	2026-11-11T03:03:48.4140340Z   ---
+tests	JavaScript tests	2026-11-11T03:03:48.4140612Z   duration_ms: 0.107121
+tests	JavaScript tests	2026-11-11T03:03:48.4140901Z   type: 'test'
+tests	JavaScript tests	2026-11-11T03:03:48.4141171Z   ...
+tests	JavaScript tests	2026-11-11T03:03:48.4141736Z # Subtest: terminal tickets cannot publish twice or later resolve newer feedback
+tests	JavaScript tests	2026-11-11T03:03:48.4142528Z ok 13 - terminal tickets cannot publish twice or later resolve newer feedback
+tests	JavaScript tests	2026-11-11T03:03:48.4143031Z   ---
+tests	JavaScript tests	2026-11-11T03:03:48.4143293Z   duration_ms: 0.09294
+tests	JavaScript tests	2026-11-11T03:03:48.4143582Z   type: 'test'
+tests	JavaScript tests	2026-11-11T03:03:48.4143849Z   ...
+tests	JavaScript tests	2026-11-11T03:03:48.4144343Z # Subtest: cancelled old timer callback cannot clear replacement error
+tests	JavaScript tests	2026-11-11T03:03:48.4145053Z ok 14 - cancelled old timer callback cannot clear replacement error
+tests	JavaScript tests	2026-11-11T03:03:48.4145511Z   ---
+tests	JavaScript tests	2026-11-11T03:03:48.4145769Z   duration_ms: 0.098288
+tests	JavaScript tests	2026-11-11T03:03:48.4146079Z   type: 'test'
+tests	JavaScript tests	2026-11-11T03:03:48.4146337Z   ...
+tests	JavaScript tests	2026-11-11T03:03:48.4146819Z # Subtest: scope change invalidates old timers and old responses
+tests	JavaScript tests	2026-11-11T03:03:48.4147463Z ok 15 - scope change invalidates old timers and old responses
+tests	JavaScript tests	2026-11-11T03:03:48.4147899Z   ---
+tests	JavaScript tests	2026-11-11T03:03:48.4148161Z   duration_ms: 0.123175
+tests	JavaScript tests	2026-11-11T03:03:48.4148465Z   type: 'test'
+tests	JavaScript tests	2026-11-11T03:03:48.4148727Z   ...
+tests	JavaScript tests	2026-11-11T03:03:48.4149184Z # Subtest: A to B to A does not revive a ticket from the first A
+tests	JavaScript tests	2026-11-11T03:03:48.4150379Z ok 16 - A to B to A does not revive a ticket from the first A
+tests	JavaScript tests	2026-11-11T03:03:48.4150804Z   ---
+tests	JavaScript tests	2026-11-11T03:03:48.4151084Z   duration_ms: 0.080521
+tests	JavaScript tests	2026-11-11T03:03:48.4151387Z   type: 'test'
+tests	JavaScript tests	2026-11-11T03:03:48.4151654Z   ...
+tests	JavaScript tests	2026-11-11T03:03:48.4152182Z # Subtest: same-scope refresh does not invalidate tickets or clear feedback
+tests	JavaScript tests	2026-11-11T03:03:48.4152964Z ok 17 - same-scope refresh does not invalidate tickets or clear feedback
+tests	JavaScript tests	2026-11-11T03:03:48.4153437Z   ---
+tests	JavaScript tests	2026-11-11T03:03:48.4153685Z   duration_ms: 0.085017
+tests	JavaScript tests	2026-11-11T03:03:48.4153963Z   type: 'test'
+tests	JavaScript tests	2026-11-11T03:03:48.4154202Z   ...
+tests	JavaScript tests	2026-11-11T03:03:48.4154700Z # Subtest: viewer lane remains separate from encoun
