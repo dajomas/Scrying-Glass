@@ -543,6 +543,32 @@ function selectionMessage(kind) {
         : 'Select one or more monsters first.';
 }
 
+const rosterPending = new Map();
+async function rosterMutation(kind, operation, target, send, success) {
+    const feedback = window.scryingAdminFeedback;
+    const key = JSON.stringify([kind, operation, target]);
+    const previous = rosterPending.get(key);
+    if (previous && (feedback.isCurrent(previous.ticket) || feedback.isCurrent(previous.refresh))) return;
+    const spec = {region: kind, operation, target: JSON.stringify([kind, target]), label: 'Update roster'};
+    const ticket = feedback.begin(spec);
+    const refresh = feedback.begin({...spec, operation: operation + '.refresh', label: 'Refresh roster'});
+    const pending = {ticket, refresh};
+    rosterPending.set(key, pending);
+    try {
+        let result;
+        try {result = await send();}
+        catch (error) {feedback.publish(ticket, {severity: 'error', text: error.message}); return;}
+        if (!feedback.isCurrent(ticket)) return;
+        if (success) feedback.publish(ticket, {severity: 'success', text: success(result)});
+        else feedback.resolve(ticket);
+        try {await load(true); feedback.resolve(refresh);}
+        catch {feedback.publish(refresh, {severity: 'error', text:
+            'Changes saved, but display reload failed. Reload the page; do not repeat the change.'});}
+    } finally {
+        if (rosterPending.get(key) === pending) rosterPending.delete(key);
+    }
+}
+
 async function runBulkAction(kind, action) {
     if (action === 'select-all') {
         setAllSelected(kind, true);
@@ -555,9 +581,12 @@ async function runBulkAction(kind, action) {
     }
 
     const ids = selectedIds(kind);
+    const feedback = window.scryingAdminFeedback;
+    const selectionSpec = {region: kind, operation: `roster.bulk.${action}.selection`,
+        target: kind, label: 'Select combatants'};
 
     if (!ids.length) {
-        paneNotification(kind, selectionMessage(kind));
+        feedback.publish(feedback.begin(selectionSpec), {severity: 'error', text: selectionMessage(kind)});
         return;
     }
 
@@ -579,14 +608,12 @@ async function runBulkAction(kind, action) {
         }
     }
 
-    try {
-        const result = await bulkRequest(kind, action, ids);
-        const count = Number(result?.count ?? ids.length);
-        paneNotification(kind, `${count} ${kind === 'characters' ? 'character' : 'monster'}${count === 1 ? '' : 's'} updated.`);
-        await load();
-    } catch (error) {
-        paneNotification(kind, error.message);
-    }
+    feedback.resolve(feedback.begin(selectionSpec));
+    return rosterMutation(kind, `roster.bulk.${action}`, JSON.stringify([...ids].map(String).sort()),
+        () => bulkRequest(kind, action, ids), result => {
+            const count = Number(result?.count ?? ids.length);
+            return `${count} ${kind === 'characters' ? 'character' : 'monster'}${count === 1 ? '' : 's'} updated.`;
+        });
 }
 
 async function removeCombatant(kind, id) {
@@ -607,18 +634,18 @@ async function removeCombatant(kind, id) {
         return;
     }
 
-    try {
-        await bulkRequest(kind, 'remove', [id]);
-
-        paneNotification(kind, `${noun[0].toUpperCase()}${noun.slice(1)} ` + `“${item.name}” removed.`);
-
-        await load();
-    } catch (error) {
-        paneNotification(kind, error.message);
-    }
+    return rosterMutation(kind, 'roster.remove', String(id),
+        () => bulkRequest(kind, 'remove', [id]),
+        () => `${noun[0].toUpperCase()}${noun.slice(1)} ` + `“${item.name}” removed.`);
 }
 
 async function patch(kind, id, data) {
+    if (['characters', 'monsters'].includes(kind)) {
+        return rosterMutation(kind, 'roster.patch', JSON.stringify([id, Object.keys(data).sort()]),
+            () => request(`/api/${kind}/${encodeURIComponent(id)}`, {
+                method: 'PATCH', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data),
+            }));
+    }
     try {
         await request(`/api/${kind}/${encodeURIComponent(id)}`, {
             method: 'PATCH',

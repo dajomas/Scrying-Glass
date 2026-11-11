@@ -1,4 +1,4 @@
-// Production Join gate plus unchanged core functions; scoped controller adapter and mock transport/DOM.
+// Production Join gate and migrated core functions; scoped controller adapter and mock transport/DOM.
 'use strict';
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -14,13 +14,13 @@ function slice(start, end) {
     return core.slice(first, last);
 }
 const functions = slice('async function request(', 'function esc(') +
-    slice('async function runBulkAction(', 'async function removeCombatant(') +
+    slice('const rosterPending =', 'async function removeCombatant(') +
     slice('async function patch(', 'function colorMarker(');
 function setup({kind = 'characters', ids = ['a'], complete = false} = {}) {
     const controller = createController({setTimeout() {throw new Error('Unexpected expiry');}, clearTimeout() {}});
     let scope = 'fixture', ready, clicks, loads = 0;
     controller.setScope('encounter', scope);
-    const api = {begin: spec => controller.begin({...spec, lane: 'encounter', scope, placement: 'global'}),
+    const api = {begin: spec => controller.begin({...spec, lane: 'encounter', scope, placement: spec.region === 'global' ? 'global' : 'pane'}),
         publish: controller.publish, resolve: controller.resolve, isCurrent: controller.isCurrent};
     const calls = [], panes = [], selected = [...ids];
     let transport = async () => new Response('{}'), refresh = async () => {};
@@ -116,15 +116,19 @@ for (const method of ['patch', 'bulk']) test(`${method}: refresh failure is not 
     await assert.rejects(w[method](), /Refresh failed/);
     assert.equal(w.calls.length, 1);assert.equal(w.loads, 1);assert.equal(w.records().length, 0);
 });
-test('non-Join patch, leave and bulk actions delegate to original core behavior', async () => {
+test('non-Join patch, leave and bulk actions delegate to explicit local feedback', async () => {
     const w = setup();w.transport(async () => rejected('Other error'));
     await w.patch('a', {active: false});await w.patch('a', {initiative: 0});await w.bulk('leave-battle');
-    assert.equal(w.calls.length, 3);assert.equal(w.records().length, 0);
-    assert.deepEqual(w.panes.map(p => p.text), ['Other error', 'Other error', 'Other error']);
+    assert.equal(w.calls.length, 3);assert.equal(w.records().length, 3);assert.deepEqual(w.panes, []);
+    assert(w.records().every(r => r.region === 'characters' && r.placement === 'pane' && r.severity === 'error'));
+    assert.deepEqual(w.records().map(r => r.text), ['Other error', 'Other error', 'Other error']);
+    assert(w.records().every(r => r.operation !== 'roster.join'));
 });
-test('empty bulk selection retains original local validation without a request', async () => {
-    const w = setup({ids: []});await w.bulk();assert.equal(w.calls.length, 0);assert.equal(w.records().length, 0);
-    assert.deepEqual(w.panes, [{region: 'characters', text: 'Select one or more first.'}]);
+test('empty bulk selection keeps local validation explicit without a request', async () => {
+    const w = setup({ids: []});await w.bulk();assert.equal(w.calls.length, 0);assert.deepEqual(w.panes, []);
+    assert.equal(w.records().length, 1);assert.equal(w.records()[0].region, 'characters');
+    assert.equal(w.records()[0].operation, 'roster.bulk.join-battle.selection');
+    assert.equal(w.records()[0].severity, 'error');assert.equal(w.records()[0].text, 'Select one or more first.');
 });
 test('encoded single ID, method, headers and payload are preserved', async () => {
     const w = setup();await w.patch('a/b', {active: true});

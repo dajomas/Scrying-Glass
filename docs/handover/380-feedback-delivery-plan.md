@@ -7,6 +7,67 @@ is preserved verbatim in the numbered sections below; dated statuses are history
 not a reversal of later acceptances. The [current task plan](../todo/097-feedback-delivery-plan.md)
 and [4A.13 close-out](470-global-feedback-close-out.md) retain current scope.
 
+## Stage 2 shared-roster checkpoint - 2026-11-11
+
+Scope: shared bulk actions, individual removal and row patches in complete
+010-source.js only. Explicit pane selection/request errors persist, matching
+recovery preserves unrelated notices, and kind/target/field identities separate
+characters from monsters even with identical IDs. Pending guards cover the
+mutation and its display refresh; stale completions cannot refresh a new scope.
+Bulk/removal success precedes load(true); refresh failures have a separate
+persistent no-replay error. Patch success only resolves its matching error,
+retaining the prior absence of a patch-success notice. Confirmation wording,
+selection sets/order, JSON values, encoded IDs and non-roster fallback remain.
+Scope guards do not revoke mutations already sent to the server.
+
+The accepted initiative-join-gate.js owner/runtime is unchanged. Its non-Join
+fixture delegation now includes the shared helper and asserts explicit local
+errors instead of retired compatibility expectations. All global Join ownership,
+single-report, matching-resolution, stale/superseded and server-gate boundaries
+remain; bulk Join pane-success migration is still separate unfinished work.
+
+Complete 010: 19,772 UTF-8 bytes (228 below the limit), SHA-256
+b6b62f1f72def4bd17c6866062ec08fb76b66d75f31d69248bdd801001a0fc86.
+Only 010's expected digest and bundle-size pin change: calculated bundle size
+119,270 bytes, using unchanged live sizes for the other seven fragments.
+Surrounding 010 source is byte-for-byte preserved. Eight-part order, other pins,
+tamper/size guards and the tracked admin.js failure marker remain unchanged.
+No enhancement cache version, template, accepted Join runtime or workflow changes.
+
+Current preparation: complete-fragment Node syntax and pin-file compilation
+passed. One combined Node run passed 46 cases, no failures/cancellations/skips:
+20 new cases execute complete 010 with the production feedback controller and
+feedback bootstrap, mocked DOM/transport and deterministic timers; 26 retained
+Join cases use production-derived functions and a scoped test adapter. Only two
+local-compatibility expectation blocks change in that retained suite. Four
+negative controls detected missing stale guards, matching resolution, roster
+identity and distinct patch targets; restored combined run passed 46/46.
+Earlier 16-case draft checks are not added as extra current case counts.
+
+These are not complete-Admin/browser/rendering, actual assembled-reader/runner,
+full pin/tamper regression, authenticated-server, human visual, screen-reader or
+exhaustive accessibility acceptance. Those suites and covering CI remain pending.
+Normal push-triggered CI is required; existing discovery includes the new .cjs.
+No [skip ci] in this mixed commit, workflow edit or separate dispatch. README,
+HANDOVER index and plan 097 retain accurate links/open-scope boundaries. TODO
+links this checkpoint. No new commit/run identity or CI outcome is invented.
+
+Stage 1, Stage 2, both deliverables and 009.7 remain open; 4A.1-4A.13 remain
+closed for accepted scopes. Creation/import and character Edit, initiative/raw
+roll/monster Edit/roll-all, select-dead, bulk Join pane success, full composition,
+CI/corrections and bounded acceptance remain. Pane compatibility stays until
+required migrations complete. No merge/deployment or automatic mutation replay.
+
+## Source-review checkpoint CI verified - 2026-11-11
+
+Commit 9ab6df2b2c149803fc6502a401ddf21f219b2a09 has successful covering
+Branch tests 43012530942 attempt 1, job 130495442110; publication
+dc4774dc1c0c96522ebc0c3429425c3b56c05842. Matching run/job metadata
+confirms completed/success and all configured validation stages succeeded.
+Individual results/screenshots were not exhaustively reviewed. This supersedes
+the historical source-review pending-CI wording below, not its acceptance/scope
+limits. That run does not cover this subsequent shared-roster change set.
+
 ## Stage 2 source-review checkpoint - 2026-11-11
 
 Scope of this change set: source-review feedback integration only; Stage 2,
