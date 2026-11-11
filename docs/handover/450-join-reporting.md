@@ -2,6 +2,10 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+Current status: completed and closed for the accepted bounded 4A.12 scope on
+2026-11-11. The close-out below supersedes historical pending-status notes,
+not preparation limits or wider deliverable/phase gates.
+
 ## 4A.12 implementation - 2026-11-11
 
 This change set supplies bounded Join reporting on features/perplexity-009.7.
@@ -64,3 +68,49 @@ task status are updated. 4A.11 remains closed; 4A.13, both feedback deliverables
 009.7 and wider gates remain open. No archive/Patch/, merge or deployment.
 
 [Task and acceptance](../todo/097-feedback-delivery-plan.md#4a12-join-reporting---2026-11-11).
+
+## 4A.12 bounded close-out - 2026-11-11
+
+Implementation delivered at 981ffe61a9bb4da162944707b42132d384eea1ad.
+Successful Branch tests 42949763708 attempt 1, job 130291065704, identifies that
+exact head SHA on features/perplexity-009.7. Published run.json and jobs.json
+agree on completed/success; all listed stages succeeded. Publication commit:
+488997aacb50ed44d785c9738457fab1b854ad90. Evidence is pinned to that immutable
+snapshot under ci-results-42949763708-attempt-1/, not to rotating latest results.
+
+Detailed reconciliation read the lossless workflow reader at
+reader-chunks/file-000038/ within that directory:
+
+| Parts | Direct observed evidence |
+|---|---|
+| 131-134 | admin-join-feedback.test.cjs: all 26 named cases passed; zero failures, cancellations or skips. Both kinds, single/bulk HTTP and network failures, one rejection/no pane duplicate, matching retry/other-target isolation, bulk key vs payload ordering, structured/HTTP fallback errors, stale/superseded outcomes, refresh separation/no replay, non-Join delegation, empty selection, encoded ID and idempotent/late installation. |
+| 162-163 | initiative-join-gate.test.cjs: 12 passed, zero failures/cancellations/skips. Blocked clicks, zero/negative initiative, leave, metadata refresh, original response consumption, rejection fallback, explicit identity and unrelated-error preservation on retry. |
+| 080-081 | All 10 InitiativeJoinTests passed: individual/bulk rejection, atomicity/rollback, invalid types, imported/legacy invalid active state, leave/clear and valid zero/negative/positive values. |
+| 021 | Browser loading/header order, Join persistence without mutation or unrelated clear, matching retry, old-scope suppression, keyboard fallback and preserved request-error shape passed. |
+| 022 | Browser rendering: explicit severity/dismissal/live-region structure, narrow wrapping, safe text, deadlines, retry isolation, scope/timer suppression and stable existing error DOM passed. |
+| 025 | Complete assembled syntax/identity, reader bounds, runner isolation, fragment size/identity/syntax, tamper guard and adapter serving/refresh/wiring passed; wrapped-message/header layout and relevant workspace-navigation entries also passed. |
+
+These are individual result entries, not merely green job metadata. The 26 and
+12 are separate suite counts (38 Join cases), not a count of unique requirements;
+server/browser coverage is not added to invent a total acceptance count. The
+server suite ran in CI; no local server-suite execution is retroactively claimed.
+No blocking failure was found in reviewed evidence. Targeted passages were read;
+no exhaustive raw-log reconstruction, screenshot assessment or unrelated test
+audit is claimed. Original preparation limits remain historical and distinct.
+
+The user's 2026-11-11 04:08 CET request to reconcile, close and push supplies
+bounded acceptance conditional on supporting evidence; the above reconciliation
+supports closure of 4A.12. Accepted scope is Join reporting only, preserving existing
+client/server gates and action semantics. This does not claim new authenticated
+live-server exercises, human visual/manual workflow, screen-reader verification
+or exhaustive accessibility acceptance. Focused JS uses a scoped controller
+adapter and mocks; existing browser/server fixtures provide additional automated
+evidence, not universal full-Admin end-to-end coverage of every Join scenario.
+
+This close-out changes only HANDOVER.md, this section and the 097 task plan.
+Commit message includes [skip ci]; no runtime, tests, pins, markup or workflows
+change, no new tests execute and no workflow is separately dispatched. The marker
+is not proof of a new workflow state. README/TODO root remain accurate and unchanged.
+4A.11 stays closed. 4A.13 remains proposed; pane/global compatibility retires only
+after relevant migrations. Deliverable 2 near-field/connection work, Deliverables
+1/2 acceptance and phase 009.7 hardening remain open. No merge or deployment.

@@ -51,24 +51,26 @@ This is the index; substantive handover lives in numbered docs/handover sections
 43. [Activity-log clear feedback](docs/handover/420-activity-log-clear-feedback.md)
 44. [Viewer font adjustment feedback](docs/handover/430-viewer-font-feedback.md)
 45. [Battle-action feedback: 4A.11 bounded close-out](docs/handover/440-battle-action-global-feedback.md)
-46. [Join reporting: 4A.12](docs/handover/450-join-reporting.md)
+46. [Join reporting: 4A.12 bounded close-out](docs/handover/450-join-reporting.md)
 
 ## Current state - 2026-11-11
 
 018, 009.5, 015 and 009.6 remain closed for accepted scopes; 340/350/360/370 retain
 all CI, failure/correction, manual-check, publication/merge identities and limits.
-009.7/both feedback deliverables remain open; 4A.1-4A.11 bounded units are closed.
-4A.11 was explicitly accepted and close-out requested on 2026-11-10 after evidence
-reconciliation. Successful covering run 42896405201 attempt 1 (job 130110564256)
-tests final corrected revision 1b621c3909e751affc356fbbb98acc53a3f588e3;
-evidence publication 477583dc63a6f88d7161bef913a27ca7a931f374. Both earlier
-failed runs remain failures. Reviewed unit/legacy/assembly/browser evidence and
-manual/live-server/accessibility limits are retained in [440](docs/handover/440-battle-action-global-feedback.md).
-4A.12 Join reporting implementation/tests are included in this change set; covering
-CI and explicit acceptance remain pending. Prior 4A.11 CI does not cover it.
-[450 preparation and limits](docs/handover/450-join-reporting.md); [task plan](docs/todo/097-feedback-delivery-plan.md).
-This mixed commit uses normal CI, not a skip marker. 4A.13 and wider feedback/phase
-gates remain open; this is not integrated-deliverable or phase acceptance.
+009.7/both feedback deliverables remain open; 4A.1-4A.12 bounded units are closed.
+4A.11 evidence, failures/corrections and acceptance limits remain in
+[440](docs/handover/440-battle-action-global-feedback.md).
+4A.12 implementation 981ffe61a9bb4da162944707b42132d384eea1ad is covered by
+successful Branch tests 42949763708 attempt 1, job 130291065704; publication
+488997aacb50ed44d785c9738457fab1b854ad90. Detailed Join/server/browser/source
+results were reconciled after the user's 2026-11-11 close-out request; no blocking
+failure was found in reviewed evidence. Bounded acceptance closes 4A.12 only.
+[450 evidence and limits](docs/handover/450-join-reporting.md#4a12-bounded-close-out---2026-11-11);
+[task plan](docs/todo/097-feedback-delivery-plan.md).
+This documentation-only close-out uses [skip ci], executes no new tests and
+changes/dispatches no workflow; no new run outcome is inferred from that marker.
+4A.13, both feedback deliverables and wider 009.7 gates remain open; no new human
+visual, screen-reader, authenticated live-server or exhaustive accessibility pass.
 016/017 and SG-TODO-019 remain proposed, agreed order unchanged. No merge/deployment.
 Longer index history is preserved in the [pre-checkpoint index](https://github.com/dajomas/Scrying-Glass/blob/9d05e129cc2b85099cf0e3bf394a1fe398d0af24/HANDOVER.md)
 and numbered sections, not deleted acceptance evidence.
