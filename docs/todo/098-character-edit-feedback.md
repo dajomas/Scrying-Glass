@@ -64,3 +64,23 @@ acceptance without invented manual/live/accessibility results. Existing CI
 executes the added Node cases and retained browser suites; the new focused harness
 is not native-browser acceptance. Remaining Stage 2 producers, Stage 1, both
 deliverables and 009.7 stay open; pane compatibility and accepted Join stay intact.
+
+## Lookup-focus fixture correction - 2026-11-11
+
+Status: in progress; entry forms delivered as 37137b6367172549ffc7028b44af64e0e6534d75,
+but covering run 43076164519 attempt 1 failed on the lookup-focus fixture's obsolete
+source-order boundary. Its three setup errors recur inside the connection audit;
+the audit completed with one failed module, not a demonstrated connection leak.
+This supersedes earlier prepared/unpushed entry-form status, not pending acceptance.
+
+Prepared correction uses the following bulk-action section boundary, retains blur
+wiring and rejects accidental inclusion of form handlers. Five extracted synthetic
+boundary tests passed and the three existing browser scenario bodies remain
+AST-identical. [Evidence and limits](../handover/480-character-edit-feedback.md#lookup-focus-source-slicing-correction---2026-11-11).
+
+Remaining gates: exact-content approval/delivery; all three native Chromium cases,
+full unittest and standalone audit covering the revised revision; correction review
+and bounded acceptance. No production/pin/workflow/audit changes are included.
+CSV/setup import and other unfinished Stage 2 work remain open. Successful equivalent
+local or hosted evidence may satisfy automated validation for its actual scope;
+synthetic extraction checks alone do not establish native browser success.

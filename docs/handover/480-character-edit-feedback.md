@@ -158,3 +158,40 @@ and plan 097 were reviewed against known live identities and need no unrelated
 edits. CSV/setup import, remaining monster initiative/Edit/roll-all, select-dead,
 bulk Join pane success, final Stage 2 reconciliation and wider deliverables remain
 open. No merge/deployment or new CI/commit identity is invented.
+
+## Lookup-focus source slicing correction - 2026-11-11
+
+Entry forms were delivered as 37137b6367172549ffc7028b44af64e0e6534d75.
+Covering run 43076164519 attempt 1, job 130716410552, failed: the main suite ran
+1,525 tests with three errors, all in LookupFocusRegressionTests.setUp. The audit
+completed 172 modules with one failed module, test_monster_lookup_focus_browser.py,
+reporting zero connections opened and zero unclosed for that module. Each error
+was ValueError at the old upload-handler boundary searched after the species
+listener. The upload handler now precedes that listener. No lookup/focus assertion
+was reached; this is not a demonstrated connection leak or Chromium launch failure.
+
+The fixture now slices from the existing species-listener registration to the
+following character bulk-action registration, not to another form's submit handler.
+This retains any additional blur wiring within that listener section. Unexpected
+form-submit code inside the slice fails explicitly instead of executing an
+unrelated handler in the minimal fixture. Missing/reversed boundaries still fail.
+The three browser test bodies are AST-identical, retaining all focus, request-count,
+popup, source-token and value checks; cleanup and timeouts remain unchanged.
+
+Five added synthetic source-boundary methods passed via AST extraction from the
+complete proposed test source. They reproduce the old boundary failure with upload
+before species, retain blur wiring, exclude following bulk/other handlers and
+reject missing boundaries or an unrelated submit handler inside the slice. A
+copied current 593-byte production listener section extracts unchanged and passes
+Node syntax checking. Original test reconstruction matched Git blob
+cc801748e0d6ecc000025b863e67f9beea680843; complete Python AST parsing passed.
+These are extraction/syntax checks, not native execution of the three Chromium
+cases, actual full-bundle assembly or full repository/audit validation.
+
+Production sources, candidate asset, fragment identities, templates, workflow and
+audit remain unchanged. Existing unittest discovery and the standalone audit will
+execute the revised module (three browser cases plus five boundary methods).
+Normal CI applies without a skip marker or separate dispatch. Covering results,
+any further corrections and bounded acceptance remain pending. README and indexes
+were reviewed/reused against live identities and left unchanged. Stage 2, both
+deliverables and 009.7 remain open. No merge/deployment or invented passing result.

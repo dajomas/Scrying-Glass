@@ -10,6 +10,44 @@ from feedback_browser_fixture import install_feedback
 
 ROOT = Path(__file__).resolve().parents[1]
 
+def lookup_listener_source(source):
+    start = source.index("document.querySelector('#monsterSpecies').addEventListener(")
+    end = source.index("characterBulkAction.addEventListener(", start)
+    listeners = source[start:end]
+    if '.onsubmit' in listeners:
+        raise AssertionError('Unexpected form handler in lookup listener slice')
+    return listeners
+
+
+class LookupListenerSourceTests(unittest.TestCase):
+    listener = "document.querySelector('#monsterSpecies').addEventListener('input', () => lookupMonsterSpeciesStats());\n"
+    bulk = "characterBulkAction.addEventListener('change', () => {});\n"
+    upload = "document.querySelector('#monsterUpload').onsubmit = () => {};\n"
+
+    def test_upload_before_species_listener_is_supported(self):
+        source = self.upload + self.listener + self.bulk
+        self.assertEqual(lookup_listener_source(source), self.listener)
+        start = source.index("document.querySelector('#monsterSpecies').addEventListener(")
+        with self.assertRaises(ValueError):
+            source.index("document.querySelector('#monsterUpload').onsubmit", start)
+
+    def test_retains_additional_blur_wiring(self):
+        blur = "document.querySelector('#monsterSpecies').addEventListener('blur', () => lookupMonsterSpeciesStats());\n"
+        self.assertEqual(lookup_listener_source(self.listener + blur + self.bulk), self.listener + blur)
+
+    def test_bulk_and_later_handlers_are_excluded(self):
+        self.assertEqual(lookup_listener_source(self.listener + self.bulk + self.upload), self.listener)
+
+    def test_missing_boundaries_fail_instead_of_using_unchecked_source(self):
+        for source in (self.bulk, self.listener, self.bulk + self.listener):
+            with self.subTest(source=source), self.assertRaises(ValueError):
+                lookup_listener_source(source)
+
+    def test_rejects_unrelated_form_handler_inside_slice(self):
+        with self.assertRaisesRegex(AssertionError, 'Unexpected form handler'):
+            lookup_listener_source(self.listener + self.upload + self.bulk)
+
+
 class LookupFocusRegressionTests(unittest.TestCase):
     def setUp(self):
         playwright = sync_playwright().start()
@@ -40,10 +78,8 @@ class LookupFocusRegressionTests(unittest.TestCase):
         self.assertEqual(self.page.locator('[data-sg-feedback-mounted]').count(), 1)
         source = (ROOT / 'static/admin.js').read_text(encoding='utf-8')
         prefix = source.split('function setColorPreview', 1)[0]
-        start = source.index("document.querySelector('#monsterSpecies').addEventListener(")
-        end = source.index("document.querySelector('#monsterUpload').onsubmit", start)
-        # Keep production blur wiring if reintroduced: that is what this test detects.
-        listeners = source[start:end]
+        # Include the listener section (and any reintroduced blur wiring), not form handlers.
+        listeners = lookup_listener_source(source)
         self.page.add_script_tag(content=prefix + """
             const paneNotification = (kind, text, options) => window.scryingAdminFeedback.deliver(kind, text, options);
             async function request(url, options) {return (await fetch(url, options)).json();}
