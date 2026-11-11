@@ -14,6 +14,23 @@
     let cancelPopup = null;
     let generation = 0;
     let pending = 0;
+    const pendingSubmitSpec = {region: 'monsters', operation: 'monster.lookup.pending-submit',
+        target: 'monster-form', label: 'Finish monster lookup'};
+    let pendingSubmitGuard = null;
+    function blockPendingSubmit() {
+        const feedback = window.scryingAdminFeedback;
+        pendingSubmitGuard = feedback.begin({...pendingSubmitSpec, operation: 'monster.lookup.pending-submit.guard'});
+        feedback.publish(feedback.begin(pendingSubmitSpec), {severity: 'error',
+            text: 'Finish or cancel the monster lookup before adding.'});
+    }
+    function settlePendingSubmit() {
+        const feedback = window.scryingAdminFeedback;
+        if (pending === 0 && pendingSubmitGuard && feedback.isCurrent(pendingSubmitGuard)) {
+            feedback.resolve(feedback.begin(pendingSubmitSpec));
+            feedback.resolve(pendingSubmitGuard);
+            pendingSubmitGuard = null;
+        }
+    }
     let bonusRevision = 0;
     function clearAppliedOffer() {
         appliedOffer = null;
@@ -51,7 +68,7 @@
         if (pending) {
             event.preventDefault();
             event.stopImmediatePropagation();
-            paneNotification('monsters', 'Finish or cancel the monster lookup before adding.');
+            blockPendingSubmit();
         }
     }, true);
     form.addEventListener('formdata', event => {
@@ -145,7 +162,10 @@
         clearAppliedOffer();
         publishSelection();
         if (cancelPopup) cancelPopup();
-        const isCurrent = () => current === generation && requestId === monsterSpeciesLookupRequest &&
+        const scopeGuard = window.scryingAdminFeedback.begin({region: 'monsters',
+            operation: 'monster.candidate.lookup', target: 'monster-form', label: 'Select monster source'});
+        const isCurrent = () => window.scryingAdminFeedback.isCurrent(scopeGuard) &&
+            current === generation && requestId === monsterSpeciesLookupRequest &&
             speciesInput.value.trim() === species && Boolean(overwrite?.checked) === overwriteBonus;
         pending++;
         try {
@@ -187,6 +207,8 @@
             return candidate;
         } finally {
             pending--;
+            settlePendingSubmit();
+            window.scryingAdminFeedback.resolve(scopeGuard);
         }
     };
 })();

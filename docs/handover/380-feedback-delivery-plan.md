@@ -5,7 +5,51 @@
 This is the continuity index and legacy-anchor entry point. Historical content
 is preserved verbatim in the numbered sections below; dated statuses are history,
 not a reversal of later acceptances. The [current task plan](../todo/097-feedback-delivery-plan.md)
-and [4A.13 handover](460-global-feedback-reconciliation.md) retain current scope.
+and [4A.13 close-out](470-global-feedback-close-out.md) retain current scope.
+
+## Stage 2 candidate-selection checkpoint - 2026-11-11
+
+This bounded implementation checkpoint is not completion or acceptance of Stage 2,
+Deliverable 1, Deliverable 2 or phase 009.7. Stage 1 is also unfinished.
+4A.1-4A.13 remain closed for their accepted scopes. No merge or deployment.
+
+The candidate asset now owns persistent pending-submit errors and matching
+settlement without clearing independent notices. An encounter-scoped guard
+suppresses late source selection and bonus attribution after a scope transition.
+Existing candidate identity, signed offer binding, overwrite/edit guards,
+FormData, popup cancellation and focus return remain. No mutation is replayed.
+Only the candidate asset reference advances to v=2; source review and the other
+Stage 2 assets are not changed by this checkpoint. Core fragment pins remain
+unchanged because no core fragment is changed.
+
+Preparation evidence: the exact candidate asset (Git blob
+6a173e8e98756050ac6d894cef79f73ec7db6e52) and new test file (Git blob
+b5cf906b7a008f3bca4f84369ff9c72cf4d75559) passed eight native Chromium
+tests with the production controller, view and Admin bootstrap and mocked
+transport. Candidate encounter-guard and matching-settlement negative controls
+failed assertions as expected; restored tests passed 8/8. The initial browser
+harness returned an unresolved Promise and timed out; its launcher was corrected
+to return void before the final passing runs. Syntax checks also passed.
+These checks are preparation evidence, not full Admin bootstrap, authenticated
+live-server/provider, manual visual, screen-reader or exhaustive accessibility
+acceptance. Earlier isolated 37/62-case draft runs are not covering CI for this
+checkpoint.
+
+Normal push-triggered CI is required. The existing workflow discovers the new
+test_*.py file; no workflow modification or separate dispatch is included.
+Covering CI, any corrections and bounded acceptance remain pending. No new
+commit SHA, workflow run or success is invented here. README and the root
+HANDOVER links remain accurate and unchanged; TODO index records this checkpoint.
+
+Remaining Stage 2 delivery: source-review mounting/lifecycle and its prepared
+12-case browser suite; shared roster mutations and creation/import forms;
+character Edit, effective raw-roll/monster Edit and roll-all handlers; select-dead;
+bulk Join pane success without changing its accepted reporting owner; complete
+fixture/asset/fragment-identity and documentation reconciliation; combined
+loaded-Admin regression and covering CI review. Source-review preparation has
+not been committed by this candidate-only checkpoint. Pane compatibility is
+retained until all required migrations are complete. The broader approved
+four-stage Deliverable 1 scope and all acceptance gates remain authoritative.
 
 ## Documentation size maintenance - 2026-11-11
 
