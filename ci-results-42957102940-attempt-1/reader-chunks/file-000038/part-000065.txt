@@ -1,0 +1,25 @@
+File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:10.8861458Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:10.8861675Z OSError: secret 5e.tools endpoint
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:10.8861809Z 
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:10.8862023Z The above exception was the direct cause of the following exception:
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:10.8862424Z 
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:10.8862539Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:10.8863023Z   File "/tmp/scrying-tests-znb5tcsf/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:10.8863430Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:10.8863832Z   File "/tmp/scrying-tests-znb5tcsf/repo/python/scrying_glass_monster_selection.py", line 152, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:10.8864263Z     lambda: fivetools_candidates(species, display),
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:10.8864545Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:10.8865034Z   File "/tmp/scrying-tests-znb5tcsf/repo/python/scrying_glass_monster_selection.py", line 144, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:10.8865634Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:10.8866243Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:10.8883642Z ok
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:10.9325082Z test_refresh_choice_apply_retains_identity_raw_roll_and_unselected_state (test_combined_monster_lookup_application.CombinedLookupApplicationTests.test_refresh_choice_apply_retains_identity_raw_roll_and_unselected_state) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:11.3692351Z test_width_halved_without_height_or_unrelated_field_changes (test_compact_combatant_inputs.CompactInputsTests.test_width_halved_without_height_or_unrelated_field_changes) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:11.3741048Z test_actual_battle_critical_flag (test_damage_logic.DamageTests.test_actual_battle_critical_flag) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:11.3799648Z test_actual_battle_handler_accepts_downed_target (test_damage_logic.DamageTests.test_actual_battle_handler_accepts_downed_target) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:11.3829727Z test_actual_character_delta_handler (test_damage_logic.DamageTests.test_actual_character_delta_handler) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:11.3850301Z test_all_damage_results_nonnegative (test_damage_logic.DamageTests.test_all_damage_results_nonnegative) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:11.3851161Z test_critical_hit_two_failures (test_damage_logic.DamageTests.test_critical_hit_two_failures) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:11.3852081Z test_critical_initial_drop_no_extra_failures (test_damage_logic.DamageTests.test_critical_initial_drop_no_extra_failures) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T04:09:11.38531
