@@ -1,0 +1,27 @@
+84Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0873140Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0873972Z   File "/tmp/scrying-tests-zhvd459w/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0874808Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0875659Z   File "/tmp/scrying-tests-zhvd459w/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0877067Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0878301Z ValueError: Retained source missing or ambiguous
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0901622Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0902151Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0904842Z   File "/tmp/scrying-tests-zhvd459w/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0905760Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0906639Z   File "/tmp/scrying-tests-zhvd459w/repo/python/scrying_glass_monster_refresh_sources.py", line 73, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0907507Z     html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0908365Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0909068Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0909488Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0910217Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0910946Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0911404Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0912147Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0912914Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:25.0913164Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:30.7093055Z Executing <Task finished name='Task-46257' coro=<SourceBonusOfferAcceptanceTests.test_owned_creation_persists_signed_values_across_storage_reopen() done, defined at /tmp/scrying-tests-zhvd459w/repo/tests/test_source_bonus_offer_acceptance.py:123> result=None created at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py:110> took 0.108 seconds
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:46.2198048Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:46.2199873Z Ran 1481 tests in 158.025s
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:46.2200082Z 
+tests	Standalone Python browser and audit checks	2026-11-11T04:35:46.22
