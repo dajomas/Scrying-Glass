@@ -190,3 +190,35 @@ parts 137-138 report seven passes/one failure. This browser-only commit does not
 fix that assertion or claim the overall run can become green yet. 4A.13 remains
 blocked on that correction, covering CI, final reconciliation and bounded acceptance.
 No new acceptance, merge/deployment or broader deliverable/phase closure.
+
+## Browser CI verified and Node assertion correction - 2026-11-11
+
+Browser correction c76b52e4d6f29e28c1726db940d29cbd223ee2a5 is covered by run
+42971464667 attempt 1, job 130360679991, publication
+54794d945a084d893d0dba77194be0251f62833a. Overall result remains failure, with
+JavaScript the only failed main validation stage. Python/browser, standalone
+browser/audit, syntax/import and pytest stages succeeded. Direct reader part 023
+confirms the formerly failing header method now reports ok, as do the other
+header methods, all four composition scenarios and all three inventory methods.
+Parts 131-132 confirms seven reconciliation passes and one failure at line 81:
+record ID 'sg-feedback-9' is not boolean true. Preserve both failed run histories.
+
+This test-only correction, prepared against that publication, changes only the
+explicit-delivery portion of the existing rejection case. It verifies a nonempty
+string return ID and the matching snapshot record's text, severity and operation.
+Source review of controller blob c4a82d73b21f4657da651ce45f76003c3348a6ef also
+establishes that publishing an error settles the ticket. The test therefore
+asserts that resolving the settled ticket returns false without altering records,
+then uses a fresh matching begin('battle.end') ticket to resolve that error while
+preserving the independent Start error. No controller contract is changed to fit
+the test. Rejection loop, 171-pair matrix, pane isolation and all other test bodies
+remain unchanged. Code review only; no new local Node/syntax/browser execution is
+claimed. Normal CI must execute all eight cases and retained browser/loading tests
+for the actual correction SHA before claiming the blocker resolved.
+
+Earlier OPEN-Node notes describe the pre-correction state; this payload supplies
+the correction with validation pending, not a green result or 4A.13 acceptance.
+No runtime, browser/shared-fixture, core/pin/markup/workflow change or dispatch.
+README/HANDOVER/TODO indexes remain unchanged. Final covering-CI reconciliation,
+bounded acceptance and separately approved documentation-only close-out remain;
+both feedback deliverables and 009.7 stay open. No merge/deployment.

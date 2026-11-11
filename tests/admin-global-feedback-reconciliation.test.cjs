@@ -78,9 +78,17 @@ test('untyped global publish and clear reject without changing explicit feedback
         assert.deepEqual(Array.from(w.feedback.legacyRegions()), []);
     }
     const ticket = w.begin('battle.end');
-    assert.equal(w.feedback.deliver('global', 'Explicit error', {ticket, severity: 'error'}), true);
+    const recordId = w.feedback.deliver('global', 'Explicit error', {ticket, severity: 'error'});
+    assert.equal(typeof recordId, 'string');
+    assert.notEqual(recordId, '');
+    const record = w.feedback.snapshot().find(item => item.id === recordId);
+    assert.equal(record?.text, 'Explicit error');
+    assert.equal(record?.severity, 'error');
+    assert.equal(record?.operation, 'battle.end');
     assert.deepEqual(w.texts(), ['battle.start:same-target', 'Explicit error']);
-    assert.equal(w.feedback.resolve(ticket), true);
+    assert.equal(w.feedback.resolve(ticket), false);
+    assert.deepEqual(w.texts(), ['battle.start:same-target', 'Explicit error']);
+    assert.equal(w.feedback.resolve(w.begin('battle.end')), true);
     assert.deepEqual(w.texts(), ['battle.start:same-target']);
 });
 test('actual End and Reset All producers preserve independent errors across explicit retry', async () => {

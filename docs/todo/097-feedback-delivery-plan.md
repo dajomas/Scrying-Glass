@@ -226,3 +226,28 @@ The Node record-ID-versus-true assertion failure remains OPEN and needs its own
 correction; this commit is not a complete green-CI repair. 4A.13 stays blocked on
 that correction, successful covering evidence, reconciliation and acceptance.
 [Failure/correction details](../handover/467-bundle-import-feedback.md#retirement-ci-failure-and-browser-fixture-correction---2026-11-11).
+
+## 4A.13 Node assertion correction - 2026-11-11
+
+Browser correction c76b52e4d6f29e28c1726db940d29cbd223ee2a5 has covering run
+42971464667 attempt 1, job 130360679991; publication
+54794d945a084d893d0dba77194be0251f62833a. Overall failure persists solely in the
+JavaScript main stage; Python/browser and standalone browser/audit stages pass.
+Direct reader part 023 verifies header layout, four composition scenarios and
+three inventory checks report ok. Parts 131-132 verifies the unchanged Node
+record-ID-versus-true failure, seven passes/one failure. Preserve failed histories.
+
+The requested Node-only correction supplies return-ID/snapshot assertions and the
+actual settled-ticket contract: an error publication settles its ticket; a fresh
+matching operation/target ticket resolves it without clearing an independent error.
+No runtime/browser/shared-fixture/workflow changes. Rejection checks, 171-pair
+matrix, pane isolation and other tests remain intact. Code review performed;
+no new local execution is claimed. Earlier OPEN notes are historical; the fix is
+supplied with validation pending, not accepted or verified passing.
+
+Required next: review covering CI for the actual new corrective SHA, including
+all eight reconciliation cases and retained browser/loading/producer regressions;
+correct any further failures under fresh approval, reconcile final scope/evidence,
+then obtain bounded acceptance before a separately approved [skip ci] docs close-out.
+4A.13, both feedback deliverables and 009.7 stay open; no merge/deployment.
+[Correction contract and evidence](../handover/467-bundle-import-feedback.md#browser-ci-verified-and-node-assertion-correction---2026-11-11).
