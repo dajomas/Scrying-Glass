@@ -1,0 +1,28 @@
+Python browser and audit checks	2026-11-11T16:54:40.0937371Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0938035Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0938621Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0938845Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0939447Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/browser_type.py", line 176, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0940057Z     await self._channel.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0940306Z     ...<2 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0940508Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0941098Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0941831Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0942128Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0943140Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0944199Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0944710Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0945249Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0945718Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0946164Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0946611Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0947077Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0947570Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0947790Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0948017Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0948390Z Ran 5 tests in 1.686s
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0948539Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0948668Z FAILED (errors=5)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0949158Z test_admin_dependent_controls.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.1217900Z FAIL: test_admin_dependent_controls.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.

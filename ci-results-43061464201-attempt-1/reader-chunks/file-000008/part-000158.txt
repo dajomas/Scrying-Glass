@@ -1,0 +1,29 @@
+on/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6820480Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6820785Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6822049Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6823175Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6823702Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6824246Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6824725Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6825193Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6825685Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6826145Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6826673Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6826895Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6827094Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6827966Z ERROR: test_stale_actor_before_post_does_not_advance (test_battle_actions_next.BattleActionsNextTests.test_stale_actor_before_post_does_not_advance)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6828823Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6829227Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6829764Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_battle_actions_next.py", line 18, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6830320Z     browser = p.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6831125Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6831894Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6832115Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6832369Z         self._impl_obj.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6832648Z         ^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6832892Z     ...<17 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6833107Z         )
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6833299Z         ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6833496Z     )
+tests	Sta

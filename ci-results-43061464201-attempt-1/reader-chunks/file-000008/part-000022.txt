@@ -1,0 +1,33 @@
+visual fixtures	2026-11-11T16:54:15.1627485Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-11T16:54:15.1627886Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-11T16:54:15.1628288Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-11T16:54:15.1628714Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Upload Admin foundations visual fixtures	2026-11-11T16:54:15.1629047Z ##[endgroup]
+tests	Upload Admin foundations visual fixtures	2026-11-11T16:54:15.3317657Z (node:2952) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Upload Admin foundations visual fixtures	2026-11-11T16:54:15.3318964Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Upload Admin foundations visual fixtures	2026-11-11T16:54:15.3355289Z ##[warning]No files were found with the provided path: /home/runner/work/_temp/sg-admin-foundations. No artifacts will be uploaded.
+tests	Pytest regression modules	﻿2026-11-11T16:54:15.3563854Z ##[group]Run python tools/run_split_tests.py -- python -m pytest -q tests/test_death_save_validation_2ba6607.py tests/test_slug_truncation_82860c4.py
+tests	Pytest regression modules	2026-11-11T16:54:15.3565692Z ^[[36;1mpython tools/run_split_tests.py -- python -m pytest -q tests/test_death_save_validation_2ba6607.py tests/test_slug_truncation_82860c4.py^[[0m
+tests	Pytest regression modules	2026-11-11T16:54:15.3618358Z shell: /usr/bin/bash -e {0}
+tests	Pytest regression modules	2026-11-11T16:54:15.3618733Z env:
+tests	Pytest regression modules	2026-11-11T16:54:15.3619378Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Pytest regression modules	2026-11-11T16:54:15.3620182Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-11T16:54:15.3620762Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Pytest regression modules	2026-11-11T16:54:15.3621339Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-11T16:54:15.3622151Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-11T16:54:15.3622709Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-11T16:54:15.3623272Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Pytest regression modules	2026-11-11T16:54:15.3623705Z ##[endgroup]
+tests	Pytest regression modules	2026-11-11T16:54:17.4798466Z ...........................................                              [100%]
+tests	Pytest regression modules	2026-11-11T16:54:17.4799404Z 43 passed in 1.34s
+tests	JavaScript tests	﻿2026-11-11T16:54:17.5898421Z ##[group]Run status=0
+tests	JavaScript tests	2026-11-11T16:54:17.5898860Z ^[[36;1mstatus=0^[[0m
+tests	JavaScript tests	2026-11-11T16:54:17.5899242Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	JavaScript tests	2026-11-11T16:54:17.5899707Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	JavaScript tests	2026-11-11T16:54:17.5900325Z ^[[36;1m  python tools/run_split_tests.py -- node --test "$test" || status=1^[[0m
+tests	JavaScript tests	2026-11-11T16:54:17.5901019Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	JavaScript tests	2026-11-11T16:54:17.5901900Z ^[[36;1mdone < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)^[[0m
+tests	JavaScript tests	2026-11-11T16:54:17.5902649Z ^[[36;1mexit "$status"^[[0m
+tests	JavaScript tests	2026-11-11T16:54:17.5956910Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	JavaScript tests	2026-11-11T16:54:17.5957269Z env:
+tests	JavaScript tests	2026-11-11T16:54:17.5957757Z   PYTHONPATH: /home/runner/work/Scrying-Glas

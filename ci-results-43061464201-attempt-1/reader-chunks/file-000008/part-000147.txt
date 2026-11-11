@@ -1,0 +1,30 @@
+mapped
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6645069Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6645358Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6646401Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6647502Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6648189Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6648723Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6649205Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6649654Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6650111Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6650560Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6651051Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6651272Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6651464Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6652498Z ERROR: test_main_next_keeps_modal_closed (test_battle_actions_next.BattleActionsNextTests.test_main_next_keeps_modal_closed)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6653242Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6653655Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6654184Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_battle_actions_next.py", line 18, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6654731Z     browser = p.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6655446Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6656064Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6656269Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6668680Z         self._impl_obj.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6669132Z         ^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6669413Z     ...<17 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6669641Z         )
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6669843Z         ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6670029Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6670220Z     ^
+tests	Standalone Python browser and audit c

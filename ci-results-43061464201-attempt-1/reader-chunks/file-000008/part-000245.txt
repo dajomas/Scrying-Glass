@@ -1,0 +1,31 @@
+:56.1269777Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1270853Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1272074Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1272673Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1273727Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1274759Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1275406Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1276570Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1277593Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1278288Z python.scrying_glass_monster_selection.ProviderError: secret
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1311605Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1312467Z Ran 12 tests in 0.023s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1313004Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1313141Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1313900Z test_monster_candidate_selection.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1771138Z Connection audit: test_monster_edit_order.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.5078969Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.5080056Z test_monster_edit_order.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.5080744Z Ran 3 tests in 0.026s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.5080983Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.5081123Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.5508720Z Connection audit: test_monster_image_preview_alignment.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2568793Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2570162Z ERROR: setUpClass (test_monster_image_preview_alignment.PreviewAlignmentTests)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2571396Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2572500Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2573498Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_image_preview_alignment.py", line 10, in setUpClass
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2574241Z     cls.rows.setUpClass.__func__(cls)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2574671Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2575367Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_button_layout.py", line 26, in setUpClass
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2

@@ -1,0 +1,28 @@
+.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.3986839Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.3987172Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.3988300Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.3989609Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.3990165Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.3990747Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.3991272Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.3991987Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.3992520Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.3993024Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.3993594Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.3993844Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.3994097Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.3994500Z Ran 0 tests in 0.565s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.3994656Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.3994768Z FAILED (errors=1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.3995319Z test_monster_button_layout.py: connections opened: 1; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.4712967Z FAIL: test_monster_button_layout.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:50.4714134Z Connection audit: test_monster_candidate_browser.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:52.9274888Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:52.9277081Z ERROR: test_choose_cancel_and_error (test_monster_candidate_browser.CandidateBrowserTests.test_choose_cancel_and_error)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:52.9278515Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:52.9279226Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:52.9280621Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_candidate_browser.py", line 14, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:52.9281939Z     self.browser = self.playwright.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:52.9282695Z                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:52.9283987Z   File 

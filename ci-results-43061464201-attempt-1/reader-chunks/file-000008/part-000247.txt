@@ -1,0 +1,28 @@
+che/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2594348Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2594884Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2595436Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2595925Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2596391Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2596879Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2597329Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2597830Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2598227Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2598464Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2598832Z Ran 0 tests in 0.620s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2598981Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2599089Z FAILED (errors=1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.2599603Z test_monster_image_preview_alignment.py: connections opened: 1; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.3193254Z FAIL: test_monster_image_preview_alignment.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:57.3195137Z Connection audit: test_monster_image_previews.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0361955Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0363289Z ERROR: setUpClass (test_monster_image_previews.FullAdminPreviewTests)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0364471Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0365363Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0366540Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_image_previews.py", line 155, in setUpClass
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0367379Z     cls.rows.setUpClass.__func__(cls)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0367805Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0368571Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_button_layout.py", line 26, in setUpClass
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0369457Z     cls.browser = cls.playwright.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0370041Z                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0371050Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/pyt

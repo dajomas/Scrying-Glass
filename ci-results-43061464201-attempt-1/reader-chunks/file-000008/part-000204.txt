@@ -1,0 +1,33 @@
+it 1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.8776603Z Connection audit: test_local_runner_publication.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:45.0140494Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:45.0141191Z Ran 6 tests in 1.045s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:45.0141428Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:45.0141568Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:45.0154239Z test_local_runner_publication.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:45.0295098Z Connection audit: test_logout.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:46.3489036Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:46.3490045Z Ran 14 tests in 1.231s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:46.3490412Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:46.3491096Z test_logout.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:46.3492288Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:46.3972388Z Connection audit: test_manual_monster_bonus_creation.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:46.7397658Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:46.7398966Z test_manual_monster_bonus_creation.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:46.7399740Z Ran 8 tests in 0.021s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:46.7399996Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:46.7400135Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:46.7923148Z Connection audit: test_manual_monster_bonus_form.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5302985Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5304163Z ERROR: setUpClass (test_manual_monster_bonus_form.AssembledMonsterEntryTests)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5305386Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5305960Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5306797Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_manual_monster_bonus_form.py", line 97, in setUpClass
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5307596Z     cls.rows.setUpClass.__func__(cls)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5308015Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5308787Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_button_layout.py", line 26, in setUpClass
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5309659Z     cls.browser = cls.playwright.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5310462Z                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5311506Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5313126Z     self._sync(
+tests	Standalone Python browser and aud

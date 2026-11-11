@@ -1,0 +1,27 @@
+nes.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4905006Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4905362Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4906388Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/browser_type.py", line 176, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4907623Z     await self._channel.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4908006Z     ...<2 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4908309Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4909251Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4910218Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4910671Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4912443Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4914272Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4915077Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4915901Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4916625Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4917372Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4918089Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4918799Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4919585Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4919934Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4920250Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4922240Z ERROR: test_desktop_and_narrow_apply_preserve_turn_ties_unselected_and_restart (test_monster_refresh_end_to_end.MonsterRefreshEndToEndTests.test_desktop_and_narrow_apply_preserve_turn_ties_unselected_and_restart)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4923871Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4924469Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4925333Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.4926196Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05

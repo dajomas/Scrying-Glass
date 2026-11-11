@@ -1,0 +1,30 @@
+t_species_reset_and_new_lookup_clear_applied_offer)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7272108Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7272498Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7273055Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_source_bonus_offer_browser.py", line 8, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7273555Z     self.fixture.setUp()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7273794Z     ~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7274299Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_candidate_browser.py", line 12, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7274841Z     self.playwright = sync_playwright().start()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7275177Z                       ~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7275867Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_context_manager.py", line 98, in start
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7276481Z     return self.__enter__()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7276730Z            ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7277381Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_context_manager.py", line 46, in __enter__
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7278005Z                 raise Error(
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7278255Z     ...<2 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7278465Z                 )
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7279037Z playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7279589Z Please use the Async API instead.
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7279762Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7279957Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7280702Z ERROR: test_unsigned_copy_is_manual (test_source_bonus_offer_browser.SourceBonusOfferBrowserTests.test_unsigned_copy_is_manual)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7281435Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7281926Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7282467Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_source_bonus_offer_browser.py", line 8, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7282969Z     self.fixture.setUp()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7283205Z     ~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7283710Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_candidate_browser.py", line 12, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7284397Z     self.playwright = sync_playwright().start()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7284738Z                       ~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7285437Z   File "/opt/hostedtoolcache/Python/3.

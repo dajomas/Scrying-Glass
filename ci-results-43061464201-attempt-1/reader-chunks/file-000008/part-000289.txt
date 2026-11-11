@@ -1,0 +1,29 @@
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5314198Z     await self._channel.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5314457Z     ...<2 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5314659Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5315265Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5315896Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5316383Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5317384Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5318420Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5318937Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5319469Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5319944Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5320396Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5321074Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5321532Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5322296Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5322533Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5322765Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5323124Z Ran 12 tests in 3.982s
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5323273Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5323383Z FAILED (errors=12)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5323926Z test_monster_refresh_review_browser.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5429763Z FAIL: test_monster_refresh_review_browser.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5430353Z Connection audit: test_monster_refresh_scope.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:11.0647511Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:11.0648351Z Ran 4 tests in 0.174s
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:11.0648660Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:11.0648823Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:11.0649632Z test_monster_refresh_scope.py: connections opened: 6; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:11.1298275Z Connection audit: test_

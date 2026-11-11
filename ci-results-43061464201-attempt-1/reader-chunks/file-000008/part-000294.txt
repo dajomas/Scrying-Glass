@@ -1,0 +1,27 @@
+:12.7835390Z   File "/tmp/scrying-tests-rqr8plfj/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.7837076Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.7838458Z   File "/tmp/scrying-tests-rqr8plfj/repo/python/scrying_glass_monster_refresh_sources.py", line 73, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.7839827Z     html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.7841241Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.7842510Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.7843168Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.7844283Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.7845553Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.7846349Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.7847733Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.7848899Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.7849334Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.7855127Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.7855787Z Ran 11 tests in 0.010s
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.7856082Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.7856240Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.7856955Z test_monster_refresh_sources.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:12.8270773Z Connection audit: test_monster_refresh_startup_browser.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:13.3092831Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:13.3094890Z ERROR: test_unready_states_do_not_prune_selection_or_dispatch_requests (test_monster_refresh_startup_browser.RefreshStartupBrowserTests.test_unready_states_do_not_prune_selection_or_dispatch_requests)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:13.3096496Z test_monster_refresh_startup_browser.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:13.3097623Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:13.3098370Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:13.3099785Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_refresh_startup_browser.py", line 13, in test_unready_states_do_not_prune_selection_or_dispatch_requests
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:13.3101096Z     browser = runtime.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:13.3102605Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.

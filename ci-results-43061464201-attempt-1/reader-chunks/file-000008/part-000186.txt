@@ -1,0 +1,30 @@
+tandalone Python browser and audit checks	2026-11-11T16:55:29.8658145Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8659406Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8660955Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8661573Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8662470Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8663020Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8663527Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8664029Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8664559Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8665130Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8665381Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8665634Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8666040Z Ran 1 test in 0.345s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8666191Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8666308Z FAILED (errors=1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8666856Z test_compact_combatant_inputs.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8994549Z FAIL: test_compact_combatant_inputs.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8995616Z Connection audit: test_connection_lifetime_audit.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:31.4196638Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:31.4197152Z Ran 7 tests in 1.430s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:31.4197307Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:31.4197683Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:31.4198273Z test_connection_lifetime_audit.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:31.4346938Z Connection audit: test_damage_logic.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:31.6675737Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:31.6676901Z Ran 30 tests in 0.132s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:31.6677280Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:31.6677505Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:31.6693096Z test_damage_logic.py: connections opened: 2; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11

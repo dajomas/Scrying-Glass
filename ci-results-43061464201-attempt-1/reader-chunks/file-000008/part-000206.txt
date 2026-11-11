@@ -1,0 +1,30 @@
+026-11-11T16:55:47.5333899Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5334396Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5334870Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5335325Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5335798Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5336303Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5336522Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5336728Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5337708Z ERROR: test_native_values_reset_and_scope (test_manual_monster_bonus_form.NativeFormDataTests.test_native_values_reset_and_scope)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5338454Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5338858Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5339551Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_manual_monster_bonus_form.py", line 75, in test_native_values_reset_and_scope
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5340213Z     with sync_playwright() as playwright:
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5340515Z          ~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5341215Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_context_manager.py", line 46, in __enter__
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5342146Z                 raise Error(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5342397Z     ...<2 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5342618Z                 )
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5343174Z playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5343752Z Please use the Async API instead.
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5343937Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5344176Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5344531Z Ran 4 tests in 0.642s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5344676Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5344775Z FAILED (errors=2)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.5345276Z test_manual_monster_bonus_form.py: connections opened: 1; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.6001600Z FAIL: test_manual_monster_bonus_form.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:47.6003756Z Connection audit: test_monster_bonus_edit_ui.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4162451Z ======================================================================
+tests	Standalone Python browser and audit check

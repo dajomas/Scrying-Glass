@@ -1,0 +1,29 @@
+d audit checks	2026-11-11T16:56:10.5057914Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5058428Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5058668Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5058879Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5060042Z ERROR: test_candidate_continuation_cannot_send_after_scope_transition (test_monster_refresh_review_browser.RefreshReviewBrowserTests.test_candidate_continuation_cannot_send_after_scope_transition)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5061372Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5062059Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5062664Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_refresh_review_browser.py", line 16, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5063293Z     browser = browser_runtime.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5064058Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5064666Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5064875Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5065302Z         self._impl_obj.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5065584Z         ^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5065820Z     ...<17 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5066032Z         )
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5066228Z         ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5066412Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5066592Z     ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5067175Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5067774Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5068007Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5068630Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5069225Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5069836Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5070484Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5070842Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5071509Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:1

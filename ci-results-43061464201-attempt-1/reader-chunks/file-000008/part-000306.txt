@@ -1,0 +1,30 @@
+.10/x64/lib/python3.14/site-packages/playwright/sync_api/_context_manager.py", line 98, in start
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7167682Z     return self.__enter__()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7168094Z            ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7169178Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_context_manager.py", line 46, in __enter__
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7170192Z                 raise Error(
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7170565Z     ...<2 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7170897Z                 )
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7171926Z playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7172775Z Please use the Async API instead.
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7173054Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7173376Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7175027Z ERROR: test_edits_during_chooser_preserved_including_edit_then_revert (test_source_bonus_offer_browser.SourceBonusOfferBrowserTests.test_edits_during_chooser_preserved_including_edit_then_revert)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7176546Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7177162Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7177978Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_source_bonus_offer_browser.py", line 8, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7178752Z     self.fixture.setUp()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7179121Z     ~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7180123Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_candidate_browser.py", line 12, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7180990Z     self.playwright = sync_playwright().start()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7181509Z                       ~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7182728Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_context_manager.py", line 98, in start
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7183702Z     return self.__enter__()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7184074Z            ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7185120Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_context_manager.py", line 46, in __enter__
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7186309Z                 raise Error(
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7186670Z     ...<2 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7186984Z                 )
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7187817Z playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7188665Z Please use the Async API instead.
+tests	Standalone Python browser and audit checks	2026-

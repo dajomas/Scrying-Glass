@@ -1,0 +1,29 @@
+-11T16:55:32.8427012Z Combined monster lookup failed for D&D Beyond
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8427453Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8428206Z   File "/tmp/scrying-tests-rqr8plfj/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8428943Z     html = context.dnd_monster_detail_html(href)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8429981Z   File "/tmp/scrying-tests-rqr8plfj/repo/python/scrying_glass_dndbeyond.py", line 128, in dnd_monster_detail_html
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8431095Z     response = urlopen(request, timeout=15)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8432228Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8432903Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8433305Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8434007Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8434698Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8435137Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8435888Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8436534Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8436912Z urllib.error.HTTPError: HTTP Error 403: fixture
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8437193Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8437524Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8437838Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8437994Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8438670Z   File "/tmp/scrying-tests-rqr8plfj/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8439278Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8439856Z   File "/tmp/scrying-tests-rqr8plfj/repo/python/scrying_glass_monster_selection.py", line 151, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8440467Z     lambda: dnd_candidates(context, species),
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8440823Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8441477Z   File "/tmp/scrying-tests-rqr8plfj/repo/python/scrying_glass_monster_selection.py", line 92, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8442481Z     raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8443369Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8444004Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:32.8444341Z Traceback (most rece

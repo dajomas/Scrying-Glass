@@ -1,0 +1,29 @@
+on browser and audit checks	2026-11-11T16:54:46.2584038Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2584779Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2585602Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2585947Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2586266Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2587767Z ERROR: test_hidden_lair_toggle_and_already_collapsed_pane (test_admin_initial_visibility.InitialVisibilityTests.test_hidden_lair_toggle_and_already_collapsed_pane)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2589203Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2589821Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2590709Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_admin_initial_visibility.py", line 24, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2591604Z     browser = self.p.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2593024Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2593968Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2594553Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2594913Z         self._impl_obj.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2595320Z         ^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2595684Z     ...<17 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2596010Z         )
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2596293Z         ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2596585Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2596864Z     ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2597774Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2598718Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2599070Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2600047Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2601185Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2602345Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2603407Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2603965Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2605033Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_i

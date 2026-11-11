@@ -1,0 +1,27 @@
+ks	2026-11-11T16:55:48.4187037Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4187814Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4188171Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4189430Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4191025Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4191618Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4192590Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4193131Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4193665Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4194175Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4194700Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4195270Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4195520Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4195738Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4196879Z ERROR: test_native_edit_render_submission_and_character_isolation (test_monster_bonus_edit_ui.MonsterBonusEditUITests.test_native_edit_render_submission_and_character_isolation)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4197948Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4198394Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4199263Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_bonus_edit_ui.py", line 17, in test_native_edit_render_submission_and_character_isolation
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4200113Z     browser = playwright.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4200933Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4201569Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4202006Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4202391Z         self._impl_obj.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4202694Z         ^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4202938Z     ...<17 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:48.4203156Z         )
+tests	Standalone Python

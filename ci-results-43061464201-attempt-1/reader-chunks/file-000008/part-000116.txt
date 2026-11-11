@@ -1,0 +1,28 @@
+2539860Z     ...<2 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2540162Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2541095Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2542289Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2542737Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2544298Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2546040Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2546856Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2547690Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2548433Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2549165Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2549903Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2550606Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2551410Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2551907Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2552250Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2553639Z ERROR: test_duplicate_asset_evaluation_is_harmless (test_admin_initial_visibility.InitialVisibilityTests.test_duplicate_asset_evaluation_is_harmless)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2554931Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2555555Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2556386Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_admin_initial_visibility.py", line 24, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2557240Z     browser = self.p.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2558707Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2559602Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2559904Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2560242Z         self._impl_obj.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2560633Z         ^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2560982Z     ...<17 lines>...
+tests	Standalone Python browser an

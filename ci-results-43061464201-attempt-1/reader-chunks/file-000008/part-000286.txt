@@ -1,0 +1,28 @@
+        ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5273163Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5274257Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5274946Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5275477Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5275947Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5276407Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5276866Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5277313Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5277813Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5278027Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5278228Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5279195Z ERROR: test_preview_retry_preserves_independent_error_node (test_monster_refresh_review_browser.RefreshReviewBrowserTests.test_preview_retry_preserves_independent_error_node)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5280097Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5280493Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5281075Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_refresh_review_browser.py", line 16, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5281699Z     browser = browser_runtime.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5282612Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5283222Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5283429Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5283672Z         self._impl_obj.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5283946Z         ^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5284186Z     ...<17 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5284399Z         )
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5284596Z         ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5284781Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5284975Z     ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5285554Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_syn

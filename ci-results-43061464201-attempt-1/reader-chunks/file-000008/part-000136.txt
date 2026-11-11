@@ -1,0 +1,32 @@
+dit checks	2026-11-11T16:54:50.7290427Z test_admin_source_preparation.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:50.7456843Z Connection audit: test_admin_split_runtime.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:51.2101647Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:51.2102756Z Ran 3 tests in 0.128s
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:51.2103005Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:51.2103158Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:51.2103915Z test_admin_split_runtime.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:51.2709380Z Connection audit: test_admin_workflow_navigation.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0176794Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0177627Z ERROR: setUpClass (test_admin_workflow_navigation.WorkflowNavigationTests)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0178342Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0178907Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0179672Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_admin_workflow_navigation.py", line 16, in setUpClass
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0180409Z     cls.rows.setUpClass.__func__(cls)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0180819Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0181516Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_button_layout.py", line 26, in setUpClass
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0182633Z     cls.browser = cls.playwright.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0183179Z                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0184113Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0184886Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0185148Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0185465Z         self._impl_obj.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0185815Z         ^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0186110Z     ...<17 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0186373Z         )
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0186606Z         ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0186831Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0187051Z     ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0187805Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0188692Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0188994Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:52.0189835Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14

@@ -1,0 +1,29 @@
+-11-11T16:56:10.5230104Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5230585Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5231043Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5231517Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5232323Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5232857Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5233087Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5233299Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5234606Z ERROR: test_partial_headers_skip_disabled_cells_and_apply_explicit_fields (test_monster_refresh_review_browser.RefreshReviewBrowserTests.test_partial_headers_skip_disabled_cells_and_apply_explicit_fields)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5235597Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5236011Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5236585Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_refresh_review_browser.py", line 16, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5237207Z     browser = browser_runtime.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5237958Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5238553Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5238775Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5239012Z         self._impl_obj.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5239281Z         ^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5239519Z     ...<17 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5239728Z         )
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5239922Z         ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5240114Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5240295Z     ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5240864Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5241452Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5241691Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5242611Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5243213Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:10.5243829Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_ow

@@ -1,0 +1,29 @@
+ts	Standalone Python browser and audit checks	2026-11-11T16:55:58.0406757Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0406955Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0407820Z ERROR: test_load_failure_safe_url_and_idempotence (test_monster_image_previews.ProviderPreviewTests.test_load_failure_safe_url_and_idempotence)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0408620Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0409017Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0409576Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_image_previews.py", line 28, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0410234Z     CandidateBrowserTests.setUp(self)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0410543Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0411094Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_candidate_browser.py", line 12, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0411658Z     self.playwright = sync_playwright().start()
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0412276Z                       ~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0412967Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_context_manager.py", line 98, in start
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0413576Z     return self.__enter__()
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0413821Z            ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0414471Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_context_manager.py", line 46, in __enter__
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0415107Z                 raise Error(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0415349Z     ...<2 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0415565Z                 )
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0416102Z playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0416637Z Please use the Async API instead.
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0416816Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0417007Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0417921Z ERROR: test_popup_choice_late_file_cancel_stale_and_no_image (test_monster_image_previews.ProviderPreviewTests.test_popup_choice_late_file_cancel_stale_and_no_image)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0418762Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0419142Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0419675Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_image_previews.py", line 28, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0420204Z     CandidateBrowserTests.setUp(self)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0420501Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58

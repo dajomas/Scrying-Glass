@@ -1,0 +1,29 @@
+ser and audit checks	2026-11-11T16:54:46.2686744Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2687031Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2688016Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2689041Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2689542Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2690072Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2690532Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2690988Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2691423Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2691978Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2692473Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2692685Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2692877Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2693796Z ERROR: test_no_active_initial_state_does_not_collapse_later (test_admin_initial_visibility.InitialVisibilityTests.test_no_active_initial_state_does_not_collapse_later)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2694657Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2695036Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2695575Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_admin_initial_visibility.py", line 24, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2696283Z     browser = self.p.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2696995Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2697586Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2697784Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2698011Z         self._impl_obj.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2698274Z         ^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2698507Z     ...<17 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2698712Z         )
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2698898Z         ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2699075Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:46.2699255Z     ^
+tests	Standalone Python b

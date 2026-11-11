@@ -1,0 +1,27 @@
+e.py", line 176, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0896105Z     await self._channel.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0896352Z     ...<2 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0896554Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0897142Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0897758Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0898046Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0899038Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0900072Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0900589Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0901124Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0901584Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0902184Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0902629Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0903083Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0903586Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0903798Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0903998Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0904911Z ERROR: test_hidden_parent_never_hides_child_or_child_button (test_admin_dependent_controls.DependentControlTests.test_hidden_parent_never_hides_child_or_child_button)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0905761Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0906150Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0906703Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_admin_dependent_controls.py", line 17, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0907352Z     browser=p.chromium.launch(headless=True);self.addCleanup(browser.close)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0908148Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0908903Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0909110Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.0909343Z         self._impl_obj.lau

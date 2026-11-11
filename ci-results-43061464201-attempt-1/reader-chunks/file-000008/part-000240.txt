@@ -1,0 +1,29 @@
+e Python browser and audit checks	2026-11-11T16:55:55.7723869Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:55.7724409Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:55.7724884Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:55.7725344Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:55.7725801Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:55.7726247Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:55.7726741Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:55.7726975Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:55.7727203Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:55.7727592Z Ran 8 tests in 2.643s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:55.7727737Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:55.7727838Z FAILED (errors=8)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:55.7728357Z test_monster_candidate_pending_feedback.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:55.7880245Z FAIL: test_monster_candidate_pending_feedback.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:55.7881288Z Connection audit: test_monster_candidate_selection.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1134339Z Combined monster lookup failed for D&D Beyond
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1135371Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1136664Z   File "/tmp/scrying-tests-rqr8plfj/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1137881Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1138883Z   File "/tmp/scrying-tests-rqr8plfj/repo/python/scrying_glass_monster_selection.py", line 151, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1140552Z     lambda: dnd_candidates(context, species),
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1141202Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1142671Z   File "/tmp/scrying-tests-rqr8plfj/repo/python/scrying_glass_monster_selection.py", line 66, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1144123Z     raise ProviderError("D&D Beyond returned an invalid candidate link.")
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1145580Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond returned an invalid candidate link.
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1150866Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1151513Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:56.1153205Z   File "/tmp/scrying-tests-rqr8plfj/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Standalone Python browser and audit

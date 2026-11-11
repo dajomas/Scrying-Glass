@@ -1,0 +1,26 @@
+15363Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5016008Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5016297Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5017338Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5018436Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5018956Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5019494Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5019977Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5020431Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5020898Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5021359Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5022215Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5022452Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5022665Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5023750Z ERROR: test_real_stale_review_is_rejected_without_apply_or_hp_generation (test_monster_refresh_end_to_end.MonsterRefreshEndToEndTests.test_real_stale_review_is_rejected_without_apply_or_hp_generation)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5024823Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5025220Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5025761Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5026291Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5026642Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5027259Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5027813Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5028056Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5028798Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_refresh_end_to_end.py", line 69, in asyncSetUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:05.5029422Z     self.browser = await runtime.chromium.launch(headless=True)
+tests	Standalone Python brow

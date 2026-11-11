@@ -1,0 +1,30 @@
+hon3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0372292Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0372624Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0372995Z         self._impl_obj.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0373430Z         ^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0373802Z     ...<17 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0374137Z         )
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0374440Z         ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0374737Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0375025Z     ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0375974Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0376935Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0377314Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0378342Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0379327Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0380334Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0381422Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0382118Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0382968Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0383703Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0383977Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0384736Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/browser_type.py", line 176, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0385490Z     await self._channel.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0386146Z     ...<2 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0386390Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0387114Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0387884Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0388225Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0389488Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:58.0391003Z ╔═══════════════════════════════════════════════════════

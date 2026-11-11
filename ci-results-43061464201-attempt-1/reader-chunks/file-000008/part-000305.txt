@@ -1,0 +1,30 @@
+verwrite_change_during_chooser)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7145192Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7145809Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7146656Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_source_bonus_offer_browser.py", line 8, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7147514Z     self.fixture.setUp()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7147889Z     ~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7148666Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_candidate_browser.py", line 12, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7149553Z     self.playwright = sync_playwright().start()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7150282Z                       ~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7151354Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_context_manager.py", line 98, in start
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7152484Z     return self.__enter__()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7152855Z            ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7153910Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_context_manager.py", line 46, in __enter__
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7154881Z                 raise Error(
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7155250Z     ...<2 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7155575Z                 )
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7156409Z playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7157251Z Please use the Async API instead.
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7157540Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7157839Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7159177Z ERROR: test_delayed_http_edits_are_preserved (test_source_bonus_offer_browser.SourceBonusOfferBrowserTests.test_delayed_http_edits_are_preserved)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7160464Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7161095Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7162118Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_source_bonus_offer_browser.py", line 8, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7162951Z     self.fixture.setUp()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7163310Z     ~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7164102Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_candidate_browser.py", line 12, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7165038Z     self.playwright = sync_playwright().start()
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7165559Z                       ~~~~~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:19.7166643Z   File "/opt/hostedtoolcache/Python/3.14

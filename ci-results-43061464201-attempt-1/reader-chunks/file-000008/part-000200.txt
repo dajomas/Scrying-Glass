@@ -1,0 +1,31 @@
+~^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0343812Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_admin_live_workspace.py", line 14, in setUpClass
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0345196Z     navigation.WorkflowNavigationTests.setUpClass.__func__(cls)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0345904Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0346853Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_admin_workflow_navigation.py", line 16, in setUpClass
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0347719Z     cls.rows.setUpClass.__func__(cls)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0348204Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0349082Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_button_layout.py", line 26, in setUpClass
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0350069Z     cls.browser = cls.playwright.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0350977Z                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0352271Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0353261Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0353593Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0353952Z         self._impl_obj.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0354355Z         ^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0354733Z     ...<17 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0355062Z         )
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0355341Z         ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0355623Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0355897Z     ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0356824Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0357766Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0358123Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0359107Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0360051Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0361025Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0362204Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0362748Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0363791Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0364701Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0365035Z  

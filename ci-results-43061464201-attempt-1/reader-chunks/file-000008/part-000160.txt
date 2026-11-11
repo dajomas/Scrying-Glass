@@ -1,0 +1,31 @@
+                              ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6849196Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6849420Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6849614Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6850495Z ERROR: test_start_of_turn_apply_refresh_blocks_next (test_battle_actions_next.BattleActionsNextTests.test_start_of_turn_apply_refresh_blocks_next)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6851319Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6851852Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6852406Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_battle_actions_next.py", line 18, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6852954Z     browser = p.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6853688Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6854301Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6854508Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6854751Z         self._impl_obj.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6855022Z         ^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6855269Z     ...<17 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6855491Z         )
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6855691Z         ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6855883Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6856080Z     ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6856687Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6857292Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6857540Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6858348Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6858965Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6859598Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6860274Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6860638Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6861327Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6862386Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:00.6862644Z            ^^^^^^^^^^^^
+tests	Standalon

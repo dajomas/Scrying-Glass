@@ -1,0 +1,29 @@
+t = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2743276Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2744012Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2744648Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2744884Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2745564Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/browser_type.py", line 176, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2746252Z     await self._channel.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2746523Z     ...<2 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2746733Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2747381Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2748060Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2748372Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2749475Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2750848Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2751417Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2752109Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2752652Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2753152Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2753633Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2754101Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2754834Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2755062Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2755306Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2755689Z Ran 0 tests in 0.332s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2755843Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2755952Z FAILED (errors=1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2756465Z test_campaign_viewer_browser.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.3056668Z FAIL: test_campaign_viewer_browser.py (exit 1)
+tests	Stan

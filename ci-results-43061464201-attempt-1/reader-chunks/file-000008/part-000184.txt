@@ -1,0 +1,30 @@
+6:55:29.2501143Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2501982Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2503083Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2504184Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2504849Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2506013Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2507283Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2507787Z OSError: secret 5e.tools endpoint
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2508127Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2508632Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2509192Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2509478Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2510666Z   File "/tmp/scrying-tests-rqr8plfj/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2511978Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2512992Z   File "/tmp/scrying-tests-rqr8plfj/repo/python/scrying_glass_monster_selection.py", line 152, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2514091Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2514755Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2515955Z   File "/tmp/scrying-tests-rqr8plfj/repo/python/scrying_glass_monster_selection.py", line 144, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2517507Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.2519016Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.3074637Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.3075386Z Ran 4 tests in 0.200s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.3075634Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.3075780Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.3093600Z test_combined_monster_lookup_application.py: connections opened: 10; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.3779597Z Connection audit: test_compact_combatant_inputs.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8632478Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8634559Z ERROR: test_width_halved_without_height_or_unrelated_field_changes (test_compact_combatant_inputs.CompactInputsTests.test_width_halved_without_height_or_unrelated_field_changes)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:29.8636150Z ----------------------------------------------------------------------
+t

@@ -1,0 +1,31 @@
+ests	Standalone Python browser and audit checks	2026-11-11T16:55:25.7645361Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:25.7645740Z Ran 0 tests in 0.330s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:25.7645880Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:25.7645985Z FAILED (errors=1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:25.7646675Z test_campaign_viewer_admin_selection.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:25.7975071Z FAIL: test_campaign_viewer_admin_selection.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:25.7976653Z Connection audit: test_campaign_viewer_browser.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2728092Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2729009Z ERROR: setUpClass (test_campaign_viewer_browser.ViewerBrowserTests)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2729738Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2730282Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2731058Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_campaign_viewer_browser.py", line 13, in setUpClass
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2732754Z     cls.p=sync_playwright().start();cls.browser=cls.p.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2733449Z                                                 ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2734438Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2735247Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2735518Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2735824Z         self._impl_obj.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2736173Z         ^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2736492Z     ...<17 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2736768Z         )
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2737010Z         ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2737252Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2737496Z     ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2738262Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2739061Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2739364Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2740188Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2740990Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2741923Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:26.2742806Z     resul

@@ -1,0 +1,32 @@
+s	Standalone Python browser and audit checks	2026-11-11T16:56:15.3917550Z test_reset_health.py: connections opened: 9; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:15.4396027Z Connection audit: test_role_pages.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:15.7588630Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:15.7589395Z Ran 10 tests in 0.232s
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:15.7589678Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:15.7589902Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:15.7590634Z test_role_pages.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:15.8021396Z Connection audit: test_roster_status_spacing.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5273384Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5274487Z ERROR: setUpClass (test_roster_status_spacing.CompactRosterSpacingTests)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5275238Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5275777Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5276538Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_roster_status_spacing.py", line 9, in setUpClass
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5277391Z     fixture.StageBRosterTests.setUpClass.__func__(cls)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5277903Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5278715Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_stage_b_rosters.py", line 14, in setUpClass
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5279784Z     fixture.MonsterButtonLayoutTests.setUpClass.__func__(cls)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5280498Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5281490Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_monster_button_layout.py", line 26, in setUpClass
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5282768Z     cls.browser = cls.playwright.chromium.launch(headless=True)
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5283472Z                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5284643Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5285618Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5285944Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5286325Z         self._impl_obj.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5286752Z         ^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5287136Z     ...<17 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5287482Z         )
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5287785Z         ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5288077Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.5288371Z     ^
+tests	Standalone Python browser and audit checks	2026-11-11T16:56:16.52

@@ -1,0 +1,29 @@
+          ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0365954Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/browser_type.py", line 176, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0366906Z     await self._channel.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0367270Z     ...<2 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0367579Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0368583Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0369584Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0370030Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0371651Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0373640Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0374433Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0375268Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0375996Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0376683Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0377397Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0378199Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0379057Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0379410Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0379784Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0380661Z Ran 0 tests in 0.625s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0380883Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0381044Z FAILED (errors=1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0381955Z test_live_roster_widths.py: connections opened: 1; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0949177Z FAIL: test_live_roster_widths.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.0949978Z Connection audit: test_live_sidebar_corrections.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.8102628Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.8103843Z ERROR: setUpClass (test_live_sidebar_corrections.SidebarCorrectionTests)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:43.8104646Z ----------------------------------------------------------------------
+tests	Sta

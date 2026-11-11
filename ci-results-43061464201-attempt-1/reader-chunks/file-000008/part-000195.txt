@@ -1,0 +1,29 @@
+1T16:55:36.8796406Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/browser_type.py", line 176, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8797368Z     await self._channel.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8797738Z     ...<2 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8798046Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8798971Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8799954Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8800406Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8802272Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8804126Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8804962Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8805820Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8806592Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8807308Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8808008Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8808735Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8809509Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8809841Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8810185Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8810974Z Ran 0 tests in 0.623s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8811229Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8811399Z FAILED (errors=1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.8812382Z test_independent_panel_controls.py: connections opened: 1; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.9400722Z FAIL: test_independent_panel_controls.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:36.9401946Z Connection audit: test_initiative_bonus_input.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:37.0312024Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:37.0313243Z test_initiative_bonus_input.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:37.0314311Z Ran 7 tests in 0.001s
+tests	Standalone Python browser and audit checks	2026-11-11T16:55:37.0314628Z 
+tests	Standalone Python browser and au

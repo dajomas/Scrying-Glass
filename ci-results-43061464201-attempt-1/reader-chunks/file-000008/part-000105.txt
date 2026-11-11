@@ -1,0 +1,28 @@
+6-11-11T16:54:40.6005335Z     await self._channel.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6005602Z     ...<2 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6005827Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6006462Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6007141Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6007449Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6008541Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6009855Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6010409Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6010981Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6011504Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6012110Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6012589Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6013072Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6013612Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6013849Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6014090Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6014457Z Ran 0 tests in 0.334s
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6026443Z 
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6026675Z FAILED (errors=1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6027433Z test_admin_feedback_loading.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6320136Z FAIL: test_admin_feedback_loading.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:40.6320673Z Connection audit: test_admin_feedback_rendering.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:41.1153101Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:41.1154644Z ERROR: setUpClass (test_admin_feedback_rendering.FeedbackRenderingTests)
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:41.1156093Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:41.1157150Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:54:41.1158735Z   File "/tmp/scrying-tests-rqr8plfj/repo/tests/test_admin_feedback_rendering.py", line 14, in s
