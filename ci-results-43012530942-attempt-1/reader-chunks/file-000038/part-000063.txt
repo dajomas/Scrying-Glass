@@ -1,0 +1,25 @@
+ors (test_combined_monster_lookup.CombinedLookupTests.test_two_successful_zero_match_searches_are_not_errors) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.0538760Z test_both_selected_sources_survive_creation_and_storage_reopen (test_combined_monster_lookup_application.CombinedLookupApplicationTests.test_both_selected_sources_survive_creation_and_storage_reopen) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.0892725Z test_disabled_providers_and_empty_source_list_make_no_disabled_requests (test_combined_monster_lookup_application.CombinedLookupApplicationTests.test_disabled_providers_and_empty_source_list_make_no_disabled_requests) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1276692Z test_either_provider_failure_blocks_candidates_signing_and_mutation (test_combined_monster_lookup_application.CombinedLookupApplicationTests.test_either_provider_failure_blocks_candidates_signing_and_mutation) ... D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1278866Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1279887Z   File "/tmp/scrying-tests-o2aja4ih/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1280868Z     hits = context.dnd_monster_candidates(species)
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1281828Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1282679Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1283175Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1284025Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1284850Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1285385Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1286312Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1287045Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1287466Z TimeoutError: secret D&D endpoint
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1287845Z Combined monster lookup failed for D&D Beyond
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1288204Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1289029Z   File "/tmp/scrying-tests-o2aja4ih/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1289621Z     hits = context.dnd_monster_candidates(species)
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1290192Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1290690Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1291061Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-11T11:32:41.1291584Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+test
