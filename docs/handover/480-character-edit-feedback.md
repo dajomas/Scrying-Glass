@@ -74,3 +74,41 @@ covering local-or-hosted validation/corrections and bounded acceptance remain op
 Pane compatibility stays until required migrations finish. Stage 1, Stages 3-4,
 Deliverable 2 and wider phase acceptance remain separate. This checkpoint does not
 claim live/manual/accessibility checks that have not run.
+
+## Composition fixture correction preparation - 2026-11-11
+
+Character Edit was delivered as fd13991c2c15cb6e15f056f0050431f5bc686ada.
+Run 43063381965 attempt 1, job 130671689532, covers Chromium repair
+6c97f22ae661156f6f2e5620b7b8d3ba0ff1c136 including that implementation.
+Standalone audit completed 172 modules with one failed module:
+test_admin_global_feedback_composition.py. Its four scenarios all stopped at
+open_page's obsolete 42-script expectation: the loaded page has 43 after the
+character-Edit asset addition. That module reported four opened SQLite connections
+and zero without explicit close. The standalone real-Chromium smoke completed its
+reported checks with no page errors. This is not an overall successful CI run.
+
+The correction preserves an exact count of 43 and additionally requires exactly
+one core Admin, character-edit-feedback.js?v=1 and monster-initiative-edit.js?v=1
+asset, in that order. It does not derive the expected count from unchecked live
+HTML or relax it to a lower bound. All four scenario bodies are AST-identical to
+the live base; existing boot-error, missing-asset, no-mutation and cleanup checks
+remain. No production asset/template, fragment pin, workflow or audit changes.
+
+Five new inventory unittest methods passed in isolation, extracted from the
+complete proposed source via AST to avoid unavailable full-fixture imports.
+They reject wrong totals, missing/duplicate required assets at the same total,
+wrong owner order and wrong character asset version. Removing count, singleton or
+order guards separately made the regression suite fail; the singleton negative
+control also exposed missing-index errors. Restored checks passed 5/5. Full-module
+AST parsing passed, and the original source reconstruction matched Git blob
+c5f141467fa4779c2a789805d9b5e0234a4405d9. This is guard-level validation, not
+execution of the four native browser scenarios or the full repository audit.
+
+Normal push-triggered CI applies without a skip marker. The existing workflow
+runs this module through unittest and the connection audit; the revised module
+contains four retained browser scenarios plus five inventory unit methods.
+Covering results and any further corrections remain pending, as does bounded
+acceptance. README, HANDOVER and TODO indexes were reviewed/reused against live
+identities and remain unchanged; their links and open scopes remain accurate.
+Both deliverables, Stage 2 and 009.7 stay open. No new passing CI or commit identity
+is invented before delivery/verification. No merge or deployment.

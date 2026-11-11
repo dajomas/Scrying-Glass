@@ -9,6 +9,55 @@ from web_html.admin_html import ADMIN_HTML
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def assert_script_inventory(test_case, scripts):
+    test_case.assertEqual(len(scripts), 43)
+    core = '/static/admin.js'
+    character = '/static/character-edit-feedback.js?v=1'
+    monster = '/static/monster-initiative-edit.js?v=1'
+    for source in (core, character, monster):
+        test_case.assertEqual(scripts.count(source), 1, source)
+    test_case.assertLess(scripts.index(core), scripts.index(character))
+    test_case.assertLess(scripts.index(character), scripts.index(monster))
+
+
+class ScriptInventoryTests(unittest.TestCase):
+    def valid_scripts(self):
+        return ['/static/admin.js', '/static/character-edit-feedback.js?v=1',
+                '/static/monster-initiative-edit.js?v=1'] + [f'/fixture-{i}.js' for i in range(40)]
+
+    def test_accepts_exact_current_inventory(self):
+        assert_script_inventory(self, self.valid_scripts())
+
+    def test_rejects_missing_or_extra_script(self):
+        for scripts in (self.valid_scripts()[:-1], self.valid_scripts() + ['/extra.js']):
+            with self.subTest(count=len(scripts)), self.assertRaises(AssertionError):
+                assert_script_inventory(self, scripts)
+
+    def test_rejects_missing_or_duplicate_required_assets_at_same_total(self):
+        for index in range(3):
+            for duplicate in (False, True):
+                scripts = self.valid_scripts()
+                if duplicate:
+                    scripts[-1] = scripts[index]
+                else:
+                    scripts[index] = '/unexpected.js'
+                with self.subTest(index=index, duplicate=duplicate), self.assertRaises(AssertionError):
+                    assert_script_inventory(self, scripts)
+
+    def test_rejects_incorrect_owner_order(self):
+        for left, right in ((0, 1), (1, 2)):
+            scripts = self.valid_scripts()
+            scripts[left], scripts[right] = scripts[right], scripts[left]
+            with self.subTest(left=left, right=right), self.assertRaises(AssertionError):
+                assert_script_inventory(self, scripts)
+
+    def test_rejects_wrong_character_asset_version(self):
+        scripts = self.valid_scripts()
+        scripts[1] = '/static/character-edit-feedback.js?v=0'
+        with self.assertRaises(AssertionError):
+            assert_script_inventory(self, scripts)
+
+
 class GlobalFeedbackCompositionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -82,7 +131,9 @@ class GlobalFeedbackCompositionTests(unittest.TestCase):
         page.wait_for_function("typeof latest!=='undefined' && latest?.characters?.some(x=>x.id==='c') && document.querySelector('#characters [data-ca]')")
         self.assertGreater(len((ROOT/'static/admin.js').read_bytes()), 100000,
                            'Run through tools/run_split_tests.py to assemble production Admin')
-        self.assertEqual(page.locator('script[src]').count(), 42)
+        scripts = page.locator('script[src]').evaluate_all(
+            "nodes => nodes.map(node => node.getAttribute('src'))")
+        assert_script_inventory(self, scripts)
         self.assertEqual(h['errors'], [])
         self.assertEqual(h['missing'], [])
         self.assertEqual(h['writes'], [], 'Boot must not mutate')
