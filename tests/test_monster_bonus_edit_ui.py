@@ -1,6 +1,8 @@
 """Native Chromium Edit fixtures with recorded transport, not live HTTP/storage."""
 import unittest
 from pathlib import Path
+from feedback_browser_fixture import install_feedback
+from python.scrying_glass_asset_cache import cache_bust_html
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -10,6 +12,9 @@ class MonsterBonusEditUITests(unittest.TestCase):
         end = (ROOT / "templates/admin/190_document_end.html").read_text(encoding="utf-8")
         self.assertEqual(end.count('/static/monster-initiative-edit.js?v=1'), 1)
         self.assertLess(end.index('/static/admin.js'), end.index('/static/monster-initiative-edit.js?v=1'))
+        for token in ('first', 'second'):
+            self.assertIn('/static/monster-initiative-edit.js?v=1&amp;_cb=' + token,
+                          cache_bust_html(end, token))
 
     def test_native_edit_render_submission_and_character_isolation(self):
         from playwright.sync_api import sync_playwright
@@ -19,6 +24,7 @@ class MonsterBonusEditUITests(unittest.TestCase):
                 for width in (375, 1440):
                     page = browser.new_page(viewport={"width": width, "height": 900})
                     page.set_content('<div id="editModal" hidden><h2 id="editTitle"></h2><form id="editForm"></form></div>')
+                    install_feedback(page)
                     page.add_script_tag(content="""
                         let editing = null;
                         const latest = {monsters: [{id:'m',name:'Dragon',monster_species:'dragon',ac:18,
@@ -51,7 +57,7 @@ class MonsterBonusEditUITests(unittest.TestCase):
                         page.evaluate("openEdit('monsters','m')")
                         page.locator('[name="initiative_bonus"]').fill(value)
                         page.get_by_role('button', name='Save monster').click()
-                        page.wait_for_function("editing === null")
+                        page.wait_for_function("editing === null && !document.querySelector('#editForm').hasAttribute('aria-busy')")
                         fields = dict(page.evaluate('sent.at(-1).fields'))
                         self.assertEqual(fields['initiative_bonus'], value)
                         self.assertEqual(fields['initiative'], '112')
@@ -62,7 +68,7 @@ class MonsterBonusEditUITests(unittest.TestCase):
                         page.evaluate("openEdit('monsters','m')")
                         page.locator('[name="initiative_bonus"]').fill(value)
                         page.get_by_role('button', name='Save monster').click()
-                        page.wait_for_function("editing === null")
+                        page.wait_for_function("editing === null && !document.querySelector('#editForm').hasAttribute('aria-busy')")
                         self.assertNotIn('initiative_bonus', dict(page.evaluate('sent.at(-1).fields')))
                     page.evaluate("openEdit('monsters','m')")
                     page.locator('[name="initiative_bonus"]').fill('1.5')
@@ -87,12 +93,15 @@ class MonsterBonusEditUITests(unittest.TestCase):
             try:
                 page = browser.new_page()
                 page.set_content('<form id="editForm"><input name="name" value="Dragon"><input name="monster_species" value="dragon"><input name="initiative" value="28"><input name="initiative_bonus" value="10" data-assigned-bonus="12"><input name="image" type="file"><button>Save</button></form>')
+                install_feedback(page)
                 page.add_script_tag(content="""
                     let editing={kind:'monsters',id:'m'};
+                    const editModal={hidden:false};
+                    function openEdit(kind,id){editing={kind,id};editModal.hidden=false;}
                     function monsterEdit(){return '';}
                     const sent=[]; const notices=[];
                     async function request(url,options){ sent.push([...options.body].map(([key,value])=>[key,value instanceof File?value.name:value])); if(window.rejectSave)throw new Error('rejected'); }
-                    function closeEdit(){editing=null;}
+                    function closeEdit(){editing=null;editModal.hidden=true;}
                     async function load(){if(window.rejectRefresh)throw new Error('refresh unavailable');}
                     function paneNotification(kind,text){notices.push(text);}
                     document.querySelector('#editForm').onsubmit=()=>{};
@@ -101,15 +110,18 @@ class MonsterBonusEditUITests(unittest.TestCase):
                 page.locator('[name="image"]').set_input_files({'name':'dragon.png','mimeType':'image/png','buffer':b'image-fixture'})
                 page.evaluate('window.rejectSave=true')
                 page.get_by_role('button', name='Save').click()
-                page.wait_for_function('notices.length === 1')
+                page.wait_for_function("scryingAdminFeedback.snapshot().some(x=>x.operation==='monster.edit')")
                 self.assertEqual(dict(page.evaluate('sent[0]'))['image'], 'dragon.png')
                 self.assertEqual(page.evaluate('editing.id'), 'm')
                 self.assertFalse(page.locator('[name="initiative_bonus"]').is_disabled())
                 self.assertIsNone(page.locator('#editForm').get_attribute('aria-busy'))
+                self.assertEqual(page.evaluate("scryingAdminFeedback.snapshot().find(x=>x.operation==='monster.edit').severity"), 'error')
                 page.evaluate('window.rejectSave=false; window.rejectRefresh=true')
                 page.get_by_role('button', name='Save').click()
-                page.wait_for_function('notices.length === 2')
+                page.wait_for_function("scryingAdminFeedback.snapshot().some(x=>x.operation==='monster.edit.refresh')")
                 self.assertIsNone(page.evaluate('editing'))
-                self.assertIn('Monster saved, but refresh failed', page.evaluate('notices[1]'))
+                self.assertIn('Monster saved, but refresh failed', page.evaluate("scryingAdminFeedback.snapshot().find(x=>x.operation==='monster.edit.refresh').text"))
+                self.assertEqual(page.evaluate("scryingAdminFeedback.snapshot().filter(x=>x.operation==='monster.edit').length"), 0)
+                self.assertEqual(page.evaluate('notices'), [])
             finally:
                 browser.close()

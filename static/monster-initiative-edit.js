@@ -35,16 +35,34 @@
         return template.innerHTML;
     };
 
+    let editSequence = 0;
+    const previousOpen = openEdit;
+    openEdit = function(...args) {
+        editSequence++;
+        return previousOpen.apply(this, args);
+    };
     const form = document.querySelector('#editForm');
     const previousSubmit = form.onsubmit;
-    let saving = false;
+    const pending = new Map();
+    let busyOwner = null;
     form.onsubmit = async function(event) {
         if (!editing || editing.kind !== 'monsters') {
             return previousSubmit.call(this, event);
         }
         event.preventDefault();
-        if (saving || !form.reportValidity()) return;
-        const target = {kind: editing.kind, id: editing.id};
+        const feedback = window.scryingAdminFeedback;
+        const session = editing;
+        const sequence = editSequence;
+        const target = JSON.stringify(['monsters', session.id]);
+        const previous = pending.get(target);
+        if (previous && (feedback.isCurrent(previous.refresh) || previous.session === session)) return;
+        const spec = {region: 'monsters', operation: 'monster.edit', target, label: 'Save monster'};
+        const validation = feedback.begin({...spec, operation: 'monster.edit.validation'});
+        if (!form.reportValidity()) {
+            feedback.publish(validation, {severity: 'error', text: 'Correct the invalid monster fields before saving.'});
+            return;
+        }
+        feedback.resolve(validation);
         const payload = new FormData(form);
         payload.set('name', form.elements.name.value.trim());
         payload.set('monster_species', form.elements.monster_species.value.trim());
@@ -57,27 +75,45 @@
         }
         const image = payload.get('image');
         if (!(image instanceof File) || !image.name) payload.delete('image');
+        const ticket = feedback.begin(spec);
+        const refresh = feedback.begin({...spec, operation: 'monster.edit.refresh'});
+        const attempt = {refresh, session};
+        pending.set(target, attempt);
         const controls = [...form.querySelectorAll('input, select, button')];
         const disabled = controls.map(control => control.disabled);
         controls.forEach(control => { control.disabled = true; });
         form.setAttribute('aria-busy', 'true');
-        saving = true;
-        let applied = false;
+        busyOwner = attempt;
+        const current = () => feedback.isCurrent(ticket) && feedback.isCurrent(refresh) &&
+            editing === session && !editModal.hidden && sequence === editSequence;
         try {
-            await request(`/api/monsters/${encodeURIComponent(target.id)}/edit`, {
-                method: 'POST', body: payload,
-            });
-            applied = true;
-            if (editing?.kind === target.kind && editing?.id === target.id) closeEdit();
-            await load(true);
-        } catch (error) {
-            paneNotification('monsters', applied
-                ? `Monster saved, but refresh failed: ${error.message}. Reload before continuing.`
-                : error.message);
+            try {
+                await request(`/api/monsters/${encodeURIComponent(session.id)}/edit`, {
+                    method: 'POST', body: payload,
+                });
+            } catch (error) {
+                if (current()) feedback.publish(ticket, {severity: 'error', text: error.message});
+                return;
+            }
+            if (!current()) return;
+            feedback.resolve(ticket);
+            closeEdit();
+            try {
+                await load(true);
+                if (editing === null && editModal.hidden && sequence === editSequence) feedback.resolve(refresh);
+            } catch (error) {
+                if (editing === null && editModal.hidden && sequence === editSequence) {
+                    feedback.publish(refresh, {severity: 'error',
+                        text: `Monster saved, but refresh failed: ${error.message}. Reload before continuing.`});
+                }
+            }
         } finally {
             controls.forEach((control, index) => { control.disabled = disabled[index]; });
-            form.removeAttribute('aria-busy');
-            saving = false;
+            if (busyOwner === attempt) {
+                form.removeAttribute('aria-busy');
+                busyOwner = null;
+            }
+            if (pending.get(target) === attempt) pending.delete(target);
         }
     };
 })();
