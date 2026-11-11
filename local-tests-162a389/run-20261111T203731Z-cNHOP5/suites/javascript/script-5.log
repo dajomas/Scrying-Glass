@@ -1,0 +1,160 @@
+TAP version 13
+# Subtest: pane success expires at exactly three seconds
+ok 1 - pane success expires at exactly three seconds
+  ---
+  duration_ms: 1.983844
+  type: 'test'
+  ...
+# Subtest: global success expires at exactly five seconds
+ok 2 - global success expires at exactly five seconds
+  ---
+  duration_ms: 0.236276
+  type: 'test'
+  ...
+# Subtest: actionable errors have no automatic expiry
+ok 3 - actionable errors have no automatic expiry
+  ---
+  duration_ms: 0.177475
+  type: 'test'
+  ...
+# Subtest: severity is explicit and never inferred from wording
+ok 4 - severity is explicit and never inferred from wording
+  ---
+  duration_ms: 0.128242
+  type: 'test'
+  ...
+# Subtest: missing or invalid metadata fails before changing state
+ok 5 - missing or invalid metadata fails before changing state
+  ---
+  duration_ms: 0.449769
+  type: 'test'
+  ...
+# Subtest: scope must be activated explicitly
+ok 6 - scope must be activated explicitly
+  ---
+  duration_ms: 0.17494
+  type: 'test'
+  ...
+# Subtest: beginning retry preserves old error until a relevant outcome
+ok 7 - beginning retry preserves old error until a relevant outcome
+  ---
+  duration_ms: 1.38814
+  type: 'test'
+  ...
+# Subtest: unrelated success does not remove error in same pane
+ok 8 - unrelated success does not remove error in same pane
+  ---
+  duration_ms: 0.180881
+  type: 'test'
+  ...
+# Subtest: targets and operations remain distinct even for identical text
+ok 9 - targets and operations remain distinct even for identical text
+  ---
+  duration_ms: 0.590294
+  type: 'test'
+  ...
+# Subtest: silent successful retry resolves only its related error
+ok 10 - silent successful retry resolves only its related error
+  ---
+  duration_ms: 0.431224
+  type: 'test'
+  ...
+# Subtest: new failed retry replaces only the related old result
+ok 11 - new failed retry replaces only the related old result
+  ---
+  duration_ms: 0.271583
+  type: 'test'
+  ...
+# Subtest: older response cannot overwrite a newer attempt
+ok 12 - older response cannot overwrite a newer attempt
+  ---
+  duration_ms: 0.134604
+  type: 'test'
+  ...
+# Subtest: terminal tickets cannot publish twice or later resolve newer feedback
+ok 13 - terminal tickets cannot publish twice or later resolve newer feedback
+  ---
+  duration_ms: 0.072427
+  type: 'test'
+  ...
+# Subtest: cancelled old timer callback cannot clear replacement error
+ok 14 - cancelled old timer callback cannot clear replacement error
+  ---
+  duration_ms: 0.067087
+  type: 'test'
+  ...
+# Subtest: scope change invalidates old timers and old responses
+ok 15 - scope change invalidates old timers and old responses
+  ---
+  duration_ms: 0.07904
+  type: 'test'
+  ...
+# Subtest: A to B to A does not revive a ticket from the first A
+ok 16 - A to B to A does not revive a ticket from the first A
+  ---
+  duration_ms: 0.051918
+  type: 'test'
+  ...
+# Subtest: same-scope refresh does not invalidate tickets or clear feedback
+ok 17 - same-scope refresh does not invalidate tickets or clear feedback
+  ---
+  duration_ms: 0.049534
+  type: 'test'
+  ...
+# Subtest: viewer lane remains separate from encounter scope changes
+ok 18 - viewer lane remains separate from encounter scope changes
+  ---
+  duration_ms: 0.056717
+  type: 'test'
+  ...
+# Subtest: operation may resolve an old related destination after intentional routing change
+ok 19 - operation may resolve an old related destination after intentional routing change
+  ---
+  duration_ms: 0.082907
+  type: 'test'
+  ...
+# Subtest: progress updates replace progress only, not existing error
+ok 20 - progress updates replace progress only, not existing error
+  ---
+  duration_ms: 0.119084
+  type: 'test'
+  ...
+# Subtest: dismissal is record-specific and cancels only its timer
+ok 21 - dismissal is record-specific and cancels only its timer
+  ---
+  duration_ms: 0.175892
+  type: 'test'
+  ...
+# Subtest: snapshots and records are immutable and ticket forgery fails
+ok 22 - snapshots and records are immutable and ticket forgery fails
+  ---
+  duration_ms: 0.080041
+  type: 'test'
+  ...
+# Subtest: subscription and unsubscription expose current state without later callbacks
+ok 23 - subscription and unsubscription expose current state without later callbacks
+  ---
+  duration_ms: 0.117131
+  type: 'test'
+  ...
+# Subtest: reentrant mutation does not send an older snapshot after a newer one
+ok 24 - reentrant mutation does not send an older snapshot after a newer one
+  ---
+  duration_ms: 0.1007
+  type: 'test'
+  ...
+# Subtest: dispose clears timers and views, and stale timer callbacks are harmless
+ok 25 - dispose clears timers and views, and stale timer callbacks are harmless
+  ---
+  duration_ms: 0.203424
+  type: 'test'
+  ...
+1..25
+# tests 25
+# suites 0
+# pass 25
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 136.650175

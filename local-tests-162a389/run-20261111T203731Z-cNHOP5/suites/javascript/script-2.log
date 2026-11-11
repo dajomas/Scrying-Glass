@@ -1,0 +1,112 @@
+TAP version 13
+# Subtest: monsters: explicit persistent failure uses target identity and unchanged request
+ok 1 - monsters: explicit persistent failure uses target identity and unchanged request
+  ---
+  duration_ms: 31.402093
+  type: 'test'
+  ...
+# Subtest: monsters: actual failed request then matching retry resolves silently
+ok 2 - monsters: actual failed request then matching retry resolves silently
+  ---
+  duration_ms: 1.019355
+  type: 'test'
+  ...
+# Subtest: characters: explicit persistent failure uses target identity and unchanged request
+ok 3 - characters: explicit persistent failure uses target identity and unchanged request
+  ---
+  duration_ms: 0.743354
+  type: 'test'
+  ...
+# Subtest: characters: actual failed request then matching retry resolves silently
+ok 4 - characters: actual failed request then matching retry resolves silently
+  ---
+  duration_ms: 0.891032
+  type: 'test'
+  ...
+# Subtest: resetting another monster or a character does not clear the first monster error
+ok 5 - resetting another monster or a character does not clear the first monster error
+  ---
+  duration_ms: 0.957758
+  type: 'test'
+  ...
+# Subtest: same identifier in different kind has a distinct feedback target
+ok 6 - same identifier in different kind has a distinct feedback target
+  ---
+  duration_ms: 0.764703
+  type: 'test'
+  ...
+# Subtest: individual reset does not clear Reset All, End or state-load errors
+ok 7 - individual reset does not clear Reset All, End or state-load errors
+  ---
+  duration_ms: 0.735669
+  type: 'test'
+  ...
+# Subtest: refresh alone does not clear an individual reset error
+ok 8 - refresh alone does not clear an individual reset error
+  ---
+  duration_ms: 0.75758
+  type: 'test'
+  ...
+# Subtest: success resolves before actual loadState handles a refresh failure without retry
+ok 9 - success resolves before actual loadState handles a refresh failure without retry
+  ---
+  duration_ms: 1.264336
+  type: 'test'
+  ...
+# Subtest: old-setup success does not clear a new error or refresh the new setup
+ok 10 - old-setup success does not clear a new error or refresh the new setup
+  ---
+  duration_ms: 1.116467
+  type: 'test'
+  ...
+# Subtest: old-campaign failure cannot publish into the new campaign
+ok 11 - old-campaign failure cannot publish into the new campaign
+  ---
+  duration_ms: 0.760726
+  type: 'test'
+  ...
+# Subtest: switching away and back does not revive an old reset attempt
+ok 12 - switching away and back does not revive an old reset attempt
+  ---
+  duration_ms: 1.555276
+  type: 'test'
+  ...
+# Subtest: superseded success cannot clear a newer failure for the same target
+ok 13 - superseded success cannot clear a newer failure for the same target
+  ---
+  duration_ms: 0.691145
+  type: 'test'
+  ...
+# Subtest: concurrent different-target resets remain independent
+ok 14 - concurrent different-target resets remain independent
+  ---
+  duration_ms: 0.737893
+  type: 'test'
+  ...
+# Subtest: URI encoding and submitted name are captured before a response
+ok 15 - URI encoding and submitted name are captured before a response
+  ---
+  duration_ms: 0.692717
+  type: 'test'
+  ...
+# Subtest: existing remove/edit/action and earlier patch branches keep their precedence
+ok 16 - existing remove/edit/action and earlier patch branches keep their precedence
+  ---
+  duration_ms: 0.708627
+  type: 'test'
+  ...
+# Subtest: unexpected load rejection is not recast as an individual reset request failure
+ok 17 - unexpected load rejection is not recast as an individual reset request failure
+  ---
+  duration_ms: 1.125945
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 169.235426

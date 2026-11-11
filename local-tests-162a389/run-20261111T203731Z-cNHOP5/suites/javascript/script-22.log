@@ -1,0 +1,106 @@
+TAP version 13
+# Subtest: missing actor yields explicit persistent ID-targeted error without opening or mutation
+ok 1 - missing actor yields explicit persistent ID-targeted error without opening or mutation
+  ---
+  duration_ms: 3.347147
+  type: 'test'
+  ...
+# Subtest: inactive actor retains existing eligibility gate and name label
+ok 2 - inactive actor retains existing eligibility gate and name label
+  ---
+  duration_ms: 0.725489
+  type: 'test'
+  ...
+# Subtest: off-turn active actor remains rejected
+ok 3 - off-turn active actor remains rejected
+  ---
+  duration_ms: 0.865323
+  type: 'test'
+  ...
+# Subtest: matching valid opening silently resolves its actual earlier eligibility failure
+ok 4 - matching valid opening silently resolves its actual earlier eligibility failure
+  ---
+  duration_ms: 1.76402
+  type: 'test'
+  ...
+# Subtest: opening another valid actor cannot clear the first actors error
+ok 5 - opening another valid actor cannot clear the first actors error
+  ---
+  duration_ms: 0.790091
+  type: 'test'
+  ...
+# Subtest: matching valid opening leaves unrelated operation error intact
+ok 6 - matching valid opening leaves unrelated operation error intact
+  ---
+  duration_ms: 0.812353
+  type: 'test'
+  ...
+# Subtest: repeated same actor rejection replaces its error with no timer
+ok 7 - repeated same actor rejection replaces its error with no timer
+  ---
+  duration_ms: 0.631442
+  type: 'test'
+  ...
+# Subtest: actor rename does not change retry identity
+ok 8 - actor rename does not change retry identity
+  ---
+  duration_ms: 0.590224
+  type: 'test'
+  ...
+# Subtest: busy opening does not create or resolve feedback or change modal state
+ok 9 - busy opening does not create or resolve feedback or change modal state
+  ---
+  duration_ms: 1.120094
+  type: 'test'
+  ...
+# Subtest: lair delegation precedes eligibility feedback and preserves pending identity
+ok 10 - lair delegation precedes eligibility feedback and preserves pending identity
+  ---
+  duration_ms: 0.846348
+  type: 'test'
+  ...
+# Subtest: missing optional lair opener retains no-op behavior
+ok 11 - missing optional lair opener retains no-op behavior
+  ---
+  duration_ms: 0.692367
+  type: 'test'
+  ...
+# Subtest: dead active current actor remains eligible and starts a reaction row
+ok 12 - dead active current actor remains eligible and starts a reaction row
+  ---
+  duration_ms: 0.530441
+  type: 'test'
+  ...
+# Subtest: character rejection and matching retry use character ID
+ok 13 - character rejection and matching retry use character ID
+  ---
+  duration_ms: 0.551431
+  type: 'test'
+  ...
+# Subtest: real bootstrap retires old-scope eligibility and prevents away-and-back revival
+ok 14 - real bootstrap retires old-scope eligibility and prevents away-and-back revival
+  ---
+  duration_ms: 0.650438
+  type: 'test'
+  ...
+# Subtest: unrelated success cannot resolve eligibility failure
+ok 15 - unrelated success cannot resolve eligibility failure
+  ---
+  duration_ms: 0.580736
+  type: 'test'
+  ...
+# Subtest: shared helper preserves explicit outcome severity and distinct targets
+ok 16 - shared helper preserves explicit outcome severity and distinct targets
+  ---
+  duration_ms: 1.687951
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 139.632592

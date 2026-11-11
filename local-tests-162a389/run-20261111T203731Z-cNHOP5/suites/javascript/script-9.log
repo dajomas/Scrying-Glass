@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: CSV endpoints, file and dual success identities
+ok 1 - CSV endpoints, file and dual success identities
+  ---
+  duration_ms: 6.083954
+  type: 'test'
+  ...
+# Subtest: setup payload, default filters and exact confirmation
+ok 2 - setup payload, default filters and exact confirmation
+  ---
+  duration_ms: 3.089762
+  type: 'test'
+  ...
+# Subtest: validation and cancelled confirmation do not import
+ok 3 - validation and cancelled confirmation do not import
+  ---
+  duration_ms: 1.120285
+  type: 'test'
+  ...
+# Subtest: request failures preserve files and matching recovery preserves other kind error
+ok 4 - request failures preserve files and matching recovery preserves other kind error
+  ---
+  duration_ms: 1.418367
+  type: 'test'
+  ...
+# Subtest: duplicates blocked through refresh; disabled states restored
+ok 5 - duplicates blocked through refresh; disabled states restored
+  ---
+  duration_ms: 1.126366
+  type: 'test'
+  ...
+# Subtest: same-kind reopen suppresses old close/reset and refresh
+ok 6 - same-kind reopen suppresses old close/reset and refresh
+  ---
+  duration_ms: 0.845275
+  type: 'test'
+  ...
+# Subtest: setup reopen and encounter changes suppress obsolete results
+ok 7 - setup reopen and encounter changes suppress obsolete results
+  ---
+  duration_ms: 0.905318
+  type: 'test'
+  ...
+# Subtest: new file selected during request is never discarded on success
+ok 8 - new file selected during request is never discarded on success
+  ---
+  duration_ms: 0.849899
+  type: 'test'
+  ...
+# Subtest: refresh error persists after three-second successes without replay
+ok 9 - refresh error persists after three-second successes without replay
+  ---
+  duration_ms: 1.941164
+  type: 'test'
+  ...
+# Subtest: cancel or scope change during setup-list loading prevents obsolete open
+ok 10 - cancel or scope change during setup-list loading prevents obsolete open
+  ---
+  duration_ms: 1.639184
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 135.86335

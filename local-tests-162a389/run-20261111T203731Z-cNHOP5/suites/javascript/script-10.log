@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: modal success posts once, closes and reopens the authoritative actor
+ok 1 - modal success posts once, closes and reopens the authoritative actor
+  ---
+  duration_ms: 4.587619
+  type: 'test'
+  ...
+# Subtest: main success leaves the modal closed without opening an actor
+ok 2 - main success leaves the modal closed without opening an actor
+  ---
+  duration_ms: 1.622966
+  type: 'test'
+  ...
+# Subtest: preflight failure is persistent, makes no POST and retains drafts/modal
+ok 3 - preflight failure is persistent, makes no POST and retains drafts/modal
+  ---
+  duration_ms: 1.455908
+  type: 'test'
+  ...
+# Subtest: lost response reports uncertainty and reconciles without POST retry or reopening
+ok 4 - lost response reports uncertainty and reconciles without POST retry or reopening
+  ---
+  duration_ms: 0.865834
+  type: 'test'
+  ...
+# Subtest: confirmed mutation with failed refresh is not reported as an unconfirmed POST
+ok 5 - confirmed mutation with failed refresh is not reported as an unconfirmed POST
+  ---
+  duration_ms: 1.096039
+  type: 'test'
+  ...
+# Subtest: successful manual Next resolves only its related error
+ok 6 - successful manual Next resolves only its related error
+  ---
+  duration_ms: 0.912152
+  type: 'test'
+  ...
+# Subtest: successful refresh alone does not erase uncertain Next feedback
+ok 7 - successful refresh alone does not erase uncertain Next feedback
+  ---
+  duration_ms: 0.903195
+  type: 'test'
+  ...
+# Subtest: repeated failed manual attempts replace one related error
+ok 8 - repeated failed manual attempts replace one related error
+  ---
+  duration_ms: 0.790061
+  type: 'test'
+  ...
+# Subtest: settled preparation report can be replaced after failed reconciliation
+ok 9 - settled preparation report can be replaced after failed reconciliation
+  ---
+  duration_ms: 1.231344
+  type: 'test'
+  ...
+# Subtest: old-scope failure does not overwrite new-scope global or modal feedback
+ok 10 - old-scope failure does not overwrite new-scope global or modal feedback
+  ---
+  duration_ms: 11.251633
+  type: 'test'
+  ...
+# Subtest: scope A-B-A rejects feedback from the old encounter epoch
+ok 11 - scope A-B-A rejects feedback from the old encounter epoch
+  ---
+  duration_ms: 1.965853
+  type: 'test'
+  ...
+# Subtest: old-scope success cannot resolve a new encounter Next error
+ok 12 - old-scope success cannot resolve a new encounter Next error
+  ---
+  duration_ms: 1.762637
+  type: 'test'
+  ...
+# Subtest: no active participant is explicit info and resolves the prior Next error
+ok 13 - no active participant is explicit info and resolves the prior Next error
+  ---
+  duration_ms: 1.278393
+  type: 'test'
+  ...
+# Subtest: double modal click and main Next share one in-flight guard
+ok 14 - double modal click and main Next share one in-flight guard
+  ---
+  duration_ms: 2.064725
+  type: 'test'
+  ...
+# Subtest: action write in flight blocks Next without changing feedback
+ok 15 - action write in flight blocks Next without changing feedback
+  ---
+  duration_ms: 1.943002
+  type: 'test'
+  ...
+# Subtest: Next blocks a new action POST and captures form submission
+ok 16 - Next blocks a new action POST and captures form submission
+  ---
+  duration_ms: 2.168027
+  type: 'test'
+  ...
+# Subtest: disabled submit controls block Next without issuing a request
+ok 17 - disabled submit controls block Next without issuing a request
+  ---
+  duration_ms: 0.839204
+  type: 'test'
+  ...
+# Subtest: actor changed before POST retains the modal and requests review
+ok 18 - actor changed before POST retains the modal and requests review
+  ---
+  duration_ms: 1.007662
+  type: 'test'
+  ...
+# Subtest: unrelated success cannot clear a Next error
+ok 19 - unrelated success cannot clear a Next error
+  ---
+  duration_ms: 0.679051
+  type: 'test'
+  ...
+# Subtest: lifetime guard creates no visible notice and is retired on completion
+ok 20 - lifetime guard creates no visible notice and is retired on completion
+  ---
+  duration_ms: 0.710311
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 168.359077

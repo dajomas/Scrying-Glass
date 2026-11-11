@@ -1,0 +1,118 @@
+TAP version 13
+# Subtest: characters: open failure is persistent, explicit and does not alert or mutate
+ok 1 - characters: open failure is persistent, explicit and does not alert or mutate
+  ---
+  duration_ms: 8.004051
+  type: 'test'
+  ...
+# Subtest: monsters: open failure is persistent, explicit and does not alert or mutate
+ok 2 - monsters: open failure is persistent, explicit and does not alert or mutate
+  ---
+  duration_ms: 1.272201
+  type: 'test'
+  ...
+# Subtest: matching retry opens and clears only its error
+ok 3 - matching retry opens and clears only its error
+  ---
+  duration_ms: 4.876935
+  type: 'test'
+  ...
+# Subtest: another combatant success cannot clear an independent open error
+ok 4 - another combatant success cannot clear an independent open error
+  ---
+  duration_ms: 1.603569
+  type: 'test'
+  ...
+# Subtest: missing combatant is a persistent targeted error without mutation
+ok 5 - missing combatant is a persistent targeted error without mutation
+  ---
+  duration_ms: 1.629691
+  type: 'test'
+  ...
+# Subtest: network error retains its wording and never retries
+ok 6 - network error retains its wording and never retries
+  ---
+  duration_ms: 2.146382
+  type: 'test'
+  ...
+# Subtest: old-scope failure cannot publish or open the modal
+ok 7 - old-scope failure cannot publish or open the modal
+  ---
+  duration_ms: 1.682216
+  type: 'test'
+  ...
+# Subtest: old-scope success cannot publish or open the modal
+ok 8 - old-scope success cannot publish or open the modal
+  ---
+  duration_ms: 1.477359
+  type: 'test'
+  ...
+# Subtest: superseded open failure cannot replace current same-target error
+ok 9 - superseded open failure cannot replace current same-target error
+  ---
+  duration_ms: 1.910977
+  type: 'test'
+  ...
+# Subtest: superseded open success cannot replace current same-target error
+ok 10 - superseded open success cannot replace current same-target error
+  ---
+  duration_ms: 1.644194
+  type: 'test'
+  ...
+# Subtest: Close invalidates a pending open failure
+ok 11 - Close invalidates a pending open failure
+  ---
+  duration_ms: 2.657338
+  type: 'test'
+  ...
+# Subtest: Close invalidates a pending open success
+ok 12 - Close invalidates a pending open success
+  ---
+  duration_ms: 1.471357
+  type: 'test'
+  ...
+# Subtest: away-and-back scope epochs cannot revive pending success
+ok 13 - away-and-back scope epochs cannot revive pending success
+  ---
+  duration_ms: 1.254628
+  type: 'test'
+  ...
+# Subtest: successful open remains silent and focuses the original dialog
+ok 14 - successful open remains silent and focuses the original dialog
+  ---
+  duration_ms: 1.320773
+  type: 'test'
+  ...
+# Subtest: busy restoration still ignores additional open attempts
+ok 15 - busy restoration still ignores additional open attempts
+  ---
+  duration_ms: 2.798282
+  type: 'test'
+  ...
+# Subtest: restore request failures stay modal-local, not statistics.open errors
+ok 16 - restore request failures stay modal-local, not statistics.open errors
+  ---
+  duration_ms: 2.161597
+  type: 'test'
+  ...
+# Subtest: open preserves its GET, no-store, response shape and absence of writes
+ok 17 - open preserves its GET, no-store, response shape and absence of writes
+  ---
+  duration_ms: 1.240532
+  type: 'test'
+  ...
+# Subtest: render failure reports through the same ticket and a valid retry resolves it
+ok 18 - render failure reports through the same ticket and a valid retry resolves it
+  ---
+  duration_ms: 1.900487
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 164.205222
