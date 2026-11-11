@@ -1,0 +1,49 @@
+air_state_buttons.js
+tests	JavaScript tests	2026-11-11T16:09:57.7734397Z ok 1 - tests/test_lair_state_buttons.js
+tests	JavaScript tests	2026-11-11T16:09:57.7734844Z   ---
+tests	JavaScript tests	2026-11-11T16:09:57.7735093Z   duration_ms: 45.611568
+tests	JavaScript tests	2026-11-11T16:09:57.7735426Z   type: 'test'
+tests	JavaScript tests	2026-11-11T16:09:57.7735648Z   ...
+tests	JavaScript tests	2026-11-11T16:09:57.7735829Z 1..1
+tests	JavaScript tests	2026-11-11T16:09:57.7736184Z # tests 1
+tests	JavaScript tests	2026-11-11T16:09:57.7736798Z # suites 0
+tests	JavaScript tests	2026-11-11T16:09:57.7737407Z # pass 1
+tests	JavaScript tests	2026-11-11T16:09:57.7738014Z # fail 0
+tests	JavaScript tests	2026-11-11T16:09:57.7738630Z # cancelled 0
+tests	JavaScript tests	2026-11-11T16:09:57.7739270Z # skipped 0
+tests	JavaScript tests	2026-11-11T16:09:57.7739831Z # todo 0
+tests	JavaScript tests	2026-11-11T16:09:57.7740481Z # duration_ms 54.091135
+tests	JavaScript tests	2026-11-11T16:09:57.8034578Z ##[endgroup]
+tests	JavaScript tests	2026-11-11T16:09:57.8035192Z ##[group]tests/test_lairs.js
+tests	JavaScript tests	2026-11-11T16:09:57.9951910Z TAP version 13
+tests	JavaScript tests	2026-11-11T16:09:58.0301946Z # Lair DOM-mock integration checks passed
+tests	JavaScript tests	2026-11-11T16:09:58.0367149Z # Subtest: tests/test_lairs.js
+tests	JavaScript tests	2026-11-11T16:09:58.0375057Z ok 1 - tests/test_lairs.js
+tests	JavaScript tests	2026-11-11T16:09:58.0375800Z   ---
+tests	JavaScript tests	2026-11-11T16:09:58.0376217Z   duration_ms: 45.597413
+tests	JavaScript tests	2026-11-11T16:09:58.0376670Z   type: 'test'
+tests	JavaScript tests	2026-11-11T16:09:58.0377048Z   ...
+tests	JavaScript tests	2026-11-11T16:09:58.0377405Z 1..1
+tests	JavaScript tests	2026-11-11T16:09:58.0377765Z # tests 1
+tests	JavaScript tests	2026-11-11T16:09:58.0379887Z # suites 0
+tests	JavaScript tests	2026-11-11T16:09:58.0380713Z # pass 1
+tests	JavaScript tests	2026-11-11T16:09:58.0383127Z # fail 0
+tests	JavaScript tests	2026-11-11T16:09:58.0383812Z # cancelled 0
+tests	JavaScript tests	2026-11-11T16:09:58.0384861Z # skipped 0
+tests	JavaScript tests	2026-11-11T16:09:58.0385341Z # todo 0
+tests	JavaScript tests	2026-11-11T16:09:58.0385918Z # duration_ms 53.870715
+tests	JavaScript tests	2026-11-11T16:09:58.0682581Z ##[endgroup]
+tests	Standalone Python browser and audit checks	﻿2026-11-11T16:09:58.0721614Z ##[group]Run status=0
+tests	Standalone Python browser and audit checks	2026-11-11T16:09:58.0721957Z ^[[36;1mstatus=0^[[0m
+tests	Standalone Python browser and audit checks	2026-11-11T16:09:58.0722198Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	Standalone Python browser and audit checks	2026-11-11T16:09:58.0722498Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	Standalone Python browser and audit checks	2026-11-11T16:09:58.0722742Z ^[[36;1m  args=()^[[0m
+tests	Standalone Python browser and audit checks	2026-11-11T16:09:58.0723014Z ^[[36;1m  if [[ "$test" == tests/audit_log_clear.py ]]; then^[[0m
+tests	Standalone Python browser and audit checks	2026-11-11T16:09:58.0723344Z ^[[36;1m    args=(patched)^[[0m
+tests	Standalone Python browser and audit checks	2026-11-11T16:09:58.0723590Z ^[[36;1m  fi^[[0m
+tests	Standalone Python browser and audit checks	2026-11-11T16:09:58.0723931Z ^[[36;1m  python tools/run_split_tests.py -- python "$test" "${args[@]}" || status=1^[[0m
+tests	Standalone Python browser and audit checks	2026-11-11T16:09:58.0724359Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	Standalone Python browser and audit checks	2026-11-11T16:09:58.0724820Z ^[[36;1mdone < <(find tests -type f -name '*.py' ! -name 'test_*.py' ! -name '__init__.py' -print0 | sort -z)^[[0m
+tests	Standalone Python browser and audit checks	2026-11-11T16:09:58.0725304Z ^[[36;1mexit "$status"^[[0m
+tests	Standalone Python browser and audit checks	2026-11-11T16:09:58.0775690Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	Standalone Python browser and audit checks	2026-11-11T16:09:58.0776057Z en

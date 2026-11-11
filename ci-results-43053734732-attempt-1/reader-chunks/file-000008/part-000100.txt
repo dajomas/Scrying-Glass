@@ -1,0 +1,28 @@
+	2026-11-11T16:10:06.5174636Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:06.5175452Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:06.5176168Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:06.5176867Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:06.5177542Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:06.5178218Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:06.5178971Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:06.6153241Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:06.6153977Z ##[group]tests/feedback_browser_fixture.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:06.8138660Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:06.8139415Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:07.0298563Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:07.0304989Z ##[error]Process completed with exit code 1.
+tests	Post Run actions/checkout@v4	﻿2026-11-11T16:10:07.0423334Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-11T16:10:07.1356424Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-11T16:10:07.1409246Z git version 2.56.0
+tests	Post Run actions/checkout@v4	2026-11-11T16:10:07.1450549Z Temporarily overriding HOME='/home/runner/work/_temp/474e3fb7-f6f0-4a16-af73-3fb70cbcdd32' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-11T16:10:07.1452363Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-11T16:10:07.1456968Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-11T16:10:07.1506180Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-11T16:10:07.1550658Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-11T16:10:07.1919124Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-11T16:10:07.1956156Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-11T16:10:07.1975699Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-11T16:10:07.2021781Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Post Run actions/checkout@v4	2026-11-11T16:10:07.2355972Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	Post Run actions/checkout@v4	2026-11-11T16:10:07.2403161Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+tests	Complete job	﻿2026-11-11T16:10:07.2860643Z Cleaning up or

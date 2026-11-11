@@ -1,0 +1,28 @@
+ests	Standalone Python browser and audit checks	2026-11-11T16:10:04.6038745Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/async_case.py", line 142, in _tearDownAsyncioRunner
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:04.6039340Z     runner.close()
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:04.6039558Z     ~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:04.6040061Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 73, in close
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:04.6040662Z     loop.run_until_complete(loop.shutdown_asyncgens())
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:04.6041050Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:04.6042010Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 696, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:04.6042582Z     self._check_running()
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:04.6042825Z     ~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:04.6043388Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 634, in _check_running
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:04.6043925Z     raise RuntimeError(
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:04.6044295Z         'Cannot run the event loop while another loop is running')
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:04.6044833Z RuntimeError: Cannot run the event loop while another loop is running
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:04.6477935Z <sys>:0: RuntimeWarning: coroutine 'BaseEventLoop.shutdown_asyncgens' was never awaited
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:04.6479149Z RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:04.8147443Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:04.8148005Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:05.1362825Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:05.1363970Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:05.1778860Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:05.1779591Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:05.5180254Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:05.5627839Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:05.5628413Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:06.5137142Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:06.5149273Z   File "/tmp/scrying-tests-830qtif_/repo/tests/browser_smoke_272cc73.py", line 38, in <module>
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:06.5150427Z     browser=pw.chromium.launch(headless=True,args=['--no-sandbox'])
+tests	Standalone Python browser and audit checks	2026-11-11T16:10:06.5151873Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 41

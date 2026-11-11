@@ -1,0 +1,26 @@
+0.5%2bnmu1build1_all.deb  Temporary failure resolving 'security.ubuntu.com'
+tests	Install Python and browser test dependencies	2026-11-11T16:09:31.6506617Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/universe/x/xfonts-scalable/xfonts-scalable_1.0.3-1.3build1_all.deb  Temporary failure resolving 'security.ubuntu.com'
+tests	Install Python and browser test dependencies	2026-11-11T16:09:31.6507609Z E: Unable to fetch some archives, maybe run apt update or try with --fix-missing?
+tests	Install Python and browser test dependencies	2026-11-11T16:09:31.6525354Z Failed to install browsers
+tests	Install Python and browser test dependencies	2026-11-11T16:09:31.6525988Z Error: Installation process exited with code: 100
+tests	Install Python and browser test dependencies	2026-11-11T16:09:31.6715298Z ##[error]Process completed with exit code 1.
+tests	Python test suite (including browser fixtures)	﻿2026-11-11T16:09:31.6779532Z ##[group]Run python tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_*.py' -v
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:31.6780326Z ^[[36;1mpython tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_*.py' -v^[[0m
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:31.6833125Z shell: /usr/bin/bash -e {0}
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:31.6833398Z env:
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:31.6833885Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:31.6834905Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:31.6835356Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:31.6835794Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:31.6836190Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:31.6836570Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:31.6836958Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:31.6837433Z   SG_VISUAL_ARTIFACTS: /home/runner/work/_temp/sg-admin-foundations
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:31.6837784Z ##[endgroup]
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:33.3842142Z test_bad_fields_and_passwords (test_accounts.AccountTests.test_bad_fields_and_passwords) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:33.6187717Z test_create_update_delete_and_no_hash_in_response (test_accounts.AccountTests.test_create_update_delete_and_no_hash_in_response) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:33.7623857Z test_duplicate_and_unknown_user (test_accounts.AccountTests.test_duplicate_and_unknown_user) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:33.9498773Z test_failed_import_is_atomic (test_accounts.AccountTests.test_failed_import_is_atomic) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:34.1027315Z test_fresh_bootstrap_only_once (test_accounts.AccountTests.test_fresh_bootstrap_only_once) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:34.2519661Z test_hash_is_retained_on_import (test_accounts.AccountTests.test_hash_is_retained_on_import) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T16:09:34.3923555Z test_import_promotes_first_admin_and_hashes (test_accounts.AccountTests
