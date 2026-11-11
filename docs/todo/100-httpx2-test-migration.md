@@ -53,10 +53,10 @@ See [testing handover](../handover/020-ci-and-tests.md#verified-localci-success-
 
 ## Connection-lifetime audit maintenance - 2026-11-11
 
-Status: in progress; module-isolation repair and seven focused regression cases
-prepared and passed locally; exact GitHub approval/delivery and full repository
-validation remain pending. This independent maintenance correction does not reopen
-the accepted SG-TODO-010 migration or close any Stage 2/009.7 work.
+Status: in progress; audit isolation delivered as
+3358400abc08c9ae38aee50942fe7e6cb47a5cfc; seven focused regression cases passed
+locally. Full repository validation remains pending. This independent maintenance
+correction does not reopen the accepted SG-TODO-010 migration or close Stage 2/009.7.
 
 Preserve the failed-PRAGMA closure assertion, all unittest module discovery and
 explicit-close leak detection. Run each discovered test*.py module in a fresh
@@ -69,3 +69,22 @@ repository, including real storage/async/browser fixtures and per-module leak
 counts. Successful equivalent local or hosted evidence is sufficient for its
 covered scope; both are not required. Missing Chromium remains a separate failure,
 not a passing or waived browser test. [Repair evidence and limits](../handover/021-connection-lifetime-audit.md).
+
+## Chromium provisioning maintenance - 2026-11-11
+
+Status: in progress; helper, workflow prerequisite gates and ten focused tests
+prepared and passed with mocked provisioning/browser APIs on Python 3.12.8.
+Exact-content GitHub delivery and covering CI remain pending. Published setup
+failure 43053734732 attempt 1 covers fd13991, not the later audit repair.
+
+Required: download Chromium before optional native-dependency installation;
+require launch/render preflight; preserve nonzero download/native-install/launch
+failures; run mixed browser suites only after verified readiness. Independent
+syntax/pytest/JavaScript checks remain eligible according to their prerequisites.
+No skipped group may be described as passed or as accepted automated coverage.
+
+Acceptance: inspect a covering run's provisioning output and actual browser/test
+results, reconcile failures and retain full-suite/Stage 2 boundaries. Missing
+libraries or external download/DNS failures remain errors, not silent fallbacks.
+The local runner and runtime dependencies are unchanged. [Detailed evidence,
+control tests and limitations](../handover/021-connection-lifetime-audit.md#chromium-provisioning-correction---2026-11-11).
