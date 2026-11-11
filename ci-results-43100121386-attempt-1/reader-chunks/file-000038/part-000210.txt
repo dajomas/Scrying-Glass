@@ -1,0 +1,32 @@
+wser and audit checks	2026-11-11T21:10:55.4286485Z Attempting native dependency installation, then rechecking Chromium.
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.4291110Z Chromium preflight failed: missing library
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.4291732Z Attempting native dependency installation, then rechecking Chromium.
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.4292516Z Chromium provisioning failed: Command 'apt' returned non-zero exit status 100.
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.4419606Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.4420085Z Ran 10 tests in 0.015s
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.4420272Z 
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.4420388Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.4429636Z test_ci_browser_provisioning.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.4549304Z Connection audit: test_ci_publication_branch_allowlists.py
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.5368067Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.5369465Z test_ci_publication_branch_allowlists.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.5370123Z Ran 3 tests in 0.012s
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.5370315Z 
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.5370427Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.5486751Z Connection audit: test_client_campaign.py
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.6564297Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.6564957Z test_client_campaign.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.6565316Z Ran 6 tests in 0.036s
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.6565443Z 
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.6565517Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.6682098Z Connection audit: test_combined_monster_lookup.py
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.7434174Z Combined monster lookup failed for D&D Beyond
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.7434591Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.7435116Z   File "/tmp/scrying-tests-v__e1287/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.7435562Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.7436001Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.7436421Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.7436678Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.7437112Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.7437554Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T21:10:55.7437845Z            ~~

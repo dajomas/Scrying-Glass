@@ -1,0 +1,25 @@
+ed_denial_is_not_classified) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7212782Z test_visible_gate_text (test_dndbeyond_locked_pages.LockedPageTests.test_visible_gate_text) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7253226Z test_all_locked_keeps_fivetools_results (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_all_locked_keeps_fivetools_results) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7290919Z test_locked_then_usable_keeps_both_providers (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_locked_then_usable_keeps_both_providers) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7333101Z test_secondary_failure_blocks_accessible_primary_without_signing (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_secondary_failure_blocks_accessible_primary_without_signing) ... Combined monster lookup failed for 5e.tools
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7334538Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7335379Z   File "/tmp/scrying-tests-i265ljku/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7336106Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7336795Z   File "/tmp/scrying-tests-i265ljku/repo/python/scrying_glass_monster_selection.py", line 152, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7337611Z     lambda: fivetools_candidates(species, display),
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7338062Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7338961Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7339653Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7340067Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7340772Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7341470Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7341913Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7342655Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7343345Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7343681Z TimeoutError: private endpoint
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7343997Z ok
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7376492Z test_unclassified_failure_and_search_failure_block_all_results (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_unclassified_failure_and_search_failure_block_all_results) ... D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7377816Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7379329Z   File "/tmp/scrying-tests-i265ljku/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-11T21:07:27.7380132Z     html = context.dnd_monster_detail_html(href)
