@@ -101,30 +101,42 @@ eight Node cases and all three Python inventory methods passed. Preparation's
 four detected negative controls remain distinct historical local evidence.
 The 136 pairs cover selected API identities, not 136 actual handler combinations.
 
-Template-loaded source census at 91dde45ccc305dfc69dfe8020260dd3670ac17a4 now
-covers all 21 fragments, 42 distinct deferred script includes and the eight-part
-Admin expansion. This is source classification, not a new runtime/full-page test
-or proof that every late installer succeeds. The repository inventory and loading/
-delegation findings are in [460](../handover/460-global-feedback-reconciliation.md#checkpoint-ci-and-template-loaded-source-inventory---2026-11-11).
+Template-loaded source census at 91dde45ccc305dfc69dfe8020260dd3670ac17a4 covers
+all 21 fragments, 42 distinct deferred script includes and the eight-part Admin
+expansion. Source classification is not proof of every late installer or a new
+full-page test. [460 source/delegation snapshot](../handover/460-global-feedback-reconciliation.md#checkpoint-ci-and-template-loaded-source-inventory---2026-11-11)
+remains the dated pre-migration record.
+
+Statistics-open migration is supplied by this change set, baseline
+13528784d0eadcc9fe00d77cdc21364676c76ed0: persistent target-specific global
+statistics.open failures, matching successful-open resolution and generation/scope/
+attempt guards; no mutation or modal-local save redesign. New 18-case suite and
+original restoration file passed; restored combined run has 19 TAP results, zero
+failures/skips; five negative controls detected. Browser fixture dependency/scope
+integration preserves all 18 original assertions and compiles, but browser execution
+and normal covering CI for the actual delivered SHA remain pending. Earlier green
+checkpoint CI is not coverage for this runtime change. [465 evidence/limits](../handover/465-statistics-open-feedback.md).
 
 Remaining before closure:
-- Resolve statistics-open failure and bundle-import success alerts as narrow
-  global migration candidates, or record an explicitly agreed exclusion. Preserve
-  import recovery guidance, operation/target/scope ownership and mutation semantics.
+- Review statistics-open delivery and covering CI, including its new/legacy suites,
+  isolated Chromium layout fixture and relevant full-source/loading checks; correct
+  failures under fresh approval. Do not infer bounded acceptance from preparation.
+- Resolve bundle-import success guidance as a narrow global migration candidate,
+  or record an explicitly agreed exclusion; preserve recovery instructions, scope/
+  ordering and mutation semantics. It is not migrated in this statistics-only step.
 - Exercise full-page/late request, bulk-action and renderer wrapper composition;
   monitor unintended legacy.global traffic and extend actual producer combinations,
   scope transitions, no-replay and draft-preservation coverage.
 - Confirm no applicable global path remains, then deliberately retire global
-  compatibility and update its current baseline test. Keep pane compatibility for
-  its identified pending consumers and retain later local/Deliverable 2 work.
-- Review and approve exact code/test/docs delivery, normal covering CI for the
-  actual runtime change and any corrections, then obtain bounded acceptance.
+  compatibility and update its baseline test. Keep pane compatibility for pending
+  consumers and retain later local/Deliverable 2 work.
+- Review/approve any remaining exact code/test/docs payload, normal covering CI and
+  corrections, then obtain explicit bounded acceptance before closing 4A.13.
 
-No runtime or compatibility retirement is made by this inventory/evidence update.
-It changes documentation only with [skip ci]; no new tests run, workflows change
-or dispatch occurs. CI for the existing checkpoint does not validate future code.
-4A.1-4A.12 remain closed; both feedback deliverables and phase 009.7 remain open.
-No scope, owner/deadline/priority/order change, merge or deployment.
+This mixed runtime/test/docs commit runs normal CI, without a skip marker;
+no workflow change/dispatch or automatic retry. Global/pane compatibility stay
+intact. 4A.1-4A.12 remain closed; both deliverables and 009.7 stay open. No scope,
+owner/deadline/priority/order change, archive/Patch/, merge or deployment.
 
 ## Closed-unit anchors
 

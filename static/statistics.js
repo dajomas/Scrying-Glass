@@ -74,14 +74,20 @@
     async function open(id,button) {
         if(busy)return;
         const ticket=++generation;
+        const feedback=window.scryingAdminFeedback;
+        const attempt=feedback.begin({region:'global',operation:'statistics.open',
+            target:String(id),label:'Open combatant statistics'});
+        const owns=()=>ticket===generation&&feedback.isCurrent(attempt);
         try {
-            const state=await api('/api/state');if(ticket!==generation)return;
+            const state=await api('/api/state');if(!owns())return;
             const item=[...state.characters,...state.monsters].find(x=>x.id===id);
             if(!item)throw new Error('Combatant no longer exists');
             window.scryingStatisticsState(state);
+            if(!feedback.isCurrent(attempt))return;
             target=id;snapshot=state;editingBases=false;returnFocus=button;draw(item);notice('');$('statisticsModal').hidden=false;
             $('statisticsModal').querySelector('[role="dialog"]')?.focus?.();
-        }catch(error){if(ticket===generation)alert(error.message);}
+            feedback.resolve(attempt);
+        }catch(error){if(owns())feedback.publish(attempt,{severity:'error',text:error.message});}
     }
     async function save(body) {
         if(busy||!target||!snapshot)return;
