@@ -1,0 +1,47 @@
+ duration_ms: 1.298096
+tests	JavaScript tests	2026-11-11T10:31:35.8834418Z   type: 'test'
+tests	JavaScript tests	2026-11-11T10:31:35.8834806Z   ...
+tests	JavaScript tests	2026-11-11T10:31:35.8835538Z # Subtest: request failure stays persistent and does not refresh or retry
+tests	JavaScript tests	2026-11-11T10:31:35.8836618Z ok 5 - request failure stays persistent and does not refresh or retry
+tests	JavaScript tests	2026-11-11T10:31:35.8837302Z   ---
+tests	JavaScript tests	2026-11-11T10:31:35.8837685Z   duration_ms: 1.076752
+tests	JavaScript tests	2026-11-11T10:31:35.8838102Z   type: 'test'
+tests	JavaScript tests	2026-11-11T10:31:35.8838480Z   ...
+tests	JavaScript tests	2026-11-11T10:31:35.8839618Z # Subtest: successful retry replaces only its request error and uses the global five-second deadline
+tests	JavaScript tests	2026-11-11T10:31:35.8841078Z ok 6 - successful retry replaces only its request error and uses the global five-second deadline
+tests	JavaScript tests	2026-11-11T10:31:35.8841940Z   ---
+tests	JavaScript tests	2026-11-11T10:31:35.8842323Z   duration_ms: 1.193351
+tests	JavaScript tests	2026-11-11T10:31:35.8842764Z   type: 'test'
+tests	JavaScript tests	2026-11-11T10:31:35.8843137Z   ...
+tests	JavaScript tests	2026-11-11T10:31:35.8843800Z # Subtest: refresh alone does not resolve an End request error
+tests	JavaScript tests	2026-11-11T10:31:35.8845258Z ok 7 - refresh alone does not resolve an End request error
+tests	JavaScript tests	2026-11-11T10:31:35.8850195Z   ---
+tests	JavaScript tests	2026-11-11T10:31:35.8850618Z   duration_ms: 0.902407
+tests	JavaScript tests	2026-11-11T10:31:35.8851066Z   type: 'test'
+tests	JavaScript tests	2026-11-11T10:31:35.8851444Z   ...
+tests	JavaScript tests	2026-11-11T10:31:35.8852221Z # Subtest: validation rejection does not resolve an existing End request error
+tests	JavaScript tests	2026-11-11T10:31:35.8853375Z ok 8 - validation rejection does not resolve an existing End request error
+tests	JavaScript tests	2026-11-11T10:31:35.8854093Z   ---
+tests	JavaScript tests	2026-11-11T10:31:35.8854449Z   duration_ms: 0.803762
+tests	JavaScript tests	2026-11-11T10:31:35.8854837Z   type: 'test'
+tests	JavaScript tests	2026-11-11T10:31:35.8855205Z   ...
+tests	JavaScript tests	2026-11-11T10:31:35.8856712Z # Subtest: End success is published before refresh and coexists with load-owned refresh error
+tests	JavaScript tests	2026-11-11T10:31:35.8858109Z ok 9 - End success is published before refresh and coexists with load-owned refresh error
+tests	JavaScript tests	2026-11-11T10:31:35.8858952Z   ---
+tests	JavaScript tests	2026-11-11T10:31:35.8859493Z   duration_ms: 2.249685
+tests	JavaScript tests	2026-11-11T10:31:35.8859928Z   type: 'test'
+tests	JavaScript tests	2026-11-11T10:31:35.8860654Z   ...
+tests	JavaScript tests	2026-11-11T10:31:35.8880083Z # Subtest: unexpected refresh rejection is not recast as a failed End request
+tests	JavaScript tests	2026-11-11T10:31:35.8881290Z ok 10 - unexpected refresh rejection is not recast as a failed End request
+tests	JavaScript tests	2026-11-11T10:31:35.8882018Z   ---
+tests	JavaScript tests	2026-11-11T10:31:35.8882392Z   duration_ms: 1.667777
+tests	JavaScript tests	2026-11-11T10:31:35.8882812Z   type: 'test'
+tests	JavaScript tests	2026-11-11T10:31:35.8883179Z   ...
+tests	JavaScript tests	2026-11-11T10:31:35.8883982Z # Subtest: old-setup successful response cannot announce or refresh the new setup
+tests	JavaScript tests	2026-11-11T10:31:35.8885193Z ok 11 - old-setup successful response cannot announce or refresh the new setup
+tests	JavaScript tests	2026-11-11T10:31:35.8885957Z   ---
+tests	JavaScript tests	2026-11-11T10:31:35.8886346Z   duration_ms: 0.959393
+tests	JavaScript tests	2026-11-11T10:31:35.8886790Z   type: 'test'
+tests	JavaScript tests	2026-11-11T10:31:35.8887161Z   ...
+tests	JavaScript tests	2026-11-11T10:31:35.8887951Z # Subtest: old-campaign failed response cannot publish into the new campaign
+tests	JavaScript tests	2026-11-11T10:31:35.8889130Z ok 12 - old-ca
