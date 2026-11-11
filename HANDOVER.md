@@ -60,6 +60,8 @@ This is the index; substantive handover lives in numbered docs/handover sections
    - [Campaign-bundle import, composition, retirement and corrections](docs/handover/467-bundle-import-feedback.md)
 48. [Global feedback reconciliation: 4A.13 bounded close-out](docs/handover/470-global-feedback-close-out.md)
 
+49. [Stage 2 character Edit feedback](docs/handover/480-character-edit-feedback.md)
+
 ## Current state - 2026-11-11
 
 018, 009.5, 015 and 009.6 remain closed for accepted scopes; 340/350/360/370 retain
