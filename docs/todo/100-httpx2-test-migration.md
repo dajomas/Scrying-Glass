@@ -50,3 +50,22 @@ These are automated fixture/suite results, not authenticated deployed-server tes
 TODO.md and the testing handover are updated with this closure. No application, test or workflow code is changed and no tests are rerun for the documentation-only close-out. The commit includes [skip ci] as explicitly requested; no workflow is separately dispatched, and no workflow-run state for the close-out commit is inferred from the marker. README and HANDOVER.md retain accurate descriptions/index links and remain unchanged. SG-TODO-009 remains independently proposed.
 
 See [testing handover](../handover/020-ci-and-tests.md#verified-localci-success-and-sg-todo-010-close-out---2026-11-06).
+
+## Connection-lifetime audit maintenance - 2026-11-11
+
+Status: in progress; module-isolation repair and seven focused regression cases
+prepared and passed locally; exact GitHub approval/delivery and full repository
+validation remain pending. This independent maintenance correction does not reopen
+the accepted SG-TODO-010 migration or close any Stage 2/009.7 work.
+
+Preserve the failed-PRAGMA closure assertion, all unittest module discovery and
+explicit-close leak detection. Run each discovered test*.py module in a fresh
+process with tracking installed before imports; retain nonzero status for setup,
+import, assertion or leak failures and continue later modules. No browser skip,
+event-loop monkeypatch in production audit, application change or workflow edit.
+
+Acceptance still requires review of the full connection audit on the revised
+repository, including real storage/async/browser fixtures and per-module leak
+counts. Successful equivalent local or hosted evidence is sufficient for its
+covered scope; both are not required. Missing Chromium remains a separate failure,
+not a passing or waived browser test. [Repair evidence and limits](../handover/021-connection-lifetime-audit.md).
