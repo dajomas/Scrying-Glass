@@ -1,0 +1,46 @@
+14:35:26.6166004Z   ...
+tests	JavaScript tests	2026-11-11T14:35:26.6166726Z # Subtest: empty battle produces a persistent validation error without confirmation or POST
+tests	JavaScript tests	2026-11-11T14:35:26.6169582Z ok 2 - empty battle produces a persistent validation error without confirmation or POST
+tests	JavaScript tests	2026-11-11T14:35:26.6170359Z   ---
+tests	JavaScript tests	2026-11-11T14:35:26.6180123Z   duration_ms: 2.343395
+tests	JavaScript tests	2026-11-11T14:35:26.6180840Z   type: 'test'
+tests	JavaScript tests	2026-11-11T14:35:26.6181324Z   ...
+tests	JavaScript tests	2026-11-11T14:35:26.6182140Z # Subtest: cancelling confirmation leaves existing End errors intact
+tests	JavaScript tests	2026-11-11T14:35:26.6183064Z ok 3 - cancelling confirmation leaves existing End errors intact
+tests	JavaScript tests	2026-11-11T14:35:26.6197652Z   ---
+tests	JavaScript tests	2026-11-11T14:35:26.6198262Z   duration_ms: 1.173726
+tests	JavaScript tests	2026-11-11T14:35:26.6198845Z   type: 'test'
+tests	JavaScript tests	2026-11-11T14:35:26.6205711Z   ...
+tests	JavaScript tests	2026-11-11T14:35:26.6206592Z # Subtest: confirmed valid attempt resolves validation before sending the unchanged POST
+tests	JavaScript tests	2026-11-11T14:35:26.6207747Z ok 4 - confirmed valid attempt resolves validation before sending the unchanged POST
+tests	JavaScript tests	2026-11-11T14:35:26.6209152Z   ---
+tests	JavaScript tests	2026-11-11T14:35:26.6209637Z   duration_ms: 0.955037
+tests	JavaScript tests	2026-11-11T14:35:26.6210155Z   type: 'test'
+tests	JavaScript tests	2026-11-11T14:35:26.6210600Z   ...
+tests	JavaScript tests	2026-11-11T14:35:26.6211275Z # Subtest: request failure stays persistent and does not refresh or retry
+tests	JavaScript tests	2026-11-11T14:35:26.6212195Z ok 5 - request failure stays persistent and does not refresh or retry
+tests	JavaScript tests	2026-11-11T14:35:26.6212847Z   ---
+tests	JavaScript tests	2026-11-11T14:35:26.6213299Z   duration_ms: 0.754345
+tests	JavaScript tests	2026-11-11T14:35:26.6213758Z   type: 'test'
+tests	JavaScript tests	2026-11-11T14:35:26.6214175Z   ...
+tests	JavaScript tests	2026-11-11T14:35:26.6214985Z # Subtest: successful retry replaces only its request error and uses the global five-second deadline
+tests	JavaScript tests	2026-11-11T14:35:26.6216173Z ok 6 - successful retry replaces only its request error and uses the global five-second deadline
+tests	JavaScript tests	2026-11-11T14:35:26.6216943Z   ---
+tests	JavaScript tests	2026-11-11T14:35:26.6217370Z   duration_ms: 0.840625
+tests	JavaScript tests	2026-11-11T14:35:26.6217846Z   type: 'test'
+tests	JavaScript tests	2026-11-11T14:35:26.6218273Z   ...
+tests	JavaScript tests	2026-11-11T14:35:26.6218871Z # Subtest: refresh alone does not resolve an End request error
+tests	JavaScript tests	2026-11-11T14:35:26.6219912Z ok 7 - refresh alone does not resolve an End request error
+tests	JavaScript tests	2026-11-11T14:35:26.6220528Z   ---
+tests	JavaScript tests	2026-11-11T14:35:26.6220958Z   duration_ms: 0.626332
+tests	JavaScript tests	2026-11-11T14:35:26.6221432Z   type: 'test'
+tests	JavaScript tests	2026-11-11T14:35:26.6221855Z   ...
+tests	JavaScript tests	2026-11-11T14:35:26.6222556Z # Subtest: validation rejection does not resolve an existing End request error
+tests	JavaScript tests	2026-11-11T14:35:26.6223522Z ok 8 - validation rejection does not resolve an existing End request error
+tests	JavaScript tests	2026-11-11T14:35:26.6224194Z   ---
+tests	JavaScript tests	2026-11-11T14:35:26.6224619Z   duration_ms: 0.553392
+tests	JavaScript tests	2026-11-11T14:35:26.6225080Z   type: 'test'
+tests	JavaScript tests	2026-11-11T14:35:26.6225507Z   ...
+tests	JavaScript tests	2026-11-11T14:35:26.6226212Z # Subtest: End success is published before refresh and coexists with load-owned refresh error
+tests	JavaScript tests	2026-11-11T14:35:26.6227237Z ok 9 - End success is published before refresh and coexists with load-owned refresh error
+tests	JavaScript tests	2026-11-11T14:35:2

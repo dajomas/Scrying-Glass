@@ -1,0 +1,32 @@
+gens())
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:48.2851996Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:48.2852470Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 696, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:48.2852892Z     self._check_running()
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:48.2853085Z     ~~~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:48.2853503Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 634, in _check_running
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:48.2853910Z     raise RuntimeError(
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:48.2854196Z         'Cannot run the event loop while another loop is running')
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:48.2854607Z RuntimeError: Cannot run the event loop while another loop is running
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:48.3294274Z <sys>:0: RuntimeWarning: coroutine 'BaseEventLoop.shutdown_asyncgens' was never awaited
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:48.3294868Z RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:48.4775789Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:48.4776208Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:48.7913837Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:48.7914443Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:48.8356095Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:48.8356556Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:49.1615087Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:49.2057186Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:49.2057652Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:49.9808005Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:49.9816690Z   File "/tmp/scrying-tests-q6b0n1iy/repo/tests/browser_smoke_272cc73.py", line 38, in <module>
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:49.9817750Z     browser=pw.chromium.launch(headless=True,args=['--no-sandbox'])
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:49.9818886Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 4113, in launch
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:49.9820134Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:49.9820490Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:49.9820899Z         self._impl_obj.launch(
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:49.9821184Z         ^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:49.9821436Z     ...<17 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:49.9821621Z         )
+tests	Standalone Python browser and audit checks	2026-11-11T14:35:49.9821787Z         ^
+tests
