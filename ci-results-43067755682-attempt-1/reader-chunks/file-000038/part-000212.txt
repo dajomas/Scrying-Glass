@@ -1,0 +1,30 @@
+t/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7037287Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7037815Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7038449Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7039092Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7039484Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7040210Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7040842Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7041127Z TimeoutError: fixture
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7041496Z Combined monster lookup failed for D&D Beyond
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7041937Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7042658Z   File "/tmp/scrying-tests-8li63i5j/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7043348Z     hits = context.dnd_monster_candidates(species)
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7044035Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7044670Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7045230Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7045885Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7046552Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7046958Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7047798Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7048398Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7048683Z TimeoutError: fixture
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7048860Z 
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7049187Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7049525Z 
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7049701Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7050404Z   File "/tmp/scrying-tests-8li63i5j/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7051051Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7051658Z   File "/tmp/scrying-tests-8li63i5j/repo/python/scrying_glass_monster_selection.py", line 151, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-11T17:29:04.7052325Z     lambda: dnd_candidates(context, speci

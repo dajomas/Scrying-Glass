@@ -1,0 +1,20 @@
+ange_after_rollback_remains_stale) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:50.1113400Z test_continuation_keeps_automatic_and_explicit_rows_without_refetch (test_monster_refresh_sole_candidate.SoleRefreshApplicationTests.test_continuation_keeps_automatic_and_explicit_rows_without_refetch) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:50.1525756Z test_sole_candidate_review_is_read_only_and_only_explicit_apply_generates_hp (test_monster_refresh_sole_candidate.SoleRefreshApplicationTests.test_sole_candidate_review_is_read_only_and_only_explicit_apply_generates_hp) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:50.1924091Z test_stale_auto_response_expiry_configuration_and_scope_are_guarded (test_monster_refresh_sole_candidate.SoleRefreshApplicationTests.test_stale_auto_response_expiry_configuration_and_scope_are_guarded) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:50.7447908Z test_automatic_row_has_no_chooser_and_selects_no_fields_at_both_widths (test_monster_refresh_sole_candidate.SoleRefreshBrowserTests.test_automatic_row_has_no_chooser_and_selects_no_fields_at_both_widths) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:51.4458366Z test_multiple_choice_keeps_individual_choices_on_automatic_row (test_monster_refresh_sole_candidate.SoleRefreshBrowserTests.test_multiple_choice_keeps_individual_choices_on_automatic_row) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:51.4460293Z test_bad_selection_rejected_before_provider_calls (test_monster_refresh_sources.MonsterRefreshSourceTests.test_bad_selection_rejected_before_provider_calls) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:51.4466872Z test_disabled_provider_and_oversized_hp_do_not_create_proposals (test_monster_refresh_sources.MonsterRefreshSourceTests.test_disabled_provider_and_oversized_hp_do_not_create_proposals) ... Selected monster source refresh failed for m
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:51.4467941Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:51.4468848Z   File "/tmp/scrying-tests-eshyekvq/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:51.4469482Z     candidate = _fetch_exact(context, monster, identity)
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:51.4470010Z   File "/tmp/scrying-tests-eshyekvq/repo/python/scrying_glass_monster_refresh_sources.py", line 72, in _fetch_exact
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:51.4471607Z ##[error]    raise ValueError('Provider disabled')
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:51.4474042Z ValueError: Provider disabled
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:51.4474334Z ok
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:51.4477124Z test_fivetools_requires_exact_book_edition_identity (test_monster_refresh_sources.MonsterRefreshSourceTests.test_fivetools_requires_exact_book_edition_identity) ... Selected monster source refresh failed for m
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:51.4478109Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:51.4478653Z   File "/tmp/scrying-tests-eshyekvq/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:51.4479176Z     candidate = _fetch_exact(context, monster, identity)
+tests	Python test suite (including browser fixtures)	2026-11-11T17:26:51.4479689Z   File "/tmp/scrying-tests-eshyekvq/repo/python/scrying_glass_monster_refresh_sources.py", line 83,
