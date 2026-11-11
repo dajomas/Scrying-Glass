@@ -162,3 +162,31 @@ global alert and not blanket D1 acceptance. The separate /users page remains out
 the GM Admin global route. Review retirement covering CI, relevant retained tests
 and any residual caller failure before requesting bounded 4A.13 acceptance. Both
 deliverables/009.7 stay open. No merge/deployment, workflow change or dispatch.
+
+## Retirement CI failure and browser fixture correction - 2026-11-11
+
+Run 42969807025 attempt 1, job 130355375717, tested retirement
+ e15ad2b18f308d116fab288e058b24f7842f8c98 and failed. Publication:
+3ac3db9529d127e3922bbf0cd2d2d97ca25fc23c. Preserve this historical failure.
+Python/browser errors at widths 1440/768/375 originate from the header layout
+fixture's direct message() injection at test_admin_header_hierarchy.py:133.
+Reader parts 120-123 show the retired-global guard rejecting it; part 213 shows
+the standalone connection audit repeating the same three suite errors. These
+are not three additional independent application defects. Part 023 confirms all
+four composition scenarios and three inventory checks still report ok.
+
+At the user's browser-only correction request, replace that single injection with
+real feedback.begin/publish using global region, fixture.header-layout operation,
+header target and explicit info severity. Text and all original assertions,
+viewport widths, harness, scrolling/draft/pane/keyboard and mutation checks remain
+unchanged. Persistent info avoids a success-expiry race in this layout fixture.
+No runtime, shared-fixture, Node test or workflow change. Code review only; no new
+local syntax or Chromium execution is claimed. Normal covering CI must verify
+header subtests and the audit rerun for the actual corrective SHA.
+
+The separate Node failure is still OPEN: reconciliation.test.cjs:81 expects true
+from deliver(), but successful publish returns record ID 'sg-feedback-9'. Reader
+parts 137-138 report seven passes/one failure. This browser-only commit does not
+fix that assertion or claim the overall run can become green yet. 4A.13 remains
+blocked on that correction, covering CI, final reconciliation and bounded acceptance.
+No new acceptance, merge/deployment or broader deliverable/phase closure.

@@ -208,3 +208,21 @@ workspace, tools/drafts/files, Start/failed-Start/refresh/Next reopening, lair/v
 roster, permission and combat safeguards remain mandatory. Both deliverables and
 phase stay open. No blanket write approval or new commitment. Full histories and
 criteria are cross-linked, not silently removed.
+
+## 4A.13 browser fixture correction - 2026-11-11
+
+Retirement e15ad2b18f308d116fab288e058b24f7842f8c98 has FAILED covering run
+42969807025 attempt 1, job 130355375717; publication
+3ac3db9529d127e3922bbf0cd2d2d97ca25fc23c. This supersedes the earlier pending
+retirement-run wording, not the historical failure. Header layout's direct untyped
+message() injection fails at 1440/768/375; the audit repeats those same errors.
+Four full-page composition scenarios and three inventory methods pass.
+
+The requested browser-only correction supplies explicit global info feedback in
+that fixture, retaining text and every original assertion/viewport/harness. No
+runtime/shared-fixture/Node/workflow change or new local execution is claimed.
+Review header and audit execution in normal covering CI for its actual new SHA.
+The Node record-ID-versus-true assertion failure remains OPEN and needs its own
+correction; this commit is not a complete green-CI repair. 4A.13 stays blocked on
+that correction, successful covering evidence, reconciliation and acceptance.
+[Failure/correction details](../handover/467-bundle-import-feedback.md#retirement-ci-failure-and-browser-fixture-correction---2026-11-11).

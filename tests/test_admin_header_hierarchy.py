@@ -130,7 +130,13 @@ class HeaderHierarchyBrowserTests(unittest.TestCase):
                 page.locator('#toggleCampaignPane').click()
                 self.assertFalse(page.locator('#characterInputPane').evaluate('n => n.hidden'))
                 self.assertEqual(page.locator('#characterName').input_value(), 'Keep my draft')
-                page.evaluate("message('Visible feedback: ' + 'encounter-data-'.repeat(8))")
+                page.evaluate("""() => {
+                    const feedback = window.scryingAdminFeedback;
+                    const ticket = feedback.begin({region: 'global', operation: 'fixture.header-layout',
+                        target: 'header', label: 'Header layout test'});
+                    feedback.publish(ticket, {severity: 'info',
+                        text: 'Visible feedback: ' + 'encounter-data-'.repeat(8)});
+                }""")
                 boxes = self.assert_boundary(page)
                 message = page.locator('#message').bounding_box()
                 self.assertLessEqual(message['y'] + message['height'], boxes['workspace']['top'])
