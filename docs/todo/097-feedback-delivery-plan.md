@@ -2,14 +2,14 @@
 
 [Back to TODO index](../../TODO.md)
 
-## Current status - 2026-11-10
+## Current status - 2026-11-11
 
 009.7 and both deliverables remain open. 4A.1-4A.11 are closed for accepted scopes.
 All original policy, seven-step criteria, implementation/run/publication and
 acceptance identities, 009.6 safeguards and history remain authoritative in the
 [preserved full plan](https://github.com/dajomas/Scrying-Glass/blob/9d05e129cc2b85099cf0e3bf394a1fe398d0af24/docs/todo/097-feedback-delivery-plan.md)
-and numbered handovers. This continuation closes only the explicitly accepted
-4A.11 unit; priority, owner, deadline, SG-TODO-019 and delivery order are unchanged.
+and numbered handovers. 4A.12 is in progress, awaiting covering CI and acceptance.
+Priority, owner, deadline, SG-TODO-019 and delivery order are unchanged.
 No unrelated unfinished task is closed.
 
 ## 4A.11 battle-action global notices - 2026-11-10
@@ -48,12 +48,39 @@ Earlier task snapshots remain in the [pre-close-out task record](https://github.
 No new authenticated live-server exercise, human visual/manual combat workflow,
 screen-reader test or exhaustive accessibility acceptance is inferred. The user
 accepted the bounded unit on the stated evidence; wider validation gates remain
-explicit and open rather than falsely recorded as passed. This documentation-only
-close-out uses [skip ci], with no application/test/pin/workflow change or new
+explicit and open rather than falsely recorded as passed. Its documentation-only
+close-out used [skip ci], with no application/test/pin/workflow change or new
 validation run/dispatch. README and TODO root remain accurate and unchanged.
-4A.12 Join and 4A.13 reconciliation remain proposed under preserved criteria;
-compatibility retires only after the respective callers migrate. Neither feedback
-deliverable nor 009.7 closes. No merge/deployment or blanket future write approval.
+4A.12 preparation follows below; 4A.13 reconciliation remains proposed under
+preserved criteria; compatibility retires only after the respective callers migrate.
+Neither feedback deliverable nor 009.7 closes. No merge/deployment or blanket
+future write approval.
+
+## 4A.12 Join reporting - 2026-11-11
+
+Status: in progress. This change set supplies Join-only reporting integration and
+regressions; delivery identity, covering CI review and explicit bounded acceptance
+are not invented or treated as completed by preparation. Baseline e633ca34d7dd651594470f7f6e64a3f9a3742da9.
+
+One global roster.join rejection across the fetch gate and core single/bulk Join
+paths, matching-success resolution, independent target/error preservation and
+stale-result suppression. Retain client/server initiative gates, payloads, bulk
+success wording, non-Join behavior and no automatic mutation replay. Near-field
+validation remains Deliverable 2, not an expansion of this unit.
+
+Preparation: runtime syntax passed; new 26-case suite and retained 12-case gate
+suite passed, restored combined run 38/38, zero failures/skips; four negative
+controls detected. These are prior focused production-controller/scoped-adapter
+and copied-core-function results with mock DOM/transport, not full-Admin/bootstrap,
+browser, authenticated live-server or accessibility acceptance. The legacy fixture
+adds lifecycle accommodation without changing original behavioral assertions.
+[Implementation, evidence and limits](../handover/450-join-reporting.md).
+
+Acceptance remaining: exact approved delivery, normal covering CI for the actual
+implementation SHA, review both Join suites plus relevant server/browser/full-source
+regressions, correction review as needed, and explicit bounded acceptance. Earlier
+4A.11 success does not cover 4A.12. No workflow edit/dispatch or skip marker in
+this mixed implementation commit. 4A.13 and all wider gates remain open.
 
 ## Closed-unit anchors
 

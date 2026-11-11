@@ -16,14 +16,16 @@ function setup(item = {id: 'a', name: 'Alpha', active: false, initiative: null},
     const message = {get textContent() {return feedback.snapshot().map(record => record.text).join('\n');}};
     const api = {begin: spec => feedback.begin({...spec, lane: 'encounter', scope: 'fixture', placement: 'global'}),
         publish: feedback.publish, resolve: feedback.resolve};
-    let refresh, click;
+    let refresh, click, ready;
     const nativeFetch = async () => response || new Response('{}', {status: 200});
     const ctx = {URL, latest: {characters: [], monsters: []}, window: {
         scryingAdminFeedback: api, fetch: nativeFetch, location: {href: 'http://localhost/', origin: 'http://localhost'}}, document: {
         getElementById: id => id === 'message' ? message : {}, querySelectorAll: () => [button],
-        addEventListener(type, fn, capture) {assert.equal(type, 'click');assert.equal(capture, true);click = fn;}},
+        addEventListener(type, fn, capture) {
+            if (type === 'DOMContentLoaded') {assert.equal(capture.once, true);ready = fn;return;}
+            assert.equal(type, 'click');assert.equal(capture, true);click = fn;}},
         MutationObserver: class {constructor(fn) {refresh = fn;} observe() {}}};
-    ctx.latest[kind] = [item];vm.createContext(ctx);vm.runInContext(source, ctx);
+    ctx.latest[kind] = [item];vm.createContext(ctx);vm.runInContext(source, ctx);ready();
     return {button, message, refresh, ctx, feedback, click() {
         const event = {target: {closest: () => button}, prevented: false, stopped: false,
             preventDefault() {this.prevented = true;}, stopImmediatePropagation() {this.stopped = true;}};

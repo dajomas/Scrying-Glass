@@ -1,7 +1,10 @@
 /* UI feedback only; the server independently validates every join request. */
 (() => {
     'use strict';
+    if (window.scryingJoinReportingInstalled) return;
+    window.scryingJoinReportingInstalled = true;
     const feedback = window.scryingAdminFeedback;
+    const owner = Symbol('Join reporting owner');
     const joinTicket = (kind, id) => feedback.begin({region: 'global', operation: 'roster.join',
         target: JSON.stringify([kind, id]), label: 'Join battle'});
     function showRejection(text, ticket) {
@@ -53,7 +56,7 @@
                 /^\/api\/(characters|monsters)(\/[^/]+)?$/.test(url.pathname) &&
                 (options.method || 'GET').toUpperCase() !== 'GET' &&
                 (body?.active === true || body?.action === 'join-battle');
-            if (joining) ticket = joinTicket(url.pathname.split('/')[2],
+            if (joining && !options[owner]) ticket = joinTicket(url.pathname.split('/')[2],
                 url.pathname.split('/')[3] ? decodeURIComponent(url.pathname.split('/')[3])
                     : [...(body.ids || [])].map(String).sort());
         } catch { /* Non-JSON and unrelated requests keep their original behavior. */ }
@@ -61,18 +64,66 @@
         try {
             response = await originalFetch(input, options);
         } catch (error) {
-            if (joining) showRejection('Unable to join battle: ' + error.message, ticket);
+            if (joining && !options[owner]) showRejection('Unable to join battle: ' + error.message, ticket);
             throw error;
         }
-        if (joining && !response.ok) {
+        if (joining && !options[owner] && !response.ok) {
             let detail;
             try { detail = (await response.clone().json()).detail; } catch { /* Use HTTP fallback. */ }
             showRejection(typeof detail === 'string' && detail.trim()
                 ? detail : `Join Battle rejected (HTTP ${response.status}).`, ticket);
         }
-        if (joining && response.ok) feedback.resolve(ticket);
+        if (joining && !options[owner] && response.ok) feedback.resolve(ticket);
         return response;
     };
+
+    async function ownedJoin(kind, target, send) {
+        const ticket = joinTicket(kind, target);
+        let result;
+        try {
+            result = await send(ticket);
+        } catch (error) {
+            showRejection(error.message, ticket);
+            return null;
+        }
+        if (!feedback.isCurrent(ticket)) return null;
+        feedback.resolve(ticket);
+        return {result};
+    }
+    function installCoreReporting() {
+        // This deferred asset precedes admin.js; bind after all deferred scripts.
+        if (typeof patch !== 'function' || typeof runBulkAction !== 'function') return;
+        const corePatch = patch, coreBulkAction = runBulkAction;
+        patch = async function (kind, id, data) {
+            if (!['characters', 'monsters'].includes(kind) || data.active !== true) {
+                return corePatch(kind, id, data);
+            }
+            const outcome = await ownedJoin(kind, id, ticket => request(
+                `/api/${kind}/${encodeURIComponent(id)}`, {
+                    method: 'PATCH', headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data), [owner]: ticket,
+                }));
+            if (outcome) await load();
+        };
+        runBulkAction = async function (kind, action) {
+            if (!['characters', 'monsters'].includes(kind) || action !== 'join-battle') {
+                return coreBulkAction(kind, action);
+            }
+            const ids = selectedIds(kind);
+            if (!ids.length) return coreBulkAction(kind, action);
+            const outcome = await ownedJoin(kind, [...ids].map(String).sort(), ticket => request(
+                `/api/${kind}/bulk`, {
+                    method: 'POST', headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({action, ids}), [owner]: ticket,
+                }));
+            if (!outcome) return;
+            const count = Number(outcome.result?.count ?? ids.length);
+            paneNotification(kind, `${count} ${kind === 'characters' ? 'character' : 'monster'}${count === 1 ? '' : 's'} updated.`);
+            await load();
+        };
+    }
+    if (document.readyState === 'complete') installCoreReporting();
+    else document.addEventListener('DOMContentLoaded', installCoreReporting, {once: true});
     for (const id of ['characters', 'monsters']) {
         const container = document.getElementById(id);
         if (container) new MutationObserver(refresh).observe(container, {childList: true, subtree: true});
