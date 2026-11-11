@@ -11,6 +11,7 @@
     option.textContent = 'Refresh from source';
     bulk.append(option);
     let opened = false;
+    let reviewFeedbackRoot = null;
     function rosterReady() {
         return typeof latest !== 'undefined' && Array.isArray(latest?.monsters);
     }
@@ -71,13 +72,38 @@
         let closed = false;
         let controls = [];
         const choices = Object.create(null);
+        const feedback = window.scryingAdminFeedback;
+        if (!reviewFeedbackRoot) {
+            reviewFeedbackRoot = document.createElement('div');
+            reviewFeedbackRoot.id = 'sgMonsterRefreshFeedback';
+            status.after(reviewFeedbackRoot);
+            feedback.mount('monsterRefreshReview', reviewFeedbackRoot.id);
+        } else status.after(reviewFeedbackRoot);
+        const reviewTarget = JSON.stringify([...ids].map(String).sort());
+        const sessionTicket = feedback.begin({region: 'monsters', operation: 'monster.refresh.session',
+            target: 'review-dialog', label: 'Source review session'});
+        const previewSpec = {region: 'monsterRefreshReview', operation: 'monster.refresh.preview',
+            target: reviewTarget, label: 'Load source review'};
+        const applySpec = {...previewSpec, operation: 'monster.refresh.apply', label: 'Apply source changes'};
+        const refreshSpec = {...applySpec, region: 'monsters', operation: 'monster.refresh.apply.refresh', label: 'Refresh applied source changes'};
+        function currentReview() { return !closed && feedback.isCurrent(sessionTicket); }
+        function staleReview() {
+            review = null;
+            status.textContent = 'The encounter changed. Close and reopen source review before continuing.';
+            if (!closed) update();
+        }
         function button(text) {
             const node = document.createElement('button');
             node.type = 'button'; node.textContent = text;
             return node;
         }
-        function close() {
+        function close(preserveApply = false) {
             if (busy || closed) return;
+            if (feedback.isCurrent(sessionTicket)) {
+                feedback.resolve(feedback.begin(previewSpec));
+                if (preserveApply !== true) feedback.resolve(feedback.begin(applySpec));
+                feedback.resolve(sessionTicket);
+            }
             closed = true;
             dialog.close(); dialog.remove();
             opened = false; syncOption(); previousFocus?.focus();
@@ -85,19 +111,20 @@
         cancel.addEventListener('click', close);
         dialog.addEventListener('cancel', event => {event.preventDefault(); close();});
         function update() {
+            const unavailable = busy || !review || !currentReview();
             for (const control of controls) {
                 if (control.axis) {
                     const state = selection.state(control.axis, control.key);
                     control.node.checked = state.checked;
                     control.node.indeterminate = state.indeterminate;
-                    control.node.disabled = busy || state.disabled;
+                    control.node.disabled = unavailable || state.disabled;
                     control.node.setAttribute('aria-checked', state.indeterminate ? 'mixed' : String(state.checked));
                 } else {
                     control.node.checked = (selection.payload()[control.id] || []).includes(control.field);
-                    control.node.disabled = busy || !control.enabled;
+                    control.node.disabled = unavailable || !control.enabled;
                 }
             }
-            content.querySelectorAll('button, select').forEach(node => {node.disabled = busy;});
+            content.querySelectorAll('button, select').forEach(node => {node.disabled = unavailable;});
             apply.disabled = busy || !review || !selection || !Object.keys(selection.payload()).length;
             restart.disabled = busy;
             cancel.disabled = busy;
@@ -167,6 +194,10 @@
                     label.append(select); source.append(label);
                     const resolve = button(`Use candidate for ${name}`);
                     resolve.addEventListener('click', () => {
+                        if (busy || !review || !currentReview()) {
+                            if (!currentReview()) staleReview();
+                            return;
+                        }
                         if (select.value === '') return;
                         const candidate = row.candidates[Number(select.value)];
                         fetchReview({review_id: review.review_id, choices: {[row.id]: candidate.selection_token}},
@@ -195,35 +226,55 @@
         }
         async function fetchReview(payload, addedChoices = {}) {
             if (busy || closed) return;
+            if (!currentReview()) {staleReview(); return;}
             const retained = selection?.payload() || {};
+            const ticket = feedback.begin(previewSpec);
             busy = true; status.textContent = 'Resolving selected sources…'; update();
             try {
                 const result = await request('/api/monsters/refresh/preview', {
                     method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)});
-                if (closed) return;
+                if (!currentReview() || !feedback.isCurrent(ticket)) {staleReview(); return;}
                 Object.assign(choices, addedChoices);
                 render(result, retained);
+                feedback.resolve(ticket);
                 status.textContent = 'Review ready. Choose fields, then Apply selected changes.';
             } catch (error) {
-                status.textContent = `${error.message} Reload review before applying.`;
                 review = null;
+                if (currentReview()) {
+                    status.textContent = '';
+                    feedback.publish(ticket, {severity: 'error', text: `${error.message} Reload review before applying.`});
+                } else staleReview();
             } finally {busy = false; if (!closed) update();}
         }
         restart.addEventListener('click', () => fetchReview({ids, choices}));
         apply.addEventListener('click', async () => {
-            if (busy || !review) return;
+            if (busy || !review || closed) return;
+            if (!currentReview()) {staleReview(); return;}
+            const ticket = feedback.begin(applySpec);
+            const refresh = feedback.begin(refreshSpec);
             busy = true; update();
             try {
                 await request('/api/monsters/refresh/apply', {method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({review_id: review.review_id, selected: selection.payload()})});
             } catch (error) {
-                status.textContent = `${error.message} Reload review before retrying.`;
-                review = null; busy = false; update(); return;
+                review = null;
+                if (currentReview()) {
+                    status.textContent = '';
+                    feedback.publish(ticket, {severity: 'error', text: `${error.message} Reload review before retrying.`});
+                } else staleReview();
+                busy = false; update(); return;
             }
-            busy = false; close();
-            try {await load(true); paneNotification('monsters', 'Selected source changes applied.');}
-            catch {paneNotification('monsters', 'Changes applied, but display reload failed. Reload the page; do not apply again.');}
+            if (!currentReview() || !feedback.isCurrent(ticket)) {
+                busy = false; staleReview(); return;
+            }
+            feedback.resolve(ticket);
+            feedback.publish(feedback.begin({...applySpec, region: 'monsters'}),
+                {severity: 'success', text: 'Selected source changes applied.'});
+            busy = false; close(true);
+            try {await load(true); feedback.resolve(refresh);}
+            catch {feedback.publish(refresh, {severity: 'error', text:
+                'Changes applied, but display reload failed. Reload the page; do not apply again.'});}
         });
         dialog.showModal();
         await fetchReview({ids});

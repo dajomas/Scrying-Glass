@@ -7,6 +7,70 @@ is preserved verbatim in the numbered sections below; dated statuses are history
 not a reversal of later acceptances. The [current task plan](../todo/097-feedback-delivery-plan.md)
 and [4A.13 close-out](470-global-feedback-close-out.md) retain current scope.
 
+## Stage 2 source-review checkpoint - 2026-11-11
+
+Scope of this change set: source-review feedback integration only; Stage 2,
+Stage 1, both deliverables and 009.7 remain open. This is not a close-out or
+permission for a merge/deployment. The accepted 4A.1-4A.13 scopes stay closed.
+
+The complete source-review asset mounts one controller-backed local error view
+inside the native dialog and reattaches the same view on reopen. Preview and
+Apply use explicit operation/target identities. Dismissal, matching recovery
+and end-of-dialog cleanup do not clear unrelated feedback. Encounter/session
+checks suppress obsolete preview results, candidate continuation and Apply
+completion effects. Invalid reviews disable stale continuation controls.
+A successful Apply publishes pane success before the subsequent load; a failed
+load owns a separate persistent error with no-replay guidance. Closing the
+dialog preserves that success. Already in-flight server requests are not undone
+or automatically retried. Existing server validation, review IDs, candidate
+identities, selected-field payloads, row/column behavior, busy guards and focus
+return remain. No combat rules, permissions or provider behavior change.
+
+Changed files: static/monster-refresh-review.js; its retained browser fixture;
+a new candidate/review asset-wiring fixture; the document-end source-review
+asset version (v=2); this continuity section and the TODO index. Candidate v=2
+and its implementation remain unchanged. No core fragment or pin changes;
+no edit of the static/admin.js failure marker or the workflows.
+
+Preparation evidence: exact source blob
+a8b412f21f2d9a7cacdf4c0809511235f81a4628 and browser-test blob
+7e8a9999716523b952642fccf5b465912349fbdc previously passed 12 native
+Chromium cases: all five retained behaviors plus seven local-feedback,
+reopen/focus, stale-scope and mutation/refresh regressions. Root-reattachment
+and success-preservation negative controls failed assertions as expected;
+restored 12-case runs passed. Current preparation verified the exact same
+source/test blobs, Node syntax and Python compilation rather than claiming a
+new browser execution. Three current asset-wiring checks passed. These are
+intercepted-HTTP fixtures with production feedback dependencies, not complete
+Admin/bootstrap, authenticated live-server/provider, human visual, screen-reader
+or exhaustive accessibility acceptance. Full branch fixture reconciliation and
+covering CI review remain required; default-branch code search is not an
+exhaustive inventory of this feature branch.
+
+Normal push-triggered CI is required for this mixed implementation/test/doc
+checkpoint. No [skip ci] in its commit message, workflow edit or separate
+dispatch. No new source-review commit SHA/run outcome is invented. README,
+HANDOVER index and plan 097 were reviewed and retained; their open-deliverable
+boundaries and links remain applicable. The TODO index links this checkpoint.
+
+Remaining Stage 2: shared roster mutations and creation/import forms; character
+Edit; effective raw-roll/monster Edit and roll-all; select-dead; explicit bulk
+Join pane success preserving accepted global reporting/server gates; complete
+fixture/asset/fragment-identity reconciliation, combined loaded-Admin regressions,
+covering CI/corrections and bounded acceptance. Pane compatibility remains until
+all required migrations finish. Stages 3/4 and Deliverable 2 are not folded in.
+
+## Candidate checkpoint CI verified - 2026-11-11
+
+Candidate checkpoint d87579bfd7fed216e447fa2b67d726a336afc5f0 is covered
+by Branch tests 43003771748 attempt 1, job 130466055498, completed/success.
+Publication 7764f52be6c47c089879ac12dab663da0faf3fea contains matching
+run/job metadata. All configured validation stages succeeded. This review did
+not individually re-review every test or visually inspect the uploaded images.
+It supersedes pending-CI wording in the historical candidate checkpoint below,
+not its acceptance/remaining-scope limits. That CI does not cover this subsequent
+source-review change set. Earlier history is preserved unchanged below.
+
 ## Stage 2 candidate-selection checkpoint - 2026-11-11
 
 This bounded implementation checkpoint is not completion or acceptance of Stage 2,
