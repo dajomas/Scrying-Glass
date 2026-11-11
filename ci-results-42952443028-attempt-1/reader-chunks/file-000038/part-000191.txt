@@ -1,0 +1,30 @@
+t/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:35.2137329Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:35.2137548Z TimeoutError: fixture
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:35.2137673Z 
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:35.2137885Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:35.2138114Z 
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:35.2138238Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:35.2138828Z   File "/tmp/scrying-tests-udmnr4_d/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:35.2139250Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:35.2139644Z   File "/tmp/scrying-tests-udmnr4_d/repo/python/scrying_glass_monster_selection.py", line 151, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:35.2140076Z     lambda: dnd_candidates(context, species),
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:35.2140350Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:35.2140806Z   File "/tmp/scrying-tests-udmnr4_d/repo/python/scrying_glass_monster_selection.py", line 92, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:35.2141403Z     raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:35.2142014Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:36.7335812Z Selected monster source refresh failed for e6c16f9994da4557a5ba3bf29db23297
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:36.7336563Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:36.7337497Z   File "/tmp/scrying-tests-udmnr4_d/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:36.7338388Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:36.7339263Z   File "/tmp/scrying-tests-udmnr4_d/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:36.7341274Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:36.7343070Z ValueError: Retained source missing or ambiguous
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:36.7438286Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:36.7438838Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:36.7439516Z   File "python/scrying_glass_monster_selection.py", line 101, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:36.7440171Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:36.7440928Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:36.7441615Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T03:28:36.7442028Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	20

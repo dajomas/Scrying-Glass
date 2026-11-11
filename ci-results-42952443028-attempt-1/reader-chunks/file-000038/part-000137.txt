@@ -1,0 +1,47 @@
+08.6881310Z ##[group]tests/admin-next-feedback.test.cjs
+tests	JavaScript tests	2026-11-11T03:27:08.8928486Z TAP version 13
+tests	JavaScript tests	2026-11-11T03:27:08.9380339Z # Subtest: modal success posts once, closes and reopens the authoritative actor
+tests	JavaScript tests	2026-11-11T03:27:08.9381625Z ok 1 - modal success posts once, closes and reopens the authoritative actor
+tests	JavaScript tests	2026-11-11T03:27:08.9382217Z   ---
+tests	JavaScript tests	2026-11-11T03:27:08.9382624Z   duration_ms: 3.65788
+tests	JavaScript tests	2026-11-11T03:27:08.9382911Z   type: 'test'
+tests	JavaScript tests	2026-11-11T03:27:08.9383224Z   ...
+tests	JavaScript tests	2026-11-11T03:27:08.9385387Z # Subtest: main success leaves the modal closed without opening an actor
+tests	JavaScript tests	2026-11-11T03:27:08.9387022Z ok 2 - main success leaves the modal closed without opening an actor
+tests	JavaScript tests	2026-11-11T03:27:08.9387462Z   ---
+tests	JavaScript tests	2026-11-11T03:27:08.9387718Z   duration_ms: 0.71952
+tests	JavaScript tests	2026-11-11T03:27:08.9387996Z   type: 'test'
+tests	JavaScript tests	2026-11-11T03:27:08.9388254Z   ...
+tests	JavaScript tests	2026-11-11T03:27:08.9389089Z # Subtest: preflight failure is persistent, makes no POST and retains drafts/modal
+tests	JavaScript tests	2026-11-11T03:27:08.9393617Z ok 3 - preflight failure is persistent, makes no POST and retains drafts/modal
+tests	JavaScript tests	2026-11-11T03:27:08.9394348Z   ---
+tests	JavaScript tests	2026-11-11T03:27:08.9394713Z   duration_ms: 0.963867
+tests	JavaScript tests	2026-11-11T03:27:08.9395021Z   type: 'test'
+tests	JavaScript tests	2026-11-11T03:27:08.9395272Z   ...
+tests	JavaScript tests	2026-11-11T03:27:08.9396078Z # Subtest: lost response reports uncertainty and reconciles without POST retry or reopening
+tests	JavaScript tests	2026-11-11T03:27:08.9397323Z ok 4 - lost response reports uncertainty and reconciles without POST retry or reopening
+tests	JavaScript tests	2026-11-11T03:27:08.9397808Z   ---
+tests	JavaScript tests	2026-11-11T03:27:08.9398064Z   duration_ms: 0.812178
+tests	JavaScript tests	2026-11-11T03:27:08.9398411Z   type: 'test'
+tests	JavaScript tests	2026-11-11T03:27:08.9398821Z   ...
+tests	JavaScript tests	2026-11-11T03:27:08.9402624Z # Subtest: confirmed mutation with failed refresh is not reported as an unconfirmed POST
+tests	JavaScript tests	2026-11-11T03:27:08.9403567Z ok 5 - confirmed mutation with failed refresh is not reported as an unconfirmed POST
+tests	JavaScript tests	2026-11-11T03:27:08.9404093Z   ---
+tests	JavaScript tests	2026-11-11T03:27:08.9404355Z   duration_ms: 0.942925
+tests	JavaScript tests	2026-11-11T03:27:08.9404641Z   type: 'test'
+tests	JavaScript tests	2026-11-11T03:27:08.9404862Z   ...
+tests	JavaScript tests	2026-11-11T03:27:08.9405652Z # Subtest: successful manual Next resolves only its related error
+tests	JavaScript tests	2026-11-11T03:27:08.9406470Z ok 6 - successful manual Next resolves only its related error
+tests	JavaScript tests	2026-11-11T03:27:08.9406875Z   ---
+tests	JavaScript tests	2026-11-11T03:27:08.9407131Z   duration_ms: 0.87282
+tests	JavaScript tests	2026-11-11T03:27:08.9407401Z   type: 'test'
+tests	JavaScript tests	2026-11-11T03:27:08.9407644Z   ...
+tests	JavaScript tests	2026-11-11T03:27:08.9408539Z # Subtest: successful refresh alone does not erase uncertain Next feedback
+tests	JavaScript tests	2026-11-11T03:27:08.9409232Z ok 7 - successful refresh alone does not erase uncertain Next feedback
+tests	JavaScript tests	2026-11-11T03:27:08.9409629Z   ---
+tests	JavaScript tests	2026-11-11T03:27:08.9409903Z   duration_ms: 1.392529
+tests	JavaScript tests	2026-11-11T03:27:08.9410201Z   type: 'test'
+tests	JavaScript tests	2026-11-11T03:27:08.9410453Z   ...
+tests	JavaScript tests	2026-11-11T03:27:08.9417822Z # Subtest: repeated failed manual attempts replace one related error
+tests	JavaScript tests	2026-11-11T03:27:08.9424137Z ok 8 - repeated failed manual attempts replace one related error
+tests	JavaScr
