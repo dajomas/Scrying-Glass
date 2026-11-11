@@ -1,0 +1,106 @@
+TAP version 13
+# Subtest: asset loads once, deferred after core and End feedback
+ok 1 - asset loads once, deferred after core and End feedback
+  ---
+  duration_ms: 1.062614
+  type: 'test'
+  ...
+# Subtest: cancellation preserves the error and does not begin or supersede a request
+ok 2 - cancellation preserves the error and does not begin or supersede a request
+  ---
+  duration_ms: 2.447547
+  type: 'test'
+  ...
+# Subtest: one unchanged POST and refresh, without direct client state mutation
+ok 3 - one unchanged POST and refresh, without direct client state mutation
+  ---
+  duration_ms: 0.648669
+  type: 'test'
+  ...
+# Subtest: failure publishes persistent explicit error and neither refreshes nor retries
+ok 4 - failure publishes persistent explicit error and neither refreshes nor retries
+  ---
+  duration_ms: 0.672605
+  type: 'test'
+  ...
+# Subtest: actual failed attempt followed by success silently resolves only Reset All
+ok 5 - actual failed attempt followed by success silently resolves only Reset All
+  ---
+  duration_ms: 0.774918
+  type: 'test'
+  ...
+# Subtest: refresh alone cannot clear a Reset All error
+ok 6 - refresh alone cannot clear a Reset All error
+  ---
+  duration_ms: 0.483305
+  type: 'test'
+  ...
+# Subtest: unrelated success cannot clear Reset All errors or use the legacy route
+ok 7 - unrelated success cannot clear Reset All errors or use the legacy route
+  ---
+  duration_ms: 0.620836
+  type: 'test'
+  ...
+# Subtest: successful mutation resolves before real loadState publishes its own refresh failure
+ok 8 - successful mutation resolves before real loadState publishes its own refresh failure
+  ---
+  duration_ms: 0.650443
+  type: 'test'
+  ...
+# Subtest: old-setup success cannot resolve or refresh a newer setup
+ok 9 - old-setup success cannot resolve or refresh a newer setup
+  ---
+  duration_ms: 0.725244
+  type: 'test'
+  ...
+# Subtest: old-campaign failure cannot publish into the new campaign
+ok 10 - old-campaign failure cannot publish into the new campaign
+  ---
+  duration_ms: 0.853267
+  type: 'test'
+  ...
+# Subtest: away-and-back scope changes do not revive an old response
+ok 11 - away-and-back scope changes do not revive an old response
+  ---
+  duration_ms: 0.540544
+  type: 'test'
+  ...
+# Subtest: superseded success cannot clear a newer same-scope failure
+ok 12 - superseded success cannot clear a newer same-scope failure
+  ---
+  duration_ms: 0.563768
+  type: 'test'
+  ...
+# Subtest: superseded failure cannot reinstate an error after the newer success
+ok 13 - superseded failure cannot reinstate an error after the newer success
+  ---
+  duration_ms: 0.6758
+  type: 'test'
+  ...
+# Subtest: unexpected refresh rejection is not published as a Reset All request failure
+ok 14 - unexpected refresh rejection is not published as a Reset All request failure
+  ---
+  duration_ms: 0.777654
+  type: 'test'
+  ...
+# Subtest: absence of the Reset All button does not affect other handlers
+ok 15 - absence of the Reset All button does not affect other handlers
+  ---
+  duration_ms: 0.454261
+  type: 'test'
+  ...
+# Subtest: Reset All remains available with an empty battle order
+ok 16 - Reset All remains available with an empty battle order
+  ---
+  duration_ms: 1.07152
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 111.598478

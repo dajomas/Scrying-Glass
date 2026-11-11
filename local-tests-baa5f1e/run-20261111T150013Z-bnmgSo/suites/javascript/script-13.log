@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: Start keeps URL, method, JSON payload and undefined result; success collapses then refreshes
+ok 1 - Start keeps URL, method, JSON payload and undefined result; success collapses then refreshes
+  ---
+  duration_ms: 2.986038
+  type: 'test'
+  ...
+# Subtest: request failure is persistent, explicit and leaves panes/refresh untouched
+ok 2 - request failure is persistent, explicit and leaves panes/refresh untouched
+  ---
+  duration_ms: 0.886008
+  type: 'test'
+  ...
+# Subtest: matching successful retry resolves only Start error, before refreshing
+ok 3 - matching successful retry resolves only Start error, before refreshing
+  ---
+  duration_ms: 0.792011
+  type: 'test'
+  ...
+# Subtest: an unrelated success does not resolve a Start error
+ok 4 - an unrelated success does not resolve a Start error
+  ---
+  duration_ms: 0.635745
+  type: 'test'
+  ...
+# Subtest: repeated failure replaces the related notice rather than duplicating it
+ok 5 - repeated failure replaces the related notice rather than duplicating it
+  ---
+  duration_ms: 0.661283
+  type: 'test'
+  ...
+# Subtest: older failure cannot overwrite a newer request failure
+ok 6 - older failure cannot overwrite a newer request failure
+  ---
+  duration_ms: 0.598985
+  type: 'test'
+  ...
+# Subtest: older success cannot clear a newer failure or collapse/refresh its view
+ok 7 - older success cannot clear a newer failure or collapse/refresh its view
+  ---
+  duration_ms: 0.558618
+  type: 'test'
+  ...
+# Subtest: old-scope failure cannot publish in the new encounter
+ok 8 - old-scope failure cannot publish in the new encounter
+  ---
+  duration_ms: 0.589757
+  type: 'test'
+  ...
+# Subtest: old-scope success cannot collapse or refresh the new encounter
+ok 9 - old-scope success cannot collapse or refresh the new encounter
+  ---
+  duration_ms: 0.710175
+  type: 'test'
+  ...
+# Subtest: scope A-B-A still rejects the old request via epoch
+ok 10 - scope A-B-A still rejects the old request via epoch
+  ---
+  duration_ms: 0.736716
+  type: 'test'
+  ...
+# Subtest: successful Start followed by handled refresh failure retains only state.load error, no retry
+ok 11 - successful Start followed by handled refresh failure retains only state.load error, no retry
+  ---
+  duration_ms: 0.682143
+  type: 'test'
+  ...
+# Subtest: duplicate asset installation preserves the installed wrapper
+ok 12 - duplicate asset installation preserves the installed wrapper
+  ---
+  duration_ms: 0.468247
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 105.78346
