@@ -1,0 +1,47 @@
+t display, resolve current error or render old value
+tests	JavaScript tests	2026-11-11T18:18:58.7634053Z ok 10 - old-scope success cannot alter latest display, resolve current error or render old value
+tests	JavaScript tests	2026-11-11T18:18:58.7634301Z   ---
+tests	JavaScript tests	2026-11-11T18:18:58.7634421Z   duration_ms: 0.649842
+tests	JavaScript tests	2026-11-11T18:18:58.7634717Z   type: 'test'
+tests	JavaScript tests	2026-11-11T18:18:58.7634853Z   ...
+tests	JavaScript tests	2026-11-11T18:18:58.7635104Z # Subtest: old-scope error cannot overwrite current feedback; pending cleanup still runs
+tests	JavaScript tests	2026-11-11T18:18:58.7635471Z ok 11 - old-scope error cannot overwrite current feedback; pending cleanup still runs
+tests	JavaScript tests	2026-11-11T18:18:58.7635711Z   ---
+tests	JavaScript tests	2026-11-11T18:18:58.7635846Z   duration_ms: 0.484141
+tests	JavaScript tests	2026-11-11T18:18:58.7635977Z   type: 'test'
+tests	JavaScript tests	2026-11-11T18:18:58.7636103Z   ...
+tests	JavaScript tests	2026-11-11T18:18:58.7636308Z # Subtest: away-and-back scope cannot revive original response
+tests	JavaScript tests	2026-11-11T18:18:58.7636581Z ok 12 - away-and-back scope cannot revive original response
+tests	JavaScript tests	2026-11-11T18:18:58.7636775Z   ---
+tests	JavaScript tests	2026-11-11T18:18:58.7636890Z   duration_ms: 0.413755
+tests	JavaScript tests	2026-11-11T18:18:58.7637032Z   type: 'test'
+tests	JavaScript tests	2026-11-11T18:18:58.7637146Z   ...
+tests	JavaScript tests	2026-11-11T18:18:58.7637405Z # Subtest: newer same-operation ticket suppresses older completion without bypassing lock
+tests	JavaScript tests	2026-11-11T18:18:58.7637804Z ok 13 - newer same-operation ticket suppresses older completion without bypassing lock
+tests	JavaScript tests	2026-11-11T18:18:58.7638033Z   ---
+tests	JavaScript tests	2026-11-11T18:18:58.7638140Z   duration_ms: 0.426194
+tests	JavaScript tests	2026-11-11T18:18:58.7638294Z   type: 'test'
+tests	JavaScript tests	2026-11-11T18:18:58.7638416Z   ...
+tests	JavaScript tests	2026-11-11T18:18:58.7638678Z # Subtest: confirmed request resolves its error even if subsequent control update throws
+tests	JavaScript tests	2026-11-11T18:18:58.7639060Z ok 14 - confirmed request resolves its error even if subsequent control update throws
+tests	JavaScript tests	2026-11-11T18:18:58.7639294Z   ---
+tests	JavaScript tests	2026-11-11T18:18:58.7639422Z   duration_ms: 0.570052
+tests	JavaScript tests	2026-11-11T18:18:58.7639565Z   type: 'test'
+tests	JavaScript tests	2026-11-11T18:18:58.7639695Z   ...
+tests	JavaScript tests	2026-11-11T18:18:58.7640072Z # Subtest: initial control rendering failure still releases pending and does not send POST
+tests	JavaScript tests	2026-11-11T18:18:58.7640453Z ok 15 - initial control rendering failure still releases pending and does not send POST
+tests	JavaScript tests	2026-11-11T18:18:58.7640694Z   ---
+tests	JavaScript tests	2026-11-11T18:18:58.7640817Z   duration_ms: 0.431923
+tests	JavaScript tests	2026-11-11T18:18:58.7640954Z   type: 'test'
+tests	JavaScript tests	2026-11-11T18:18:58.7641081Z   ...
+tests	JavaScript tests	2026-11-11T18:18:58.7641354Z # Subtest: missing latest display retains no-assignment path and default final controls
+tests	JavaScript tests	2026-11-11T18:18:58.7641723Z ok 16 - missing latest display retains no-assignment path and default final controls
+tests	JavaScript tests	2026-11-11T18:18:58.7641957Z   ---
+tests	JavaScript tests	2026-11-11T18:18:58.7642082Z   duration_ms: 0.349198
+tests	JavaScript tests	2026-11-11T18:18:58.7642246Z   type: 'test'
+tests	JavaScript tests	2026-11-11T18:18:58.7642387Z   ...
+tests	JavaScript tests	2026-11-11T18:18:58.7642568Z # Subtest: both original click listeners retain directions
+tests	JavaScript tests	2026-11-11T18:18:58.7642842Z ok 17 - both original click listeners retain directions
+tests	JavaScript tests	2026-11-11T18:18:58.7643014Z   ---
+tests	JavaScript tests	2026-11-11T18:18:58.7643131Z   duration_ms: 5.41924
+tests	J

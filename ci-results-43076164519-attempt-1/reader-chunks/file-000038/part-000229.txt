@@ -1,0 +1,29 @@
+up (test_monster_lookup_focus_browser.LookupFocusRegressionTests.test_cancel_restores_focus_without_relookup)
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8640711Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8640944Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8641265Z   File "/tmp/scrying-tests-dc6psag5/repo/tests/test_monster_lookup_focus_browser.py", line 44, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8641643Z     end = source.index("document.querySelector('#monsterUpload').onsubmit", start)
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8641897Z ValueError: substring not found
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8642300Z 
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8642411Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8642884Z ERROR: test_escape_restores_focus_without_relookup (test_monster_lookup_focus_browser.LookupFocusRegressionTests.test_escape_restores_focus_without_relookup)
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8643311Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8643524Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8643823Z   File "/tmp/scrying-tests-dc6psag5/repo/tests/test_monster_lookup_focus_browser.py", line 44, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8644181Z     end = source.index("document.querySelector('#monsterUpload').onsubmit", start)
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8644433Z ValueError: substring not found
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8644657Z 
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8644834Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8645370Z ERROR: test_typing_opens_stable_popup_and_selection_does_not_relookup (test_monster_lookup_focus_browser.LookupFocusRegressionTests.test_typing_opens_stable_popup_and_selection_does_not_relookup)
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8645866Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8646080Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8646365Z   File "/tmp/scrying-tests-dc6psag5/repo/tests/test_monster_lookup_focus_browser.py", line 44, in setUp
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8646714Z     end = source.index("document.querySelector('#monsterUpload').onsubmit", start)
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8646953Z ValueError: substring not found
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8647053Z 
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8647174Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8647365Z Ran 3 tests in 1.109s
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8647450Z 
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8647513Z FAILED (errors=3)
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8647807Z test_monster_lookup_focus_browser.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T18:21:04.8949487Z FAIL: test_monster_lookup_focus_b
