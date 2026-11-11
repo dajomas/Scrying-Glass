@@ -115,33 +115,43 @@ Preparation's five negative controls and 19 combined TAP results remain distinct
 historical local evidence. [465 implementation](../handover/465-statistics-open-feedback.md);
 [467 CI reconciliation and limits](../handover/467-bundle-import-feedback.md#statistics-open-evidence-reconciliation).
 
-This change supplies bundle-import success feedback: explicit encounter-scoped
-campaign-bundle.import publication with full campaign/recovery wording and scope/
-attempt guards, preserving POST, busy guard, local failures and refresh sequence.
-Its 12-case full-script/real-controller CJS suite is prepared but not locally run;
-normal covering CI for the actual delivered SHA remains pending. Earlier green
-statistics/checkpoint CI does not cover this change. Global success follows the
-approved five-second policy; it is no longer a blocking alert.
-[467 behavior/tests/remaining gates](../handover/467-bundle-import-feedback.md).
+Bundle implementation 1fc5b724a47ff8dd29ef6c168d938dc818f86d0d supplies explicit
+encounter-scoped campaign-bundle.import success with complete recovery wording.
+Successful Branch tests 42959512777 attempt 1, job 130322466945 matches that SHA;
+publication b610b93b7a2679178c685390a9ba2111d3ac66fa. Direct log review confirms
+all 12 new CJS cases passed, zero failures/cancellations/skips. All main stages
+report success, not an individual-log re-review of every retained regression.
+Global success follows the approved five-second policy, no blocking alert or replay.
+[467 covering evidence and limits](../handover/467-bundle-import-feedback.md#bundle-ci-and-full-page-composition-preparation---2026-11-11).
+
+This test/docs change adds four complete-Admin Chromium composition scenarios:
+End/Reset matching isolation and renderer/draft/selection preservation with late
+bulk delegation; Join single/bulk and Next request wrapper interaction; held End
+across a real load-driven setup transition; actual statistics/import interactions.
+All production script includes are loaded; intercepted HTTP and SQLite-generated
+fixture state are not authenticated live-server/backend acceptance. Python
+compilation/AST parsing passed; Chromium behavior and normal covering CI for the
+actual new test commit remain pending. Earlier green runs do not cover these cases.
+Global/pane compatibility and all original runtime/test assertions remain intact.
 
 Remaining before closure:
-- Review bundle-import covering CI, new focused cases, retained feature draft/
-  polling regressions and relevant browser/loading checks; correct failures under
-  fresh approval. Do not infer acceptance from preparation or an earlier green run.
-- Exercise full-page/late request, bulk-action and renderer wrapper composition;
-  monitor unintended legacy.global traffic and extend actual producer combinations,
-  scope transitions, no-replay and draft-preservation coverage. Record dedicated
-  feature/lair/viewer notice dispositions without silently closing local work.
+- Review the new full-page cases and relevant retained regressions in covering CI;
+  correct failures under fresh approval. Assess the exercised paths and remaining
+  producer combinations rather than treating four scenarios as exhaustive proof.
+- Complete remaining dedicated feature/lair/viewer notice dispositions and review
+  unintended legacy.global traffic, scope transitions, no replay and draft/selection
+  preservation. Do not silently close later local integration obligations.
 - Confirm no applicable global path remains, then deliberately retire global
   compatibility and update its baseline test. Keep pane compatibility for pending
   consumers and retain later local/Deliverable 2 work.
-- Review/approve any remaining exact code/test/docs payload, normal covering CI and
-  corrections, then obtain explicit bounded acceptance before closing 4A.13.
+- Review/approve remaining exact payloads and covering corrections, then obtain
+  explicit bounded acceptance before closing 4A.13.
 
-This mixed runtime/test/docs commit runs normal CI, without a skip marker;
-no workflow change/dispatch or automatic retry. Global/pane compatibility stay
-intact. 4A.1-4A.12 remain closed; both deliverables and 009.7 stay open. No scope,
-owner/deadline/priority/order change, archive/Patch/, merge or deployment.
+This test/docs commit runs normal CI, without a skip marker; no runtime/core/pin/
+markup/shared-fixture/workflow change or dispatch. 4A.1-4A.12 remain closed; both
+deliverables and 009.7 stay open. No scope, owner/deadline/priority/order change,
+archive/Patch/, merge or deployment. README, HANDOVER index and TODO root remain
+unchanged; linked 467 explicitly supersedes the index's older pending-CI wording.
 
 ## Closed-unit anchors
 
