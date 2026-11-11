@@ -109,3 +109,56 @@ index's older pending wording is explicitly superseded by this linked section.
 deliberate global compatibility retirement with pane compatibility retained,
 covering CI and explicit bounded acceptance. No merge/deployment or broader
 feedback-deliverable/009.7 closure is implied.
+
+## Global compatibility retirement preparation - 2026-11-11
+
+This entry supersedes pending composition execution and global-retirement delivery
+notes above and in the older index, not their historical validation limits.
+Composition commit 8d45d1c19e67b21c387205b1711956305d8a9823 is covered by successful
+Branch tests 42967879960 attempt 1, job 130349218050; publication
+ df4137b62c7668442c08e8ac9425c135c611c730. Run/job metadata match the tested SHA.
+Direct reader file-000038 parts 022-023 confirms all four new Chromium scenarios
+report ok; part 023 also confirms all three retained inventory checks report ok.
+All main CI stages succeeded. These are actual assembled-page fixture results,
+not every producer combination or authenticated live-server acceptance.
+
+Prepared against publication df4137b62c7668442c08e8ac9425c135c611c730, this change
+makes deliver('global', text) without options throw before any controller or legacy
+state changes, including blank clear calls. Explicit ticket/severity delivery and
+controller begin/publish/resolve are unchanged. Pane compatibility retains its
+neutral persistent behavior and observability. No automatic fallback notice is
+created for a programming error. The known replaced core message() bodies remain
+in source as guarded by inventory tests; they are not effective installed handlers
+in the covered assembled-page paths. This does not claim exhaustive dynamic aliases.
+
+The eight-case Node reconciliation suite replaces its deliberate global legacy
+baseline with rejection/noninterference/explicit-delivery assertions, retaining
+pane isolation. The identity matrix adds statistics.open and campaign-bundle.import:
+19 selected identities, 171 unordered pairs, not 171 actual handler combinations.
+The four existing full-page composition scenarios and original assertions remain
+unchanged and must pass again with this runtime revision. Code/test review only;
+no new local syntax, Node or Chromium execution is claimed. Normal covering CI
+for the actual delivered SHA is pending; prior green runs do not cover retirement.
+
+### Remaining producer dispositions
+
+The 460 source census plus the statistics/import migrations and actual composition
+results support this bounded global-route retirement. Remaining dedicated writers
+are not silently reclassified as global producers or accepted as completed D1 work:
+- features.js featureNotice, modal operation outcomes and display connection status
+  remain local; import success alone was migrated. Connection/recovery persistence
+  and polling deduplication remain D2; local producer integration remains open.
+- lairs.js lairNotice/lairActionNotice and lair-state-buttons' local feedback remain
+  configuration/action-local. Their future integration must retain scope, drafts,
+  validation/request/refresh distinctions and busy guards; no mutation redesign.
+- campaign-viewer-admin.js campaignViewerNotice belongs to explicitly selected
+  authorized-campaign viewer grants, not the active encounter. Retain its generation
+  and save controls; later integration must not substitute encounter scope.
+- Ownership guidance, previews, read-only status and tools busy-close guidance keep
+  their dedicated roles. Pane consumers listed in 460 remain pending migrations.
+
+These are retained/deferred local obligations, not new exclusions of an applicable
+global alert and not blanket D1 acceptance. The separate /users page remains outside
+the GM Admin global route. Review retirement covering CI, relevant retained tests
+and any residual caller failure before requesting bounded 4A.13 acceptance. Both
+deliverables/009.7 stay open. No merge/deployment, workflow change or dispatch.

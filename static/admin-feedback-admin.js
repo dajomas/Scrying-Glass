@@ -58,8 +58,10 @@
             if (!options.ticket || options.ticket.region !== region) throw new Error('Feedback destination mismatch');
             return controller.publish(options.ticket, {severity: options.severity, text});
         }
-        // Temporary, observable compatibility route. No severity inference or expiry.
-        // Remove its use by migrating the remaining producers before D1 approval.
+        // Global producers must supply explicit identity, scope and severity.
+        if (region === 'global') throw new Error('Global feedback requires an explicit ticket and severity');
+        // Temporary pane-only compatibility. No severity inference or expiry.
+        // Remove its use by migrating the remaining pane producers before D1 approval.
         legacyRegions.add(region);
         const ticket = begin({region, operation: 'legacy.' + region, target: region,
             label: 'Unmigrated feedback'});

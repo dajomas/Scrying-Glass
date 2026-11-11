@@ -99,7 +99,7 @@ a82e17146aae53a89710c054460f352415b7b45f, covered by successful Branch tests
 80891f360bedc572cce753b5187f4fd27e581939. Detailed log review confirms all
 eight Node cases and all three Python inventory methods passed. Preparation's
 four detected negative controls remain distinct historical local evidence.
-The 136 pairs cover selected API identities, not 136 actual handler combinations.
+The original 136 pairs cover selected API identities, not actual handler combinations.
 
 Template-loaded source census at 91dde45ccc305dfc69dfe8020260dd3670ac17a4 covers
 all 21 fragments, 42 distinct deferred script includes and the eight-part Admin
@@ -124,34 +124,42 @@ report success, not an individual-log re-review of every retained regression.
 Global success follows the approved five-second policy, no blocking alert or replay.
 [467 covering evidence and limits](../handover/467-bundle-import-feedback.md#bundle-ci-and-full-page-composition-preparation---2026-11-11).
 
-This test/docs change adds four complete-Admin Chromium composition scenarios:
-End/Reset matching isolation and renderer/draft/selection preservation with late
-bulk delegation; Join single/bulk and Next request wrapper interaction; held End
-across a real load-driven setup transition; actual statistics/import interactions.
-All production script includes are loaded; intercepted HTTP and SQLite-generated
-fixture state are not authenticated live-server/backend acceptance. Python
-compilation/AST parsing passed; Chromium behavior and normal covering CI for the
-actual new test commit remain pending. Earlier green runs do not cover these cases.
-Global/pane compatibility and all original runtime/test assertions remain intact.
+Composition commit 8d45d1c19e67b21c387205b1711956305d8a9823 is covered by successful
+Branch tests 42967879960 attempt 1, job 130349218050; publication
+df4137b62c7668442c08e8ac9425c135c611c730. Direct reader parts 022-023 confirms
+all four full-page Chromium scenarios passed; the three inventory checks also
+report ok. All main CI stages succeeded. This resolves those scenarios' execution
+gate, not every possible caller, human accessibility or authenticated server path.
+
+This runtime/test/docs change retires untyped deliver(global) by throwing before
+feedback/legacy state changes, including empty clears. Explicit global tickets
+remain supported; pane compatibility remains unchanged. The deliberate baseline
+test now asserts rejection/noninterference and explicit delivery. The identity
+matrix expands to 19 selected operations/171 unordered pairs including statistics
+and import, not 171 real handler combinations. Existing full-page assertions are
+unchanged and must pass again. No new local tests/syntax execution is claimed;
+normal covering CI for the actual retirement SHA remains pending. Earlier green
+composition CI does not validate this runtime change.
+
+Remaining dedicated feature/lair/viewer writers are classified as local and remain
+later integration obligations, not hidden applicable global exclusions or D1 closure.
+Viewer grants retain selected authorized-campaign scope; connection persistence/
+polling/field association remain D2. [Disposition and retirement details](../handover/467-bundle-import-feedback.md#global-compatibility-retirement-preparation---2026-11-11).
 
 Remaining before closure:
-- Review the new full-page cases and relevant retained regressions in covering CI;
-  correct failures under fresh approval. Assess the exercised paths and remaining
-  producer combinations rather than treating four scenarios as exhaustive proof.
-- Complete remaining dedicated feature/lair/viewer notice dispositions and review
-  unintended legacy.global traffic, scope transitions, no replay and draft/selection
-  preservation. Do not silently close later local integration obligations.
-- Confirm no applicable global path remains, then deliberately retire global
-  compatibility and update its baseline test. Keep pane compatibility for pending
-  consumers and retain later local/Deliverable 2 work.
-- Review/approve remaining exact payloads and covering corrections, then obtain
-  explicit bounded acceptance before closing 4A.13.
+- Review retirement covering CI: changed eight-case isolation suite, full-page
+  composition, inventory and relevant retained loading/rendering/producer tests.
+  Investigate residual caller errors and correct failures under fresh approval.
+- Reconcile final evidence, scopes and retained/deferred work without treating
+  fixture coverage as exhaustive dynamic or manual acceptance.
+- Obtain explicit bounded acceptance, then separately approve a documentation-only
+  close-out with [skip ci]. Both deliverables and 009.7 remain open.
 
-This test/docs commit runs normal CI, without a skip marker; no runtime/core/pin/
-markup/shared-fixture/workflow change or dispatch. 4A.1-4A.12 remain closed; both
-deliverables and 009.7 stay open. No scope, owner/deadline/priority/order change,
-archive/Patch/, merge or deployment. README, HANDOVER index and TODO root remain
-unchanged; linked 467 explicitly supersedes the index's older pending-CI wording.
+This mixed runtime/test/docs commit uses normal CI, no skip marker, workflow change
+or dispatch. No core/pin/markup/shared-fixture changes. 4A.1-4A.12 stay closed.
+README, HANDOVER index and TODO root remain unchanged; linked 467 explicitly
+supersedes older pending-CI/retirement wording. No scope/owner/deadline/priority/
+order change, archive/Patch/, merge or deployment.
 
 ## Closed-unit anchors
 

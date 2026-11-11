@@ -11,7 +11,8 @@ const operations = ['state.load', 'battle.start', 'battle.start.eligibility',
     'battle.start.tie-order', 'battle.next', 'battle.end', 'battle.end.validation',
     'battle.reset-all', 'combatant.reset', 'combatant.remove.fallback',
     'activity-log.clear', 'display.battle-order-font', 'battle.actions.eligibility',
-    'battle.actions.targets', 'battle.actions.pending', 'battle.actions.turn-completion', 'roster.join'];
+    'battle.actions.targets', 'battle.actions.pending', 'battle.actions.turn-completion', 'roster.join',
+    'statistics.open', 'campaign-bundle.import'];
 function setup() {
     let now = 0, sequence = 0;
     const timers = new Map();
@@ -38,7 +39,7 @@ test('every distinct operation pair isolates matching resolution through the rea
         assert.deepEqual(w.texts(), [b + ':same-target'], `${a} must not clear ${b}`);
         assert.deepEqual(Array.from(w.feedback.legacyRegions()), []);pairs++;
     }
-    assert.equal(pairs, 136);
+    assert.equal(pairs, 171);
 });
 test('same operation retains independent target failures', () => {
     const w = setup();w.error('roster.join', 'character-a');w.error('roster.join', 'character-b');
@@ -69,10 +70,18 @@ test('retained pane compatibility cannot clear explicit pane or global errors', 
     assert.deepEqual(w.texts(), ['roster.join:same-target', 'monster.edit:one']);
     assert.deepEqual(Array.from(w.feedback.legacyRegions()), ['monsters']);
 });
-test('global compatibility remains observable until inventory authorizes retirement', () => {
-    const w = setup();w.error('battle.start');w.feedback.deliver('global', 'Unmigrated');
-    assert.deepEqual(Array.from(w.feedback.legacyRegions()), ['global']);
-    w.feedback.deliver('global', '');assert.deepEqual(w.texts(), ['battle.start:same-target']);
+test('untyped global publish and clear reject without changing explicit feedback', () => {
+    const w = setup();w.error('battle.start');
+    for (const text of ['Unmigrated', '', '   ']) {
+        assert.throws(() => w.feedback.deliver('global', text), /Global feedback requires an explicit ticket and severity/);
+        assert.deepEqual(w.texts(), ['battle.start:same-target']);
+        assert.deepEqual(Array.from(w.feedback.legacyRegions()), []);
+    }
+    const ticket = w.begin('battle.end');
+    assert.equal(w.feedback.deliver('global', 'Explicit error', {ticket, severity: 'error'}), true);
+    assert.deepEqual(w.texts(), ['battle.start:same-target', 'Explicit error']);
+    assert.equal(w.feedback.resolve(ticket), true);
+    assert.deepEqual(w.texts(), ['battle.start:same-target']);
 });
 test('actual End and Reset All producers preserve independent errors across explicit retry', async () => {
     const w = setup(), buttons = {endBattle: {}, resetAll: {}};
