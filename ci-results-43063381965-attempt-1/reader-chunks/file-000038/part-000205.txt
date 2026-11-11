@@ -1,0 +1,32 @@
+ion audit: test_ci_publication_branch_allowlists.py
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.0260532Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.0261269Z Ran 3 tests in 0.015s
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.0261494Z 
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.0261626Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.0262374Z test_ci_publication_branch_allowlists.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.0419835Z Connection audit: test_client_campaign.py
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.1834598Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.1835599Z test_client_campaign.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.1836221Z Ran 6 tests in 0.048s
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.1836437Z 
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.1836568Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.1994796Z Connection audit: test_combined_monster_lookup.py
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3010158Z Combined monster lookup failed for D&D Beyond
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3010884Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3011589Z   File "/tmp/scrying-tests-vz8wxu5e/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3012212Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3012768Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3013337Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3013700Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3014283Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3015018Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3015577Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3016521Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3017066Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3017344Z RuntimeError: secret one
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3017693Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3018070Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3018863Z   File "/tmp/scrying-tests-vz8wxu5e/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3019494Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-11T17:03:09.3020041Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-11T1

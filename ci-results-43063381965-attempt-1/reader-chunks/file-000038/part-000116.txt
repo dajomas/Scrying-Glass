@@ -1,0 +1,32 @@
+k3c/repo/tests/test_admin_global_feedback_composition.py", line 85, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8706308Z     self.assertEqual(page.locator('script[src]').count(), 42)
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8706889Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8707335Z AssertionError: 43 != 42
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8707545Z 
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8708060Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8709722Z FAIL: test_statistics_and_bundle_import_coexist_on_loaded_page (test_admin_global_feedback_composition.GlobalFeedbackCompositionTests.test_statistics_and_bundle_import_coexist_on_loaded_page)
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8711102Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8711629Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8712756Z   File "/tmp/scrying-tests-8007ek3c/repo/tests/test_admin_global_feedback_composition.py", line 170, in test_statistics_and_bundle_import_coexist_on_loaded_page
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8713754Z     page, h = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8714145Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8714921Z   File "/tmp/scrying-tests-8007ek3c/repo/tests/test_admin_global_feedback_composition.py", line 85, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8715796Z     self.assertEqual(page.locator('script[src]').count(), 42)
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8716356Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8716792Z AssertionError: 43 != 42
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8717004Z 
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8717325Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8717829Z Ran 1520 tests in 187.972s
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8718028Z 
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:04.8718179Z FAILED (failures=4)
+tests	Python test suite (including browser fixtures)	2026-11-11T17:01:05.2254792Z ##[error]Process completed with exit code 1.
+tests	Upload Admin foundations visual fixtures	﻿2026-11-11T17:01:05.2321185Z ##[group]Run actions/upload-artifact@v4
+tests	Upload Admin foundations visual fixtures	2026-11-11T17:01:05.2321506Z with:
+tests	Upload Admin foundations visual fixtures	2026-11-11T17:01:05.2321786Z   name: admin-foundations-visual-fixtures
+tests	Upload Admin foundations visual fixtures	2026-11-11T17:01:05.2322139Z   path: /home/runner/work/_temp/sg-admin-foundations
+tests	Upload Admin foundations visual fixtures	2026-11-11T17:01:05.2322483Z   if-no-files-found: warn
+tests	Upload Admin foundations visual fixtures	2026-11-11T17:01:05.2322736Z   compression-level: 6
+tests	Upload Admin foundations visual fixtures	2026-11-11T17:01:05.2322979Z   overwrite: false
+tests	Upload Admin foundations visual fixtures	2026-11-11T17:01:05.2323208Z   include-hidden-files: false
+tests	Upload Admin foundations visual fixtures	2026-11-11T17:01:05.2323466Z env:
+tests	Upload Admin foundations visual fixtures	2026-11-11T17:01:05.2323923Z   PYTHONPATH: /home/r
