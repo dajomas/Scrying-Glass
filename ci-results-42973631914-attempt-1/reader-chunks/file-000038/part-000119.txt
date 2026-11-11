@@ -1,0 +1,31 @@
+ will be 30 files uploaded
+tests	Upload Admin foundations visual fixtures	2026-11-11T06:40:05.1719406Z Artifact name is valid!
+tests	Upload Admin foundations visual fixtures	2026-11-11T06:40:05.1719951Z Root directory input is valid!
+tests	Upload Admin foundations visual fixtures	2026-11-11T06:40:05.4567339Z Beginning upload of artifact content to blob storage
+tests	Upload Admin foundations visual fixtures	2026-11-11T06:40:05.5859753Z (node:14292) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+tests	Upload Admin foundations visual fixtures	2026-11-11T06:40:05.9976893Z Uploaded bytes 2436956
+tests	Upload Admin foundations visual fixtures	2026-11-11T06:40:06.0425188Z Finished uploading artifact content to blob storage!
+tests	Upload Admin foundations visual fixtures	2026-11-11T06:40:06.0426567Z SHA256 digest of uploaded artifact zip is 777f6c255068efe9c4082144c7afdb313dec165687e2e031090b638d444dae64
+tests	Upload Admin foundations visual fixtures	2026-11-11T06:40:06.0428497Z Finalizing artifact upload
+tests	Upload Admin foundations visual fixtures	2026-11-11T06:40:06.3928997Z Artifact admin-foundations-visual-fixtures.zip successfully finalized. Artifact ID 13834188278
+tests	Upload Admin foundations visual fixtures	2026-11-11T06:40:06.3931137Z Artifact admin-foundations-visual-fixtures has been successfully uploaded! Final size is 2436956 bytes. Artifact ID is 13834188278
+tests	Upload Admin foundations visual fixtures	2026-11-11T06:40:06.3936957Z Artifact download URL: https://github.com/dajomas/Scrying-Glass/actions/runs/42973631914/artifacts/13834188278
+tests	Pytest regression modules	﻿2026-11-11T06:40:06.4121791Z ##[group]Run python tools/run_split_tests.py -- python -m pytest -q tests/test_death_save_validation_2ba6607.py tests/test_slug_truncation_82860c4.py
+tests	Pytest regression modules	2026-11-11T06:40:06.4122923Z ^[[36;1mpython tools/run_split_tests.py -- python -m pytest -q tests/test_death_save_validation_2ba6607.py tests/test_slug_truncation_82860c4.py^[[0m
+tests	Pytest regression modules	2026-11-11T06:40:06.4172697Z shell: /usr/bin/bash -e {0}
+tests	Pytest regression modules	2026-11-11T06:40:06.4172968Z env:
+tests	Pytest regression modules	2026-11-11T06:40:06.4173443Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Pytest regression modules	2026-11-11T06:40:06.4174065Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-11T06:40:06.4174514Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Pytest regression modules	2026-11-11T06:40:06.4174967Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-11T06:40:06.4175376Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-11T06:40:06.4175778Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-11T06:40:06.4176200Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Pytest regression modules	2026-11-11T06:40:06.4176537Z ##[endgroup]
+tests	Pytest regression modules	2026-11-11T06:40:08.5915747Z ...........................................                              [100%]
+tests	Pytest regression modules	2026-11-11T06:40:08.5916484Z 43 passed in 1.28s
+tests	JavaScript tests	﻿2026-11-11T06:40:08.6919547Z ##[group]Run status=0
+tests	JavaScript tests	2026-11-11T06:40:08.6919883Z ^[[36;1mstatus=0^[[0m
+tests	JavaScript tests	2026-11-11T06:40:08.6920138Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	JavaScript tests	2026-11-11T06:40:08.6920454Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	JavaScript tests	2026-11-11T06:40:08.6920858Z ^[[36;1m  python tools/run_split_tests.py -- node --test "$test" || status=1^[
