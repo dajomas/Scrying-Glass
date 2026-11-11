@@ -1,75 +1,151 @@
-function openCsvImport(kind) {
-    csvImportKind = kind;
+let csvImportSession = null;
+let setupImportSession = null;
+const modalImportPending = new WeakSet();
+const modalImportRevision = new WeakMap();
+for (const id of ['#csvImportForm', '#importForm']) {
+    const form = document.querySelector(id);
+    const edited = () => modalImportRevision.set(form, (modalImportRevision.get(form) || 0) + 1);
+    for (const name of ['input', 'change', 'reset']) form.addEventListener(name, edited);
+}
+const previousCloseImport = closeImport;
+closeImport = function() {
+    if (setupImportSession) setupImportSession.closed = true;
+    previousCloseImport();
+};
 
-    const isMonster = kind === 'monsters';
-
-    document.querySelector('#csvImportTitle').textContent =
-        isMonster ? 'Import monsters from CSV' : 'Import characters from CSV';
-
-    document.querySelector('#csvImportHelp').textContent =
-        isMonster
-            ? 'Required columns: name, monster_species, ac, hp. Optional id values are preserved; blank or missing IDs are generated automatically.'
-            : 'Required column: name. Imported characters are added to the active campaign. Optional id values are preserved; blank or missing IDs are generated automatically.';
-
-    csvImportModal.hidden = false;
+async function runModalImport(form, spec, session, getSession, modal, prepare) {
+    if (modalImportPending.has(form)) return;
+    modalImportPending.add(form);
+    const feedback = window.scryingAdminFeedback;
+    let buttons = [], disabled = [];
+    try {
+        const validation = feedback.begin({...spec, operation: spec.operation + '.validation'});
+        const prepared = prepare();
+        if (prepared.error || !form.reportValidity()) {
+            feedback.publish(validation, {severity: 'error', text: prepared.error || 'Select a valid import file and options.'});
+            return;
+        }
+        feedback.resolve(validation);
+        if (prepared.confirmation && !confirm(prepared.confirmation)) return;
+        const tickets = prepared.regions.map(region => feedback.begin({...spec, region,
+            target: JSON.stringify([spec.target, region])}));
+        const refresh = feedback.begin({...spec, operation: spec.operation + '.refresh'});
+        const revision = modalImportRevision.get(form) || 0;
+        buttons = [...form.querySelectorAll('button[type="submit"], button:not([type]), input[type="submit"]')];
+        disabled = buttons.map(button => button.disabled);
+        buttons.forEach(button => {button.disabled = true;});
+        const relevant = () => feedback.isCurrent(refresh) && getSession() === session;
+        const current = () => relevant() && !session.closed && !modal.hidden;
+        let result;
+        try {result = await prepared.send();}
+        catch (error) {
+            if (current()) feedback.publish(tickets[0], {severity: 'error', text: error.message});
+            return;
+        }
+        if (!current()) return;
+        try {
+            const messages = prepared.messages(result);
+            for (let index = 0; index < tickets.length; index++) {
+                if (!current()) return;
+                feedback.publish(tickets[index], {severity: 'success', text: messages[index]});
+            }
+            // Do not discard files/options edited after the request was sent.
+            if ((modalImportRevision.get(form) || 0) === revision) prepared.close();
+            if (!relevant()) return;
+            await load(true);
+            if (relevant()) feedback.resolve(refresh);
+        } catch {
+            if (relevant()) feedback.publish(refresh, {severity: 'error', text:
+                'Import succeeded, but updating the view failed. Reload the page; do not import again.'});
+        }
+    } finally {
+        buttons.forEach((button, index) => {button.disabled = disabled[index];});
+        modalImportPending.delete(form);
+    }
 }
 
-document.querySelector('#openMonsterCsvImport').onclick = () => {
-    openCsvImport('monsters');
-};
-
-document.querySelector('#openCharacterCsvImport').onclick = () => {
-    openCsvImport('characters');
-};
-
+function openCsvImport(kind) {
+    csvImportKind = kind;
+    csvImportSession = {kind, closed: false};
+    const isMonster = kind === 'monsters';
+    document.querySelector('#csvImportTitle').textContent = isMonster ? 'Import monsters from CSV' : 'Import characters from CSV';
+    document.querySelector('#csvImportHelp').textContent = isMonster
+        ? 'Required columns: name, monster_species, ac, hp. Optional id values are preserved; blank or missing IDs are generated automatically.'
+        : 'Required column: name. Imported characters are added to the active campaign. Optional id values are preserved; blank or missing IDs are generated automatically.';
+    csvImportModal.hidden = false;
+}
+function closeCsvImport() {
+    if (csvImportSession) csvImportSession.closed = true;
+    csvImportModal.hidden = true;
+    csvImportKind = null;
+    document.querySelector('#csvImportForm').reset();
+}
+document.querySelector('#openMonsterCsvImport').onclick = () => openCsvImport('monsters');
+document.querySelector('#openCharacterCsvImport').onclick = () => openCsvImport('characters');
 document.querySelector('#cancelCsvImport').onclick = closeCsvImport;
-
-document.querySelector('#csvImportForm').onsubmit = async event => {
+document.querySelector('#csvImportForm').onsubmit = event => {
     event.preventDefault();
-
-    if (!csvImportKind) {
-        return;
-    }
-
+    if (!csvImportKind || !csvImportSession) return;
     const kind = csvImportKind;
-    const form = event.target;
-    const submit = form.querySelector('button[type="submit"], button.import');
-
-    submit.disabled = true;
-
-    try {
-        const endpoint = kind === 'monsters'
-            ? '/api/monsters/import-csv'
-            : '/api/characters/import-csv';
-
-        const result = await request(endpoint, {
-            method: 'POST',
-            body: new FormData(form),
+    const primary = kind === 'characters' ? 'campaign' : 'battleSetup';
+    return runModalImport(event.currentTarget || event.target,
+        {region: primary, operation: 'roster.import.csv', target: kind, label: 'Import CSV'},
+        csvImportSession, () => csvImportSession, csvImportModal, () => {
+            const payload = new FormData(event.currentTarget || event.target);
+            const noun = kind === 'characters' ? 'character' : 'monster';
+            return {
+                regions: [primary, kind], close: closeCsvImport,
+                send: () => request(kind === 'monsters' ? '/api/monsters/import-csv' : '/api/characters/import-csv',
+                    {method: 'POST', body: payload}),
+                messages: result => [
+                    `Imported ${result.count} ${noun}${result.count === 1 ? '' : 's'} from CSV.`,
+                    `${Number(result?.count ?? 0)} ${noun}${Number(result?.count ?? 0) === 1 ? '' : 's'} added successfully.`,
+                ],
+            };
         });
-
-        closeCsvImport();
-        await load();
-
-        paneNotification(
-            kind === 'characters' ? 'campaign' : 'battleSetup',
-            `Imported ${result.count} ${kind === 'monsters' ? 'monster' : 'character'
-            }${result.count === 1 ? '' : 's'} from CSV.`,
-        );
-
-        const count = Number(result?.count ?? 0);
-        const noun = kind === 'characters' ? 'character' : 'monster';
-        const target = kind === 'characters' ? 'characters' : 'monsters';
-
-        paneNotification(
-            target,
-            `${count} ${noun}${count === 1 ? '' : 's'} added successfully.`,
-        );
-    } catch (error) {
-        paneNotification(kind === 'characters' ? 'campaign' : 'battleSetup', error.message);
-    } finally {
-        submit.disabled = false;
-    }
 };
+
+async function openSetupImport() {
+    const feedback = window.scryingAdminFeedback;
+    const session = setupImportSession = {closed: false};
+    const ticket = feedback.begin({region: 'battleSetup', operation: 'setup.import.open',
+        target: 'setup-import', label: 'Open setup import'});
+    try {await setups();}
+    catch (error) {feedback.publish(ticket, {severity: 'error', text: error.message}); return;}
+    if (!feedback.isCurrent(ticket) || setupImportSession !== session || session.closed) return;
+    feedback.resolve(ticket);
+    document.querySelector('#importCampaign').value = campaignData.active || '';
+    document.querySelector('#importLifeFilter').value = 'alive';
+    renderImportSetups();
+    importModal.hidden = false;
+}
+function submitSetupImport(event) {
+    event.preventDefault();
+    if (!setupImportSession) return;
+    return runModalImport(event.currentTarget || event.target,
+        {region: 'battleSetup', operation: 'setup.import', target: 'setup-import', label: 'Import saved setup'},
+        setupImportSession, () => setupImportSession, importModal, () => {
+            const payload = new FormData(event.currentTarget || event.target);
+            const name = payload.get('name'), kind = payload.get('kind');
+            const life_filter = payload.get('life_filter') || 'alive';
+            const lifeLabel = {alive: 'Alive', dead: 'Dead', all: 'Alive and Dead'}[life_filter];
+            const campaign = payload.get('campaign') || campaignData.active;
+            if (!lifeLabel) return {error: 'Choose a valid monster state to import'};
+            if (!name) return {error: 'Choose a saved setup to import from'};
+            return {
+                regions: ['battleSetup'], close: () => closeImport(),
+                confirmation: `Import ${lifeLabel} ${kind} from ${name} into the current setup?`,
+                send: () => request('/api/setups/import', {method: 'POST',
+                    headers: {'Content-Type': 'application/json'}, body: JSON.stringify({name, kind, campaign, life_filter})}),
+                messages: result => [`Imported ${result.monsters} monster${result.monsters === 1 ? '' : 's'} from ${result.name}`],
+            };
+        });
+}
+// Rebind the earlier setup-import handlers to this session-aware owner.
+document.querySelector('#openImport').onclick = () => openSetupImport();
+document.querySelector('#importCampaign').onchange = renderImportSetups;
+document.querySelector('#cancelImport').onclick = () => closeImport();
+document.querySelector('#importForm').onsubmit = submitSetupImport;
 
 document.querySelector('#exportActivityLogCsv').onclick = () => {
     window.location.href = '/api/activity-log.csv';
