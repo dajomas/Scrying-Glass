@@ -71,15 +71,20 @@ results were reconciled after the user's 2026-11-11 close-out request; no blocki
 failure was found in reviewed evidence. Bounded acceptance closes 4A.12 only.
 [450 evidence and limits](docs/handover/450-join-reporting.md#4a12-bounded-close-out---2026-11-11);
 [task plan](docs/todo/097-feedback-delivery-plan.md).
-4A.13 is in progress: this change set adds bounded literal-core/override guards and
-production-bootstrap isolation tests, not runtime migration or compatibility
-retirement. Focused Node suite passed 8/8 with four detected negative controls;
-repository-dependent Python execution, covering CI and complete caller inventory
-remain pending. [460 scope/evidence/limits](docs/handover/460-global-feedback-reconciliation.md).
-This test/docs checkpoint uses normal CI; no workflow change or dispatch.
-Both feedback deliverables and wider 009.7 gates remain open; no new human visual,
-screen-reader, authenticated live-server or exhaustive accessibility pass.
-016/017 and SG-TODO-019 remain proposed, agreed order unchanged. No merge/deployment.
+4A.13 remains in progress. Checkpoint a82e17146aae53a89710c054460f352415b7b45f
+has successful covering CI 42952443028 attempt 1; direct log review confirms all
+eight Node cases and all three Python inventory checks passed. Publication:
+80891f360bedc572cce753b5187f4fd27e581939. The source census now accounts for
+all 21 template fragments and 42 script includes; no runtime retirement is implied.
+Two browser alert paths still require disposition, and full-page/late-wrapper
+composition and global compatibility retirement remain pending.
+[460 inventory/evidence/limits](docs/handover/460-global-feedback-reconciliation.md#checkpoint-ci-and-template-loaded-source-inventory---2026-11-11).
+This inventory/evidence update changes documentation only and includes [skip ci];
+no tests execute and no workflow is changed or dispatched. The marker alone is
+not verification of a workflow-run state. Both feedback deliverables and wider
+009.7 gates stay open; no new human visual, screen-reader, authenticated live-server
+or exhaustive accessibility pass. No prior acceptance or agreed order changes.
+016/017 and SG-TODO-019 remain proposed. No merge/deployment.
 Longer index history is preserved in the [pre-checkpoint index](https://github.com/dajomas/Scrying-Glass/blob/9d05e129cc2b85099cf0e3bf394a1fe398d0af24/HANDOVER.md)
 and numbered sections, not deleted acceptance evidence.
 

@@ -93,30 +93,38 @@ write approval.
 
 ## 4A.13 global reconciliation - 2026-11-11
 
-Status: in progress, audit/regression checkpoint; not completed or accepted.
-Baseline f68e40872e8f3657f6d203f372565c01531f4a68. This change set adds two test
-guards and indexed handover/task updates, without runtime migration or global/pane
-compatibility retirement. The core literal guard checks eight known calls and
-replacement-source/template contracts, not a complete effective caller inventory.
+Status: in progress. Audit/regression checkpoint delivered at
+a82e17146aae53a89710c054460f352415b7b45f, covered by successful Branch tests
+42952443028 attempt 1, job 130299650206; evidence publication
+80891f360bedc572cce753b5187f4fd27e581939. Detailed log review confirms all
+eight Node cases and all three Python inventory methods passed. Preparation's
+four detected negative controls remain distinct historical local evidence.
+The 136 pairs cover selected API identities, not 136 actual handler combinations.
 
-Executed: Node syntax, real-controller/bootstrap suite 8 passes, zero failures/
-skips, four detected negative controls and restored suite pass. The 136-pair
-matrix covers 17 selected API operation identities; it is not 136 handler or
-requirement acceptances. Actual End/Reset composition is one additional case.
-Python guard compilation passed; its three full-repository-dependent tests have
-not run locally. [460 preparation and limits](../handover/460-global-feedback-reconciliation.md).
+Template-loaded source census at 91dde45ccc305dfc69dfe8020260dd3670ac17a4 now
+covers all 21 fragments, 42 distinct deferred script includes and the eight-part
+Admin expansion. This is source classification, not a new runtime/full-page test
+or proof that every late installer succeeds. The repository inventory and loading/
+delegation findings are in [460](../handover/460-global-feedback-reconciliation.md#checkpoint-ci-and-template-loaded-source-inventory---2026-11-11).
 
-Remaining: deliver the exact approved checkpoint with normal CI and review its
-covering results; finish all loaded/injected/global/direct-writer caller mapping,
-classify local/alert and later pane/Deliverable 2 dependencies, extend actual-handler
-composition/combined coverage and migrate any remaining applicable global paths.
-Retire global compatibility only when inventory and tests justify it; retain pane
-compatibility until its migrations finish. The current global-compatibility test
-is a deliberate baseline, not a permanent retirement veto. Complete evidence,
-necessary corrections and explicit bounded acceptance are required before closure.
-No prior green run covers these new tests; no new SHA or CI pass is invented.
-4A.1-4A.12 remain closed; both deliverables and phase 009.7 stay open. No scope,
-owner/deadline/priority/order change, workflow dispatch, merge or deployment.
+Remaining before closure:
+- Resolve statistics-open failure and bundle-import success alerts as narrow
+  global migration candidates, or record an explicitly agreed exclusion. Preserve
+  import recovery guidance, operation/target/scope ownership and mutation semantics.
+- Exercise full-page/late request, bulk-action and renderer wrapper composition;
+  monitor unintended legacy.global traffic and extend actual producer combinations,
+  scope transitions, no-replay and draft-preservation coverage.
+- Confirm no applicable global path remains, then deliberately retire global
+  compatibility and update its current baseline test. Keep pane compatibility for
+  its identified pending consumers and retain later local/Deliverable 2 work.
+- Review and approve exact code/test/docs delivery, normal covering CI for the
+  actual runtime change and any corrections, then obtain bounded acceptance.
+
+No runtime or compatibility retirement is made by this inventory/evidence update.
+It changes documentation only with [skip ci]; no new tests run, workflows change
+or dispatch occurs. CI for the existing checkpoint does not validate future code.
+4A.1-4A.12 remain closed; both feedback deliverables and phase 009.7 remain open.
+No scope, owner/deadline/priority/order change, merge or deployment.
 
 ## Closed-unit anchors
 
