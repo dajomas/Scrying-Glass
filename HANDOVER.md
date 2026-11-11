@@ -52,6 +52,7 @@ This is the index; substantive handover lives in numbered docs/handover sections
 44. [Viewer font adjustment feedback](docs/handover/430-viewer-font-feedback.md)
 45. [Battle-action feedback: 4A.11 bounded close-out](docs/handover/440-battle-action-global-feedback.md)
 46. [Join reporting: 4A.12 bounded close-out](docs/handover/450-join-reporting.md)
+47. [Global feedback reconciliation: 4A.13 audit guards](docs/handover/460-global-feedback-reconciliation.md)
 
 ## Current state - 2026-11-11
 
@@ -67,10 +68,14 @@ results were reconciled after the user's 2026-11-11 close-out request; no blocki
 failure was found in reviewed evidence. Bounded acceptance closes 4A.12 only.
 [450 evidence and limits](docs/handover/450-join-reporting.md#4a12-bounded-close-out---2026-11-11);
 [task plan](docs/todo/097-feedback-delivery-plan.md).
-This documentation-only close-out uses [skip ci], executes no new tests and
-changes/dispatches no workflow; no new run outcome is inferred from that marker.
-4A.13, both feedback deliverables and wider 009.7 gates remain open; no new human
-visual, screen-reader, authenticated live-server or exhaustive accessibility pass.
+4A.13 is in progress: this change set adds bounded literal-core/override guards and
+production-bootstrap isolation tests, not runtime migration or compatibility
+retirement. Focused Node suite passed 8/8 with four detected negative controls;
+repository-dependent Python execution, covering CI and complete caller inventory
+remain pending. [460 scope/evidence/limits](docs/handover/460-global-feedback-reconciliation.md).
+This test/docs checkpoint uses normal CI; no workflow change or dispatch.
+Both feedback deliverables and wider 009.7 gates remain open; no new human visual,
+screen-reader, authenticated live-server or exhaustive accessibility pass.
 016/017 and SG-TODO-019 remain proposed, agreed order unchanged. No merge/deployment.
 Longer index history is preserved in the [pre-checkpoint index](https://github.com/dajomas/Scrying-Glass/blob/9d05e129cc2b85099cf0e3bf394a1fe398d0af24/HANDOVER.md)
 and numbered sections, not deleted acceptance evidence.

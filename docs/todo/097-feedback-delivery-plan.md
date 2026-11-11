@@ -8,8 +8,8 @@
 All original policy, seven-step criteria, implementation/run/publication and
 acceptance identities, 009.6 safeguards and history remain authoritative in the
 [preserved full plan](https://github.com/dajomas/Scrying-Glass/blob/9d05e129cc2b85099cf0e3bf394a1fe398d0af24/docs/todo/097-feedback-delivery-plan.md)
-and numbered handovers. 4A.12 closes after reviewed covering evidence and the
-user's bounded close-out request. 4A.13 remains proposed; wider gates stay open.
+and numbered handovers. 4A.12 is closed after reviewed covering evidence and the
+user's bounded close-out request. 4A.13 is in progress; wider gates stay open.
 Priority, owner, deadline, SG-TODO-019 and delivery order are unchanged.
 No unrelated unfinished task is closed.
 
@@ -52,8 +52,8 @@ accepted the bounded unit on the stated evidence; wider validation gates remain
 explicit and open rather than falsely recorded as passed. Its documentation-only
 close-out used [skip ci], with no application/test/pin/workflow change or new
 validation run/dispatch. README and TODO root remain accurate and unchanged.
-4A.12 close-out follows below; 4A.13 reconciliation remains proposed under
-preserved criteria; compatibility retires only after the respective callers migrate.
+4A.12 close-out follows below; 4A.13 reconciliation is tracked separately below
+under preserved criteria; compatibility retires only after relevant callers migrate.
 Neither feedback deliverable nor 009.7 closes. No merge/deployment or blanket
 future write approval.
 
@@ -85,11 +85,38 @@ preserves the then-pending status and criteria.
 No new authenticated live-server, human visual/manual workflow, screen-reader or
 exhaustive accessibility acceptance is claimed. Focused controller-adapter/mocked
 checks and browser/server fixtures are not universal end-to-end coverage of every
-Join path. This documentation-only close-out uses [skip ci], executes no new tests
-and changes/dispatches no workflow; it does not infer a new run outcome. README
+Join path. Its documentation-only close-out used [skip ci], executed no new tests
+and changed/dispatched no workflow; it did not infer a new run outcome. README
 and TODO root remain accurate and unchanged. 4A.13, both feedback deliverables and
 009.7 remain open under preserved criteria. No merge/deployment or future blanket
 write approval.
+
+## 4A.13 global reconciliation - 2026-11-11
+
+Status: in progress, audit/regression checkpoint; not completed or accepted.
+Baseline f68e40872e8f3657f6d203f372565c01531f4a68. This change set adds two test
+guards and indexed handover/task updates, without runtime migration or global/pane
+compatibility retirement. The core literal guard checks eight known calls and
+replacement-source/template contracts, not a complete effective caller inventory.
+
+Executed: Node syntax, real-controller/bootstrap suite 8 passes, zero failures/
+skips, four detected negative controls and restored suite pass. The 136-pair
+matrix covers 17 selected API operation identities; it is not 136 handler or
+requirement acceptances. Actual End/Reset composition is one additional case.
+Python guard compilation passed; its three full-repository-dependent tests have
+not run locally. [460 preparation and limits](../handover/460-global-feedback-reconciliation.md).
+
+Remaining: deliver the exact approved checkpoint with normal CI and review its
+covering results; finish all loaded/injected/global/direct-writer caller mapping,
+classify local/alert and later pane/Deliverable 2 dependencies, extend actual-handler
+composition/combined coverage and migrate any remaining applicable global paths.
+Retire global compatibility only when inventory and tests justify it; retain pane
+compatibility until its migrations finish. The current global-compatibility test
+is a deliberate baseline, not a permanent retirement veto. Complete evidence,
+necessary corrections and explicit bounded acceptance are required before closure.
+No prior green run covers these new tests; no new SHA or CI pass is invented.
+4A.1-4A.12 remain closed; both deliverables and phase 009.7 stay open. No scope,
+owner/deadline/priority/order change, workflow dispatch, merge or deployment.
 
 ## Closed-unit anchors
 
