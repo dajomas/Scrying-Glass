@@ -1,0 +1,27 @@
+:28:31.8945253Z     ...<2 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:31.8945427Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:31.8945875Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:31.8946585Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:31.8946825Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:31.8947614Z playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:31.8948599Z ╔════════════════════════════════════════════════════════════╗
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:31.8949028Z ║ Looks like Playwright was just installed or updated.       ║
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:31.8949448Z ║ Please run the following command to download new browsers: ║
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:31.8949817Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:31.8950166Z ║     playwright install                                     ║
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:31.8950719Z ║                                                            ║
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:31.8951085Z ║ <3 Playwright Team                                         ║
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:31.8951516Z ╚════════════════════════════════════════════════════════════╝
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:31.9505112Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:31.9505631Z ##[group]tests/audit_connection_lifetime.py
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:36.8789852Z /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/case.py:664: RuntimeWarning: coroutine 'IsolatedAsyncioTestCase.asyncSetUp' was never awaited
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:36.8790698Z   with outcome.testPartExecutor(self):
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:36.8791108Z RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:36.8799029Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:36.8808892Z   File "/tmp/scrying-tests-9bej8ey0/repo/tests/audit_connection_lifetime.py", line 69, in <module>
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:36.8809629Z     raise SystemExit(main())
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:36.8809921Z                      ~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:36.8810674Z   File "/tmp/scrying-tests-9bej8ey0/repo/tests/audit_connection_lifetime.py", line 55, in main
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:36.8811401Z     result = unittest.TextTestRunner(verbosity=0).run(suite)
+tests	Standalone Python browser and audit checks	2026-11-11T15:28:36.8812426Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/runner.py", line 257, in run
+tests	Standalone Python browser and audit checks	2026-11-1

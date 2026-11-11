@@ -1,0 +1,47 @@
+104737Z ##[endgroup]
+tests	JavaScript tests	2026-11-11T15:28:18.0105147Z ##[group]tests/admin-start-validation.test.cjs
+tests	JavaScript tests	2026-11-11T15:28:18.2246379Z TAP version 13
+tests	JavaScript tests	2026-11-11T15:28:18.2681763Z # Subtest: asset loads once after core and the 4A.2 override
+tests	JavaScript tests	2026-11-11T15:28:18.2685567Z ok 1 - asset loads once after core and the 4A.2 override
+tests	JavaScript tests	2026-11-11T15:28:18.2685985Z   ---
+tests	JavaScript tests	2026-11-11T15:28:18.2701094Z   duration_ms: 1.927614
+tests	JavaScript tests	2026-11-11T15:28:18.2701672Z   type: 'test'
+tests	JavaScript tests	2026-11-11T15:28:18.2701972Z   ...
+tests	JavaScript tests	2026-11-11T15:28:18.2702564Z # Subtest: empty eligibility rejection is persistent and makes no Start call
+tests	JavaScript tests	2026-11-11T15:28:18.2703354Z ok 2 - empty eligibility rejection is persistent and makes no Start call
+tests	JavaScript tests	2026-11-11T15:28:18.2703868Z   ---
+tests	JavaScript tests	2026-11-11T15:28:18.2704141Z   duration_ms: 1.441211
+tests	JavaScript tests	2026-11-11T15:28:18.2704443Z   type: 'test'
+tests	JavaScript tests	2026-11-11T15:28:18.2704697Z   ...
+tests	JavaScript tests	2026-11-11T15:28:18.2705304Z # Subtest: eligible retry resolves only eligibility, preserving request and refresh errors
+tests	JavaScript tests	2026-11-11T15:28:18.2706303Z ok 3 - eligible retry resolves only eligibility, preserving request and refresh errors
+tests	JavaScript tests	2026-11-11T15:28:18.2706854Z   ---
+tests	JavaScript tests	2026-11-11T15:28:18.2707108Z   duration_ms: 0.951864
+tests	JavaScript tests	2026-11-11T15:28:18.2707407Z   type: 'test'
+tests	JavaScript tests	2026-11-11T15:28:18.2708100Z   ...
+tests	JavaScript tests	2026-11-11T15:28:18.2708582Z # Subtest: active lair permits empty order, inactive lair does not
+tests	JavaScript tests	2026-11-11T15:28:18.2709262Z ok 4 - active lair permits empty order, inactive lair does not
+tests	JavaScript tests	2026-11-11T15:28:18.2709702Z   ---
+tests	JavaScript tests	2026-11-11T15:28:18.2709962Z   duration_ms: 0.774707
+tests	JavaScript tests	2026-11-11T15:28:18.2723191Z   type: 'test'
+tests	JavaScript tests	2026-11-11T15:28:18.2723553Z   ...
+tests	JavaScript tests	2026-11-11T15:28:18.2724156Z # Subtest: dead/inactive participants do not bypass the existing eligibility gate
+tests	JavaScript tests	2026-11-11T15:28:18.2725029Z ok 5 - dead/inactive participants do not bypass the existing eligibility gate
+tests	JavaScript tests	2026-11-11T15:28:18.2725548Z   ---
+tests	JavaScript tests	2026-11-11T15:28:18.2725815Z   duration_ms: 0.654095
+tests	JavaScript tests	2026-11-11T15:28:18.2726134Z   type: 'test'
+tests	JavaScript tests	2026-11-11T15:28:18.2726397Z   ...
+tests	JavaScript tests	2026-11-11T15:28:18.2726947Z # Subtest: opening and cancelling ties preserve their error and selections
+tests	JavaScript tests	2026-11-11T15:28:18.2727711Z ok 6 - opening and cancelling ties preserve their error and selections
+tests	JavaScript tests	2026-11-11T15:28:18.2728183Z   ---
+tests	JavaScript tests	2026-11-11T15:28:18.2728460Z   duration_ms: 0.828268
+tests	JavaScript tests	2026-11-11T15:28:18.2728769Z   type: 'test'
+tests	JavaScript tests	2026-11-11T15:28:18.2729035Z   ...
+tests	JavaScript tests	2026-11-11T15:28:18.2729650Z # Subtest: duplicate tie positions retain modal and emit one persistent validation error
+tests	JavaScript tests	2026-11-11T15:28:18.2736690Z ok 7 - duplicate tie positions retain modal and emit one persistent validation error
+tests	JavaScript tests	2026-11-11T15:28:18.2737109Z   ---
+tests	JavaScript tests	2026-11-11T15:28:18.2737302Z   duration_ms: 0.919385
+tests	JavaScript tests	2026-11-11T15:28:18.2737508Z   type: 'test'
+tests	JavaScript tests	2026-11-11T15:28:18.2737693Z   ...
+tests	JavaScript tests	2026-11-11T15:28:18.2737995Z # Subtest: incomplete tie controls retain the original rejection
+tests	JavaScript tests	2026-11-11T15:28:18.2738398Z ok 8 - incomplete tie controls retain the origi
