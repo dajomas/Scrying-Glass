@@ -1,0 +1,47 @@
+11-11T06:06:47.2763899Z # Subtest: one success expires at five seconds without erasing another operation error
+tests	JavaScript tests	2026-11-11T06:06:47.2765655Z ok 3 - one success expires at five seconds without erasing another operation error
+tests	JavaScript tests	2026-11-11T06:06:47.2766105Z   ---
+tests	JavaScript tests	2026-11-11T06:06:47.2766337Z   duration_ms: 0.467136
+tests	JavaScript tests	2026-11-11T06:06:47.2766567Z   type: 'test'
+tests	JavaScript tests	2026-11-11T06:06:47.2766771Z   ...
+tests	JavaScript tests	2026-11-11T06:06:47.2767159Z # Subtest: superseded tickets cannot overwrite or clear current failures
+tests	JavaScript tests	2026-11-11T06:06:47.2767791Z ok 4 - superseded tickets cannot overwrite or clear current failures
+tests	JavaScript tests	2026-11-11T06:06:47.2768153Z   ---
+tests	JavaScript tests	2026-11-11T06:06:47.2768363Z   duration_ms: 0.406274
+tests	JavaScript tests	2026-11-11T06:06:47.2768595Z   type: 'test'
+tests	JavaScript tests	2026-11-11T06:06:47.2768786Z   ...
+tests	JavaScript tests	2026-11-11T06:06:47.2783051Z # Subtest: away-and-back scope transitions cannot revive an old operation ticket
+tests	JavaScript tests	2026-11-11T06:06:47.2792842Z ok 5 - away-and-back scope transitions cannot revive an old operation ticket
+tests	JavaScript tests	2026-11-11T06:06:47.2793229Z   ---
+tests	JavaScript tests	2026-11-11T06:06:47.2793470Z   duration_ms: 0.418072
+tests	JavaScript tests	2026-11-11T06:06:47.2793730Z   type: 'test'
+tests	JavaScript tests	2026-11-11T06:06:47.2794034Z   ...
+tests	JavaScript tests	2026-11-11T06:06:47.2794491Z # Subtest: retained pane compatibility cannot clear explicit pane or global errors
+tests	JavaScript tests	2026-11-11T06:06:47.2794977Z ok 6 - retained pane compatibility cannot clear explicit pane or global errors
+tests	JavaScript tests	2026-11-11T06:06:47.2795306Z   ---
+tests	JavaScript tests	2026-11-11T06:06:47.2795529Z   duration_ms: 0.519475
+tests	JavaScript tests	2026-11-11T06:06:47.2795786Z   type: 'test'
+tests	JavaScript tests	2026-11-11T06:06:47.2796008Z   ...
+tests	JavaScript tests	2026-11-11T06:06:47.2796403Z # Subtest: untyped global publish and clear reject without changing explicit feedback
+tests	JavaScript tests	2026-11-11T06:06:47.2796899Z not ok 7 - untyped global publish and clear reject without changing explicit feedback
+tests	JavaScript tests	2026-11-11T06:06:47.2797239Z   ---
+tests	JavaScript tests	2026-11-11T06:06:47.2797459Z   duration_ms: 1.976086
+tests	JavaScript tests	2026-11-11T06:06:47.2797702Z   type: 'test'
+tests	JavaScript tests	2026-11-11T06:06:47.2798110Z   location: '/tmp/scrying-tests-z_cvk28c/repo/tests/admin-global-feedback-reconciliation.test.cjs:73:1'
+tests	JavaScript tests	2026-11-11T06:06:47.2798534Z   failureType: 'testCodeFailure'
+tests	JavaScript tests	2026-11-11T06:06:47.2798818Z   error: |-
+tests	JavaScript tests	2026-11-11T06:06:47.2799159Z     Expected values to be strictly equal:
+tests	JavaScript tests	2026-11-11T06:06:47.2799545Z     + actual - expected
+tests	JavaScript tests	2026-11-11T06:06:47.2799793Z     
+tests	JavaScript tests	2026-11-11T06:06:47.2800016Z     + 'sg-feedback-9'
+tests	JavaScript tests	2026-11-11T06:06:47.2800247Z     - true
+tests	JavaScript tests	2026-11-11T06:06:47.2800465Z     
+tests	JavaScript tests	2026-11-11T06:06:47.2800684Z   code: 'ERR_ASSERTION'
+tests	JavaScript tests	2026-11-11T06:06:47.2801274Z   name: 'AssertionError'
+tests	JavaScript tests	2026-11-11T06:06:47.2801604Z   expected: true
+tests	JavaScript tests	2026-11-11T06:06:47.2801894Z   actual: 'sg-feedback-9'
+tests	JavaScript tests	2026-11-11T06:06:47.2802225Z   operator: 'strictEqual'
+tests	JavaScript tests	2026-11-11T06:06:47.2802671Z   stack: |-
+tests	JavaScript tests	2026-11-11T06:06:47.2803336Z     TestContext.<anonymous> (/tmp/scrying-tests-z_cvk28c/repo/tests/admin-global-feedback-reconciliation.test.cjs:81:12)
+tests	JavaScript tests	2026-11-11T06:06:47.2804092Z     Test.runInAsyncScope (node:async_hooks:214:14)
+tests	JavaScript tests	

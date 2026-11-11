@@ -1,0 +1,29 @@
+cks	2026-11-11T06:09:15.7771214Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7771581Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7771902Z     return await func()
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7772045Z            ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7772531Z playwright._impl._errors.Error: Page.evaluate: Error: Global feedback requires an explicit ticket and severity
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7773159Z     at Object.deliver (http://fixture.test/static/admin-feedback-admin.js?v=1:62:40)
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7773565Z     at message (http://fixture.test/static/admin.js:240:33)
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7773812Z     at eval (eval at evaluate (:370:30), <anonymous>:1:1)
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7774007Z     at eval (<anonymous>)
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7774331Z     at UtilityScript.evaluate (<anonymous>:370:30)
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7774557Z     at UtilityScript.<anonymous> (<anonymous>:1:44)
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7774688Z 
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7774804Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7775357Z ERROR: test_header_scrolling_feedback_and_pane_preferences (test_admin_header_hierarchy.HeaderHierarchyBrowserTests.test_header_scrolling_feedback_and_pane_preferences) (width=768)
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7775865Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7776103Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7776505Z   File "/tmp/scrying-tests-0sqs0m3n/repo/tests/test_admin_header_hierarchy.py", line 133, in test_header_scrolling_feedback_and_pane_preferences
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7776950Z     page.evaluate("message('Visible feedback: ' + 'encounter-data-'.repeat(8))")
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7777238Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7777640Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 16876, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7777975Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7778105Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7778327Z         self._impl_obj.evaluate(expression=expression, arg=mapping.to_impl(arg))
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7778596Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7778869Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7778982Z     ^
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7779298Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7779616Z     return task.result()
+tests	Standalone Pyth

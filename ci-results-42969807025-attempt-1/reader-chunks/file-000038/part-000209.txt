@@ -1,0 +1,30 @@
+s
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7763315Z     page.evaluate("message('Visible feedback: ' + 'encounter-data-'.repeat(8))")
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7763612Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7764029Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 16876, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7764382Z     self._sync(
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7764512Z     ~~~~~~~~~~^
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7764737Z         self._impl_obj.evaluate(expression=expression, arg=mapping.to_impl(arg))
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7765012Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7765203Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7765321Z     ^
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7765854Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7766183Z     return task.result()
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7766339Z            ~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7766677Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/page.py", line 894, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7767088Z     return await self._main_frame.evaluate(expression=expression, arg=arg)
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7767355Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7767734Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/frame.py", line 380, in evaluate
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7768099Z     result = await self._channel.evaluateExpression(
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7768317Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7768490Z     ...<5 lines>...
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7768616Z     )
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7768728Z     ^
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7769062Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 398, in _mapped
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7769411Z     return mapper(await awaitable)
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7769585Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7769978Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7770300Z     raise e from None
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7770642Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7771006Z     result = await zone.run_async(lambda: awaitable)
+tests	Standalone Python browser and audit che

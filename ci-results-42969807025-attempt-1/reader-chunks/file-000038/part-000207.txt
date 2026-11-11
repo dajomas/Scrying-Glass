@@ -1,0 +1,22 @@
+n <lambda>
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:27.5145833Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:27.5146044Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:27.5146352Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:27.5146647Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:27.5146835Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:27.5147139Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:27.5147441Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:27.5147647Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:27.5147974Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:27.5148368Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:27.5148582Z python.scrying_glass_monster_selection.ProviderError: secret
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:50.4340659Z Executing <Task pending name='Task-42438' coro=<MonsterRefreshEndToEndTests.open_page.<locals>.route() running at /tmp/scrying-tests-0sqs0m3n/repo/tests/test_monster_refresh_end_to_end.py:109> wait_for=<Future pending cb=[Task.task_wakeup()] created at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py:460> cb=[gather.<locals>._done_callback() at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/tasks.py:829] created at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/tasks.py:746> took 0.117 seconds
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:54.6811959Z Executing <Task pending name='Task-44144' coro=<Page._on_route() running at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/page.py:348> wait_for=<_GatheringFuture pending cb=[Task.task_wakeup()] created at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/tasks.py:763> cb=[EventEmitter._call_handler.<locals>.on_done() at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/playwright/_impl/event_emitter.py:100] created at /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/tasks.py:746> took 0.113 seconds
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0594628Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0594981Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0595739Z   File "/tmp/scrying-tests-0sqs0m3n/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0596138Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0596523Z   File "/tmp/scrying-tests-0sqs0m3n/repo/python/scrying_glass_monster_refresh_sources.py", line 72, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0597475Z ##[error]    raise ValueError('Provider disabled')
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0598360Z ValueError: Provider disabled
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0602832Z Selected monster source refresh failed

@@ -1,0 +1,21 @@
+t_fivetools_requires_exact_book_edition_identity) ... Selected monster source refresh failed for m
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.2990999Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.2991642Z   File "/tmp/scrying-tests-8g82bfq1/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.2992517Z     candidate = _fetch_exact(context, monster, identity)
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.2993226Z   File "/tmp/scrying-tests-8g82bfq1/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.2994161Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.2995106Z ValueError: Retained source missing or ambiguous
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.2995386Z ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.2996514Z test_identityless_single_result_resolves_signed_identity_without_mutation (test_monster_refresh_sources.MonsterRefreshSourceTests.test_identityless_single_result_resolves_signed_identity_without_mutation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.2998616Z test_invalid_retained_identity_and_conflicting_signed_choice_never_search (test_monster_refresh_sources.MonsterRefreshSourceTests.test_invalid_retained_identity_and_conflicting_signed_choice_never_search) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.3000844Z test_invalid_signed_choice_does_not_fetch_and_other_rows_are_preserved (test_monster_refresh_sources.MonsterRefreshSourceTests.test_invalid_signed_choice_does_not_fetch_and_other_rows_are_preserved) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.3002545Z test_missing_and_invalid_fields_are_independent_and_do_not_default_bonus (test_monster_refresh_sources.MonsterRefreshSourceTests.test_missing_and_invalid_fields_are_independent_and_do_not_default_bonus) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.3006279Z test_multiple_zero_and_failed_lookup_never_fetch_or_offer_partial_results (test_monster_refresh_sources.MonsterRefreshSourceTests.test_multiple_zero_and_failed_lookup_never_fetch_or_offer_partial_results) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.3009420Z test_retained_dnd_url_is_fetched_without_search_or_fallback_or_mutation (test_monster_refresh_sources.MonsterRefreshSourceTests.test_retained_dnd_url_is_fetched_without_search_or_fallback_or_mutation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.3017630Z test_retained_failure_never_uses_alternate_candidate (test_monster_refresh_sources.MonsterRefreshSourceTests.test_retained_failure_never_uses_alternate_candidate) ... Selected monster source refresh failed for m
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.3018871Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.3019712Z   File "/tmp/scrying-tests-8g82bfq1/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.3020355Z     candidate = _fetch_exact(context, monster, identity)
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.3020993Z   File "/tmp/scrying-tests-8g82bfq1/repo/python/scrying_glass_monster_refresh_sources.py", line 73, in _fetch_exact
+tests	Python test suite (including browser fixtures)	2026-11-11T06:06:25.3021634Z     html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+te

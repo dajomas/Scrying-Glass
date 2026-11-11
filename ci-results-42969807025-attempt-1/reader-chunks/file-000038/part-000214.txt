@@ -1,0 +1,32 @@
+ter integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:16.9024585Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:16.9024971Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:19.1648094Z {
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:19.1648420Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:19.1648704Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:19.1648979Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:19.1649311Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:19.1649642Z     "client card has a positive layout width at mobile viewport"
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:19.1649886Z   ],
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:19.1650019Z   "page_errors": [],
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:19.1650216Z   "transport": "mocked HTTP/WS, real Chromium rendering"
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:19.1650403Z }
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:19.2511071Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:19.2511514Z ##[group]tests/feedback_browser_fixture.py
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:19.4345073Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:19.4345415Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:19.6264653Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:19.6271898Z ##[error]Process completed with exit code 1.
+tests	Post Run actions/checkout@v4	﻿2026-11-11T06:09:19.6341263Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-11T06:09:19.6938283Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-11T06:09:19.6974400Z git version 2.56.0
+tests	Post Run actions/checkout@v4	2026-11-11T06:09:19.6998089Z Temporarily overriding HOME='/home/runner/work/_temp/1f27c2a9-7d43-40ba-971f-85741523acbc' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-11T06:09:19.6998924Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-11T06:09:19.7001638Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-11T06:09:19.7035589Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-11T06:09:19.7065153Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-11T06:09:19.7335793Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-11T06:09:19.7361784Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-11T06:09:19.7371719Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-11T06:09:19.7407613Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Post Run actions/checkout@v4	2026-11-11T06:09:19.7654867Z [

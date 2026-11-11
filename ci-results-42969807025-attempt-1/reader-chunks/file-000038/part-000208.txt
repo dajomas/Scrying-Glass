@@ -1,0 +1,27 @@
+ for m
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0603187Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0603569Z   File "/tmp/scrying-tests-0sqs0m3n/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0604029Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0604554Z   File "/tmp/scrying-tests-0sqs0m3n/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0605096Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0605679Z ValueError: Retained source missing or ambiguous
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0635225Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0635558Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0635936Z   File "/tmp/scrying-tests-0sqs0m3n/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0636315Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0636694Z   File "/tmp/scrying-tests-0sqs0m3n/repo/python/scrying_glass_monster_refresh_sources.py", line 73, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0637070Z     html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0637443Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0637743Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0637949Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0638259Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0638570Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0638782Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0639119Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0639413Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-11T06:08:59.0639747Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7759954Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7760991Z ERROR: test_header_scrolling_feedback_and_pane_preferences (test_admin_header_hierarchy.HeaderHierarchyBrowserTests.test_header_scrolling_feedback_and_pane_preferences) (width=1440)
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7761523Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7761903Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T06:09:15.7762683Z   File "/tmp/scrying-tests-0sqs0m3n/repo/tests/test_admin_header_hierarchy.py", line 133, in test_header_scrolling_feedback_and_pane_preference
