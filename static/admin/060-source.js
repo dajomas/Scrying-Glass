@@ -8,78 +8,123 @@ async function applyBackground(background) {
     await load();
 }
 
+const entryFormPending = new WeakSet();
+async function submitEntryForm(form, region, operation, prepare) {
+    if (entryFormPending.has(form)) return;
+    entryFormPending.add(form);
+    const feedback = window.scryingAdminFeedback;
+    const spec = {region, operation, target: form.id, label: 'Create or import combatants'};
+    let controls = [], disabled = [];
+    try {
+        const validation = feedback.begin({...spec, operation: operation + '.validation'});
+        if (!form.reportValidity()) {
+            feedback.publish(validation, {severity: 'error', text: 'Review the required fields and valid values before submitting.'});
+            return;
+        }
+        let prepared;
+        try { prepared = prepare(); }
+        catch (error) {
+            feedback.publish(validation, {severity: 'error', text: error.message});
+            return;
+        }
+        if (prepared.error) {
+            feedback.publish(validation, {severity: 'error', text: prepared.error});
+            prepared.focus?.focus();
+            return;
+        }
+        feedback.resolve(validation);
+        const ticket = feedback.begin(spec);
+        const refresh = feedback.begin({...spec, operation: operation + '.refresh'});
+        controls = [...form.querySelectorAll('input, select, textarea, button')];
+        disabled = controls.map(control => control.disabled);
+        controls.forEach(control => { control.disabled = true; });
+        let result;
+        try { result = await prepared.send(); }
+        catch (error) {
+            feedback.publish(ticket, {severity: 'error', text: error instanceof Error
+                ? error.message : 'Unable to create or import combatants.'});
+            return;
+        }
+        if (!feedback.isCurrent(refresh)) return;
+        feedback.publish(ticket, {severity: 'success', text: prepared.success(result)});
+        try {
+            form.reset();
+            await load(true);
+            feedback.resolve(refresh);
+        } catch {
+            feedback.publish(refresh, {severity: 'error', text:
+                'Changes saved, but updating the view failed. Reload the page; do not repeat the submission.'});
+        }
+    } finally {
+        controls.forEach((control, index) => { control.disabled = disabled[index]; });
+        entryFormPending.delete(form);
+    }
+}
+
+document.querySelector('#characterForm').onsubmit = async event => {
+    event.preventDefault();
+    const form = event.currentTarget || event.target;
+    return submitEntryForm(form, 'characters', 'character.create', () => {
+        const payload = new FormData(form);
+        const data = {
+            name: payload.get('name'), color: payload.get('color'), hp: +payload.get('hp'),
+            initiative: payload.get('initiative') === '' ? null : +payload.get('initiative'),
+        };
+        return {
+            send: () => request('/api/characters', {method: 'POST',
+                headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)}),
+            success: () => `Character “${payload.get('name')}” added to the active campaign.`,
+        };
+    });
+};
+
 document.querySelector('#monsterForm').onsubmit = async event => {
     event.preventDefault();
+    const form = event.currentTarget || event.target;
+    return submitEntryForm(form, 'monsters', 'monster.create', () => {
+        const payload = new FormData(form);
+        const start = String(payload.get('hprangestart') ?? '').trim();
+        const end = String(payload.get('hprangeend') ?? '').trim();
+        const error = validateMonsterHpRange(start, end);
+        if (error) {
+            const invalidStart = !start || (!isDiceHpExpression(start) && parseNonNegativeInteger(start) === null);
+            return {error, focus: invalidStart ? form.elements.hprangestart : form.elements.hprangeend};
+        }
+        payload.set('hprangestart', start);
+        payload.set('hprangeend', end);
+        const name = String(payload.get('name') ?? '').trim();
+        return {
+            send: () => request('/api/monsters', {method: 'POST', body: payload}),
+            success: result => {
+                const count = Array.isArray(result) ? result.length : 0;
+                return count === 1 ? `Monster ${name} added to the battle setup.`
+                    : `${count} monsters added to the battle setup.`;
+            },
+        };
+    });
+};
 
-    const form = event.target;
-    const formData = new FormData(form);
-
-    const hpRangeStart = String(
-        formData.get('hprangestart') ?? ''
-    ).trim();
-
-    const hpRangeEnd = String(
-        formData.get('hprangeend') ?? ''
-    ).trim();
-
-    const hpValidationError = validateMonsterHpRange(
-        hpRangeStart,
-        hpRangeEnd,
-    );
-
-    if (hpValidationError) {
-        paneNotification('monsters', hpValidationError);
-
-        const startIsInvalid =
-            !hpRangeStart ||
-            (
-                !isDiceHpExpression(hpRangeStart) &&
-                parseNonNegativeInteger(hpRangeStart) === null
-            );
-
-        (
-            startIsInvalid
-                ? form.elements.hprangestart
-                : form.elements.hprangeend
-        )?.focus();
-
-        return;
-    }
-
-    // Submit normalized strings. In particular, retain a valid dice expression
-    // such as "3d8+9" rather than converting it into Number/NaN.
-    formData.set('hprangestart', hpRangeStart);
-    formData.set('hprangeend', hpRangeEnd);
-
-    const name = String(formData.get('name') ?? '').trim();
-
-    try {
-        const created = await request('/api/monsters', {
-            method: 'POST',
-            body: formData,
-        });
-
-        const count = Array.isArray(created) ? created.length : 0;
-
-        form.reset();
-
-        // Reload the authoritative state and redraw #monsters immediately.
-        await load();
-
-        paneNotification(
-            'monsters',
-            count === 1
-                ? `Monster ${name} added to the battle setup.`
-                : `${count} monsters added to the battle setup.`,
-        );
-    } catch (error) {
-        paneNotification(
-            'monsters',
-            error instanceof Error
-                ? error.message
-                : 'Unable to add monster.',
-        );
-    }
+document.querySelector('#monsterUpload').onsubmit = async event => {
+    event.preventDefault();
+    const form = event.currentTarget || event.target;
+    return submitEntryForm(form, 'battleSetup', 'monster.import.file', () => {
+        const payload = new FormData(form);
+        const file = payload.get('monster_file');
+        const fileName = file instanceof File && file.name ? file.name : 'the uploaded file';
+        const text = String(payload.get('quantity') ?? '1').trim();
+        const quantity = Number(text);
+        if (!/^\d+$/.test(text) || !Number.isInteger(quantity) || quantity < 1 || quantity > 50) {
+            return {error: 'Quantity must be a whole number between 1 and 50.'};
+        }
+        return {
+            send: () => request('/api/monsters/import', {method: 'POST', body: payload}),
+            success: result => {
+                const count = Array.isArray(result) ? result.length : quantity;
+                return count === 1 ? `Monster imported from “${fileName}”.`
+                    : `${count} monsters imported from “${fileName}”.`;
+            },
+        };
+    });
 };
 
 document.querySelector('#monsterSpecies').addEventListener(
@@ -107,137 +152,6 @@ document.querySelector('#monsterSpecies').addEventListener(
         );
     },
 );
-
-document.querySelector('#monsterUpload').onsubmit = async event => {
-    event.preventDefault();
-
-    const form = event.currentTarget;
-    const payload = new FormData(form);
-
-    const uploadedFile = payload.get('monster_file');
-    const fileName = (
-        uploadedFile instanceof File && uploadedFile.name
-    )
-        ? uploadedFile.name
-        : 'the uploaded file';
-
-    const quantityText = String(payload.get('quantity') ?? '1').trim();
-    const requestedQuantity = Number(quantityText);
-
-    if (
-        !/^\d+$/.test(quantityText) ||
-        !Number.isInteger(requestedQuantity) ||
-        requestedQuantity < 1 ||
-        requestedQuantity > 50
-    ) {
-        paneNotification(
-            'battleSetup',
-            'Quantity must be a whole number between 1 and 50.',
-        );
-        return;
-    }
-
-    const submitButtons = Array.from(
-        form.querySelectorAll(
-            'button[type="submit"], button:not([type]), input[type="submit"]',
-        ),
-    );
-
-    const originalDisabledStates = submitButtons.map(
-        button => button.disabled,
-    );
-
-    submitButtons.forEach(button => {
-        button.disabled = true;
-    });
-
-    try {
-        let result;
-
-        try {
-            result = await request('/api/monsters/import', {
-                method: 'POST',
-                body: payload,
-            });
-        } catch (error) {
-            paneNotification(
-                'battleSetup',
-                error instanceof Error
-                    ? error.message
-                    : 'Unable to import monsters.',
-            );
-            return;
-        }
-
-        const importedCount = Array.isArray(result)
-            ? result.length
-            : requestedQuantity;
-
-        const successMessage = importedCount === 1
-            ? `Monster imported from “${fileName}”.`
-            : `${importedCount} monsters imported from “${fileName}”.`;
-
-        form.reset();
-
-        try {
-            await load();
-        } catch (error) {
-            console.error(
-                'Monster import succeeded, but refreshing the admin view failed:',
-                error,
-            );
-
-            paneNotification(
-                'battleSetup',
-                `${successMessage} The view could not be refreshed; ` +
-                'reload the page rather than importing again.',
-            );
-            return;
-        }
-
-        paneNotification(
-            'battleSetup',
-            successMessage,
-        );
-    } finally {
-        submitButtons.forEach((button, index) => {
-            button.disabled = originalDisabledStates[index];
-        });
-    }
-};
-
-document.querySelector('#characterForm').onsubmit = async event => {
-    event.preventDefault();
-
-    const formData = new FormData(event.target);
-
-    try {
-        await request('/api/characters', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: formData.get('name'),
-                color: formData.get('color'),
-                hp: +formData.get('hp'),
-                initiative: formData.get('initiative') === ''
-                    ? null
-                    : +formData.get('initiative'),
-            }),
-        });
-
-        paneNotification(
-            'characters',
-            `Character “${formData.get('name')}” added to the active campaign.`,
-        );
-
-        event.target.reset();
-        await load();
-    } catch (error) {
-        paneNotification('characters', error.message);
-    }
-};
 
 characterBulkAction.addEventListener('change', async () => {
     const action = characterBulkAction.value;

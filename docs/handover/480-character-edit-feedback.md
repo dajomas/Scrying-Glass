@@ -112,3 +112,49 @@ acceptance. README, HANDOVER and TODO indexes were reviewed/reused against live
 identities and remain unchanged; their links and open scopes remain accurate.
 Both deliverables, Stage 2 and 009.7 stay open. No new passing CI or commit identity
 is invented before delivery/verification. No merge or deployment.
+
+## Entry forms checkpoint preparation - 2026-11-11
+
+This next bounded Stage 2 checkpoint migrates character creation, monster creation
+and .monster import, not CSV/setup import or the whole stage. Prior composition
+correction 7e49938c8064b7c70526583a2d4bfac358150cce has verified successful covering
+run 43067755682 attempt 1; that evidence does not validate this later core change.
+
+The complete 060 fragment replaces the three existing handlers, without an extra
+asset or script-count change. Explicit per-form validation, request and refresh
+identities retain independent errors. Payload capture precedes disabled controls;
+character JSON values, monster FormData/dice strings/bonus fields and the native
+formdata token hook remain. Drafts/files survive request failures. Success precedes
+reset/refresh and expires after three seconds; update failure has a separate
+persistent no-replay error. Per-form busy guards last through refresh, and obsolete
+encounter completions cannot reset the form or initiate refresh. Already-sent
+mutations are not cancelled or replayed. The species listener, applyBackground and
+bulk/battle-action source outside the replaced handler blocks remain unchanged.
+
+060 is 13,674 UTF-8 bytes, SHA-256
+fc9fb3d3cc8dbf1e3524848cea75924bf1e3c2e532e622cb6bc82ba74388ec2b.
+Only its digest and the calculated bundle size, 119,233 bytes, change in the pin
+fixture. Other fragment identities/order, UTF-8/20,000-byte/tamper guards and the
+tracked admin.js failure marker are retained. No workflow/template/cache-version,
+candidate asset, accepted Join owner or server-rule changes.
+
+Twelve focused cases passed executing complete 060 with the exact production
+controller (blob c4a82d73b21f4657da651ce45f76003c3348a6ef), deterministic timers,
+mock DOM/transport/FormData and a scoped adapter. Three removed-guard controls
+(duplicate, stale and matching validation) caused assertion failures; restored
+suite passed 12/12. Complete-fragment Node syntax and pin-file compilation passed.
+Original 060 reconstruction matched blob 5ce48f8d0e82a0ce3eaa35b06037ea0c1a03c029.
+The earlier ten-case draft/mock-controller run is superseded for this payload,
+not an additional current case count. Native HP parsing is stubbed in these tests;
+real FormData events, candidate capture blocking, bootstrap/view and full Admin,
+reader/runner/tamper/browser/server/manual/accessibility checks were not executed.
+Existing CI discovers the new .cjs and retains the existing browser regressions;
+new-path native-browser acceptance and any fixture reconciliation remain open.
+
+Normal CI applies without a skip marker. Covering validation/corrections and
+bounded acceptance remain pending; equivalent successful local or hosted results
+count for their tested revision/scope, not future changes. README, root indexes
+and plan 097 were reviewed against known live identities and need no unrelated
+edits. CSV/setup import, remaining monster initiative/Edit/roll-all, select-dead,
+bulk Join pane success, final Stage 2 reconciliation and wider deliverables remain
+open. No merge/deployment or new CI/commit identity is invented.

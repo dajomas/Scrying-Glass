@@ -40,3 +40,27 @@ and revised Python fixture without workflow changes.
 Creation/import and all other unfinished Stage 2 producers, Stage 1, both feedback
 deliverables and 009.7 remain open. Accepted 4A.1-4A.13 scopes remain closed;
 pane compatibility and accepted Join reporting/server behavior remain unchanged.
+
+## Entry forms checkpoint - 2026-11-11
+
+Status: in progress; complete-fragment integration for character creation, monster
+creation and .monster import is prepared with twelve passing focused production-
+controller tests. Exact approval/delivery, covering repository validation and
+bounded acceptance remain pending. This is the next Stage 2 checkpoint, not a
+reimplementation or acceptance of character Edit. Composition correction 7e49938
+has verified successful run 43067755682 attempt 1; historical pending wording above
+is superseded for that earlier covering run, not for this later core change.
+
+Preserve JSON/FormData/dice/bonus/token and file/draft behavior, explicit independent
+validation/request/update feedback, matching recovery, three-second pane success,
+no replay and duplicate/stale guards. Complete-source integration updates only
+060's digest and bundle length; all other pins/guards remain. [Preparation and
+limits](../handover/480-character-edit-feedback.md#entry-forms-checkpoint-preparation---2026-11-11).
+
+Remaining: CSV/setup-import migration; real native FormData/candidate/loaded-Admin
+regression for the new paths; retained full-suite/reader/runner/tamper validation;
+review equivalent covering local or hosted results and corrections; bounded
+acceptance without invented manual/live/accessibility results. Existing CI
+executes the added Node cases and retained browser suites; the new focused harness
+is not native-browser acceptance. Remaining Stage 2 producers, Stage 1, both
+deliverables and 009.7 stay open; pane compatibility and accepted Join stay intact.
