@@ -5,7 +5,7 @@ usage() {
 cat <<'HELP'
 Usage: bash runlocaltests.sh [--suite all|syntax|python|pytest|javascript|standalone|browser]
                             [--python PATH] [--no-publish]
-Default: all five CI groups, then publish completed evidence to features/perplexity.
+Default: all five CI groups, then publish completed evidence to the current branch.
 browser is an alias for standalone; unittest also includes browser fixtures.
 --no-publish never stages, commits or pushes results.
 Tests committed HEAD, not uncommitted files. Does not install dependencies.
@@ -62,9 +62,9 @@ printf 'suite\tcommand\texit_code\tlog\n' > "$RUN/summary.tsv"
 publish_results() {
     local relative=${RUN#"$ROOT/"} branch head
     branch=$(git -C "$ROOT" symbolic-ref --quiet --short HEAD) || return 1
-    [[ "$branch" == features/perplexity ]] || {
-        echo 'Refusing publication outside features/perplexity'; return 1;
-    }
+#    [[ "$branch" == features/perplexity-009.7 ]] || {
+#        echo 'Refusing publication outside features/perplexity-009.7'; return 1;
+#    }
     head=$(git -C "$ROOT" rev-parse --verify HEAD) || return 1
     [[ "$head" == "$HASH" ]] || { echo 'HEAD changed; refusing publication'; return 1; }
     git -C "$ROOT" diff --cached --quiet || {
@@ -73,7 +73,7 @@ publish_results() {
     git -C "$ROOT" add -f -- "$relative" || return 1
     git -C "$ROOT" commit --only \
         -m "Local test results for commit hash $HASH [skip ci]" -- "$relative" || return 1
-    git -C "$ROOT" push origin HEAD:refs/heads/features/perplexity || return 1
+    git -C "$ROOT" push origin HEAD:refs/heads/${branch} || return 1
 }
 finish() {
     local rc=$? publication_log
