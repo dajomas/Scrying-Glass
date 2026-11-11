@@ -1,0 +1,34 @@
+ckout@v4	2026-11-11T14:09:52.6501533Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Run actions/checkout@v4	2026-11-11T14:09:52.6534134Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Run actions/checkout@v4	2026-11-11T14:09:52.6943571Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Run actions/checkout@v4	2026-11-11T14:09:52.6978914Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Run actions/checkout@v4	2026-11-11T14:09:52.7209675Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	Run actions/checkout@v4	2026-11-11T14:09:52.7239482Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+tests	Run actions/checkout@v4	2026-11-11T14:09:52.7470191Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+tests	Run actions/checkout@v4	2026-11-11T14:09:52.7505478Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-11T14:09:52.7506162Z ##[group]Fetching the repository
+tests	Run actions/checkout@v4	2026-11-11T14:09:52.7513809Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +e4a2626622b1b0c3966fb2452af8394735c5505a:refs/remotes/origin/features/perplexity-009.7
+tests	Run actions/checkout@v4	2026-11-11T14:09:53.5685195Z From https://github.com/dajomas/Scrying-Glass
+tests	Run actions/checkout@v4	2026-11-11T14:09:53.5687065Z  * [new ref]         e4a2626622b1b0c3966fb2452af8394735c5505a -> origin/features/perplexity-009.7
+tests	Run actions/checkout@v4	2026-11-11T14:09:53.5691814Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-11T14:09:53.5693303Z ##[group]Determining the checkout info
+tests	Run actions/checkout@v4	2026-11-11T14:09:53.5694917Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-11T14:09:53.5765706Z [command]/usr/bin/git sparse-checkout disable
+tests	Run actions/checkout@v4	2026-11-11T14:09:53.5768459Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+tests	Run actions/checkout@v4	2026-11-11T14:09:53.5775086Z ##[group]Checking out the ref
+tests	Run actions/checkout@v4	2026-11-11T14:09:53.5780937Z [command]/usr/bin/git checkout --progress --force -B features/perplexity-009.7 refs/remotes/origin/features/perplexity-009.7
+tests	Run actions/checkout@v4	2026-11-11T14:09:53.6651699Z Switched to a new branch 'features/perplexity-009.7'
+tests	Run actions/checkout@v4	2026-11-11T14:09:53.6658873Z branch 'features/perplexity-009.7' set up to track 'origin/features/perplexity-009.7'.
+tests	Run actions/checkout@v4	2026-11-11T14:09:53.6662173Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-11T14:09:53.6702771Z [command]/usr/bin/git log -1 --format=%H
+tests	Run actions/checkout@v4	2026-11-11T14:09:53.6724640Z e4a2626622b1b0c3966fb2452af8394735c5505a
+tests	Run actions/setup-python@v5	﻿2026-11-11T14:09:53.7033605Z ##[group]Run actions/setup-python@v5
+tests	Run actions/setup-python@v5	2026-11-11T14:09:53.7034592Z with:
+tests	Run actions/setup-python@v5	2026-11-11T14:09:53.7035273Z   python-version: 3.14
+tests	Run actions/setup-python@v5	2026-11-11T14:09:53.7036034Z   cache: pip
+tests	Run actions/setup-python@v5	2026-11-11T14:09:53.7037027Z   cache-dependency-path: requirements.txt
+tests	Run actions/setup-python@v5	requirements-test.txt
+tests	Run actions/setup-python@v5	
+tests	Run actions/setup-python@v5	2026-11-11T14:09:53.7038561Z   check-latest: false
+tests	Run actions/setup-python@v5	2026-11-11T14:09:53.7046512Z   token: ***
+tests	Run actions/setup-python@v5	2026-11-11T14:0
