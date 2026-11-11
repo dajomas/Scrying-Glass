@@ -107,26 +107,31 @@ expansion. Source classification is not proof of every late installer or a new
 full-page test. [460 source/delegation snapshot](../handover/460-global-feedback-reconciliation.md#checkpoint-ci-and-template-loaded-source-inventory---2026-11-11)
 remains the dated pre-migration record.
 
-Statistics-open migration is supplied by this change set, baseline
-13528784d0eadcc9fe00d77cdc21364676c76ed0: persistent target-specific global
-statistics.open failures, matching successful-open resolution and generation/scope/
-attempt guards; no mutation or modal-local save redesign. New 18-case suite and
-original restoration file passed; restored combined run has 19 TAP results, zero
-failures/skips; five negative controls detected. Browser fixture dependency/scope
-integration preserves all 18 original assertions and compiles, but browser execution
-and normal covering CI for the actual delivered SHA remain pending. Earlier green
-checkpoint CI is not coverage for this runtime change. [465 evidence/limits](../handover/465-statistics-open-feedback.md).
+Statistics-open implementation 83fc58b07bbfee3e420ad37dcc2fdc3795ecad3f is covered
+by successful Branch tests 42957102940 attempt 1, job 130314688066; publication
+86acacd09e497c3afba40489b31e541831d32753. Direct review confirms all 18 new
+Node cases, retained restoration file and isolated Chromium layout test passed.
+Preparation's five negative controls and 19 combined TAP results remain distinct
+historical local evidence. [465 implementation](../handover/465-statistics-open-feedback.md);
+[467 CI reconciliation and limits](../handover/467-bundle-import-feedback.md#statistics-open-evidence-reconciliation).
+
+This change supplies bundle-import success feedback: explicit encounter-scoped
+campaign-bundle.import publication with full campaign/recovery wording and scope/
+attempt guards, preserving POST, busy guard, local failures and refresh sequence.
+Its 12-case full-script/real-controller CJS suite is prepared but not locally run;
+normal covering CI for the actual delivered SHA remains pending. Earlier green
+statistics/checkpoint CI does not cover this change. Global success follows the
+approved five-second policy; it is no longer a blocking alert.
+[467 behavior/tests/remaining gates](../handover/467-bundle-import-feedback.md).
 
 Remaining before closure:
-- Review statistics-open delivery and covering CI, including its new/legacy suites,
-  isolated Chromium layout fixture and relevant full-source/loading checks; correct
-  failures under fresh approval. Do not infer bounded acceptance from preparation.
-- Resolve bundle-import success guidance as a narrow global migration candidate,
-  or record an explicitly agreed exclusion; preserve recovery instructions, scope/
-  ordering and mutation semantics. It is not migrated in this statistics-only step.
+- Review bundle-import covering CI, new focused cases, retained feature draft/
+  polling regressions and relevant browser/loading checks; correct failures under
+  fresh approval. Do not infer acceptance from preparation or an earlier green run.
 - Exercise full-page/late request, bulk-action and renderer wrapper composition;
   monitor unintended legacy.global traffic and extend actual producer combinations,
-  scope transitions, no-replay and draft-preservation coverage.
+  scope transitions, no-replay and draft-preservation coverage. Record dedicated
+  feature/lair/viewer notice dispositions without silently closing local work.
 - Confirm no applicable global path remains, then deliberately retire global
   compatibility and update its baseline test. Keep pane compatibility for pending
   consumers and retain later local/Deliverable 2 work.

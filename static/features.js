@@ -143,8 +143,10 @@
     $('exportBundle').onclick=()=>{location.href='/api/campaign-bundle';};
     $('importBundle').onchange=()=>perform(async()=>{
         const file=$('importBundle').files[0];if(!file||!confirm('Import as a NEW campaign, leaving the active campaign unchanged?'))return false;
+        const feedback=window.scryingAdminFeedback;
+        const ticket=feedback.begin({region:'global',operation:'campaign-bundle.import',target:'import',label:'Import campaign bundle'});
         const body=new FormData();body.append('file',file);const result=await api('/api/campaign-bundle','POST',body);
-        alert(`Imported ${result.name}. Switch campaigns, then restore the "Imported encounter" checkpoint to resume its runtime state.`);
+        feedback.publish(ticket,{severity:'success',text:`Imported ${result.name}. Switch campaigns, then restore the "Imported encounter" checkpoint to resume its runtime state.`});
         if(typeof setups==='function')await setups();$('importBundle').value='';
     });
     refresh();setInterval(()=>{if(!busy)refresh();},3000);

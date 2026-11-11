@@ -57,6 +57,7 @@ This is the index; substantive handover lives in numbered docs/handover sections
 46. [Join reporting: 4A.12 bounded close-out](docs/handover/450-join-reporting.md)
 47. [Global feedback reconciliation: 4A.13 audit guards](docs/handover/460-global-feedback-reconciliation.md)
    - [Statistics-open feedback](docs/handover/465-statistics-open-feedback.md)
+   - [Campaign-bundle import feedback and statistics CI reconciliation](docs/handover/467-bundle-import-feedback.md)
 
 ## Current state - 2026-11-11
 
@@ -77,11 +78,16 @@ has successful covering CI 42952443028 attempt 1; direct log review confirms all
 eight Node cases and all three Python inventory checks passed. Publication:
 80891f360bedc572cce753b5187f4fd27e581939. The source census accounts for all 21
 template fragments and 42 script includes; it does not establish runtime retirement.
-This change set supplies statistics-open failure feedback and its fixture/regression
-integration; normal covering CI/browser validation remain pending. Bundle-import
-alert disposition, full-page/late-wrapper composition and global compatibility
-retirement remain pending. [465 implementation/evidence/limits](docs/handover/465-statistics-open-feedback.md);
-[460 source snapshot](docs/handover/460-global-feedback-reconciliation.md#checkpoint-ci-and-template-loaded-source-inventory---2026-11-11).
+Statistics-open implementation 83fc58b07bbfee3e420ad37dcc2fdc3795ecad3f has successful
+covering CI 42957102940 attempt 1, job 130314688066; publication
+86acacd09e497c3afba40489b31e541831d32753. Detailed review confirms 18 new cases,
+retained restoration and the isolated browser layout fixture passed.
+This change supplies bundle-import success feedback and 12 focused test cases;
+execution/covering CI for its actual delivered SHA remain pending. Full-page/late-
+wrapper composition and global compatibility retirement remain pending; pane
+compatibility remains. [467 delivery/evidence/limits](docs/handover/467-bundle-import-feedback.md);
+[465 statistics implementation](docs/handover/465-statistics-open-feedback.md);
+[460 dated source snapshot](docs/handover/460-global-feedback-reconciliation.md#checkpoint-ci-and-template-loaded-source-inventory---2026-11-11).
 This mixed runtime/test/docs commit uses normal CI without a skip marker;
 no workflow change or separate dispatch. Both feedback deliverables and wider
 009.7 gates stay open; no new human visual, screen-reader, authenticated live-server
