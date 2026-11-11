@@ -55,15 +55,16 @@ This is the index; substantive handover lives in numbered docs/handover sections
 44. [Viewer font adjustment feedback](docs/handover/430-viewer-font-feedback.md)
 45. [Battle-action feedback: 4A.11 bounded close-out](docs/handover/440-battle-action-global-feedback.md)
 46. [Join reporting: 4A.12 bounded close-out](docs/handover/450-join-reporting.md)
-47. [Global feedback reconciliation: 4A.13 audit guards](docs/handover/460-global-feedback-reconciliation.md)
+47. [Global feedback reconciliation: audit history](docs/handover/460-global-feedback-reconciliation.md)
    - [Statistics-open feedback](docs/handover/465-statistics-open-feedback.md)
-   - [Campaign-bundle import feedback and statistics CI reconciliation](docs/handover/467-bundle-import-feedback.md)
+   - [Campaign-bundle import, composition, retirement and corrections](docs/handover/467-bundle-import-feedback.md)
+48. [Global feedback reconciliation: 4A.13 bounded close-out](docs/handover/470-global-feedback-close-out.md)
 
 ## Current state - 2026-11-11
 
 018, 009.5, 015 and 009.6 remain closed for accepted scopes; 340/350/360/370 retain
 all CI, failure/correction, manual-check, publication/merge identities and limits.
-009.7/both feedback deliverables remain open; 4A.1-4A.12 bounded units are closed.
+009.7/both feedback deliverables remain open; 4A.1-4A.13 bounded units are closed.
 4A.11 evidence, failures/corrections and acceptance limits remain in
 [440](docs/handover/440-battle-action-global-feedback.md).
 4A.12 implementation 981ffe61a9bb4da162944707b42132d384eea1ad is covered by
@@ -73,25 +74,25 @@ results were reconciled after the user's 2026-11-11 close-out request; no blocki
 failure was found in reviewed evidence. Bounded acceptance closes 4A.12 only.
 [450 evidence and limits](docs/handover/450-join-reporting.md#4a12-bounded-close-out---2026-11-11);
 [task plan](docs/todo/097-feedback-delivery-plan.md).
-4A.13 remains in progress. Checkpoint a82e17146aae53a89710c054460f352415b7b45f
-has successful covering CI 42952443028 attempt 1; direct log review confirms all
-eight Node cases and all three Python inventory checks passed. Publication:
-80891f360bedc572cce753b5187f4fd27e581939. The source census accounts for all 21
-template fragments and 42 script includes; it does not establish runtime retirement.
-Statistics-open implementation 83fc58b07bbfee3e420ad37dcc2fdc3795ecad3f has successful
-covering CI 42957102940 attempt 1, job 130314688066; publication
-86acacd09e497c3afba40489b31e541831d32753. Detailed review confirms 18 new cases,
-retained restoration and the isolated browser layout fixture passed.
-This change supplies bundle-import success feedback and 12 focused test cases;
-execution/covering CI for its actual delivered SHA remain pending. Full-page/late-
-wrapper composition and global compatibility retirement remain pending; pane
-compatibility remains. [467 delivery/evidence/limits](docs/handover/467-bundle-import-feedback.md);
-[465 statistics implementation](docs/handover/465-statistics-open-feedback.md);
-[460 dated source snapshot](docs/handover/460-global-feedback-reconciliation.md#checkpoint-ci-and-template-loaded-source-inventory---2026-11-11).
-This mixed runtime/test/docs commit uses normal CI without a skip marker;
-no workflow change or separate dispatch. Both feedback deliverables and wider
-009.7 gates stay open; no new human visual, screen-reader, authenticated live-server
-or exhaustive accessibility pass. No prior acceptance or agreed order changes.
+
+4A.13 is closed for the accepted bounded global reconciliation scope following
+reviewed covering CI and the user's 2026-11-11 finish request. Final tested revision
+413822d82bc1dd5894b139946b5caf054e24f39d has successful Branch tests 42973631914
+attempt 1, job 130367559943; publication 6c77d9fe069fffc34dd3335294e20ea90e8097f9.
+Direct review confirms all eight reconciliation cases, four complete-Admin Chromium
+scenarios, three inventory methods and corrected header-layout test passed; all
+main stages succeeded. Failed runs 42969807025 and 42971464667 are preserved with
+both test corrections. Global compatibility is retired; explicit global feedback
+and pane compatibility remain. The 19-identity/171-pair matrix is API coverage,
+not 171 actual handler combinations. [470 close-out/evidence/limits](docs/handover/470-global-feedback-close-out.md)
+supersedes older pending/blocked 4A.13 notes in 460/465/467 while retaining history.
+
+This documentation-only close-out uses [skip ci], executes no new tests and changes
+or dispatches no workflow. No new human visual/manual, screen-reader, authenticated
+live-server or exhaustive accessibility acceptance is inferred. Local producer/pane
+integration, D2 connection/recovery/polling/field association and wider 009.7 gates
+remain open. Neither feedback deliverable nor phase 009.7 closes. No prior bounded
+acceptance or agreed order changes. README and TODO root remain unchanged.
 016/017 and SG-TODO-019 remain proposed. No merge/deployment.
 Longer index history is preserved in the [pre-checkpoint index](https://github.com/dajomas/Scrying-Glass/blob/9d05e129cc2b85099cf0e3bf394a1fe398d0af24/HANDOVER.md)
 and numbered sections, not deleted acceptance evidence.

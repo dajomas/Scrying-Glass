@@ -4,13 +4,13 @@
 
 ## Current status - 2026-11-11
 
-009.7 and both deliverables remain open. 4A.1-4A.12 are closed for accepted scopes.
+009.7 and both deliverables remain open. 4A.1-4A.13 are closed for accepted scopes.
 All original policy, seven-step criteria, implementation/run/publication and
 acceptance identities, 009.6 safeguards and history remain authoritative in the
 [preserved full plan](https://github.com/dajomas/Scrying-Glass/blob/9d05e129cc2b85099cf0e3bf394a1fe398d0af24/docs/todo/097-feedback-delivery-plan.md)
-and numbered handovers. 4A.12 is closed after reviewed covering evidence and the
-user's bounded close-out request. 4A.13 is in progress; wider gates stay open.
-Priority, owner, deadline, SG-TODO-019 and delivery order are unchanged.
+and numbered handovers. 4A.12 and 4A.13 are closed after reviewed covering evidence
+and bounded user close-out requests. Wider gates stay open. Priority, owner,
+deadline, SG-TODO-019 and delivery order are unchanged.
 No unrelated unfinished task is closed.
 
 ## 4A.11 battle-action global notices - 2026-11-10
@@ -87,79 +87,52 @@ exhaustive accessibility acceptance is claimed. Focused controller-adapter/mocke
 checks and browser/server fixtures are not universal end-to-end coverage of every
 Join path. Its documentation-only close-out used [skip ci], executed no new tests
 and changed/dispatched no workflow; it did not infer a new run outcome. README
-and TODO root remain accurate and unchanged. 4A.13, both feedback deliverables and
-009.7 remain open under preserved criteria. No merge/deployment or future blanket
-write approval.
+and TODO root remain accurate and unchanged. Its close-out did not close 4A.13,
+both feedback deliverables or 009.7; 4A.13 closes separately below. No merge/
+deployment or future blanket write approval.
 
 ## 4A.13 global reconciliation - 2026-11-11
 
-Status: in progress. Audit/regression checkpoint delivered at
-a82e17146aae53a89710c054460f352415b7b45f, covered by successful Branch tests
-42952443028 attempt 1, job 130299650206; evidence publication
-80891f360bedc572cce753b5187f4fd27e581939. Detailed log review confirms all
-eight Node cases and all three Python inventory methods passed. Preparation's
-four detected negative controls remain distinct historical local evidence.
-The original 136 pairs cover selected API identities, not actual handler combinations.
+Completed and closed for the accepted bounded scope. Following the verified green
+covering run and stated limits, the user requested 'Finish 4a.13 please' on
+2026-11-11. Exact close-out approval records bounded acceptance, not whole-feedback-
+deliverable or phase acceptance. [470 close-out/evidence/limits](../handover/470-global-feedback-close-out.md#4a13-bounded-close-out---2026-11-11).
 
-Template-loaded source census at 91dde45ccc305dfc69dfe8020260dd3670ac17a4 covers
-all 21 fragments, 42 distinct deferred script includes and the eight-part Admin
-expansion. Source classification is not proof of every late installer or a new
-full-page test. [460 source/delegation snapshot](../handover/460-global-feedback-reconciliation.md#checkpoint-ci-and-template-loaded-source-inventory---2026-11-11)
-remains the dated pre-migration record.
+Delivered: source/caller classification; statistics-open persistent targeted errors
+and matching resolution; bundle-import success with complete recovery guidance;
+actual full-page/late-wrapper composition coverage; global compatibility retirement
+with explicit global feedback and pane compatibility retained. Preserve action
+payloads, busy guards, request/refresh distinctions, drafts/selections and no replay.
 
-Statistics-open implementation 83fc58b07bbfee3e420ad37dcc2fdc3795ecad3f is covered
-by successful Branch tests 42957102940 attempt 1, job 130314688066; publication
-86acacd09e497c3afba40489b31e541831d32753. Direct review confirms all 18 new
-Node cases, retained restoration file and isolated Chromium layout test passed.
-Preparation's five negative controls and 19 combined TAP results remain distinct
-historical local evidence. [465 implementation](../handover/465-statistics-open-feedback.md);
-[467 CI reconciliation and limits](../handover/467-bundle-import-feedback.md#statistics-open-evidence-reconciliation).
+Final tested revision 413822d82bc1dd5894b139946b5caf054e24f39d has successful
+Branch tests 42973631914 attempt 1, job 130367559943. Evidence publication:
+6c77d9fe069fffc34dd3335294e20ea90e8097f9. Matching run/job metadata and individual
+results confirm all eight reconciliation cases, four full-page Chromium scenarios,
+three inventory checks and corrected header-layout test passed. All main stages
+succeeded; not every retained regression was individually re-reviewed. The matrix
+covers 19 selected identities/171 unordered API pairs, not actual handler combinations.
 
-Bundle implementation 1fc5b724a47ff8dd29ef6c168d938dc818f86d0d supplies explicit
-encounter-scoped campaign-bundle.import success with complete recovery wording.
-Successful Branch tests 42959512777 attempt 1, job 130322466945 matches that SHA;
-publication b610b93b7a2679178c685390a9ba2111d3ac66fa. Direct log review confirms
-all 12 new CJS cases passed, zero failures/cancellations/skips. All main stages
-report success, not an individual-log re-review of every retained regression.
-Global success follows the approved five-second policy, no blocking alert or replay.
-[467 covering evidence and limits](../handover/467-bundle-import-feedback.md#bundle-ci-and-full-page-composition-preparation---2026-11-11).
+Retirement e15ad2b18f308d116fab288e058b24f7842f8c98 is retained unchanged with
+browser correction c76b52e4d6f29e28c1726db940d29cbd223ee2a5 and Node correction
+413822d82bc1dd5894b139946b5caf054e24f39d. Failed runs 42969807025 and
+42971464667 remain historical; the final covering run verifies both repairs.
+[Detailed migration/composition/failure history](../handover/467-bundle-import-feedback.md).
+[Pre-close-out task record](https://github.com/dajomas/Scrying-Glass/blob/6c77d9fe069fffc34dd3335294e20ea90e8097f9/docs/todo/097-feedback-delivery-plan.md)
+preserves the audit, migration, correction identities and then-open gates in full.
 
-Composition commit 8d45d1c19e67b21c387205b1711956305d8a9823 is covered by successful
-Branch tests 42967879960 attempt 1, job 130349218050; publication
-df4137b62c7668442c08e8ac9425c135c611c730. Direct reader parts 022-023 confirms
-all four full-page Chromium scenarios passed; the three inventory checks also
-report ok. All main CI stages succeeded. This resolves those scenarios' execution
-gate, not every possible caller, human accessibility or authenticated server path.
+No new authenticated live-server, human visual/manual, screen-reader or exhaustive
+accessibility acceptance is inferred. Full-page intercepted-HTTP fixtures do not
+prove every dynamic caller or live backend. Bounded acceptance resolves this unit
+on its stated evidence, not unperformed wider validation. Pane consumers and local
+feature/lair/selected-campaign viewer integration remain open; D2 connection/
+recovery persistence, polling deduplication and field/combatant association remain
+open. The documented producer dispositions are not whole-D1 acceptance.
 
-This runtime/test/docs change retires untyped deliver(global) by throwing before
-feedback/legacy state changes, including empty clears. Explicit global tickets
-remain supported; pane compatibility remains unchanged. The deliberate baseline
-test now asserts rejection/noninterference and explicit delivery. The identity
-matrix expands to 19 selected operations/171 unordered pairs including statistics
-and import, not 171 real handler combinations. Existing full-page assertions are
-unchanged and must pass again. No new local tests/syntax execution is claimed;
-normal covering CI for the actual retirement SHA remains pending. Earlier green
-composition CI does not validate this runtime change.
-
-Remaining dedicated feature/lair/viewer writers are classified as local and remain
-later integration obligations, not hidden applicable global exclusions or D1 closure.
-Viewer grants retain selected authorized-campaign scope; connection persistence/
-polling/field association remain D2. [Disposition and retirement details](../handover/467-bundle-import-feedback.md#global-compatibility-retirement-preparation---2026-11-11).
-
-Remaining before closure:
-- Review retirement covering CI: changed eight-case isolation suite, full-page
-  composition, inventory and relevant retained loading/rendering/producer tests.
-  Investigate residual caller errors and correct failures under fresh approval.
-- Reconcile final evidence, scopes and retained/deferred work without treating
-  fixture coverage as exhaustive dynamic or manual acceptance.
-- Obtain explicit bounded acceptance, then separately approve a documentation-only
-  close-out with [skip ci]. Both deliverables and 009.7 remain open.
-
-This mixed runtime/test/docs commit uses normal CI, no skip marker, workflow change
-or dispatch. No core/pin/markup/shared-fixture changes. 4A.1-4A.12 stay closed.
-README, HANDOVER index and TODO root remain unchanged; linked 467 explicitly
-supersedes older pending-CI/retirement wording. No scope/owner/deadline/priority/
-order change, archive/Patch/, merge or deployment.
+This close-out is documentation only with [skip ci]; no new tests, runtime/test/
+pin/markup/workflow changes or workflow dispatch. It invents no new CI outcome.
+README and TODO root remain unchanged. 4A.1-4A.13 stay closed for accepted scopes;
+both feedback deliverables and phase 009.7 stay open. No merge/deployment, changed
+owner/deadline/priority/order or future blanket write approval.
 
 ## Closed-unit anchors
 
@@ -211,43 +184,14 @@ criteria are cross-linked, not silently removed.
 
 ## 4A.13 browser fixture correction - 2026-11-11
 
-Retirement e15ad2b18f308d116fab288e058b24f7842f8c98 has FAILED covering run
-42969807025 attempt 1, job 130355375717; publication
-3ac3db9529d127e3922bbf0cd2d2d97ca25fc23c. This supersedes the earlier pending
-retirement-run wording, not the historical failure. Header layout's direct untyped
-message() injection fails at 1440/768/375; the audit repeats those same errors.
-Four full-page composition scenarios and three inventory methods pass.
-
-The requested browser-only correction supplies explicit global info feedback in
-that fixture, retaining text and every original assertion/viewport/harness. No
-runtime/shared-fixture/Node/workflow change or new local execution is claimed.
-Review header and audit execution in normal covering CI for its actual new SHA.
-The Node record-ID-versus-true assertion failure remains OPEN and needs its own
-correction; this commit is not a complete green-CI repair. 4A.13 stays blocked on
-that correction, successful covering evidence, reconciliation and acceptance.
-[Failure/correction details](../handover/467-bundle-import-feedback.md#retirement-ci-failure-and-browser-fixture-correction---2026-11-11).
+Historical correction and failed-run details remain in the
+[pre-close-out task record](https://github.com/dajomas/Scrying-Glass/blob/6c77d9fe069fffc34dd3335294e20ea90e8097f9/docs/todo/097-feedback-delivery-plan.md#4a13-browser-fixture-correction---2026-11-11)
+and [467](../handover/467-bundle-import-feedback.md#retirement-ci-failure-and-browser-fixture-correction---2026-11-11).
+The final covering run and bounded close-out above supersede the historical blocker.
 
 ## 4A.13 Node assertion correction - 2026-11-11
 
-Browser correction c76b52e4d6f29e28c1726db940d29cbd223ee2a5 has covering run
-42971464667 attempt 1, job 130360679991; publication
-54794d945a084d893d0dba77194be0251f62833a. Overall failure persists solely in the
-JavaScript main stage; Python/browser and standalone browser/audit stages pass.
-Direct reader part 023 verifies header layout, four composition scenarios and
-three inventory checks report ok. Parts 131-132 verifies the unchanged Node
-record-ID-versus-true failure, seven passes/one failure. Preserve failed histories.
-
-The requested Node-only correction supplies return-ID/snapshot assertions and the
-actual settled-ticket contract: an error publication settles its ticket; a fresh
-matching operation/target ticket resolves it without clearing an independent error.
-No runtime/browser/shared-fixture/workflow changes. Rejection checks, 171-pair
-matrix, pane isolation and other tests remain intact. Code review performed;
-no new local execution is claimed. Earlier OPEN notes are historical; the fix is
-supplied with validation pending, not accepted or verified passing.
-
-Required next: review covering CI for the actual new corrective SHA, including
-all eight reconciliation cases and retained browser/loading/producer regressions;
-correct any further failures under fresh approval, reconcile final scope/evidence,
-then obtain bounded acceptance before a separately approved [skip ci] docs close-out.
-4A.13, both feedback deliverables and 009.7 stay open; no merge/deployment.
-[Correction contract and evidence](../handover/467-bundle-import-feedback.md#browser-ci-verified-and-node-assertion-correction---2026-11-11).
+Historical correction and failed-run details remain in the
+[pre-close-out task record](https://github.com/dajomas/Scrying-Glass/blob/6c77d9fe069fffc34dd3335294e20ea90e8097f9/docs/todo/097-feedback-delivery-plan.md#4a13-node-assertion-correction---2026-11-11)
+and [467](../handover/467-bundle-import-feedback.md#browser-ci-verified-and-node-assertion-correction---2026-11-11).
+The final covering run and bounded close-out above supersede the historical blocker.
