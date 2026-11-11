@@ -1,0 +1,32 @@
+875Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.7630360Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.7631239Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.7632556Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.7633031Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.7633854Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.7634564Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.7634880Z OSError: private detail
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.7635538Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.7635976Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.7636636Z   File "python/scrying_glass_monster_selection.py", line 98, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.7637296Z     sources = ft.configured_sources(display)
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.7638134Z   File "/tmp/scrying-tests-w21kesv4/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.7639403Z     raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.7640675Z ValueError: fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.8328209Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.8328863Z Ran 12 tests in 0.078s
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.8329099Z 
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.8329232Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.8336138Z test_fivetools_source_configuration.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.8519570Z Connection audit: test_healing_max_hp_cap.py
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.9456709Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.9457561Z Ran 12 tests in 0.003s
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.9457790Z 
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.9457924Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.9466461Z test_healing_max_hp_cap.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:27.9596179Z Connection audit: test_independent_panel_controls.py
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:30.9353989Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:30.9354630Z Ran 2 tests in 2.886s
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:30.9354803Z 
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:30.9354898Z OK
+tests	Standalone Python browser and audit checks	2026-11-11T19:34:30.9356089Z test_indepe
