@@ -1,0 +1,47 @@
+tests	2026-11-11T06:21:09.1126468Z # Subtest: individual reset does not clear Reset All, End or state-load errors
+tests	JavaScript tests	2026-11-11T06:21:09.1127217Z ok 7 - individual reset does not clear Reset All, End or state-load errors
+tests	JavaScript tests	2026-11-11T06:21:09.1127682Z   ---
+tests	JavaScript tests	2026-11-11T06:21:09.1127959Z   duration_ms: 0.798628
+tests	JavaScript tests	2026-11-11T06:21:09.1128253Z   type: 'test'
+tests	JavaScript tests	2026-11-11T06:21:09.1128511Z   ...
+tests	JavaScript tests	2026-11-11T06:21:09.1128917Z # Subtest: refresh alone does not clear an individual reset error
+tests	JavaScript tests	2026-11-11T06:21:09.1129542Z ok 8 - refresh alone does not clear an individual reset error
+tests	JavaScript tests	2026-11-11T06:21:09.1129980Z   ---
+tests	JavaScript tests	2026-11-11T06:21:09.1130267Z   duration_ms: 0.662135
+tests	JavaScript tests	2026-11-11T06:21:09.1130578Z   type: 'test'
+tests	JavaScript tests	2026-11-11T06:21:09.1130854Z   ...
+tests	JavaScript tests	2026-11-11T06:21:09.1131702Z # Subtest: success resolves before actual loadState handles a refresh failure without retry
+tests	JavaScript tests	2026-11-11T06:21:09.1132616Z ok 9 - success resolves before actual loadState handles a refresh failure without retry
+tests	JavaScript tests	2026-11-11T06:21:09.1133203Z   ---
+tests	JavaScript tests	2026-11-11T06:21:09.1133472Z   duration_ms: 1.100626
+tests	JavaScript tests	2026-11-11T06:21:09.1133786Z   type: 'test'
+tests	JavaScript tests	2026-11-11T06:21:09.1134046Z   ...
+tests	JavaScript tests	2026-11-11T06:21:09.1134579Z # Subtest: old-setup success does not clear a new error or refresh the new setup
+tests	JavaScript tests	2026-11-11T06:21:09.1135336Z ok 10 - old-setup success does not clear a new error or refresh the new setup
+tests	JavaScript tests	2026-11-11T06:21:09.1135839Z   ---
+tests	JavaScript tests	2026-11-11T06:21:09.1136106Z   duration_ms: 0.97004
+tests	JavaScript tests	2026-11-11T06:21:09.1136408Z   type: 'test'
+tests	JavaScript tests	2026-11-11T06:21:09.1136686Z   ...
+tests	JavaScript tests	2026-11-11T06:21:09.1137169Z # Subtest: old-campaign failure cannot publish into the new campaign
+tests	JavaScript tests	2026-11-11T06:21:09.1137859Z ok 11 - old-campaign failure cannot publish into the new campaign
+tests	JavaScript tests	2026-11-11T06:21:09.1138312Z   ---
+tests	JavaScript tests	2026-11-11T06:21:09.1138596Z   duration_ms: 0.739218
+tests	JavaScript tests	2026-11-11T06:21:09.1138907Z   type: 'test'
+tests	JavaScript tests	2026-11-11T06:21:09.1139189Z   ...
+tests	JavaScript tests	2026-11-11T06:21:09.1139688Z # Subtest: switching away and back does not revive an old reset attempt
+tests	JavaScript tests	2026-11-11T06:21:09.1140646Z ok 12 - switching away and back does not revive an old reset attempt
+tests	JavaScript tests	2026-11-11T06:21:09.1141267Z   ---
+tests	JavaScript tests	2026-11-11T06:21:09.1141563Z   duration_ms: 0.730688
+tests	JavaScript tests	2026-11-11T06:21:09.1141893Z   type: 'test'
+tests	JavaScript tests	2026-11-11T06:21:09.1142163Z   ...
+tests	JavaScript tests	2026-11-11T06:21:09.1142725Z # Subtest: superseded success cannot clear a newer failure for the same target
+tests	JavaScript tests	2026-11-11T06:21:09.1143479Z ok 13 - superseded success cannot clear a newer failure for the same target
+tests	JavaScript tests	2026-11-11T06:21:09.1143972Z   ---
+tests	JavaScript tests	2026-11-11T06:21:09.1144236Z   duration_ms: 0.720658
+tests	JavaScript tests	2026-11-11T06:21:09.1144554Z   type: 'test'
+tests	JavaScript tests	2026-11-11T06:21:09.1144820Z   ...
+tests	JavaScript tests	2026-11-11T06:21:09.1145267Z # Subtest: concurrent different-target resets remain independent
+tests	JavaScript tests	2026-11-11T06:21:09.1145912Z ok 14 - concurrent different-target resets remain independent
+tests	JavaScript tests	2026-11-11T06:21:09.1146348Z   ---
+tests	JavaScript tests	2026-11-11T06:21:09.1146654Z   duration_ms: 0.726101
+tests	JavaScript tests	2026-11-11T06:21:09.1146959Z   type: 

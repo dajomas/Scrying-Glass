@@ -1,0 +1,21 @@
+174645Z test_removed_row_controls_stay_unavailable_after_refresh (test_monster_button_layout.MonsterButtonLayoutTests.test_removed_row_controls_stay_unavailable_after_refresh) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:09.1353245Z test_single_line_geometry_and_local_overflow (test_monster_button_layout.MonsterButtonLayoutTests.test_single_line_geometry_and_local_overflow) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:09.7150103Z test_choose_cancel_and_error (test_monster_candidate_browser.CandidateBrowserTests.test_choose_cancel_and_error) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:10.2158172Z test_dnd_beyond_source_wording_and_candidate_cancel (test_monster_candidate_browser.CandidateBrowserTests.test_dnd_beyond_source_wording_and_candidate_cancel) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:10.7344062Z test_edit_preservation_and_pending_submit (test_monster_candidate_browser.CandidateBrowserTests.test_edit_preservation_and_pending_submit) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:11.2060591Z test_single_and_zero (test_monster_candidate_browser.CandidateBrowserTests.test_single_and_zero) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:11.7511594Z test_six_book_labels_links_and_selected_raw_identity (test_monster_candidate_browser.CandidateBrowserTests.test_six_book_labels_links_and_selected_raw_identity) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:12.2297605Z test_species_change_closes_popup (test_monster_candidate_browser.CandidateBrowserTests.test_species_change_closes_popup) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:12.7795597Z test_unknown_codes_are_literal_without_invented_editions (test_monster_candidate_browser.CandidateBrowserTests.test_unknown_codes_are_literal_without_invented_editions) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:12.7803836Z test_both_versions_retain_separate_signed_source_identity (test_monster_candidate_selection.CandidateTests.test_both_versions_retain_separate_signed_source_identity) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:12.7822621Z test_count_table (test_monster_candidate_selection.CandidateTests.test_count_table) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:12.7828212Z test_disabled_and_invalid_link (test_monster_candidate_selection.CandidateTests.test_disabled_and_invalid_link) ... Combined monster lookup failed for D&D Beyond
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:12.7828896Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:12.7829410Z   File "/tmp/scrying-tests-97u40_zl/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:12.7829848Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:12.7830280Z   File "/tmp/scrying-tests-97u40_zl/repo/python/scrying_glass_monster_selection.py", line 151, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:12.7830726Z     lambda: dnd_candidates(context, species),
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:12.7831039Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:12.7831685Z   File "/tmp/scrying-tests-97u40_zl/repo/python/scrying_glass_monster_selection.py", line 66, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:12.7832267Z     raise ProviderError("D&D Beyond returned an invalid candidate link.")
+tests	Python test suite (including browser fixtures)	2026-11-11T06:20:12.7832824Z python.scrying_glass_monster_selection

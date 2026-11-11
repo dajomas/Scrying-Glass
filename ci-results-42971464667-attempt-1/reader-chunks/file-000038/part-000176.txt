@@ -1,0 +1,46 @@
+ draft
+tests	JavaScript tests	2026-11-11T06:21:17.0371270Z # PASS undo preserves a new-target draft
+tests	JavaScript tests	2026-11-11T06:21:17.0380199Z # PASS undo still discards unchanged pre-operation drafts
+tests	JavaScript tests	2026-11-11T06:21:17.0390752Z # PASS restore preserves a newer same-target draft
+tests	JavaScript tests	2026-11-11T06:21:17.0406268Z # PASS restore preserves a new-target draft
+tests	JavaScript tests	2026-11-11T06:21:17.0415333Z # PASS restore still discards unchanged pre-operation drafts
+tests	JavaScript tests	2026-11-11T06:21:17.0427334Z # PASS effect response preserves newer name
+tests	JavaScript tests	2026-11-11T06:21:17.0436300Z # PASS effect response preserves newer notes
+tests	JavaScript tests	2026-11-11T06:21:17.0447861Z # PASS effect response does not clear form after target switch
+tests	JavaScript tests	2026-11-11T06:21:17.0464762Z # PASS unchanged effect form still clears after success
+tests	JavaScript tests	2026-11-11T06:21:17.0472018Z # PASS failed recovery request preserves drafts
+tests	JavaScript tests	2026-11-11T06:21:17.0479315Z # PASS cancelled restore preserves drafts
+tests	JavaScript tests	2026-11-11T06:21:17.0488803Z # PASS ordinary health save still clears its own draft
+tests	JavaScript tests	2026-11-11T06:21:17.0497093Z # PASS ordinary health save preserves unrelated drafts
+tests	JavaScript tests	2026-11-11T06:21:17.0505517Z # PASS normal same-encounter polling preserves drafts
+tests	JavaScript tests	2026-11-11T06:21:17.0506127Z # 15 tests; 15 passed; 0 failed
+tests	JavaScript tests	2026-11-11T06:21:17.0548891Z # Subtest: tests/test_bughunt_0f46ef7.js
+tests	JavaScript tests	2026-11-11T06:21:17.0551967Z ok 1 - tests/test_bughunt_0f46ef7.js
+tests	JavaScript tests	2026-11-11T06:21:17.0552494Z   ---
+tests	JavaScript tests	2026-11-11T06:21:17.0552803Z   duration_ms: 74.510291
+tests	JavaScript tests	2026-11-11T06:21:17.0553045Z   type: 'test'
+tests	JavaScript tests	2026-11-11T06:21:17.0553259Z   ...
+tests	JavaScript tests	2026-11-11T06:21:17.0553471Z 1..1
+tests	JavaScript tests	2026-11-11T06:21:17.0562040Z # tests 1
+tests	JavaScript tests	2026-11-11T06:21:17.0562540Z # suites 0
+tests	JavaScript tests	2026-11-11T06:21:17.0563012Z # pass 1
+tests	JavaScript tests	2026-11-11T06:21:17.0563270Z # fail 0
+tests	JavaScript tests	2026-11-11T06:21:17.0563510Z # cancelled 0
+tests	JavaScript tests	2026-11-11T06:21:17.0563777Z # skipped 0
+tests	JavaScript tests	2026-11-11T06:21:17.0564021Z # todo 0
+tests	JavaScript tests	2026-11-11T06:21:17.0564297Z # duration_ms 80.308628
+tests	JavaScript tests	2026-11-11T06:21:17.0757837Z ##[endgroup]
+tests	JavaScript tests	2026-11-11T06:21:17.0758453Z ##[group]tests/test_bughunt_504cb25.js
+tests	JavaScript tests	2026-11-11T06:21:17.2101661Z TAP version 13
+tests	JavaScript tests	2026-11-11T06:21:17.2419637Z # PASS failed resync can be retried on next heartbeat
+tests	JavaScript tests	2026-11-11T06:21:17.2423215Z # PASS manual resync can retry after render failure
+tests	JavaScript tests	2026-11-11T06:21:17.2428123Z # PASS old valid snapshot is rerendered after partial failure
+tests	JavaScript tests	2026-11-11T06:21:17.2436120Z # PASS reconnect also repairs old snapshot after partial failure
+tests	JavaScript tests	2026-11-11T06:21:17.2441446Z # PASS error status does not falsely promise a retained screen
+tests	JavaScript tests	2026-11-11T06:21:17.2447203Z # PASS healthy unchanged snapshots still skip duplicate rendering
+tests	JavaScript tests	2026-11-11T06:21:17.2453139Z # PASS failed state is not acknowledged
+tests	JavaScript tests	2026-11-11T06:21:17.2459639Z # PASS pending resync requests remain deduplicated
+tests	JavaScript tests	2026-11-11T06:21:17.2466737Z # PASS successful repair is acknowledged at its revision
+tests	JavaScript tests	2026-11-11T06:21:17.2472395Z # PASS healthy reconnect still preserves unchanged stage
+tests	JavaScript tests	2026-11-11T06:21:17.2472932Z # 10 tests; 10 passed; 0 failed
+tests	JavaScript tests	2026-11-11T06:21:17.2516747Z # Sub
