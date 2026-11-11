@@ -20,7 +20,7 @@ class RawRollCompositionTests(unittest.TestCase):
 
     def test_script_loaded_once_after_roster_and_navigation(self):
         end=(ROOT/'templates/admin/190_document_end.html').read_text()
-        marker='/static/monster-initiative-roll.js?v=1'
+        marker='/static/monster-initiative-roll.js?v=2'
         self.assertEqual(end.count(marker),1)
         for predecessor in ('/static/admin.js','/static/initiative-keyboard-navigation.js','/static/monster-initiative-roster.js'):
             self.assertLess(end.index(predecessor),end.index(marker))

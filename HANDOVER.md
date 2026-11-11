@@ -62,6 +62,7 @@ This is the index; substantive handover lives in numbered docs/handover sections
 48. [Global feedback reconciliation: 4A.13 bounded close-out](docs/handover/470-global-feedback-close-out.md)
 
 49. [Stage 2 character Edit feedback](docs/handover/480-character-edit-feedback.md)
+50. [Stage 2 monster raw-roll feedback](docs/handover/490-monster-raw-roll-feedback.md)
 
 ## Current state - 2026-11-11
 

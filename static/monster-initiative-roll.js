@@ -43,29 +43,57 @@
         const item = byId.get(input.dataset.mi);
         if (item) decorate(input, item);
     }
+    const feedback = window.scryingAdminFeedback;
+    const pending = new Map();
+    function begin(operation, target) {
+        return feedback.begin({region: 'monsters', operation: 'monster.raw-roll.' + operation,
+            target, label: 'Monster initiative raw roll'});
+    }
     region.addEventListener('change', async event => {
         const input = event.target;
         if (!(input instanceof HTMLInputElement) || !input.matches('input[data-mi]')) return;
         event.stopPropagation();
+        const target = String(input.dataset.mi);
+        const previous = pending.get(target);
+        if (previous && feedback.isCurrent(previous.ticket)) return;
+        const validation = begin('validation', target);
         const text = input.value.trim();
         const roll = text === '' ? null : Number(text);
         if (!input.checkValidity() || (text !== '' &&
             (!/^[+-]?[0-9]+$/.test(text) || !Number.isSafeInteger(roll)))) {
-            paneNotification('monsters', 'Enter an exactly representable whole-number raw roll or leave it blank.');
+            feedback.publish(validation, {severity: 'error',
+                text: 'Enter an exactly representable whole-number raw roll or leave it blank.'});
             return;
         }
+        feedback.resolve(validation);
+        const ticket = begin('request', target);
+        const refresh = begin('refresh', target);
+        const attempt = {ticket};
+        pending.set(target, attempt);
+        const current = () => feedback.isCurrent(ticket) && feedback.isCurrent(refresh);
         let applied = false;
         try {
-            await request(`/api/monsters/${encodeURIComponent(input.dataset.mi)}/initiative-roll`, {
+            await request(`/api/monsters/${encodeURIComponent(target)}/initiative-roll`, {
                 method: 'PATCH', headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({initiative_roll: roll}),
             });
             applied = true;
+            if (!current()) return;
             await load(true);
+            if (!current()) return;
+            feedback.resolve(ticket);
+            feedback.resolve(refresh);
         } catch (error) {
-            paneNotification('monsters', applied
-                ? `Roll saved, but refresh failed: ${error.message}. Reload before continuing.`
-                : error.message);
+            if (!current()) return;
+            if (applied) {
+                feedback.resolve(ticket);
+                feedback.publish(refresh, {severity: 'error',
+                    text: `Roll saved, but refresh failed: ${error.message}. Reload before continuing.`});
+            } else {
+                feedback.publish(ticket, {severity: 'error', text: error.message});
+            }
+        } finally {
+            if (pending.get(target) === attempt) pending.delete(target);
         }
     });
 })();

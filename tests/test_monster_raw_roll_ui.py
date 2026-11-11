@@ -2,6 +2,7 @@
 from pathlib import Path
 import unittest
 from playwright.sync_api import sync_playwright
+from feedback_browser_fixture import install_feedback
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -20,7 +21,8 @@ class RawRollUITests(unittest.TestCase):
     def page(self,width):
         page=self.browser.new_page(viewport={"width":width,"height":900})
         self.addCleanup(page.close)
-        page.set_content('<div id="monsters" tabindex="0"></div><div id="characters" tabindex="0"><input data-ci="c" value="21"></div>')
+        page.set_content('<div id="monsterAddNotification"></div><div id="monsters" tabindex="0"></div><div id="characters" tabindex="0"><input data-ci="c" value="21"></div>')
+        install_feedback(page)
         page.add_script_tag(content="""
             const latest={active_campaign_id:'a',active_setup:{campaign_id:'a',name:'one'},monsters:[
                 {id:'m',name:'Dragon',initiative_roll:16,initiative_bonus:12,initiative:28},
@@ -48,7 +50,7 @@ class RawRollUITests(unittest.TestCase):
                 self.assertEqual(page.locator('.sg-monster-initiative-total').all_text_contents(),['Total: 28','Total: 19 (legacy)'])
                 for index,value in enumerate(('16','10','16','0','-2','')):
                     page.eval_on_selector('[data-mi="m"]',"(input,value)=>{input.value=value;input.dispatchEvent(new Event('change',{bubbles:true}));}",value)
-                    page.wait_for_function('(count)=>sent.length===count',arg=index+1)
+                    page.wait_for_function('(count)=>sent.length===count && loads===count',arg=index+1)
                     record=page.evaluate('sent.at(-1)')
                     self.assertEqual(record,dict(url='/api/monsters/m/initiative-roll',method='PATCH',body=dict(initiative_roll=None if value=='' else int(value))))
                 self.assertEqual(page.evaluate('legacyChanges'),0)
@@ -82,6 +84,7 @@ class RawRollUITests(unittest.TestCase):
         errors=[]
         page.on('pageerror',lambda error:errors.append(str(error)))
         page.set_content('<div id="monsters"></div>')
+        install_feedback(page)
         page.add_script_tag(content="""
             let latest=null;
             function monsterRow(item){return '<tr><td><input type="number" data-mi="'+item.id+'" value="28"></td></tr>';}
