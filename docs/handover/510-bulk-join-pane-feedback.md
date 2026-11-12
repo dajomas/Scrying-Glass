@@ -104,3 +104,53 @@ asset, template, pin, workflow, dispatch, merge, deployment, compatibility retir
 or test-suite cleanup change is included. README and root index links remain
 applicable; no new handover section file or index entry is needed. Stage 2, both
 feedback deliverables and 009.7 stay open pending their existing acceptance gates.
+
+## Stage 2 bounded close-out - 2026-11-12
+
+Completed and closed for the agreed Stage 2 scope. After the successful final
+local evidence review, the user explicitly accepted Stage 2 and requested its
+close-out on 2026-11-12. This supersedes historical pending Stage 2 wording in
+this section and earlier checkpoints; it does not reopen accepted 4A.1-4A.13 or
+close Stage 1, Stages 3-4, either whole feedback deliverable or 009.7.
+
+Final tested revision: c7dce86f810e78858e361ac87cd7b9a8a5788deb. Local run
+run-20261112T054019Z-4vJTEQ is published at
+a65c0ed4240ad78868cab7cf3e79f132ad3da46a under
+local-tests-c7dce86/run-20261112T054019Z-4vJTEQ. Reviewed environment.txt identifies
+the exact committed revision, suite=all, completed=1, Python 3.14.7, Node v22.23.2,
+a detached local clone, start 2026-11-12T05:40:19Z and finish 05:57:40Z.
+exit-code.txt is 0. All 77 summary command invocations exit 0: syntax/import,
+unittest including browser fixtures, selected pytest, 66 discovered JavaScript
+files and seven standalone scripts. These invocation counts include helpers and
+are not unique individual-test counts. This is local execution of the configured
+CI-command suite, not a hosted GitHub Actions run.
+
+Direct log review confirms the new test_stage2_selection_roll_all_and_bulk_join_feedback_coexist
+and all four retained complete-Admin browser scenarios are marked ok, as are all
+five inventory checks. Visible source/assembly/fragment identity/size/tamper/reader/
+runner/static-adapter checks pass. Roll-all 15/15, select-dead feedback 12/12,
+core/Join 37/37 and retained gate 12/12 pass with no failures/cancellations/skips
+in those reviewed Node suites. The 247,723-byte Python log was truncated by the
+connector; no exhaustive tail review, total Python-case count or suite-wide
+zero-skips claim is made. Summary-level all-suite success and direct critical
+composition evidence satisfy the accepted Stage 2 automated gate. No corrective
+implementation is indicated by reviewed results; separate hosted success is not
+required in addition to this accepted equivalent local covering run.
+
+Accepted scope includes candidate/pending-submit and source-review feedback,
+shared roster/row patches, creation/file/CSV/setup imports, character/monster Edit,
+raw-roll/roll-all, select-dead and bulk Join pane success with global reporting
+preserved. Prior failed runs remain historical failures, not relabelled successes.
+No new authenticated live-server/provider, human visual/manual combat, screen-reader
+or exhaustive accessibility exercise is inferred from fixture success. The user
+accepted the bounded scope on these stated evidence limits, not fictional checks.
+[Accepted task status and preserved wider boundaries](../todo/098-character-edit-feedback.md#stage-2-close-out---2026-11-12).
+
+This close-out is documentation only with [skip ci]. It executes no new tests,
+changes no runtime/test/template/asset/pin/workflow files and dispatches no workflow.
+README and HANDOVER links remain applicable without edits; TODO root and the two
+relevant Stage 2 task records are reconciled in the same close-out. Other stages,
+D2, wider phase acceptance, compatibility retirement and deferred test cleanup
+remain separate. The Stage 2-only implementation skip instruction is not a blanket
+skip for future unrelated work. No merge, deployment, owner/deadline/priority/order
+change or future external-write approval is included.

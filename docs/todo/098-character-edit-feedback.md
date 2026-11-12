@@ -2,15 +2,24 @@
 
 [Back to TODO index](../../TODO.md)
 
-## Current Stage 2 reconciliation - 2026-11-12
+## Stage 2 close-out - 2026-11-12
 
-SG-TODO-009.7-S2. Status: in progress; all named Stage 2 implementation groups
-are delivered through 09c2f0912c77efdeffcd00f007470aae57b80622. Final combined
-composition-test/status integration is prepared; combined validation and bounded
-acceptance remain pending. No further planned handler migration was identified
-in the bounded source/delivery reconciliation. This is not Stage 2 acceptance.
+SG-TODO-009.7-S2. Status: completed and closed for the agreed bounded Stage 2
+scope. After reviewing the successful final local all-suite evidence, the user
+explicitly accepted Stage 2 and requested its close-out on 2026-11-12.
+This closes Stage 2, not Stage 1, Stages 3-4, either whole feedback deliverable
+or phase 009.7. 4A.1-4A.13 remain closed for their previously accepted scopes.
 
-| Delivered group | Implementation reference / effective owner |
+Final tested revision: c7dce86f810e78858e361ac87cd7b9a8a5788deb, including the
+combined loaded-Admin reconciliation. Completed suite=all evidence is published
+at a65c0ed4240ad78868cab7cf3e79f132ad3da46a under
+local-tests-c7dce86/run-20261112T054019Z-4vJTEQ. Metadata identifies that exact
+revision, completed=1 and overall exit 0; all 77 listed command invocations exit 0.
+This accepted local covering execution satisfies the automated-validation gate;
+a separate hosted CI run is not required. It is not a GitHub Actions result.
+[Detailed close-out evidence and limits](../handover/510-bulk-join-pane-feedback.md#stage-2-bounded-close-out---2026-11-12).
+
+| Accepted delivered group | Implementation reference / effective owner |
 |---|---|
 | Candidate selection / pending submit | d87579b; monster-candidate-selection.js |
 | Source review | 9ab6df2; monster-refresh-review.js |
@@ -24,69 +33,72 @@ in the bounded source/delivery reconciliation. This is not Stage 2 acceptance.
 | Select-dead | ab730d4; bulk-select-all.js |
 | Bulk Join pane success | 09c2f091; late initiative-join-gate.js wrapper |
 
-The 11 rows group delivered work, not new acceptance requirements. Detailed
-behavior, failed runs, preparation counts, limitations and earlier criteria remain
-in handovers 380/480/490/500/510 and the
-[pre-reconciliation task record](https://github.com/dajomas/Scrying-Glass/blob/09c2f0912c77efdeffcd00f007470aae57b80622/docs/todo/098-character-edit-feedback.md).
-Earlier prepared/unfinished wording must not be read as requiring these features
-to be reimplemented. 4A.1-4A.13 remain closed for their accepted scopes.
+The 11 rows group accepted work, not new acceptance requirements. No outstanding
+agreed Stage 2 handler migration or corrective implementation is indicated by
+the reviewed final results. Other-stage callers and compatibility retirement
+are not silently included in this acceptance.
+
+## Current Stage 2 reconciliation - 2026-11-12
+
+Reconciliation was delivered as c7dce86, not left as an uncommitted draft. Its
+new combined browser scenario passed in the final local run. Implementation,
+reconciliation, automated validation and bounded acceptance are now recorded.
+Detailed histories, criteria, failed runs and preparation limits remain in
+handovers 380/480/490/500/510 and the
+[pre-close-out task record](https://github.com/dajomas/Scrying-Glass/blob/c7dce86f810e78858e361ac87cd7b9a8a5788deb/docs/todo/098-character-edit-feedback.md).
+Historical pending wording does not reopen accepted Stage 2 work or relabel
+older failed runs. No priority, owner, deadline, order or unrelated status changes.
 
 ## SG-TODO-009.7 - Current checkpoint status - 2026-11-11
 
-Historical checkpoint details are preserved in the pre-reconciliation task record
-linked above and numbered handovers. The dated current reconciliation supersedes
-those implementation-status notes, not their acceptance/evidence boundaries.
-No priority, owner, deadline, order or unrelated task status changes.
+Historical checkpoint details remain in the linked pre-close-out record and
+numbered handovers. The dated close-out supersedes their pending Stage 2 status,
+not their historical evidence or limits.
 
 ## Preservation and remaining gates
 
-Preserve JSON/FormData, HP/dice/bonus/source tokens, selected files, drafts,
-selection behavior, server authorization/validation and accepted global Join
-ownership. Retain explicit identities, persistent independent errors, matching
-recovery, 3s pane successes, distinct no-replay refresh guidance, duplicate
-protection and stale scope/session/timer suppression. Native File/FormData/events,
-focus, loaded-Admin and retained reader/runner/tamper/browser suites still require
-covering evidence where specified. Focused mocked checks do not establish native
-or authenticated live-server acceptance; state any unperformed manual/accessibility
-checks explicitly and seek bounded acceptance rather than inventing results.
-Equivalent successful local or hosted evidence counts for its exact revision/scope;
-both are not required. Keep accepted 009.6 behavior and all existing gates intact.
+The Stage 2 automated-validation and bounded-acceptance gates are satisfied on
+the evidence above. Preserve JSON/FormData, HP/dice/bonus/source tokens, files,
+drafts, selection behavior, authorization/validation, global Join ownership,
+explicit identities, independent persistent errors, matching recovery, 3s pane
+successes, distinct no-replay refresh guidance and stale/duplicate safeguards.
+Accepted 009.6 behavior and other existing contracts remain intact.
+
+Native intercepted-HTTP fixtures are not authenticated live-server/provider,
+human visual/manual workflow, screen-reader or exhaustive accessibility evidence.
+No unperformed check is claimed. The user's bounded acceptance resolves Stage 2
+on the stated evidence; wider phase validation stays with its existing scope.
 
 ## Select-dead - 2026-11-12
 
-SG-TODO-009.7-S2-SELECT-DEAD. Implementation delivered at
-ab730d4498ac1e7a4cadb321ea8f391f45a60eef; combined validation and acceptance pending.
-Historical preparation passed 13 tests (12 new plus retained regression file) and
-three negative controls. [Scope, criteria and limits](../handover/500-select-dead-feedback.md).
+SG-TODO-009.7-S2-SELECT-DEAD. Completed and closed within accepted Stage 2.
+Implementation ab730d4498ac1e7a4cadb321ea8f391f45a60eef is covered by the final
+c7dce86 all-suite run. Direct review confirms its 12-case feedback suite passed;
+its retained regression invocation also exits 0 in the summary.
+[Scope and preparation history](../handover/500-select-dead-feedback.md).
 
 ## Bulk Join pane success - 2026-11-12
 
-SG-TODO-009.7-S2-BULK-JOIN. Implementation delivered at
-09c2f0912c77efdeffcd00f007470aae57b80622; combined validation and acceptance pending.
-Historical preparation passed 49 tests (37 core/Join and 12 retained gate cases)
-and four negative controls. [Scope, criteria and limits](../handover/510-bulk-join-pane-feedback.md).
+SG-TODO-009.7-S2-BULK-JOIN. Completed and closed within accepted Stage 2.
+Implementation 09c2f0912c77efdeffcd00f007470aae57b80622 is covered by the final
+c7dce86 run. Direct review confirms core/Join 37/37 and retained gate 12/12 passed.
+[Scope and detailed evidence](../handover/510-bulk-join-pane-feedback.md).
 
 ## Final composition reconciliation - 2026-11-12
 
-SG-TODO-009.7-S2-RECONCILIATION. Status: in progress; test/status payload prepared.
-The existing loaded-Admin fixture gains one combined case covering selection,
-roll-all, bulk Join rejection/recovery, separate refresh failure, unrelated Reset
-error, draft/selection retention and no mutation replay. All 15 existing class
-method ASTs remain unchanged. Full module compilation and five AST-isolated
-inventory tests passed; no browser/full-suite run is claimed for this preparation.
-[Reconciliation findings and limits](../handover/510-bulk-join-pane-feedback.md#final-stage-2-reconciliation---2026-11-12).
+SG-TODO-009.7-S2-RECONCILIATION. Completed and closed within accepted Stage 2.
+The new selection/roll-all/bulk-Join coexistence case, all four retained loaded-Admin
+scenarios and all five inventory tests are explicitly marked ok in the reviewed
+Python log portion. Source/assembly/identity/tamper/reader/runtime checks visible
+there also pass. The large log was truncated; no exhaustive tail review, full
+Python test count or suite-wide zero-skips claim is made.
 
-Remaining actions:
-1. Obtain exact-content approval and push this final test/status integration.
-2. Run the complete configured suite against that committed revision and review
-   completed evidence, including the new loaded-Admin scenario; correct actual
-   failures with fresh approval if needed. Earlier green cd1599e7 does not cover
-   ed6a211, ab730d4 or 09c2f091.
-3. Obtain bounded Stage 2 acceptance and reconcile its status without closing
-   Stage 1, Stages 3-4, either whole feedback deliverable or phase 009.7.
+Stage 2 remaining actions: none within the accepted bounded scope. Stage 1,
+Stages 3-4, Deliverable 2, wider 009.7 acceptance, compatibility retirement and
+the deferred test-suite cleanup remain separate unfinished work. Do not infer
+whole-deliverable or phase close-out, merge or deployment.
 
-Retain [skip ci] for this push as requested; no workflow changes or separate
-dispatch. Combined validation remains pending until a final exact-revision run
-is arranged. Inactive-source/pane-compatibility retirement and deferred test-suite
-cleanup remain outside this scope. Do not mark completed solely because code is
-pushed or metadata sizes agree with pins. No merge or deployment.
+This close-out changes documentation only and includes [skip ci]. It runs no
+new tests, changes no runtime/test/pin/workflow files and dispatches no workflow.
+The earlier Stage 2 implementation skip instruction does not authorize skipping
+future unrelated implementation pushes; ordinary repository CI rules apply.

@@ -2,6 +2,25 @@
 
 [Back to TODO index](../../TODO.md)
 
+## Stage 2 close-out - 2026-11-12
+
+Completed and closed within the agreed Stage 2 acceptance. The final tested
+revision c7dce86f810e78858e361ac87cd7b9a8a5788deb has green completed suite=all
+local evidence at a65c0ed4240ad78868cab7cf3e79f132ad3da46a,
+local-tests-c7dce86/run-20261112T054019Z-4vJTEQ. Overall exit and all 77 listed
+command exits are 0; the new combined loaded-Admin scenario explicitly passed.
+Following review, the user accepted Stage 2 and requested close-out on 2026-11-12.
+
+Raw-roll, monster Edit, its composition fixture correction and roll-all are
+therefore closed for their bounded Stage 2 scopes. Direct Node review confirms
+roll-all 15/15; the complete suite and composition evidence cover the final batch.
+[Accepted status, evidence and limits](098-character-edit-feedback.md#stage-2-close-out---2026-11-12).
+The dated entries below remain preparation/delivery history, not outstanding
+Stage 2 work. No earlier failed run is relabelled and no unperformed manual/live/
+accessibility check is claimed. Stage 1, Stages 3-4, both whole deliverables and
+009.7 remain open; no compatibility retirement, merge or deployment is included.
+This documentation-only update uses [skip ci] and executes no new tests or workflows.
+
 ## Step 1 - 2026-11-11
 
 Status: in progress; implementation and regression tests prepared, covering
