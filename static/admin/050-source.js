@@ -1,3 +1,17 @@
+// Stage 1 Step 1D.1: delete validation/request ownership; follow-up retained for 1D.2.
+let campaignDeleteSession = 0, campaignDeleteRevision = 0, campaignDeletePending = false;
+const campaignDeleteFeedback = (operation, target, label) => window.scryingAdminFeedback.begin({
+    lane: 'page', region: 'campaign', operation, target, label,
+});
+const campaignDeleteForm = document.querySelector('#campaignDeleteForm');
+campaignDeleteForm.addEventListener('input', () => { campaignDeleteRevision++; });
+campaignDeleteForm.addEventListener('reset', () => { campaignDeleteRevision++; });
+const campaignDeleteCancel = document.querySelector('#cancelCampaignDelete').onclick;
+document.querySelector('#cancelCampaignDelete').onclick = () => {
+    campaignDeleteSession++;
+    campaignDeleteCancel();
+};
+
 function renderCampaignDeleteDialog() {
     const campaign = campaignById(document.querySelector('#campaignDeleteTarget').value);
     if (!campaign) {
@@ -29,10 +43,14 @@ function renderCampaignDeleteDialog() {
 }
 
 document.querySelector('#deleteCampaign').onclick = () => {
+    campaignDeleteSession++;
+    const feedback = window.scryingAdminFeedback;
+    const validation = campaignDeleteFeedback('campaign.delete.open', 'campaign-delete-selection', 'Delete campaign');
     if (campaignData.campaigns.length <= 1) {
-        paneNotification('campaign', 'The last remaining campaign cannot be deleted');
+        feedback.publish(validation, {severity: 'error', text: 'The last remaining campaign cannot be deleted'});
         return;
     }
+    feedback.resolve(validation);
     // Preselect the first campaign that is NOT active, so the active campaign is
     // never deleted by accident; it can still be chosen explicitly.
     const initial =
@@ -49,24 +67,30 @@ document.querySelector('#deleteCampaign').onclick = () => {
     campaignDeleteModal.hidden = false;
 };
 
-document.querySelector('#campaignDeleteTarget').onchange = renderCampaignDeleteDialog;
-document.querySelector('#campaignDeleteAction').onchange = renderCampaignDeleteDialog;
+const campaignDeleteChanged = () => { campaignDeleteRevision++; renderCampaignDeleteDialog(); };
+document.querySelector('#campaignDeleteTarget').onchange = campaignDeleteChanged;
+document.querySelector('#campaignDeleteAction').onchange = campaignDeleteChanged;
+document.querySelector('#campaignDeleteMoveTo').onchange = () => { campaignDeleteRevision++; };
 
 document.querySelector('#campaignDeleteForm').onsubmit = async event => {
     event.preventDefault();
+    if (campaignDeletePending || campaignDeleteModal.hidden) return;
+    const feedback = window.scryingAdminFeedback;
+    const validation = campaignDeleteFeedback('campaign.delete.validation', 'campaign-delete-selection', 'Delete campaign');
     const campaignId = document.querySelector('#campaignDeleteTarget').value;
     const campaign = campaignById(campaignId);
     if (!campaign) {
-        paneNotification('campaign', 'Choose a campaign to delete');
+        feedback.publish(validation, {severity: 'error', text: 'Choose a campaign to delete'});
         return;
     }
     const moveTo = document.querySelector('#campaignDeleteMoveTo').value;
     const hasSetups = campaign.setups.length > 0;
     const deleteSetups = hasSetups && document.querySelector('#campaignDeleteAction').value === 'delete';
     if (hasSetups && !deleteSetups && (!moveTo || moveTo === campaignId)) {
-        paneNotification('campaign', 'Choose another campaign to move the battle setups to');
+        feedback.publish(validation, {severity: 'error', text: 'Choose another campaign to move the battle setups to'});
         return;
     }
+    feedback.resolve(validation);
     const query = !hasSetups
         ? ''
         : deleteSetups
@@ -85,24 +109,48 @@ document.querySelector('#campaignDeleteForm').onsubmit = async event => {
         : !confirm(`Delete campaign ${campaign.name}?${setupNote}`)) {
         return;
     }
+    const owner = campaignDeleteSession, revision = campaignDeleteRevision, registry = campaignData;
+    const origin = feedback.encounterContext();
+    const action = document.querySelector('#campaignDeleteAction').value;
+    const ticket = campaignDeleteFeedback('campaign.delete', JSON.stringify(['campaign-delete', campaignId]), 'Delete campaign');
+    const submit = document.querySelector('#campaignDeleteForm .danger'), disabled = submit.disabled;
+    let result;
+    const same = () => {
+        const now = feedback.encounterContext();
+        const unchanged = now.scope === origin.scope && now.epoch === origin.epoch;
+        const intended = result && now.epoch === origin.epoch + 1 && now.scope ===
+            JSON.stringify([result.active, result.opened_setup ? result.active : null, result.opened_setup || null]);
+        return !campaignDeleteModal.hidden && campaignDeleteSession === owner && campaignDeleteRevision === revision &&
+            campaignData === registry && document.querySelector('#campaignDeleteTarget').value === campaignId &&
+            document.querySelector('#campaignDeleteAction').value === action &&
+            document.querySelector('#campaignDeleteMoveTo').value === moveTo && (unchanged || intended);
+    };
+    campaignDeletePending = true; submit.disabled = true;
     try {
-        const result = await request(`/api/campaigns/${encodeURIComponent(campaignId)}${query}`, {
-            method: 'DELETE',
-        });
-        campaignData = result;
-        campaignDeleteModal.hidden = true;
-        document.querySelector('#setupSelect').value = '';
-        const opened = await applyOpenedSetup(result);
-        paneNotification(
-            'campaign',
-            `Deleted campaign: ${campaign ? campaign.name : campaignId}` +
-            (result.moved && result.moved.length ? ` (moved ${result.moved.length} setup(s))` : '') +
-            (result.deleted_setups && result.deleted_setups.length ? ` (deleted ${result.deleted_setups.length} setup(s))` : '') +
-            opened,
-        );
-    } catch (error) {
-        paneNotification('campaign', error.message);
-    }
+        try {
+            result = await request(`/api/campaigns/${encodeURIComponent(campaignId)}${query}`, {method: 'DELETE'});
+        } catch (error) {
+            if (same() && feedback.isCurrent(ticket)) feedback.publish(ticket, {severity: 'error', text: error.message});
+            return;
+        }
+        if (!same() || !feedback.isCurrent(ticket)) return;
+        feedback.resolve(ticket);
+        if (!same()) return; // The settled request ticket is not a subsequent context guard.
+        // Existing applied-deletion/setup/success/error behavior belongs to 1D.2.
+        try {
+            campaignData = result;
+            campaignDeleteModal.hidden = true;
+            document.querySelector('#setupSelect').value = '';
+            const opened = await applyOpenedSetup(result);
+            paneNotification(
+                'campaign',
+                `Deleted campaign: ${campaign ? campaign.name : campaignId}` +
+                (result.moved && result.moved.length ? ` (moved ${result.moved.length} setup(s))` : '') +
+                (result.deleted_setups && result.deleted_setups.length ? ` (deleted ${result.deleted_setups.length} setup(s))` : '') +
+                opened,
+            );
+        } catch (error) { paneNotification('campaign', error.message); }
+    } finally { submit.disabled = disabled; campaignDeletePending = false; }
 };
 
 document.querySelector('#openCampaignSetup').onclick = async () => {
