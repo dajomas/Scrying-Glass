@@ -27,63 +27,33 @@ That is a historical baseline, not the modified 009.7 checkpoint's identity.
 The service account needs a writable temporary directory for the generated bundle.
 See [Admin split details](docs/handover/050-admin-script-split.md).
 
-The features/perplexity-009.7 branch contains an explicitly incomplete feedback
-checkpoint. Controller-backed wiring, state-load feedback and scoped Start/restart
-request feedback are included, but remaining callers still use a temporary neutral
-compatibility route. Start/restart request feedback (4A.2) is completed after
-verified successful covering CI and the user's close-out request on 2026-11-10.
-Final Deliverable 1 producer coverage/validation and the wider phase remain open;
-Start eligibility/tie-order feedback is separate 4A.3 work. Do not deploy this branch
-as a completed increment or infer phase acceptance. See
-[close-out evidence and remaining scope](docs/handover/380-feedback-delivery-plan.md#4a2-close-out---2026-11-10).
+### Current 009.7 feedback status - 2026-11-12
 
-Campaign feedback continuation (2026-11-12): creation is delivered at
-3c144a2279adf9446bf0f0c082df9aa3065961c4. The 1B archive adds explicit campaign-edit
-validation, persistent request errors and three-second pane successes, preserving
-newer drafts/sessions and distinguishing a saved campaign from a view-rendering
-failure. It does not change switching/deletion or add automatic retries. Publication,
-covering validation and bounded acceptance remain separate; see the
-[current campaign record](docs/handover/520-campaign-operation-feedback.md).
+Stage 1 is completed and closed for its agreed scope following the user's explicit
+acceptance on 2026-11-12 at 19:45 CET. It covers campaign create/edit/switch/delete;
+setup create/save/load/switch/rename/delete; setup copy/move between campaigns;
+and View screen background apply/clear/upload. Persistent actionable errors,
+matching resolution, early three-second pane successes, distinct completed-mutation/
+failed-refresh reporting and guarded no-replay follow-up are retained, with existing
+endpoints, payloads, permissions, confirmations and setup behavior preserved.
 
-Switch feedback continuation (1C.1, 2026-11-12): campaign-switch validation and
-request errors now have persistent explicit identities and obsolete-result/
-duplicate protection. The existing success/setup/refresh follow-up remains for
-1C.2; this archive is not complete switch-feedback migration or phase acceptance.
-No switch endpoint/payload/confirmation changes, automatic retries or deletion work.
+Final Stage 1 implementation cc0b67b177772e314b608817f6f51cecc322a065 is covered
+by successful Branch tests 43279736032 attempt 1; evidence publication
+97eedc6da52abcfa94526fee25a3c321f0626844. Run/job metadata and all configured
+validation-stage outcomes were reviewed; this does not claim individual review of
+every log/screenshot or new authenticated live-server, human visual, screen-reader
+or exhaustive accessibility verification. [Stage 1 close-out and history](docs/handover/530-setup-operation-feedback.md#stage-1-accepted-close-out---2026-11-12)
+supersedes the earlier campaign/setup archive-pending notes. Deploy all changed
+assets and template references together; setup-switch.js is referenced with ?v=2.
 
-Current switch feedback (1C.2, 2026-11-12): success now appears before refresh
-and expires after three seconds. A successful activation followed by failed
-refresh produces a separate persistent error with reload/no-replay guidance.
-Independent refresh tickets, selection revisions and scope/epoch guards preserve
-newer selections/feedback. Busy protection spans refresh. Earlier 1C.1 legacy-
-follow-up wording above describes that published checkpoint only. This archive
-completes the agreed 1C implementation, not covering validation or acceptance;
-1D and wider 009.7 scope remain open. See the current campaign handover.
-
-Campaign deletion feedback (1D.2b, 2026-11-12): this final implementation archive
-adds explicit three-second deletion success before refresh and persistent feedback
-when deletion completed but view refresh failed, with reload/no-replay guidance.
-Operation ownership guards setup rendering, state observation and error publication;
-reopened dialogs/newer selections remain protected. Existing deletion confirmations,
-move/delete-setup choices, endpoints, queries and permissions are unchanged. Earlier
-delivery paragraphs describe historical checkpoints, not current acceptance.
-Refresh ownership is opt-in: other setup/state callers retain default behavior.
-Updated bootstrap/request-wrapper assets have cache-version bumps; deploy all files
-from the archive together. The final commit omits the CI skip marker for normal push
-CI. Publication, integrated CI review and bounded acceptance remain pending; Stage 1,
-Deliverable 1 and wider 009.7 scope remain open. See the current campaign handover.
-
-Setup creation feedback (2A, 2026-11-12): New setup validation and request errors
-persist in the Battle setup pane until dismissed or resolved by a matching retry;
-success appears right after the setup is created and expires after three seconds.
-If the setup was created but refreshing the list/state fails, a separate persistent
-error advises reloading rather than creating the setup again; nothing is replayed.
-Duplicate clicks are ignored through refresh and newer typing is preserved.
-
-Setup save, load/switch, rename and delete feedback (2B-2E, 2026-11-12) follows the
-same pattern in the Battle setup pane: persistent validation/request errors, early
-three-second success, and a separate persistent no-replay error when the operation
-completed but the refresh failed. Setup copy/move (campaign pane) and View screen background apply/clear/upload (Battle Setup pane) use the same guarded lifecycle (Stage 1 Step 3, archive pending CI). See [530](docs/handover/530-setup-operation-feedback.md).
+Stage 2 and accepted global units 4A.1-4A.13 also remain closed. Stage 3 local-feature/
+lair/selected-campaign viewer integration is next; Stage 4 integration/responsive/
+accessibility hardening, approved compatibility retirement, Deliverable 1 acceptance,
+Deliverable 2 connection/recovery/polling/field association and final 009.7/009
+acceptance remain open. Do not treat this branch as a completed 009.7 release.
+Detailed earlier checkpoints are preserved in the
+[pre-close-out README](https://github.com/dajomas/Scrying-Glass/blob/97eedc6da52abcfa94526fee25a3c321f0626844/README.md)
+and numbered handovers. No optional work is added to the finish line.
 
 Legacy source-reading tests use a disposable assembled checkout:
 
