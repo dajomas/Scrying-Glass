@@ -240,3 +240,66 @@ installColorPreview('#backgroundColor', '#backgroundColorPreview',);
 
 load();
 setups();
+
+// Stage 1 Step 1C.1: switch validation/request ownership; legacy follow-up retained.
+(() => {
+    if (typeof switchCampaign !== 'function') return;
+    const select = document.querySelector('#campaignSelect'), button = document.querySelector('#switchCampaign');
+    let pending = false, revision = 0;
+    select.addEventListener('input', () => { revision++; });
+    switchCampaign = async function() {
+        if (pending) return;
+        const feedback = window.scryingAdminFeedback, id = select.value;
+        const selectionSpec = {lane: 'page', region: 'campaign', operation: 'campaign.switch.validation',
+            target: 'campaign-switch-selection', label: 'Choose campaign to switch to'};
+        const validation = feedback.begin(selectionSpec);
+        const revert = () => { select.value = campaignData.active || ''; };
+        if (!id) {
+            revert();
+            feedback.publish(validation, {severity: 'error', text: 'Choose a campaign to switch to'});
+            return;
+        }
+        if (id === campaignData.active) {
+            feedback.resolve(validation);
+            feedback.publish(feedback.begin(selectionSpec), {severity: 'info', text: `${activeCampaign()?.name || id} is already the active campaign`});
+            return;
+        }
+        feedback.resolve(validation);
+        const target = campaignById(id);
+        if (!confirm(`Switch to campaign ${target ? target.name : id}?\n\n${REPLACE_WARNING}`)) { revert(); return; }
+        const registry = campaignData, owner = revision, origin = feedback.encounterContext();
+        const ticket = feedback.begin({lane: 'page', region: 'campaign', operation: 'campaign.switch',
+            target: JSON.stringify(['campaign-switch', id]), label: 'Switch campaign'});
+        let result;
+        const same = () => {
+            const now = feedback.encounterContext();
+            const unchanged = now.epoch === origin.epoch && now.scope === origin.scope;
+            const intended = result && now.epoch === origin.epoch + 1 && now.scope ===
+                JSON.stringify([result.active, result.opened_setup ? result.active : null, result.opened_setup || null]);
+            return revision === owner && select.value === id && campaignData === registry && (unchanged || intended);
+        };
+        const disabled = button.disabled;
+        pending = true; button.disabled = true;
+        try {
+            try { result = await request(`/api/campaigns/${encodeURIComponent(id)}/activate`, {method: 'POST'}); }
+            catch (error) {
+                if (same() && feedback.isCurrent(ticket)) {
+                    revert(); feedback.publish(ticket, {severity: 'error', text: error.message});
+                }
+                return;
+            }
+            if (!same() || !feedback.isCurrent(ticket)) return;
+            feedback.resolve(ticket);
+            if (!same()) return; // A settled ticket is not a subsequent relevance guard.
+            // Existing applied-switch/setup/success/error behavior belongs to 1C.2.
+            try {
+                campaignData = result;
+                document.querySelector('#setupSelect').value = '';
+                const opened = await applyOpenedSetup(campaignData);
+                paneNotification('campaign', `Switched to campaign: ${activeCampaign()?.name || id}${opened}`);
+            } catch (error) { revert(); paneNotification('campaign', error.message); }
+        } finally { button.disabled = disabled; pending = false; }
+    };
+    button.onclick = switchCampaign;
+    select.onchange = () => { revision++; return switchCampaign(); };
+})();

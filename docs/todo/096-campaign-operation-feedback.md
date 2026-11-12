@@ -4,11 +4,10 @@
 
 ## SG-TODO-009.7 Stage 1 Step 1 - 2026-11-12
 
-Status: 1A implementation delivered; 1B edit implementation prepared as an
-archive-only delivery. Publication, covering validation and bounded acceptance
-pending. Foundation delivered at 64e9873f2def145cbd133f1008b69e05d71e14c8.
-1A creation delivered at 3c144a2279adf9446bf0f0c082df9aa3065961c4. This archive
-implements 1B only; no GitHub write or acceptance is claimed.
+Status: 1A/1B implementations published; 1C.1 switch-request archive prepared.
+1B publication: 385ad5690f2783c1bb22767cba80b2bae5dff0db. Covering validation and bounded
+acceptance remain separate/pending. This delivery implements only 1C.1; no new
+GitHub write or acceptance is claimed. The approved 1C split does not add scope.
 [Parent plan](097-feedback-delivery-plan.md) and
 [evidence/remaining work](../handover/520-campaign-operation-feedback.md).
 
@@ -19,7 +18,8 @@ The agreed four deliveries replace combined Step 1 without expanding scope:
   newer-input preservation and obsolete feedback suppression; implemented in this
   archive, publication/covering validation/acceptance pending.
 - 1C Switch: request/success, intentional campaign/setup transition, applied switch
-  versus refresh failure; retain setup-opening rules; not implemented here.
+  versus refresh failure; retain setup-opening rules. Split into 1C.1 request/validation
+  (this archive) and 1C.2 success/refresh (pending).
 - 1D Delete: validation/request/success, completed deletion versus refresh failure;
   retain confirmations and move/delete-setup options/dialog; not implemented here.
 
@@ -52,3 +52,15 @@ the agreed validation sequence, obtain bounded acceptance, then implement 1C and
 1D. No new acceptance gate or test-cleanup prerequisite is added. New Node/Python
 files match existing CI discovery; no workflow changes or dispatch. The archive
 message includes [skip ci] for intermediate 1B; final 1D retains normal push CI.
+
+## 1C.1 request/validation archive - 2026-11-12
+
+1C.1 implementation prepared; publication/covering validation/acceptance pending.
+10 switch-request Node tests and 3 complete-Admin switch Chromium scenarios pass;
+retained creation (14 Node/3 browser), font (18), context (9) and source checks (4)
+also pass. Three negative controls detected. Scoped fixtures are not full-suite
+or live-server/accessibility evidence. See current 520 handover for exact base,
+identities and limits. Existing success/setup/refresh behavior remains legacy for
+1C.2; no false claim of complete 1C. Intermediate message includes [skip ci].
+Next: publish/review this archive, then implement 1C.2 under the existing sequence;
+1D remains excluded. Final 1D normal push CI and deferred test cleanup unchanged.

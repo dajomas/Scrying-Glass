@@ -2,7 +2,67 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-## Current: 1B edit archive - 2026-11-12
+## Current: 1C.1 switch validation/request archive - 2026-11-12
+
+Base: 385ad5690f2783c1bb22767cba80b2bae5dff0db, published 1B edit implementation verified from GitHub.
+Only 1C.1 is prepared here; no GitHub write, new commit, acceptance or hosted CI
+outcome is claimed. The older 1B preparation status below is historical: its
+publication is now verified, not its full covering validation or acceptance.
+
+Approved split replaces the single 1C delivery without adding scope:
+- 1C.1: validation and request errors, target identity, duplicate/stale protection.
+- 1C.2: explicit success feedback and applied-switch versus refresh-failure handling,
+  late-refresh guards and completion of transition-aware feedback.
+1D and wider work are excluded. Prior accepted Stage 2/global scopes stay closed.
+
+080 installs a switch-specific owner and rebinds both the switch button and
+selection onchange entry points. Validation uses campaign.switch.validation,
+page scope and a selection-action target. Request errors use campaign.switch and
+JSON campaign-ID targets; errors persist and only matching recovery resolves them.
+Already-active selection retains informational wording, not false mutation success.
+Missing selection/confirmation cancellation retains existing revert behavior.
+POST /api/campaigns/<encoded-id>/activate, no extra headers/body, replacement
+confirmation, permissions and explicit retry remain unchanged. No automatic replay.
+
+Request completion checks selection revision (including away-return), registry
+reference, encounter scope/epoch and current feedback ticket. A single expected
+activation before the response is allowed to preserve successful switching.
+Request success resolves its matching error before the original setup-opening and
+legacy pane-success/error follow-up. A settled ticket is not reused as a guard.
+Duplicate switch submissions are blocked through that retained follow-up, restoring
+prior button-disabled state. Older outcomes cannot revert newer selections or
+replace newer registries/feedback. Creation/edit implementations remain byte-for-
+byte intact; 040, applyOpenedSetup and deletion are unchanged.
+
+Intentional limitation: success and post-activation refresh/error feedback still
+use the legacy follow-up, including load()'s existing error behavior. This is NOT
+completed 1C or a claim that refresh-failure distinction/late-refresh protection
+are finished. Those belong to 1C.2, not a newly added gate.
+
+Only 080 changes among eight fragments: 16,031 UTF-8 bytes, SHA-256
+14448725580d101e4bb10f2101d13bb375e1e4f00acdcab93e9f0747a7380082.
+Bundle: 140,550 bytes. Corresponding 080 digest and bundle-size pin updated;
+other hashes/order/20,000-byte checks and tracked failure marker retained.
+
+Executed scoped checks: 10 switch-request Node tests, 14 retained creation Node,
+18 retained font Node, 9 context Node, 4 source/assembly/pin/tamper/syntax checks,
+and 6 full-Admin intercepted-HTTP Chromium cases (3 switch, 3 retained creation).
+Switch browser cases also verify 1B edit errors/drafts remain independent. Three
+negative controls (selection revision, registry and epoch) were detected; restored
+switch suite passes. Initial validation test caught info publication retaining a
+previous error; explicit matching resolution before publishing info fixes it.
+These are not full-suite, hosted CI, authenticated live-server, human visual or
+screen-reader acceptance. Existing discovery finds new suites; no workflow edit
+or dispatch. README and indexed campaign records updated, full history retained.
+
+Archive only, with complete replacement files, full TODO/handover context, exact
+change manifest/base hashes, review diff, logs, safe apply helper and
+Patch/COMMIT_MESSAGE.txt containing [skip ci]. Patch is not repository content;
+unchanged context is not copied by the helper. No deletions/renames. Do not use
+newzip.sh unchanged (it stages Patch and uses commit -a). 1C.1 publication/covering
+validation/acceptance, 1C.2, 1D and wider gates remain pending; cleanup stays deferred.
+
+## Historical: 1B edit archive - 2026-11-12
 
 Base: 02c7e12d3242da4545abb5cdd333e54e1e99335b, matching the uploaded source
 snapshot and live branch when preparation began. Archive only; no new commit,

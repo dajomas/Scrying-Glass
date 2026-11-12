@@ -45,6 +45,12 @@ failure. It does not change switching/deletion or add automatic retries. Publica
 covering validation and bounded acceptance remain separate; see the
 [current campaign record](docs/handover/520-campaign-operation-feedback.md).
 
+Switch feedback continuation (1C.1, 2026-11-12): campaign-switch validation and
+request errors now have persistent explicit identities and obsolete-result/
+duplicate protection. The existing success/setup/refresh follow-up remains for
+1C.2; this archive is not complete switch-feedback migration or phase acceptance.
+No switch endpoint/payload/confirmation changes, automatic retries or deletion work.
+
 Legacy source-reading tests use a disposable assembled checkout:
 
 ```bash
