@@ -1,0 +1,232 @@
+TAP version 13
+# Subtest: characters patch: exactly one persistent rejection and no pane duplicate
+ok 1 - characters patch: exactly one persistent rejection and no pane duplicate
+  ---
+  duration_ms: 37.116149
+  type: 'test'
+  ...
+# Subtest: characters patch: network error is reported once without replay
+ok 2 - characters patch: network error is reported once without replay
+  ---
+  duration_ms: 0.819903
+  type: 'test'
+  ...
+# Subtest: characters bulk: exactly one persistent rejection and no pane duplicate
+ok 3 - characters bulk: exactly one persistent rejection and no pane duplicate
+  ---
+  duration_ms: 0.957283
+  type: 'test'
+  ...
+# Subtest: characters bulk: network error is reported once without replay
+ok 4 - characters bulk: network error is reported once without replay
+  ---
+  duration_ms: 0.647697
+  type: 'test'
+  ...
+# Subtest: characters: blocked click then matching core retry preserves another target/error
+ok 5 - characters: blocked click then matching core retry preserves another target/error
+  ---
+  duration_ms: 1.373262
+  type: 'test'
+  ...
+# Subtest: characters: bulk key canonicalizes order without changing payload order or single target
+ok 6 - characters: bulk key canonicalizes order without changing payload order or single target
+  ---
+  duration_ms: 2.321217
+  type: 'test'
+  ...
+# Subtest: monsters patch: exactly one persistent rejection and no pane duplicate
+ok 7 - monsters patch: exactly one persistent rejection and no pane duplicate
+  ---
+  duration_ms: 0.683795
+  type: 'test'
+  ...
+# Subtest: monsters patch: network error is reported once without replay
+ok 8 - monsters patch: network error is reported once without replay
+  ---
+  duration_ms: 0.558999
+  type: 'test'
+  ...
+# Subtest: monsters bulk: exactly one persistent rejection and no pane duplicate
+ok 9 - monsters bulk: exactly one persistent rejection and no pane duplicate
+  ---
+  duration_ms: 0.854479
+  type: 'test'
+  ...
+# Subtest: monsters bulk: network error is reported once without replay
+ok 10 - monsters bulk: network error is reported once without replay
+  ---
+  duration_ms: 0.7071
+  type: 'test'
+  ...
+# Subtest: monsters: blocked click then matching core retry preserves another target/error
+ok 11 - monsters: blocked click then matching core retry preserves another target/error
+  ---
+  duration_ms: 0.811527
+  type: 'test'
+  ...
+# Subtest: monsters: bulk key canonicalizes order without changing payload order or single target
+ok 12 - monsters: bulk key canonicalizes order without changing payload order or single target
+  ---
+  duration_ms: 1.313709
+  type: 'test'
+  ...
+# Subtest: structured core request errors retain formatted field context
+ok 13 - structured core request errors retain formatted field context
+  ---
+  duration_ms: 0.667325
+  type: 'test'
+  ...
+# Subtest: non-JSON core failure retains HTTP request fallback
+ok 14 - non-JSON core failure retains HTTP request fallback
+  ---
+  duration_ms: 0.777203
+  type: 'test'
+  ...
+# Subtest: patch: stale scope failure cannot publish or refresh
+ok 15 - patch: stale scope failure cannot publish or refresh
+  ---
+  duration_ms: 0.9712
+  type: 'test'
+  ...
+# Subtest: patch: stale scope success cannot publish or refresh
+ok 16 - patch: stale scope success cannot publish or refresh
+  ---
+  duration_ms: 0.546505
+  type: 'test'
+  ...
+# Subtest: bulk: stale scope failure cannot publish or refresh
+ok 17 - bulk: stale scope failure cannot publish or refresh
+  ---
+  duration_ms: 0.605096
+  type: 'test'
+  ...
+# Subtest: bulk: stale scope success cannot publish or refresh
+ok 18 - bulk: stale scope success cannot publish or refresh
+  ---
+  duration_ms: 0.629883
+  type: 'test'
+  ...
+# Subtest: superseded failure cannot replace current rejection
+ok 19 - superseded failure cannot replace current rejection
+  ---
+  duration_ms: 0.729903
+  type: 'test'
+  ...
+# Subtest: superseded success cannot replace current rejection
+ok 20 - superseded success cannot replace current rejection
+  ---
+  duration_ms: 1.070899
+  type: 'test'
+  ...
+# Subtest: patch: refresh failure is not a Join rejection or mutation replay
+ok 21 - patch: refresh failure is not a Join rejection or mutation replay
+  ---
+  duration_ms: 2.081654
+  type: 'test'
+  ...
+# Subtest: bulk: refresh failure is not a Join rejection or mutation replay
+ok 22 - bulk: refresh failure is not a Join rejection or mutation replay
+  ---
+  duration_ms: 0.657295
+  type: 'test'
+  ...
+# Subtest: non-Join patch, leave and bulk actions delegate to explicit local feedback
+ok 23 - non-Join patch, leave and bulk actions delegate to explicit local feedback
+  ---
+  duration_ms: 1.440369
+  type: 'test'
+  ...
+# Subtest: empty bulk selection keeps local validation explicit without a request
+ok 24 - empty bulk selection keeps local validation explicit without a request
+  ---
+  duration_ms: 0.644191
+  type: 'test'
+  ...
+# Subtest: encoded single ID, method, headers and payload are preserved
+ok 25 - encoded single ID, method, headers and payload are preserved
+  ---
+  duration_ms: 0.470812
+  type: 'test'
+  ...
+# Subtest: late injection and repeated loading do not wrap/report twice
+ok 26 - late injection and repeated loading do not wrap/report twice
+  ---
+  duration_ms: 0.551996
+  type: 'test'
+  ...
+# Subtest: characters: pane success precedes strict refresh and expires at 3s
+ok 27 - characters: pane success precedes strict refresh and expires at 3s
+  ---
+  duration_ms: 8.585566
+  type: 'test'
+  ...
+# Subtest: monsters: pane success precedes strict refresh and expires at 3s
+ok 28 - monsters: pane success precedes strict refresh and expires at 3s
+  ---
+  duration_ms: 3.008445
+  type: 'test'
+  ...
+# Subtest: matching selected retry clears selection validation and keeps independent errors
+ok 29 - matching selected retry clears selection validation and keeps independent errors
+  ---
+  duration_ms: 1.437341
+  type: 'test'
+  ...
+# Subtest: duplicate bulk Join is suppressed through mutation and refresh even with reordered selection
+ok 30 - duplicate bulk Join is suppressed through mutation and refresh even with reordered selection
+  ---
+  duration_ms: 4.859614
+  type: 'test'
+  ...
+# Subtest: equal selected IDs in different rosters do not share a pending lock or pane identity
+ok 31 - equal selected IDs in different rosters do not share a pending lock or pane identity
+  ---
+  duration_ms: 0.920724
+  type: 'test'
+  ...
+# Subtest: obsolete bulk refresh failure preserves new-scope feedback
+ok 32 - obsolete bulk refresh failure preserves new-scope feedback
+  ---
+  duration_ms: 1.354466
+  type: 'test'
+  ...
+# Subtest: obsolete bulk refresh success preserves new-scope feedback
+ok 33 - obsolete bulk refresh success preserves new-scope feedback
+  ---
+  duration_ms: 0.924672
+  type: 'test'
+  ...
+# Subtest: refresh failure persists after success expiry and resolves on explicit matching retry
+ok 34 - refresh failure persists after success expiry and resolves on explicit matching retry
+  ---
+  duration_ms: 1.101538
+  type: 'test'
+  ...
+# Subtest: newer pane outcome suppresses obsolete bulk success and reload
+ok 35 - newer pane outcome suppresses obsolete bulk success and reload
+  ---
+  duration_ms: 0.628421
+  type: 'test'
+  ...
+# Subtest: single Join remains silent and its transport ownership marker is preserved
+ok 36 - single Join remains silent and its transport ownership marker is preserved
+  ---
+  duration_ms: 0.680169
+  type: 'test'
+  ...
+# Subtest: explicit zero count and missing-count fallback retain bulk wording
+ok 37 - explicit zero count and missing-count fallback retain bulk wording
+  ---
+  duration_ms: 0.732888
+  type: 'test'
+  ...
+1..37
+# tests 37
+# suites 0
+# pass 37
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 177.33811

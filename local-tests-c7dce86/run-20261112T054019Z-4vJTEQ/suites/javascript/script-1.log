@@ -1,0 +1,136 @@
+TAP version 13
+# Subtest: cancel retains count confirmation, existing error and pending identity
+ok 1 - cancel retains count confirmation, existing error and pending identity
+  ---
+  duration_ms: 2.64431
+  type: 'test'
+  ...
+# Subtest: empty emits explicit info without confirmation, request or refresh
+ok 2 - empty emits explicit info without confirmation, request or refresh
+  ---
+  duration_ms: 0.641656
+  type: 'test'
+  ...
+# Subtest: empty is not server success and cannot erase a matching clear failure
+ok 3 - empty is not server success and cannot erase a matching clear failure
+  ---
+  duration_ms: 0.592703
+  type: 'test'
+  ...
+# Subtest: repeated empty notices replace one info record without erasing errors
+ok 4 - repeated empty notices replace one info record without erasing errors
+  ---
+  duration_ms: 1.766087
+  type: 'test'
+  ...
+# Subtest: confirmed clear preserves one bodyless POST and publishes before refresh
+ok 5 - confirmed clear preserves one bodyless POST and publishes before refresh
+  ---
+  duration_ms: 1.603498
+  type: 'test'
+  ...
+# Subtest: success reports server count with singular wording
+ok 6 - success reports server count with singular wording
+  ---
+  duration_ms: 0.60178
+  type: 'test'
+  ...
+# Subtest: server-confirmed zero is success, distinct from the local empty shortcut
+ok 7 - server-confirmed zero is success, distinct from the local empty shortcut
+  ---
+  duration_ms: 1.44108
+  type: 'test'
+  ...
+# Subtest: request failure is persistent and never refreshes or automatically retries
+ok 8 - request failure is persistent and never refreshes or automatically retries
+  ---
+  duration_ms: 0.762404
+  type: 'test'
+  ...
+# Subtest: successful retry with changed count clears only related error and info
+ok 9 - successful retry with changed count clears only related error and info
+  ---
+  duration_ms: 0.850591
+  type: 'test'
+  ...
+# Subtest: success expires at five seconds without removing unrelated error
+ok 10 - success expires at five seconds without removing unrelated error
+  ---
+  duration_ms: 0.737036
+  type: 'test'
+  ...
+# Subtest: ordinary refresh and unrelated success cannot clear a failed clear
+ok 11 - ordinary refresh and unrelated success cannot clear a failed clear
+  ---
+  duration_ms: 0.592452
+  type: 'test'
+  ...
+# Subtest: confirmed clear and real loadState refresh failure coexist with one POST
+ok 12 - confirmed clear and real loadState refresh failure coexist with one POST
+  ---
+  duration_ms: 0.81801
+  type: 'test'
+  ...
+# Subtest: unexpected refresh rejection is not mislabeled a clear request failure
+ok 13 - unexpected refresh rejection is not mislabeled a clear request failure
+  ---
+  duration_ms: 2.323437
+  type: 'test'
+  ...
+# Subtest: old-setup success cannot publish or refresh new setup
+ok 14 - old-setup success cannot publish or refresh new setup
+  ---
+  duration_ms: 0.666588
+  type: 'test'
+  ...
+# Subtest: old-campaign failure cannot overwrite new campaign feedback
+ok 15 - old-campaign failure cannot overwrite new campaign feedback
+  ---
+  duration_ms: 0.479749
+  type: 'test'
+  ...
+# Subtest: away-and-back scope changes cannot revive old clear response
+ok 16 - away-and-back scope changes cannot revive old clear response
+  ---
+  duration_ms: 0.508874
+  type: 'test'
+  ...
+# Subtest: newer same-operation failure supersedes old success without adding concurrency policy
+ok 17 - newer same-operation failure supersedes old success without adding concurrency policy
+  ---
+  duration_ms: 0.636807
+  type: 'test'
+  ...
+# Subtest: newer success supersedes old failure
+ok 18 - newer success supersedes old failure
+  ---
+  duration_ms: 10.563186
+  type: 'test'
+  ...
+# Subtest: newer empty observation supersedes pending clear but does not clear a prior error
+ok 19 - newer empty observation supersedes pending clear but does not clear a prior error
+  ---
+  duration_ms: 0.566663
+  type: 'test'
+  ...
+# Subtest: CSV and JSON export navigation remains unchanged with no feedback or clear request
+ok 20 - CSV and JSON export navigation remains unchanged with no feedback or clear request
+  ---
+  duration_ms: 0.444732
+  type: 'test'
+  ...
+# Subtest: non-array activity data retains existing empty fallback
+ok 21 - non-array activity data retains existing empty fallback
+  ---
+  duration_ms: 0.627549
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 143.953288

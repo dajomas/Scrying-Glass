@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: persistent independent patch errors do not acquire expiry
+ok 1 - persistent independent patch errors do not acquire expiry
+  ---
+  duration_ms: 3.94733
+  type: 'test'
+  ...
+# Subtest: matching retry preserves its error until success and retains another target
+ok 2 - matching retry preserves its error until success and retains another target
+  ---
+  duration_ms: 27.716683
+  type: 'test'
+  ...
+# Subtest: empty selection publishes persistent local validation without a request
+ok 3 - empty selection publishes persistent local validation without a request
+  ---
+  duration_ms: 0.792682
+  type: 'test'
+  ...
+# Subtest: selection-only actions preserve real selection sets without new feedback
+ok 4 - selection-only actions preserve real selection sets without new feedback
+  ---
+  duration_ms: 0.607451
+  type: 'test'
+  ...
+# Subtest: cancelled bulk removal preserves feedback and named confirmation
+ok 5 - cancelled bulk removal preserves feedback and named confirmation
+  ---
+  duration_ms: 0.694876
+  type: 'test'
+  ...
+# Subtest: bulk payload keeps selection order while feedback uses canonical targets
+ok 6 - bulk payload keeps selection order while feedback uses canonical targets
+  ---
+  duration_ms: 0.815876
+  type: 'test'
+  ...
+# Subtest: individual removal preserves payload, destination, name and success
+ok 7 - individual removal preserves payload, destination, name and success
+  ---
+  duration_ms: 0.921666
+  type: 'test'
+  ...
+# Subtest: stale success cannot refresh a new encounter
+ok 8 - stale success cannot refresh a new encounter
+  ---
+  duration_ms: 1.558603
+  type: 'test'
+  ...
+# Subtest: stale failure cannot publish to a new encounter
+ok 9 - stale failure cannot publish to a new encounter
+  ---
+  duration_ms: 0.968575
+  type: 'test'
+  ...
+# Subtest: bulk refresh failure stays separate from success and does not replay
+ok 10 - bulk refresh failure stays separate from success and does not replay
+  ---
+  duration_ms: 1.173543
+  type: 'test'
+  ...
+# Subtest: patch retains encoded URL, method, headers and exact JSON values
+ok 11 - patch retains encoded URL, method, headers and exact JSON values
+  ---
+  duration_ms: 0.782382
+  type: 'test'
+  ...
+# Subtest: duplicate same-field patch stays guarded through refresh
+ok 12 - duplicate same-field patch stays guarded through refresh
+  ---
+  duration_ms: 6.18568
+  type: 'test'
+  ...
+# Subtest: old-scope cleanup cannot remove a newer pending guard
+ok 13 - old-scope cleanup cannot remove a newer pending guard
+  ---
+  duration_ms: 1.536952
+  type: 'test'
+  ...
+# Subtest: different field patches have independent pending identities
+ok 14 - different field patches have independent pending identities
+  ---
+  duration_ms: 0.93385
+  type: 'test'
+  ...
+# Subtest: successful refresh settles only its matching refresh error
+ok 15 - successful refresh settles only its matching refresh error
+  ---
+  duration_ms: 1.160474
+  type: 'test'
+  ...
+# Subtest: same IDs in different rosters do not replace each other
+ok 16 - same IDs in different rosters do not replace each other
+  ---
+  duration_ms: 0.652086
+  type: 'test'
+  ...
+# Subtest: characters patch: loaded Join owner still reports one global rejection
+ok 17 - characters patch: loaded Join owner still reports one global rejection
+  ---
+  duration_ms: 1.592086
+  type: 'test'
+  ...
+# Subtest: characters bulk: loaded Join owner still reports one global rejection
+ok 18 - characters bulk: loaded Join owner still reports one global rejection
+  ---
+  duration_ms: 0.737688
+  type: 'test'
+  ...
+# Subtest: monsters patch: loaded Join owner still reports one global rejection
+ok 19 - monsters patch: loaded Join owner still reports one global rejection
+  ---
+  duration_ms: 0.634633
+  type: 'test'
+  ...
+# Subtest: monsters bulk: loaded Join owner still reports one global rejection
+ok 20 - monsters bulk: loaded Join owner still reports one global rejection
+  ---
+  duration_ms: 0.563628
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 156.699756

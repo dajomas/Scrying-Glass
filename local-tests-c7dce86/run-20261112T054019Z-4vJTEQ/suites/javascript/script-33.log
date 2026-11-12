@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: characters: blocked click reports the name and prevents join handler
+ok 1 - characters: blocked click reports the name and prevents join handler
+  ---
+  duration_ms: 2.887079
+  type: 'test'
+  ...
+# Subtest: monsters: blocked click reports the name and prevents join handler
+ok 2 - monsters: blocked click reports the name and prevents join handler
+  ---
+  duration_ms: 0.450914
+  type: 'test'
+  ...
+# Subtest: numeric initiative permits joining, including zero and negatives
+ok 3 - numeric initiative permits joining, including zero and negatives
+  ---
+  duration_ms: 1.100826
+  type: 'test'
+  ...
+# Subtest: leaving remains allowed without initiative
+ok 4 - leaving remains allowed without initiative
+  ---
+  duration_ms: 0.400549
+  type: 'test'
+  ...
+# Subtest: saved-state refresh removes blocked metadata
+ok 5 - saved-state refresh removes blocked metadata
+  ---
+  duration_ms: 0.517149
+  type: 'test'
+  ...
+# Subtest: bulk server rejection reaches message without consuming response
+ok 6 - bulk server rejection reaches message without consuming response
+  ---
+  duration_ms: 30.326575
+  type: 'test'
+  ...
+# Subtest: single join server rejection also reaches message
+ok 7 - single join server rejection also reaches message
+  ---
+  duration_ms: 1.061491
+  type: 'test'
+  ...
+# Subtest: non-JSON rejection uses HTTP fallback
+ok 8 - non-JSON rejection uses HTTP fallback
+  ---
+  duration_ms: 0.972222
+  type: 'test'
+  ...
+# Subtest: unrelated rejection does not change global message
+ok 9 - unrelated rejection does not change global message
+  ---
+  duration_ms: 0.68073
+  type: 'test'
+  ...
+# Subtest: successful join does not create rejection message
+ok 10 - successful join does not create rejection message
+  ---
+  duration_ms: 0.801088
+  type: 'test'
+  ...
+# Subtest: blocked join publishes an explicit operation-scoped error
+ok 11 - blocked join publishes an explicit operation-scoped error
+  ---
+  duration_ms: 0.431046
+  type: 'test'
+  ...
+# Subtest: successful retry resolves its join error without clearing an unrelated error
+ok 12 - successful retry resolves its join error without clearing an unrelated error
+  ---
+  duration_ms: 1.520836
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 140.145985

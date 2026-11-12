@@ -1,0 +1,106 @@
+TAP version 13
+# Subtest: native invalidity has persistent matching validation recovery
+ok 1 - native invalidity has persistent matching validation recovery
+  ---
+  duration_ms: 2.526597
+  type: 'test'
+  ...
+# Subtest: transport trims names, preserves bonus omission and image upload, and encodes IDs
+ok 2 - transport trims names, preserves bonus omission and image upload, and encodes IDs
+  ---
+  duration_ms: 0.850671
+  type: 'test'
+  ...
+# Subtest: request error persists, keeps draft/modal and restores prior disabled states
+ok 3 - request error persists, keeps draft/modal and restores prior disabled states
+  ---
+  duration_ms: 1.827964
+  type: 'test'
+  ...
+# Subtest: matching recovery preserves other targets and raw-roll errors; no success notice
+ok 4 - matching recovery preserves other targets and raw-roll errors; no success notice
+  ---
+  duration_ms: 0.730434
+  type: 'test'
+  ...
+# Subtest: duplicate prevention spans mutation and refresh even after reopening same target
+ok 5 - duplicate prevention spans mutation and refresh even after reopening same target
+  ---
+  duration_ms: 4.920312
+  type: 'test'
+  ...
+# Subtest: obsolete mutation scope reject=false
+ok 6 - obsolete mutation scope reject=false
+  ---
+  duration_ms: 0.595979
+  type: 'test'
+  ...
+# Subtest: obsolete mutation session reject=false
+ok 7 - obsolete mutation session reject=false
+  ---
+  duration_ms: 0.673757
+  type: 'test'
+  ...
+# Subtest: obsolete mutation superseded reject=false
+ok 8 - obsolete mutation superseded reject=false
+  ---
+  duration_ms: 0.535865
+  type: 'test'
+  ...
+# Subtest: obsolete mutation scope reject=true
+ok 9 - obsolete mutation scope reject=true
+  ---
+  duration_ms: 1.027267
+  type: 'test'
+  ...
+# Subtest: obsolete mutation session reject=true
+ok 10 - obsolete mutation session reject=true
+  ---
+  duration_ms: 0.749329
+  type: 'test'
+  ...
+# Subtest: obsolete mutation superseded reject=true
+ok 11 - obsolete mutation superseded reject=true
+  ---
+  duration_ms: 0.462517
+  type: 'test'
+  ...
+# Subtest: saved mutation/failed refresh owns separate error and does not replay
+ok 12 - saved mutation/failed refresh owns separate error and does not replay
+  ---
+  duration_ms: 0.732999
+  type: 'test'
+  ...
+# Subtest: reopen then close during refresh cannot receive old completion
+ok 13 - reopen then close during refresh cannot receive old completion
+  ---
+  duration_ms: 1.466659
+  type: 'test'
+  ...
+# Subtest: old cleanup cannot clear newer busy state for an independent target
+ok 14 - old cleanup cannot clear newer busy state for an independent target
+  ---
+  duration_ms: 0.681631
+  type: 'test'
+  ...
+# Subtest: characters and absent sessions delegate unchanged
+ok 15 - characters and absent sessions delegate unchanged
+  ---
+  duration_ms: 0.45929
+  type: 'test'
+  ...
+# Subtest: scope and supersession during refresh cannot replace current feedback
+ok 16 - scope and supersession during refresh cannot replace current feedback
+  ---
+  duration_ms: 2.654986
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 113.28347
