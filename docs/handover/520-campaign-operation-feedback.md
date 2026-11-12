@@ -2,6 +2,63 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+## Current: 1B edit archive - 2026-11-12
+
+Base: 02c7e12d3242da4545abb5cdd333e54e1e99335b, matching the uploaded source
+snapshot and live branch when preparation began. Archive only; no new commit,
+push or hosted CI outcome is claimed. 1A creation implementation was delivered at
+3c144a2279adf9446bf0f0c082df9aa3065961c4. This status supersedes older index and
+foundation wording without reopening accepted scopes.
+
+Only 1B is added: campaign.edit.open selection validation; campaign.edit.validation,
+campaign.edit and campaign.edit.render with stable campaign-ID targets, separate
+modal-session/input-revision guards and page-lane feedback. Metadata PATCH retains
+encoded ID, trimmed name/description, existing authorization/request transport and
+success wording. It adds no confirmation, state fetch or mutation replay. Errors
+persist until dismissal/matching resolution; pane success expires after 3 seconds.
+
+Capture registry reference, selection and encounter scope/epoch before await;
+obsolete results cannot overwrite a newer registry/selection or close reopened
+forms. Edit/revert and newer drafts survive. Save success is independent of a
+subsequent render failure, which advises reloading rather than saving again.
+The shared pending flag spans edit request/render and still protects creation;
+original button-disabled state is restored. 040 and switch/delete/setup-opening
+helpers are unchanged. No 1C/1D, D2, workflows or deferred test cleanup.
+
+Only 080 changes among eight fragments. Its size is 12,426 UTF-8 bytes; SHA-256
+72d754040bd46ea0d531c1b3c997842340fcb51db095e483275630f09f55219f.
+Calculated and locally verified bundle size: 136,945 bytes. Only the corresponding
+080 digest and bundle-size pin change; inventory/order/20,000-byte guards and
+tracked failure marker remain intact.
+
+Executed locally against the extracted repository:
+- Edit Node: 11 tests pass; retained creation: 14; viewer-font: 18; context: 9.
+- Source preparation: all 4 identity/assembly/tamper/syntax tests pass.
+- Production runner + complete-Admin Chromium: 6 pass (3 edit, 3 retained creation).
+- Four negative controls (session owner, draft revision, registry, render identity)
+  fail as expected; restored edit suite passes. An initially redundant owner-only
+  negative control exposed a missing same-target reopen scenario; that scenario
+  was added and now detects removal of the owner guard.
+- Browser draft initially used textarea instead of the real description input,
+  then a late fake-clock installation failed expiry coverage. The fixture now
+  uses the actual input and observes real deadline expiry; final 6-case run passes.
+
+Creation tests share a scoped fixture helper with edit tests. The retained busy
+case now asserts migration to PATCH after creation completes, rather than legacy
+edit delegation; its duplicate/busy assertions remain. This is bounded fixture
+plumbing, not the deferred suite audit. Existing CI discovery includes the new
+suites; no workflow edit. Full-suite/hosted CI, human visual, live-server and
+screen-reader evidence remain pending, not inferred from these scoped fixtures.
+
+Archive includes all TODO/handover context, an exact changed-file manifest,
+review diff, local logs and Patch/COMMIT_MESSAGE.txt with [skip ci]. Patch is
+archive-only and must not be staged. The base newzip.sh indiscriminately stages
+archive entries and uses commit -a; use Patch/README.md's exact-file commands
+instead. No deletions/renames. README/index status updated proportionately.
+Publication, covering validation and bounded acceptance remain pending; 1C/1D
+and wider gates remain open, previously accepted scopes (including Stage 2) stay
+closed. The historical sections below retain their own evidence boundaries.
+
 ## 1A creation implementation checkpoint - 2026-11-12
 
 Current status: creation migration implemented by this second checkpoint;

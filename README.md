@@ -37,6 +37,14 @@ Start eligibility/tie-order feedback is separate 4A.3 work. Do not deploy this b
 as a completed increment or infer phase acceptance. See
 [close-out evidence and remaining scope](docs/handover/380-feedback-delivery-plan.md#4a2-close-out---2026-11-10).
 
+Campaign feedback continuation (2026-11-12): creation is delivered at
+3c144a2279adf9446bf0f0c082df9aa3065961c4. The 1B archive adds explicit campaign-edit
+validation, persistent request errors and three-second pane successes, preserving
+newer drafts/sessions and distinguishing a saved campaign from a view-rendering
+failure. It does not change switching/deletion or add automatic retries. Publication,
+covering validation and bounded acceptance remain separate; see the
+[current campaign record](docs/handover/520-campaign-operation-feedback.md).
+
 Legacy source-reading tests use a disposable assembled checkout:
 
 ```bash

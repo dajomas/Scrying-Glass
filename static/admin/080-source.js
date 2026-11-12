@@ -1,4 +1,4 @@
-// Stage 1 Step 1A: create only; preserve the legacy edit submit owner.
+// Stage 1 Steps 1A/1B: campaign creation and metadata editing feedback.
 (() => {
     const form = document.querySelector('#campaignForm');
     if (!form || typeof form.onsubmit !== 'function' || typeof openCampaignModal !== 'function' ||
@@ -19,9 +19,89 @@
     for (const type of ['input', 'change', 'reset']) form.addEventListener(type, () => {
         if (session) session.revision++;
     });
+    const editButton = document.querySelector('#editCampaign');
+    if (editButton && typeof campaignById === 'function') editButton.onclick = () => {
+        const feedback = window.scryingAdminFeedback;
+        const validation = feedback.begin({lane: 'page', region: 'campaign', operation: 'campaign.edit.open',
+            target: 'campaign-edit-selection', label: 'Choose campaign to edit'});
+        const campaign = campaignById(document.querySelector('#campaignSelect').value);
+        if (!campaign) {
+            feedback.publish(validation, {severity: 'error', text: 'Choose a campaign to edit'});
+            return;
+        }
+        feedback.resolve(validation);
+        openCampaignModal(campaign);
+    };
+    async function saveCampaignEdit(event) {
+        event.preventDefault();
+        if (!session || session.closed) return;
+        const owner = session, revision = owner.revision, id = campaignEditing;
+        const registry = campaignData, select = document.querySelector('#campaignSelect'), selection = select.value;
+        const feedback = window.scryingAdminFeedback, origin = feedback.encounterContext();
+        const spec = {lane: 'page', region: 'campaign', target: JSON.stringify(['campaign-edit', id]),
+            label: 'Save campaign'};
+        const begin = suffix => feedback.begin({...spec, operation: 'campaign.edit' + suffix});
+        const validation = begin('.validation');
+        const values = [form.elements.name.value, form.elements.description.value];
+        const name = values[0].trim(), description = values[1].trim();
+        if (!name || !form.reportValidity()) {
+            feedback.publish(validation, {severity: 'error', text: !name
+                ? 'Enter a campaign name' : 'Enter valid campaign details.'});
+            return;
+        }
+        feedback.resolve(validation);
+        const ticket = begin(''), render = begin('.render');
+        const button = document.querySelector('#campaignSubmit'), disabled = button.disabled;
+        let result, applied = false, closedByAttempt = false;
+        const relevant = (ownRender = false) => {
+            const now = feedback.encounterContext();
+            return feedback.isCurrent(render) && session === owner &&
+                (!owner.closed || closedByAttempt) && campaignEditing === (closedByAttempt ? null : id) &&
+                now.scope === origin.scope && now.epoch === origin.epoch &&
+                campaignData === (applied ? result : registry) && (ownRender || select.value === selection);
+        };
+        const currentDraft = () => owner.revision === revision &&
+            form.elements.name.value === values[0] && form.elements.description.value === values[1];
+        pending = true;
+        button.disabled = true;
+        try {
+            try {
+                result = await request(`/api/campaigns/${encodeURIComponent(id)}`, {
+                    method: 'PATCH', headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({name, description}),
+                });
+            } catch (error) {
+                if (relevant() && currentDraft()) feedback.publish(ticket, {severity: 'error', text: error.message});
+                return;
+            }
+            if (!relevant()) return;
+            campaignData = result;
+            applied = true;
+            try {
+                if (currentDraft()) {
+                    feedback.publish(ticket, {severity: 'success', text: `Updated campaign: ${name}`});
+                    if (!relevant()) return;
+                    closedByAttempt = true;
+                    closeCampaignModal();
+                } else feedback.resolve(ticket);
+                if (!relevant()) return;
+                try { renderCampaigns(); } finally {
+                    // Restore only our own rendering's selection change, never a newer session.
+                    if (relevant(true)) select.value = selection;
+                }
+                if (relevant()) feedback.resolve(render);
+            } catch (error) {
+                if (relevant() && currentDraft()) feedback.publish(render, {severity: 'error', text:
+                    `Campaign saved, but updating the view failed: ${error.message}. Reload the page; do not save the campaign again to retry the view update.`});
+            }
+        } finally {
+            button.disabled = disabled;
+            pending = false;
+        }
+    }
     form.onsubmit = async function(event) {
         if (pending) {event.preventDefault(); return;}
-        if (campaignEditing) return previousSubmit.call(this, event);
+        if (campaignEditing) return saveCampaignEdit(event);
         event.preventDefault();
         if (!session || session.closed) return;
         const owner = session, revision = owner.revision;
