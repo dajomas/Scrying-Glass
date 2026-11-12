@@ -7,10 +7,47 @@ Previous stage: [530 Stage 1 close-out](530-setup-operation-feedback.md#stage-1-
 
 ## Status - 2026-11-12
 
-Prepared as an archive on 1aa85334 (`features/perplexity-009.7`); not yet published,
-CI-covered or accepted. Stage 1 was closed by the user's 37ea8c99 documentation commit
-on the covering Branch tests 43279736032 attempt 1 (tested cc0b67b1, success). The later
-Branch tests run 43284682854 on a5aebc34 was cancelled; it is not evidence either way.
+Completed and closed for the agreed Stage 3 scope after explicit user acceptance
+on 2026-11-12 at 20:48 CET. The user requested acceptance, close-out, documentation
+and a GitHub push with [skip ci]. This supersedes the earlier archive-only,
+publication/CI/acceptance-pending notes; do not request Stage 3 acceptance again.
+Stages 1 and 2 and earlier accepted scopes remain closed.
+
+## Stage 3 accepted close-out - 2026-11-12
+
+Accepted scope: Encounter tools operation/manual-refresh/checkpoint feedback;
+lair save/remove/toggle/open/applied feedback; lair-action dialog errors;
+typed has-lair setup errors; selected-campaign viewer-access load/save feedback.
+Existing endpoints, payloads, confirmations, permissions, busy guards, drafts,
+selected-campaign/generation ownership and retained progress/polling roles remain.
+
+Implementation: d17b5885baea02821224d811dffc070d6a7d33a4 on
+features/perplexity-009.7. Successful covering Branch tests 43291659600 attempt 1,
+job 131439168185; evidence publication db2daf8a473ebf77ff1626a8709a6a745e45b0b7,
+directory ci-results-43291659600-attempt-1. Reviewed run.json and jobs.json agree
+on branch, tested SHA, attempt, completed status and success. All configured
+Chromium provisioning, syntax/import, main Python/browser, pytest, JavaScript and
+standalone browser/audit stages succeeded. Completion: 2026-11-12T19:44:42Z
+(20:44 CET). Review did not individually re-review every test log/screenshot or
+independently recount tests; no new authenticated live-server, human visual,
+screen-reader or exhaustive accessibility evidence is claimed. Earlier local
+fixture counts/negative controls below remain preparation evidence, not new runs.
+
+The initial archive was prepared on 1aa85334. Stage 1 was closed at 37ea8c99 on
+covering run 43279736032 attempt 1 (cc0b67b1, success). Later cancelled run
+43284682854 on a5aebc34 remains historical, not covering evidence and not an
+outstanding failure. The green Stage 3 run above covers the delivered Stage 3 SHA.
+
+This documentation-only close-out uses [skip ci], executes no new tests and
+changes/dispatches no workflow. No application, tests, templates, assets, pins,
+permissions or source-assembly changes. No new run result or close-out commit SHA
+is invented before publication; no merge/deployment or blanket future write approval.
+
+Stage 4 integration/responsive/accessibility hardening and approved compatibility
+retirement is next. Whole Deliverable 1 acceptance, Deliverable 2 connection/recovery/
+polling/field association and final 009.7/009 acceptance remain open under
+[097](../todo/097-feedback-delivery-plan.md#remaining-scope-and-gates). No optional
+scope or new acceptance gates; test-suite cleanup stays deferred until after 009.
 
 ## Scope delivered
 
@@ -80,4 +117,5 @@ four added lair-button cases, extended `tests/test_lairs.js` and
 composition `tests/test_local_feature_feedback_composition.py` (4). Negative controls:
 the new/updated Node tests and the composition test fail against the 1aa85334 sources.
 Fixtures intercept HTTP; there is no authenticated live-server, human visual,
-screen-reader or exhaustive accessibility verification.
+screen-reader or exhaustive accessibility verification. The successful hosted-CI
+review and bounded user acceptance are recorded separately in the close-out above.

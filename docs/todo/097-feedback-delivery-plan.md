@@ -10,15 +10,25 @@ Stage 1 now, finish documentation and push to github". This accepts the whole
 Stage 1 scope, including Step 2 (2A-2E) and Step 3; do not ask for their acceptance
 again. [530 close-out, evidence and limits](../handover/530-setup-operation-feedback.md#stage-1-accepted-close-out---2026-11-12).
 
-Stage 2 and accepted 4A.1-4A.13 scopes stay closed. Stages 3-4, both whole feedback
-deliverables, 009.7 and overall 009 remain open. No new scope, owner, deadline,
-priority, delivery-order change or acceptance gate is introduced. Earlier dated
-pending/preparation statements are superseded for closed scopes, not reopened work.
+Stages 2 and 3 and accepted 4A.1-4A.13 scopes stay closed. Stage 4, both whole
+feedback deliverables, 009.7 and overall 009 remain open. No new scope, owner,
+deadline, priority, delivery-order change or acceptance gate is introduced. Earlier
+dated pending/preparation statements are superseded for closed scopes, not reopened
+work.
 
-Stage 3 local-feature/lair/selected-campaign viewer feedback is prepared as an
-archive on 1aa85334; it is not yet published, CI-covered or accepted. Scope,
-boundaries and validation: [540](../handover/540-local-feature-feedback.md). Branch
-tests 43284682854 on a5aebc34 was cancelled and is not evidence.
+Stage 3 local-feature/lair/selected-campaign viewer feedback is completed and closed
+following explicit user acceptance on 2026-11-12 at 20:48 CET. Implementation
+ d17b5885baea02821224d811dffc070d6a7d33a4 is covered by successful Branch tests
+43291659600 attempt 1, job 131439168185; evidence publication
+ db2daf8a473ebf77ff1626a8709a6a745e45b0b7, directory ci-results-43291659600-attempt-1.
+Reviewed run/job metadata match the branch, implementation SHA, attempt and success;
+all configured validation stages succeeded. No individual re-review of every test
+log/screenshot or new manual/live-server/accessibility evidence is claimed. Scope,
+accepted boundaries and limits: [540 close-out](../handover/540-local-feature-feedback.md#stage-3-accepted-close-out---2026-11-12).
+Earlier Stage 3 archive/publication/CI/acceptance-pending wording is superseded;
+do not request acceptance again. Cancelled run 43284682854 on a5aebc34 remains
+historical and is not covering evidence. This documentation-only close-out uses
+[skip ci], runs no tests and changes/dispatches no workflow.
 
 ## Stage 1 accepted close-out - 2026-11-12
 
@@ -62,18 +72,18 @@ record supersedes pending notes without deleting the historical evidence.
 
 ## Remaining scope and gates
 
-1. Stage 3: remaining local-feature/lair/selected-campaign viewer feedback
-   integration, preserving accepted encounter-tools/workspace/permission behavior.
-   Implementation prepared ([540](../handover/540-local-feature-feedback.md));
-   publication, covering CI and user acceptance pending.
-2. Stage 4: integration reconciliation and responsive/accessibility hardening,
+Stage 3 is closed under [540](../handover/540-local-feature-feedback.md#stage-3-accepted-close-out---2026-11-12);
+no Stage 3 implementation, publication, covering-CI or acceptance action remains.
+The existing remaining sequence is:
+
+1. Stage 4: integration reconciliation and responsive/accessibility hardening,
    including destructive confirmations, local overflow/zoom/labels/contrast/focus/
    tab/menu/live announcements, nested tools and independent panels. Retire remaining
    compatibility paths only after their required callers migrate and approval.
-3. Deliverable 1 integrated evidence review, documentation and bounded acceptance.
-4. Deliverable 2: persistent connection-loss/recovery feedback, background-polling
+2. Deliverable 1 integrated evidence review, documentation and bounded acceptance.
+3. Deliverable 2: persistent connection-loss/recovery feedback, background-polling
    deduplication and validation associated with its affected field/combatant.
-5. Final integrated evidence/corrections, documentation reconciliation and user
+4. Final integrated evidence/corrections, documentation reconciliation and user
    acceptance of 009.7, then overall 009 close-out.
 
 These are the existing agreed areas, not new requirements. Preserve all original

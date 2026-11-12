@@ -68,7 +68,7 @@ This is the index; substantive handover lives in numbered docs/handover sections
 
 53. [Stage 1 campaign-operation feedback](docs/handover/520-campaign-operation-feedback.md) - Step 1 accepted/closed 2026-11-12; covering CI 43237771405 attempt 1 for 4f0127b56550cacb821ae2c62cb2057265eaea2a. Historical remaining-Stage-1 notes are superseded by the whole-stage close-out below.
 54. [Stage 1 accepted close-out and setup-operation history](docs/handover/530-setup-operation-feedback.md#stage-1-accepted-close-out---2026-11-12) - all agreed campaign/setup/transfer/background work completed and closed, user acceptance 2026-11-12 at 19:45 CET. Final tested revision cc0b67b177772e314b608817f6f51cecc322a065; successful Branch tests 43279736032 attempt 1; evidence 97eedc6da52abcfa94526fee25a3c321f0626844. Step 2/3 pending notes are superseded; wider gates remain open.
-55. [Stage 3 local-feature feedback](docs/handover/540-local-feature-feedback.md) - encounter tools, lair, lair-action dialog, has-lair and selected-campaign viewer-access outcomes moved to managed regions; archive prepared on 1aa85334, publication/CI/acceptance pending.
+55. [Stage 3 accepted local-feature feedback close-out](docs/handover/540-local-feature-feedback.md#stage-3-accepted-close-out---2026-11-12) - completed/closed for encounter tools, lairs/lair-action dialog, has-lair and selected-campaign viewer access; user accepted 2026-11-12 at 20:48 CET. Tested d17b5885baea02821224d811dffc070d6a7d33a4; successful Branch tests 43291659600 attempt 1; evidence db2daf8a473ebf77ff1626a8709a6a745e45b0b7. Earlier pending notes are superseded.
 
 <a id="current-state---2026-11-11"></a>
 
@@ -77,30 +77,29 @@ This is the index; substantive handover lives in numbered docs/handover sections
 009.1-009.6, coordinated 012, 018, 015 and accepted global units 4A.1-4A.13 remain
 closed. Stage 2 remains closed on its separately recorded bounded acceptance and
 green local evidence; [510](docs/handover/510-bulk-join-pane-feedback.md#stage-2-bounded-close-out---2026-11-12)
-retains scope/evidence limits. Stage 1 is now explicitly accepted and closed,
+retains scope/evidence limits. Stage 1 is explicitly accepted and closed,
 including Step 2 (2A-2E) and Step 3, with covering CI and limits in
 [530](docs/handover/530-setup-operation-feedback.md#stage-1-accepted-close-out---2026-11-12).
 Earlier preparation/publication/acceptance-pending notes are historical, not current
 blockers or a reason to request Stage 1 acceptance again.
 
-Stage 3 local-feature/lair/selected-campaign viewer feedback integration is
-prepared ([540](docs/handover/540-local-feature-feedback.md)) and awaits publication,
-covering CI and acceptance.
-Stage 4 integration/responsive/accessibility hardening, approved compatibility
-retirement, Deliverable 1 acceptance, Deliverable 2 connection/recovery/polling/field
-association and final 009.7/009 acceptance remain open under the
+Stage 3 is explicitly accepted and closed following the 20:48 CET user request,
+with matching successful covering CI and evidence limits in
+[540](docs/handover/540-local-feature-feedback.md#stage-3-accepted-close-out---2026-11-12).
+Do not reopen it or request its acceptance again. Stage 4 integration/responsive/
+accessibility hardening and approved compatibility retirement is next. Deliverable 1
+acceptance, Deliverable 2 connection/recovery/polling/field association and final
+009.7/009 acceptance remain open under the
 [current task plan](docs/todo/097-feedback-delivery-plan.md). Neither whole feedback
 deliverable nor phase 009.7 is closed. No optional scope or new acceptance gates.
 Test-suite cleanup stays deferred until after 009; 016/017 and SG-TODO-019 remain
 proposed, not prerequisites. No merge/deployment or blanket future write approval.
 
-This close-out changes documentation only and uses [skip ci]. No new application
-checks, authenticated live-server, human visual, screen-reader or exhaustive
-accessibility evidence is claimed; no workflow is changed or separately dispatched.
-Historical index details and earlier CI/failure/correction identities remain in the
-[pre-close-out index](https://github.com/dajomas/Scrying-Glass/blob/97eedc6da52abcfa94526fee25a3c321f0626844/HANDOVER.md)
-and numbered handovers. Existing section links/order and the old current-state
-anchor are retained.
+This Stage 3 close-out changes documentation only and uses [skip ci]. No new tests,
+authenticated live-server, human visual, screen-reader or exhaustive accessibility
+evidence is claimed; no workflow is changed or separately dispatched. Earlier index
+history remains in the [pre-Stage-3-close-out index](https://github.com/dajomas/Scrying-Glass/blob/db2daf8a473ebf77ff1626a8709a6a745e45b0b7/HANDOVER.md)
+and numbered handovers. Existing section links/order and old anchors are retained.
 
 ## Maintenance
 
