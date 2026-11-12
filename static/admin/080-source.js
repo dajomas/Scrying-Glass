@@ -1,3 +1,114 @@
+// Stage 1 Step 1A: create only; preserve the legacy edit submit owner.
+(() => {
+    const form = document.querySelector('#campaignForm');
+    if (!form || typeof form.onsubmit !== 'function' || typeof openCampaignModal !== 'function' ||
+        typeof closeCampaignModal !== 'function') return;
+    const previousOpen = openCampaignModal, previousClose = closeCampaignModal;
+    const previousSubmit = form.onsubmit;
+    let session = null, sequence = 0, pending = false;
+    openCampaignModal = function(...args) {
+        session = {id: ++sequence, revision: 0, closed: false};
+        return previousOpen.apply(this, args);
+    };
+    closeCampaignModal = function(...args) {
+        if (session) session.closed = true;
+        return previousClose.apply(this, args);
+    };
+    // The earlier cancel button captured the original close function by value.
+    document.querySelector('#cancelCampaign').onclick = closeCampaignModal;
+    for (const type of ['input', 'change', 'reset']) form.addEventListener(type, () => {
+        if (session) session.revision++;
+    });
+    form.onsubmit = async function(event) {
+        if (pending) {event.preventDefault(); return;}
+        if (campaignEditing) return previousSubmit.call(this, event);
+        event.preventDefault();
+        if (!session || session.closed) return;
+        const owner = session, revision = owner.revision;
+        const feedback = window.scryingAdminFeedback;
+        const spec = {lane: 'page', region: 'campaign', target: JSON.stringify(['campaign-create', owner.id]),
+            label: 'Create campaign'};
+        const begin = suffix => feedback.begin({...spec, operation: 'campaign.create' + suffix});
+        const validation = begin('.validation');
+        const values = [form.elements.name.value, form.elements.description.value];
+        const name = values[0].trim(), description = values[1].trim();
+        if (!name || !form.reportValidity()) {
+            feedback.publish(validation, {severity: 'error', text: !name
+                ? 'Enter a campaign name' : 'Enter valid campaign details.'});
+            return;
+        }
+        feedback.resolve(validation);
+        if (!confirm(`Create and switch to campaign ${name}?\n\n${REPLACE_WARNING}`)) return;
+        const origin = feedback.encounterContext(), active = campaignData.active;
+        const ticket = begin(''), refresh = begin('.refresh');
+        const button = document.querySelector('#campaignSubmit'), disabled = button.disabled;
+        let result, applied = false, closedByAttempt = false;
+        const relevant = () => {
+            if (!feedback.isCurrent(refresh) || session !== owner || (owner.closed && !closedByAttempt)) return false;
+            const now = feedback.encounterContext();
+            const unchanged = now.epoch === origin.epoch && now.scope === origin.scope;
+            const expected = result && now.epoch === origin.epoch + 1 && now.scope ===
+                JSON.stringify([result.active, result.opened_setup ? result.active : null, result.opened_setup || null]);
+            return Boolean((unchanged || expected) && campaignData.active === (applied ? result.active : active));
+        };
+        const currentDraft = () => owner.revision === revision &&
+            form.elements.name.value === values[0] && form.elements.description.value === values[1];
+        pending = true;
+        button.disabled = true;
+        try {
+            try {
+                result = await request('/api/campaigns', {
+                    method: 'POST', headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({name, description, activate: true}),
+                });
+            } catch (error) {
+                if (relevant() && currentDraft()) feedback.publish(ticket, {severity: 'error', text: error.message});
+                return;
+            }
+            if (!relevant()) return;
+            campaignData = result;
+            applied = true;
+            try {
+                if (currentDraft()) {
+                    const opened = result.opened_setup ? `; opened battle setup ${result.opened_setup}` : '';
+                    feedback.publish(ticket, {severity: 'success', text: `Created and switched to campaign: ${name}${opened}`});
+                    if (!relevant()) return;
+                    closedByAttempt = true;
+                    closeCampaignModal();
+                } else feedback.resolve(ticket);
+                if (!relevant()) return;
+                // Mirror existing creation setup-opening behavior, but propagate reload failure.
+                // Do not change the shared helper used by switch/delete.
+                renderCampaigns();
+                if (!result.opened_setup) {
+                    document.querySelector('#setupName').value = '';
+                    document.querySelector('#setupSelect').value = '';
+                    await load(true);
+                    if (relevant()) renderActiveBattleSetup();
+                } else {
+                    document.querySelector('#setupName').value = result.opened_setup;
+                    document.querySelector('#setupSelect').value = result.opened_setup;
+                    syncActiveBattleSetupControls();
+                    renderActiveBattleSetup();
+                    await load(true);
+                }
+                if (relevant()) {
+                    if (feedback.encounterContext().epoch === origin.epoch) {
+                        throw new Error('The created campaign state was not applied');
+                    }
+                    feedback.resolve(refresh);
+                }
+            } catch (error) {
+                if (relevant() && currentDraft()) feedback.publish(refresh, {severity: 'error', text:
+                    `Campaign created and activated, but refresh failed: ${error.message}. Reload the page; do not create the campaign again to retry the refresh.`});
+            }
+        } finally {
+            button.disabled = disabled;
+            pending = false;
+        }
+    };
+})();
+
 async function adjustBattleOrderFont(direction) {
     if (battleOrderFontAdjustmentPending) return;
     const feedback = window.scryingAdminFeedback;

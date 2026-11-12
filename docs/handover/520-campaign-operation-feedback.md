@@ -2,37 +2,53 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-## 1A foundation checkpoint - 2026-11-12
+## 1A creation implementation checkpoint - 2026-11-12
 
-First of the user's approved two commits within 1A: encounterContext() returns a
-fresh frozen {scope, epoch} snapshot without changing scope, tickets, feedback or
-requests. Its epoch detects leaving and returning to the same scope identity.
-Only this accessor and bootstrap asset v=2 are added. Existing campaign handlers,
-all eight fragments, assembly, marker, pins and workflows are unchanged.
-This is not creation migration or completed 1A; checkpoint 2 implements creation.
-[Task/split/criteria](../todo/096-campaign-operation-feedback.md).
+Current status: creation migration implemented by this second checkpoint;
+covering validation and bounded acceptance remain pending. This supersedes the
+foundation's then-pending creation wording, including foundation index labels,
+not wider gates. [Task/scope](../todo/096-campaign-operation-feedback.md).
 
-## Preparation evidence and limits
+Foundation delivered at 64e9873f2def145cbd133f1008b69e05d71e14c8. Its full
+scope, nine-test preparation evidence, two negative controls, blob identities and
+limits remain in the [preserved foundation record](https://github.com/dajomas/Scrying-Glass/blob/64e9873f2def145cbd133f1008b69e05d71e14c8/docs/handover/520-campaign-operation-feedback.md).
+The accessor/bootstrap asset from that commit remain unchanged. No new commit or
+covering-run identity is invented here.
 
-Base: 80cbdd8a82119f13c529a645e53bb393756aed21. Reconstructed originals matched live
-bootstrap/header blobs 16c62c99d50455a3bc19265ae27f639fc8d051df and
-fcf90a2afa8b682913b08130c198a4e8c725cc11. Proposed bootstrap: 6,920 UTF-8 bytes,
-Git blob 747d352ca23d6935778fe6f8421c2a8f1b4902c7. Node syntax passed.
-Nine focused Node tests passed, zero failures/cancellations/skips, using the
-complete proposed bootstrap, unchanged production controller and mocked absent-view
-DOM. Coverage: immutable snapshots, same/changed/returned scopes, obsolete/invalid
-state, ticket/error preservation, lookup isolation, idempotency and asset wiring.
-Removing immutability or losing the epoch caused expected failures; restored run
-passed 9/9. Controller reconstruction matched blob
-c4a82d73b21f4657da651ce45f76003c3348a6ef; controller is not changed.
+080 installs the create-only submit owner after legacy handlers. Page-lane
+campaign.create.validation, campaign.create and campaign.create.refresh use modal
+session targets; encounter scope/epoch guards permit expected activation and
+reject unrelated transitions/leave-return. Success precedes refresh and expires
+in three seconds; refresh errors persist with no-replay guidance. Newer input,
+edit/revert, reopened sessions and unrelated/newer feedback are preserved.
+POST /api/campaigns, trimmed name/description, activate:true, replacement
+confirmation and setup-opening behavior are retained.
 
-These are preparation checks, not full repository/browser/live-server, human
-visual, screen-reader or exhaustive accessibility evidence. Earlier 24-test
-creation-draft evidence is separate. Covering validation and 1A acceptance remain
-pending. No commit/run identity is invented. README and parent 090/097/380 records
-were reviewed and retained; indexes link these dedicated records.
+Shared plumbing: wrap modal open/close for session identity, rebind cancel's
+captured close callback, track input revisions and block shared-form duplicates
+through creation refresh. Other edit submissions delegate unchanged. 040 and
+shared applyOpenedSetup are untouched; switch/delete behavior and options remain.
+An installation guard preserves isolated fragment readers without campaign owners.
 
-This mixed checkpoint uses user-directed [skip ci]; no workflow edit, separate
-dispatch or inferred workflow outcome. Prior accepted scopes, including Stage 2,
-stay closed. 1B-1D, wider Stage 1, Stages 3-4, both whole deliverables and 009.7/009
-remain open. No merge, deployment or deferred test-suite cleanup.
+Preparation: complete 080 syntax and pin-file/browser-module compilation passed.
+Fourteen Node tests passed, zero failures/cancellations/skips, using complete 080
+and production controller with mocked DOM, transport, feedback-context adapter
+and legacy owners. Four negative controls (obsolete result, newer input, refresh
+identity, scope epoch) failed; restored run passed 14/14. Earlier 24-test draft
+counts are separate. Three loaded-Admin intercepted-HTTP scenarios are prepared,
+not executed here; existing 43-script inventory is unchanged. Retained font
+fixture was inspected, not claimed fully executed. Full reader/runner/pin/tamper,
+repository/browser execution and published covering evidence remain pending.
+No live-server, human visual, screen-reader or exhaustive accessibility evidence.
+
+Only 080 changes among the eight fragments: 8,020 UTF-8 bytes, SHA-256
+86d0adedfbb5c2c1b0c4c50d3794820bf742aa16d49c3d8a066a652952510540.
+Its original body is retained verbatim. Only its digest and calculated bundle-size
+pin (132,539 bytes) change; other pins/order, 20,000-byte guards, reader and marker
+are unchanged. No asset is added. Root indexes retain foundation-history links;
+current status is here and in 096. README and parent records remain unchanged.
+
+This mixed commit uses user-directed [skip ci]; no workflow edit/dispatch or
+inferred CI outcome. No automatic mutation replay or D2 near-field/connection/
+polling work. Prior accepted scopes, including Stage 2, stay closed. 1A acceptance,
+1B-1D and wider open gates remain open. Test-suite cleanup stays deferred.
