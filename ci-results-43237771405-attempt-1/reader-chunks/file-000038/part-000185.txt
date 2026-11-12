@@ -1,0 +1,49 @@
+s completion even if Edit session object remains
+tests	JavaScript tests	2026-11-12T14:34:04.5615907Z ok 14 - scope invalidation alone suppresses completion even if Edit session object remains
+tests	JavaScript tests	2026-11-12T14:34:04.5616789Z   ---
+tests	JavaScript tests	2026-11-12T14:34:04.5617166Z   duration_ms: 0.656334
+tests	JavaScript tests	2026-11-12T14:34:04.5617630Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:34:04.5618333Z   ...
+tests	JavaScript tests	2026-11-12T14:34:04.5619310Z # Subtest: scope change does not enable overlapping submissions on the same dialog controls
+tests	JavaScript tests	2026-11-12T14:34:04.5620718Z ok 15 - scope change does not enable overlapping submissions on the same dialog controls
+tests	JavaScript tests	2026-11-12T14:34:04.5621560Z   ---
+tests	JavaScript tests	2026-11-12T14:34:04.5621946Z   duration_ms: 0.792989
+tests	JavaScript tests	2026-11-12T14:34:04.5622374Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:34:04.5623153Z   ...
+tests	JavaScript tests	2026-11-12T14:34:04.5680320Z 1..15
+tests	JavaScript tests	2026-11-12T14:34:04.5680675Z # tests 15
+tests	JavaScript tests	2026-11-12T14:34:04.5681337Z # suites 0
+tests	JavaScript tests	2026-11-12T14:34:04.5681768Z # pass 15
+tests	JavaScript tests	2026-11-12T14:34:04.5682326Z # fail 0
+tests	JavaScript tests	2026-11-12T14:34:04.5683216Z # cancelled 0
+tests	JavaScript tests	2026-11-12T14:34:04.5683805Z # skipped 0
+tests	JavaScript tests	2026-11-12T14:34:04.5684326Z # todo 0
+tests	JavaScript tests	2026-11-12T14:34:04.5684862Z # duration_ms 82.818311
+tests	JavaScript tests	2026-11-12T14:34:04.6114393Z ##[endgroup]
+tests	JavaScript tests	2026-11-12T14:34:04.6115139Z ##[group]tests/encounter-active-combatant.test.cjs
+tests	JavaScript tests	2026-11-12T14:34:04.8740818Z TAP version 13
+tests	JavaScript tests	2026-11-12T14:34:04.9016671Z # Initial selection, manual override, monster/downed turns, dirty-field refresh, lair transition, scope change and no-turn checks passed.
+tests	JavaScript tests	2026-11-12T14:34:04.9072154Z # Subtest: tests/encounter-active-combatant.test.cjs
+tests	JavaScript tests	2026-11-12T14:34:04.9079442Z ok 1 - tests/encounter-active-combatant.test.cjs
+tests	JavaScript tests	2026-11-12T14:34:04.9080234Z   ---
+tests	JavaScript tests	2026-11-12T14:34:04.9080601Z   duration_ms: 37.019513
+tests	JavaScript tests	2026-11-12T14:34:04.9081003Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:34:04.9081371Z   ...
+tests	JavaScript tests	2026-11-12T14:34:04.9081677Z 1..1
+tests	JavaScript tests	2026-11-12T14:34:04.9082037Z # tests 1
+tests	JavaScript tests	2026-11-12T14:34:04.9084307Z # suites 0
+tests	JavaScript tests	2026-11-12T14:34:04.9085296Z # pass 1
+tests	JavaScript tests	2026-11-12T14:34:04.9087624Z # fail 0
+tests	JavaScript tests	2026-11-12T14:34:04.9088386Z # cancelled 0
+tests	JavaScript tests	2026-11-12T14:34:04.9089214Z # skipped 0
+tests	JavaScript tests	2026-11-12T14:34:04.9089882Z # todo 0
+tests	JavaScript tests	2026-11-12T14:34:04.9091455Z # duration_ms 45.018413
+tests	JavaScript tests	2026-11-12T14:34:04.9521124Z ##[endgroup]
+tests	JavaScript tests	2026-11-12T14:34:04.9521710Z ##[group]tests/fivetools-source-labels.test.cjs
+tests	JavaScript tests	2026-11-12T14:34:05.2158954Z TAP version 13
+tests	JavaScript tests	2026-11-12T14:34:05.2631603Z # Optional monster stats lookup failed: Error: Fixture provider unavailable
+tests	JavaScript tests	2026-11-12T14:34:05.2633684Z #     at c.request (/tmp/scrying-tests-yhevs196/repo/tests/fivetools-source-labels.test.cjs:83:31)
+tests	JavaScript tests	2026-11-12T14:34:05.2635567Z #     at Object.lookupMonsterSpeciesStats (evalmachine.<anonymous>:87:34)
+tests	JavaScript tests	2026-11-12T14:34:05.2637559Z #     at TestContext.<anonymous> (/tmp/scrying-tests-yhevs196/repo/tests/fivetools-source-labels.test.cjs:84:13)
+tests	JavaScript tests	2026-11-12T14:34:05.2639218Z #     at Test.runInAsyncScope (node:async_hooks:214:14)
+tests	JavaScript tests	2026-11-12T14:34:05.2640260Z #     a

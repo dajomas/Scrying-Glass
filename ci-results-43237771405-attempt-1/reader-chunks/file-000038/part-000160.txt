@@ -1,0 +1,46 @@
+ # Subtest: boundary disabling is retained after request failure
+tests	JavaScript tests	2026-11-12T14:33:56.5980111Z ok 8 - boundary disabling is retained after request failure
+tests	JavaScript tests	2026-11-12T14:33:56.5980854Z   ---
+tests	JavaScript tests	2026-11-12T14:33:56.5981293Z   duration_ms: 1.582752
+tests	JavaScript tests	2026-11-12T14:33:56.5981772Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:56.5982202Z   ...
+tests	JavaScript tests	2026-11-12T14:33:56.5987189Z # Subtest: control helper retains clamp and invalid-value default
+tests	JavaScript tests	2026-11-12T14:33:56.5988530Z ok 9 - control helper retains clamp and invalid-value default
+tests	JavaScript tests	2026-11-12T14:33:56.5989377Z   ---
+tests	JavaScript tests	2026-11-12T14:33:56.5989877Z   duration_ms: 0.92256
+tests	JavaScript tests	2026-11-12T14:33:56.5990353Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:56.5990773Z   ...
+tests	JavaScript tests	2026-11-12T14:33:56.5991785Z # Subtest: old-scope success cannot alter latest display, resolve current error or render old value
+tests	JavaScript tests	2026-11-12T14:33:56.5993547Z ok 10 - old-scope success cannot alter latest display, resolve current error or render old value
+tests	JavaScript tests	2026-11-12T14:33:56.5994504Z   ---
+tests	JavaScript tests	2026-11-12T14:33:56.5995016Z   duration_ms: 1.081818
+tests	JavaScript tests	2026-11-12T14:33:56.5995549Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:56.5996107Z   ...
+tests	JavaScript tests	2026-11-12T14:33:56.5997140Z # Subtest: old-scope error cannot overwrite current feedback; pending cleanup still runs
+tests	JavaScript tests	2026-11-12T14:33:56.6006987Z ok 11 - old-scope error cannot overwrite current feedback; pending cleanup still runs
+tests	JavaScript tests	2026-11-12T14:33:56.6023264Z   ---
+tests	JavaScript tests	2026-11-12T14:33:56.6023668Z   duration_ms: 0.86858
+tests	JavaScript tests	2026-11-12T14:33:56.6024066Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:56.6024410Z   ...
+tests	JavaScript tests	2026-11-12T14:33:56.6024891Z # Subtest: away-and-back scope cannot revive original response
+tests	JavaScript tests	2026-11-12T14:33:56.6025520Z ok 12 - away-and-back scope cannot revive original response
+tests	JavaScript tests	2026-11-12T14:33:56.6025867Z   ---
+tests	JavaScript tests	2026-11-12T14:33:56.6026074Z   duration_ms: 0.670511
+tests	JavaScript tests	2026-11-12T14:33:56.6026339Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:56.6026538Z   ...
+tests	JavaScript tests	2026-11-12T14:33:56.6027017Z # Subtest: newer same-operation ticket suppresses older completion without bypassing lock
+tests	JavaScript tests	2026-11-12T14:33:56.6027715Z ok 13 - newer same-operation ticket suppresses older completion without bypassing lock
+tests	JavaScript tests	2026-11-12T14:33:56.6028143Z   ---
+tests	JavaScript tests	2026-11-12T14:33:56.6028343Z   duration_ms: 0.729872
+tests	JavaScript tests	2026-11-12T14:33:56.6028585Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:56.6028783Z   ...
+tests	JavaScript tests	2026-11-12T14:33:56.6029229Z # Subtest: confirmed request resolves its error even if subsequent control update throws
+tests	JavaScript tests	2026-11-12T14:33:56.6029904Z ok 14 - confirmed request resolves its error even if subsequent control update throws
+tests	JavaScript tests	2026-11-12T14:33:56.6030329Z   ---
+tests	JavaScript tests	2026-11-12T14:33:56.6030528Z   duration_ms: 1.032907
+tests	JavaScript tests	2026-11-12T14:33:56.6030758Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:56.6030966Z   ...
+tests	JavaScript tests	2026-11-12T14:33:56.6031430Z # Subtest: initial control rendering failure still releases pending and does not send POST
+tests	JavaScript tests	2026-11-12T14:33:56.6032132Z ok 15 - initial control rendering failure still releases pending and does not send POST
+tests	JavaScript tests	2026-11-12T14:33:56.6033553Z   ---
+tests	JavaScript tests	2026-11-12T14:33:56.6033948Z   duration_ms: 0.723

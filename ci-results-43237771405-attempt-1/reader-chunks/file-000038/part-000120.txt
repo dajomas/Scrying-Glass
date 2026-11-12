@@ -1,0 +1,47 @@
+st: request failure is persistent and never refreshes or automatically retries
+tests	JavaScript tests	2026-11-12T14:33:49.6126892Z ok 8 - request failure is persistent and never refreshes or automatically retries
+tests	JavaScript tests	2026-11-12T14:33:49.6127647Z   ---
+tests	JavaScript tests	2026-11-12T14:33:49.6128326Z   duration_ms: 0.862909
+tests	JavaScript tests	2026-11-12T14:33:49.6128755Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:49.6129104Z   ...
+tests	JavaScript tests	2026-11-12T14:33:49.6129894Z # Subtest: successful retry with changed count clears only related error and info
+tests	JavaScript tests	2026-11-12T14:33:49.6131065Z ok 9 - successful retry with changed count clears only related error and info
+tests	JavaScript tests	2026-11-12T14:33:49.6131786Z   ---
+tests	JavaScript tests	2026-11-12T14:33:49.6132157Z   duration_ms: 1.417835
+tests	JavaScript tests	2026-11-12T14:33:49.6132576Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:49.6132944Z   ...
+tests	JavaScript tests	2026-11-12T14:33:49.6133894Z # Subtest: success expires at five seconds without removing unrelated error
+tests	JavaScript tests	2026-11-12T14:33:49.6135038Z ok 10 - success expires at five seconds without removing unrelated error
+tests	JavaScript tests	2026-11-12T14:33:49.6135803Z   ---
+tests	JavaScript tests	2026-11-12T14:33:49.6136192Z   duration_ms: 1.165414
+tests	JavaScript tests	2026-11-12T14:33:49.6136623Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:49.6137012Z   ...
+tests	JavaScript tests	2026-11-12T14:33:49.6137864Z # Subtest: ordinary refresh and unrelated success cannot clear a failed clear
+tests	JavaScript tests	2026-11-12T14:33:49.6139098Z ok 11 - ordinary refresh and unrelated success cannot clear a failed clear
+tests	JavaScript tests	2026-11-12T14:33:49.6139837Z   ---
+tests	JavaScript tests	2026-11-12T14:33:49.6140217Z   duration_ms: 0.858512
+tests	JavaScript tests	2026-11-12T14:33:49.6140633Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:49.6141007Z   ...
+tests	JavaScript tests	2026-11-12T14:33:49.6141894Z # Subtest: confirmed clear and real loadState refresh failure coexist with one POST
+tests	JavaScript tests	2026-11-12T14:33:49.6143387Z ok 12 - confirmed clear and real loadState refresh failure coexist with one POST
+tests	JavaScript tests	2026-11-12T14:33:49.6144168Z   ---
+tests	JavaScript tests	2026-11-12T14:33:49.6144541Z   duration_ms: 0.989566
+tests	JavaScript tests	2026-11-12T14:33:49.6145008Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:49.6145365Z   ...
+tests	JavaScript tests	2026-11-12T14:33:49.6146133Z # Subtest: unexpected refresh rejection is not mislabeled a clear request failure
+tests	JavaScript tests	2026-11-12T14:33:49.6147308Z ok 13 - unexpected refresh rejection is not mislabeled a clear request failure
+tests	JavaScript tests	2026-11-12T14:33:49.6147879Z   ---
+tests	JavaScript tests	2026-11-12T14:33:49.6148218Z   duration_ms: 1.122834
+tests	JavaScript tests	2026-11-12T14:33:49.6148652Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:49.6149080Z   ...
+tests	JavaScript tests	2026-11-12T14:33:49.6149781Z # Subtest: old-setup success cannot publish or refresh new setup
+tests	JavaScript tests	2026-11-12T14:33:49.6150570Z ok 14 - old-setup success cannot publish or refresh new setup
+tests	JavaScript tests	2026-11-12T14:33:49.6151111Z   ---
+tests	JavaScript tests	2026-11-12T14:33:49.6151450Z   duration_ms: 0.873549
+tests	JavaScript tests	2026-11-12T14:33:49.6151831Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:49.6152175Z   ...
+tests	JavaScript tests	2026-11-12T14:33:49.6152783Z # Subtest: old-campaign failure cannot overwrite new campaign feedback
+tests	JavaScript tests	2026-11-12T14:33:49.6153936Z ok 15 - old-campaign failure cannot overwrite new campaign feedback
+tests	JavaScript tests	2026-11-12T14:33:49.6154529Z   ---
+tests	JavaScript tests	2026-11-12T14:33:49.6154835Z   duration_ms: 0.782319
+tests	JavaScript tests	2026-11-12T14:33:49.6155194Z   type
