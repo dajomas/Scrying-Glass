@@ -29,52 +29,39 @@ See [Admin split details](docs/handover/050-admin-script-split.md).
 
 ### Current 009.7 feedback status - 2026-11-12
 
-Stage 1 is completed and closed for its agreed scope following the user's explicit
-acceptance on 2026-11-12 at 19:45 CET. It covers campaign create/edit/switch/delete;
-setup create/save/load/switch/rename/delete; setup copy/move between campaigns;
-and View screen background apply/clear/upload. Persistent actionable errors,
-matching resolution, early three-second pane successes, distinct completed-mutation/
-failed-refresh reporting and guarded no-replay follow-up are retained, with existing
-endpoints, payloads, permissions, confirmations and setup behavior preserved.
+Stages 1-4 and accepted global units 4A.1-4A.13 are closed for their agreed scopes.
+[Stage 1](docs/handover/530-setup-operation-feedback.md#stage-1-accepted-close-out---2026-11-12),
+[Stage 2](docs/handover/510-bulk-join-pane-feedback.md#stage-2-bounded-close-out---2026-11-12),
+[Stage 3](docs/handover/540-local-feature-feedback.md#stage-3-accepted-close-out---2026-11-12)
+and [Stage 4](docs/handover/550-integration-accessibility-hardening.md#stage-4-accepted-close-out---2026-11-12)
+retain their implementation, CI/local evidence, user acceptance and limitations.
+They are not reopened by this continuation. Earlier version lists describe their
+historical checkpoints, not replacements for the Deliverable 2 shared assets below.
 
-Final Stage 1 implementation cc0b67b177772e314b608817f6f51cecc322a065 is covered
-by successful Branch tests 43279736032 attempt 1; evidence publication
-97eedc6da52abcfa94526fee25a3c321f0626844. Run/job metadata and all configured
-validation-stage outcomes were reviewed; this does not claim individual review of
-every log/screenshot or new authenticated live-server, human visual, screen-reader
-or exhaustive accessibility verification. [Stage 1 close-out and history](docs/handover/530-setup-operation-feedback.md#stage-1-accepted-close-out---2026-11-12)
-supersedes the earlier campaign/setup archive-pending notes. The setup-switch.js
-?v=2 reference belongs to that checkpoint; deploy the Stage 4 versions below.
+Deliverable 2 is completed and closed for the agreed Admin connection/recovery,
+polling-deduplication and near-field validation scope after the user's explicit
+acceptance on 2026-11-12 at 22:43 CET. Tested implementation
+8da0657325818c69fc82dc1234995a5146e88ebc has successful Branch tests 43310602854
+attempt 1; evidence publication dbb78d3057a2d38527bd612b948a6566a1a741e3.
+[560 close-out, scope and evidence limits](docs/handover/560-connection-field-feedback.md#deliverable-2-accepted-close-out---2026-11-12)
+supersedes archive/publication/CI/acceptance-pending notes. Reviewed run/job metadata
+match the implementation and all configured validation stages succeeded; no individual
+re-review of every test log/screenshot or new authenticated live-server, human visual,
+screen-reader or exhaustive accessibility verification is claimed.
 
-Stage 2 and accepted global units 4A.1-4A.13 remain closed. Stage 3 local-feature/
-lair/selected-campaign viewer feedback is completed and closed following the user's
-explicit acceptance on 2026-11-12 at 20:48 CET. Implementation
- d17b5885baea02821224d811dffc070d6a7d33a4 has successful covering Branch tests
-43291659600 attempt 1; evidence publication db2daf8a473ebf77ff1626a8709a6a745e45b0b7.
-[540 scope, close-out and evidence limits](docs/handover/540-local-feature-feedback.md#stage-3-accepted-close-out---2026-11-12)
-supersedes earlier archive/publication/CI/acceptance-pending notes. Stage 3 asset
-versions in its handover describe that checkpoint; Stage 4 supersedes shared assets.
-
-Stage 4 integration/accessibility hardening and approved compatibility retirement
-are completed and closed following the user's explicit acceptance on 2026-11-12
-at 21:49 CET. Tested implementation 535af6f350fdcb0a473d4d43133e0d8ac7c0b50e has
-successful Branch tests 43302214845 attempt 1; evidence publication
-3bfa218c1ecd0b93c3a7278f88dd811ea4380540. [550 close-out, scope and evidence limits](docs/handover/550-integration-accessibility-hardening.md#stage-4-accepted-close-out---2026-11-12)
-supersedes earlier archive/publication/CI/acceptance-pending notes. Deploy
-admin-feedback-admin.js?v=5, setup-switch.js?v=3, admin-workflow-navigation.js?v=2,
-features.js?v=5, lairs.js?v=3, statistics.js?v=2, admin-end-feedback.js?v=2,
-admin-reset-all-feedback.js?v=2 and admin-dialog-accessibility.js?v=1 together with
-all eight fragments and templates. Stages 1-4 are closed for their agreed scopes;
-whole Deliverable 1 integrated evidence review/acceptance, Deliverable 2 connection/
-recovery/polling/field association and final 009.7/009 acceptance remain open.
-Deliverable 2 (archive SG-TODO-009.7-D2.zip, publication/CI/acceptance pending,
-[560](docs/handover/560-connection-field-feedback.md)) supersedes shared versions:
-deploy admin-feedback-controller.js?v=2, admin-feedback-view.js?v=2,
+Deploy admin-feedback-controller.js?v=2, admin-feedback-view.js?v=2,
 admin-feedback.css?v=2, admin-feedback-admin.js?v=6, initiative-join-gate.js?v=2,
 features.js?v=6, monster-initiative-edit.js?v=2, monster-initiative-roll.js?v=3 and
-setup-switch.js?v=4 with all eight fragments and templates. Do not treat this branch as a completed 009.7 release. Detailed earlier checkpoints
-are preserved in the [pre-Stage-1-close-out README](https://github.com/dajomas/Scrying-Glass/blob/97eedc6da52abcfa94526fee25a3c321f0626844/README.md)
-and numbered handovers. No optional work is added to the finish line.
+setup-switch.js?v=4 with all eight fragments and templates. Retain the non-superseded
+Stage 4 assets, including admin-dialog-accessibility.js?v=1; deploy the complete tree.
+Existing endpoints, payloads, permissions, combat/initiative/server gates, drafts and
+selections remain. Whole Deliverable 1 integrated evidence review/acceptance and
+final integrated 009.7/009 review, documentation and acceptance remain open under the
+[current plan](docs/todo/097-feedback-delivery-plan.md#remaining-scope-and-gates).
+Deliverable 2 acceptance does not close Deliverable 1 or 009.7/009. Do not treat this
+branch as a completed 009.7 release. Earlier checkpoint detail remains in the
+[pre-Deliverable-2-close-out README](https://github.com/dajomas/Scrying-Glass/blob/dbb78d3057a2d38527bd612b948a6566a1a741e3/README.md)
+and numbered handovers; no optional work is added to the finish line.
 
 Legacy source-reading tests use a disposable assembled checkout:
 

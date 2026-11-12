@@ -7,13 +7,48 @@ Previous stage: [550 Stage 4 close-out](550-integration-accessibility-hardening.
 
 ## Status - 2026-11-12
 
-Implemented for the agreed Deliverable 2 scope and delivered as archive
-SG-TODO-009.7-D2.zip on 52061a68 at the user's request "Now that stage 4 is closed,
-please implement Deliverable 2 and provide an archive". Publication, covering CI and
-acceptance are pending; no commit SHA, run or acceptance is claimed. The user asked for
-Deliverable 2 before the whole Deliverable 1 integrated evidence review; that review
-and acceptance remain open and are not satisfied by this work. Final 009.7/009
-acceptance remains open. Stages 1-4 stay closed and are not reopened.
+Completed and closed for the agreed Deliverable 2 scope following the user's explicit
+"Accept and close Deliverable 2" request on 2026-11-12 at 22:43 CET after the green
+covering-CI review. Earlier archive-only, publication/CI/acceptance-pending notes are
+superseded; do not request Deliverable 2 acceptance again. Stages 1-4 remain closed.
+Whole Deliverable 1 integrated review/acceptance and final 009.7/009 review,
+documentation and acceptance remain open; Deliverable 2 does not satisfy them.
+
+## Deliverable 2 accepted close-out - 2026-11-12
+
+Implementation: 8da0657325818c69fc82dc1234995a5146e88ebc on
+features/perplexity-009.7. Successful covering Branch tests 43310602854 attempt 1,
+job 131505374358; evidence publication dbb78d3057a2d38527bd612b948a6566a1a741e3,
+directory ci-results-43310602854-attempt-1. Reviewed run.json and jobs.json agree
+on branch, tested SHA, attempt, completed status and success. All configured
+Chromium provisioning, syntax/import, main Python/browser, pytest, JavaScript and
+standalone browser/audit stages succeeded. Completion: 2026-11-12T21:37:28Z
+(22:37 CET). The review did not individually re-review every test log/screenshot or
+recount tests; no new authenticated live-server, human visual, screen-reader or
+exhaustive accessibility evidence is claimed. Local fixture/audit results below
+remain preparation evidence, not new executions or universal end-to-end coverage.
+
+Accepted scope: the Admin background poll's persistent connection warning, matching
+recovery and deduplication, explicit warning severity and field-selector contract,
+near-field association/cleanup/re-render handling and the listed producer integration.
+All limits below remain explicit: Client Display reconnect behavior is outside this
+Admin plan; bulk operations have no single-field association; general HTTP detail is
+not parsed into a guessed field. Existing gates, endpoints, payloads, permissions,
+combat behavior, drafts and selections are unchanged.
+
+Originally prepared as SG-TODO-009.7-D2.zip on 52061a68 at the user's request
+"Now that stage 4 is closed, please implement Deliverable 2 and provide an archive".
+The user requested this before whole Deliverable 1 integrated review; that review
+and acceptance remain open. No Deliverable 2 implementation/publication/covering-CI/
+acceptance action remains. This documentation-only close-out uses [skip ci], runs
+no new tests and changes/dispatches no workflow. No application/test/template/asset/
+pin/permission/assembly change, merge, deployment or blanket future write approval;
+no new run outcome or close-out commit SHA is invented before publication.
+
+Continuation: whole Deliverable 1 integrated evidence review and acceptance, then
+final integrated evidence/corrections, documentation and explicit 009.7/009 acceptance
+under [097](../todo/097-feedback-delivery-plan.md#remaining-scope-and-gates). No optional
+scope or new acceptance gate; test-suite cleanup remains deferred until after 009.
 
 ## Scope
 
