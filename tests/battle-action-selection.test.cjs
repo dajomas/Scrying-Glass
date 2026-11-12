@@ -129,7 +129,7 @@ async function submit(fixture) {
     assert.equal(multiple.rows.children[1].querySelector('[data-action-target]').value, '');
     for (const fixture of [ordinary, reaction, multiple]) {
         assert.equal(fixture.feedback.snapshot().length, 0);
-        assert.equal(fixture.feedback.legacyRegions().length, 0);
+        assert.equal(fixture.feedback.snapshot().filter(r=>String(r.operation).startsWith('legacy.')).map(r=>r.region).length, 0);
     }
     console.log('Explicit target/source selection regression tests passed.');
 })().catch(error => { console.error(error); process.exitCode = 1; });

@@ -14,7 +14,7 @@ let install,calls=[],messages=[],loads=0,refreshes=0,failRequest=false,failRefre
 const confirm=()=>{throw new Error('Confirmation must not be called');};
 const context={confirm,window:{scryingAdminFeedback:feedback},renderCampaigns(){},latest:{active_setup:{name:'old',campaign_id:'campaign'}},campaignData:{active:'campaign'},
     document:{readyState:'interactive',getElementById(id){return {setupSelect:select,loadSetup:button,setupName:name}[id];},addEventListener(event,cb){install=cb;}},
-    paneNotification(kind,message){messages.push(message);},
+    paneNotification(kind,message){messages.push(message);},announceMovedSetups(moved){if(moved?.length)messages.push('moved');},
     async request(url,options){if(url==='/api/campaigns'){refreshes++;return {active:'campaign',moved:[]};}calls.push({url,options});if(failRequest)throw new Error('Denied');return {name:'new',campaign:'campaign'};},
     async load(){loads++;if(failRefresh)throw new Error('Refresh failed');observe('new');context.latest={active_setup:{name:'new',campaign_id:'campaign'}};},
     async setups(){throw new Error('Error-swallowing setups() must not be used');}};

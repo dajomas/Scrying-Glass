@@ -55,8 +55,13 @@ explicit acceptance on 2026-11-12 at 20:48 CET. Implementation
 supersedes earlier archive/publication/CI/acceptance-pending notes. Deploy
 admin-feedback-admin.js?v=4, features.js?v=4, lairs.js?v=2, lair-state-buttons.js?v=2,
 setup-has-lair.js?v=1 and campaign-viewer-admin.js?v=1 with their templates.
-Stage 4 integration/responsive/accessibility hardening and approved compatibility
-retirement is next; Deliverable 1 acceptance, Deliverable 2 connection/recovery/
+Stage 4 integration/accessibility hardening and the approved compatibility
+retirement are implemented in archive SG-TODO-009.7-S4.zip
+([550](docs/handover/550-integration-accessibility-hardening.md)); publication,
+covering CI and acceptance are pending. Deploy admin-feedback-admin.js?v=5,
+setup-switch.js?v=3, admin-workflow-navigation.js?v=2, features.js?v=5, lairs.js?v=3,
+statistics.js?v=2, admin-end-feedback.js?v=2, admin-reset-all-feedback.js?v=2 and the
+new admin-dialog-accessibility.js?v=1 together with all eight fragments and templates; Deliverable 1 acceptance, Deliverable 2 connection/recovery/
 polling/field association and final 009.7/009 acceptance remain open. Do not treat
 this branch as a completed 009.7 release. Detailed earlier checkpoints are preserved
 in the [pre-Stage-1-close-out README](https://github.com/dajomas/Scrying-Glass/blob/97eedc6da52abcfa94526fee25a3c321f0626844/README.md)

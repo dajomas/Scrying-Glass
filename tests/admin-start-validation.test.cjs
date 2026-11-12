@@ -25,7 +25,7 @@ function fixture() {
     context.window=context;
     vm.createContext(context); vm.runInContext(core.slice(from,to),context);
     const cancelFrom=core.indexOf("document.querySelector('#cancelOrder').onclick");
-    const cancelTo=core.indexOf("document.querySelector('#nextBattle').onclick",cancelFrom);
+    const cancelTo=core.indexOf('let battleOrderFontAdjustmentPending',cancelFrom);
     assert.ok(cancelFrom>=0 && cancelTo>cancelFrom);
     vm.runInContext(core.slice(cancelFrom,cancelTo),context);
     const start=context.startBattle, cancel=nodes.cancelOrder.onclick;

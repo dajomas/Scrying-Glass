@@ -48,7 +48,7 @@ function deferred() {
 }
 test('End asset is deferred after core and Start validation, exactly once', () => {
     const html = fs.readFileSync(path.join(root, 'templates/admin/190_document_end.html'), 'utf8');
-    const tag = '<script src="/static/admin-end-feedback.js?v=1" defer></script>';
+    const tag = '<script src="/static/admin-end-feedback.js?v=2" defer></script>';
     assert.equal(html.split(tag).length, 2);
     assert.ok(html.indexOf(tag) > html.indexOf('/static/admin-start-validation.js'));
     assert.ok(html.indexOf('/static/admin-start-validation.js') > html.indexOf('/static/admin.js'));
@@ -64,7 +64,7 @@ test('cancelling confirmation leaves existing End errors intact', async () => {
     const f = fixture(); f.seed('battle.end.validation'); f.seed('battle.end');
     const before = f.snapshot(); f.accept = false; await f.click();
     assert.deepEqual(f.snapshot(), before); assert.equal(f.calls.length, 0);
-    assert.equal(f.confirmations[0], 'End the battle without resetting combatants?');
+    assert.equal(f.confirmations[0], 'End the battle in the current battle setup without resetting combatants?');
 });
 test('confirmed valid attempt resolves validation before sending the unchanged POST', async () => {
     const f = fixture(); f.seed('battle.end.validation');
@@ -145,5 +145,5 @@ test('unrelated success cannot clear an End error and no legacy route is used', 
     const f = fixture(); f.onRequest = async () => { throw new Error('End failed'); };
     await f.click(); f.seed('battle.start', 'Started', 'success');
     assert.equal(f.snapshot().find(x => x.operation === 'battle.end').severity, 'error');
-    assert.deepEqual(Array.from(f.feedback.legacyRegions()), []);
+    assert.deepEqual(Array.from(f.feedback.snapshot().filter(r=>String(r.operation).startsWith('legacy.')).map(r=>r.region)), []);
 });

@@ -1,7 +1,7 @@
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const {createController}=require('../static/admin-feedback-controller.js');
 const source=fs.readFileSync(path.join(__dirname,'../static/admin/050-source.js'),'utf8');
-const deletion=source.slice(0,source.indexOf("document.querySelector('#openCampaignSetup')"));
+const deletion=source.slice(0,source.indexOf('// Setup transfer (#openCampaignSetup'));
 const deferred=()=>{let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b;});return {promise,resolve,reject};};
 const flush=async()=>{for(let i=0;i<8;i++)await Promise.resolve();};
 function fixture(setups=['one']){

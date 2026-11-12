@@ -442,16 +442,28 @@ function renderCampaigns() {
     renderActiveBattleSetup();
 }
 
+// Stage 4: typed campaign-list feedback. A load error persists until a later load
+// succeeds; the moved-setups notice is information that persists until replaced.
+function campaignListNotice(operation, severity, text) {
+    const feedback = window.scryingAdminFeedback;
+    const ticket = feedback.begin({lane: 'page', region: 'campaign', operation,
+        target: 'campaign-list', label: 'Campaign list'});
+    return text ? feedback.publish(ticket, {severity, text}) : feedback.resolve(ticket);
+}
+
+function announceMovedSetups(moved) {
+    if (moved?.length) campaignListNotice('campaign.setups.moved', 'info',
+        `Moved ${moved.length} unassigned setup(s) into campaign Default: ` + moved.join(', '));
+}
+
 async function setups() {
     try {
         campaignData = await request('/api/campaigns');
         renderCampaigns();
-
-        if (campaignData.moved && campaignData.moved.length) {
-            paneNotification('campaign', `Moved ${campaignData.moved.length} unassigned setup(s) into campaign Default: ` + campaignData.moved.join(', '));
-        }
+        campaignListNotice('campaign.setups.load');
+        announceMovedSetups(campaignData.moved);
     } catch (error) {
-        paneNotification('campaign', error.message);
+        campaignListNotice('campaign.setups.load', 'error', error.message);
     }
 }
 

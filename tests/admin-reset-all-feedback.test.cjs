@@ -51,7 +51,7 @@ function deferred() {
 }
 test('asset loads once, deferred after core and End feedback', () => {
     const html = fs.readFileSync(path.join(root, 'templates/admin/190_document_end.html'), 'utf8');
-    const tag = '<script src="/static/admin-reset-all-feedback.js?v=1" defer></script>';
+    const tag = '<script src="/static/admin-reset-all-feedback.js?v=2" defer></script>';
     assert.equal(html.split(tag).length, 2);
     assert.ok(html.indexOf(tag) > html.indexOf('/static/admin-end-feedback.js'));
     assert.ok(html.indexOf('/static/admin-end-feedback.js') > html.indexOf('/static/admin.js'));
@@ -62,7 +62,7 @@ test('cancellation preserves the error and does not begin or supersede a request
     f.accept = false; await f.click();
     assert.deepEqual(f.snapshot(), before); assert.equal(f.feedback.isCurrent(guard), true);
     assert.equal(f.calls.length, 0); assert.equal(f.refreshes(), 0);
-    assert.equal(f.confirmations[0], 'Reset every monster and character?');
+    assert.equal(f.confirmations[0], 'Reset every monster and character in the current battle setup (1 monster(s), 1 character(s))?');
 });
 test('one unchanged POST and refresh, without direct client state mutation', async () => {
     const f = fixture(), before = JSON.stringify(f.context.latest);
@@ -95,7 +95,7 @@ test('refresh alone cannot clear a Reset All error', async () => {
 test('unrelated success cannot clear Reset All errors or use the legacy route', async () => {
     const f = fixture(); f.seed('battle.reset-all'); f.seed('battle.end', 'Ended', 'success');
     assert.equal(f.snapshot().find(x => x.operation === 'battle.reset-all').severity, 'error');
-    assert.deepEqual(Array.from(f.feedback.legacyRegions()), []);
+    assert.deepEqual(Array.from(f.feedback.snapshot().filter(r=>String(r.operation).startsWith('legacy.')).map(r=>r.region)), []);
 });
 test('successful mutation resolves before real loadState publishes its own refresh failure', async () => {
     const f = fixture(); f.seed('battle.reset-all'); f.seed('battle.end');

@@ -49,7 +49,7 @@
             return button;
         });
         // One existing workspace; controls are never cloned, reparented or rebuilt.
-        main.setAttribute('role', 'tabpanel');
+        // Stage 4: <main> keeps its landmark role; the selected tab names it (aria-labelledby).
         const scroll = new Map();
         let active = null;
         function select(key, focus = false) {

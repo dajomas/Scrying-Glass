@@ -37,7 +37,7 @@ for(const kind of ['characters','monsters']) test(`${kind}: open failure is pers
  assert.equal(record.operation,'statistics.open');assert.equal(record.target,'c');assert.equal(record.region,'global');assert.equal(record.severity,'error');
  assert.equal(record.text,'Encounter changed; reopen Restore statistics');
  assert.equal(h.alerts.length,0);assert.equal(h.requests.length,0);assert.equal(h.el('statisticsModal').hidden,true);
- assert.equal(h.feedback.legacyRegions().length,0);
+ assert.equal(h.feedback.snapshot().filter(r=>String(r.operation).startsWith('legacy.')).map(r=>r.region).length,0);
 });
 test('matching retry opens and clears only its error',async()=>{
  const h=setup();h.setFail(true);h.open();await flush();

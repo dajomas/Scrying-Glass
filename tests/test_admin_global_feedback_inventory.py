@@ -7,29 +7,26 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class GlobalFeedbackCoreInventoryTests(unittest.TestCase):
-    def test_literal_core_message_calls_are_confined_to_known_replaced_handlers(self):
+    def test_core_has_no_untyped_message_or_pane_notification_calls(self):
+        # Stage 4: the superseded 070 handlers were removed and untyped delivery is retired.
         parts = sorted((ROOT / "static/admin").glob("*-source.js"))
         self.assertEqual(len(parts), 8)
-        calls = {}
+        calls, pane = {}, {}
         for part in parts:
-            matches = list(re.finditer(r"(?<![\w$.])message\s*\(", part.read_text(encoding="utf-8")))
+            text = part.read_text(encoding="utf-8")
+            matches = list(re.finditer(r"(?<![\w$.])message\s*\(", text))
             if matches:
                 calls[part.name] = len(matches)
-        self.assertEqual(calls, {"070-source.js": 8})
-        source = (ROOT / "static/admin/070-source.js").read_text(encoding="utf-8")
-        boundaries = [
-            ("async function startBattle(", "document.querySelector('#startBattle').onclick", 1),
-            ("document.querySelector('#startBattle').onclick", "document.querySelector('#confirmOrder').onclick", 1),
-            ("document.querySelector('#confirmOrder').onclick", "document.querySelector('#cancelOrder').onclick", 1),
-            ("document.querySelector('#nextBattle').onclick", "document.querySelector('#endBattle').onclick", 1),
-            ("document.querySelector('#endBattle').onclick", "document.querySelector('#resetAll').onclick", 3),
-            ("document.querySelector('#resetAll').onclick", "let battleOrderFontAdjustmentPending", 1),
-        ]
-        for start, end, count in boundaries:
-            with self.subTest(handler=start):
-                first = source.index(start)
-                last = source.index(end, first)
-                self.assertEqual(len(re.findall(r"(?<![\w$.])message\s*\(", source[first:last])), count)
+            # Every remaining paneNotification call passes a third (ticket/severity) argument.
+            for match in re.finditer(r"(?<![\w$.])paneNotification\(([^;]*)\);", text):
+                if match.group(0).startswith("paneNotification(kind, text, options)"):
+                    continue
+                if "{ticket" not in match.group(1) and "options" not in match.group(1):
+                    pane.setdefault(part.name, []).append(match.group(0)[:80])
+        self.assertEqual(calls, {})
+        self.assertEqual(pane, {})
+        for asset in ("setup-switch.js", "features.js", "lairs.js", "campaign-viewer-admin.js"):
+            self.assertNotRegex((ROOT / "static" / asset).read_text(encoding="utf-8"), r"(?<![\w$.])paneNotification\(")
 
     def test_feedback_and_replacement_assets_keep_their_relative_template_order(self):
         directory = ROOT / "templates/admin"

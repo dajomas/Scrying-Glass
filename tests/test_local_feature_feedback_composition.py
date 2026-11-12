@@ -20,7 +20,7 @@ class LocalFeatureFeedbackCompositionTests(unittest.TestCase):
         return page.locator(f'#{region} .sg-feedback-text').all_text_contents()
 
     def no_stage3_legacy(self, page):
-        legacy = page.evaluate('scryingAdminFeedback.legacyRegions()')
+        legacy = page.evaluate('scryingAdminFeedback.snapshot().filter(r=>String(r.operation).startsWith("legacy.")).map(r=>r.region)')
         for region in ('tools', 'lair', 'lairAction', 'campaignViewer'):
             self.assertNotIn(region, legacy)
 
@@ -88,7 +88,7 @@ class LocalFeatureFeedbackCompositionTests(unittest.TestCase):
         self.assertIn('Error: Setup changed', self.text(page, 'battleSetupNotification'))
         page.wait_for_function("!document.querySelector('#setupHasLair').disabled")
         self.assertTrue(page.locator('#setupHasLair').is_checked(), 'Server state is restored')
-        self.assertNotIn('battleSetup', page.evaluate('scryingAdminFeedback.legacyRegions()'))
+        self.assertNotIn('battleSetup', page.evaluate('scryingAdminFeedback.snapshot().filter(r=>String(r.operation).startsWith("legacy.")).map(r=>r.region)'))
         self.no_stage3_legacy(page)
 
     def test_viewer_access_feedback_uses_selected_campaign_region(self):

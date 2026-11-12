@@ -93,7 +93,7 @@
         if(busy||!target||!snapshot)return;
         if(body.operation==='restore'&&!affected(currentItem()).length)return;
         const id=target,ticket=generation,token=snapshot.statistics_token;
-        if(!confirm(body.operation==='restore'?'Restore selected statistics to their original/base values? Current HP will not heal.':'Save the entered original/base statistics? This does not heal.'))return;
+        const who=currentItem()?.name?`“${currentItem().name}”`:'this combatant';if(!confirm(body.operation==='restore'?`Restore selected statistics of ${who} to their original/base values? Current HP will not heal.`:`Save the entered original/base statistics of ${who}? This does not heal.`))return;
         busy=true;const controls=[...$('statisticsModal').querySelectorAll('input,select,button')];
         const previousDisabled=controls.map(x=>x.disabled);controls.forEach(x=>x.disabled=true);
         try {

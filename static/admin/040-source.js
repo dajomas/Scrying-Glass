@@ -217,7 +217,7 @@ document.querySelector(
             feedback.publish(validation, {severity: 'info', text: 'There are no monsters to roll initiative for'});
             return;
         }
-        if (!confirm('Overwrite initiative for every monster with a random d20 roll?')) return;
+        if (!confirm(`Overwrite initiative for all ${latest.monsters.length} monster(s) with a random d20 roll?`)) return;
         feedback.resolve(validation);
         const ticket = begin('request'), refresh = begin('refresh');
         const current = () => feedback.isCurrent(ticket) && feedback.isCurrent(refresh);
@@ -340,14 +340,7 @@ document.querySelector('#cancelCampaignDelete').onclick = () => { campaignDelete
 
 document.querySelector('#newCampaign').onclick = () => openCampaignModal();
 
-document.querySelector('#editCampaign').onclick = () => {
-    const campaign = campaignById(document.querySelector('#campaignSelect').value);
-    if (!campaign) {
-        paneNotification('campaign', 'Choose a campaign to edit');
-        return;
-    }
-    openCampaignModal(campaign);
-};
+// #editCampaign is bound by the 080 campaign-edit owner.
 
 // After a campaign is activated the server opens its most recently worked on
 // (or newest) battle setup. Reflect that in the setup controls and reload state.
@@ -380,77 +373,13 @@ const REPLACE_WARNING =
     'The current battle will be replaced by the campaign\'s most recently used battle setup. ' +
     'Unsaved changes will be lost.';
 
-document.querySelector('#campaignForm').onsubmit = async event => {
+// Campaign create/edit submit and switching are owned by 080. These placeholders
+// are the documented install points the 080 owners wrap or replace.
+document.querySelector('#campaignForm').onsubmit = event => {
     event.preventDefault();
-    const form = event.target;
-    const name = form.elements.name.value.trim();
-    const description = form.elements.description.value.trim();
-
-    if (!name) {
-        paneNotification('campaign', 'Enter a campaign name');
-        return;
-    }
-
-    try {
-        if (campaignEditing) {
-            campaignData = await request(`/api/campaigns/${encodeURIComponent(campaignEditing)}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, description }),
-            });
-            paneNotification('campaign', `Updated campaign: ${name}`);
-        } else {
-            if (!confirm(`Create and switch to campaign ${name}?\n\n${REPLACE_WARNING}`)) {
-                return;
-            }
-            campaignData = await request('/api/campaigns', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, description, activate: true }),
-            });
-            closeCampaignModal();
-            const opened = await applyOpenedSetup(campaignData);
-            paneNotification('campaign', `Created and switched to campaign: ${name}${opened}`);
-            return;
-        }
-        closeCampaignModal();
-        renderCampaigns();
-    } catch (error) {
-        paneNotification('campaign', error.message);
-    }
 };
 
-async function switchCampaign() {
-    const campaignSelect = document.querySelector('#campaignSelect');
-    const campaignId = campaignSelect.value;
-    // Put the dropdown back on the active campaign when the switch does not happen.
-    const revert = () => { campaignSelect.value = campaignData.active || ''; };
-    if (!campaignId) {
-        revert();
-        paneNotification('campaign', 'Choose a campaign to switch to');
-        return;
-    }
-    if (campaignId === campaignData.active) {
-        paneNotification('campaign', `${activeCampaign()?.name || campaignId} is already the active campaign`);
-        return;
-    }
-    const target = campaignById(campaignId);
-    if (!confirm(`Switch to campaign ${target ? target.name : campaignId}?\n\n${REPLACE_WARNING}`)) {
-        revert();
-        return;
-    }
-    try {
-        campaignData = await request(`/api/campaigns/${encodeURIComponent(campaignId)}/activate`, {
-            method: 'POST',
-        });
-        document.querySelector('#setupSelect').value = '';
-        const opened = await applyOpenedSetup(campaignData);
-        paneNotification('campaign', `Switched to campaign: ${activeCampaign()?.name || campaignId}${opened}`);
-    } catch (error) {
-        revert();
-        paneNotification('campaign', error.message);
-    }
-}
+async function switchCampaign() {}
 
 document.querySelector('#switchCampaign').onclick = switchCampaign;
 // Selecting another campaign in the dropdown switches to it immediately.

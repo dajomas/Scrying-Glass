@@ -3,7 +3,7 @@
     'use strict';
     if (window.scryingAdminFeedback) return;
     const controller = ScryingFeedback.createController();
-    const scopes = new Map(), views = new Map(), legacyRegions = new Set();
+    const scopes = new Map(), views = new Map();
     let stateSequence = 0, lookupSequence = 0, encounterEpoch = 0;
     let stateRequestEpoch = 0, acceptedStateSequence = 0, acceptedStateEpoch = 0;
     const regions = {
@@ -58,20 +58,12 @@
         return controller.begin({...spec, lane, scope: spec.scope || scopes.get(lane),
             placement: spec.region === 'global' ? 'global' : 'pane'});
     }
+    // Stage 4: the untyped pane compatibility path is retired. Every producer,
+    // global or pane, supplies an explicit ticket for this region and a severity.
     function deliver(region, text, options) {
-        if (options !== undefined) {
-            if (!options.ticket || options.ticket.region !== region) throw new Error('Feedback destination mismatch');
-            return controller.publish(options.ticket, {severity: options.severity, text});
-        }
-        // Global producers must supply explicit identity, scope and severity.
-        if (region === 'global') throw new Error('Global feedback requires an explicit ticket and severity');
-        // Temporary pane-only compatibility. No severity inference or expiry.
-        // Remove its use by migrating the remaining pane producers before D1 approval.
-        legacyRegions.add(region);
-        const ticket = begin({region, operation: 'legacy.' + region, target: region,
-            label: 'Unmigrated feedback'});
-        const value = String(text ?? '');
-        return value.trim() ? controller.publish(ticket, {severity: 'info', text: value}) : controller.resolve(ticket);
+        if (!options?.ticket) throw new Error('Feedback requires an explicit ticket and severity: ' + region);
+        if (options.ticket.region !== region) throw new Error('Feedback destination mismatch');
+        return controller.publish(options.ticket, {severity: options.severity, text});
     }
     function stateRequest() {
         stateRequestEpoch = encounterEpoch;
@@ -126,7 +118,7 @@
             return begin({lane: 'lookup', region: 'monsters', operation: 'monster.lookup', target, label: 'Monster lookup'});
         },
         publish: controller.publish, resolve: controller.resolve, isCurrent: controller.isCurrent,
-        snapshot: controller.snapshot, legacyRegions: () => [...legacyRegions],
+        snapshot: controller.snapshot,
     });
     window.scryingAdminFeedback = api;
     for (const [region, [id, fallbackIds]] of Object.entries(regions)) mount(region, id, fallbackIds);

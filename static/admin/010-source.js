@@ -640,25 +640,11 @@ async function removeCombatant(kind, id) {
 }
 
 async function patch(kind, id, data) {
-    if (['characters', 'monsters'].includes(kind)) {
-        return rosterMutation(kind, 'roster.patch', JSON.stringify([id, Object.keys(data).sort()]),
-            () => request(`/api/${kind}/${encodeURIComponent(id)}`, {
-                method: 'PATCH', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data),
-            }));
-    }
-    try {
-        await request(`/api/${kind}/${encodeURIComponent(id)}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
-
-        await load();
-    } catch (error) {
-        paneNotification(kind, error.message);
-    }
+    if (!['characters', 'monsters'].includes(kind)) throw new Error('Unsupported roster kind: ' + kind);
+    return rosterMutation(kind, 'roster.patch', JSON.stringify([id, Object.keys(data).sort()]),
+        () => request(`/api/${kind}/${encodeURIComponent(id)}`, {
+            method: 'PATCH', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data),
+        }));
 }
 
 // Colored dot in front of a combatant's name, styled like the battle-order

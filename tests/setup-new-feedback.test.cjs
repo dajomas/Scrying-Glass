@@ -5,6 +5,12 @@ const fs = require('node:fs'), path = require('node:path'), vm = require('node:v
 const root = path.resolve(__dirname, '..');
 const {createController} = require(path.join(root, 'static/admin-feedback-controller.js'));
 const source = fs.readFileSync(path.join(root, 'static/admin/060-source.js'), 'utf8');
+const announceSource = (() => {
+    const core = fs.readFileSync(path.join(root, 'static/admin/020-source.js'), 'utf8');
+    const from = core.indexOf('function campaignListNotice('), to = core.indexOf('async function setups()', from);
+    if (from < 0 || to <= from) throw new Error('Cannot isolate the typed campaign-list notice helpers');
+    return core.slice(from, to);
+})();
 const deferred = () => {let resolve, reject; const promise = new Promise((a, b) => {resolve = a; reject = b;}); return {promise, resolve, reject};};
 const flush = async () => {for (let i = 0; i < 8; i++) await Promise.resolve();};
 const LIST = {active: 'camp', moved: [], campaigns: [{id: 'camp', name: 'Camp', setups: ['default', 'Fresh']}]};
@@ -38,6 +44,7 @@ function harness() {
         renderCampaigns() {}, renderActiveBattleSetup() {}, syncActiveBattleSetupControls() {},
         paneNotification(region, text) {panes.push([region, text]);},
         confirm(text) {confirmations.push(text); return context.confirmed;}, confirmed: true});
+    vm.runInContext(announceSource, context);
     vm.runInContext(source, context);
     const input = node('#setupName'), button = node('#newSetup');
     const type = value => {input.value = value; for (const fn of input.listeners.input || []) fn();};
@@ -186,5 +193,8 @@ test('older success timer cannot clear a newer same-identity error', async () =>
 
 test('server-moved setups keep the existing campaign notice', async () => {
     const h = harness(), p = h.click(); await created(h); await listed(h, {...LIST, moved: ['a', 'b']}); await loaded(h, p);
-    assert.deepEqual(h.panes, [['campaign', 'Moved 2 unassigned setup(s) into campaign Default: a, b']]);
+    assert.deepEqual(h.panes, []);
+    const moved = h.records().filter(r => r.operation === 'campaign.setups.moved');
+    assert.deepEqual(moved.map(r => [r.lane, r.region, r.severity, r.text]),
+        [['page', 'campaign', 'info', 'Moved 2 unassigned setup(s) into campaign Default: a, b']]);
 });

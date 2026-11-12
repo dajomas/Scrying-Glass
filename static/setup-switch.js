@@ -35,8 +35,7 @@
         if (!relevant()) return false;
         campaignData = list;
         renderCampaigns();
-        if (list?.moved?.length) paneNotification('campaign',
-            `Moved ${list.moved.length} unassigned setup(s) into campaign Default: ` + list.moved.join(', '));
+        announceMovedSetups(list?.moved);
         return true;
     }
 

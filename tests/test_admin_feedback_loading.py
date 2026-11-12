@@ -123,11 +123,15 @@ class FeedbackLoadingTests(unittest.TestCase):
         page.clock.run_for(10000)
         self.assertIn('Persistent error', page.locator('#message').text_content())
 
-    def test_legacy_clear_cannot_clear_explicit_error(self):
+    def test_retired_untyped_pane_delivery_cannot_clear_explicit_error(self):
+        # Stage 4: the untyped pane compatibility path is retired and now rejects.
         page, _ = self.open_page()
         self.emit(page, region='monsters')
-        page.evaluate("paneNotification('monsters','Legacy');paneNotification('monsters','')")
-        self.assertEqual(page.evaluate('scryingAdminFeedback.legacyRegions()'), ['monsters'])
+        errors = page.evaluate("""() => ['Legacy', ''].map(text => {
+            try { paneNotification('monsters', text); return 'accepted'; } catch (error) { return error.message; } })""")
+        self.assertEqual(errors, ['Feedback requires an explicit ticket and severity: monsters'] * 2)
+        self.assertEqual(page.evaluate('scryingAdminFeedback.snapshot().filter(r=>String(r.operation).startsWith("legacy.")).map(r=>r.region)'), [])
+        self.assertIsNone(page.evaluate('scryingAdminFeedback.legacyRegions'))
         self.assertIn('Persistent error', page.locator('#monsterAddNotification').text_content())
         self.assertEqual(page.locator('#monsterAddNotification .sg-feedback-record').count(), 1)
 

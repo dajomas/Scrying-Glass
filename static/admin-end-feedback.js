@@ -11,7 +11,8 @@
             feedback.publish(validation(), {severity: 'error', text: 'There is no active battle to end.'});
             return;
         }
-        if (!confirm('End the battle without resetting combatants?')) return;
+        const setup = typeof latest?.active_setup === 'string' ? latest.active_setup : latest?.active_setup?.name;
+        if (!confirm(`End the battle in ${setup ? `battle setup “${setup}”` : 'the current battle setup'} without resetting combatants?`)) return;
         feedback.resolve(validation());
         const ticket = feedback.begin({region: 'global', operation: 'battle.end',
             target: 'battle', label: 'End battle'});

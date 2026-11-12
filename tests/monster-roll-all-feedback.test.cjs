@@ -38,7 +38,7 @@ test('cancellation preserves errors and does not mutate or refresh',async()=>{
 });
 test('bodyless POST and original confirmation/count text; success precedes strict refresh',async()=>{
     const h=fixture(),d=hold();h.refresh=()=>d.promise;const before=JSON.stringify(h.context.latest);const pending=h.run();await tick();
-    a.equal(h.confirmations[0],'Overwrite initiative for every monster with a random d20 roll?');
+    a.equal(h.confirmations[0],'Overwrite initiative for all 2 monster(s) with a random d20 roll?');
     a.equal(h.calls[0].url,'/api/monsters/roll-initiative');a.deepEqual(Object.keys(h.calls[0].options),['method']);a.equal(h.calls[0].options.method,'POST');
     a.deepEqual(h.loads,[true]);a.equal(h.records()[0].text,'Rolled d20 initiative for 2 monster(s)');
     a.equal(h.records()[0].severity,'success');a.equal(JSON.stringify(h.context.latest),before);

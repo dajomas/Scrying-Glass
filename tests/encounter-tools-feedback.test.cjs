@@ -60,7 +60,7 @@ test('tools error persists in the tools region and keeps the draft; next success
     delete h.fail[patch];await h.click('setTempHp');
     assert.deepEqual(h.records(),[['encounter','tools','tools.temp-hp','success','Saved.']]);
     h.tick(2999);assert.equal(h.records().length,1);h.tick(1);assert.equal(h.records().length,0);
-    assert.equal(h.writes().length,2);assert.deepEqual(Array.from(h.feedback.legacyRegions()),[]);
+    assert.equal(h.writes().length,2);assert.deepEqual(Array.from(h.feedback.snapshot().filter(r=>String(r.operation).startsWith('legacy.')).map(r=>r.region)),[]);
 });
 test('declined confirmation is silent, sends nothing and keeps the earlier error',async()=>{
     const h=await setup();h.element('featureLifeState').value='dead';

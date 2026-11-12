@@ -37,7 +37,7 @@ test('every distinct operation pair isolates matching resolution through the rea
         assert.equal(w.feedback.snapshot().length, 2, `${a} / ${b}: persistent errors`);
         assert.equal(w.feedback.resolve(w.begin(a)), true);
         assert.deepEqual(w.texts(), [b + ':same-target'], `${a} must not clear ${b}`);
-        assert.deepEqual(Array.from(w.feedback.legacyRegions()), []);pairs++;
+        assert.deepEqual(Array.from(w.feedback.snapshot().filter(r=>String(r.operation).startsWith('legacy.')).map(r=>r.region)), []);pairs++;
     }
     assert.equal(pairs, 171);
 });
@@ -64,18 +64,23 @@ test('away-and-back scope transitions cannot revive an old operation ticket', ()
     assert.equal(w.feedback.publish(old, {severity: 'error', text: 'Old scope'}), false);
     assert.equal(w.feedback.resolve(old), false);assert.deepEqual(w.texts(), ['battle.end:same-target']);
 });
-test('retained pane compatibility cannot clear explicit pane or global errors', () => {
+test('Stage 4: retired pane compatibility rejects untyped pane delivery without changing feedback', () => {
     const w = setup();w.error('roster.join');w.error('monster.edit', 'one', 'monsters');
-    w.feedback.deliver('monsters', 'Legacy pane notice');w.feedback.deliver('monsters', '');
-    assert.deepEqual(w.texts(), ['roster.join:same-target', 'monster.edit:one']);
-    assert.deepEqual(Array.from(w.feedback.legacyRegions()), ['monsters']);
+    for (const text of ['Legacy pane notice', '', '   ']) {
+        assert.throws(() => w.feedback.deliver('monsters', text), /Feedback requires an explicit ticket and severity: monsters/);
+        assert.deepEqual(w.texts(), ['roster.join:same-target', 'monster.edit:one']);
+    }
+    assert.equal(w.feedback.legacyRegions, undefined);
+    assert.ok(!w.feedback.snapshot().some(r => String(r.operation).startsWith('legacy.')));
+    // A ticket for another region is still a destination mismatch.
+    assert.throws(() => w.feedback.deliver('monsters', 'x', {ticket: w.begin('battle.end'), severity: 'error'}), /destination mismatch/);
 });
 test('untyped global publish and clear reject without changing explicit feedback', () => {
     const w = setup();w.error('battle.start');
     for (const text of ['Unmigrated', '', '   ']) {
-        assert.throws(() => w.feedback.deliver('global', text), /Global feedback requires an explicit ticket and severity/);
+        assert.throws(() => w.feedback.deliver('global', text), /Feedback requires an explicit ticket and severity: global/);
         assert.deepEqual(w.texts(), ['battle.start:same-target']);
-        assert.deepEqual(Array.from(w.feedback.legacyRegions()), []);
+        assert.deepEqual(Array.from(w.feedback.snapshot().filter(r=>String(r.operation).startsWith('legacy.')).map(r=>r.region)), []);
     }
     const ticket = w.begin('battle.end');
     const recordId = w.feedback.deliver('global', 'Explicit error', {ticket, severity: 'error'});
@@ -116,5 +121,5 @@ test('actual End and Reset All producers preserve independent errors across expl
     w.tick(5000);assert.deepEqual(w.texts(), ['Reset failed']);
     assert.deepEqual(calls.map(call => call.url), ['/api/battle/end', '/api/battle/reset-all', '/api/battle/end']);
     assert(calls.every(call => call.options.method === 'POST'));
-    assert.deepEqual(Array.from(w.feedback.legacyRegions()), []);
+    assert.deepEqual(Array.from(w.feedback.snapshot().filter(r=>String(r.operation).startsWith('legacy.')).map(r=>r.region)), []);
 });

@@ -4,7 +4,9 @@
     const button = document.getElementById('resetAll');
     if (!button) return;
     button.onclick = async () => {
-        if (!confirm('Reset every monster and character?')) return;
+        const setup = typeof latest?.active_setup === 'string' ? latest.active_setup : latest?.active_setup?.name;
+        const counts = `${latest?.monsters?.length ?? 0} monster(s), ${latest?.characters?.length ?? 0} character(s)`;
+        if (!confirm(`Reset every monster and character in ${setup ? `battle setup “${setup}”` : 'the current battle setup'} (${counts})?`)) return;
         const feedback = window.scryingAdminFeedback;
         const ticket = feedback.begin({region: 'global', operation: 'battle.reset-all',
             target: 'battle', label: 'Reset all combatants'});

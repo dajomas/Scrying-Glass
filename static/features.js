@@ -139,7 +139,7 @@
     };
     $('featureUndo').onclick=()=>perform({operation:'tools.undo',label:'Undo',target:'undo'},()=>api('/api/battle/undo','POST',{id:summary.undo?.id}),editable);
     $('setTempHp').onclick=()=>perform({operation:'tools.temp-hp',label:'Set temporary HP',target:selected()},()=>edit({temp_hp:Number($('featureTempHp').value)}),['featureTempHp']);
-    $('setLifeState').onclick=()=>perform({operation:'tools.life-state',label:'Set life state',target:selected()},async()=>{const value=$('featureLifeState').value;if(value==='dead'&&!confirm('Mark this combatant dead?'))return false;return edit({life_state:value});},['featureLifeState']);
+    $('setLifeState').onclick=()=>perform({operation:'tools.life-state',label:'Set life state',target:selected()},async()=>{const value=$('featureLifeState').value;if(value==='dead'&&!confirm(`Mark ${target()?.name?`“${target().name}”`:'this combatant'} dead?`))return false;return edit({life_state:value});},['featureLifeState']);
     $('setDeathSaves').onclick=()=>perform({operation:'tools.death-saves',label:'Set death saves',target:selected()},()=>edit({death_successes:Number($('deathSuccesses').value),death_failures:Number($('deathFailures').value)}),['deathSuccesses','deathFailures']);
     $('startConcentration').onclick=()=>perform({operation:'tools.concentration',label:'Start concentration',target:selected()},()=>edit({concentrating:true}));
     $('endConcentration').onclick=()=>perform({operation:'tools.concentration',label:'End concentration',target:selected()},()=>{const item=target();if(!item)throw new Error('Select a combatant');return api(`/api/combatants/${encodeURIComponent(item.id)}/concentration/end`,'POST');});
@@ -164,12 +164,12 @@
         if(!confirm(`Restore checkpoint?\nRound ${p.battle_round}; ${p.monsters} monsters; ${p.characters} characters.\nSetup: ${p.active_setup?.name||'None'}\nCurrent HP, effects, roster and turn state will be replaced. Audit history is retained.`))return false;
         return api(`/api/checkpoints/${id}/restore`,'POST',{confirm:true,revision:p.revision});
     },editable);
-    $('deleteCheckpoint').onclick=()=>perform({operation:'tools.checkpoint.delete',label:'Delete checkpoint',target:$('checkpointSelect').value},async()=>{const id=$('checkpointSelect').value;if(!id)throw new Error('Select a checkpoint');if(!confirm('Permanently delete checkpoint?'))return false;return api(`/api/checkpoints/${id}`,'DELETE');});
+    $('deleteCheckpoint').onclick=()=>perform({operation:'tools.checkpoint.delete',label:'Delete checkpoint',target:$('checkpointSelect').value},async()=>{const id=$('checkpointSelect').value;if(!id)throw new Error('Select a checkpoint');const label=$('checkpointSelect').selectedOptions?.[0]?.textContent||id;if(!confirm(`Permanently delete checkpoint “${label}”?`))return false;return api(`/api/checkpoints/${id}`,'DELETE');});
     $('exportBundle').onclick=()=>{location.href='/api/campaign-bundle';};
     // Success stays global (4A.13); a rejection is a persistent tools-region error with the same
     // operation/target identity, so the next successful import resolves it.
     $('importBundle').onchange=()=>{
-        const file=$('importBundle').files[0];if(!file||!confirm('Import as a NEW campaign, leaving the active campaign unchanged?'))return;
+        const file=$('importBundle').files[0];if(!file||!confirm(`Import “${file.name}” as a NEW campaign, leaving the active campaign unchanged?`))return;
         const spec={region:'global',operation:'campaign-bundle.import',target:'import',label:'Import campaign bundle',
             success:result=>`Imported ${result.name}. Switch campaigns, then restore the "Imported encounter" checkpoint to resume its runtime state.`,
             async after(){$('importBundle').value='';if(typeof setups==='function')await setups();}};

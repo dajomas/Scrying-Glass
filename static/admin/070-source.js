@@ -496,112 +496,21 @@ function readTieOrder() {
     return orderedBuckets;
 }
 
+// Install point wrapped by admin-initial-visibility.js (typed feedback, Start collapse).
+// Start/tie confirmation, Next, End and Reset All controls are bound by
+// admin-start-validation.js, battle-actions-next.js, admin-end-feedback.js and
+// admin-reset-all-feedback.js. Errors propagate to the owning caller.
 async function startBattle(order) {
-    try {
-        await request('/api/battle/start', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ order }),
-        });
-
-        await load();
-    } catch (error) {
-        message(error.message);
-    }
+    await request('/api/battle/start', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({order}),
+    });
+    await load();
 }
-
-document.querySelector('#startBattle').onclick = () => {
-    const order = normalOrder();
-
-    if (!order.length && !(latest.lairs || []).some(x => x.active)) {
-        message('Activate at least one turn-eligible participant first');
-        return;
-    }
-
-    if (!tiedBuckets().length) {
-        startBattle(order);
-        return;
-    }
-
-    document.querySelector('#tieGroups').innerHTML = tieUI();
-    document.querySelector('#tieModal').hidden = false;
-};
-
-document.querySelector('#confirmOrder').onclick = () => {
-    try {
-        const orderedTies = readTieOrder();
-        let tieIndex = 0;
-        const order = [];
-
-        for (const bucket of initiativeBuckets()) {
-            if (bucket.initiative !== null && bucket.members.length > 1) {
-                order.push(...orderedTies[tieIndex++]);
-            } else {
-                order.push(...bucket.members.map(combatant => combatant.id));
-            }
-        }
-
-        document.querySelector('#tieModal').hidden = true;
-        startBattle(order);
-    } catch (error) {
-        message(error.message);
-    }
-};
 
 document.querySelector('#cancelOrder').onclick = () => {
     document.querySelector('#tieModal').hidden = true;
-};
-
-document.querySelector('#nextBattle').onclick = async () => {
-    try {
-        await request('/api/battle/next', {
-            method: 'POST',
-        });
-
-        await load();
-    } catch (error) {
-        message(error.message);
-    }
-};
-
-document.querySelector('#endBattle').onclick = async () => {
-    if (!latest?.battle_order?.length) {
-        message('There is no active battle to end.');
-        return;
-    }
-
-    if (!confirm('End the battle without resetting combatants?')) {
-        return;
-    }
-
-    try {
-        await request('/api/battle/end', {
-            method: 'POST',
-        });
-
-        await load();
-        message('Battle ended. Combatants were not reset.');
-    } catch (error) {
-        message(error.message);
-    }
-};
-
-document.querySelector('#resetAll').onclick = async () => {
-    if (!confirm('Reset every monster and character?')) {
-        return;
-    }
-
-    try {
-        await request('/api/battle/reset-all', {
-            method: 'POST',
-        });
-
-        await load();
-    } catch (error) {
-        message(error.message);
-    }
 };
 
 let battleOrderFontAdjustmentPending = false;

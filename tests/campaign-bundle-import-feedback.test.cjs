@@ -64,7 +64,7 @@ test('confirmed import keeps file POST and full recovery wording, without alert'
     assert.equal(h.records().length,1);assert.equal(h.records()[0].severity,'success');
     assert.equal(h.records()[0].text,guidance(h.name));assert.deepEqual(h.alerts,[]);
     assert.equal(h.setups,1);assert.equal(h.loads,1);assert.equal(h.element('importBundle').value,'');
-    assert.deepEqual(Array.from(h.feedback.legacyRegions()),[]);
+    assert.deepEqual(Array.from(h.feedback.snapshot().filter(r=>String(r.operation).startsWith('legacy.')).map(r=>r.region)),[]);
 });
 test('success expires at five seconds without clearing unrelated persistent error',async()=>{
     const h=await setup();const ticket=h.feedback.begin({region:'global',operation:'battle.end',target:'battle',label:'End'});

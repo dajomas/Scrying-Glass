@@ -62,7 +62,7 @@ test('load error has explicit identity, persists and never uses the legacy route
     assert.equal(notice.operation, 'state.load');
     assert.equal(notice.severity, 'error');
     assert.equal(notice.text, 'State unavailable');
-    assert.equal(f.api.legacyRegions().length, 0);
+    assert.equal(f.api.snapshot().filter(r=>String(r.operation).startsWith('legacy.')).map(r=>r.region).length, 0);
 });
 test('matching retry clears only load error, including the no-battle early return', async () => {
     const f = fixture();

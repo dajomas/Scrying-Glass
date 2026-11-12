@@ -70,6 +70,13 @@ negative controls, local/CI counts and archive instructions remain in the
 and [530 history](../handover/530-setup-operation-feedback.md). This concise current
 record supersedes pending notes without deleting the historical evidence.
 
+Stage 4 integration reconciliation and accessibility hardening is implemented
+locally and delivered as archive SG-TODO-009.7-S4.zip (2026-11-12); it is not yet
+committed, CI-covered or accepted. The user's request "Stage 3 is closed, now please
+implement Stage 4 and provide an archive" is recorded as the approval for the
+reserved compatibility retirement. Scope, tests and limits:
+[550](../handover/550-integration-accessibility-hardening.md).
+
 ## Remaining scope and gates
 
 Stage 3 is closed under [540](../handover/540-local-feature-feedback.md#stage-3-accepted-close-out---2026-11-12);
@@ -80,6 +87,9 @@ The existing remaining sequence is:
    including destructive confirmations, local overflow/zoom/labels/contrast/focus/
    tab/menu/live announcements, nested tools and independent panels. Retire remaining
    compatibility paths only after their required callers migrate and approval.
+   Status 2026-11-12: implemented in archive SG-TODO-009.7-S4.zip per
+   [550](../handover/550-integration-accessibility-hardening.md); publication,
+   covering CI and acceptance pending.
 2. Deliverable 1 integrated evidence review, documentation and bounded acceptance.
 3. Deliverable 2: persistent connection-loss/recovery feedback, background-polling
    deduplication and validation associated with its affected field/combatant.

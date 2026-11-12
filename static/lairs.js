@@ -68,7 +68,7 @@
         });
     };
     $('removeLair').onclick=()=>{
-        if(editingId&&confirm('Remove this lair? Existing conditions remain; lair-anchored expiry becomes manual.'))
+        if(editingId&&confirm(`Remove lair “${state?.lairs?.find(x=>x.id===editingId)?.name||'Lair'}”? Existing conditions remain; lair-anchored expiry becomes manual.`))
             perform({region:'lair',operation:'lair.remove',target:editingId,label:'Remove lair',success:()=>'Lair removed.'},
                 ()=>api(`/api/lairs/${encodeURIComponent(editingId)}`,'DELETE'));
     };

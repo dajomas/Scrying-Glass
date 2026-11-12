@@ -62,7 +62,7 @@ test('persistent independent patch errors do not acquire expiry', async () => {
     await h.ctx.patch('characters', 'a', {hp: 1});await h.ctx.patch('characters', 'b', {hp: 2});
     assert.equal(h.records().length, 2);assert.equal(h.timers.size, 0);
     assert(h.records().every(r => r.severity === 'error' && r.placement === 'pane'));
-    assert.equal(h.loads.length, 0);assert.deepEqual(clean(h.feedback.legacyRegions()), []);
+    assert.equal(h.loads.length, 0);assert.deepEqual(clean(h.feedback.snapshot().filter(r=>String(r.operation).startsWith('legacy.')).map(r=>r.region)), []);
 });
 test('matching retry preserves its error until success and retains another target', async () => {
     const h = setup();h.send = async () => {throw Error('Rejected');};
@@ -164,6 +164,6 @@ for (const kind of ['characters', 'monsters']) for (const method of ['patch', 'b
         else await h.ctx.runBulkAction(kind, 'join-battle');
         assert.equal(h.calls.length, 1);assert.equal(h.loads.length, 0);assert.equal(h.records().length, 1);
         assert.equal(h.records()[0].operation, 'roster.join');assert.equal(h.records()[0].region, 'global');
-        assert.equal(h.records()[0].text, 'Join rejected');assert.deepEqual(clean(h.feedback.legacyRegions()), []);
+        assert.equal(h.records()[0].text, 'Join rejected');assert.deepEqual(clean(h.feedback.snapshot().filter(r=>String(r.operation).startsWith('legacy.')).map(r=>r.region)), []);
     });
 }

@@ -61,8 +61,7 @@ async function applyBackground(background) {
                 if (!relevant()) return;
                 campaignData = list;
                 renderCampaigns();
-                if (list.moved?.length) paneNotification('campaign',
-                    `Moved ${list.moved.length} unassigned setup(s) into campaign Default: ` + list.moved.join(', '));
+                announceMovedSetups(list.moved);
                 document.querySelector('#setupSelect').value = setup;
                 syncActiveBattleSetupControls();
                 renderActiveBattleSetup();
