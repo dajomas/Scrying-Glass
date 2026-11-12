@@ -51,6 +51,15 @@ duplicate protection. The existing success/setup/refresh follow-up remains for
 1C.2; this archive is not complete switch-feedback migration or phase acceptance.
 No switch endpoint/payload/confirmation changes, automatic retries or deletion work.
 
+Current switch feedback (1C.2, 2026-11-12): success now appears before refresh
+and expires after three seconds. A successful activation followed by failed
+refresh produces a separate persistent error with reload/no-replay guidance.
+Independent refresh tickets, selection revisions and scope/epoch guards preserve
+newer selections/feedback. Busy protection spans refresh. Earlier 1C.1 legacy-
+follow-up wording above describes that published checkpoint only. This archive
+completes the agreed 1C implementation, not covering validation or acceptance;
+1D and wider 009.7 scope remain open. See the current campaign handover.
+
 Legacy source-reading tests use a disposable assembled checkout:
 
 ```bash

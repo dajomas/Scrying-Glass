@@ -1,4 +1,4 @@
-# Full Admin, intercepted HTTP; success/refresh feedback migration remains 1C.2.
+# Full Admin, intercepted HTTP; retained 1C.1 request safeguards with 1C.2 feedback.
 import unittest
 import test_admin_global_feedback_composition as composed
 
@@ -62,7 +62,7 @@ class SwitchRequestCompositionTests(unittest.TestCase):
         h['state']['active_campaign_id'] = 'target'
         h['state']['active_setup'] = {'campaign_id': 'target', 'name': 'default'}
         self.change(page, 'target')
-        self.assertEqual(self.records(page, 'campaign.switch'), [])
+        self.assertEqual([r['severity'] for r in self.records(page, 'campaign.switch')], ['success'])
         self.assertEqual(page.evaluate('campaignData.active'), 'target')
         self.assertEqual(page.evaluate('latest.active_campaign_id'), 'target')
         self.assertEqual(page.locator('#setupName').input_value(), 'default')

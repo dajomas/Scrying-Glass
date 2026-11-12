@@ -241,7 +241,7 @@ installColorPreview('#backgroundColor', '#backgroundColorPreview',);
 load();
 setups();
 
-// Stage 1 Step 1C.1: switch validation/request ownership; legacy follow-up retained.
+// Stage 1 Step 1C.1: switch validation/request ownership; explicit success/refresh (1C.2).
 (() => {
     if (typeof switchCampaign !== 'function') return;
     const select = document.querySelector('#campaignSelect'), button = document.querySelector('#switchCampaign');
@@ -268,15 +268,18 @@ setups();
         const target = campaignById(id);
         if (!confirm(`Switch to campaign ${target ? target.name : id}?\n\n${REPLACE_WARNING}`)) { revert(); return; }
         const registry = campaignData, owner = revision, origin = feedback.encounterContext();
-        const ticket = feedback.begin({lane: 'page', region: 'campaign', operation: 'campaign.switch',
-            target: JSON.stringify(['campaign-switch', id]), label: 'Switch campaign'});
-        let result;
+        const spec = {lane: 'page', region: 'campaign', operation: 'campaign.switch',
+            target: JSON.stringify(['campaign-switch', id]), label: 'Switch campaign'};
+        const ticket = feedback.begin(spec);
+        const refresh = feedback.begin({...spec, operation: 'campaign.switch.refresh', label: 'Refresh switched campaign'});
+        let result, applied = false;
         const same = () => {
             const now = feedback.encounterContext();
             const unchanged = now.epoch === origin.epoch && now.scope === origin.scope;
             const intended = result && now.epoch === origin.epoch + 1 && now.scope ===
                 JSON.stringify([result.active, result.opened_setup ? result.active : null, result.opened_setup || null]);
-            return revision === owner && select.value === id && campaignData === registry && (unchanged || intended);
+            return feedback.isCurrent(refresh) && revision === owner && select.value === id &&
+                campaignData === (applied ? result : registry) && (unchanged || intended);
         };
         const disabled = button.disabled;
         pending = true; button.disabled = true;
@@ -289,15 +292,37 @@ setups();
                 return;
             }
             if (!same() || !feedback.isCurrent(ticket)) return;
-            feedback.resolve(ticket);
-            if (!same()) return; // A settled ticket is not a subsequent relevance guard.
-            // Existing applied-switch/setup/success/error behavior belongs to 1C.2.
+            campaignData = result;
+            applied = true;
             try {
-                campaignData = result;
+                const opened = result.opened_setup ? `; opened battle setup ${result.opened_setup}` : '';
+                feedback.publish(ticket, {severity: 'success', text: `Switched to campaign: ${activeCampaign()?.name || id}${opened}`});
+                if (!same()) return; // Refresh has its own live ticket; success settled the request ticket.
                 document.querySelector('#setupSelect').value = '';
-                const opened = await applyOpenedSetup(campaignData);
-                paneNotification('campaign', `Switched to campaign: ${activeCampaign()?.name || id}${opened}`);
-            } catch (error) { revert(); paneNotification('campaign', error.message); }
+                renderCampaigns();
+                if (!same()) return;
+                if (!result.opened_setup) {
+                    document.querySelector('#setupName').value = '';
+                    document.querySelector('#setupSelect').value = '';
+                    await load(true);
+                    if (same()) renderActiveBattleSetup();
+                } else {
+                    document.querySelector('#setupName').value = result.opened_setup;
+                    document.querySelector('#setupSelect').value = result.opened_setup;
+                    syncActiveBattleSetupControls();
+                    renderActiveBattleSetup();
+                    await load(true);
+                }
+                if (same()) {
+                    if (feedback.encounterContext().epoch === origin.epoch) {
+                        throw new Error('Switched campaign state was not applied');
+                    }
+                    feedback.resolve(refresh);
+                }
+            } catch (error) {
+                if (same()) feedback.publish(refresh, {severity: 'error', text:
+                    `Campaign switched and activated, but refresh failed: ${error.message}. Reload the page; do not switch the campaign again to retry the refresh.`});
+            }
         } finally { button.disabled = disabled; pending = false; }
     };
     button.onclick = switchCampaign;
