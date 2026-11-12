@@ -73,3 +73,31 @@ Use [skip ci] for this intermediate Stage 2 push as requested on 2026-11-12; no
 workflow edit or separate dispatch. Combined covering/native-browser validation
 and bounded acceptance remain pending until the Stage 2 batch is pushed and tested.
 Do not mark Stage 2 or 009.7 completed merely because this candidate is committed.
+
+## Bulk Join pane success - 2026-11-12
+
+SG-TODO-009.7-S2-BULK-JOIN. Status: in progress; effective wrapper integration,
+retained fixture reconciliation, 11 added cases and documentation prepared.
+Accepted global Join rejection ownership/client/server gates are preserved, not
+reopened. Require 3s pane success before strict refresh, separate persistent
+no-replay refresh failure, matching selection/refresh recovery, unrelated-notice
+isolation, canonical per-roster/selection duplicate protection through refresh and
+stale/superseded-result safety. Keep POST/payload order/count wording and non-Join/
+single-row behavior. No request replay or core fragment/pin changes.
+
+Preparation passed 49 combined tests (37 core/Join including 26 retained and 11
+added; 12 unchanged gate cases), four negative controls, restored combined execution
+and syntax/reverse-replacement checks. These are production-controller/gate and
+production-derived core-slice checks, not full Admin/native/live-server acceptance.
+[Implementation, evidence and limits](../handover/510-bulk-join-pane-feedback.md).
+
+Select-dead is delivered as ab730d4498ac1e7a4cadb321ea8f391f45a60eef and roll-all
+as ed6a211382d60110ecd008b19c4b88db46bd2bd3; their combined validation is pending.
+After this bounded delivery, final Stage 2 caller/fixture/status reconciliation and
+combined validation/acceptance remain; already delivered features are not restarted.
+Keep Stage 1, Stages 3-4, D2, compatibility retirement and deferred test cleanup out.
+
+Retain [skip ci] for this intermediate Stage 2 push as requested. No workflow change
+or separate dispatch. Combined covering CI/browser/full-suite validation remains
+pending until all Stage 2 changes/updates are pushed and a final run is arranged.
+Stage 2 and 009.7 stay open pending their existing acceptance criteria.

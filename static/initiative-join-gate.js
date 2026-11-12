@@ -105,21 +105,42 @@
                 }));
             if (outcome) await load();
         };
+        const bulkJoinPending = new Map();
         runBulkAction = async function (kind, action) {
             if (!['characters', 'monsters'].includes(kind) || action !== 'join-battle') {
                 return coreBulkAction(kind, action);
             }
             const ids = selectedIds(kind);
             if (!ids.length) return coreBulkAction(kind, action);
-            const outcome = await ownedJoin(kind, [...ids].map(String).sort(), ticket => request(
-                `/api/${kind}/bulk`, {
-                    method: 'POST', headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({action, ids}), [owner]: ticket,
-                }));
-            if (!outcome) return;
-            const count = Number(outcome.result?.count ?? ids.length);
-            paneNotification(kind, `${count} ${kind === 'characters' ? 'character' : 'monster'}${count === 1 ? '' : 's'} updated.`);
-            await load();
+            const canonical = [...ids].map(String).sort();
+            const target = JSON.stringify([kind, canonical]);
+            const previous = bulkJoinPending.get(target);
+            if (previous && (feedback.isCurrent(previous.ticket) || feedback.isCurrent(previous.refresh))) return;
+            feedback.resolve(feedback.begin({region: kind, operation: 'roster.bulk.join-battle.selection',
+                target: kind, label: 'Select combatants'}));
+            const spec = {region: kind, operation: 'roster.bulk.join-battle', target, label: 'Join selected combatants'};
+            const ticket = feedback.begin(spec);
+            const refresh = feedback.begin({...spec, operation: spec.operation + '.refresh'});
+            const pending = {ticket, refresh};
+            bulkJoinPending.set(target, pending);
+            try {
+                // The existing owner remains the sole Join rejection reporter.
+                const outcome = await ownedJoin(kind, canonical, join => request(
+                    `/api/${kind}/bulk`, {
+                        method: 'POST', headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({action, ids}), [owner]: join,
+                    }));
+                if (!outcome || !feedback.isCurrent(ticket) || !feedback.isCurrent(refresh)) return;
+                const count = Number(outcome.result?.count ?? ids.length);
+                feedback.publish(ticket, {severity: 'success',
+                    text: `${count} ${kind === 'characters' ? 'character' : 'monster'}${count === 1 ? '' : 's'} updated.`});
+                if (!feedback.isCurrent(refresh)) return;
+                try {await load(true); feedback.resolve(refresh);}
+                catch {feedback.publish(refresh, {severity: 'error', text:
+                    'Join succeeded, but display reload failed. Reload the page; do not repeat the Join.'});}
+            } finally {
+                if (bulkJoinPending.get(target) === pending) bulkJoinPending.delete(target);
+            }
         };
     }
     if (document.readyState === 'complete') installCoreReporting();

@@ -64,6 +64,7 @@ This is the index; substantive handover lives in numbered docs/handover sections
 49. [Stage 2 character Edit feedback](docs/handover/480-character-edit-feedback.md)
 50. [Stage 2 monster raw-roll feedback](docs/handover/490-monster-raw-roll-feedback.md)
 51. [Stage 2 select-dead feedback](docs/handover/500-select-dead-feedback.md)
+52. [Stage 2 bulk Join pane feedback](docs/handover/510-bulk-join-pane-feedback.md)
 
 ## Current state - 2026-11-11
 
