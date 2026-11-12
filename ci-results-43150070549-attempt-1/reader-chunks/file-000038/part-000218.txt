@@ -1,0 +1,30 @@
+ne Python browser and audit checks	2026-11-12T03:49:14.1449584Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1450018Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1450785Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1451331Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1451674Z urllib.error.HTTPError: HTTP Error 403: fixture
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1453874Z Combined monster lookup failed for D&D Beyond
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1454537Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1455765Z   File "/tmp/scrying-tests-gdd04e9a/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1456421Z     html = context.dnd_monster_detail_html(href)
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1457333Z   File "/tmp/scrying-tests-gdd04e9a/repo/python/scrying_glass_dndbeyond.py", line 128, in dnd_monster_detail_html
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1457954Z     response = urlopen(request, timeout=15)
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1458560Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1459123Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1459463Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1460129Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1460987Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1461363Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1462004Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1462560Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1462883Z urllib.error.HTTPError: HTTP Error 403: fixture
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1463113Z 
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1463378Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1463667Z 
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1463821Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1464437Z   File "/tmp/scrying-tests-gdd04e9a/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1464979Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1465491Z   File "/tmp/scrying-tests-gdd04e9a/repo/python/scrying_glass_monster_selection.py", line 151, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1466061Z     lambda: dnd_candidates(context, species),
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:14.1466729Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit che

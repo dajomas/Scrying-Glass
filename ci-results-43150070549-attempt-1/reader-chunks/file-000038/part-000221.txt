@@ -1,0 +1,34 @@
+---------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.2317914Z test_feature_logging.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.2319078Z Ran 10 tests in 0.008s
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.2319500Z 
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.2319753Z OK
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.2438262Z Connection audit: test_fivetools_fallback.py
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.3686799Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.3687916Z test_fivetools_fallback.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.3688648Z Ran 15 tests in 0.023s
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.3688885Z 
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.3689017Z OK
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.3844767Z Connection audit: test_fivetools_initiative.py
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.4721357Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.4722449Z test_fivetools_initiative.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.4723457Z Ran 10 tests in 0.001s
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.4723823Z 
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.4724194Z OK
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.4842840Z Connection audit: test_fivetools_initiative_flow.py
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.9597858Z Selected monster source refresh failed for aa2ba7f575a94d6bbec40e97e4cc1d62
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.9598465Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.9599212Z   File "/tmp/scrying-tests-gdd04e9a/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.9599946Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.9600653Z   File "/tmp/scrying-tests-gdd04e9a/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.9602198Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.9603336Z ValueError: Retained source missing or ambiguous
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.9640736Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.9641428Z Ran 2 tests in 0.142s
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.9641684Z 
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.9641834Z OK
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:16.9647688Z test_fivetools_initiative_flow.py: connections opened: 8; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:17.0259786Z Connection audit: test_fivetools_source_configuration.py
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:17.1601252Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-12T03:49:17.1602163Z Traceback (most recent call last):
+tests	Standalone 
