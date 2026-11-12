@@ -149,9 +149,9 @@
             dialog.showModal();
         });
     }
-    request = async function(url, options = {}) {
+    request = async function(url, options = {}, ...extra) {
         const prefix = '/api/dndbeyond/monster-stats?species=';
-        if (typeof url !== 'string' || !url.startsWith(prefix)) return originalRequest(url, options);
+        if (typeof url !== 'string' || !url.startsWith(prefix)) return originalRequest(url, options, ...extra);
         const species = new URLSearchParams(url.split('?')[1]).get('species');
         const current = ++generation;
         const requestId = monsterSpeciesLookupRequest;

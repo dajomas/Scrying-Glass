@@ -86,7 +86,8 @@
         acceptedStateEpoch = encounterEpoch;
         return true;
     }
-    async function loadState(fetchState, render, rethrowErrors = false) {
+    async function loadState(fetchState, render, rethrowErrors = false, current = () => true) {
+        if (!current()) return;
         const spec = {region: 'global', operation: 'state.load', target: 'state', label: 'Load encounter state'};
         let ticket = begin(spec), sequence;
         try {
@@ -94,6 +95,7 @@
             const pending = fetchState();
             sequence = stateSequence;
             const state = await pending;
+            if (!current()) return;
             if (sequence !== stateSequence) return;
             if (acceptedStateSequence !== sequence) {
                 if (!controller.isCurrent(ticket)) return;
@@ -103,8 +105,9 @@
             // An accepted campaign/setup transition invalidates the original encounter ticket.
             if (!controller.isCurrent(ticket)) ticket = begin(spec);
             render(state);
-            controller.resolve(ticket);
+            if (current()) controller.resolve(ticket);
         } catch (error) {
+            if (!current()) return;
             if ((sequence === undefined || sequence === stateSequence) && controller.isCurrent(ticket)) {
                 controller.publish(ticket, {severity: 'error', text: error.message});
             }

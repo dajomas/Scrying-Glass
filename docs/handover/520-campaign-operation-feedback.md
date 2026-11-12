@@ -2,69 +2,90 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-## Current: 1D.2a follow-up feedback guards archive - 2026-11-12
+## Current: final 1D.2b implementation archive - 2026-11-12
 
-Base: 478d8dacd1de282ab2ad919af9459345ab507526, published 1D.1 verified on GitHub.
-Implementation archive only; no GitHub write, new commit, hosted CI, deployment
-or acceptance is claimed. [Current task](../todo/096-campaign-operation-feedback.md).
-Full prior scope, criteria and evidence remain in the
-[pre-1D.2a record](https://github.com/dajomas/Scrying-Glass/blob/478d8dacd1de282ab2ad919af9459345ab507526/docs/handover/520-campaign-operation-feedback.md).
-1D.1 publication is verified; its covering validation/acceptance remain separate.
+Base: c729cf5d7a7bcc4d37b7a6e26f7fb82a1ffaa26a, published 1D.2a verified on the live branch.
+Archive only: no new GitHub commit/push, workflow dispatch, CI completion,
+deployment or acceptance is claimed. This completes the agreed campaign Step 1
+implementation preparation, NOT Stage 1/Deliverable 1/009.7 acceptance.
+[Current task/remaining validation](../todo/096-campaign-operation-feedback.md).
+Full prior scope, identities and evidence remain in the
+[pre-1D.2b record](https://github.com/dajomas/Scrying-Glass/blob/c729cf5d7a7bcc4d37b7a6e26f7fb82a1ffaa26a/docs/handover/520-campaign-operation-feedback.md).
 
-The user requested smaller remaining deliveries and skip CI until the last part.
-- 1D.2a (this archive): applied-result/own-modal-close context, independent refresh
-  ownership and obsolete success/error publication guards after the shared helper.
-- 1D.2b (final, pending): explicit three-second success, persistent applied-deletion
-  versus failed-refresh guidance, error propagation, guarded setup/refresh internals
-  and focused integration/regressions. No new scope, requirements or acceptance gate.
+### Delivered behavior and compatibility
 
-### Implemented
+campaign.delete success is explicit page-lane campaign-ID feedback, published once
+after successful DELETE and before view refresh, with the retained campaign/moved/
+deleted/setup wording and three-second expiry. A request error remains separate.
+The independent campaign.delete.refresh ticket reports a completed deletion plus
+failed refresh as a persistent actionable error advising reload, never another
+DELETE. Newer matching error records survive old success timers. Successful refresh
+resolves only its matching operation/target; unrelated errors remain.
 
-campaign.delete.refresh has its own page-lane campaign-ID ticket. The deletion
-request ticket can settle without invalidating the follow-up's live identity.
-The relevance predicate recognizes its own applied registry and modal close while
-retaining session/revision, target/action/destination, registry, scope/epoch and
-refresh-owner guards. One expected campaign/setup transition remains allowed;
-unrelated and leave-return transitions cannot revive an obsolete outcome.
+1D.1/1D.2a dialog/session/revision/registry/scope/epoch and refresh-owner safeguards
+remain. Expected campaign/setup transition and own modal close/registry update are
+recognized. Busy protection spans refresh with original disabled-state restoration.
+Setup fields/opening, active/permanent-deletion confirmations, move/delete-setup
+choices, encoded endpoint/query, method-only DELETE options, permissions and native
+cancel/Escape behavior are preserved. No automatic replay/queued mutation.
 
-After applyOpenedSetup returns, stale success is not published. Caught helper
-errors are also suppressed if the originating context/refresh owner is obsolete.
-Matching successful follow-up resolves only its refresh identity; unrelated targets
-and operations remain. Busy protection and original disabled-state restoration
-span the helper, including reopening a dialog. No second/queued DELETE or replay.
-Existing selection validation, DELETE request errors, endpoint/query/options,
-permissions, confirmations, dialog, setup choices and normal legacy follow-up
-wording remain. 040/shared helper and 080/1A/1B/1C are not changed by this archive.
+The shared setup helper now accepts an OPTIONAL ownership callback. Only deletion
+opts in: guarded helper/state loading propagates errors and rejects obsolete work
+before state observation/rendering and suppresses obsolete global errors. Default
+callers still use legacy load/return behavior. Optional owner callbacks pass through
+request(), load() and bootstrap loadState(); two existing request wrappers forward
+extra arguments so the callback cannot be silently dropped. This is bounded caller
+plumbing for 1D, not reopened accepted Stage 2 scope or new polling/connection work.
 
-Boundary: this guards publication/resolution around the shared helper, NOT its
-internal fetch/render work. The helper still has legacy load/error handling;
-success and helper-error feedback are still legacy, not completed typed three-
-second success or persistent applied-delete/refresh-failure guidance. Those and
-internal late-render protection remain 1D.2b. No completed 1D/Stage 1 claim.
+Cache URLs: admin-feedback-admin.js v2 -> v3, monster-candidate-selection.js v2 ->
+v3, battle-actions-next.js unversioned -> v1. Script count/order stay unchanged;
+deploy all replacement files together. No controller/view/CSS/API/auth schema change.
+The entire published 080 (1A/1B/1C), 050 content from openCampaignSetup onward,
+unrelated fragments and tracked static/admin.js failure marker remain unchanged.
 
-### Checks and delivery
+### Verification actually executed on this prepared revision
 
-Executed: eight new focused Node component cases pass using production 050 delete
-code/controller and the unchanged 1D.1 fixture with mocked DOM, request, context
-and setup helper. Four negative controls detected (refresh owner, success guard,
-error guard, applied registry); restored eight-case suite passes. Updated 050
-passes node --check; updated pin Python parses. Existing request/browser suites,
-full assembly/pin/tamper checks, full-suite/hosted CI and live-server/human visual/
-screen-reader acceptance are NOT rerun or claimed here. Prior evidence remains
-historical, not re-labelled as covering this revision. Final integration is pending.
+- 115 Node tests pass through the production assembled-source runner: delete
+  request 12, follow-up 8, refresh 8, context/guarded state 13, retained creation 14,
+  viewer-font 18, state-load 15, battle-action core 6, next feedback 20, Apply 1.
+- 11 distinct full-Admin Chromium scenarios pass with intercepted HTTP: 4 deletion
+  refresh, 4 retained deletion request, 3 retained creation. Parameterized cases
+  remain single cases. Includes held refresh, success expiry, persistent failure,
+  reopened-dialog stale state/error suppression and active deletion with empty setup.
+- Four identity/assembly/size/hash/tamper/syntax tests pass; eight fragments remain
+  below 20,000 bytes. Whole source is assembled by the production runner.
+- Four negative controls detected: state observation ownership, obsolete global
+  error suppression, late empty-setup rendering, strict error propagation. Restored
+  suites pass. Current legacy assertions were migrated to explicit success/refresh
+  outcomes while preserving request/confirmation/stale/busy and resolution checks.
 
-050: 19,056 UTF-8 bytes, SHA-256
-7295ac2a9d12343827ee1464020fd8bf1a20caca68a70e70b2e5e72500e5c866.
-Calculated bundle pin: 145,878 bytes, from verified base 145,415 plus the
-exact 050 byte delta. Only 050 digest and bundle-size pins change; other digest
-pins/order/20,000-byte guards and marker remain. No new fragment or workflow edit.
-All 050 content from openCampaignSetup onward is byte-identical to the base.
+Earlier browser preparation caught the request wrappers dropping the owner argument;
+forwarding is included and the complete-page regression now passes. The reported
+missing addBattleActionRow/onsubmit failure was caused by invoking a legacy source-
+reading fixture directly against the tracked marker. Using run_split_tests.py
+passes 6 core, 20 next and 1 Apply tests on this revision. No fixture/application or
+workflow workaround was introduced for that invocation error; never overwrite the
+tracked marker to make tests pass.
 
-README and parent plans reviewed/retained; their wider open scope stays accurate.
-Indexes/current records updated; complete TODO/handover context supplied. Patch is
-archive-only: manifest, source review, logs, safe apply helper and COMMIT_MESSAGE.
-No deletions/renames or automatic stage/commit/push. Do not use newzip.sh unchanged.
-1D.2a uses [skip ci]; only final 1D.2b omits it for normal push CI. No separate
-dispatch. Publication, covering validation and bounded acceptance remain pending.
-Accepted Stage 2/global/009.1-009.6 stay closed; wider gates remain open and test
-cleanup stays deferred. Continue the existing sequence without adding gates.
+These are scoped fixtures/intercepted HTTP, NOT the full repository suite, hosted
+CI, authenticated live-server, human visual or screen-reader acceptance. Existing
+CI discovery includes new Node/Python suites and already uses the assembled runner.
+The unchanged workflow targets features/perplexity-009.7. Final commit has NO skip
+marker; user application/commit/push should trigger normal CI. Trigger/completion/
+pass status remain unobserved until actual run evidence is reviewed. No dispatch.
+
+### Source and archive
+
+Bundle: 146,586 bytes. Updated fragments: 010 19,817,
+030 19,609, 040 19,377,
+050 19,368 UTF-8 bytes. Corresponding four digests and bundle-size pin
+updated; eight-fragment inventory/order/20,000-byte guards and other pins retained.
+Archive contains complete replacements, full TODO/handover context, exact manifest,
+base Git objects, source review, local logs, safe apply helper and COMMIT_MESSAGE.
+Patch is archive-only; no deletions/renames or automatic stage/commit/push. Do not
+use newzip.sh unchanged. README/current indexes updated; parent plans retained.
+
+Remaining: publish/review archive, review normal push CI and other already-agreed
+covering evidence, obtain bounded acceptance, then continue wider Stage 1. Accepted
+Stage 2/4A/009.1-009.6 remain closed. Stage 1, Stages 3-4, Deliverable 1 acceptance,
+Deliverable 2 and 009.7/009 remain open; cleanup stays deferred. No new gate.

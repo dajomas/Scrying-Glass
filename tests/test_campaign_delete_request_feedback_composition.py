@@ -1,4 +1,4 @@
-# Complete Admin delete request paths with intercepted HTTP; follow-up migration is 1D.2.
+# Complete Admin delete request safeguards with explicit success/refresh feedback.
 import unittest
 import test_admin_global_feedback_composition as composed
 
@@ -71,7 +71,7 @@ class DeleteRequestCompositionTests(unittest.TestCase):
         }''')
         h['replies']['/api/campaigns/victim'] = (200, result)
         self.submit(page)
-        self.assertEqual(self.records(page, 'campaign.delete'), [])
+        self.assertEqual([r['severity'] for r in self.records(page, 'campaign.delete')], ['success'])
         self.assertEqual(self.records(page, 'campaign.switch')[0]['text'], 'Keep switch error')
         self.assertTrue(page.locator('#campaignDeleteModal').is_hidden())
         self.assertIn('Deleted campaign: Victim (moved 1 setup(s))', page.locator('#campaignNotification').text_content())

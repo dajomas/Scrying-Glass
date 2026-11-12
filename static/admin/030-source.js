@@ -106,9 +106,9 @@ function sortedMonstersForAdmin() {
     });
 }
 
-async function load(rethrowErrors = false) {
+async function load(rethrowErrors = false, current = () => true) {
     return window.scryingAdminFeedback.loadState(
-        () => request('/api/state'), state => {
+        () => request('/api/state', {}, current), state => {
         latest = state;
         window.scryingStatisticsState?.(latest);
         window.scryingLairsRender?.(latest);
@@ -259,7 +259,7 @@ async function load(rethrowErrors = false) {
                 })
                 .join(' ⇒ ');
 
-    }, rethrowErrors);
+    }, rethrowErrors, current);
 }
 
 const hideablePanes = [

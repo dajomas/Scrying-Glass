@@ -1,4 +1,4 @@
-// Stage 1 Step 1D.1: delete validation/request ownership; follow-up guarded in 1D.2a; feedback migration remains 1D.2b.
+// Stage 1 Step 1D: owned validation/request/success and guarded applied-deletion refresh.
 let campaignDeleteSession = 0, campaignDeleteRevision = 0, campaignDeletePending = false;
 const campaignDeleteFeedback = (operation, target, label) => window.scryingAdminFeedback.begin({
     lane: 'page', region: 'campaign', operation, target, label,
@@ -135,26 +135,29 @@ document.querySelector('#campaignDeleteForm').onsubmit = async event => {
             return;
         }
         if (!same() || !feedback.isCurrent(ticket)) return;
-        feedback.resolve(ticket);
-        if (!same()) return; // The settled request ticket is not a subsequent context guard.
-        // Existing applied-deletion/setup/success/error behavior belongs to 1D.2.
         try {
             campaignData = result;
             applied = true;
             closedByAttempt = true;
             campaignDeleteModal.hidden = true;
+            const opened = result.opened_setup ? `; opened battle setup ${result.opened_setup}` : '';
+            feedback.publish(ticket, {severity: 'success', text:
+                `Deleted campaign: ${campaign.name}` +
+                (result.moved?.length ? ` (moved ${result.moved.length} setup(s))` : '') +
+                (result.deleted_setups?.length ? ` (deleted ${result.deleted_setups.length} setup(s))` : '') + opened});
+            if (!same()) return; // Refresh owns relevance after the success ticket settles.
             document.querySelector('#setupSelect').value = '';
-            const opened = await applyOpenedSetup(result);
+            await applyOpenedSetup(result, same);
             if (!same()) return;
-            paneNotification(
-                'campaign',
-                `Deleted campaign: ${campaign ? campaign.name : campaignId}` +
-                (result.moved && result.moved.length ? ` (moved ${result.moved.length} setup(s))` : '') +
-                (result.deleted_setups && result.deleted_setups.length ? ` (deleted ${result.deleted_setups.length} setup(s))` : '') +
-                opened,
-            );
-            if (same()) feedback.resolve(refresh);
-        } catch (error) { if (same()) paneNotification('campaign', error.message); }
+            if (feedback.encounterContext().scope !== JSON.stringify([
+                result.active, result.opened_setup ? result.active : null, result.opened_setup || null])) {
+                throw new Error('Deleted-campaign refresh state was not applied');
+            }
+            feedback.resolve(refresh);
+        } catch (error) {
+            if (same()) feedback.publish(refresh, {severity: 'error', text:
+                `Campaign deleted, but refreshing the view failed: ${error.message}. Reload the page; do not delete the campaign again to retry the refresh.`});
+        }
     } finally { submit.disabled = disabled; campaignDeletePending = false; }
 };
 

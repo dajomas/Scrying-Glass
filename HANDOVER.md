@@ -66,7 +66,7 @@ This is the index; substantive handover lives in numbered docs/handover sections
 51. [Stage 2 select-dead feedback](docs/handover/500-select-dead-feedback.md)
 52. [Stage 2 bulk Join pane feedback](docs/handover/510-bulk-join-pane-feedback.md)
 
-53. [Stage 1 campaign-operation feedback](docs/handover/520-campaign-operation-feedback.md) - 1A/1B/1C/1D.1 implementations published; 1D.2a follow-up feedback guards archive prepared. Publication/covering validation/acceptance pending; final 1D.2b excluded.
+53. [Stage 1 campaign-operation feedback](docs/handover/520-campaign-operation-feedback.md) - 1A-1D.2a implementations published; final 1D.2b archive prepared with normal push CI. Campaign Step 1 implementation prepared; publication/CI review/acceptance pending.
 
 ## Current state - 2026-11-11
 

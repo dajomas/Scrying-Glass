@@ -349,13 +349,13 @@ function closeImport() {
     importModal.hidden = true;
 }
 
-async function request(url, options = {}) {
+async function request(url, options = {}, stateCurrent = () => true) {
     const feedbackState = url === '/api/state' ? window.scryingAdminFeedback.stateRequest() : null;
     const response = await fetch(url, options);
 
     if (response.ok) {
         const result = await response.json().catch(() => null);
-        if (feedbackState !== null) window.scryingAdminFeedback.observeState(result, feedbackState);
+        if (feedbackState !== null && stateCurrent()) window.scryingAdminFeedback.observeState(result, feedbackState);
         return result;
     }
 

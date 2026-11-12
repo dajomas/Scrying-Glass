@@ -351,27 +351,29 @@ document.querySelector('#editCampaign').onclick = () => {
 
 // After a campaign is activated the server opens its most recently worked on
 // (or newest) battle setup. Reflect that in the setup controls and reload state.
-async function applyOpenedSetup(result) {
+async function applyOpenedSetup(result, followup = null) {
+    const current = followup || (() => true);
+    if (!current()) return '';
     renderCampaigns();
-
+    if (!current()) return '';
     if (!result || !result.opened_setup) {
         document.querySelector('#setupName').value = '';
         document.querySelector('#setupSelect').value = '';
-        await load();
+        await (followup ? load(true, followup) : load());
+        if (!current()) return '';
         renderActiveBattleSetup();
         return '';
     }
-
     document.querySelector('#setupName').value = result.opened_setup;
     document.querySelector('#setupSelect').value = result.opened_setup;
-
     syncActiveBattleSetupControls();
+    if (!current()) return '';
     renderActiveBattleSetup();
-
-    await load();
-
-    return `; opened battle setup ${result.opened_setup}`;
+    if (!current()) return '';
+    await (followup ? load(true, followup) : load());
+    return current() ? `; opened battle setup ${result.opened_setup}` : '';
 }
+
 
 
 const REPLACE_WARNING =

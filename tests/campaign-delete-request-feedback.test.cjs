@@ -41,8 +41,8 @@ test('DELETE rejection retains dialog/options and persistent campaign identity',
 });
 test('successful retry resolves only matching delete error, preserving other target errors',async()=>{
  const h=fixture();seed(h);let p=h.submit();h.calls[0].reject(new Error('Denied'));await p;
- p=h.submit();await ok(h,p);assert.deepEqual(h.records().map(r=>r.text),['Keep newer error']);
- assert.equal(h.modal.hidden,true);assert.equal(h.follow.length,1);assert.equal(h.legacy[0].text,'Deleted campaign: Victim (moved 1 setup(s)); opened battle setup before');
+ p=h.submit();await ok(h,p);assert.deepEqual(h.records().filter(r=>r.severity==='error').map(r=>r.text),['Keep newer error']);
+ assert.equal(h.modal.hidden,true);assert.equal(h.follow.length,1);assert.equal(h.records().find(r=>r.severity==='success').text,'Deleted campaign: Victim (moved 1 setup(s)); opened battle setup before');
 });
 test('cancel, Escape/reopen, same-dialog reopen and changed target/options suppress old responses',async()=>{
  for(const action of ['cancel','escape','reopen','target','action','destination','return','reset','registry','scope'])for(const reject of [false,true]){
@@ -75,8 +75,8 @@ test('duplicates are blocked through retained follow-up, including a reopened di
 });
 test('prior disabled state is restored and legacy follow-up errors are not DELETE errors',async()=>{
  const h=fixture();h.node('#campaignDeleteForm .danger').disabled=true;h.context.applyOpenedSetup=async()=>{throw new Error('Legacy refresh');};
- const p=h.submit();await ok(h,p);assert.equal(h.context.campaignData,h.result);assert.equal(h.records().length,0);
- assert.equal(h.legacy[0].text,'Legacy refresh');assert.equal(h.node('#campaignDeleteForm .danger').disabled,true);assert.equal(h.calls.length,1);
+ const p=h.submit();await ok(h,p);assert.equal(h.context.campaignData,h.result);assert.equal(h.records().find(r=>r.operation==='campaign.delete').severity,'success');
+ assert.match(h.records().find(r=>r.operation==='campaign.delete.refresh').text,/Legacy refresh.*do not delete/);assert.equal(h.node('#campaignDeleteForm .danger').disabled,true);assert.equal(h.calls.length,1);
 });
 test('the expected active-campaign transition before DELETE response remains allowed',async()=>{
  const h=fixture();h.change('#campaignDeleteTarget','a');h.result.active='c';h.result.opened_setup='default';

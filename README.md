@@ -60,6 +60,19 @@ follow-up wording above describes that published checkpoint only. This archive
 completes the agreed 1C implementation, not covering validation or acceptance;
 1D and wider 009.7 scope remain open. See the current campaign handover.
 
+Campaign deletion feedback (1D.2b, 2026-11-12): this final implementation archive
+adds explicit three-second deletion success before refresh and persistent feedback
+when deletion completed but view refresh failed, with reload/no-replay guidance.
+Operation ownership guards setup rendering, state observation and error publication;
+reopened dialogs/newer selections remain protected. Existing deletion confirmations,
+move/delete-setup choices, endpoints, queries and permissions are unchanged. Earlier
+delivery paragraphs describe historical checkpoints, not current acceptance.
+Refresh ownership is opt-in: other setup/state callers retain default behavior.
+Updated bootstrap/request-wrapper assets have cache-version bumps; deploy all files
+from the archive together. The final commit omits the CI skip marker for normal push
+CI. Publication, integrated CI review and bounded acceptance remain pending; Stage 1,
+Deliverable 1 and wider 009.7 scope remain open. See the current campaign handover.
+
 Legacy source-reading tests use a disposable assembled checkout:
 
 ```bash

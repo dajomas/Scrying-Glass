@@ -18,7 +18,7 @@
         // Include refresh time: the existing forms keep their submit controls disabled.
         const applying = () => writes > 0 || battleActionsApplying ||
             [...modal.querySelectorAll('button[type="submit"]')].some(control => control.disabled);
-        request = async function(url, options = {}) {
+        request = async function(url, options = {}, ...extra) {
             const action = url === '/api/battle/actions' && options.method === 'POST';
             const next = url === '/api/battle/next' && options.method === 'POST';
             if (action && (moving || advancing)) throw new Error('Turn advancement is in progress.');
@@ -26,7 +26,7 @@
                 throw new Error('Another battle operation is in progress.');
             if (action) writes++;
             if (next) advancing = true;
-            try { return await originalRequest(url, options); }
+            try { return await originalRequest(url, options, ...extra); }
             finally {
                 if (action) writes--;
                 if (next) advancing = false;

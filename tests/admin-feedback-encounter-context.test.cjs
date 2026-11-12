@@ -83,9 +83,39 @@ test('reloading the bootstrap retains the original API and context', () => {
 });
 test('header versions only the changed bootstrap and retains asset order', () => {
     const html = fs.readFileSync(path.join(root, 'templates/admin/010_pane_controls.html'), 'utf8');
-    assert.equal((html.match(/admin-feedback-admin\.js\?v=2/g) || []).length, 1);
+    assert.equal((html.match(/admin-feedback-admin\.js\?v=3/g) || []).length, 1);
     assert.ok(!html.includes('admin-feedback-admin.js?v=1'));
     const order = ['admin-feedback-controller.js?v=1', 'admin-feedback-view.js?v=1',
-        'admin-feedback-admin.js?v=2', 'initiative-join-gate.js'];
+        'admin-feedback-admin.js?v=3', 'initiative-join-gate.js'];
     for (let i = 1; i < order.length; i++) assert.ok(html.indexOf(order[i - 1]) < html.indexOf(order[i]));
+});
+
+test('owner guard can decline state load before transport starts', async () => {
+    const {api} = harness(); let calls = 0;
+    await api.loadState(() => { calls++; }, () => assert.fail('rendered'), true, () => false);
+    assert.equal(calls, 0); assert.equal(api.snapshot().length, 0);
+});
+test('obsolete successful state response cannot observe scope or render', async () => {
+    const {api,context} = harness(); let release, current = true, rendered = 0;
+    const requestSource = fs.readFileSync(path.join(root,'static/admin/010-source.js'),'utf8');
+    vm.runInContext(requestSource.slice(requestSource.indexOf('async function request('),requestSource.indexOf('function esc(')),context);
+    context.fetch = () => new Promise(resolve => { release = resolve; });
+    const before = api.encounterContext();
+    const p = api.loadState(() => context.request('/api/state', {}, () => current), () => rendered++, true, () => current);
+    current = false; release({ok:true,json:async()=>({active_campaign_id:'new',active_setup:null})}); await p;
+    assert.equal(rendered,0);assert.equal(api.encounterContext().scope,before.scope);assert.equal(api.snapshot().length,0);
+});
+test('obsolete transport rejection neither publishes global error nor rethrows', async () => {
+    const {api} = harness(); let reject, current = true;
+    const p = api.loadState(() => {api.stateRequest();return new Promise((a,b)=>{reject=b;});}, () => assert.fail('rendered'), true, () => current);
+    current=false;reject(new Error('Obsolete'));await p;assert.equal(api.snapshot().length,0);
+});
+test('current guarded state request preserves transport options and accepted rendering', async () => {
+    const {api,context} = harness(); let rendered = 0, sent;
+    const requestSource=fs.readFileSync(path.join(root,'static/admin/010-source.js'),'utf8');
+    vm.runInContext(requestSource.slice(requestSource.indexOf('async function request('),requestSource.indexOf('function esc(')),context);
+    context.fetch=async(url,options)=>{sent={url,options};return {ok:true,json:async()=>({active_campaign_id:'new',active_setup:null})};};
+    await api.loadState(()=>context.request('/api/state',{},()=>true),()=>rendered++,true,()=>true);
+    assert.equal(sent.url,'/api/state');assert.equal(JSON.stringify(sent.options),'{}');assert.equal(rendered,1);
+    assert.equal(api.encounterContext().scope,JSON.stringify(['new',null,null]));
 });

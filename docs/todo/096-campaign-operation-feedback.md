@@ -4,41 +4,45 @@
 
 ## SG-TODO-009.7 Stage 1 Step 1 - 2026-11-12
 
-Status: 1A/1B/1C/1D.1 implementations published; 1D.2a archive prepared.
-Base: 478d8dacd1de282ab2ad919af9459345ab507526. No new GitHub write or acceptance is claimed.
+Status: 1A-1D.2a implementations published; final 1D.2b implementation archive
+prepared. Base: c729cf5d7a7bcc4d37b7a6e26f7fb82a1ffaa26a. Publication, normal push CI review,
+covering integrated validation and bounded acceptance are pending, not inferred
+from preparation. No new commit/push or CI result is claimed.
 [Parent plan](097-feedback-delivery-plan.md) and
 [current evidence/limits](../handover/520-campaign-operation-feedback.md).
-Full previous criteria/history are preserved in the
-[pre-1D.2a task record](https://github.com/dajomas/Scrying-Glass/blob/478d8dacd1de282ab2ad919af9459345ab507526/docs/todo/096-campaign-operation-feedback.md).
+Prior full criteria/history remain in the
+[pre-1D.2b task record](https://github.com/dajomas/Scrying-Glass/blob/c729cf5d7a7bcc4d37b7a6e26f7fb82a1ffaa26a/docs/todo/096-campaign-operation-feedback.md).
 
-The remaining 1D.2 implementation is now two smaller deliveries, not added scope:
-- 1D.2a: independent refresh ownership, own-result/modal-close context and obsolete
-  success/error publication guards around the shared helper. Implemented here;
-  publication/covering validation/acceptance pending. Normal legacy success/error
-  wording and helper internals remain for the final part.
-- 1D.2b: final remaining implementation. Migrate explicit three-second success and
-  persistent applied-deletion/failed-refresh feedback with reload/no-replay guidance;
-  propagate refresh failures; guard internal setup/refresh work and expected
-  transitions/newer state; preserve matching resolution and busy restoration.
-  Finish focused request/success/refresh integration/regressions and documentation.
-  Do not describe a completed deletion as failed or advise repeating DELETE.
+Agreed campaign Step 1 implementation preparation is complete across 1A create,
+1B edit, 1C switch and 1D delete. The earlier 1D.1/1D.2a splits are retained as
+published checkpoints, not additional requirements. This final 1D.2b delivers
+explicit three-second deletion success, persistent completed-deletion/failed-
+refresh feedback with reload/no-replay guidance, strict error propagation, guarded
+setup/state observation/rendering and focused integration/regressions.
 
-Preserve 1D.1 validation, campaign/dialog/revision/registry/scope identity,
-confirmation, move/delete-setup options, payloads/queries, authorization and dialog.
-Preserve drafts/selections/files, unrelated/newer feedback, obsolete-timer guards
-and persistent actionable errors until dismissal or matching recovery/replacement.
-No automatic mutation replay, new deletion rules, dialog redesign, D2 near-field/
-connection/polling work or deferred test-suite cleanup.
+Preserve existing dialog/session/input/registry/scope/epoch identities, matching
+resolution, unrelated/newer feedback, obsolete-result/timer guards and busy-state
+restoration. Preserve options, confirmations, endpoints, queries/payloads, auth,
+selection/drafts/files and setup-opening semantics. No mutation replay, new deletion
+rule, dialog redesign, Deliverable 2 near-field/connection/polling work or suite audit.
+Optional helper/transport/state-loader ownership callbacks default to old behavior;
+wrapper forwarding/cache bumps are necessary scoped integration, not reopened Stage 2.
 
-Executed here: eight new Node component cases, four detected negative controls,
-restored suite, 050 syntax and pin Python parse. Base bundle plus exact byte delta
-sets the size pin. Existing request/browser, full assembly/pin/tamper and full-suite/
-hosted CI checks are not rerun or claimed. Review final covering evidence under the
-existing sequence; prior historical results do not cover this prepared revision.
+Executed locally on prepared revision: 115 scoped Node tests, 11 full-Admin Chromium
+scenarios, four source/identity/assembly/pin/tamper/syntax checks and four detected
+negative controls. All restored checks pass; see 520/logs for exact counts and
+coverage limits. The missing fixture functions were an incorrect direct invocation;
+assembled-runner core/next/Apply checks now pass. No marker/fixture workaround.
 
-Remaining: publish/review 1D.2a, implement final 1D.2b, review covering integrated
-validation and obtain bounded acceptance, then continue the existing wider plan.
-Every intermediate part includes [skip ci]; only the last 1D.2b omits it for normal
-push CI. No workflow edit/dispatch or new acceptance gate. Prior accepted Stage 2,
+Remaining under the EXISTING sequence:
+- Apply/review/commit/push final archive with the supplied message containing no
+  skip marker; inspect actual CI results and their tested revision/attempt.
+- Review other agreed integrated evidence and obtain bounded campaign acceptance.
+- Continue remaining Stage 1 steps and wider project plan. Do not mark Stage 1,
+  Deliverable 1, 009.7 or 009 completed based on this archive or push alone.
+
+The unchanged branch workflow runs normal push CI and discovers new Node/Python
+suites. No workflow edit/dispatch. Full-suite/hosted CI, authenticated live-server,
+human visual and screen-reader acceptance remain unclaimed. Prior accepted Stage 2,
 4A.1-4A.13 and 009.1-009.6 stay closed. Stage 1, Stages 3-4, Deliverable 1 acceptance,
-Deliverable 2 and 009.7/009 remain open; cleanup remains deferred until after 009.
+Deliverable 2 and 009.7/009 remain open; cleanup stays deferred until after 009.
