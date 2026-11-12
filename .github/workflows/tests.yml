@@ -4,7 +4,13 @@ on:
   push:
     branches:
       - features/perplexity
-
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to publish CI results for'
+        required: true
+        default: 'features/perplexity'
+        
 # GitHub natively skips push workflows for commit messages containing [skip ci].
 permissions:
   contents: read
