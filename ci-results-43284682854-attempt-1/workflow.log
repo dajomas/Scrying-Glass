@@ -1,0 +1,299 @@
+tests	Set up job	﻿2026-11-12T18:54:37.2660566Z Current runner version: '2.338.2'
+tests	Set up job	2026-11-12T18:54:37.2684967Z ##[group]Runner Image Provisioner
+tests	Set up job	2026-11-12T18:54:37.2685885Z Hosted Compute Agent
+tests	Set up job	2026-11-12T18:54:37.2686856Z Version: 20261028.624
+tests	Set up job	2026-11-12T18:54:37.2687511Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+tests	Set up job	2026-11-12T18:54:37.2688201Z Build Date: 2026-10-28T21:51:42Z
+tests	Set up job	2026-11-12T18:54:37.2688861Z Worker ID: {f08f0380-11ed-4ff5-b98c-6407fc97f7b2}
+tests	Set up job	2026-11-12T18:54:37.2689559Z Region: westcentralus
+tests	Set up job	2026-11-12T18:54:37.2690144Z Cloud: Azure
+tests	Set up job	2026-11-12T18:54:37.2690664Z ##[endgroup]
+tests	Set up job	2026-11-12T18:54:37.2691936Z ##[group]Operating System
+tests	Set up job	2026-11-12T18:54:37.2692550Z Ubuntu
+tests	Set up job	2026-11-12T18:54:37.2693068Z 26.04.1
+tests	Set up job	2026-11-12T18:54:37.2693596Z LTS
+tests	Set up job	2026-11-12T18:54:37.2694146Z ##[endgroup]
+tests	Set up job	2026-11-12T18:54:37.2694970Z ##[group]Runner Image
+tests	Set up job	2026-11-12T18:54:37.2695572Z Image: ubuntu-26.04
+tests	Set up job	2026-11-12T18:54:37.2696145Z Version: 20261101.186.1
+tests	Set up job	2026-11-12T18:54:37.2697233Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+tests	Set up job	2026-11-12T18:54:37.2698909Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+tests	Set up job	2026-11-12T18:54:37.2699812Z ##[endgroup]
+tests	Set up job	2026-11-12T18:54:37.2700912Z ##[group]GITHUB_TOKEN Permissions
+tests	Set up job	2026-11-12T18:54:37.2702955Z Contents: read
+tests	Set up job	2026-11-12T18:54:37.2703524Z Metadata: read
+tests	Set up job	2026-11-12T18:54:37.2704028Z ##[endgroup]
+tests	Set up job	2026-11-12T18:54:37.2706641Z Secret source: Actions
+tests	Set up job	2026-11-12T18:54:37.2707518Z Cache mode: write
+tests	Set up job	2026-11-12T18:54:37.2708296Z Prepare workflow directory
+tests	Set up job	2026-11-12T18:54:37.3243303Z Prepare all required actions
+tests	Set up job	2026-11-12T18:54:37.3291860Z Getting action download info
+tests	Set up job	2026-11-12T18:54:37.6270601Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+tests	Set up job	2026-11-12T18:54:37.7308464Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+tests	Set up job	2026-11-12T18:54:37.8306852Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+tests	Set up job	2026-11-12T18:54:37.9134193Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+tests	Set up job	2026-11-12T18:54:38.1374364Z Complete job name: tests
+tests	Run actions/checkout@v4	﻿2026-11-12T18:54:38.2103131Z ##[group]Run actions/checkout@v4
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2104044Z with:
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2104759Z   repository: dajomas/Scrying-Glass
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2108470Z   token: ***
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2108984Z   ssh-strict: true
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2109458Z   ssh-user: git
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2109991Z   persist-credentials: true
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2110521Z   clean: true
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2111033Z   sparse-checkout-cone-mode: true
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2111634Z   fetch-depth: 1
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2112114Z   fetch-tags: false
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2112624Z   show-progress: true
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2113115Z   lfs: false
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2113620Z   submodules: false
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2114156Z   set-safe-directory: true
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2114828Z   allow-unsafe-pr-checkout: false
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2115618Z env:
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2116480Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.2117433Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4519752Z Syncing repository: dajomas/Scrying-Glass
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4522600Z ##[group]Getting Git version info
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4523764Z Working directory is '/home/runner/work/Scrying-Glass/Scrying-Glass'
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4525784Z [command]/usr/bin/git version
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4526678Z git version 2.56.0
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4544078Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4556613Z Temporarily overriding HOME='/home/runner/work/_temp/67f2b731-28bb-4b06-8594-dbf6c1cf0911' before making global git config changes
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4560732Z Adding repository directory to the temporary git global config as a safe directory
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4562564Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4624545Z Deleting the contents of '/home/runner/work/Scrying-Glass/Scrying-Glass'
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4628612Z ##[group]Initializing the repository
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4633262Z [command]/usr/bin/git init /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4722377Z hint: Using 'master' as the name for the initial branch. This default branch name
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4724000Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4725546Z hint: to use in all of your new repositories, which will suppress this warning,
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4726642Z hint: call:
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4727357Z hint:
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4728238Z hint: 	git config --global init.defaultBranch <name>
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4729180Z hint:
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4730042Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4731344Z hint: 'development'. The just-created branch can be renamed via this command:
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4732433Z hint:
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4733148Z hint: 	git branch -m <name>
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4733835Z hint:
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4735014Z hint: Disable this message with "git config set advice.defaultBranchName false"
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4736678Z Initialized empty Git repository in /home/runner/work/Scrying-Glass/Scrying-Glass/.git/
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4745335Z [command]/usr/bin/git remote add origin https://github.com/dajomas/Scrying-Glass
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4796805Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4798147Z ##[group]Disabling automatic garbage collection
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4799318Z [command]/usr/bin/git config --local gc.auto 0
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4825561Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4826892Z ##[group]Setting up auth
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4831782Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.4859160Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.5292286Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.5321653Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.5549581Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.5578384Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.5801599Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.5842729Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.5850350Z ##[group]Fetching the repository
+tests	Run actions/checkout@v4	2026-11-12T18:54:38.5852296Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +a5aebc34f9ab56f1564e8d78109e1b852daac7df:refs/remotes/origin/features/perplexity-009.7
+tests	Run actions/checkout@v4	2026-11-12T18:54:39.6947917Z From https://github.com/dajomas/Scrying-Glass
+tests	Run actions/checkout@v4	2026-11-12T18:54:39.6950152Z  * [new ref]         a5aebc34f9ab56f1564e8d78109e1b852daac7df -> origin/features/perplexity-009.7
+tests	Run actions/checkout@v4	2026-11-12T18:54:39.6952869Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-12T18:54:39.6954209Z ##[group]Determining the checkout info
+tests	Run actions/checkout@v4	2026-11-12T18:54:39.6955728Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-12T18:54:39.6956376Z [command]/usr/bin/git sparse-checkout disable
+tests	Run actions/checkout@v4	2026-11-12T18:54:39.7001102Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+tests	Run actions/checkout@v4	2026-11-12T18:54:39.7034017Z ##[group]Checking out the ref
+tests	Run actions/checkout@v4	2026-11-12T18:54:39.7039462Z [command]/usr/bin/git checkout --progress --force -B features/perplexity-009.7 refs/remotes/origin/features/perplexity-009.7
+tests	Run actions/checkout@v4	2026-11-12T18:54:39.7969667Z Switched to a new branch 'features/perplexity-009.7'
+tests	Run actions/checkout@v4	2026-11-12T18:54:39.7978252Z branch 'features/perplexity-009.7' set up to track 'origin/features/perplexity-009.7'.
+tests	Run actions/checkout@v4	2026-11-12T18:54:39.7985150Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-12T18:54:39.8024013Z [command]/usr/bin/git log -1 --format=%H
+tests	Run actions/checkout@v4	2026-11-12T18:54:39.8047289Z a5aebc34f9ab56f1564e8d78109e1b852daac7df
+tests	Run actions/setup-python@v5	﻿2026-11-12T18:54:39.8411615Z ##[group]Run actions/setup-python@v5
+tests	Run actions/setup-python@v5	2026-11-12T18:54:39.8413071Z with:
+tests	Run actions/setup-python@v5	2026-11-12T18:54:39.8414194Z   python-version: 3.14
+tests	Run actions/setup-python@v5	2026-11-12T18:54:39.8415517Z   cache: pip
+tests	Run actions/setup-python@v5	2026-11-12T18:54:39.8417013Z   cache-dependency-path: requirements.txt
+tests	Run actions/setup-python@v5	requirements-test.txt
+tests	Run actions/setup-python@v5	
+tests	Run actions/setup-python@v5	2026-11-12T18:54:39.8418842Z   check-latest: false
+tests	Run actions/setup-python@v5	2026-11-12T18:54:39.8428583Z   token: ***
+tests	Run actions/setup-python@v5	2026-11-12T18:54:39.8429766Z   update-environment: true
+tests	Run actions/setup-python@v5	2026-11-12T18:54:39.8431055Z   allow-prereleases: false
+tests	Run actions/setup-python@v5	2026-11-12T18:54:39.8432296Z   freethreaded: false
+tests	Run actions/setup-python@v5	2026-11-12T18:54:39.8433426Z env:
+tests	Run actions/setup-python@v5	2026-11-12T18:54:39.8435522Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Run actions/setup-python@v5	2026-11-12T18:54:39.8437951Z ##[endgroup]
+tests	Run actions/setup-python@v5	2026-11-12T18:54:39.9748252Z ##[group]Installed versions
+tests	Run actions/setup-python@v5	2026-11-12T18:54:39.9865389Z (node:2453) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Run actions/setup-python@v5	2026-11-12T18:54:39.9870153Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Run actions/setup-python@v5	2026-11-12T18:54:39.9872995Z Successfully set up CPython (3.14.10)
+tests	Run actions/setup-python@v5	2026-11-12T18:54:39.9876780Z ##[endgroup]
+tests	Run actions/setup-python@v5	2026-11-12T18:54:40.0442240Z [command]/opt/hostedtoolcache/Python/3.14.10/x64/bin/pip cache dir
+tests	Run actions/setup-python@v5	2026-11-12T18:54:42.7605499Z /home/runner/.cache/pip
+tests	Run actions/setup-python@v5	2026-11-12T18:54:42.9855186Z Cache hit for: setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e
+tests	Run actions/setup-python@v5	2026-11-12T18:54:42.9950467Z (node:2453) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+tests	Run actions/setup-python@v5	2026-11-12T18:54:44.0855389Z Received 66072350 of 66072350 (100.0%), 71.1 MBs/sec
+tests	Run actions/setup-python@v5	2026-11-12T18:54:44.0856652Z Cache Size: ~63 MB (66072350 B)
+tests	Run actions/setup-python@v5	2026-11-12T18:54:44.0884366Z [command]/usr/bin/tar -xf /home/runner/work/_temp/4fa2530c-7356-48db-b6ca-59e69bdc472d/cache.tzst -P -C /home/runner/work/Scrying-Glass/Scrying-Glass --use-compress-program unzstd
+tests	Run actions/setup-python@v5	2026-11-12T18:54:44.1629262Z Cache restored successfully
+tests	Run actions/setup-python@v5	2026-11-12T18:54:44.1655798Z Cache restored from key: setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e
+tests	Run actions/setup-node@v4	﻿2026-11-12T18:54:44.1892175Z ##[group]Run actions/setup-node@v4
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.1892611Z with:
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.1892913Z   node-version: 22
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.1893223Z   always-auth: false
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.1893612Z   check-latest: false
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.1896141Z   token: ***
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.1896530Z env:
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.1897073Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.1897746Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.1898283Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.1898815Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.1899299Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.1899754Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.1900302Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.1900707Z ##[endgroup]
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.3303789Z (node:2489) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.3305421Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.3307216Z Found in cache @ /opt/hostedtoolcache/node/22.23.4/x64
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.3308846Z ##[group]Environment details
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.7576613Z node: v22.23.4
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.7577664Z npm: 10.9.9
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.7578774Z yarn: 1.22.22
+tests	Run actions/setup-node@v4	2026-11-12T18:54:44.7580877Z ##[endgroup]
+tests	Install Python test dependencies	﻿2026-11-12T18:54:44.7698974Z ##[group]Run python -m pip install --upgrade pip
+tests	Install Python test dependencies	2026-11-12T18:54:44.7699648Z ^[[36;1mpython -m pip install --upgrade pip^[[0m
+tests	Install Python test dependencies	2026-11-12T18:54:44.7700146Z ^[[36;1mpython -m pip install -r requirements-test.txt^[[0m
+tests	Install Python test dependencies	2026-11-12T18:54:44.7743076Z shell: /usr/bin/bash -e {0}
+tests	Install Python test dependencies	2026-11-12T18:54:44.7743591Z env:
+tests	Install Python test dependencies	2026-11-12T18:54:44.7744134Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Install Python test dependencies	2026-11-12T18:54:44.7745031Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python test dependencies	2026-11-12T18:54:44.7745620Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Install Python test dependencies	2026-11-12T18:54:44.7746142Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python test dependencies	2026-11-12T18:54:44.7746623Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python test dependencies	2026-11-12T18:54:44.7747076Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python test dependencies	2026-11-12T18:54:44.7747563Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Install Python test dependencies	2026-11-12T18:54:44.7748018Z ##[endgroup]
+tests	Install Python test dependencies	2026-11-12T18:54:46.0829399Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages (26.2.2)
+tests	Install Python test dependencies	2026-11-12T18:54:46.1994302Z Collecting pip
+tests	Install Python test dependencies	2026-11-12T18:54:46.2007837Z   Using cached pip-26.3-py3-none-any.whl.metadata (4.6 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:46.2049658Z Using cached pip-26.3-py3-none-any.whl (2.0 MB)
+tests	Install Python test dependencies	2026-11-12T18:54:46.4486780Z Installing collected packages: pip
+tests	Install Python test dependencies	2026-11-12T18:54:46.4488040Z   Attempting uninstall: pip
+tests	Install Python test dependencies	2026-11-12T18:54:46.4519980Z     Found existing installation: pip 26.2.2
+tests	Install Python test dependencies	2026-11-12T18:54:46.5462726Z     Uninstalling pip-26.2.2:
+tests	Install Python test dependencies	2026-11-12T18:54:46.5505926Z       Successfully uninstalled pip-26.2.2
+tests	Install Python test dependencies	2026-11-12T18:54:47.7421754Z Successfully installed pip-26.3
+tests	Install Python test dependencies	2026-11-12T18:54:48.2351878Z Collecting fastapi>=0.115 (from -r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 3))
+tests	Install Python test dependencies	2026-11-12T18:54:48.3122911Z   Downloading fastapi-0.162.5-py3-none-any.whl.metadata (27 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.3602843Z Collecting uvicorn>=0.30 (from uvicorn[standard]>=0.30->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 4))
+tests	Install Python test dependencies	2026-11-12T18:54:48.3614979Z   Using cached uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.4036612Z Collecting PyYAML>=6.0 (from -r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 5))
+tests	Install Python test dependencies	2026-11-12T18:54:48.4047561Z   Using cached pyyaml-6.0.3-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.4305990Z Collecting python-multipart (from -r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 6))
+tests	Install Python test dependencies	2026-11-12T18:54:48.4317323Z   Using cached python_multipart-0.0.33-py3-none-any.whl.metadata (6.3 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.4570726Z Collecting httpx2>=2.0.0 (from -r requirements-test.txt (line 4))
+tests	Install Python test dependencies	2026-11-12T18:54:48.4581085Z   Using cached httpx2-2.16.0-py3-none-any.whl.metadata (10 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.5068692Z Collecting playwright (from -r requirements-test.txt (line 5))
+tests	Install Python test dependencies	2026-11-12T18:54:48.5262599Z   Downloading playwright-1.65.1-py3-none-manylinux1_x86_64.whl.metadata (3.3 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.5657168Z Collecting pytest (from -r requirements-test.txt (line 6))
+tests	Install Python test dependencies	2026-11-12T18:54:48.5667640Z   Using cached pytest-9.2.0-py3-none-any.whl.metadata (7.9 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.6018016Z Collecting starlette>=0.46.0 (from fastapi>=0.115->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 3))
+tests	Install Python test dependencies	2026-11-12T18:54:48.6025960Z   Using cached starlette-1.10.0-py3-none-any.whl.metadata (6.6 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.6317247Z Collecting anyio>=4.1.0 (from fastapi>=0.115->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 3))
+tests	Install Python test dependencies	2026-11-12T18:54:48.6326746Z   Using cached anyio-4.16.0-py3-none-any.whl.metadata (4.7 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.7296874Z Collecting pydantic>=2.9.0 (from fastapi>=0.115->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 3))
+tests	Install Python test dependencies	2026-11-12T18:54:48.7306475Z   Using cached pydantic-2.14.3-py3-none-any.whl.metadata (141 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.7626490Z Collecting typing-extensions>=4.8.0 (from fastapi>=0.115->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 3))
+tests	Install Python test dependencies	2026-11-12T18:54:48.7636549Z   Using cached typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.7877311Z Collecting typing-inspection>=0.4.2 (from fastapi>=0.115->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 3))
+tests	Install Python test dependencies	2026-11-12T18:54:48.7887168Z   Using cached typing_inspection-0.4.5-py3-none-any.whl.metadata (2.6 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.8131653Z Collecting annotated-doc>=0.0.2 (from fastapi>=0.115->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 3))
+tests	Install Python test dependencies	2026-11-12T18:54:48.8322162Z   Downloading annotated_doc-0.0.6-py3-none-any.whl.metadata (6.5 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.8626041Z Collecting opentelemetry-api>=1.44.0 (from fastapi>=0.115->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 3))
+tests	Install Python test dependencies	2026-11-12T18:54:48.8638450Z   Using cached opentelemetry_api-1.45.2-py3-none-any.whl.metadata (1.4 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.8920988Z Collecting click>=7.0 (from uvicorn>=0.30->uvicorn[standard]>=0.30->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 4))
+tests	Install Python test dependencies	2026-11-12T18:54:48.8931218Z   Using cached click-8.5.1-py3-none-any.whl.metadata (2.6 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.9168752Z Collecting h11>=0.8 (from uvicorn>=0.30->uvicorn[standard]>=0.30->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 4))
+tests	Install Python test dependencies	2026-11-12T18:54:48.9179167Z   Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.9440558Z Collecting httpcore2==2.16.0 (from httpx2>=2.0.0->-r requirements-test.txt (line 4))
+tests	Install Python test dependencies	2026-11-12T18:54:48.9450287Z   Using cached httpcore2-2.16.0-py3-none-any.whl.metadata (27 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.9711374Z Collecting idna>=3.18 (from httpx2>=2.0.0->-r requirements-test.txt (line 4))
+tests	Install Python test dependencies	2026-11-12T18:54:48.9721067Z   Using cached idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:48.9971698Z Collecting truststore>=0.10 (from httpx2>=2.0.0->-r requirements-test.txt (line 4))
+tests	Install Python test dependencies	2026-11-12T18:54:48.9984144Z   Using cached truststore-0.10.5-py3-none-any.whl.metadata (4.5 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:49.1192788Z Collecting greenlet<4.0.0,>=3.1.1 (from playwright->-r requirements-test.txt (line 5))
+tests	Install Python test dependencies	2026-11-12T18:54:49.1202856Z   Using cached greenlet-3.5.6-cp314-cp314-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:49.1447117Z Collecting iniconfig>=2 (from pytest->-r requirements-test.txt (line 6))
+tests	Install Python test dependencies	2026-11-12T18:54:49.1456722Z   Using cached iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:49.1715559Z Collecting packaging>=24 (from pytest->-r requirements-test.txt (line 6))
+tests	Install Python test dependencies	2026-11-12T18:54:49.1725058Z   Using cached packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:49.1971346Z Collecting pluggy<2,>=1.6 (from pytest->-r requirements-test.txt (line 6))
+tests	Install Python test dependencies	2026-11-12T18:54:49.1982469Z   Using cached pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:49.2263585Z Collecting pygments>=2.15 (from pytest->-r requirements-test.txt (line 6))
+tests	Install Python test dependencies	2026-11-12T18:54:49.2272693Z   Using cached pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:49.2556019Z Collecting annotated-types>=0.6.0 (from pydantic>=2.9.0->fastapi>=0.115->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 3))
+tests	Install Python test dependencies	2026-11-12T18:54:49.2566307Z   Using cached annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:49.7590595Z Collecting pydantic-core==2.50.4 (from pydantic>=2.9.0->fastapi>=0.115->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 3))
+tests	Install Python test dependencies	2026-11-12T18:54:49.7603435Z   Using cached pydantic_core-2.50.4-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (6.6 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:49.8058578Z Collecting httptools>=0.8.0 (from uvicorn[standard]>=0.30->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 4))
+tests	Install Python test dependencies	2026-11-12T18:54:49.8070364Z   Using cached httptools-0.9.0-cp314-cp314-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:49.8344154Z Collecting python-dotenv>=0.13 (from uvicorn[standard]>=0.30->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 4))
+tests	Install Python test dependencies	2026-11-12T18:54:49.8353646Z   Using cached python_dotenv-1.2.4-py3-none-any.whl.metadata (29 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:49.8805169Z Collecting uvloop>=0.15.1 (from uvicorn[standard]>=0.30->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 4))
+tests	Install Python test dependencies	2026-11-12T18:54:49.8826013Z   Using cached uvloop-0.23.0-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.1 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:49.9500414Z Collecting watchfiles>=0.20 (from uvicorn[standard]>=0.30->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 4))
+tests	Install Python test dependencies	2026-11-12T18:54:49.9511109Z   Using cached watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.0846625Z Collecting websockets>=13.0 (from uvicorn[standard]>=0.30->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 4))
+tests	Install Python test dependencies	2026-11-12T18:54:50.0860665Z   Using cached websockets-17.4-cp314-cp314-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.3 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.1096723Z Downloading fastapi-0.162.5-py3-none-any.whl (151 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.1397409Z Using cached uvicorn-0.54.0-py3-none-any.whl (87 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.1408046Z Using cached pyyaml-6.0.3-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (794 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.1421838Z Using cached python_multipart-0.0.33-py3-none-any.whl (32 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.1431536Z Using cached httpx2-2.16.0-py3-none-any.whl (97 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.1441471Z Using cached httpcore2-2.16.0-py3-none-any.whl (85 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.1639503Z Downloading playwright-1.65.1-py3-none-manylinux1_x86_64.whl (53.5 MB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.6951777Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.5/53.5 MB 104.1 MB/s  0:00:00
+tests	Install Python test dependencies	2026-11-12T18:54:50.6968696Z Using cached greenlet-3.5.6-cp314-cp314-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (670 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.6982784Z Using cached pytest-9.2.0-py3-none-any.whl (411 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.6994839Z Using cached pluggy-1.7.0-py3-none-any.whl (27 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7190114Z Downloading annotated_doc-0.0.6-py3-none-any.whl (5.3 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7223011Z Using cached anyio-4.16.0-py3-none-any.whl (134 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7233443Z Using cached click-8.5.1-py3-none-any.whl (126 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7243666Z Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7253155Z Using cached idna-3.20-py3-none-any.whl (69 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7262609Z Using cached iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7272080Z Using cached opentelemetry_api-1.45.2-py3-none-any.whl (60 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7281760Z Using cached packaging-26.3-py3-none-any.whl (129 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7291990Z Using cached pydantic-2.14.3-py3-none-any.whl (494 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7303864Z Using cached pydantic_core-2.50.4-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (2.3 MB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7322550Z Using cached annotated_types-0.8.0-py3-none-any.whl (13 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7331633Z Using cached pygments-2.21.0-py3-none-any.whl (1.3 MB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7346574Z Using cached starlette-1.10.0-py3-none-any.whl (80 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7356399Z Using cached truststore-0.10.5-py3-none-any.whl (19 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7365830Z Using cached typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7374845Z Using cached typing_inspection-0.4.5-py3-none-any.whl (14 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7383967Z Using cached httptools-0.9.0-cp314-cp314-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (514 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7396138Z Using cached python_dotenv-1.2.4-py3-none-any.whl (23 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7405620Z Using cached uvloop-0.23.0-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.4 MB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7431616Z Using cached watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (458 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.7442998Z Using cached websockets-17.4-cp314-cp314-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (226 kB)
+tests	Install Python test dependencies	2026-11-12T18:54:50.9856251Z Installing collected packages: websockets, uvloop, typing-extensions, truststore, PyYAML, python-multipart, python-dotenv, pygments, pluggy, packaging, iniconfig, idna, httptools, h11, greenlet, click, annotated-types, annotated-doc, uvicorn, typing-inspection, pytest, pydantic-core, playwright, opentelemetry-api, httpcore2, anyio, watchfiles, starlette, pydantic, httpx2, fastapi
+tests	Install Python test dependencies	2026-11-12T18:54:54.9931570Z 
+tests	Install Python test dependencies	2026-11-12T18:54:54.9960588Z Successfully installed PyYAML-6.0.3 annotated-doc-0.0.6 annotated-types-0.8.0 anyio-4.16.0 click-8.5.1 fastapi-0.162.5 greenlet-3.5.6 h11-0.16.0 httpcore2-2.16.0 httptools-0.9.0 httpx2-2.16.0 idna-3.20 iniconfig-2.3.1 opentelemetry-api-1.45.2 packaging-26.3 playwright-1.65.1 pluggy-1.7.0 pydantic-2.14.3 pydantic-core-2.50.4 pygments-2.21.0 pytest-9.2.0 python-dotenv-1.2.4 python-multipart-0.0.33 starlette-1.10.0 truststore-0.10.5 typing-extensions-4.16.0 typing-inspection-0.4.5 uvicorn-0.54.0 uvloop-0.23.0 watchfiles-1.3.0 websockets-17.4
+tests	Install Python test dependencies	2026-11-12T18:54:55.1229243Z ##[error]The operation was canceled.
+tests	Post Run actions/checkout@v4	﻿2026-11-12T18:54:55.1397975Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-12T18:54:55.2206638Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-12T18:54:55.2251327Z git version 2.56.0
+tests	Post Run actions/checkout@v4	2026-11-12T18:54:55.2291422Z Temporarily overriding HOME='/home/runner/work/_temp/a3f708db-516d-43ef-8287-969c5022f341' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-12T18:54:55.2292492Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-12T18:54:55.2297836Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-12T18:54:55.2338576Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-12T18:54:55.2370939Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-12T18:54:55.2625922Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-12T18:54:55.2664840Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-12T18:54:55.2667734Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-12T18:54:55.2763521Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Post Run actions/checkout@v4	2026-11-12T18:54:55.3047429Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	Post Run actions/checkout@v4	2026-11-12T18:54:55.3084373Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+tests	Complete job	﻿2026-11-12T18:54:55.3465425Z Cleaning up orphan processes
+tests	Complete job	2026-11-12T18:54:55.3844248Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
