@@ -48,3 +48,28 @@ acceptance. Inactive-source retirement and pane compatibility remain separate
 later gates; do not retire compatibility prematurely. Stage 1, Stages 3-4,
 Deliverable 2 and wider phase acceptance remain separate under the
 [approved plan](097-feedback-delivery-plan.md). No merge/deployment.
+
+## Select-dead - 2026-11-12
+
+SG-TODO-009.7-S2-SELECT-DEAD. Status: in progress; implementation, retained fixture
+reconciliation, 12 new regressions and cache-reference/documentation updates prepared.
+Acceptance: unchanged death rules, selection sets/checkboxes and non-selection
+delegation; original count text, explicit roster-specific pane success, 3s expiry,
+matching recovery/unrelated-error retention and scope/timer safety. No network,
+server mutation, refresh, Join-reporting or combat-rule changes.
+
+Preparation: combined Node run passed 13 tests (12 new cases plus the retained
+regression file), zero failures/cancellations/skips; three negative controls detected
+regressions and restored execution passed. Syntax and exact source-preservation/
+base-identity checks passed. [Implementation and evidence limits](../handover/500-select-dead-feedback.md).
+
+Roll-all is already delivered as ed6a211382d60110ecd008b19c4b88db46bd2bd3;
+raw-roll/Edit and prior imports are not restarted by this step. Historical pending
+paragraphs above do not reverse later deliveries. Bulk Join pane success and final
+Stage 2 reconciliation/acceptance remain separate next work. Keep other stages,
+Deliverable 2, compatibility retirement and deferred test cleanup outside this scope.
+
+Use [skip ci] for this intermediate Stage 2 push as requested on 2026-11-12; no
+workflow edit or separate dispatch. Combined covering/native-browser validation
+and bounded acceptance remain pending until the Stage 2 batch is pushed and tested.
+Do not mark Stage 2 or 009.7 completed merely because this candidate is committed.
