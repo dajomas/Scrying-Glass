@@ -59,3 +59,48 @@ until the Stage 2 batch is pushed and tested. Final Stage 2 reconciliation follo
 no compatibility retirement, other-stage/D2 work, deferred test cleanup, phase close-out,
 merge or deployment is included.
 [Task status](../todo/098-character-edit-feedback.md#bulk-join-pane-success---2026-11-12).
+
+## Final Stage 2 reconciliation - 2026-11-12
+
+Reviewed revision: 09c2f0912c77efdeffcd00f007470aae57b80622. All named Stage 2
+implementation groups are accounted for: candidate selection/pending submit, source
+review, shared roster/row patches, creation/.monster import, CSV/saved-setup import,
+character Edit, monster raw-roll/Edit, roll-all, select-dead and bulk Join pane
+success. No further planned handler migration was identified in this bounded review.
+This reconciles source/delivery records, not runtime acceptance. The current
+[Stage 2 task record](../todo/098-character-edit-feedback.md) supersedes stale
+prepared/unfinished wording without reopening or deleting delivered work.
+
+The eight ordered fragment metadata sizes sum to 126,506 bytes, matching the pin;
+each is <=20,000 bytes (largest 010: 19,772). The failure marker remains intact.
+Candidate/review/raw-roll/select-dead asset references are v=2, and character Edit
+still precedes monster Edit. The last three steps changed no script count. These
+are metadata/source checks, not a fresh content-hash/assembly/tamper/runtime run.
+Older inactive import code and pane compatibility remain outside this retirement
+scope; effective later bindings and the late Join owner are deliberately retained.
+
+This reconciliation adds one case to the existing complete-Admin intercepted-HTTP
+fixture: select-dead, roll-all and bulk Join coexist with an unrelated Reset error;
+selection remains local, Join rejection is single-owned, successful Join/failed
+refresh has separate guidance, drafts/selections survive, and read-only reload does
+not replay mutation. The complete original fixture matches Git blob
+f2bcba1c811792ff27d57b63aa4774f2456cc863. All 15 existing class method ASTs are
+unchanged; four existing browser scenarios and five inventory tests are retained.
+The new fifth browser scenario and full module compile successfully. All five
+inventory tests passed in AST-isolated execution without importing browser/server
+fixtures. No browser scenario or full suite was executed during this preparation.
+The earlier focused 15/13/49 passes are historical, not a new combined result.
+
+Implementation is delivered through 09c2f091. Final test/status integration is
+prepared; combined validation and bounded acceptance remain pending. The green
+cd1599e7 run 43150070549 attempt 1 does not cover the later ed6a211/ab730d4/09c2f091
+batch. After this reconciliation is committed, validate committed HEAD, for example
+with bash runlocaltests.sh --suite all --no-publish. That runner excludes uncommitted
+drafts and the flag prevents automatic Git publication. Review completed evidence
+for the exact final SHA before acceptance; never use an older rerun as coverage.
+
+This mixed test/documentation commit retains [skip ci] as requested. No runtime,
+asset, template, pin, workflow, dispatch, merge, deployment, compatibility retirement
+or test-suite cleanup change is included. README and root index links remain
+applicable; no new handover section file or index entry is needed. Stage 2, both
+feedback deliverables and 009.7 stay open pending their existing acceptance gates.

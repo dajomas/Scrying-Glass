@@ -2,102 +2,91 @@
 
 [Back to TODO index](../../TODO.md)
 
+## Current Stage 2 reconciliation - 2026-11-12
+
+SG-TODO-009.7-S2. Status: in progress; all named Stage 2 implementation groups
+are delivered through 09c2f0912c77efdeffcd00f007470aae57b80622. Final combined
+composition-test/status integration is prepared; combined validation and bounded
+acceptance remain pending. No further planned handler migration was identified
+in the bounded source/delivery reconciliation. This is not Stage 2 acceptance.
+
+| Delivered group | Implementation reference / effective owner |
+|---|---|
+| Candidate selection / pending submit | d87579b; monster-candidate-selection.js |
+| Source review | 9ab6df2; monster-refresh-review.js |
+| Shared roster mutations / row patches | e4a2626; 010-source.js |
+| Character/monster creation and .monster import | 37137b6, lookup fixture 8841bf0; 060-source.js |
+| CSV and saved-setup imports | 9764fea; active 040-source.js bindings |
+| Character Edit | fd13991, composition corrections; character-edit-feedback.js |
+| Monster raw-roll | 162a389; monster-initiative-roll.js |
+| Monster Edit | 31bb7c4, fixture correction cd1599e7; monster-initiative-edit.js |
+| Roll-all | ed6a211; effective 040-source.js handler |
+| Select-dead | ab730d4; bulk-select-all.js |
+| Bulk Join pane success | 09c2f091; late initiative-join-gate.js wrapper |
+
+The 11 rows group delivered work, not new acceptance requirements. Detailed
+behavior, failed runs, preparation counts, limitations and earlier criteria remain
+in handovers 380/480/490/500/510 and the
+[pre-reconciliation task record](https://github.com/dajomas/Scrying-Glass/blob/09c2f0912c77efdeffcd00f007470aae57b80622/docs/todo/098-character-edit-feedback.md).
+Earlier prepared/unfinished wording must not be read as requiring these features
+to be reimplemented. 4A.1-4A.13 remain closed for their accepted scopes.
+
 ## SG-TODO-009.7 - Current checkpoint status - 2026-11-11
 
-Status: in progress; neither Stage 2, either feedback deliverable nor 009.7 is
-closed. No changed priority, owner, deadline or blanket future write approval.
-4A.1-4A.13 remain closed only for their accepted scopes.
-
-This task prose consolidates stale prepared/pending notes. Historical delivery,
-failed-run identities, focused test counts, corrections and evidence limits are
-preserved in the [Stage 2 handover](../handover/480-character-edit-feedback.md),
-not silently accepted or removed from the backlog.
-
-- Character Edit: fd13991c2c15cb6e15f056f0050431f5bc686ada plus composition correction
-  7e49938c8064b7c70526583a2d4bfac358150cce has verified successful covering run
-  43067755682 attempt 1; bounded acceptance remains separate.
-- Entry forms (character/monster creation and .monster import): implementation
-  37137b6367172549ffc7028b44af64e0e6534d75 plus lookup-focus correction
-  8841bf0b99d3e48352f3f785819b759b4e180624 has verified successful covering run
-  43082738853 attempt 1. This does not certify unperformed native/live/manual checks.
-- CSV/setup import: complete 040 integration and ten grouped production-controller
-  cases prepared and passed locally; exact approval/delivery, covering repository
-  validation/corrections and bounded acceptance remain pending. Runtime import
-  owners/bindings are replaced in 040; inactive older 030 source is not retired.
-  [Integration, pin identity and limits](../handover/030-validation-and-next-steps.md#stage-2-modal-import-integration---2026-11-11).
+Historical checkpoint details are preserved in the pre-reconciliation task record
+linked above and numbered handovers. The dated current reconciliation supersedes
+those implementation-status notes, not their acceptance/evidence boundaries.
+No priority, owner, deadline, order or unrelated task status changes.
 
 ## Preservation and remaining gates
 
-Preserve JSON/FormData, HP/dice/bonus/source-token values, selected files, drafts,
-server authorization/validation and accepted Join ownership. Require persistent
-independent validation/request errors, matching recovery, 3s pane successes,
-separate no-replay refresh errors, duplicate protection and stale session/scope
-isolation. Newer files/options must not be discarded after an older import.
-
-Remaining: native File/FormData/events/focus and loaded-Admin regression for new
-paths; retained source/reader/runner/tamper/full suites; review equivalent covering
-local or hosted evidence and correct failures; bounded acceptance with any
-unperformed live/manual/accessibility checks stated rather than invented. Both
-local and hosted success are not required; evidence counts for its revision/scope,
-not future changes. Existing CI discovers the Node tests and retained browser
-suites; focused mocked checks alone are not native browser acceptance.
-
-Still unfinished: monster initiative/raw-roll/Edit/roll-all, select-dead, bulk
-Join pane success, final Stage 2 fixture/caller/identity reconciliation and
-acceptance. Inactive-source retirement and pane compatibility remain separate
-later gates; do not retire compatibility prematurely. Stage 1, Stages 3-4,
-Deliverable 2 and wider phase acceptance remain separate under the
-[approved plan](097-feedback-delivery-plan.md). No merge/deployment.
+Preserve JSON/FormData, HP/dice/bonus/source tokens, selected files, drafts,
+selection behavior, server authorization/validation and accepted global Join
+ownership. Retain explicit identities, persistent independent errors, matching
+recovery, 3s pane successes, distinct no-replay refresh guidance, duplicate
+protection and stale scope/session/timer suppression. Native File/FormData/events,
+focus, loaded-Admin and retained reader/runner/tamper/browser suites still require
+covering evidence where specified. Focused mocked checks do not establish native
+or authenticated live-server acceptance; state any unperformed manual/accessibility
+checks explicitly and seek bounded acceptance rather than inventing results.
+Equivalent successful local or hosted evidence counts for its exact revision/scope;
+both are not required. Keep accepted 009.6 behavior and all existing gates intact.
 
 ## Select-dead - 2026-11-12
 
-SG-TODO-009.7-S2-SELECT-DEAD. Status: in progress; implementation, retained fixture
-reconciliation, 12 new regressions and cache-reference/documentation updates prepared.
-Acceptance: unchanged death rules, selection sets/checkboxes and non-selection
-delegation; original count text, explicit roster-specific pane success, 3s expiry,
-matching recovery/unrelated-error retention and scope/timer safety. No network,
-server mutation, refresh, Join-reporting or combat-rule changes.
-
-Preparation: combined Node run passed 13 tests (12 new cases plus the retained
-regression file), zero failures/cancellations/skips; three negative controls detected
-regressions and restored execution passed. Syntax and exact source-preservation/
-base-identity checks passed. [Implementation and evidence limits](../handover/500-select-dead-feedback.md).
-
-Roll-all is already delivered as ed6a211382d60110ecd008b19c4b88db46bd2bd3;
-raw-roll/Edit and prior imports are not restarted by this step. Historical pending
-paragraphs above do not reverse later deliveries. Bulk Join pane success and final
-Stage 2 reconciliation/acceptance remain separate next work. Keep other stages,
-Deliverable 2, compatibility retirement and deferred test cleanup outside this scope.
-
-Use [skip ci] for this intermediate Stage 2 push as requested on 2026-11-12; no
-workflow edit or separate dispatch. Combined covering/native-browser validation
-and bounded acceptance remain pending until the Stage 2 batch is pushed and tested.
-Do not mark Stage 2 or 009.7 completed merely because this candidate is committed.
+SG-TODO-009.7-S2-SELECT-DEAD. Implementation delivered at
+ab730d4498ac1e7a4cadb321ea8f391f45a60eef; combined validation and acceptance pending.
+Historical preparation passed 13 tests (12 new plus retained regression file) and
+three negative controls. [Scope, criteria and limits](../handover/500-select-dead-feedback.md).
 
 ## Bulk Join pane success - 2026-11-12
 
-SG-TODO-009.7-S2-BULK-JOIN. Status: in progress; effective wrapper integration,
-retained fixture reconciliation, 11 added cases and documentation prepared.
-Accepted global Join rejection ownership/client/server gates are preserved, not
-reopened. Require 3s pane success before strict refresh, separate persistent
-no-replay refresh failure, matching selection/refresh recovery, unrelated-notice
-isolation, canonical per-roster/selection duplicate protection through refresh and
-stale/superseded-result safety. Keep POST/payload order/count wording and non-Join/
-single-row behavior. No request replay or core fragment/pin changes.
+SG-TODO-009.7-S2-BULK-JOIN. Implementation delivered at
+09c2f0912c77efdeffcd00f007470aae57b80622; combined validation and acceptance pending.
+Historical preparation passed 49 tests (37 core/Join and 12 retained gate cases)
+and four negative controls. [Scope, criteria and limits](../handover/510-bulk-join-pane-feedback.md).
 
-Preparation passed 49 combined tests (37 core/Join including 26 retained and 11
-added; 12 unchanged gate cases), four negative controls, restored combined execution
-and syntax/reverse-replacement checks. These are production-controller/gate and
-production-derived core-slice checks, not full Admin/native/live-server acceptance.
-[Implementation, evidence and limits](../handover/510-bulk-join-pane-feedback.md).
+## Final composition reconciliation - 2026-11-12
 
-Select-dead is delivered as ab730d4498ac1e7a4cadb321ea8f391f45a60eef and roll-all
-as ed6a211382d60110ecd008b19c4b88db46bd2bd3; their combined validation is pending.
-After this bounded delivery, final Stage 2 caller/fixture/status reconciliation and
-combined validation/acceptance remain; already delivered features are not restarted.
-Keep Stage 1, Stages 3-4, D2, compatibility retirement and deferred test cleanup out.
+SG-TODO-009.7-S2-RECONCILIATION. Status: in progress; test/status payload prepared.
+The existing loaded-Admin fixture gains one combined case covering selection,
+roll-all, bulk Join rejection/recovery, separate refresh failure, unrelated Reset
+error, draft/selection retention and no mutation replay. All 15 existing class
+method ASTs remain unchanged. Full module compilation and five AST-isolated
+inventory tests passed; no browser/full-suite run is claimed for this preparation.
+[Reconciliation findings and limits](../handover/510-bulk-join-pane-feedback.md#final-stage-2-reconciliation---2026-11-12).
 
-Retain [skip ci] for this intermediate Stage 2 push as requested. No workflow change
-or separate dispatch. Combined covering CI/browser/full-suite validation remains
-pending until all Stage 2 changes/updates are pushed and a final run is arranged.
-Stage 2 and 009.7 stay open pending their existing acceptance criteria.
+Remaining actions:
+1. Obtain exact-content approval and push this final test/status integration.
+2. Run the complete configured suite against that committed revision and review
+   completed evidence, including the new loaded-Admin scenario; correct actual
+   failures with fresh approval if needed. Earlier green cd1599e7 does not cover
+   ed6a211, ab730d4 or 09c2f091.
+3. Obtain bounded Stage 2 acceptance and reconcile its status without closing
+   Stage 1, Stages 3-4, either whole feedback deliverable or phase 009.7.
+
+Retain [skip ci] for this push as requested; no workflow changes or separate
+dispatch. Combined validation remains pending until a final exact-revision run
+is arranged. Inactive-source/pane-compatibility retirement and deferred test-suite
+cleanup remain outside this scope. Do not mark completed solely because code is
+pushed or metadata sizes agree with pins. No merge or deployment.

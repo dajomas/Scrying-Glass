@@ -217,6 +217,53 @@ class GlobalFeedbackCompositionTests(unittest.TestCase):
         self.assertEqual(len(h['writes']), 1)
         self.no_global_legacy(page)
 
+    def test_stage2_selection_roll_all_and_bulk_join_feedback_coexist(self):
+        page, h = self.open_page()
+        page.eval_on_selector('#monsterName', "n=>{n.value='Keep Stage 2 draft';n.dispatchEvent(new Event('input',{bubbles:true}))}")
+        h['replies']['/api/battle/reset-all'] = (422, {'detail': 'Keep Reset error'})
+        page.evaluate("() => document.querySelector('#resetAll').onclick()")
+        page.evaluate("() => runBulkAction('monsters','select-dead')")
+        self.assertEqual(page.evaluate("selectedIds('monsters')"), ['m'])
+        selected = self.records(page, 'roster.select-dead')
+        self.assertEqual([(r['region'], r['severity'], r['text']) for r in selected],
+                         [('monsters', 'success', 'Selected 1 dead monster.')])
+        self.assertEqual(len(h['writes']), 1, 'Selection must not send a mutation')
+
+        h['replies']['/api/monsters/roll-initiative'] = (200, {'count': 1})
+        page.evaluate("() => document.querySelector('#rollMonsterInitiative').onclick()")
+        self.assertEqual(self.records(page, 'monster.roll-all.request')[0]['severity'], 'success')
+        self.assertEqual(self.records(page, 'battle.reset-all')[0]['text'], 'Keep Reset error')
+        self.assertEqual(h['writes'][-1], {'path': '/api/monsters/roll-initiative', 'method': 'POST', 'body': None})
+
+        h['replies']['/api/monsters/bulk'] = (422, {'detail': 'Bulk Join rejected'})
+        page.evaluate("() => runBulkAction('monsters','join-battle')")
+        self.assertEqual([r['text'] for r in self.records(page, 'roster.join')], ['Bulk Join rejected'])
+        self.assertEqual(self.records(page, 'roster.bulk.join-battle'), [])
+
+        h['replies']['/api/monsters/bulk'] = (200, {'count': 1})
+        h['replies']['/api/state'] = (503, {'detail': 'Display reload unavailable'})
+        page.evaluate("() => runBulkAction('monsters','join-battle')")
+        self.assertEqual(self.records(page, 'roster.join'), [])
+        joined = self.records(page, 'roster.bulk.join-battle')
+        self.assertEqual([(r['region'], r['severity'], r['text']) for r in joined],
+                         [('monsters', 'success', '1 monster updated.')])
+        failed = self.records(page, 'roster.bulk.join-battle.refresh')
+        self.assertEqual(len(failed), 1)
+        self.assertEqual(failed[0]['severity'], 'error')
+        self.assertIn('do not repeat the Join', failed[0]['text'])
+        self.assertEqual(self.records(page, 'battle.reset-all')[0]['text'], 'Keep Reset error')
+        self.assertEqual(page.locator('#monsterName').input_value(), 'Keep Stage 2 draft')
+        self.assertEqual(page.evaluate("selectedIds('monsters')"), ['m'])
+        self.assertEqual(len(h['writes']), 4)
+        import json
+        self.assertEqual(json.loads(h['writes'][-1]['body']), {'action': 'join-battle', 'ids': ['m']})
+
+        del h['replies']['/api/state']
+        page.evaluate('() => load(true)')
+        self.assertEqual(len(h['writes']), 4, 'Read-only reload must not replay the Join')
+        self.assertEqual(self.records(page, 'battle.reset-all')[0]['text'], 'Keep Reset error')
+        self.no_global_legacy(page)
+
     def test_statistics_and_bundle_import_coexist_on_loaded_page(self):
         page, h = self.open_page()
         h['replies']['/api/state'] = (503, {'detail': 'Statistics unavailable'})
