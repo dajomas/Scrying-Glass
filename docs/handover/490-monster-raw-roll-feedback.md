@@ -82,3 +82,19 @@ fixture now verifies token replacement for this asset. Reload the page after
 updating. No Admin fragment/pin, template, workflow or unrelated source changes.
 README and root indexes retain accurate links/open boundaries and are unchanged.
 This mixed commit uses normal CI. Stage 2 and wider deliverables remain open.
+
+## Step 2 composition fixture correction - 2026-11-12
+
+CI run 43100121386 attempt 1 covered implementation
+31bb7c459e776f9c20aac27659a0824524359398 and failed its JavaScript step.
+The character Edit suite reported 13 passes and two failures: both retained
+monster-wrapper composition tests threw ReferenceError: openEdit is not
+defined during asset evaluation, before their submission assertions.
+
+The shared VM harness now exposes its existing Edit-opening helper as
+openEdit with the production (kind, id) argument order. Production session
+guards and existing integration assertions are unchanged.
+
+Corrective runtime and covering CI validation remain pending. This draft
+does not establish that all JavaScript failures have been resolved.
+Stage 2 and wider deliverables remain open.

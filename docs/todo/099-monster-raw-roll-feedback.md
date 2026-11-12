@@ -45,3 +45,16 @@ Review normal covering results and correct failures with fresh approval before
 bounded acceptance. Do not apply Step 1's green run to Step 2 or close Stage 2,
 Stage 1, either deliverable or 009.7. Roll-all, select-dead, bulk Join pane success,
 compatibility retirement and phase close-out remain separate unfinished work.
+
+## Step 2 composition fixture correction - 2026-11-12
+
+Status: in progress; fixture correction drafted, validation pending.
+Expose openEdit in the shared character Edit VM harness without weakening
+the retained delegation and monster FormData assertions.
+
+Acceptance: both previously failing composition tests pass, the monster
+Edit feedback suite remains green, and the complete configured JavaScript
+step passes on the corrective revision. Review the full covering CI result
+before bounded acceptance; do not close Stage 2 or 009.7.
+
+[Diagnosis and correction](../handover/490-monster-raw-roll-feedback.md#step-2-composition-fixture-correction---2026-11-12).

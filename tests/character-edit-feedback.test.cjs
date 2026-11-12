@@ -48,6 +48,8 @@ function harness() {
         form.controls = [...Object.values(form.elements), submit, cancel];
         return {session: context.editing, controls: form.controls, submit, cancel};
     }
+    // Production openEdit uses (kind, id); this fixture helper uses (id, kind).
+    context.openEdit = (kind, id) => { open(id, kind); };
     open(); vm.runInContext(source, context);
     const submit = () => form.onsubmit.call(form, {preventDefault() {}});
     return {form, context, modal, open, submit, calls, loads, timers, controller, feedback, delegated,
