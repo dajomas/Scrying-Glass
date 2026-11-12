@@ -1,0 +1,48 @@
+89Z ok 4 - actual failure followed by matching success replaces its error only
+tests	JavaScript tests	2026-11-12T14:33:54.2871282Z   ---
+tests	JavaScript tests	2026-11-12T14:33:54.2871800Z   duration_ms: 1.278445
+tests	JavaScript tests	2026-11-12T14:33:54.2872361Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:54.2872885Z   ...
+tests	JavaScript tests	2026-11-12T14:33:54.2874037Z # Subtest: success expiry is five seconds and cannot remove unrelated persistent errors
+tests	JavaScript tests	2026-11-12T14:33:54.2875499Z ok 5 - success expiry is five seconds and cannot remove unrelated persistent errors
+tests	JavaScript tests	2026-11-12T14:33:54.2876420Z   ---
+tests	JavaScript tests	2026-11-12T14:33:54.2876965Z   duration_ms: 1.90338
+tests	JavaScript tests	2026-11-12T14:33:54.2877510Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:54.2878007Z   ...
+tests	JavaScript tests	2026-11-12T14:33:54.2881600Z # Subtest: removing another entity does not clear the first entity failure
+tests	JavaScript tests	2026-11-12T14:33:54.2883736Z ok 6 - removing another entity does not clear the first entity failure
+tests	JavaScript tests	2026-11-12T14:33:54.2884611Z   ---
+tests	JavaScript tests	2026-11-12T14:33:54.2885104Z   duration_ms: 0.947978
+tests	JavaScript tests	2026-11-12T14:33:54.2885604Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:54.2913668Z   ...
+tests	JavaScript tests	2026-11-12T14:33:54.2914668Z # Subtest: kind is display metadata: same endpoint ID retry resolves earlier default-kind error
+tests	JavaScript tests	2026-11-12T14:33:54.2916139Z ok 7 - kind is display metadata: same endpoint ID retry resolves earlier default-kind error
+tests	JavaScript tests	2026-11-12T14:33:54.2917026Z   ---
+tests	JavaScript tests	2026-11-12T14:33:54.2917416Z   duration_ms: 0.823456
+tests	JavaScript tests	2026-11-12T14:33:54.2917865Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:54.2918262Z   ...
+tests	JavaScript tests	2026-11-12T14:33:54.2918849Z # Subtest: refresh alone cannot clear a removal error
+tests	JavaScript tests	2026-11-12T14:33:54.2919632Z ok 8 - refresh alone cannot clear a removal error
+tests	JavaScript tests	2026-11-12T14:33:54.2920176Z   ---
+tests	JavaScript tests	2026-11-12T14:33:54.2920541Z   duration_ms: 0.774444
+tests	JavaScript tests	2026-11-12T14:33:54.2920945Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:54.2921292Z   ...
+tests	JavaScript tests	2026-11-12T14:33:54.2921888Z # Subtest: unrelated success cannot clear a removal error
+tests	JavaScript tests	2026-11-12T14:33:54.2922766Z ok 9 - unrelated success cannot clear a removal error
+tests	JavaScript tests	2026-11-12T14:33:54.2923636Z   ---
+tests	JavaScript tests	2026-11-12T14:33:54.2924023Z   duration_ms: 1.086436
+tests	JavaScript tests	2026-11-12T14:33:54.2924520Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:54.2924888Z   ...
+tests	JavaScript tests	2026-11-12T14:33:54.2925832Z # Subtest: confirmed deletion and real loadState refresh failure coexist without a second DELETE
+tests	JavaScript tests	2026-11-12T14:33:54.2927294Z ok 10 - confirmed deletion and real loadState refresh failure coexist without a second DELETE
+tests	JavaScript tests	2026-11-12T14:33:54.2928194Z   ---
+tests	JavaScript tests	2026-11-12T14:33:54.2928575Z   duration_ms: 1.352493
+tests	JavaScript tests	2026-11-12T14:33:54.2929340Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:54.2929714Z   ...
+tests	JavaScript tests	2026-11-12T14:33:54.2930690Z # Subtest: unexpected refresh rejection is not labelled as a failed DELETE or reenabled for replay
+tests	JavaScript tests	2026-11-12T14:33:54.2932161Z ok 11 - unexpected refresh rejection is not labelled as a failed DELETE or reenabled for replay
+tests	JavaScript tests	2026-11-12T14:33:54.2933252Z   ---
+tests	JavaScript tests	2026-11-12T14:33:54.2933930Z   duration_ms: 1.274066
+tests	JavaScript tests	2026-11-12T14:33:54.2934374Z   type: 'test'
+tests	JavaScript tests	2026-11-12T14:33:54.2934755Z   ...
+tests	JavaScri
