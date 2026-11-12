@@ -1,0 +1,34 @@
+.2295235Z Connection audit: test_turn_eligibility.py
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:35.4963044Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:35.4963811Z Ran 8 tests in 0.167s
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:35.4964079Z 
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:35.4964215Z OK
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:35.4967803Z test_turn_eligibility.py: connections opened: 8; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:35.5132371Z Connection audit modules: 182; failed: 0
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:35.5133307Z PASS: all audited modules passed and closed their tracked connections
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:35.6093150Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:35.6093646Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:35.8832948Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:35.8834081Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:35.9197776Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:35.9198450Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:36.2019562Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:36.2465329Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:36.2466492Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:39.1758912Z {
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:39.1759366Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:39.1759940Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:39.1760640Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:39.1761573Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:39.1762494Z     "client card has a positive layout width at mobile viewport"
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:39.1763007Z   ],
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:39.1763316Z   "page_errors": [],
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:39.1763793Z   "transport": "mocked HTTP/WS, real Chromium rendering"
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:39.1764279Z }
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:39.2684615Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:39.2685311Z ##[group]tests/feedback_browser_fixture.py
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:39.4172704Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:39.4173419Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	2026-11-12T19:44:39.5783242Z ##[endgroup]
+tests	Post Run actions/setup-node@v4	﻿2026-11-12T19:44:39.5871713Z Post job cleanup.
+tests	Post Run actions/setup-node@v4	2026-11-12T19:44:39.7119059Z (node:31804) [DEP0040] DeprecationWarning: The `punycode` module is depre
