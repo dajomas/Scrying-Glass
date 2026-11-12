@@ -4,6 +4,7 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const code=fs.readFileSync(path.join(__dirname,'..','static','lairs.js'),'utf8');
+const {installFeedback}=require('./battle-action-feedback-fixture.cjs');
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
 async function harness({fail=false}={}) {
   class Element {
@@ -25,7 +26,8 @@ async function harness({fail=false}={}) {
       if(h.hold){h.hold=false;await new Promise(resolve=>{h.release=resolve;});}
       return {ok:true,json:async()=>({})};
     }};
-  vm.runInNewContext(code,context,{filename:'static/lairs.js'});window.scryingLairsRender(h.state);
+  const {feedback}=installFeedback(context);context.document.getElementById=element;h.feedback=feedback;
+  vm.runInContext(code,context,{filename:'static/lairs.js'});window.scryingLairsRender(h.state);
   h.render=()=>window.scryingLairsRender(h.state);
   h.dirty=(id,value)=>{element(id).value=value;element(id).listeners.input();};
   h.submit=()=>element('lairConfigForm').onsubmit({preventDefault(){}});
@@ -72,10 +74,12 @@ const cases=[
  }],
  ['ordinary successful save clears unchanged draft',async()=>{
    const h=await paused();await h.finish();assert.equal(h.element('lairName').value,'Submitted');assert.equal(h.element('lairName').dataset.dirty,undefined);
+   assert.deepEqual(h.feedback.snapshot().map(r=>[r.region,r.operation,r.severity,r.text]),[['lair','lair.save','success','Lair saved.']]);
  }],
  ['failed save preserves drafts',async()=>{
    const h=await harness({fail:true});h.dirty('lairName','Unsaved');h.submit();await flush();
-   assert.equal(h.element('lairName').value,'Unsaved');assert.equal(h.element('lairName').dataset.dirty,'1');assert.equal(h.element('lairNotice').textContent,'Rejected');
+   assert.equal(h.element('lairName').value,'Unsaved');assert.equal(h.element('lairName').dataset.dirty,'1');
+   assert.deepEqual(h.feedback.snapshot().map(r=>[r.region,r.operation,r.severity,r.text]),[['lair','lair.save','error','Rejected']]);
  }],
  ['same-encounter polling preserves drafts',async()=>{
    const h=await harness();h.dirty('lairNotes','Unsaved');h.render();assert.equal(h.element('lairNotes').value,'Unsaved');

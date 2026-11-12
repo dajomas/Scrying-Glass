@@ -47,7 +47,10 @@ supersedes the earlier campaign/setup archive-pending notes. Deploy all changed
 assets and template references together; setup-switch.js is referenced with ?v=2.
 
 Stage 2 and accepted global units 4A.1-4A.13 also remain closed. Stage 3 local-feature/
-lair/selected-campaign viewer integration is next; Stage 4 integration/responsive/
+lair/selected-campaign viewer integration is prepared, pending publication, covering
+CI and acceptance ([540](docs/handover/540-local-feature-feedback.md)): deploy
+admin-feedback-admin.js?v=4, features.js?v=4, lairs.js?v=2, lair-state-buttons.js?v=2,
+setup-has-lair.js?v=1 and campaign-viewer-admin.js?v=1 with their templates; Stage 4 integration/responsive/
 accessibility hardening, approved compatibility retirement, Deliverable 1 acceptance,
 Deliverable 2 connection/recovery/polling/field association and final 009.7/009
 acceptance remain open. Do not treat this branch as a completed 009.7 release.

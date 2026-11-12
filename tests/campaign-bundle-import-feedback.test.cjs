@@ -75,7 +75,9 @@ test('success expires at five seconds without clearing unrelated persistent erro
 for(const missing of [false,true])test(missing?'missing file does not start import feedback':'cancellation does not start import feedback',async()=>{
     const h=await setup();if(missing)h.element('importBundle').files=[];else h.allow=false;
     await h.run();assert.equal(h.writes().length,0);assert.equal(h.records().length,0);
-    assert.equal(h.element('importBundle').value,'selected');assert.equal(h.element('featureNotice').textContent,'Cancelled.');
+    // Stage 3: cancellation is silent; the legacy 'Cancelled.' notice is retired.
+    assert.equal(h.element('importBundle').value,'selected');assert.equal(h.element('featureNotice').textContent,undefined);
+    assert.equal(h.feedback.snapshot().length,0);
 });
 test('busy duplicate is suppressed and release permits only an explicit later import',async()=>{
     const h=await setup({hold:true});const pending=h.run();await flush();await h.run();
@@ -85,8 +87,11 @@ test('busy duplicate is suppressed and release permits only an explicit later im
 });
 test('rejected POST remains local and is not retried or announced as success',async()=>{
     const h=await setup({failPost:true});await h.run();await h.poll();
-    assert.equal(h.writes().length,1);assert.equal(h.records().length,0);assert.equal(h.setups,0);
-    assert.equal(h.element('featureNotice').textContent,'Import rejected');assert.equal(h.element('importBundle').value,'selected');
+    assert.equal(h.writes().length,1);assert.equal(h.setups,0);
+    // Stage 3: the rejection is a persistent tools-region error keyed like the import, never a success.
+    assert.deepEqual(h.records().map(r=>[r.region,r.severity,r.text]),[['tools','error','Import rejected']]);
+    h.tick(60000);assert.equal(h.records().length,1);
+    assert.equal(h.element('featureNotice').textContent,undefined);assert.equal(h.element('importBundle').value,'selected');
 });
 for(const awayBack of [false,true])test(awayBack?'away-and-back epoch suppresses stale import success':'scope transition suppresses stale import success',async()=>{
     const h=await setup({hold:true});const pending=h.run();await flush();h.scope('other','elsewhere');
@@ -97,7 +102,14 @@ for(const [flag,message]of [['failSetups','Setup list failed'],['failLoad','Core
     const h=await setup({[flag]:true});await h.run();
     assert.equal(h.writes().length,1);assert.equal(h.records().length,1);
     assert.equal(h.records()[0].severity,'success');assert.equal(h.records()[0].text,guidance(h.name));
-    assert.equal(h.element('featureNotice').textContent,message);
+    const again=h.feedback.snapshot().filter(r=>r.operation==='campaign-bundle.import.refresh');
+    assert.equal(again.length,1);assert.equal(again[0].region,'tools');assert.equal(again[0].severity,'error');
+    assert.match(again[0].text,new RegExp(`^Import campaign bundle completed, but refreshing the view failed: ${message}\\. Reload the page`));
+    h.tick(60000);assert.equal(h.feedback.snapshot().filter(r=>r.operation==='campaign-bundle.import.refresh').length,1);
+});
+test('a later successful import resolves the earlier rejection',async()=>{
+    const h=await setup({failPost:true});await h.run();h.failPost=false;await h.run();
+    assert.deepEqual(h.records().map(r=>[r.region,r.severity]),[['global','success']]);
 });
 test('same-scope feature refresh preserves an unsaved field during import',async()=>{
     const h=await setup({hold:true});const pending=h.run();await flush();

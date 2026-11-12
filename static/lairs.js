@@ -8,7 +8,13 @@
         snapshot?.active_campaign_id??snapshot?.active_setup?.campaign_id??null,
         snapshot?.active_setup?.name??null,snapshot?.lairs?.[0]?.id??null,
     ]);
-    const notice=text=>{$('lairNotice').textContent=text;};
+    /* SG-TODO-009.7 Stage 3: lairNotice (lair region) and the dialog's lairActionNotice
+     * (lairAction region) are managed feedback regions on the encounter lane. */
+    const feedback=()=>window.scryingAdminFeedback;
+    const ticket=(region,operation,target,label)=>feedback().begin({region,operation,
+        target:JSON.stringify([operation,target]),label});
+    const fail=(region,operation,target,label,text)=>feedback().publish(ticket(region,operation,target,label),{severity:'error',text});
+    const settle=(region,operation,target,label)=>feedback().resolve(ticket(region,operation,target,label));
     async function api(url,method='GET',body) {
         const options={method,cache:'no-store'};
         if(body!==undefined){options.headers={'Content-Type':'application/json'};options.body=JSON.stringify(body);}
@@ -28,27 +34,43 @@
         $('resolveLair').disabled=busy||!item?.active||!item?.in_turn;
     };
     configFields.forEach(id=>$(id).addEventListener('input',()=>{$(id).dataset.dirty='1';}));
-    async function perform(action) {
+    /* spec: region, operation, target, label, success(result). Validation/request errors persist on
+     * the operation/target until its next success; a declined confirmation is silent. Success is
+     * published before the reload; a failed reload is a separate no-replay refresh error. */
+    async function perform(spec,action) {
         if(busy)return;busy=true;
         const controls=['saveLair','removeLair','resolveLair','applyLairAction'];controls.forEach(id=>$(id).disabled=true);
-        try{await action();await load();}
-        catch(error){notice(error.message);$('lairActionNotice').textContent=error.message;}
+        const own=ticket(spec.region,spec.operation,spec.target,spec.label);
+        const again=ticket('lair',spec.operation+'.refresh',spec.target,spec.label);
+        try{
+            let result;
+            try{result=await action();}catch(error){feedback().publish(own,{severity:'error',text:error.message});return;}
+            if(result===false)return;
+            // A closed dialog reports its success in the pane (successRegion); its own errors resolve.
+            let done=own;
+            if(spec.successRegion){feedback().resolve(own);done=ticket(spec.successRegion,spec.operation+'.applied',spec.target,spec.label);}
+            feedback().publish(done,{severity:'success',text:spec.success(result)});
+            try{await load(true);feedback().resolve(again);}
+            catch(error){feedback().publish(again,{severity:'error',text:`${spec.label} completed, but refreshing the `+
+                `view failed: ${error.message}. Reload the page; do not repeat it to retry the refresh.`});}
+        }
         finally{busy=false;controls.forEach(id=>$(id).disabled=false);$('resolveLair').disabled=!state?.lairs?.[0]?.in_turn;}
     }
     $('lairConfigForm').onsubmit=event=>{
-        event.preventDefault();perform(async()=>{
+        event.preventDefault();perform({region:'lair',operation:'lair.save',target:editingId||'new',label:'Save lair',
+            success:()=>'Lair saved.'},async()=>{
             const submittedScope=editingScope,submittedValues=new Map(configFields.map(id=>[id,configValue(id)]));
             const body={name:$('lairName').value,color:$('lairColor').value,active:$('lairActive').checked,visible:$('lairVisible').checked,notes:$('lairNotes').value};
             await api(editingId?`/api/lairs/${encodeURIComponent(editingId)}`:'/api/lairs',editingId?'PATCH':'POST',body);
             if(editingScope===submittedScope)configFields.forEach(id=>{
                 if(configValue(id)===submittedValues.get(id))delete $(id).dataset.dirty;
             });
-            notice('Lair saved.');
         });
     };
     $('removeLair').onclick=()=>{
         if(editingId&&confirm('Remove this lair? Existing conditions remain; lair-anchored expiry becomes manual.'))
-            perform(async()=>{await api(`/api/lairs/${encodeURIComponent(editingId)}`,'DELETE');notice('Lair removed.');});
+            perform({region:'lair',operation:'lair.remove',target:editingId,label:'Remove lair',success:()=>'Lair removed.'},
+                ()=>api(`/api/lairs/${encodeURIComponent(editingId)}`,'DELETE'));
     };
     function input(type,value,label) {
         const element=document.createElement('input');element.type=type;element.value=value;element.setAttribute('aria-label',label);return element;
@@ -61,7 +83,9 @@
             const item=snapshot.lairs?.find(x=>x.id===ident);
             if(!item?.active||!item?.in_turn)throw new Error('The lair is not currently taking its turn.');
             actionState=snapshot;actorId=ident;revision=after.revision;
-            $('lairActionTitle').textContent=`Lair action: ${item.name}`;$('lairActionNotice').textContent='';$('lairTargets').replaceChildren();
+            $('lairActionTitle').textContent=`Lair action: ${item.name}`;$('lairTargets').replaceChildren();
+            // A fresh dialog starts without the previous attempt's errors for this lair.
+            settle('lairAction','lair.action',ident,'Lair action');settle('lair','lair.action.open',ident,'Open lair action');
             const targets=[...snapshot.characters,...snapshot.monsters].filter(x=>x.active&&x.life_state!=='dead'&&(x.death_failures||0)<3).sort((a,b)=>a.name.localeCompare(b.name));
             for(const target of targets){
                 const row=document.createElement('tr');row.dataset.target=target.id;
@@ -76,7 +100,7 @@
                 $('lairTargets').append(row);
             }
             $('lairActionModal').hidden=false;
-        }catch(error){notice(error.message);}finally{opening=false;}
+        }catch(error){fail('lair','lair.action.open',ident,'Open lair action',error.message);}finally{opening=false;}
     };
     $('resolveLair').onclick=()=>window.scryingOpenLairAction(editingId);
     $('cancelLairAction').onclick=()=>{if(busy)return;$('lairActionModal').hidden=true;actorId=null;};
@@ -89,7 +113,8 @@
         }
     };
     $('lairActionForm').onsubmit=event=>{
-        event.preventDefault();perform(async()=>{
+        event.preventDefault();perform({region:'lairAction',successRegion:'lair',operation:'lair.action',target:actorId,label:'Lair action',
+            success:result=>`Applied lair action to ${result.applied} target(s).`},async()=>{
             const timing=$('lairConditionTiming').value,targets=[];
             for(const row of $('lairTargets').rows){
                 if(!row.querySelector('[data-lair-select]').checked)continue;
@@ -107,9 +132,10 @@
                 const target=[...actionState.characters,...actionState.monsters].find(x=>x.id===row.id);
                 return `${target.name}: ${row.damage} damage${row.effects.length?'; '+row.effects.map(x=>x.name).join(', '):''}`;
             });
-            if(!confirm('Apply lair action?\n\n'+descriptions.join('\n')+'\n\nDamage uses existing temporary HP and death-state rules.'))return;
+            if(!confirm('Apply lair action?\n\n'+descriptions.join('\n')+'\n\nDamage uses existing temporary HP and death-state rules.'))return false;
             const result=await api(`/api/lairs/${encodeURIComponent(actorId)}/actions`,'POST',{name:$('lairActionName').value,revision,targets});
-            $('lairActionModal').hidden=true;actorId=null;notice(`Applied lair action to ${result.applied} target(s).`);
+            $('lairActionModal').hidden=true;actorId=null;
+            return result;
         });
     };
     if(typeof latest!=='undefined'&&latest)window.scryingLairsRender(latest);

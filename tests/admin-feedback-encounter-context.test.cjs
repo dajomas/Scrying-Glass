@@ -83,10 +83,10 @@ test('reloading the bootstrap retains the original API and context', () => {
 });
 test('header versions only the changed bootstrap and retains asset order', () => {
     const html = fs.readFileSync(path.join(root, 'templates/admin/010_pane_controls.html'), 'utf8');
-    assert.equal((html.match(/admin-feedback-admin\.js\?v=3/g) || []).length, 1);
-    assert.ok(!html.includes('admin-feedback-admin.js?v=1'));
+    assert.equal((html.match(/admin-feedback-admin\.js\?v=4/g) || []).length, 1);
+    assert.ok(!html.includes('admin-feedback-admin.js?v=1') && !html.includes('admin-feedback-admin.js?v=3'));
     const order = ['admin-feedback-controller.js?v=1', 'admin-feedback-view.js?v=1',
-        'admin-feedback-admin.js?v=3', 'initiative-join-gate.js'];
+        'admin-feedback-admin.js?v=4', 'initiative-join-gate.js'];
     for (let i = 1; i < order.length; i++) assert.ok(html.indexOf(order[i - 1]) < html.indexOf(order[i]));
 });
 

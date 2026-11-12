@@ -12,6 +12,11 @@
         characters: ['characterAddNotification', ['toggleCharacterPane']],
         battleSetup: ['battleSetupNotification', ['toggleBattleSetupPane', 'saveSetup']],
         monsters: ['monsterAddNotification', ['toggleMonsterPane']],
+        // Stage 3 local regions: encounter tools, lair pane, lair-action dialog, viewer access.
+        tools: ['featureFeedback', ['featureRefresh']],
+        lair: ['lairNotice', ['saveLair']],
+        lairAction: ['lairActionNotice', ['applyLairAction', 'cancelLairAction']],
+        campaignViewer: ['campaignViewerFeedback', ['saveCampaignViewers', 'campaignViewerAccessTitle']],
     };
     function setScope(lane, scope) {
         const changed = controller.setScope(lane, scope);

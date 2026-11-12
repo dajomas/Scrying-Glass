@@ -67,7 +67,8 @@ class ViewerBrowserTests(unittest.TestCase):
                     {id:'10',username:'alice',granted:true},{id:'11',username:'bob',granted:false}]})};
             };
         }""")
-        self.page.add_script_tag(content=(ROOT/'static/campaign-viewer-admin.js').read_text())
+        for name in ('admin-feedback-controller.js','admin-feedback-view.js','admin-feedback-admin.js','campaign-viewer-admin.js'):
+            self.page.add_script_tag(content=(ROOT/'static'/name).read_text())
         self.page.locator('#campaignViewerAccess').evaluate('(node)=>node.open=true')
         self.page.wait_for_function("document.querySelectorAll('#campaignViewerUsers input').length===2")
         self.assertEqual(self.page.locator('#campaignViewerAccessTitle').inner_text(),'Viewer access: First campaign')
@@ -77,5 +78,7 @@ class ViewerBrowserTests(unittest.TestCase):
         self.page.locator('#saveCampaignViewers').click()
         self.page.wait_for_function('window.savedGrant!==null')
         self.assertEqual(self.page.evaluate('window.savedGrant'),{'url':'/api/campaigns/1/viewers','body':{'user_ids':['10','11']}})
+        self.page.wait_for_function("document.querySelector('#campaignViewerFeedback .sg-feedback-text')?.textContent==='Success: Viewer access saved.'")
+        self.assertEqual(self.page.locator('#campaignViewerNotice').inner_text(),'')
 
 if __name__=='__main__':unittest.main()

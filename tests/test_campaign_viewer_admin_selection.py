@@ -25,7 +25,7 @@ class ViewerSelectionTests(unittest.TestCase):
 <select id="campaignSelect"><option value="1">Campaign one</option><option value="2">Campaign two</option></select>
 <details id="campaignViewerAccess" open><summary id="campaignViewerAccessTitle">Viewer access</summary>
 <div id="campaignViewerUsers"></div><button id="saveCampaignViewers" disabled>Save viewer access</button>
-<p id="campaignViewerNotice"></p></details>""")
+<p id="campaignViewerNotice"></p><p id="campaignViewerFeedback" hidden></p></details>""")
         self.page.select_option('#campaignSelect', selected)
         self.page.evaluate(r"""config => {
             window._campaignData={active:config.active,campaigns:config.allowed};
@@ -44,7 +44,11 @@ class ViewerSelectionTests(unittest.TestCase):
                     {id:'10',username:'client-one',granted:true},{id:'11',username:'client-two',granted:false}]})};
             };
         }""", {'allowed':allowed,'active':active,'denied':denied,'delays':delays})
-        self.page.add_script_tag(content=(ROOT/'static/campaign-viewer-admin.js').read_text())
+        # Stage 3: the real feedback stack owns #campaignViewerFeedback (page lane).
+        for name in ('admin-feedback-controller.js','admin-feedback-view.js','admin-feedback-admin.js','campaign-viewer-admin.js'):
+            self.page.add_script_tag(content=(ROOT/'static'/name).read_text())
+    def records(self):
+        return self.page.evaluate("window.scryingAdminFeedback.snapshot().map(r=>[r.lane,r.region,r.operation,r.severity,r.text])")
     def wait_users(self):
         self.page.wait_for_function("document.querySelectorAll('#campaignViewerUsers input').length===2", timeout=5000)
     def test_user1_owned_campaign_shows_clients_with_no_global_active_access(self):
@@ -81,7 +85,9 @@ class ViewerSelectionTests(unittest.TestCase):
         self.assertEqual(self.page.locator('#campaignViewerAccessTitle').inner_text(),'Viewer access: Campaign two')
     def test_forbidden_campaign_shows_error_instead_of_no_client_users(self):
         self.install(denied='1')
-        self.page.wait_for_function("document.getElementById('campaignViewerNotice').textContent.includes('not assigned')")
+        self.page.wait_for_function("document.getElementById('campaignViewerFeedback').textContent.includes('not assigned')")
+        self.assertEqual(self.records(),[['page','campaignViewer','viewer.load','error','This campaign is not assigned to your admin account']])
+        self.assertEqual(self.page.locator('#campaignViewerNotice').inner_text(),'')
         self.assertEqual(self.page.locator('#campaignViewerUsers input').count(),0)
         self.assertTrue(self.page.locator('#saveCampaignViewers').is_disabled())
     def test_selector_cannot_choose_campaign_outside_authorized_list(self):
@@ -94,5 +100,38 @@ class ViewerSelectionTests(unittest.TestCase):
         self.page.locator('#activeCampaignInfo').evaluate("node=>node.textContent='Refreshed campaign information'")
         self.page.wait_for_function('(count)=>window._calls.length>count',arg=count)
         self.assertTrue(self.page.locator('#campaignViewerUsers input[value="11"]').is_checked())
+    # SG-TODO-009.7 Stage 3: managed viewer-access feedback.
+    def test_save_success_is_managed_and_expires_after_three_seconds(self):
+        self.install();self.wait_users();self.page.locator('#saveCampaignViewers').click()
+        self.page.wait_for_function("document.querySelector('#campaignViewerFeedback .sg-feedback-text')?.textContent==='Success: Viewer access saved.'")
+        self.assertEqual(self.records(),[['page','campaignViewer','viewer.save','success','Viewer access saved.']])
+        self.assertEqual(self.page.locator('#campaignViewerNotice').inner_text(),'')
+        self.assertEqual(self.page.evaluate("document.getElementById('campaignViewerFeedback').getAttribute('role')"),'status')
+        self.page.wait_for_function("window.scryingAdminFeedback.snapshot().length===0",timeout=4500)
+        self.assertTrue(self.page.locator('#campaignViewerFeedback').is_hidden())
+    def test_save_error_persists_until_next_success(self):
+        self.install();self.wait_users();self.page.evaluate("window._denied='1'")
+        self.page.locator('#saveCampaignViewers').click()
+        self.page.wait_for_function("document.getElementById('campaignViewerFeedback').textContent.includes('not assigned')")
+        self.page.wait_for_timeout(3500)
+        self.assertEqual([r[2:4] for r in self.records()],[['viewer.save','error']])
+        self.assertTrue(self.page.locator('#saveCampaignViewers').is_enabled())
+        self.page.evaluate("window._denied=null");self.page.locator('#saveCampaignViewers').click()
+        self.page.wait_for_function("document.querySelector('#campaignViewerFeedback .sg-feedback-text')?.textContent==='Success: Viewer access saved.'")
+        self.assertEqual([r[2:4] for r in self.records()],[['viewer.save','success']])
+    def test_save_outcome_is_suppressed_after_selecting_another_campaign(self):
+        self.install(allowed=[{'id':'1','name':'Campaign one'},{'id':'2','name':'Campaign two'}]);self.wait_users()
+        self.page.evaluate("window._delays={'1':300}");self.page.locator('#saveCampaignViewers').click()
+        self.page.wait_for_function("window._calls.some(call=>call.method==='PUT')")
+        self.page.select_option('#campaignSelect','2')
+        self.page.wait_for_function("document.getElementById('campaignViewerAccessTitle').textContent==='Viewer access: Campaign two'")
+        self.page.wait_for_function('window._saves.length===1');self.page.wait_for_timeout(100)
+        self.assertEqual(self.records(),[])
+    def test_load_error_is_resolved_by_a_later_successful_load(self):
+        self.install(allowed=[{'id':'1','name':'Campaign one'},{'id':'2','name':'Campaign two'}],denied='1')
+        self.page.wait_for_function("document.getElementById('campaignViewerFeedback').textContent.includes('not assigned')")
+        self.page.select_option('#campaignSelect','2');self.wait_users()
+        self.assertEqual(self.records(),[]);self.assertTrue(self.page.locator('#campaignViewerFeedback').is_hidden())
+        self.assertEqual(self.page.locator('#campaignViewerAccessTitle').inner_text(),'Viewer access: Campaign two')
 
 if __name__=='__main__':unittest.main()

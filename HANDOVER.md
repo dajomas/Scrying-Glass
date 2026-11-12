@@ -68,6 +68,7 @@ This is the index; substantive handover lives in numbered docs/handover sections
 
 53. [Stage 1 campaign-operation feedback](docs/handover/520-campaign-operation-feedback.md) - Step 1 accepted/closed 2026-11-12; covering CI 43237771405 attempt 1 for 4f0127b56550cacb821ae2c62cb2057265eaea2a. Historical remaining-Stage-1 notes are superseded by the whole-stage close-out below.
 54. [Stage 1 accepted close-out and setup-operation history](docs/handover/530-setup-operation-feedback.md#stage-1-accepted-close-out---2026-11-12) - all agreed campaign/setup/transfer/background work completed and closed, user acceptance 2026-11-12 at 19:45 CET. Final tested revision cc0b67b177772e314b608817f6f51cecc322a065; successful Branch tests 43279736032 attempt 1; evidence 97eedc6da52abcfa94526fee25a3c321f0626844. Step 2/3 pending notes are superseded; wider gates remain open.
+55. [Stage 3 local-feature feedback](docs/handover/540-local-feature-feedback.md) - encounter tools, lair, lair-action dialog, has-lair and selected-campaign viewer-access outcomes moved to managed regions; archive prepared on 1aa85334, publication/CI/acceptance pending.
 
 <a id="current-state---2026-11-11"></a>
 
@@ -82,7 +83,9 @@ including Step 2 (2A-2E) and Step 3, with covering CI and limits in
 Earlier preparation/publication/acceptance-pending notes are historical, not current
 blockers or a reason to request Stage 1 acceptance again.
 
-Next is Stage 3 local-feature/lair/selected-campaign viewer feedback integration.
+Stage 3 local-feature/lair/selected-campaign viewer feedback integration is
+prepared ([540](docs/handover/540-local-feature-feedback.md)) and awaits publication,
+covering CI and acceptance.
 Stage 4 integration/responsive/accessibility hardening, approved compatibility
 retirement, Deliverable 1 acceptance, Deliverable 2 connection/recovery/polling/field
 association and final 009.7/009 acceptance remain open under the

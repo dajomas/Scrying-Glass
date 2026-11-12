@@ -15,6 +15,11 @@ deliverables, 009.7 and overall 009 remain open. No new scope, owner, deadline,
 priority, delivery-order change or acceptance gate is introduced. Earlier dated
 pending/preparation statements are superseded for closed scopes, not reopened work.
 
+Stage 3 local-feature/lair/selected-campaign viewer feedback is prepared as an
+archive on 1aa85334; it is not yet published, CI-covered or accepted. Scope,
+boundaries and validation: [540](../handover/540-local-feature-feedback.md). Branch
+tests 43284682854 on a5aebc34 was cancelled and is not evidence.
+
 ## Stage 1 accepted close-out - 2026-11-12
 
 - Step 1 campaign create/edit/switch/delete was accepted and recorded closed at
@@ -59,6 +64,8 @@ record supersedes pending notes without deleting the historical evidence.
 
 1. Stage 3: remaining local-feature/lair/selected-campaign viewer feedback
    integration, preserving accepted encounter-tools/workspace/permission behavior.
+   Implementation prepared ([540](../handover/540-local-feature-feedback.md));
+   publication, covering CI and user acceptance pending.
 2. Stage 4: integration reconciliation and responsive/accessibility hardening,
    including destructive confirmations, local overflow/zoom/labels/contrast/focus/
    tab/menu/live announcements, nested tools and independent panels. Retire remaining

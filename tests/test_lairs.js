@@ -2,6 +2,7 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const root=path.resolve(__dirname,'..');
+const {installFeedback}=require('./battle-action-feedback-fixture.cjs');
 class Element {
     constructor(tag='div'){this.tag=tag;this.children=[];this.dataset={};this.value='';this.checked=false;this.disabled=false;this.hidden=false;this.textContent='';this.listeners={};}
     append(...children){this.children.push(...children);}
@@ -27,13 +28,15 @@ const snapshot={lairs:[{id:'l',kind:'lair',name:'Lair',active:true,visible:true,
  {id:'dead',name:'Dead',hp:0,max_hp:10,active:true,life_state:'dead',monster_species:'Goblin'}]};
 let revision=10,calls=[],loads=0,confirmations=0;
 const context={document:{getElementById:$,createElement:tag=>new Element(tag)},window:{},
- confirm:()=>{confirmations++;return true;},load:async()=>{loads++;},
+ confirm:()=>{confirmations++;return context.allow!==false;},load:async rethrow=>{loads++;assert.equal(rethrow,true);},
  fetch:async(url,options)=>{
   const body=options.body?JSON.parse(options.body):null;calls.push({url,method:options.method,body});
   const data=url==='/api/state'?structuredClone(snapshot):url==='/api/features'?{revision}:url.endsWith('/actions')?{applied:body.targets.length}:{};
   return {ok:true,json:async()=>data};
  },console};
-vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'static/lairs.js'),'utf8'),context);
+const {feedback}=installFeedback(context);context.document.getElementById=$;
+const records=()=>feedback.snapshot().map(r=>[r.region,r.operation,r.severity,r.text]);
+vm.runInContext(fs.readFileSync(path.join(root,'static/lairs.js'),'utf8'),context);
 const settle=async()=>{for(let i=0;i<12;i++)await new Promise(resolve=>setImmediate(resolve));};
 (async()=>{
  context.window.scryingLairsRender(snapshot);
@@ -56,11 +59,25 @@ const settle=async()=>{for(let i=0;i<12;i++)await new Promise(resolve=>setImmedi
  assert.equal(action.body.targets[0].effects[0].anchor_id,'l');
  assert.equal(action.body.targets[0].effects[0].timing,'start');assert.equal(action.body.targets[0].effects[0].public,true);
  assert.equal($('lairActionModal').hidden,true);assert.equal(loads,1);assert.equal(confirmations,1);
+ // Stage 3: the closed dialog reports success in the lair pane region.
+ assert.deepEqual(records(),[['lair','lair.action.applied','success','Applied lair action to 2 target(s).']]);
  await context.window.scryingOpenLairAction('l');$('lairSelectNone').onclick();
  $('lairActionForm').onsubmit({preventDefault(){}});await settle();
  assert.equal(calls.filter(c=>c.url.endsWith('/actions')).length,1,'Empty selection sends no write');
- assert.equal($('lairActionNotice').textContent,'Select at least one target.');
+ assert.deepEqual(records().filter(r=>r[0]==='lairAction'),[['lairAction','lair.action','error','Select at least one target.']]);
+ assert(!records().some(r=>r[0]==='lair'&&r[2]==='error'),'Dialog validation is not double-written to the pane');
+ // Declined confirmation is silent and keeps the earlier dialog error.
+ $('lairSelectAll').onclick();context.allow=false;
+ $('lairActionForm').onsubmit({preventDefault(){}});await settle();context.allow=true;assert.equal(confirmations,2);
+ assert.equal(calls.filter(c=>c.url.endsWith('/actions')).length,1,'Declined confirmation sends no write');
+ assert.equal(records().filter(r=>r[0]==='lairAction').length,1);
+ // Reopening the dialog starts without the previous attempt's errors.
+ await context.window.scryingOpenLairAction('l');assert.equal(records().filter(r=>r[0]==='lairAction').length,0);
  snapshot.lairs[0].in_turn=false;context.window.scryingLairsRender(snapshot);assert.equal($('resolveLair').disabled,true);
- await context.window.scryingOpenLairAction('l');assert.match($('lairNotice').textContent,/not currently/);
+ await context.window.scryingOpenLairAction('l');
+ const open=records().filter(r=>r[1]==='lair.action.open');assert.equal(open.length,1);assert.equal(open[0][0],'lair');
+ assert.equal(open[0][2],'error');assert.match(open[0][3],/not currently/);
+ snapshot.lairs[0].in_turn=true;context.window.scryingLairsRender(snapshot);await context.window.scryingOpenLairAction('l');
+ assert.equal(records().filter(r=>r[1]==='lair.action.open').length,0,'A successful open resolves the open error');
  console.log('Lair DOM-mock integration checks passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});
