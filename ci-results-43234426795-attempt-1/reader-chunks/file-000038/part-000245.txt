@@ -1,0 +1,33 @@
+-12T14:17:03.9112333Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:03.9112730Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:03.9113295Z   File "python/scrying_glass_monster_selection.py", line 98, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:03.9113844Z     sources = ft.configured_sources(display)
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:03.9114545Z   File "/tmp/scrying-tests-q8z56rnp/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:03.9115614Z     raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:03.9117004Z ValueError: fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:03.9806511Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:03.9807279Z Ran 12 tests in 0.078s
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:03.9807534Z 
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:03.9808117Z test_fivetools_source_configuration.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:03.9808662Z OK
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:03.9993927Z Connection audit: test_healing_max_hp_cap.py
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:04.1035111Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:04.1035845Z Ran 12 tests in 0.003s
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:04.1036091Z 
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:04.1036423Z OK
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:04.1037122Z test_healing_max_hp_cap.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:04.1175181Z Connection audit: test_independent_panel_controls.py
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:07.1239519Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:07.1240030Z Ran 2 tests in 2.917s
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:07.1240238Z 
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:07.1240339Z OK
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:07.1240846Z test_independent_panel_controls.py: connections opened: 1; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:07.1969186Z Connection audit: test_initiative_bonus_input.py
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:07.2854889Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:07.2856061Z test_initiative_bonus_input.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:07.2856999Z Ran 7 tests in 0.001s
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:07.2857235Z 
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:07.2857375Z OK
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:07.2986162Z Connection audit: test_initiative_join_gate.py
+tests	Standalone Python browser and audit checks	2026-11-12T14:17:07.3947631Z ----------------------------------------------------------------------
+tests	Standalone Py

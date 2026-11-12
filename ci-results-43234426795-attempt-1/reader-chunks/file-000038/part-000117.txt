@@ -1,0 +1,31 @@
+te (including browser fixtures)	2026-11-12T14:14:28.6140474Z FAIL: test_cache_versions_and_single_inclusions (test_candidate_review_asset_wiring.CandidateReviewFeedbackAssetTests.test_cache_versions_and_single_inclusions)
+tests	Python test suite (including browser fixtures)	2026-11-12T14:14:28.6142427Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-12T14:14:28.6143325Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-12T14:14:28.6144377Z   File "/tmp/scrying-tests-_qk8j40c/repo/tests/test_candidate_review_asset_wiring.py", line 12, in test_cache_versions_and_single_inclusions
+tests	Python test suite (including browser fixtures)	2026-11-12T14:14:28.6145572Z     self.assertEqual(end.count('/static/' + name + '.js?v=2'), 1)
+tests	Python test suite (including browser fixtures)	2026-11-12T14:14:28.6146088Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-12T14:14:28.6146806Z AssertionError: 0 != 1
+tests	Python test suite (including browser fixtures)	2026-11-12T14:14:28.6146994Z 
+tests	Python test suite (including browser fixtures)	2026-11-12T14:14:28.6147275Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-12T14:14:28.6147714Z Ran 1552 tests in 216.807s
+tests	Python test suite (including browser fixtures)	2026-11-12T14:14:28.6147891Z 
+tests	Python test suite (including browser fixtures)	2026-11-12T14:14:28.6148016Z FAILED (failures=1)
+tests	Python test suite (including browser fixtures)	2026-11-12T14:14:28.9916177Z ##[error]Process completed with exit code 1.
+tests	Upload Admin foundations visual fixtures	﻿2026-11-12T14:14:28.9983243Z ##[group]Run actions/upload-artifact@v4
+tests	Upload Admin foundations visual fixtures	2026-11-12T14:14:28.9983579Z with:
+tests	Upload Admin foundations visual fixtures	2026-11-12T14:14:28.9983813Z   name: admin-foundations-visual-fixtures
+tests	Upload Admin foundations visual fixtures	2026-11-12T14:14:28.9984160Z   path: /home/runner/work/_temp/sg-admin-foundations
+tests	Upload Admin foundations visual fixtures	2026-11-12T14:14:28.9984487Z   if-no-files-found: warn
+tests	Upload Admin foundations visual fixtures	2026-11-12T14:14:28.9984739Z   compression-level: 6
+tests	Upload Admin foundations visual fixtures	2026-11-12T14:14:28.9984967Z   overwrite: false
+tests	Upload Admin foundations visual fixtures	2026-11-12T14:14:28.9985188Z   include-hidden-files: false
+tests	Upload Admin foundations visual fixtures	2026-11-12T14:14:28.9985437Z env:
+tests	Upload Admin foundations visual fixtures	2026-11-12T14:14:28.9985894Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Upload Admin foundations visual fixtures	2026-11-12T14:14:28.9986699Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-12T14:14:28.9987136Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Upload Admin foundations visual fixtures	2026-11-12T14:14:28.9987569Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-12T14:14:28.9987963Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-12T14:14:28.9988373Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Upload Admin foundations visual fixtures	2026-11-12T14:14:28.9988813Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Upload Admin foundations visual fixtures	2026-11-12T14:14:28.9989146Z ##[endgroup]
+tests	Upload Admin foundations visual fixtures	2026-11-12T14:14:29.1770944Z (node:15838) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative 

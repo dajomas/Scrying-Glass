@@ -1,0 +1,125 @@
+[
+  {
+    "check_run_url": "https://api.github.com/repos/dajomas/Scrying-Glass/check-runs/131237883592",
+    "completed_at": "2026-11-12T14:19:20Z",
+    "conclusion": "failure",
+    "created_at": "2026-11-12T14:10:20Z",
+    "head_branch": "features/perplexity-009.7",
+    "head_sha": "742697d86a76a657c92653dd6f1533135399f4b0",
+    "html_url": "https://github.com/dajomas/Scrying-Glass/actions/runs/43234426795/job/131237883592",
+    "id": 131237883592,
+    "labels": [
+      "ubuntu-latest"
+    ],
+    "name": "tests",
+    "node_id": "CR_kwDOUq6MkM8AAAAejmMuyA",
+    "run_attempt": 1,
+    "run_id": 43234426795,
+    "run_url": "https://api.github.com/repos/dajomas/Scrying-Glass/actions/runs/43234426795",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions",
+    "runner_id": 1000000848,
+    "runner_name": "GitHub Actions 1000000848",
+    "started_at": "2026-11-12T14:10:23Z",
+    "status": "completed",
+    "steps": [
+      {
+        "completed_at": "2026-11-12T14:10:24Z",
+        "conclusion": "success",
+        "name": "Set up job",
+        "number": 1,
+        "started_at": "2026-11-12T14:10:24Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-12T14:10:25Z",
+        "conclusion": "success",
+        "name": "Run actions/checkout@v4",
+        "number": 2,
+        "started_at": "2026-11-12T14:10:24Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-12T14:10:28Z",
+        "conclusion": "success",
+        "name": "Run actions/setup-python@v5",
+        "number": 3,
+        "started_at": "2026-11-12T14:10:25Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-12T14:10:29Z",
+        "conclusion": "success",
+        "name": "Run actions/setup-node@v4",
+        "number": 4,
+        "started_at": "2026-11-12T14:10:28Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-12T14:10:39Z",
+        "conclusion": "success",
+        "name": "Install Python test dependencies",
+        "number": 5,
+        "started_at": "2026-11-12T14:10:29Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-12T14:10:49Z",
+        "conclusion": "success",
+        "name": "Provision and verify Chromium",
+        "number": 6,
+        "started_at": "2026-11-12T14:10:39Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-12T14:10:50Z",
+        "conclusion": "success",
+        "name": "Python syntax and server import checks",
+        "number": 7,
+        "started_at": "2026-11-12T14:10:49Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-12T14:14:28Z",
+        "conclusion": "failure",
+        "name": "Python test suite (including browser fixtures)",
+        "number": 8,
+        "started_at": "2026-11-12T14:10:50Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-12T14:14:30Z",
+        "conclusion": "success",
+        "name": "Upload Admin foundations visual fixtures",
+        "number": 9,
+        "started_at": "2026-11-12T14:14:28Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-12T14:14:32Z",
+        "conclusion": "success",
+        "name": "Pytest regression modules",
+        "number": 10,
+        "started_at": "2026-11-12T14:14:30Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-12T14:14:49Z",
+        "conclusion": "success",
+        "name": "JavaScript tests",
+        "number": 11,
+        "started_at": "2026-11-12T14:14:32Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-12T14:19:18Z",
+        "conclusion": "failure",
+        "name": "Standalone Python browser and audit checks",
+        "number": 12,
+        "started_at": "2026-11-12T14:14:49Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-12T14:19:18Z",
+        "conclusion": "skipped",
+        "name": "Post Run actions/setu
