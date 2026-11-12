@@ -112,6 +112,7 @@
         }
     }
     const api = Object.freeze({loadState, begin, deliver, mount, setScope, stateRequest, observeState, invalidateLookup,
+        encounterContext: () => Object.freeze({scope: scopes.get('encounter'), epoch: encounterEpoch}),
         beginLookup(target) {
             invalidateLookup();
             return begin({lane: 'lookup', region: 'monsters', operation: 'monster.lookup', target, label: 'Monster lookup'});

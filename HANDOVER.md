@@ -66,6 +66,8 @@ This is the index; substantive handover lives in numbered docs/handover sections
 51. [Stage 2 select-dead feedback](docs/handover/500-select-dead-feedback.md)
 52. [Stage 2 bulk Join pane feedback](docs/handover/510-bulk-join-pane-feedback.md)
 
+53. [Stage 1 campaign-operation feedback](docs/handover/520-campaign-operation-feedback.md) - 1A foundation checkpoint only; creation migration remains pending.
+
 ## Current state - 2026-11-11
 
 018, 009.5, 015 and 009.6 remain closed for accepted scopes; 340/350/360/370 retain
