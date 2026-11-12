@@ -10,13 +10,13 @@ from python.scrying_glass_admin_source import ADMIN_SCRIPT_PARTS, read_admin_scr
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_PARTS = tuple(f"{number:03d}-source.js" for number in range(10, 81, 10))
-BUNDLE_BYTES = 145415
+BUNDLE_BYTES = 145878
 DIGESTS = (
     "b6b62f1f72def4bd17c6866062ec08fb76b66d75f31d69248bdd801001a0fc86",
     "a85ac3628d46516447e2e99761e2c02ac5f255c16e470a2645445ac749a435db",
     "943f2c753cd3104842221ed039141647d3010ba1a03f51755dac8eb912b13a66",
     "f72e71725b2952ed8b0aea6bb5f0da0fa4abc0b570013161a4beae1caf6a1ea1",
-    "8e32077e877f98cb763885deb23a3e72783e9b637953025ca0e0ebf9bf5608b1",
+    "7295ac2a9d12343827ee1464020fd8bf1a20caca68a70e70b2e5e72500e5c866",
     "fc9fb3d3cc8dbf1e3524848cea75924bf1e3c2e532e622cb6bc82ba74388ec2b",
     "68830a8efd3b02716c8253aeb24d4ac978d426880ce4438d1c7e0b0d4283a1ce",
     "5c5b72146278603c56412cb0a786051b222833c18ee20bfbca7157d146682c02",

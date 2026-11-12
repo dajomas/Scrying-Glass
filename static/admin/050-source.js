@@ -1,4 +1,4 @@
-// Stage 1 Step 1D.1: delete validation/request ownership; follow-up retained for 1D.2.
+// Stage 1 Step 1D.1: delete validation/request ownership; follow-up guarded in 1D.2a; feedback migration remains 1D.2b.
 let campaignDeleteSession = 0, campaignDeleteRevision = 0, campaignDeletePending = false;
 const campaignDeleteFeedback = (operation, target, label) => window.scryingAdminFeedback.begin({
     lane: 'page', region: 'campaign', operation, target, label,
@@ -113,15 +113,16 @@ document.querySelector('#campaignDeleteForm').onsubmit = async event => {
     const origin = feedback.encounterContext();
     const action = document.querySelector('#campaignDeleteAction').value;
     const ticket = campaignDeleteFeedback('campaign.delete', JSON.stringify(['campaign-delete', campaignId]), 'Delete campaign');
+    const refresh = campaignDeleteFeedback('campaign.delete.refresh', JSON.stringify(['campaign-delete', campaignId]), 'Refresh after campaign deletion');
     const submit = document.querySelector('#campaignDeleteForm .danger'), disabled = submit.disabled;
-    let result;
+    let result, applied = false, closedByAttempt = false;
     const same = () => {
         const now = feedback.encounterContext();
         const unchanged = now.scope === origin.scope && now.epoch === origin.epoch;
         const intended = result && now.epoch === origin.epoch + 1 && now.scope ===
             JSON.stringify([result.active, result.opened_setup ? result.active : null, result.opened_setup || null]);
-        return !campaignDeleteModal.hidden && campaignDeleteSession === owner && campaignDeleteRevision === revision &&
-            campaignData === registry && document.querySelector('#campaignDeleteTarget').value === campaignId &&
+        return feedback.isCurrent(refresh) && (!campaignDeleteModal.hidden || closedByAttempt) && campaignDeleteSession === owner && campaignDeleteRevision === revision &&
+            campaignData === (applied ? result : registry) && document.querySelector('#campaignDeleteTarget').value === campaignId &&
             document.querySelector('#campaignDeleteAction').value === action &&
             document.querySelector('#campaignDeleteMoveTo').value === moveTo && (unchanged || intended);
     };
@@ -139,9 +140,12 @@ document.querySelector('#campaignDeleteForm').onsubmit = async event => {
         // Existing applied-deletion/setup/success/error behavior belongs to 1D.2.
         try {
             campaignData = result;
+            applied = true;
+            closedByAttempt = true;
             campaignDeleteModal.hidden = true;
             document.querySelector('#setupSelect').value = '';
             const opened = await applyOpenedSetup(result);
+            if (!same()) return;
             paneNotification(
                 'campaign',
                 `Deleted campaign: ${campaign ? campaign.name : campaignId}` +
@@ -149,7 +153,8 @@ document.querySelector('#campaignDeleteForm').onsubmit = async event => {
                 (result.deleted_setups && result.deleted_setups.length ? ` (deleted ${result.deleted_setups.length} setup(s))` : '') +
                 opened,
             );
-        } catch (error) { paneNotification('campaign', error.message); }
+            if (same()) feedback.resolve(refresh);
+        } catch (error) { if (same()) paneNotification('campaign', error.message); }
     } finally { submit.disabled = disabled; campaignDeletePending = false; }
 };
 
