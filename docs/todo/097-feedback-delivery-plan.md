@@ -2,6 +2,65 @@
 
 [Back to TODO index](../../TODO.md)
 
+## Stage 1 Step 2 setup-operation delivery split - 2026-11-12
+
+Status: planned, implementation not started. On 2026-11-12 the user requested
+smaller deliveries for Stage 1 Step 2 and publication of this plan. The current
+base is 7eecdc7adc5873c671e70389feed30333cc37002. Campaign Stage 1 Step 1 is
+accepted and closed in that commit; Stage 2 and accepted 4A units stay closed.
+These are setup-operation delivery labels, not Stage 2 or the seven parent
+Deliverable 1 process steps. No new scope, owner, deadline or acceptance gate.
+
+| ID | Delivery | Preserved behavior and focused boundary |
+|---|---|---|
+| SG-TODO-009.7-S1-2A | Create a new empty setup | Migrate existing name/duplicate validation, POST /api/setups/new feedback, selection/opening and refresh outcomes. Creation already saves the new empty setup; do not combine this with the separate Save operation. |
+| SG-TODO-009.7-S1-2B | Save the current setup | Migrate POST /api/setups/save validation/request/success and subsequent list/state refresh feedback; retain existing name, save/overwrite and selection semantics. |
+| SG-TODO-009.7-S1-2C | Load/switch setups | Migrate the effective static/setup-switch.js owner for both dropdown and Load button. Preserve already-loaded no-op, busy/disabled behavior, request-failure selection restoration and current effective confirmation behavior; do not revive the obsolete 050 handler's confirmation. |
+| SG-TODO-009.7-S1-2D | Rename a setup | Migrate selection/prompt/request/success and refresh feedback for POST /api/setups/rename. Preserve cancel/blank/unchanged-name no-ops and correct loaded/selected-name updates. |
+| SG-TODO-009.7-S1-2E | Delete a setup | Migrate selection/confirmation/DELETE/success and refresh feedback. Preserve server-selected replacement setup and creation/opening of an empty default when the last setup is deleted. |
+
+Delivery order is 2A, 2B, 2C, 2D, 2E; 2A is next. These five replace the combined
+Step 2 delivery, not five new requirements. Each is one usable operation end to
+end, including persistent actionable validation/request errors, explicit campaign/
+setup/operation/scope identity, matching resolution, three-second pane success,
+completed-mutation versus failed-refresh guidance, newer-input/selection/session/
+registry and obsolete-timer/result guards, legitimate transition handling, busy
+protection through refresh and disabled-state restoration. Never replay mutations.
+Preserve existing endpoints/payloads/auth, confirmations, drafts/files/selections,
+setup and combat behavior; add no new server rules or Deliverable 2 field validation.
+
+Each operation includes focused Node/full-Admin regression coverage as applicable,
+necessary fragment/digest/size/cache-version reconciliation and proportional task/
+handover updates. Reuse existing guarded state/helper plumbing only where needed
+for the current operation. No separate foundation-only delivery, unrelated cleanup,
+workflow edit, ninth fragment or unapproved compatibility retirement. Preserve the
+eight-fragment assembly/order, 20,000-byte code limits and tracked failure marker.
+Check late handlers/overrides rather than migrating only an overridden legacy path.
+
+Use the existing implementation-archive workflow: complete replacement files,
+required README/TODO and complete handover/TODO context, archive-only Patch with
+COMMIT_MESSAGE, exact change manifest/base verification and safe application notes.
+The user applies, commits and pushes, then supplies the published SHA for verification
+before the next archive. Never stage Patch; do not use newzip.sh unchanged. Direct
+assistant writes still require their own exact-content approval if later requested.
+
+No extra full-suite acceptance gate is imposed per archive. Focused checks accompany
+each delivery; configured CI and covering correction/review follow the existing
+sequence, with combined setup regressions completed with 2E. Bounded Step 2 acceptance
+follows integrated evidence, not a mandatory new sign-off loop for every substep.
+Future code deliveries use normal CI unless the user explicitly directs otherwise;
+the old intermediate skip instruction ended with campaign Step 1. This PLAN-ONLY
+commit uses [skip ci], executes no tests and does not modify/dispatch workflows.
+
+Setup copy/move between campaigns and background controls remain separate Stage 1
+work, not silently included here. Already-migrated setup/CSV imports, accepted
+campaigns and Stage 2 are not reopened. General lair/viewer integration, compatibility
+retirement, Deliverable 2 connection/recovery/polling/field association and deferred
+test-suite cleanup stay outside this split. Completing 2A-2E does not close all of
+Stage 1, either whole deliverable, 009.7 or 009. No implementation/test result is
+claimed by recording this plan. Further subdivisions require reporting an actual
+boundary/problem and obtaining agreement before changing this five-delivery plan.
+
 ## Current status - 2026-11-11
 
 009.7 and both deliverables remain open. 4A.1-4A.13 are closed for accepted scopes.
