@@ -1,0 +1,47 @@
+s not begin or supersede a request
+tests	JavaScript tests	2026-11-12T18:29:57.5667955Z ok 2 - cancellation preserves the error and does not begin or supersede a request
+tests	JavaScript tests	2026-11-12T18:29:57.5668924Z   ---
+tests	JavaScript tests	2026-11-12T18:29:57.5669444Z   duration_ms: 3.553616
+tests	JavaScript tests	2026-11-12T18:29:57.5670029Z   type: 'test'
+tests	JavaScript tests	2026-11-12T18:29:57.5670541Z   ...
+tests	JavaScript tests	2026-11-12T18:29:57.5671456Z # Subtest: one unchanged POST and refresh, without direct client state mutation
+tests	JavaScript tests	2026-11-12T18:29:57.5673525Z ok 3 - one unchanged POST and refresh, without direct client state mutation
+tests	JavaScript tests	2026-11-12T18:29:57.5674340Z   ---
+tests	JavaScript tests	2026-11-12T18:29:57.5674730Z   duration_ms: 1.180501
+tests	JavaScript tests	2026-11-12T18:29:57.5675172Z   type: 'test'
+tests	JavaScript tests	2026-11-12T18:29:57.5675553Z   ...
+tests	JavaScript tests	2026-11-12T18:29:57.5676677Z # Subtest: failure publishes persistent explicit error and neither refreshes nor retries
+tests	JavaScript tests	2026-11-12T18:29:57.5678508Z ok 4 - failure publishes persistent explicit error and neither refreshes nor retries
+tests	JavaScript tests	2026-11-12T18:29:57.5679512Z   ---
+tests	JavaScript tests	2026-11-12T18:29:57.5680022Z   duration_ms: 0.894766
+tests	JavaScript tests	2026-11-12T18:29:57.5680577Z   type: 'test'
+tests	JavaScript tests	2026-11-12T18:29:57.5681078Z   ...
+tests	JavaScript tests	2026-11-12T18:29:57.5681973Z # Subtest: actual failed attempt followed by success silently resolves only Reset All
+tests	JavaScript tests	2026-11-12T18:29:57.5683280Z ok 5 - actual failed attempt followed by success silently resolves only Reset All
+tests	JavaScript tests	2026-11-12T18:29:57.5684222Z   ---
+tests	JavaScript tests	2026-11-12T18:29:57.5684712Z   duration_ms: 1.129525
+tests	JavaScript tests	2026-11-12T18:29:57.5685236Z   type: 'test'
+tests	JavaScript tests	2026-11-12T18:29:57.5685738Z   ...
+tests	JavaScript tests	2026-11-12T18:29:57.5691310Z # Subtest: refresh alone cannot clear a Reset All error
+tests	JavaScript tests	2026-11-12T18:29:57.5693791Z ok 6 - refresh alone cannot clear a Reset All error
+tests	JavaScript tests	2026-11-12T18:29:57.5694416Z   ---
+tests	JavaScript tests	2026-11-12T18:29:57.5694796Z   duration_ms: 0.850323
+tests	JavaScript tests	2026-11-12T18:29:57.5695236Z   type: 'test'
+tests	JavaScript tests	2026-11-12T18:29:57.5695612Z   ...
+tests	JavaScript tests	2026-11-12T18:29:57.5696448Z # Subtest: unrelated success cannot clear Reset All errors or use the legacy route
+tests	JavaScript tests	2026-11-12T18:29:57.5698227Z ok 7 - unrelated success cannot clear Reset All errors or use the legacy route
+tests	JavaScript tests	2026-11-12T18:29:57.5699021Z   ---
+tests	JavaScript tests	2026-11-12T18:29:57.5699401Z   duration_ms: 0.909793
+tests	JavaScript tests	2026-11-12T18:29:57.5699835Z   type: 'test'
+tests	JavaScript tests	2026-11-12T18:29:57.5700227Z   ...
+tests	JavaScript tests	2026-11-12T18:29:57.5701185Z # Subtest: successful mutation resolves before real loadState publishes its own refresh failure
+tests	JavaScript tests	2026-11-12T18:29:57.5713460Z ok 8 - successful mutation resolves before real loadState publishes its own refresh failure
+tests	JavaScript tests	2026-11-12T18:29:57.5714345Z   ---
+tests	JavaScript tests	2026-11-12T18:29:57.5714739Z   duration_ms: 1.138733
+tests	JavaScript tests	2026-11-12T18:29:57.5715183Z   type: 'test'
+tests	JavaScript tests	2026-11-12T18:29:57.5715570Z   ...
+tests	JavaScript tests	2026-11-12T18:29:57.5716271Z # Subtest: old-setup success cannot resolve or refresh a newer setup
+tests	JavaScript tests	2026-11-12T18:29:57.5717280Z ok 9 - old-setup success cannot resolve or refresh a newer setup
+tests	JavaScript tests	2026-11-12T18:29:57.5718155Z   ---
+tests	JavaScript tests	2026-11-12T18:29:57.5718546Z   duration_ms: 1.816943
+tests	JavaScript tests	2026-11-12T18:29:57.5718999Z   type: 'test'
