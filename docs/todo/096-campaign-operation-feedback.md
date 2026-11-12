@@ -2,58 +2,42 @@
 
 [Back to TODO index](../../TODO.md)
 
-## SG-TODO-009.7 Stage 1 Step 1 - 2026-11-12
+## SG-TODO-009.7 Stage 1 Step 1 - accepted close-out, 2026-11-12
 
-Status: 1D.2b published at 742697d86a76a657c92653dd6f1533135399f4b0. Covering
-Branch tests 43234426795 attempt 1 failed on a stale asset-version assertion.
-The targeted assertion correction is prepared; corrective push CI review, covering
-validation and bounded acceptance remain pending.
-[Parent plan](097-feedback-delivery-plan.md) and
-[current evidence/limits](../handover/520-campaign-operation-feedback.md).
-Prior full criteria/history remain in the
-[pre-1D.2b task record](https://github.com/dajomas/Scrying-Glass/blob/c729cf5d7a7bcc4d37b7a6e26f7fb82a1ffaa26a/docs/todo/096-campaign-operation-feedback.md).
+Status: completed and closed for the agreed campaign create/edit/switch/delete
+scope (1A-1D). Following successful covering CI, the user explicitly requested
+"Accept Stage 1 Step 1 now" on 2026-11-12. No campaign Step 1 implementation,
+covering-CI correction or bounded acceptance action remains open.
 
-Agreed campaign Step 1 implementation preparation is complete across 1A create,
-1B edit, 1C switch and 1D delete. The earlier 1D.1/1D.2a splits are retained as
-published checkpoints, not additional requirements. This final 1D.2b delivers
-explicit three-second deletion success, persistent completed-deletion/failed-
-refresh feedback with reload/no-replay guidance, strict error propagation, guarded
-setup/state observation/rendering and focused integration/regressions.
+Final tested revision: 4f0127b56550cacb821ae2c62cb2057265eaea2a; successful Branch
+tests 43237771405 attempt 1, job 131249677511. Evidence publication:
+ce05279711f29915b5f43132ff1078c3933fb4cf. Run/job metadata match the revision and
+show all configured test stages succeeded. Earlier 1D.2b runtime implementation:
+742697d86a76a657c92653dd6f1533135399f4b0. Failed run 43234426795 attempt 1 and the
+subsequent asset-version assertion correction remain historical, not open blockers.
 
-Preserve existing dialog/session/input/registry/scope/epoch identities, matching
-resolution, unrelated/newer feedback, obsolete-result/timer guards and busy-state
-restoration. Preserve options, confirmations, endpoints, queries/payloads, auth,
-selection/drafts/files and setup-opening semantics. No mutation replay, new deletion
-rule, dialog redesign, Deliverable 2 near-field/connection/polling work or suite audit.
-Optional helper/transport/state-loader ownership callbacks default to old behavior;
-wrapper forwarding/cache bumps are necessary scoped integration, not reopened Stage 2.
+[Detailed accepted scope/evidence/limits](../handover/520-campaign-operation-feedback.md)
+and [parent plan](097-feedback-delivery-plan.md). Full earlier criteria, delivery
+history and preparation evidence remain in the
+[pre-close-out task record](https://github.com/dajomas/Scrying-Glass/blob/ce05279711f29915b5f43132ff1078c3933fb4cf/docs/todo/096-campaign-operation-feedback.md).
+Earlier pending-publication/CI/acceptance wording is superseded for Step 1 only.
 
-Executed locally on prepared revision: 115 scoped Node tests, 11 full-Admin Chromium
-scenarios, four source/identity/assembly/pin/tamper/syntax checks and four detected
-negative controls. All restored checks pass; see 520/logs for exact counts and
-coverage limits. The missing fixture functions were an incorrect direct invocation;
-assembled-runner core/next/Apply checks now pass. No marker/fixture workaround.
+Accepted behavior preserves persistent independent errors, matching resolution,
+three-second pane success, mutation/refresh distinction, context/session/revision/
+registry/timer guards, busy restoration, original APIs/auth/confirmations/setup
+options and drafts/selections, with no automatic mutation replay. The intermediate
+1A/1B/1C/1D splits are delivery history, not new scope or future acceptance gates.
 
-## CI assertion correction - 2026-11-12
+Acceptance is bounded to the stated automated/fixture evidence; it does not claim
+unperformed human visual/manual, live-server, screen-reader or exhaustive
+accessibility checks. Stage 1 as a whole is not closed.
 
-Evidence publication: 332cbf05b9903f4b718fe223dca7e5a724497496. The Python suite
-reports 1 failure among 1,552 tests; the audit repeats the same stale assertion.
-JavaScript and pytest stages passed. Correct only the test expectations: candidate
-selection v3, refresh review v2; retain exact-once, obsolete-version and order checks.
-Local targeted suite: 3 passes; four wrong-version/duplicate negative controls were
-detected and the restored suite passes. No runtime downgrade or workflow edit.
-A new normal push CI result is required and not yet claimed; scope acceptance stays
-pending. Earlier preparation counts above remain scoped historical evidence.
+Remaining work belongs to existing Stage 1 setup/background migration and wider
+Stages 3-4, Deliverable 1 acceptance, Deliverable 2 and 009.7/009. Stage 2, accepted
+4A.1-4A.13 and 009.1-009.6 remain closed. Do not reopen campaign Step 1 because of
+historical pending notes. No new scope, owner/deadline or gate is added. Test-suite
+cleanup stays deferred until after 009; source-selection/Open5e are not prerequisites.
 
-Remaining under the EXISTING sequence:
-- Push the assertion correction without a skip marker; review its actual covering
-  CI result, exact tested revision and workflow attempt. No separate dispatch.
-- Review other agreed integrated evidence and obtain bounded campaign acceptance.
-- Continue remaining Stage 1 steps and wider project plan. Do not mark Stage 1,
-  Deliverable 1, 009.7 or 009 completed based on this archive or push alone.
-
-The unchanged branch workflow runs normal push CI and discovers new Node/Python
-suites. No workflow edit/dispatch. Full-suite/hosted CI, authenticated live-server,
-human visual and screen-reader acceptance remain unclaimed. Prior accepted Stage 2,
-4A.1-4A.13 and 009.1-009.6 stay closed. Stage 1, Stages 3-4, Deliverable 1 acceptance,
-Deliverable 2 and 009.7/009 remain open; cleanup stays deferred until after 009.
+This close-out is documentation only with [skip ci]. It runs no new tests, changes
+no application/tests/templates/pins/workflows, and dispatches no workflow. It does
+not invent a new CI run, merge, deployment or blanket future-write approval.
