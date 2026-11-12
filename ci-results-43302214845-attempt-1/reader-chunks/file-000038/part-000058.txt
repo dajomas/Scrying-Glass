@@ -1,0 +1,27 @@
+/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3842856Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3843211Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3843785Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3844297Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3844732Z ValueError: secret two
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3845291Z ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3846416Z test_disabled_providers_are_never_called (test_combined_monster_lookup.CombinedLookupTests.test_disabled_providers_are_never_called) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3847707Z test_empty_primary_still_searches_secondary (test_combined_monster_lookup.CombinedLookupTests.test_empty_primary_still_searches_secondary) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3849119Z test_first_failure_does_not_skip_other_enabled_provider (test_combined_monster_lookup.CombinedLookupTests.test_first_failure_does_not_skip_other_enabled_provider) ... Combined monster lookup failed for D&D Beyond
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3850545Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3851159Z   File "/tmp/scrying-tests-6nq5kz3l/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3851708Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3852474Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3853231Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3853551Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3854086Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3854988Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3855522Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3856142Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3856657Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3856989Z OSError: private endpoint or credentials
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3857422Z ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3858697Z test_malformed_or_over_limit_result_blocks_whole_lookup (test_combined_monster_lookup.CombinedLookupTests.test_malformed_or_over_limit_result_blocks_whole_lookup) ... Combined monster lookup failed for 5e.tools
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3859765Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3860679Z   File "/tmp/scrying-tests-6nq5kz3l/repo/python/scrying_glass_combined_lookup.py", line 32, in combined_candidates
+tests	Python test suit

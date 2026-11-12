@@ -1,0 +1,21 @@
+ fixtures)	2026-11-12T20:40:10.3018753Z Chromium provisioning failed: cannot launch
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3019246Z Attempting native dependency installation, then rechecking Chromium.
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3019627Z ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3020582Z test_native_dependency_failure_remains_failure (test_ci_browser_provisioning.BrowserProvisioningTests.test_native_dependency_failure_remains_failure) ... Chromium preflight failed: missing library
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3021597Z Chromium provisioning failed: Command 'apt' returned non-zero exit status 100.
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3021993Z ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3022352Z Attempting native dependency installation, then rechecking Chromium.
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3051518Z test_preflight_launches_headless_renders_and_closes (test_ci_browser_provisioning.BrowserProvisioningTests.test_preflight_launches_headless_renders_and_closes) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3069657Z test_render_failure_still_closes_browser_and_context (test_ci_browser_provisioning.BrowserProvisioningTests.test_render_failure_still_closes_browser_and_context) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3120911Z test_browser_preflight_is_a_required_separate_step (test_ci_browser_provisioning.WorkflowPrerequisiteTests.test_browser_preflight_is_a_required_separate_step) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3167162Z test_independent_groups_do_not_depend_on_chromium (test_ci_browser_provisioning.WorkflowPrerequisiteTests.test_independent_groups_do_not_depend_on_chromium) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3212160Z test_mixed_browser_suites_require_verified_browser_not_previous_suite_success (test_ci_browser_provisioning.WorkflowPrerequisiteTests.test_mixed_browser_suites_require_verified_browser_not_previous_suite_success) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3339045Z test_collector_gate (test_ci_publication_branch_allowlists.PublicationBranchAllowlistsTests.test_collector_gate) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3358094Z test_collector_syntax (test_ci_publication_branch_allowlists.PublicationBranchAllowlistsTests.test_collector_syntax) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3360230Z test_workflow_allowlist (test_ci_publication_branch_allowlists.PublicationBranchAllowlistsTests.test_workflow_allowlist) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3439686Z test_campaign_id_and_name_only (test_client_campaign.CampaignTests.test_campaign_id_and_name_only) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3574734Z test_metadata_does_not_leak (test_client_campaign.CampaignTests.test_metadata_does_not_leak) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3643217Z test_name_is_raw_text_for_safe_textcontent_rendering (test_client_campaign.CampaignTests.test_name_is_raw_text_for_safe_textcontent_rendering) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3711431Z test_no_active_campaign (test_client_campaign.CampaignTests.test_no_active_campaign) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3741817Z test_rename_broadcasts_active_campaign (test_client_campaign.CampaignTests.test_rename_broadcasts_active_campaign) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:40:10.3810183Z test_unexpected_errors_not_h

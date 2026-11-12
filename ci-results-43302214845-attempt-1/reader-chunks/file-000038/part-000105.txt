@@ -1,0 +1,22 @@
+urceTests.test_disabled_provider_and_oversized_hp_do_not_create_proposals) ... Selected monster source refresh failed for m
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0958228Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0959277Z   File "/tmp/scrying-tests-6nq5kz3l/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0960015Z     candidate = _fetch_exact(context, monster, identity)
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0960878Z   File "/tmp/scrying-tests-6nq5kz3l/repo/python/scrying_glass_monster_refresh_sources.py", line 72, in _fetch_exact
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0962642Z ##[error]    raise ValueError('Provider disabled')
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0963953Z ValueError: Provider disabled
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0964524Z ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0965618Z test_fivetools_requires_exact_book_edition_identity (test_monster_refresh_sources.MonsterRefreshSourceTests.test_fivetools_requires_exact_book_edition_identity) ... Selected monster source refresh failed for m
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0966564Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0967288Z   File "/tmp/scrying-tests-6nq5kz3l/repo/python/scrying_glass_monster_refresh_sources.py", line 147, in resolve_selected_sources
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0967994Z     candidate = _fetch_exact(context, monster, identity)
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0968869Z   File "/tmp/scrying-tests-6nq5kz3l/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0969833Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0970716Z ValueError: Retained source missing or ambiguous
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0971048Z ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0972304Z test_identityless_single_result_resolves_signed_identity_without_mutation (test_monster_refresh_sources.MonsterRefreshSourceTests.test_identityless_single_result_resolves_signed_identity_without_mutation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0974186Z test_invalid_retained_identity_and_conflicting_signed_choice_never_search (test_monster_refresh_sources.MonsterRefreshSourceTests.test_invalid_retained_identity_and_conflicting_signed_choice_never_search) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0976040Z test_invalid_signed_choice_does_not_fetch_and_other_rows_are_preserved (test_monster_refresh_sources.MonsterRefreshSourceTests.test_invalid_signed_choice_does_not_fetch_and_other_rows_are_preserved) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0977623Z test_missing_and_invalid_fields_are_independent_and_do_not_default_bonus (test_monster_refresh_sources.MonsterRefreshSourceTests.test_missing_and_invalid_fields_are_independent_and_do_not_default_bonus) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0980812Z test_multiple_zero_and_failed_lookup_never_fetch_or_offer_partial_results (test_monster_refresh_sources.MonsterRefreshSourceTests.test_multiple_zero_and_failed_lookup_never_fetch_or_offer_partial_results) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T20:41:42.0993086Z test_retaine
