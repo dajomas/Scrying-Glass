@@ -5,6 +5,12 @@ on:
     workflows: ['Branch tests']
     types: [completed]
     branches: [features/perplexity, features/perplexity-018, features/perplexity-009.7]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to publish CI results for'
+        required: true
+        default: 'features/perplexity'
 
 permissions:
   actions: read
