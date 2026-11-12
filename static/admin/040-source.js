@@ -203,27 +203,52 @@ document.querySelector(
     }
 });
 
-document.querySelector('#rollMonsterInitiative').onclick = async () => {
-    if (!latest.monsters.length) {
-        paneNotification('monsters', 'There are no monsters to roll initiative for');
-        return;
-    }
-
-    if (!confirm('Overwrite initiative for every monster with a random d20 roll?')) {
-        return;
-    }
-
-    try {
-        const result = await request('/api/monsters/roll-initiative', {
-            method: 'POST',
-        });
-
-        await load();
-        paneNotification('monsters', `Rolled d20 initiative for ${result.count} monster(s)`);
-    } catch (error) {
-        paneNotification('monsters', error.message);
-    }
-};
+// Roll-all has one pending owner through mutation and display refresh.
+(() => {
+    const button = document.querySelector('#rollMonsterInitiative');
+    let pending = false;
+    button.onclick = async () => {
+        if (pending) return;
+        const feedback = window.scryingAdminFeedback;
+        const spec = {region: 'monsters', target: 'all-monsters', label: 'Roll monster initiative'};
+        const begin = operation => feedback.begin({...spec, operation: 'monster.roll-all.' + operation});
+        const validation = begin('validation');
+        if (!latest.monsters.length) {
+            feedback.publish(validation, {severity: 'info', text: 'There are no monsters to roll initiative for'});
+            return;
+        }
+        if (!confirm('Overwrite initiative for every monster with a random d20 roll?')) return;
+        feedback.resolve(validation);
+        const ticket = begin('request'), refresh = begin('refresh');
+        const current = () => feedback.isCurrent(ticket) && feedback.isCurrent(refresh);
+        const disabled = button.disabled;
+        pending = true;
+        button.disabled = true;
+        try {
+            let result;
+            try {
+                result = await request('/api/monsters/roll-initiative', {method: 'POST'});
+            } catch (error) {
+                if (current()) feedback.publish(ticket, {severity: 'error', text: error.message});
+                return;
+            }
+            if (!current()) return;
+            feedback.publish(ticket, {severity: 'success',
+                text: `Rolled d20 initiative for ${result.count} monster(s)`});
+            if (!feedback.isCurrent(refresh)) return;
+            try {
+                await load(true);
+                feedback.resolve(refresh);
+            } catch (error) {
+                feedback.publish(refresh, {severity: 'error', text:
+                    `Initiative rolled, but refresh failed: ${error.message}. Reload the page; do not roll again to retry the refresh.`});
+            }
+        } finally {
+            button.disabled = disabled;
+            pending = false;
+        }
+    };
+})();
 
 editModal.addEventListener('click', event => {
     if (event.target === editModal) {

@@ -58,3 +58,30 @@ step passes on the corrective revision. Review the full covering CI result
 before bounded acceptance; do not close Stage 2 or 009.7.
 
 [Diagnosis and correction](../handover/490-monster-raw-roll-feedback.md#step-2-composition-fixture-correction---2026-11-12).
+
+## Roll-all - 2026-11-12
+
+SG-TODO-009.7-S2-ROLL-ALL. Status: in progress; integrated implementation/tests/pins
+and documentation prepared, not yet pushed or accepted. The previous Edit correction
+has green covering run 43150070549 attempt 1 for cd1599e7; its pending-CI notes above
+are historical. That success is not covering evidence for this roll-all draft.
+
+Acceptance: original confirmation/bodyless POST/count text and server behavior;
+explicit scoped monster roll-all identities, persistent matching errors and independent
+notices; 3s pane success before refresh; separate saved/failed-refresh guidance without
+replay; duplicate protection through mutation/refresh, stale/superseded suppression and
+restored button state. Fifteen focused complete-fragment/controller regressions and
+four negative controls passed preparation checks; full Admin/browser/full-suite and
+covering validation remain pending. Review equivalent covering results and resolve
+actual failures before bounded acceptance. Keep existing guards/assertions intact.
+
+[Implementation, pins and evidence limits](../handover/490-monster-raw-roll-feedback.md#covering-ci-reconciled-and-roll-all-preparation---2026-11-12).
+Select-dead and bulk Join pane success are next separate steps; no Stage 1, Stages 3-4,
+Deliverable 2, compatibility retirement, deferred test cleanup or 009.7 closure is
+included. No changed priority/owner/deadline or blanket external-write approval.
+
+CI staging instruction - 2026-11-12: use [skip ci] for this and remaining intermediate
+Stage 2 pushes until all Stage 2 changes and updates are pushed. Do not change or
+separately dispatch the workflow. Arrange combined covering validation after that
+batch; until then the new work remains delivered/prepared with validation pending,
+not accepted on the strength of the earlier green revision.

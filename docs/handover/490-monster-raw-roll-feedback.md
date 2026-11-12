@@ -98,3 +98,55 @@ guards and existing integration assertions are unchanged.
 Corrective runtime and covering CI validation remain pending. This draft
 does not establish that all JavaScript failures have been resolved.
 Stage 2 and wider deliverables remain open.
+
+## Covering CI reconciled and roll-all preparation - 2026-11-12
+
+Branch tests 43150070549 attempt 1 succeeded for corrective revision
+cd1599e7cf485d55ae83f4e622384be70ebe0bcf, published at
+49da8bc04b36824005342640902d1c44de679169. Run/job metadata confirms all
+configured main stages succeeded, including JavaScript and Python/browser/audit.
+This supersedes earlier pending-covering-CI notes for the Edit fixture correction,
+not an exhaustive individual-log review or wider acceptance. It does not cover
+this later roll-all draft. No old failed run is relabelled.
+
+Bounded roll-all scope: replace only its effective handler in complete 040-source.js.
+Keep the bodyless POST /api/monsters/roll-initiative, confirmation and count wording;
+server dice/bonus arithmetic, order, permissions and character initiative are unchanged.
+Use monster.roll-all.validation/request/refresh with all-monsters target and monster
+pane placement. Empty roster is deduplicated information; cancellation performs no
+mutation or feedback clearing. Errors persist and matching recovery leaves raw-roll,
+Edit, Join and independent targets untouched. Confirmed success appears before strict
+load(true), expires after 3s, and does not misreport a refresh failure as a failed roll.
+A separate persistent refresh error instructs reload, not another roll or automatic
+mutation replay. Encounter/supersession guards suppress obsolete results/refreshes.
+One pending owner disables the roll-all button through mutation and refresh, including
+scope changes until that attempt settles; prior disabled state is restored. Other
+handlers and controls are not locked. Already-sent mutations are not cancelled.
+
+Preparation executed: complete-fragment syntax, test syntax, 15 Node regressions
+with zero failures/cancellations/skips, four detected negative controls and restored
+15/15 run; pin-file Python compilation and exact reverse-replacement checks passed.
+The complete original 040 matches Git blob 5030c15e60e41b194ff841b3ea96c5f49a0b6496;
+controller matches c4a82d73b21f4657da651ce45f76003c3348a6ef. Tests execute complete
+040 with the production controller, controlled DOM/transport, deterministic timers
+and a scoped adapter, not full Admin bootstrap/view, native browser or live server.
+Negative controls remove duplicate/relevance protection, strict refresh propagation
+or operation isolation separately and each makes the suite fail.
+
+040 is 19,070 UTF-8 bytes, SHA-256
+f72e71725b2952ed8b0aea6bb5f0da0fa4abc0b570013161a4beae1caf6a1ea1.
+Only its expected digest and calculated bundle size 126,506 change in the pin fixture;
+all other pins and guard logic remain. Surrounding 040 bytes are unchanged. Actual
+eight-fragment assembly/reader/tamper/runtime and full-suite/browser validation remain
+pending combined validation; calculated total is not a locally assembled-bundle identity.
+No new asset, template/cache reference, failure-marker or workflow change is needed.
+README, indexes and established links remain applicable and unchanged. Existing CI
+discovers the new .cjs. At the user's 2026-11-12 request, this and the remaining
+intermediate Stage 2 commits use [skip ci] until all Stage 2 changes and updates are
+pushed. No workflow is changed or separately dispatched. Combined covering validation
+remains pending until a final run is arranged; the marker alone is not a verified
+workflow-run outcome.
+
+Select-dead, bulk Join pane success, final Stage 2 reconciliation/acceptance and
+all work outside this bounded handler remain separate. No phase close-out or merge.
+[Task status](../todo/099-monster-raw-roll-feedback.md#roll-all---2026-11-12).
