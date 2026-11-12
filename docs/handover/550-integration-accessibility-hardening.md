@@ -7,12 +7,49 @@ Previous stage: [540 Stage 3 close-out](540-local-feature-feedback.md#stage-3-ac
 
 ## Status - 2026-11-12
 
-Implemented locally on top of 93be54ac for the agreed Stage 4 scope and delivered
-as archive SG-TODO-009.7-S4.zip. Not yet committed, pushed, CI-covered or accepted.
-Do not treat Stage 4, Deliverable 1, Deliverable 2, 009.7 or 009 as closed. The
-user's 2026-11-12 request "Stage 3 is closed, now please implement Stage 4 and
-provide an archive" is recorded as the approval for the compatibility retirement
-that the 097 plan reserved for Stage 4; no other approval is implied.
+Completed and closed for the agreed Stage 4 scope after explicit user acceptance
+on 2026-11-12 at 21:49 CET: "Accept and close stage 4, update documentation and
+push with skip ci". This supersedes the earlier archive-only, publication/CI/
+acceptance-pending notes. Do not reopen Stage 4 or request acceptance again.
+Stages 1-3 and earlier accepted scopes remain closed; whole Deliverable 1 acceptance,
+Deliverable 2 and final 009.7/009 close-out remain open.
+
+## Stage 4 accepted close-out - 2026-11-12
+
+Accepted scope: typed-feedback integration reconciliation and approved compatibility
+retirement, superseded-handler removal, document language/main landmark, legacy
+dialog semantics/focus/keyboard behavior and target-specific destructive
+confirmations. Endpoints, payloads, combat, permissions and existing cancellation
+behavior remain unchanged.
+
+Implementation: 535af6f350fdcb0a473d4d43133e0d8ac7c0b50e on
+features/perplexity-009.7. Successful covering Branch tests 43302214845 attempt 1,
+job 131476065294; evidence publication 3bfa218c1ecd0b93c3a7278f88dd811ea4380540,
+directory ci-results-43302214845-attempt-1. Reviewed run.json and jobs.json agree
+on branch, tested SHA, attempt, completed status and success. All configured
+Chromium provisioning, syntax/import, main Python/browser, pytest, JavaScript and
+standalone browser/audit stages succeeded. Completion: 2026-11-12T20:47:35Z
+(21:47 CET). Review did not individually re-review every test log/screenshot or
+recount tests; no new authenticated live-server, human visual, screen-reader or
+exhaustive accessibility verification is claimed. Local audit/fixtures below are
+preparation evidence, not new executions or an exhaustive hosted-CI audit.
+
+The implementation was prepared on 93be54ac and delivered as
+SG-TODO-009.7-S4.zip. The user's earlier request "Stage 3 is closed, now please
+implement Stage 4 and provide an archive" authorized the compatibility retirement
+reserved by 097; the 21:49 CET request now explicitly accepts its delivered scope.
+
+This documentation-only close-out uses [skip ci], executes no new tests and
+changes/dispatches no workflow. No application/test/template/asset/pin/permission
+or assembly change, merge, deployment or blanket future write approval. No new
+run result or close-out commit SHA is invented before publication.
+
+No Stage 4 implementation, publication, covering-CI or acceptance action remains.
+Next is the existing whole Deliverable 1 integrated evidence review and acceptance,
+then Deliverable 2 connection/recovery/polling/field association and final 009.7/009
+acceptance under [097](../todo/097-feedback-delivery-plan.md#remaining-scope-and-gates).
+No optional scope or new acceptance gate; test-suite cleanup stays deferred until
+after 009. Earlier implementation details and limits below are preserved.
 
 ## Integration reconciliation and compatibility retirement
 
@@ -39,7 +76,7 @@ that the 097 plan reserved for Stage 4; no other approval is implied.
   reload; errors propagate to the owning wrapper. `#cancelOrder`,
   `#campaignSetupFrom.onchange` and every other binding are unchanged.
 - The eight-fragment assembly is preserved; the bundle shrinks from 148,660 to
-  130,882 bytes (010: 19,502; largest fragment 070: 19,250 is unchanged). No ninth
+  130,882 bytes (010: 19,502; fragment 070: 19,250 is unchanged). No ninth
   fragment; static/admin.js stays the tracked marker.
 
 ## Accessibility hardening
@@ -106,8 +143,9 @@ that the 097 plan reserved for Stage 4; no other approval is implied.
     check.
   - Marker-based fixtures were moved to the remaining owners. The setup-import
     life-filter test now drives the 040 owner.
-- Local results are listed in the archive's Patch/CHANGES.md. CI has not run for
-  this change.
+- Local preparation results are listed in the archive's Patch/CHANGES.md; they
+  precede the successful covering CI and explicit bounded acceptance above. No
+  additional local test execution is claimed by this close-out.
 
 ## Limits
 

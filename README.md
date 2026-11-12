@@ -43,8 +43,8 @@ by successful Branch tests 43279736032 attempt 1; evidence publication
 validation-stage outcomes were reviewed; this does not claim individual review of
 every log/screenshot or new authenticated live-server, human visual, screen-reader
 or exhaustive accessibility verification. [Stage 1 close-out and history](docs/handover/530-setup-operation-feedback.md#stage-1-accepted-close-out---2026-11-12)
-supersedes the earlier campaign/setup archive-pending notes. Deploy all changed
-assets and template references together; setup-switch.js is referenced with ?v=2.
+supersedes the earlier campaign/setup archive-pending notes. The setup-switch.js
+?v=2 reference belongs to that checkpoint; deploy the Stage 4 versions below.
 
 Stage 2 and accepted global units 4A.1-4A.13 remain closed. Stage 3 local-feature/
 lair/selected-campaign viewer feedback is completed and closed following the user's
@@ -52,19 +52,23 @@ explicit acceptance on 2026-11-12 at 20:48 CET. Implementation
  d17b5885baea02821224d811dffc070d6a7d33a4 has successful covering Branch tests
 43291659600 attempt 1; evidence publication db2daf8a473ebf77ff1626a8709a6a745e45b0b7.
 [540 scope, close-out and evidence limits](docs/handover/540-local-feature-feedback.md#stage-3-accepted-close-out---2026-11-12)
+supersedes earlier archive/publication/CI/acceptance-pending notes. Stage 3 asset
+versions in its handover describe that checkpoint; Stage 4 supersedes shared assets.
+
+Stage 4 integration/accessibility hardening and approved compatibility retirement
+are completed and closed following the user's explicit acceptance on 2026-11-12
+at 21:49 CET. Tested implementation 535af6f350fdcb0a473d4d43133e0d8ac7c0b50e has
+successful Branch tests 43302214845 attempt 1; evidence publication
+3bfa218c1ecd0b93c3a7278f88dd811ea4380540. [550 close-out, scope and evidence limits](docs/handover/550-integration-accessibility-hardening.md#stage-4-accepted-close-out---2026-11-12)
 supersedes earlier archive/publication/CI/acceptance-pending notes. Deploy
-admin-feedback-admin.js?v=4, features.js?v=4, lairs.js?v=2, lair-state-buttons.js?v=2,
-setup-has-lair.js?v=1 and campaign-viewer-admin.js?v=1 with their templates.
-Stage 4 integration/accessibility hardening and the approved compatibility
-retirement are implemented in archive SG-TODO-009.7-S4.zip
-([550](docs/handover/550-integration-accessibility-hardening.md)); publication,
-covering CI and acceptance are pending. Deploy admin-feedback-admin.js?v=5,
-setup-switch.js?v=3, admin-workflow-navigation.js?v=2, features.js?v=5, lairs.js?v=3,
-statistics.js?v=2, admin-end-feedback.js?v=2, admin-reset-all-feedback.js?v=2 and the
-new admin-dialog-accessibility.js?v=1 together with all eight fragments and templates; Deliverable 1 acceptance, Deliverable 2 connection/recovery/
-polling/field association and final 009.7/009 acceptance remain open. Do not treat
-this branch as a completed 009.7 release. Detailed earlier checkpoints are preserved
-in the [pre-Stage-1-close-out README](https://github.com/dajomas/Scrying-Glass/blob/97eedc6da52abcfa94526fee25a3c321f0626844/README.md)
+admin-feedback-admin.js?v=5, setup-switch.js?v=3, admin-workflow-navigation.js?v=2,
+features.js?v=5, lairs.js?v=3, statistics.js?v=2, admin-end-feedback.js?v=2,
+admin-reset-all-feedback.js?v=2 and admin-dialog-accessibility.js?v=1 together with
+all eight fragments and templates. Stages 1-4 are closed for their agreed scopes;
+whole Deliverable 1 integrated evidence review/acceptance, Deliverable 2 connection/
+recovery/polling/field association and final 009.7/009 acceptance remain open.
+Do not treat this branch as a completed 009.7 release. Detailed earlier checkpoints
+are preserved in the [pre-Stage-1-close-out README](https://github.com/dajomas/Scrying-Glass/blob/97eedc6da52abcfa94526fee25a3c321f0626844/README.md)
 and numbered handovers. No optional work is added to the finish line.
 
 Legacy source-reading tests use a disposable assembled checkout:

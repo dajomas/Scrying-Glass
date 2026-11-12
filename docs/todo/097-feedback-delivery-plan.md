@@ -10,11 +10,10 @@ Stage 1 now, finish documentation and push to github". This accepts the whole
 Stage 1 scope, including Step 2 (2A-2E) and Step 3; do not ask for their acceptance
 again. [530 close-out, evidence and limits](../handover/530-setup-operation-feedback.md#stage-1-accepted-close-out---2026-11-12).
 
-Stages 2 and 3 and accepted 4A.1-4A.13 scopes stay closed. Stage 4, both whole
-feedback deliverables, 009.7 and overall 009 remain open. No new scope, owner,
-deadline, priority, delivery-order change or acceptance gate is introduced. Earlier
-dated pending/preparation statements are superseded for closed scopes, not reopened
-work.
+Stages 1-4 and accepted 4A.1-4A.13 scopes are closed. Both whole feedback
+deliverables, 009.7 and overall 009 remain open. No new scope, owner, deadline,
+priority, delivery-order change or acceptance gate is introduced. Earlier dated
+pending/preparation statements are superseded for closed scopes, not reopened work.
 
 Stage 3 local-feature/lair/selected-campaign viewer feedback is completed and closed
 following explicit user acceptance on 2026-11-12 at 20:48 CET. Implementation
@@ -29,6 +28,25 @@ Earlier Stage 3 archive/publication/CI/acceptance-pending wording is superseded;
 do not request acceptance again. Cancelled run 43284682854 on a5aebc34 remains
 historical and is not covering evidence. This documentation-only close-out uses
 [skip ci], runs no tests and changes/dispatches no workflow.
+
+## Stage 4 accepted close-out - 2026-11-12
+
+Completed and closed for the agreed integration/accessibility hardening and approved
+compatibility-retirement scope. On 2026-11-12 at 21:49 CET the user explicitly
+requested "Accept and close stage 4, update documentation and push with skip ci".
+Implementation 535af6f350fdcb0a473d4d43133e0d8ac7c0b50e has successful covering
+Branch tests 43302214845 attempt 1, job 131476065294; evidence publication
+3bfa218c1ecd0b93c3a7278f88dd811ea4380540 under ci-results-43302214845-attempt-1.
+Run/job metadata match branch features/perplexity-009.7, tested SHA, attempt and
+completed/success; all configured validation stages succeeded. Review did not
+individually re-review every test log/screenshot or recount tests. No new human
+visual, authenticated live-server, screen-reader or exhaustive accessibility
+verification is inferred. [550 scope, history and limits](../handover/550-integration-accessibility-hardening.md#stage-4-accepted-close-out---2026-11-12).
+
+Earlier Stage 4 archive/publication/CI/acceptance-pending notes are superseded;
+no Stage 4 action or further acceptance request remains. This closes Stage 4 only,
+not either whole deliverable or 009.7/009. It changes documentation only, uses
+[skip ci], runs no new tests and changes/dispatches no workflow.
 
 ## Stage 1 accepted close-out - 2026-11-12
 
@@ -70,30 +88,21 @@ negative controls, local/CI counts and archive instructions remain in the
 and [530 history](../handover/530-setup-operation-feedback.md). This concise current
 record supersedes pending notes without deleting the historical evidence.
 
-Stage 4 integration reconciliation and accessibility hardening is implemented
-locally and delivered as archive SG-TODO-009.7-S4.zip (2026-11-12); it is not yet
-committed, CI-covered or accepted. The user's request "Stage 3 is closed, now please
-implement Stage 4 and provide an archive" is recorded as the approval for the
-reserved compatibility retirement. Scope, tests and limits:
-[550](../handover/550-integration-accessibility-hardening.md).
+The Stage 4 implementation was originally delivered in archive SG-TODO-009.7-S4.zip
+on 93be54ac. The user's request "Stage 3 is closed, now please implement Stage 4 and
+provide an archive" authorized the compatibility retirement reserved for Stage 4.
+Publication, covering CI and bounded acceptance are now complete as recorded above.
 
 ## Remaining scope and gates
 
-Stage 3 is closed under [540](../handover/540-local-feature-feedback.md#stage-3-accepted-close-out---2026-11-12);
-no Stage 3 implementation, publication, covering-CI or acceptance action remains.
-The existing remaining sequence is:
+Stages 1-4 are closed for their agreed scopes. No Stage 4 implementation,
+publication, covering-CI or acceptance action remains. The existing remaining
+sequence is:
 
-1. Stage 4: integration reconciliation and responsive/accessibility hardening,
-   including destructive confirmations, local overflow/zoom/labels/contrast/focus/
-   tab/menu/live announcements, nested tools and independent panels. Retire remaining
-   compatibility paths only after their required callers migrate and approval.
-   Status 2026-11-12: implemented in archive SG-TODO-009.7-S4.zip per
-   [550](../handover/550-integration-accessibility-hardening.md); publication,
-   covering CI and acceptance pending.
-2. Deliverable 1 integrated evidence review, documentation and bounded acceptance.
-3. Deliverable 2: persistent connection-loss/recovery feedback, background-polling
+1. Deliverable 1 integrated evidence review, documentation and bounded acceptance.
+2. Deliverable 2: persistent connection-loss/recovery feedback, background-polling
    deduplication and validation associated with its affected field/combatant.
-4. Final integrated evidence/corrections, documentation reconciliation and user
+3. Final integrated evidence/corrections, documentation reconciliation and user
    acceptance of 009.7, then overall 009 close-out.
 
 These are the existing agreed areas, not new requirements. Preserve all original
@@ -147,9 +156,10 @@ and the [pre-close-out task record](https://github.com/dajomas/Scrying-Glass/blo
 
 ## 4A.13 global reconciliation - 2026-11-11
 
-Completed and closed for its accepted bounded scope. Global compatibility is
-retired; remaining pane/local integration and approved retirement are distinct.
-[470](../handover/470-global-feedback-close-out.md#4a13-bounded-close-out---2026-11-11)
+Completed and closed for its accepted bounded scope. Global compatibility was
+retired at that checkpoint; subsequent pane/local migration and compatibility
+retirement are now completed and accepted within Stages 1-4. Deliverable 2 remains
+separate. [470](../handover/470-global-feedback-close-out.md#4a13-bounded-close-out---2026-11-11)
 and the [pre-close-out task record](https://github.com/dajomas/Scrying-Glass/blob/97eedc6da52abcfa94526fee25a3c321f0626844/docs/todo/097-feedback-delivery-plan.md#4a13-global-reconciliation---2026-11-11)
 preserve full implementations, failures/corrections, runs, counts and limitations.
 
