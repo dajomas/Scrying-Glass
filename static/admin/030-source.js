@@ -132,60 +132,6 @@ async function load(rethrowErrors = false, current = () => true) {
 
         updatePaneVisibilityForBattle();
 
-        document.querySelector('#backgroundColor').onclick = () => {
-            document.querySelector('#backgroundColor').showPicker?.();
-        };
-
-        document.querySelector('#backgroundColor').oninput = event => {
-            document.querySelector('#backgroundValue').value = event.target.value;
-        };
-
-        document.querySelector('#applyBackground').onclick = async () => {
-            try {
-                await applyBackground(
-                    document.querySelector('#backgroundValue').value.trim() || '#080b14',
-                );
-                paneNotification('battleSetup', 'View screen background updated. Save the setup to keep it.');
-            } catch (error) {
-                paneNotification('battleSetup', error.message);
-            }
-        };
-
-        document.querySelector('#clearBackgroundImage').onclick = async () => {
-            try {
-                await applyBackground(document.querySelector('#backgroundColor').value);
-                paneNotification('battleSetup', 'View screen now uses the selected background color.');
-            } catch (error) {
-                paneNotification('battleSetup', error.message);
-            }
-        };
-
-        document.querySelector('#backgroundImage').onchange = async event => {
-            const [image] = event.target.files;
-
-            if (!image) {
-                return;
-            }
-
-            try {
-                const form = new FormData();
-                form.append('image', image);
-
-                const result = await request('/api/display/background-image', {
-                    method: 'POST',
-                    body: form,
-                });
-
-                document.querySelector('#backgroundValue').value = result.background;
-                await load();
-                paneNotification('battleSetup', 'Background image uploaded. Save the setup to keep it.');
-            } catch (error) {
-                paneNotification('battleSetup', error.message);
-            } finally {
-                event.target.value = '';
-            }
-        };
-
         document.querySelector('#monsters').innerHTML =
             '<table>' +
             '<tr>' +

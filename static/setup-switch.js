@@ -1,6 +1,7 @@
-/* SG-TODO-009.7 Stage 1 Steps 2B-2E: save, load/switch, rename and delete battle setups.
- * Installed after the core Admin bundle; replaces the legacy 050 handlers for these controls.
- * New-setup creation (2A) lives in static/admin/060-source.js. */
+/* SG-TODO-009.7 Stage 1 Steps 2B-2E: save, load/switch, rename and delete battle setups;
+ * Step 3: setup copy/move between campaigns (replaces the 050 modal handlers) and the View screen
+ * background controls (formerly rebound by every 030 load()). Installed after the core Admin
+ * bundle. New-setup creation (2A) lives in static/admin/060-source.js. */
 (() => {
     'use strict';
     const $ = id => document.getElementById(id);
@@ -8,21 +9,23 @@
     const campaignName = id => (typeof campaignById === 'function' && campaignById(id)?.name) || id;
 
     // One explicit page-lane identity per operation and campaign; matching retries resolve it.
-    function tickets(operation, campaign, label) {
+    // Options: region (default battleSetup) and an explicit target (default [operation, campaign]).
+    function tickets(operation, campaign, label, options = {}) {
         const feedback = window.scryingAdminFeedback;
-        const begin = suffix => feedback.begin({lane: 'page', region: 'battleSetup', operation: operation + suffix,
-            target: JSON.stringify([operation.replace('.', '-'), campaign]), label});
+        const target = options.target ?? JSON.stringify([operation.replace('.', '-'), campaign]);
+        const begin = suffix => feedback.begin({lane: 'page', region: options.region || 'battleSetup',
+            operation: operation + suffix, target, label});
         return {feedback, begin};
     }
 
-    function invalid(operation, campaign, label, text, focus) {
-        const {feedback, begin} = tickets(operation, campaign, label);
+    function invalid(operation, campaign, label, text, focus, options) {
+        const {feedback, begin} = tickets(operation, campaign, label, options);
         feedback.publish(begin('.validation'), {severity: 'error', text});
         focus?.focus?.();
     }
 
-    function valid(operation, campaign, label) {
-        const {feedback, begin} = tickets(operation, campaign, label);
+    function valid(operation, campaign, label, options) {
+        const {feedback, begin} = tickets(operation, campaign, label, options);
         feedback.resolve(begin('.validation'));
     }
 
@@ -40,7 +43,7 @@
     /* Shared guarded lifecycle. spec: operation, campaign, label, controls, mutate(), expected(result),
      * success(result), refresh(result, relevant), failed(error), noun. Never replays the mutation. */
     async function operate(spec) {
-        const {feedback, begin} = tickets(spec.operation, spec.campaign, spec.label);
+        const {feedback, begin} = tickets(spec.operation, spec.campaign, spec.label, spec);
         const origin = feedback.encounterContext(), ticket = begin(''), refresh = begin('.refresh');
         const disabled = spec.controls.map(control => control.disabled);
         let expected = null, result;
@@ -68,7 +71,7 @@
                 await spec.refresh(result, relevant);
                 if (!relevant()) return;
                 if (expected && feedback.encounterContext().scope !== expected) {
-                    throw new Error('The resulting setup state was not applied');
+                    throw new Error(spec.unapplied || 'The resulting setup state was not applied');
                 }
                 feedback.resolve(refresh);
             } catch (error) {
@@ -81,20 +84,22 @@
         }
     }
 
-    function install() {
+    // Duplicate activations of the same operation are ignored until it (and its refresh) settles.
+    const pending = new Set();
+    const guarded = (key, handler) => async event => {
+        event?.preventDefault?.();
+        if (pending.has(key)) return;
+        pending.add(key);
+        try {await handler(event);} finally {pending.delete(key);}
+    };
+    const active = () => (typeof latest === 'undefined' ? null : latest?.active_setup) || null;
+
+    function installSetups() {
         const select = $('setupSelect'), input = $('setupName');
         const save = $('saveSetup'), loadButton = $('loadSetup'), rename = $('renameSetup'), remove = $('deleteSetup');
-        if (!select || !input || !loadButton || !window.scryingAdminFeedback) return;
-        const pending = new Set();
+        if (!select || !input || !loadButton) return;
         let revision = 0;
         input.addEventListener?.('input', () => revision++);
-        const guarded = (key, handler) => async event => {
-            event?.preventDefault?.();
-            if (pending.has(key)) return;
-            pending.add(key);
-            try {await handler();} finally {pending.delete(key);}
-        };
-        const active = () => (typeof latest === 'undefined' ? null : latest?.active_setup) || null;
 
         // 2B: save the current setup under the entered name (server overwrite semantics retained).
         if (save) save.onclick = guarded('save', async () => {
@@ -201,6 +206,115 @@
                 },
             });
         });
+    }
+
+    // Step 3: copy/move a saved setup between campaigns (campaign pane, modal workflow).
+    function installTransfer() {
+        const open = $('openCampaignSetup'), form = $('campaignSetupForm'), modal = $('campaignSetupModal');
+        if (!open || !form || !modal) return;
+        const label = 'Copy or move battle setup', region = {region: 'campaign'};
+        const selection = {...region, target: JSON.stringify(['setup-transfer', 'selection'])};
+        const cancel = $('cancelCampaignSetup');
+        let session = 0;
+        if (cancel) {
+            const close = cancel.onclick;
+            cancel.onclick = event => {session++; return close?.(event);};
+        }
+        open.onclick = guarded('transfer.open', async () => {
+            session++;
+            try {
+                const list = await request('/api/campaigns');
+                campaignData = list;
+                renderCampaigns();
+            } catch (error) {
+                return invalid('setup.transfer.open', null, label, error.message, open, selection);
+            }
+            if (campaignData.campaigns.length < 2) return invalid('setup.transfer.open', null, label,
+                'Create a second campaign first; setups can only be added from another campaign', open, selection);
+            valid('setup.transfer.open', null, label, selection);
+            const target = $('campaignSelect')?.value || campaignData.active;
+            const source = campaignData.campaigns.find(item => item.id !== target && item.setups.length)
+                || campaignData.campaigns.find(item => item.id !== target);
+            $('campaignSetupFrom').innerHTML = campaignOptions(source.id);
+            $('campaignSetupTo').innerHTML = campaignOptions(target);
+            renderCampaignSetupNames();
+            modal.hidden = false;
+        });
+        form.onsubmit = guarded('transfer', async event => {
+            const data = new FormData(event?.target || form);
+            const from = data.get('from_campaign'), setup = data.get('setup');
+            const to = data.get('to_campaign'), mode = data.get('mode');
+            const focus = $('campaignSetupName');
+            if (!setup) return invalid('setup.transfer', null, label, 'Choose a battle setup', focus, selection);
+            if (from === to) return invalid('setup.transfer', null, label,
+                'Source and target campaign are the same', $('campaignSetupTo'), selection);
+            valid('setup.transfer', null, label, selection);
+            const own = session, reference = active();
+            // Moving the loaded setup makes the server clear the active setup reference.
+            const unloads = mode === 'move' && reference?.campaign_id === from && reference?.name === setup;
+            const verb = mode === 'copy' ? 'copied' : 'moved';
+            await operate({operation: 'setup.transfer', campaign: campaignData.active, label, ...region,
+                target: JSON.stringify(['setup-transfer', from, setup, to]),
+                controls: [form.querySelector?.('button.import')].filter(Boolean), retry: mode,
+                mutate: () => request(`/api/campaigns/${encodeURIComponent(to)}/setups`, {method: 'POST',
+                    headers: {'Content-Type': 'application/json'}, body: JSON.stringify({setup, from_campaign: from, mode})}),
+                expected: () => unloads ? scopeOf(campaignData.active, null) : null,
+                unapplied: 'The unloaded setup state was not applied',
+                success: result => `${mode === 'copy' ? 'Copied' : 'Moved'} setup ${setup} to campaign ` +
+                    `${campaignName(result.campaign)}` + (result.setup !== setup ? ` as ${result.setup}` : ''),
+                noun: result => `Battle setup ${setup} was ${verb} to ${campaignName(result.campaign)}`,
+                async refresh(result, relevant) {
+                    campaignData = result;
+                    if (own === session) modal.hidden = true;
+                    renderCampaigns();
+                    if (unloads) await load(true, relevant);
+                },
+            });
+        });
+    }
+
+    // Step 3: View screen background color/image. Shared busy key: all three change one value.
+    function installBackground() {
+        const color = $('backgroundColor'), value = $('backgroundValue');
+        const apply = $('applyBackground'), clear = $('clearBackgroundImage'), image = $('backgroundImage');
+        if (!color || !value || !apply || !clear || !image) return;
+        color.onclick = () => color.showPicker?.();
+        color.oninput = event => {value.value = event.target.value;};
+        const controls = [apply, clear, image];
+        const change = (operation, text, mutate, done = 'updated') => operate({operation,
+            campaign: campaignData.active, label: 'View screen background', controls, retry: 'background change',
+            target: JSON.stringify(['view-background', campaignData.active]), mutate, expected: () => null,
+            success: () => text, noun: () => `The View screen background was ${done}`,
+            refresh: (result, relevant) => load(true, relevant)});
+        const patch = background => request('/api/display/background', {method: 'PATCH',
+            headers: {'Content-Type': 'application/json'}, body: JSON.stringify({background})});
+        apply.onclick = guarded('background', () => change('background.apply',
+            'View screen background updated. Save the setup to keep it.',
+            () => patch(value.value.trim() || '#080b14')));
+        clear.onclick = guarded('background', () => change('background.clear',
+            'View screen now uses the selected background color.', () => patch(color.value)));
+        image.onchange = guarded('background', async event => {
+            const input = event?.target || image, [file] = input.files || [];
+            if (!file) return;
+            const form = new FormData();
+            form.append('image', file);
+            try {
+                await change('background.upload', 'Background image uploaded. Save the setup to keep it.', async () => {
+                    const result = await request('/api/display/background-image', {method: 'POST', body: form});
+                    value.value = result.background;
+                    return result;
+                }, 'uploaded');
+            } finally {
+                input.value = '';
+            }
+        });
+    }
+
+    function install() {
+        if (!window.scryingAdminFeedback) return;
+        installSetups();
+        installTransfer();
+        installBackground();
     }
     if (document.readyState !== 'complete') {
         document.addEventListener('DOMContentLoaded', install, {once: true});

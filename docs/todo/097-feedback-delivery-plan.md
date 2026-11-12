@@ -27,8 +27,13 @@ accepted.
 
 2B-2E status (2026-11-12): at the user's explicit request delivered together with
 2A in one cumulative archive on the same base, instead of one operation per archive
-with SHA verification between; not yet published, CI-covered or accepted.
-[2A-2E scope, evidence and limits](../handover/530-setup-operation-feedback.md).
+with SHA verification between. Published as 3adf212646aa8956ca6a42870c23075d5c482c9b;
+CI run 43272584707 attempt 1 succeeded (evidence 1a6e5624). Bounded acceptance pending.
+
+Stage 1 Step 3 status (2026-11-12): setup copy/move and background controls archive
+prepared on 1a6e562474fe3fb82d2a9f37b6d5493a70d2307c; not yet published, CI-covered or
+accepted. Stage 1 closes only after its covering CI and explicit acceptance.
+[2A-2E and Step 3 scope, evidence and limits](../handover/530-setup-operation-feedback.md).
 
 Original plan text: These five replace the combined
 Step 2 delivery, not five new requirements. Each is one usable operation end to

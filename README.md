@@ -83,7 +83,7 @@ Duplicate clicks are ignored through refresh and newer typing is preserved.
 Setup save, load/switch, rename and delete feedback (2B-2E, 2026-11-12) follows the
 same pattern in the Battle setup pane: persistent validation/request errors, early
 three-second success, and a separate persistent no-replay error when the operation
-completed but the refresh failed. Copy/move and background feedback are unchanged. See [530](docs/handover/530-setup-operation-feedback.md).
+completed but the refresh failed. Setup copy/move (campaign pane) and View screen background apply/clear/upload (Battle Setup pane) use the same guarded lifecycle (Stage 1 Step 3, archive pending CI). See [530](docs/handover/530-setup-operation-feedback.md).
 
 Legacy source-reading tests use a disposable assembled checkout:
 
