@@ -2,7 +2,30 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-## Current: final 1D.2b implementation archive - 2026-11-12
+## Current: CI asset-version assertion correction - 2026-11-12
+
+1D.2b is published at 742697d86a76a657c92653dd6f1533135399f4b0. Branch tests
+43234426795 attempt 1 tested that exact revision and failed; evidence publication:
+332cbf05b9903f4b718fe223dca7e5a724497496. The main Python suite ran 1,552 tests
+with one failure in test_candidate_review_asset_wiring.py; the audit repeats the
+same assertion. JavaScript, pytest, provisioning and syntax/import stages passed.
+
+The assertion incorrectly pins both assets to v2 after candidate selection was
+intentionally bumped to v3. The correction expects candidate selection v3 and
+refresh review v2, retaining exact-once inclusion, dependency order, bounded review
+asset and untyped-call checks, and rejecting obsolete versions/unversioned duplicates.
+No runtime asset downgrade, application/pin/workflow change or Stage 2 reopening.
+
+Local targeted suite: all 3 tests pass against the verified published footer.
+Four negative controls (candidate v2, review v1, duplicate candidate v3, unversioned
+duplicate candidate) fail as expected; restored suite passes. No new full-suite,
+hosted CI or acceptance result is claimed. The corrective commit omits the skip
+marker for normal push CI; no separate dispatch. Review its actual run before
+bounded campaign acceptance. Earlier archive-preparation wording below is historical
+and superseded only by the publication/CI facts stated here. Root indexes and README
+need no structural/behavior changes for this three-file correction.
+
+## Historical: final 1D.2b implementation archive - 2026-11-12
 
 Base: c729cf5d7a7bcc4d37b7a6e26f7fb82a1ffaa26a, published 1D.2a verified on the live branch.
 Archive only: no new GitHub commit/push, workflow dispatch, CI completion,

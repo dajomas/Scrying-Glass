@@ -8,9 +8,14 @@ ROOT = Path(__file__).resolve().parents[1]
 class CandidateReviewFeedbackAssetTests(unittest.TestCase):
     def test_cache_versions_and_single_inclusions(self):
         end = (ROOT / 'templates/admin/190_document_end.html').read_text(encoding='utf-8')
-        for name in ('monster-candidate-selection', 'monster-refresh-review'):
-            self.assertEqual(end.count('/static/' + name + '.js?v=2'), 1)
-            self.assertNotIn('/static/' + name + '.js?v=1', end)
+        versions = {'monster-candidate-selection': 3, 'monster-refresh-review': 2}
+        for name, version in versions.items():
+            with self.subTest(asset=name):
+                prefix = '/static/' + name + '.js'
+                self.assertEqual(end.count(prefix + '?v=' + str(version)), 1)
+                self.assertEqual(end.count(prefix), 1)
+                for obsolete in range(1, version):
+                    self.assertNotIn(prefix + '?v=' + str(obsolete), end)
 
     def test_existing_dependency_order_is_retained(self):
         end = (ROOT / 'templates/admin/190_document_end.html').read_text(encoding='utf-8')
