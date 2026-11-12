@@ -45,9 +45,9 @@
     }
     const feedback = window.scryingAdminFeedback;
     const pending = new Map();
-    function begin(operation, target) {
+    function begin(operation, target, field) {
         return feedback.begin({region: 'monsters', operation: 'monster.raw-roll.' + operation,
-            target, label: 'Monster initiative raw roll'});
+            target, label: 'Monster initiative raw roll', ...(field ? {field} : {})});
     }
     region.addEventListener('change', async event => {
         const input = event.target;
@@ -56,13 +56,16 @@
         const target = String(input.dataset.mi);
         const previous = pending.get(target);
         if (previous && feedback.isCurrent(previous.ticket)) return;
-        const validation = begin('validation', target);
+        // Deliverable 2: the validation error is associated with this monster's raw-roll input.
+        const validation = begin('validation', target, feedback.initiativeField?.('monsters', target));
+        const name = (typeof latest !== 'undefined' ? latest?.monsters || [] : [])
+            .find(item => String(item.id) === target)?.name;
         const text = input.value.trim();
         const roll = text === '' ? null : Number(text);
         if (!input.checkValidity() || (text !== '' &&
             (!/^[+-]?[0-9]+$/.test(text) || !Number.isSafeInteger(roll)))) {
             feedback.publish(validation, {severity: 'error',
-                text: 'Enter an exactly representable whole-number raw roll or leave it blank.'});
+                text: (name ? name + ': ' : '') + 'Enter an exactly representable whole-number raw roll or leave it blank.'});
             return;
         }
         feedback.resolve(validation);

@@ -13,7 +13,7 @@ def assert_script_inventory(test_case, scripts):
     test_case.assertEqual(len(scripts), 44)
     core = '/static/admin.js'
     character = '/static/character-edit-feedback.js?v=1'
-    monster = '/static/monster-initiative-edit.js?v=1'
+    monster = '/static/monster-initiative-edit.js?v=2'
     for source in (core, character, monster):
         test_case.assertEqual(scripts.count(source), 1, source)
     test_case.assertLess(scripts.index(core), scripts.index(character))
@@ -23,7 +23,7 @@ def assert_script_inventory(test_case, scripts):
 class ScriptInventoryTests(unittest.TestCase):
     def valid_scripts(self):
         return ['/static/admin.js', '/static/character-edit-feedback.js?v=1',
-                '/static/monster-initiative-edit.js?v=1'] + [f'/fixture-{i}.js' for i in range(41)]
+                '/static/monster-initiative-edit.js?v=2'] + [f'/fixture-{i}.js' for i in range(41)]
 
     def test_accepts_exact_current_inventory(self):
         assert_script_inventory(self, self.valid_scripts())

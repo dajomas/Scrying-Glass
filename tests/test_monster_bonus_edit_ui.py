@@ -10,10 +10,10 @@ ROOT = Path(__file__).resolve().parents[1]
 class MonsterBonusEditUITests(unittest.TestCase):
     def test_script_is_loaded_after_admin(self):
         end = (ROOT / "templates/admin/190_document_end.html").read_text(encoding="utf-8")
-        self.assertEqual(end.count('/static/monster-initiative-edit.js?v=1'), 1)
-        self.assertLess(end.index('/static/admin.js'), end.index('/static/monster-initiative-edit.js?v=1'))
+        self.assertEqual(end.count('/static/monster-initiative-edit.js?v=2'), 1)
+        self.assertLess(end.index('/static/admin.js'), end.index('/static/monster-initiative-edit.js?v=2'))
         for token in ('first', 'second'):
-            self.assertIn('/static/monster-initiative-edit.js?v=1&amp;_cb=' + token,
+            self.assertIn('/static/monster-initiative-edit.js?v=2&amp;_cb=' + token,
                           cache_bust_html(end, token))
 
     def test_native_edit_render_submission_and_character_isolation(self):

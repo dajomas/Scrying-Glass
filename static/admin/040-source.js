@@ -22,7 +22,8 @@ async function runModalImport(form, spec, session, getSession, modal, prepare) {
         const validation = feedback.begin({...spec, operation: spec.operation + '.validation'});
         const prepared = prepare();
         if (prepared.error || !form.reportValidity()) {
-            feedback.publish(validation, {severity: 'error', text: prepared.error || 'Select a valid import file and options.'});
+            const field = prepared.error ? null : feedback.field?.(form);
+            feedback.publish(field ? feedback.begin({...spec, operation: spec.operation + '.validation', field}) : validation, {severity: 'error', text: prepared.error || 'Select a valid import file and options.'});
             return;
         }
         feedback.resolve(validation);

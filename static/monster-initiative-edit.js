@@ -57,8 +57,11 @@
         const previous = pending.get(target);
         if (previous && (feedback.isCurrent(previous.refresh) || previous.session === session)) return;
         const spec = {region: 'monsters', operation: 'monster.edit', target, label: 'Save monster'};
-        const validation = feedback.begin({...spec, operation: 'monster.edit.validation'});
-        if (!form.reportValidity()) {
+        const valid = form.reportValidity();
+        // Deliverable 2: associate the error with the first constraint-invalid field.
+        const validation = feedback.begin({...spec, operation: 'monster.edit.validation',
+            ...(valid ? {} : {field: feedback.field?.(form)})});
+        if (!valid) {
             feedback.publish(validation, {severity: 'error', text: 'Correct the invalid monster fields before saving.'});
             return;
         }

@@ -4,8 +4,8 @@
     let state=null,summary=null,busy=false,polling=null;
     window.scryingEncounterToolsBusy=()=>busy;
     const editable=['featureTempHp','featureLifeState','deathSuccesses','deathFailures'];
-    // featureNotice keeps background-poll status (Deliverable 2); operation outcomes use the
-    // managed tools region (SG-TODO-009.7 Stage 3), encounter lane: a scope change clears them.
+    // Operation outcomes use the managed tools region (SG-TODO-009.7 Stage 3), encounter lane: a
+    // scope change clears them. featureNotice is only the fallback without the feedback API.
     const notice=text=>{$('featureNotice').textContent=text;};
     const feedback=()=>window.scryingAdminFeedback;
     function ticket(spec,suffix=''){
@@ -15,7 +15,25 @@
     }
     const say=(t,severity,text)=>{if(t)feedback().publish(t,{severity,text});};
     let refreshError='';
-    function connectionText(summary,state) {
+    /* Deliverable 2: the background poll owns one persistent page-lane warning (explicit identity,
+     * independent of campaign/setup scope). Identical failures keep the existing record without a new
+     * announcement (also after dismissal); a different failure replaces it; the next successful
+     * refresh resolves only this identity with a short success. Classification uses the request
+     * outcome (fetch rejection versus HTTP failure), never message wording. */
+    const connectionSpec={lane:'page',region:'global',operation:'connection.poll',target:'server',label:'Server connection'};
+    let connectionText=null;
+    function connectionLost(error){
+        const api=feedback();if(!api){notice(error.message);return;}
+        const text=error.connectionLost?'Connection to the server was lost. Retrying automatically.'
+            :`Background refresh failed: ${error.message}. Retrying automatically.`;
+        if(connectionText===text)return;
+        connectionText=text;api.publish(api.begin(connectionSpec),{severity:'warning',text});
+    }
+    function connectionRestored(){
+        const api=feedback();if(connectionText===null||!api)return;
+        connectionText=null;api.publish(api.begin(connectionSpec),{severity:'success',text:'Connection to the server restored.'});
+    }
+    function displayConnectionText(summary,state) {
         const campaign=state?.active_campaign_id??state?.active_setup?.campaign_id??null;
         if(summary.display_scope_available===false||!Array.isArray(summary.displays)||
             (summary.display_campaign_id!==undefined&&summary.display_campaign_id!==String(campaign??'')))
@@ -26,7 +44,8 @@
         const options={method,cache:'no-store'};
         if(body instanceof FormData) options.body=body;
         else if(body!==undefined) {options.headers={'Content-Type':'application/json'};options.body=JSON.stringify(body);}
-        const response=await fetch(url,options);
+        let response;
+        try{response=await fetch(url,options);}catch(error){if(error&&typeof error==='object')error.connectionLost=true;throw error;}
         if(!response.ok) {
             let data;try {data=await response.json();} catch {data=null;}
             throw new Error(typeof data?.detail==='string'?data.detail:`Request failed (${response.status})`);
@@ -85,7 +104,7 @@
             choices($('effectSource'),[...combatants(),...(state?.lairs||[])],true);choices($('effectAnchor'),[...combatants(),...(state?.lairs||[])],true);
             choices($('checkpointSelect'),summary.checkpoints.map(x=>({...x,name:x.name+' — '+new Date(x.created*1000).toLocaleString()})));
             $('featureUndo').disabled=!summary.undo||busy;$('featureUndo').textContent=summary.undo?'Undo: '+summary.undo.label:'Nothing to undo';
-            $('displayConnections').textContent=connectionText(summary,state);
+            $('displayConnections').textContent=displayConnectionText(summary,state);
             $('downedReminder').hidden=!summary.downed.length;
             $('downedReminder').textContent='Death-save reminder: '+summary.downed.map(x=>x.name).join(', ')+'. Downed characters keep their initiative turns. Damage at 0 HP adds failed saves automatically; record rolled saves manually.';
             if(discardDrafts&&targetScope()===discardDrafts.target){
@@ -94,8 +113,9 @@
                 });
             }
             draw(force||targetChanged);
+            connectionRestored();
             return true;
-        }catch(error){$('displayConnections').textContent='Connection status unavailable';refreshError=error.message;if(report)notice(error.message);return false;}finally{polling=null;finishPoll();}
+        }catch(error){$('displayConnections').textContent='Connection status unavailable';refreshError=error.message;if(report)connectionLost(error);return false;}finally{polling=null;finishPoll();}
     }
     /* spec: operation, label, target (identity), optional region/success(result)/after(result).
      * Validation and request errors persist on the operation/target; cancellation is silent and keeps

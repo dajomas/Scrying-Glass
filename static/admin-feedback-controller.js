@@ -60,13 +60,15 @@
             const operation = required(spec.operation, 'operation');
             const target = required(spec.target, 'target'), region = required(spec.region, 'region');
             const label = required(spec.label, 'label');
+            // Deliverable 2: an optional explicit field selector associates the record with a control.
+            const field = spec.field === undefined || spec.field === null ? null : required(spec.field, 'field');
             if (!['global', 'pane'].includes(spec.placement)) throw new TypeError('placement must be global or pane');
             const active = lanes.get(lane);
             if (!active || active.scope !== scope) throw new Error('Activate the matching lane scope before beginning feedback');
             const key = JSON.stringify([lane, operation, target]);
             const token = ++sequence;
             const ticket = Object.freeze({lane, scope, operation, target, region, label,
-                placement: spec.placement, epoch: active.epoch, token});
+                placement: spec.placement, ...(field ? {field} : {}), epoch: active.epoch, token});
             const entry = {lane, key, ticket, settled: false};
             attempts.set(key, entry); tickets.set(ticket, entry);
             return ticket;
@@ -82,7 +84,8 @@
             const entry = current(ticket);
             if (!entry) return false;
             const severity = outcome.severity;
-            if (!['success', 'error', 'info'].includes(severity)) throw new TypeError('Explicit severity is required');
+            // warning (Deliverable 2 connection status) persists like error until resolved or replaced.
+            if (!['success', 'error', 'warning', 'info'].includes(severity)) throw new TypeError('Explicit severity is required');
             const text = required(outcome.text, 'text');
             if (severity === 'info') removeOperation(entry.key, record => record.severity === 'info');
             else {

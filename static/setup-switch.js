@@ -13,14 +13,16 @@
     function tickets(operation, campaign, label, options = {}) {
         const feedback = window.scryingAdminFeedback;
         const target = options.target ?? JSON.stringify([operation.replace('.', '-'), campaign]);
-        const begin = suffix => feedback.begin({lane: 'page', region: options.region || 'battleSetup',
-            operation: operation + suffix, target, label});
+        const begin = (suffix, field) => feedback.begin({lane: 'page', region: options.region || 'battleSetup',
+            operation: operation + suffix, target, label, ...(field ? {field} : {})});
         return {feedback, begin};
     }
 
+    // Deliverable 2: a validation error on a form control is associated with that control.
     function invalid(operation, campaign, label, text, focus, options) {
         const {feedback, begin} = tickets(operation, campaign, label, options);
-        feedback.publish(begin('.validation'), {severity: 'error', text});
+        const control = focus?.matches?.('input,select,textarea') ? feedback.field?.(focus) : null;
+        feedback.publish(begin('.validation', control), {severity: 'error', text});
         focus?.focus?.();
     }
 

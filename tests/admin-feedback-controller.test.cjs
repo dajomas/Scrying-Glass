@@ -49,7 +49,8 @@ test('missing or invalid metadata fails before changing state', () => {
         assert.throws(() => f.begin({[field]: ''}));
     const ticket = f.begin();
     assert.throws(() => f.c.publish(ticket, {text: 'No severity'}));
-    assert.throws(() => f.c.publish(ticket, {severity: 'warning', text: 'Not yet a supported category'}));
+    assert.throws(() => f.c.publish(ticket, {severity: 'notice', text: 'Not a supported category'}));
+    assert.throws(() => f.begin({field: ' '}));
     assert.throws(() => f.c.publish(ticket, {severity: 'error', text: ' '}));
     assert.equal(f.c.snapshot().length, 0);
     assert(f.c.publish(ticket, {severity: 'error', text: 'Still usable'}));
@@ -175,4 +176,27 @@ test('dispose clears timers and views, and stale timer callbacks are harmless', 
     f.c.dispose(); timer(); f.c.dispose();
     assert.deepEqual(seen, [1,0]); assert.equal(f.timers.size, 0); assert.equal(f.c.snapshot().length, 0);
     assert.throws(() => f.begin());
+});
+// SG-TODO-009.7 Deliverable 2: warning severity and explicit field association.
+test('warning persists without a timer and is replaced or resolved by its own identity', () => {
+    const f = fixture();
+    f.c.publish(f.begin(), {severity: 'warning', text: 'Connection lost'});
+    assert.equal(f.timers.size, 0); f.advance(600000);
+    assert.deepEqual(f.c.snapshot().map(x => [x.severity, x.text]), [['warning', 'Connection lost']]);
+    const other = f.begin({operation: 'other'}); f.c.publish(other, {severity: 'success', text: 'Unrelated'});
+    f.c.resolve(f.begin({operation: 'other'}));
+    assert.deepEqual(f.c.snapshot().map(x => x.severity), ['warning']);
+    f.c.publish(f.begin(), {severity: 'warning', text: 'Still lost'});
+    assert.deepEqual(f.c.snapshot().map(x => x.text), ['Still lost']);
+    f.c.resolve(f.begin()); assert.equal(f.c.snapshot().length, 0);
+});
+test('an explicit field selector is carried on the ticket and record; omitted otherwise', () => {
+    const f = fixture();
+    const plain = f.begin(); assert.equal(Object.hasOwn(plain, 'field'), false);
+    assert.equal(Object.hasOwn(f.begin({field: null}), 'field'), false);
+    const ticket = f.begin({field: '#name'});
+    assert.equal(ticket.field, '#name');
+    f.c.publish(ticket, {severity: 'error', text: 'Enter a name'});
+    assert.equal(f.c.snapshot()[0].field, '#name');
+    assert.throws(() => f.begin({field: 3}));
 });

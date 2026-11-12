@@ -67,7 +67,12 @@ admin-reset-all-feedback.js?v=2 and admin-dialog-accessibility.js?v=1 together w
 all eight fragments and templates. Stages 1-4 are closed for their agreed scopes;
 whole Deliverable 1 integrated evidence review/acceptance, Deliverable 2 connection/
 recovery/polling/field association and final 009.7/009 acceptance remain open.
-Do not treat this branch as a completed 009.7 release. Detailed earlier checkpoints
+Deliverable 2 (archive SG-TODO-009.7-D2.zip, publication/CI/acceptance pending,
+[560](docs/handover/560-connection-field-feedback.md)) supersedes shared versions:
+deploy admin-feedback-controller.js?v=2, admin-feedback-view.js?v=2,
+admin-feedback.css?v=2, admin-feedback-admin.js?v=6, initiative-join-gate.js?v=2,
+features.js?v=6, monster-initiative-edit.js?v=2, monster-initiative-roll.js?v=3 and
+setup-switch.js?v=4 with all eight fragments and templates. Do not treat this branch as a completed 009.7 release. Detailed earlier checkpoints
 are preserved in the [pre-Stage-1-close-out README](https://github.com/dajomas/Scrying-Glass/blob/97eedc6da52abcfa94526fee25a3c321f0626844/README.md)
 and numbered handovers. No optional work is added to the finish line.
 

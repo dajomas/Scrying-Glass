@@ -1,7 +1,7 @@
 // Stage 1 Step 1D: owned validation/request/success and guarded applied-deletion refresh.
 let campaignDeleteSession = 0, campaignDeleteRevision = 0, campaignDeletePending = false;
-const campaignDeleteFeedback = (operation, target, label) => window.scryingAdminFeedback.begin({
-    lane: 'page', region: 'campaign', operation, target, label,
+const campaignDeleteFeedback = (operation, target, label, field) => window.scryingAdminFeedback.begin({
+    lane: 'page', region: 'campaign', operation, target, label, ...(field ? {field} : {}),
 });
 const campaignDeleteForm = document.querySelector('#campaignDeleteForm');
 campaignDeleteForm.addEventListener('input', () => { campaignDeleteRevision++; });
@@ -80,14 +80,16 @@ document.querySelector('#campaignDeleteForm').onsubmit = async event => {
     const campaignId = document.querySelector('#campaignDeleteTarget').value;
     const campaign = campaignById(campaignId);
     if (!campaign) {
-        feedback.publish(validation, {severity: 'error', text: 'Choose a campaign to delete'});
+        feedback.publish(campaignDeleteFeedback('campaign.delete.validation', 'campaign-delete-selection',
+            'Delete campaign', '#campaignDeleteTarget'), {severity: 'error', text: 'Choose a campaign to delete'});
         return;
     }
     const moveTo = document.querySelector('#campaignDeleteMoveTo').value;
     const hasSetups = campaign.setups.length > 0;
     const deleteSetups = hasSetups && document.querySelector('#campaignDeleteAction').value === 'delete';
     if (hasSetups && !deleteSetups && (!moveTo || moveTo === campaignId)) {
-        feedback.publish(validation, {severity: 'error', text: 'Choose another campaign to move the battle setups to'});
+        feedback.publish(campaignDeleteFeedback('campaign.delete.validation', 'campaign-delete-selection',
+            'Delete campaign', '#campaignDeleteMoveTo'), {severity: 'error', text: 'Choose another campaign to move the battle setups to'});
         return;
     }
     feedback.resolve(validation);

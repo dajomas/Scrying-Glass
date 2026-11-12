@@ -10,16 +10,16 @@ from python.scrying_glass_admin_source import ADMIN_SCRIPT_PARTS, read_admin_scr
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_PARTS = tuple(f"{number:03d}-source.js" for number in range(10, 81, 10))
-BUNDLE_BYTES = 130882
+BUNDLE_BYTES = 131949
 DIGESTS = (
     "e760d06ed6b762c0454c68da195bbba452cc950003a4a9d7afb181acfe4e050d",
     "744cc3b5bc2dfb56431d4a350f1c63db2d66145d73a5ad6407961698051794e0",
     "6cc39f53fb65672c867c0424ba5c5fcff362f53ed943ecf56c72727b64201f19",
-    "fee22101a45ae9f6d2fd8a791ef450108b7df1cc32d3525be1086aac7227ca65",
-    "41cd211dde3b12f2bd7f0f36a2b396d3d3b0569f0ce4dfb9ca6faebda462daee",
-    "7e11ec9b86417d5adbf66a67bfb8686307565d57902b51b703b7211ba1e64575",
+    "f0bd34765ee2273922c075c49d2f16487c00f66cb95f8dcddef929bbcf2b54ee",
+    "e710841257654aad62cc6cd48f79d944f4ebeb3dc8949d78317dbed70d79ef39",
+    "0e34affe4ae4d063b4dd9faaf8b26642a2a9aa5fc7aaceb1b619f555c8c6fbda",
     "4efb2b4f779b1c5f9a70e6c3e058cca48aa40c357620a9f2413efc2d7b9ae16b",
-    "5c5b72146278603c56412cb0a786051b222833c18ee20bfbca7157d146682c02",
+    "ea6a51445615b3777b98e38496e6681e6431c045d62c592c9aeeab851ffedc4f",
 )
 
 

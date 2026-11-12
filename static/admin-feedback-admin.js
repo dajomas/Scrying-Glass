@@ -1,4 +1,4 @@
-/* SG-TODO-009.7 Admin wiring. Caller migration remains explicit. */
+/* SG-TODO-009.7 Admin wiring. Caller migration remains explicit; Deliverable 2 field association. */
 (() => {
     'use strict';
     if (window.scryingAdminFeedback) return;
@@ -111,7 +111,80 @@
             if (rethrowErrors === true) throw error;
         }
     }
-    const api = Object.freeze({loadState, begin, deliver, mount, setScope, stateRequest, observeState, invalidateLookup,
+    // Deliverable 2: near-field association. A ticket naming an explicit `field` selector marks the
+    // matching control aria-invalid while its error/warning record exists and adds a non-live hint
+    // after it (the record itself stays the single live announcement). Removal, dismissal, matching
+    // resolution or a scope change restores the control; re-rendered controls are re-associated.
+    const hints = new Map(), priors = new WeakMap();
+    let fieldRecords = [], observer = null, queued = false;
+    function token(node, id, add) {
+        const list = (node.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean)
+            .filter(item => item !== id);
+        if (add) list.push(id);
+        if (list.length) node.setAttribute('aria-describedby', list.join(' '));
+        else node.removeAttribute('aria-describedby');
+    }
+    function release(view) {
+        view.hint.remove();
+        const node = view.node, prior = priors.get(node);
+        token(node, view.hint.id, false);
+        if (prior && --prior.count === 0) {
+            priors.delete(node);
+            if (prior.invalid === null) node.removeAttribute('aria-invalid');
+            else node.setAttribute('aria-invalid', prior.invalid);
+        }
+    }
+    function associate() {
+        queued = false;
+        const wanted = new Map();
+        for (const record of fieldRecords) {
+            let node = null;
+            try { node = document.querySelector(record.field); } catch { node = null; }
+            if (node) wanted.set(record.id, {record, node});
+        }
+        for (const [id, view] of hints) {
+            const next = wanted.get(id);
+            if (next && next.node === view.node && view.hint.isConnected) continue;
+            release(view); hints.delete(id);
+        }
+        for (const [id, {record, node}] of wanted) {
+            if (hints.has(id)) continue;
+            const hint = document.createElement('span');
+            hint.className = 'sg-field-error'; hint.id = id + '-field';
+            hint.dataset.severity = record.severity; hint.textContent = record.text;
+            const prior = priors.get(node) || {invalid: node.getAttribute('aria-invalid'), count: 0};
+            prior.count++; priors.set(node, prior);
+            node.setAttribute('aria-invalid', 'true');
+            token(node, hint.id, true);
+            node.after(hint);
+            hints.set(id, {node, hint});
+        }
+        if (fieldRecords.length && !observer && typeof MutationObserver === 'function') {
+            observer = new MutationObserver(() => {
+                if (!queued) { queued = true; queueMicrotask(associate); }
+            });
+            observer.observe(document.body, {childList: true, subtree: true});
+        } else if (!fieldRecords.length && observer) { observer.disconnect(); observer = null; }
+    }
+    controller.subscribe(snapshot => {
+        fieldRecords = snapshot.filter(record => record.field &&
+            (record.severity === 'error' || record.severity === 'warning'));
+        if (fieldRecords.length || hints.size) associate();
+    });
+    // Explicit selector for a control: the first constraint-invalid control of a form, or the node.
+    const escape = value => globalThis.CSS?.escape ? CSS.escape(value)
+        : String(value).replace(/[^a-zA-Z0-9_-]/g, character => '\\' + character);
+    function field(node) {
+        if (node?.tagName === 'FORM') node = node.querySelector(':invalid') || null;
+        if (!node) return null;
+        if (node.id) return '#' + escape(node.id);
+        const form = node.form || node.closest?.('form');
+        if (form?.id && node.name) return '#' + escape(form.id) + ' [name="' + escape(node.name) + '"]';
+        return null;
+    }
+    const api = Object.freeze({loadState, field,
+        // Explicit selector for a roster initiative input (characters: data-ci, monsters: data-mi).
+        initiativeField: (kind, id) => `input[data-${kind === 'characters' ? 'ci' : 'mi'}="${escape(String(id))}"]`, begin, deliver, mount, setScope, stateRequest, observeState, invalidateLookup,
         encounterContext: () => Object.freeze({scope: scopes.get('encounter'), epoch: encounterEpoch}),
         beginLookup(target) {
             invalidateLookup();

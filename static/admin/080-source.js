@@ -23,7 +23,7 @@
     if (editButton && typeof campaignById === 'function') editButton.onclick = () => {
         const feedback = window.scryingAdminFeedback;
         const validation = feedback.begin({lane: 'page', region: 'campaign', operation: 'campaign.edit.open',
-            target: 'campaign-edit-selection', label: 'Choose campaign to edit'});
+            target: 'campaign-edit-selection', label: 'Choose campaign to edit', field: '#campaignSelect'});
         const campaign = campaignById(document.querySelector('#campaignSelect').value);
         if (!campaign) {
             feedback.publish(validation, {severity: 'error', text: 'Choose a campaign to edit'});
@@ -40,12 +40,13 @@
         const feedback = window.scryingAdminFeedback, origin = feedback.encounterContext();
         const spec = {lane: 'page', region: 'campaign', target: JSON.stringify(['campaign-edit', id]),
             label: 'Save campaign'};
-        const begin = suffix => feedback.begin({...spec, operation: 'campaign.edit' + suffix});
+        const begin = (suffix, field) => feedback.begin({...spec, operation: 'campaign.edit' + suffix, ...(field ? {field} : {})});
         const validation = begin('.validation');
         const values = [form.elements.name.value, form.elements.description.value];
         const name = values[0].trim(), description = values[1].trim();
         if (!name || !form.reportValidity()) {
-            feedback.publish(validation, {severity: 'error', text: !name
+            const field = feedback.field?.(!name ? form.elements.name : form);
+            feedback.publish(field ? begin('.validation', field) : validation, {severity: 'error', text: !name
                 ? 'Enter a campaign name' : 'Enter valid campaign details.'});
             return;
         }
@@ -108,12 +109,13 @@
         const feedback = window.scryingAdminFeedback;
         const spec = {lane: 'page', region: 'campaign', target: JSON.stringify(['campaign-create', owner.id]),
             label: 'Create campaign'};
-        const begin = suffix => feedback.begin({...spec, operation: 'campaign.create' + suffix});
+        const begin = (suffix, field) => feedback.begin({...spec, operation: 'campaign.create' + suffix, ...(field ? {field} : {})});
         const validation = begin('.validation');
         const values = [form.elements.name.value, form.elements.description.value];
         const name = values[0].trim(), description = values[1].trim();
         if (!name || !form.reportValidity()) {
-            feedback.publish(validation, {severity: 'error', text: !name
+            const field = feedback.field?.(!name ? form.elements.name : form);
+            feedback.publish(field ? begin('.validation', field) : validation, {severity: 'error', text: !name
                 ? 'Enter a campaign name' : 'Enter valid campaign details.'});
             return;
         }
@@ -251,7 +253,7 @@ setups();
         if (pending) return;
         const feedback = window.scryingAdminFeedback, id = select.value;
         const selectionSpec = {lane: 'page', region: 'campaign', operation: 'campaign.switch.validation',
-            target: 'campaign-switch-selection', label: 'Choose campaign to switch to'};
+            target: 'campaign-switch-selection', label: 'Choose campaign to switch to', field: '#campaignSelect'};
         const validation = feedback.begin(selectionSpec);
         const revert = () => { select.value = campaignData.active || ''; };
         if (!id) {

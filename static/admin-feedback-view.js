@@ -8,7 +8,7 @@
         const document = root.ownerDocument, nodes = new Map();
         const prior = new Map(['role', 'aria-live', 'aria-relevant', 'aria-atomic', 'hidden', 'class']
             .map(name => [name, root.getAttribute(name)]));
-        const titles = {success: 'Success', error: 'Error', info: 'Information'};
+        const titles = {success: 'Success', error: 'Error', warning: 'Warning', info: 'Information'};
         root.dataset.sgFeedbackMounted = 'true';
         root.classList.add('sg-feedback-region');
         root.setAttribute('role', 'status');
@@ -37,7 +37,7 @@
                 row.className = 'sg-feedback-record'; row.dataset.severity = item.severity;
                 row.dataset.feedbackId = item.id;
                 const text = document.createElement('span');
-                text.className = 'sg-feedback-text';
+                text.className = 'sg-feedback-text'; text.id = item.id + '-text';
                 text.textContent = titles[item.severity] + ': ' + item.text;
                 const button = document.createElement('button');
                 button.type = 'button'; button.className = 'sg-feedback-dismiss';

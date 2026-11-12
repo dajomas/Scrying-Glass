@@ -5,7 +5,11 @@
 .sg-feedback-record + .sg-feedback-record { margin-block-start: .35rem; }
 .sg-feedback-text { flex: 1 1 auto; min-width: 0; white-space: pre-wrap; }
 .sg-feedback-record[data-severity="error"] { border-color: #e7a4a4; }
+.sg-feedback-record[data-severity="warning"] { border-color: #e6c36a; }
 .sg-feedback-record[data-severity="success"] { border-color: var(--admin-campaign, #84c5c0); }
 .sg-feedback-dismiss { flex: 0 0 auto; }
 #adminHeader > .sg-feedback-region { max-height: min(28dvh, 14rem); overflow: auto; scrollbar-gutter: stable; }
 @media (max-width: 480px) { .sg-feedback-record { flex-wrap: wrap; } }
+/* Deliverable 2: near-field validation hint; the pane/global record remains the live announcement. */
+.sg-field-error { display: block; margin-block-start: .2rem; text-decoration: none; font-size: .85em; color: #f2b8b8; overflow-wrap: anywhere; }
+[aria-invalid="true"]:not(form) { outline: 2px solid #e7a4a4; outline-offset: 1px; }

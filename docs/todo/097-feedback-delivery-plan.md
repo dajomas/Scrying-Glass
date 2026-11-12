@@ -29,6 +29,28 @@ do not request acceptance again. Cancelled run 43284682854 on a5aebc34 remains
 historical and is not covering evidence. This documentation-only close-out uses
 [skip ci], runs no tests and changes/dispatches no workflow.
 
+## Deliverable 2 implementation - 2026-11-12
+
+Implemented for the agreed Deliverable 2 scope (policy items 5-8) and delivered as
+archive SG-TODO-009.7-D2.zip on 52061a68 at the user's request "Now that stage 4 is
+closed, please implement Deliverable 2 and provide an archive". Publication, covering
+CI and acceptance are pending; no commit SHA, run or acceptance is claimed.
+[560 scope, design, tests and limits](../handover/560-connection-field-feedback.md).
+
+- Persistent, deduplicated background-poll connection warning: one page-lane global
+  `connection.poll` identity with explicit `warning` severity; identical failures add
+  no notice/announcement; a successful refresh resolves only that identity.
+- Near-field validation: explicit `field` selectors on validation/Join tickets mark the
+  control `aria-invalid`, describe it with an adjacent non-live hint and clear on
+  dismissal/resolution/replacement/scope change, re-associating after re-renders.
+- Existing initiative/server gates, endpoints, payloads, combat, permissions, drafts and
+  selections are unchanged; eight fragments under 20,000 bytes; inventory 44.
+
+Ordering note: Deliverable 2 was implemented before the whole Deliverable 1
+integrated evidence review at the user's request; that review/acceptance remains
+open and is not satisfied by Deliverable 2. Acceptance criteria for Deliverable 2:
+reviewed covering CI on the published implementation and explicit user acceptance.
+
 ## Stage 4 accepted close-out - 2026-11-12
 
 Completed and closed for the agreed integration/accessibility hardening and approved
@@ -102,6 +124,8 @@ sequence is:
 1. Deliverable 1 integrated evidence review, documentation and bounded acceptance.
 2. Deliverable 2: persistent connection-loss/recovery feedback, background-polling
    deduplication and validation associated with its affected field/combatant.
+   Implemented in archive SG-TODO-009.7-D2.zip (see above); publication, covering CI
+   and acceptance pending.
 3. Final integrated evidence/corrections, documentation reconciliation and user
    acceptance of 009.7, then overall 009 close-out.
 

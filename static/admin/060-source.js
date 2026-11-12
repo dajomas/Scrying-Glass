@@ -17,9 +17,9 @@ async function applyBackground(background) {
     button.onclick = async () => {
         if (pending) return;
         const feedback = window.scryingAdminFeedback, campaign = campaignData.active, name = input.value.trim();
-        const begin = suffix => feedback.begin({lane: 'page', region: 'battleSetup', operation: 'setup.new' + suffix,
-            target: JSON.stringify(['setup-new', campaign]), label: 'Create battle setup'});
-        const validation = begin('.validation');
+        const begin = (suffix, field) => feedback.begin({lane: 'page', region: 'battleSetup', operation: 'setup.new' + suffix,
+            target: JSON.stringify(['setup-new', campaign]), label: 'Create battle setup', ...(field ? {field} : {})});
+        const validation = begin('.validation', '#setupName');
         const known = (activeCampaign()?.setups || []).map(item => item.toLocaleLowerCase());
         const invalid = !name ? 'Enter a unique battle setup name before creating it.'
             : known.includes(name.toLocaleLowerCase())
@@ -89,8 +89,10 @@ async function submitEntryForm(form, region, operation, prepare) {
     const spec = {region, operation, target: form.id, label: 'Create or import combatants'};
     let controls = [], disabled = [];
     try {
-        const validation = feedback.begin({...spec, operation: operation + '.validation'});
+        const check = field => feedback.begin({...spec, operation: operation + '.validation', ...(field ? {field} : {})});
+        let validation = check(null);
         if (!form.reportValidity()) {
+            validation = check(feedback.field?.(form));
             feedback.publish(validation, {severity: 'error', text: 'Review the required fields and valid values before submitting.'});
             return;
         }
@@ -101,6 +103,7 @@ async function submitEntryForm(form, region, operation, prepare) {
             return;
         }
         if (prepared.error) {
+            if (prepared.focus) validation = check(feedback.field?.(prepared.focus));
             feedback.publish(validation, {severity: 'error', text: prepared.error});
             prepared.focus?.focus();
             return;

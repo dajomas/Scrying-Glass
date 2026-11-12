@@ -5,8 +5,10 @@
     window.scryingJoinReportingInstalled = true;
     const feedback = window.scryingAdminFeedback;
     const owner = Symbol('Join reporting owner');
+    // Deliverable 2: a single-combatant Join error is associated with that combatant's initiative input.
     const joinTicket = (kind, id) => feedback.begin({region: 'global', operation: 'roster.join',
-        target: JSON.stringify([kind, id]), label: 'Join battle'});
+        target: JSON.stringify([kind, id]), label: 'Join battle',
+        ...(typeof id === 'string' ? {field: feedback.initiativeField?.(kind, id)} : {})});
     function showRejection(text, ticket) {
         feedback.publish(ticket, {severity: 'error', text});
     }
