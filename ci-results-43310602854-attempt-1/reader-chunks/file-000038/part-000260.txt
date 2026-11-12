@@ -1,0 +1,31 @@
+dalone Python browser and audit checks	2026-11-12T21:35:52.7577871Z Connection audit: test_monster_candidate_browser.py
+tests	Standalone Python browser and audit checks	2026-11-12T21:35:56.5773605Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-12T21:35:56.5774213Z Ran 7 tests in 3.699s
+tests	Standalone Python browser and audit checks	2026-11-12T21:35:56.5774393Z 
+tests	Standalone Python browser and audit checks	2026-11-12T21:35:56.5774495Z OK
+tests	Standalone Python browser and audit checks	2026-11-12T21:35:56.5791308Z test_monster_candidate_browser.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-12T21:35:56.6108737Z Connection audit: test_monster_candidate_pending_feedback.py
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.2594365Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.2594916Z Ran 8 tests in 6.532s
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.2595041Z 
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.2595123Z OK
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.2595557Z test_monster_candidate_pending_feedback.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.2935328Z Connection audit: test_monster_candidate_selection.py
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.5577350Z Combined monster lookup failed for D&D Beyond
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.5577985Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.5578842Z   File "/tmp/scrying-tests-yfkur1qv/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.5579552Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.5580249Z   File "/tmp/scrying-tests-yfkur1qv/repo/python/scrying_glass_monster_selection.py", line 151, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.5581134Z     lambda: dnd_candidates(context, species),
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.5581558Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.5582381Z   File "/tmp/scrying-tests-yfkur1qv/repo/python/scrying_glass_monster_selection.py", line 66, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.5583308Z     raise ProviderError("D&D Beyond returned an invalid candidate link.")
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.5584225Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond returned an invalid candidate link.
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.5588587Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.5589068Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.5589868Z   File "/tmp/scrying-tests-yfkur1qv/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.5590788Z     hits = context.dnd_monster_candidates(species)
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.5591565Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.5592247Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-12T21:36:03.5592665Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests
