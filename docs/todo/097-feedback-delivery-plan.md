@@ -23,8 +23,12 @@ Delivery order is 2A, 2B, 2C, 2D, 2E.
 
 2A status (2026-11-12): implementation archive prepared on
 1b54a2c4c47644c9ac0f72939043652d818cf337; not yet published, CI-covered or
-accepted. 2B is next after the published 2A SHA is verified.
-[2A scope, evidence and limits](../handover/530-setup-operation-feedback.md).
+accepted.
+
+2B-2E status (2026-11-12): at the user's explicit request delivered together with
+2A in one cumulative archive on the same base, instead of one operation per archive
+with SHA verification between; not yet published, CI-covered or accepted.
+[2A-2E scope, evidence and limits](../handover/530-setup-operation-feedback.md).
 
 Original plan text: These five replace the combined
 Step 2 delivery, not five new requirements. Each is one usable operation end to

@@ -7,11 +7,11 @@ Accepted campaign Step 1 history: [520](520-campaign-operation-feedback.md).
 
 ## SG-TODO-009.7-S1-2A - create a new empty setup - 2026-11-12
 
-Status: implementation archive prepared on base
+Status: implementation prepared on base
 1b54a2c4c47644c9ac0f72939043652d818cf337 (features/perplexity-009.7). Archive
 only: no GitHub commit, push, workflow dispatch, hosted CI result, deployment or
-acceptance is claimed here. The user applies, commits and pushes; the published SHA
-and its covering CI are reviewed before the 2B archive.
+acceptance is claimed here. The user applies, commits and pushes. Delivered together
+with 2B-2E in one cumulative archive (see below).
 
 ### Delivered behavior
 
@@ -42,8 +42,8 @@ and its covering CI are reviewed before the 2B archive.
   response). Obsolete results, errors and refreshes are suppressed. Newer typing in
   the name field is not overwritten. Duplicate clicks are ignored through the POST
   and refresh; the button's prior disabled state is restored.
-- Save, Load/switch, Rename, Delete (2B-2E), setup copy/move and background
-  controls are unchanged and still use their existing feedback paths.
+- Save, Load/switch, Rename and Delete are covered by 2B-2E below; setup copy/move
+  and background controls are unchanged and still use their existing feedback paths.
 
 ### Source identity
 
@@ -74,9 +74,85 @@ authenticated live-server, human visual, screen-reader or exhaustive accessibili
 acceptance. The commit omits [skip ci] so normal push CI runs; no workflow edit or
 dispatch.
 
+## SG-TODO-009.7-S1-2B-2E - save, load/switch, rename, delete - 2026-11-12
+
+Status: implementation prepared together with 2A in one cumulative archive on base
+1b54a2c4c47644c9ac0f72939043652d818cf337, because 2A was not yet published and the
+user explicitly asked for 2B-2E together. This replaces the plan's one-operation-
+per-archive sequencing for this delivery only. Archive only: no commit, push,
+dispatch, hosted CI result, deployment or acceptance is claimed.
+
+### Delivered behavior
+
+- Owner: static/setup-switch.js (separate asset, installed on DOMContentLoaded after
+  the core bundle) now owns `#saveSetup`, `#setupSelect` change, `#loadSetup`,
+  `#renameSetup` and `#deleteSetup`, replacing the 050 legacy handlers at load time.
+  050 is unchanged. The template reference becomes `/static/setup-switch.js?v=1`.
+- One shared guarded lifecycle per operation `<op>` in save, load, rename, delete:
+  page lane, region battleSetup, target `["setup-<op>", <campaign>]`, operations
+  `setup.<op>.validation`, `setup.<op>` and `setup.<op>.refresh`.
+- Validation is a persistent error without a request: "Enter a battle setup name
+  before saving", "Choose a saved battle setup to load", "Choose an active campaign
+  first", "Choose a saved setup to rename", "Choose a saved setup to delete". A valid
+  attempt resolves only its matching validation error.
+- Requests keep exact endpoints and payloads: POST /api/setups/save `{name,
+  campaign}`, POST /api/setups/load `{name, campaign}`, POST /api/setups/rename
+  `{name, new_name, campaign}`, DELETE `/api/setups/<name>?campaign=<id>`. Rejections
+  are persistent `setup.<op>` errors.
+- Success is published right after the completed mutation and expires after three
+  seconds: "Saved setup: X (campaign: Y)", "Loaded battle setup: X", "Renamed battle
+  setup A to B", "Deleted battle setup A; opened [new empty setup ]B".
+- Refresh uses a direct GET /api/campaigns (failures propagate; the error-swallowing
+  `setups()` helper is no longer used here; the `moved` campaign notice is retained)
+  and `load(true, relevant)`. A completed mutation followed by a failed refresh, or a
+  reload that does not apply the expected setup scope, is a separate persistent
+  `setup.<op>.refresh` error advising reload and not repeating the operation.
+  Nothing is replayed.
+- Guards: relevant only while the refresh ticket is current, the active campaign is
+  unchanged and the encounter scope is unchanged or the expected `[campaign,
+  campaign, setup]` transition (save: saved name; load: loaded name; rename: new name
+  when the renamed setup was loaded; delete: server-opened setup). Duplicate clicks
+  are ignored per operation through refresh; prior disabled states are restored.
+- Preserved behavior: save keeps newer typing in the name field; load has no
+  confirmation, an already-loaded no-op and restores the selection on request
+  failure only if the user has not picked something else; rename keeps
+  cancel/blank/unchanged no-ops, updates the name field only if it still held the old
+  name, and reloads state when the loaded setup was renamed; delete keeps the
+  existing confirmation wording and opens the server-selected replacement (or the new
+  empty default).
+
+### Source identity
+
+Fragments, digests, bundle size pin (150,740 bytes from 2A), eight-fragment order
+and the tracked static/admin.js failure marker are unchanged by 2B-2E.
+static/setup-switch.js is 12,340 bytes; only its template URL gains `?v=1`.
+
+### Verification executed locally on the prepared files
+
+- tests/setup-switch.test.cjs adapted: failures are now asserted through the
+  production controller instead of legacy paneNotification calls; payload, no-op,
+  selection restoration, empty selection, no-confirmation and refresh-failure checks
+  remain. It also fails if the error-swallowing `setups()` helper is used.
+- New tests/setup-operations-feedback.test.cjs: 15 Node tests pass.
+- Eight negative controls on static/setup-switch.js were run; seven were detected
+  (campaign guard, refresh-error publication, disabled-state restoration, applied-
+  scope check, unconditional selection restore, duplicate-click guard, target
+  identity). The eighth (a pre-request predicted scope) was not detected because it
+  was redundant and was removed from the source. The original pre-2B
+  static/setup-switch.js fails all new Node and composition tests.
+- New tests/test_setup_operations_feedback_composition.py: 4 full-Admin Chromium
+  scenarios pass with intercepted HTTP.
+- Through tools/run_split_tests.py on the cumulative 2A-2E files: `unittest discover
+  -s tests -p 'test_*.py'` ran 1,559 tests, OK; all 79 JavaScript test files in one
+  `node --test` run: 631 tests pass, 0 fail; the two pytest modules pass (43);
+  the seven standalone scripts exit 0.
+
+Same environment limits as 2A: local Python 3.14 / Node 20 / provisioned Chromium,
+not CI, live-server, human visual or accessibility acceptance. Normal CI (no
+[skip ci]).
+
 ### Remaining
 
-2B save, 2C load/switch (effective static/setup-switch.js owner), 2D rename and 2E
-delete with combined setup regressions; setup copy/move and background controls;
-Stages 3-4; Deliverable 1 acceptance; Deliverable 2; 009.7/009 close-out. 2A
-acceptance follows reviewed covering CI. Test-suite cleanup stays deferred.
+Publication and covering-CI review of the cumulative 2A-2E commit; bounded
+acceptance; setup copy/move and background controls; Stages 3-4; Deliverable 1
+acceptance; Deliverable 2; 009.7/009 close-out. Test-suite cleanup stays deferred.

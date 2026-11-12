@@ -78,9 +78,12 @@ persist in the Battle setup pane until dismissed or resolved by a matching retry
 success appears right after the setup is created and expires after three seconds.
 If the setup was created but refreshing the list/state fails, a separate persistent
 error advises reloading rather than creating the setup again; nothing is replayed.
-Duplicate clicks are ignored through refresh and newer typing is preserved. Save,
-load, rename, delete, copy/move and background feedback are unchanged (2B-2E and
-later Stage 1 work). See [530](docs/handover/530-setup-operation-feedback.md).
+Duplicate clicks are ignored through refresh and newer typing is preserved.
+
+Setup save, load/switch, rename and delete feedback (2B-2E, 2026-11-12) follows the
+same pattern in the Battle setup pane: persistent validation/request errors, early
+three-second success, and a separate persistent no-replay error when the operation
+completed but the refresh failed. Copy/move and background feedback are unchanged. See [530](docs/handover/530-setup-operation-feedback.md).
 
 Legacy source-reading tests use a disposable assembled checkout:
 
