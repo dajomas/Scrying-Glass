@@ -8,6 +8,80 @@ async function applyBackground(background) {
     await load();
 }
 
+// Stage 1 Step 2A: create a new empty setup.
+(() => {
+    const button = document.querySelector('#newSetup'), input = document.querySelector('#setupName');
+    if (!button || typeof button.onclick !== 'function' || !input || typeof activeCampaign !== 'function') return;
+    let pending = false, revision = 0;
+    input.addEventListener('input', () => revision++);
+    button.onclick = async () => {
+        if (pending) return;
+        const feedback = window.scryingAdminFeedback, campaign = campaignData.active, name = input.value.trim();
+        const begin = suffix => feedback.begin({lane: 'page', region: 'battleSetup', operation: 'setup.new' + suffix,
+            target: JSON.stringify(['setup-new', campaign]), label: 'Create battle setup'});
+        const validation = begin('.validation');
+        const known = (activeCampaign()?.setups || []).map(item => item.toLocaleLowerCase());
+        const invalid = !name ? 'Enter a unique battle setup name before creating it.'
+            : known.includes(name.toLocaleLowerCase())
+                ? `A battle setup named “${name}” already exists in ${activeCampaign()?.name || campaign}.` : '';
+        if (invalid) {
+            feedback.publish(validation, {severity: 'error', text: invalid});
+            input.focus();
+            return;
+        }
+        feedback.resolve(validation);
+        if (!confirm(`Discard the current battle setup and create a new empty setup named “${name}”?`)) return;
+        const origin = feedback.encounterContext(), own = revision, ticket = begin(''), refresh = begin('.refresh');
+        const disabled = button.disabled;
+        let result, scope;
+        const relevant = () => {
+            if (!feedback.isCurrent(refresh) || campaignData.active !== campaign) return false;
+            const now = feedback.encounterContext();
+            return (now.epoch === origin.epoch && now.scope === origin.scope) ||
+                Boolean(scope && now.epoch === origin.epoch + 1 && now.scope === scope);
+        };
+        pending = true;
+        button.disabled = true;
+        try {
+            try {
+                result = await request('/api/setups/new', {method: 'POST',
+                    headers: {'Content-Type': 'application/json'}, body: JSON.stringify({name, campaign})});
+            } catch (error) {
+                if (relevant()) feedback.publish(ticket, {severity: 'error', text: error.message});
+                return;
+            }
+            const setup = result.name, owner = result.campaign || campaign;
+            scope = JSON.stringify([owner, owner, setup]);
+            if (!relevant()) return;
+            feedback.publish(ticket, {severity: 'success', text: `Created and saved empty battle setup “${setup}”.`});
+            try {
+                // Newer typing wins; the created setup is still selected and loaded.
+                if (own === revision) input.value = setup;
+                const list = await request('/api/campaigns');
+                if (!relevant()) return;
+                campaignData = list;
+                renderCampaigns();
+                if (list.moved?.length) paneNotification('campaign',
+                    `Moved ${list.moved.length} unassigned setup(s) into campaign Default: ` + list.moved.join(', '));
+                document.querySelector('#setupSelect').value = setup;
+                syncActiveBattleSetupControls();
+                renderActiveBattleSetup();
+                await load(true, relevant);
+                if (relevant()) {
+                    if (feedback.encounterContext().scope !== scope) throw new Error('The created setup state was not applied');
+                    feedback.resolve(refresh);
+                }
+            } catch (error) {
+                if (relevant()) feedback.publish(refresh, {severity: 'error', text: `Battle setup “${setup}” was created and ` +
+                    `saved, but refreshing the view failed: ${error.message}. Reload the page; do not create the setup again to retry the refresh.`});
+            }
+        } finally {
+            button.disabled = disabled;
+            pending = false;
+        }
+    };
+})();
+
 const entryFormPending = new WeakSet();
 async function submitEntryForm(form, region, operation, prepare) {
     if (entryFormPending.has(form)) return;

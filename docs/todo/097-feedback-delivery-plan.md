@@ -19,7 +19,14 @@ Deliverable 1 process steps. No new scope, owner, deadline or acceptance gate.
 | SG-TODO-009.7-S1-2D | Rename a setup | Migrate selection/prompt/request/success and refresh feedback for POST /api/setups/rename. Preserve cancel/blank/unchanged-name no-ops and correct loaded/selected-name updates. |
 | SG-TODO-009.7-S1-2E | Delete a setup | Migrate selection/confirmation/DELETE/success and refresh feedback. Preserve server-selected replacement setup and creation/opening of an empty default when the last setup is deleted. |
 
-Delivery order is 2A, 2B, 2C, 2D, 2E; 2A is next. These five replace the combined
+Delivery order is 2A, 2B, 2C, 2D, 2E.
+
+2A status (2026-11-12): implementation archive prepared on
+1b54a2c4c47644c9ac0f72939043652d818cf337; not yet published, CI-covered or
+accepted. 2B is next after the published 2A SHA is verified.
+[2A scope, evidence and limits](../handover/530-setup-operation-feedback.md).
+
+Original plan text: These five replace the combined
 Step 2 delivery, not five new requirements. Each is one usable operation end to
 end, including persistent actionable validation/request errors, explicit campaign/
 setup/operation/scope identity, matching resolution, three-second pane success,

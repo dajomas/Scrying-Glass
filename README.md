@@ -73,6 +73,15 @@ from the archive together. The final commit omits the CI skip marker for normal 
 CI. Publication, integrated CI review and bounded acceptance remain pending; Stage 1,
 Deliverable 1 and wider 009.7 scope remain open. See the current campaign handover.
 
+Setup creation feedback (2A, 2026-11-12): New setup validation and request errors
+persist in the Battle setup pane until dismissed or resolved by a matching retry;
+success appears right after the setup is created and expires after three seconds.
+If the setup was created but refreshing the list/state fails, a separate persistent
+error advises reloading rather than creating the setup again; nothing is replayed.
+Duplicate clicks are ignored through refresh and newer typing is preserved. Save,
+load, rename, delete, copy/move and background feedback are unchanged (2B-2E and
+later Stage 1 work). See [530](docs/handover/530-setup-operation-feedback.md).
+
 Legacy source-reading tests use a disposable assembled checkout:
 
 ```bash
