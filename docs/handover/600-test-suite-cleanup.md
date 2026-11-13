@@ -35,4 +35,8 @@ The bug-hunt regression modules, feedback Node tests, browser fixtures and provi
 
 ## Result and validation (local, 2026-11-13)
 
-Unittest discovery collects 1638 tests (was 1644) with no import failures; `tests/` holds 265 files (was 280). Executed through `tools/run_split_tests.py`: `tests/audit_connection_lifetime.py` ran every unittest module (179 modules, 0 failed, all tracked SQLite connections closed), and the new or changed modules passed under pytest. Node tests were not changed and not rerun. CI and user acceptance are pending.
+Unittest discovery collects 1638 tests (was 1644) with no import failures; `tests/` holds 265 files (was 280). Executed through `tools/run_split_tests.py`: `tests/audit_connection_lifetime.py` ran every unittest module (179 modules, 0 failed, all tracked SQLite connections closed), and the new or changed modules passed under pytest. Node tests were not changed and not rerun locally.
+
+## SG-TODO-020 close-out - 2026-11-13
+
+User instruction: "Close SG-TODO-020 after CI succeeds". Covering CI: Branch tests [run 43428109475](https://github.com/dajomas/Scrying-Glass/actions/runs/43428109475), attempt 1, for `4460dd0b`: conclusion success. Every step succeeded, including the unittest suite (`Ran 1638 tests`, `OK`), the pytest regression modules (43 passed), the JavaScript tests and the standalone checks. Results were published in `5cdf3586` (`ci-results-43428109475-attempt-1/`). SG-TODO-020 is completed and closed; earlier "CI and user acceptance pending" notes are superseded.

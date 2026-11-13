@@ -74,7 +74,7 @@ This is the index; substantive handover lives in numbered docs/handover sections
 58. [Final Deliverable 1, 009.7 and overall 009 close-out](docs/handover/570-final-0097-close-out.md) - completed/closed for the agreed scope after final user acceptance 2026-11-12 at 22:58 CET; integrated evidence, unchanged code identity, criterion mapping and limits recorded. No new scope, test run, merge or deployment.
 59. [SG-TODO-019 accepted Activity log close-out](docs/handover/580-activity-log-result-details.md#sg-todo-019-accepted-close-out---2026-11-13) - completed/closed for the agreed unit/property/result Details scope; final user acceptance 2026-11-13 at 09:04 CET. Tested 4a1feb47654ea6665862ec44b3f52dc6a27458b8 on features/perplexity; successful Branch tests 43386246710 attempt 1; publication 5b1a0a6270adea9e67ca9ffd1def534b875f1317. Earlier CI/acceptance-pending notes are superseded; evidence limits retained.
 60. [Accepted monster source workstream (SG-TODO-016/017)](docs/handover/590-monster-source-workstream.md#stage-3-accepted-close-out---2026-11-13) - all three agreed stages complete; Stage 2/017 remains accepted and closed; Stage 3/016 final user acceptance 2026-11-13 at 13:02 CET. Tested 7e2579efcd3fc2833498edb1bc6e5093612cbc5e; successful Branch tests 43419501886 attempt 1; publication 49822ee7cacfd3bc4e2bd520b98917aef036db2c. Original live samples, fixtures, failures/corrections and verification limits remain linked; no further Stage 3 acceptance request.
-61. [Test-suite cleanup (SG-TODO-020)](docs/handover/600-test-suite-cleanup.md) - obsolete pins/oracles and duplicates removed, standalone scripts converted to unittest, composition files consolidated, 2026-11-13; CI and acceptance pending.
+61. [Test-suite cleanup (SG-TODO-020)](docs/handover/600-test-suite-cleanup.md) - obsolete pins/oracles and duplicates removed, standalone scripts converted to unittest, composition files consolidated; closed 2026-11-13 after covering CI run 43428109475 succeeded.
 
 <a id="current-state---2026-11-11"></a>
 <a id="current-state---2026-11-12"></a>
@@ -116,7 +116,7 @@ workstream is complete; no further feature acceptance request remains for it.
 
 No agreed 009.7/009, SG-TODO-019 or SG-TODO-016/017 implementation/acceptance action
 remains. The deferred post-009 test-suite cleanup was requested on 2026-11-13 and is
-tracked as SG-TODO-020 ([600](docs/handover/600-test-suite-cleanup.md)); CI and acceptance are pending. Existing 115 order is unchanged. No new owner/deadline, scope,
+completed and closed as SG-TODO-020 ([600](docs/handover/600-test-suite-cleanup.md)). SG-TODO-021 (Playwright end-to-end suite) is open, not started. Existing 115 order is unchanged. No new owner/deadline, scope,
 merge/deployment/release operation or blanket future-write approval.
 
 This SG-TODO-016 close-out changes documentation only and uses [skip ci]. No
