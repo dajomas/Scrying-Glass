@@ -26,7 +26,7 @@ test('existing provider labels are unchanged', () => {
 
 test('candidate popup renders attribution as text only', () => {
     const script = fs.readFileSync(path.join(__dirname, '../static/monster-candidate-selection.js'), 'utf8');
-    assert.match(script, /credit\.textContent = ` \$\{candidate\.attribution\}`/);
+    assert.match(script, /credit\.textContent = details\.childElementCount \? ` · \$\{candidate\.attribution\}` : candidate\.attribution;/);
     assert.doesNotMatch(script, /innerHTML/);
 });
 

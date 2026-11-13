@@ -183,13 +183,38 @@ class Open5eLookupIntegrationTests(unittest.TestCase):
                 self.assertEqual(result["status"], "ok")
                 self.assertEqual(result["providers"][-1], {"provider": "Open5e", "status": "disabled"})
 
-    def test_refresh_does_not_resolve_retained_open5e_identity(self):
+    def test_refresh_skips_retained_open5e_identity_when_disabled(self):
         from python.scrying_glass_monster_refresh_sources import _fetch_exact
         identity = {"monster_source_provider": "Open5e",
                     "monster_source_url": BASE + "/creatures/srd_goblin/"}
+        self.ctx.CONFIG["display"] = {"open5e_lookup": False}
         with patch.object(open5e, "load_json", side_effect=AssertionError("network")):
-            with self.assertRaisesRegex(ValueError, "Open5e monster refresh is not enabled"):
+            with self.assertRaisesRegex(ValueError, "Provider disabled"):
                 _fetch_exact(self.ctx, {"monster_species": "Goblin"}, identity)
+
+    def test_refresh_resolves_retained_open5e_identity_when_enabled(self):
+        from python.scrying_glass_monster_refresh_sources import _fetch_exact
+        self.ctx.CONFIG["display"] = {"open5e_lookup": True}
+        candidate = {"provider": "Open5e", "name": "Goblin", "source": "SRD", "legacy": True,
+                     "source_url": BASE + "/creatures/srd_goblin/", "ac": 15, "hp": "2d6"}
+        other = dict(candidate, source="Other", source_url=BASE + "/creatures/other_goblin/")
+        identity = {"monster_source_provider": "Open5e", "monster_source_url": candidate["source_url"],
+                    "monster_source_name": "Goblin", "monster_source_book": "SRD", "monster_source_legacy": True}
+        with patch.object(ms, "open5e_candidates", return_value=[other, candidate]) as lookup:
+            self.assertIs(_fetch_exact(self.ctx, {"monster_species": "Goblin"}, identity), candidate)
+        lookup.assert_called_once()
+        with patch.object(ms, "open5e_candidates", return_value=[other]):
+            with self.assertRaisesRegex(ValueError, "missing or ambiguous"):
+                _fetch_exact(self.ctx, {"monster_species": "Goblin"}, identity)
+
+    def test_dnd_beyond_and_fivetools_source_attribution(self):
+        html = '<footer><p class="source monster-source">\n  Basic Rules (2014), <span>pg. 138</span>\n </p></footer>'
+        self.assertEqual(ms.dnd_source_attribution(html), "Basic Rules (2014), pg. 138 via D&D Beyond")
+        self.assertIsNone(ms.dnd_source_attribution("<p class='source'>Elsewhere</p>"))
+        self.assertIsNone(ms.dnd_source_attribution('<p class="monster-source"> </p>'))
+        self.assertEqual(ms.fivetools_source_attribution("MM", {"page": 166}), "MM, page 166 via 5e.tools")
+        for page in (None, 0, "166", True, 1.5):
+            self.assertIsNone(ms.fivetools_source_attribution("MM", {"page": page}))
 
 
 class Open5eConfigTests(unittest.TestCase):

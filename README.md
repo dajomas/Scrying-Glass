@@ -254,7 +254,8 @@ remote Open5e images (CC BY-NC 4.0). `display.open5e_lookup` (default `true`) an
 `display.open5e_base_url` (HTTPS, default `https://api.open5e.com/v2`) configure it.
 A superadmin can switch D&D Beyond, 5e.tools and Open5e search on or off on the
 User management page; saved switches override the three configuration keys for
-candidate lookup, image lookup and Refresh. Open5e does not take part in Refresh.
+candidate lookup, image lookup and Refresh. Open5e takes part in Refresh when it is
+enabled. The lookup message and help text name only the enabled providers.
 See [590 Stage 2](docs/handover/590-monster-source-workstream.md#stage-2-delivery---2026-11-13).
 
 The 10 remaining visible monster-row buttons stay on one line with table-local

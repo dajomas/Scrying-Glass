@@ -82,7 +82,7 @@ async function lookupMonsterSpeciesStats() {
     }
 
     setMonsterSpeciesLookupStatus(
-        `Looking up ${species} (D&D Beyond, then 5e.tools)…`,
+        `Looking up ${species} (${window.scryingLookupSources?.order() || 'enabled sources'})…`,
         {ticket: feedback, severity: 'info'},
     );
 

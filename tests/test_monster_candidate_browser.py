@@ -5,7 +5,7 @@ from playwright.sync_api import sync_playwright
 from feedback_browser_fixture import install_feedback
 
 ROOT = Path(__file__).resolve().parents[1]
-UNAVAILABLE_OFFER = ' — Initiative bonus unavailable: No supported explicit source modifier.'
+UNAVAILABLE_OFFER = ' — Initiative bonus unavailable: No supported explicit source modifier. — No image available'
 
 class CandidateBrowserTests(unittest.TestCase):
     def setUp(self):
@@ -164,10 +164,29 @@ class CandidateBrowserTests(unittest.TestCase):
         self.start_candidates([dict(found=True, name='Goblin', species='Goblin', provider='D&D Beyond',
             source=code, legacy=False, ac=12, hp='7', selection_token=code, image_url=image)
             for code, image in [('A', 'https://example.test/goblin.png'), ('B', None), ('C', '')]])
-        notes = self.page.locator('dialog .monster-candidate-image').all_inner_texts()
-        self.assertEqual([note.strip() for note in notes],
+        names = self.page.locator('dialog .monster-candidate-row > button').all_inner_texts()
+        self.assertEqual([name.rsplit(' — ', 1)[1] for name in names],
                          ['Image available', 'No image available', 'No image available'])
         self.assertEqual(self.page.locator('dialog img').count(), 0)
+        self.page.get_by_role('button', name='Cancel', exact=True).click()
+        self.finish()
+
+    def test_source_link_and_attribution_sit_below_the_button(self):
+        self.start_candidates([
+            dict(found=True, name='Goblin', species='Goblin', provider='D&D Beyond', source='X', legacy=True,
+                 ac=12, hp='7', selection_token='a', source_url='https://www.dndbeyond.com/monsters/1-goblin',
+                 attribution='Basic Rules (2014), pg. 138 via D&D Beyond'),
+            dict(found=True, name='Goblin', species='Goblin', provider='5e.tools', source='MM', legacy=True,
+                 ac=12, hp='7', selection_token='b', attribution='MM, page 166 via 5e.tools'),
+            dict(found=True, name='Goblin', species='Goblin', provider='Open5e', source='SRD', ac=12, hp='7',
+                 selection_token='c', source_url='https://api.open5e.com/v2/creatures/srd_goblin/')])
+        details = self.page.locator('dialog .monster-candidate-details')
+        self.assertEqual(details.all_inner_texts(), [
+            'View source · Basic Rules (2014), pg. 138 via D&D Beyond', 'MM, page 166 via 5e.tools', 'View source'])
+        for row in range(3):
+            button = self.page.locator('dialog .monster-candidate-row > button').nth(row).bounding_box()
+            below = details.nth(row).bounding_box()
+            self.assertGreaterEqual(below['y'], button['y'] + button['height'] - 1)
         self.page.get_by_role('button', name='Cancel', exact=True).click()
         self.finish()
 

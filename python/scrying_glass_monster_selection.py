@@ -83,6 +83,7 @@ def dnd_candidates(context, species):
                             "source": "Source book unavailable",
                             "source_url": "https://www.dndbeyond.com" + href,
                             "ac": ac, "hp": hp, "hp_source": hp_source, "image_url": image.url,
+                            **({"attribution": credit} if (credit := dnd_source_attribution(html)) else {}),
                             **dnd_initiative_offer(html)})
         return results
     except ProviderError:
@@ -90,6 +91,44 @@ def dnd_candidates(context, species):
     except Exception as exc:
         LOG.warning("D&D Beyond candidate lookup failed", exc_info=True)
         raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+
+class MonsterSourceText(HTMLParser):
+    """Collect the text of D&D Beyond's <p class="source monster-source"> element."""
+    def __init__(self):
+        super().__init__()
+        self.depth, self.parts, self.done = 0, [], False
+
+    def handle_starttag(self, tag, attrs):
+        if self.depth:
+            self.depth += 1
+        elif not self.done and tag == "p" and "monster-source" in (dict(attrs).get("class") or "").split():
+            self.depth = 1
+
+    def handle_endtag(self, tag):
+        if self.depth:
+            self.depth -= 1
+            self.done = self.done or self.depth == 0
+
+    def handle_data(self, data):
+        if self.depth:
+            self.parts.append(data)
+
+
+def dnd_source_attribution(html):
+    """'<book>, pg. N via D&D Beyond' when the page names its source; otherwise None."""
+    parser = MonsterSourceText()
+    parser.feed(html)
+    text = " ".join(" ".join(parser.parts).split()).replace(" ,", ",")
+    return f"{text} via D&D Beyond" if 0 < len(text) <= 200 else None
+
+
+def fivetools_source_attribution(source_name, monster):
+    """'<code>, page N via 5e.tools' when the entry has a positive integer page."""
+    page = monster.get("page")
+    if type(page) is int and 0 < page < 100000:
+        return f"{source_name}, page {page} via 5e.tools"
+    return None
+
 
 def fivetools_candidates(species, display):
     from .scrying_glass_fivetools_initiative import fivetools_initiative_offer
@@ -133,6 +172,8 @@ def fivetools_candidates(species, display):
                                 "provider": "5e.tools", "source": source_name,
                                 "legacy": source_name == "MM", "source_url": url,
                                 "ac": ac, "hp": hp, "hp_source": hp_source, "image_url": image,
+                                **({"attribution": credit} if (credit := fivetools_source_attribution(
+                                    source_name, monster)) else {}),
                                 **fivetools_initiative_offer(monster)})
                 if len(results) > MAX_CANDIDATES:
                     raise ProviderError("5e.tools returned too many candidates; refine the configured sources.")
@@ -154,7 +195,7 @@ def open5e_candidates(species, display):
 def lookup_candidates(context, species, *, include_open5e=True):
     """Ordered D&D Beyond, 5e.tools, Open5e lookup with saved provider toggles.
 
-    Monster refresh passes include_open5e=False: Open5e refresh is not agreed.
+    Monster refresh includes Open5e when its provider switch is enabled.
     """
     from .scrying_glass_combined_lookup import combined_candidates
     from .scrying_glass_provider_settings import effective_display

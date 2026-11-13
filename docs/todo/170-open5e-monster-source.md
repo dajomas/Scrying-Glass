@@ -50,5 +50,5 @@ Stage 2 implemented 2026-11-13 on the proposed design the user approved for impl
 Remaining for this task:
 
 - CI results for the Stage 2 commit, then user acceptance.
-- Open decision: whether Open5e should take part in monster Refresh. It is excluded in Stage 2 (not agreed); retained Open5e identities report that refresh is not enabled.
+- Refresh: decided by the user on 2026-11-13 ("Yes include it if it is enabled"). Open5e takes part in monster Refresh when its provider switch is enabled; a retained Open5e identity is re-resolved exactly and reports "Provider disabled" when Open5e is off.
 - Name fill-in from a picked monster is delivered with the SG-TODO-016 dropdowns (Stage 3); Stage 2 keeps the existing AC/HP/initiative empty-or-overwrite rules and image snapshot behaviour.

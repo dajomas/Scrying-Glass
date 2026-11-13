@@ -120,6 +120,14 @@ def install_provider_settings_routes(context, app):
         return serialized_handler(context, handler, role="superadmin",
                                   cookie_name=context.ADMIN_SESSION_COOKIE)
 
+    @app.get("/api/monsters/lookup-providers",
+             dependencies=[Depends(context.require("admin", context.ADMIN_SESSION_COOKIE))])
+    async def enabled_lookup_providers():
+        """Enabled provider labels in lookup order, for Admin lookup wording."""
+        display = effective_display(context)
+        return {"providers": [label for _provider, key, default, label in PROVIDERS
+                              if display.get(key, default) is True]}
+
     @app.get("/api/settings/lookup-providers", dependencies=[guard])
     async def lookup_providers():
         return describe(context)

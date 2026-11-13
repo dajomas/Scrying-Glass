@@ -9,6 +9,31 @@
     if (!form || !speciesInput) return;
     const label = overwrite?.closest('label')?.querySelector('span');
     if (label) label.textContent = 'Overwrite AC, HP range and initiative bonus with source values. Missing initiative bonus defaults to 0.';
+    // Enabled lookup providers, in lookup order, for the status message and help text.
+    let providers = ['D&D Beyond', '5e.tools', 'Open5e'];
+    const sourcesHelp = document.querySelector('#monsterLookupSources');
+    function describeProviders() {
+        const names = providers.map(name => name === '5e.tools' ? 'configured 5e.tools sources' : name);
+        if (sourcesHelp) sourcesHelp.textContent = !names.length ? 'no lookup sources'
+            : names.length === 1 ? names[0] : `${names.slice(0, -1).join(', ')} and ${names.at(-1)}`;
+    }
+    function refreshProviders() {
+        if (typeof fetch !== 'function') return Promise.resolve();
+        // Plain fetch: a failed wording refresh must not raise Admin notifications.
+        return fetch('/api/monsters/lookup-providers', {credentials: 'same-origin'})
+            .then(response => response.ok ? response.json() : null).then(result => {
+            if (Array.isArray(result?.providers) && result.providers.every(name => typeof name === 'string')) {
+                providers = result.providers;
+                describeProviders();
+            }
+        }).catch(() => {});
+    }
+    window.scryingLookupSources = {
+        order: () => providers.length ? providers.join(', then ') : 'no lookup sources are enabled',
+        refresh: refreshProviders,
+    };
+    refreshProviders();
+    window.addEventListener('focus', refreshProviders);
     let selected = null;
     let appliedOffer = null;
     let cancelPopup = null;
@@ -134,30 +159,35 @@
                 const row = document.createElement('p');
                 const button = document.createElement('button');
                 button.type = 'button';
+                const image = typeof candidate.image_url === 'string' && candidate.image_url
+                    ? 'Image available' : 'No image available';
                 button.textContent = `${index + 1}. ${candidate.name || candidate.species} — ` +
                     `${monsterSourceLabel(candidate, true)} — ` +
-                    `AC ${candidate.ac ?? '—'}, HP ${candidate.hp ?? '—'} — ${offerText(candidate)}`;
+                    `AC ${candidate.ac ?? '—'}, HP ${candidate.hp ?? '—'} — ${offerText(candidate)} — ${image}`;
                 button.addEventListener('click', () => finish(candidate));
+                row.className = 'monster-candidate-row';
+                row.style.margin = '0 0 .75rem';
                 row.append(button);
-                const imageNote = document.createElement('small');
-                imageNote.className = 'monster-candidate-image';
-                imageNote.textContent = typeof candidate.image_url === 'string' && candidate.image_url
-                    ? ' Image available' : ' No image available';
-                row.append(imageNote);
+                // Source link and attribution sit on their own line below the button.
+                const details = document.createElement('small');
+                details.className = 'monster-candidate-details';
+                details.style.display = 'block';
+                details.style.marginTop = '.25rem';
                 if (candidate.source_url && candidate.source_url.startsWith('https://')) {
                     const link = document.createElement('a');
                     link.href = candidate.source_url;
                     link.target = '_blank';
                     link.rel = 'noopener noreferrer';
-                    link.textContent = ' View source';
-                    row.append(link);
+                    link.textContent = 'View source';
+                    details.append(link);
                 }
                 if (typeof candidate.attribution === 'string' && candidate.attribution) {
-                    const credit = document.createElement('small');
+                    const credit = document.createElement('span');
                     credit.className = 'monster-candidate-attribution';
-                    credit.textContent = ` ${candidate.attribution}`;
-                    row.append(credit);
+                    credit.textContent = details.childElementCount ? ` · ${candidate.attribution}` : candidate.attribution;
+                    details.append(credit);
                 }
+                if (details.childElementCount) row.append(details);
                 dialog.append(row);
             });
             const cancel = document.createElement('button');
@@ -176,6 +206,7 @@
         if (typeof url !== 'string' || !url.startsWith(prefix)) return originalRequest(url, options, ...extra);
         const species = new URLSearchParams(url.split('?')[1]).get('species');
         const current = ++generation;
+        refreshProviders();
         const requestId = monsterSpeciesLookupRequest;
         const originalBonus = bonusInput?.value;
         const originalBonusRevision = bonusRevision;

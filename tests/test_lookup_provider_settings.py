@@ -146,6 +146,18 @@ class ProviderSettingsRouteTests(unittest.TestCase):
         self.assertEqual(self.call("PUT", "root", json={"open5e": "no"}).status_code, 422)
         self.assertFalse(self.client.portal.call(lambda: _async(table_exists, self.storage)))
 
+    def test_admin_reads_enabled_provider_labels_in_lookup_order(self):
+        self.client.cookies.clear()
+        self.assertEqual(self.client.get("/api/monsters/lookup-providers").status_code, 401)
+        self.client.cookies.set("admin", "alice")
+        response = self.client.get("/api/monsters/lookup-providers")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), {"providers": ["D&D Beyond", "5e.tools", "Open5e"]})
+        self.assertEqual(self.call("PUT", "root", json={"fivetools": False}).status_code, 200)
+        self.client.cookies.set("admin", "alice")
+        self.assertEqual(self.client.get("/api/monsters/lookup-providers").json(),
+                         {"providers": ["D&D Beyond", "Open5e"]})
+
 
 class ProviderSettingsPageTests(unittest.TestCase):
     def test_users_page_includes_section_and_script(self):
