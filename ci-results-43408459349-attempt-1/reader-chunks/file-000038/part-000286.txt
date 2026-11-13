@@ -1,0 +1,30 @@
+dtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0522601Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0522854Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0524878Z Combined monster lookup failed for Open5e
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0525534Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0526548Z   File "/tmp/scrying-tests-ai334jve/repo/python/scrying_glass_monster_selection.py", line 190, in open5e_candidates
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0527388Z     return open5e.candidates(species, display, max_candidates=MAX_CANDIDATES)
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0527950Z            ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0528649Z   File "/tmp/scrying-tests-ai334jve/repo/python/scrying_glass_open5e.py", line 171, in candidates
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0529368Z     found = _pages(base + "/creatures/?" + query, base, limit=max_candidates)
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0530047Z   File "/tmp/scrying-tests-ai334jve/repo/python/scrying_glass_open5e.py", line 79, in _pages
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0530536Z     data = load_json(url)
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0531302Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0531873Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0532412Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0532983Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0533550Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0533902Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0534511Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0535046Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0535261Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0535392Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0535666Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0535965Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0536116Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0536741Z   File "/tmp/scrying-tests-ai334jve/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0537296Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0537812Z   File "/tmp/scrying-tests-ai334jve/repo/python/scrying_glass_monster_selection.py", line 211, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-13T10:31:04.0538510Z     extra=(("Open5e", open5e_enabled, lambda: open5e_candidates(species, display)),))
+tests	Standalone Python browser and audit checks	2026-11-

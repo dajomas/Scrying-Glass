@@ -1,0 +1,32 @@
+cks	2026-11-13T10:29:11.0362898Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.0363168Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.0363465Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.0363619Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.0364245Z   File "/tmp/scrying-tests-ai334jve/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.0364782Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.0365310Z   File "/tmp/scrying-tests-ai334jve/repo/python/scrying_glass_monster_selection.py", line 207, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.0365894Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.0366262Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.0366919Z   File "/tmp/scrying-tests-ai334jve/repo/python/scrying_glass_monster_selection.py", line 185, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.0367734Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.0368535Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.0968533Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.0969473Z Ran 4 tests in 0.199s
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.0969655Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.0969766Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.0972058Z test_combined_monster_lookup_application.py: connections opened: 15; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.1509338Z Connection audit: test_compact_combatant_inputs.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.8124141Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.8124640Z Ran 1 test in 0.525s
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.8124934Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.8125091Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.8125911Z test_compact_combatant_inputs.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:11.8419813Z Connection audit: test_connection_lifetime_audit.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:13.3154810Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:13.3155390Z Ran 7 tests in 1.387s
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:13.3155556Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:13.3155644Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:13.3172208Z test_connection_lifetime_audit.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:13.3302465Z Connection audit: test_damage_logic.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:13.5645570Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:13.5646163Z Ran 30 tests in

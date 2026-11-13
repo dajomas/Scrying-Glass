@@ -1,0 +1,27 @@
+	2026-11-13T10:25:52.5353740Z test_third_failure_removed (test_turn_eligibility.TurnTests.test_third_failure_removed) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5540071Z test_zero_hp_monster_excluded (test_turn_eligibility.TurnTests.test_zero_hp_monster_excluded) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5541226Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5541702Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5543872Z ERROR: test_candidate_explicit_order_and_duplicates (test_fivetools_source_configuration.SourceConfigurationTests.test_candidate_explicit_order_and_duplicates)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5545797Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5546674Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5547759Z   File "python/scrying_glass_monster_selection.py", line 175, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5548643Z     **({"attribution": credit} if (credit := fivetools_source_attribution(
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5549219Z                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5549789Z NameError: name 'fivetools_source_attribution' is not defined
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5550112Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5550458Z The above exception was the direct cause of the following exception:
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5551485Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5551705Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5552573Z   File "/tmp/scrying-tests-btgzk0vo/repo/tests/test_fivetools_source_configuration.py", line 121, in test_candidate_explicit_order_and_duplicates
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5553453Z     result = self.candidates('Claw',{'fivetools_sources':['XPHB','DMG','XPHB']})
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5554114Z   File "python/scrying_glass_monster_selection.py", line 185, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5554837Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5555694Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5556169Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5556372Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5557375Z ERROR: test_candidates_enumerate_six_sources_in_order (test_fivetools_source_configuration.SourceConfigurationTests.test_candidates_enumerate_six_sources_in_order)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5558304Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5558692Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:25:52.5559181Z   File "python/scrying_glass_monster_selection.py", line 175, in fivetools_candidates
+tests	Python test suite (including browser

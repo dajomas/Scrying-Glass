@@ -1,0 +1,27 @@
+tion": credit} if (credit := dnd_source_attribution(html)) else {}),
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5098035Z                                              ^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5098541Z NameError: name 'dnd_source_attribution' is not defined
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5098838Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5099203Z The above exception was the direct cause of the following exception:
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5099738Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5100002Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5100841Z   File "/tmp/scrying-tests-btgzk0vo/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5101674Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5102307Z   File "/tmp/scrying-tests-btgzk0vo/repo/python/scrying_glass_monster_selection.py", line 206, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5102994Z     lambda: dnd_candidates(context, species),
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5103342Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5103958Z   File "/tmp/scrying-tests-btgzk0vo/repo/python/scrying_glass_monster_selection.py", line 93, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5104741Z     raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5105567Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5106242Z FAIL
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5152667Z test_secondary_failure_blocks_accessible_primary_without_signing (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_secondary_failure_blocks_accessible_primary_without_signing) ... D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5153941Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5154703Z   File "/tmp/scrying-tests-btgzk0vo/repo/python/scrying_glass_monster_selection.py", line 86, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5155581Z     **({"attribution": credit} if (credit := dnd_source_attribution(html)) else {}),
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5156159Z                                              ^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5156682Z NameError: name 'dnd_source_attribution' is not defined
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5157677Z Combined monster lookup failed for D&D Beyond
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5158448Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5159283Z   File "/tmp/scrying-tests-btgzk0vo/repo/python/scrying_glass_monster_selection.py", line 86, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5160165Z     **({"attribution": credit} if (credit := dnd_source_attribution(html)) else {}),
+tests	Python test suite (including browser fixtures)	2026-11-13T10:23:54.5160739Z                                              ^^^^^^^^^^^^

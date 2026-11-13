@@ -1,0 +1,33 @@
+026-11-13T10:29:18.5116628Z     **({"attribution": credit} if (credit := fivetools_source_attribution(
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5117116Z                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5117606Z NameError: name 'fivetools_source_attribution' is not defined
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5117891Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5118179Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5118493Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5118645Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5119470Z   File "/tmp/scrying-tests-ai334jve/repo/tests/test_fivetools_source_configuration.py", line 107, in test_candidates_enumerate_six_sources_in_order
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5120227Z     result = self.candidates('Claw',{})
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5120776Z   File "python/scrying_glass_monster_selection.py", line 185, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5121674Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5122557Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5123043Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5123290Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5123676Z Ran 12 tests in 0.088s
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5123831Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5123944Z FAILED (errors=2)
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5124493Z test_fivetools_source_configuration.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5252611Z FAIL: test_fivetools_source_configuration.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.5253570Z Connection audit: test_healing_max_hp_cap.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.6137126Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.6137834Z test_healing_max_hp_cap.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.6138589Z Ran 12 tests in 0.003s
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.6139203Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.6139437Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:18.6260579Z Connection audit: test_independent_panel_controls.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:21.5550369Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:21.5551325Z Ran 2 tests in 2.839s
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:21.5551563Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:21.5551709Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:21.5552470Z test_independent_panel_controls.py: connections opened: 1; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:29:21.6166188Z Connection audit: test_initiative_bonus_input.py
+te
