@@ -309,9 +309,10 @@ and live endpoints could not be verified from the patch-build environment.
 ## Open5e monster source and provider switches
 
 Monster lookup also searches the [Open5e API](https://open5e.com/api-docs) after
-D&D Beyond and 5e.tools, across all Open5e documents. Each choice names the
-document and game system, e.g. "5e 2014 Rules, 5th Edition 2014 (Open5e)", with
-publisher and licence attribution. Any provider failure still blocks all candidates.
+D&D Beyond and 5e.tools, across all Open5e documents. Each choice uses the same
+"provider / book [/ legacy]" layout as the other providers, e.g. "Open5e / 5e 2014
+Rules / legacy", with publisher and licence attribution. Within each provider the
+choices are sorted by book. Any provider failure still blocks all candidates.
 Open5e statistics fill AC, HP range and initiative bonus by the same empty-field and
 overwrite rules; most Open5e monsters have no image. Open5e is not used by Refresh.
 

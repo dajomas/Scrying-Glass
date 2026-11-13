@@ -123,14 +123,18 @@ class CandidateBrowserTests(unittest.TestCase):
             source=code, legacy=code=='MM', ac=10+i, hp=str(5+i), selection_token=f'token-{code}',
             source_url=f'https://example.test/books/{code}/Goblin') for i, (code, _) in enumerate(labels, 1)]
         self.start_candidates(candidates)
-        for i, (code, label) in enumerate(labels, 1):
-            text = f'{i}. Goblin — 5e.tools / {label} — AC {10+i}, HP {5+i}' + UNAVAILABLE_OFFER
+        # The popup sorts rows by book label within a provider (SG-TODO-017 follow-up).
+        server = {code: i for i, (code, _) in enumerate(labels, 1)}
+        shown = sorted(labels, key=lambda item: item[1])
+        for row, (code, label) in enumerate(shown, 1):
+            i = server[code]
+            text = f'{row}. Goblin — 5e.tools / {label} — AC {10+i}, HP {5+i}' + UNAVAILABLE_OFFER
             self.assertEqual(self.page.get_by_role('button', name=text, exact=True).count(), 1)
-            link = self.page.locator('dialog a').nth(i-1)
+            link = self.page.locator('dialog a').nth(row-1)
             self.assertEqual(link.get_attribute('href'), f'https://example.test/books/{code}/Goblin')
             self.assertEqual(link.get_attribute('target'), '_blank')
             self.assertEqual(link.get_attribute('rel'), 'noopener noreferrer')
-        self.page.get_by_role('button', name='4. Goblin', exact=False).click()
+        self.page.get_by_role('button', name='6. Goblin — 5e.tools / Player Handbook 2024', exact=False).click()
         self.finish()
         self.assertEqual(self.token(), 'token-XPHB')
         self.assertEqual(self.page.locator('#monsterAc').input_value(), '14')
@@ -144,11 +148,14 @@ class CandidateBrowserTests(unittest.TestCase):
         codes = ['CUSTOM', 'XPBH', '__proto__', '<img src=x onerror=alert(1)>', '']
         self.start_candidates([dict(found=True, name='Goblin', species='Goblin', provider='5e.tools',
             source=code, legacy=True, ac=12, hp='7', selection_token=f'custom-{i}') for i, code in enumerate(codes)])
-        for i, code in enumerate(codes, 1):
-            text = f'{i}. Goblin — 5e.tools / {code or "Source unavailable"} — AC 12, HP 7' + UNAVAILABLE_OFFER
-            self.assertEqual(self.page.get_by_role('button', name=text, exact=True).count(), 1)
+        # Rows are sorted by label; check each literal label appears exactly once.
+        shown = self.page.locator('dialog button').all_inner_texts()
+        for code in codes:
+            suffix = f'. Goblin — 5e.tools / {code or "Source unavailable"} — AC 12, HP 7' + UNAVAILABLE_OFFER
+            self.assertEqual(sum(1 for text in shown if text.split('.', 1)[0].isdigit()
+                                 and text[text.index('.'):] == suffix), 1, code)
         self.assertEqual(self.page.locator('dialog img, dialog script').count(), 0)
-        self.page.get_by_role('button', name='3. Goblin', exact=False).click()
+        self.page.get_by_role('button', name='Goblin — 5e.tools / __proto__ —', exact=False).click()
         self.finish()
         self.assertEqual(self.token(), 'custom-2')
         self.assertTrue(self.page.evaluate('JSON.stringify(lastLookupPayload) === lookupPayloadBefore'))

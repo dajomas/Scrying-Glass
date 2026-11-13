@@ -119,7 +119,18 @@
                 resolve(candidate);
             }
             dialog.append(heading);
-            candidates.forEach((candidate, index) => {
+            // Keep provider order; within a provider, sort rows by book source label.
+            const providerRank = new Map();
+            candidates.forEach(candidate => {
+                if (!providerRank.has(candidate.provider)) providerRank.set(candidate.provider, providerRank.size);
+            });
+            const rows = candidates.map((candidate, position) =>
+                ({candidate, position, label: monsterSourceLabel(candidate, true)}));
+            rows.sort((a, b) =>
+                providerRank.get(a.candidate.provider) - providerRank.get(b.candidate.provider) ||
+                a.label.localeCompare(b.label, undefined, {sensitivity: 'base', numeric: true}) ||
+                a.position - b.position);
+            rows.map(row => row.candidate).forEach((candidate, index) => {
                 const row = document.createElement('p');
                 const button = document.createElement('button');
                 button.type = 'button';

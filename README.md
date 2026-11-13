@@ -245,9 +245,9 @@ Live-provider data/image availability is separate from intercepted-HTTP fixtures
 Open5e (SG-TODO-017 Stage 2, delivered 2026-11-13 with CI pending) is a third
 provider after D&D Beyond and 5e.tools. It searches every Open5e v2 document by
 exact name, validates each returned creature (the API silently ignores unsupported
-filters) and fails closed like the others. Popup choices read, for example,
-"5e 2014 Rules, 5th Edition 2014 (Open5e)" and show document, publisher and
-licence attribution. AC, HP (dice only when the formula reproduces the listed
+filters) and fails closed like the others. Popup choices use the same layout as
+the other providers, for example "Open5e / 5e 2014 Rules / legacy", are sorted by
+book within each provider and show document, publisher and licence attribution. AC, HP (dice only when the formula reproduces the listed
 average) and the explicit `initiative_bonus` map through the existing offer rules;
 missing values stay empty. Most creatures have no illustration; available ones are
 remote Open5e images (CC BY-NC 4.0). `display.open5e_lookup` (default `true`) and
