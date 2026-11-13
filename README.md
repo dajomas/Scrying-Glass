@@ -59,13 +59,17 @@ field mapping. Historical asset lists describe their dated checkpoints only.
 
 No agreed 009.7/009 implementation or acceptance action remains. Deferred test-suite
 cleanup and proposed source-selection/Open5e remain separate work, not closure
-prerequisites or newly started tasks. SG-TODO-019 (Activity log Details name the
-affected unit and resulting value) is implemented with CI pending; see
-[580](docs/handover/580-activity-log-result-details.md). Closure does not authorize merge,
-deployment or a release operation. The [task plan](docs/todo/097-feedback-delivery-plan.md)
-and [parent checklist](docs/todo/090-admin-usability-redesign.md) retain the accepted
-scope and history. Earlier README checkpoint detail is preserved in the
-[pre-final-close-out README](https://github.com/dajomas/Scrying-Glass/blob/2eb3b4d8a35b8a97761c1479f1ef68275652a01d/README.md).
+prerequisites or newly started tasks. SG-TODO-019 is also completed and closed for
+its agreed Activity log Details scope after final user acceptance on 2026-11-13 at
+09:04 CET. Tested implementation 4a1feb47654ea6665862ec44b3f52dc6a27458b8 on
+features/perplexity has successful Branch tests 43386246710 attempt 1, evidence
+publication 5b1a0a6270adea9e67ca9ffd1def534b875f1317. [580 close-out and evidence limits](docs/handover/580-activity-log-result-details.md#sg-todo-019-accepted-close-out---2026-11-13)
+supersedes its earlier CI/acceptance-pending notes; old entries are not rewritten,
+and no new authenticated live-server, human visual or screen-reader review is
+claimed. Closure does not authorize merge, deployment or a release operation.
+The [009.7 task plan](docs/todo/097-feedback-delivery-plan.md) and [parent checklist](docs/todo/090-admin-usability-redesign.md)
+retain their accepted scope/history. Earlier README checkpoint detail is preserved
+in the [pre-final-009-close-out README](https://github.com/dajomas/Scrying-Glass/blob/2eb3b4d8a35b8a97761c1479f1ef68275652a01d/README.md).
 
 Legacy source-reading tests use a disposable assembled checkout:
 

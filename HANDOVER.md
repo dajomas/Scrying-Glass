@@ -72,41 +72,48 @@ This is the index; substantive handover lives in numbered docs/handover sections
 56. [Stage 4 accepted integration/accessibility close-out](docs/handover/550-integration-accessibility-hardening.md#stage-4-accepted-close-out---2026-11-12) - completed/closed for the agreed compatibility retirement and hardening scope; user accepted 2026-11-12 at 21:49 CET. Tested 535af6f350fdcb0a473d4d43133e0d8ac7c0b50e; successful Branch tests 43302214845 attempt 1; evidence 3bfa218c1ecd0b93c3a7278f88dd811ea4380540. Earlier publication/CI/acceptance-pending notes are superseded.
 57. [Deliverable 2 accepted close-out](docs/handover/560-connection-field-feedback.md#deliverable-2-accepted-close-out---2026-11-12) - agreed Admin persistent connection/recovery, polling deduplication and near-field association completed/closed; user accepted 2026-11-12 at 22:43 CET. Tested 8da0657325818c69fc82dc1234995a5146e88ebc; successful Branch tests 43310602854 attempt 1; evidence dbb78d3057a2d38527bd612b948a6566a1a741e3. Historical whole-D1/final-pending notes are superseded by 570.
 58. [Final Deliverable 1, 009.7 and overall 009 close-out](docs/handover/570-final-0097-close-out.md) - completed/closed for the agreed scope after final user acceptance 2026-11-12 at 22:58 CET; integrated evidence, unchanged code identity, criterion mapping and limits recorded. No new scope, test run, merge or deployment.
-59. [Activity log affected unit and resulting value](docs/handover/580-activity-log-result-details.md) - SG-TODO-019 implemented on features/perplexity 2026-11-13 after the 009.7 branch merge; local results recorded; CI validation and user acceptance pending.
+59. [SG-TODO-019 accepted Activity log close-out](docs/handover/580-activity-log-result-details.md#sg-todo-019-accepted-close-out---2026-11-13) - completed/closed for the agreed unit/property/result Details scope; final user acceptance 2026-11-13 at 09:04 CET. Tested 4a1feb47654ea6665862ec44b3f52dc6a27458b8 on features/perplexity; successful Branch tests 43386246710 attempt 1; publication 5b1a0a6270adea9e67ca9ffd1def534b875f1317. Earlier CI/acceptance-pending notes are superseded; evidence limits retained.
 
 <a id="current-state---2026-11-11"></a>
+<a id="current-state---2026-11-12"></a>
 
-## Current state - 2026-11-12
+## Current state - 2026-11-13
 
 Whole Deliverable 1 and Deliverable 2, SG-TODO-009.7 and parent SG-TODO-009 are
-completed and closed following the final 22:58 CET user acceptance/close-out request.
-009.1-009.6, Stages 1-4, global units 4A.1-4A.13 and coordinated previously accepted
-scopes remain closed. [570 final evidence/limits](docs/handover/570-final-0097-close-out.md)
+completed and closed following the final 22:58 CET user acceptance/close-out request
+on 2026-11-12. 009.1-009.6, Stages 1-4, global units 4A.1-4A.13 and coordinated
+previously accepted scopes remain closed. [570 final evidence/limits](docs/handover/570-final-0097-close-out.md)
 is the current authority over dated whole-deliverable/final-review-pending notes in
 earlier records; their evidence, failure histories and limitations remain historical.
 Do not request their acceptance again or treat deferred optional work as a blocker.
 
-Final integrated application revision 8da0657325818c69fc82dc1234995a5146e88ebc is
-covered by successful Branch tests 43310602854 attempt 1; publication
- dbb78d3057a2d38527bd612b948a6566a1a741e3. Direct review confirms main Python
+The final 009.7 integrated application revision 8da0657325818c69fc82dc1234995a5146e88ebc
+is covered by successful Branch tests 43310602854 attempt 1; publication
+ dbb78d3057a2d38527bd612b948a6566a1a741e3. That earlier review confirmed main Python
 1,583 tests OK and pytest 43 passes plus selected feedback/integration/browser
-results. All configured stages succeeded; not every result or screenshot was
-individually reviewed. Git root identities show unchanged application, assets,
-templates, tests, tooling and workflows through 2eb3b4d8a35b8a97761c1479f1ef68275652a01d.
-No new authenticated live-server, human visual, screen-reader or exhaustive
-accessibility verification is inferred from bounded final acceptance.
+results. These are historical 009 counts, not SG-TODO-019 CI counts. Original
+runtime/test/workflow identity and review limits remain under 570.
 
-No agreed 009.7/009 implementation, validation or acceptance action remains.
-Test-suite cleanup remains separate post-009 work; 016/017 remain proposed, not
-closure prerequisites. SG-TODO-019 was implemented 2026-11-13 on features/perplexity
-(the 009.7 branch is merged there); see [580](docs/handover/580-activity-log-result-details.md), CI pending. The agreed sequence in 115
-is unchanged; its dated rationale is history. No new owner/deadline or blanket
-future-write/merge/deployment approval.
+SG-TODO-019 is now completed and closed on features/perplexity after final user
+acceptance at 09:04 CET on 2026-11-13. Implementation
+4a1feb47654ea6665862ec44b3f52dc6a27458b8 has successful covering Branch tests
+43386246710 attempt 1; evidence 5b1a0a6270adea9e67ca9ffd1def534b875f1317.
+[580 close-out](docs/handover/580-activity-log-result-details.md#sg-todo-019-accepted-close-out---2026-11-13)
+retains accepted coverage, matching run/job metadata and limits. Its old pending
+notes are superseded; no further acceptance request remains. No individual review
+of every 019 test log/screenshot, new authenticated live-server, human visual or
+screen-reader verification is claimed. Preparation counts are not relabelled CI.
 
-This final close-out changes documentation only and uses [skip ci]. No application,
-test, template, asset, pin or workflow change, no fresh tests and no separate workflow
-dispatch. Earlier index history is preserved in the [pre-final-close-out index](https://github.com/dajomas/Scrying-Glass/blob/2eb3b4d8a35b8a97761c1479f1ef68275652a01d/HANDOVER.md)
-and numbered handovers. Existing order, links and old anchors are retained.
+No agreed 009.7/009 or SG-TODO-019 implementation/acceptance action remains.
+Test-suite cleanup stays separate post-009 work; 016/017 remain proposed, not newly
+started. The existing 115 sequence is unchanged. No owner/deadline or blanket
+future-write/merge/deployment approval. The earlier user merge of the 009.7 branch
+is history; no merge is performed by this documentation close-out.
+
+This SG-TODO-019 close-out changes documentation only and uses [skip ci]. No
+application, test, template, asset, pin or workflow change, no fresh tests and no
+separate dispatch. Existing section links/order and old anchors remain; earlier
+index detail is preserved in the [pre-019-close-out index](https://github.com/dajomas/Scrying-Glass/blob/5b1a0a6270adea9e67ca9ffd1def534b875f1317/HANDOVER.md).
 
 ## Maintenance
 
