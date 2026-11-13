@@ -28,7 +28,8 @@ class SourceConfigurationTests(unittest.TestCase):
             dict(copy=copy, json=json, yaml=yaml, Path=Path, Any=object))
         self.selection = extracted('python/scrying_glass_monster_selection.py',
             {'ProviderError','fivetools_candidates'},
-            dict(ft=ft, re=re, MAX_CANDIDATES=32, LOG=logging.getLogger(__name__)))
+            dict(ft=ft, re=re, MAX_CANDIDATES=32, LOG=logging.getLogger(__name__),
+                 __name__="python.scrying_glass_monster_selection", __package__="python"))
         self.candidates = self.selection['fivetools_candidates']
         patcher = patch.object(ft, 'urlopen', side_effect=AssertionError('Live network forbidden'))
         network = patcher.start()

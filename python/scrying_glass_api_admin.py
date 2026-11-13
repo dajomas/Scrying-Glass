@@ -1,14 +1,14 @@
 """Compose admin handler groups and register routes in their original order."""
 from __future__ import annotations
 from typing import Any, get_type_hints
-from fastapi import Depends, FastAPI
+from fastapi import Body, Depends, FastAPI
 from .scrying_glass_database_transactions import transactional_handler, serialized_handler
 from .scrying_glass_request_security import same_origin
 from .scrying_glass_admin_pages import AdminPagesMixin
 from .scrying_glass_admin_display import AdminDisplayMixin
 from .scrying_glass_admin_setups import AdminSetupsMixin
 from .scrying_glass_admin_campaigns import AdminCampaignsMixin
-from .scrying_glass_monster_selection import CandidateMonstersMixin as AdminMonstersMixin
+from .scrying_glass_monster_initiative_edit import InitiativeEditMonstersMixin as AdminMonstersMixin
 from .scrying_glass_admin_characters import AdminCharactersMixin
 from .scrying_glass_admin_combatants import AdminCombatantsMixin
 from .scrying_glass_admin_battle import AdminBattleMixin
@@ -44,6 +44,7 @@ ADMIN_ROUTES = (
     ('/api/monsters/import-csv', 'import_monsters_csv', 'POST', True),
     ('/api/characters/import-csv', 'import_characters_csv', 'POST', True),
     ('/api/monsters/{ident}/edit', 'edit_monster', 'POST', True),
+    ('/api/monsters/{ident}/initiative-roll', 'set_monster_initiative_roll', 'PATCH', True),
     ('/api/monsters/{ident}', 'update_monster', 'PATCH', True),
     ('/api/characters', 'create_character', 'POST', True),
     ('/api/characters/{ident}', 'update_character', 'PATCH', True),
@@ -78,6 +79,8 @@ class AdminAPI(AdminPagesMixin, AdminDisplayMixin, AdminSetupsMixin, AdminCampai
         install_user_routes(context, app)
         from .scrying_glass_logout import install_logout
         install_logout(context, app, context.ADMIN_SESSION_COOKIE)
+        from .scrying_glass_monster_refresh_review import install_monster_refresh
+        install_monster_refresh(context, app)
 
     def register_routes(self) -> None:
         """Resolve types and register routes with unchanged paths and authorization."""
@@ -105,3 +108,8 @@ class AdminAPI(AdminPagesMixin, AdminDisplayMixin, AdminSetupsMixin, AdminCampai
             self.app.add_api_route(
                 path, handler, methods=[method], dependencies=dependencies,
             )
+
+    async def set_monster_initiative_roll(self, ident: str, body: dict = Body(...)):
+        """Set raw initiative under the standard authenticated transaction wrapper."""
+        from .scrying_glass_monster_raw_roll import apply_raw_roll
+        return await apply_raw_roll(self.context, ident, body)

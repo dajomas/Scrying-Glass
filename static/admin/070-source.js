@@ -1,28 +1,3 @@
-function openBattleActions(actorId) {
-    if (battleActionsApplying) return;
-    if ((latest.lairs || []).some(x => x.id === actorId)) {
-        window.scryingOpenLairAction?.(actorId);
-        return;
-    }
-    const actor = [...latest.monsters, ...latest.characters]
-        .find(combatant => combatant.id === actorId);
-
-    if (!actor || !actor.active || !actor.in_turn) {
-        message('Only the current active combatant can perform battle actions.');
-        return;
-    }
-
-    document.querySelector('#battleActionNotice').textContent = '';
-    battleActionActorId = actorId;
-    battleStatisticsToken = latest.statistics_token;
-    document.querySelector('#battleActionTitle').textContent =
-        `Battle actions: ${actor.name}`;
-
-    battleActionRows.innerHTML = '';
-    addBattleActionRow(!actor.alive);
-    battleActionModal.hidden = false;
-}
-
 document.querySelector('#addBattleActionTarget').onclick = () => {
     addBattleActionRow();
 };
@@ -67,9 +42,14 @@ battleActionForm.onsubmit = async event => {
         };
     });
 
-    if (!actions.length) { message('No pending actions or reactions. Add a new row to apply more.'); return; }
+    if (!actions.length) {
+        battleActionFeedback('pending', battleActionActorId, 'Battle actions',
+            {severity: 'info', text: 'No pending actions or reactions. Add a new row to apply more.'});
+        return;
+    }
     const applyButton = battleActionForm.querySelector('button[type="submit"]');
     if (applyButton.disabled) return;
+    battleActionFeedback('pending', battleActionActorId, 'Battle actions');
     battleActionsApplying = true;
     // Freeze this batch and the separate start-of-turn form until refresh ends.
     const controls = [...battleActionModal.querySelectorAll('input, select, button')];
@@ -117,6 +97,24 @@ battleActionForm.onsubmit = async event => {
     }
 };
 
+async function resetCombatantWithFeedback(kind, id) {
+    const feedback = window.scryingAdminFeedback;
+    const name = latest?.[kind]?.find(combatant => combatant.id === id)?.name || id;
+    const noun = kind === 'monsters' ? 'monster' : 'character';
+    const ticket = feedback.begin({region: 'global', operation: 'combatant.reset',
+        target: JSON.stringify([kind, id]), label: `Reset ${noun}: ${name}`});
+    try {
+        await request(`/api/combatants/${encodeURIComponent(id)}/reset`, {method: 'POST'});
+    } catch (error) {
+        feedback.publish(ticket, {severity: 'error', text: error.message});
+        return;
+    }
+    if (!feedback.isCurrent(ticket)) return;
+    feedback.resolve(ticket);
+    // Reset succeeded; refresh failures remain owned by load(), not the mutation.
+    await load();
+}
+
 document.addEventListener('click', async event => {
     const button = event.target.closest('button');
 
@@ -138,24 +136,25 @@ document.addEventListener('click', async event => {
         const row = button.closest('tr');
         const name = row?.querySelector('td')?.textContent.trim() || kind;
 
-        if (!confirm(`Remove ${kind} “${name}” from the current encounter?`)) {
+        if (!confirm(`Remove ${kind} “${name}” from the current encounter?`)) return;
+        const feedback = window.scryingAdminFeedback;
+        const ticket = feedback.begin({region: 'global', operation: 'combatant.remove.fallback',
+            target: id, label: `Remove ${kind}: ${name}`});
+        button.disabled = true;
+        let result;
+        try {
+            result = await request(`/api/combatants/${encodeURIComponent(id)}`, {method: 'DELETE'});
+        } catch (error) {
+            if (feedback.isCurrent(ticket)) {
+                feedback.publish(ticket, {severity: 'error', text: error.message});
+                button.disabled = false;
+            }
             return;
         }
-
-        button.disabled = true;
-
-        try {
-            const result = await request(`/api/combatants/${encodeURIComponent(id)}`, {
-                method: 'DELETE',
-            });
-
-            await load();
-            message(`Removed ${result.name}.`);
-        } catch (error) {
-            message(error.message);
-            button.disabled = false;
-        }
-
+        if (!feedback.isCurrent(ticket)) return;
+        feedback.publish(ticket, {severity: 'success', text: `Removed ${result?.name ?? name}.`});
+        // Deletion succeeded; load() owns refresh errors. Do not replay DELETE.
+        await load();
         return;
     }
 
@@ -211,9 +210,7 @@ document.addEventListener('click', async event => {
     }
 
     if (button.dataset.r) {
-        request(`/api/combatants/${encodeURIComponent(id)}/reset`, { method: 'POST' })
-            .then(load)
-            .catch(error => message(error.message));
+        await resetCombatantWithFeedback('monsters', id);
         return;
     }
 
@@ -301,9 +298,7 @@ document.addEventListener('click', async event => {
     }
 
     if (button.dataset.cr) {
-        request(`/api/combatants/${encodeURIComponent(id)}/reset`, { method: 'POST' })
-            .then(load)
-            .catch(error => message(error.message));
+        await resetCombatantWithFeedback('characters', id);
     }
 });
 
@@ -501,112 +496,21 @@ function readTieOrder() {
     return orderedBuckets;
 }
 
+// Install point wrapped by admin-initial-visibility.js (typed feedback, Start collapse).
+// Start/tie confirmation, Next, End and Reset All controls are bound by
+// admin-start-validation.js, battle-actions-next.js, admin-end-feedback.js and
+// admin-reset-all-feedback.js. Errors propagate to the owning caller.
 async function startBattle(order) {
-    try {
-        await request('/api/battle/start', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ order }),
-        });
-
-        await load();
-    } catch (error) {
-        message(error.message);
-    }
+    await request('/api/battle/start', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({order}),
+    });
+    await load();
 }
-
-document.querySelector('#startBattle').onclick = () => {
-    const order = normalOrder();
-
-    if (!order.length && !(latest.lairs || []).some(x => x.active)) {
-        message('Activate at least one turn-eligible participant first');
-        return;
-    }
-
-    if (!tiedBuckets().length) {
-        startBattle(order);
-        return;
-    }
-
-    document.querySelector('#tieGroups').innerHTML = tieUI();
-    document.querySelector('#tieModal').hidden = false;
-};
-
-document.querySelector('#confirmOrder').onclick = () => {
-    try {
-        const orderedTies = readTieOrder();
-        let tieIndex = 0;
-        const order = [];
-
-        for (const bucket of initiativeBuckets()) {
-            if (bucket.initiative !== null && bucket.members.length > 1) {
-                order.push(...orderedTies[tieIndex++]);
-            } else {
-                order.push(...bucket.members.map(combatant => combatant.id));
-            }
-        }
-
-        document.querySelector('#tieModal').hidden = true;
-        startBattle(order);
-    } catch (error) {
-        message(error.message);
-    }
-};
 
 document.querySelector('#cancelOrder').onclick = () => {
     document.querySelector('#tieModal').hidden = true;
-};
-
-document.querySelector('#nextBattle').onclick = async () => {
-    try {
-        await request('/api/battle/next', {
-            method: 'POST',
-        });
-
-        await load();
-    } catch (error) {
-        message(error.message);
-    }
-};
-
-document.querySelector('#endBattle').onclick = async () => {
-    if (!latest?.battle_order?.length) {
-        message('There is no active battle to end.');
-        return;
-    }
-
-    if (!confirm('End the battle without resetting combatants?')) {
-        return;
-    }
-
-    try {
-        await request('/api/battle/end', {
-            method: 'POST',
-        });
-
-        await load();
-        message('Battle ended. Combatants were not reset.');
-    } catch (error) {
-        message(error.message);
-    }
-};
-
-document.querySelector('#resetAll').onclick = async () => {
-    if (!confirm('Reset every monster and character?')) {
-        return;
-    }
-
-    try {
-        await request('/api/battle/reset-all', {
-            method: 'POST',
-        });
-
-        await load();
-    } catch (error) {
-        message(error.message);
-    }
 };
 
 let battleOrderFontAdjustmentPending = false;

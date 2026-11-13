@@ -320,6 +320,12 @@ class StateService:
                             f"{location}.{field} must be a boolean"
                         )
 
+                if is_monster:
+                    from .scrying_glass_monster_initiative import normalize_initiative
+                    try:
+                        item.update(normalize_initiative(item))
+                    except ValueError as exc:
+                        raise ValueError(f"{location}: {exc}") from exc
                 from .scrying_glass_feature_rules import normalize_features
                 normalize_features(item)
                 if item["in_turn"]:
@@ -463,7 +469,7 @@ class StateService:
                     *full.get("lairs", []),
                 ]
                 if item["id"] in visible_ids
-                and item["id"] not in ordered_ids
+                and item.get("id") not in ordered_ids
             ),
             key=self.context.admin_initiative_key,
         )

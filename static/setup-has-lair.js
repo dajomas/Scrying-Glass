@@ -24,13 +24,19 @@
         pending = true;
         checkbox.disabled = true;
         draw(chosen);
+        // SG-TODO-009.7 Stage 3: a persistent battleSetup error per setup; the next success resolves it
+        // (the checkbox itself is the success indication, so no success message is shown).
+        const feedback = window.scryingAdminFeedback;
+        const ticket = feedback.begin({region: 'battleSetup', operation: 'setup.has-lair',
+            target: JSON.stringify([scope.campaign_id, scope.setup]), label: 'Has lair'});
         try {
             await request('/api/setups/has-lair', {
                 method: 'PATCH', headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({has_lair: chosen, scope}),
             });
+            feedback.resolve(ticket);
         } catch (error) {
-            paneNotification('battleSetup', error.message);
+            feedback.publish(ticket, {severity: 'error', text: error.message});
         } finally {
             pending = false;
             await load();

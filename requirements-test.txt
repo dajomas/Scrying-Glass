@@ -1,0 +1,6 @@
+# Test environment: Python 3.11+ (httpx2 requirement); CI uses Python 3.14.
+# Runtime dependencies remain separately declared; this is not a lockfile.
+-r requirements.txt
+httpx2>=2.0.0
+playwright
+pytest

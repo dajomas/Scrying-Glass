@@ -1,0 +1,34 @@
+026-11-12T21:37:19.3480253Z OK
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:19.3480972Z test_technical_documentation_split.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:19.3593779Z Connection audit: test_turn_eligibility.py
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:19.5754833Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:19.5755428Z Ran 8 tests in 0.134s
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:19.5755605Z 
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:19.5755713Z OK
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:19.5761391Z test_turn_eligibility.py: connections opened: 8; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:19.5911703Z Connection audit modules: 184; failed: 0
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:19.5912583Z PASS: all audited modules passed and closed their tracked connections
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:19.8738466Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:19.8739034Z ##[group]tests/audit_log_clear.py
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:20.1977881Z returned count: 1 live entries: 0 reloaded setup entries: 0
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:20.1978578Z PASS: reload/restart persistence, other-setup isolation, background separation and rollback
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:20.2461324Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:20.2461785Z ##[group]tests/audit_round3_check.py
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:20.5970556Z PASS: bounded setup suffixes, unknown state rejection, malformed log rejection, stable log IDs, duplicate log IDs, CSV validation/multiline preservation, monster integer bounds/JSON conversion, zero preservation
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:20.6449479Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:23.3281952Z ##[group]tests/browser_smoke_272cc73.py
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:23.3282395Z {
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:23.3282589Z   "checks": [
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:23.3282902Z     "admin assembled page, scripts, state load and select-all",
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:23.3283326Z     "user-management page load and edit selection",
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:23.3283781Z     "client snapshot, retained card during disconnect, unchanged reconnect preserves DOM identity",
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:23.3284264Z     "client card has a positive layout width at mobile viewport"
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:23.3284538Z   ],
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:23.3284714Z   "page_errors": [],
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:23.3284985Z   "transport": "mocked HTTP/WS, real Chromium rendering"
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:23.3285243Z }
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:23.4251548Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:23.4251975Z ##[group]tests/feedback_browser_fixture.py
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:23.6584119Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-12T21:37:23.6584557Z ##[group]tests/storage_split_reference.py
+tests	Standalone Python browser and audit checks	202

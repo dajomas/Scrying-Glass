@@ -1,4 +1,4 @@
-/* Per-page visibility state; temporary battle visibility does not overwrite preference. */
+/* Compatibility helper retained for callers; the Admin UI now uses an explicit dialog. */
 window.createEncounterVisibility=function(render) {
     let visible=false,inBattle=false,beforeBattle=false;
     function set(value) {visible=Boolean(value);render(visible);}
@@ -19,11 +19,12 @@ window.createEncounterVisibility=function(render) {
     const pane=document.getElementById('encounterFeatures');
     const button=document.getElementById('toggleEncounterTools');
     if(!pane||!button)return;
-    const controller=window.createEncounterVisibility(visible=>{
-        pane.dataset.etVisible=String(visible);pane.hidden=!visible;
-        button.textContent=visible?'Hide encounter tools':'Show encounter tools';
-        button.setAttribute('aria-expanded',String(visible));
-    });
-    button.addEventListener('click',()=>controller.toggle());
-    window.updateEncounterToolsVisibility=state=>controller.update(state);
+    pane.dataset.etVisible='false';pane.hidden=true;
+    button.textContent='Encounter tools';
+    button.setAttribute('aria-expanded','false');
+    button.setAttribute('aria-haspopup','dialog');
+    // Keep aria-controls until navigation records the original opener's view filter.
+    button.addEventListener('click',()=>window.scryingOpenEncounterTools?.());
+    // Battle transitions/refresh must never open a seldom-used popup automatically.
+    window.updateEncounterToolsVisibility=()=>{};
 })();

@@ -8,78 +8,199 @@ async function applyBackground(background) {
     await load();
 }
 
+// Stage 1 Step 2A: create a new empty setup.
+(() => {
+    const button = document.querySelector('#newSetup'), input = document.querySelector('#setupName');
+    if (!button || typeof button.onclick !== 'function' || !input || typeof activeCampaign !== 'function') return;
+    let pending = false, revision = 0;
+    input.addEventListener('input', () => revision++);
+    button.onclick = async () => {
+        if (pending) return;
+        const feedback = window.scryingAdminFeedback, campaign = campaignData.active, name = input.value.trim();
+        const begin = (suffix, field) => feedback.begin({lane: 'page', region: 'battleSetup', operation: 'setup.new' + suffix,
+            target: JSON.stringify(['setup-new', campaign]), label: 'Create battle setup', ...(field ? {field} : {})});
+        const validation = begin('.validation', '#setupName');
+        const known = (activeCampaign()?.setups || []).map(item => item.toLocaleLowerCase());
+        const invalid = !name ? 'Enter a unique battle setup name before creating it.'
+            : known.includes(name.toLocaleLowerCase())
+                ? `A battle setup named “${name}” already exists in ${activeCampaign()?.name || campaign}.` : '';
+        if (invalid) {
+            feedback.publish(validation, {severity: 'error', text: invalid});
+            input.focus();
+            return;
+        }
+        feedback.resolve(validation);
+        if (!confirm(`Discard the current battle setup and create a new empty setup named “${name}”?`)) return;
+        const origin = feedback.encounterContext(), own = revision, ticket = begin(''), refresh = begin('.refresh');
+        const disabled = button.disabled;
+        let result, scope;
+        const relevant = () => {
+            if (!feedback.isCurrent(refresh) || campaignData.active !== campaign) return false;
+            const now = feedback.encounterContext();
+            return (now.epoch === origin.epoch && now.scope === origin.scope) ||
+                Boolean(scope && now.epoch === origin.epoch + 1 && now.scope === scope);
+        };
+        pending = true;
+        button.disabled = true;
+        try {
+            try {
+                result = await request('/api/setups/new', {method: 'POST',
+                    headers: {'Content-Type': 'application/json'}, body: JSON.stringify({name, campaign})});
+            } catch (error) {
+                if (relevant()) feedback.publish(ticket, {severity: 'error', text: error.message});
+                return;
+            }
+            const setup = result.name, owner = result.campaign || campaign;
+            scope = JSON.stringify([owner, owner, setup]);
+            if (!relevant()) return;
+            feedback.publish(ticket, {severity: 'success', text: `Created and saved empty battle setup “${setup}”.`});
+            try {
+                // Newer typing wins; the created setup is still selected and loaded.
+                if (own === revision) input.value = setup;
+                const list = await request('/api/campaigns');
+                if (!relevant()) return;
+                campaignData = list;
+                renderCampaigns();
+                announceMovedSetups(list.moved);
+                document.querySelector('#setupSelect').value = setup;
+                syncActiveBattleSetupControls();
+                renderActiveBattleSetup();
+                await load(true, relevant);
+                if (relevant()) {
+                    if (feedback.encounterContext().scope !== scope) throw new Error('The created setup state was not applied');
+                    feedback.resolve(refresh);
+                }
+            } catch (error) {
+                if (relevant()) feedback.publish(refresh, {severity: 'error', text: `Battle setup “${setup}” was created and ` +
+                    `saved, but refreshing the view failed: ${error.message}. Reload the page; do not create the setup again to retry the refresh.`});
+            }
+        } finally {
+            button.disabled = disabled;
+            pending = false;
+        }
+    };
+})();
+
+const entryFormPending = new WeakSet();
+async function submitEntryForm(form, region, operation, prepare) {
+    if (entryFormPending.has(form)) return;
+    entryFormPending.add(form);
+    const feedback = window.scryingAdminFeedback;
+    const spec = {region, operation, target: form.id, label: 'Create or import combatants'};
+    let controls = [], disabled = [];
+    try {
+        const check = field => feedback.begin({...spec, operation: operation + '.validation', ...(field ? {field} : {})});
+        let validation = check(null);
+        if (!form.reportValidity()) {
+            validation = check(feedback.field?.(form));
+            feedback.publish(validation, {severity: 'error', text: 'Review the required fields and valid values before submitting.'});
+            return;
+        }
+        let prepared;
+        try { prepared = prepare(); }
+        catch (error) {
+            feedback.publish(validation, {severity: 'error', text: error.message});
+            return;
+        }
+        if (prepared.error) {
+            if (prepared.focus) validation = check(feedback.field?.(prepared.focus));
+            feedback.publish(validation, {severity: 'error', text: prepared.error});
+            prepared.focus?.focus();
+            return;
+        }
+        feedback.resolve(validation);
+        const ticket = feedback.begin(spec);
+        const refresh = feedback.begin({...spec, operation: operation + '.refresh'});
+        controls = [...form.querySelectorAll('input, select, textarea, button')];
+        disabled = controls.map(control => control.disabled);
+        controls.forEach(control => { control.disabled = true; });
+        let result;
+        try { result = await prepared.send(); }
+        catch (error) {
+            feedback.publish(ticket, {severity: 'error', text: error instanceof Error
+                ? error.message : 'Unable to create or import combatants.'});
+            return;
+        }
+        if (!feedback.isCurrent(refresh)) return;
+        feedback.publish(ticket, {severity: 'success', text: prepared.success(result)});
+        try {
+            form.reset();
+            await load(true);
+            feedback.resolve(refresh);
+        } catch {
+            feedback.publish(refresh, {severity: 'error', text:
+                'Changes saved, but updating the view failed. Reload the page; do not repeat the submission.'});
+        }
+    } finally {
+        controls.forEach((control, index) => { control.disabled = disabled[index]; });
+        entryFormPending.delete(form);
+    }
+}
+
+document.querySelector('#characterForm').onsubmit = async event => {
+    event.preventDefault();
+    const form = event.currentTarget || event.target;
+    return submitEntryForm(form, 'characters', 'character.create', () => {
+        const payload = new FormData(form);
+        const data = {
+            name: payload.get('name'), color: payload.get('color'), hp: +payload.get('hp'),
+            initiative: payload.get('initiative') === '' ? null : +payload.get('initiative'),
+        };
+        return {
+            send: () => request('/api/characters', {method: 'POST',
+                headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)}),
+            success: () => `Character “${payload.get('name')}” added to the active campaign.`,
+        };
+    });
+};
+
 document.querySelector('#monsterForm').onsubmit = async event => {
     event.preventDefault();
+    const form = event.currentTarget || event.target;
+    return submitEntryForm(form, 'monsters', 'monster.create', () => {
+        const payload = new FormData(form);
+        const start = String(payload.get('hprangestart') ?? '').trim();
+        const end = String(payload.get('hprangeend') ?? '').trim();
+        const error = validateMonsterHpRange(start, end);
+        if (error) {
+            const invalidStart = !start || (!isDiceHpExpression(start) && parseNonNegativeInteger(start) === null);
+            return {error, focus: invalidStart ? form.elements.hprangestart : form.elements.hprangeend};
+        }
+        payload.set('hprangestart', start);
+        payload.set('hprangeend', end);
+        const name = String(payload.get('name') ?? '').trim();
+        return {
+            send: () => request('/api/monsters', {method: 'POST', body: payload}),
+            success: result => {
+                const count = Array.isArray(result) ? result.length : 0;
+                return count === 1 ? `Monster ${name} added to the battle setup.`
+                    : `${count} monsters added to the battle setup.`;
+            },
+        };
+    });
+};
 
-    const form = event.target;
-    const formData = new FormData(form);
-
-    const hpRangeStart = String(
-        formData.get('hprangestart') ?? ''
-    ).trim();
-
-    const hpRangeEnd = String(
-        formData.get('hprangeend') ?? ''
-    ).trim();
-
-    const hpValidationError = validateMonsterHpRange(
-        hpRangeStart,
-        hpRangeEnd,
-    );
-
-    if (hpValidationError) {
-        paneNotification('monsters', hpValidationError);
-
-        const startIsInvalid =
-            !hpRangeStart ||
-            (
-                !isDiceHpExpression(hpRangeStart) &&
-                parseNonNegativeInteger(hpRangeStart) === null
-            );
-
-        (
-            startIsInvalid
-                ? form.elements.hprangestart
-                : form.elements.hprangeend
-        )?.focus();
-
-        return;
-    }
-
-    // Submit normalized strings. In particular, retain a valid dice expression
-    // such as "3d8+9" rather than converting it into Number/NaN.
-    formData.set('hprangestart', hpRangeStart);
-    formData.set('hprangeend', hpRangeEnd);
-
-    const name = String(formData.get('name') ?? '').trim();
-
-    try {
-        const created = await request('/api/monsters', {
-            method: 'POST',
-            body: formData,
-        });
-
-        const count = Array.isArray(created) ? created.length : 0;
-
-        form.reset();
-
-        // Reload the authoritative state and redraw #monsters immediately.
-        await load();
-
-        paneNotification(
-            'monsters',
-            count === 1
-                ? `Monster ${name} added to the battle setup.`
-                : `${count} monsters added to the battle setup.`,
-        );
-    } catch (error) {
-        paneNotification(
-            'monsters',
-            error instanceof Error
-                ? error.message
-                : 'Unable to add monster.',
-        );
-    }
+document.querySelector('#monsterUpload').onsubmit = async event => {
+    event.preventDefault();
+    const form = event.currentTarget || event.target;
+    return submitEntryForm(form, 'battleSetup', 'monster.import.file', () => {
+        const payload = new FormData(form);
+        const file = payload.get('monster_file');
+        const fileName = file instanceof File && file.name ? file.name : 'the uploaded file';
+        const text = String(payload.get('quantity') ?? '1').trim();
+        const quantity = Number(text);
+        if (!/^\d+$/.test(text) || !Number.isInteger(quantity) || quantity < 1 || quantity > 50) {
+            return {error: 'Quantity must be a whole number between 1 and 50.'};
+        }
+        return {
+            send: () => request('/api/monsters/import', {method: 'POST', body: payload}),
+            success: result => {
+                const count = Array.isArray(result) ? result.length : quantity;
+                return count === 1 ? `Monster imported from “${fileName}”.`
+                    : `${count} monsters imported from “${fileName}”.`;
+            },
+        };
+    });
 };
 
 document.querySelector('#monsterSpecies').addEventListener(
@@ -107,137 +228,6 @@ document.querySelector('#monsterSpecies').addEventListener(
         );
     },
 );
-
-document.querySelector('#monsterUpload').onsubmit = async event => {
-    event.preventDefault();
-
-    const form = event.currentTarget;
-    const payload = new FormData(form);
-
-    const uploadedFile = payload.get('monster_file');
-    const fileName = (
-        uploadedFile instanceof File && uploadedFile.name
-    )
-        ? uploadedFile.name
-        : 'the uploaded file';
-
-    const quantityText = String(payload.get('quantity') ?? '1').trim();
-    const requestedQuantity = Number(quantityText);
-
-    if (
-        !/^\d+$/.test(quantityText) ||
-        !Number.isInteger(requestedQuantity) ||
-        requestedQuantity < 1 ||
-        requestedQuantity > 50
-    ) {
-        paneNotification(
-            'battleSetup',
-            'Quantity must be a whole number between 1 and 50.',
-        );
-        return;
-    }
-
-    const submitButtons = Array.from(
-        form.querySelectorAll(
-            'button[type="submit"], button:not([type]), input[type="submit"]',
-        ),
-    );
-
-    const originalDisabledStates = submitButtons.map(
-        button => button.disabled,
-    );
-
-    submitButtons.forEach(button => {
-        button.disabled = true;
-    });
-
-    try {
-        let result;
-
-        try {
-            result = await request('/api/monsters/import', {
-                method: 'POST',
-                body: payload,
-            });
-        } catch (error) {
-            paneNotification(
-                'battleSetup',
-                error instanceof Error
-                    ? error.message
-                    : 'Unable to import monsters.',
-            );
-            return;
-        }
-
-        const importedCount = Array.isArray(result)
-            ? result.length
-            : requestedQuantity;
-
-        const successMessage = importedCount === 1
-            ? `Monster imported from “${fileName}”.`
-            : `${importedCount} monsters imported from “${fileName}”.`;
-
-        form.reset();
-
-        try {
-            await load();
-        } catch (error) {
-            console.error(
-                'Monster import succeeded, but refreshing the admin view failed:',
-                error,
-            );
-
-            paneNotification(
-                'battleSetup',
-                `${successMessage} The view could not be refreshed; ` +
-                'reload the page rather than importing again.',
-            );
-            return;
-        }
-
-        paneNotification(
-            'battleSetup',
-            successMessage,
-        );
-    } finally {
-        submitButtons.forEach((button, index) => {
-            button.disabled = originalDisabledStates[index];
-        });
-    }
-};
-
-document.querySelector('#characterForm').onsubmit = async event => {
-    event.preventDefault();
-
-    const formData = new FormData(event.target);
-
-    try {
-        await request('/api/characters', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: formData.get('name'),
-                color: formData.get('color'),
-                hp: +formData.get('hp'),
-                initiative: formData.get('initiative') === ''
-                    ? null
-                    : +formData.get('initiative'),
-            }),
-        });
-
-        paneNotification(
-            'characters',
-            `Character “${formData.get('name')}” added to the active campaign.`,
-        );
-
-        event.target.reset();
-        await load();
-    } catch (error) {
-        paneNotification('characters', error.message);
-    }
-};
 
 characterBulkAction.addEventListener('change', async () => {
     const action = characterBulkAction.value;
@@ -274,6 +264,13 @@ function activeBattleTargets() {
         .sort((left, right) => left.name.localeCompare(right.name));
 }
 
+function battleActionFeedback(operation, target, label, outcome) {
+    const feedback = window.scryingAdminFeedback;
+    const ticket = feedback.begin({region: 'global', operation: `battle.actions.${operation}`,
+        target: String(target), label});
+    return outcome === undefined ? feedback.resolve(ticket) : feedback.publish(ticket, outcome);
+}
+
 function closeBattleActions() {
     if (battleActionsApplying) return;
     battleActionModal.hidden = true;
@@ -306,10 +303,12 @@ function addBattleActionRow(reaction = false) {
     const targets = activeBattleTargets();
 
     if (!targets.length) {
-        message('There are no active combatants available as targets.');
+        battleActionFeedback('targets', 'active', 'Battle-action targets',
+            {severity: 'error', text: 'There are no active combatants available as targets.'});
         return;
     }
 
+    battleActionFeedback('targets', 'active', 'Battle-action targets');
     const row = document.createElement('div');
     row.className = 'battle-action-row' + (reaction ? ' battle-reaction-row' : '');
 
@@ -369,7 +368,12 @@ function addBattleActionRow(reaction = false) {
 function addStatisticsReductionRow() {
     if (battleActionsApplying) return;
     const targets = activeBattleTargets().filter(x => x.alive);
-    if (!targets.length) { message('There are no living active targets.'); return; }
+    if (!targets.length) {
+        battleActionFeedback('targets', 'living', 'Statistics-reduction targets',
+            {severity: 'error', text: 'There are no living active targets.'});
+        return;
+    }
+    battleActionFeedback('targets', 'living', 'Statistics-reduction targets');
     const row = document.createElement('div');
     row.className = 'battle-action-row statistics-reduction-row';
     row.innerHTML = `
@@ -390,5 +394,32 @@ function addStatisticsReductionRow() {
         <button data-remove-action-row type="button" class="danger">Remove</button>`;
     row.querySelector('[data-remove-action-row]').addEventListener('click',()=>row.remove());
     battleActionRows.appendChild(row);
+}
+
+function openBattleActions(actorId) {
+    if (battleActionsApplying) return;
+    if ((latest.lairs || []).some(x => x.id === actorId)) {
+        window.scryingOpenLairAction?.(actorId);
+        return;
+    }
+    const actor = [...latest.monsters, ...latest.characters]
+        .find(combatant => combatant.id === actorId);
+
+    if (!actor || !actor.active || !actor.in_turn) {
+        battleActionFeedback('eligibility', actorId, `Battle actions: ${actor?.name || actorId}`,
+            {severity: 'error', text: 'Only the current active combatant can perform battle actions.'});
+        return;
+    }
+
+    battleActionFeedback('eligibility', actorId, `Battle actions: ${actor.name}`);
+    document.querySelector('#battleActionNotice').textContent = '';
+    battleActionActorId = actorId;
+    battleStatisticsToken = latest.statistics_token;
+    document.querySelector('#battleActionTitle').textContent =
+        `Battle actions: ${actor.name}`;
+
+    battleActionRows.innerHTML = '';
+    addBattleActionRow(!actor.alive);
+    battleActionModal.hidden = false;
 }
 

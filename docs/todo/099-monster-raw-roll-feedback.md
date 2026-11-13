@@ -1,0 +1,106 @@
+# 099 - SG-TODO-009.7 Stage 2 raw-roll feedback
+
+[Back to TODO index](../../TODO.md)
+
+## Stage 2 close-out - 2026-11-12
+
+Completed and closed within the agreed Stage 2 acceptance. The final tested
+revision c7dce86f810e78858e361ac87cd7b9a8a5788deb has green completed suite=all
+local evidence at a65c0ed4240ad78868cab7cf3e79f132ad3da46a,
+local-tests-c7dce86/run-20261112T054019Z-4vJTEQ. Overall exit and all 77 listed
+command exits are 0; the new combined loaded-Admin scenario explicitly passed.
+Following review, the user accepted Stage 2 and requested close-out on 2026-11-12.
+
+Raw-roll, monster Edit, its composition fixture correction and roll-all are
+therefore closed for their bounded Stage 2 scopes. Direct Node review confirms
+roll-all 15/15; the complete suite and composition evidence cover the final batch.
+[Accepted status, evidence and limits](098-character-edit-feedback.md#stage-2-close-out---2026-11-12).
+The dated entries below remain preparation/delivery history, not outstanding
+Stage 2 work. No earlier failed run is relabelled and no unperformed manual/live/
+accessibility check is claimed. Stage 1, Stages 3-4, both whole deliverables and
+009.7 remain open; no compatibility retirement, merge or deployment is included.
+This documentation-only update uses [skip ci] and executes no new tests or workflows.
+
+## Step 1 - 2026-11-11
+
+Status: in progress; implementation and regression tests prepared, covering
+validation and acceptance pending. Scope is only the effective monster-row
+raw-roll handler. [Implementation and preparation evidence](../handover/490-monster-raw-roll-feedback.md).
+
+Acceptance: persistent operation/target-owned validation and request errors,
+matching recovery with unrelated notices retained, duplicate prevention through
+refresh, stale/superseded-result suppression, unchanged raw-roll transport and
+server arithmetic, and separate mutation-success/refresh-failure reporting without
+a success notice or automatic replay. The focused controller-backed suite covers
+these boundaries; actual browser/full-suite/covering CI review remains required.
+
+Remaining: review normal covering CI and native-browser regressions, correct any
+failures with fresh approval, and obtain bounded acceptance. Do not mark completed
+merely because a commit is pushed. Stage 2, Stage 1, both deliverables and 009.7
+stay open. Monster Edit, roll-all, select-dead, bulk Join pane success, compatibility
+retirement and phase close-out remain separate work. Accepted Join reporting and
+combat/authorization rules are unchanged. No priority, owner or deadline changes.
+
+## Step 1 local validation reconciled - 2026-11-11
+
+Implementation 162a3892ef330c62961b05409d07916af7d8b4e6 has a green completed
+local all-suite publication 50e3123ccec5d8cae2db727271a0ba8c434f3a52,
+run-20261111T203731Z-cNHOP5. This supersedes the historical pending-local-validation
+wording above, not wider acceptance boundaries or unreviewed GitHub Actions status.
+[Evidence scope and review limits](../handover/490-monster-raw-roll-feedback.md#step-1-local-covering-evidence---2026-11-11).
+The user requested proceeding to Step 2 when green; Stage 2 remains in progress.
+
+## Related Step 2 - monster Edit - 2026-11-11
+
+Status: in progress; implementation, reconciled native fixture and focused
+production-controller tests prepared. Syntax/compilation checks passed; Step 2
+runtime/browser/full-suite covering validation and acceptance remain pending.
+Acceptance: preserve FormData, bonus/image behavior and character delegation;
+persistent monster Edit-specific errors/matching recovery; independent targets;
+duplicate prevention through refresh; encounter/session/supersession safety;
+owned cleanup; separate saved/refresh-failed guidance, no replay or success notice.
+[Implementation and pending checks](../handover/490-monster-raw-roll-feedback.md#related-step-2-monster-edit-checkpoint---2026-11-11).
+Review normal covering results and correct failures with fresh approval before
+bounded acceptance. Do not apply Step 1's green run to Step 2 or close Stage 2,
+Stage 1, either deliverable or 009.7. Roll-all, select-dead, bulk Join pane success,
+compatibility retirement and phase close-out remain separate unfinished work.
+
+## Step 2 composition fixture correction - 2026-11-12
+
+Status: in progress; fixture correction drafted, validation pending.
+Expose openEdit in the shared character Edit VM harness without weakening
+the retained delegation and monster FormData assertions.
+
+Acceptance: both previously failing composition tests pass, the monster
+Edit feedback suite remains green, and the complete configured JavaScript
+step passes on the corrective revision. Review the full covering CI result
+before bounded acceptance; do not close Stage 2 or 009.7.
+
+[Diagnosis and correction](../handover/490-monster-raw-roll-feedback.md#step-2-composition-fixture-correction---2026-11-12).
+
+## Roll-all - 2026-11-12
+
+SG-TODO-009.7-S2-ROLL-ALL. Status: in progress; integrated implementation/tests/pins
+and documentation prepared, not yet pushed or accepted. The previous Edit correction
+has green covering run 43150070549 attempt 1 for cd1599e7; its pending-CI notes above
+are historical. That success is not covering evidence for this roll-all draft.
+
+Acceptance: original confirmation/bodyless POST/count text and server behavior;
+explicit scoped monster roll-all identities, persistent matching errors and independent
+notices; 3s pane success before refresh; separate saved/failed-refresh guidance without
+replay; duplicate protection through mutation/refresh, stale/superseded suppression and
+restored button state. Fifteen focused complete-fragment/controller regressions and
+four negative controls passed preparation checks; full Admin/browser/full-suite and
+covering validation remain pending. Review equivalent covering results and resolve
+actual failures before bounded acceptance. Keep existing guards/assertions intact.
+
+[Implementation, pins and evidence limits](../handover/490-monster-raw-roll-feedback.md#covering-ci-reconciled-and-roll-all-preparation---2026-11-12).
+Select-dead and bulk Join pane success are next separate steps; no Stage 1, Stages 3-4,
+Deliverable 2, compatibility retirement, deferred test cleanup or 009.7 closure is
+included. No changed priority/owner/deadline or blanket external-write approval.
+
+CI staging instruction - 2026-11-12: use [skip ci] for this and remaining intermediate
+Stage 2 pushes until all Stage 2 changes and updates are pushed. Do not change or
+separately dispatch the workflow. Arrange combined covering validation after that
+batch; until then the new work remains delivered/prepared with validation pending,
+not accepted on the strength of the earlier green revision.

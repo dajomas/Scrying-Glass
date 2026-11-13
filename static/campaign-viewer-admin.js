@@ -9,7 +9,12 @@
         const notice = document.getElementById('campaignViewerNotice');
         const save = document.getElementById('saveCampaignViewers');
         const selector = document.getElementById('campaignSelect');
-        let campaign = null, generation = 0, saving = false;
+        let campaign = null, generation = 0, saving = false, saved = null;
+        /* SG-TODO-009.7 Stage 3: outcomes use the managed campaignViewer region (campaignViewerFeedback) on
+         * the page lane, keyed by the selected campaign. campaignViewerNotice keeps progress/guidance text. */
+        const feedback = () => window.scryingAdminFeedback;
+        const ticket = (operation, target, label) => feedback().begin({lane: 'page', region: 'campaignViewer',
+            operation, target: JSON.stringify([operation, target]), label});
 
         async function api(url, options = {}) {
             const response = await fetch(url, {cache: 'no-store', ...options});
@@ -44,6 +49,8 @@
 
         function draw(data) {
             campaign = {...data.campaign, id: String(data.campaign.id)};
+            // A save outcome belongs to its campaign; drop it once another campaign is shown.
+            if (saved && saved.id !== campaign.id) {feedback().resolve(saved.ticket);saved = null;}
             heading.textContent = 'Viewer access: ' + campaign.name;
             list.replaceChildren();
             for (const user of data.users) {
@@ -63,11 +70,14 @@
 
         async function refresh(force = false) {
             const request = ++generation;
+            // One load slot: a newer refresh supersedes this ticket, so stale loads cannot publish.
+            const loading = ticket('viewer.load', 'selected', 'Load viewer access');
             try {
                 const campaigns = await api('/api/campaigns');
                 if (request !== generation) return;
                 const target = selectedCampaign(campaigns);
                 if (!target) {
+                    feedback().resolve(loading);
                     clear('No campaigns are assigned to your account. Ask a superadmin to assign a campaign.');
                     return;
                 }
@@ -80,8 +90,9 @@
                     throw new Error('Unexpected viewer-access response; reload the campaign list.');
                 }
                 draw(data);
+                feedback().resolve(loading);
             } catch (error) {
-                if (request === generation) clear(error.message);
+                if (request === generation) {clear('');feedback().publish(loading, {severity: 'error', text: error.message});}
             }
         }
 
@@ -91,15 +102,21 @@
             const ids = [...list.querySelectorAll('input:checked')].map(input => input.value);
             saving = true;save.disabled = true;setInputsDisabled(true);
             notice.textContent = 'Saving viewer access…';
+            const own = ticket('viewer.save', target, 'Save viewer access');
+            saved = {id: target, ticket: own};
             try {
                 await api(`/api/campaigns/${encodeURIComponent(target)}/viewers`, {
                     method: 'PUT', headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({user_ids: ids}),
                 });
-                if (campaign?.id === target) notice.textContent = 'Viewer access saved.';
+                // The legacy rule stands: no outcome is reported once another campaign is selected.
+                if (campaign?.id === target) feedback().publish(own, {severity: 'success', text: 'Viewer access saved.'});
+                else feedback().resolve(own);
             } catch (error) {
-                if (campaign?.id === target) notice.textContent = error.message;
+                if (campaign?.id === target) feedback().publish(own, {severity: 'error', text: error.message});
+                else feedback().resolve(own);
             } finally {
+                if (notice.textContent === 'Saving viewer access…') notice.textContent = '';
                 saving = false;save.disabled = !campaign;setInputsDisabled(false);
             }
         };

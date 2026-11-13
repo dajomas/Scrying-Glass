@@ -1,18 +1,18 @@
-"""Production static adapter via fixture apps, not authenticated server startup."""
+"""Production static adapter via HTTPX2 fixture apps, not server startup."""
 import ast
 from pathlib import Path
 import shutil
 import tempfile
 import unittest
+import httpx2
 from fastapi import FastAPI
-from fastapi.testclient import TestClient
 from python.scrying_glass_admin_source import ADMIN_SCRIPT_PARTS, read_admin_script
 from python.scrying_glass_admin_static import AdminScriptStaticFiles
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
-class AdminSplitRuntimeTests(unittest.TestCase):
+class AdminSplitRuntimeTests(unittest.IsolatedAsyncioTestCase):
     def setUp(self):
         temporary = tempfile.TemporaryDirectory()
         self.addCleanup(temporary.cleanup)
@@ -22,45 +22,51 @@ class AdminSplitRuntimeTests(unittest.TestCase):
         (self.static / "other.css").write_text("body{color:red}")
         self.bundle = read_admin_script(self.static)
 
-    def client(self):
+    async def client(self):
         app = FastAPI()
         adapter = AdminScriptStaticFiles(directory=str(self.static))
         self.addCleanup(adapter._admin_bundle_directory.cleanup)
         app.mount("/static", adapter)
-        client = TestClient(app)
-        self.addCleanup(client.close)
+        client = httpx2.AsyncClient(
+            transport=httpx2.ASGITransport(app=app),
+            base_url="http://testserver",
+        )
+        await client.__aenter__()
+        self.addAsyncCleanup(client.__aexit__, None, None, None)
         return client, adapter
 
-    def test_get_head_conditional_range_and_delegation(self):
+    async def test_get_head_conditional_range_and_delegation(self):
         for interface in ("admin", "client"):
             with self.subTest(interface=interface):
-                client, adapter = self.client()
-                response = client.get("/static/admin.js?_cb=test")
+                client, adapter = await self.client()
+                response = await client.get("/static/admin.js?_cb=test")
+                self.assertIsInstance(client, httpx2.AsyncClient)
+                self.assertIsInstance(response, httpx2.Response)
                 self.assertEqual(response.status_code, 200)
                 self.assertEqual(response.content, self.bundle)
                 self.assertIn("javascript", response.headers["content-type"])
-                head = client.head("/static/admin.js")
+                head = await client.head("/static/admin.js")
                 self.assertEqual(head.status_code, 200)
                 self.assertEqual(head.content, b"")
                 self.assertEqual(int(head.headers["content-length"]), len(self.bundle))
-                cached = client.get("/static/admin.js", headers={"If-None-Match": response.headers["etag"]})
+                cached = await client.get("/static/admin.js", headers={"If-None-Match": response.headers["etag"]})
                 self.assertEqual(cached.status_code, 304)
-                ranged = client.get("/static/admin.js", headers={"Range": "bytes=10-31"})
+                ranged = await client.get("/static/admin.js", headers={"Range": "bytes=10-31"})
                 self.assertEqual(ranged.status_code, 206)
                 self.assertEqual(ranged.content, self.bundle[10:32])
-                self.assertEqual(client.get("/static/other.css").text, "body{color:red}")
-                self.assertEqual(client.get("/static/missing.js").status_code, 404)
-                self.assertEqual(client.get("/static/%2e%2e/secret.txt").status_code, 404)
+                self.assertEqual((await client.get("/static/other.css")).text, "body{color:red}")
+                self.assertEqual((await client.get("/static/missing.js")).status_code, 404)
+                self.assertEqual((await client.get("/static/%2e%2e/secret.txt")).status_code, 404)
 
-    def test_refresh_and_stable_unchanged_mtime(self):
-        client, adapter = self.client()
-        before = client.get("/static/admin.js")
+    async def test_refresh_and_stable_unchanged_mtime(self):
+        client, adapter = await self.client()
+        before = await client.get("/static/admin.js")
         mtime = adapter._admin_bundle_path.stat().st_mtime_ns
-        self.assertEqual(client.get("/static/admin.js").content, self.bundle)
+        self.assertEqual((await client.get("/static/admin.js")).content, self.bundle)
         self.assertEqual(adapter._admin_bundle_path.stat().st_mtime_ns, mtime)
         last = self.static / "admin" / ADMIN_SCRIPT_PARTS[-1]
         last.write_bytes(last.read_bytes() + b"\n")
-        after = client.get("/static/admin.js")
+        after = await client.get("/static/admin.js")
         self.assertEqual(after.content, self.bundle + b"\n")
         self.assertNotEqual(before.headers["etag"], after.headers["etag"])
 

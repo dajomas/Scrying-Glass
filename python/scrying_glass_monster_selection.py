@@ -25,33 +25,19 @@ class ProviderError(Exception):
     """Failed or incomplete lookup, not a successful zero-match search."""
 
 def issue_token(candidate):
-    payload = json.dumps({"species": candidate["species"],
-                          "image_url": candidate.get("image_url"),
-                          "issued": int(time.time())}, separators=(",", ":")).encode()
-    data = base64.urlsafe_b64encode(payload).decode()
-    return data + "." + hmac.new(_KEY, data.encode(), hashlib.sha256).hexdigest()
+    from .scrying_glass_monster_source_snapshot import issue_selection
+    return issue_selection(candidate, _KEY, now=time.time())
+
+
+def selected_snapshot(token, species):
+    from .scrying_glass_monster_source_snapshot import read_selection
+    return read_selection(token, species, _KEY, now=time.time(), max_age=TOKEN_AGE,
+                          image_validator=ft.https_url)
+
 
 def selected_image(token, species):
-    """Validate a snapshot without fetching any browser-supplied URL."""
-    if token == "manual":
-        return None
-    try:
-        if not isinstance(token, str) or len(token) > 8192:
-            raise ValueError()
-        data, signature = token.rsplit(".", 1)
-        expected = hmac.new(_KEY, data.encode(), hashlib.sha256).hexdigest()
-        if not hmac.compare_digest(signature, expected):
-            raise ValueError()
-        payload = json.loads(base64.urlsafe_b64decode(data))
-        age = time.time() - payload["issued"]
-        if age < -60 or age > TOKEN_AGE or payload["species"] != species.strip():
-            raise ValueError()
-        image = payload.get("image_url")
-        if image is not None and not ft.https_url(image):
-            raise ValueError()
-        return image
-    except Exception as exc:
-        raise ValueError("Monster selection expired or invalid; repeat lookup or use manual entry.") from exc
+    """Keep the existing image-only interface; never fetch a browser-supplied URL."""
+    return selected_snapshot(token, species)[0]
 
 class MonsterImage(HTMLParser):
     def __init__(self):
@@ -64,10 +50,11 @@ class MonsterImage(HTMLParser):
             src = attrs.get("src")
             if src:
                 url = urljoin("https://www.dndbeyond.com", src)
-                if ft.https_url(url):
+                if ft.https_url(src):
                     self.url = url
 
 def dnd_candidates(context, species):
+    from .scrying_glass_dnd_initiative_offer import dnd_initiative_offer
     results, seen = [], set()
     try:
         hits = context.dnd_monster_candidates(species)
@@ -95,15 +82,17 @@ def dnd_candidates(context, species):
                             "provider": "D&D Beyond", "legacy": legacy,
                             "source": "Source book unavailable",
                             "source_url": "https://www.dndbeyond.com" + href,
-                            "ac": ac, "hp": hp, "hp_source": hp_source, "image_url": image.url})
+                            "ac": ac, "hp": hp, "hp_source": hp_source, "image_url": image.url,
+                            **dnd_initiative_offer(html)})
         return results
     except ProviderError:
         raise
     except Exception as exc:
         LOG.warning("D&D Beyond candidate lookup failed", exc_info=True)
-        raise ProviderError("D&D Beyond lookup failed; no fallback was attempted. Enter stats manually or retry.") from exc
+        raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
 
 def fivetools_candidates(species, display):
+    from .scrying_glass_fivetools_initiative import fivetools_initiative_offer
     try:
         root = display.get("fivetools_data_base_url", "https://5e.tools/data/bestiary").rstrip("/")
         sources = ft.configured_sources(display)
@@ -116,19 +105,23 @@ def fivetools_candidates(species, display):
         for source in dict.fromkeys(sources):
             filename = index.get(source)
             if filename is None:
-                continue
+                raise ValueError("Configured source is missing from the provider index")
             if not isinstance(filename, str) or not re.fullmatch(r"[A-Za-z0-9_.-]+\.json", filename):
                 raise ValueError("Invalid source filename")
             data = ft.load_json(root + "/" + filename)
             if not isinstance(data, dict) or not isinstance(data.get("monster"), list):
                 raise ValueError("Invalid source data")
             for monster in data["monster"]:
-                if not isinstance(monster, dict) or ft.normalized(monster.get("name", "")) != ft.normalized(species):
+                if not isinstance(monster, dict):
+                    raise ValueError("Invalid monster entry")
+                if ft.normalized(monster.get("name", "")) != ft.normalized(species):
                     continue
                 ac, hp, hp_source = ft.stats(monster)
                 if ac is None and hp is None:
                     continue
                 source_name = str(monster.get("source", source))
+                if source_name not in sources:
+                    continue
                 url = "https://5e.tools/bestiary.html#" + ft.quote(
                     str(monster.get("name", "")).lower() + "_" + source_name.lower(), safe="")
                 image = ft.image_url(monster, display)
@@ -139,7 +132,8 @@ def fivetools_candidates(species, display):
                 results.append({"found": True, "name": str(monster["name"]), "species": species,
                                 "provider": "5e.tools", "source": source_name,
                                 "legacy": source_name == "MM", "source_url": url,
-                                "ac": ac, "hp": hp, "hp_source": hp_source, "image_url": image})
+                                "ac": ac, "hp": hp, "hp_source": hp_source, "image_url": image,
+                                **fivetools_initiative_offer(monster)})
                 if len(results) > MAX_CANDIDATES:
                     raise ProviderError("5e.tools returned too many candidates; refine the configured sources.")
         return results
@@ -150,16 +144,23 @@ def fivetools_candidates(species, display):
         raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
 
 def lookup_candidates(context, species):
+    from .scrying_glass_combined_lookup import combined_candidates
+    from .scrying_glass_source_bonus_offer import issue_bonus_offer
     display = context.CONFIG["display"]
-    try:
-        results = dnd_candidates(context, species) if display.get("dndbeyond_image_lookup", True) else []
-        if not results and display.get("fivetools_fallback", True):
-            results = fivetools_candidates(species, display)
-        for candidate in results:
-            candidate["selection_token"] = issue_token(candidate)
-        return {"status": "ok", "candidates": results}
-    except ProviderError as exc:
-        return {"status": "error", "candidates": [], "reason": str(exc)}
+    result = combined_candidates(
+        lambda: dnd_candidates(context, species),
+        lambda: fivetools_candidates(species, display),
+        dnd_enabled=display.get("dndbeyond_image_lookup", True),
+        fivetools_enabled=display.get("fivetools_fallback", True),
+        max_candidates=MAX_CANDIDATES)
+    if result["status"] != "ok":
+        return result
+    for candidate in result["candidates"]:
+        candidate["selection_token"] = issue_token(candidate)
+        offer = issue_bonus_offer(candidate, _KEY, now=time.time())
+        if offer is not None:
+            candidate["initiative_bonus_offer_token"] = offer
+    return result
 
 class CandidateMonstersMixin(AdminMonstersMixin):
     """Extend creation with an optional signed image snapshot."""
@@ -174,26 +175,60 @@ class CandidateMonstersMixin(AdminMonstersMixin):
                              ac: int = Form(...), hprangestart: str = Form(...),
                              hprangeend: str = Form(''), color: str = Form(...),
                              quantity: int = Form(1, ge=1, le=50),
-                             image: UploadFile | None = File(None), selection_token: str = Form('')):
+                             image: UploadFile | None = File(None), selection_token: str = Form(''),
+                             initiative_bonus: str = Form(''),
+                             initiative_bonus_offer_token: str = Form('')):
+        from fastapi.params import Form as FormParameter
+        from .scrying_glass_initiative_input import creation_bonus_fields
+        from .scrying_glass_source_bonus_offer import read_bonus_offer
+        from .scrying_glass_monster_source_snapshot import FIELDS as SOURCE_FIELDS
+        if isinstance(initiative_bonus, FormParameter):
+            initiative_bonus = initiative_bonus.default
+        if isinstance(initiative_bonus_offer_token, FormParameter):
+            initiative_bonus_offer_token = initiative_bonus_offer_token.default
+        try:
+            bonus_fields = creation_bonus_fields(initiative_bonus)
+            if initiative_bonus_offer_token:
+                offered = read_bonus_offer(initiative_bonus_offer_token, monster_species, _KEY,
+                                          now=time.time(), max_age=TOKEN_AGE)
+                _, identity = selected_snapshot(selection_token, monster_species)
+                offered_identity = {key: value for key, value in offered.items() if key in SOURCE_FIELDS}
+                if not identity or identity != offered_identity:
+                    raise ValueError("Initiative offer does not match the selected source; repeat lookup.")
+                if (bonus_fields["initiative_bonus_origin"] == "default"
+                        or bonus_fields["initiative_bonus"] != offered["initiative_bonus"]):
+                    raise ValueError("Initiative bonus changed; use manual entry or repeat offer review.")
+                bonus_fields = {"initiative_bonus": offered["initiative_bonus"],
+                                "initiative_bonus_origin": "source"}
+        except ValueError as exc:
+            raise self.context.HTTPException(422, str(exc)) from exc
         next_hp = self.context.hp_value_factory(hprangestart, hprangeend)
-        fields = {"name": name.strip(), "monster_species": monster_species.strip(), "ac": ac}
+        fields = {"name": name.strip(), "monster_species": monster_species.strip(), "ac": ac,
+                  "initiative_roll": None, **bonus_fields}
         from .scrying_glass_monster_names import numbered_monster_name
         try:
             names = [numbered_monster_name(fields["name"], quantity, number) for number in range(1, quantity + 1)]
         except ValueError as exc:
             raise self.context.HTTPException(422, str(exc)) from exc
         working_state = self.context.STATE
+        source_fields = {}
         if image is not None and image.filename:
             image_url = self.context.save_image(image)
+            if selection_token:
+                try:
+                    _, source_fields = selected_snapshot(selection_token, fields["monster_species"])
+                except ValueError:
+                    pass  # Preserve upload precedence; invalid tokens cannot supply identity.
         elif selection_token:
             try:
-                image_url = selected_image(selection_token, fields["monster_species"])
+                image_url, source_fields = selected_snapshot(selection_token, fields["monster_species"])
             except ValueError as exc:
                 raise self.context.HTTPException(422, str(exc)) from exc
         else:
             image_url = await asyncio.to_thread(self.context.dnd_image, fields["monster_species"])
         if self.context.STATE is not working_state:
             raise self.context.HTTPException(409, "The encounter changed while this request was running. Retry.")
+        fields.update(source_fields)
         created = [self.context.make_monster({**fields, "name": item, "hp": next_hp()}, color, None, image_url) for item in names]
         working_state["monsters"].extend(created)
         await self.context.combatants_changed(monsters=True, characters=False)

@@ -3,6 +3,7 @@ import copy
 import json
 import unittest
 from pathlib import Path
+from feedback_browser_fixture import install_feedback
 try:
     from playwright.sync_api import sync_playwright
 except ImportError:
@@ -17,7 +18,7 @@ class StatisticsLayoutTests(unittest.TestCase):
         modal=markup[markup.index('  <div id="statisticsModal"'):]
         css='\n'.join((ROOT/p).read_text() for p in ('static/glass-theme.css','static/admin.css','static/statistics.css'))
         script=(ROOT/'static/statistics.js').read_text()
-        state=dict(active_campaign_id='1',active_setup={'name':'test'},statistics_token='token',monsters=[],characters=[dict(id='c',name='Johan',hp=0,max_hp=0,base_max_hp=1,effects=[dict(mechanical=dict(version=1,stat='max_hp',amount=9))])])
+        state=dict(active_campaign_id='1',active_setup={'name':'test','campaign_id':'1'},statistics_token='token',monsters=[],characters=[dict(id='c',name='Johan',hp=0,max_hp=0,base_max_hp=1,effects=[dict(mechanical=dict(version=1,stat='max_hp',amount=9))])])
         requests=[]
         html='<html><head><style>'+css+'</style></head><body><button data-statistics="c">Restore statistics</button>'+modal+'<script>'+script+'</script></body></html>'
         with sync_playwright() as p:
@@ -36,6 +37,9 @@ class StatisticsLayoutTests(unittest.TestCase):
                     request_route.fulfill(content_type='text/html',body=html)
             page.route('http://sg.test/**',route)
             page.goto('http://sg.test/')
+            install_feedback(page)
+            page.evaluate('''state => {const a=window.scryingAdminFeedback;
+                if(!a.observeState(state,a.stateRequest()))throw new Error('Invalid statistics fixture scope');}''',state)
             page.click('[data-statistics]')
             page.wait_for_selector('#statisticsFields tbody tr')
             self.assertEqual(page.locator('#statisticsFields tbody tr').count(),1)
@@ -62,7 +66,7 @@ class StatisticsLayoutTests(unittest.TestCase):
             self.assertTrue(page.locator('#statisticsRestoreControls').is_hidden())
             self.assertTrue(page.locator('#statisticsSaveBases').is_visible())
             page.fill('[data-base-stat="dexterity"]','14')
-            page.evaluate('window.scryingStatisticsState({active_campaign_id:"1",active_setup:{name:"test"}})')
+            page.evaluate('window.scryingStatisticsState({active_campaign_id:"1",active_setup:{name:"test",campaign_id:"1"}})')
             self.assertEqual(page.input_value('[data-base-stat="dexterity"]'),'14')
             page.click('#statisticsBack')
             self.assertEqual(page.locator('#statisticsFields tbody tr').count(),0)

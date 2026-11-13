@@ -1,0 +1,26 @@
+	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0025039Z   File "/tmp/scrying-tests-rgy7mtw6/repo/python/scrying_glass_combined_lookup.py", line 32, in combined_candidates
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0025814Z     raise ValueError("Incomplete or unsupported candidate list")
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0026308Z ValueError: Incomplete or unsupported candidate list
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0026786Z Combined monster lookup failed for 5e.tools
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0027193Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0027894Z   File "/tmp/scrying-tests-rgy7mtw6/repo/python/scrying_glass_combined_lookup.py", line 32, in combined_candidates
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0028713Z     raise ValueError("Incomplete or unsupported candidate list")
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0029271Z ValueError: Incomplete or unsupported candidate list
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0029666Z ok
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0030835Z test_returned_candidates_are_independent_deep_copies (test_combined_monster_lookup.CombinedLookupTests.test_returned_candidates_are_independent_deep_copies) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0032572Z test_same_name_candidates_are_not_collapsed_or_field_merged (test_combined_monster_lookup.CombinedLookupTests.test_same_name_candidates_are_not_collapsed_or_field_merged) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0034610Z test_secondary_failure_discards_primary_candidates_and_tokens (test_combined_monster_lookup.CombinedLookupTests.test_secondary_failure_discards_primary_candidates_and_tokens) ... Combined monster lookup failed for 5e.tools
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0035789Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0036580Z   File "/tmp/scrying-tests-rgy7mtw6/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0037256Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0037901Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0038530Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0038869Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0039454Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0040042Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0040516Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0040987Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0041387Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0041583Z TimeoutError: secret
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0041760Z ok
+tests	Python test suite (including browser fixtures)	2026-11-12T21:30:47.0042378Z test_two_successful_zero_match

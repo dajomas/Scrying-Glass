@@ -30,6 +30,11 @@
         const lair = state?.lairs?.[0];
         if (busy || !lair || (field === 'in_turn' && !lair.active)) return;
         busy = true; draw();
+        // SG-TODO-009.7 Stage 3: outcomes go to the managed lair region (lairNotice), keyed per lair/field.
+        const feedback = window.scryingAdminFeedback;
+        const key = operation => ({region: 'lair', operation, target: JSON.stringify([operation, lair.id, field]),
+            label: 'Lair update'});
+        const own = feedback.begin(key('lair.toggle')), again = feedback.begin(key('lair.toggle.refresh'));
         try {
             const response = await fetch(`/api/lairs/${encodeURIComponent(lair.id)}`, {
                 method: 'PATCH', headers: {'Content-Type': 'application/json'},
@@ -41,10 +46,16 @@
             }
             const updated = await response.json();
             if (state?.lairs?.[0]?.id === updated.id) state = {...state, lairs: [updated]};
-            await load();
-            $('lairNotice').textContent = 'Lair updated.';
+            feedback.publish(own, {severity: 'success', text: 'Lair updated.'});
+            try {
+                await load(true);
+                feedback.resolve(again);
+            } catch (error) {
+                feedback.publish(again, {severity: 'error', text: 'Lair update completed, but refreshing the view ' +
+                    `failed: ${error.message}. Reload the page; do not repeat it to retry the refresh.`});
+            }
         } catch (error) {
-            $('lairNotice').textContent = error.message;
+            feedback.publish(own, {severity: 'error', text: error.message});
         } finally {
             busy = false; draw();
         }

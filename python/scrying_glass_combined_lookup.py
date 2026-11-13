@@ -1,0 +1,45 @@
+"""Fail-closed provider orchestration; active lookup is wired in a later increment."""
+import copy
+import logging
+
+LOG = logging.getLogger(__name__)
+
+
+def combined_candidates(dnd_fetch, fivetools_fetch, *, dnd_enabled=True,
+                        fivetools_enabled=True, max_candidates=32):
+    """Collect every enabled provider, retaining versions and never merging stats.
+
+    Callbacks return complete raw candidate lists or raise on incomplete search.
+    Signing and application state changes are the caller's separate responsibility.
+    A failed provider suppresses all candidates, even when another succeeded.
+    """
+    if type(dnd_enabled) is not bool or type(fivetools_enabled) is not bool:
+        raise ValueError("Provider enable settings must be boolean")
+    if type(max_candidates) is not int or max_candidates < 1:
+        raise ValueError("Candidate limit must be a positive integer")
+    providers = (("D&D Beyond", dnd_enabled, dnd_fetch),
+                 ("5e.tools", fivetools_enabled, fivetools_fetch))
+    candidates, outcomes, failed = [], [], []
+    for name, enabled, fetch in providers:
+        if not enabled:
+            outcomes.append(dict(provider=name, status="disabled"))
+            continue
+        try:
+            found = fetch()
+            if (not isinstance(found, list) or len(found) > max_candidates
+                    or any(not isinstance(item, dict) or item.get("provider") != name
+                           for item in found)):
+                raise ValueError("Incomplete or unsupported candidate list")
+            copied = copy.deepcopy(found)
+        except Exception:
+            LOG.warning("Combined monster lookup failed for %s", name, exc_info=True)
+            failed.append(name)
+            outcomes.append(dict(provider=name, status="failed"))
+            continue
+        candidates.extend(copied)
+        outcomes.append(dict(provider=name, status="ok", count=len(copied)))
+    if failed:
+        return dict(status="error", candidates=[], providers=outcomes,
+                    reason="Combined monster lookup incomplete: " + ", ".join(failed)
+                    + ". No candidates were offered. Retry or enter stats manually.")
+    return dict(status="ok", candidates=candidates, providers=outcomes)

@@ -1,4 +1,5 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+const {installFeedback}=require('./battle-action-feedback-fixture.cjs');
 class Element {
  constructor(tag='div'){this.tagName=tag;this.children=[];this.dataset={};this.value='';this.hidden=false;this.disabled=false;this.listeners={};this.attributes={};}
  append(...children){this.children.push(...children);}
@@ -19,10 +20,10 @@ class Element {
 function harness(effects=[{mechanical:{version:1,stat:'max_hp',amount:9}}]) {
  const nodes=new Map(),listeners={},requests=[];
  const el=id=>{if(!nodes.has(id))nodes.set(id,new Element());return nodes.get(id);};
- const modal=el('statisticsModal'),dialog=new Element();dialog.setAttribute('role','dialog');modal.append(dialog);
+ const modal=el('statisticsModal'),dialog=new Element();dialog.setAttribute('role','dialog');modal.append(dialog);modal.hidden=true;
  for(const id of ['statisticsRestore','statisticsClose','statisticsEditBases','statisticsBack','statisticsSaveBases']){const x=el(id);x.tagName='button';dialog.append(x);}
  el('statisticsRestoreStat').tagName='select';dialog.append(el('statisticsRestoreStat'));
- const state={active_campaign_id:'1',active_setup:{name:'test'},statistics_token:'token',monsters:[],characters:[{id:'c',name:'Johan',hp:0,max_hp:0,base_max_hp:1,effects}]};
+ const state={active_campaign_id:'1',active_setup:{name:'test',campaign_id:'1'},statistics_token:'token',monsters:[],characters:[{id:'c',name:'Johan',hp:0,max_hp:0,base_max_hp:1,effects}]};
  let allow=true,fail=false,hold=null;
  const context={window:{},document:{getElementById:el,createElement:tag=>new Element(tag),addEventListener:(n,f)=>listeners[n]=f},confirm:()=>allow,alert:()=>{},
  fetch:async(url,opts={})=>{
@@ -31,9 +32,12 @@ function harness(effects=[{mechanical:{version:1,stat:'max_hp',amount:9}}]) {
   if(body&&!fail&&body.operation==='restore')state.characters[0].effects=state.characters[0].effects.filter(e=>body.stat!=='all'&&e.mechanical.stat!==body.stat);
   return {ok:!fail,json:async()=>fail?{detail:'Encounter changed; reopen Restore statistics'}:body?{}:JSON.parse(JSON.stringify(state))};
  }};
+ let now=0,serial=0;const timers=new Map();
+ const {feedback,scope}=installFeedback(context,{setTimeout(fn,delay){const id=++serial;timers.set(id,{fn,at:now+delay});return id;},clearTimeout(id){timers.delete(id);}});
+ scope('1','test');context.document.getElementById=el;
  vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../static/statistics.js'),'utf8'),context);
  const button=new Element();button.dataset.statistics='c';
- return {el,state,requests,context,listeners,button,open:()=>listeners.click({target:{closest:()=>button}}),setAllow:x=>allow=x,setFail:x=>fail=x,setHold:x=>hold=x};
+ return {feedback,scope,tick(ms){now+=ms;for(const [id,timer] of [...timers])if(timer.at<=now){timers.delete(id);timer.fn();}},el,state,requests,context,listeners,button,open:()=>listeners.click({target:{closest:()=>button}}),setAllow:x=>allow=x,setFail:x=>fail=x,setHold:x=>hold=x};
 }
 const flush=()=>new Promise(r=>setImmediate(r));
 const shown=h=>h.el('statisticsFields').querySelectorAll('[data-stat]').map(x=>x.dataset.stat);

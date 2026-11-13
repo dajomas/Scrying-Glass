@@ -4,129 +4,126 @@
 
 ## SG-TODO-009 - Professional, task-focused Admin interface
 
-- Status: proposed; no redesign implementation delivered.
-- Requested: 2026-11-06. The user requested recording the preceding design suggestions and a processing order in the TODO list.
-- Priority: proposed incremental usability improvement; no priority relative to other tasks agreed.
-- Owner and deadline: not assigned.
-- Scope: Admin presentation, navigation and interaction clarity; do not change encounter rules, API semantics, permissions or persistence merely to redesign the interface.
-- The phases and visual values below are recommendations, not approval of every design decision or authorization to implement them.
+- Status: completed and closed for the agreed scope, 2026-11-12 at 22:58 CET, following final user acceptance of Deliverable 1, 009.7 and overall 009. SG-TODO-009.1-009.7 and coordinated SG-TODO-012 are closed. No further agreed 009 work remains.
+- Requested: 2026-11-06; incremental redesign with staged deliveries and task-specific agreements. 009.6 renewed sign-off: 2026-11-09; final 009.7/009 acceptance: 2026-11-12.
+- Priority: incremental usability improvement; no priority relative to unrelated work agreed. Owner/deadline not assigned.
+- Scope: Admin presentation, navigation and interaction clarity; preserve encounter rules, API semantics, permissions and persistence unless an explicitly reviewed task requires a change.
 
-## Preparation and compatibility gates
+[570 final integrated evidence, acceptance and limits](../handover/570-final-0097-close-out.md)
+supersedes the old inspection/scoping and final-review-pending notes. Full prior
+phase details, all implementation/correction/run/publication identities, manual-check
+boundaries and history remain in the [pre-final-close-out parent checklist](https://github.com/dajomas/Scrying-Glass/blob/2eb3b4d8a35b8a97761c1479f1ef68275652a01d/docs/todo/090-admin-usability-redesign.md)
+and the numbered phase handovers. Original earlier history also remains in the
+[pre-009.5 plan](https://github.com/dajomas/Scrying-Glass/blob/cfc7b0f16f929041bc6107dd1f895d24492261c5/docs/todo/090-admin-usability-redesign.md)
+and [pre-009.6 task](https://github.com/dajomas/Scrying-Glass/blob/a7c7614f23acb7a502c3e8c48f579faacfe1fc12/docs/todo/090-admin-usability-redesign.md).
+No historical failure is relabelled and no accepted earlier scope is reopened.
 
-Before implementation, inspect the live templates, stylesheets, loaded enhancement modules, source assembly, tests and CI configuration. Capture representative current screenshots and baseline interactions at desktop and narrow widths; the original suggestions were not a fresh visual audit of the current screen.
+## Compatibility and processing order
 
-Retain the established dark/gold companion identity where appropriate. A quieter neutral surface system and teal/amber grouping accents must be evaluated against that existing theme rather than introducing a conflicting theme by assumption.
+Preserve accepted dark/gold identity, fixed context/actions/feedback, original
+forms/drafts/files/selections, full-width rosters, local scrolling and source
+assembly/size constraints. Closed 005 initial collapse is retained where not
+explicitly superseded by 009.6. Independent Campaign/Preparation panels and the
+on-demand tools dialog replace the earlier parent-dependent/inline tools behavior;
+lair eligibility remains independent. Closed 007 row controls and 008 failure-marker
+boundaries remain. Permissions, persistence and combat/initiative rules are unchanged.
 
-Preserve fixed controls and visible global feedback above a shared scrolling workspace. Preserve campaign/setup context, manual pane choices, independent lair gating, form values and existing action availability across navigation and refresh.
-
-Related accepted work:
-
-- [SG-TODO-005: initial section visibility](050-admin-initial-visibility.md): parent/child controls and per-page initial collapse must not regress. Replacing pane toggles with views requires an explicit behaviour mapping.
-- [SG-TODO-007: single-line monster buttons](070-monster-button-layout.md) and [row-layout handover](../handover/250-monster-button-layout.md): the accepted 11 monster-row buttons, local horizontal scrolling, focus exposure and removal of row Damage/Heal controls must not be silently reversed. Moving actions into menus or details is a proposed alternative requiring explicit agreement.
-- [SG-TODO-008: source-size refactors](080-source-size-refactors.md): preserve source assembly and code-size constraints; do not overwrite the tracked Admin script failure marker.
-
-## Proposed processing order
-
-Process phases 1 through 7 in order. Each phase has a stable subtask ID and remains proposed. Review the result of each coherent increment before proceeding to structural changes. Dependencies indicate the recommended sequence, not a requirement to implement the entire redesign in one commit.
-
-| Order | Subtask | Deliverable | Dependencies |
+| Order | Subtask | Status | Dependencies |
 |---|---|---|---|
-| 1 | SG-TODO-009.1 | Shared visual foundations | Baseline inspection |
-| 2 | SG-TODO-009.2 | Header and action hierarchy | 009.1 |
-| 3 | SG-TODO-009.3 | Consistent panels and forms | 009.1, 009.2 |
-| 4 | SG-TODO-009.4 | Scannable rosters and contextual bulk actions | 009.3; agreement for changed row controls |
-| 5 | SG-TODO-009.5 | Workflow-based navigation | 009.2-009.4; agreed visibility mapping |
-| 6 | SG-TODO-009.6 | Focused live encounter workspace | 009.4, 009.5 |
-| 7 | SG-TODO-009.7 | Feedback, responsive and accessibility hardening | 009.1-009.6 |
+| 1 | SG-TODO-009.1 | Shared foundations - closed | Baseline inspection |
+| 2 | SG-TODO-009.2 | Header/action hierarchy - closed | 009.1 |
+| 3 | SG-TODO-009.3 | Panels/forms - closed | 009.1/009.2 |
+| 4 | SG-TODO-009.4 | Rosters/bulk actions - closed | 009.3 |
+| 5 | SG-TODO-009.5 | Workflow navigation - closed | Agreed navigation/initiative baseline |
+| 6 | SG-TODO-009.6 | Full-width workspace, dialog and independent controls - closed 2026-11-09 | Closed 009.5/015 baseline |
+| 7 | SG-TODO-009.7 | Both feedback deliverables and final usability hardening - closed 2026-11-12 | Closed 009.1-009.6 |
 
-Accessibility and responsive checks apply to every phase; phase 7 is final consolidation, not permission to postpone basic usability.
+The [agreed sequence](115-admin-delivery-sequence.md) remains 018, 009.5, 015,
+009.6, 009.7, coordinated 016/017. 018, 009.5, 015, 009.6 and 009.7 are now closed.
+016/017 remain proposed, not prerequisites inside 009 and not started by this
+close-out. Deferred test-suite cleanup and SG-TODO-019 stay separate. No new
+owner/deadline or delivery order.
 
 ### SG-TODO-009.1 - Shared visual foundations
 
-Status: proposed.
-
-- Establish reusable tokens for surfaces, borders, typography, spacing, control heights and corner radii.
-- Use quieter panels with subtle borders and minimal shadows; use campaign/character teal and battle/monster amber as restrained accents rather than dominant panel fills. Retain appropriate fantasy branding without decorating operational controls excessively.
-- Proposed spacing scale: 4, 8, 12, 16, 24 and 32 px. Use one coherent UI type system and consistent button/input geometry. Values remain subject to visual review.
-- Reserve a consistent accent for primary actions and red for destructive operations; do not rely on colour alone for grouping or status.
-
-Acceptance: representative panels, tables, forms and modals share the same visual rules; text, focus and state indicators remain readable; existing theme and combatant/display colours are not accidentally overridden.
+Accepted/closed 2026-11-06. [260](../handover/260-admin-visual-foundations.md)
+and the pre-final parent record retain token/surface/focus behavior, exact
+implementation/correction identities and evidence limits.
 
 ### SG-TODO-009.2 - Header and action hierarchy
 
-Status: proposed.
-
-- Keep a compact fixed header with product identity, active campaign, active battle setup and explicit encounter state.
-- Separate context, navigation, global actions and feedback into predictable areas. Move infrequent global actions into a labelled More menu where appropriate.
-- Keep entity-specific actions local: campaign backups with campaign management, setup actions with setup management.
-- Give the current task one dominant action; visually quiet secondary actions. Separate End encounter from routine controls and put Reset all in a clearly labelled danger section.
-
-Acceptance: context and feedback remain visible while scrolling; wrapped controls/messages never overlap the workspace; global and local actions are distinguishable and keyboard accessible.
+Accepted/closed 2026-11-06. [270](../handover/270-admin-header-hierarchy.md)
+retains fixed context/actions/feedback, More, Next emphasis, End/Reset distinction
+and implementation/correction/acceptance evidence.
 
 ### SG-TODO-009.3 - Consistent panels and forms
 
-Status: proposed.
-
-- Standardize panel anatomy: concise title, optional description, related fields, main action and secondary actions.
-- Use task-oriented labels such as Add character for an entry form and Characters for a roster.
-- Keep labels consistently above inputs, clarify mandatory fields and group related controls.
-- Keep common actions visible; place import/export, backups and advanced settings in clearly named expandable areas when appropriate. Do not hide frequently needed controls merely to reduce button counts.
-
-Acceptance: field purposes and required values are clear; expand/collapse exposes accurate accessible state; forms retain values, validation, existing IDs/handlers and expected submit behaviour.
+Accepted/closed 2026-11-06. [280](../handover/280-admin-panel-forms.md)
+retains original-node grouping, labels, disclosures, values, validation, IDs and
+handlers, with full delivery/evidence history.
 
 ### SG-TODO-009.4 - Scannable rosters and contextual bulk actions
 
-Status: proposed; alternative action-menu design requires agreement against SG-TODO-007.
-
-- Present characters and monsters as structured rows with clear names, aligned numeric values and concise textual status indicators. Keep HP, initiative and combat state immediately visible where relevant.
-- Consider search/filter and a collection-level Add action. Keep table-wide controls separate from row actions.
-- Show selected counts and contextual bulk actions after selection, retaining clear Select all and Clear selection behaviour.
-- Evaluate row expansion or a details panel for secondary information. A frequent visible action plus an overflow menu is a design option, not an approved replacement for accepted single-line controls.
-
-Acceptance: scan, select, edit and bulk workflows remain available without accidental mutations; selection survives or resets predictably on refresh/filter changes; keyboard focus is exposed within local scrollers; removed row HP-change controls do not reappear.
+Accepted/closed 2026-11-06 with coordinated 012. [310](../handover/310-admin-rosters.md)
+retains read-only roster HP/Edit-dialog editing, counts/Clear selection, contextual
+availability and local scrolling. Search/filter, row expansion and replacement
+menus were excluded, not unfinished requirements. Exact deliveries and evidence
+remain in 310 and the pre-final parent record.
 
 ### SG-TODO-009.5 - Workflow-based navigation
 
-Status: proposed; tab model and visibility replacement require design agreement.
-
-- Proposed views: Campaign (campaign selection, characters, backups), Battle preparation (setups, monsters, initiative, lair configuration) and Live encounter (turn order, participants, encounter tools, log).
-- Prefer compact tabs initially over a large sidebar; keep active campaign/setup context visible in every view.
-- Reduce global pane-toggle clutter through workflow views and local disclosure, after explicitly mapping existing manual visibility and automatic battle-related behaviour.
-
-Acceptance: every existing capability has a discoverable destination; changing views does not submit forms, lose edits or mutate encounters; active tab and focus state are accessible; initial collapse, dependent controls, lair gating and encounter-tools restoration are preserved or intentionally replaced by an explicitly agreed specification.
+Accepted/closed 2026-11-09. [095 contract](095-admin-workflow-navigation.md)
+and [350](../handover/350-admin-workflow-navigation.md) retain context/drafts/files/
+selections and lair gating, all run/publication identities and the accepted-copy
+coverage limitation. Later 009.6 explicitly superseded inline tools and parent-
+dependent controls without reopening this phase. Earlier successful CI and the
+later accepted copy are not falsely presented as one identical tested revision.
 
 ### SG-TODO-009.6 - Focused live encounter workspace
 
-Status: proposed.
-
-- Give turn order/participants the largest area, with encounter tools beside it on wide screens and below it on narrow screens.
-- Clearly identify round and active participant, emphasize Next turn and keep HP/conditions and upcoming turns scannable.
-- Place a collapsible activity log below the main workspace and remove setup forms from the primary combat view without removing access to them.
-- Preserve the existing Next from Battle Actions workflow and all alternate damage/healing/statistics workflows.
-
-Acceptance: combat operations remain efficient and correctly scoped; turn advancement, end/reset, lair behaviour, tools visibility restoration and activity history regressions are covered; narrow layouts do not conceal essential controls.
+Accepted/closed 2026-11-09 on corrective CI and renewed sign-off, superseding the
+earlier revocation of Admin-page verification. [370 close-out](../handover/370-live-encounter-workspace.md#sg-todo-0096-close-out---2026-11-09)
+retains full implementation, failed/corrected CI, acceptance and manual-scenario
+limits. Accepted layout: full-width Battle/Characters/Monsters/Activity; on-demand
+tools dialog using original nodes/drafts/files, closed by default, no auto-opening;
+independent Campaign/Preparation panels and separate lair eligibility; successful
+Start/restart collapses native panes, failed Start preserves them, refresh/Next keeps
+manual reopening. Native End/Reset, Battle Actions/Next, 015 summaries, roster
+scrolling, permissions and assembly guards remain. No human scenario is newly
+claimed executed by this final close-out.
 
 ### SG-TODO-009.7 - Feedback and final usability hardening
 
-Status: proposed.
+Completed and closed for both deliverables and agreed final scope after the user's
+2026-11-12 22:58 CET request "Proceed with final acceptance and close out".
+[097](097-feedback-delivery-plan.md) retains the approved policy/execution criteria;
+[570](../handover/570-final-0097-close-out.md) records final criterion/evidence mapping,
+code identity, limits and whole-Deliverable-1/phase/parent acceptance.
 
-- Distinguish brief success notices from actionable errors. Proposed change: success messages may expire, while actionable errors persist until corrected or dismissed; review the existing five-second global-message rule explicitly.
-- Show field validation near the field. A rejected Join battle should explain the missing initiative and identify the affected combatant/field, not merely display a generic failure.
-- Show connection problems persistently until resolved and confirm destructive operations with specific affected targets.
-- Check responsive stacking, local table overflow, zoom, labels, contrast, focus visibility/order, tab/menu semantics and appropriate announcement of feedback. Avoid disruptive page movement when messages appear.
+Accepted scope includes persistent actionable errors and matching resolution,
+five-second global/three-second pane successes, explicit operation/target/scope
+identity and stale/timer isolation; campaign/setup/roster/local/lair/viewer producer
+migration; compatibility retirement; connection/recovery and polling deduplication;
+field/combatant association; targeted destructive confirmations and responsive/
+keyboard/focus/dialog/announcement hardening. Existing server/Join/initiative gates,
+API payloads, authorization, combat rules and original drafts/context remain.
 
-Acceptance: feedback is visible and actionable without depending solely on colour or a short timeout; messages do not overlap content; keyboard-only operation and representative desktop/narrow layouts remain usable.
+Final integrated implementation 8da0657325818c69fc82dc1234995a5146e88ebc has green
+Branch tests 43310602854 attempt 1, publication dbb78d3057a2d38527bd612b948a6566a1a741e3.
+The review confirms main Python 1,583 tests OK, pytest 43 passes, successful configured
+JS/standalone stages and selected logged integration/browser results. Matching
+runtime/test/workflow identities through 2eb3b4d8a35b8a97761c1479f1ef68275652a01d
+justify reusing that covering run for this documentation-only closure. No new run
+or exhaustive individual log/screenshot review is claimed. Overall acceptance is
+bounded, not proof of unperformed live-server/manual/screen-reader verification.
 
-## Validation and delivery requirements
+## Documentation transition and validation limits
 
-For implementation increments, prepare targeted automated regressions for the affected behaviours and retain existing tests. Verify actual CI coverage before delegating checks to it. Browser fixtures are not authenticated live-server evidence.
-
-Required review scenarios include: campaign/setup active and inactive; initial/delayed state; manual pane changes; battle start/end/reset; lair enabled/disabled; refresh and rerender; row selection/filter/bulk actions; missing initiative; successful/failed saves; connection loss/recovery; destructive confirmations; keyboard traversal and narrow screens.
-
-Record executed checks and observed results separately from unexecuted, pending or manual checks. Obtain user visual/workflow acceptance before closing the redesign. Do not mark phases completed merely because code is committed. Update relevant user documentation, TODO status and handover with implementation deliveries.
-
-## Planning-only change - 2026-11-06
-
-This addition records suggestions and a recommended processing order only. No application, test or workflow code is changed; no redesign or browser validation is claimed. README and relevant indexed handover/TODO documentation were reviewed. README and handover remain unchanged because current delivered behaviour has not changed.
-
-The user explicitly requested [skip ci] for this documentation push. Include that marker in the commit message, do not modify or separately dispatch workflows, and do not claim the workflow-run state has been verified merely from the marker. The skip request does not apply to later implementation pushes.
+This final close-out changes human-readable documentation only, with [skip ci].
+No application, tests, assets, pins, templates, dependencies or workflows change;
+no fresh tests or separate dispatch. Earlier 009.7 inspection/scoping preparation
+is historical and superseded; no agreed 009 implementation/acceptance action
+remains. Evidence limits remain explicit under 570. This closes overall 009,
+not unrelated tasks, merges, deployments or future external writes. The sequencing
+record 115 was reviewed and left unchanged as a dated agreement/rationale; the
+current task/index status above supersedes historical in-progress wording.

@@ -1,0 +1,40 @@
+/* SG-TODO-009.2: only activate after the matching enhancement is installed. */
+body.admin-shell[data-header-hierarchy="ready"] #adminHeader h1 { font-size: 1.25rem; }
+body.admin-shell[data-header-hierarchy="ready"] #adminButtonBar { padding: 0 0 .5rem; }
+.sg-header-context { display: flex; flex-wrap: wrap; gap: .25rem 1rem; padding: .35rem 0; }
+.sg-context-field { min-width: 0; overflow-wrap: anywhere; }
+.sg-context-label { color: var(--admin-muted, var(--muted)); font-size: .8rem; }
+.sg-context-field strong { font-size: .875rem; }
+.sg-context-field [data-active="true"] { color: var(--ok); }
+.sg-header-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; }
+.sg-header-actions button { margin: 0; }
+body.admin-shell .sg-header-actions #startBattle,
+body.admin-shell .sg-header-actions #nextBattle { background: var(--surface-2); color: var(--text); }
+body.admin-shell .sg-header-actions #startBattle.sg-primary-action,
+body.admin-shell .sg-header-actions #nextBattle.sg-primary-action { background: var(--accent); color: var(--accent-ink); }
+.sg-end-action { border-left: 1px solid var(--border); padding-left: .6rem; margin-left: .25rem; }
+.sg-pane-row { display: flex; align-items: center; gap: .5rem; margin-top: .4rem; min-width: 0; }
+body.admin-shell #adminButtonBar .sg-pane-strip {
+    flex: 1 1 0; display: flex; flex-wrap: nowrap; gap: .35rem;
+    min-width: 0; overflow-x: auto; padding: .25rem;
+}
+.sg-pane-strip button { flex: 0 0 auto; white-space: nowrap; margin: 0; }
+.sg-pane-strip:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
+.sg-header-more { position: relative; margin-left: auto; }
+.sg-header-more > summary {
+    cursor: pointer; padding: .45rem .75rem; min-height: 2.25rem;
+    border: 1px solid var(--border); border-radius: 6px; background: var(--surface);
+}
+.sg-more-body {
+    position: absolute; right: 0; top: calc(100% + .35rem); z-index: 2;
+    width: min(24rem, calc(100vw - 2rem)); max-height: 50dvh; overflow: auto;
+    padding: 1rem; border: 1px solid var(--border); border-radius: var(--radius);
+    background: var(--bg-2); box-shadow: 0 8px 24px #0006;
+}
+.sg-more-body h2 { margin: 0 0 .5rem; font: 600 1rem/1.35 var(--font); }
+.sg-more-body .row { gap: .35rem; }
+.sg-more-body form { border-top: 1px solid var(--border); padding-top: .75rem; margin-top: .75rem !important; }
+.sg-danger-zone { margin-top: 1rem; border-top: 1px solid var(--border); padding-top: .75rem; }
+.sg-danger-zone > summary { color: #ffe4de; cursor: pointer; }
+.sg-danger-zone p { color: var(--muted); }
+body.admin-shell #adminDangerZone #resetAll { background: #71382f; color: #ffe4de; }

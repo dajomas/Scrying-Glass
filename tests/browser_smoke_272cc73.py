@@ -56,8 +56,13 @@ with sync_playwright() as pw:
     admin.goto('http://audit.test/admin');admin.wait_for_function("typeof latest !== 'undefined' && latest && latest.monsters.length === 1")
     assert admin.locator('#startBattle').count()==1
     assert admin.locator('button[data-select-all-kind="monsters"]').count()==1
+    admin.wait_for_function("document.body.dataset.workflowNavigation === 'ready'")
+    assert admin.locator('#adminWorkflow-campaign').get_attribute('aria-selected')=='true'
+    admin.locator('#adminWorkflow-preparation').click()
+    assert admin.locator('body').get_attribute('data-workflow-view')=='preparation'
     if not admin.locator('#monsterDisplayPane').is_visible():
         admin.locator('#toggleMonsterDisplayPane').click()
+    assert admin.locator('#monsterDisplayPane').is_visible()
     admin.locator('button[data-select-all-kind="monsters"]').click()
     assert admin.locator('input[data-select-kind="monsters"]').first.is_checked()
     checks.append('admin assembled page, scripts, state load and select-all')

@@ -1,0 +1,97 @@
+/* SG-TODO-009.1: Admin-only foundations; behaviour and specialised layouts stay local. */
+body.admin-shell {
+    --admin-space-1: .25rem;
+    --admin-space-2: .5rem;
+    --admin-space-3: .75rem;
+    --admin-space-4: 1rem;
+    --admin-space-6: 1.5rem;
+    --admin-space-8: 2rem;
+    --admin-panel: var(--bg-2);
+    --admin-control: var(--bg);
+    --admin-border: var(--border);
+    --admin-text: var(--text);
+    --admin-muted: #b1bacb;
+    --admin-campaign: #84c5c0;
+    --admin-battle: var(--accent);
+    --admin-focus: var(--blue);
+    --admin-radius: var(--radius);
+    --admin-control-radius: 6px;
+    --admin-control-height: 2.25rem;
+    --admin-font: var(--font);
+    --admin-label-size: .875rem;
+    font-family: var(--admin-font);
+}
+
+body.admin-shell #adminScroll > section {
+    background: var(--admin-panel);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius);
+    padding: var(--admin-space-4);
+    margin: var(--admin-space-4) 0;
+    box-shadow: none;
+}
+
+body.admin-shell #adminScroll > .pane-campaign-group {
+    border-left: 3px solid var(--admin-campaign);
+}
+
+body.admin-shell #adminScroll > .pane-battle-group {
+    border-left: 3px solid var(--admin-battle);
+}
+
+body.admin-shell :where(section, .modal) :where(h2, h3) {
+    font-family: var(--admin-font);
+    letter-spacing: normal;
+    line-height: 1.35;
+}
+
+body.admin-shell .pane-campaign-group h2 { color: var(--admin-campaign); }
+body.admin-shell .pane-battle-group h2 { color: var(--admin-battle); }
+
+body.admin-shell .field { gap: var(--admin-space-1); }
+body.admin-shell .field-label {
+    color: var(--admin-muted);
+    font-size: var(--admin-label-size);
+    line-height: 1.35;
+}
+body.admin-shell .field-help { color: var(--admin-muted); }
+
+/* Do not resize checkboxes, radios, colour pickers or specialised icon buttons. */
+body.admin-shell :where(input:not([type]), input[type="text"], input[type="number"],
+                       input[type="password"], input[type="search"], input[type="url"], select) {
+    min-height: var(--admin-control-height);
+    padding: var(--admin-space-2);
+    border-radius: var(--admin-control-radius);
+    border-color: var(--admin-border);
+    background: var(--admin-control);
+    color: var(--admin-text);
+}
+body.admin-shell textarea {
+    padding: var(--admin-space-2);
+    border-radius: var(--admin-control-radius);
+    border-color: var(--admin-border);
+    background: var(--admin-control);
+    color: var(--admin-text);
+}
+body.admin-shell button:not(.help-button):not(.modal-close):not(.battle-order-combatant) {
+    min-height: var(--admin-control-height);
+    border-radius: var(--admin-control-radius);
+}
+
+body.admin-shell :where(th, td) {
+    border-bottom-color: var(--admin-border);
+    font-variant-numeric: tabular-nums;
+}
+body.admin-shell th { color: var(--admin-muted); }
+
+/* Geometry/overflow of individual dialogs remains owned by their existing CSS. */
+body.admin-shell .modal > div {
+    background: var(--admin-panel);
+    border-color: var(--admin-border);
+    border-radius: var(--admin-radius);
+    box-shadow: 0 8px 24px #0006;
+}
+body.admin-shell :where(input, select, textarea, button, summary):focus-visible {
+    outline: 2px solid var(--admin-focus);
+    outline-offset: 2px;
+}

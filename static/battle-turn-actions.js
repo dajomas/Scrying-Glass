@@ -71,6 +71,11 @@
             catch (error) { notice(error.message); return; }
             if (!actions.length) { notice('Enter damage or healing greater than zero.'); return; }
             const submittedSession = session;
+            const feedback = window.scryingAdminFeedback;
+            const ticket = feedback.begin({region: 'global', operation: 'battle.actions.turn-completion',
+                target: item.id, label: `Start-of-turn changes: ${item.name}`});
+            const ownsUi = () => session === submittedSession && battleActionActorId === item.id &&
+                feedback.isCurrent(ticket);
             busy = true;
             const controls = [...form.querySelectorAll('input, button'),
                 ...$('battleActionForm').querySelectorAll('input, select, button')];
@@ -83,19 +88,19 @@
                     body: JSON.stringify({actor_id: item.id, actions}),
                 });
                 applied = true;
-                if (session === submittedSession) {
-                    form.reset(); notice('Start-of-turn changes applied.');
-                }
+                if (!ownsUi()) return;
+                form.reset(); notice('Start-of-turn changes applied.');
                 await load();
-                if (session !== submittedSession) return;
+                if (!ownsUi()) return;
                 updateActor();
                 const current = actor();
                 if (!current || !current.in_turn || !current.active) {
                     closeBattleActions();
-                    message('Start-of-turn changes applied; this combatant can no longer act.');
-                }
+                    feedback.publish(ticket, {severity: 'success',
+                        text: 'Start-of-turn changes applied; this combatant can no longer act.'});
+                } else feedback.resolve(ticket);
             } catch (error) {
-                if (session === submittedSession) notice(applied
+                if (ownsUi()) notice(applied
                     ? `Changes were applied, but refresh failed: ${error.message}. Refresh before continuing.`
                     : error.message);
             } finally {
