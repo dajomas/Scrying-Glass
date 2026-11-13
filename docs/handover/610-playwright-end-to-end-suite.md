@@ -83,3 +83,39 @@ It has not been run on a real Rocky/RHEL host. No CI runs on `features/perplexit
 ### User run after the system packages were installed
 
 The user pushed `58556e4c` (`E2E results 20261113T135544Z: 27 passed, 0 failed (chromium, firefox) [skip ci]`). Its `summary.md` reports that the run tested `2fe31145` with pytest exit status 0: Chromium 13 passed, Firefox 13 passed, server-only 1 passed. The commit also deleted the older `e2e-results/20261113T133947Z/` folder. This is the first observed run of the script's commit/push path and of latest-folder-only retention. The dnf check above was added after that run.
+
+## Stage 2 - rosters and initiative - 2026-11-13
+
+User instruction: "The first run was succesful: Pushed 58556e4c1baf7c8b7f5c27503c1a4006f5c95ea1 to origin/features/perplexity-021. So please move on to Stage 2".
+
+### Delivered
+
+- `e2e/helpers.py`: shared page helpers (log in and open a workflow tab, add characters and monsters, find a roster row by its exact selection label, set inline initiative). `e2e/test_campaigns.py` now imports `admin` and `open_workflow` from it; its tests are unchanged.
+- `e2e/test_rosters.py` (8 tests):
+  - add, edit and remove a character, with HP shown as current/max and persistence after reload;
+  - the character form requires a name and starting HP;
+  - add numbered monsters (quantity 3), check AC, HP, bonus and species, edit one, remove one;
+  - a dice expression (`2d6+3`) gives HP within its range, with current equal to max;
+  - bulk select-all, unselect-all and remove, for characters and monsters, including the confirm text;
+  - bulk actions and Clear selection stay disabled until something is selected;
+  - compact inline initiative inputs in both rosters are 7.5ch wide;
+  - Refresh from source reviews only the selected monsters. With providers off it shows "No usable source candidates found", Apply stays disabled, and Cancel leaves the roster unchanged.
+- `e2e/test_initiative.py` (9 tests):
+  - the join gate for characters: Join Battle is refused without initiative. The error is shown and linked to the initiative field (`aria-invalid`, `aria-describedby`); after entering initiative, joining works;
+  - the join gate for monsters without a raw roll;
+  - a monster's total is its raw roll plus its bonus, recalculated after the bonus is edited, with the raw roll kept and persisted after reload;
+  - Roll monster initiatives asks for confirmation, then gives each monster a d20 roll plus its bonus;
+  - Roll shared initiative gives the selected monsters one common roll and leaves the others unset;
+  - inline and dialog initiative edits for a character are saved;
+  - battle order follows initiative, and the tie dialog decides equal totals (`Order: Borin ⇒ Cara ⇒ Orc ⇒ Aelwyn`);
+  - cancelling the tie dialog keeps the battle inactive;
+  - keyboard navigation: Tab and Shift+Tab move between initiative fields and wrap around, a typed value is saved on Tab, and Escape moves focus to the roster region.
+- Every new test has a one-line docstring, which the progress line uses.
+
+Notes for later stages: Playwright treats `aria-disabled="true"` buttons as disabled, so the join-gate tests click with `force=True`. The rosters are listed sorted by name, not by insertion order.
+
+### Validation (local, this sandbox)
+
+- `python -m pytest -q -rfE .` in `e2e/` (Playwright 1.65.1, Chromium and Firefox headless): 61 passed. That is 30 tests in each browser (5 access, 8 campaign, 8 roster and 9 initiative) plus one server-only HTTP check.
+- No application, `tests/` or workflow file changed, so the regular suite was not run (user instruction to run only relevant tests). No CI runs on `features/perplexity-021`.
+- Not yet run with `tools/run_e2e.sh` on the user's host. User acceptance of Stage 2 is pending; Stages 3-4 are not started.

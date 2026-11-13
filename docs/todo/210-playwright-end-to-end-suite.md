@@ -4,7 +4,7 @@
 
 ## SG-TODO-021 - Extensive Playwright end-to-end suite with a run-and-push script
 
-Status: in progress - Stage 1 delivered 2026-11-13 ([610 handover](../handover/610-playwright-end-to-end-suite.md)); Stage 1 on `features/perplexity-021`, user acceptance pending (no CI on that branch); Stages 2-4 not started. Requested 2026-11-12 (originally as a Selenium suite); decisions recorded 2026-11-13. No priority, owner or deadline assigned.
+Status: in progress - Stage 1 delivered 2026-11-13 ([610 handover](../handover/610-playwright-end-to-end-suite.md)); the user's script run `58556e4c` passed 27 of 27 and the user asked to continue. Stage 2 (rosters and initiative) delivered 2026-11-13 on `features/perplexity-021`, user acceptance pending (no CI on that branch); Stages 3-4 not started. Requested 2026-11-12 (originally as a Selenium suite); decisions recorded 2026-11-13. No priority, owner or deadline assigned.
 
 ### User decisions (2026-11-13)
 

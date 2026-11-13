@@ -3,19 +3,7 @@ import zipfile
 
 from playwright.sync_api import expect
 
-
-def admin(sessions, workflow="campaign"):
-    session = sessions("dm")
-    page = session.login("admin")
-    page.wait_for_function("document.body.dataset.workflowNavigation === 'ready'")
-    open_workflow(page, workflow)
-    return session, page
-
-
-def open_workflow(page, workflow):
-    page.click(f"#adminWorkflow-{workflow}")
-    if workflow == "campaign" and page.locator("#campaignInputPane").is_hidden():
-        page.click("#toggleCampaignPane")
+from helpers import admin, open_workflow
 
 
 def create_campaign(page, name, description=""):
