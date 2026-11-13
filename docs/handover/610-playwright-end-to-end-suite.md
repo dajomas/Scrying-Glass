@@ -84,6 +84,12 @@ It has not been run on a real Rocky/RHEL host. No CI runs on `features/perplexit
 
 The user pushed `58556e4c` (`E2E results 20261113T135544Z: 27 passed, 0 failed (chromium, firefox) [skip ci]`). Its `summary.md` reports that the run tested `2fe31145` with pytest exit status 0: Chromium 13 passed, Firefox 13 passed, server-only 1 passed. The commit also deleted the older `e2e-results/20261113T133947Z/` folder. This is the first observed run of the script's commit/push path and of latest-folder-only retention. The dnf check above was added after that run.
 
+## Stage 1 acceptance and close-out - 2026-11-13
+
+User instruction: "Accept Stage 1 and close it".
+
+Stage 1 is accepted and closed: the framework, server fixtures, access and campaign/setup tests, `tools/run_e2e.sh`, the progress lines, the browser preflight and the dnf package check. The acceptance is based on the user's script run `58556e4c` (tested `2fe31145`, 27 passed: Chromium 13, Firefox 13, server-only 1). The later dnf check (`c9af4a73`) has not been run on a Rocky/RHEL host. Retry and scope handling under request failures stays in Stage 4. No CI runs on `features/perplexity-021`.
+
 ## Stage 2 - rosters and initiative - 2026-11-13
 
 User instruction: "The first run was succesful: Pushed 58556e4c1baf7c8b7f5c27503c1a4006f5c95ea1 to origin/features/perplexity-021. So please move on to Stage 2".
