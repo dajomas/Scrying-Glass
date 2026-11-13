@@ -175,6 +175,13 @@ If a connection fails before success is confirmed, check the activity log/curren
 before retrying: this browser-level protection does not provide server-side retry
 idempotency or protect against duplicate requests from another tab.
 
+Activity log Details for value changes name the affected creature, the changed
+property and its resulting value, for example `Goblin - 2: HP 12 → 10/12;
+temporary HP 4 → 0`, `Goblin: STR 12 → 10; source: Cleric` or `Cleric: death-save
+failures now 1/3; damage at 0 HP`. HP results include the current maximum. Lair
+damage keeps the action name first. Entries recorded before this change keep their
+original text.
+
 
 Start-of-turn damage/heal targets the current creature, damage first, ignores empty/zero fields and does not advance. Ordinary self-action eligibility applies, so down/dead actors cannot use it.
 

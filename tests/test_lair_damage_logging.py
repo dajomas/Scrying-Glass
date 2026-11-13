@@ -45,7 +45,7 @@ class LoggingTests(unittest.TestCase):
     def test_twelve_damage_is_logged_and_applied_once(self):
         self.apply([{'id':'c','damage':12}]);self.assertEqual(self.target['hp'],12)
         self.assertEqual(len(self.c.STATE['activity_log']),1)
-        self.assertEqual(self.damage_rows()[0]['amount'],12);self.assertEqual(self.damage_rows()[0]['note'],'Tremor')
+        self.assertEqual(self.damage_rows()[0]['amount'],12);self.assertEqual(self.damage_rows()[0]['note'],'Tremor; Hero: HP 24 → 12/24')
         self.assertEqual(self.damage_rows()[0]['active_combatant_id'],'l')
         self.assertFalse(any(x['action']=='lair-action' for x in self.c.STATE['activity_log']))
     def test_multi_target_one_damage_row_each(self):

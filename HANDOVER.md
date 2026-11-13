@@ -72,6 +72,7 @@ This is the index; substantive handover lives in numbered docs/handover sections
 56. [Stage 4 accepted integration/accessibility close-out](docs/handover/550-integration-accessibility-hardening.md#stage-4-accepted-close-out---2026-11-12) - completed/closed for the agreed compatibility retirement and hardening scope; user accepted 2026-11-12 at 21:49 CET. Tested 535af6f350fdcb0a473d4d43133e0d8ac7c0b50e; successful Branch tests 43302214845 attempt 1; evidence 3bfa218c1ecd0b93c3a7278f88dd811ea4380540. Earlier publication/CI/acceptance-pending notes are superseded.
 57. [Deliverable 2 accepted close-out](docs/handover/560-connection-field-feedback.md#deliverable-2-accepted-close-out---2026-11-12) - agreed Admin persistent connection/recovery, polling deduplication and near-field association completed/closed; user accepted 2026-11-12 at 22:43 CET. Tested 8da0657325818c69fc82dc1234995a5146e88ebc; successful Branch tests 43310602854 attempt 1; evidence dbb78d3057a2d38527bd612b948a6566a1a741e3. Historical whole-D1/final-pending notes are superseded by 570.
 58. [Final Deliverable 1, 009.7 and overall 009 close-out](docs/handover/570-final-0097-close-out.md) - completed/closed for the agreed scope after final user acceptance 2026-11-12 at 22:58 CET; integrated evidence, unchanged code identity, criterion mapping and limits recorded. No new scope, test run, merge or deployment.
+59. [Activity log affected unit and resulting value](docs/handover/580-activity-log-result-details.md) - SG-TODO-019 implemented on features/perplexity 2026-11-13 after the 009.7 branch merge; local results recorded; CI validation and user acceptance pending.
 
 <a id="current-state---2026-11-11"></a>
 
@@ -96,8 +97,9 @@ No new authenticated live-server, human visual, screen-reader or exhaustive
 accessibility verification is inferred from bounded final acceptance.
 
 No agreed 009.7/009 implementation, validation or acceptance action remains.
-Test-suite cleanup remains separate post-009 work; 016/017 and SG-TODO-019 remain
-proposed, not newly started or closure prerequisites. The agreed sequence in 115
+Test-suite cleanup remains separate post-009 work; 016/017 remain proposed, not
+closure prerequisites. SG-TODO-019 was implemented 2026-11-13 on features/perplexity
+(the 009.7 branch is merged there); see [580](docs/handover/580-activity-log-result-details.md), CI pending. The agreed sequence in 115
 is unchanged; its dated rationale is history. No new owner/deadline or blanket
 future-write/merge/deployment approval.
 

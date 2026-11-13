@@ -58,8 +58,10 @@ include unchanged Client Display reconnect behavior and no guessed server-detail
 field mapping. Historical asset lists describe their dated checkpoints only.
 
 No agreed 009.7/009 implementation or acceptance action remains. Deferred test-suite
-cleanup, proposed source-selection/Open5e and SG-TODO-019 remain separate work,
-not closure prerequisites or newly started tasks. Closure does not authorize merge,
+cleanup and proposed source-selection/Open5e remain separate work, not closure
+prerequisites or newly started tasks. SG-TODO-019 (Activity log Details name the
+affected unit and resulting value) is implemented with CI pending; see
+[580](docs/handover/580-activity-log-result-details.md). Closure does not authorize merge,
 deployment or a release operation. The [task plan](docs/todo/097-feedback-delivery-plan.md)
 and [parent checklist](docs/todo/090-admin-usability-redesign.md) retain the accepted
 scope and history. Earlier README checkpoint detail is preserved in the
