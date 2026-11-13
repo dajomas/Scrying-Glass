@@ -125,3 +125,9 @@ Notes for later stages: Playwright treats `aria-disabled="true"` buttons as disa
 - `python -m pytest -q -rfE .` in `e2e/` (Playwright 1.65.1, Chromium and Firefox headless): 61 passed. That is 30 tests in each browser (5 access, 8 campaign, 8 roster and 9 initiative) plus one server-only HTTP check.
 - No application, `tests/` or workflow file changed, so the regular suite was not run (user instruction to run only relevant tests). No CI runs on `features/perplexity-021`.
 - Not yet run with `tools/run_e2e.sh` on the user's host. User acceptance of Stage 2 is pending; Stages 3-4 are not started.
+
+### User run of Stage 2 and the join-click fix
+
+The user pushed `2aad5117` (`E2E results 20261113T143058Z: 60 passed, 1 failed (chromium, firefox) [skip ci]`). It tested `8e519e6f`: Chromium 29 passed and 1 failed, Firefox 30 passed, server-only 1 passed. The failure was `test_join_gate_requires_initiative[chromium]`. After the initiative save, the second Join Battle click reached the row while it was being re-rendered: the button was still marked as gated and Playwright reported "Element is not visible". `force=True` (needed for the `aria-disabled` button) skips Playwright's actionability waits, so the click raced the re-render.
+
+Fix (test-only): `set_initiative` in `e2e/helpers.py` now waits until the row's Join button is no longer gated, and a shared `join` helper waits for the button to be visible before the forced click. `e2e/test_initiative.py` uses that helper. Locally, `test_initiative.py` passed 18 of 18 (both browsers) in three consecutive runs. The full suite was not rerun here; Stage 2 acceptance is pending a new user run.

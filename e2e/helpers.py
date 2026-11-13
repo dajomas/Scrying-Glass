@@ -68,6 +68,19 @@ def set_initiative(page, kind, name, value):
     if kind == "monsters":
         expect(row(page, kind, name).locator("output")).not_to_have_text("Total: unset")
     expect(field).to_have_value(str(value))
+    # The save re-renders the row; wait until its Join button is no longer gated.
+    expect(join_button(page, kind, name)).not_to_have_attribute("data-initiative-blocked", "true")
+
+
+def join_button(page, kind, name):
+    return row(page, kind, name).locator("button[data-ca]" if kind == "characters" else "button[data-ma]")
+
+
+def join(page, kind, name):
+    """Click Join Battle; force is needed because a gated button is aria-disabled."""
+    button = join_button(page, kind, name)
+    expect(button).to_be_visible()
+    button.click(force=True)
 
 
 def roster_state(page, kind, name):

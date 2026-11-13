@@ -3,13 +3,8 @@ import re
 
 from playwright.sync_api import expect
 
-from helpers import (add_character, add_monster, admin, initiative_input, open_workflow, roster_state,
-                     row, set_initiative)
-
-
-def join(page, kind, name):
-    attribute = "data-ca" if kind == "characters" else "data-ma"
-    row(page, kind, name).locator(f"button[{attribute}]").click(force=True)
+from helpers import (add_character, add_monster, admin, initiative_input, join, open_workflow,
+                     roster_state, row, set_initiative)
 
 
 def raw_and_total(page, name):
