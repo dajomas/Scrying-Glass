@@ -252,5 +252,34 @@ class CandidateBrowserTests(unittest.TestCase):
         self.assertFalse(again.is_visible())
         self.assertEqual(self.errors, [])
 
+    def test_choose_again_keeps_current_monster_and_image_until_replaced(self):
+        self.page.evaluate("""window.shownImage = 'unset';
+            document.addEventListener('scrying:monster-selection', e => {window.shownImage = e.detail?.image_url ?? null;});""")
+        self.start_candidates(self.images('https://img.test/mm.svg'))
+        self.page.get_by_role('button', name='1. Goblin', exact=False).click()
+        picker = self.page.get_by_role('dialog', name='Select monster image', exact=True)
+        picker.get_by_role('button', name='Cancel', exact=True).click()
+        self.finish()
+        self.assertEqual(self.page.evaluate('window.shownImage'), 'https://img.test/mm.svg')
+        again = self.page.get_by_role('button', name='Choose again', exact=True)
+        # Opening the list again and cancelling keeps monster and image.
+        self.page.evaluate("window.lookupSettled = false")
+        again.click()
+        self.page.get_by_role('dialog', name='Select monster candidate', exact=True).wait_for()
+        self.assertEqual(self.page.evaluate('window.shownImage'), 'https://img.test/mm.svg')
+        self.assertEqual(self.token(), 'token-1')
+        self.page.keyboard.press('Escape')
+        self.page.wait_for_function("document.querySelectorAll('dialog').length === 0")
+        self.assertEqual(self.token(), 'token-1')
+        self.assertEqual(self.page.evaluate('window.shownImage'), 'https://img.test/mm.svg')
+        # A new monster with Cancel in the image picker keeps the image shown before.
+        again.click()
+        self.page.get_by_role('button', name='2. Goblin', exact=False).click()
+        picker.get_by_role('button', name='Cancel', exact=True).click()
+        self.page.wait_for_function("new FormData(document.querySelector('#monsterForm')).get('selection_token') === 'token-2'")
+        self.assertEqual(self.form_value('image_selection_token'), 'token-1')
+        self.assertEqual(self.page.evaluate('window.shownImage'), 'https://img.test/mm.svg')
+        self.assertEqual(self.errors, [])
+
 if __name__ == '__main__':
     unittest.main()

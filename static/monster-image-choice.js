@@ -4,7 +4,9 @@
     function hasImage(candidate) {
         return typeof candidate?.image_url === 'string' && candidate.image_url.startsWith('https://');
     }
-    function open(candidate, candidates, labelFor) {
+    function open(candidate, candidates, labelFor, kept) {
+        // Cancel keeps `kept` (the image shown before Choose again) or the selected monster's own.
+        const keep = hasImage(kept) ? kept : candidate;
         const others = [];
         const seen = new Set(hasImage(candidate) ? [candidate.image_url] : []);
         for (const other of candidates) {
@@ -62,9 +64,10 @@
             const cancelButton = document.createElement('button');
             cancelButton.type = 'button';
             cancelButton.textContent = 'Cancel';
-            cancelButton.title = hasImage(candidate) ? 'Keep the selected monster image' : 'Keep no image';
-            cancelButton.addEventListener('click', () => finish(candidate));
-            dialog.addEventListener('cancel', event => {event.preventDefault(); finish(candidate);});
+            cancelButton.title = keep !== candidate ? 'Keep the current image'
+                : hasImage(candidate) ? 'Keep the selected monster image' : 'Keep no image';
+            cancelButton.addEventListener('click', () => finish(keep));
+            dialog.addEventListener('cancel', event => {event.preventDefault(); finish(keep);});
             dialog.append(heading, intro, grid, cancelButton);
             document.body.append(dialog);
             cancel = () => finish(null);

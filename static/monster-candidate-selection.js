@@ -63,11 +63,11 @@
         const file = document.querySelector('#monsterImage');
         return Boolean(file?.files && file.files.length);
     }
-    function chooseImage(candidate, candidates) {
+    function chooseImage(candidate, candidates, kept) {
         // Image picker lives in monster-image-choice.js (fragment size limit).
         const picker = window.scryingMonsterImageChoice;
         if (!picker) return Promise.resolve(candidate);
-        const open = picker.open(candidate, candidates, other => monsterSourceLabel(other, true));
+        const open = picker.open(candidate, candidates, other => monsterSourceLabel(other, true), kept);
         cancelPopup = open.cancel;
         return open.promise.finally(() => {
             if (cancelPopup === open.cancel) cancelPopup = null;
@@ -259,14 +259,18 @@
         const originalBonus = bonusInput?.value;
         const originalBonusRevision = bonusRevision;
         const overwriteBonus = Boolean(overwrite?.checked);
-        selected = null;
-        imageChoice = null;
-        clearAppliedOffer();
-        publishSelection();
-        if (cancelPopup) cancelPopup();
         const reuse = reuseLookup && reuseLookup.species === species &&
             Date.now() - reuseLookup.at < REUSE_MS ? reuseLookup : null;
         reuseLookup = null;
+        // Choose again keeps the current monster and image until a new monster is picked.
+        const kept = reuse && selected && selected.species === species ? (imageChoice || selected) : null;
+        if (!kept) {
+            selected = null;
+            imageChoice = null;
+            clearAppliedOffer();
+            publishSelection();
+        }
+        if (cancelPopup) cancelPopup();
         const scopeGuard = window.scryingAdminFeedback.begin({region: 'monsters',
             operation: 'monster.candidate.lookup', target: 'monster-form', label: 'Select monster source'});
         const isCurrent = () => window.scryingAdminFeedback.isCurrent(scopeGuard) &&
@@ -290,8 +294,10 @@
             updateReselect();
             const candidate = candidates.length === 1 ? candidates[0] : await choose(candidates);
             if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
-            if (!candidate) return {found: false,
-                reason: 'Monster selection cancelled; manual entry remains available.'};
+            if (!candidate) return {found: false, reason: kept
+                ? 'Monster selection cancelled; the current monster and image are kept.'
+                : 'Monster selection cancelled; manual entry remains available.'};
+            if (kept) clearAppliedOffer();
             const bonusUnchanged = bonusInput && bonusInput.value === originalBonus &&
                 bonusRevision === originalBonusRevision;
             if (bonusUnchanged && offerAvailable(candidate) &&
@@ -316,7 +322,7 @@
             }
             // Offer images from the other found monsters unless an upload already overrides them.
             const imageOwner = candidates.length > 1 && !uploadChosen()
-                ? await chooseImage(candidate, candidates) : candidate;
+                ? await chooseImage(candidate, candidates, kept) : candidate;
             if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
             selected = candidate;
             imageChoice = imageOwner && imageOwner !== candidate ? imageOwner : null;

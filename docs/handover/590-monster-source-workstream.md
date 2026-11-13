@@ -90,6 +90,10 @@ Selection follow-up (2026-11-13, user request): D&D Beyond choices now show the 
 
 CI for 6b92277d ([run 43408459349](https://github.com/dajomas/Scrying-Glass/actions/runs/43408459349)) failed: `test_fivetools_source_configuration` and `test_dndbeyond_locked_pages` run only some functions copied out of `scrying_glass_monster_selection.py`, and those copies lacked the new source-attribution helpers (NameError). The application code was not affected. Both tests now copy the helpers and pass locally with the next commit.
 
+Choose again follow-up (2026-11-13, user report): Choose again cleared the selected image as soon as the list opened. It now keeps the current monster, image and signed tokens until a new monster is picked; Cancel in "Select monster candidate" keeps them, and Cancel in "Select monster image" after a new pick keeps the image shown before Choose again (`monster-candidate-selection.js?v=9`, `monster-image-choice.js?v=2`). A fresh lookup still starts from no selection, and image Cancel there keeps the selected monster's own image. Only related tests were run locally.
+
+CI for c92119d7 ([run 43411555344](https://github.com/dajomas/Scrying-Glass/actions/runs/43411555344)) failed: the complete-Admin composition tests pin the script count at 44, and the new `monster-image-choice.js` makes 45. `tests/test_admin_global_feedback_composition.py` now expects 45; the 14 failing files pass locally with the next commit.
+
 ## Status
 
 Stage 1 is documentation only. Stage 2 is implemented with acceptance pending; Open5e takes part in Refresh when enabled (user decision 2026-11-13). Stage 3 is not started.

@@ -327,7 +327,9 @@ image, a "Select monster image" dialog shows thumbnails: the selected monster's 
 first, then the others with their provider and book. Click a thumbnail to use that
 image, or Cancel to keep the original image (or none). An uploaded image file still
 takes precedence. After a lookup with several results, "Choose again" next to Monster
-species reopens the list for the same species without typing it again.
+species reopens the list for the same species without typing it again. The current
+monster and image stay until you pick another monster; Cancel keeps them, and Cancel in
+the image dialog after a new pick keeps the image you had.
 
 Configuration under `display` (defaults shown):
 ```yaml
