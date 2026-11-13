@@ -23,45 +23,47 @@ one classic deferred script at `/static/admin.js` on both interfaces. The tracke
 deploy it alone or load fragments independently. The accepted pre-009.7 core was
 114,814 bytes, SHA-256
 `40fca092f989bcd85eaf7f06dc02b962b662a28827864df68c998919cdf87b46`.
-That is a historical baseline, not the modified 009.7 checkpoint's identity.
+That is a historical baseline, not the final 009.7 source identity.
 The service account needs a writable temporary directory for the generated bundle.
 See [Admin split details](docs/handover/050-admin-script-split.md).
 
-### Current 009.7 feedback status - 2026-11-12
+### Accepted 009.7 and overall 009 - 2026-11-12
 
-Stages 1-4 and accepted global units 4A.1-4A.13 are closed for their agreed scopes.
-[Stage 1](docs/handover/530-setup-operation-feedback.md#stage-1-accepted-close-out---2026-11-12),
-[Stage 2](docs/handover/510-bulk-join-pane-feedback.md#stage-2-bounded-close-out---2026-11-12),
-[Stage 3](docs/handover/540-local-feature-feedback.md#stage-3-accepted-close-out---2026-11-12)
-and [Stage 4](docs/handover/550-integration-accessibility-hardening.md#stage-4-accepted-close-out---2026-11-12)
-retain their implementation, CI/local evidence, user acceptance and limitations.
-They are not reopened by this continuation. Earlier version lists describe their
-historical checkpoints, not replacements for the Deliverable 2 shared assets below.
+Whole Deliverable 1, Deliverable 2, SG-TODO-009.7 and overall SG-TODO-009 are
+completed and closed for the agreed scope after the user's final acceptance/
+close-out request on 2026-11-12 at 22:58 CET. Earlier accepted Stages 1-4,
+4A.1-4A.13 and 009.1-009.6 stay closed. Earlier pending whole-deliverable/final-review
+notes are superseded by the [final evidence and acceptance record](docs/handover/570-final-0097-close-out.md).
 
-Deliverable 2 is completed and closed for the agreed Admin connection/recovery,
-polling-deduplication and near-field validation scope after the user's explicit
-acceptance on 2026-11-12 at 22:43 CET. Tested implementation
-8da0657325818c69fc82dc1234995a5146e88ebc has successful Branch tests 43310602854
-attempt 1; evidence publication dbb78d3057a2d38527bd612b948a6566a1a741e3.
-[560 close-out, scope and evidence limits](docs/handover/560-connection-field-feedback.md#deliverable-2-accepted-close-out---2026-11-12)
-supersedes archive/publication/CI/acceptance-pending notes. Reviewed run/job metadata
-match the implementation and all configured validation stages succeeded; no individual
-re-review of every test log/screenshot or new authenticated live-server, human visual,
-screen-reader or exhaustive accessibility verification is claimed.
+Final integrated application revision 8da0657325818c69fc82dc1234995a5146e88ebc has
+successful Branch tests 43310602854 attempt 1, published as
+ dbb78d3057a2d38527bd612b948a6566a1a741e3. Direct log review confirms 1,583 Python
+tests OK, 43 pytest passes and selected loaded-Admin feedback, accessibility and
+Deliverable 2 composition results; all configured validation stages succeeded.
+Application/test/tool/workflow tree identities match through documentation close-out
+2eb3b4d8a35b8a97761c1479f1ef68275652a01d. No new test run or exhaustive log/screenshot
+review, authenticated live-server, human visual or screen-reader verification is
+claimed. Final acceptance is bounded to the documented scope and evidence limits,
+not certification that every possible accessibility or deployment scenario was tested.
 
 Deploy admin-feedback-controller.js?v=2, admin-feedback-view.js?v=2,
 admin-feedback.css?v=2, admin-feedback-admin.js?v=6, initiative-join-gate.js?v=2,
 features.js?v=6, monster-initiative-edit.js?v=2, monster-initiative-roll.js?v=3 and
-setup-switch.js?v=4 with all eight fragments and templates. Retain the non-superseded
-Stage 4 assets, including admin-dialog-accessibility.js?v=1; deploy the complete tree.
-Existing endpoints, payloads, permissions, combat/initiative/server gates, drafts and
-selections remain. Whole Deliverable 1 integrated evidence review/acceptance and
-final integrated 009.7/009 review, documentation and acceptance remain open under the
-[current plan](docs/todo/097-feedback-delivery-plan.md#remaining-scope-and-gates).
-Deliverable 2 acceptance does not close Deliverable 1 or 009.7/009. Do not treat this
-branch as a completed 009.7 release. Earlier checkpoint detail remains in the
-[pre-Deliverable-2-close-out README](https://github.com/dajomas/Scrying-Glass/blob/dbb78d3057a2d38527bd612b948a6566a1a741e3/README.md)
-and numbered handovers; no optional work is added to the finish line.
+setup-switch.js?v=4 with all eight fragments and templates. Retain non-superseded
+Stage 4 assets including admin-dialog-accessibility.js?v=1; deploy the complete tree.
+The final core bundle is 131,939 bytes and the Admin script inventory is 44.
+Existing endpoints, payloads, permissions, combat/initiative/server gates, drafts
+and selections remain. [Deliverable 2 scope and limits](docs/handover/560-connection-field-feedback.md)
+include unchanged Client Display reconnect behavior and no guessed server-detail
+field mapping. Historical asset lists describe their dated checkpoints only.
+
+No agreed 009.7/009 implementation or acceptance action remains. Deferred test-suite
+cleanup, proposed source-selection/Open5e and SG-TODO-019 remain separate work,
+not closure prerequisites or newly started tasks. Closure does not authorize merge,
+deployment or a release operation. The [task plan](docs/todo/097-feedback-delivery-plan.md)
+and [parent checklist](docs/todo/090-admin-usability-redesign.md) retain the accepted
+scope and history. Earlier README checkpoint detail is preserved in the
+[pre-final-close-out README](https://github.com/dajomas/Scrying-Glass/blob/2eb3b4d8a35b8a97761c1479f1ef68275652a01d/README.md).
 
 Legacy source-reading tests use a disposable assembled checkout:
 

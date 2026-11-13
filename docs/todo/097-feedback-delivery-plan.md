@@ -4,126 +4,57 @@
 
 ## Current status - 2026-11-12
 
-Stages 1-4, accepted 4A.1-4A.13 units and Deliverable 2 are completed and closed
-for their agreed scopes. Whole Deliverable 1 integrated evidence review/acceptance
-and final integrated 009.7/009 evidence, documentation and user acceptance remain
-open. No new scope, owner, deadline, priority, order or acceptance gate is introduced.
-Earlier dated pending/preparation notes are superseded for these closed scopes,
-not reopened work. Do not request their acceptance again.
+Completed and closed for whole Deliverable 1, Deliverable 2 and agreed SG-TODO-009.7
+scope; parent SG-TODO-009 is also closed. Following the final-review explanation,
+the user requested "Proceed with final acceptance and close out" at 22:58 CET on
+2026-11-12. This is final whole-deliverable/phase/parent acceptance with the stated
+evidence limits, not a request to reopen accepted units or certify unperformed checks.
+[570 final reconciliation and acceptance](../handover/570-final-0097-close-out.md)
+is authoritative over earlier whole-D1/final-pending notes. No agreed implementation,
+validation or acceptance action remains inside 009.7/009.
 
-Stage 1 user acceptance: 2026-11-12 at 19:45 CET; Step 1 was recorded closed at
-7eecdc7adc5873c671e70389feed30333cc37002, and whole-stage close-out at
-37ea8c99b8c0e4133b4462e7f5b970694a313d2e. [530 evidence/limits](../handover/530-setup-operation-feedback.md#stage-1-accepted-close-out---2026-11-12).
-Stage 2 remains closed on its separately accepted green local evidence, not a new
-hosted-CI claim. [510 close-out](../handover/510-bulk-join-pane-feedback.md#stage-2-bounded-close-out---2026-11-12).
-Stage 3 user acceptance: 2026-11-12 at 20:48 CET; tested
- d17b5885baea02821224d811dffc070d6a7d33a4, green run 43291659600 attempt 1,
-publication db2daf8a473ebf77ff1626a8709a6a745e45b0b7, close-out
-93be54ace5a9efb45265668a56d54f7f053817cd. [540 evidence/limits](../handover/540-local-feature-feedback.md#stage-3-accepted-close-out---2026-11-12).
-Cancelled run 43284682854 on a5aebc34 remains historical, not covering evidence or
-an outstanding failure. Current bounded acceptance does not invent unperformed
-manual, authenticated live-server, screen-reader or exhaustive accessibility checks.
+## Final integrated evidence and scope
 
-## Deliverable 2 accepted close-out - 2026-11-12
+Final tested application: 8da0657325818c69fc82dc1234995a5146e88ebc;
+successful Branch tests 43310602854 attempt 1, job 131505374358; evidence
+ dbb78d3057a2d38527bd612b948a6566a1a741e3 under ci-results-43310602854-attempt-1.
+Main log: 1,583 Python tests OK, 43 pytest passes. Configured JavaScript and
+standalone browser/audit stages succeeded. Selected direct log checks cover loaded
+feedback/deadlines/isolation, global composition, all nine accessibility-composition
+and all four Deliverable 2 composition cases, original independent panels and
+narrow/keyboard behavior. Not every test, screenshot or possible scenario was
+individually re-reviewed. Runtime/test/tool/workflow identities match through
+2eb3b4d8a35b8a97761c1479f1ef68275652a01d; no new CI is inferred from doc-only commits.
 
-The user explicitly requested "Accept and close Deliverable 2" on 2026-11-12 at
-22:43 CET following the green covering-CI review. Completed and closed for the
-agreed Admin persistent connection/recovery warning, polling deduplication and
-near-field field/combatant association scope, with the limits in
-[560 close-out](../handover/560-connection-field-feedback.md#deliverable-2-accepted-close-out---2026-11-12).
-
-Implementation 8da0657325818c69fc82dc1234995a5146e88ebc on
-features/perplexity-009.7 has successful Branch tests 43310602854 attempt 1,
-job 131505374358; publication dbb78d3057a2d38527bd612b948a6566a1a741e3, directory
-ci-results-43310602854-attempt-1. Reviewed run.json and jobs.json agree on branch,
-tested SHA, attempt and completed/success. All configured Chromium provisioning,
-syntax/import, main Python/browser, pytest, JavaScript and standalone browser/audit
-stages succeeded. Review did not individually re-review every test log/screenshot
-or recount tests. No new manual/live-server/screen-reader/exhaustive accessibility
-evidence is claimed. Earlier archive/publication/CI/acceptance-pending notes are
-superseded; no further Deliverable 2 acceptance request remains.
-
-This documentation-only close-out uses [skip ci], runs no new tests and changes/
-dispatches no workflow. It closes Deliverable 2 only, not whole Deliverable 1 or
-009.7/009. No merge, deployment or blanket future write approval.
-
-## Deliverable 2 implementation - 2026-11-12
-
-Originally delivered in SG-TODO-009.7-D2.zip on 52061a68; now published, covered
-by green CI and accepted as above. Policy items 5-8:
-
-- One persistent page-lane global `connection.poll`/`server` warning; repeated
-  identical failures add no record/announcement; matching recovery resolves only it.
-- Explicit `field` selectors associate validation/Join feedback with the affected
-  control, using aria-invalid, a preserved aria-describedby and an adjacent non-live
-  hint; cleanup on dismissal/resolution/replacement/scope change and re-association
-  after re-render.
-- Existing initiative/server gates, API/payloads, combat, permissions, drafts and
-  selections retained; eight fragments below 20,000 bytes; script inventory 44.
-
-[560](../handover/560-connection-field-feedback.md) retains full design, test names,
-asset versions and limits. The user requested Deliverable 2 before the whole
-Deliverable 1 integrated review; that review/acceptance remains open and is not
-satisfied by Deliverable 2 implementation or acceptance.
-
-## Stage 4 accepted close-out - 2026-11-12
-
-Accepted 2026-11-12 at 21:49 CET for agreed integration/accessibility hardening and
-approved compatibility retirement. Tested 535af6f350fdcb0a473d4d43133e0d8ac7c0b50e;
-green Branch tests 43302214845 attempt 1, job 131476065294; publication
-3bfa218c1ecd0b93c3a7278f88dd811ea4380540; close-out
-52061a68312a80af7182335db71f851b57536bb4. [550 scope/history/evidence limits](../handover/550-integration-accessibility-hardening.md#stage-4-accepted-close-out---2026-11-12).
-Original archive SG-TODO-009.7-S4.zip and earlier compatibility-retirement approval
-remain historical. No Stage 4 implementation/publication/CI/acceptance action remains.
-
-## Stage 1 accepted close-out - 2026-11-12
-
-Step 1 was already accepted, with green run 43237771405 attempt 1 testing
-4f0127b56550cacb821ae2c62cb2057265eaea2a. Step 2 publication
-3adf212646aa8956ca6a42870c23075d5c482c9b has green run 43272584707 attempt 1,
-evidence 1a6e562474fe3fb82d2a9f37b6d5493a70d2307c. Final Step 3/integrated
-Stage 1 implementation cc0b67b177772e314b608817f6f51cecc322a065 has green run
-43279736032 attempt 1, job 131397505642, publication
-97eedc6da52abcfa94526fee25a3c321f0626844. Whole-stage acceptance included Steps 2/3;
-[530](../handover/530-setup-operation-feedback.md#stage-1-accepted-close-out---2026-11-12)
-retains all scope, publication and evidence-review limits. No new test execution
-or individual re-review is claimed here.
-
-## Stage 1 Step 2 setup-operation delivery split - 2026-11-12
-
-Completed/accepted stable IDs: SG-TODO-009.7-S1-2A (new empty setup),
-SG-TODO-009.7-S1-2B (save), SG-TODO-009.7-S1-2C (load/switch),
-SG-TODO-009.7-S1-2D (rename), SG-TODO-009.7-S1-2E (delete/replacement/default).
-Cumulative packaging replaced the original one-operation-per-archive order at the
-user's request for that delivery only; no new requirement or acceptance gate.
-Existing name/duplicate validation, confirmations/no-confirmation load, prompt
-cancel/blank/unchanged no-ops, save/overwrite and server-selected replacement
-behavior remain. Step 3 copy/move/background scope is also closed. Full details
-remain in [530](../handover/530-setup-operation-feedback.md) and the
-[pre-Deliverable-2-close-out task record](https://github.com/dajomas/Scrying-Glass/blob/dbb78d3057a2d38527bd612b948a6566a1a741e3/docs/todo/097-feedback-delivery-plan.md).
+Prior Stage 1-4, 4A.1-4A.13 and Deliverable 2 bounded acceptances remain closed.
+Their precise behavior, tests, source/pin identities and failures/corrections remain
+in numbered handovers 440/450/470/510/520/530/540/550/560 and the
+[complete pre-final task record](https://github.com/dajomas/Scrying-Glass/blob/2eb3b4d8a35b8a97761c1479f1ef68275652a01d/docs/todo/097-feedback-delivery-plan.md).
+Stage 2's accepted local evidence is not relabelled hosted CI; cancelled/historical
+failed runs are not converted to passes. Final hosted CI supplies integrated coverage.
 
 ## Remaining scope and gates
 
-Stages 1-4 and Deliverable 2 are closed. The existing remaining sequence is:
+None inside the agreed 009.7/009 scope after final acceptance. No new scope, owner,
+deadline, priority or gate. Test-suite cleanup remains separate post-009 work;
+source-selection/Open5e, SG-TODO-019 and unrelated backlog remain outside closure,
+not newly started. The existing 115 delivery sequence is unchanged. No merge,
+deployment, release operation or blanket future external-write approval.
 
-1. Whole Deliverable 1 integrated evidence review, documentation and bounded
-   acceptance. Do not reopen accepted units or infer whole-D1 acceptance from D2.
-2. Final integrated evidence/corrections, documentation reconciliation and user
-   acceptance of 009.7, then overall 009 close-out.
-
-These are existing agreed areas, not new requirements. Preserve all original
-criteria, 009.6 safeguards and limits from the
-[preserved full plan](https://github.com/dajomas/Scrying-Glass/blob/9d05e129cc2b85099cf0e3bf394a1fe398d0af24/docs/todo/097-feedback-delivery-plan.md)
-and numbered handovers. Source-selection/Open5e, SG-TODO-019 and unrelated backlog
-are not prerequisites; test-suite cleanup stays deferred until after 009.
-No blanket approval for future external writes, merges, deployment or dispatch.
+No new authenticated live-server, human visual, screen-reader or exhaustive
+accessibility verification is claimed. Intercepted-HTTP browser fixtures and prior
+local audits retain their limitations; the user accepted the documented bounded
+scope. D2 remains the agreed Admin poll/association scope, not Client Display
+reconnect redesign, guessed HTTP-detail field mapping or single-field bulk errors.
 
 ## Approved policy and required Deliverable 1 steps
 
-Global success 5s, pane success 3s; actionable errors persist until dismissal or
-matching resolution/replacement. Explicit severity/identity/scope/order; stale
-tickets/timers cannot overwrite or clear current/unrelated feedback. Preserve
-API/combat/authorization and drafts/selections. Full ten-point policy retained.
+Retained execution/acceptance contract, now satisfied for the agreed bounded scope;
+this is not a new open checklist. Global success 5s, pane success 3s; actionable
+errors persist until dismissal or matching resolution/replacement. Explicit
+severity/identity/scope/order; stale tickets/timers cannot overwrite or clear current/
+unrelated feedback. Preserve API/combat/authorization and drafts/selections. Full
+original policy/criteria remain in the [preserved full plan](https://github.com/dajomas/Scrying-Glass/blob/9d05e129cc2b85099cf0e3bf394a1fe398d0af24/docs/todo/097-feedback-delivery-plan.md).
 
 1. Finish actual integration inventory, destinations, scope/retry mapping.
 2. Controller/accessibility: deadlines, persistent independent errors, safe text,
@@ -139,47 +70,30 @@ API/combat/authorization and drafts/selections. Full ten-point policy retained.
 7. Exact nonempty write approval, exact push/real SHA, covering CI/correction
    review; mixed commits normal CI, documentation-only commits [skip ci].
 
-Implementation archives remain the agreed workflow unless explicitly changed: the
-user applies, commits and pushes; Patch is archive-only and must not be staged;
-never use newzip.sh unchanged. Preserve complete required handover/TODO context,
-replacement files, base/file verification and COMMIT_MESSAGE. No extra full-suite
-acceptance gate per archive; focused checks and covering review follow the existing
-sequence. Future code uses normal CI unless explicitly directed otherwise.
+This close-out changes documentation only, runs no new tests and changes/dispatches
+no workflow. Existing implementation-archive conventions remain for future requested
+work: complete required context/replacement files/base verification/COMMIT_MESSAGE,
+Patch archive-only, never stage Patch or use newzip.sh unchanged. No blanket write
+approval; future code runs normal CI unless explicitly directed otherwise.
 
-## 4A.11 battle-action global notices - 2026-11-10
+## Closed-scope history and retained anchors
 
-Accepted/closed. Full behavior, implementation/correction/run/publication identities,
-counts and limitations remain in [440](../handover/440-battle-action-global-feedback.md#4a11-bounded-close-out---2026-11-10)
-and the permanently linked pre-close-out task record above.
+Full dated records are permanently preserved at the pre-final task link above and
+in their numbered handovers; the following existing fragment targets remain valid.
+They do not reopen work. Earlier pending whole-deliverable/final notes are superseded
+by final acceptance, not deleted evidence or a claim of unperformed testing.
 
-## 4A.12 Join reporting - 2026-11-11
-
-Accepted/closed for global reporting/server gates. Detailed identities, evidence and
-limits remain in [450](../handover/450-join-reporting.md#4a12-bounded-close-out---2026-11-11)
-and the pre-close-out task record. Deliverable 2 adds association without reopening it.
-
-## 4A.13 global reconciliation - 2026-11-11
-
-Accepted/closed. Global compatibility retirement was followed by accepted Stage 4
-pane/local retirement. Deliverable 2 is separately accepted; whole Deliverable 1
-remains open. [470](../handover/470-global-feedback-close-out.md#4a13-bounded-close-out---2026-11-11)
-and the pre-close-out task record retain full implementations, failures/corrections,
-runs, counts and limits.
-
-## 4A.13 browser fixture correction - 2026-11-11
-
-Historical failure/correction superseded by green covering evidence and accepted
-4A.13 close-out. [467 history](../handover/467-bundle-import-feedback.md#retirement-ci-failure-and-browser-fixture-correction---2026-11-11)
-and the pre-close-out task record retain the complete history.
-
-## 4A.13 Node assertion correction - 2026-11-11
-
-Historical failure/correction superseded by green covering evidence and accepted
-4A.13 close-out. [467 history](../handover/467-bundle-import-feedback.md#browser-ci-verified-and-node-assertion-correction---2026-11-11)
-and the pre-close-out task record retain the complete history.
-
-## Closed-unit anchors
-
+<a id="deliverable-2-accepted-close-out---2026-11-12"></a>
+<a id="deliverable-2-implementation---2026-11-12"></a>
+<a id="stage-4-accepted-close-out---2026-11-12"></a>
+<a id="stage-1-accepted-close-out---2026-11-12"></a>
+<a id="stage-1-step-2-setup-operation-delivery-split---2026-11-12"></a>
+<a id="4a11-battle-action-global-notices---2026-11-10"></a>
+<a id="4a12-join-reporting---2026-11-11"></a>
+<a id="4a13-global-reconciliation---2026-11-11"></a>
+<a id="4a13-browser-fixture-correction---2026-11-11"></a>
+<a id="4a13-node-assertion-correction---2026-11-11"></a>
+<a id="closed-unit-anchors"></a>
 <a id="current-status---2026-11-11"></a>
 <a id="4a1-implementation-checkpoint---2026-11-10"></a>
 <a id="4a2-startrestart-request-feedback---2026-11-10"></a>
@@ -194,7 +108,3 @@ and the pre-close-out task record retain the complete history.
 <a id="4a10-viewer-font-adjustment-feedback---2026-11-10"></a>
 <a id="4a11-close-out---2026-11-10"></a>
 <a id="4a12-close-out---2026-11-11"></a>
-
-Retained headings/anchors preserve incoming links. Compacted closed-unit detail is
-preserved permanently at the pre-close-out task link; no unfinished task or criterion
-is removed, no historical failure is relabelled, and no accepted scope is reopened.

@@ -67,46 +67,44 @@ This is the index; substantive handover lives in numbered docs/handover sections
 52. [Stage 2 bulk Join pane feedback](docs/handover/510-bulk-join-pane-feedback.md)
 
 53. [Stage 1 campaign-operation feedback](docs/handover/520-campaign-operation-feedback.md) - Step 1 accepted/closed 2026-11-12; covering CI 43237771405 attempt 1 for 4f0127b56550cacb821ae2c62cb2057265eaea2a. Historical remaining-Stage-1 notes are superseded by the whole-stage close-out below.
-54. [Stage 1 accepted close-out and setup-operation history](docs/handover/530-setup-operation-feedback.md#stage-1-accepted-close-out---2026-11-12) - all agreed campaign/setup/transfer/background work completed and closed, user acceptance 2026-11-12 at 19:45 CET. Final tested revision cc0b67b177772e314b608817f6f51cecc322a065; successful Branch tests 43279736032 attempt 1; evidence 97eedc6da52abcfa94526fee25a3c321f0626844. Step 2/3 pending notes are superseded; wider gates remain open.
+54. [Stage 1 accepted close-out and setup-operation history](docs/handover/530-setup-operation-feedback.md#stage-1-accepted-close-out---2026-11-12) - all agreed campaign/setup/transfer/background work completed and closed, user acceptance 2026-11-12 at 19:45 CET. Final tested revision cc0b67b177772e314b608817f6f51cecc322a065; successful Branch tests 43279736032 attempt 1; evidence 97eedc6da52abcfa94526fee25a3c321f0626844. Historical wider-gate notes are superseded by final close-out 570.
 55. [Stage 3 accepted local-feature feedback close-out](docs/handover/540-local-feature-feedback.md#stage-3-accepted-close-out---2026-11-12) - completed/closed for encounter tools, lairs/lair-action dialog, has-lair and selected-campaign viewer access; user accepted 2026-11-12 at 20:48 CET. Tested d17b5885baea02821224d811dffc070d6a7d33a4; successful Branch tests 43291659600 attempt 1; evidence db2daf8a473ebf77ff1626a8709a6a745e45b0b7. Earlier pending notes are superseded.
 56. [Stage 4 accepted integration/accessibility close-out](docs/handover/550-integration-accessibility-hardening.md#stage-4-accepted-close-out---2026-11-12) - completed/closed for the agreed compatibility retirement and hardening scope; user accepted 2026-11-12 at 21:49 CET. Tested 535af6f350fdcb0a473d4d43133e0d8ac7c0b50e; successful Branch tests 43302214845 attempt 1; evidence 3bfa218c1ecd0b93c3a7278f88dd811ea4380540. Earlier publication/CI/acceptance-pending notes are superseded.
-57. [Deliverable 2 accepted close-out](docs/handover/560-connection-field-feedback.md#deliverable-2-accepted-close-out---2026-11-12) - agreed Admin persistent connection/recovery, polling deduplication and near-field association completed/closed; user accepted 2026-11-12 at 22:43 CET. Tested 8da0657325818c69fc82dc1234995a5146e88ebc; successful Branch tests 43310602854 attempt 1; evidence dbb78d3057a2d38527bd612b948a6566a1a741e3. Whole Deliverable 1 and final 009.7/009 gates stay open.
+57. [Deliverable 2 accepted close-out](docs/handover/560-connection-field-feedback.md#deliverable-2-accepted-close-out---2026-11-12) - agreed Admin persistent connection/recovery, polling deduplication and near-field association completed/closed; user accepted 2026-11-12 at 22:43 CET. Tested 8da0657325818c69fc82dc1234995a5146e88ebc; successful Branch tests 43310602854 attempt 1; evidence dbb78d3057a2d38527bd612b948a6566a1a741e3. Historical whole-D1/final-pending notes are superseded by 570.
+58. [Final Deliverable 1, 009.7 and overall 009 close-out](docs/handover/570-final-0097-close-out.md) - completed/closed for the agreed scope after final user acceptance 2026-11-12 at 22:58 CET; integrated evidence, unchanged code identity, criterion mapping and limits recorded. No new scope, test run, merge or deployment.
 
 <a id="current-state---2026-11-11"></a>
 
 ## Current state - 2026-11-12
 
-009.1-009.6, coordinated 012, 018, 015 and accepted global units 4A.1-4A.13 remain
-closed. Stage 2 remains closed on its separately recorded bounded acceptance and
-green local evidence; [510](docs/handover/510-bulk-join-pane-feedback.md#stage-2-bounded-close-out---2026-11-12)
-retains scope/evidence limits. Stage 1 is explicitly accepted and closed,
-including Step 2 (2A-2E) and Step 3, with covering CI and limits in
-[530](docs/handover/530-setup-operation-feedback.md#stage-1-accepted-close-out---2026-11-12).
-Earlier preparation/publication/acceptance-pending notes are historical, not current
-blockers or a reason to request Stage 1 acceptance again.
+Whole Deliverable 1 and Deliverable 2, SG-TODO-009.7 and parent SG-TODO-009 are
+completed and closed following the final 22:58 CET user acceptance/close-out request.
+009.1-009.6, Stages 1-4, global units 4A.1-4A.13 and coordinated previously accepted
+scopes remain closed. [570 final evidence/limits](docs/handover/570-final-0097-close-out.md)
+is the current authority over dated whole-deliverable/final-review-pending notes in
+earlier records; their evidence, failure histories and limitations remain historical.
+Do not request their acceptance again or treat deferred optional work as a blocker.
 
-Stage 3 is accepted and closed with covering CI and evidence limits in
-[540](docs/handover/540-local-feature-feedback.md#stage-3-accepted-close-out---2026-11-12).
-Stage 4 is accepted and closed with covering CI and limits in
-[550](docs/handover/550-integration-accessibility-hardening.md#stage-4-accepted-close-out---2026-11-12).
-Deliverable 2 is explicitly accepted and closed following the user's 22:43 CET
-request; [560](docs/handover/560-connection-field-feedback.md#deliverable-2-accepted-close-out---2026-11-12)
-records the matching successful covering run, scoped behavior and limits. Earlier
-Deliverable 2 publication/CI/acceptance-pending notes are superseded. Do not reopen
-Stages 1-4 or Deliverable 2 or request their acceptance again. Whole Deliverable 1
-integrated evidence review/acceptance and final integrated 009.7/009 evidence,
-documentation and acceptance remain open under the
-[current task plan](docs/todo/097-feedback-delivery-plan.md). Deliverable 2 acceptance
-does not close Deliverable 1, phase 009.7 or parent 009. No optional scope or new
-acceptance gates. Test-suite cleanup stays deferred until after 009; 016/017 and
-SG-TODO-019 remain proposed, not prerequisites. No merge/deployment or blanket
-future write approval.
+Final integrated application revision 8da0657325818c69fc82dc1234995a5146e88ebc is
+covered by successful Branch tests 43310602854 attempt 1; publication
+ dbb78d3057a2d38527bd612b948a6566a1a741e3. Direct review confirms main Python
+1,583 tests OK and pytest 43 passes plus selected feedback/integration/browser
+results. All configured stages succeeded; not every result or screenshot was
+individually reviewed. Git root identities show unchanged application, assets,
+templates, tests, tooling and workflows through 2eb3b4d8a35b8a97761c1479f1ef68275652a01d.
+No new authenticated live-server, human visual, screen-reader or exhaustive
+accessibility verification is inferred from bounded final acceptance.
 
-This Deliverable 2 close-out changes documentation only and uses [skip ci]. No new
-tests, authenticated live-server, human visual, screen-reader or exhaustive
-accessibility evidence is claimed; no workflow is changed or separately dispatched.
-Earlier index history remains in the [pre-Deliverable-2-close-out index](https://github.com/dajomas/Scrying-Glass/blob/dbb78d3057a2d38527bd612b948a6566a1a741e3/HANDOVER.md)
-and numbered handovers. Existing section links/order and old anchors are retained.
+No agreed 009.7/009 implementation, validation or acceptance action remains.
+Test-suite cleanup remains separate post-009 work; 016/017 and SG-TODO-019 remain
+proposed, not newly started or closure prerequisites. The agreed sequence in 115
+is unchanged; its dated rationale is history. No new owner/deadline or blanket
+future-write/merge/deployment approval.
+
+This final close-out changes documentation only and uses [skip ci]. No application,
+test, template, asset, pin or workflow change, no fresh tests and no separate workflow
+dispatch. Earlier index history is preserved in the [pre-final-close-out index](https://github.com/dajomas/Scrying-Glass/blob/2eb3b4d8a35b8a97761c1479f1ef68275652a01d/HANDOVER.md)
+and numbered handovers. Existing order, links and old anchors are retained.
 
 ## Maintenance
 
