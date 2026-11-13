@@ -1,0 +1,33 @@
+7Z test_logout.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:57.9171707Z Ran 14 tests in 1.154s
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:57.9171859Z 
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:57.9171955Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:57.9612324Z Connection audit: test_lookup_provider_settings.py
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2928087Z Provider settings unreadable; optional lookups disabled
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2928504Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2929028Z   File "/tmp/scrying-tests-nasvj42i/repo/python/scrying_glass_provider_settings.py", line 67, in effective_display
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2929464Z     saved = overrides(context)
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2929929Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2930423Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2930733Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2931138Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2931543Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2931801Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2932223Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2932615Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2933059Z sqlite3.OperationalError: locked
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2933369Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2933651Z Ran 9 tests in 0.099s
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2933770Z 
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2933839Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.2934196Z test_lookup_provider_settings.py: connections opened: 15; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.3522087Z Connection audit: test_manual_monster_bonus_creation.py
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.5779641Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.5780027Z Ran 8 tests in 0.013s
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.5780448Z test_manual_monster_bonus_creation.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.5780719Z 
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.5780789Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:58.6211474Z Connection audit: test_manual_monster_bonus_form.py
+tests	Standalone Python browser and audit checks	2026-11-13T09:12:00.8786838Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T09:12:00.8787399Z Ran 6 tests in 2.192s
+tests	Standalone Python browser and audit checks	2026-11-13T09:

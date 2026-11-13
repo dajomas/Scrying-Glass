@@ -1,0 +1,33 @@
+ecks	2026-11-13T09:11:38.2044007Z 
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.2044160Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.2190049Z Connection audit: test_display_connection.py
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.3482919Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.3484123Z test_display_connection.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.3484895Z Ran 18 tests in 0.066s
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.3485154Z 
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.3485315Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.3620210Z Connection audit: test_dnd_initiative_candidates.py
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.5853152Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.5854334Z test_dnd_initiative_candidates.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.5855181Z Ran 4 tests in 0.007s
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.5855434Z 
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.5855585Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.6300105Z Connection audit: test_dnd_initiative_offer.py
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.6998313Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.6999130Z Ran 16 tests in 0.005s
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.6999377Z 
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.6999539Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.7000402Z test_dnd_initiative_offer.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.7131607Z Connection audit: test_dndbeyond_locked_pages.py
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.9437918Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.9438360Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.9438847Z   File "/tmp/scrying-tests-nasvj42i/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.9439245Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.9439633Z   File "/tmp/scrying-tests-nasvj42i/repo/python/scrying_glass_monster_selection.py", line 166, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.9440048Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.9440439Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.9441285Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.9441686Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.9441929Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.9442326Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T09:11:38.9442719Z     return self._

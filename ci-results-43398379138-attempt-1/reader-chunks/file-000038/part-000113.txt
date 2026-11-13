@@ -1,0 +1,25 @@
+st/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0416451Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0416775Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0417406Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0417857Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0418049Z OSError: secret
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0418148Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0418340Z The above exception was the direct cause of the following exception:
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0418543Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0418659Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0419178Z   File "/tmp/scrying-tests-h5dyf_0z/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0419669Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0420068Z   File "/tmp/scrying-tests-h5dyf_0z/repo/python/scrying_glass_monster_selection.py", line 170, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0420546Z     extra=(("Open5e", open5e_enabled, lambda: open5e_candidates(species, display)),))
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0420900Z                                               ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0421338Z   File "/tmp/scrying-tests-h5dyf_0z/repo/python/scrying_glass_monster_selection.py", line 152, in open5e_candidates
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0421851Z     raise ProviderError("Open5e lookup failed; enter stats manually or retry.") from exc
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0422418Z python.scrying_glass_monster_selection.ProviderError: Open5e lookup failed; enter stats manually or retry.
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0422765Z ok
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0423317Z test_refresh_does_not_resolve_retained_open5e_identity (test_open5e_provider.Open5eLookupIntegrationTests.test_refresh_does_not_resolve_retained_open5e_identity) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0424132Z test_base_url_requires_plain_https (test_open5e_provider.Open5eProviderTests.test_base_url_requires_plain_https) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0424939Z test_exact_name_candidates_are_mapped_with_attribution (test_open5e_provider.Open5eProviderTests.test_exact_name_candidates_are_mapped_with_attribution) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0426030Z test_hit_points_prefer_matching_dice_otherwise_average (test_open5e_provider.Open5eProviderTests.test_hit_points_prefer_matching_dice_otherwise_average) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0427185Z test_ignored_filter_results_are_validated_not_trusted (test_open5e_provider.Open5eProviderTests.test_ignored_filter_results_are_validated_not_trusted) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T09:08:50.0428121Z test_illustrations_stay_on_the_configured_https_host (test_open5e_provider.Open5eProviderTests.test_illustrations_stay_on_the_configured_https_ho
