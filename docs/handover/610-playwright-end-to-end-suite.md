@@ -63,3 +63,23 @@ User request: "Is there a way to generate output? Something like: Now running te
 - `--no-push` no longer removes older results folders; pruning to the latest folder now happens only when results are committed.
 
 Validation (local): `tools/run_e2e.sh --no-push` passed both browser checks and printed 27 progress lines, all `SUCCESS` (27 passed). Deliberate failing-test and setup-error probes printed `FAILED` and `ERROR`. The preflight failure path was not exercised, because both browsers start here. No CI runs on `features/perplexity-021`. User acceptance is pending.
+
+## Stage 1 follow-up - dnf system package check - 2026-11-13
+
+User request: Playwright does not natively support RHEL-like systems such as Rocky Linux 10.2, so add a dependency check. Playwright's missing-library message lists apt packages (`libxcursor1 libgtk-3-0t64 libpangocairo-1.0-0 libpango-1.0-0 libcairo-gobject2 libcairo2 libgdk-pixbuf-2.0-0`). The user gave the dnf equivalents: `sudo dnf install -y libXcursor gtk3 pango cairo cairo-gobject gdk-pixbuf2`.
+
+- `tools/run_e2e.sh` reads `/etc/os-release`. When `ID`/`ID_LIKE` contains rhel, fedora, centos, rocky or almalinux and `rpm` is available, it runs `rpm -q` for `libXcursor gtk3 pango cairo cairo-gobject gdk-pixbuf2` before it creates the virtual environment. If any are missing, it stops with `sudo dnf install -y <missing packages>` before any download, test or commit. `E2E_SKIP_DEPS_CHECK=1` skips the check.
+- If a browser still cannot start on such a system, the preflight message names the dnf packages instead of `playwright install-deps` (which uses apt). Other systems keep the `install-deps` advice.
+- The package list covers the Firefox libraries the user reported. Chromium already started on the user's Rocky host, so no Chromium packages are checked; the browser preflight still catches any other missing library.
+
+Validation (local): `bash -n`. The check block was run on its own with a simulated Rocky `os-release` and a stub `rpm`:
+  - with two packages missing, it stopped with `sudo dnf install -y gtk3 pango`;
+  - with all packages present, it printed `... OK`;
+  - with `E2E_SKIP_DEPS_CHECK=1`, it was skipped;
+  - with an Ubuntu `os-release`, it was skipped.
+
+It has not been run on a real Rocky/RHEL host. No CI runs on `features/perplexity-021`.
+
+### User run after the system packages were installed
+
+The user pushed `58556e4c` (`E2E results 20261113T135544Z: 27 passed, 0 failed (chromium, firefox) [skip ci]`). Its `summary.md` reports that the run tested `2fe31145` with pytest exit status 0: Chromium 13 passed, Firefox 13 passed, server-only 1 passed. The commit also deleted the older `e2e-results/20261113T133947Z/` folder. This is the first observed run of the script's commit/push path and of latest-folder-only retention. The dnf check above was added after that run.

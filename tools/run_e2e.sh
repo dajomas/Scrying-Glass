@@ -5,7 +5,8 @@
 #
 # Usage: tools/run_e2e.sh [--no-push] [extra pytest arguments]
 # Environment: E2E_BRANCH (default features/perplexity-021), E2E_REMOTE (default origin),
-#              E2E_VENV (default .venv-e2e), E2E_HEADED=1 to show the browsers.
+#              E2E_VENV (default .venv-e2e), E2E_HEADED=1 to show the browsers,
+#              E2E_SKIP_DEPS_CHECK=1 to skip the system package check.
 set -euo pipefail
 
 ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -35,6 +36,32 @@ then
     [[ "$behind" == "0" ]] || fail "local $BRANCH is $behind commit(s) behind $REMOTE/$BRANCH; pull first"
 fi
 
+# System packages: Playwright only knows apt (Debian/Ubuntu) package names. On dnf-based
+# systems (Rocky, AlmaLinux, RHEL, CentOS, Fedora) check the equivalent rpm packages that
+# Firefox needs and print the matching dnf command when any are missing.
+DNF_PACKAGES=(libXcursor gtk3 pango cairo cairo-gobject gdk-pixbuf2)
+os_like=""
+if [[ -r /etc/os-release ]]
+then
+    os_like="$(. /etc/os-release; echo " ${ID:-} ${ID_LIKE:-} ")"
+fi
+if [[ "${E2E_SKIP_DEPS_CHECK:-0}" != "1" && "$os_like" =~ \ (rhel|fedora|centos|rocky|almalinux)\  ]] && command -v rpm >/dev/null 2>&1
+then
+    missing=()
+    for package in "${DNF_PACKAGES[@]}"
+    do
+        rpm -q "$package" >/dev/null 2>&1 || missing+=("$package")
+    done
+    if (( ${#missing[@]} ))
+    then
+        fail "missing system packages for the Playwright browsers: ${missing[*]}
+Install them with:
+    sudo dnf install -y ${missing[*]}
+then run this script again (E2E_SKIP_DEPS_CHECK=1 skips this check). Nothing was committed."
+    fi
+    echo "System package check (dnf): ${DNF_PACKAGES[*]} ... OK"
+fi
+
 if [[ ! -x "$VENV/bin/python" ]]
 then
     python3 -m venv "$VENV"
@@ -61,6 +88,12 @@ with sync_playwright() as playwright:
 sys.exit(1 if failed else 0)
 PY
 then
+    if [[ "$os_like" =~ \ (rhel|fedora|centos|rocky|almalinux)\  ]]
+    then
+        fail "a browser could not start. Playwright's install-deps and apt package names do not apply here.
+Install the dnf equivalents of the libraries named above (for example: sudo dnf install -y ${DNF_PACKAGES[*]}),
+then run this script again. Nothing was committed."
+    fi
     fail "a browser could not start; install its system libraries with:
     sudo $VENV/bin/python -m playwright install-deps chromium firefox
 then run this script again. Nothing was committed."
