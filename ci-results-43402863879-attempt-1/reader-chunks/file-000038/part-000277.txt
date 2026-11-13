@@ -1,0 +1,33 @@
+r and audit checks	2026-11-13T09:47:09.3876420Z Ran 15 tests in 0.002s
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:09.3876675Z 
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:09.3883244Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:09.3884031Z test_monster_roll_order.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:09.4004411Z Connection audit: test_monster_roll_order_handlers.py
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:09.7533763Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:09.7534658Z Ran 6 tests in 0.019s
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:09.7534977Z 
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:09.7535159Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:09.7543651Z test_monster_roll_order_handlers.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:09.8036957Z Connection audit: test_monster_source_help_text.py
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.4429666Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.4430233Z Ran 3 tests in 1.547s
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.4430422Z 
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.4430526Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.4431095Z test_monster_source_help_text.py: connections opened: 1; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.5085016Z Connection audit: test_monster_source_snapshot.py
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.6050641Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.6051412Z Ran 20 tests in 0.002s
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.6051656Z 
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.6051795Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.6052853Z test_monster_source_snapshot.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.6199826Z Connection audit: test_open5e_provider.py
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.9562144Z Open5e candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.9562932Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.9563883Z   File "/tmp/scrying-tests-1lj4q3or/repo/python/scrying_glass_monster_selection.py", line 149, in open5e_candidates
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.9565171Z     return open5e.candidates(species, display, max_candidates=MAX_CANDIDATES)
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.9565849Z            ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.9566661Z   File "/tmp/scrying-tests-1lj4q3or/repo/python/scrying_glass_open5e.py", line 171, in candidates
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.9567527Z     found = _pages(base + "/creatures/?" + query, base, limit=max_candidates)
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.9568496Z   File "/tmp/scrying-tests-1lj4q3or/repo/python/scrying_glass_open5e.py", line 79, in _pages
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:11.9569084Z     data = load_json(url)
+tests	Standalone Python browser and audit checks	2026-11-

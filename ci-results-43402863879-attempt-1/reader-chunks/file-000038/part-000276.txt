@@ -1,0 +1,31 @@
+audit checks	2026-11-13T09:47:08.5279022Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5281152Z ValueError: Retained source missing or ambiguous
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5323558Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5324135Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5324852Z   File "/tmp/scrying-tests-1lj4q3or/repo/python/scrying_glass_monster_refresh_sources.py", line 150, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5325559Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5326253Z   File "/tmp/scrying-tests-1lj4q3or/repo/python/scrying_glass_monster_refresh_sources.py", line 76, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5327235Z     html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5327903Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5328430Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5328755Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5329321Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5329898Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5330265Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5330885Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5331414Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5331630Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5340522Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5341037Z Ran 11 tests in 0.010s
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5341188Z 
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5341281Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5341759Z test_monster_refresh_sources.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:08.5811847Z Connection audit: test_monster_refresh_startup_browser.py
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:09.2630551Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:09.2631313Z Ran 1 test in 0.543s
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:09.2631545Z 
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:09.2631702Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:09.2633203Z test_monster_refresh_startup_browser.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:09.2930227Z Connection audit: test_monster_roll_order.py
+tests	Standalone Python browser and audit checks	2026-11-13T09:47:09.3875666Z ----------------------------------------------------------------------
+tests	Standalone Python browse

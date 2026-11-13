@@ -1,0 +1,49 @@
+lized scope
+tests	JavaScript tests	2026-11-13T09:42:06.1065503Z ok 1 - encounter context starts with the existing uninitialized scope
+tests	JavaScript tests	2026-11-13T09:42:06.1066431Z   ---
+tests	JavaScript tests	2026-11-13T09:42:06.1066956Z   duration_ms: 2.564167
+tests	JavaScript tests	2026-11-13T09:42:06.1067529Z   type: 'test'
+tests	JavaScript tests	2026-11-13T09:42:06.1068031Z   ...
+tests	JavaScript tests	2026-11-13T09:42:06.1072327Z # Subtest: context is a fresh immutable snapshot and cannot mutate feedback scope
+tests	JavaScript tests	2026-11-13T09:42:06.1074445Z ok 2 - context is a fresh immutable snapshot and cannot mutate feedback scope
+tests	JavaScript tests	2026-11-13T09:42:06.1093451Z   ---
+tests	JavaScript tests	2026-11-13T09:42:06.1094214Z   duration_ms: 1.677344
+tests	JavaScript tests	2026-11-13T09:42:06.1094713Z   type: 'test'
+tests	JavaScript tests	2026-11-13T09:42:06.1095139Z   ...
+tests	JavaScript tests	2026-11-13T09:42:06.1095773Z # Subtest: same accepted scope does not advance its epoch
+tests	JavaScript tests	2026-11-13T09:42:06.1096643Z ok 3 - same accepted scope does not advance its epoch
+tests	JavaScript tests	2026-11-13T09:42:06.1097224Z   ---
+tests	JavaScript tests	2026-11-13T09:42:06.1097648Z   duration_ms: 0.835175
+tests	JavaScript tests	2026-11-13T09:42:06.1098075Z   type: 'test'
+tests	JavaScript tests	2026-11-13T09:42:06.1098456Z   ...
+tests	JavaScript tests	2026-11-13T09:42:06.1099245Z # Subtest: leaving and returning to the same identity advances the epoch twice
+tests	JavaScript tests	2026-11-13T09:42:06.1100372Z ok 4 - leaving and returning to the same identity advances the epoch twice
+tests	JavaScript tests	2026-11-13T09:42:06.1101088Z   ---
+tests	JavaScript tests	2026-11-13T09:42:06.1101470Z   duration_ms: 0.718187
+tests	JavaScript tests	2026-11-13T09:42:06.1101913Z   type: 'test'
+tests	JavaScript tests	2026-11-13T09:42:06.1102526Z   ...
+tests	JavaScript tests	2026-11-13T09:42:06.1103270Z # Subtest: obsolete and invalid state observations cannot change context
+tests	JavaScript tests	2026-11-13T09:42:06.1104340Z ok 5 - obsolete and invalid state observations cannot change context
+tests	JavaScript tests	2026-11-13T09:42:06.1105021Z   ---
+tests	JavaScript tests	2026-11-13T09:42:06.1105393Z   duration_ms: 0.790132
+tests	JavaScript tests	2026-11-13T09:42:06.1105813Z   type: 'test'
+tests	JavaScript tests	2026-11-13T09:42:06.1106180Z   ...
+tests	JavaScript tests	2026-11-13T09:42:06.1106922Z # Subtest: reading context preserves tickets, errors and page-lane feedback
+tests	JavaScript tests	2026-11-13T09:42:06.1107946Z ok 6 - reading context preserves tickets, errors and page-lane feedback
+tests	JavaScript tests	2026-11-13T09:42:06.1108959Z   ---
+tests	JavaScript tests	2026-11-13T09:42:06.1109299Z   duration_ms: 1.157199
+tests	JavaScript tests	2026-11-13T09:42:06.1109695Z   type: 'test'
+tests	JavaScript tests	2026-11-13T09:42:06.1110223Z   ...
+tests	JavaScript tests	2026-11-13T09:42:06.1110860Z # Subtest: lookup invalidation does not advance encounter context
+tests	JavaScript tests	2026-11-13T09:42:06.1111747Z ok 7 - lookup invalidation does not advance encounter context
+tests	JavaScript tests	2026-11-13T09:42:06.1112590Z   ---
+tests	JavaScript tests	2026-11-13T09:42:06.1112949Z   duration_ms: 0.730841
+tests	JavaScript tests	2026-11-13T09:42:06.1113340Z   type: 'test'
+tests	JavaScript tests	2026-11-13T09:42:06.1113680Z   ...
+tests	JavaScript tests	2026-11-13T09:42:06.1114341Z # Subtest: reloading the bootstrap retains the original API and context
+tests	JavaScript tests	2026-11-13T09:42:06.1115299Z ok 8 - reloading the bootstrap retains the original API and context
+tests	JavaScript tests	2026-11-13T09:42:06.1115910Z   ---
+tests	JavaScript tests	2026-11-13T09:42:06.1116193Z   duration_ms: 0.81628
+tests	JavaScript tests	2026-11-13T09:42:06.1116492Z   type: 'test'
+tests	JavaScript tests	2026-11-13T09:42:06.1116849Z   ...
+tests	JavaScript tests	2026-11-13T09:42:06.1124302Z # Subtest: header versions only
