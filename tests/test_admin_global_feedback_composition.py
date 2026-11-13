@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def assert_script_inventory(test_case, scripts):
-    test_case.assertEqual(len(scripts), 45)
+    test_case.assertEqual(len(scripts), 46)
     core = '/static/admin.js'
     character = '/static/character-edit-feedback.js?v=1'
     monster = '/static/monster-initiative-edit.js?v=2'
@@ -23,7 +23,7 @@ def assert_script_inventory(test_case, scripts):
 class ScriptInventoryTests(unittest.TestCase):
     def valid_scripts(self):
         return ['/static/admin.js', '/static/character-edit-feedback.js?v=1',
-                '/static/monster-initiative-edit.js?v=2'] + [f'/fixture-{i}.js' for i in range(42)]
+                '/static/monster-initiative-edit.js?v=2'] + [f'/fixture-{i}.js' for i in range(43)]
 
     def test_accepts_exact_current_inventory(self):
         assert_script_inventory(self, self.valid_scripts())

@@ -331,6 +331,8 @@ species reopens the list for the same species without typing it again. The curre
 monster and image stay until you pick another monster; Cancel keeps them, and Cancel in
 the image dialog after a new pick keeps the image you had.
 
+Source and Monster dropdowns (SG-TODO-016): the Monster identity row has a Source list (None by default, each configured 5e.tools source and every Open5e document, labelled with its provider and source) and a Monster list with the complete list for that source. Picking a monster fills in the name when it is empty or overwrite is ticked, sets Monster species to the monster name, and fills the statistics and image by the usual empty-or-overwrite rules. D&D Beyond is not listed (name search only), and disabled providers are not offered. If a list cannot be loaded completely, it shows that the list is unavailable; retry or type the species instead.
+
 Configuration under `display` (defaults shown):
 ```yaml
 open5e_lookup: true

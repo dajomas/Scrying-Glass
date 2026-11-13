@@ -3,7 +3,7 @@
 [Back to TODO index](../../TODO.md)
 
 - Task: SG-TODO-017
-- Status: in progress - Stage 2 implementation delivered 2026-11-13 on features/perplexity; CI validation and user acceptance pending.
+- Status: closed - Stage 2 delivered 2026-11-13; CI success for e5227f42 ([run 43416936427](https://github.com/dajomas/Scrying-Glass/actions/runs/43416936427)); accepted by the user 2026-11-13 ("I accept stage 2 please close it").
 - Recorded: 2026-11-06
 - Priority: not assigned; no change to the [agreed Admin delivery sequence](115-admin-delivery-sequence.md).
 - Dependencies: verify the current Open5e API contract during implementation planning.
@@ -49,6 +49,6 @@ Stage 2 implemented 2026-11-13 on the proposed design the user approved for impl
 
 Remaining for this task:
 
-- CI results for the Stage 2 commit, then user acceptance.
+- CI and acceptance: done 2026-11-13 (see Status).
 - Refresh: decided by the user on 2026-11-13 ("Yes include it if it is enabled"). Open5e takes part in monster Refresh when its provider switch is enabled; a retained Open5e identity is re-resolved exactly and reports "Provider disabled" when Open5e is off.
 - Name fill-in from a picked monster is delivered with the SG-TODO-016 dropdowns (Stage 3); Stage 2 keeps the existing AC/HP/initiative empty-or-overwrite rules and image snapshot behaviour.

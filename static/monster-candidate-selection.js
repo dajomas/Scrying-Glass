@@ -59,6 +59,12 @@
         }
         if (reselectButton) reselectButton.hidden = !show;
     }
+    // Source dropdown picks (monster-source-picker.js) run as a one-candidate lookup.
+    window.scryingMonsterSelection = {
+        preset(species, candidate) {
+            reuseLookup = {species, candidates: [candidate], at: Date.now()};
+        },
+    };
     function uploadChosen() {
         const file = document.querySelector('#monsterImage');
         return Boolean(file?.files && file.files.length);

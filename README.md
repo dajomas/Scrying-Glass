@@ -194,7 +194,7 @@ In Add monster, one candidate is automatic and multiple candidates open a select
 dialog; D&D Beyond choices name their book and sort by it, "Choose again" next to
 Monster species reopens the same list, and a "Select monster image" dialog offers the
 images of the other found monsters (Cancel keeps the original). The overwrite checkbox
-is ticked by default. There is no separate initiative-bonus confirmation. Available source
+is ticked by default. The Monster identity row has a Source list (None by default, each configured 5e.tools source and every Open5e document, labelled with its provider and source) and a Monster list with the complete list for that source. Picking a monster fills in the name when it is empty or overwrite is ticked, sets Monster species to the monster name, and fills the statistics and image by the usual empty-or-overwrite rules. D&D Beyond is not listed (name search only), and disabled providers are not offered. If a list cannot be loaded completely, it shows that the list is unavailable; retry or type the species instead. There is no separate initiative-bonus confirmation. Available source
 bonuses fill blank fields; the overwrite checkbox covers AC, HP range and initiative
 bonus. With overwrite enabled, an explicitly missing source bonus clears the input
 to blank, using the existing default-zero path without source-bonus attribution.

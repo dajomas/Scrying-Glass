@@ -79,6 +79,8 @@ class AdminAPI(AdminPagesMixin, AdminDisplayMixin, AdminSetupsMixin, AdminCampai
         install_user_routes(context, app)
         from .scrying_glass_provider_settings import install_provider_settings_routes
         install_provider_settings_routes(context, app)
+        from .scrying_glass_source_catalog import install_source_catalog_routes
+        install_source_catalog_routes(context, app)
         from .scrying_glass_logout import install_logout
         install_logout(context, app, context.ADMIN_SESSION_COOKIE)
         from .scrying_glass_monster_refresh_review import install_monster_refresh

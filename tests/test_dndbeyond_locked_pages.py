@@ -91,7 +91,7 @@ class SelectionIntegrationTests(unittest.TestCase):
         source = ROOT / 'python/scrying_glass_monster_selection.py'
         tree = ast.parse(source.read_text(encoding='utf-8'))
         names = {'ProviderError', 'dnd_candidates', 'lookup_candidates', 'MonsterImage', 'MonsterSourceText',
-                 'dnd_source_text', 'dnd_source_book', 'dnd_source_attribution'}
+                 'dnd_source_text', 'dnd_source_book', 'dnd_source_attribution', 'sign_candidate'}
         subset = ast.Module(body=[n for n in tree.body if getattr(n, 'name', None) in names], type_ignores=[])
         self.fallback = Mock(return_value=[{'found': True, 'species': 'Crawling Claw', 'provider': '5e.tools'}])
         self.sign = Mock(return_value='fixture-token')

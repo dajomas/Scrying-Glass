@@ -94,6 +94,24 @@ Choose again follow-up (2026-11-13, user report): Choose again cleared the selec
 
 CI for c92119d7 ([run 43411555344](https://github.com/dajomas/Scrying-Glass/actions/runs/43411555344)) failed: the complete-Admin composition tests pin the script count at 44, and the new `monster-image-choice.js` makes 45. `tests/test_admin_global_feedback_composition.py` now expects 45; the 14 failing files pass locally with the next commit.
 
+CI for e5227f42 ([run 43416936427](https://github.com/dajomas/Scrying-Glass/actions/runs/43416936427)) concluded success (published in `ff40ee72`).
+
+Stage 2 acceptance: on 2026-11-13 the user wrote "I accept stage 2 please close it and move on to the next item". Stage 2 (SG-TODO-017) is closed for its delivered scope.
+
+## Stage 3 delivery - 2026-11-13
+
+### Delivered behaviour
+
+- **Catalog routes.** New `python/scrying_glass_source_catalog.py`, registered in `scrying_glass_api_admin.py`; all routes are admin-only: `GET /api/monsters/catalog/sources`, `GET /api/monsters/catalog/monsters?provider=&source=` and `GET /api/monsters/catalog/monster?provider=&source=&id=`. Unknown provider is 400, a disabled provider 409 "Provider disabled", a monster without usable stats 404; any other failure returns `status: error` ("The monster list could not be loaded completely; retry.").
+- **Sources.** Each configured 5e.tools source when 5e.tools is enabled, then every Open5e document (by name) when Open5e is enabled. D&D Beyond is not listed (user decision: name search only). A failed provider is reported in `unavailable` instead of being guessed.
+- **Lists.** 5e.tools lists come from the configured source file (`fivetools_source_entries`); Open5e uses `document_monsters` (`/creatures/?document__key=…&fields=key,name,document`, all pages, document key validated on every item, duplicates rejected). A single monster comes from `fivetools_candidate` or `document_monster` (`/creatures/<key>/`) and is signed with `sign_candidate`, the same signing the lookup uses.
+- **Admin UI.** New `static/monster-source-picker.js` (`?v=1`) adds Source (`#monsterSourceSelect`) and Monster (`#monsterSourceMonster`) selects to the Monster identity row, with a status line below the row (loading, count with "complete list", "No monsters in this source", "Monster list unavailable"). A stale response from an earlier selection is ignored.
+- **Fill-in.** Picking a monster fills the name only when it is empty or overwrite is ticked; Monster species is always set to the monster name because the signed token must match the species. Statistics and image then follow the existing lookup rules through `window.scryingMonsterSelection.preset` (`monster-candidate-selection.js?v=10`). Typing another species clears the pick; form reset clears both selects.
+
+### Validation (local, 2026-11-13)
+
+Only related tests were run, as the user asked; CI runs the full suite. Passed: `tests/test_monster_source_catalog.py`, `tests/test_monster_source_picker_browser.py`, `tests/test_monster_image_previews.py`, `tests/test_monster_button_layout.py`, the admin composition, asset-wiring, 5e.tools configuration and D&D Beyond extraction tests, and the related browser modules. Admin script count is now 46. A live check on 2026-11-13 listed 30 sources (6 5e.tools, 24 Open5e), 450 monsters for MM and 325 for `srd-2014`, and picking Goblin worked from both providers. A screenshot of the full Admin form at 1440 px confirmed the dropdowns sit in the Monster identity row. CI and user acceptance are pending.
+
 ## Status
 
-Stage 1 is documentation only. Stage 2 is implemented with acceptance pending; Open5e takes part in Refresh when enabled (user decision 2026-11-13). Stage 3 is not started.
+Stage 1 is documentation only. Stage 2 is accepted and closed (2026-11-13). Stage 3 is delivered; CI and acceptance are pending.

@@ -106,7 +106,10 @@ def documents(base):
         if not isinstance(licenses, list):
             raise Open5eError("Invalid Open5e document licences")
         publisher = item.get("publisher") if isinstance(item.get("publisher"), dict) else {}
+        system = item.get("gamesystem") if isinstance(item.get("gamesystem"), dict) else {}
         catalog[key] = dict(
+            name=_text(item.get("display_name"), 100) or key,
+            legacy=system.get("key") == "5e-2014",
             licenses=[name for name in (_text(entry.get("name")) for entry in licenses
                                         if isinstance(entry, dict)) if name],
             publisher=_text(publisher.get("name")))
@@ -182,24 +185,75 @@ def candidates(species, display, *, max_candidates=32):
         if not isinstance(document, dict) or document.get("key") not in catalog:
             raise Open5eError("Open5e creature references an unknown document")
         seen.add(key)
-        ac = creature.get("armor_class")
-        ac = ac if type(ac) is int and 0 <= ac <= 999 else None
-        hp, hp_source = hit_points(creature)
-        if ac is None and hp is None:
-            continue
-        system = document.get("gamesystem") if isinstance(document.get("gamesystem"), dict) else {}
-        attribution = catalog[document["key"]]
-        source = _text(document.get("display_name"), 100) or document["key"]
-        game_system = _text(system.get("name"), 100)
-        credit = ", ".join(attribution["licenses"]) or "licence not listed"
-        results.append({"found": True, "name": name, "species": species, "provider": PROVIDER,
-                        "source": source, "source_key": document["key"],
-                        "game_system": game_system, "publisher": attribution["publisher"],
-                        "licenses": attribution["licenses"],
-                        "attribution": (f"{source}" + (f" by {attribution['publisher']}"
-                                        if attribution["publisher"] else "") + f" ({credit}) via Open5e"),
-                        "legacy": system.get("key") == "5e-2014",
-                        "source_url": creature_url(key), "ac": ac, "hp": hp,
-                        "hp_source": hp_source, "image_url": image_url(creature, base),
-                        **initiative_offer(creature)})
+        candidate = _candidate(creature, catalog, base, species)
+        if candidate is not None:
+            results.append(candidate)
     return results
+
+
+def _candidate(creature, catalog, base, species):
+    """Map one validated creature; None when it has neither AC nor HP."""
+    key, name, document = creature.get("key"), creature.get("name"), creature.get("document")
+    ac = creature.get("armor_class")
+    ac = ac if type(ac) is int and 0 <= ac <= 999 else None
+    hp, hp_source = hit_points(creature)
+    if ac is None and hp is None:
+        return None
+    system = document.get("gamesystem") if isinstance(document.get("gamesystem"), dict) else {}
+    attribution = catalog[document["key"]]
+    source = _text(document.get("display_name"), 100) or document["key"]
+    game_system = _text(system.get("name"), 100)
+    credit = ", ".join(attribution["licenses"]) or "licence not listed"
+    return {"found": True, "name": name, "species": species, "provider": PROVIDER,
+            "source": source, "source_key": document["key"],
+            "game_system": game_system, "publisher": attribution["publisher"],
+            "licenses": attribution["licenses"],
+            "attribution": (f"{source}" + (f" by {attribution['publisher']}"
+                            if attribution["publisher"] else "") + f" ({credit}) via Open5e"),
+            "legacy": system.get("key") == "5e-2014",
+            "source_url": creature_url(key), "ac": ac, "hp": hp,
+            "hp_source": hp_source, "image_url": image_url(creature, base),
+            **initiative_offer(creature)}
+
+
+def document_monsters(display, document_key):
+    """Every monster name in one document; raises unless the list is complete."""
+    base = base_url(display)
+    catalog = documents(base)
+    if document_key not in catalog:
+        raise Open5eError("Unknown Open5e document")
+    query = urlencode({"document__key": document_key, "fields": "key,name,document",
+                       "limit": 500, "format": "json"})
+    monsters, seen = [], set()
+    for creature in _pages(base + "/creatures/?" + query, base):
+        if not isinstance(creature, dict):
+            raise Open5eError("Invalid Open5e creature")
+        key, name, document = creature.get("key"), creature.get("name"), creature.get("document")
+        if not isinstance(document, dict) or document.get("key") != document_key:
+            raise Open5eError("Open5e returned monsters from another document")
+        if not isinstance(key, str) or not KEY.fullmatch(key) or key in seen:
+            raise Open5eError("Invalid or duplicate Open5e creature key")
+        if not isinstance(name, str) or not name.strip() or len(name) > 256:
+            raise Open5eError("Invalid Open5e creature name")
+        seen.add(key)
+        monsters.append({"id": key, "name": name})
+    return monsters
+
+
+def document_monster(display, document_key, key):
+    """One monster from a document as a lookup candidate (species = its name)."""
+    if not isinstance(key, str) or not KEY.fullmatch(key):
+        raise Open5eError("Invalid Open5e creature key")
+    base = base_url(display)
+    catalog = documents(base)
+    creature = load_json(f"{base}/creatures/{quote(key, safe='')}/?" +
+                         urlencode({"fields": FIELDS, "format": "json"}))
+    if not isinstance(creature, dict) or creature.get("key") != key:
+        raise Open5eError("Invalid Open5e creature")
+    document = creature.get("document")
+    if not isinstance(document, dict) or document.get("key") != document_key or document_key not in catalog:
+        raise Open5eError("Open5e creature is not in the chosen document")
+    name = creature.get("name")
+    if not isinstance(name, str) or not name.strip() or len(name) > 256:
+        raise Open5eError("Invalid Open5e creature name")
+    return _candidate(creature, catalog, base, name)
