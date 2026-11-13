@@ -31,12 +31,13 @@ test('native invalidity has persistent matching validation recovery',async()=>{
     const f=fixture();f.form.valid=false;await f.submit();a.equal(f.sent.length,0);a.equal(f.records()[0].operation,'monster.edit.validation');
     f.form.valid=true;await f.submit();a.equal(f.records().length,0);
 });
-test('transport trims names, preserves bonus omission and image upload, and encodes IDs',async()=>{
+test('transport trims names, omits an unchanged bonus, sends blank as 0, keeps image upload, and encodes IDs',async()=>{
     const f=fixture();f.open('a/b ?#');await f.submit();let s=f.sent.at(-1);
     a.equal(s.url,'/api/monsters/a%2Fb%20%3F%23/edit');a.equal(s.options.method,'POST');
     a.equal(s.options.body.get('name'),'Dragon');a.equal(s.options.body.get('monster_species'),'dragon');
     a.equal(s.options.body.get('initiative'),'28');a.equal(s.options.body.get('initiative_bonus'),'10');a.equal(s.options.body.has('image'),false);
-    for(const value of ['','12']){f.open();f.form.elements.initiative_bonus.value=value;await f.submit();a.equal(f.sent.at(-1).options.body.has('initiative_bonus'),false);}
+    f.open();f.form.elements.initiative_bonus.value='12';await f.submit();a.equal(f.sent.at(-1).options.body.has('initiative_bonus'),false);
+    f.open();f.form.elements.initiative_bonus.value='';await f.submit();a.equal(f.sent.at(-1).options.body.get('initiative_bonus'),'0');
     f.open();f.image={};await f.submit();a.equal(f.sent.at(-1).options.body.has('image'),false);
 });
 test('request error persists, keeps draft/modal and restores prior disabled states',async()=>{

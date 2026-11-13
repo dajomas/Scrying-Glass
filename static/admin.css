@@ -439,7 +439,16 @@ input[type="number"] {
 
 .edit-form label {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
     gap: .25rem;
+    min-width: 0;
+}
+
+.edit-form label > input,
+.edit-form label > select {
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .edit-form .full {

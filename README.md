@@ -48,7 +48,7 @@ not certification that every possible accessibility or deployment scenario was t
 
 Deploy admin-feedback-controller.js?v=2, admin-feedback-view.js?v=2,
 admin-feedback.css?v=2, admin-feedback-admin.js?v=6, initiative-join-gate.js?v=2,
-features.js?v=6, monster-initiative-edit.js?v=2, monster-initiative-roll.js?v=3 and
+features.js?v=6, monster-initiative-edit.js?v=3, monster-initiative-roll.js?v=3 and
 setup-switch.js?v=4 with all eight fragments and templates. Retain non-superseded
 Stage 4 assets including admin-dialog-accessibility.js?v=1; deploy the complete tree.
 The final core bundle is 131,939 bytes and the Admin script inventory is 44.
