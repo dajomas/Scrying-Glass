@@ -1,0 +1,20 @@
+tmp/scrying-tests-_txkbiiy/repo/python/scrying_glass_monster_selection.py", line 170, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1690744Z     extra=(("Open5e", open5e_enabled, lambda: open5e_candidates(species, display)),))
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1691129Z                                               ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1691665Z   File "/tmp/scrying-tests-_txkbiiy/repo/python/scrying_glass_monster_selection.py", line 152, in open5e_candidates
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1692811Z     raise ProviderError("Open5e lookup failed; enter stats manually or retry.") from exc
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1693742Z python.scrying_glass_monster_selection.ProviderError: Open5e lookup failed; enter stats manually or retry.
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1694148Z ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1694812Z test_refresh_does_not_resolve_retained_open5e_identity (test_open5e_provider.Open5eLookupIntegrationTests.test_refresh_does_not_resolve_retained_open5e_identity) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1695687Z test_base_url_requires_plain_https (test_open5e_provider.Open5eProviderTests.test_base_url_requires_plain_https) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1696561Z test_exact_name_candidates_are_mapped_with_attribution (test_open5e_provider.Open5eProviderTests.test_exact_name_candidates_are_mapped_with_attribution) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1697509Z test_hit_points_prefer_matching_dice_otherwise_average (test_open5e_provider.Open5eProviderTests.test_hit_points_prefer_matching_dice_otherwise_average) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1698453Z test_ignored_filter_results_are_validated_not_trusted (test_open5e_provider.Open5eProviderTests.test_ignored_filter_results_are_validated_not_trusted) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1699394Z test_illustrations_stay_on_the_configured_https_host (test_open5e_provider.Open5eProviderTests.test_illustrations_stay_on_the_configured_https_host) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1700253Z test_incomplete_or_invalid_listings_raise (test_open5e_provider.Open5eProviderTests.test_incomplete_or_invalid_listings_raise) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1701149Z test_initiative_bonus_offer_states (test_open5e_provider.Open5eProviderTests.test_initiative_bonus_offer_states) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1702993Z test_next_pages_are_followed_until_null (test_open5e_provider.Open5eProviderTests.test_next_pages_are_followed_until_null) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1703962Z test_source_identity_and_snapshot_round_trip (test_open5e_provider.Open5eProviderTests.test_source_identity_and_snapshot_round_trip) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1704860Z test_zero_matches_is_success_without_catalog_request (test_open5e_provider.Open5eProviderTests.test_zero_matches_is_success_without_catalog_request) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.1958288Z test_bulk_character_reset_clears_temporary_hp (test_reset_health.ResetHealthTests.test_bulk_character_reset_clears_temporary_hp) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:03:45.2221556Z test_bulk_monster_reset_revives_dead_monster (test_reset_health.ResetHealthTests.test_bulk_monster_reset_revives_dead_mons

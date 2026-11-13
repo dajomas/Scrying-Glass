@@ -1,0 +1,29 @@
+Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2490935Z OSError: secret 5e.tools endpoint
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2492221Z Combined monster lookup failed for 5e.tools
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2492632Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2493151Z   File "/tmp/scrying-tests-_txkbiiy/repo/python/scrying_glass_monster_selection.py", line 101, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2493638Z     index = ft.load_json(root + "/index.json")
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2494320Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2494745Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2495000Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2495434Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2495852Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2496127Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2496577Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2496981Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2497205Z OSError: secret 5e.tools endpoint
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2497345Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2497559Z The above exception was the direct cause of the following exception:
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2497786Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2497911Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2498406Z   File "/tmp/scrying-tests-_txkbiiy/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2498824Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2499228Z   File "/tmp/scrying-tests-_txkbiiy/repo/python/scrying_glass_monster_selection.py", line 166, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2499657Z     lambda: fivetools_candidates(species, display),
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2499935Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2500438Z   File "/tmp/scrying-tests-_txkbiiy/repo/python/scrying_glass_monster_selection.py", line 144, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2501056Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2501655Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.2519030Z ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:20.3556941Z test_refresh_choice_apply_retains_identity_raw_roll_and_unselect

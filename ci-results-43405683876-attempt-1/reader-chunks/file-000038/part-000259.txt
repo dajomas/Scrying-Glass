@@ -1,0 +1,32 @@
+"/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1627068Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1627350Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1627788Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1628247Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1628555Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1629172Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1629600Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1629810Z TimeoutError: fixture
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1629943Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1630174Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1630402Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1630537Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1631038Z   File "/tmp/scrying-tests-1gzx9wbl/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1631463Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1631972Z   File "/tmp/scrying-tests-1gzx9wbl/repo/python/scrying_glass_monster_selection.py", line 165, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1632433Z     lambda: dnd_candidates(context, species),
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1632729Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1633214Z   File "/tmp/scrying-tests-1gzx9wbl/repo/python/scrying_glass_monster_selection.py", line 92, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1633835Z     raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1634469Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1635127Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1635460Z Ran 10 tests in 0.184s
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1635589Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1635681Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.1636060Z test_dndbeyond_locked_pages.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.2030529Z Connection audit: test_dndbeyond_lookup_diagnostics.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.4893317Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.4893762Z Ran 17 tests in 0.198s
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.4893909Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:07:02.4894002Z OK
+tests	Standalone Python

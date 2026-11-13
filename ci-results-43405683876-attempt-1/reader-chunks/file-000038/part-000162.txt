@@ -1,0 +1,49 @@
+aScript tests	2026-11-13T10:04:15.5643810Z ok 9 - old-scope success cannot collapse or refresh the new encounter
+tests	JavaScript tests	2026-11-13T10:04:15.5644271Z   ---
+tests	JavaScript tests	2026-11-13T10:04:15.5644524Z   duration_ms: 0.86492
+tests	JavaScript tests	2026-11-13T10:04:15.5644808Z   type: 'test'
+tests	JavaScript tests	2026-11-13T10:04:15.5645077Z   ...
+tests	JavaScript tests	2026-11-13T10:04:15.5645531Z # Subtest: scope A-B-A still rejects the old request via epoch
+tests	JavaScript tests	2026-11-13T10:04:15.5646151Z ok 10 - scope A-B-A still rejects the old request via epoch
+tests	JavaScript tests	2026-11-13T10:04:15.5646568Z   ---
+tests	JavaScript tests	2026-11-13T10:04:15.5646832Z   duration_ms: 1.562966
+tests	JavaScript tests	2026-11-13T10:04:15.5647125Z   type: 'test'
+tests	JavaScript tests	2026-11-13T10:04:15.5647392Z   ...
+tests	JavaScript tests	2026-11-13T10:04:15.5648387Z # Subtest: successful Start followed by handled refresh failure retains only state.load error, no retry
+tests	JavaScript tests	2026-11-13T10:04:15.5649458Z ok 11 - successful Start followed by handled refresh failure retains only state.load error, no retry
+tests	JavaScript tests	2026-11-13T10:04:15.5650054Z   ---
+tests	JavaScript tests	2026-11-13T10:04:15.5650316Z   duration_ms: 0.729331
+tests	JavaScript tests	2026-11-13T10:04:15.5650618Z   type: 'test'
+tests	JavaScript tests	2026-11-13T10:04:15.5650870Z   ...
+tests	JavaScript tests	2026-11-13T10:04:15.5651376Z # Subtest: duplicate asset installation preserves the installed wrapper
+tests	JavaScript tests	2026-11-13T10:04:15.5659598Z ok 12 - duplicate asset installation preserves the installed wrapper
+tests	JavaScript tests	2026-11-13T10:04:15.5660146Z   ---
+tests	JavaScript tests	2026-11-13T10:04:15.5660424Z   duration_ms: 0.547775
+tests	JavaScript tests	2026-11-13T10:04:15.5660747Z   type: 'test'
+tests	JavaScript tests	2026-11-13T10:04:15.5661019Z   ...
+tests	JavaScript tests	2026-11-13T10:04:15.5714489Z 1..12
+tests	JavaScript tests	2026-11-13T10:04:15.5714750Z # tests 12
+tests	JavaScript tests	2026-11-13T10:04:15.5722957Z # suites 0
+tests	JavaScript tests	2026-11-13T10:04:15.5736383Z # pass 12
+tests	JavaScript tests	2026-11-13T10:04:15.5736688Z # fail 0
+tests	JavaScript tests	2026-11-13T10:04:15.5736959Z # cancelled 0
+tests	JavaScript tests	2026-11-13T10:04:15.5737700Z # skipped 0
+tests	JavaScript tests	2026-11-13T10:04:15.5738016Z # todo 0
+tests	JavaScript tests	2026-11-13T10:04:15.5738334Z # duration_ms 66.209853
+tests	JavaScript tests	2026-11-13T10:04:15.6105095Z ##[endgroup]
+tests	JavaScript tests	2026-11-13T10:04:15.6105533Z ##[group]tests/admin-start-validation.test.cjs
+tests	JavaScript tests	2026-11-13T10:04:15.8302684Z TAP version 13
+tests	JavaScript tests	2026-11-13T10:04:15.8712205Z # Subtest: asset loads once after core and the 4A.2 override
+tests	JavaScript tests	2026-11-13T10:04:15.8715570Z ok 1 - asset loads once after core and the 4A.2 override
+tests	JavaScript tests	2026-11-13T10:04:15.8716159Z   ---
+tests	JavaScript tests	2026-11-13T10:04:15.8716541Z   duration_ms: 1.932168
+tests	JavaScript tests	2026-11-13T10:04:15.8716944Z   type: 'test'
+tests	JavaScript tests	2026-11-13T10:04:15.8717337Z   ...
+tests	JavaScript tests	2026-11-13T10:04:15.8718256Z # Subtest: empty eligibility rejection is persistent and makes no Start call
+tests	JavaScript tests	2026-11-13T10:04:15.8720371Z ok 2 - empty eligibility rejection is persistent and makes no Start call
+tests	JavaScript tests	2026-11-13T10:04:15.8720945Z   ---
+tests	JavaScript tests	2026-11-13T10:04:15.8721247Z   duration_ms: 2.027538
+tests	JavaScript tests	2026-11-13T10:04:15.8721568Z   type: 'test'
+tests	JavaScript tests	2026-11-13T10:04:15.8722025Z   ...
+tests	JavaScript tests	2026-11-13T10:04:15.8725775Z # Subtest: eligible retry resolves only eligibility, preserving request and refresh errors
+tests	JavaScript tests	2026-11-13T10:04:15.8733073Z ok 3 - eligible retry resolves only eligibility, preserving request and refre

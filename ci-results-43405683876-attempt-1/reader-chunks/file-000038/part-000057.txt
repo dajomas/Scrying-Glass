@@ -1,0 +1,21 @@
+0:02:19.9519711Z test_download_then_verify_without_unnecessary_apt (test_ci_browser_provisioning.BrowserProvisioningTests.test_download_then_verify_without_unnecessary_apt) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9532972Z test_failed_launch_installs_native_dependencies_then_rechecks (test_ci_browser_provisioning.BrowserProvisioningTests.test_failed_launch_installs_native_dependencies_then_rechecks) ... Chromium preflight failed: missing library
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9534104Z Attempting native dependency installation, then rechecking Chromium.
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9534607Z ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9534871Z Chromium headless launch/render preflight passed.
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9536794Z test_failed_second_launch_remains_failure (test_ci_browser_provisioning.BrowserProvisioningTests.test_failed_second_launch_remains_failure) ... Chromium preflight failed: cannot launch
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9537644Z Chromium provisioning failed: cannot launch
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9538062Z Attempting native dependency installation, then rechecking Chromium.
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9538463Z ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9539444Z test_native_dependency_failure_remains_failure (test_ci_browser_provisioning.BrowserProvisioningTests.test_native_dependency_failure_remains_failure) ... Chromium preflight failed: missing library
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9540503Z Chromium provisioning failed: Command 'apt' returned non-zero exit status 100.
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9541240Z Attempting native dependency installation, then rechecking Chromium.
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9541649Z ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9556210Z test_preflight_launches_headless_renders_and_closes (test_ci_browser_provisioning.BrowserProvisioningTests.test_preflight_launches_headless_renders_and_closes) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9569472Z test_render_failure_still_closes_browser_and_context (test_ci_browser_provisioning.BrowserProvisioningTests.test_render_failure_still_closes_browser_and_context) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9612887Z test_browser_preflight_is_a_required_separate_step (test_ci_browser_provisioning.WorkflowPrerequisiteTests.test_browser_preflight_is_a_required_separate_step) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9649285Z test_independent_groups_do_not_depend_on_chromium (test_ci_browser_provisioning.WorkflowPrerequisiteTests.test_independent_groups_do_not_depend_on_chromium) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9685285Z test_mixed_browser_suites_require_verified_browser_not_previous_suite_success (test_ci_browser_provisioning.WorkflowPrerequisiteTests.test_mixed_browser_suites_require_verified_browser_not_previous_suite_success) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9786119Z test_collector_gate (test_ci_publication_branch_allowlists.PublicationBranchAllowlistsTests.test_collector_gate) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9801452Z test_collector_syntax (test_ci_publication_branch_allowlists.PublicationBranchAllowlistsTests.test_collector_syntax) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:02:19.9803812Z test_workflow_allowlist (test_ci_publication_branch_
