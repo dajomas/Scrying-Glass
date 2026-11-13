@@ -84,7 +84,7 @@ Legacy source-reading tests use a disposable assembled checkout:
 ```bash
 python tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_*.py' -v
 python tools/run_split_tests.py -- node --test tests/battle-action-apply.test.cjs
-python tools/run_split_tests.py -- python tests/browser_smoke_272cc73.py
+python tools/run_split_tests.py -- python -m unittest tests/test_browser_smoke.py
 ```
 
 The real checkout and marker remain untouched. Normal CI uses this runner for

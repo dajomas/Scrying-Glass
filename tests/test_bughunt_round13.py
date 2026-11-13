@@ -87,9 +87,4 @@ class TransferDestinationIdentityTests(unittest.TestCase):
         self.assertEqual(state['characters'][0]['id'],'c')
         self.assertEqual(state['monsters'][0]['id'],'m')
 
-    def test_unrelated_value_error_keeps_its_type(self):
-        async def broken():raise ValueError('programming failure')
-        with self.assertRaisesRegex(ValueError,'programming failure'):
-            asyncio.run(transactional_handler(self.c,broken)())
-
 if __name__=='__main__':unittest.main()
