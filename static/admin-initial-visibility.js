@@ -1,8 +1,47 @@
-/* SG-TODO-005: one initial decision per page, no saved preferences or polling. */
+/* One initial decision per page; panel buttons are independent within each workflow. */
 (() => {
     'use strict';
     if (window.scryingInitialPaneVisibilityInstalled) return;
     window.scryingInitialPaneVisibilityInstalled = true;
+    // Retire the native parent/child links, not the native one-time battle collapse.
+    // Existing onclick handlers consult this map on every click and now toggle only themselves.
+    if (typeof paneDependencies !== 'undefined') {
+        delete paneDependencies.campaign;
+        delete paneDependencies.battleSetup;
+    }
+    const independent = ['toggleCampaignPane', 'toggleCharacterPane',
+        'toggleBattleSetupPane', 'toggleMonsterPane',
+        'toggleCharacterDisplayPane', 'toggleMonsterDisplayPane'];
+    for (const id of independent) {
+        const button = document.getElementById(id);
+        if (button) button.hidden = false;
+    }
+    // The native callers (including tie confirmation) resolve startBattle dynamically.
+    // Preserve its request/error contract, adding collapse only after a successful Start.
+    if (typeof startBattle === 'function') {
+        startBattle = async function(order) {
+            const feedback = window.scryingAdminFeedback;
+            const ticket = feedback.begin({region: 'global', operation: 'battle.start',
+                target: 'battle', label: 'Start or restart battle'});
+            try {
+                await request('/api/battle/start', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({order}),
+                });
+            } catch (error) {
+                feedback.publish(ticket, {severity: 'error', text: error.message});
+                return;
+            }
+            // A superseded request must not collapse a different encounter's panels.
+            if (!feedback.isCurrent(ticket)) return;
+            feedback.resolve(ticket);
+            setAllHideablePanesHidden(true);
+            // load() owns refresh errors. The successful POST must not be retried.
+            await load();
+        };
+    }
+    // Lair eligibility and workflow filtering remain owned by their existing controllers/CSS.
     const campaign = ['toggleCampaignPane', 'toggleCharacterPane'];
     const setup = ['toggleBattleSetupPane', 'toggleMonsterPane', 'toggleLairPane'];
     const touched = new Set();
@@ -36,13 +75,12 @@
             }
         } finally { applying = false; }
     }
-    // Installed after Admin/lair extensions; preserve the existing renderer contract.
+    // Preserve renderer context, arguments and return, without polling or state mutations.
     const render = window.scryingLairsRender;
     window.scryingLairsRender = function(state) {
         const result = typeof render === 'function' ? render.apply(this, arguments) : undefined;
         initialize(state);
         return result;
     };
-    // Initial load may already have completed while deferred assets were executing.
     if (typeof latest !== 'undefined') initialize(latest);
 })();

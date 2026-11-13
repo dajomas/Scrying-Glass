@@ -56,3 +56,46 @@ Inspect normal push-triggered CI. Require the connection audit to report zero co
 Continue verifying clean unittest, pytest and JavaScript stages. No passing full workflow or repaired audit connection total is predicted. If further failures appear, investigate rather than suppressing assertions or the audit.
 
 [SG-TODO-001](../todo/010-monster-lookup.md) and [SG-TODO-002](../todo/020-monster-damage-effects.md) remain proposed and unrelated. The broader source split remains unfinished and inactive. Use normal CI, no skip marker and no extra workflow dispatch.
+
+## Stage 2 modal-import integration - 2026-11-11
+
+Earlier sections preserve November 1 history, not current phase/task closure.
+The last verified covering run 43082738853 attempt 1 succeeds for
+8841bf0b99d3e48352f3f785819b759b4e180624; it does not validate this later change.
+
+The effective CSV and saved-setup import owners now live in complete 040. CSV
+retains both success destinations with distinct region-aware targets; setup JSON,
+filters, fallback campaign and confirmation wording remain. Errors persist and
+recover by matching identity; success lasts 3s, and update failures have separate
+persistent no-replay guidance. Sessions protect close/reopen and pending opens;
+revision tracking keeps newer files/options. Busy guards span request and refresh,
+while Cancel and editing remain usable. Already-sent imports cannot be revoked.
+
+The earlier physical-move draft is superseded: 030 is unchanged, and its older
+setup assignments/CSV closer source remain inactive after 040's explicit bindings
+and later function definition. This is effective runtime migration, not removal
+of every inactive legacy producer; inventory/retirement reconciliation stays open.
+No new asset, script count, template, workflow, Join/server-rule or 060 changes.
+The tail from exportActivityLogCsv onward is byte-for-byte preserved. 040 is
+17,595 bytes, SHA-256
+9b33377efa3980e60d7400ae4ad525802f87c711cecc28d9ad39e5d9e5c9416b.
+Only 040's digest and bundle length (125,031) change in the pin test; all other
+pins, eight-part order, UTF-8/size/tamper guards and admin.js marker remain.
+
+Ten grouped Node cases passed with complete 040 and the exact production feedback
+controller (blob c4a82d73b21f4657da651ce45f76003c3348a6ef), scoped adapter,
+mock DOM/FormData/transport and deterministic timers. Four removed safeguards
+(duplicate, scope, revision, region target) caused assertion failures; restored
+run passed 10/10. Fragment syntax passed; original reconstruction matched blob
+13931d020bc8fee49915c45b7701641e8cca4b5f. The earlier 15 draft cases are not added
+to this current grouped count. Native form validity/serialization/events, actual
+030/040 composition, browser focus, full bundle/reader/runner/tamper, live-server,
+manual/accessibility and covering repository validation were not executed here.
+Registry-loader setups() error ownership is unchanged. Existing CI discovers the
+new .cjs and retains browser suites, but that is not new-path native acceptance.
+
+Normal push-triggered CI applies without a skip marker or separate dispatch.
+Complete approval/delivery, covering results/corrections and bounded acceptance
+remain pending. README and root indexes retain accurate links/open scopes and are
+unchanged. Stage 2 and both deliverables remain open; no merge/deployment or
+unobserved CI/commit identity is claimed. [Current tasks](../todo/098-character-edit-feedback.md).

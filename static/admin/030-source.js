@@ -106,9 +106,10 @@ function sortedMonstersForAdmin() {
     });
 }
 
-async function load(rethrowErrors = false) {
-    try {
-        latest = await request('/api/state');
+async function load(rethrowErrors = false, current = () => true) {
+    return window.scryingAdminFeedback.loadState(
+        () => request('/api/state', {}, current), state => {
+        latest = state;
         window.scryingStatisticsState?.(latest);
         window.scryingLairsRender?.(latest);
         window.updateEncounterToolsVisibility?.(latest);
@@ -130,60 +131,6 @@ async function load(rethrowErrors = false) {
         updateBattleState(latest);
 
         updatePaneVisibilityForBattle();
-
-        document.querySelector('#backgroundColor').onclick = () => {
-            document.querySelector('#backgroundColor').showPicker?.();
-        };
-
-        document.querySelector('#backgroundColor').oninput = event => {
-            document.querySelector('#backgroundValue').value = event.target.value;
-        };
-
-        document.querySelector('#applyBackground').onclick = async () => {
-            try {
-                await applyBackground(
-                    document.querySelector('#backgroundValue').value.trim() || '#080b14',
-                );
-                paneNotification('battleSetup', 'View screen background updated. Save the setup to keep it.');
-            } catch (error) {
-                paneNotification('battleSetup', error.message);
-            }
-        };
-
-        document.querySelector('#clearBackgroundImage').onclick = async () => {
-            try {
-                await applyBackground(document.querySelector('#backgroundColor').value);
-                paneNotification('battleSetup', 'View screen now uses the selected background color.');
-            } catch (error) {
-                paneNotification('battleSetup', error.message);
-            }
-        };
-
-        document.querySelector('#backgroundImage').onchange = async event => {
-            const [image] = event.target.files;
-
-            if (!image) {
-                return;
-            }
-
-            try {
-                const form = new FormData();
-                form.append('image', image);
-
-                const result = await request('/api/display/background-image', {
-                    method: 'POST',
-                    body: form,
-                });
-
-                document.querySelector('#backgroundValue').value = result.background;
-                await load();
-                paneNotification('battleSetup', 'Background image uploaded. Save the setup to keep it.');
-            } catch (error) {
-                paneNotification('battleSetup', error.message);
-            } finally {
-                event.target.value = '';
-            }
-        };
 
         document.querySelector('#monsters').innerHTML =
             '<table>' +
@@ -258,10 +205,7 @@ async function load(rethrowErrors = false) {
                 })
                 .join(' ⇒ ');
 
-    } catch (error) {
-        message(error.message);
-        if (rethrowErrors === true) throw error;
-    }
+    }, rethrowErrors, current);
 }
 
 const hideablePanes = [
@@ -470,144 +414,13 @@ function updatePaneVisibilityForBattle() {
     }
 }
 
-document.querySelector('#editForm').onsubmit = async event => {
+// Character and monster saves are owned by character-edit-feedback.js and
+// monster-initiative-edit.js, which delegate only unsupported kinds here.
+document.querySelector('#editForm').onsubmit = event => {
     event.preventDefault();
-
-    if (!editing) {
-        return;
-    }
-
-    const form = event.target;
-    const data = {
-        name: form.elements.name.value.trim(),
-        color: form.elements.color.value,
-        hp: numberValue(form, 'hp', 0),
-        max_hp: numberValue(form, 'max_hp', 0),
-        initiative: form.elements.initiative.value === ''
-            ? null
-            : +form.elements.initiative.value,
-    };
-
-    if (editing.kind === 'monsters') {
-        data.monster_species = form.elements.monster_species.value.trim();
-        data.ac = numberValue(form, 'ac', 0);
-        data.original_hp = numberValue(form, 'original_hp', 0);
-        data.ally = form.elements.ally.value === 'true';
-
-        const image = form.elements.image.files[0];
-
-        try {
-            if (image) {
-                const formData = new FormData();
-
-                Object.entries(data).forEach(([key, value]) => {
-                    formData.append(key, value === null ? '' : String(value));
-                });
-
-                formData.append('image', image);
-
-                const response = await fetch(
-                    `/api/monsters/${encodeURIComponent(editing.id)}/edit`,
-                    {
-                        method: 'POST',
-                        body: formData,
-                    },
-                );
-
-                if (!response.ok) {
-                    const error = await response.json().catch(() => ({
-                        detail: response.statusText,
-                    }));
-
-                    throw new Error(error.detail);
-                }
-            } else {
-                await request(`/api/monsters/${encodeURIComponent(editing.id)}`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                });
-            }
-        } catch (error) {
-            paneNotification('monsters', error.message);
-            return;
-        }
-    } else {
-        try {
-            await request(`/api/characters/${encodeURIComponent(editing.id)}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-        } catch (error) {
-            paneNotification('characters', error.message);
-            return;
-        }
-    }
-
-    closeEdit();
-    await load();
 };
 
-document.querySelector('#openImport').onclick = async () => {
-    await setups();
-    document.querySelector('#importCampaign').value = campaignData.active || '';
-    document.querySelector('#importLifeFilter').value = 'alive';
-    renderImportSetups();
-    importModal.hidden = false;
-};
-
-document.querySelector('#importCampaign').onchange = renderImportSetups;
-
-document.querySelector('#cancelImport').onclick = closeImport;
-
-document.querySelector('#importForm').onsubmit = async event => {
-    event.preventDefault();
-
-    const formData = new FormData(event.target);
-    const name = formData.get('name');
-    const kind = formData.get('kind');
-    const life_filter = formData.get('life_filter') || 'alive';
-    const lifeLabel = {alive: 'Alive', dead: 'Dead', all: 'Alive and Dead'}[life_filter];
-    const campaign = formData.get('campaign') || campaignData.active;
-    if (!lifeLabel) {
-        paneNotification('battleSetup', 'Choose a valid monster state to import');
-        return;
-    }
-
-    if (!name) {
-        paneNotification('battleSetup', 'Choose a saved setup to import from');
-        return;
-    }
-
-    if (!confirm(`Import ${lifeLabel} ${kind} from ${name} into the current setup?`)) {
-        return;
-    }
-
-    try {
-        const result = await request('/api/setups/import', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, kind, campaign, life_filter }),
-        });
-
-        closeImport();
-        await load();
-
-        paneNotification(
-            'battleSetup',
-            `Imported ${result.monsters} monster${result.monsters === 1 ? '' : 's'} from ${result.name}`,
-        );
-    } catch (error) {
-        paneNotification('battleSetup', error.message);
-    }
-};
+// Setup import (#openImport, #importCampaign, #cancelImport, #importForm) is bound in 040.
 
 function closeCsvImport() {
     csvImportModal.hidden = true;

@@ -11,5 +11,8 @@ fi
 
 cat ${CM}
 git commit -a -F ${CM} && git push
-./create_git_archive.sh
+
+echo "Latest changes pushed to github with commit hash $(git rev-parse  --verify 'HEAD')"
+
+# ./create_git_archive.sh
 # ./run.sh

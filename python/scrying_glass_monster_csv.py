@@ -101,7 +101,16 @@ def parse_monster(raw: bytes) -> dict[str, Any]:
             raise HTTPException(400, f".monster {field} must be a whole number")
         return int(value)
 
+    bonus_fields = {}
+    if "initiative_bonus" in data:
+        from .scrying_glass_initiative_input import creation_bonus_fields
+        try:
+            bonus_fields = creation_bonus_fields(data["initiative_bonus"], origin="import")
+        except ValueError as exc:
+            raise HTTPException(400, f".monster {exc}") from exc
+
     return {
+        **bonus_fields,
         "name": name,
         "monster_species": monster_species,
         "ac": bounded_integer(ac_match, "AC", 0, 999),

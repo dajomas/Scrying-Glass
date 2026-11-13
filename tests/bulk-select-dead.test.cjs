@@ -1,5 +1,9 @@
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+const {createController}=require('../static/admin-feedback-controller.js');
+const controller=createController({setTimeout(){return 1;},clearTimeout(){}});
+controller.setScope('encounter','fixture');
+const feedback={...controller,begin:spec=>controller.begin({...spec,lane:'encounter',scope:'fixture',placement:'pane'})};
 const source=fs.readFileSync(path.join(__dirname,'../static/bulk-select-all.js'),'utf8');
 function select() {
     const s={options:[]};
@@ -17,8 +21,8 @@ const characters=[{id:'standing',alive:true,life_state:'standing'},{id:'down',al
 const monsters=[{id:'living',alive:true},{id:'dead-monster',alive:false},{id:'explicit-dead',alive:true,life_state:'dead'}];
 const boxes={characters:characters.map(x=>({dataset:{selectId:x.id},checked:true})),
     monsters:monsters.map(x=>({dataset:{selectId:x.id},checked:true}))};
-let buttonHandler,delegated=[],notices=[];
-const context={latest:{characters,monsters},
+let buttonHandler,delegated=[];
+const context={window:{scryingAdminFeedback:feedback},latest:{characters,monsters},
     Option:class {constructor(text,value){this.text=text;this.value=value;}},
     document:{getElementById:id=>menus[id],querySelectorAll(selector){
         if(selector==='button[data-select-all-kind]')return [{dataset:{selectAllKind:'characters'},addEventListener(event,handler){buttonHandler=handler;}}];
@@ -27,7 +31,7 @@ const context={latest:{characters,monsters},
     setAllSelected(kind,value){sets[kind].clear();if(value)context.latest[kind].forEach(x=>sets[kind].add(x.id));boxes[kind].forEach(x=>{x.checked=value;});},
     updateRowSelection(kind,id,checked){if(checked)sets[kind].add(id);else sets[kind].delete(id);},
     async runBulkAction(kind,action){delegated.push([kind,action]);return 'original';},
-    paneNotification(kind,text){notices.push([kind,text]);}};
+    paneNotification(){assert.fail('Unexpected compatibility notice');}};
 vm.runInNewContext(source,context);
 (async()=>{
     for(const menu of Object.values(menus))assert.deepEqual(menu.options.map(x=>x.value),['','select-all','select-dead','unselect-all','remove']);
@@ -40,7 +44,7 @@ vm.runInNewContext(source,context);
     assert.equal(await context.runBulkAction('characters','remove'),'original');assert.deepEqual(delegated,[['characters','remove']]);
     buttonHandler();assert.equal(sets.characters.size,characters.length);
     context.latest.characters=[{id:'standing',life_state:'standing',alive:true}];
-    await context.runBulkAction('characters','select-dead');assert.equal(sets.characters.size,0);assert(notices.at(-1)[1].includes('0 dead'));
+    await context.runBulkAction('characters','select-dead');assert.equal(sets.characters.size,0);assert(controller.snapshot().at(-1).text.includes('0 dead'));
     context.latest=null;await context.runBulkAction('monsters','select-dead');
     console.log('Menu position, permanent-death character rules, monster death, selection sets/checkboxes, pane isolation, empty results and original actions passed.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

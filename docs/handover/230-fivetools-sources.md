@@ -101,3 +101,40 @@ This close-out is documentation-only; no code, tests or workflow changes, new te
 execution, archive, manifest refresh or workflow dispatch. Normal CI applies to the
 proposed close-out commit; the earlier SG-TODO-005-specific skip request is not reused.
 Other task statuses and the account-integration hold remain unchanged.
+
+## Source-label VM feedback dependency repair - 2026-11-10
+
+The [approved 009.7 CI repairs](380-feedback-delivery-plan.md#ci-repair-stages---2026-11-10)
+include tests/fivetools-source-labels.test.cjs. Run 42789493875 attempt 1 tested
+62b824501cefc5418ef6f41b853faf5c2b2289b9; evidence publication is
+978453c1164bcb632cb9a041a37b981ed6d07d3f. The JavaScript step's sole failing
+file had two passing subtests and one lookup subtest throwing window is not defined.
+The Python/browser, pytest and standalone groups passed; this does not itself
+validate the unexecuted lookup assertions in that failing VM subtest.
+
+The fixture now supplies window as its VM global, initializes the real feedback
+controller and Admin bootstrap, and routes notifier ticket/severity options through
+the real deliver API. Only accepted publications enter the message recorder.
+Missing DOM view roots are deliberate for this record-level VM fixture; no renderer
+is mounted. A deterministic timer queue supports the persistence check without
+leaving real success timers alive. No always-current/success feedback stub or
+production fallback is introduced. All original label, immutable ID/token/URL,
+AC/HP overwrite and pending-edit assertions remain. Three added regressions cover
+explicit lookup-success metadata and lookup-only clearing, persistent request
+errors, and rejection of an older response after a newer lookup succeeds.
+
+Executed preparation: node --check and all six subtests passed on Node 20.20.1;
+CI is configured for Node 22, whose covering result remains pending. The exact
+original fixture reproduced the CI failure as a negative control (two pass, one
+window-is-not-defined failure). Controller, bootstrap and original test reconstructions
+matched their live Git blob identities. The production lookup prefix was rebuilt
+from the verified prior read; a complete local 010-file identity is not claimed.
+These are isolated Node VM/source-slice tests with mocked request results, not
+full Admin/browser, authenticated-server or live-provider verification.
+
+This changes only the test file and this existing handover, using normal CI with
+no skip marker, workflow change or separate dispatch. Root README/TODO/HANDOVER
+identities were rechecked and their descriptions/statuses/links need no edits.
+SG-TODO-006 stays closed; 4A.1/009.7 and combined validation remain open. No new
+commit SHA or passing corrective CI is invented before supporting evidence. The
+older documentation-only close-out/skip notes above are historical.

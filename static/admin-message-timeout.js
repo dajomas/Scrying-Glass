@@ -1,6 +1,7 @@
 /* Clear global messages five seconds after the most recent text update. */
 (() => {
     'use strict';
+    if (globalThis.scryingAdminFeedback) return;
     const area = document.getElementById('message');
     if (!area) return;
     let timeout = null;

@@ -1,0 +1,61 @@
+/* SG-TODO-015: shared label, control and summary tracks. */
+#battleActionModal .battle-action-row {
+    grid-template-rows: auto auto auto;
+    align-items: start;
+}
+#battleActionModal .battle-action-row > label {
+    grid-row: 1 / span 3;
+    grid-template-rows: subgrid;
+    row-gap: inherit;
+    align-self: stretch;
+    min-width: 0;
+    margin: 0;
+}
+#battleActionModal .battle-action-row > label > select,
+#battleActionModal .battle-action-row > label > input:not([type="hidden"]) {
+    box-sizing: border-box;
+    height: 2.5rem;
+    min-height: 2.5rem;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+}
+#battleActionModal .battle-action-row > .critical-option,
+#battleActionModal .battle-action-row > [data-remove-action-row] {
+    grid-row: 2;
+    align-self: center;
+    box-sizing: border-box;
+    height: 2.5rem;
+    min-height: 0;
+    margin: 0;
+}
+#battleActionModal .battle-action-row > .battle-action-applied-status {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    align-self: start;
+}
+#battleActionModal .sg-action-stats {
+    margin: 0;
+    min-width: 0;
+    max-width: 100%;
+    color: var(--muted, #b7bfcc);
+    font-size: .8rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+#battleActionModal .sg-action-stats[hidden] { display: none !important; }
+@media (max-width: 700px) {
+    #battleActionModal .battle-action-row { grid-template-rows: none; }
+    #battleActionModal .battle-action-row > label {
+        grid-row: auto;
+        grid-template-rows: none;
+        row-gap: .25rem;
+        align-self: start;
+    }
+    #battleActionModal .battle-action-row > .critical-option,
+    #battleActionModal .battle-action-row > [data-remove-action-row],
+    #battleActionModal .battle-action-row > .battle-action-applied-status {
+        grid-row: auto;
+    }
+}

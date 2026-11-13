@@ -1,0 +1,68 @@
+/* SG-TODO-009.3: scoped to input panels; rosters and modal layouts stay untouched. */
+body.admin-shell .sg-input-panel { min-width: 0; }
+body.admin-shell .sg-input-panel h2 { margin: 0; }
+body.admin-shell .sg-panel-description {
+    color: var(--admin-muted);
+    margin: var(--admin-space-2) 0 var(--admin-space-4);
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+body.admin-shell .sg-entry-form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--admin-space-3);
+}
+body.admin-shell .sg-field-group {
+    box-sizing: border-box;
+    min-width: 0;
+    margin: 0 0 var(--admin-space-3);
+    padding: var(--admin-space-3);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-control-radius);
+}
+body.admin-shell .sg-field-group legend {
+    padding: 0 var(--admin-space-1);
+    color: var(--admin-text);
+    font-size: var(--admin-label-size);
+    font-weight: 700;
+}
+body.admin-shell .sg-group-row, body.admin-shell .sg-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: var(--admin-space-3);
+}
+body.admin-shell .sg-input-panel .field { min-width: 0; max-width: 100%; }
+body.admin-shell .sg-input-panel .field-label { display: block; }
+body.admin-shell .sg-input-panel .field :is(input, select) {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+body.admin-shell .sg-input-panel button:not(.danger):not(.sg-panel-primary):not(.help-button) {
+    background: var(--surface-2);
+    color: var(--admin-text);
+}
+body.admin-shell .sg-input-panel button.sg-panel-primary {
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 700;
+}
+body.admin-shell .sg-form-disclosure {
+    margin: var(--admin-space-3) 0;
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-control-radius);
+    min-width: 0;
+}
+body.admin-shell .sg-form-disclosure > summary {
+    padding: var(--admin-space-3);
+    cursor: pointer;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+body.admin-shell .sg-disclosure-body { padding: 0 var(--admin-space-3) var(--admin-space-3); }
+@media (max-width: 600px) {
+    body.admin-shell .sg-input-panel :is(.setup-name, .campaign-select) { min-width: 0; width: 100%; }
+    body.admin-shell .sg-group-row > .field:not(.field-compact):not(.field-color) { flex: 1 1 100%; }
+    body.admin-shell .sg-input-panel input[type="file"] { width: 100%; min-width: 0; }
+}

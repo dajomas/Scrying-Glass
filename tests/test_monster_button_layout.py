@@ -30,7 +30,7 @@ class MonsterButtonLayoutTests(unittest.TestCase):
         cls.browser.close()
         cls.playwright.stop()
 
-    def open_page(self, width, active=False):
+    def open_page(self, width, active=False, workflow='preparation'):
         snapshot = copy.deepcopy(self.snapshot)
         snapshot['monsters'][0].update(
             active=active, ally=active, visible=active, in_turn=active,
@@ -73,7 +73,17 @@ class MonsterButtonLayoutTests(unittest.TestCase):
 
         page.route('**/*', route)
         page.goto('http://fixture.test/', wait_until='load')
+        # Legacy DOM includes the CSS-excluded Turn control; visible counts differ.
         page.wait_for_function("document.querySelectorAll('#monsters td button').length === 11")
+        page.wait_for_function("document.querySelectorAll('#monsters th').length === 7")
+        page.wait_for_function("document.body.dataset.workflowNavigation === 'ready'")
+        self.assertEqual(page.locator('#adminWorkflow-campaign').get_attribute('aria-selected'), 'true')
+        # Roster consumers explicitly enter their destination through the real UI.
+        # None retains the production initial view for navigation-contract tests.
+        if workflow is not None:
+            self.assertIn(workflow, ('campaign', 'preparation', 'live'))
+            page.locator('#adminWorkflow-' + workflow).click()
+            self.assertEqual(page.locator('body').get_attribute('data-workflow-view'), workflow)
         self.assertEqual(errors, [])
         self.assertEqual(mutations, [])
         return page, errors, mutations
@@ -83,15 +93,15 @@ class MonsterButtonLayoutTests(unittest.TestCase):
             for active in (False, True):
                 with self.subTest(width=width, active=active):
                     page, errors, mutations = self.open_page(width, active)
-                    buttons = page.locator('#monsters td button')
+                    buttons = page.locator('#monsters td button:visible')
                     expected = ['Edit', 'In Battle' if active else 'Join Battle',
-                                'Ally', 'Visible', 'Turn',
-                                'AC on' if active else 'AC off',
-                                'HP on' if active else 'HP off',
-                                'Init on' if active else 'Init off',
+                                'Ally', 'Visible',
+                                'AC',
+                                'HP',
+                                'Init',
                                 'Reset', 'Restore statistics', 'Remove']
                     self.assertEqual([s.strip() for s in buttons.all_text_contents()], expected)
-                    boxes = [buttons.nth(i).bounding_box() for i in range(11)]
+                    boxes = [buttons.nth(i).bounding_box() for i in range(len(expected))]
                     self.assertTrue(all(box is not None for box in boxes))
                     for index, box in enumerate(boxes):
                         self.assertAlmostEqual(box['y'], boxes[0]['y'], delta=1)
@@ -99,11 +109,13 @@ class MonsterButtonLayoutTests(unittest.TestCase):
                         self.assertGreater(box['width'], 20)
                         if index:
                             self.assertGreaterEqual(box['x'], boxes[index-1]['x'] + boxes[index-1]['width'])
-                    self.assertEqual(page.locator('#monsters td:nth-child(6) button').count(), 11)
-                    self.assertEqual(page.locator('#monsters th').count(), 6)
-                    for attr in ('data-ma', 'data-mally', 'data-mv', 'data-mt'):
+                    self.assertEqual(page.locator('#monsters td:has(button[data-edit]) button:visible').count(), 10)
+                    self.assertEqual(page.locator('#monsters th').count(), 7)
+                    for attr in ('data-ma', 'data-mally', 'data-mv'):
                         classes = page.locator('#monsters [' + attr + ']').get_attribute('class') or ''
                         self.assertEqual('on' in classes.split(), active)
+                    for kind in ('monsters', 'characters'):
+                        self.assertEqual(page.locator('#' + kind).get_by_role('button', name='Turn', exact=True).count(), 0)
                     region = page.get_by_role('region', name='Monsters', exact=True)
                     metrics = region.evaluate("""node => {
                         const scroll = document.querySelector('#adminScroll');
@@ -134,8 +146,20 @@ class MonsterButtonLayoutTests(unittest.TestCase):
                 self.assertEqual(page.locator(':focus').get_attribute('data-select-kind'), 'monsters')
                 page.keyboard.press('Tab')
                 self.assertIsNotNone(page.locator(':focus').get_attribute('data-mi'))
-                buttons = page.locator('#monsters td button')
-                for key, indexes in (('Tab', range(11)), ('Shift+Tab', range(9, -1, -1))):
+                # Exit the approved initiative loop before testing native button traversal.
+                page.keyboard.press('Escape')
+                self.assertTrue(region.evaluate('node => node === document.activeElement'))
+                page.keyboard.press('Tab')
+                self.assertEqual(page.locator(':focus').get_attribute('data-select-kind'), 'monsters')
+                page.keyboard.press('Tab')
+                self.assertIsNotNone(page.locator(':focus').get_attribute('data-mi'))
+                page.keyboard.press('Tab')
+                self.assertEqual(page.locator(':focus').inner_text(), 'Edit')
+                page.keyboard.press('Shift+Tab')
+                self.assertIsNotNone(page.locator(':focus').get_attribute('data-mi'))
+                buttons = page.locator('#monsters td button:visible')
+                self.assertEqual(buttons.count(), 10)
+                for key, indexes in (('Tab', range(10)), ('Shift+Tab', range(8, -1, -1))):
                     for index in indexes:
                         page.keyboard.press(key)
                         self.assertTrue(buttons.nth(index).evaluate('node => node === document.activeElement'))
@@ -145,7 +169,7 @@ class MonsterButtonLayoutTests(unittest.TestCase):
                             const left = region.getBoundingClientRect().left + region.clientLeft;
                             return b.left >= left - 1 && b.right <= left + region.clientWidth + 1;
                         }"""), f'{width=} {key=} {index=}')
-                        if key == 'Tab' and index == 10 and region.evaluate('n => n.scrollWidth > n.clientWidth'):
+                        if key == 'Tab' and index == 9 and region.evaluate('n => n.scrollWidth > n.clientWidth'):
                             self.assertGreater(region.evaluate('n => n.scrollLeft'), 0)
                 self.assertEqual(errors, [])
                 self.assertEqual(mutations, [])
@@ -170,12 +194,13 @@ class MonsterButtonLayoutTests(unittest.TestCase):
         self.assertEqual(errors, [])
         self.assertEqual(mutations, [])
 
-    def test_hp_change_columns_stay_removed_after_refresh(self):
+    def test_removed_row_controls_stay_unavailable_after_refresh(self):
         page, errors, mutations = self.open_page(768)
         for cycle in range(3):
-            for kind, columns, buttons in (('monsters', 6, 11), ('characters', 5, 8)):
+            for kind, columns, buttons in (('monsters', 7, 10), ('characters', 5, 7)):
                 page.wait_for_function("([kind, count]) => document.querySelectorAll('#' + kind + ' th').length === count", arg=[kind, columns])
-                self.assertEqual(page.locator(f'#{kind} td button').count(), buttons)
+                self.assertEqual(page.locator(f'#{kind} td button:visible').count(), buttons)
+                self.assertEqual(page.locator('#' + kind).get_by_role('button', name='Turn', exact=True).count(), 0)
                 self.assertEqual(page.locator(f'#{kind} [data-d], #{kind} [data-h], #{kind} [data-cd], #{kind} [data-ch]').count(), 0)
                 self.assertNotIn('HP change', page.locator(f'#{kind} th').all_text_contents())
                 self.assertTrue(page.locator(f'#{kind} table').evaluate(
@@ -184,7 +209,7 @@ class MonsterButtonLayoutTests(unittest.TestCase):
                 page.evaluate('load(true)')
         page.add_script_tag(content=(ROOT / 'static/combatant-row-layout.js').read_text())
         page.evaluate('load(true)')
-        page.wait_for_function("document.querySelectorAll('#monsters th').length === 6 && document.querySelectorAll('#characters th').length === 5")
+        page.wait_for_function("document.querySelectorAll('#monsters th').length === 7 && document.querySelectorAll('#characters th').length === 5")
         page.evaluate('closeBattleActions(); addBattleActionRow()')
         for action in ('damage', 'heal'):
             self.assertEqual(page.locator(f'#battleActionRows [data-action-kind] option[value="{action}"]').count(), 1)

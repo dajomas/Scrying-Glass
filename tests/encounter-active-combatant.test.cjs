@@ -15,7 +15,12 @@ const summary={checkpoints:[],displays:[],downed:[],undo:null};
 const context={document:{getElementById:element,activeElement:null},FormData:class {},
     Option:class {constructor(name,value){this.name=name;this.value=value;}},
     fetch:async url=>({ok:true,json:async()=>url==='/api/state'?serverState:summary})};
+// In a browser, window and globalThis refer to the same global object.
+context.window=context;
 vm.runInNewContext(source,context);
+assert.equal(vm.runInNewContext('window === globalThis',context),true);
+assert.equal(typeof context.scryingEncounterToolsBusy,'function');
+assert.equal(context.scryingEncounterToolsBusy(),false);
 const refresh=context.testApi.refresh;
 const actor=(id,in_turn=false,extra={})=>({id,name:id,active:true,in_turn,hp:10,max_hp:20,effects:[],...extra});
 const state=(turn,scope='campaign')=>({active_campaign_id:scope,characters:[actor('a',turn==='a'),actor('b',turn==='b')],monsters:[actor('m',turn==='m')],lairs:turn==='lair'?[actor('lair',true)]:[]});

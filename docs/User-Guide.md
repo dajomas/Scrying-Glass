@@ -1,13 +1,21 @@
 # Scrying Glass User Guide
 
-## Compact Characters and Monsters table inputs
+## Character HP display and compact initiative inputs
 
-In the Characters table, Current HP, Max HP and Initiative inputs are narrower.
-The Monsters table Initiative inputs are narrower too. Each is half its previous
-CSS width; height and editing behaviour are unchanged. Setup fields and edit
-modals retain their existing sizes. Large values may need horizontal cursor
-movement inside a narrow input; use the Edit dialog for more room.
-Restart the server and hard-refresh the Admin page after installing the update.
+The Characters roster shows read-only current/max HP, such as 12/20, like the
+Monsters roster. To change either character HP value, choose that row's Edit,
+change Current HP and/or Max HP, then Save character. Cancel makes no change.
+Existing validation and HP rules still apply; a rejected save leaves the dialog
+and draft available for correction. Refresh after a successful save to check the
+stored values. Maximum HP affected by statistics reductions retains its existing
+original/base-editor restrictions described below.
+
+Character and monster Initiative inputs remain compact inline editors at 7.5ch.
+Tab/Shift+Tab navigation within each roster is described under Participation and
+initiative below; initiative values and combat ordering rules are unchanged.
+Setup fields and edit modals retain their existing sizes. Restart the correct
+server process and hard-refresh the Admin page after installing the matching
+HTML/static update.
 
 ## Looking Glass companion styling
 
@@ -67,7 +75,7 @@ Clients with no grants see an access message; one campaign opens automatically; 
 
 ## Characters and setups
 
-Characters belong to the campaign, not setup snapshots. Add/edit name, color, HP, maximum HP and initiative. CSV imports append to the roster. Removing a character changes the roster across that campaign's setups.
+Characters belong to the campaign, not setup snapshots. Add/edit name, color, HP, maximum HP and initiative. CSV imports append to the roster. Removing a character changes the roster across that campaign's setups. In the roster, HP is read-only; use Edit to change Current HP and Max HP. Initiative remains editable inline.
 
 | Setup action | Result |
 |---|---|
@@ -109,6 +117,28 @@ Aelwyn,34,34,16,#1f4e79
 Active/Join Battle controls participation; Visible controls the player strip. Pane visibility is presentation only. Monsters additionally support Ally and Show AC/HP/Init. Ally changes the rendered label, not stored name.
 
 Characters/monsters require whole-number initiative before joining. Zero/negative values are valid; unset is not. Mixed bulk joins fail atomically if anyone lacks initiative. Leave before clearing initiative, or deactivate and clear in the same API update. Lair initiative is fixed.
+
+### Initiative keyboard navigation
+
+Within Characters or Monsters, Tab moves to the next available initiative editor
+and Shift+Tab to the previous in displayed row order, skipping other row controls.
+The last editor wraps to the first, and Shift+Tab at the first wraps to the last.
+The loop never jumps between the two rosters. With one editor, either key keeps
+focus there. Hidden, disabled and readonly editors are skipped; empty rosters
+introduce no navigation interception.
+
+Press Escape from an initiative editor to leave the loop and focus that roster's
+scroll region. Tab/Shift+Tab then follow normal page order, including other row
+controls, even when you pass through another initiative editor. This normal mode
+lasts until you leave and re-enter the roster or use the pointer to interact again.
+Thus Escape provides an exit without immediately trapping focus back in the loop.
+Other controls and modified shortcuts retain their normal keyboard behaviour.
+
+Existing change/save validation still applies. After a same-campaign/setup refresh,
+loop focus follows the destination combatant even if rows reorder, and a draft
+typed there while the preceding save completes is retained without replaying an
+already emitted save. Escape, moving focus elsewhere or changing campaign/setup
+cancels restoration. Initiative values and combat ordering are unchanged.
 
 Select all selects the list; Unselect all clears. Select dead replaces selection: characters match explicit death/three failures, monsters also match alive=False. Selection does not mutate. Reset restores baselines/runtime flags; Remove permanently deletes.
 

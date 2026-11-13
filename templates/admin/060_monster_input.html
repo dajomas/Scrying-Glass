@@ -21,7 +21,11 @@
               The dice expression can be a simple roll such as <code>2d6</code> or dice notation such as <code>3d8+9</code>.</br>
               Spaces around <code>+</code> or <code>-</code> are optional.</li>
           </ul>
-          If no image is provided, an attempt is made to find an image on D&D Beyond based on the monster species (against Monster Name on D&D Beyond).
+        </p>
+
+        <p id="monsterLookupHelp" class="field-help">
+          While entering Monster species, D&amp;D Beyond and configured 5e.tools sources will be searched.
+          Choose a version when prompted. Uploaded images override source images.
         </p>
 
         <label class="monster-species-lookup-option">
@@ -30,7 +34,7 @@
             type="checkbox"
           >
           <span>
-            Overwrite Armor Class and HP Range with found D&amp;D Beyond values
+            Overwrite AC, HP range and initiative bonus with source values. Missing initiative bonus defaults to 0.
           </span>
         </label>
 
@@ -99,6 +103,17 @@
               min="0"
               placeholder="Optional"
               aria-describedby="monsterHpRangeHelp"
+            >
+          </label>
+
+          <label class="field field-compact">
+            <span class="field-label">Initiative bonus</span>
+            <input
+              id="monsterInitiativeBonus"
+              name="initiative_bonus"
+              type="number"
+              step="1"
+              placeholder="0"
             >
           </label>
 

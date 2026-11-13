@@ -22,27 +22,12 @@ const selectedMonsterIds = new Set();
 let monsterSpeciesLookupTimer = null;
 let monsterSpeciesLookupRequest = 0;
 
-function setMonsterSpeciesLookupStatus(text, options = {}) {
-    const {
-        timed = false,
-    } = options;
-
-    const notification = document.querySelector(
-        '#monsterAddNotification',
-    );
-
-    if (!notification) {
+function setMonsterSpeciesLookupStatus(text, options) {
+    if (text === '') {
+        window.scryingAdminFeedback.invalidateLookup();
         return;
     }
-
-    if (timed) {
-        paneNotification('monsters', text);
-        return;
-    }
-
-    clearTimeout(paneNotificationTimeouts.monsters);
-    paneNotificationTimeouts.monsters = null;
-    notification.textContent = (text === '') ? ' ' : text;
+    paneNotification('monsters', text, options);
 }
 
 async function lookupMonsterSpeciesStats() {
@@ -76,6 +61,9 @@ async function lookupMonsterSpeciesStats() {
     }
 
     const overwriteFoundStats = Boolean(overwriteInput?.checked);
+    const feedback = window.scryingAdminFeedback.beginLookup(species);
+    const lookupNotice = (kind, text, severity = 'success') =>
+        paneNotification(kind, text, {ticket: feedback, severity});
 
     const originalAc = acInput.value;
     const originalHpStart = hpStartInput.value;
@@ -83,6 +71,7 @@ async function lookupMonsterSpeciesStats() {
 
     function isCurrentRequest() {
         return (
+            window.scryingAdminFeedback.isCurrent(feedback) &&
             requestId === monsterSpeciesLookupRequest &&
             speciesInput.value.trim() === species &&
             Boolean(overwriteInput?.checked) === overwriteFoundStats
@@ -91,6 +80,7 @@ async function lookupMonsterSpeciesStats() {
 
     setMonsterSpeciesLookupStatus(
         `Looking up ${species} (D&D Beyond, then 5e.tools)…`,
+        {ticket: feedback, severity: 'info'},
     );
 
     try {
@@ -103,12 +93,13 @@ async function lookupMonsterSpeciesStats() {
         }
 
         if (!suggestion || suggestion.found !== true) {
-            paneNotification(
+            lookupNotice(
                 'monsters',
                 suggestion?.reason
                     ? String(suggestion.reason)
                     : `No usable monster stats found for ${species}; ` +
                       'enter AC and HP manually.',
+                'info',
             );
             return;
         }
@@ -171,7 +162,7 @@ async function lookupMonsterSpeciesStats() {
         const provider = monsterSourceLabel(suggestion);
 
         if (changes.length) {
-            paneNotification(
+            lookupNotice(
                 'monsters',
                 `Loaded ${changes.join(', ')} from the ` +
                 `${provider} result.`,
@@ -180,7 +171,7 @@ async function lookupMonsterSpeciesStats() {
         }
 
         if (!acUnchanged || !hpUnchanged) {
-            paneNotification(
+            lookupNotice(
                 'monsters',
                 `Found ${provider} stats; values edited ` +
                 'while the lookup was running were left unchanged.',
@@ -189,13 +180,14 @@ async function lookupMonsterSpeciesStats() {
         }
 
         if (overwriteFoundStats) {
-            paneNotification(
+            lookupNotice(
                 'monsters',
                 `Found ${provider} stats, but no usable ` +
                 'AC or HP values were returned.',
+                'info',
             );
         } else {
-            paneNotification(
+            lookupNotice(
                 'monsters',
                 `Found ${provider} stats; existing AC ` +
                 'and HP were left unchanged. Enable overwrite to replace them.',
@@ -213,6 +205,7 @@ async function lookupMonsterSpeciesStats() {
 
         setMonsterSpeciesLookupStatus(
             'Monster lookup is unavailable; enter AC and HP manually.',
+            {ticket: feedback, severity: 'error'},
         );
     }
 }
@@ -243,45 +236,11 @@ function installColorPreview(inputSelector, previewSelector) {
     input.addEventListener('change', update);
 }
 
-const message = text => {
-    document.querySelector('#message').textContent = text;
-};
+const message = (text, options) =>
+    window.scryingAdminFeedback.deliver('global', text, options);
 
-const paneNotificationTimeouts = {
-    characters: null,
-    monsters: null,
-    campaign: null,
-    battleSetup: null,
-};
-
-const paneNotificationIds = {
-    characters: '#characterAddNotification',
-    monsters: '#monsterAddNotification',
-    campaign: '#campaignNotification',
-    battleSetup: '#battleSetupNotification',
-};
-
-const paneNotification = (kind, text) => {
-    const notification = document.querySelector(
-        paneNotificationIds[kind],
-    );
-
-    if (!notification) {
-        console.error(
-            `Missing notification element for pane: ${kind}`,
-        );
-        return;
-    }
-
-    clearTimeout(paneNotificationTimeouts[kind]);
-
-    notification.textContent = text;
-
-    paneNotificationTimeouts[kind] = setTimeout(() => {
-        notification.textContent = ' ';
-        paneNotificationTimeouts[kind] = null;
-    }, 3_000);
-};
+const paneNotification = (kind, text, options) =>
+    window.scryingAdminFeedback.deliver(kind, text, options);
 
 const all = () => [
     ...latest.monsters,
@@ -390,11 +349,14 @@ function closeImport() {
     importModal.hidden = true;
 }
 
-async function request(url, options = {}) {
+async function request(url, options = {}, stateCurrent = () => true) {
+    const feedbackState = url === '/api/state' ? window.scryingAdminFeedback.stateRequest() : null;
     const response = await fetch(url, options);
 
     if (response.ok) {
-        return response.json().catch(() => null);
+        const result = await response.json().catch(() => null);
+        if (feedbackState !== null && stateCurrent()) window.scryingAdminFeedback.observeState(result, feedbackState);
+        return result;
     }
 
     const fallbackMessage = response.statusText
@@ -581,6 +543,32 @@ function selectionMessage(kind) {
         : 'Select one or more monsters first.';
 }
 
+const rosterPending = new Map();
+async function rosterMutation(kind, operation, target, send, success) {
+    const feedback = window.scryingAdminFeedback;
+    const key = JSON.stringify([kind, operation, target]);
+    const previous = rosterPending.get(key);
+    if (previous && (feedback.isCurrent(previous.ticket) || feedback.isCurrent(previous.refresh))) return;
+    const spec = {region: kind, operation, target: JSON.stringify([kind, target]), label: 'Update roster'};
+    const ticket = feedback.begin(spec);
+    const refresh = feedback.begin({...spec, operation: operation + '.refresh', label: 'Refresh roster'});
+    const pending = {ticket, refresh};
+    rosterPending.set(key, pending);
+    try {
+        let result;
+        try {result = await send();}
+        catch (error) {feedback.publish(ticket, {severity: 'error', text: error.message}); return;}
+        if (!feedback.isCurrent(ticket)) return;
+        if (success) feedback.publish(ticket, {severity: 'success', text: success(result)});
+        else feedback.resolve(ticket);
+        try {await load(true); feedback.resolve(refresh);}
+        catch {feedback.publish(refresh, {severity: 'error', text:
+            'Changes saved, but display reload failed. Reload the page; do not repeat the change.'});}
+    } finally {
+        if (rosterPending.get(key) === pending) rosterPending.delete(key);
+    }
+}
+
 async function runBulkAction(kind, action) {
     if (action === 'select-all') {
         setAllSelected(kind, true);
@@ -593,9 +581,12 @@ async function runBulkAction(kind, action) {
     }
 
     const ids = selectedIds(kind);
+    const feedback = window.scryingAdminFeedback;
+    const selectionSpec = {region: kind, operation: `roster.bulk.${action}.selection`,
+        target: kind, label: 'Select combatants'};
 
     if (!ids.length) {
-        paneNotification(kind, selectionMessage(kind));
+        feedback.publish(feedback.begin(selectionSpec), {severity: 'error', text: selectionMessage(kind)});
         return;
     }
 
@@ -617,14 +608,12 @@ async function runBulkAction(kind, action) {
         }
     }
 
-    try {
-        const result = await bulkRequest(kind, action, ids);
-        const count = Number(result?.count ?? ids.length);
-        paneNotification(kind, `${count} ${kind === 'characters' ? 'character' : 'monster'}${count === 1 ? '' : 's'} updated.`);
-        await load();
-    } catch (error) {
-        paneNotification(kind, error.message);
-    }
+    feedback.resolve(feedback.begin(selectionSpec));
+    return rosterMutation(kind, `roster.bulk.${action}`, JSON.stringify([...ids].map(String).sort()),
+        () => bulkRequest(kind, action, ids), result => {
+            const count = Number(result?.count ?? ids.length);
+            return `${count} ${kind === 'characters' ? 'character' : 'monster'}${count === 1 ? '' : 's'} updated.`;
+        });
 }
 
 async function removeCombatant(kind, id) {
@@ -645,31 +634,17 @@ async function removeCombatant(kind, id) {
         return;
     }
 
-    try {
-        await bulkRequest(kind, 'remove', [id]);
-
-        paneNotification(kind, `${noun[0].toUpperCase()}${noun.slice(1)} ` + `“${item.name}” removed.`);
-
-        await load();
-    } catch (error) {
-        paneNotification(kind, error.message);
-    }
+    return rosterMutation(kind, 'roster.remove', String(id),
+        () => bulkRequest(kind, 'remove', [id]),
+        () => `${noun[0].toUpperCase()}${noun.slice(1)} ` + `“${item.name}” removed.`);
 }
 
 async function patch(kind, id, data) {
-    try {
-        await request(`/api/${kind}/${encodeURIComponent(id)}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
-
-        await load();
-    } catch (error) {
-        paneNotification(kind, error.message);
-    }
+    if (!['characters', 'monsters'].includes(kind)) throw new Error('Unsupported roster kind: ' + kind);
+    return rosterMutation(kind, 'roster.patch', JSON.stringify([id, Object.keys(data).sort()]),
+        () => request(`/api/${kind}/${encodeURIComponent(id)}`, {
+            method: 'PATCH', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data),
+        }));
 }
 
 // Colored dot in front of a combatant's name, styled like the battle-order

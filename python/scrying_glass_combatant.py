@@ -25,10 +25,13 @@ def update_alive_state(combatant: dict[str, Any]) -> None:
 
 def reset_entity(x: dict[str, Any]) -> None:
     """Restore reset values and remove the combatant from battle."""
+    from .scrying_glass_monster_initiative import reset_initiative_patch
+    initiative = (reset_initiative_patch(x) if "monster_species" in x
+                  else {"initiative": x.get("original_initiative")})
     x["active"] = False
     x["visible"] = False
     x["in_turn"] = False
-    x["initiative"] = x.get("original_initiative")
+    x.update(initiative)
 
     if "monster_species" in x:
         x["hp"] = x["original_hp"]
@@ -57,7 +60,8 @@ def reset_imported_monster(source: dict[str, Any]) -> dict[str, Any]:
     # Do not overwrite hp with original_hp during setup import.
     item['alive'] = item.get('hp', 0) > 0
 
-    item['initiative'] = item.get('original_initiative')
+    from .scrying_glass_monster_initiative import reset_initiative_patch
+    item.update(reset_initiative_patch(item))
     item['active'] = False
     item['visible'] = False
     item['in_turn'] = False

@@ -4,6 +4,14 @@ on:
   push:
     branches:
       - features/perplexity
+      - features/perplexity-018
+      - features/perplexity-009.7
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to publish CI results for'
+        required: true
+        default: 'features/perplexity'
 
 # GitHub natively skips push workflows for commit messages containing [skip ci].
 permissions:
@@ -21,23 +29,40 @@ jobs:
         with:
           python-version: '3.14'
           cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-test.txt
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install Python and browser test dependencies
+      - name: Install Python test dependencies
+        id: python_dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt httpx playwright pytest
-          python -m playwright install --with-deps chromium
+          python -m pip install -r requirements-test.txt
+      - name: Provision and verify Chromium
+        id: chromium
+        if: ${{ !cancelled() && steps.python_dependencies.conclusion == 'success' }}
+        run: python tools/prepare_ci_browser.py
       - name: Python syntax and server import checks
+        if: ${{ !cancelled() && steps.python_dependencies.conclusion == 'success' }}
         run: |
           python -m compileall -q scrying_glass_server.py python web_html tests tools
           python -c "import scrying_glass_server"
       - name: Python test suite (including browser fixtures)
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.python_dependencies.conclusion == 'success' && steps.chromium.conclusion == 'success' }}
+        env:
+          SG_VISUAL_ARTIFACTS: ${{ runner.temp }}/sg-admin-foundations
         run: python tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Upload Admin foundations visual fixtures
+        if: ${{ !cancelled() && steps.chromium.conclusion == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: admin-foundations-visual-fixtures
+          path: ${{ runner.temp }}/sg-admin-foundations
+          if-no-files-found: warn
       - name: Pytest regression modules
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.python_dependencies.conclusion == 'success' }}
         run: >-
           python tools/run_split_tests.py -- python -m pytest -q
           tests/test_death_save_validation_2ba6607.py
@@ -54,7 +79,7 @@ jobs:
           done < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)
           exit "$status"
       - name: Standalone Python browser and audit checks
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.python_dependencies.conclusion == 'success' && steps.chromium.conclusion == 'success' }}
         shell: bash
         run: |
           status=0

@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const test = require('node:test');
+const {installFeedback} = require('./battle-action-feedback-fixture.cjs');
 const root = path.resolve(__dirname, '..');
 const source = fs.readFileSync(path.join(root, 'static/setup-has-lair.js'), 'utf8');
 function setup(initial) {
@@ -11,13 +12,17 @@ function setup(initial) {
         nodes.set(id, {dataset: {}, checked: false, disabled: false, hidden: false,
             addEventListener(type, fn) {this[type] = fn;}});
     }
-    const calls = [], errors = [];
-    const ctx = {document: {getElementById: id => nodes.get(id)}, window: {}, latest: initial,
+    const calls = [], legacy = [];
+    const ctx = {document: {}, window: {}, latest: initial,
         request: async (url, options) => {calls.push([url, options]);},
-        paneNotification: (kind, text) => errors.push(text)};
+        // Stage 3 retires this caller's untyped pane notification; any call is a regression.
+        paneNotification: (kind, text) => legacy.push([kind, text])};
     ctx.load = async () => ctx.window.scryingLairsRender(ctx.latest);
-    vm.createContext(ctx); vm.runInContext(source, ctx);
-    return {ctx, nodes, calls, errors, box: nodes.get('setupHasLair')};
+    const {feedback, scope} = installFeedback(ctx);
+    ctx.document.getElementById = id => nodes.get(id);
+    vm.runInContext(source, ctx);
+    const records = () => feedback.snapshot().filter(r => r.operation === 'setup.has-lair');
+    return {ctx, nodes, calls, legacy, feedback, scope, records, box: nodes.get('setupHasLair')};
 }
 const state = enabled => ({has_lair: enabled, active_campaign_id: '1', active_setup: {campaign_id: '1', name: 'test'}});
 test('unchecked gates pane and toggle without overwriting existing hidden preferences', () => {
@@ -60,7 +65,34 @@ test('failed update restores server state and shows error', async () => {
     w.ctx.request = async () => {throw new Error('Denied');};
     w.box.checked = true; await w.box.change();
     assert(!w.box.checked); assert(!w.box.disabled);
-    assert.deepEqual(w.errors, ['Denied']);
+    assert.deepEqual(w.records().map(r => [r.region, r.severity, r.text, r.target]),
+        [['battleSetup', 'error', 'Denied', JSON.stringify(['1', {campaign_id: '1', name: 'test'}])]]);
+    assert.deepEqual(w.legacy, []);
+});
+test('error persists until the next successful update for the setup resolves it', async () => {
+    const w = setup(state(false));
+    w.ctx.request = async () => {throw new Error('Denied');};
+    w.box.checked = true; await w.box.change();
+    assert.equal(w.records().length, 1);
+    w.ctx.request = async () => {}; w.ctx.latest = state(true);
+    w.box.checked = true; await w.box.change();
+    assert.equal(w.records().length, 0); assert(w.box.checked); assert.deepEqual(w.legacy, []);
+});
+test('success publishes no message and a declined duplicate starts no feedback', async () => {
+    const w = setup(state(false));
+    let release;
+    w.ctx.request = () => new Promise(resolve => {release = resolve;});
+    w.box.checked = true; const pending = w.box.change(); await w.box.change();
+    w.ctx.latest = state(true); release(); await pending;
+    assert.equal(w.feedback.snapshot().length, 0);
+});
+test('setup switch clears the encounter-lane error and stale completion cannot publish', async () => {
+    const w = setup(state(false));
+    let reject;
+    w.ctx.request = () => new Promise((resolve, fail) => {reject = fail;});
+    w.box.checked = true; const pending = w.box.change();
+    w.scope('1', 'other'); reject(new Error('Late denial')); await pending;
+    assert.equal(w.records().length, 0);
 });
 test('checkbox precedes imports and follows setup-name input', () => {
     const html = fs.readFileSync(path.join(root, 'templates/admin/050_setup_input.html'), 'utf8');

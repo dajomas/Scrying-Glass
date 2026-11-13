@@ -11,8 +11,16 @@ class AdminMonstersMixin:
 
     async def roll_monster_initiative(self):
         """Roll monster initiative."""
-        for monster in self.context.STATE['monsters']:
-            monster['initiative'] = self.context.random.randint(1, 20)
+        from .scrying_glass_monster_initiative import initiative_patch
+        try:
+            changes = [
+                (monster, initiative_patch(monster, roll=self.context.random.randint(1, 20)))
+                for monster in self.context.STATE['monsters']
+            ]
+        except ValueError as exc:
+            raise self.context.HTTPException(422, str(exc)) from exc
+        for monster, values in changes:
+            monster.update(values)
         await self.context.combatants_changed(monsters=True, characters=False)
         return {'count': len(self.context.STATE['monsters'])}
 
@@ -285,6 +293,12 @@ class AdminMonstersMixin:
         candidate.update(
             validated.model_dump(exclude_unset=True)
         )
+        if parsed_initiative != monster.get("initiative"):
+            from .scrying_glass_monster_initiative import legacy_total_patch
+            try:
+                candidate.update(legacy_total_patch(monster, parsed_initiative))
+            except ValueError as exc:
+                raise self.context.HTTPException(422, str(exc)) from exc
 
         from .scrying_glass_statistics import legacy_max_edit
         try: legacy_max_edit(candidate, validated.model_dump(exclude_unset=True))
@@ -353,6 +367,12 @@ class AdminMonstersMixin:
         for key, value in values.items():
             if key != "in_turn":
                 candidate[key] = value
+        if "initiative" in values and values["initiative"] != monster.get("initiative"):
+            from .scrying_glass_monster_initiative import legacy_total_patch
+            try:
+                candidate.update(legacy_total_patch(monster, values["initiative"]))
+            except ValueError as exc:
+                raise self.context.HTTPException(422, str(exc)) from exc
 
         from .scrying_glass_statistics import legacy_max_edit
         try: legacy_max_edit(candidate, values)
@@ -446,9 +466,14 @@ class AdminMonstersMixin:
                     monster[field] = value
 
         elif body.action == "roll-shared-initiative":
+            from .scrying_glass_monster_initiative import initiative_patch
             initiative = self.context.random.randint(1, 20)
-            for monster in targets:
-                monster["initiative"] = initiative
+            try:
+                changes = [(monster, initiative_patch(monster, roll=initiative)) for monster in targets]
+            except ValueError as exc:
+                raise self.context.HTTPException(422, str(exc)) from exc
+            for monster, values in changes:
+                monster.update(values)
 
         elif body.action == "reset":
             for monster in targets:

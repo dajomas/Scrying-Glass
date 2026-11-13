@@ -14,7 +14,10 @@ class SharedInitiativeTests(unittest.TestCase):
         cls = next(n for n in tree.body if isinstance(n, ast.ClassDef))
         method = next(n for n in cls.body if getattr(n, "name", "") == "bulk_monsters")
         module = ast.Module(body=[ast.ImportFrom(module="__future__", names=[ast.alias(name="annotations")], level=0), method], type_ignores=[])
-        namespace = {}
+        namespace = {
+            "__name__": "python.scrying_glass_admin_monsters",
+            "__package__": "python",
+        }
         exec(compile(ast.fix_missing_locations(module), "bulk_monsters", "exec"), namespace)
         self.method = namespace["bulk_monsters"]
         self.monsters = [{"id": i, "initiative": v} for i, v in [("a", 2), ("b", 19), ("c", 7)]]

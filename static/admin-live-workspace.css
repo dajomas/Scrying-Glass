@@ -1,0 +1,29 @@
+/* No split workspace: Battle and both native rosters keep their original full-width flow. */
+body.admin-shell #adminScroll > section { min-width: 0; }
+#encounterToolsModal { z-index: 20; }
+#encounterToolsModal > .sg-tools-dialog {
+    box-sizing: border-box;
+    width: min(960px, 94vw);
+    max-height: 92vh;
+    max-height: 92dvh;
+    padding: 0 1rem 1rem;
+    overflow: auto;
+    overscroll-behavior: contain;
+}
+.sg-tools-dialog-bar {
+    position: sticky; top: 0; z-index: 1;
+    display: flex; justify-content: flex-end;
+    padding: .75rem 0; background: var(--bg-2);
+}
+#encounterToolsModal #encounterFeatures { margin: 0; min-width: 0; }
+#encounterToolsModal #encounterFeatures .et-header { flex-direction: column; }
+#encounterToolsModal #encounterFeatures .et-connection { flex: none; width: 100%; height: auto; min-height: 0; }
+#encounterToolsDialogNotice:empty { display: none; }
+#encounterToolsDialogNotice { overflow-wrap: anywhere; }
+body[data-encounter-tools-open="true"] .modal:not(#encounterToolsModal) { z-index: 30; }
+#liveActivityDisclosure > .row > h2 { display: none; }
+.sg-live-history > summary { cursor: pointer; font-weight: 600; padding: .75rem; }
+.sg-live-history > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+@media (max-width: 480px) {
+    #encounterToolsModal > .sg-tools-dialog { padding: 0 .5rem .5rem; }
+}

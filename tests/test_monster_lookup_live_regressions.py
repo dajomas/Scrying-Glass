@@ -33,7 +33,7 @@ class MarketplaceRegressionTests(unittest.TestCase):
             self.assertEqual(dnd.dnd_monster_detail_html('/monsters/claw'), '')
         fetch.assert_called_once()
 
-    def test_two_marketplace_redirects_reach_fallback_once(self):
+    def test_two_marketplace_redirects_search_fivetools_once(self):
         fallback = [{'found': True, 'species': 'Crawling Claw', 'provider': '5e.tools',
                      'image_url': None, 'ac': 12, 'hp': '2d4+2'}]
         with patch.object(dnd, 'urlopen', side_effect=[Response(MARKETPLACE), Response(MARKETPLACE)]) as fetch:
@@ -45,16 +45,20 @@ class MarketplaceRegressionTests(unittest.TestCase):
         self.assertEqual(result['candidates'][0]['provider'], '5e.tools')
         self.assertIn('selection_token', result['candidates'][0])
 
-    def test_one_usable_primary_candidate_prevents_fallback(self):
+    def test_one_usable_primary_candidate_keeps_fivetools_version(self):
+        newer = [dict(found=True, species='Crawling Claw', name='Crawling Claw',
+            provider='5e.tools', source='XMM', legacy=False, ac=15, hp='10',
+            source_url='https://5e.tools/bestiary.html#crawling%20claw_xmm')]
         with patch.object(dnd, 'urlopen', side_effect=[Response(MARKETPLACE),
                 Response('https://www.dndbeyond.com/monsters/new-claw', STATS)]):
-            with patch.object(selection, 'fivetools_candidates') as ft:
+            with patch.object(selection, 'fivetools_candidates', return_value=newer) as ft:
                 result = selection.lookup_candidates(self.context(), 'Crawling Claw')
-        ft.assert_not_called()
+        ft.assert_called_once_with('Crawling Claw', {})
         self.assertEqual(result['status'], 'ok')
-        self.assertEqual(len(result['candidates']), 1)
+        self.assertEqual(len(result['candidates']), 2)
         self.assertEqual(result['candidates'][0]['provider'], 'D&D Beyond')
         self.assertEqual(result['candidates'][0]['ac'], 12)
+        self.assertEqual((result['candidates'][1]['provider'], result['candidates'][1]['ac']), ('5e.tools', 15))
 
     def test_marketplace_exception_does_not_trust_other_destinations(self):
         for url in ['http://marketplace.dndbeyond.com/category/monster-manual',

@@ -3,7 +3,7 @@ set -Eeuo pipefail
 umask 077
 
 REPO="dajomas/Scrying-Glass"
-BRANCH="features/perplexity"
+BRANCH="${BRANCH:-features/perplexity}"
 WORKFLOW="tests.yml"
 RUN_ID=""
 PUBLISH=0

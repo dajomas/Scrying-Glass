@@ -21,10 +21,13 @@ display:
   default_character_color: "#1f4e79"
   # Best-effort lookup against public D&D Beyond HTML. A manually uploaded image always wins.
   dndbeyond_image_lookup: true
-  # Independent optional stats/token fallback after D&D Beyond fails.
+  # Independently enable 5e.tools for combined candidate lookup (compatibility key).
+  # All enabled candidate searches must complete; failures block all candidates.
+  # Legacy image/stats fallback interfaces keep their existing behavior.
   fivetools_fallback: true
   # Omitted list uses these six defaults; explicit lists replace them in this order.
-  # MM first preserves legacy first-result preference. [] means no 5e.tools sources.
+  # Order controls candidate presentation and unchanged legacy first-result paths.
+  # [] means no 5e.tools data requests; D&D Beyond can remain enabled.
   # Source IDs are case-sensitive; duplicates are searched once; maximum 32 entries.
   fivetools_sources: ["MM", "XMM", "PHB", "XPHB", "DMG", "XDMG"]
   fivetools_data_base_url: "https://5e.tools/data/bestiary"

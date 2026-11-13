@@ -31,6 +31,9 @@
         }
         if (kind !== 'characters' && kind !== 'monsters') return;
         if (typeof latest === 'undefined' || !latest || !Array.isArray(latest[kind])) return;
+        const feedback = window.scryingAdminFeedback;
+        const ticket = feedback.begin({region: kind, operation: 'roster.select-dead',
+            target: kind, label: 'Select dead'});
         const deadIds = new Set(latest[kind].filter(item => isDead(kind, item)).map(item => item.id));
         setAllSelected(kind, false);
         for (const id of deadIds) updateRowSelection(kind, id, true);
@@ -38,6 +41,7 @@
             checkbox.checked = deadIds.has(checkbox.dataset.selectId);
         });
         const noun = kind === 'characters' ? 'character' : 'monster';
-        paneNotification(kind, `Selected ${deadIds.size} dead ${noun}${deadIds.size === 1 ? '' : 's'}.`);
+        feedback.publish(ticket, {severity: 'success',
+            text: `Selected ${deadIds.size} dead ${noun}${deadIds.size === 1 ? '' : 's'}.`});
     };
 })();

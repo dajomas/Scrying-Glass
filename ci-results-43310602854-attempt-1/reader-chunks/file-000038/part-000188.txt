@@ -1,0 +1,49 @@
+ts	2026-11-12T21:32:45.3381231Z ok 15 - scope change does not enable overlapping submissions on the same dialog controls
+tests	JavaScript tests	2026-11-12T21:32:45.3381810Z   ---
+tests	JavaScript tests	2026-11-12T21:32:45.3382068Z   duration_ms: 0.623541
+tests	JavaScript tests	2026-11-12T21:32:45.3382366Z   type: 'test'
+tests	JavaScript tests	2026-11-12T21:32:45.3382643Z   ...
+tests	JavaScript tests	2026-11-12T21:32:45.3429376Z 1..15
+tests	JavaScript tests	2026-11-12T21:32:45.3429647Z # tests 15
+tests	JavaScript tests	2026-11-12T21:32:45.3429890Z # suites 0
+tests	JavaScript tests	2026-11-12T21:32:45.3430126Z # pass 15
+tests	JavaScript tests	2026-11-12T21:32:45.3430687Z # fail 0
+tests	JavaScript tests	2026-11-12T21:32:45.3431199Z # cancelled 0
+tests	JavaScript tests	2026-11-12T21:32:45.3431600Z # skipped 0
+tests	JavaScript tests	2026-11-12T21:32:45.3431907Z # todo 0
+tests	JavaScript tests	2026-11-12T21:32:45.3432286Z # duration_ms 68.653095
+tests	JavaScript tests	2026-11-12T21:32:45.3811571Z ##[endgroup]
+tests	JavaScript tests	2026-11-12T21:32:45.3812053Z ##[group]tests/connection-feedback.test.cjs
+tests	JavaScript tests	2026-11-12T21:32:45.5967207Z TAP version 13
+tests	JavaScript tests	2026-11-12T21:32:45.6305188Z # Subtest: network loss shows one persistent global warning on the page lane
+tests	JavaScript tests	2026-11-12T21:32:45.6311946Z ok 1 - network loss shows one persistent global warning on the page lane
+tests	JavaScript tests	2026-11-12T21:32:45.6312626Z   ---
+tests	JavaScript tests	2026-11-12T21:32:45.6312937Z   duration_ms: 7.345065
+tests	JavaScript tests	2026-11-12T21:32:45.6313252Z   type: 'test'
+tests	JavaScript tests	2026-11-12T21:32:45.6313534Z   ...
+tests	JavaScript tests	2026-11-12T21:32:45.6334603Z # Subtest: identical polling failures keep the same record without re-publishing
+tests	JavaScript tests	2026-11-12T21:32:45.6335869Z ok 2 - identical polling failures keep the same record without re-publishing
+tests	JavaScript tests	2026-11-12T21:32:45.6336638Z   ---
+tests	JavaScript tests	2026-11-12T21:32:45.6337140Z   duration_ms: 2.960021
+tests	JavaScript tests	2026-11-12T21:32:45.6337416Z   type: 'test'
+tests	JavaScript tests	2026-11-12T21:32:45.6337599Z   ...
+tests	JavaScript tests	2026-11-12T21:32:45.6354427Z # Subtest: a different failure replaces the warning in place (one record)
+tests	JavaScript tests	2026-11-12T21:32:45.6355660Z ok 3 - a different failure replaces the warning in place (one record)
+tests	JavaScript tests	2026-11-12T21:32:45.6356181Z   ---
+tests	JavaScript tests	2026-11-12T21:32:45.6357984Z   duration_ms: 2.097647
+tests	JavaScript tests	2026-11-12T21:32:45.6358320Z   type: 'test'
+tests	JavaScript tests	2026-11-12T21:32:45.6358605Z   ...
+tests	JavaScript tests	2026-11-12T21:32:45.6373576Z # Subtest: recovery resolves only the connection identity and keeps unrelated errors
+tests	JavaScript tests	2026-11-12T21:32:45.6374451Z ok 4 - recovery resolves only the connection identity and keeps unrelated errors
+tests	JavaScript tests	2026-11-12T21:32:45.6375418Z   ---
+tests	JavaScript tests	2026-11-12T21:32:45.6375618Z   duration_ms: 1.902519
+tests	JavaScript tests	2026-11-12T21:32:45.6375821Z   type: 'test'
+tests	JavaScript tests	2026-11-12T21:32:45.6376021Z   ...
+tests	JavaScript tests	2026-11-12T21:32:45.6396579Z # Subtest: successful polls without an outstanding warning publish nothing
+tests	JavaScript tests	2026-11-12T21:32:45.6397678Z ok 5 - successful polls without an outstanding warning publish nothing
+tests	JavaScript tests	2026-11-12T21:32:45.6399608Z   ---
+tests	JavaScript tests	2026-11-12T21:32:45.6400009Z   duration_ms: 2.34323
+tests	JavaScript tests	2026-11-12T21:32:45.6400525Z   type: 'test'
+tests	JavaScript tests	2026-11-12T21:32:45.6400891Z   ...
+tests	JavaScript tests	2026-11-12T21:32:45.6419286Z # Subtest: a dismissed warning is not re-announced by identical failures; a new failure or recovery is
+tests	JavaScript tests	2026-11-12T21:32:45.6421265Z ok 6 - a dismissed warning is not
