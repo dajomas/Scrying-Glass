@@ -11,7 +11,7 @@ class PanelFormsSourceTests(unittest.TestCase):
     def test_assets_and_presentation_only_contract(self):
         head = (ROOT / 'templates/admin/000_document_start.html').read_text(encoding='utf-8')
         end = (ROOT / 'templates/admin/190_document_end.html').read_text(encoding='utf-8')
-        self.assertEqual(head.count('/static/admin-panel-forms.css?v=1'), 1)
+        self.assertEqual(head.count('/static/admin-panel-forms.css?v=2'), 1)
         self.assertLess(head.index('/static/admin-foundations.css'), head.index('/static/admin-panel-forms.css'))
         self.assertEqual(end.count('/static/admin-panel-forms.js?v=1'), 1)
         self.assertLess(end.index('/static/combatant-row-layout.js'), end.index('/static/admin-panel-forms.js'))

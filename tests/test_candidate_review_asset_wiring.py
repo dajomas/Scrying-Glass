@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class CandidateReviewFeedbackAssetTests(unittest.TestCase):
     def test_cache_versions_and_single_inclusions(self):
         end = (ROOT / 'templates/admin/190_document_end.html').read_text(encoding='utf-8')
-        versions = {'monster-candidate-selection': 5, 'monster-refresh-review': 2}
+        versions = {'monster-candidate-selection': 6, 'monster-refresh-review': 2}
         for name, version in versions.items():
             with self.subTest(asset=name):
                 prefix = '/static/' + name + '.js'

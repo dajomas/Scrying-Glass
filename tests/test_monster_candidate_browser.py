@@ -160,6 +160,17 @@ class CandidateBrowserTests(unittest.TestCase):
         self.assertEqual(self.token(), 'custom-2')
         self.assertTrue(self.page.evaluate('JSON.stringify(lastLookupPayload) === lookupPayloadBefore'))
 
+    def test_popup_notes_whether_an_image_is_available(self):
+        self.start_candidates([dict(found=True, name='Goblin', species='Goblin', provider='D&D Beyond',
+            source=code, legacy=False, ac=12, hp='7', selection_token=code, image_url=image)
+            for code, image in [('A', 'https://example.test/goblin.png'), ('B', None), ('C', '')]])
+        notes = self.page.locator('dialog .monster-candidate-image').all_inner_texts()
+        self.assertEqual([note.strip() for note in notes],
+                         ['Image available', 'No image available', 'No image available'])
+        self.assertEqual(self.page.locator('dialog img').count(), 0)
+        self.page.get_by_role('button', name='Cancel', exact=True).click()
+        self.finish()
+
     def test_dnd_beyond_source_wording_and_candidate_cancel(self):
         self.start_candidates([dict(found=True, name='Goblin', species='Goblin', provider='D&D Beyond',
             source=code, legacy=legacy, ac=12, hp='7', selection_token=code)

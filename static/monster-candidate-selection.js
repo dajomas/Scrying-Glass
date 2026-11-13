@@ -139,6 +139,11 @@
                     `AC ${candidate.ac ?? '—'}, HP ${candidate.hp ?? '—'} — ${offerText(candidate)}`;
                 button.addEventListener('click', () => finish(candidate));
                 row.append(button);
+                const imageNote = document.createElement('small');
+                imageNote.className = 'monster-candidate-image';
+                imageNote.textContent = typeof candidate.image_url === 'string' && candidate.image_url
+                    ? ' Image available' : ' No image available';
+                row.append(imageNote);
                 if (candidate.source_url && candidate.source_url.startsWith('https://')) {
                     const link = document.createElement('a');
                     link.href = candidate.source_url;
