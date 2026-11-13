@@ -1,0 +1,30 @@
+it checks	2026-11-13T11:31:30.0707567Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0707892Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0708179Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0708358Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0708655Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0708962Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0709160Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0709487Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0709768Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0709929Z OSError: secret 5e.tools endpoint
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0710220Z 
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0710375Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0710538Z 
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0710627Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0710964Z   File "/tmp/scrying-tests-od6m7kr5/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0711263Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0711836Z   File "/tmp/scrying-tests-od6m7kr5/repo/python/scrying_glass_monster_selection.py", line 220, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0712366Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0712697Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0713293Z   File "/tmp/scrying-tests-od6m7kr5/repo/python/scrying_glass_monster_selection.py", line 198, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0714018Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.0714753Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.1147776Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.1148339Z Ran 4 tests in 0.146s
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.1148435Z 
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.1148494Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.1172067Z test_combined_monster_lookup_application.py: connections opened: 15; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.1805037Z Connection audit: test_compact_combatant_inputs.py
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.6531775Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T11:31:30.6532118Z

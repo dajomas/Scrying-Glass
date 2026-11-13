@@ -1,0 +1,32 @@
+ock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0444552Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0444753Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0445084Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0445366Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0445501Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0445583Z 
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0445734Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0446050Z 
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0446140Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0446472Z   File "/tmp/scrying-tests-od6m7kr5/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0446774Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0447060Z   File "/tmp/scrying-tests-od6m7kr5/repo/python/scrying_glass_monster_selection.py", line 224, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0447445Z     extra=(("Open5e", open5e_enabled, lambda: open5e_candidates(species, display)),))
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0447731Z                                               ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0448096Z   File "/tmp/scrying-tests-od6m7kr5/repo/python/scrying_glass_monster_selection.py", line 206, in open5e_candidates
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0448521Z     raise ProviderError("Open5e lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0448944Z python.scrying_glass_monster_selection.ProviderError: Open5e lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0461646Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0461988Z Ran 18 tests in 0.016s
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0462123Z 
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0462330Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0471916Z test_open5e_provider.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.0919744Z Connection audit: test_reset_health.py
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.4924542Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.4924956Z Ran 9 tests in 0.331s
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.4925056Z 
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.4925117Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.4925385Z test_reset_health.py: connections opened: 9; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.5404510Z Connection audit: test_role_pages.py
+tests	Standalone Python browser and audit checks	2026-11-13T11:33:02.7438318Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T

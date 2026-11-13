@@ -1,0 +1,50 @@
+s
+tests	JavaScript tests	2026-11-13T11:29:03.0734721Z ok 7 - individual removal preserves payload, destination, name and success
+tests	JavaScript tests	2026-11-13T11:29:03.0735184Z   ---
+tests	JavaScript tests	2026-11-13T11:29:03.0735421Z   duration_ms: 0.889445
+tests	JavaScript tests	2026-11-13T11:29:03.0735634Z   type: 'test'
+tests	JavaScript tests	2026-11-13T11:29:03.0735866Z   ...
+tests	JavaScript tests	2026-11-13T11:29:03.0736212Z # Subtest: stale success cannot refresh a new encounter
+tests	JavaScript tests	2026-11-13T11:29:03.0736603Z ok 8 - stale success cannot refresh a new encounter
+tests	JavaScript tests	2026-11-13T11:29:03.0736869Z   ---
+tests	JavaScript tests	2026-11-13T11:29:03.0737060Z   duration_ms: 0.652717
+tests	JavaScript tests	2026-11-13T11:29:03.0737263Z   type: 'test'
+tests	JavaScript tests	2026-11-13T11:29:03.0749228Z   ...
+tests	JavaScript tests	2026-11-13T11:29:03.0749688Z # Subtest: stale failure cannot publish to a new encounter
+tests	JavaScript tests	2026-11-13T11:29:03.0750182Z ok 9 - stale failure cannot publish to a new encounter
+tests	JavaScript tests	2026-11-13T11:29:03.0750531Z   ---
+tests	JavaScript tests	2026-11-13T11:29:03.0750742Z   duration_ms: 0.846881
+tests	JavaScript tests	2026-11-13T11:29:03.0750968Z   type: 'test'
+tests	JavaScript tests	2026-11-13T11:29:03.0751154Z   ...
+tests	JavaScript tests	2026-11-13T11:29:03.0751664Z # Subtest: bulk refresh failure stays separate from success and does not replay
+tests	JavaScript tests	2026-11-13T11:29:03.0752173Z ok 10 - bulk refresh failure stays separate from success and does not replay
+tests	JavaScript tests	2026-11-13T11:29:03.0752782Z   ---
+tests	JavaScript tests	2026-11-13T11:29:03.0752967Z   duration_ms: 1.033854
+tests	JavaScript tests	2026-11-13T11:29:03.0753174Z   type: 'test'
+tests	JavaScript tests	2026-11-13T11:29:03.0753358Z   ...
+tests	JavaScript tests	2026-11-13T11:29:03.0753709Z # Subtest: patch retains encoded URL, method, headers and exact JSON values
+tests	JavaScript tests	2026-11-13T11:29:03.0754212Z ok 11 - patch retains encoded URL, method, headers and exact JSON values
+tests	JavaScript tests	2026-11-13T11:29:03.0754532Z   ---
+tests	JavaScript tests	2026-11-13T11:29:03.0754721Z   duration_ms: 0.775183
+tests	JavaScript tests	2026-11-13T11:29:03.0754929Z   type: 'test'
+tests	JavaScript tests	2026-11-13T11:29:03.0755117Z   ...
+tests	JavaScript tests	2026-11-13T11:29:03.0830397Z # Subtest: duplicate same-field patch stays guarded through refresh
+tests	JavaScript tests	2026-11-13T11:29:03.0830906Z ok 12 - duplicate same-field patch stays guarded through refresh
+tests	JavaScript tests	2026-11-13T11:29:03.0831202Z   ---
+tests	JavaScript tests	2026-11-13T11:29:03.0831524Z   duration_ms: 5.397985
+tests	JavaScript tests	2026-11-13T11:29:03.0831734Z   type: 'test'
+tests	JavaScript tests	2026-11-13T11:29:03.0831916Z   ...
+tests	JavaScript tests	2026-11-13T11:29:03.0832216Z # Subtest: old-scope cleanup cannot remove a newer pending guard
+tests	JavaScript tests	2026-11-13T11:29:03.0832869Z ok 13 - old-scope cleanup cannot remove a newer pending guard
+tests	JavaScript tests	2026-11-13T11:29:03.0833144Z   ---
+tests	JavaScript tests	2026-11-13T11:29:03.0833318Z   duration_ms: 1.6394
+tests	JavaScript tests	2026-11-13T11:29:03.0833487Z   type: 'test'
+tests	JavaScript tests	2026-11-13T11:29:03.0833601Z   ...
+tests	JavaScript tests	2026-11-13T11:29:03.0833814Z # Subtest: different field patches have independent pending identities
+tests	JavaScript tests	2026-11-13T11:29:03.0834100Z ok 14 - different field patches have independent pending identities
+tests	JavaScript tests	2026-11-13T11:29:03.0834291Z   ---
+tests	JavaScript tests	2026-11-13T11:29:03.0834403Z   duration_ms: 1.1436
+tests	JavaScript tests	2026-11-13T11:29:03.0834538Z   type: 'test'
+tests	JavaScript tests	2026-11-13T11:29:03.0834650Z   ...
+tests	JavaScript tests	2026-11-13T11:29:03.0834848Z # Subtest: successful refresh settles only its matching refresh error
+tests	JavaScript tests	202
