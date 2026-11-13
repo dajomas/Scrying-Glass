@@ -53,38 +53,55 @@ See [testing handover](../handover/020-ci-and-tests.md#verified-localci-success-
 
 ## Connection-lifetime audit maintenance - 2026-11-11
 
-Status: in progress; audit isolation delivered as
-3358400abc08c9ae38aee50942fe7e6cb47a5cfc; seven focused regression cases passed
-locally. Full repository validation remains pending. This independent maintenance
-correction does not reopen the accepted SG-TODO-010 migration or close Stage 2/009.7.
+Status: completed and closed 2026-11-13 following the user's explicit 13:17 CET
+request to close the two maintenance records. Audit isolation was delivered as
+3358400abc08c9ae38aee50942fe7e6cb47a5cfc; seven focused local regression cases
+were recorded during preparation. Later covering CI and direct log review resolve
+the earlier full-repository-validation-pending status; this does not reopen the
+accepted SG-TODO-010 migration, Stage 2 or 009/009.7.
 
-Preserve the failed-PRAGMA closure assertion, all unittest module discovery and
-explicit-close leak detection. Run each discovered test*.py module in a fresh
-process with tracking installed before imports; retain nonzero status for setup,
-import, assertion or leak failures and continue later modules. No browser skip,
-event-loop monkeypatch in production audit, application change or workflow edit.
+Preserved contract: failed-PRAGMA closure/propagation check, all discovered
+test*.py modules in fresh processes, tracking before imports, per-module leak
+counts, nonzero setup/import/assertion/leak failures and continuation to later
+modules. No browser skip or production event-loop monkeypatch is introduced.
 
-Acceptance still requires review of the full connection audit on the revised
-repository, including real storage/async/browser fixtures and per-module leak
-counts. Successful equivalent local or hosted evidence is sufficient for its
-covered scope; both are not required. Missing Chromium remains a separate failure,
-not a passing or waived browser test. [Repair evidence and limits](../handover/021-connection-lifetime-audit.md).
+Covering Branch tests 43419501886 attempt 1 tests
+7e2579efcd3fc2833498edb1bc6e5093612cbc5e on features/perplexity; job 131865652023
+is completed/success, including the standalone browser/audit step. Evidence
+publication: 49822ee7cacfd3bc4e2bd520b98917aef036db2c. Directly reviewed workflow
+reader part-000290.txt reports "Connection audit modules: 190; failed: 0" and
+"PASS: all audited modules passed and closed their tracked connections". This
+is a module count, not a unique-test or aggregated connection count. No new audit
+execution or individual review of every module's log is claimed.
+[Close-out evidence and retained limits](../handover/021-connection-lifetime-audit.md#maintenance-records-accepted-close-out---2026-11-13).
 
 ## Chromium provisioning maintenance - 2026-11-11
 
-Status: in progress; helper, workflow prerequisite gates and ten focused tests
-prepared and passed with mocked provisioning/browser APIs on Python 3.12.8.
-Exact-content GitHub delivery and covering CI remain pending. Published setup
-failure 43053734732 attempt 1 covers fd13991, not the later audit repair.
+Status: completed and closed 2026-11-13 at the same explicit user request. The
+helper and prerequisite gates are delivered and exercised by the successful
+covering run above; earlier exact-content-delivery/CI-pending notes are superseded.
+Published setup failure 43053734732 attempt 1 remains historical failure evidence
+for fd13991, not a current failure or a passing validation result.
 
-Required: download Chromium before optional native-dependency installation;
-require launch/render preflight; preserve nonzero download/native-install/launch
-failures; run mixed browser suites only after verified readiness. Independent
-syntax/pytest/JavaScript checks remain eligible according to their prerequisites.
-No skipped group may be described as passed or as accepted automated coverage.
+Preserved contract: download Chromium before optional native-dependency setup,
+require launch/render preflight, retain fatal download/native-install/launch
+failures and gate mixed browser groups on readiness. Independent syntax/pytest/JS
+checks retain their prerequisites; skipped groups are not passed coverage.
 
-Acceptance: inspect a covering run's provisioning output and actual browser/test
-results, reconcile failures and retain full-suite/Stage 2 boundaries. Missing
-libraries or external download/DNS failures remain errors, not silent fallbacks.
-The local runner and runtime dependencies are unchanged. [Detailed evidence,
-control tests and limitations](../handover/021-connection-lifetime-audit.md#chromium-provisioning-correction---2026-11-11).
+Directly reviewed reader part-000012.txt records headless-shell download and
+"Chromium headless launch/render preflight passed." Matching jobs.json reports
+successful provisioning, actual Python/browser and standalone browser/audit groups
+as well as syntax/import, pytest and JavaScript. Part-000290.txt records browser
+smoke with real Chromium rendering, mocked HTTP/WS and no page errors. Original
+ten mocked control tests and negative controls remain preparation evidence, not
+real APT/DNS-failure execution. No claim of universal native-library/font support,
+actual fallback-APT-path execution or authenticated live-server testing is made.
+[Detailed history and limits](../handover/021-connection-lifetime-audit.md).
+
+Both maintenance records have no remaining agreed delivery, covering-validation
+or acceptance action. Deferred test-suite cleanup is separate and remains deferred.
+README, TODO.md and HANDOVER.md retain accurate feature status/index links and are
+unchanged; this update changes these two existing detail records only. Documentation-
+only commit with [skip ci]; no code/test/workflow/runtime change, fresh tests,
+separate dispatch, merge or deployment. Earlier dated feature-pending statements
+are historical and superseded by the accepted feature close-outs.

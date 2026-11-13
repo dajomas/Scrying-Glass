@@ -2,6 +2,12 @@
 
 [Back to handover index](../../HANDOVER.md)
 
+Current status: both audit-isolation and Chromium-provisioning maintenance records
+are completed and closed at the user's request on 2026-11-13 at 13:17 CET.
+[Accepted close-out and covering evidence](#maintenance-records-accepted-close-out---2026-11-13)
+supersede the dated delivery/validation-pending and open-feature statements below.
+The original repair/failure history and validation limits remain historical.
+
 ## Repair preparation - 2026-11-11
 
 The supplied CI excerpt shows browser launch failures followed by an audit crash:
@@ -95,3 +101,41 @@ README, root indexes and the 020 overview were reviewed; this dated correction
 provides current browser provisioning/gating guidance while preserving history.
 Local runlocaltests.sh still requires users to provision their own dependencies;
 its behavior is unchanged. Both deliverables, Stage 2 and 009.7 remain open.
+
+## Maintenance records accepted close-out - 2026-11-13
+
+The user explicitly requested "Please close out the 2 maintenance records" at
+13:17 CET on 2026-11-13. Both connection-lifetime audit isolation and Chromium
+provisioning are completed and closed for their agreed maintenance scope. The
+[task statuses](../todo/100-httpx2-test-migration.md#connection-lifetime-audit-maintenance---2026-11-11)
+are reconciled in the same documentation-only change. Earlier delivery/covering-CI/
+acceptance-pending language is superseded; no additional acceptance gate is added.
+
+### Covering evidence and implementation review
+
+- Branch tests 43419501886, attempt 1, on features/perplexity tests 7e2579efcd3fc2833498edb1bc6e5093612cbc5e. Job 131865652023 is completed/success; every configured provisioning/test stage succeeded. Evidence publication: 49822ee7cacfd3bc4e2bd520b98917aef036db2c, directory ci-results-43419501886-attempt-1. jobs.json was directly reviewed for the tested SHA, branch, attempt and step outcomes.
+- reader-chunks/index-000001.jsonl.txt maps workflow.log to file-000038. Directly read part-000012.txt records headless-shell download and "Chromium headless launch/render preflight passed."
+- Directly read part-000290.txt reports "Connection audit modules: 190; failed: 0" and "PASS: all audited modules passed and closed their tracked connections". It also records successful browser smoke: real Chromium, mocked HTTP/WS, no page errors. The count is audited modules, not unique tests or an invented aggregate connection total.
+- Current tests/audit_connection_lifetime.py (blob e06aa7eed5d034b088df9f6a1855258e861f3a6d) retains the failed-initialization probe, fresh workers, tracking before discovery/imports, nonzero setup/assertion/leak handling and continuation. Audit-isolation delivery was 3358400abc08c9ae38aee50942fe7e6cb47a5cfc.
+- Current tools/prepare_ci_browser.py (blob 8d25d90c479731e614860bea3d969a53f18b0226) retains download-first provisioning, mandatory headless DOM-text preflight, one optional native-dependency attempt and fatal failure handling. The existing workflow prerequisite gates were reviewed during the immediately preceding Stage 3 reconciliation; no workflow change is proposed here.
+
+### Limits and remaining work
+
+This is direct review of existing hosted evidence and implementation, not a new
+local/hosted test execution, full reread of every test/module log or screenshot,
+complete package inventory, real APT-fallback/DNS-failure test, authenticated
+live-server test or guarantee of every runner's native libraries/fonts. Earlier
+seven audit and ten provisioning focused-control results retain their original
+local/mock scope. Process isolation does not claim to fix all possible within-module
+fixture lifecycle faults or instrument child processes spawned by tests.
+
+No agreed delivery, covering-validation or acceptance action remains for either
+maintenance record. SG-TODO-010 and all already accepted feature scopes remain
+closed. Deferred post-009 test-suite cleanup is separate and is not started or
+closed by this update. Earlier broad feature-pending statements are superseded by
+their own later accepted close-outs, including 570 for 009/009.7.
+
+README and TODO/HANDOVER indexes retain accurate links/status and need no cosmetic
+edit. Only this handover and the existing 100 task details change. Commit message
+uses [skip ci]; no code/tests/workflow/runtime change, fresh execution, separate
+dispatch, merge, deployment, new owner/deadline or blanket future-write approval.
