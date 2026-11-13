@@ -1,0 +1,33 @@
+.9300841Z FAIL: test_local_feature_feedback_composition.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:15.9302154Z Connection audit: test_local_runner_publication.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:17.0350455Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:17.0351206Z Ran 6 tests in 1.015s
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:17.0351491Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:17.0351986Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:17.0352824Z test_local_runner_publication.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:17.0502368Z Connection audit: test_logout.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.3711075Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.3712733Z test_logout.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.3713560Z Ran 14 tests in 1.233s
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.3713854Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.3714049Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.4208430Z Connection audit: test_lookup_provider_settings.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9584098Z Provider settings unreadable; optional lookups disabled
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9584790Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9585595Z   File "/tmp/scrying-tests-9v7bvolx/repo/python/scrying_glass_provider_settings.py", line 67, in effective_display
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9586275Z     saved = overrides(context)
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9586906Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9587555Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9587921Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9588757Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9590120Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9590534Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9591234Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9592077Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9592432Z sqlite3.OperationalError: locked
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9592916Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9593330Z Ran 10 tests in 0.182s
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9593499Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9593604Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:18.9602982Z test_lookup_provider_settings.py: connections opened: 18; without explicit close: 0
+tests	Standalone Python browser and audit checks

@@ -1,0 +1,27 @@
+1-13T10:49:51.2809688Z     page, h = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2809957Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2810537Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2811113Z     assert_script_inventory(self, scripts)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2811429Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2812192Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2812820Z     test_case.assertEqual(len(scripts), 44)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2813137Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2813422Z AssertionError: 45 != 44
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2813574Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2813763Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2814981Z FAIL: test_permanent_delete_and_empty_campaign_keep_distinct_queries (test_campaign_delete_request_feedback_composition.DeleteRequestCompositionTests.test_permanent_delete_and_empty_campaign_keep_distinct_queries) (mode='delete')
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2816111Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2816500Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2817359Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_campaign_delete_request_feedback_composition.py", line 85, in test_permanent_delete_and_empty_campaign_keep_distinct_queries
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2818239Z     page, h, old, result = self.prepare([] if mode == 'empty' else ['one'])
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2818699Z                            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2819390Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_campaign_delete_request_feedback_composition.py", line 19, in prepare
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2819984Z     page, h = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2820250Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2820809Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2821529Z     assert_script_inventory(self, scripts)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2821974Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2822626Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2823267Z     test_case.assertEqual(len(scripts), 44)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2823587Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2823874Z Asserti

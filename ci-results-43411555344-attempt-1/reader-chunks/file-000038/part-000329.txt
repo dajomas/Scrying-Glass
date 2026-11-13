@@ -1,0 +1,32 @@
+ browser and audit checks	2026-11-13T10:53:08.6434195Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:08.6434296Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:08.6452451Z test_launcher_python310.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:08.6590574Z Connection audit: test_launcher_runtime_82860c4.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:08.7530994Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:08.7531485Z Ran 2 tests in 0.008s
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:08.7532082Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:08.7532729Z test_launcher_runtime_82860c4.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:08.7533380Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:08.7664003Z Connection audit: test_live_roster_widths.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:11.5462983Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:11.5463789Z Ran 2 tests in 2.692s
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:11.5464042Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:11.5464202Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:11.5464961Z test_live_roster_widths.py: connections opened: 1; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:11.6257299Z Connection audit: test_live_sidebar_corrections.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:14.0042655Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:14.0043144Z Ran 2 tests in 2.291s
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:14.0043654Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:14.0043757Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:14.0044264Z test_live_sidebar_corrections.py: connections opened: 1; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:14.0796946Z Connection audit: test_local_feature_feedback_composition.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:15.8586125Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:15.8587671Z FAIL: test_lair_toggle_save_and_has_lair_feedback (test_local_feature_feedback_composition.LocalFeatureFeedbackCompositionTests.test_lair_toggle_save_and_has_lair_feedback)
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:15.8588619Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:15.8589372Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:15.8590166Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_local_feature_feedback_composition.py", line 68, in test_lair_toggle_save_and_has_lair_feedback
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:15.8590861Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:15.8591164Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:15.8592474Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:53:15.8593119Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:53

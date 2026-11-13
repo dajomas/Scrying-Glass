@@ -1,0 +1,30 @@
+43375Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9243569Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9244817Z FAIL: test_rejected_move_preserves_options_and_successful_retry_retains_followup (test_campaign_delete_request_feedback_composition.DeleteRequestCompositionTests.test_rejected_move_preserves_options_and_successful_retry_retains_followup)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9245936Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9246330Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9247252Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_delete_request_feedback_composition.py", line 58, in test_rejected_move_preserves_options_and_successful_retry_retains_followup
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9248082Z     page, h, old, result = self.prepare()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9248402Z                            ~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9249035Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_delete_request_feedback_composition.py", line 19, in prepare
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9249649Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9249924Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9250496Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9251077Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9251386Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9252224Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9252852Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9253191Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9253535Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9253855Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9264098Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9264743Z Ran 4 tests in 1.883s
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9264922Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9265046Z FAILED (failures=5)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9265646Z test_campaign_delete_request_feedback_composition.py: connections opened: 5; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:27.0047480Z FAIL: test_campaign_delete_request_feedback_composition.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:27.0048364Z Connection audit: test_campaign_display_status.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:27.2474504Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:27.2475403Z Ran 5 tests in 0.132s
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:27.2475578Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:

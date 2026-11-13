@@ -1,0 +1,27 @@
+browser and audit checks	2026-11-13T10:52:26.9213170Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9213472Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9213635Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9213838Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9214878Z FAIL: test_last_campaign_selection_and_move_validation (test_campaign_delete_request_feedback_composition.DeleteRequestCompositionTests.test_last_campaign_selection_and_move_validation)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9215845Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9216237Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9217046Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_delete_request_feedback_composition.py", line 38, in test_last_campaign_selection_and_move_validation
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9217776Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9218063Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9218656Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9219262Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9219576Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9220240Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9220868Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9221186Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9221478Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9221869Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9222079Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9223329Z FAIL: test_permanent_delete_and_empty_campaign_keep_distinct_queries (test_campaign_delete_request_feedback_composition.DeleteRequestCompositionTests.test_permanent_delete_and_empty_campaign_keep_distinct_queries) (mode='delete')
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9224556Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9224972Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9225842Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_delete_request_feedback_composition.py", line 85, in test_permanent_delete_and_empty_campaign_keep_distinct_queries
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9226736Z     page, h, old, result = self.prepare([] if mode == 'empty' else ['one'])
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9227194Z                            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:26.9227884Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_delete_request_feedback_composition.py", line 19, in prepare
+tests	Standalone Python browser and aud

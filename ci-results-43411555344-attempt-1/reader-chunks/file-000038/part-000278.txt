@@ -1,0 +1,29 @@
+input
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3663941Z     page, _ = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3664242Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3664872Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3665478Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3665803Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3666475Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3667124Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3667479Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3667783Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3667950Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3668156Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3669458Z FAIL: test_poll_connection_loss_is_one_persistent_warning_and_recovery_keeps_other_errors (test_admin_deliverable2_composition.AdminDeliverable2CompositionTests.test_poll_connection_loss_is_one_persistent_warning_and_recovery_keeps_other_errors)
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3670623Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3671020Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3672130Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_deliverable2_composition.py", line 78, in test_poll_connection_loss_is_one_persistent_warning_and_recovery_keeps_other_errors
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3672943Z     page, _ = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3673219Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3673804Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3674391Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3674710Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3675375Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3676014Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3676339Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3676644Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3676800Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3677003Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:55.3678121Z FAIL: test_raw_roll_validation_is_associated_with_the_monster_input (test_admin_deliverable2_composition.AdminDeliverable2CompositionTests.test_raw_roll_validation_is_associated_with_the_monster_input)
+te

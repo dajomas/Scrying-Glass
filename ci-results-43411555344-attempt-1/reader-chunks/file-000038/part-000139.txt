@@ -1,0 +1,27 @@
+r fixtures)	2026-11-13T10:49:51.2751178Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2751873Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2752597Z     assert_script_inventory(self, scripts)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2752910Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2753556Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2754184Z     test_case.assertEqual(len(scripts), 44)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2754503Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2754796Z AssertionError: 45 != 44
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2754953Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2755154Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2756444Z FAIL: test_reopened_dialog_prevents_late_state_observation_render_and_error (test_campaign_delete_refresh_feedback_composition.DeleteRefreshCompositionTests.test_reopened_dialog_prevents_late_state_observation_render_and_error) (failure=False)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2757601Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2758007Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2758923Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_campaign_delete_refresh_feedback_composition.py", line 66, in test_reopened_dialog_prevents_late_state_observation_render_and_error
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2759751Z     page, h, old, result, held = self.held()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2760081Z                                  ~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2760838Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_campaign_delete_refresh_feedback_composition.py", line 27, in held
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2761451Z     page, h, old, result = self.configure()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2761914Z                            ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2762567Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_campaign_delete_refresh_feedback_composition.py", line 22, in configure
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2763186Z     page, h, old, result = self.prepare()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2763496Z                            ~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2764128Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_campaign_delete_request_feedback_composition.py", line 19, in prepare
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2764734Z     page, h = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2765017Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2765591Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Python test suite (incl

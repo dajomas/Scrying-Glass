@@ -1,0 +1,30 @@
+andalone Python browser and audit checks	2026-11-13T10:54:38.9061265Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:38.9061408Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:38.9073124Z test_monster_refresh_scope.py: connections opened: 9; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:38.9722698Z Connection audit: test_monster_refresh_sole_candidate.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.0490350Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.0491147Z Ran 5 tests in 1.684s
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.0491408Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.0491549Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.0493088Z test_monster_refresh_sole_candidate.py: connections opened: 10; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.1413031Z Connection audit: test_monster_refresh_sources.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4656464Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4657270Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4658604Z   File "/tmp/scrying-tests-9v7bvolx/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4659952Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4661343Z   File "/tmp/scrying-tests-9v7bvolx/repo/python/scrying_glass_monster_refresh_sources.py", line 82, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4665723Z ##[error]    raise ValueError('Provider disabled')
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4668422Z ValueError: Provider disabled
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4676673Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4677402Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4678624Z   File "/tmp/scrying-tests-9v7bvolx/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4679932Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4681183Z   File "/tmp/scrying-tests-9v7bvolx/repo/python/scrying_glass_monster_refresh_sources.py", line 93, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4683128Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4685065Z ValueError: Retained source missing or ambiguous
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4726699Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4727434Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4728743Z   File "/tmp/scrying-tests-9v7bvolx/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4730076Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:41.4731384Z   File "/tmp/scrying-tests-9v7bvolx/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+tests	Standalone Pytho

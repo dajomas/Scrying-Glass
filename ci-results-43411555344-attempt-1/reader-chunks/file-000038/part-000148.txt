@@ -1,0 +1,27 @@
+	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2881316Z     assert_script_inventory(self, scripts)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2881770Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2882424Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2883052Z     test_case.assertEqual(len(scripts), 44)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2883369Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2883661Z AssertionError: 45 != 44
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2883815Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2884014Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2885179Z FAIL: test_late_refresh_error_does_not_overwrite_returned_selection (test_campaign_switch_refresh_feedback_composition.SwitchRefreshCompositionTests.test_late_refresh_error_does_not_overwrite_returned_selection)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2886200Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2886586Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2887443Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_campaign_switch_refresh_feedback_composition.py", line 68, in test_late_refresh_error_does_not_overwrite_returned_selection
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2888248Z     page, h, old, result, held = self.held_refresh()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2888743Z                                  ~~~~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2889416Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_campaign_switch_refresh_feedback_composition.py", line 28, in held_refresh
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2890045Z     page, h, old, result = self.configure()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2890561Z                            ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2891253Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_campaign_switch_refresh_feedback_composition.py", line 21, in configure
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2892124Z     page, h, old, result = self.prepare()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2892441Z                            ~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2893089Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_campaign_switch_request_feedback_composition.py", line 19, in prepare
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2893687Z     page, h = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2893961Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2894549Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2895137Z     assert_script_inventory(self, scripts)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2895452Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:4

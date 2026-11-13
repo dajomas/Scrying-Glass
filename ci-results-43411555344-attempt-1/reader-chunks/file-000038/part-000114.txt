@@ -1,0 +1,25 @@
+~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7365700Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7366701Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7367096Z OSError: secret
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7367321Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7367827Z The above exception was the direct cause of the following exception:
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7368367Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7368650Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7370116Z   File "/tmp/scrying-tests-5k02n8ln/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7371133Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7372355Z   File "/tmp/scrying-tests-5k02n8ln/repo/python/scrying_glass_monster_selection.py", line 224, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7373709Z     extra=(("Open5e", open5e_enabled, lambda: open5e_candidates(species, display)),))
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7374667Z                                               ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7375940Z   File "/tmp/scrying-tests-5k02n8ln/repo/python/scrying_glass_monster_selection.py", line 206, in open5e_candidates
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7377446Z     raise ProviderError("Open5e lookup failed; enter stats manually or retry.") from exc
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7378952Z python.scrying_glass_monster_selection.ProviderError: Open5e lookup failed; enter stats manually or retry.
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7379921Z ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7381833Z test_refresh_resolves_retained_open5e_identity_when_enabled (test_open5e_provider.Open5eLookupIntegrationTests.test_refresh_resolves_retained_open5e_identity_when_enabled) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7384595Z test_refresh_skips_retained_open5e_identity_when_disabled (test_open5e_provider.Open5eLookupIntegrationTests.test_refresh_skips_retained_open5e_identity_when_disabled) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7387117Z test_base_url_requires_plain_https (test_open5e_provider.Open5eProviderTests.test_base_url_requires_plain_https) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7389342Z test_exact_name_candidates_are_mapped_with_attribution (test_open5e_provider.Open5eProviderTests.test_exact_name_candidates_are_mapped_with_attribution) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7392046Z test_hit_points_prefer_matching_dice_otherwise_average (test_open5e_provider.Open5eProviderTests.test_hit_points_prefer_matching_dice_otherwise_average) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7394526Z test_ignored_filter_results_are_validated_not_trusted (test_open5e_provider.Open5eProviderTests.test_ignored_filter_results_are_validated_not_trusted) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:25.7396948Z test_illustrations_stay_on_the_configured_https_host (test_open5e_provider.Open5eProviderTests.test_illustrations_stay_on_the_configured_https_host) ... ok
+tests	Py

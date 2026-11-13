@@ -1,0 +1,29 @@
+13T10:52:31.3955159Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3955548Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3956445Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_switch_refresh_feedback_composition.py", line 43, in test_success_is_visible_before_held_refresh_and_busy_covers_refresh
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3957292Z     page, h, old, result, held = self.held_refresh()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3957660Z                                  ~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3958338Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_switch_refresh_feedback_composition.py", line 28, in held_refresh
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3958971Z     page, h, old, result = self.configure()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3959292Z                            ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3959923Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_switch_refresh_feedback_composition.py", line 21, in configure
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3960552Z     page, h, old, result = self.prepare()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3960860Z                            ~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3961493Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_switch_request_feedback_composition.py", line 19, in prepare
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3962324Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3962625Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3963202Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3963785Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3964102Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3964759Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3965389Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3965706Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3965999Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3966168Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3966397Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3966753Z Ran 4 tests in 1.630s
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3966901Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3967350Z test_campaign_switch_refresh_feedback_composition.py: connections opened: 4; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3968027Z FAILED (failures=4)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.4604183Z FAIL: test_campaign_switch_refresh_feedback_composition.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.4605347Z Connection audit: test_campaign_switch_request_feedback_composition.

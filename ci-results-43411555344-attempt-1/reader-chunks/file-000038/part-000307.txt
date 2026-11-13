@@ -1,0 +1,28 @@
+ts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3922902Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3923564Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3924392Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3924725Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3925027Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3925195Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3925394Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3926554Z FAIL: test_late_refresh_error_does_not_overwrite_returned_selection (test_campaign_switch_refresh_feedback_composition.SwitchRefreshCompositionTests.test_late_refresh_error_does_not_overwrite_returned_selection)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3927580Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3927996Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3928889Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_switch_refresh_feedback_composition.py", line 68, in test_late_refresh_error_does_not_overwrite_returned_selection
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3929725Z     page, h, old, result, held = self.held_refresh()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3930105Z                                  ~~~~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3930782Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_switch_refresh_feedback_composition.py", line 28, in held_refresh
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3931419Z     page, h, old, result = self.configure()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3932094Z                            ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3933201Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_switch_refresh_feedback_composition.py", line 21, in configure
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3933836Z     page, h, old, result = self.prepare()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3934155Z                            ~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3934808Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_switch_request_feedback_composition.py", line 19, in prepare
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3935419Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3935694Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3936285Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3936875Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3937192Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3937844Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3938487Z  

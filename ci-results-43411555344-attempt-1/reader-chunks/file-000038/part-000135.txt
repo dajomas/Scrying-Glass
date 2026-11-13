@@ -1,0 +1,26 @@
+ding browser fixtures)	2026-11-13T10:49:51.2693004Z FAIL: test_stage2_selection_roll_all_and_bulk_join_feedback_coexist (test_admin_global_feedback_composition.GlobalFeedbackCompositionTests.test_stage2_selection_roll_all_and_bulk_join_feedback_coexist)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2693992Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2694388Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2695219Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 221, in test_stage2_selection_roll_all_and_bulk_join_feedback_coexist
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2695963Z     page, h = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2696237Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2696806Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2697394Z     assert_script_inventory(self, scripts)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2697709Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2698364Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2699004Z     test_case.assertEqual(len(scripts), 44)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2699326Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2699619Z AssertionError: 45 != 44
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2699772Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2699969Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2701014Z FAIL: test_statistics_and_bundle_import_coexist_on_loaded_page (test_admin_global_feedback_composition.GlobalFeedbackCompositionTests.test_statistics_and_bundle_import_coexist_on_loaded_page)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2702218Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2702619Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2703419Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 268, in test_statistics_and_bundle_import_coexist_on_loaded_page
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2704135Z     page, h = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2704404Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2704974Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2705566Z     assert_script_inventory(self, scripts)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2705879Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2706530Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2707299Z   

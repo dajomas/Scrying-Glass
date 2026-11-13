@@ -1,0 +1,29 @@
+ist (test_setup_new_feedback_composition.SetupNewCompositionTests.test_loaded_duplicate_name_and_request_rejection_persist)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9383264Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9383933Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9385143Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_setup_new_feedback_composition.py", line 49, in test_loaded_duplicate_name_and_request_rejection_persist
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9386240Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9387062Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9387955Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9388855Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9389356Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9390368Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9391331Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9391965Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9392646Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9392879Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9393186Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9394681Z FAIL: test_loaded_refresh_failure_never_replays_creation (test_setup_new_feedback_composition.SetupNewCompositionTests.test_loaded_refresh_failure_never_replays_creation)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9396090Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9396685Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9397833Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_setup_new_feedback_composition.py", line 65, in test_loaded_refresh_failure_never_replays_creation
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9398876Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9399289Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9400144Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9401023Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9401505Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9402855Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9403820Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9404320Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:51.9404743Z AssertionError: 45 != 44
+tes

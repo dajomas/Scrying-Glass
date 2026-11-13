@@ -1,0 +1,28 @@
+48843Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2549242Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2550071Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_accessibility_composition.py", line 122, in test_campaign_list_load_error_persists_and_moved_notice_is_typed
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2550813Z     page, h = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2551091Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2551848Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2552448Z     assert_script_inventory(self, scripts)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2552759Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2553410Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2554039Z     test_case.assertEqual(len(scripts), 44)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2554358Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2554651Z AssertionError: 45 != 44
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2554806Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2555001Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2556180Z FAIL: test_destructive_confirmations_name_their_scope_and_cancel_silently (test_admin_accessibility_composition.AdminAccessibilityCompositionTests.test_destructive_confirmations_name_their_scope_and_cancel_silently)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2557395Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2557791Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2558637Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_accessibility_composition.py", line 140, in test_destructive_confirmations_name_their_scope_and_cancel_silently
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2559383Z     page, h = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2559648Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2560228Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2560807Z     assert_script_inventory(self, scripts)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2561110Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2561964Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2562616Z     test_case.assertEqual(len(scripts), 44)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2562945Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2563243Z AssertionError: 45 != 44
+tests	Python test su

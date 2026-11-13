@@ -1,0 +1,29 @@
+/test_campaign_switch_request_feedback_composition.py", line 19, in prepare
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9832440Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9832734Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9833320Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9833918Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9834234Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9834912Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9835543Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9835867Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9836174Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9836335Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9836538Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9837639Z FAIL: test_validation_and_request_error_preserve_edit_feedback (test_campaign_switch_request_feedback_composition.SwitchRequestCompositionTests.test_validation_and_request_error_preserve_edit_feedback)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9838846Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9839247Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9840108Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_switch_request_feedback_composition.py", line 37, in test_validation_and_request_error_preserve_edit_feedback
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9840875Z     page, h, old, result = self.prepare()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9841196Z                            ~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9842130Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_switch_request_feedback_composition.py", line 19, in prepare
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9842905Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9843187Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9843767Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9844369Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9844680Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9845340Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9845966Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9846296Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9846586Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-

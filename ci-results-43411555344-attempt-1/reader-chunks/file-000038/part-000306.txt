@@ -1,0 +1,30 @@
+44
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8141308Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8141786Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8142334Z Ran 3 tests in 1.396s
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8142546Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8142701Z FAILED (failures=3)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8143494Z test_campaign_edit_feedback_composition.py: connections opened: 3; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8742550Z FAIL: test_campaign_edit_feedback_composition.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8743119Z Connection audit: test_campaign_ownership.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:29.5948761Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:29.5949336Z Ran 23 tests in 0.623s
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:29.5949515Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:29.5949646Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:29.5962822Z test_campaign_ownership.py: connections opened: 57; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:29.6129554Z Connection audit: test_campaign_switch_refresh_feedback_composition.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3912351Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3914061Z FAIL: test_empty_setup_switch_preserves_blank_setup_controls (test_campaign_switch_refresh_feedback_composition.SwitchRefreshCompositionTests.test_empty_setup_switch_preserves_blank_setup_controls)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3915118Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3915540Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3916440Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_switch_refresh_feedback_composition.py", line 79, in test_empty_setup_switch_preserves_blank_setup_controls
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3917239Z     page, h, old, result = self.configure()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3917581Z                            ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3918272Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_switch_refresh_feedback_composition.py", line 21, in configure
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3918898Z     page, h, old, result = self.prepare()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3919225Z                            ~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3920180Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_switch_request_feedback_composition.py", line 19, in prepare
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3920789Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3921071Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3921935Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:31.3922574Z     assert_script_inventory(self, scrip

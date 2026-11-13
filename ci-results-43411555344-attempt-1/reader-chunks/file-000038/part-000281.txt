@@ -1,0 +1,29 @@
+.GlobalFeedbackCompositionTests.test_end_reset_renderer_and_late_bulk_delegation)
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2124395Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2125063Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2126341Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 151, in test_end_reset_renderer_and_late_bulk_delegation
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2127460Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2127912Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2128835Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2129777Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2130267Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2131336Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2132595Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2133138Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2133603Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2133854Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2134180Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2135746Z FAIL: test_late_join_bulk_and_next_request_wrappers (test_admin_global_feedback_composition.GlobalFeedbackCompositionTests.test_late_join_bulk_and_next_request_wrappers)
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2137217Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2137843Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2139059Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 181, in test_late_join_bulk_and_next_request_wrappers
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2140163Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2140611Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2141524Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2149510Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2150088Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2151147Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2152386Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2152881Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:51:10.2153337Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	20

@@ -1,0 +1,28 @@
+ck_composition.py", line 13, in assert_script_inventory
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2648535Z     test_case.assertEqual(len(scripts), 44)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2648867Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2649165Z AssertionError: 45 != 44
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2649323Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2649526Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2650635Z FAIL: test_raw_roll_validation_is_associated_with_the_monster_input (test_admin_deliverable2_composition.AdminDeliverable2CompositionTests.test_raw_roll_validation_is_associated_with_the_monster_input)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2651758Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2652170Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2653001Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_deliverable2_composition.py", line 31, in test_raw_roll_validation_is_associated_with_the_monster_input
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2653727Z     page, h = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2654011Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2654588Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2655181Z     assert_script_inventory(self, scripts)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2655489Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2656146Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2656777Z     test_case.assertEqual(len(scripts), 44)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2657095Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2657389Z AssertionError: 45 != 44
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2657551Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2658047Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2659647Z FAIL: test_setup_name_validation_marks_the_name_field_and_keeps_prior_attributes (test_admin_deliverable2_composition.AdminDeliverable2CompositionTests.test_setup_name_validation_marks_the_name_field_and_keeps_prior_attributes)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2660986Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2661387Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2662495Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_deliverable2_composition.py", line 65, in test_setup_name_validation_marks_the_name_field_and_keeps_prior_attributes
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2663276Z     page, _ = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2663553Z               ~~~~~~~~~~~~~~^^
+tests	Python

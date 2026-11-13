@@ -1,0 +1,48 @@
+6-11-13T10:50:10.2924332Z ok 6 - DELETE rejection retains dialog/options and persistent campaign identity
+tests	JavaScript tests	2026-11-13T10:50:10.2925071Z   ---
+tests	JavaScript tests	2026-11-13T10:50:10.2925429Z   duration_ms: 1.867056
+tests	JavaScript tests	2026-11-13T10:50:10.2925860Z   type: 'test'
+tests	JavaScript tests	2026-11-13T10:50:10.2926226Z   ...
+tests	JavaScript tests	2026-11-13T10:50:10.2927129Z # Subtest: successful retry resolves only matching delete error, preserving other target errors
+tests	JavaScript tests	2026-11-13T10:50:10.2928464Z ok 7 - successful retry resolves only matching delete error, preserving other target errors
+tests	JavaScript tests	2026-11-13T10:50:10.2929272Z   ---
+tests	JavaScript tests	2026-11-13T10:50:10.2929643Z   duration_ms: 1.957626
+tests	JavaScript tests	2026-11-13T10:50:10.2930073Z   type: 'test'
+tests	JavaScript tests	2026-11-13T10:50:10.2930478Z   ...
+tests	JavaScript tests	2026-11-13T10:50:10.2931476Z # Subtest: cancel, Escape/reopen, same-dialog reopen and changed target/options suppress old responses
+tests	JavaScript tests	2026-11-13T10:50:10.2933187Z ok 8 - cancel, Escape/reopen, same-dialog reopen and changed target/options suppress old responses
+tests	JavaScript tests	2026-11-13T10:50:10.2934045Z   ---
+tests	JavaScript tests	2026-11-13T10:50:10.2934427Z   duration_ms: 13.129306
+tests	JavaScript tests	2026-11-13T10:50:10.2934856Z   type: 'test'
+tests	JavaScript tests	2026-11-13T10:50:10.2935295Z   ...
+tests	JavaScript tests	2026-11-13T10:50:10.2936032Z # Subtest: newer same-operation feedback supersedes an older completion
+tests	JavaScript tests	2026-11-13T10:50:10.2937098Z ok 9 - newer same-operation feedback supersedes an older completion
+tests	JavaScript tests	2026-11-13T10:50:10.2937759Z   ---
+tests	JavaScript tests	2026-11-13T10:50:10.2938124Z   duration_ms: 1.117422
+tests	JavaScript tests	2026-11-13T10:50:10.2938549Z   type: 'test'
+tests	JavaScript tests	2026-11-13T10:50:10.2938881Z   ...
+tests	JavaScript tests	2026-11-13T10:50:10.2939748Z # Subtest: duplicates are blocked through retained follow-up, including a reopened dialog
+tests	JavaScript tests	2026-11-13T10:50:10.2940963Z ok 10 - duplicates are blocked through retained follow-up, including a reopened dialog
+tests	JavaScript tests	2026-11-13T10:50:10.2941964Z   ---
+tests	JavaScript tests	2026-11-13T10:50:10.2942277Z   duration_ms: 1.251494
+tests	JavaScript tests	2026-11-13T10:50:10.2942533Z   type: 'test'
+tests	JavaScript tests	2026-11-13T10:50:10.2943391Z   ...
+tests	JavaScript tests	2026-11-13T10:50:10.2944296Z # Subtest: prior disabled state is restored and legacy follow-up errors are not DELETE errors
+tests	JavaScript tests	2026-11-13T10:50:10.2945451Z ok 11 - prior disabled state is restored and legacy follow-up errors are not DELETE errors
+tests	JavaScript tests	2026-11-13T10:50:10.2946215Z   ---
+tests	JavaScript tests	2026-11-13T10:50:10.2946552Z   duration_ms: 1.19086
+tests	JavaScript tests	2026-11-13T10:50:10.2946943Z   type: 'test'
+tests	JavaScript tests	2026-11-13T10:50:10.2947518Z   ...
+tests	JavaScript tests	2026-11-13T10:50:10.2948321Z # Subtest: the expected active-campaign transition before DELETE response remains allowed
+tests	JavaScript tests	2026-11-13T10:50:10.2949477Z ok 12 - the expected active-campaign transition before DELETE response remains allowed
+tests	JavaScript tests	2026-11-13T10:50:10.2950157Z   ---
+tests	JavaScript tests	2026-11-13T10:50:10.2950472Z   duration_ms: 0.858127
+tests	JavaScript tests	2026-11-13T10:50:10.2950840Z   type: 'test'
+tests	JavaScript tests	2026-11-13T10:50:10.2951157Z   ...
+tests	JavaScript tests	2026-11-13T10:50:10.2999201Z 1..12
+tests	JavaScript tests	2026-11-13T10:50:10.2999526Z # tests 12
+tests	JavaScript tests	2026-11-13T10:50:10.2999997Z # suites 0
+tests	JavaScript tests	2026-11-13T10:50:10.3000568Z # pass 12
+tests	JavaScript tests	2026-11-13T10:50:10.3001125Z # fail 0
+tests	JavaScript tests	2026-11-13T10:50:10.3001992Z # cancelled 0
+tests	JavaScrip

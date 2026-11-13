@@ -1,0 +1,28 @@
+T10:52:24.8170318Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8170894Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8171475Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8172281Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8172981Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8173635Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8173961Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8174266Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8174425Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8174630Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8175823Z FAIL: test_success_precedes_held_refresh_and_busy_prevents_second_delete (test_campaign_delete_refresh_feedback_composition.DeleteRefreshCompositionTests.test_success_precedes_held_refresh_and_busy_prevents_second_delete)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8177013Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8177409Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8178305Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_delete_refresh_feedback_composition.py", line 41, in test_success_precedes_held_refresh_and_busy_prevents_second_delete
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8179120Z     page, h, old, result, held = self.held()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8179447Z                                  ~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8180069Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_delete_refresh_feedback_composition.py", line 27, in held
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8180664Z     page, h, old, result = self.configure()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8180979Z                            ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8181873Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_delete_refresh_feedback_composition.py", line 22, in configure
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8182530Z     page, h, old, result = self.prepare()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8182845Z                            ~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8183489Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_delete_request_feedback_composition.py", line 19, in prepare
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8184090Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8184364Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8184937Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:24.8185511Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-1

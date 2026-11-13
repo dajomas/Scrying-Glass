@@ -1,0 +1,28 @@
+cks	2026-11-13T10:54:53.7971894Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7972904Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_setup_operations_feedback_composition.py", line 40, in test_loaded_save_posts_once_and_reports_pane_success
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7973704Z     page, h, campaign = self.prepare(('default', 'Fresh'))
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7974097Z                         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7974750Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_setup_operations_feedback_composition.py", line 20, in prepare
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7975336Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7975622Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7976213Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7976816Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7977134Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7977815Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7978456Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7978779Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7979072Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7979234Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7979432Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7980470Z FAIL: test_loaded_switch_rename_and_delete_report_success (test_setup_operations_feedback_composition.SetupOperationsCompositionTests.test_loaded_switch_rename_and_delete_report_success)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7981418Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7982154Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7982981Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_setup_operations_feedback_composition.py", line 68, in test_loaded_switch_rename_and_delete_report_success
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7983715Z     page, h, campaign = self.prepare()
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7984042Z                         ~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7984641Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_setup_operations_feedback_composition.py", line 20, in prepare
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7985229Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7985518Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7986109Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7986710Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.7987

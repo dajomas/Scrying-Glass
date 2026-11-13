@@ -1,0 +1,27 @@
+  test_case.assertEqual(len(scripts), 44)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2707624Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2707909Z AssertionError: 45 != 44
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2708067Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2708271Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2709403Z FAIL: test_loaded_applied_creation_refresh_failure_never_replays_post (test_campaign_create_feedback_composition.CampaignCreateCompositionTests.test_loaded_applied_creation_refresh_failure_never_replays_post)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2710415Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2710804Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2711830Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_campaign_create_feedback_composition.py", line 61, in test_loaded_applied_creation_refresh_failure_never_replays_post
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2712609Z     page, h = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2712896Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2713485Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2714071Z     assert_script_inventory(self, scripts)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2714527Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2715235Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2715870Z     test_case.assertEqual(len(scripts), 44)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2716191Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2716482Z AssertionError: 45 != 44
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2716637Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2716848Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2717993Z FAIL: test_loaded_creation_survives_activation_and_keeps_exact_payload (test_campaign_create_feedback_composition.CampaignCreateCompositionTests.test_loaded_creation_survives_activation_and_keeps_exact_payload)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2719016Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2719412Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2720256Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_campaign_create_feedback_composition.py", line 35, in test_loaded_creation_survives_activation_and_keeps_exact_payload
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2721005Z     page, h = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2721282Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2721975Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_co

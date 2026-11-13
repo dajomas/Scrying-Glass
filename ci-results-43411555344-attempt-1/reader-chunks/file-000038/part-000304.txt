@@ -1,0 +1,28 @@
+27.2475672Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:27.2476193Z test_campaign_display_status.py: connections opened: 10; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:27.2638006Z Connection audit: test_campaign_edit_feedback_composition.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8097116Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8098844Z FAIL: test_error_draft_and_matching_retry (test_campaign_edit_feedback_composition.CampaignEditCompositionTests.test_error_draft_and_matching_retry)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8100203Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8100862Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8102253Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_edit_feedback_composition.py", line 50, in test_error_draft_and_matching_retry
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8103383Z     page, h, campaign, result = self.prepare()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8103921Z                                 ~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8104911Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_edit_feedback_composition.py", line 20, in prepare
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8105797Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8106214Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8107117Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8108065Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8108575Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8109652Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8110674Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8111175Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8111795Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8112036Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8112361Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8113934Z FAIL: test_old_response_cannot_close_reopened_edit (test_campaign_edit_feedback_composition.CampaignEditCompositionTests.test_old_response_cannot_close_reopened_edit)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8115368Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8115996Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8117207Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_edit_feedback_composition.py", line 62, in test_old_response_cannot_close_reopened_edit
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8118344Z     page, h, campaign, result = self.prepare()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:28.8118860Z                     

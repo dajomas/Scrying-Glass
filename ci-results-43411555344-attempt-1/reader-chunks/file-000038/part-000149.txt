@@ -1,0 +1,28 @@
+9:51.2896116Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2896917Z     test_case.assertEqual(len(scripts), 44)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2897234Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2897532Z AssertionError: 45 != 44
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2897691Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2897884Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2899080Z FAIL: test_refresh_error_persists_after_success_expiry_without_post_replay (test_campaign_switch_refresh_feedback_composition.SwitchRefreshCompositionTests.test_refresh_error_persists_after_success_expiry_without_post_replay)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2900170Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2900557Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2901456Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_campaign_switch_refresh_feedback_composition.py", line 55, in test_refresh_error_persists_after_success_expiry_without_post_replay
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2902419Z     page, h, old, result = self.configure()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2902732Z                            ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2903369Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_campaign_switch_refresh_feedback_composition.py", line 21, in configure
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2903981Z     page, h, old, result = self.prepare()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2904295Z                            ~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2904917Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_campaign_switch_request_feedback_composition.py", line 19, in prepare
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2905505Z     page, h = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2905784Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2906354Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2906937Z     assert_script_inventory(self, scripts)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2907245Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2907894Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2908539Z     test_case.assertEqual(len(scripts), 44)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2908858Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2909149Z AssertionError: 45 != 44
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2909306Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2909502Z ======================================================================
+tests	Python test suite (including 

@@ -1,0 +1,30 @@
+52:22.7324115Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7324704Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7325025Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7325679Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7326329Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7326659Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7326962Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7327116Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7327315Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7328376Z FAIL: test_loaded_request_rejection_retains_draft_and_modal (test_campaign_create_feedback_composition.CampaignCreateCompositionTests.test_loaded_request_rejection_retains_draft_and_modal)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7329324Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7329718Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7330515Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_create_feedback_composition.py", line 50, in test_loaded_request_rejection_retains_draft_and_modal
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7331229Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7331519Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7332393Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7333006Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7333349Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7334035Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7334682Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7335005Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7335305Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7335465Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7335690Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7336049Z Ran 3 tests in 1.425s
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7336195Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7336297Z FAILED (failures=3)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7336860Z test_campaign_create_feedback_composition.py: connections opened: 3; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7955226Z FAIL: test_campaign_create_feedback_composition.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-13T10

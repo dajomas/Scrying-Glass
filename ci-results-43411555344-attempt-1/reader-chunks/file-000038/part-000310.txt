@@ -1,0 +1,27 @@
+py
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9813244Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9815298Z FAIL: test_changed_and_returned_selection_suppresses_held_response (test_campaign_switch_request_feedback_composition.SwitchRequestCompositionTests.test_changed_and_returned_selection_suppresses_held_response)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9816613Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9817419Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9818447Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_switch_request_feedback_composition.py", line 74, in test_changed_and_returned_selection_suppresses_held_response
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9819373Z     page, h, old, result = self.prepare()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9819754Z                            ~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9820498Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_switch_request_feedback_composition.py", line 19, in prepare
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9821192Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9821513Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9822448Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9823141Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9823508Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9824283Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9825024Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9825389Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9825718Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9825896Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9826131Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9827378Z FAIL: test_successful_retry_preserves_existing_activation_setup_flow (test_campaign_switch_request_feedback_composition.SwitchRequestCompositionTests.test_successful_retry_preserves_existing_activation_setup_flow)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9828435Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9828844Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9829729Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_switch_request_feedback_composition.py", line 57, in test_successful_retry_preserves_existing_activation_setup_flow
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9830538Z     page, h, old, result = self.prepare()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9830855Z                            ~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:32.9831496Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests

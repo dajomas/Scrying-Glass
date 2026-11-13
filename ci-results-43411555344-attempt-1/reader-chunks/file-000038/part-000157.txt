@@ -1,0 +1,27 @@
+r fixtures)	2026-11-13T10:49:51.3026100Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3026488Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3027264Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_setup_operations_feedback_composition.py", line 94, in test_loaded_refresh_failure_never_replays_delete
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3027974Z     page, h, campaign = self.prepare()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3028286Z                         ~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3028876Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_setup_operations_feedback_composition.py", line 20, in prepare
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3029438Z     page, h = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3029716Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3030292Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3030873Z     assert_script_inventory(self, scripts)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3031200Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3032013Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3032663Z     test_case.assertEqual(len(scripts), 44)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3032984Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3033282Z AssertionError: 45 != 44
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3033451Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3033651Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3034692Z FAIL: test_loaded_save_posts_once_and_reports_pane_success (test_setup_operations_feedback_composition.SetupOperationsCompositionTests.test_loaded_save_posts_once_and_reports_pane_success)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3035636Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3036036Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3036830Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_setup_operations_feedback_composition.py", line 40, in test_loaded_save_posts_once_and_reports_pane_success
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3037606Z     page, h, campaign = self.prepare(('default', 'Fresh'))
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3037987Z                         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3038601Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_setup_operations_feedback_composition.py", line 20, in prepare
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3039172Z     page, h = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3039577Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.3040136Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/t

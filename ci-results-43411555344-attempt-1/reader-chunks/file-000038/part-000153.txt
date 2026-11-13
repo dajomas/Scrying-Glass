@@ -1,0 +1,27 @@
+ir_toggle_save_and_has_lair_feedback (test_local_feature_feedback_composition.LocalFeatureFeedbackCompositionTests.test_lair_toggle_save_and_has_lair_feedback)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2954676Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2955061Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2955803Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_local_feature_feedback_composition.py", line 68, in test_lair_toggle_save_and_has_lair_feedback
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2956479Z     page, h = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2956880Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2957445Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2958035Z     assert_script_inventory(self, scripts)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2958348Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2959016Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2959645Z     test_case.assertEqual(len(scripts), 44)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2959960Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2960255Z AssertionError: 45 != 44
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2960405Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2960602Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2961803Z FAIL: test_regions_are_mounted_once_with_live_status_semantics (test_local_feature_feedback_composition.LocalFeatureFeedbackCompositionTests.test_regions_are_mounted_once_with_live_status_semantics)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2962814Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2963200Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2964003Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_local_feature_feedback_composition.py", line 28, in test_regions_are_mounted_once_with_live_status_semantics
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2964846Z     page, h = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2965112Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2965688Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2966259Z     assert_script_inventory(self, scripts)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2966566Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2967218Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2967838Z     test_case.assertEqual(len(scripts), 44)
+tests	Python test suite (including browser fixtures)	2026-11-13

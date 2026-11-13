@@ -1,0 +1,27 @@
+osition.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:53.8660752Z Connection audit: test_setup_transfer_background_composition.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4419841Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4422206Z FAIL: test_loaded_background_apply_upload_and_refresh_failure (test_setup_transfer_background_composition.SetupTransferBackgroundCompositionTests.test_loaded_background_apply_upload_and_refresh_failure)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4424148Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4424721Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4425604Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_setup_transfer_background_composition.py", line 79, in test_loaded_background_apply_upload_and_refresh_failure
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4426396Z     page, h, campaign, listing = self.prepare()
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4426759Z                                  ~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4427405Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_setup_transfer_background_composition.py", line 20, in prepare
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4427997Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4428277Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4428871Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4429471Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4429792Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4430469Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4431130Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4431466Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4432046Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4432217Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4432422Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4433651Z FAIL: test_loaded_copy_posts_once_and_reports_campaign_pane_success (test_setup_transfer_background_composition.SetupTransferBackgroundCompositionTests.test_loaded_copy_posts_once_and_reports_campaign_pane_success)
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4434727Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4435454Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4436334Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_setup_transfer_background_composition.py", line 43, in test_loaded_copy_posts_once_and_reports_campaign_pane_success
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4437145Z     page, h, campaign, listing = self.prepare()
+tests	Standalone Python browser and audit checks	2026-11-13T10:54:55.4437501Z                       

@@ -1,0 +1,28 @@
+alone Python browser and audit checks	2026-11-13T10:52:21.1074340Z Ran 5 tests in 0.246s
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:21.1074501Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:21.1074594Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:21.1075059Z test_bughunt_round9.py: connections opened: 5; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:21.1550160Z Connection audit: test_campaign_create_feedback_composition.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7307564Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7309793Z FAIL: test_loaded_applied_creation_refresh_failure_never_replays_post (test_campaign_create_feedback_composition.CampaignCreateCompositionTests.test_loaded_applied_creation_refresh_failure_never_replays_post)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7311862Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7312345Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7313246Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_create_feedback_composition.py", line 61, in test_loaded_applied_creation_refresh_failure_never_replays_post
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7314055Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7314348Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7314937Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7315904Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7316228Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7316898Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7317531Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7317882Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7318178Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7318343Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7318550Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7319688Z FAIL: test_loaded_creation_survives_activation_and_keeps_exact_payload (test_campaign_create_feedback_composition.CampaignCreateCompositionTests.test_loaded_creation_survives_activation_and_keeps_exact_payload)
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7320894Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7321299Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7322482Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_campaign_create_feedback_composition.py", line 35, in test_loaded_creation_survives_activation_and_keeps_exact_payload
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7323251Z     page, h = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:52:22.7323532Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:

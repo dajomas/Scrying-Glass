@@ -1,0 +1,26 @@
+===========================
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2621161Z FAIL: test_blocked_join_is_associated_and_dismissal_restores_the_input (test_admin_deliverable2_composition.AdminDeliverable2CompositionTests.test_blocked_join_is_associated_and_dismissal_restores_the_input)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2622325Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2622722Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2623550Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_deliverable2_composition.py", line 54, in test_blocked_join_is_associated_and_dismissal_restores_the_input
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2624413Z     page, _ = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2624684Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2625258Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2625842Z     assert_script_inventory(self, scripts)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2626154Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2626816Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2627432Z     test_case.assertEqual(len(scripts), 44)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2627749Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2639942Z AssertionError: 45 != 44
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2640190Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2640419Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2641875Z FAIL: test_poll_connection_loss_is_one_persistent_warning_and_recovery_keeps_other_errors (test_admin_deliverable2_composition.AdminDeliverable2CompositionTests.test_poll_connection_loss_is_one_persistent_warning_and_recovery_keeps_other_errors)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2643073Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2643490Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2644436Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_deliverable2_composition.py", line 78, in test_poll_connection_loss_is_one_persistent_warning_and_recovery_keeps_other_errors
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2645443Z     page, _ = self.open_page()
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2645733Z               ~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2646315Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2646909Z     assert_script_inventory(self, scripts)
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2647234Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T10:49:51.2647891Z   File "/tmp/scrying-tests-5k02n8ln/repo/tests/test_admin_global_feedba

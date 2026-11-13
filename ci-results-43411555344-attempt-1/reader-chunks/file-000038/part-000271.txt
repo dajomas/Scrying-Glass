@@ -1,0 +1,31 @@
+ests in 0.302s
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:48.2648475Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:48.2648582Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:48.2649120Z test_activity_life_states.py: connections opened: 3; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:48.3072240Z Connection audit: test_activity_log_result_details.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:48.9534181Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:48.9534791Z Ran 15 tests in 0.438s
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:48.9534973Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:48.9535079Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:48.9562908Z test_activity_log_result_details.py: connections opened: 8; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:49.0005104Z Connection audit: test_activity_log_result_render.py
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4162358Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4164004Z FAIL: test_details_are_rendered_as_text (test_activity_log_result_render.ActivityLogResultRenderTests.test_details_are_rendered_as_text)
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4165926Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4166705Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4167957Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_activity_log_result_render.py", line 50, in test_details_are_rendered_as_text
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4169078Z     page, _ = self.open_page()
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4169560Z               ~~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4170605Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 136, in open_page
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4171799Z     assert_script_inventory(self, scripts)
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4172368Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4173688Z   File "/tmp/scrying-tests-9v7bvolx/repo/tests/test_admin_global_feedback_composition.py", line 13, in assert_script_inventory
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4174371Z     test_case.assertEqual(len(scripts), 44)
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4174707Z     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4175028Z AssertionError: 45 != 44
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4175204Z 
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4175408Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4176510Z FAIL: test_multiple_affected_units_render_distinguishable_detail_lines (test_activity_log_result_render.ActivityLogResultRenderTests.test_multiple_affected_units_render_distinguishable_detail_lines)
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4177495Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T10:50:50.4177914Z Traceback (most recent call last):
+tests	Standalone Python br
