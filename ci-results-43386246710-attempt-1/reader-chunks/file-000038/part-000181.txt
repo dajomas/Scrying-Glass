@@ -1,0 +1,49 @@
+ state is restored and legacy follow-up errors are not DELETE errors
+tests	JavaScript tests	2026-11-13T07:35:17.5855785Z   ---
+tests	JavaScript tests	2026-11-13T07:35:17.5856037Z   duration_ms: 1.157593
+tests	JavaScript tests	2026-11-13T07:35:17.5856295Z   type: 'test'
+tests	JavaScript tests	2026-11-13T07:35:17.5856701Z   ...
+tests	JavaScript tests	2026-11-13T07:35:17.5857218Z # Subtest: the expected active-campaign transition before DELETE response remains allowed
+tests	JavaScript tests	2026-11-13T07:35:17.5858025Z ok 12 - the expected active-campaign transition before DELETE response remains allowed
+tests	JavaScript tests	2026-11-13T07:35:17.5858495Z   ---
+tests	JavaScript tests	2026-11-13T07:35:17.5858694Z   duration_ms: 0.81331
+tests	JavaScript tests	2026-11-13T07:35:17.5858942Z   type: 'test'
+tests	JavaScript tests	2026-11-13T07:35:17.5859164Z   ...
+tests	JavaScript tests	2026-11-13T07:35:17.5924276Z 1..12
+tests	JavaScript tests	2026-11-13T07:35:17.5924749Z # tests 12
+tests	JavaScript tests	2026-11-13T07:35:17.5925310Z # suites 0
+tests	JavaScript tests	2026-11-13T07:35:17.5925879Z # pass 12
+tests	JavaScript tests	2026-11-13T07:35:17.5926417Z # fail 0
+tests	JavaScript tests	2026-11-13T07:35:17.5926979Z # cancelled 0
+tests	JavaScript tests	2026-11-13T07:35:17.5927486Z # skipped 0
+tests	JavaScript tests	2026-11-13T07:35:17.5928037Z # todo 0
+tests	JavaScript tests	2026-11-13T07:35:17.5928597Z # duration_ms 95.080444
+tests	JavaScript tests	2026-11-13T07:35:17.6162627Z ##[endgroup]
+tests	JavaScript tests	2026-11-13T07:35:17.6163340Z ##[group]tests/campaign-edit-feedback.test.cjs
+tests	JavaScript tests	2026-11-13T07:35:17.7697081Z TAP version 13
+tests	JavaScript tests	2026-11-13T07:35:17.8330778Z # Subtest: edit selection validation is persistent and resolves on a valid selection
+tests	JavaScript tests	2026-11-13T07:35:17.8341264Z ok 1 - edit selection validation is persistent and resolves on a valid selection
+tests	JavaScript tests	2026-11-13T07:35:17.8342472Z   ---
+tests	JavaScript tests	2026-11-13T07:35:17.8343140Z   duration_ms: 3.234734
+tests	JavaScript tests	2026-11-13T07:35:17.8343630Z   type: 'test'
+tests	JavaScript tests	2026-11-13T07:35:17.8344028Z   ...
+tests	JavaScript tests	2026-11-13T07:35:17.8345424Z # Subtest: empty name and native form validation block PATCH; matching validation resolves
+tests	JavaScript tests	2026-11-13T07:35:17.8348805Z ok 2 - empty name and native form validation block PATCH; matching validation resolves
+tests	JavaScript tests	2026-11-13T07:35:17.8349789Z   ---
+tests	JavaScript tests	2026-11-13T07:35:17.8350541Z   duration_ms: 2.508628
+tests	JavaScript tests	2026-11-13T07:35:17.8351152Z   type: 'test'
+tests	JavaScript tests	2026-11-13T07:35:17.8351673Z   ...
+tests	JavaScript tests	2026-11-13T07:35:17.8352704Z # Subtest: PATCH has exact encoded target and trimmed metadata, with no confirmation/reload
+tests	JavaScript tests	2026-11-13T07:35:17.8354426Z ok 3 - PATCH has exact encoded target and trimmed metadata, with no confirmation/reload
+tests	JavaScript tests	2026-11-13T07:35:17.8355411Z   ---
+tests	JavaScript tests	2026-11-13T07:35:17.8355948Z   duration_ms: 1.686161
+tests	JavaScript tests	2026-11-13T07:35:17.8356404Z   type: 'test'
+tests	JavaScript tests	2026-11-13T07:35:17.8356795Z   ...
+tests	JavaScript tests	2026-11-13T07:35:17.8357615Z # Subtest: request failure retains draft, modal and persistent campaign identity
+tests	JavaScript tests	2026-11-13T07:35:17.8359644Z ok 4 - request failure retains draft, modal and persistent campaign identity
+tests	JavaScript tests	2026-11-13T07:35:17.8360759Z   ---
+tests	JavaScript tests	2026-11-13T07:35:17.8361194Z   duration_ms: 0.897357
+tests	JavaScript tests	2026-11-13T07:35:17.8361657Z   type: 'test'
+tests	JavaScript tests	2026-11-13T07:35:17.8362313Z   ...
+tests	JavaScript tests	2026-11-13T07:35:17.8363270Z # Subtest: successful retry resolves only matching campaign error, including a reopened edit
+tests	JavaScript tests	2026-11-13T07:35:17.836483

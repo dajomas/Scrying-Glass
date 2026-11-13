@@ -1,0 +1,49 @@
+lled old timer callback cannot clear replacement error
+tests	JavaScript tests	2026-11-13T07:35:10.0166009Z   ---
+tests	JavaScript tests	2026-11-13T07:35:10.0166362Z   duration_ms: 0.144279
+tests	JavaScript tests	2026-11-13T07:35:10.0166758Z   type: 'test'
+tests	JavaScript tests	2026-11-13T07:35:10.0167104Z   ...
+tests	JavaScript tests	2026-11-13T07:35:10.0167770Z # Subtest: scope change invalidates old timers and old responses
+tests	JavaScript tests	2026-11-13T07:35:10.0168777Z ok 15 - scope change invalidates old timers and old responses
+tests	JavaScript tests	2026-11-13T07:35:10.0169416Z   ---
+tests	JavaScript tests	2026-11-13T07:35:10.0169805Z   duration_ms: 0.175177
+tests	JavaScript tests	2026-11-13T07:35:10.0170443Z   type: 'test'
+tests	JavaScript tests	2026-11-13T07:35:10.0170889Z   ...
+tests	JavaScript tests	2026-11-13T07:35:10.0171572Z # Subtest: A to B to A does not revive a ticket from the first A
+tests	JavaScript tests	2026-11-13T07:35:10.0172515Z ok 16 - A to B to A does not revive a ticket from the first A
+tests	JavaScript tests	2026-11-13T07:35:10.0173130Z   ---
+tests	JavaScript tests	2026-11-13T07:35:10.0173505Z   duration_ms: 0.801285
+tests	JavaScript tests	2026-11-13T07:35:10.0173939Z   type: 'test'
+tests	JavaScript tests	2026-11-13T07:35:10.0174312Z   ...
+tests	JavaScript tests	2026-11-13T07:35:10.0175097Z # Subtest: same-scope refresh does not invalidate tickets or clear feedback
+tests	JavaScript tests	2026-11-13T07:35:10.0176209Z ok 17 - same-scope refresh does not invalidate tickets or clear feedback
+tests	JavaScript tests	2026-11-13T07:35:10.0176945Z   ---
+tests	JavaScript tests	2026-11-13T07:35:10.0177287Z   duration_ms: 0.131015
+tests	JavaScript tests	2026-11-13T07:35:10.0177668Z   type: 'test'
+tests	JavaScript tests	2026-11-13T07:35:10.0178014Z   ...
+tests	JavaScript tests	2026-11-13T07:35:10.0178662Z # Subtest: viewer lane remains separate from encounter scope changes
+tests	JavaScript tests	2026-11-13T07:35:10.0179672Z ok 18 - viewer lane remains separate from encounter scope changes
+tests	JavaScript tests	2026-11-13T07:35:10.0180545Z   ---
+tests	JavaScript tests	2026-11-13T07:35:10.0180941Z   duration_ms: 0.126366
+tests	JavaScript tests	2026-11-13T07:35:10.0181382Z   type: 'test'
+tests	JavaScript tests	2026-11-13T07:35:10.0181667Z   ...
+tests	JavaScript tests	2026-11-13T07:35:10.0182151Z # Subtest: operation may resolve an old related destination after intentional routing change
+tests	JavaScript tests	2026-11-13T07:35:10.0182866Z ok 19 - operation may resolve an old related destination after intentional routing change
+tests	JavaScript tests	2026-11-13T07:35:10.0183298Z   ---
+tests	JavaScript tests	2026-11-13T07:35:10.0183498Z   duration_ms: 0.182331
+tests	JavaScript tests	2026-11-13T07:35:10.0183746Z   type: 'test'
+tests	JavaScript tests	2026-11-13T07:35:10.0183957Z   ...
+tests	JavaScript tests	2026-11-13T07:35:10.0184336Z # Subtest: progress updates replace progress only, not existing error
+tests	JavaScript tests	2026-11-13T07:35:10.0184866Z ok 20 - progress updates replace progress only, not existing error
+tests	JavaScript tests	2026-11-13T07:35:10.0185215Z   ---
+tests	JavaScript tests	2026-11-13T07:35:10.0185459Z   duration_ms: 0.129241
+tests	JavaScript tests	2026-11-13T07:35:10.0185688Z   type: 'test'
+tests	JavaScript tests	2026-11-13T07:35:10.0186173Z   ...
+tests	JavaScript tests	2026-11-13T07:35:10.0186563Z # Subtest: dismissal is record-specific and cancels only its timer
+tests	JavaScript tests	2026-11-13T07:35:10.0187158Z ok 21 - dismissal is record-specific and cancels only its timer
+tests	JavaScript tests	2026-11-13T07:35:10.0187527Z   ---
+tests	JavaScript tests	2026-11-13T07:35:10.0187750Z   duration_ms: 0.149329
+tests	JavaScript tests	2026-11-13T07:35:10.0187981Z   type: 'test'
+tests	JavaScript tests	2026-11-13T07:35:10.0188213Z   ...
+tests	JavaScript tests	2026-11-13T07:35:10.0188655Z # Subtest: snapshots and records are immutable and ticket forgery fails
+tests	JavaScript tests	2026-11-1

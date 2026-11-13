@@ -1,0 +1,30 @@
+e 60, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1652553Z     hits = context.dnd_monster_candidates(species)
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1653131Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1653827Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1654137Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1654681Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1655223Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1655570Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1656158Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1656664Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1656886Z TimeoutError: fixture
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1657197Z Combined monster lookup failed for D&D Beyond
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1657537Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1658107Z   File "/tmp/scrying-tests-h5jgedho/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1658702Z     hits = context.dnd_monster_candidates(species)
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1659728Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1660758Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1661067Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1661622Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1662176Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1662514Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1663112Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1663638Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1663903Z TimeoutError: fixture
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1664050Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1664319Z The above exception was the direct cause of the following exception:
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1664762Z 
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1664912Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T07:33:08.1665516Z   File "/tmp/scrying-tests-h5jgedho/repo/python/scrying_glass_combined_lookup.py", line 28, in combined_candidates
+tests	Python test suite (including browser fixtu

@@ -1,0 +1,22 @@
+ons/setup-node@v4	2026-11-13T07:40:36.9220483Z (node:32593) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-node@v4	2026-11-13T07:40:36.9221492Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/setup-python@v5	﻿2026-11-13T07:40:36.9380544Z Post job cleanup.
+tests	Post Run actions/setup-python@v5	2026-11-13T07:40:37.0753208Z Cache hit occurred on the primary key setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e, not saving cache.
+tests	Post Run actions/setup-python@v5	2026-11-13T07:40:37.0755779Z (node:32601) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-python@v5	2026-11-13T07:40:37.0757318Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/checkout@v4	﻿2026-11-13T07:40:37.0899384Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-13T07:40:37.1788505Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-13T07:40:37.1834285Z git version 2.56.1
+tests	Post Run actions/checkout@v4	2026-11-13T07:40:37.1875769Z Temporarily overriding HOME='/home/runner/work/_temp/d231dd06-9a29-4318-803f-d58954eff966' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-13T07:40:37.1877766Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-13T07:40:37.1881909Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-13T07:40:37.1922389Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-13T07:40:37.1961984Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-13T07:40:37.2276694Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-13T07:40:37.2303441Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-13T07:40:37.2316330Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-13T07:40:37.2367091Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Post Run actions/checkout@v4	2026-11-13T07:40:37.2692014Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	Post Run actions/checkout@v4	2026-11-13T07:40:37.2731007Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+tests	Complete job	﻿2026-11-13T07:40:37.3174867Z Cleaning up orphan processes
+tests	Complete job	2026-11-13T07:40:37.3557538Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
