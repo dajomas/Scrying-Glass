@@ -248,7 +248,7 @@ def pytest_runtest_logreport(report):
     if report.failed:
         _OUTCOMES.setdefault(report.nodeid, "FAILED" if report.when == "call" else "ERROR")
     elif report.skipped:
-        _OUTCOMES.setdefault(report.nodeid, "SKIPPED")
+        _OUTCOMES.setdefault(report.nodeid, "XFAIL (known finding)" if hasattr(report, "wasxfail") else "SKIPPED")
 
 
 @pytest.hookimpl(trylast=True)
@@ -256,7 +256,8 @@ def pytest_runtest_logfinish(nodeid, location):
     reporter = _PROGRESS.get("reporter")
     if reporter:
         outcome = _OUTCOMES.get(nodeid, "SUCCESS")
-        markup = {"SUCCESS": {"green": True}, "SKIPPED": {"yellow": True}}.get(outcome, {"red": True, "bold": True})
+        markup = {"SUCCESS": {"green": True}, "SKIPPED": {"yellow": True},
+                  "XFAIL (known finding)": {"yellow": True}}.get(outcome, {"red": True, "bold": True})
         reporter.write_line(outcome, **markup)
 
 

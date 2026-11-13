@@ -4,7 +4,7 @@
 
 ## SG-TODO-021 - Extensive Playwright end-to-end suite with a run-and-push script
 
-Status: in progress - Stage 1 delivered 2026-11-13 ([610 handover](../handover/610-playwright-end-to-end-suite.md)); the user's script run `58556e4c` passed 27 of 27; Stage 1 accepted and closed by the user 2026-11-13. Stage 2 (rosters and initiative) delivered 2026-11-13 on `features/perplexity-021`, user acceptance pending (no CI on that branch); Stages 3-4 not started. Requested 2026-11-12 (originally as a Selenium suite); decisions recorded 2026-11-13. No priority, owner or deadline assigned.
+Status: in progress - Stage 1 delivered 2026-11-13 ([610 handover](../handover/610-playwright-end-to-end-suite.md)); the user's script run `58556e4c` passed 27 of 27; Stage 1 accepted and closed by the user 2026-11-13. Stage 2 (rosters and initiative) delivered 2026-11-13 on `features/perplexity-021`; the user's run `29ff6123` passed 61 of 61, acceptance pending (no CI on that branch). Stages 3 (combat, Client Display) and 4 (feedback, connection, widths, accessibility) delivered 2026-11-13; local run 119 passed plus 2 expected failures for a known focus finding; user run and acceptance pending. Requested 2026-11-12 (originally as a Selenium suite); decisions recorded 2026-11-13. No priority, owner or deadline assigned.
 
 ### User decisions (2026-11-13)
 
@@ -54,5 +54,6 @@ The user can stop after any stage.
 ### Open points
 
 - Retention is decided: only the latest results folder is kept.
-- Retry and scope handling during setup switching under request failures moved from Stage 1 to Stage 4 (it needs failure injection or a server restart).
+- Retry and scope handling during setup switching under request failures moved from Stage 1 to Stage 4 and is covered there with failure injection.
+- Stage 4 findings for a possible follow-up (no app change made): focus is not returned after the New campaign dialog closes; a server restart signs users and Client Displays out (in-memory sessions); axe baseline of known violations. Details in the [610 handover](../handover/610-playwright-end-to-end-suite.md).
 - Credit usage cannot be estimated in advance.

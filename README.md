@@ -80,12 +80,12 @@ scope/history; earlier README detail is preserved in the
 [pre-016-close-out README](https://github.com/dajomas/Scrying-Glass/blob/49822ee7cacfd3bc4e2bd520b98917aef036db2c/README.md).
 
 The Playwright end-to-end suite in `e2e/` (login and access, campaigns and setups, rosters and
-initiative) runs against a real local server in Chromium and Firefox and is not part of CI ([SG-TODO-021](docs/todo/210-playwright-end-to-end-suite.md)).
+initiative, combat, Client Display, feedback and connection handling, screen widths, dialog focus and axe accessibility scans) runs against a real local server in Chromium and Firefox and is not part of CI ([SG-TODO-021](docs/todo/210-playwright-end-to-end-suite.md)).
 `tools/run_e2e.sh` runs it and commits only the latest `e2e-results/<timestamp>/` folder with
 `[skip ci]` to `features/perplexity-021`. On dnf-based systems (Rocky, AlmaLinux, RHEL, Fedora) it first checks the
 required rpm packages and prints the `dnf install` command if any are missing. It checks
 that both browsers start, then prints
-`Now running test ###/###: <description> [browser] ... SUCCESS|FAILED` per test; `tools/run_e2e.sh --no-push` only runs it.
+`Now running test ###/###: <description> [browser] ... SUCCESS|FAILED|XFAIL (known finding)` per test; `tools/run_e2e.sh --no-push` only runs it.
 
 Legacy source-reading tests use a disposable assembled checkout:
 

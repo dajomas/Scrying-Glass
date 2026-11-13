@@ -85,3 +85,58 @@ def join(page, kind, name):
 
 def roster_state(page, kind, name):
     return row(page, kind, name).locator(".sg-roster-state")
+
+
+def show_rosters(page):
+    """Open both roster display panes; a running battle collapses them in the live workflow."""
+    for pane, toggle in (("#characterDisplayPane", "#toggleCharacterDisplayPane"),
+                         ("#monsterDisplayPane", "#toggleMonsterDisplayPane")):
+        if page.locator(pane).is_hidden():
+            page.click(toggle)
+        expect(page.locator(pane)).to_be_visible()
+
+
+def grant_viewer(page, username):
+    """Give a client account viewer access to the active campaign."""
+    open_workflow(page, "campaign")
+    page.locator("#campaignViewerAccessTitle").click()
+    page.locator("#campaignViewerUsers label", has_text=username).locator("input").check()
+    page.click("#saveCampaignViewers")
+    expect(page.locator("#campaignViewerFeedback")).to_be_visible()
+
+
+def prepare_battle(page, characters=(("Borin", 20),), monsters=(("Orc", 10, 15),)):
+    """Add joined characters (name, initiative) and monsters (name, raw roll, HP; bonus 0)."""
+    for name, initiative in characters:
+        add_character(page, name, initiative=initiative)
+        join(page, "characters", name)
+        expect(roster_state(page, "characters", name)).to_contain_text("In battle")
+    for name, roll, hp in monsters:
+        add_monster(page, name, ac=13, hp=hp, bonus=0)
+        set_initiative(page, "monsters", name, roll)
+        join(page, "monsters", name)
+        expect(roster_state(page, "monsters", name)).to_contain_text("In battle")
+
+
+def start_battle(page):
+    open_workflow(page, "live")
+    page.click("#startBattle")
+    expect(page.locator("#battleState")).to_have_text("Active")
+
+
+def hp_cell(page, kind, name):
+    if kind == "characters":
+        return row(page, kind, name).locator(".sg-character-hp")
+    return row(page, kind, name).locator("td").nth(3)
+
+
+def option_value(select, text):
+    """Value of the first option in ``select`` whose label contains ``text``."""
+    for option in select.locator("option").all():
+        if text in option.inner_text():
+            return option.get_attribute("value")
+    raise AssertionError(f"No option containing {text!r}")
+
+
+def wait_ready(page):
+    page.wait_for_function("document.body.dataset.workflowNavigation === 'ready'")
