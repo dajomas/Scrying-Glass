@@ -306,6 +306,28 @@ and verify index/source URL reachability from the service account. Token paths
 and live endpoints could not be verified from the patch-build environment.
 
 
+## Open5e monster source and provider switches
+
+Monster lookup also searches the [Open5e API](https://open5e.com/api-docs) after
+D&D Beyond and 5e.tools, across all Open5e documents. Each choice names the
+document and game system, e.g. "5e 2014 Rules, 5th Edition 2014 (Open5e)", with
+publisher and licence attribution. Any provider failure still blocks all candidates.
+Open5e statistics fill AC, HP range and initiative bonus by the same empty-field and
+overwrite rules; most Open5e monsters have no image. Open5e is not used by Refresh.
+
+Configuration under `display` (defaults shown):
+```yaml
+open5e_lookup: true
+open5e_base_url: "https://api.open5e.com/v2"
+```
+
+A superadmin can turn D&D Beyond, 5e.tools and Open5e search on or off under
+Monster lookup providers on the User management page (`/users`). Saved switches
+override the configuration keys for every admin until changed again. Open5e content
+is published under per-document licences (OGL 1.0a, CC-BY-4.0, CC0); Open5e
+illustrations are CC BY-NC 4.0. Run `python3 tools/check_open5e_live.py` for a live
+contract check.
+
 ## Attack statistics reductions
 
 In the current combatant's Battle actions window, Add statistics reduction adds an

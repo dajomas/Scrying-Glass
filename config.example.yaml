@@ -32,3 +32,8 @@ display:
   fivetools_sources: ["MM", "XMM", "PHB", "XPHB", "DMG", "XDMG"]
   fivetools_data_base_url: "https://5e.tools/data/bestiary"
   fivetools_image_base_url: "https://5e.tools/img"
+  # Open5e v2 API candidate lookup (all documents), listed after D&D Beyond and 5e.tools.
+  # Candidates show document, game system, publisher and licence. No API key is needed.
+  # A superadmin can override all three provider switches on the User management page.
+  open5e_lookup: true
+  open5e_base_url: "https://api.open5e.com/v2"

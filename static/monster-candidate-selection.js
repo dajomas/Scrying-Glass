@@ -136,6 +136,12 @@
                     link.textContent = ' View source';
                     row.append(link);
                 }
+                if (typeof candidate.attribution === 'string' && candidate.attribution) {
+                    const credit = document.createElement('small');
+                    credit.className = 'monster-candidate-attribution';
+                    credit.textContent = ` ${candidate.attribution}`;
+                    row.append(credit);
+                }
                 dialog.append(row);
             });
             const cancel = document.createElement('button');

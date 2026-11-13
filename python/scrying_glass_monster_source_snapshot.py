@@ -33,6 +33,8 @@ def _source_url(provider, value):
         return (re.fullmatch(r"https://5e\.tools/bestiary\.html#[A-Za-z0-9_%~.\-]+", value) is not None
                 and re.search(r"%(?![0-9A-Fa-f]{2})", value) is None
                 and not any(ord(char) < 32 or ord(char) == 127 for char in unquote(value)))
+    if provider == "Open5e":
+        return re.fullmatch(r"https://api\.open5e\.com/v2/creatures/[A-Za-z0-9][A-Za-z0-9_.-]{0,199}/", value) is not None
     return False
 
 
@@ -46,7 +48,7 @@ def capture_source_fields(candidate):
     result = {PROVIDER: provider, URL: url}
     if _text(candidate.get("name"), 256):
         result[NAME] = candidate["name"]
-    if provider == "5e.tools" and _text(candidate.get("source"), 100):
+    if provider in ("5e.tools", "Open5e") and _text(candidate.get("source"), 100):
         result[BOOK] = candidate["source"]
     if type(candidate.get("legacy")) is bool:
         result[LEGACY] = candidate["legacy"]

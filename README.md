@@ -60,7 +60,8 @@ field mapping. Historical asset lists describe their dated checkpoints only.
 No agreed 009.7/009 implementation or acceptance action remains. Deferred test-suite
 cleanup remains separate work. The source-selection/Open5e workstream (016/017) has
 an accepted plan with Stage 1 recorded in
-[590](docs/handover/590-monster-source-workstream.md); Stages 2-3 are not started. SG-TODO-019 is also completed and closed for
+[590](docs/handover/590-monster-source-workstream.md); Stage 2 (Open5e provider and
+provider switches) is delivered with CI pending and Stage 3 is not started. SG-TODO-019 is also completed and closed for
 its agreed Activity log Details scope after final user acceptance on 2026-11-13 at
 09:04 CET. Tested implementation 4a1feb47654ea6665862ec44b3f52dc6a27458b8 on
 features/perplexity has successful Branch tests 43386246710 attempt 1, evidence
@@ -240,6 +241,21 @@ are not combined across providers/editions. Token URLs are remote, not downloade
 or cached locally, and availability is not probed. Disable both lookup providers
 to prevent optional provider requests; no credentials are sent to 5e.tools.
 Live-provider data/image availability is separate from intercepted-HTTP fixtures.
+
+Open5e (SG-TODO-017 Stage 2, delivered 2026-11-13 with CI pending) is a third
+provider after D&D Beyond and 5e.tools. It searches every Open5e v2 document by
+exact name, validates each returned creature (the API silently ignores unsupported
+filters) and fails closed like the others. Popup choices read, for example,
+"5e 2014 Rules, 5th Edition 2014 (Open5e)" and show document, publisher and
+licence attribution. AC, HP (dice only when the formula reproduces the listed
+average) and the explicit `initiative_bonus` map through the existing offer rules;
+missing values stay empty. Most creatures have no illustration; available ones are
+remote Open5e images (CC BY-NC 4.0). `display.open5e_lookup` (default `true`) and
+`display.open5e_base_url` (HTTPS, default `https://api.open5e.com/v2`) configure it.
+A superadmin can switch D&D Beyond, 5e.tools and Open5e search on or off on the
+User management page; saved switches override the three configuration keys for
+candidate lookup, image lookup and Refresh. Open5e does not take part in Refresh.
+See [590 Stage 2](docs/handover/590-monster-source-workstream.md#stage-2-delivery---2026-11-13).
 
 The 10 remaining visible monster-row buttons stay on one line with table-local
 horizontal scrolling and focus exposure. Name/species remain individually

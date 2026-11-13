@@ -3,7 +3,7 @@
 [Back to TODO index](../../TODO.md)
 
 - Task: SG-TODO-017
-- Status: in progress - Stage 1 (joint feasibility/design) recorded 2026-11-13; implementation is Stage 2 of the accepted workstream and is not started.
+- Status: in progress - Stage 2 implementation delivered 2026-11-13 on features/perplexity; CI validation and user acceptance pending.
 - Recorded: 2026-11-06
 - Priority: not assigned; no change to the [agreed Admin delivery sequence](115-admin-delivery-sequence.md).
 - Dependencies: verify the current Open5e API contract during implementation planning.
@@ -43,4 +43,12 @@ Stage 1 verified the v2 API contract against the live service: document filterin
 
 ## Delivery status
 
-Stage 1 recorded 2026-11-13 (documentation only). Stage 2 implementation and validation are outstanding.
+Stage 1 recorded 2026-11-13 (documentation only).
+
+Stage 2 implemented 2026-11-13 on the proposed design the user approved for implementation ("Start Stage 2 on the proposed design"): Open5e v2 provider, ordered provider layer, `display.open5e_lookup`/`display.open5e_base_url`, and superadmin provider switches. Details, decisions and local results are in [590 Stage 2](../handover/590-monster-source-workstream.md#stage-2-delivery---2026-11-13).
+
+Remaining for this task:
+
+- CI results for the Stage 2 commit, then user acceptance.
+- Open decision: whether Open5e should take part in monster Refresh. It is excluded in Stage 2 (not agreed); retained Open5e identities report that refresh is not enabled.
+- Name fill-in from a picked monster is delivered with the SG-TODO-016 dropdowns (Stage 3); Stage 2 keeps the existing AC/HP/initiative empty-or-overwrite rules and image snapshot behaviour.

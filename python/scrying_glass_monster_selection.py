@@ -143,16 +143,31 @@ def fivetools_candidates(species, display):
         LOG.warning("5e.tools candidate lookup failed", exc_info=True)
         raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
 
-def lookup_candidates(context, species):
+def open5e_candidates(species, display):
+    from . import scrying_glass_open5e as open5e
+    try:
+        return open5e.candidates(species, display, max_candidates=MAX_CANDIDATES)
+    except Exception as exc:
+        LOG.warning("Open5e candidate lookup failed", exc_info=True)
+        raise ProviderError("Open5e lookup failed; enter stats manually or retry.") from exc
+
+def lookup_candidates(context, species, *, include_open5e=True):
+    """Ordered D&D Beyond, 5e.tools, Open5e lookup with saved provider toggles.
+
+    Monster refresh passes include_open5e=False: Open5e refresh is not agreed.
+    """
     from .scrying_glass_combined_lookup import combined_candidates
+    from .scrying_glass_provider_settings import effective_display
     from .scrying_glass_source_bonus_offer import issue_bonus_offer
-    display = context.CONFIG["display"]
+    display = effective_display(context)
+    open5e_enabled = include_open5e and display.get("open5e_lookup", False) is True
     result = combined_candidates(
         lambda: dnd_candidates(context, species),
         lambda: fivetools_candidates(species, display),
         dnd_enabled=display.get("dndbeyond_image_lookup", True),
         fivetools_enabled=display.get("fivetools_fallback", True),
-        max_candidates=MAX_CANDIDATES)
+        max_candidates=MAX_CANDIDATES,
+        extra=(("Open5e", open5e_enabled, lambda: open5e_candidates(species, display)),))
     if result["status"] != "ok":
         return result
     for candidate in result["candidates"]:

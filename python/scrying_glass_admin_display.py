@@ -27,7 +27,9 @@ class AdminDisplayMixin:
         def lookup() -> dict[str, Any]:
             from .scrying_glass_fivetools import lookup as fivetools_lookup
 
-            display = self.context.CONFIG["display"]
+            from .scrying_glass_provider_settings import effective_display
+
+            display = effective_display(self.context)
             failures = []
             if display.get("dndbeyond_image_lookup", True):
                 try:

@@ -9,6 +9,10 @@ function monsterSourceLabel(candidate, popup = false) {
         const label = Object.prototype.hasOwnProperty.call(labels, source) ? labels[source] : source;
         return popup ? `5e.tools / ${label}` : `5e.tools (${label})`;
     }
+    if (candidate.provider === 'Open5e') {
+        const label = candidate.game_system ? `${source}, ${candidate.game_system}` : source;
+        return popup ? `${label} (Open5e)` : `Open5e (${label})`;
+    }
     const edition = candidate.legacy ? 'legacy' : 'current';
     return popup ? `${candidate.provider} / ${source} / ${edition}` : `${edition} D&D Beyond`;
 }

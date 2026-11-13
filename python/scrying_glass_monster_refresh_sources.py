@@ -66,7 +66,10 @@ def proposed_fields(monster, candidate):
 def _fetch_exact(context, monster, identity):
     from . import scrying_glass_monster_selection as selection
     from .scrying_glass_dnd_initiative_offer import dnd_initiative_offer
-    display = context.CONFIG['display']
+    from .scrying_glass_provider_settings import effective_display
+    display = effective_display(context)
+    if identity[PROVIDER] == 'Open5e':
+        raise ValueError('Open5e monster refresh is not enabled')
     if identity[PROVIDER] == 'D&D Beyond':
         if not display.get('dndbeyond_image_lookup', True):
             raise ValueError('Provider disabled')
@@ -120,7 +123,7 @@ def resolve_selected_sources(context, roster, ids, *, choices=None):
             continue
         token = choices.get(ident)
         if ident not in choices and not identity:
-            result = selection.lookup_candidates(context, species.strip())
+            result = selection.lookup_candidates(context, species.strip(), include_open5e=False)
             if result.get('status') != 'ok':
                 row.update(status='failed', reason=result.get('reason', 'Source lookup failed; retry.'))
                 continue

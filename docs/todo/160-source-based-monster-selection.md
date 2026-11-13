@@ -44,4 +44,4 @@ Findings and the proposed design are in the [590 handover](../handover/590-monst
 
 ## Delivery status
 
-Stage 1 findings recorded 2026-11-13 (documentation only). Implementation and validation are outstanding and depend on the Stage 2 provider layer.
+Stage 1 findings recorded 2026-11-13 (documentation only). Implementation and validation are outstanding and depend on the Stage 2 provider layer. The Stage 2 layer (ordered providers, Open5e provider, provider switches) was delivered 2026-11-13 with CI pending; see [590 Stage 2](../handover/590-monster-source-workstream.md#stage-2-delivery---2026-11-13). Stage 3 is not started.

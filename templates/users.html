@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/static/admin.css">
     <script src="/static/users.js" defer></script>
     <script src="/static/campaign-ownership-admin.js" defer></script>
+    <script src="/static/lookup-providers-admin.js?v=1" defer></script>
 </head>
 
 <body>
@@ -58,6 +59,17 @@
                 <thead><tr><th>Campaign</th><th>Assigned admin</th><th>Action</th></tr></thead>
                 <tbody id="campaignOwnerRows"></tbody>
             </table>
+        </section>
+        <section id="lookupProviderSection">
+            <h2>Monster lookup providers</h2>
+            <p>Choose which public sources the Admin monster lookup searches, in this order: D&amp;D Beyond,
+                5e.tools, Open5e. A disabled provider is also skipped for image lookup and monster refresh.
+                Saved settings override the configuration file defaults for every admin.</p>
+            <form id="lookupProviderForm">
+                <div id="lookupProviderToggles"></div>
+                <button type="submit">Save provider settings</button>
+            </form>
+            <p id="lookupProviderNotice" role="status" aria-live="polite"></p>
         </section>
     </main>
 </body>
