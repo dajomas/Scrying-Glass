@@ -4,7 +4,7 @@
 
 ## SG-TODO-021 - Extensive Playwright end-to-end suite with a run-and-push script
 
-Status: in progress - Stage 1 delivered 2026-11-13 ([610 handover](../handover/610-playwright-end-to-end-suite.md)); the user's script run `58556e4c` passed 27 of 27; Stage 1 accepted and closed by the user 2026-11-13. Stage 2 (rosters and initiative) delivered 2026-11-13 on `features/perplexity-021`; the user's run `29ff6123` passed 61 of 61, acceptance pending (no CI on that branch). Stages 3 (combat, Client Display) and 4 (feedback, connection, widths, accessibility) delivered 2026-11-13; local run 119 passed plus 2 expected failures for a known focus finding; user run and acceptance pending. Requested 2026-11-12 (originally as a Selenium suite); decisions recorded 2026-11-13. No priority, owner or deadline assigned.
+Status: in progress - Stage 1 delivered 2026-11-13 ([610 handover](../handover/610-playwright-end-to-end-suite.md)); the user's script run `58556e4c` passed 27 of 27; Stage 1 accepted and closed by the user 2026-11-13. Stage 2 (rosters and initiative) delivered 2026-11-13 on `features/perplexity-021`; the user's run `29ff6123` passed 61 of 61, acceptance pending (no CI on that branch). Stages 3 (combat, Client Display) and 4 (feedback, connection, widths, accessibility) delivered 2026-11-13; local run 119 passed plus 2 expected failures for a known focus finding; user run `180b15c8` (tested `325c685f`) passed 119 of 121 with 2 expected failures for the known focus finding; acceptance pending. Requested 2026-11-12 (originally as a Selenium suite); decisions recorded 2026-11-13. No priority, owner or deadline assigned.
 
 ### User decisions (2026-11-13)
 

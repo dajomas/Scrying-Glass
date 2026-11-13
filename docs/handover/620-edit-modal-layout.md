@@ -29,4 +29,5 @@ User-reported fix, 2026-11-13, delivered on `features/perplexity-021` (not part 
 - Passed: `tests/test_monster_bonus_edit_ui.py`, `tests/test_admin_source.py`, `tests/test_admin_asset_wiring.py`, `tests/test_compact_combatant_inputs.py`, `tests/test_asset_cache_busting.py`, `tests/test_statistics_layout.py`; `node --test` for `monster-edit-feedback`, `character-edit-feedback`, `setup-new-feedback`, `setup-operations-feedback`; e2e `test_rosters.py` in Chromium (8 passed).
 - Not passing locally, with or without this change (sandbox environment, not caused by it): `tests/test_admin_global_feedback_composition.py` (5 tests time out in `wait_for_function`) and `tests/test_lair_pane_visibility.js` (exit 1). CI is the reference for these.
 - Screenshots of both modals at 375 and 1440 px were checked by eye.
+- The user's e2e run `180b15c8` tested `325c685f` (this fix included): 119 passed, 2 expected failures, 0 failed. That suite does not open the Edit modals' layout directly; it covers roster editing.
 - No CI runs on `features/perplexity-021`. User acceptance pending.

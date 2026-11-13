@@ -201,3 +201,9 @@ Deviation from the plan: the plan said connection loss would be tested by stoppi
 - Repeat run of the timing-sensitive files (`test_feedback.py`, `test_client_display.py`, both browsers): 26 passed (13 per browser) on a second run.
 - No application, `tests/` or workflow file changed, so the regular suite was not run. No CI runs on `features/perplexity-021`.
 - Not yet run with `tools/run_e2e.sh` on the user's host. Stages 3 and 4 await a user run and acceptance.
+
+### User run of Stages 3-4
+
+The user pushed `180b15c8` (`E2E results 20261113T161147Z: 119 passed, 0 failed (chromium, firefox) [skip ci]`). It tested `325c685f`, which also contains the Edit modal fix ([620](620-edit-modal-layout.md)). pytest exit status 0: 121 tests, 119 passed, and 2 expected failures (`XFAIL (known finding)`, the New campaign focus return, one per browser) counted as skipped. Every Stage 3 and Stage 4 test passed in Chromium and Firefox. Stages 2-4 are validated by the user's runs; formal acceptance is the user's decision.
+
+Cosmetic note: the `tools/run_e2e.sh` summary groups results by the last bracketed test id, so the width tests show up as `chromium-360`, `firefox-1440` and so on, next to `chromium` and `firefox`. The totals are correct.
