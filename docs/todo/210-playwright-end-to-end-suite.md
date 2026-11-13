@@ -4,13 +4,15 @@
 
 ## SG-TODO-021 - Extensive Playwright end-to-end suite with a run-and-push script
 
-Status: open, not started. Requested 2026-11-12 (originally as a Selenium suite); decisions recorded 2026-11-13. No priority, owner or deadline assigned.
+Status: in progress - Stage 1 delivered 2026-11-13 ([610 handover](../handover/610-playwright-end-to-end-suite.md)); Stage 1 on `features/perplexity-021`, user acceptance pending (no CI on that branch); Stages 2-4 not started. Requested 2026-11-12 (originally as a Selenium suite); decisions recorded 2026-11-13. No priority, owner or deadline assigned.
 
 ### User decisions (2026-11-13)
 
 - **Framework:** Playwright (Python, pytest), on the browser stack the repository already uses. Not Selenium.
-- **Results location:** a results folder on the feature branch (`features/perplexity`), not a separate results branch.
+- **Results location:** a results folder on the feature branch, not a separate results branch.
+- **Branch:** all SG-TODO-021 work and result pushes go to `features/perplexity-021` (user instruction 2026-11-13). The Branch tests workflow does not trigger on that branch, and workflow edits are not allowed, so pushes there run no CI.
 - **Browsers:** Chromium (Chrome) and Firefox. Every scenario runs in both.
+- **Retention:** keep only the latest results folder; the script deletes older ones before committing (2026-11-13).
 
 ### Approach
 
@@ -35,7 +37,7 @@ Status: open, not started. Requested 2026-11-12 (originally as a Selenium suite)
 
 1. Creates or reuses a virtual environment, installs the test requirements and the Playwright Chromium and Firefox browsers, and starts the server on a free port.
 2. Runs pytest for both browsers. It writes JUnit XML, an HTML report, failure screenshots/traces and a summary into `e2e-results/<timestamp>/`.
-3. Commits only that folder to `features/perplexity`, with a message like `E2E results <date>: N passed, M failed (chromium, firefox) [skip ci]` and the `Co-authored-by: Perplexity <noreply@perplexity.ai>` trailer, then pushes it.
+3. Commits only that folder to `features/perplexity-021`, with a message like `E2E results <date>: N passed, M failed (chromium, firefox) [skip ci]` and the `Co-authored-by: Perplexity <noreply@perplexity.ai>` trailer, then pushes it.
 4. Refuses to commit if anything outside the results folder is staged, so `Patch/` or stray files cannot be included. It also refuses if the local branch is behind the remote.
 
 ### Delivery stages
@@ -51,5 +53,6 @@ The user can stop after any stage.
 
 ### Open points
 
-- Results commits add files to the feature branch over time. A retention rule (for example, keep the latest N runs) can be added to the script if wanted.
+- Retention is decided: only the latest results folder is kept.
+- Retry and scope handling during setup switching under request failures moved from Stage 1 to Stage 4 (it needs failure injection or a server restart).
 - Credit usage cannot be estimated in advance.
