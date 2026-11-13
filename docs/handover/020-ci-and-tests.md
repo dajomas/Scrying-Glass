@@ -42,8 +42,8 @@ This is one selected CI environment, not a compatibility matrix. Dependency spec
 2. Run `python -m unittest discover -s tests -p 'test_*.py' -v`, including unittest-based browser fixtures.
 3. Run `python -m pytest -q tests/test_death_save_validation_2ba6607.py tests/test_slug_truncation_82860c4.py` without case filtering.
 4. Find every `.js` and `.cjs` file under `tests/` and run each with `node --test`.
-5. Execute standalone Python files under `tests/` whose names do not match `test_*.py`, excluding `__init__.py`. This includes browser smoke checks and audit scripts.
-6. Pass `patched` to `tests/audit_log_clear.py` to enable its persistence and rollback assertions.
+5. Execute standalone Python files under `tests/` whose names do not match `test_*.py`, excluding `__init__.py`. Since SG-TODO-020 these are the connection audit and the shared browser fixture helper; the browser smoke check and the activity-log/round-three audits are unittest modules ([600](600-test-suite-cleanup.md)).
+6. The `patched` argument special case for `tests/audit_log_clear.py` is unused since that script became `tests/test_activity_log_clear.py`.
 
 The unittest, pytest, JavaScript and standalone test steps use `if: ${{ !cancelled() }}` so later test groups still run after earlier failures unless the job is cancelled. File loops accumulate failures and return a nonzero exit code after processing the remaining files.
 

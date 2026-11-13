@@ -98,15 +98,16 @@ class LairService:
             candidate.setdefault('effects',[]).extend(created)
             prepared.append((target,candidate,damage,created,result,was_concentrating))
         self.context.remember_turn_successors()
+        from python.scrying_glass_activity_details import snapshot,hp_note,death_failure_note
         for target,candidate,damage,effects,result,was_concentrating in prepared:
-            target.update(candidate)
+            before=snapshot(target);target.update(candidate)
             if damage:
                 self.context.log_battle_action(lair,target,'damage',damage)
-                # Keep the action name on the single authoritative damage row.
-                self.context.STATE['activity_log'][-1]['note'] = name.strip()
+                # Keep the action name on the single authoritative damage row (SG-TODO-019 adds the result).
+                self.context.STATE['activity_log'][-1]['note'] = name.strip()+'; '+hp_note(target,before)
                 if was_concentrating:self.context.features.log('concentration-reminder',target,note='Resolve concentration manually')
                 if result['instant_death']:self.context.features.log('instant-death',target,note='Excess damage reached maximum HP')
-                elif result['failed_saves']:self.context.features.log('death-save-failure',target,result['failed_saves'],note='Lair damage at 0 HP')
+                elif result['failed_saves']:self.context.features.log('death-save-failure',target,result['failed_saves'],note=death_failure_note(target,'lair damage at 0 HP'))
             for effect in effects:self.context.features.log('effect-added',target,note=name+': '+effect['name'])
         self.context.clean_order();await self.persist()
         return {'applied':len(prepared)}

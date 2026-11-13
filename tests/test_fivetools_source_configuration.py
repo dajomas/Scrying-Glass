@@ -27,7 +27,8 @@ class SourceConfigurationTests(unittest.TestCase):
             {'DEFAULT_STORAGE_DIR','DEFAULT_CONFIG','merge','load_config'},
             dict(copy=copy, json=json, yaml=yaml, Path=Path, Any=object))
         self.selection = extracted('python/scrying_glass_monster_selection.py',
-            {'ProviderError','fivetools_candidates'},
+            {'ProviderError','fivetools_candidates','fivetools_source_attribution','fivetools_candidate',
+             '_fivetools_root','_fivetools_source_data','_fivetools_index'},
             dict(ft=ft, re=re, MAX_CANDIDATES=32, LOG=logging.getLogger(__name__),
                  __name__="python.scrying_glass_monster_selection", __package__="python"))
         self.candidates = self.selection['fivetools_candidates']

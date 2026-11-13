@@ -405,7 +405,8 @@ class AdminMonstersMixin:
         self.context.remember_turn_successors()
 
         if hp_delta is not None:
-            self.context.log_hp_change(candidate, hp_delta, hp_result)
+            from python.scrying_glass_activity_details import snapshot
+            self.context.log_hp_change(candidate, hp_delta, hp_result, snapshot(monster))
 
         monster.update(candidate)
         self.context.set_turn(monster, requested_turn)

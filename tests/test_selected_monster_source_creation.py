@@ -60,3 +60,18 @@ class SelectedSourceCreationTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(error.exception.status_code,422)
         self.assertEqual(self.context.STATE["monsters"],[])
         self.context.combatants_changed.assert_not_awaited()
+
+    async def test_image_from_another_candidate_keeps_selected_identity(self):
+        other=dict(self.candidate,source="MM",legacy=True,image_url="https://example.test/other.png")
+        result=await self.create(selection_token=selection.issue_token(self.candidate),
+            image_selection_token=selection.issue_token(other))
+        self.assertEqual(result[0]["image_url"],"https://example.test/other.png")
+        self.assertEqual((result[0][BOOK],result[0][LEGACY]),("XMM",False))
+
+    async def test_image_choice_without_image_or_valid_token_is_rejected(self):
+        for token in ("invalid",selection.issue_token(dict(self.candidate,image_url=None)),
+                      selection.issue_token(dict(self.candidate,species="different"))):
+            with self.assertRaises(HTTPException) as error:
+                await self.create(selection_token=selection.issue_token(self.candidate),image_selection_token=token)
+            self.assertEqual(error.exception.status_code,422)
+        self.assertEqual(self.context.STATE["monsters"],[])

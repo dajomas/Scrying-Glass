@@ -16,19 +16,19 @@ class LoggingTests(unittest.TestCase):
         item={**self.before(),'concentrating':True};self.assertEqual(feature_changes(item,dict(item)),[])
     def test_hp_and_temp_details(self):
         old=self.before();events=feature_changes(old,{**old,'hp':9,'temp_hp':0},-10)
-        self.assertEqual(events,[('combat-features',10,'HP: 12 → 9; Temporary HP: 7 → 0')])
+        self.assertEqual(events,[('combat-features',10,'HP 12 → 9; Temporary HP 7 → 0')])
     def test_life_state_and_save_details(self):
         old={**self.before(),'life_state':'down','death_successes':2};events=feature_changes(old,{**old,'life_state':'stable','death_successes':3})
-        self.assertIn('Life state: down → stable',events[0][2]);self.assertIn('Death-save successes: 2 → 3',events[0][2])
+        self.assertIn('Life state down → stable',events[0][2]);self.assertIn('Death-save successes 2 → 3',events[0][2])
     def test_failures_identified(self):
         old=self.before();events=feature_changes(old,{**old,'death_failures':1})
-        self.assertEqual(events[0][2],'Death-save failures: 0 → 1')
+        self.assertEqual(events[0][2],'Death-save failures 0 → 1')
     def test_separate_feature_and_concentration_events(self):
         old={**self.before(),'concentrating':True};events=feature_changes(old,{**old,'hp':0,'life_state':'down','concentrating':False},-12)
         self.assertEqual([e[0] for e in events],['combat-features','concentration-ended'])
     def test_temp_pool_named(self):
         old=self.before();events=feature_changes(old,{**old,'temp_hp':10})
-        self.assertEqual(events[0],('combat-features',None,'Temporary HP: 7 → 10'))
+        self.assertEqual(events[0],('combat-features',None,'Temporary HP 7 → 10'))
     def test_real_logger_preserves_effect_note(self):
         root=Path(__file__).resolve().parents[1]
         tree=ast.parse((root/'python/scrying_glass_service_features.py').read_text())

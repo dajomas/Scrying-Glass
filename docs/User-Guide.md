@@ -175,6 +175,13 @@ If a connection fails before success is confirmed, check the activity log/curren
 before retrying: this browser-level protection does not provide server-side retry
 idempotency or protect against duplicate requests from another tab.
 
+Activity log Details for value changes name the affected creature, the changed
+property and its resulting value, for example `Goblin - 2: HP 12 → 10/12;
+temporary HP 4 → 0`, `Goblin: STR 12 → 10; source: Cleric` or `Cleric: death-save
+failures now 1/3; damage at 0 HP`. HP results include the current maximum. Lair
+damage keeps the action name first. Entries recorded before this change keep their
+original text.
+
 
 Start-of-turn damage/heal targets the current creature, damage first, ignores empty/zero fields and does not advance. Ordinary self-action eligibility applies, so down/dead actors cannot use it.
 
@@ -298,6 +305,46 @@ check its token in the player view. If no result appears, inspect WARNING logs
 and verify index/source URL reachability from the service account. Token paths
 and live endpoints could not be verified from the patch-build environment.
 
+
+## Open5e monster source and provider switches
+
+Monster lookup also searches the [Open5e API](https://open5e.com/api-docs) after
+D&D Beyond and 5e.tools, across all Open5e documents. Each choice uses the same
+"provider / book [/ legacy]" layout as the other providers, e.g. "Open5e / 5e 2014
+Rules / legacy", with publisher and licence attribution. Within each provider the
+choices are sorted by book, and each choice ends with whether a monster image is
+available. Below each choice are the View source link and, when the provider supplies
+it, the source details: book and page for D&D Beyond (for example "Basic Rules (2014),
+pg. 148 via D&D Beyond") and 5e.tools ("XMM, page 133 via 5e.tools"), and publisher
+and licence attribution for Open5e. Any provider failure still blocks all candidates.
+Open5e statistics fill AC, HP range and initiative bonus by the same empty-field and
+overwrite rules; most Open5e monsters have no image. When Open5e is enabled, Refresh
+also uses it. The lookup message and the help text name only the enabled providers.
+D&D Beyond choices show the book named on the monster page (for example "D&D Beyond /
+Basic Rules (2014) / legacy") and sort by book. The overwrite checkbox is ticked by
+default. When you pick from several monsters and another found monster has a different
+image, a "Select monster image" dialog shows thumbnails: the selected monster's image
+first, then the others with their provider and book. Click a thumbnail to use that
+image, or Cancel to keep the original image (or none). An uploaded image file still
+takes precedence. After a lookup with several results, "Choose again" next to Monster
+species reopens the list for the same species without typing it again. The current
+monster and image stay until you pick another monster; Cancel keeps them, and Cancel in
+the image dialog after a new pick keeps the image you had.
+
+Source and Monster dropdowns (SG-TODO-016): the Monster identity row has a Source list (None by default, each configured 5e.tools source and every Open5e document, labelled with its provider and source) and a Monster list with the complete list for that source. Picking a monster fills in the name when it is empty or overwrite is ticked, sets Monster species to the monster name, and fills the statistics and image by the usual empty-or-overwrite rules. D&D Beyond is not listed (name search only), and disabled providers are not offered. If a list cannot be loaded completely, it shows that the list is unavailable; retry or type the species instead.
+
+Configuration under `display` (defaults shown):
+```yaml
+open5e_lookup: true
+open5e_base_url: "https://api.open5e.com/v2"
+```
+
+A superadmin can turn D&D Beyond, 5e.tools and Open5e search on or off under
+Monster lookup providers on the User management page (`/users`). Saved switches
+override the configuration keys for every admin until changed again. Open5e content
+is published under per-document licences (OGL 1.0a, CC-BY-4.0, CC0); Open5e
+illustrations are CC BY-NC 4.0. Run `python3 tools/check_open5e_live.py` for a live
+contract check.
 
 ## Attack statistics reductions
 

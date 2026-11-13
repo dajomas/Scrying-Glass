@@ -138,5 +138,70 @@ class ThirdBugHuntTests(unittest.TestCase):
         self.assertEqual(character['extra_counter'],2**63-1)
         self.assertEqual(character['extra_minimum'],-(2**63))
 
+
+class RoundThreeStorageAndImportTests(unittest.TestCase):
+    """Formerly tests/audit_round3_check.py: setup suffixes, log IDs, CSV and monster bounds."""
+
+    def setUp(self):
+        import tempfile
+        from test_sqlite_storage import context
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        self.c = context(Path(directory.name))
+        self.addCleanup(self.c.STORAGE.close)
+        self.c.import_legacy_storage()
+        self.campaign = self.c.active_campaign()
+
+    def save(self, name, state):
+        self.c.STORAGE.save_setup(self.campaign, name, self.c.setup_snapshot(state))
+
+    def test_long_setup_names_get_bounded_unique_suffixes(self):
+        longname = 'a' * 80
+        self.save(longname, self.c.normalize_state({}))
+        candidate = self.c.STORAGE.unique_setup_name(self.campaign, longname)
+        self.assertLessEqual(len(candidate), 80)
+        self.assertNotEqual(candidate, longname)
+        self.assertEqual(self.c.setup_slug(candidate), candidate)
+        self.save(candidate, self.c.normalize_state({}))
+        third = self.c.STORAGE.unique_setup_name(self.campaign, longname)
+        self.assertNotIn(third, (longname, candidate))
+        self.assertLessEqual(len(third), 80)
+
+    def test_malformed_and_duplicate_log_entries_are_rejected(self):
+        for raw in ({'activity_log': [42]}, {'activity_log': [{'id': 'x'}, {'id': 'x'}]}):
+            with self.subTest(raw=raw), self.assertRaises(ValueError):
+                self.c.normalize_state(raw)
+
+    def test_log_ids_are_assigned_without_mutating_input_and_stay_stable(self):
+        raw = {'activity_log': [{'action': 'damage', 'amount': 2}]}
+        normalized = self.c.normalize_state(raw)
+        self.assertNotIn('id', raw['activity_log'][0])
+        query = 'SELECT id,event_id FROM activity_log_entries'
+        self.save('log', normalized)
+        before = [tuple(r) for r in self.c.STORAGE.connection.execute(query)]
+        self.save('log', normalized)
+        self.assertEqual([tuple(r) for r in self.c.STORAGE.connection.execute(query)], before)
+
+
+class RoundThreeMonsterFileTests(unittest.TestCase):
+    def test_malformed_csv_is_rejected_and_multiline_cells_kept(self):
+        from python.scrying_glass_monster_csv import csv_rows
+        for data in (b'name,Name\nA,B\n', b'name,hp\nA,1,2\n', b'name,hp\n"unclosed,1', b'name,\nA,1\n'):
+            with self.subTest(data=data), self.assertRaises(Exception) as caught:
+                csv_rows(data)
+            self.assertEqual(caught.exception.status_code, 400)
+        self.assertEqual(csv_rows(b'name,hp\n"a\nb",1\n')[0]['name'], 'a\nb')
+
+    def test_monster_hp_overflow_rejected_and_zero_kept(self):
+        from python.scrying_glass_monster_csv import parse_monster
+        raws = [json.dumps({'name': 'Goblin', 'type': 'Goblin', 'ac': 12, 'hpText': hp}).encode()
+                for hp in (str(2**63), '9' * 5000)]
+        raws.append(('{"name":"Goblin","type":"Goblin","ac":12,"hp":' + '9' * 5000 + '}').encode())
+        for raw in raws:
+            with self.subTest(size=len(raw)), self.assertRaises(Exception) as caught:
+                parse_monster(raw)
+            self.assertEqual(caught.exception.status_code, 400)
+        self.assertEqual(parse_monster(b'{"name":"G","type":"G","ac":0,"hp":0}')['hp'], 0)
+
 if __name__=='__main__':
     unittest.main()

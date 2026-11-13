@@ -9,7 +9,76 @@
     if (!form || !speciesInput) return;
     const label = overwrite?.closest('label')?.querySelector('span');
     if (label) label.textContent = 'Overwrite AC, HP range and initiative bonus with source values. Missing initiative bonus defaults to 0.';
+    // Enabled lookup providers, in lookup order, for the status message and help text.
+    let providers = ['D&D Beyond', '5e.tools', 'Open5e'];
+    const sourcesHelp = document.querySelector('#monsterLookupSources');
+    function describeProviders() {
+        const names = providers.map(name => name === '5e.tools' ? 'configured 5e.tools sources' : name);
+        if (sourcesHelp) sourcesHelp.textContent = !names.length ? 'no lookup sources'
+            : names.length === 1 ? names[0] : `${names.slice(0, -1).join(', ')} and ${names.at(-1)}`;
+    }
+    function refreshProviders() {
+        if (typeof fetch !== 'function') return Promise.resolve();
+        // Plain fetch: a failed wording refresh must not raise Admin notifications.
+        return fetch('/api/monsters/lookup-providers', {credentials: 'same-origin'})
+            .then(response => response.ok ? response.json() : null).then(result => {
+            if (Array.isArray(result?.providers) && result.providers.every(name => typeof name === 'string')) {
+                providers = result.providers;
+                describeProviders();
+            }
+        }).catch(() => {});
+    }
+    window.scryingLookupSources = {
+        order: () => providers.length ? providers.join(', then ') : 'no lookup sources are enabled',
+        refresh: refreshProviders,
+    };
+    refreshProviders();
+    window.addEventListener('focus', refreshProviders);
     let selected = null;
+    let imageChoice = null;   // Another found candidate whose image replaces the selected one.
+    let lastLookup = null;    // {species, candidates, at} of the last multi-candidate lookup.
+    let reuseLookup = null;
+    const REUSE_MS = 20 * 60 * 1000;  // Signed selection tokens last 30 minutes.
+    let reselectButton = null;
+    function updateReselect() {
+        const show = Boolean(lastLookup && lastLookup.species === speciesInput.value.trim() &&
+            Date.now() - lastLookup.at < REUSE_MS);
+        if (show && !reselectButton) {
+            reselectButton = document.createElement('button');
+            reselectButton.type = 'button';
+            reselectButton.id = 'monsterSpeciesReselect';
+            reselectButton.className = 'monster-species-reselect';
+            reselectButton.textContent = 'Choose again';
+            reselectButton.title = 'Choose again from the monsters found for this species';
+            reselectButton.addEventListener('click', () => {
+                if (!lastLookup || lastLookup.species !== speciesInput.value.trim()) return updateReselect();
+                reuseLookup = lastLookup;
+                if (typeof lookupMonsterSpeciesStats === 'function') lookupMonsterSpeciesStats();
+            });
+            (speciesInput.closest('label.field') || speciesInput).after(reselectButton);
+        }
+        if (reselectButton) reselectButton.hidden = !show;
+    }
+    // Source dropdown picks (monster-source-picker.js) run as a one-candidate lookup.
+    window.scryingMonsterSelection = {
+        preset(species, candidate) {
+            reuseLookup = {species, candidates: [candidate], at: Date.now()};
+        },
+    };
+    function uploadChosen() {
+        const file = document.querySelector('#monsterImage');
+        return Boolean(file?.files && file.files.length);
+    }
+    function chooseImage(candidate, candidates, kept) {
+        // Image picker lives in monster-image-choice.js (fragment size limit).
+        const picker = window.scryingMonsterImageChoice;
+        if (!picker) return Promise.resolve(candidate);
+        const open = picker.open(candidate, candidates, other => monsterSourceLabel(other, true), kept);
+        cancelPopup = open.cancel;
+        return open.promise.finally(() => {
+            if (cancelPopup === open.cancel) cancelPopup = null;
+        });
+    }
     let appliedOffer = null;
     let cancelPopup = null;
     let generation = 0;
@@ -51,19 +120,24 @@
     function publishSelection() {
         document.dispatchEvent(new CustomEvent('scrying:monster-selection', {
             detail: selected ? {species: selected.species, provider: selected.provider,
-                image_url: selected.image_url || null} : null
+                image_url: (imageChoice || selected).image_url || null} : null
         }));
     }
     function invalidate() {
         generation++;
         selected = null;
+        imageChoice = null;
+        updateReselect();
         clearAppliedOffer();
         publishSelection();
         if (cancelPopup) cancelPopup();
     }
     speciesInput.addEventListener('input', invalidate, true);
     overwrite?.addEventListener('change', invalidate, true);
-    form.addEventListener('reset', invalidate);
+    form.addEventListener('reset', () => {
+        lastLookup = null;
+        invalidate();
+    });
     form.addEventListener('submit', event => {
         if (pending) {
             event.preventDefault();
@@ -75,6 +149,11 @@
         const currentSelection = selected && selected.species === speciesInput.value.trim();
         event.formData.set('selection_token', currentSelection ? selected.selection_token : 'manual');
         event.formData.delete('initiative_bonus_offer_token');
+        event.formData.delete('image_selection_token');
+        if (currentSelection && imageChoice && imageChoice !== selected &&
+                typeof imageChoice.selection_token === 'string') {
+            event.formData.set('image_selection_token', imageChoice.selection_token);
+        }
         if (currentSelection && appliedOffer &&
                 appliedOffer.selectionToken === selected.selection_token &&
                 appliedOffer.species === speciesInput.value.trim() &&
@@ -119,23 +198,50 @@
                 resolve(candidate);
             }
             dialog.append(heading);
-            candidates.forEach((candidate, index) => {
+            // Keep provider order; within a provider, sort rows by book source label.
+            const providerRank = new Map();
+            candidates.forEach(candidate => {
+                if (!providerRank.has(candidate.provider)) providerRank.set(candidate.provider, providerRank.size);
+            });
+            const rows = candidates.map((candidate, position) =>
+                ({candidate, position, label: monsterSourceLabel(candidate, true)}));
+            rows.sort((a, b) =>
+                providerRank.get(a.candidate.provider) - providerRank.get(b.candidate.provider) ||
+                a.label.localeCompare(b.label, undefined, {sensitivity: 'base', numeric: true}) ||
+                a.position - b.position);
+            rows.map(row => row.candidate).forEach((candidate, index) => {
                 const row = document.createElement('p');
                 const button = document.createElement('button');
                 button.type = 'button';
+                const image = typeof candidate.image_url === 'string' && candidate.image_url
+                    ? 'Image available' : 'No image available';
                 button.textContent = `${index + 1}. ${candidate.name || candidate.species} — ` +
                     `${monsterSourceLabel(candidate, true)} — ` +
-                    `AC ${candidate.ac ?? '—'}, HP ${candidate.hp ?? '—'} — ${offerText(candidate)}`;
+                    `AC ${candidate.ac ?? '—'}, HP ${candidate.hp ?? '—'} — ${offerText(candidate)} — ${image}`;
                 button.addEventListener('click', () => finish(candidate));
+                row.className = 'monster-candidate-row';
+                row.style.margin = '0 0 .75rem';
                 row.append(button);
+                // Source link and attribution sit on their own line below the button.
+                const details = document.createElement('small');
+                details.className = 'monster-candidate-details';
+                details.style.display = 'block';
+                details.style.marginTop = '.25rem';
                 if (candidate.source_url && candidate.source_url.startsWith('https://')) {
                     const link = document.createElement('a');
                     link.href = candidate.source_url;
                     link.target = '_blank';
                     link.rel = 'noopener noreferrer';
-                    link.textContent = ' View source';
-                    row.append(link);
+                    link.textContent = 'View source';
+                    details.append(link);
                 }
+                if (typeof candidate.attribution === 'string' && candidate.attribution) {
+                    const credit = document.createElement('span');
+                    credit.className = 'monster-candidate-attribution';
+                    credit.textContent = details.childElementCount ? ` · ${candidate.attribution}` : candidate.attribution;
+                    details.append(credit);
+                }
+                if (details.childElementCount) row.append(details);
                 dialog.append(row);
             });
             const cancel = document.createElement('button');
@@ -154,13 +260,22 @@
         if (typeof url !== 'string' || !url.startsWith(prefix)) return originalRequest(url, options, ...extra);
         const species = new URLSearchParams(url.split('?')[1]).get('species');
         const current = ++generation;
+        refreshProviders();
         const requestId = monsterSpeciesLookupRequest;
         const originalBonus = bonusInput?.value;
         const originalBonusRevision = bonusRevision;
         const overwriteBonus = Boolean(overwrite?.checked);
-        selected = null;
-        clearAppliedOffer();
-        publishSelection();
+        const reuse = reuseLookup && reuseLookup.species === species &&
+            Date.now() - reuseLookup.at < REUSE_MS ? reuseLookup : null;
+        reuseLookup = null;
+        // Choose again keeps the current monster and image until a new monster is picked.
+        const kept = reuse && selected && selected.species === species ? (imageChoice || selected) : null;
+        if (!kept) {
+            selected = null;
+            imageChoice = null;
+            clearAppliedOffer();
+            publishSelection();
+        }
         if (cancelPopup) cancelPopup();
         const scopeGuard = window.scryingAdminFeedback.begin({region: 'monsters',
             operation: 'monster.candidate.lookup', target: 'monster-form', label: 'Select monster source'});
@@ -169,17 +284,26 @@
             speciesInput.value.trim() === species && Boolean(overwrite?.checked) === overwriteBonus;
         pending++;
         try {
-            const result = await originalRequest(`/api/monsters/lookup?species=${encodeURIComponent(species)}`, options);
+            const result = reuse ? {status: 'ok', candidates: reuse.candidates}
+                : await originalRequest(`/api/monsters/lookup?species=${encodeURIComponent(species)}`, options);
             if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
             if (!result || result.status !== 'ok') return {found: false,
                 reason: result?.reason || 'Monster lookup failed; enter stats manually.'};
             const candidates = result.candidates || [];
             if (!candidates.length) return {found: false,
                 reason: `No usable monster stats found for ${species}; enter AC and HP manually.`};
+            if (candidates.length > 1 && !reuse) {
+                lastLookup = {species, candidates, at: Date.now()};
+            } else if (candidates.length <= 1) {
+                lastLookup = null;
+            }
+            updateReselect();
             const candidate = candidates.length === 1 ? candidates[0] : await choose(candidates);
             if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
-            if (!candidate) return {found: false,
-                reason: 'Monster selection cancelled; manual entry remains available.'};
+            if (!candidate) return {found: false, reason: kept
+                ? 'Monster selection cancelled; the current monster and image are kept.'
+                : 'Monster selection cancelled; manual entry remains available.'};
+            if (kept) clearAppliedOffer();
             const bonusUnchanged = bonusInput && bonusInput.value === originalBonus &&
                 bonusRevision === originalBonusRevision;
             if (bonusUnchanged && offerAvailable(candidate) &&
@@ -202,7 +326,12 @@
                 bonusInput.dispatchEvent(new Event('change', {bubbles: true}));
                 if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
             }
+            // Offer images from the other found monsters unless an upload already overrides them.
+            const imageOwner = candidates.length > 1 && !uploadChosen()
+                ? await chooseImage(candidate, candidates, kept) : candidate;
+            if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
             selected = candidate;
+            imageChoice = imageOwner && imageOwner !== candidate ? imageOwner : null;
             publishSelection();
             return candidate;
         } finally {

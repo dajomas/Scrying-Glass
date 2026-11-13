@@ -9,6 +9,9 @@ function monsterSourceLabel(candidate, popup = false) {
         const label = Object.prototype.hasOwnProperty.call(labels, source) ? labels[source] : source;
         return popup ? `5e.tools / ${label}` : `5e.tools (${label})`;
     }
+    if (candidate.provider === 'Open5e') {
+        return popup ? `Open5e / ${source}${candidate.legacy ? ' / legacy' : ''}` : `Open5e (${source})`;
+    }
     const edition = candidate.legacy ? 'legacy' : 'current';
     return popup ? `${candidate.provider} / ${source} / ${edition}` : `${edition} D&D Beyond`;
 }
@@ -79,7 +82,7 @@ async function lookupMonsterSpeciesStats() {
     }
 
     setMonsterSpeciesLookupStatus(
-        `Looking up ${species} (D&D Beyond, then 5e.tools)…`,
+        `Looking up ${species} (${window.scryingLookupSources?.order() || 'enabled sources'})…`,
         {ticket: feedback, severity: 'info'},
     );
 
