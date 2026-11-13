@@ -191,7 +191,10 @@ remains explicitly unavailable rather than guessed. No account authentication or
 entitlement filtering is added.
 
 In Add monster, one candidate is automatic and multiple candidates open a selection
-dialog. There is no separate initiative-bonus confirmation. Available source
+dialog; D&D Beyond choices name their book and sort by it, "Choose again" next to
+Monster species reopens the same list, and a "Select monster image" dialog offers the
+images of the other found monsters (Cancel keeps the original). The overwrite checkbox
+is ticked by default. There is no separate initiative-bonus confirmation. Available source
 bonuses fill blank fields; the overwrite checkbox covers AC, HP range and initiative
 bonus. With overwrite enabled, an explicitly missing source bonus clears the input
 to blank, using the existing default-zero path without source-bonus attribution.

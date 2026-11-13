@@ -320,6 +320,14 @@ and licence attribution for Open5e. Any provider failure still blocks all candid
 Open5e statistics fill AC, HP range and initiative bonus by the same empty-field and
 overwrite rules; most Open5e monsters have no image. When Open5e is enabled, Refresh
 also uses it. The lookup message and the help text name only the enabled providers.
+D&D Beyond choices show the book named on the monster page (for example "D&D Beyond /
+Basic Rules (2014) / legacy") and sort by book. The overwrite checkbox is ticked by
+default. When you pick from several monsters and another found monster has a different
+image, a "Select monster image" dialog shows thumbnails: the selected monster's image
+first, then the others with their provider and book. Click a thumbnail to use that
+image, or Cancel to keep the original image (or none). An uploaded image file still
+takes precedence. After a lookup with several results, "Choose again" next to Monster
+species reopens the list for the same species without typing it again.
 
 Configuration under `display` (defaults shown):
 ```yaml

@@ -80,7 +80,7 @@ def dnd_candidates(context, species):
             image.feed(html)
             results.append({"found": True, "name": species, "species": species,
                             "provider": "D&D Beyond", "legacy": legacy,
-                            "source": "Source book unavailable",
+                            "source": dnd_source_book(html) or "Source book unavailable",
                             "source_url": "https://www.dndbeyond.com" + href,
                             "ac": ac, "hp": hp, "hp_source": hp_source, "image_url": image.url,
                             **({"attribution": credit} if (credit := dnd_source_attribution(html)) else {}),
@@ -114,12 +114,25 @@ class MonsterSourceText(HTMLParser):
             self.parts.append(data)
 
 
-def dnd_source_attribution(html):
-    """'<book>, pg. N via D&D Beyond' when the page names its source; otherwise None."""
+def dnd_source_text(html):
+    """The page's source line, e.g. 'Basic Rules (2014), pg. 138'; None when absent."""
     parser = MonsterSourceText()
     parser.feed(html)
     text = " ".join(" ".join(parser.parts).split()).replace(" ,", ",")
-    return f"{text} via D&D Beyond" if 0 < len(text) <= 200 else None
+    return text if 0 < len(text) <= 200 else None
+
+
+def dnd_source_book(html):
+    """Book name from the source line without the page; None when absent."""
+    text = dnd_source_text(html)
+    book = re.split(r",\s*pg\.", text, maxsplit=1)[0].strip() if text else ""
+    return book if 0 < len(book) <= 100 else None
+
+
+def dnd_source_attribution(html):
+    """'<book>, pg. N via D&D Beyond' when the page names its source; otherwise None."""
+    text = dnd_source_text(html)
+    return f"{text} via D&D Beyond" if text else None
 
 
 def fivetools_source_attribution(source_name, monster):
@@ -233,7 +246,8 @@ class CandidateMonstersMixin(AdminMonstersMixin):
                              quantity: int = Form(1, ge=1, le=50),
                              image: UploadFile | None = File(None), selection_token: str = Form(''),
                              initiative_bonus: str = Form(''),
-                             initiative_bonus_offer_token: str = Form('')):
+                             initiative_bonus_offer_token: str = Form(''),
+                             image_selection_token: str = Form('')):
         from fastapi.params import Form as FormParameter
         from .scrying_glass_initiative_input import creation_bonus_fields
         from .scrying_glass_source_bonus_offer import read_bonus_offer
@@ -242,6 +256,8 @@ class CandidateMonstersMixin(AdminMonstersMixin):
             initiative_bonus = initiative_bonus.default
         if isinstance(initiative_bonus_offer_token, FormParameter):
             initiative_bonus_offer_token = initiative_bonus_offer_token.default
+        if isinstance(image_selection_token, FormParameter):
+            image_selection_token = image_selection_token.default
         try:
             bonus_fields = creation_bonus_fields(initiative_bonus)
             if initiative_bonus_offer_token:
@@ -278,6 +294,11 @@ class CandidateMonstersMixin(AdminMonstersMixin):
         elif selection_token:
             try:
                 image_url, source_fields = selected_snapshot(selection_token, fields["monster_species"])
+                if image_selection_token:
+                    # Image picked from another found candidate: only its signed image is used.
+                    image_url = selected_snapshot(image_selection_token, fields["monster_species"])[0]
+                    if not image_url:
+                        raise ValueError("Chosen image is unavailable; repeat lookup.")
             except ValueError as exc:
                 raise self.context.HTTPException(422, str(exc)) from exc
         else:

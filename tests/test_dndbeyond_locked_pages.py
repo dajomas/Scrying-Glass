@@ -5,6 +5,7 @@ No account, network, FastAPI server or live-provider verification is performed.
 import ast
 import io
 import logging
+import re
 from html.parser import HTMLParser
 from pathlib import Path
 from types import SimpleNamespace
@@ -89,11 +90,12 @@ class SelectionIntegrationTests(unittest.TestCase):
         # Extract production selection functions to avoid requiring FastAPI.
         source = ROOT / 'python/scrying_glass_monster_selection.py'
         tree = ast.parse(source.read_text(encoding='utf-8'))
-        names = {'ProviderError', 'dnd_candidates', 'lookup_candidates', 'MonsterImage'}
+        names = {'ProviderError', 'dnd_candidates', 'lookup_candidates', 'MonsterImage', 'MonsterSourceText',
+                 'dnd_source_text', 'dnd_source_book', 'dnd_source_attribution'}
         subset = ast.Module(body=[n for n in tree.body if getattr(n, 'name', None) in names], type_ignores=[])
         self.fallback = Mock(return_value=[{'found': True, 'species': 'Crawling Claw', 'provider': '5e.tools'}])
         self.sign = Mock(return_value='fixture-token')
-        self.ns = dict(HTTPError=HTTPError, urlsplit=dnd.urlsplit, MAX_CANDIDATES=32,
+        self.ns = dict(re=re, HTTPError=HTTPError, urlsplit=dnd.urlsplit, MAX_CANDIDATES=32,
                        LOG=logging.getLogger(__name__), HTMLParser=HTMLParser, urljoin=urljoin,
                        ft=SimpleNamespace(https_url=lambda value: value.startswith('https://')),
                        _KEY=b'locked-page-fixture-only-key', time=SimpleNamespace(time=lambda: 1000),

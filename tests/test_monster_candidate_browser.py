@@ -26,6 +26,8 @@ class CandidateBrowserTests(unittest.TestCase):
             <p id="monsterInitiativeBonusHelp">Initiative bonus help.</p>
             <button>Add</button></form><input type="checkbox" id="monsterSpeciesLookupOverwrite">
             <p id="monsterAddNotification"></p>"""))
+        self.page.route('https://img.test/**', lambda route: route.fulfill(content_type='image/svg+xml',
+            body='<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"/>'))
         self.page.goto('http://fixture.test/')
         install_feedback(self.page)
         self.assertEqual(self.page.locator('[data-sg-feedback-mounted]').count(), 1)
@@ -39,6 +41,7 @@ class CandidateBrowserTests(unittest.TestCase):
                 return result;
             }
         """)
+        self.page.add_script_tag(content=(ROOT / 'static/monster-image-choice.js').read_text())
         self.page.add_script_tag(content=(ROOT / 'static/monster-candidate-selection.js').read_text())
 
     def launch_lookup(self):
@@ -202,6 +205,52 @@ class CandidateBrowserTests(unittest.TestCase):
         self.assertEqual(self.token(), 'manual')
         self.assertEqual(self.page.locator('#monsterAc').input_value(), '')
         self.assertTrue(self.page.locator('#monsterSpecies').evaluate('node => node === document.activeElement'))
+
+    def images(self, own):
+        return [dict(found=True, name='Goblin', species='Goblin', provider='5e.tools', source='MM', legacy=True,
+                     ac=11, hp='6', selection_token='token-1', image_url=own),
+                dict(found=True, name='Goblin', species='Goblin', provider='5e.tools', source='XMM', legacy=False,
+                     ac=12, hp='7', selection_token='token-2', image_url='https://img.test/xmm.svg')]
+
+    def form_value(self, name):
+        return self.page.evaluate(f"new FormData(document.querySelector('#monsterForm')).get('{name}')")
+
+    def test_other_image_can_replace_the_selected_image(self):
+        self.start_candidates(self.images('https://img.test/mm.svg'))
+        self.page.get_by_role('button', name='1. Goblin', exact=False).click()
+        dialog = self.page.get_by_role('dialog', name='Select monster image', exact=True)
+        dialog.wait_for()
+        self.assertEqual(dialog.locator('img').count(), 2)
+        self.assertEqual(dialog.locator('img').first.get_attribute('src'), 'https://img.test/mm.svg')
+        self.page.get_by_role('button', name='Use image: 5e.tools / Monster Manuals 2024', exact=True).click()
+        self.finish()
+        self.assertEqual(self.token(), 'token-1')
+        self.assertEqual(self.form_value('image_selection_token'), 'token-2')
+
+    def test_cancel_keeps_no_image_and_choose_again_reuses_results(self):
+        self.start_candidates(self.images(None))
+        self.page.get_by_role('button', name='1. Goblin', exact=False).click()
+        dialog = self.page.get_by_role('dialog', name='Select monster image', exact=True)
+        dialog.wait_for()
+        self.assertEqual(dialog.locator('img').count(), 1)
+        dialog.get_by_role('button', name='Cancel', exact=True).click()
+        self.finish()
+        self.assertEqual(self.token(), 'token-1')
+        self.assertIsNone(self.form_value('image_selection_token'))
+        again = self.page.get_by_role('button', name='Choose again', exact=True)
+        self.assertTrue(again.is_visible())
+        self.result = {'status': 'error', 'reason': 'Should not refetch.'}
+        self.page.locator('#monsterSpeciesLookupOverwrite').check()
+        self.page.evaluate("window.lookupSettled = false")
+        again.click()
+        self.page.get_by_role('dialog', name='Select monster candidate', exact=True).wait_for()
+        self.page.evaluate("window.lookupDone = new Promise(r => {window.lookupSettled = true; r();})")
+        self.page.get_by_role('button', name='2. Goblin', exact=False).click()
+        self.page.wait_for_function("new FormData(document.querySelector('#monsterForm')).get('selection_token') === 'token-2'")
+        self.assertEqual(self.page.locator('#monsterAc').input_value(), '12')
+        self.page.evaluate("const input = document.querySelector('#monsterSpecies'); input.value='Orc'; input.dispatchEvent(new Event('input', {bubbles:true}));")
+        self.assertFalse(again.is_visible())
+        self.assertEqual(self.errors, [])
 
 if __name__ == '__main__':
     unittest.main()

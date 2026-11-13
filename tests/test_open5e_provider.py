@@ -212,6 +212,8 @@ class Open5eLookupIntegrationTests(unittest.TestCase):
         self.assertEqual(ms.dnd_source_attribution(html), "Basic Rules (2014), pg. 138 via D&D Beyond")
         self.assertIsNone(ms.dnd_source_attribution("<p class='source'>Elsewhere</p>"))
         self.assertIsNone(ms.dnd_source_attribution('<p class="monster-source"> </p>'))
+        self.assertEqual(ms.dnd_source_book(html), "Basic Rules (2014)")
+        self.assertIsNone(ms.dnd_source_book('<p class="monster-source"> </p>'))
         self.assertEqual(ms.fivetools_source_attribution("MM", {"page": 166}), "MM, page 166 via 5e.tools")
         for page in (None, 0, "166", True, 1.5):
             self.assertIsNone(ms.fivetools_source_attribution("MM", {"page": page}))

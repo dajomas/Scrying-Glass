@@ -35,6 +35,44 @@
     refreshProviders();
     window.addEventListener('focus', refreshProviders);
     let selected = null;
+    let imageChoice = null;   // Another found candidate whose image replaces the selected one.
+    let lastLookup = null;    // {species, candidates, at} of the last multi-candidate lookup.
+    let reuseLookup = null;
+    const REUSE_MS = 20 * 60 * 1000;  // Signed selection tokens last 30 minutes.
+    let reselectButton = null;
+    function updateReselect() {
+        const show = Boolean(lastLookup && lastLookup.species === speciesInput.value.trim() &&
+            Date.now() - lastLookup.at < REUSE_MS);
+        if (show && !reselectButton) {
+            reselectButton = document.createElement('button');
+            reselectButton.type = 'button';
+            reselectButton.id = 'monsterSpeciesReselect';
+            reselectButton.className = 'monster-species-reselect';
+            reselectButton.textContent = 'Choose again';
+            reselectButton.title = 'Choose again from the monsters found for this species';
+            reselectButton.addEventListener('click', () => {
+                if (!lastLookup || lastLookup.species !== speciesInput.value.trim()) return updateReselect();
+                reuseLookup = lastLookup;
+                if (typeof lookupMonsterSpeciesStats === 'function') lookupMonsterSpeciesStats();
+            });
+            (speciesInput.closest('label.field') || speciesInput).after(reselectButton);
+        }
+        if (reselectButton) reselectButton.hidden = !show;
+    }
+    function uploadChosen() {
+        const file = document.querySelector('#monsterImage');
+        return Boolean(file?.files && file.files.length);
+    }
+    function chooseImage(candidate, candidates) {
+        // Image picker lives in monster-image-choice.js (fragment size limit).
+        const picker = window.scryingMonsterImageChoice;
+        if (!picker) return Promise.resolve(candidate);
+        const open = picker.open(candidate, candidates, other => monsterSourceLabel(other, true));
+        cancelPopup = open.cancel;
+        return open.promise.finally(() => {
+            if (cancelPopup === open.cancel) cancelPopup = null;
+        });
+    }
     let appliedOffer = null;
     let cancelPopup = null;
     let generation = 0;
@@ -76,19 +114,24 @@
     function publishSelection() {
         document.dispatchEvent(new CustomEvent('scrying:monster-selection', {
             detail: selected ? {species: selected.species, provider: selected.provider,
-                image_url: selected.image_url || null} : null
+                image_url: (imageChoice || selected).image_url || null} : null
         }));
     }
     function invalidate() {
         generation++;
         selected = null;
+        imageChoice = null;
+        updateReselect();
         clearAppliedOffer();
         publishSelection();
         if (cancelPopup) cancelPopup();
     }
     speciesInput.addEventListener('input', invalidate, true);
     overwrite?.addEventListener('change', invalidate, true);
-    form.addEventListener('reset', invalidate);
+    form.addEventListener('reset', () => {
+        lastLookup = null;
+        invalidate();
+    });
     form.addEventListener('submit', event => {
         if (pending) {
             event.preventDefault();
@@ -100,6 +143,11 @@
         const currentSelection = selected && selected.species === speciesInput.value.trim();
         event.formData.set('selection_token', currentSelection ? selected.selection_token : 'manual');
         event.formData.delete('initiative_bonus_offer_token');
+        event.formData.delete('image_selection_token');
+        if (currentSelection && imageChoice && imageChoice !== selected &&
+                typeof imageChoice.selection_token === 'string') {
+            event.formData.set('image_selection_token', imageChoice.selection_token);
+        }
         if (currentSelection && appliedOffer &&
                 appliedOffer.selectionToken === selected.selection_token &&
                 appliedOffer.species === speciesInput.value.trim() &&
@@ -212,9 +260,13 @@
         const originalBonusRevision = bonusRevision;
         const overwriteBonus = Boolean(overwrite?.checked);
         selected = null;
+        imageChoice = null;
         clearAppliedOffer();
         publishSelection();
         if (cancelPopup) cancelPopup();
+        const reuse = reuseLookup && reuseLookup.species === species &&
+            Date.now() - reuseLookup.at < REUSE_MS ? reuseLookup : null;
+        reuseLookup = null;
         const scopeGuard = window.scryingAdminFeedback.begin({region: 'monsters',
             operation: 'monster.candidate.lookup', target: 'monster-form', label: 'Select monster source'});
         const isCurrent = () => window.scryingAdminFeedback.isCurrent(scopeGuard) &&
@@ -222,13 +274,20 @@
             speciesInput.value.trim() === species && Boolean(overwrite?.checked) === overwriteBonus;
         pending++;
         try {
-            const result = await originalRequest(`/api/monsters/lookup?species=${encodeURIComponent(species)}`, options);
+            const result = reuse ? {status: 'ok', candidates: reuse.candidates}
+                : await originalRequest(`/api/monsters/lookup?species=${encodeURIComponent(species)}`, options);
             if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
             if (!result || result.status !== 'ok') return {found: false,
                 reason: result?.reason || 'Monster lookup failed; enter stats manually.'};
             const candidates = result.candidates || [];
             if (!candidates.length) return {found: false,
                 reason: `No usable monster stats found for ${species}; enter AC and HP manually.`};
+            if (candidates.length > 1 && !reuse) {
+                lastLookup = {species, candidates, at: Date.now()};
+            } else if (candidates.length <= 1) {
+                lastLookup = null;
+            }
+            updateReselect();
             const candidate = candidates.length === 1 ? candidates[0] : await choose(candidates);
             if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
             if (!candidate) return {found: false,
@@ -255,7 +314,12 @@
                 bonusInput.dispatchEvent(new Event('change', {bubbles: true}));
                 if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
             }
+            // Offer images from the other found monsters unless an upload already overrides them.
+            const imageOwner = candidates.length > 1 && !uploadChosen()
+                ? await chooseImage(candidate, candidates) : candidate;
+            if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
             selected = candidate;
+            imageChoice = imageOwner && imageOwner !== candidate ? imageOwner : null;
             publishSelection();
             return candidate;
         } finally {
