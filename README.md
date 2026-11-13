@@ -58,8 +58,9 @@ include unchanged Client Display reconnect behavior and no guessed server-detail
 field mapping. Historical asset lists describe their dated checkpoints only.
 
 No agreed 009.7/009 implementation or acceptance action remains. Deferred test-suite
-cleanup and proposed source-selection/Open5e remain separate work, not closure
-prerequisites or newly started tasks. SG-TODO-019 is also completed and closed for
+cleanup remains separate work. The source-selection/Open5e workstream (016/017) has
+an accepted plan with Stage 1 recorded in
+[590](docs/handover/590-monster-source-workstream.md); Stages 2-3 are not started. SG-TODO-019 is also completed and closed for
 its agreed Activity log Details scope after final user acceptance on 2026-11-13 at
 09:04 CET. Tested implementation 4a1feb47654ea6665862ec44b3f52dc6a27458b8 on
 features/perplexity has successful Branch tests 43386246710 attempt 1, evidence

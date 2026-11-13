@@ -73,6 +73,7 @@ This is the index; substantive handover lives in numbered docs/handover sections
 57. [Deliverable 2 accepted close-out](docs/handover/560-connection-field-feedback.md#deliverable-2-accepted-close-out---2026-11-12) - agreed Admin persistent connection/recovery, polling deduplication and near-field association completed/closed; user accepted 2026-11-12 at 22:43 CET. Tested 8da0657325818c69fc82dc1234995a5146e88ebc; successful Branch tests 43310602854 attempt 1; evidence dbb78d3057a2d38527bd612b948a6566a1a741e3. Historical whole-D1/final-pending notes are superseded by 570.
 58. [Final Deliverable 1, 009.7 and overall 009 close-out](docs/handover/570-final-0097-close-out.md) - completed/closed for the agreed scope after final user acceptance 2026-11-12 at 22:58 CET; integrated evidence, unchanged code identity, criterion mapping and limits recorded. No new scope, test run, merge or deployment.
 59. [SG-TODO-019 accepted Activity log close-out](docs/handover/580-activity-log-result-details.md#sg-todo-019-accepted-close-out---2026-11-13) - completed/closed for the agreed unit/property/result Details scope; final user acceptance 2026-11-13 at 09:04 CET. Tested 4a1feb47654ea6665862ec44b3f52dc6a27458b8 on features/perplexity; successful Branch tests 43386246710 attempt 1; publication 5b1a0a6270adea9e67ca9ffd1def534b875f1317. Earlier CI/acceptance-pending notes are superseded; evidence limits retained.
+60. [Monster source workstream (SG-TODO-016/017)](docs/handover/590-monster-source-workstream.md) - three-stage plan and user decisions accepted 2026-11-13; Stage 1 live Open5e/provider findings recorded (documentation only); Stages 2-3 not started.
 
 <a id="current-state---2026-11-11"></a>
 <a id="current-state---2026-11-12"></a>
@@ -104,9 +105,13 @@ notes are superseded; no further acceptance request remains. No individual revie
 of every 019 test log/screenshot, new authenticated live-server, human visual or
 screen-reader verification is claimed. Preparation counts are not relabelled CI.
 
+The SG-TODO-016/017 workstream plan and user decisions were accepted on 2026-11-13;
+Stage 1 findings are recorded in [590](docs/handover/590-monster-source-workstream.md).
+Stages 2 (Open5e provider) and 3 (source dropdowns) are not started.
+
 No agreed 009.7/009 or SG-TODO-019 implementation/acceptance action remains.
-Test-suite cleanup stays separate post-009 work; 016/017 remain proposed, not newly
-started. The existing 115 sequence is unchanged. No owner/deadline or blanket
+Test-suite cleanup stays separate post-009 work; 016/017 follow the accepted
+three-stage plan in 590. The 115 sequence is unchanged. No owner/deadline or blanket
 future-write/merge/deployment approval. The earlier user merge of the 009.7 branch
 is history; no merge is performed by this documentation close-out.
 

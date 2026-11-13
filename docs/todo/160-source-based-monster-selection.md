@@ -3,7 +3,7 @@
 [Back to TODO index](../../TODO.md)
 
 - Task: SG-TODO-016
-- Status: proposed
+- Status: in progress - Stage 1 (joint feasibility/design) recorded 2026-11-13; this task is Stage 3 of the accepted workstream and is not started.
 - Recorded: 2026-11-06
 - Priority: not assigned; no change to the [agreed Admin delivery sequence](115-admin-delivery-sequence.md).
 - Dependencies: source-catalog enumeration feasibility must be established during implementation planning.
@@ -32,6 +32,16 @@ Define the effect of choosing a monster on identity, statistics and image fields
 
 Add relevant provider and UI regression coverage for default None, configured source options, source-specific lists, pagination where applicable, source switching, stale responses, empty catalogs and failures. Manually verify the selectors in Monster identity and preservation of manual entry. Verify live catalog completeness separately from fixture-based tests before claiming all available monsters are listed.
 
+## Accepted decisions - 2026-11-13
+
+The user accepted the coordinated plan (Stage 1 feasibility, Stage 2 SG-TODO-017 provider layer, Stage 3 this task) and decided:
+
+- D&D Beyond is **not** in the source dropdown because of how it is accessed. It remains available for name search only. This narrows the original "D&D Beyond" option by explicit agreement.
+- Source options are None (default), each configured 5e.tools source and every Open5e document, each labelled with its source.
+- Picking a monster fills in name, statistics and image only when those fields are empty or the overwrite check is ticked.
+
+Findings and the proposed design are in the [590 handover](../handover/590-monster-source-workstream.md).
+
 ## Delivery status
 
-Backlog entry only. Provider feasibility, implementation and validation remain outstanding.
+Stage 1 findings recorded 2026-11-13 (documentation only). Implementation and validation are outstanding and depend on the Stage 2 provider layer.

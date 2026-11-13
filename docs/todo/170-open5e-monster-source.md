@@ -3,7 +3,7 @@
 [Back to TODO index](../../TODO.md)
 
 - Task: SG-TODO-017
-- Status: proposed
+- Status: in progress - Stage 1 (joint feasibility/design) recorded 2026-11-13; implementation is Stage 2 of the accepted workstream and is not started.
 - Recorded: 2026-11-06
 - Priority: not assigned; no change to the [agreed Admin delivery sequence](115-admin-delivery-sequence.md).
 - Dependencies: verify the current Open5e API contract during implementation planning.
@@ -32,6 +32,15 @@ Agree how Open5e is enabled and configured, its position (if any) in automatic f
 
 Prepare provider and UI regression tests covering lookup, candidate selection, field mapping, missing data, pagination, empty results and provider failures. Verify representative live API responses separately from fixture-based tests and document any limits on catalog completeness or image availability.
 
+## Accepted decisions - 2026-11-13
+
+- All Open5e documents are included. When several options match, the source is shown with each choice.
+- Open5e is enabled by default.
+- Add toggles to enable or disable D&D Beyond, 5e.tools and Open5e search.
+- Picking a monster fills in name, statistics and image only when those fields are empty or the overwrite check is ticked.
+
+Stage 1 verified the v2 API contract against the live service: document filtering, field selection and pagination work; unsupported filters are silently ignored; no images were seen on sampled creatures; and content carries per-document licences. Details, configuration and toggle proposals and the candidate order (D&D Beyond, 5e.tools, Open5e) are in the [590 handover](../handover/590-monster-source-workstream.md). The proposals remain open for review with the Stage 2 payload.
+
 ## Delivery status
 
-Backlog entry only. API research, implementation and validation remain outstanding.
+Stage 1 recorded 2026-11-13 (documentation only). Stage 2 implementation and validation are outstanding.
