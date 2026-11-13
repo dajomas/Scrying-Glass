@@ -1,0 +1,748 @@
+.............EEEEEEEEEEEEE.                                              [100%]
+==================================== ERRORS ====================================
+_______ ERROR at setup of test_admin_login_logout_and_redirects[firefox] _______
+
+browser_name = 'firefox'
+
+    @pytest.fixture(scope="session")
+    def browser(browser_name):
+        with sync_playwright() as playwright:
+            launcher = getattr(playwright, browser_name)
+            args = ["--no-sandbox"] if browser_name == "chromium" else []
+>           instance = launcher.launch(headless=os.environ.get("E2E_HEADED") != "1", args=args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+e2e/conftest.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv-e2e/lib64/python3.12/site-packages/playwright/sync_api/_generated.py:4113: in launch
+    self._sync(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:387: in finish
+    raise e from None
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:352: in finish
+    result = await zone.run_async(lambda: awaitable)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/utils/zones.py:58: in run_async
+    return await func()
+           ^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/browser_type.py:176: in launch
+    await self._channel.launch(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+awaitable = <Future finished exception=Error('\n╔══════════════════════════════════════════════════════╗\n║ Host system is missing...\n║ <3 Playwright Team                                   ║\n╚══════════════════════════════════════════════════════╝')>
+mapper = <function BrowserTypeChannel.launch.<locals>.<lambda> at 0x7f6670cb0cc0>
+
+    async def _mapped(awaitable: Awaitable[Any], mapper: Callable[[Any], Any]) -> Any:
+        # Python: the result of a channel call, mapped by the generated channel method.
+>       return mapper(await awaitable)
+                      ^^^^^^^^^^^^^^^
+E       playwright._impl._errors.Error: BrowserType.launch: 
+E       ╔══════════════════════════════════════════════════════╗
+E       ║ Host system is missing dependencies to run browsers. ║
+E       ║ Please install them with the following command:      ║
+E       ║                                                      ║
+E       ║     sudo playwright install-deps                     ║
+E       ║                                                      ║
+E       ║ Alternatively, use apt:                              ║
+E       ║     sudo apt-get install libxcursor1\                ║
+E       ║         libgtk-3-0t64\                               ║
+E       ║         libpangocairo-1.0-0\                         ║
+E       ║         libpango-1.0-0\                              ║
+E       ║         libcairo-gobject2\                           ║
+E       ║         libcairo2\                                   ║
+E       ║         libgdk-pixbuf-2.0-0                          ║
+E       ║                                                      ║
+E       ║ <3 Playwright Team                                   ║
+E       ╚══════════════════════════════════════════════════════╝
+
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:398: Error
+_________________ ERROR at setup of test_role_routing[firefox] _________________
+
+browser_name = 'firefox'
+
+    @pytest.fixture(scope="session")
+    def browser(browser_name):
+        with sync_playwright() as playwright:
+            launcher = getattr(playwright, browser_name)
+            args = ["--no-sandbox"] if browser_name == "chromium" else []
+>           instance = launcher.launch(headless=os.environ.get("E2E_HEADED") != "1", args=args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+e2e/conftest.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv-e2e/lib64/python3.12/site-packages/playwright/sync_api/_generated.py:4113: in launch
+    self._sync(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:387: in finish
+    raise e from None
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:352: in finish
+    result = await zone.run_async(lambda: awaitable)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/utils/zones.py:58: in run_async
+    return await func()
+           ^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/browser_type.py:176: in launch
+    await self._channel.launch(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+awaitable = <Future finished exception=Error('\n╔══════════════════════════════════════════════════════╗\n║ Host system is missing...\n║ <3 Playwright Team                                   ║\n╚══════════════════════════════════════════════════════╝')>
+mapper = <function BrowserTypeChannel.launch.<locals>.<lambda> at 0x7f6670cb0cc0>
+
+    async def _mapped(awaitable: Awaitable[Any], mapper: Callable[[Any], Any]) -> Any:
+        # Python: the result of a channel call, mapped by the generated channel method.
+>       return mapper(await awaitable)
+                      ^^^^^^^^^^^^^^^
+E       playwright._impl._errors.Error: BrowserType.launch: 
+E       ╔══════════════════════════════════════════════════════╗
+E       ║ Host system is missing dependencies to run browsers. ║
+E       ║ Please install them with the following command:      ║
+E       ║                                                      ║
+E       ║     sudo playwright install-deps                     ║
+E       ║                                                      ║
+E       ║ Alternatively, use apt:                              ║
+E       ║     sudo apt-get install libxcursor1\                ║
+E       ║         libgtk-3-0t64\                               ║
+E       ║         libpangocairo-1.0-0\                         ║
+E       ║         libpango-1.0-0\                              ║
+E       ║         libcairo-gobject2\                           ║
+E       ║         libcairo2\                                   ║
+E       ║         libgdk-pixbuf-2.0-0                          ║
+E       ║                                                      ║
+E       ║ <3 Playwright Team                                   ║
+E       ╚══════════════════════════════════════════════════════╝
+
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:398: Error
+___ ERROR at setup of test_superadmin_creates_user_who_can_sign_in[firefox] ____
+
+browser_name = 'firefox'
+
+    @pytest.fixture(scope="session")
+    def browser(browser_name):
+        with sync_playwright() as playwright:
+            launcher = getattr(playwright, browser_name)
+            args = ["--no-sandbox"] if browser_name == "chromium" else []
+>           instance = launcher.launch(headless=os.environ.get("E2E_HEADED") != "1", args=args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+e2e/conftest.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv-e2e/lib64/python3.12/site-packages/playwright/sync_api/_generated.py:4113: in launch
+    self._sync(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:387: in finish
+    raise e from None
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:352: in finish
+    result = await zone.run_async(lambda: awaitable)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/utils/zones.py:58: in run_async
+    return await func()
+           ^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/browser_type.py:176: in launch
+    await self._channel.launch(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+awaitable = <Future finished exception=Error('\n╔══════════════════════════════════════════════════════╗\n║ Host system is missing...\n║ <3 Playwright Team                                   ║\n╚══════════════════════════════════════════════════════╝')>
+mapper = <function BrowserTypeChannel.launch.<locals>.<lambda> at 0x7f6670cb0cc0>
+
+    async def _mapped(awaitable: Awaitable[Any], mapper: Callable[[Any], Any]) -> Any:
+        # Python: the result of a channel call, mapped by the generated channel method.
+>       return mapper(await awaitable)
+                      ^^^^^^^^^^^^^^^
+E       playwright._impl._errors.Error: BrowserType.launch: 
+E       ╔══════════════════════════════════════════════════════╗
+E       ║ Host system is missing dependencies to run browsers. ║
+E       ║ Please install them with the following command:      ║
+E       ║                                                      ║
+E       ║     sudo playwright install-deps                     ║
+E       ║                                                      ║
+E       ║ Alternatively, use apt:                              ║
+E       ║     sudo apt-get install libxcursor1\                ║
+E       ║         libgtk-3-0t64\                               ║
+E       ║         libpangocairo-1.0-0\                         ║
+E       ║         libpango-1.0-0\                              ║
+E       ║         libcairo-gobject2\                           ║
+E       ║         libcairo2\                                   ║
+E       ║         libgdk-pixbuf-2.0-0                          ║
+E       ║                                                      ║
+E       ║ <3 Playwright Team                                   ║
+E       ╚══════════════════════════════════════════════════════╝
+
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:398: Error
+_ ERROR at setup of test_campaign_ownership_controls_admin_visibility[firefox] _
+
+browser_name = 'firefox'
+
+    @pytest.fixture(scope="session")
+    def browser(browser_name):
+        with sync_playwright() as playwright:
+            launcher = getattr(playwright, browser_name)
+            args = ["--no-sandbox"] if browser_name == "chromium" else []
+>           instance = launcher.launch(headless=os.environ.get("E2E_HEADED") != "1", args=args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+e2e/conftest.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv-e2e/lib64/python3.12/site-packages/playwright/sync_api/_generated.py:4113: in launch
+    self._sync(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:387: in finish
+    raise e from None
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:352: in finish
+    result = await zone.run_async(lambda: awaitable)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/utils/zones.py:58: in run_async
+    return await func()
+           ^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/browser_type.py:176: in launch
+    await self._channel.launch(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+awaitable = <Future finished exception=Error('\n╔══════════════════════════════════════════════════════╗\n║ Host system is missing...\n║ <3 Playwright Team                                   ║\n╚══════════════════════════════════════════════════════╝')>
+mapper = <function BrowserTypeChannel.launch.<locals>.<lambda> at 0x7f6670cb0cc0>
+
+    async def _mapped(awaitable: Awaitable[Any], mapper: Callable[[Any], Any]) -> Any:
+        # Python: the result of a channel call, mapped by the generated channel method.
+>       return mapper(await awaitable)
+                      ^^^^^^^^^^^^^^^
+E       playwright._impl._errors.Error: BrowserType.launch: 
+E       ╔══════════════════════════════════════════════════════╗
+E       ║ Host system is missing dependencies to run browsers. ║
+E       ║ Please install them with the following command:      ║
+E       ║                                                      ║
+E       ║     sudo playwright install-deps                     ║
+E       ║                                                      ║
+E       ║ Alternatively, use apt:                              ║
+E       ║     sudo apt-get install libxcursor1\                ║
+E       ║         libgtk-3-0t64\                               ║
+E       ║         libpangocairo-1.0-0\                         ║
+E       ║         libpango-1.0-0\                              ║
+E       ║         libcairo-gobject2\                           ║
+E       ║         libcairo2\                                   ║
+E       ║         libgdk-pixbuf-2.0-0                          ║
+E       ║                                                      ║
+E       ║ <3 Playwright Team                                   ║
+E       ╚══════════════════════════════════════════════════════╝
+
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:398: Error
+________ ERROR at setup of test_viewer_access_grant_and_revoke[firefox] ________
+
+browser_name = 'firefox'
+
+    @pytest.fixture(scope="session")
+    def browser(browser_name):
+        with sync_playwright() as playwright:
+            launcher = getattr(playwright, browser_name)
+            args = ["--no-sandbox"] if browser_name == "chromium" else []
+>           instance = launcher.launch(headless=os.environ.get("E2E_HEADED") != "1", args=args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+e2e/conftest.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv-e2e/lib64/python3.12/site-packages/playwright/sync_api/_generated.py:4113: in launch
+    self._sync(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:387: in finish
+    raise e from None
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:352: in finish
+    result = await zone.run_async(lambda: awaitable)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/utils/zones.py:58: in run_async
+    return await func()
+           ^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/browser_type.py:176: in launch
+    await self._channel.launch(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+awaitable = <Future finished exception=Error('\n╔══════════════════════════════════════════════════════╗\n║ Host system is missing...\n║ <3 Playwright Team                                   ║\n╚══════════════════════════════════════════════════════╝')>
+mapper = <function BrowserTypeChannel.launch.<locals>.<lambda> at 0x7f6670cb0cc0>
+
+    async def _mapped(awaitable: Awaitable[Any], mapper: Callable[[Any], Any]) -> Any:
+        # Python: the result of a channel call, mapped by the generated channel method.
+>       return mapper(await awaitable)
+                      ^^^^^^^^^^^^^^^
+E       playwright._impl._errors.Error: BrowserType.launch: 
+E       ╔══════════════════════════════════════════════════════╗
+E       ║ Host system is missing dependencies to run browsers. ║
+E       ║ Please install them with the following command:      ║
+E       ║                                                      ║
+E       ║     sudo playwright install-deps                     ║
+E       ║                                                      ║
+E       ║ Alternatively, use apt:                              ║
+E       ║     sudo apt-get install libxcursor1\                ║
+E       ║         libgtk-3-0t64\                               ║
+E       ║         libpangocairo-1.0-0\                         ║
+E       ║         libpango-1.0-0\                              ║
+E       ║         libcairo-gobject2\                           ║
+E       ║         libcairo2\                                   ║
+E       ║         libgdk-pixbuf-2.0-0                          ║
+E       ║                                                      ║
+E       ║ <3 Playwright Team                                   ║
+E       ╚══════════════════════════════════════════════════════╝
+
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:398: Error
+_______ ERROR at setup of test_create_edit_and_switch_campaigns[firefox] _______
+
+browser_name = 'firefox'
+
+    @pytest.fixture(scope="session")
+    def browser(browser_name):
+        with sync_playwright() as playwright:
+            launcher = getattr(playwright, browser_name)
+            args = ["--no-sandbox"] if browser_name == "chromium" else []
+>           instance = launcher.launch(headless=os.environ.get("E2E_HEADED") != "1", args=args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+e2e/conftest.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv-e2e/lib64/python3.12/site-packages/playwright/sync_api/_generated.py:4113: in launch
+    self._sync(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:387: in finish
+    raise e from None
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:352: in finish
+    result = await zone.run_async(lambda: awaitable)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/utils/zones.py:58: in run_async
+    return await func()
+           ^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/browser_type.py:176: in launch
+    await self._channel.launch(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+awaitable = <Future finished exception=Error('\n╔══════════════════════════════════════════════════════╗\n║ Host system is missing...\n║ <3 Playwright Team                                   ║\n╚══════════════════════════════════════════════════════╝')>
+mapper = <function BrowserTypeChannel.launch.<locals>.<lambda> at 0x7f6670cb0cc0>
+
+    async def _mapped(awaitable: Awaitable[Any], mapper: Callable[[Any], Any]) -> Any:
+        # Python: the result of a channel call, mapped by the generated channel method.
+>       return mapper(await awaitable)
+                      ^^^^^^^^^^^^^^^
+E       playwright._impl._errors.Error: BrowserType.launch: 
+E       ╔══════════════════════════════════════════════════════╗
+E       ║ Host system is missing dependencies to run browsers. ║
+E       ║ Please install them with the following command:      ║
+E       ║                                                      ║
+E       ║     sudo playwright install-deps                     ║
+E       ║                                                      ║
+E       ║ Alternatively, use apt:                              ║
+E       ║     sudo apt-get install libxcursor1\                ║
+E       ║         libgtk-3-0t64\                               ║
+E       ║         libpangocairo-1.0-0\                         ║
+E       ║         libpango-1.0-0\                              ║
+E       ║         libcairo-gobject2\                           ║
+E       ║         libcairo2\                                   ║
+E       ║         libgdk-pixbuf-2.0-0                          ║
+E       ║                                                      ║
+E       ║ <3 Playwright Team                                   ║
+E       ╚══════════════════════════════════════════════════════╝
+
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:398: Error
+__________ ERROR at setup of test_campaign_name_is_required[firefox] ___________
+
+browser_name = 'firefox'
+
+    @pytest.fixture(scope="session")
+    def browser(browser_name):
+        with sync_playwright() as playwright:
+            launcher = getattr(playwright, browser_name)
+            args = ["--no-sandbox"] if browser_name == "chromium" else []
+>           instance = launcher.launch(headless=os.environ.get("E2E_HEADED") != "1", args=args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+e2e/conftest.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv-e2e/lib64/python3.12/site-packages/playwright/sync_api/_generated.py:4113: in launch
+    self._sync(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:387: in finish
+    raise e from None
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:352: in finish
+    result = await zone.run_async(lambda: awaitable)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/utils/zones.py:58: in run_async
+    return await func()
+           ^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/browser_type.py:176: in launch
+    await self._channel.launch(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+awaitable = <Future finished exception=Error('\n╔══════════════════════════════════════════════════════╗\n║ Host system is missing...\n║ <3 Playwright Team                                   ║\n╚══════════════════════════════════════════════════════╝')>
+mapper = <function BrowserTypeChannel.launch.<locals>.<lambda> at 0x7f6670cb0cc0>
+
+    async def _mapped(awaitable: Awaitable[Any], mapper: Callable[[Any], Any]) -> Any:
+        # Python: the result of a channel call, mapped by the generated channel method.
+>       return mapper(await awaitable)
+                      ^^^^^^^^^^^^^^^
+E       playwright._impl._errors.Error: BrowserType.launch: 
+E       ╔══════════════════════════════════════════════════════╗
+E       ║ Host system is missing dependencies to run browsers. ║
+E       ║ Please install them with the following command:      ║
+E       ║                                                      ║
+E       ║     sudo playwright install-deps                     ║
+E       ║                                                      ║
+E       ║ Alternatively, use apt:                              ║
+E       ║     sudo apt-get install libxcursor1\                ║
+E       ║         libgtk-3-0t64\                               ║
+E       ║         libpangocairo-1.0-0\                         ║
+E       ║         libpango-1.0-0\                              ║
+E       ║         libcairo-gobject2\                           ║
+E       ║         libcairo2\                                   ║
+E       ║         libgdk-pixbuf-2.0-0                          ║
+E       ║                                                      ║
+E       ║ <3 Playwright Team                                   ║
+E       ╚══════════════════════════════════════════════════════╝
+
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:398: Error
+_______ ERROR at setup of test_last_campaign_cannot_be_deleted[firefox] ________
+
+browser_name = 'firefox'
+
+    @pytest.fixture(scope="session")
+    def browser(browser_name):
+        with sync_playwright() as playwright:
+            launcher = getattr(playwright, browser_name)
+            args = ["--no-sandbox"] if browser_name == "chromium" else []
+>           instance = launcher.launch(headless=os.environ.get("E2E_HEADED") != "1", args=args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+e2e/conftest.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv-e2e/lib64/python3.12/site-packages/playwright/sync_api/_generated.py:4113: in launch
+    self._sync(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:387: in finish
+    raise e from None
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:352: in finish
+    result = await zone.run_async(lambda: awaitable)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/utils/zones.py:58: in run_async
+    return await func()
+           ^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/browser_type.py:176: in launch
+    await self._channel.launch(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+awaitable = <Future finished exception=Error('\n╔══════════════════════════════════════════════════════╗\n║ Host system is missing...\n║ <3 Playwright Team                                   ║\n╚══════════════════════════════════════════════════════╝')>
+mapper = <function BrowserTypeChannel.launch.<locals>.<lambda> at 0x7f6670cb0cc0>
+
+    async def _mapped(awaitable: Awaitable[Any], mapper: Callable[[Any], Any]) -> Any:
+        # Python: the result of a channel call, mapped by the generated channel method.
+>       return mapper(await awaitable)
+                      ^^^^^^^^^^^^^^^
+E       playwright._impl._errors.Error: BrowserType.launch: 
+E       ╔══════════════════════════════════════════════════════╗
+E       ║ Host system is missing dependencies to run browsers. ║
+E       ║ Please install them with the following command:      ║
+E       ║                                                      ║
+E       ║     sudo playwright install-deps                     ║
+E       ║                                                      ║
+E       ║ Alternatively, use apt:                              ║
+E       ║     sudo apt-get install libxcursor1\                ║
+E       ║         libgtk-3-0t64\                               ║
+E       ║         libpangocairo-1.0-0\                         ║
+E       ║         libpango-1.0-0\                              ║
+E       ║         libcairo-gobject2\                           ║
+E       ║         libcairo2\                                   ║
+E       ║         libgdk-pixbuf-2.0-0                          ║
+E       ║                                                      ║
+E       ║ <3 Playwright Team                                   ║
+E       ╚══════════════════════════════════════════════════════╝
+
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:398: Error
+______ ERROR at setup of test_delete_campaign_moving_its_setups[firefox] _______
+
+browser_name = 'firefox'
+
+    @pytest.fixture(scope="session")
+    def browser(browser_name):
+        with sync_playwright() as playwright:
+            launcher = getattr(playwright, browser_name)
+            args = ["--no-sandbox"] if browser_name == "chromium" else []
+>           instance = launcher.launch(headless=os.environ.get("E2E_HEADED") != "1", args=args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+e2e/conftest.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv-e2e/lib64/python3.12/site-packages/playwright/sync_api/_generated.py:4113: in launch
+    self._sync(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:387: in finish
+    raise e from None
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:352: in finish
+    result = await zone.run_async(lambda: awaitable)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/utils/zones.py:58: in run_async
+    return await func()
+           ^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/browser_type.py:176: in launch
+    await self._channel.launch(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+awaitable = <Future finished exception=Error('\n╔══════════════════════════════════════════════════════╗\n║ Host system is missing...\n║ <3 Playwright Team                                   ║\n╚══════════════════════════════════════════════════════╝')>
+mapper = <function BrowserTypeChannel.launch.<locals>.<lambda> at 0x7f6670cb0cc0>
+
+    async def _mapped(awaitable: Awaitable[Any], mapper: Callable[[Any], Any]) -> Any:
+        # Python: the result of a channel call, mapped by the generated channel method.
+>       return mapper(await awaitable)
+                      ^^^^^^^^^^^^^^^
+E       playwright._impl._errors.Error: BrowserType.launch: 
+E       ╔══════════════════════════════════════════════════════╗
+E       ║ Host system is missing dependencies to run browsers. ║
+E       ║ Please install them with the following command:      ║
+E       ║                                                      ║
+E       ║     sudo playwright install-deps                     ║
+E       ║                                                      ║
+E       ║ Alternatively, use apt:                              ║
+E       ║     sudo apt-get install libxcursor1\                ║
+E       ║         libgtk-3-0t64\                               ║
+E       ║         libpangocairo-1.0-0\                         ║
+E       ║         libpango-1.0-0\                              ║
+E       ║         libcairo-gobject2\                           ║
+E       ║         libcairo2\                                   ║
+E       ║         libgdk-pixbuf-2.0-0                          ║
+E       ║                                                      ║
+E       ║ <3 Playwright Team                                   ║
+E       ╚══════════════════════════════════════════════════════╝
+
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:398: Error
+_______ ERROR at setup of test_delete_campaign_with_its_setups[firefox] ________
+
+browser_name = 'firefox'
+
+    @pytest.fixture(scope="session")
+    def browser(browser_name):
+        with sync_playwright() as playwright:
+            launcher = getattr(playwright, browser_name)
+            args = ["--no-sandbox"] if browser_name == "chromium" else []
+>           instance = launcher.launch(headless=os.environ.get("E2E_HEADED") != "1", args=args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+e2e/conftest.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv-e2e/lib64/python3.12/site-packages/playwright/sync_api/_generated.py:4113: in launch
+    self._sync(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:387: in finish
+    raise e from None
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:352: in finish
+    result = await zone.run_async(lambda: awaitable)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/utils/zones.py:58: in run_async
+    return await func()
+           ^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/browser_type.py:176: in launch
+    await self._channel.launch(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+awaitable = <Future finished exception=Error('\n╔══════════════════════════════════════════════════════╗\n║ Host system is missing...\n║ <3 Playwright Team                                   ║\n╚══════════════════════════════════════════════════════╝')>
+mapper = <function BrowserTypeChannel.launch.<locals>.<lambda> at 0x7f6670cb0cc0>
+
+    async def _mapped(awaitable: Awaitable[Any], mapper: Callable[[Any], Any]) -> Any:
+        # Python: the result of a channel call, mapped by the generated channel method.
+>       return mapper(await awaitable)
+                      ^^^^^^^^^^^^^^^
+E       playwright._impl._errors.Error: BrowserType.launch: 
+E       ╔══════════════════════════════════════════════════════╗
+E       ║ Host system is missing dependencies to run browsers. ║
+E       ║ Please install them with the following command:      ║
+E       ║                                                      ║
+E       ║     sudo playwright install-deps                     ║
+E       ║                                                      ║
+E       ║ Alternatively, use apt:                              ║
+E       ║     sudo apt-get install libxcursor1\                ║
+E       ║         libgtk-3-0t64\                               ║
+E       ║         libpangocairo-1.0-0\                         ║
+E       ║         libpango-1.0-0\                              ║
+E       ║         libcairo-gobject2\                           ║
+E       ║         libcairo2\                                   ║
+E       ║         libgdk-pixbuf-2.0-0                          ║
+E       ║                                                      ║
+E       ║ <3 Playwright Team                                   ║
+E       ╚══════════════════════════════════════════════════════╝
+
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:398: Error
+___ ERROR at setup of test_battle_setup_save_load_rename_and_delete[firefox] ___
+
+browser_name = 'firefox'
+
+    @pytest.fixture(scope="session")
+    def browser(browser_name):
+        with sync_playwright() as playwright:
+            launcher = getattr(playwright, browser_name)
+            args = ["--no-sandbox"] if browser_name == "chromium" else []
+>           instance = launcher.launch(headless=os.environ.get("E2E_HEADED") != "1", args=args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+e2e/conftest.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv-e2e/lib64/python3.12/site-packages/playwright/sync_api/_generated.py:4113: in launch
+    self._sync(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:387: in finish
+    raise e from None
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:352: in finish
+    result = await zone.run_async(lambda: awaitable)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/utils/zones.py:58: in run_async
+    return await func()
+           ^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/browser_type.py:176: in launch
+    await self._channel.launch(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+awaitable = <Future finished exception=Error('\n╔══════════════════════════════════════════════════════╗\n║ Host system is missing...\n║ <3 Playwright Team                                   ║\n╚══════════════════════════════════════════════════════╝')>
+mapper = <function BrowserTypeChannel.launch.<locals>.<lambda> at 0x7f6670cb0cc0>
+
+    async def _mapped(awaitable: Awaitable[Any], mapper: Callable[[Any], Any]) -> Any:
+        # Python: the result of a channel call, mapped by the generated channel method.
+>       return mapper(await awaitable)
+                      ^^^^^^^^^^^^^^^
+E       playwright._impl._errors.Error: BrowserType.launch: 
+E       ╔══════════════════════════════════════════════════════╗
+E       ║ Host system is missing dependencies to run browsers. ║
+E       ║ Please install them with the following command:      ║
+E       ║                                                      ║
+E       ║     sudo playwright install-deps                     ║
+E       ║                                                      ║
+E       ║ Alternatively, use apt:                              ║
+E       ║     sudo apt-get install libxcursor1\                ║
+E       ║         libgtk-3-0t64\                               ║
+E       ║         libpangocairo-1.0-0\                         ║
+E       ║         libpango-1.0-0\                              ║
+E       ║         libcairo-gobject2\                           ║
+E       ║         libcairo2\                                   ║
+E       ║         libgdk-pixbuf-2.0-0                          ║
+E       ║                                                      ║
+E       ║ <3 Playwright Team                                   ║
+E       ╚══════════════════════════════════════════════════════╝
+
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:398: Error
+______ ERROR at setup of test_add_setup_copy_to_another_campaign[firefox] ______
+
+browser_name = 'firefox'
+
+    @pytest.fixture(scope="session")
+    def browser(browser_name):
+        with sync_playwright() as playwright:
+            launcher = getattr(playwright, browser_name)
+            args = ["--no-sandbox"] if browser_name == "chromium" else []
+>           instance = launcher.launch(headless=os.environ.get("E2E_HEADED") != "1", args=args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+e2e/conftest.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv-e2e/lib64/python3.12/site-packages/playwright/sync_api/_generated.py:4113: in launch
+    self._sync(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:387: in finish
+    raise e from None
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:352: in finish
+    result = await zone.run_async(lambda: awaitable)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/utils/zones.py:58: in run_async
+    return await func()
+           ^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/browser_type.py:176: in launch
+    await self._channel.launch(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+awaitable = <Future finished exception=Error('\n╔══════════════════════════════════════════════════════╗\n║ Host system is missing...\n║ <3 Playwright Team                                   ║\n╚══════════════════════════════════════════════════════╝')>
+mapper = <function BrowserTypeChannel.launch.<locals>.<lambda> at 0x7f6670cb0cc0>
+
+    async def _mapped(awaitable: Awaitable[Any], mapper: Callable[[Any], Any]) -> Any:
+        # Python: the result of a channel call, mapped by the generated channel method.
+>       return mapper(await awaitable)
+                      ^^^^^^^^^^^^^^^
+E       playwright._impl._errors.Error: BrowserType.launch: 
+E       ╔══════════════════════════════════════════════════════╗
+E       ║ Host system is missing dependencies to run browsers. ║
+E       ║ Please install them with the following command:      ║
+E       ║                                                      ║
+E       ║     sudo playwright install-deps                     ║
+E       ║                                                      ║
+E       ║ Alternatively, use apt:                              ║
+E       ║     sudo apt-get install libxcursor1\                ║
+E       ║         libgtk-3-0t64\                               ║
+E       ║         libpangocairo-1.0-0\                         ║
+E       ║         libpango-1.0-0\                              ║
+E       ║         libcairo-gobject2\                           ║
+E       ║         libcairo2\                                   ║
+E       ║         libgdk-pixbuf-2.0-0                          ║
+E       ║                                                      ║
+E       ║ <3 Playwright Team                                   ║
+E       ╚══════════════════════════════════════════════════════╝
+
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:398: Error
+______ ERROR at setup of test_export_and_import_campaign_bundle[firefox] _______
+
+browser_name = 'firefox'
+
+    @pytest.fixture(scope="session")
+    def browser(browser_name):
+        with sync_playwright() as playwright:
+            launcher = getattr(playwright, browser_name)
+            args = ["--no-sandbox"] if browser_name == "chromium" else []
+>           instance = launcher.launch(headless=os.environ.get("E2E_HEADED") != "1", args=args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+e2e/conftest.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv-e2e/lib64/python3.12/site-packages/playwright/sync_api/_generated.py:4113: in launch
+    self._sync(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:387: in finish
+    raise e from None
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:352: in finish
+    result = await zone.run_async(lambda: awaitable)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/utils/zones.py:58: in run_async
+    return await func()
+           ^^^^^^^^^^^^
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/browser_type.py:176: in launch
+    await self._channel.launch(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+awaitable = <Future finished exception=Error('\n╔══════════════════════════════════════════════════════╗\n║ Host system is missing...\n║ <3 Playwright Team                                   ║\n╚══════════════════════════════════════════════════════╝')>
+mapper = <function BrowserTypeChannel.launch.<locals>.<lambda> at 0x7f6670cb0cc0>
+
+    async def _mapped(awaitable: Awaitable[Any], mapper: Callable[[Any], Any]) -> Any:
+        # Python: the result of a channel call, mapped by the generated channel method.
+>       return mapper(await awaitable)
+                      ^^^^^^^^^^^^^^^
+E       playwright._impl._errors.Error: BrowserType.launch: 
+E       ╔══════════════════════════════════════════════════════╗
+E       ║ Host system is missing dependencies to run browsers. ║
+E       ║ Please install them with the following command:      ║
+E       ║                                                      ║
+E       ║     sudo playwright install-deps                     ║
+E       ║                                                      ║
+E       ║ Alternatively, use apt:                              ║
+E       ║     sudo apt-get install libxcursor1\                ║
+E       ║         libgtk-3-0t64\                               ║
+E       ║         libpangocairo-1.0-0\                         ║
+E       ║         libpango-1.0-0\                              ║
+E       ║         libcairo-gobject2\                           ║
+E       ║         libcairo2\                                   ║
+E       ║         libgdk-pixbuf-2.0-0                          ║
+E       ║                                                      ║
+E       ║ <3 Playwright Team                                   ║
+E       ╚══════════════════════════════════════════════════════╝
+
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:398: Error
+==================================== PASSES ====================================
+- Generated html report: file:///mnt/d/git/Scrying-Glass/e2e-results/20261113T133947Z/report.html -
+=========================== short test summary info ============================
+PASSED e2e/test_access.py::test_admin_login_logout_and_redirects[chromium]
+PASSED e2e/test_access.py::test_role_routing[chromium]
+PASSED e2e/test_access.py::test_superadmin_creates_user_who_can_sign_in[chromium]
+PASSED e2e/test_access.py::test_campaign_ownership_controls_admin_visibility[chromium]
+PASSED e2e/test_access.py::test_viewer_access_grant_and_revoke[chromium]
+PASSED e2e/test_campaigns.py::test_create_edit_and_switch_campaigns[chromium]
+PASSED e2e/test_campaigns.py::test_campaign_name_is_required[chromium]
+PASSED e2e/test_campaigns.py::test_last_campaign_cannot_be_deleted[chromium]
+PASSED e2e/test_campaigns.py::test_delete_campaign_moving_its_setups[chromium]
+PASSED e2e/test_campaigns.py::test_delete_campaign_with_its_setups[chromium]
+PASSED e2e/test_campaigns.py::test_battle_setup_save_load_rename_and_delete[chromium]
+PASSED e2e/test_campaigns.py::test_add_setup_copy_to_another_campaign[chromium]
+PASSED e2e/test_campaigns.py::test_export_and_import_campaign_bundle[chromium]
+PASSED e2e/test_access.py::test_unauthenticated_requests_are_rejected
+ERROR e2e/test_access.py::test_admin_login_logout_and_redirects[firefox] - pl...
+ERROR e2e/test_access.py::test_role_routing[firefox] - playwright._impl._erro...
+ERROR e2e/test_access.py::test_superadmin_creates_user_who_can_sign_in[firefox]
+ERROR e2e/test_access.py::test_campaign_ownership_controls_admin_visibility[firefox]
+ERROR e2e/test_access.py::test_viewer_access_grant_and_revoke[firefox] - play...
+ERROR e2e/test_campaigns.py::test_create_edit_and_switch_campaigns[firefox]
+ERROR e2e/test_campaigns.py::test_campaign_name_is_required[firefox] - playwr...
+ERROR e2e/test_campaigns.py::test_last_campaign_cannot_be_deleted[firefox] - ...
+ERROR e2e/test_campaigns.py::test_delete_campaign_moving_its_setups[firefox]
+ERROR e2e/test_campaigns.py::test_delete_campaign_with_its_setups[firefox] - ...
+ERROR e2e/test_campaigns.py::test_battle_setup_save_load_rename_and_delete[firefox]
+ERROR e2e/test_campaigns.py::test_add_setup_copy_to_another_campaign[firefox]
+ERROR e2e/test_campaigns.py::test_export_and_import_campaign_bundle[firefox]
+14 passed, 13 errors in 86.65s (0:01:26)
