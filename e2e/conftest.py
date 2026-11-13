@@ -28,6 +28,7 @@ ARTIFACTS = Path(os.environ.get("E2E_ARTIFACTS", ROOT / "e2e-results" / "local")
 def pytest_addoption(parser):
     parser.addoption("--browser-name", action="append", choices=BROWSERS,
                      help="Browser to run (repeatable); default: all")
+    parser.addoption("--no-progress", action="store_true", help="Use pytest's normal progress output")
 
 
 def pytest_generate_tests(metafunc):
@@ -203,3 +204,68 @@ def pytest_runtest_makereport(item, call):
     report = outcome.get_result()
     if report.when == "call" and report.failed:
         item.e2e_failed = True
+
+
+# ---------------------------------------------------------------------------
+# Progress lines: "Now running test 001/027: <description> [browser] ... SUCCESS"
+# The description is the first docstring line of the test. --no-progress restores
+# pytest's normal output.
+# ---------------------------------------------------------------------------
+_PROGRESS = {}
+_OUTCOMES = {}
+
+
+def pytest_sessionstart(session):
+    config = session.config
+    reporter = config.pluginmanager.get_plugin("terminalreporter")
+    if reporter and not config.getoption("--no-progress"):
+        _PROGRESS["reporter"] = reporter
+
+
+def pytest_collection_modifyitems(session, config, items):
+    for number, item in enumerate(items, 1):
+        item.e2e_number = (number, len(items))
+
+
+def _describe(item):
+    doc = (item.function.__doc__ or "").strip().splitlines()
+    text = doc[0].strip().rstrip(".") if doc else item.originalname.removeprefix("test_").replace("_", " ").capitalize()
+    browser = item.callspec.params.get("browser_name") if hasattr(item, "callspec") else None
+    return f"{text} [{browser}]" if browser else text
+
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_runtest_protocol(item, nextitem):
+    reporter = _PROGRESS.get("reporter")
+    if reporter:
+        number, total = getattr(item, "e2e_number", (0, 0))
+        reporter.ensure_newline()
+        width = max(3, len(str(total)))
+        reporter.write(f"Now running test {number:0{width}d}/{total:0{width}d}: {_describe(item)} ... ", flush=True)
+
+
+def pytest_runtest_logreport(report):
+    if report.failed:
+        _OUTCOMES.setdefault(report.nodeid, "FAILED" if report.when == "call" else "ERROR")
+    elif report.skipped:
+        _OUTCOMES.setdefault(report.nodeid, "SKIPPED")
+
+
+@pytest.hookimpl(trylast=True)
+def pytest_runtest_logfinish(nodeid, location):
+    reporter = _PROGRESS.get("reporter")
+    if reporter:
+        outcome = _OUTCOMES.get(nodeid, "SUCCESS")
+        markup = {"SUCCESS": {"green": True}, "SKIPPED": {"yellow": True}}.get(outcome, {"red": True, "bold": True})
+        reporter.write_line(outcome, **markup)
+
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_report_teststatus(report, config):
+    """Suppress pytest's progress letters while the progress lines are active."""
+    if _PROGRESS.get("reporter"):
+        if report.passed:
+            return ("passed" if report.when == "call" else ""), "", ""
+        if report.skipped:
+            return "skipped", "", ""
+        return ("failed" if report.when == "call" else "error"), "", ""

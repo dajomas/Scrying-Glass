@@ -44,13 +44,35 @@ PY="$VENV/bin/python"
 "$PY" -m pip install --quiet -r e2e/requirements.txt
 "$PY" -m playwright install chromium firefox
 
+# Preflight: both browsers must start before any test runs or anything is committed.
+if ! "$PY" - <<'PY'
+import sys
+from playwright.sync_api import sync_playwright
+failed = []
+with sync_playwright() as playwright:
+    for name in ("chromium", "firefox"):
+        try:
+            args = ["--no-sandbox"] if name == "chromium" else []
+            getattr(playwright, name).launch(headless=True, args=args).close()
+            print(f"Browser check: {name} ... OK")
+        except Exception as error:
+            print(f"Browser check: {name} ... FAILED\n{str(error).splitlines()[0]}")
+            failed.append(name)
+sys.exit(1 if failed else 0)
+PY
+then
+    fail "a browser could not start; install its system libraries with:
+    sudo $VENV/bin/python -m playwright install-deps chromium firefox
+then run this script again. Nothing was committed."
+fi
+
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 OUT="e2e-results/$STAMP"
 mkdir -p "$OUT"
 SHA="$(git rev-parse HEAD)"
 
 set +e
-E2E_ARTIFACTS="$ROOT/$OUT" "$PY" -m pytest -c e2e/pytest.ini e2e -q -rA \
+E2E_ARTIFACTS="$ROOT/$OUT" "$PY" -m pytest -c e2e/pytest.ini e2e -q -rfE \
     --junitxml="$OUT/junit.xml" --html="$OUT/report.html" --self-contained-html "$@" \
     2>&1 | tee "$OUT/pytest.log"
 STATUS="${PIPESTATUS[0]}"
@@ -87,17 +109,17 @@ cat "$OUT/summary.md"
 RESULT="$(cat "$OUT/subject.txt")"
 rm -f "$OUT/subject.txt"
 
+if (( ! PUSH ))
+then
+    echo "Results in $OUT (not committed; older results folders left in place)."
+    exit "$STATUS"
+fi
+
 # Keep only the latest results folder.
 for old in e2e-results/*/
 do
     [[ "${old%/}" == "$OUT" ]] || rm -rf "$old"
 done
-
-if (( ! PUSH ))
-then
-    echo "Results in $OUT (not committed)."
-    exit "$STATUS"
-fi
 
 git add -A e2e-results
 outside="$(git diff --cached --name-only | grep -v '^e2e-results/' || true)"

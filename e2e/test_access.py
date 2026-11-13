@@ -17,6 +17,7 @@ def status(url):
 
 
 def test_admin_login_logout_and_redirects(sessions, server, browser_name):
+    """Admin login (wrong and correct password), logout and login redirects."""
     page = sessions().page()
     page.goto(server.admin + "/")
     expect(page).to_have_url(server.admin + "/login")
@@ -40,6 +41,7 @@ def test_admin_login_logout_and_redirects(sessions, server, browser_name):
 
 
 def test_role_routing(sessions, server):
+    """Role routing: superadmin to Users, admin denied Users, client denied Admin."""
     superadmin = sessions("super").login("superadmin")
     expect(superadmin).to_have_url(server.admin + "/users")
     superadmin.goto(server.admin + "/")
@@ -52,12 +54,14 @@ def test_role_routing(sessions, server):
 
 
 def test_unauthenticated_requests_are_rejected(server):
+    """Unauthenticated API requests are rejected on both portals."""
     assert status(server.admin + "/api/state") == 401
     assert status(server.admin + "/api/users") == 401
     assert status(server.client + "/api/state") == 401
 
 
 def test_superadmin_creates_user_who_can_sign_in(sessions, server):
+    """Superadmin creates a client user who can sign in to the display."""
     page = sessions("super").login("superadmin")
     rows = page.locator("#userRows tr")
     expect(rows).to_have_count(3)
@@ -76,6 +80,7 @@ def test_superadmin_creates_user_who_can_sign_in(sessions, server):
 
 
 def test_campaign_ownership_controls_admin_visibility(sessions, server):
+    """Campaign ownership: unassign hides, reassign restores the campaign."""
     dm = sessions("dm").login("admin")
     dm.click("#toggleCampaignPane")
     options = dm.locator("#campaignSelect option")
@@ -100,6 +105,7 @@ def test_campaign_ownership_controls_admin_visibility(sessions, server):
 
 
 def test_viewer_access_grant_and_revoke(sessions, server):
+    """Viewer access grant and revoke update the Client display."""
     viewer = sessions("viewer").login("client", portal="client")
     expect(viewer).to_have_url(server.client + "/display")
     campaign = viewer.locator("#clientCampaign")

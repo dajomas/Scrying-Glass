@@ -53,3 +53,13 @@ The push path of the script (commit/push of results) was not executed here. CI d
 ### Branch
 
 On the user's instruction this stage and all later SG-TODO-021 pushes, including result commits, go to `features/perplexity-021`, branched from `features/perplexity` at `187f5be1`. The Branch tests workflow triggers only on `features/perplexity`, `features/perplexity-018` and `features/perplexity-009.7`, and workflow edits are not allowed. So no CI runs for this branch; the regular suite is unaffected by this commit (no `tests/`, application or workflow change). User acceptance is pending.
+
+## Stage 1 follow-up - progress output and browser preflight - 2026-11-13
+
+User request: "Is there a way to generate output? Something like: Now running test ###: <Short description of test> ... [SUCCESS|FAILED]". The user also pushed the first real results commit `4453a4d7` (`E2E results 20261113T133947Z`). That run tested `158694d2`: Chromium 13 passed and the server-only check passed, but all 13 Firefox tests errored at browser launch, because the host was missing Firefox's system libraries (Playwright: "Host system is missing dependencies to run browsers"; `playwright install-deps` needed). This was an environment failure, not a test failure.
+
+- `e2e/conftest.py` prints one line per test, for example `Now running test 004/027: Campaign ownership: unassign hides, reassign restores the campaign [chromium] ... SUCCESS`. The result is `SUCCESS`, `FAILED` (test body), `ERROR` (setup/teardown, for example a browser that cannot start, or uncaught page errors) or `SKIPPED`. The description is the first docstring line of each test; every Stage 1 test now has one. pytest's progress dots are suppressed while these lines are active, and `--no-progress` restores the normal output. The final pytest summary only lists failures and errors (`-rfE`).
+- `tools/run_e2e.sh` now starts Chromium and Firefox once before the tests (`Browser check: <name> ... OK|FAILED`). If either cannot start, it stops with the `sudo .venv-e2e/bin/python -m playwright install-deps chromium firefox` instruction, before any test runs or anything is committed.
+- `--no-push` no longer removes older results folders; pruning to the latest folder now happens only when results are committed.
+
+Validation (local): `tools/run_e2e.sh --no-push` passed both browser checks and printed 27 progress lines, all `SUCCESS` (27 passed). Deliberate failing-test and setup-error probes printed `FAILED` and `ERROR`. The preflight failure path was not exercised, because both browsers start here. No CI runs on `features/perplexity-021`. User acceptance is pending.

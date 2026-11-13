@@ -32,6 +32,7 @@ def selected_campaign(page):
 
 
 def test_create_edit_and_switch_campaigns(sessions):
+    """Create, edit and switch campaigns; choice survives reload."""
     _, page = admin(sessions)
     create_campaign(page, "Lost Mine", "Phandelver")
     expect(selected_campaign(page)).to_have_text("Lost Mine (1)")
@@ -55,6 +56,7 @@ def test_create_edit_and_switch_campaigns(sessions):
 
 
 def test_campaign_name_is_required(sessions):
+    """New campaign requires a name; cancel leaves campaigns unchanged."""
     _, page = admin(sessions)
     page.click("#newCampaign")
     page.click("#campaignSubmit")
@@ -66,6 +68,7 @@ def test_campaign_name_is_required(sessions):
 
 
 def test_last_campaign_cannot_be_deleted(sessions):
+    """The last remaining campaign cannot be deleted."""
     _, page = admin(sessions)
     page.click("#deleteCampaign")
     expect(page.locator("#campaignDeleteModal")).to_be_hidden()
@@ -74,6 +77,7 @@ def test_last_campaign_cannot_be_deleted(sessions):
 
 
 def test_delete_campaign_moving_its_setups(sessions):
+    """Delete a campaign and move its setups to another campaign."""
     _, page = admin(sessions)
     create_campaign(page, "Doomed")
     page.click("#deleteCampaign")
@@ -90,6 +94,7 @@ def test_delete_campaign_moving_its_setups(sessions):
 
 
 def test_delete_campaign_with_its_setups(sessions):
+    """Delete a campaign together with its setups."""
     _, page = admin(sessions)
     create_campaign(page, "Scratch")
     page.click("#deleteCampaign")
@@ -103,6 +108,7 @@ def test_delete_campaign_with_its_setups(sessions):
 
 
 def test_battle_setup_save_load_rename_and_delete(sessions):
+    """Battle setup save, load, rename and delete."""
     session, page = admin(sessions, "preparation")
     setups = page.locator("#setupSelect option:not([value=''])")
     expect(setups).to_have_text(["default"])
@@ -127,6 +133,7 @@ def test_battle_setup_save_load_rename_and_delete(sessions):
 
 
 def test_add_setup_copy_to_another_campaign(sessions):
+    """Copy a saved setup to another campaign."""
     _, page = admin(sessions, "preparation")
     page.fill("#setupName", "ambush")
     page.click("#saveSetup")
@@ -148,6 +155,7 @@ def test_add_setup_copy_to_another_campaign(sessions):
 
 
 def test_export_and_import_campaign_bundle(sessions, tmp_path):
+    """Export a campaign bundle and import it as a new campaign."""
     _, page = admin(sessions)
     create_campaign(page, "Exported", "bundle round trip")
     page.click(".et-backup-panel > summary")
