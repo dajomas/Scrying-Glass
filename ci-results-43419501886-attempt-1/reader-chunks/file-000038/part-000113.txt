@@ -1,0 +1,20 @@
+ fixtures)	2026-11-13T11:48:40.8406702Z   File "/tmp/scrying-tests-az_bkvkv/repo/python/scrying_glass_source_catalog.py", line 47, in monsters
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8407630Z     items = [{"id": name, "name": name} for name, _ in ms.fivetools_source_entries(display, source)]
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8408348Z                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8409283Z   File "/tmp/scrying-tests-az_bkvkv/repo/python/scrying_glass_monster_selection.py", line 229, in fivetools_source_entries
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8410167Z     raise ValueError("5e.tools source is not configured")
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8410698Z ValueError: 5e.tools source is not configured
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8436363Z ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:41.8397056Z test_help_and_checkbox_label_render_without_mutation (test_monster_source_help_text.SourceHelpBrowserTests.test_help_and_checkbox_label_render_without_mutation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:41.8669684Z test_config_comments_explain_compatibility_without_changing_defaults (test_monster_source_help_text.SourceHelpTests.test_config_comments_explain_compatibility_without_changing_defaults) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:41.8679922Z test_lookup_help_is_concise_and_preserves_essential_guidance (test_monster_source_help_text.SourceHelpTests.test_lookup_help_is_concise_and_preserves_essential_guidance) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:42.3866060Z test_failed_list_is_not_shown_as_complete_and_none_hides_it (test_monster_source_picker_browser.SourcePickerTests.test_failed_list_is_not_shown_as_complete_and_none_hides_it) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:42.8687388Z test_none_default_sources_and_hidden_monster_list (test_monster_source_picker_browser.SourcePickerTests.test_none_default_sources_and_hidden_monster_list) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:43.4147849Z test_pick_fills_species_name_and_stats_with_signed_token (test_monster_source_picker_browser.SourcePickerTests.test_pick_fills_species_name_and_stats_with_signed_token) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:43.4149604Z test_bonus_or_dexterity_is_not_captured (test_monster_source_snapshot.SourceSnapshotTests.test_bonus_or_dexterity_is_not_captured) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:43.4150973Z test_distinct_sources_remain_distinct (test_monster_source_snapshot.SourceSnapshotTests.test_distinct_sources_remain_distinct) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:43.4152460Z test_dnd_identity_does_not_invent_a_book (test_monster_source_snapshot.SourceSnapshotTests.test_dnd_identity_does_not_invent_a_book) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:43.4154057Z test_exact_fivetools_identity_and_book (test_monster_source_snapshot.SourceSnapshotTests.test_exact_fivetools_identity_and_book) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:43.4155670Z test_expired_future_and_oversized_tokens_are_rejected (test_monster_source_snapshot.SourceSnapshotTests.test_expired_future_and_oversized_tokens_are_rejected) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:43.4157435Z test_image_and_source_share_one_authenticated_snapshot (test_monster_source_snapshot.SourceSnapshotTests.test_image_and_source_share_one_authenticated_snapshot) ... ok
+tests	Pyth

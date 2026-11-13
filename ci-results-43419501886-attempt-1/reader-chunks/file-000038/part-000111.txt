@@ -1,0 +1,21 @@
+ation (test_monster_roll_order.MonsterRollOrderTests.test_unknown_order_member_is_rejected_without_mutation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8048134Z test_unselected_monsters_and_characters_are_not_changed (test_monster_roll_order.MonsterRollOrderTests.test_unselected_monsters_and_characters_are_not_changed) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8069328Z test_automatic_reorders_preserving_turn_round_and_unrelated_fields (test_monster_roll_order_handlers.MonsterRollOrderHandlerTests.test_automatic_reorders_preserving_turn_round_and_unrelated_fields) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8085035Z test_invalid_bonus_rejected_before_dice_or_mutation (test_monster_roll_order_handlers.MonsterRollOrderHandlerTests.test_invalid_bonus_rejected_before_dice_or_mutation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8099948Z test_invalid_order_is_conflict_without_partial_mutation (test_monster_roll_order_handlers.MonsterRollOrderHandlerTests.test_invalid_order_is_conflict_without_partial_mutation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8114103Z test_missing_selection_rejected_before_dice (test_monster_roll_order_handlers.MonsterRollOrderHandlerTests.test_missing_selection_rejected_before_dice) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8129573Z test_other_bulk_actions_delegate_without_rolling (test_monster_roll_order_handlers.MonsterRollOrderHandlerTests.test_other_bulk_actions_delegate_without_rolling) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8145946Z test_shared_one_roll_deduplicates_and_only_changes_selection (test_monster_roll_order_handlers.MonsterRollOrderHandlerTests.test_shared_one_roll_deduplicates_and_only_changes_selection) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8163279Z test_disabled_providers_are_not_offered_and_open5e_failure_is_reported (test_monster_source_catalog.CatalogFunctionTests.test_disabled_providers_are_not_offered_and_open5e_failure_is_reported) ... Open5e document list failed
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8164764Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8165459Z   File "/tmp/scrying-tests-az_bkvkv/repo/python/scrying_glass_source_catalog.py", line 31, in sources
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8166193Z     catalog = open5e.documents(open5e.base_url(display))
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8166928Z   File "/tmp/scrying-tests-az_bkvkv/repo/python/scrying_glass_open5e.py", line 101, in documents
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8167807Z     for item in _pages(base + "/documents/?" + urlencode({"limit": 200, "format": "json"}), base):
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8168539Z                 ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8169557Z   File "/tmp/scrying-tests-az_bkvkv/repo/python/scrying_glass_open5e.py", line 79, in _pages
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8170146Z     data = load_json(url)
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8170860Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8171548Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8171969Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixture

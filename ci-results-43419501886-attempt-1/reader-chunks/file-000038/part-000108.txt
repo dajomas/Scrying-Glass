@@ -1,0 +1,22 @@
+ndidate_review_is_read_only_and_only_explicit_apply_generates_hp (test_monster_refresh_sole_candidate.SoleRefreshApplicationTests.test_sole_candidate_review_is_read_only_and_only_explicit_apply_generates_hp) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:39.1111738Z test_stale_auto_response_expiry_configuration_and_scope_are_guarded (test_monster_refresh_sole_candidate.SoleRefreshApplicationTests.test_stale_auto_response_expiry_configuration_and_scope_are_guarded) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:39.6453369Z test_automatic_row_has_no_chooser_and_selects_no_fields_at_both_widths (test_monster_refresh_sole_candidate.SoleRefreshBrowserTests.test_automatic_row_has_no_chooser_and_selects_no_fields_at_both_widths) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3446016Z test_multiple_choice_keeps_individual_choices_on_automatic_row (test_monster_refresh_sole_candidate.SoleRefreshBrowserTests.test_multiple_choice_keeps_individual_choices_on_automatic_row) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3448016Z test_bad_selection_rejected_before_provider_calls (test_monster_refresh_sources.MonsterRefreshSourceTests.test_bad_selection_rejected_before_provider_calls) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3454997Z test_disabled_provider_and_oversized_hp_do_not_create_proposals (test_monster_refresh_sources.MonsterRefreshSourceTests.test_disabled_provider_and_oversized_hp_do_not_create_proposals) ... Selected monster source refresh failed for m
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3456133Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3456687Z   File "/tmp/scrying-tests-az_bkvkv/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3457211Z     candidate = _fetch_exact(context, monster, identity)
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3457725Z   File "/tmp/scrying-tests-az_bkvkv/repo/python/scrying_glass_monster_refresh_sources.py", line 82, in _fetch_exact
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3459337Z ##[error]    raise ValueError('Provider disabled')
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3462034Z ValueError: Provider disabled
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3462359Z ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3466064Z test_fivetools_requires_exact_book_edition_identity (test_monster_refresh_sources.MonsterRefreshSourceTests.test_fivetools_requires_exact_book_edition_identity) ... Selected monster source refresh failed for m
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3466844Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3467396Z   File "/tmp/scrying-tests-az_bkvkv/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3467935Z     candidate = _fetch_exact(context, monster, identity)
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3468469Z   File "/tmp/scrying-tests-az_bkvkv/repo/python/scrying_glass_monster_refresh_sources.py", line 93, in _fetch_exact
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3469281Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3470312Z ValueError: Retained source missing or ambiguous
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.3470750Z ok
+tests	Python test suite (including browser

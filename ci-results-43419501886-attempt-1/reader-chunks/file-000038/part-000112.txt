@@ -1,0 +1,24 @@
+s)	2026-11-13T11:48:40.8172678Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8173379Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8174009Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8174796Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8175458Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8175878Z python.scrying_glass_open5e.Open5eError: down
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8176263Z ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8177529Z test_fivetools_source_lists_usable_monsters_sorted_and_signs_a_pick (test_monster_source_catalog.CatalogFunctionTests.test_fivetools_source_lists_usable_monsters_sorted_and_signs_a_pick) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8181743Z test_open5e_document_list_is_validated_complete_and_sorted (test_monster_source_catalog.CatalogFunctionTests.test_open5e_document_list_is_validated_complete_and_sorted) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8188955Z test_open5e_pick_is_a_signed_candidate_from_the_chosen_document (test_monster_source_catalog.CatalogFunctionTests.test_open5e_pick_is_a_signed_candidate_from_the_chosen_document) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8191263Z test_sources_list_configured_books_then_open5e_documents_without_dnd_beyond (test_monster_source_catalog.CatalogFunctionTests.test_sources_list_configured_books_then_open5e_documents_without_dnd_beyond) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8397110Z test_routes_require_admin_and_validate_input (test_monster_source_catalog.CatalogRouteTests.test_routes_require_admin_and_validate_input) ... Monster source catalog failed
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8398582Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8399287Z   File "/tmp/scrying-tests-az_bkvkv/repo/python/scrying_glass_source_catalog.py", line 81, in run
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8400126Z     return await asyncio.to_thread(function, effective_display(context), *args)
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8400775Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8401596Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/threads.py", line 26, in to_thread
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8402349Z     return await loop.run_in_executor(None, func_call)
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8402818Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8403600Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8404507Z     result = ctx.run(self.task)
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8405269Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+tests	Python test suite (including browser fixtures)	2026-11-13T11:48:40.8405954Z     return fn(*args, **kwargs)
+tests	Python test suite (including browser

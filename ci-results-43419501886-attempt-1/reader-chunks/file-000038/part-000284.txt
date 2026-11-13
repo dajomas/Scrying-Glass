@@ -1,0 +1,28 @@
+ecks	2026-11-13T11:53:48.8151057Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8151744Z   File "/tmp/scrying-tests-2ttubfcl/repo/python/scrying_glass_monster_selection.py", line 247, in open5e_candidates
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8152811Z     return open5e.candidates(species, display, max_candidates=MAX_CANDIDATES)
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8153413Z            ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8154361Z   File "/tmp/scrying-tests-2ttubfcl/repo/python/scrying_glass_open5e.py", line 174, in candidates
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8155132Z     found = _pages(base + "/creatures/?" + query, base, limit=max_candidates)
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8155907Z   File "/tmp/scrying-tests-2ttubfcl/repo/python/scrying_glass_open5e.py", line 79, in _pages
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8156412Z     data = load_json(url)
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8156828Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8157234Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8157480Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8157903Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8158322Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8158605Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8159063Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8159460Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8159641Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8159751Z 
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8159967Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8160187Z 
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8160316Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8160787Z   File "/tmp/scrying-tests-2ttubfcl/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8161201Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8161631Z   File "/tmp/scrying-tests-2ttubfcl/repo/python/scrying_glass_monster_selection.py", line 268, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8162185Z     extra=(("Open5e", open5e_enabled, lambda: open5e_candidates(species, display)),))
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8162592Z                                               ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8163106Z   File "/tmp/scrying-tests-2ttubfcl/repo/python/scrying_glass_monster_selection.py", line 250, in open5e_candidates
+tests	Standalone Python browser and audit checks	2026-11-13T11:53:48.8163859Z     raise ProviderError("Open5e lookup failed; enter stats manually or retr
