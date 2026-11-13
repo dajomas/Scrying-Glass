@@ -58,20 +58,26 @@ include unchanged Client Display reconnect behavior and no guessed server-detail
 field mapping. Historical asset lists describe their dated checkpoints only.
 
 No agreed 009.7/009 implementation or acceptance action remains. Deferred test-suite
-cleanup remains separate work. The source-selection/Open5e workstream (016/017) has
-an accepted plan with Stage 1 recorded in
-[590](docs/handover/590-monster-source-workstream.md); Stage 2 (Open5e provider and
-provider switches) is delivered with CI pending and Stage 3 is not started. SG-TODO-019 is also completed and closed for
-its agreed Activity log Details scope after final user acceptance on 2026-11-13 at
-09:04 CET. Tested implementation 4a1feb47654ea6665862ec44b3f52dc6a27458b8 on
-features/perplexity has successful Branch tests 43386246710 attempt 1, evidence
-publication 5b1a0a6270adea9e67ca9ffd1def534b875f1317. [580 close-out and evidence limits](docs/handover/580-activity-log-result-details.md#sg-todo-019-accepted-close-out---2026-11-13)
-supersedes its earlier CI/acceptance-pending notes; old entries are not rewritten,
-and no new authenticated live-server, human visual or screen-reader review is
-claimed. Closure does not authorize merge, deployment or a release operation.
-The [009.7 task plan](docs/todo/097-feedback-delivery-plan.md) and [parent checklist](docs/todo/090-admin-usability-redesign.md)
-retain their accepted scope/history. Earlier README checkpoint detail is preserved
-in the [pre-final-009-close-out README](https://github.com/dajomas/Scrying-Glass/blob/2eb3b4d8a35b8a97761c1479f1ef68275652a01d/README.md).
+cleanup remains separate work. The coordinated source-selection/Open5e workstream
+(016/017) is completed and closed for its agreed scope: Stage 2 (SG-TODO-017) was
+already accepted; Stage 3 (SG-TODO-016 Source and Monster dropdowns) received final
+user acceptance on 2026-11-13 at 13:02 CET. Tested Stage 3 revision
+7e2579efcd3fc2833498edb1bc6e5093612cbc5e has successful Branch tests 43419501886
+attempt 1; evidence publication 49822ee7cacfd3bc4e2bd520b98917aef036db2c.
+[590 close-out, history and evidence limits](docs/handover/590-monster-source-workstream.md#stage-3-accepted-close-out---2026-11-13)
+supersedes earlier Stage 2/3 CI/acceptance-pending notes. D&D Beyond remains name-
+search only, not a catalog dropdown; current catalog completeness is not inferred
+for every future provider revision from fixtures or earlier sample checks.
+SG-TODO-019 is also completed and closed for its agreed Activity log Details scope
+following final user acceptance 2026-11-13 at 09:04 CET; implementation
+4a1feb47654ea6665862ec44b3f52dc6a27458b8 has green run 43386246710 attempt 1,
+evidence 5b1a0a6270adea9e67ca9ffd1def534b875f1317. [580 evidence limits](docs/handover/580-activity-log-result-details.md#sg-todo-019-accepted-close-out---2026-11-13)
+remain. No new authenticated live-server, human visual or screen-reader review is
+claimed by these close-outs. Closure does not authorize merge, deployment or a
+release operation. The [009.7 plan](docs/todo/097-feedback-delivery-plan.md) and
+[parent checklist](docs/todo/090-admin-usability-redesign.md) retain their accepted
+scope/history; earlier README detail is preserved in the
+[pre-016-close-out README](https://github.com/dajomas/Scrying-Glass/blob/49822ee7cacfd3bc4e2bd520b98917aef036db2c/README.md).
 
 Legacy source-reading tests use a disposable assembled checkout:
 
@@ -245,8 +251,8 @@ or cached locally, and availability is not probed. Disable both lookup providers
 to prevent optional provider requests; no credentials are sent to 5e.tools.
 Live-provider data/image availability is separate from intercepted-HTTP fixtures.
 
-Open5e (SG-TODO-017 Stage 2, delivered 2026-11-13 with CI pending) is a third
-provider after D&D Beyond and 5e.tools. It searches every Open5e v2 document by
+Open5e (SG-TODO-017 Stage 2, accepted/closed 2026-11-13 with green covering CI)
+is a third provider after D&D Beyond and 5e.tools. It searches every Open5e v2 document by
 exact name, validates each returned creature (the API silently ignores unsupported
 filters) and fails closed like the others. Popup choices use the same layout as
 the other providers, for example "Open5e / 5e 2014 Rules / legacy", are sorted by

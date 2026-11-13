@@ -73,7 +73,7 @@ This is the index; substantive handover lives in numbered docs/handover sections
 57. [Deliverable 2 accepted close-out](docs/handover/560-connection-field-feedback.md#deliverable-2-accepted-close-out---2026-11-12) - agreed Admin persistent connection/recovery, polling deduplication and near-field association completed/closed; user accepted 2026-11-12 at 22:43 CET. Tested 8da0657325818c69fc82dc1234995a5146e88ebc; successful Branch tests 43310602854 attempt 1; evidence dbb78d3057a2d38527bd612b948a6566a1a741e3. Historical whole-D1/final-pending notes are superseded by 570.
 58. [Final Deliverable 1, 009.7 and overall 009 close-out](docs/handover/570-final-0097-close-out.md) - completed/closed for the agreed scope after final user acceptance 2026-11-12 at 22:58 CET; integrated evidence, unchanged code identity, criterion mapping and limits recorded. No new scope, test run, merge or deployment.
 59. [SG-TODO-019 accepted Activity log close-out](docs/handover/580-activity-log-result-details.md#sg-todo-019-accepted-close-out---2026-11-13) - completed/closed for the agreed unit/property/result Details scope; final user acceptance 2026-11-13 at 09:04 CET. Tested 4a1feb47654ea6665862ec44b3f52dc6a27458b8 on features/perplexity; successful Branch tests 43386246710 attempt 1; publication 5b1a0a6270adea9e67ca9ffd1def534b875f1317. Earlier CI/acceptance-pending notes are superseded; evidence limits retained.
-60. [Monster source workstream (SG-TODO-016/017)](docs/handover/590-monster-source-workstream.md) - three-stage plan and user decisions accepted 2026-11-13; Stage 1 live Open5e/provider findings recorded (documentation only); [Stage 2](docs/handover/590-monster-source-workstream.md#stage-2-delivery---2026-11-13) Open5e provider and superadmin provider switches delivered 2026-11-13 with selection follow-ups (D&D Beyond book labels, overwrite on by default, image picker, Choose again), CI success and accepted/closed 2026-11-13; [Stage 3](docs/handover/590-monster-source-workstream.md#stage-3-delivery---2026-11-13) Source and Monster dropdowns delivered 2026-11-13, CI and acceptance pending.
+60. [Accepted monster source workstream (SG-TODO-016/017)](docs/handover/590-monster-source-workstream.md#stage-3-accepted-close-out---2026-11-13) - all three agreed stages complete; Stage 2/017 remains accepted and closed; Stage 3/016 final user acceptance 2026-11-13 at 13:02 CET. Tested 7e2579efcd3fc2833498edb1bc6e5093612cbc5e; successful Branch tests 43419501886 attempt 1; publication 49822ee7cacfd3bc4e2bd520b98917aef036db2c. Original live samples, fixtures, failures/corrections and verification limits remain linked; no further Stage 3 acceptance request.
 
 <a id="current-state---2026-11-11"></a>
 <a id="current-state---2026-11-12"></a>
@@ -95,31 +95,34 @@ is covered by successful Branch tests 43310602854 attempt 1; publication
 results. These are historical 009 counts, not SG-TODO-019 CI counts. Original
 runtime/test/workflow identity and review limits remain under 570.
 
-SG-TODO-019 is now completed and closed on features/perplexity after final user
-acceptance at 09:04 CET on 2026-11-13. Implementation
-4a1feb47654ea6665862ec44b3f52dc6a27458b8 has successful covering Branch tests
-43386246710 attempt 1; evidence 5b1a0a6270adea9e67ca9ffd1def534b875f1317.
-[580 close-out](docs/handover/580-activity-log-result-details.md#sg-todo-019-accepted-close-out---2026-11-13)
-retains accepted coverage, matching run/job metadata and limits. Its old pending
-notes are superseded; no further acceptance request remains. No individual review
-of every 019 test log/screenshot, new authenticated live-server, human visual or
-screen-reader verification is claimed. Preparation counts are not relabelled CI.
+SG-TODO-019 is completed and closed on features/perplexity after final acceptance
+2026-11-13 at 09:04 CET. Tested 4a1feb47654ea6665862ec44b3f52dc6a27458b8 has green
+Branch tests 43386246710 attempt 1, evidence 5b1a0a6270adea9e67ca9ffd1def534b875f1317.
+[580](docs/handover/580-activity-log-result-details.md#sg-todo-019-accepted-close-out---2026-11-13)
+retains coverage and limits; its pending notes are superseded and no acceptance
+request remains. Local counts are not relabelled hosted CI.
 
-The SG-TODO-016/017 workstream plan and user decisions were accepted on 2026-11-13;
-Stage 1 findings are recorded in [590](docs/handover/590-monster-source-workstream.md).
-Stage 2 (Open5e provider and provider switches) is accepted and closed (2026-11-13);
-Stage 3 (source dropdowns) is delivered with CI and acceptance pending.
+SG-TODO-016 is now completed and closed after explicit final user acceptance at
+13:02 CET on 2026-11-13. Its source/catalog/dropdown implementation
+7e2579efcd3fc2833498edb1bc6e5093612cbc5e has successful covering Branch tests
+43419501886 attempt 1; publication 49822ee7cacfd3bc4e2bd520b98917aef036db2c.
+[590](docs/handover/590-monster-source-workstream.md#stage-3-accepted-close-out---2026-11-13)
+supersedes Stage 3 CI/acceptance-pending notes and retains the agreed D&D Beyond
+exclusion, sampled live-catalog observations and fixture limits. SG-TODO-017 Stage 2
+was already accepted/closed, tested e5227f423f21cb1d4ed6aa9ac59e40cbd6207f86 with
+green run 43416936427 attempt 1; it is not reopened. The agreed three-stage 016/017
+workstream is complete; no further feature acceptance request remains for it.
 
-No agreed 009.7/009 or SG-TODO-019 implementation/acceptance action remains.
-Test-suite cleanup stays separate post-009 work; 016/017 follow the accepted
-three-stage plan in 590. The 115 sequence is unchanged. No owner/deadline or blanket
-future-write/merge/deployment approval. The earlier user merge of the 009.7 branch
-is history; no merge is performed by this documentation close-out.
+No agreed 009.7/009, SG-TODO-019 or SG-TODO-016/017 implementation/acceptance action
+remains. Deferred test-suite cleanup is separate post-009 maintenance; this close-out
+does not start it. Existing 115 order is unchanged. No new owner/deadline, scope,
+merge/deployment/release operation or blanket future-write approval.
 
-This SG-TODO-019 close-out changes documentation only and uses [skip ci]. No
-application, test, template, asset, pin or workflow change, no fresh tests and no
-separate dispatch. Existing section links/order and old anchors remain; earlier
-index detail is preserved in the [pre-019-close-out index](https://github.com/dajomas/Scrying-Glass/blob/5b1a0a6270adea9e67ca9ffd1def534b875f1317/HANDOVER.md).
+This SG-TODO-016 close-out changes documentation only and uses [skip ci]. No
+application, tests, assets, templates, pins or workflows change; no fresh tests or
+separate dispatch. Earlier index detail is preserved in the
+[pre-016-close-out index](https://github.com/dajomas/Scrying-Glass/blob/49822ee7cacfd3bc4e2bd520b98917aef036db2c/HANDOVER.md).
+Existing section order, links and old anchors remain.
 
 ## Maintenance
 
