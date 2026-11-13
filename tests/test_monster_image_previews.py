@@ -18,7 +18,8 @@ class PreviewSourceTests(unittest.TestCase):
         self.assertEqual(end.count('/static/monster-image-previews.js?v=1'), 1)
         self.assertLess(end.index('/static/admin-panel-forms.js'), end.index('/static/monster-image-previews.js'))
         self.assertIn('<script src="/static/monster-image-previews.js?v=1" defer></script>', end)
-        for name in ('monster-image-previews.js', 'monster-image-previews.css', 'monster-candidate-selection.js'):
+        for name in ('monster-image-previews.js', 'monster-image-previews.css', 'monster-candidate-selection.js',
+                     'monster-image-choice.js'):
             self.assertLessEqual((ROOT / 'static' / name).stat().st_size, 20000)
 
 
@@ -104,6 +105,9 @@ class ProviderPreviewTests(unittest.TestCase):
         self.begin([self.candidate(), self.candidate('5e.tools','https://images.test/b.png')])
         self.page.get_by_role('dialog').wait_for()
         self.page.get_by_role('button', name='2. Goblin', exact=False).click()
+        # The other candidate's image is offered; Cancel keeps the selected image.
+        picker = self.page.get_by_role('dialog', name='Select monster image', exact=True)
+        picker.get_by_role('button', name='Cancel', exact=True).click()
         self.finish()
         self.assertEqual(self.page.locator('#monsterImagePreview img').get_attribute('src'), 'https://images.test/b.png')
         self.begin([self.candidate(), self.candidate('5e.tools')])

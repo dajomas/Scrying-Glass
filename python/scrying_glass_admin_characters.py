@@ -184,7 +184,8 @@ class AdminCharactersMixin:
         self.context.remember_turn_successors()
 
         if hp_delta is not None:
-            self.context.log_hp_change(candidate, hp_delta, hp_result)
+            from python.scrying_glass_activity_details import snapshot
+            self.context.log_hp_change(candidate, hp_delta, hp_result, snapshot(character))
 
         character.update(candidate)
         self.context.set_turn(character, requested_turn)

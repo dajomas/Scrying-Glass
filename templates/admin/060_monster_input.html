@@ -3,13 +3,6 @@
         <h2>Add monster to Battle setup</h2>
       </div>
 
-      <p
-          id="monsterAddNotification"
-          class="pane-notification-battleSetup"
-          role="status"
-          aria-live="polite"
-        > </p>
-
       <div>
 
         <p id="monsterHpRangeHelp" class="field-help">
@@ -24,7 +17,7 @@
         </p>
 
         <p id="monsterLookupHelp" class="field-help">
-          While entering Monster species, D&amp;D Beyond and configured 5e.tools sources will be searched.
+          While entering Monster species, <span id="monsterLookupSources">D&amp;D Beyond, configured 5e.tools sources and Open5e</span> will be searched.
           Choose a version when prompted. Uploaded images override source images.
         </p>
 
@@ -32,11 +25,19 @@
           <input
             id="monsterSpeciesLookupOverwrite"
             type="checkbox"
+            checked
           >
           <span>
             Overwrite AC, HP range and initiative bonus with source values. Missing initiative bonus defaults to 0.
           </span>
         </label>
+
+        <p
+          id="monsterAddNotification"
+          class="pane-notification-battleSetup"
+          role="status"
+          aria-live="polite"
+        > </p>
 
         <form id="monsterForm" class="row">
           <label class="field">

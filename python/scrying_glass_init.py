@@ -17,7 +17,7 @@ from web_html.login_html import LOGIN
 
 DEFAULT_STORAGE_DIR = './scrying-glass-data'
 
-DEFAULT_CONFIG = {'network': {'bind': '0.0.0.0', 'admin_port': 3000, 'client_port': 3100}, 'storage_dir': DEFAULT_STORAGE_DIR, 'security': {}, 'display': {'background': '#080b14', 'entry_direction': 'from_bottom', 'exit_direction': 'to_bottom', 'monster_width_percent': 45, 'dndbeyond_image_lookup': True, 'fivetools_fallback': True, 'fivetools_sources': ['MM', 'XMM', 'PHB', 'XPHB', 'DMG', 'XDMG'], 'fivetools_data_base_url': 'https://5e.tools/data/bestiary', 'fivetools_image_base_url': 'https://5e.tools/img'}}
+DEFAULT_CONFIG = {'network': {'bind': '0.0.0.0', 'admin_port': 3000, 'client_port': 3100}, 'storage_dir': DEFAULT_STORAGE_DIR, 'security': {}, 'display': {'background': '#080b14', 'entry_direction': 'from_bottom', 'exit_direction': 'to_bottom', 'monster_width_percent': 45, 'dndbeyond_image_lookup': True, 'fivetools_fallback': True, 'fivetools_sources': ['MM', 'XMM', 'PHB', 'XPHB', 'DMG', 'XDMG'], 'fivetools_data_base_url': 'https://5e.tools/data/bestiary', 'fivetools_image_base_url': 'https://5e.tools/img', 'open5e_lookup': True, 'open5e_base_url': 'https://api.open5e.com/v2'}}
 
 def merge(a: dict[str, Any], b: dict[str, Any]) -> dict[str, Any]:
     """Recursively merge configuration mappings without modifying either input."""
@@ -41,6 +41,10 @@ def load_config(p: Path | None) -> dict[str, Any]:
     if not isinstance(display, dict):
         raise ValueError('display must be a mapping/object')
     display['fivetools_sources'] = configured_sources(display)
+    if type(display.get('open5e_lookup', True)) is not bool:
+        raise ValueError('display.open5e_lookup must be true or false')
+    from python.scrying_glass_open5e import base_url as open5e_base_url
+    open5e_base_url(display)
     return config
 
 def password_hash(password: str, salt: bytes | None=None) -> str:

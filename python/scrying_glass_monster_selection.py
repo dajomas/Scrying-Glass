@@ -80,9 +80,10 @@ def dnd_candidates(context, species):
             image.feed(html)
             results.append({"found": True, "name": species, "species": species,
                             "provider": "D&D Beyond", "legacy": legacy,
-                            "source": "Source book unavailable",
+                            "source": dnd_source_book(html) or "Source book unavailable",
                             "source_url": "https://www.dndbeyond.com" + href,
                             "ac": ac, "hp": hp, "hp_source": hp_source, "image_url": image.url,
+                            **({"attribution": credit} if (credit := dnd_source_attribution(html)) else {}),
                             **dnd_initiative_offer(html)})
         return results
     except ProviderError:
@@ -91,49 +92,126 @@ def dnd_candidates(context, species):
         LOG.warning("D&D Beyond candidate lookup failed", exc_info=True)
         raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
 
-def fivetools_candidates(species, display):
+class MonsterSourceText(HTMLParser):
+    """Collect the text of D&D Beyond's <p class="source monster-source"> element."""
+    def __init__(self):
+        super().__init__()
+        self.depth, self.parts, self.done = 0, [], False
+
+    def handle_starttag(self, tag, attrs):
+        if self.depth:
+            self.depth += 1
+        elif not self.done and tag == "p" and "monster-source" in (dict(attrs).get("class") or "").split():
+            self.depth = 1
+
+    def handle_endtag(self, tag):
+        if self.depth:
+            self.depth -= 1
+            self.done = self.done or self.depth == 0
+
+    def handle_data(self, data):
+        if self.depth:
+            self.parts.append(data)
+
+
+def dnd_source_text(html):
+    """The page's source line, e.g. 'Basic Rules (2014), pg. 138'; None when absent."""
+    parser = MonsterSourceText()
+    parser.feed(html)
+    text = " ".join(" ".join(parser.parts).split()).replace(" ,", ",")
+    return text if 0 < len(text) <= 200 else None
+
+
+def dnd_source_book(html):
+    """Book name from the source line without the page; None when absent."""
+    text = dnd_source_text(html)
+    book = re.split(r",\s*pg\.", text, maxsplit=1)[0].strip() if text else ""
+    return book if 0 < len(book) <= 100 else None
+
+
+def dnd_source_attribution(html):
+    """'<book>, pg. N via D&D Beyond' when the page names its source; otherwise None."""
+    text = dnd_source_text(html)
+    return f"{text} via D&D Beyond" if text else None
+
+
+def fivetools_source_attribution(source_name, monster):
+    """'<code>, page N via 5e.tools' when the entry has a positive integer page."""
+    page = monster.get("page")
+    if type(page) is int and 0 < page < 100000:
+        return f"{source_name}, page {page} via 5e.tools"
+    return None
+
+
+def _fivetools_root(display):
+    return display.get("fivetools_data_base_url", "https://5e.tools/data/bestiary").rstrip("/")
+
+
+def _fivetools_source_data(root, index, source):
+    """The monster list of one configured 5e.tools source file."""
+    filename = index.get(source)
+    if filename is None:
+        raise ValueError("Configured source is missing from the provider index")
+    if not isinstance(filename, str) or not re.fullmatch(r"[A-Za-z0-9_.-]+\.json", filename):
+        raise ValueError("Invalid source filename")
+    data = ft.load_json(root + "/" + filename)
+    if not isinstance(data, dict) or not isinstance(data.get("monster"), list):
+        raise ValueError("Invalid source data")
+    for monster in data["monster"]:
+        if not isinstance(monster, dict):
+            raise ValueError("Invalid monster entry")
+    return data["monster"]
+
+
+def _fivetools_index(root):
+    index = ft.load_json(root + "/index.json")
+    if not isinstance(index, dict):
+        raise ValueError("Invalid index")
+    return index
+
+
+def fivetools_candidate(monster, display, species, sources):
+    """Map one 5e.tools entry; None without AC/HP or outside the configured sources."""
     from .scrying_glass_fivetools_initiative import fivetools_initiative_offer
+    ac, hp, hp_source = ft.stats(monster)
+    if ac is None and hp is None:
+        return None
+    source_name = str(monster.get("source", ""))
+    if source_name not in sources:
+        return None
+    url = "https://5e.tools/bestiary.html#" + ft.quote(
+        str(monster.get("name", "")).lower() + "_" + source_name.lower(), safe="")
+    return {"found": True, "name": str(monster["name"]), "species": species,
+            "provider": "5e.tools", "source": source_name,
+            "legacy": source_name == "MM", "source_url": url,
+            "ac": ac, "hp": hp, "hp_source": hp_source, "image_url": ft.image_url(monster, display),
+            **({"attribution": credit} if (credit := fivetools_source_attribution(
+                source_name, monster)) else {}),
+            **fivetools_initiative_offer(monster)}
+
+
+def fivetools_candidates(species, display):
     try:
-        root = display.get("fivetools_data_base_url", "https://5e.tools/data/bestiary").rstrip("/")
+        root = _fivetools_root(display)
         sources = ft.configured_sources(display)
         if not sources:
             return []
-        index = ft.load_json(root + "/index.json")
-        if not isinstance(index, dict):
-            raise ValueError("Invalid index")
+        index = _fivetools_index(root)
         results, seen = [], set()
         for source in dict.fromkeys(sources):
-            filename = index.get(source)
-            if filename is None:
-                raise ValueError("Configured source is missing from the provider index")
-            if not isinstance(filename, str) or not re.fullmatch(r"[A-Za-z0-9_.-]+\.json", filename):
-                raise ValueError("Invalid source filename")
-            data = ft.load_json(root + "/" + filename)
-            if not isinstance(data, dict) or not isinstance(data.get("monster"), list):
-                raise ValueError("Invalid source data")
-            for monster in data["monster"]:
-                if not isinstance(monster, dict):
-                    raise ValueError("Invalid monster entry")
+            for monster in _fivetools_source_data(root, index, source):
                 if ft.normalized(monster.get("name", "")) != ft.normalized(species):
                     continue
-                ac, hp, hp_source = ft.stats(monster)
-                if ac is None and hp is None:
+                if "source" not in monster:
+                    monster = dict(monster, source=source)
+                candidate = fivetools_candidate(monster, display, species, sources)
+                if candidate is None:
                     continue
-                source_name = str(monster.get("source", source))
-                if source_name not in sources:
-                    continue
-                url = "https://5e.tools/bestiary.html#" + ft.quote(
-                    str(monster.get("name", "")).lower() + "_" + source_name.lower(), safe="")
-                image = ft.image_url(monster, display)
-                identity = (url, ac, hp, image)
+                identity = (candidate["source_url"], candidate["ac"], candidate["hp"], candidate["image_url"])
                 if identity in seen:
                     continue
                 seen.add(identity)
-                results.append({"found": True, "name": str(monster["name"]), "species": species,
-                                "provider": "5e.tools", "source": source_name,
-                                "legacy": source_name == "MM", "source_url": url,
-                                "ac": ac, "hp": hp, "hp_source": hp_source, "image_url": image,
-                                **fivetools_initiative_offer(monster)})
+                results.append(candidate)
                 if len(results) > MAX_CANDIDATES:
                     raise ProviderError("5e.tools returned too many candidates; refine the configured sources.")
         return results
@@ -143,24 +221,67 @@ def fivetools_candidates(species, display):
         LOG.warning("5e.tools candidate lookup failed", exc_info=True)
         raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
 
-def lookup_candidates(context, species):
+
+def fivetools_source_entries(display, source):
+    """(name, candidate) for every usable monster of one configured source, sorted by name."""
+    sources = ft.configured_sources(display)
+    if source not in sources:
+        raise ValueError("5e.tools source is not configured")
+    root = _fivetools_root(display)
+    entries = {}
+    for monster in _fivetools_source_data(root, _fivetools_index(root), source):
+        name = monster.get("name")
+        if not isinstance(name, str) or not name.strip() or len(name) > 256:
+            continue
+        if str(monster.get("source", source)) != source:
+            continue
+        candidate = fivetools_candidate(dict(monster, source=source), display, name, (source,))
+        if candidate is not None:
+            entries.setdefault(ft.normalized(name), (name, candidate))
+    return sorted(entries.values(), key=lambda item: item[0].casefold())
+
+
+def open5e_candidates(species, display):
+    from . import scrying_glass_open5e as open5e
+    try:
+        return open5e.candidates(species, display, max_candidates=MAX_CANDIDATES)
+    except Exception as exc:
+        LOG.warning("Open5e candidate lookup failed", exc_info=True)
+        raise ProviderError("Open5e lookup failed; enter stats manually or retry.") from exc
+
+def lookup_candidates(context, species, *, include_open5e=True):
+    """Ordered D&D Beyond, 5e.tools, Open5e lookup with saved provider toggles.
+
+    Monster refresh includes Open5e when its provider switch is enabled.
+    """
     from .scrying_glass_combined_lookup import combined_candidates
+    from .scrying_glass_provider_settings import effective_display
     from .scrying_glass_source_bonus_offer import issue_bonus_offer
-    display = context.CONFIG["display"]
+    display = effective_display(context)
+    open5e_enabled = include_open5e and display.get("open5e_lookup", False) is True
     result = combined_candidates(
         lambda: dnd_candidates(context, species),
         lambda: fivetools_candidates(species, display),
         dnd_enabled=display.get("dndbeyond_image_lookup", True),
         fivetools_enabled=display.get("fivetools_fallback", True),
-        max_candidates=MAX_CANDIDATES)
+        max_candidates=MAX_CANDIDATES,
+        extra=(("Open5e", open5e_enabled, lambda: open5e_candidates(species, display)),))
     if result["status"] != "ok":
         return result
     for candidate in result["candidates"]:
-        candidate["selection_token"] = issue_token(candidate)
-        offer = issue_bonus_offer(candidate, _KEY, now=time.time())
-        if offer is not None:
-            candidate["initiative_bonus_offer_token"] = offer
+        sign_candidate(candidate, issue_bonus_offer)
     return result
+
+
+def sign_candidate(candidate, issue_bonus_offer=None):
+    """Attach the selection token and, when available, the initiative bonus offer token."""
+    if issue_bonus_offer is None:
+        from .scrying_glass_source_bonus_offer import issue_bonus_offer
+    candidate["selection_token"] = issue_token(candidate)
+    offer = issue_bonus_offer(candidate, _KEY, now=time.time())
+    if offer is not None:
+        candidate["initiative_bonus_offer_token"] = offer
+    return candidate
 
 class CandidateMonstersMixin(AdminMonstersMixin):
     """Extend creation with an optional signed image snapshot."""
@@ -177,7 +298,8 @@ class CandidateMonstersMixin(AdminMonstersMixin):
                              quantity: int = Form(1, ge=1, le=50),
                              image: UploadFile | None = File(None), selection_token: str = Form(''),
                              initiative_bonus: str = Form(''),
-                             initiative_bonus_offer_token: str = Form('')):
+                             initiative_bonus_offer_token: str = Form(''),
+                             image_selection_token: str = Form('')):
         from fastapi.params import Form as FormParameter
         from .scrying_glass_initiative_input import creation_bonus_fields
         from .scrying_glass_source_bonus_offer import read_bonus_offer
@@ -186,6 +308,8 @@ class CandidateMonstersMixin(AdminMonstersMixin):
             initiative_bonus = initiative_bonus.default
         if isinstance(initiative_bonus_offer_token, FormParameter):
             initiative_bonus_offer_token = initiative_bonus_offer_token.default
+        if isinstance(image_selection_token, FormParameter):
+            image_selection_token = image_selection_token.default
         try:
             bonus_fields = creation_bonus_fields(initiative_bonus)
             if initiative_bonus_offer_token:
@@ -222,6 +346,11 @@ class CandidateMonstersMixin(AdminMonstersMixin):
         elif selection_token:
             try:
                 image_url, source_fields = selected_snapshot(selection_token, fields["monster_species"])
+                if image_selection_token:
+                    # Image picked from another found candidate: only its signed image is used.
+                    image_url = selected_snapshot(image_selection_token, fields["monster_species"])[0]
+                    if not image_url:
+                        raise ValueError("Chosen image is unavailable; repeat lookup.")
             except ValueError as exc:
                 raise self.context.HTTPException(422, str(exc)) from exc
         else:

@@ -3,7 +3,7 @@
 [Back to TODO index](../../TODO.md)
 
 - Task: SG-TODO-017
-- Status: proposed
+- Status: closed - Stage 2 delivered 2026-11-13; CI success for e5227f42 ([run 43416936427](https://github.com/dajomas/Scrying-Glass/actions/runs/43416936427)); accepted by the user 2026-11-13 ("I accept stage 2 please close it").
 - Recorded: 2026-11-06
 - Priority: not assigned; no change to the [agreed Admin delivery sequence](115-admin-delivery-sequence.md).
 - Dependencies: verify the current Open5e API contract during implementation planning.
@@ -32,6 +32,23 @@ Agree how Open5e is enabled and configured, its position (if any) in automatic f
 
 Prepare provider and UI regression tests covering lookup, candidate selection, field mapping, missing data, pagination, empty results and provider failures. Verify representative live API responses separately from fixture-based tests and document any limits on catalog completeness or image availability.
 
+## Accepted decisions - 2026-11-13
+
+- All Open5e documents are included. When several options match, the source is shown with each choice.
+- Open5e is enabled by default.
+- Add toggles to enable or disable D&D Beyond, 5e.tools and Open5e search.
+- Picking a monster fills in name, statistics and image only when those fields are empty or the overwrite check is ticked.
+
+Stage 1 verified the v2 API contract against the live service: document filtering, field selection and pagination work; unsupported filters are silently ignored; no images were seen on sampled creatures; and content carries per-document licences. Details, configuration and toggle proposals and the candidate order (D&D Beyond, 5e.tools, Open5e) are in the [590 handover](../handover/590-monster-source-workstream.md). The proposals remain open for review with the Stage 2 payload.
+
 ## Delivery status
 
-Backlog entry only. API research, implementation and validation remain outstanding.
+Stage 1 recorded 2026-11-13 (documentation only).
+
+Stage 2 implemented 2026-11-13 on the proposed design the user approved for implementation ("Start Stage 2 on the proposed design"): Open5e v2 provider, ordered provider layer, `display.open5e_lookup`/`display.open5e_base_url`, and superadmin provider switches. Details, decisions and local results are in [590 Stage 2](../handover/590-monster-source-workstream.md#stage-2-delivery---2026-11-13).
+
+Remaining for this task:
+
+- CI and acceptance: done 2026-11-13 (see Status).
+- Refresh: decided by the user on 2026-11-13 ("Yes include it if it is enabled"). Open5e takes part in monster Refresh when its provider switch is enabled; a retained Open5e identity is re-resolved exactly and reports "Provider disabled" when Open5e is off.
+- Name fill-in from a picked monster is delivered with the SG-TODO-016 dropdowns (Stage 3); Stage 2 keeps the existing AC/HP/initiative empty-or-overwrite rules and image snapshot behaviour.

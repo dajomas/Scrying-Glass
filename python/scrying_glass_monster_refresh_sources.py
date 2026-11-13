@@ -66,7 +66,17 @@ def proposed_fields(monster, candidate):
 def _fetch_exact(context, monster, identity):
     from . import scrying_glass_monster_selection as selection
     from .scrying_glass_dnd_initiative_offer import dnd_initiative_offer
-    display = context.CONFIG['display']
+    from .scrying_glass_provider_settings import effective_display
+    display = effective_display(context)
+    if identity[PROVIDER] == 'Open5e':
+        if display.get('open5e_lookup', False) is not True:
+            raise ValueError('Provider disabled')
+        candidates = selection.open5e_candidates(identity.get(NAME) or monster['monster_species'], display)
+        matches = [candidate for candidate in candidates if all(
+            capture_source_fields(candidate).get(key) == value for key, value in identity.items())]
+        if len(matches) != 1:
+            raise ValueError('Retained source missing or ambiguous')
+        return matches[0]
     if identity[PROVIDER] == 'D&D Beyond':
         if not display.get('dndbeyond_image_lookup', True):
             raise ValueError('Provider disabled')

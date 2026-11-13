@@ -1,0 +1,33 @@
+Standalone Python browser and audit checks	2026-11-13T12:56:47.6886271Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T12:56:47.6886933Z Ran 8 tests in 0.410s
+tests	Standalone Python browser and audit checks	2026-11-13T12:56:47.6887149Z 
+tests	Standalone Python browser and audit checks	2026-11-13T12:56:47.6887280Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T12:56:47.6908939Z test_monster_refresh_review.py: connections opened: 24; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T12:56:47.7576892Z Connection audit: test_monster_refresh_review_browser.py
+tests	Standalone Python browser and audit checks	2026-11-13T12:56:59.2056913Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T12:56:59.2058031Z Ran 12 tests in 11.301s
+tests	Standalone Python browser and audit checks	2026-11-13T12:56:59.2058278Z 
+tests	Standalone Python browser and audit checks	2026-11-13T12:56:59.2058414Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T12:56:59.2059184Z test_monster_refresh_review_browser.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T12:56:59.2501137Z Connection audit: test_monster_refresh_scope.py
+tests	Standalone Python browser and audit checks	2026-11-13T12:56:59.7840829Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T12:56:59.7842536Z Ran 4 tests in 0.177s
+tests	Standalone Python browser and audit checks	2026-11-13T12:56:59.7843022Z 
+tests	Standalone Python browser and audit checks	2026-11-13T12:56:59.7843230Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T12:56:59.7848952Z test_monster_refresh_scope.py: connections opened: 9; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T12:56:59.8469659Z Connection audit: test_monster_refresh_sole_candidate.py
+tests	Standalone Python browser and audit checks	2026-11-13T12:57:01.9843585Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T12:57:01.9844367Z Ran 5 tests in 1.737s
+tests	Standalone Python browser and audit checks	2026-11-13T12:57:01.9844592Z 
+tests	Standalone Python browser and audit checks	2026-11-13T12:57:01.9844723Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T12:57:01.9845452Z test_monster_refresh_sole_candidate.py: connections opened: 10; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T12:57:02.0910187Z Connection audit: test_monster_refresh_sources.py
+tests	Standalone Python browser and audit checks	2026-11-13T12:57:02.4259257Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-13T12:57:02.4260027Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T12:57:02.4261163Z   File "/tmp/scrying-tests-s94qek1v/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-13T12:57:02.4262313Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-13T12:57:02.4263422Z   File "/tmp/scrying-tests-s94qek1v/repo/python/scrying_glass_monster_refresh_sources.py", line 82, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-13T12:57:02.4267079Z ##[error]    raise ValueError('Provider disabled')
+tests	Standalone Python browser and audit checks	2026-11-13T12:57:02.4269290Z ValueError: Provider disabled
+tests	Standalone Python browser and audit checks	2026-11-13T12:57:02.4275217Z Selected monster source refresh failed for m
+tests	Standalone Python browser and audit checks	2026-11-13

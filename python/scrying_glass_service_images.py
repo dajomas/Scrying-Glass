@@ -137,7 +137,8 @@ class ImagesService:
         if image:
             return image
         try:
-            result = lookup(monster_species, self.context.CONFIG["display"], want_image=True)
+            from .scrying_glass_provider_settings import effective_display
+            result = lookup(monster_species, effective_display(self.context), want_image=True)
             return result.get("image_url") if result else None
         except Exception:
             logging.getLogger(__name__).warning(
@@ -148,7 +149,8 @@ class ImagesService:
 
     def _dndbeyond_image(self, monster_species: str) -> str | None:
         '\n    Find the dedicated D&D Beyond monster image for monster_species.\n\n    Exact normalized name matches are collected from D&D Beyond search results.\n    A match whose complete result HTML contains \'legacy\' is preferred. The\n    dedicated <img class="monster-image"> URL from that monster page is used,\n    not a generic Open Graph image.\n    '
-        if not self.context.CONFIG["display"].get("dndbeyond_image_lookup", True):
+        from .scrying_glass_provider_settings import effective_display
+        if not effective_display(self.context).get("dndbeyond_image_lookup", True):
             return None
 
         requested_name = self.context.re.sub(

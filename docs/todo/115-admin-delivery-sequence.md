@@ -87,6 +87,11 @@ provider bonus fields or derive a bonus from Dexterity without an agreed rule.
 5. Recheck source help text, previews, responsive layout and keyboard behaviour.
    Completion of 009.7 does not exempt later integrations from their own hardening.
 
+Accepted 2026-11-13: the user adopted this as three stages - (1) joint feasibility/design,
+documentation only; (2) SG-TODO-017 Open5e provider with the generalized provider layer
+and provider toggles; (3) SG-TODO-016 selectors. D&D Beyond is excluded from the dropdown
+by explicit agreement. Decisions and Stage 1 findings: [590 handover](../handover/590-monster-source-workstream.md).
+
 Open5e is not assumed technically necessary for existing-provider selectors. An
 independent coherent 016 increment remains possible if investigation supports it.
 Early bounded research is not silently inserted as a blocker before redesign.

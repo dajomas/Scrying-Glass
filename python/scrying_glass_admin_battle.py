@@ -163,13 +163,17 @@ class AdminBattleMixin:
         # Apply only after every row passed validation.
         self.context.remember_turn_successors()
 
+        from python.scrying_glass_activity_details import snapshot, statistics_snapshot, statistics_note, death_failure_note
         for source, target, action, amount, critical, stat in prepared:
+            before = snapshot(target)
             if action == 'reduce-stat':
+                stats_before = statistics_snapshot(target)
                 try: reduce_stat(target, stat, amount, source['id'])
                 except ValueError as exc: raise self.context.HTTPException(422, str(exc)) from exc
                 if not target.get('alive') and getattr(self.context, 'features', None):
                     self.context.features.clear_concentration(target['id'])
-                self.context.features.log('statistic-reduced', target, amount, note=f"{stat}; source: {source['name']}")
+                note = statistics_note(target, stats_before) + f"; source: {source['name']}"
+                self.context.features.log('statistic-reduced', target, amount, note=note)
                 continue
             if action == "damage":
                 result=apply_hp(target,-amount,critical=critical)
@@ -180,7 +184,7 @@ class AdminBattleMixin:
                     if result['instant_death']:
                         self.context.features.log('instant-death',target,note=f"Excess damage {result['excess']} ≥ maximum HP {target['max_hp']}")
                     elif result['failed_saves']:
-                        self.context.features.log('death-save-failure',target,result['failed_saves'],note=f"Damage at 0 HP; failures now {target['death_failures']}/3"+(' (critical hit)' if critical else ''))
+                        self.context.features.log('death-save-failure',target,result['failed_saves'],note=death_failure_note(target,'damage at 0 HP'+(' (critical hit)' if critical else '')))
                     if target.get('concentrating'):
                         self.context.features.log('concentration-reminder',target,note='Resolve concentration manually')
             elif action == "heal":
@@ -189,7 +193,7 @@ class AdminBattleMixin:
                 if can_take_turn(target):
                     self.context.insert_into_battle_order(target)
 
-            self.context.log_battle_action(source, target, action, amount)
+            self.context.log_battle_action(source, target, action, amount, before)
 
         self.context.clean_order()
         self.context.save_active_campaign_characters()

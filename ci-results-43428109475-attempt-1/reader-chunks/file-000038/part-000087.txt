@@ -1,0 +1,20 @@
+ython test suite (including browser fixtures)	2026-11-13T12:50:07.0894493Z test_stalled_socket_is_bounded (test_logout.LogoutTests.test_stalled_socket_is_bounded) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.0897222Z test_routes_are_registered_by_admin_api (test_lookup_provider_settings.ProviderSettingsPageTests.test_routes_are_registered_by_admin_api) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.0900436Z test_users_page_includes_section_and_script (test_lookup_provider_settings.ProviderSettingsPageTests.test_users_page_includes_section_and_script) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.1183166Z test_admin_anonymous_and_cross_origin_writes_are_rejected (test_lookup_provider_settings.ProviderSettingsRouteTests.test_admin_anonymous_and_cross_origin_writes_are_rejected) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.1448653Z test_admin_reads_enabled_provider_labels_in_lookup_order (test_lookup_provider_settings.ProviderSettingsRouteTests.test_admin_reads_enabled_provider_labels_in_lookup_order) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.1705135Z test_superadmin_reads_and_saves (test_lookup_provider_settings.ProviderSettingsRouteTests.test_superadmin_reads_and_saves) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.1826759Z test_configuration_defaults_apply_without_creating_a_table (test_lookup_provider_settings.ProviderSettingsStorageTests.test_configuration_defaults_apply_without_creating_a_table) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.1939016Z test_invalid_bodies_and_missing_storage_are_rejected (test_lookup_provider_settings.ProviderSettingsStorageTests.test_invalid_bodies_and_missing_storage_are_rejected) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.2084769Z test_lookup_and_image_paths_honour_saved_toggles (test_lookup_provider_settings.ProviderSettingsStorageTests.test_lookup_and_image_paths_honour_saved_toggles) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.2252374Z test_saved_toggles_override_configuration_and_persist (test_lookup_provider_settings.ProviderSettingsStorageTests.test_saved_toggles_override_configuration_and_persist) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.2405478Z test_unreadable_settings_fail_closed (test_lookup_provider_settings.ProviderSettingsStorageTests.test_unreadable_settings_fail_closed) ... Provider settings unreadable; optional lookups disabled
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.2406958Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.2408272Z   File "/tmp/scrying-tests-2oa1ur40/repo/python/scrying_glass_provider_settings.py", line 67, in effective_display
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.2409338Z     saved = overrides(context)
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.2410483Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.2411261Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.2411707Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.2412503Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.2413329Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-13T12:50:07.2413824Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^

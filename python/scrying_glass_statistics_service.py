@@ -2,6 +2,7 @@
 import copy
 from .scrying_glass_statistics import STATS, integer, statistics_token, restore_stat
 from .scrying_glass_feature_rules import normalize_features
+from .scrying_glass_activity_details import statistics_snapshot, statistics_note
 
 
 async def edit_statistics(features, ident, body):
@@ -33,11 +34,12 @@ async def edit_statistics(features, ident, body):
     except (ValueError, TypeError) as exc:
         raise c.HTTPException(422, str(exc)) from exc
     c.remember_turn_successors()
+    stats_before = statistics_snapshot(target)
     target.update(candidate)
     if not target.get('alive'):
         features.clear_concentration(ident)
         target['visible'] = True
     c.clean_order()
-    features.log('statistics-' + operation, target, note=note)
+    features.log('statistics-' + operation, target, note=statistics_note(target, stats_before, prefix=note))
     await features.persist()
     return target

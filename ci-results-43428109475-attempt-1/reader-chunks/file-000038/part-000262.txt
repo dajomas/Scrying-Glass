@@ -1,0 +1,32 @@
+ts	Standalone Python browser and audit checks	2026-11-13T12:55:13.7359427Z test_fivetools_fallback.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:13.7360143Z Ran 15 tests in 0.234s
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:13.7360377Z 
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:13.7360508Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:13.7888629Z Connection audit: test_fivetools_initiative.py
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:13.8771194Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:13.8772530Z test_fivetools_initiative.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:13.8773144Z Ran 10 tests in 0.001s
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:13.8773345Z 
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:13.8773463Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:13.8889786Z Connection audit: test_fivetools_initiative_flow.py
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.3867425Z Selected monster source refresh failed for 2b4f128814c04968860c8fa2cfd1a987
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.3868942Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.3870259Z   File "/tmp/scrying-tests-s94qek1v/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.3871533Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.3872774Z   File "/tmp/scrying-tests-s94qek1v/repo/python/scrying_glass_monster_refresh_sources.py", line 93, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.3875292Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.3877265Z ValueError: Retained source missing or ambiguous
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.3913632Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.3914307Z Ran 2 tests in 0.153s
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.3914589Z 
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.3914734Z OK
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.3918836Z test_fivetools_initiative_flow.py: connections opened: 13; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.4447405Z Connection audit: test_fivetools_source_configuration.py
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.5708979Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.5709753Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.5710735Z   File "python/scrying_glass_monster_selection.py", line 199, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.5711640Z     index = _fivetools_index(root)
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.5712545Z   File "python/scrying_glass_monster_selection.py", line 167, in _fivetools_index
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.5713464Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-13T12:55:14.5714578Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Stand

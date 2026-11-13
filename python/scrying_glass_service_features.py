@@ -116,7 +116,7 @@ class FeaturesService:
         if not target['alive'] or ('concentrating' in body and not target['concentrating']): self.clear_concentration(ident)
         self.context.clean_order()
         if can_take_turn(target): self.context.insert_into_battle_order(target)
-        for action,amount,note in feature_changes(before,target,delta):
+        for action,amount,note in feature_changes(before,target,delta,target.get('name')):
             self.log(action,target,amount,note=note)
         await self.persist();return target
     async def edit_statistics(self,ident,body):
