@@ -1,0 +1,124 @@
+Now running test 001/061: Admin login (wrong and correct password), logout and login redirects [chromium] ... SUCCESS
+Now running test 002/061: Role routing: superadmin to Users, admin denied Users, client denied Admin [chromium] ... SUCCESS
+Now running test 003/061: Superadmin creates a client user who can sign in to the display [chromium] ... SUCCESS
+Now running test 004/061: Campaign ownership: unassign hides, reassign restores the campaign [chromium] ... SUCCESS
+Now running test 005/061: Viewer access grant and revoke update the Client display [chromium] ... SUCCESS
+Now running test 006/061: Create, edit and switch campaigns; choice survives reload [chromium] ... SUCCESS
+Now running test 007/061: New campaign requires a name; cancel leaves campaigns unchanged [chromium] ... SUCCESS
+Now running test 008/061: The last remaining campaign cannot be deleted [chromium] ... SUCCESS
+Now running test 009/061: Delete a campaign and move its setups to another campaign [chromium] ... SUCCESS
+Now running test 010/061: Delete a campaign together with its setups [chromium] ... SUCCESS
+Now running test 011/061: Battle setup save, load, rename and delete [chromium] ... SUCCESS
+Now running test 012/061: Copy a saved setup to another campaign [chromium] ... SUCCESS
+Now running test 013/061: Export a campaign bundle and import it as a new campaign [chromium] ... SUCCESS
+Now running test 014/061: Join Battle is refused until initiative is set, with the error linked to the field [chromium] ... FAILED
+Now running test 015/061: A monster without a raw roll cannot join; with a roll it can [chromium] ... SUCCESS
+Now running test 016/061: A monster's total is the raw roll plus its bonus, also after editing the bonus [chromium] ... SUCCESS
+Now running test 017/061: Roll monster initiatives asks first, then rolls a d20 for every monster [chromium] ... SUCCESS
+Now running test 018/061: Roll shared initiative gives the selected monsters one common roll [chromium] ... SUCCESS
+Now running test 019/061: Inline and dialog initiative edits for a character are saved [chromium] ... SUCCESS
+Now running test 020/061: Battle order sorts by initiative, and the tie dialog decides equal totals [chromium] ... SUCCESS
+Now running test 021/061: Cancelling the tie dialog does not start the battle [chromium] ... SUCCESS
+Now running test 022/061: Tab and Shift+Tab move between initiative fields, save typed values, and Escape leaves the roster [chromium] ... SUCCESS
+Now running test 023/061: Add, edit and remove a character; changes survive reload [chromium] ... SUCCESS
+Now running test 024/061: The character form requires a name and a starting HP [chromium] ... SUCCESS
+Now running test 025/061: Add numbered monsters, edit one and remove another [chromium] ... SUCCESS
+Now running test 026/061: A dice expression in HP Range start rolls HP within its range [chromium] ... SUCCESS
+Now running test 027/061: Bulk select-all, unselect-all and remove for characters and monsters [chromium] ... SUCCESS
+Now running test 028/061: Bulk actions stay disabled until a combatant is selected [chromium] ... SUCCESS
+Now running test 029/061: Inline initiative inputs in both rosters use the compact 7.5ch width [chromium] ... SUCCESS
+Now running test 030/061: Refresh from source reviews only the selected monsters and applies nothing when no source exists [chromium] ... SUCCESS
+Now running test 031/061: Admin login (wrong and correct password), logout and login redirects [firefox] ... SUCCESS
+Now running test 032/061: Role routing: superadmin to Users, admin denied Users, client denied Admin [firefox] ... SUCCESS
+Now running test 033/061: Superadmin creates a client user who can sign in to the display [firefox] ... SUCCESS
+Now running test 034/061: Campaign ownership: unassign hides, reassign restores the campaign [firefox] ... SUCCESS
+Now running test 035/061: Viewer access grant and revoke update the Client display [firefox] ... SUCCESS
+Now running test 036/061: Create, edit and switch campaigns; choice survives reload [firefox] ... SUCCESS
+Now running test 037/061: New campaign requires a name; cancel leaves campaigns unchanged [firefox] ... SUCCESS
+Now running test 038/061: The last remaining campaign cannot be deleted [firefox] ... SUCCESS
+Now running test 039/061: Delete a campaign and move its setups to another campaign [firefox] ... SUCCESS
+Now running test 040/061: Delete a campaign together with its setups [firefox] ... SUCCESS
+Now running test 041/061: Battle setup save, load, rename and delete [firefox] ... SUCCESS
+Now running test 042/061: Copy a saved setup to another campaign [firefox] ... SUCCESS
+Now running test 043/061: Export a campaign bundle and import it as a new campaign [firefox] ... SUCCESS
+Now running test 044/061: Join Battle is refused until initiative is set, with the error linked to the field [firefox] ... SUCCESS
+Now running test 045/061: A monster without a raw roll cannot join; with a roll it can [firefox] ... SUCCESS
+Now running test 046/061: A monster's total is the raw roll plus its bonus, also after editing the bonus [firefox] ... SUCCESS
+Now running test 047/061: Roll monster initiatives asks first, then rolls a d20 for every monster [firefox] ... SUCCESS
+Now running test 048/061: Roll shared initiative gives the selected monsters one common roll [firefox] ... SUCCESS
+Now running test 049/061: Inline and dialog initiative edits for a character are saved [firefox] ... SUCCESS
+Now running test 050/061: Battle order sorts by initiative, and the tie dialog decides equal totals [firefox] ... SUCCESS
+Now running test 051/061: Cancelling the tie dialog does not start the battle [firefox] ... SUCCESS
+Now running test 052/061: Tab and Shift+Tab move between initiative fields, save typed values, and Escape leaves the roster [firefox] ... SUCCESS
+Now running test 053/061: Add, edit and remove a character; changes survive reload [firefox] ... SUCCESS
+Now running test 054/061: The character form requires a name and a starting HP [firefox] ... SUCCESS
+Now running test 055/061: Add numbered monsters, edit one and remove another [firefox] ... SUCCESS
+Now running test 056/061: A dice expression in HP Range start rolls HP within its range [firefox] ... SUCCESS
+Now running test 057/061: Bulk select-all, unselect-all and remove for characters and monsters [firefox] ... SUCCESS
+Now running test 058/061: Bulk actions stay disabled until a combatant is selected [firefox] ... SUCCESS
+Now running test 059/061: Inline initiative inputs in both rosters use the compact 7.5ch width [firefox] ... SUCCESS
+Now running test 060/061: Refresh from source reviews only the selected monsters and applies nothing when no source exists [firefox] ... SUCCESS
+Now running test 061/061: Unauthenticated API requests are rejected on both portals ... SUCCESS
+
+=================================== FAILURES ===================================
+_________________ test_join_gate_requires_initiative[chromium] _________________
+
+sessions = <function sessions.<locals>.make at 0x74da9b7f0540>
+
+    def test_join_gate_requires_initiative(sessions):
+        """Join Battle is refused until initiative is set, with the error linked to the field."""
+        _, page = admin(sessions)
+        add_character(page, "Borin")
+        field = initiative_input(page, "characters", "Borin")
+        expect(row(page, "characters", "Borin").locator("button[data-ca]")).to_have_attribute("aria-disabled", "true")
+        join(page, "characters", "Borin")
+        message = "Enter initiative before joining battle: Borin"
+        expect(page.get_by_text(f"Error: {message}")).to_be_visible()
+        expect(field).to_have_attribute("aria-invalid", "true")
+        described = field.get_attribute("aria-describedby")
+        expect(page.locator(f"#{described}")).to_have_text(message)
+        expect(roster_state(page, "characters", "Borin")).to_contain_text("Not in battle")
+    
+        set_initiative(page, "characters", "Borin", 14)
+>       join(page, "characters", "Borin")
+
+e2e/test_initiative.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+e2e/test_initiative.py:12: in join
+    row(page, kind, name).locator(f"button[{attribute}]").click(force=True)
+.venv-e2e/lib64/python3.12/site-packages/playwright/sync_api/_generated.py:11045: in click
+    self._sync(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/locator.py:222: in click
+    return await self._frame.click(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/frame.py:587: in click
+    return await self._channel.click(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:387: in finish
+    raise e from None
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:352: in finish
+    result = await zone.run_async(lambda: awaitable)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl.utils.zones.Zone object at 0x74da9b7d0a70>
+func = <function ChannelOwner._wrap_api_call.<locals>.finish.<locals>.<lambda> at 0x74da9b7b9080>
+
+    async def run_async(self, func: Callable[[], Awaitable[R]]) -> R:
+        # Python: run() of an async function. The coroutine runs when it is awaited,
+        # so the zone must be current while it is awaited, not while it is created.
+        token = _async_local_storage.set(self)
+        try:
+>           return await func()
+                   ^^^^^^^^^^^^
+E           playwright._impl._errors.Error: Locator.click: Element is not visible
+E           Call log:
+E             - waiting for locator("#characters tr").filter(has=get_by_label("Select Borin", exact=True)).locator("button[data-ca]")
+E               - locator resolved to <button class="" aria-disabled="true" aria-pressed="false" aria-label="Join Battle" data-initiative-blocked="true" data-ca="282739b1aed84a779e6ccd7d77db64c7" title="Enter initiative before joining battle.">Join Battle</button>
+E             - attempting click action
+E               - scrolling into view if needed
+E               - done scrolling
+
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/utils/zones.py:58: Error
+- Generated html report: file:///mnt/d/git/Scrying-Glass/e2e-results/20261113T143058Z/report.html -
+=========================== short test summary info ============================
+ e2e/test_initiative.py::test_join_gate_requires_initiative[chromium] - playw...
+1 failed, 60 passed in 361.53s (0:06:01)

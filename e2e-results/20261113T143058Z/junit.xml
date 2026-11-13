@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="61" time="361.436" timestamp="2026-11-13T15:31:04.697357+01:00" hostname="jgodfr-win-01"><testcase classname="test_access" name="test_admin_login_logout_and_redirects[chromium]" time="5.902" /><testcase classname="test_access" name="test_role_routing[chromium]" time="6.590" /><testcase classname="test_access" name="test_superadmin_creates_user_who_can_sign_in[chromium]" time="5.092" /><testcase classname="test_access" name="test_campaign_ownership_controls_admin_visibility[chromium]" time="7.380" /><testcase classname="test_access" name="test_viewer_access_grant_and_revoke[chromium]" time="6.178" /><testcase classname="test_campaigns" name="test_create_edit_and_switch_campaigns[chromium]" time="5.663" /><testcase classname="test_campaigns" name="test_campaign_name_is_required[chromium]" time="5.355" /><testcase classname="test_campaigns" name="test_last_campaign_cannot_be_deleted[chromium]" time="5.143" /><testcase classname="test_campaigns" name="test_delete_campaign_moving_its_setups[chromium]" time="5.357" /><testcase classname="test_campaigns" name="test_delete_campaign_with_its_setups[chromium]" time="5.356" /><testcase classname="test_campaigns" name="test_battle_setup_save_load_rename_and_delete[chromium]" time="5.370" /><testcase classname="test_campaigns" name="test_add_setup_copy_to_another_campaign[chromium]" time="5.657" /><testcase classname="test_campaigns" name="test_export_and_import_campaign_bundle[chromium]" time="5.564" /><testcase classname="test_initiative" name="test_join_gate_requires_initiative[chromium]" time="5.576"><failure message="playwright._impl._errors.Error: Locator.click: Element is not visible&#10;Call log:&#10;  - waiting for locator(&quot;#characters tr&quot;).filter(has=get_by_label(&quot;Select Borin&quot;, exact=True)).locator(&quot;button[data-ca]&quot;)&#10;    - locator resolved to &lt;button class=&quot;&quot; aria-disabled=&quot;true&quot; aria-pressed=&quot;false&quot; aria-label=&quot;Join Battle&quot; data-initiative-blocked=&quot;true&quot; data-ca=&quot;282739b1aed84a779e6ccd7d77db64c7&quot; title=&quot;Enter initiative before joining battle.&quot;&gt;Join Battle&lt;/button&gt;&#10;  - attempting click action&#10;[+2 more lines; full report in element text]">sessions = &lt;function sessions.&lt;locals&gt;.make at 0x74da9b7f0540&gt;
+
+    def test_join_gate_requires_initiative(sessions):
+        """Join Battle is refused until initiative is set, with the error linked to the field."""
+        _, page = admin(sessions)
+        add_character(page, "Borin")
+        field = initiative_input(page, "characters", "Borin")
+        expect(row(page, "characters", "Borin").locator("button[data-ca]")).to_have_attribute("aria-disabled", "true")
+        join(page, "characters", "Borin")
+        message = "Enter initiative before joining battle: Borin"
+        expect(page.get_by_text(f"Error: {message}")).to_be_visible()
+        expect(field).to_have_attribute("aria-invalid", "true")
+        described = field.get_attribute("aria-describedby")
+        expect(page.locator(f"#{described}")).to_have_text(message)
+        expect(roster_state(page, "characters", "Borin")).to_contain_text("Not in battle")
+    
+        set_initiative(page, "characters", "Borin", 14)
+&gt;       join(page, "characters", "Borin")
+
+e2e/test_initiative.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+e2e/test_initiative.py:12: in join
+    row(page, kind, name).locator(f"button[{attribute}]").click(force=True)
+.venv-e2e/lib64/python3.12/site-packages/playwright/sync_api/_generated.py:11045: in click
+    self._sync(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/locator.py:222: in click
+    return await self._frame.click(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/frame.py:587: in click
+    return await self._channel.click(
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:387: in finish
+    raise e from None
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/channel_owner.py:352: in finish
+    result = await zone.run_async(lambda: awaitable)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl.utils.zones.Zone object at 0x74da9b7d0a70&gt;
+func = &lt;function ChannelOwner._wrap_api_call.&lt;locals&gt;.finish.&lt;locals&gt;.&lt;lambda&gt; at 0x74da9b7b9080&gt;
+
+    async def run_async(self, func: Callable[[], Awaitable[R]]) -&gt; R:
+        # Python: run() of an async function. The coroutine runs when it is awaited,
+        # so the zone must be current while it is awaited, not while it is created.
+        token = _async_local_storage.set(self)
+        try:
+&gt;           return await func()
+                   ^^^^^^^^^^^^
+E           playwright._impl._errors.Error: Locator.click: Element is not visible
+E           Call log:
+E             - waiting for locator("#characters tr").filter(has=get_by_label("Select Borin", exact=True)).locator("button[data-ca]")
+E               - locator resolved to &lt;button class="" aria-disabled="true" aria-pressed="false" aria-label="Join Battle" data-initiative-blocked="true" data-ca="282739b1aed84a779e6ccd7d77db64c7" title="Enter initiative before joining battle."&gt;Join Battle&lt;/button&gt;
+E             - attempting click action
+E               - scrolling into view if needed
+E               - done scrolling
+
+.venv-e2e/lib64/python3.12/site-packages/playwright/_impl/utils/zones.py:58: Error</failure></testcase><testcase classname="test_initiative" name="test_monster_join_gate_requires_raw_roll[chromium]" time="5.563" /><testcase classname="test_initiative" name="test_monster_raw_roll_bonus_and_total[chromium]" time="5.681" /><testcase classname="test_initiative" name="test_roll_monster_initiatives[chromium]" time="5.350" /><testcase classname="test_initiative" name="test_roll_shared_initiative[chromium]" time="5.764" /><testcase classname="test_initiative" name="test_manual_character_initiative_edits[chromium]" time="5.896" /><testcase classname="test_initiative" name="test_battle_order_follows_initiative_and_tie_choice[chromium]" time="6.269" /><testcase classname="test_initiative" name="test_tie_dialog_cancel_keeps_battle_inactive[chromium]" time="5.661" /><testcase classname="test_initiative" name="test_keyboard_navigation_between_initiative_fields[chromium]" time="5.359" /><testcase classname="test_rosters" name="test_add_edit_and_remove_character[chromium]" time="5.740" /><testcase classname="test_rosters" name="test_character_form_requires_name_and_hp[chromium]" time="5.282" /><testcase classname="test_rosters" name="test_add_edit_and_remove_monsters[chromium]" time="5.454" /><testcase classname="test_rosters" name="test_monster_hp_from_dice_expression[chromium]" time="5.256" /><testcase classname="test_rosters" name="test_bulk_select_all_and_remove[chromium]" time="6.248" /><testcase classname="test_rosters" name="test_bulk_actions_need_a_selection[chromium]" time="5.442" /><testcase classname="test_rosters" name="test_compact_initiative_inputs[chromium]" time="5.594" /><testcase classname="test_rosters" name="test_monster_refresh_review_without_sources[chromium]" time="5.549" /><testcase classname="test_access" name="test_admin_login_logout_and_redirects[firefox]" time="6.946" /><testcase classname="test_access" name="test_role_routing[firefox]" time="7.159" /><testcase classname="test_access" name="test_superadmin_creates_user_who_can_sign_in[firefox]" time="5.450" /><testcase classname="test_access" name="test_campaign_ownership_controls_admin_visibility[firefox]" time="8.081" /><testcase classname="test_access" name="test_viewer_access_grant_and_revoke[firefox]" time="6.998" /><testcase classname="test_campaigns" name="test_create_edit_and_switch_campaigns[firefox]" time="6.211" /><testcase classname="test_campaigns" name="test_campaign_name_is_required[firefox]" time="5.663" /><testcase classname="test_campaigns" name="test_last_campaign_cannot_be_deleted[firefox]" time="5.351" /><testcase classname="test_campaigns" name="test_delete_campaign_moving_its_setups[firefox]" time="5.865" /><testcase classname="test_campaigns" name="test_delete_campaign_with_its_setups[firefox]" time="5.672" /><testcase classname="test_campaigns" name="test_battle_setup_save_load_rename_and_delete[firefox]" time="5.755" /><testcase classname="test_campaigns" name="test_add_setup_copy_to_another_campaign[firefox]" time="5.953" /><testcase classname="test_campaigns" name="test_export_and_import_campaign_bundle[firefox]" time="5.746" /><testcase classname="test_initiative" name="test_join_gate_requires_initiative[firefox]" time="5.889" /><testcase classname="test_initiative" name="test_monster_join_gate_requires_raw_roll[firefox]" time="5.993" /><testcase classname="test_initiative" name="test_monster_raw_roll_bonus_and_total[firefox]" time="6.492" /><testcase classname="test_initiative" name="test_roll_monster_initiatives[firefox]" time="5.888" /><testcase classname="test_initiative" name="test_roll_shared_initiative[firefox]" time="6.098" /><testcase classname="test_initiative" name="test_manual_character_initiative_edits[firefox]" time="6.147" /><testcase classname="test_initiative" name="test_battle_order_follows_initiative_and_tie_choice[firefox]" time="7.004" /><testcase classname="test_initiative" name="test_tie_dialog_cancel_keeps_battle_inactive[firefox]" time="6.249" /><testcase classname="test_initiative" name="test_keyboard_navigation_between_initiative_fields[firefox]" time="5.780" /><testcase classname="test_rosters" name="test_add_edit_and_remove_character[firefox]" time="6.299" /><testcase classname="test_rosters" name="test_character_form_requires_name_and_hp[firefox]" time="5.534" /><testcase classname="test_rosters" name="test_add_edit_and_remove_monsters[firefox]" time="6.504" /><testcase classname="test_rosters" name="test_monster_hp_from_dice_expression[firefox]" time="5.604" /><testcase classname="test_rosters" name="test_bulk_select_all_and_remove[firefox]" time="6.780" /><testcase classname="test_rosters" name="test_bulk_actions_need_a_selection[firefox]" time="5.860" /><testcase classname="test_rosters" name="test_compact_initiative_inputs[firefox]" time="6.066" /><testcase classname="test_rosters" name="test_monster_refresh_review_without_sources[firefox]" time="5.955" /><testcase classname="test_access" name="test_unauthenticated_requests_are_rejected" time="4.196" /></testsuite></testsuites>
