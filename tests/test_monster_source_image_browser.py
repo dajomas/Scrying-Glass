@@ -25,7 +25,7 @@ class MonsterSourceImageBrowserTests(unittest.TestCase):
         self.addCleanup(browser.close)
         self.page = browser.new_page(viewport={'width': 1280, 'height': 900})
         self.page.set_default_timeout(5000)
-        self.posts, self.lookups, self.errors = [], [], []
+        self.posts, self.lookups, self.errors, self.urls = [], [], [], []
         self.page.on('pageerror', lambda error: self.errors.append(str(error)))
         self.page.route('http://fixture.test/', lambda route: route.fulfill(content_type='text/html', body=(
             '<select id="monsterBulkAction"><option value="">Actions</option>'
@@ -37,7 +37,11 @@ class MonsterSourceImageBrowserTests(unittest.TestCase):
         def lookup(route):
             species = route.request.url.split('species=')[1]
             self.lookups.append(species)
-            route.fulfill(json={'status': 'ok', 'candidates': CANDIDATES.get(species, [])})
+            self.urls.append(route.request.url)
+            body = {'status': 'ok', 'candidates': CANDIDATES.get(species, [])}
+            if species == 'orc':
+                body['warning'] = 'Not available right now: Open5e. Showing images from the other sources.'
+            route.fulfill(json=body)
         self.page.route('**/api/monsters/lookup?*', lookup)
 
         def apply(route):
@@ -168,6 +172,20 @@ class MonsterSourceImageBrowserTests(unittest.TestCase):
         self.page.evaluate("runBulkAction('monsters', 'remove')")
         self.assertTrue(self.page.evaluate('window.legacyBulk'))
 
+
+    def test_bulk_shows_partial_lookup_warning_and_retries_it_later(self):
+        """A partial lookup shows its warning in the row and is not reused next time."""
+        self.page.evaluate("chosen = ['a', 'b']; window.running = runBulkAction('monsters', 'select-source-image'); void 0")
+        self.page.wait_for_function("document.querySelector('dialog')?.getAttribute('aria-busy') === 'false'")
+        self.assertTrue(all('images=true' in url for url in self.urls))
+        orc = self.page.locator('.monster-source-image-row[data-monster-id="b"]')
+        self.assertIn('Not available right now: Open5e', orc.locator('.monster-source-image-row-status').text_content())
+        self.assertEqual(orc.locator('.monster-image-option').count(), 2)
+        self.page.get_by_role('button', name='Cancel', exact=True).click()
+        self.page.evaluate("window.running = runBulkAction('monsters', 'select-source-image'); void 0")
+        self.page.wait_for_function("document.querySelector('dialog')?.getAttribute('aria-busy') === 'false'")
+        self.assertEqual(sorted(self.lookups), ['goblin', 'orc', 'orc'])
+        self.assertEqual(self.errors, [])
 
 if __name__ == '__main__':
     unittest.main()

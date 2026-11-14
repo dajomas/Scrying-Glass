@@ -38,3 +38,12 @@ Validation of the follow-up (this sandbox): through `tools/run_split_tests.py`, 
 CI run 43636503802 (on `93ffbd0e`) failed one test: `test_edit_rejects_a_tampered_token`. It replaced the last two token characters with `00`, which changes nothing when a token already ends in `00`. The test now always changes the last character; it passed 8 of 8 in `test_monster_source_image`.
 
 Layout fix (user screenshot of the bulk dialog): the "Keep current" tile looked wider because the selected outline was drawn outside the tile, and images with different shapes had no visible frame. The outline is now drawn inside the tile (`outline-offset: -3px`), every thumbnail sits in a 7rem square with a dark backdrop, tiles align to the top, and the "No source images found…" note is smaller and dimmed. Cache version `monster-source-image.js?v=3`. Validation: `test_monster_source_image_browser`, `test_asset_cache_busting` and `test_admin_asset_wiring` through `tools/run_split_tests.py`, plus a Chromium screenshot with wide, tall and square stub images. User run and acceptance pending.
+
+Partial image lookups (user report: Open5e timed out, and the bulk row for Shadow showed "Combined monster lookup incomplete: Open5e. No candidates were offered", plus two tracebacks in the server log):
+
+- Image picking (Edit button and bulk dialog) now calls `GET /api/monsters/lookup?images=true&species=…`. In that mode, `ordered_candidates(partial=True)` returns the candidates from the providers that answered, with `failed` and a `warning` ("Not available right now: Open5e. Showing images from the other sources."). It is still an error when every enabled provider failed. Stats lookups (add, refresh) are unchanged and stay fail-closed.
+- The warning is shown in the bulk row note and in the Edit status line. Partial and failed lookups are not cached, so the next attempt retries every source.
+- Network timeouts and connection errors are logged once as a single line ("Combined monster lookup: Open5e did not respond (The read operation timed out)") instead of two tracebacks. Other provider errors still log a traceback.
+- Cache version `monster-source-image.js?v=4`.
+
+Validation: through `tools/run_split_tests.py`, the new `test_image_lookup_partial` (4) and every test module that uses the lookup, combined lookup or Open5e provider (20 modules, including the source-image browser test with a new partial-warning case): 159 tests OK. Not checked against the real Open5e service. User run and acceptance pending.

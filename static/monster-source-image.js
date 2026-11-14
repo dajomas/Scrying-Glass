@@ -14,7 +14,7 @@
         const key = species.trim().toLowerCase();
         const cached = lookups.get(key);
         if (cached && Date.now() - cached.at < CACHE_MS) return cached.promise;
-        const promise = request(`/api/monsters/lookup?species=${encodeURIComponent(species)}`).then(result => {
+        const promise = request(`/api/monsters/lookup?images=true&species=${encodeURIComponent(species)}`).then(result => {
             if (!result || result.status !== 'ok') {
                 throw new Error(result?.reason || `Image lookup failed for ${species}.`);
             }
@@ -25,11 +25,14 @@
                 seen.add(candidate.image_url);
                 images.push({candidate, species, caption: label(candidate)});
             }
+            images.warning = typeof result.warning === 'string' ? result.warning : '';
             return images;
         });
         const entry = {at: Date.now(), promise};
         lookups.set(key, entry);
-        promise.catch(() => { if (lookups.get(key) === entry) lookups.delete(key); });
+        // Failed or partial lookups are not reused, so the next attempt retries every source.
+        const forget = () => { if (lookups.get(key) === entry) lookups.delete(key); };
+        promise.then(images => { if (images.warning) forget(); }, forget);
         return promise;
     }
 
@@ -158,10 +161,10 @@
                 const images = await speciesImages(name);
                 if (editing !== session || editModal.hidden) return;
                 if (!images.length) {
-                    say(`No source images found for ${name}.`);
+                    say(`No source images found for ${name}.${images.warning ? ` ${images.warning}` : ''}`);
                     return;
                 }
-                say('');
+                say(images.warning);
                 const choice = await chooseOne('Select monster image', images);
                 if (!choice || editing !== session || editModal.hidden) return;
                 token.value = choice.candidate.selection_token;
@@ -341,7 +344,8 @@
                             note.textContent = failure;
                             continue;
                         }
-                        note.textContent = images.length ? '' : `No source images found for ${species}.`;
+                        note.textContent = [images.length ? '' : `No source images found for ${species}.`,
+                            images.warning].filter(Boolean).join(' ');
                         note.hidden = !note.textContent;
                         for (const image of images) {
                             const button = tile(image.candidate.image_url, image.caption,
