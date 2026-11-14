@@ -1,0 +1,26 @@
+ers_after_other_providers) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0181947Z test_disabled_absent_or_refresh_lookup_never_contacts_open5e (test_open5e_provider.Open5eLookupIntegrationTests.test_disabled_absent_or_refresh_lookup_never_contacts_open5e) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0184762Z test_dnd_beyond_and_fivetools_source_attribution (test_open5e_provider.Open5eLookupIntegrationTests.test_dnd_beyond_and_fivetools_source_attribution) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0195059Z test_open5e_failure_blocks_all_candidates (test_open5e_provider.Open5eLookupIntegrationTests.test_open5e_failure_blocks_all_candidates) ... Open5e candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0195919Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0196425Z   File "/tmp/scrying-tests-my_qulij/repo/python/scrying_glass_monster_selection.py", line 247, in open5e_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0196985Z     return open5e.candidates(species, display, max_candidates=MAX_CANDIDATES)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0197376Z            ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0197843Z   File "/tmp/scrying-tests-my_qulij/repo/python/scrying_glass_open5e.py", line 174, in candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0198329Z     found = _pages(base + "/creatures/?" + query, base, limit=max_candidates)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0198826Z   File "/tmp/scrying-tests-my_qulij/repo/python/scrying_glass_open5e.py", line 79, in _pages
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0199198Z     data = load_json(url)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0199625Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0200036Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0200281Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0200715Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0201148Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0201424Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0201884Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0202295Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0202470Z OSError: secret
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0203372Z Combined monster lookup failed for Open5e
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0203794Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0204550Z   File "/tmp/scrying-tests-my_qulij/repo/python/scrying_glass_monster_selection.py", line 247, in open5e_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0205507Z     return open5e.candidates(species, display, max_candidates=MAX_CANDIDATES)
+tests	Python test suite (including browser fixtures)	2026-11-14T

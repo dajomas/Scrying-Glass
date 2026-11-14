@@ -1,0 +1,31 @@
+= _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:20.9955650Z   File "/tmp/scrying-tests-mkkoskem/repo/python/scrying_glass_monster_refresh_sources.py", line 93, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:20.9957141Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:20.9960072Z ValueError: Retained source missing or ambiguous
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:20.9989903Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:20.9990269Z Ran 2 tests in 0.130s
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:20.9990425Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:20.9990518Z OK
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:20.9990915Z test_fivetools_initiative_flow.py: connections opened: 13; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.0602088Z Connection audit: test_fivetools_source_configuration.py
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1627423Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1627865Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1628295Z   File "python/scrying_glass_monster_selection.py", line 199, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1628694Z     index = _fivetools_index(root)
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1629078Z   File "python/scrying_glass_monster_selection.py", line 167, in _fivetools_index
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1629496Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1630053Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1630482Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1630748Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1631190Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1631622Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1631893Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1632350Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1632747Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1632949Z OSError: private detail
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1633185Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1633451Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1633832Z   File "python/scrying_glass_monster_selection.py", line 196, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1634228Z     sources = ft.configured_sources(display)
+tests	Standalone Python browser and audit checks	2026-11-14T20:33:21.1634719Z   File "/tmp/scrying-tests-mkkoskem/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+tests	Standalone Python browser and 

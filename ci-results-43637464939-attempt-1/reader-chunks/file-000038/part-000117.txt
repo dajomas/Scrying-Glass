@@ -1,0 +1,28 @@
+20:29:58.0205895Z            ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0206365Z   File "/tmp/scrying-tests-my_qulij/repo/python/scrying_glass_open5e.py", line 174, in candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0206831Z     found = _pages(base + "/creatures/?" + query, base, limit=max_candidates)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0207302Z   File "/tmp/scrying-tests-my_qulij/repo/python/scrying_glass_open5e.py", line 79, in _pages
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0207665Z     data = load_json(url)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0208071Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0208480Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0208728Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0209336Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0210031Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0210466Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0211222Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0211857Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0212128Z OSError: secret
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0212276Z 
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0212615Z The above exception was the direct cause of the following exception:
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0212975Z 
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0213155Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0213906Z   File "/tmp/scrying-tests-my_qulij/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0214716Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0215496Z   File "/tmp/scrying-tests-my_qulij/repo/python/scrying_glass_monster_selection.py", line 268, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0216377Z     extra=(("Open5e", open5e_enabled, lambda: open5e_candidates(species, display)),))
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0217014Z                                               ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0217823Z   File "/tmp/scrying-tests-my_qulij/repo/python/scrying_glass_monster_selection.py", line 250, in open5e_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0218433Z     raise ProviderError("Open5e lookup failed; enter stats manually or retry.") from exc
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0219049Z python.scrying_glass_monster_selection.ProviderError: Open5e lookup failed; enter stats manually or retry.
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0219460Z ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:58.0220142Z test_refresh_

@@ -1,0 +1,46 @@
+026-11-14T20:30:24.7500802Z ##[group]tests/admin-combatant-reset-feedback.test.cjs
+tests	JavaScript tests	2026-11-14T20:30:24.9970847Z TAP version 13
+tests	JavaScript tests	2026-11-14T20:30:25.0463558Z # Subtest: monsters: explicit persistent failure uses target identity and unchanged request
+tests	JavaScript tests	2026-11-14T20:30:25.0466281Z ok 1 - monsters: explicit persistent failure uses target identity and unchanged request
+tests	JavaScript tests	2026-11-14T20:30:25.0467157Z   ---
+tests	JavaScript tests	2026-11-14T20:30:25.0467443Z   duration_ms: 4.1166
+tests	JavaScript tests	2026-11-14T20:30:25.0467742Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:25.0468019Z   ...
+tests	JavaScript tests	2026-11-14T20:30:25.0472246Z # Subtest: monsters: actual failed request then matching retry resolves silently
+tests	JavaScript tests	2026-11-14T20:30:25.0473770Z ok 2 - monsters: actual failed request then matching retry resolves silently
+tests	JavaScript tests	2026-11-14T20:30:25.0474420Z   ---
+tests	JavaScript tests	2026-11-14T20:30:25.0474714Z   duration_ms: 1.047333
+tests	JavaScript tests	2026-11-14T20:30:25.0475041Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:25.0475567Z   ...
+tests	JavaScript tests	2026-11-14T20:30:25.0476254Z # Subtest: characters: explicit persistent failure uses target identity and unchanged request
+tests	JavaScript tests	2026-11-14T20:30:25.0477459Z ok 3 - characters: explicit persistent failure uses target identity and unchanged request
+tests	JavaScript tests	2026-11-14T20:30:25.0478349Z   ---
+tests	JavaScript tests	2026-11-14T20:30:25.0478632Z   duration_ms: 0.752718
+tests	JavaScript tests	2026-11-14T20:30:25.0478943Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:25.0479207Z   ...
+tests	JavaScript tests	2026-11-14T20:30:25.0480030Z # Subtest: characters: actual failed request then matching retry resolves silently
+tests	JavaScript tests	2026-11-14T20:30:25.0481062Z ok 4 - characters: actual failed request then matching retry resolves silently
+tests	JavaScript tests	2026-11-14T20:30:25.0481695Z   ---
+tests	JavaScript tests	2026-11-14T20:30:25.0482121Z   duration_ms: 0.815702
+tests	JavaScript tests	2026-11-14T20:30:25.0482617Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:25.0483065Z   ...
+tests	JavaScript tests	2026-11-14T20:30:25.0483890Z # Subtest: resetting another monster or a character does not clear the first monster error
+tests	JavaScript tests	2026-11-14T20:30:25.0485093Z ok 5 - resetting another monster or a character does not clear the first monster error
+tests	JavaScript tests	2026-11-14T20:30:25.0485997Z   ---
+tests	JavaScript tests	2026-11-14T20:30:25.0486449Z   duration_ms: 1.58167
+tests	JavaScript tests	2026-11-14T20:30:25.0486909Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:25.0487333Z   ...
+tests	JavaScript tests	2026-11-14T20:30:25.0488045Z # Subtest: same identifier in different kind has a distinct feedback target
+tests	JavaScript tests	2026-11-14T20:30:25.0488976Z ok 6 - same identifier in different kind has a distinct feedback target
+tests	JavaScript tests	2026-11-14T20:30:25.0489645Z   ---
+tests	JavaScript tests	2026-11-14T20:30:25.0490056Z   duration_ms: 0.710774
+tests	JavaScript tests	2026-11-14T20:30:25.0490982Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:25.0491412Z   ...
+tests	JavaScript tests	2026-11-14T20:30:25.0492109Z # Subtest: individual reset does not clear Reset All, End or state-load errors
+tests	JavaScript tests	2026-11-14T20:30:25.0493056Z ok 7 - individual reset does not clear Reset All, End or state-load errors
+tests	JavaScript tests	2026-11-14T20:30:25.0493670Z   ---
+tests	JavaScript tests	2026-11-14T20:30:25.0494039Z   duration_ms: 0.812367
+tests	JavaScript tests	2026-11-14T20:30:25.0494470Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:25.0494853Z   ...
+tests	JavaScript tests	2026-11-14T20:30:25.0503399Z # Subtest: refresh alone does not clear an individual reset error
+tests	JavaScript tests	2026-11

@@ -1,0 +1,49 @@
+k 6 - old success cannot clear a newer failed load
+tests	JavaScript tests	2026-11-14T20:30:30.8020733Z   ---
+tests	JavaScript tests	2026-11-14T20:30:30.8021048Z   duration_ms: 0.802563
+tests	JavaScript tests	2026-11-14T20:30:30.8021360Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:30.8021609Z   ...
+tests	JavaScript tests	2026-11-14T20:30:30.8022071Z # Subtest: old failure cannot replace feedback after newer success
+tests	JavaScript tests	2026-11-14T20:30:30.8022732Z ok 7 - old failure cannot replace feedback after newer success
+tests	JavaScript tests	2026-11-14T20:30:30.8023169Z   ---
+tests	JavaScript tests	2026-11-14T20:30:30.8023877Z   duration_ms: 0.876494
+tests	JavaScript tests	2026-11-14T20:30:30.8024177Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:30.8024448Z   ...
+tests	JavaScript tests	2026-11-14T20:30:30.8024914Z # Subtest: a direct state request also supersedes a pending load
+tests	JavaScript tests	2026-11-14T20:30:30.8026336Z ok 8 - a direct state request also supersedes a pending load
+tests	JavaScript tests	2026-11-14T20:30:30.8026873Z   ---
+tests	JavaScript tests	2026-11-14T20:30:30.8027144Z   duration_ms: 0.698004
+tests	JavaScript tests	2026-11-14T20:30:30.8027456Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:30.8027719Z   ...
+tests	JavaScript tests	2026-11-14T20:30:30.8028349Z # Subtest: scope change without another request rejects the pending old state
+tests	JavaScript tests	2026-11-14T20:30:30.8029163Z ok 9 - scope change without another request rejects the pending old state
+tests	JavaScript tests	2026-11-14T20:30:30.8029754Z   ---
+tests	JavaScript tests	2026-11-14T20:30:30.8030400Z   duration_ms: 0.962585
+tests	JavaScript tests	2026-11-14T20:30:30.8030713Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:30.8030982Z   ...
+tests	JavaScript tests	2026-11-14T20:30:30.8031480Z # Subtest: accepted transition rebinds render errors to the new scope
+tests	JavaScript tests	2026-11-14T20:30:30.8032193Z ok 10 - accepted transition rebinds render errors to the new scope
+tests	JavaScript tests	2026-11-14T20:30:30.8032990Z   ---
+tests	JavaScript tests	2026-11-14T20:30:30.8033259Z   duration_ms: 1.242407
+tests	JavaScript tests	2026-11-14T20:30:30.8033556Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:30.8033816Z   ...
+tests	JavaScript tests	2026-11-14T20:30:30.8034402Z # Subtest: load(true) rethrows the original network error; default load swallows it
+tests	JavaScript tests	2026-11-14T20:30:30.8035409Z ok 11 - load(true) rethrows the original network error; default load swallows it
+tests	JavaScript tests	2026-11-14T20:30:30.8035979Z   ---
+tests	JavaScript tests	2026-11-14T20:30:30.8036246Z   duration_ms: 1.246464
+tests	JavaScript tests	2026-11-14T20:30:30.8036554Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:30.8036820Z   ...
+tests	JavaScript tests	2026-11-14T20:30:30.8037335Z # Subtest: stale load(true) still rethrows while suppressing its feedback
+tests	JavaScript tests	2026-11-14T20:30:30.8038112Z ok 12 - stale load(true) still rethrows while suppressing its feedback
+tests	JavaScript tests	2026-11-14T20:30:30.8038613Z   ---
+tests	JavaScript tests	2026-11-14T20:30:30.8049981Z   duration_ms: 0.72786
+tests	JavaScript tests	2026-11-14T20:30:30.8050333Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:30.8050616Z   ...
+tests	JavaScript tests	2026-11-14T20:30:30.8051107Z # Subtest: only literal true enables rethrowing
+tests	JavaScript tests	2026-11-14T20:30:30.8051599Z ok 13 - only literal true enables rethrowing
+tests	JavaScript tests	2026-11-14T20:30:30.8051971Z   ---
+tests	JavaScript tests	2026-11-14T20:30:30.8052207Z   duration_ms: 0.658806
+tests	JavaScript tests	2026-11-14T20:30:30.8052468Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:30.8052711Z   ...
+tests	JavaScript tests	2026-11-14T20:30:30.8053201Z # Subtest: active-battle success also resolves a related load failure
+tests	JavaScript tests	2026-11-14T20:30:30.8053886Z ok 14 - active-battle succes

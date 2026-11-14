@@ -1,0 +1,29 @@
+m/repo/python/scrying_glass_monster_selection.py", line 202, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5695655Z     for monster in _fivetools_source_data(root, index, source):
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5695970Z                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5696485Z   File "/tmp/scrying-tests-mkkoskem/repo/python/scrying_glass_monster_selection.py", line 154, in _fivetools_source_data
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5697048Z     raise ValueError("Configured source is missing from the provider index")
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5697471Z ValueError: Configured source is missing from the provider index
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5697683Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5697883Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5698259Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5698447Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5699195Z   File "/tmp/scrying-tests-mkkoskem/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5699860Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5700511Z   File "/tmp/scrying-tests-mkkoskem/repo/python/scrying_glass_monster_selection.py", line 264, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5701213Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5710796Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5711659Z   File "/tmp/scrying-tests-mkkoskem/repo/python/scrying_glass_monster_selection.py", line 222, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5712310Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5712934Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5713405Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5713705Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5714204Z   File "/tmp/scrying-tests-mkkoskem/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5714659Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5715293Z   File "/tmp/scrying-tests-mkkoskem/repo/python/scrying_glass_monster_selection.py", line 264, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5715809Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5716105Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5716544Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5716982Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:05.5717245Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser an

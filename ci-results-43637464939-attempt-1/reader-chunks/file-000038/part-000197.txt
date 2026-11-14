@@ -1,0 +1,46 @@
+-11-14T20:30:38.8978032Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:38.8978322Z   ...
+tests	JavaScript tests	2026-11-14T20:30:38.8999011Z # Subtest: identical polling failures keep the same record without re-publishing
+tests	JavaScript tests	2026-11-14T20:30:38.8999988Z ok 2 - identical polling failures keep the same record without re-publishing
+tests	JavaScript tests	2026-11-14T20:30:38.9000567Z   ---
+tests	JavaScript tests	2026-11-14T20:30:38.9000870Z   duration_ms: 2.927543
+tests	JavaScript tests	2026-11-14T20:30:38.9001192Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:38.9001481Z   ...
+tests	JavaScript tests	2026-11-14T20:30:38.9019354Z # Subtest: a different failure replaces the warning in place (one record)
+tests	JavaScript tests	2026-11-14T20:30:38.9020403Z ok 3 - a different failure replaces the warning in place (one record)
+tests	JavaScript tests	2026-11-14T20:30:38.9020968Z   ---
+tests	JavaScript tests	2026-11-14T20:30:38.9021248Z   duration_ms: 2.158431
+tests	JavaScript tests	2026-11-14T20:30:38.9021570Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:38.9021928Z   ...
+tests	JavaScript tests	2026-11-14T20:30:38.9037831Z # Subtest: recovery resolves only the connection identity and keeps unrelated errors
+tests	JavaScript tests	2026-11-14T20:30:38.9038772Z ok 4 - recovery resolves only the connection identity and keeps unrelated errors
+tests	JavaScript tests	2026-11-14T20:30:38.9039319Z   ---
+tests	JavaScript tests	2026-11-14T20:30:38.9040278Z   duration_ms: 1.854672
+tests	JavaScript tests	2026-11-14T20:30:38.9040635Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:38.9040907Z   ...
+tests	JavaScript tests	2026-11-14T20:30:38.9061183Z # Subtest: successful polls without an outstanding warning publish nothing
+tests	JavaScript tests	2026-11-14T20:30:38.9062019Z ok 5 - successful polls without an outstanding warning publish nothing
+tests	JavaScript tests	2026-11-14T20:30:38.9062521Z   ---
+tests	JavaScript tests	2026-11-14T20:30:38.9062808Z   duration_ms: 2.340756
+tests	JavaScript tests	2026-11-14T20:30:38.9063121Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:38.9063400Z   ...
+tests	JavaScript tests	2026-11-14T20:30:38.9082118Z # Subtest: a dismissed warning is not re-announced by identical failures; a new failure or recovery is
+tests	JavaScript tests	2026-11-14T20:30:38.9083657Z ok 6 - a dismissed warning is not re-announced by identical failures; a new failure or recovery is
+tests	JavaScript tests	2026-11-14T20:30:38.9084277Z   ---
+tests	JavaScript tests	2026-11-14T20:30:38.9084566Z   duration_ms: 2.029156
+tests	JavaScript tests	2026-11-14T20:30:38.9084876Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:38.9085340Z   ...
+tests	JavaScript tests	2026-11-14T20:30:38.9095837Z # Subtest: campaign/setup scope changes do not clear the connection warning
+tests	JavaScript tests	2026-11-14T20:30:38.9096898Z ok 7 - campaign/setup scope changes do not clear the connection warning
+tests	JavaScript tests	2026-11-14T20:30:38.9097780Z   ---
+tests	JavaScript tests	2026-11-14T20:30:38.9098150Z   duration_ms: 1.3171
+tests	JavaScript tests	2026-11-14T20:30:38.9098483Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:38.9098781Z   ...
+tests	JavaScript tests	2026-11-14T20:30:38.9121543Z # Subtest: manual Refresh failure stays a tools error and does not raise the connection warning
+tests	JavaScript tests	2026-11-14T20:30:38.9122820Z ok 8 - manual Refresh failure stays a tools error and does not raise the connection warning
+tests	JavaScript tests	2026-11-14T20:30:38.9123748Z   ---
+tests	JavaScript tests	2026-11-14T20:30:38.9124022Z   duration_ms: 1.979641
+tests	JavaScript tests	2026-11-14T20:30:38.9124301Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:30:38.9124479Z   ...
+tests	JavaScript tests	2026-11-14T20:30:38.9135497Z # Subtest: manual success after a background loss also resolves the warning
+tests	JavaScript tests	2026-11-14T20:30:38.9136887Z ok 9 - manual success after a b

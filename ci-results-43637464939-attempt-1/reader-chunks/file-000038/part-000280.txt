@@ -1,0 +1,32 @@
+t checks	2026-11-14T20:34:52.5348827Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5349514Z   File "/tmp/scrying-tests-mkkoskem/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5350404Z     candidate = _fetch_exact(context, monster, identity)
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5350935Z   File "/tmp/scrying-tests-mkkoskem/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5351467Z     html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5351980Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5352386Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5352652Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5353104Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5353701Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5353996Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5354474Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5354890Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5355074Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5359637Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5360097Z Ran 11 tests in 0.007s
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5360278Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5360391Z OK
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5360845Z test_monster_refresh_sources.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:52.5717616Z Connection audit: test_monster_refresh_startup_browser.py
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:53.1383339Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:53.1383797Z Ran 1 test in 0.452s
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:53.1383965Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:53.1384061Z OK
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:53.1386443Z test_monster_refresh_startup_browser.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:53.1684420Z Connection audit: test_monster_roll_order.py
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:53.2451463Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:53.2452343Z test_monster_roll_order.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:53.2452826Z Ran 15 tests in 0.002s
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:53.2452949Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:34:53.2453033Z OK
+tests	Standalone

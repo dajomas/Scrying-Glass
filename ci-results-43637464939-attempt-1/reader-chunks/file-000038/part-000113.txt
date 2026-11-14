@@ -1,0 +1,22 @@
+l_guidance) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:52.9309573Z test_bulk_rejects_bad_items_without_changes (test_monster_source_image.MonsterSourceImageTests.test_bulk_rejects_bad_items_without_changes)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:52.9323245Z Bulk action rejects a wrong species, a missing image, duplicates or no items, changing nothing. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:52.9327792Z test_bulk_rejects_unknown_monsters (test_monster_source_image.MonsterSourceImageTests.test_bulk_rejects_unknown_monsters)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:52.9343858Z Bulk action fails without changes when a selected monster is gone. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:52.9348632Z test_bulk_sets_one_image_per_selected_monster (test_monster_source_image.MonsterSourceImageTests.test_bulk_sets_one_image_per_selected_monster)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:52.9359918Z Bulk action sets each chosen source image on its own monster only. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:52.9364202Z test_edit_rejects_a_tampered_token (test_monster_source_image.MonsterSourceImageTests.test_edit_rejects_a_tampered_token)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:52.9374218Z Edit rejects a source image token with a bad signature. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:52.9379024Z test_edit_upload_takes_precedence_over_source_image (test_monster_source_image.MonsterSourceImageTests.test_edit_upload_takes_precedence_over_source_image)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:52.9390430Z Edit prefers an uploaded file over a chosen source image. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:52.9394768Z test_edit_uses_the_signed_source_image (test_monster_source_image.MonsterSourceImageTests.test_edit_uses_the_signed_source_image)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:52.9406380Z Edit saves the image of the chosen source candidate. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:52.9410807Z test_edit_without_token_keeps_the_image (test_monster_source_image.MonsterSourceImageTests.test_edit_without_token_keeps_the_image)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:52.9421658Z Edit without upload or source choice keeps the current image. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:52.9426088Z test_route_is_registered_as_authenticated_post (test_monster_source_image.MonsterSourceImageTests.test_route_is_registered_as_authenticated_post)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:52.9432035Z The bulk source-image route is an authenticated POST. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:52.9437234Z test_bulk_offers_one_row_per_monster_with_one_lookup_per_species (test_monster_source_image_browser.MonsterSourceImageBrowserTests.test_bulk_offers_one_row_per_monster_with_one_lookup_per_species)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:53.5226543Z Monster action shows a row per selected monster, looks up each species once and applies per-monster choices. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:53.5227975Z test_bulk_shows_progress_and_reuses_lookups (test_monster_source_image_browser.MonsterSourceImageBrowserTests.test_bulk_shows_progress_and_reuses_lookups)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:54.0205593Z Monster action reports the lookup in progress and a second run reuses the species lookups. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:29:54.0206967Z test_bulk_without_selection_repo
