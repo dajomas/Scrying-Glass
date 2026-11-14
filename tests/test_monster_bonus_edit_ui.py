@@ -10,10 +10,10 @@ ROOT = Path(__file__).resolve().parents[1]
 class MonsterBonusEditUITests(unittest.TestCase):
     def test_script_is_loaded_after_admin(self):
         end = (ROOT / "templates/admin/190_document_end.html").read_text(encoding="utf-8")
-        self.assertEqual(end.count('/static/monster-initiative-edit.js?v=2'), 1)
-        self.assertLess(end.index('/static/admin.js'), end.index('/static/monster-initiative-edit.js?v=2'))
+        self.assertEqual(end.count('/static/monster-initiative-edit.js?v=3'), 1)
+        self.assertLess(end.index('/static/admin.js'), end.index('/static/monster-initiative-edit.js?v=3'))
         for token in ('first', 'second'):
-            self.assertIn('/static/monster-initiative-edit.js?v=2&amp;_cb=' + token,
+            self.assertIn('/static/monster-initiative-edit.js?v=3&amp;_cb=' + token,
                           cache_bust_html(end, token))
 
     def test_native_edit_render_submission_and_character_isolation(self):
@@ -23,7 +23,7 @@ class MonsterBonusEditUITests(unittest.TestCase):
             try:
                 for width in (375, 1440):
                     page = browser.new_page(viewport={"width": width, "height": 900})
-                    page.set_content('<div id="editModal" hidden><h2 id="editTitle"></h2><form id="editForm"></form></div>')
+                    page.set_content('<div id="editModal" hidden><h2 id="editTitle"></h2><form id="editForm" class="edit-form"></form></div>')
                     install_feedback(page)
                     page.add_script_tag(content="""
                         let editing = null;
@@ -64,12 +64,27 @@ class MonsterBonusEditUITests(unittest.TestCase):
                         self.assertNotIn('initiative_bonus_origin', fields)
                         self.assertEqual(page.evaluate('sent.at(-1).url'), '/api/monsters/m/edit')
                         self.assertEqual(page.evaluate('sent.at(-1).method'), 'POST')
-                    for value in ('96', ''):
-                        page.evaluate("openEdit('monsters','m')")
-                        page.locator('[name="initiative_bonus"]').fill(value)
-                        page.get_by_role('button', name='Save monster').click()
-                        page.wait_for_function("editing === null && !document.querySelector('#editForm').hasAttribute('aria-busy')")
-                        self.assertNotIn('initiative_bonus', dict(page.evaluate('sent.at(-1).fields')))
+                    page.evaluate("openEdit('monsters','m')")
+                    page.get_by_role('button', name='Save monster').click()
+                    page.wait_for_function("editing === null && !document.querySelector('#editForm').hasAttribute('aria-busy')")
+                    self.assertNotIn('initiative_bonus', dict(page.evaluate('sent.at(-1).fields')))
+                    page.evaluate("openEdit('monsters','m')")
+                    page.locator('[name="initiative_bonus"]').fill('')
+                    page.get_by_role('button', name='Save monster').click()
+                    page.wait_for_function("editing === null && !document.querySelector('#editForm').hasAttribute('aria-busy')")
+                    self.assertEqual(dict(page.evaluate('sent.at(-1).fields'))['initiative_bonus'], '0')
+                    page.evaluate("openEdit('monsters','m')")
+                    self.assertEqual(page.get_by_label('Initiative bonus (Leave blank for 0)').count(), 1)
+                    self.assertEqual(page.locator('#editMonsterBonusHelp').count(), 0)
+                    page.add_style_tag(content=(ROOT / 'static/admin.css').read_text(encoding='utf-8'))
+                    def markers_inline(names):
+                        for name in names:
+                            caption = page.locator('#editForm label > span', has_text=name).first
+                            marker = caption.locator('.required-marker')
+                            self.assertLess(abs(marker.bounding_box()['y'] - caption.bounding_box()['y']), 4, name)
+                    markers_inline(('Name', 'Monster species', 'AC', 'Current HP', 'Max HP', 'Reset HP'))
+                    page.evaluate("openEdit('characters','c')")
+                    markers_inline(('Name', 'Current HP', 'Max HP'))
                     page.evaluate("openEdit('monsters','m')")
                     page.locator('[name="initiative_bonus"]').fill('1.5')
                     self.assertFalse(page.locator('#editForm').evaluate('(form)=>form.checkValidity()'))

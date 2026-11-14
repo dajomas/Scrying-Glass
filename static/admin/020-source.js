@@ -128,15 +128,15 @@ function monsterEdit(monster) {
     return `
     ${imagePreview}
     <label>
-        Name <span class="required-marker" aria-hidden="true">*</span>
+        <span>Name <span class="required-marker" aria-hidden="true">*</span></span>
         <input name="name" required value="${esc(monster.name)}">
     </label>
     <label>
-        Monster species <span class="required-marker" aria-hidden="true">*</span>
+        <span>Monster species <span class="required-marker" aria-hidden="true">*</span></span>
         <input name="monster_species" required value="${esc(monster.monster_species)}">
     </label>
     <label>
-        AC <span class="required-marker" aria-hidden="true">*</span>
+        <span>AC <span class="required-marker" aria-hidden="true">*</span></span>
         <input name="ac" type="number" min="0" value="${monster.ac}">
     </label>
     <label>
@@ -155,15 +155,15 @@ function monsterEdit(monster) {
         </span>
     </label>
     <label>
-        Current HP <span class="required-marker" aria-hidden="true">*</span>
+        <span>Current HP <span class="required-marker" aria-hidden="true">*</span></span>
         <input name="hp" type="number" value="${monster.hp}">
     </label>
     <label>
-        Max HP <span class="required-marker" aria-hidden="true">*</span>
+        <span>Max HP <span class="required-marker" aria-hidden="true">*</span></span>
         <input name="max_hp" type="number" min="0" value="${monster.max_hp}">
     </label>
     <label>
-        Reset HP <span class="required-marker" aria-hidden="true">*</span>
+        <span>Reset HP <span class="required-marker" aria-hidden="true">*</span></span>
         <input name="original_hp" type="number" min="0" value="${monster.original_hp}">
     </label>
     <label>
@@ -191,7 +191,7 @@ function monsterEdit(monster) {
 function characterEdit(character) {
     return `
     <label>
-        Name <span class="required-marker" aria-hidden="true">*</span>
+        <span>Name <span class="required-marker" aria-hidden="true">*</span></span>
         <input name="name" required value="${esc(character.name)}">
     </label>
     <label>
@@ -210,11 +210,11 @@ function characterEdit(character) {
         </span>
     </label>
     <label>
-        Current HP <span class="required-marker" aria-hidden="true">*</span>
+        <span>Current HP <span class="required-marker" aria-hidden="true">*</span></span>
         <input name="hp" type="number" value="${character.hp}">
     </label>
     <label>
-        Max HP <span class="required-marker" aria-hidden="true">*</span>
+        <span>Max HP <span class="required-marker" aria-hidden="true">*</span></span>
         <input name="max_hp" type="number" min="0" value="${character.max_hp}">
     </label>
     <label>

@@ -8,11 +8,10 @@
         total.readOnly = true;
         total.removeAttribute('min');
         total.removeAttribute('max');
-        total.setAttribute('aria-describedby', 'editMonsterBonusHelp');
         total.parentElement.firstChild.textContent = 'Initiative total (calculated or legacy) ';
 
         const label = document.createElement('label');
-        label.textContent = 'Initiative bonus ';
+        label.textContent = 'Initiative bonus (Leave blank for 0) ';
         const bonus = document.createElement('input');
         bonus.name = 'initiative_bonus';
         bonus.type = 'text';
@@ -21,17 +20,8 @@
         bonus.value = String(monster.initiative_bonus ?? 0);
         bonus.defaultValue = bonus.value;
         bonus.dataset.assignedBonus = bonus.value;
-        bonus.setAttribute('aria-describedby', 'editMonsterBonusHelp');
         label.appendChild(bonus);
         total.parentElement.before(label);
-        const help = document.createElement('p');
-        help.id = 'editMonsterBonusHelp';
-        help.className = 'field-help full';
-        help.textContent = 'Enter a signed whole-number bonus, not a dice roll. ' +
-            'Blank or unchanged keeps the assigned bonus and its origin. Explicit changes are manual. ' +
-            'A retained raw roll recalculates the total; otherwise a legacy total stays unchanged. ' +
-            'Saving does not roll initiative.';
-        total.parentElement.after(help);
         return template.innerHTML;
     };
 
@@ -70,8 +60,9 @@
         payload.set('name', form.elements.name.value.trim());
         payload.set('monster_species', form.elements.monster_species.value.trim());
         const bonus = form.elements.initiative_bonus;
-        const value = bonus.value.trim();
-        if (!value || value === bonus.dataset.assignedBonus) {
+        // Blank means a bonus of 0; an unchanged value keeps the assigned bonus and its origin.
+        const value = bonus.value.trim() || '0';
+        if (value === bonus.dataset.assignedBonus) {
             payload.delete('initiative_bonus');
         } else {
             payload.set('initiative_bonus', value);

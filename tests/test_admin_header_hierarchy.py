@@ -11,7 +11,7 @@ class HeaderHierarchySourceTests(unittest.TestCase):
     def test_matching_assets_load_after_foundations_and_core(self):
         head = (ROOT / 'templates/admin/000_document_start.html').read_text(encoding='utf-8')
         end = (ROOT / 'templates/admin/190_document_end.html').read_text(encoding='utf-8')
-        self.assertEqual(head.count('/static/admin-header-hierarchy.css?v=1'), 1)
+        self.assertEqual(head.count('/static/admin-header-hierarchy.css?v=2'), 1)
         self.assertLess(head.index('/static/admin-foundations.css'), head.index('/static/admin-header-hierarchy.css'))
         self.assertEqual(end.count('/static/admin-header-hierarchy.js?v=1'), 1)
         self.assertLess(end.index('/static/admin-notification-layout.js'), end.index('/static/admin-header-hierarchy.js'))

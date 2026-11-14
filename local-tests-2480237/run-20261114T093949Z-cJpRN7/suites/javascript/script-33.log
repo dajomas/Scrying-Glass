@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: own modal close and applied registry do not suppress a relevant explicit success
+ok 1 - own modal close and applied registry do not suppress a relevant explicit success
+  ---
+  duration_ms: 2.930303
+  type: 'test'
+  ...
+# Subtest: relevant helper rejection reports applied-deletion refresh error, not DELETE failure
+ok 2 - relevant helper rejection reports applied-deletion refresh error, not DELETE failure
+  ---
+  duration_ms: 0.765445
+  type: 'test'
+  ...
+# Subtest: reopened dialog, newer options, registry and leave-return suppress late success/error
+ok 3 - reopened dialog, newer options, registry and leave-return suppress late success/error
+  ---
+  duration_ms: 3.996818
+  type: 'test'
+  ...
+# Subtest: independent refresh ownership protects newer same-target feedback
+ok 4 - independent refresh ownership protects newer same-target feedback
+  ---
+  duration_ms: 0.974216
+  type: 'test'
+  ...
+# Subtest: expected activation during follow-up remains relevant for opened and empty setups
+ok 5 - expected activation during follow-up remains relevant for opened and empty setups
+  ---
+  duration_ms: 1.472825
+  type: 'test'
+  ...
+# Subtest: matching refresh resolution preserves unrelated target and operation feedback
+ok 6 - matching refresh resolution preserves unrelated target and operation feedback
+  ---
+  duration_ms: 0.544963
+  type: 'test'
+  ...
+# Subtest: duplicate DELETE stays blocked until follow-up completes, including after reopen
+ok 7 - duplicate DELETE stays blocked until follow-up completes, including after reopen
+  ---
+  duration_ms: 0.450442
+  type: 'test'
+  ...
+# Subtest: persistent request failure, confirmation, method/query and retry safeguards remain
+ok 8 - persistent request failure, confirmation, method/query and retry safeguards remain
+  ---
+  duration_ms: 0.708452
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 98.166024

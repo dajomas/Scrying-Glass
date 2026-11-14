@@ -4,9 +4,8 @@ body.admin-shell[data-workflow-navigation="ready"] [data-workflow-excluded="true
 }
 .sg-workflow-tabs {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap; /* Narrow screens wrap the tabs instead of clipping them. */
     gap: .35rem;
-    overflow-x: auto;
     min-width: 0;
     padding: .4rem .2rem;
     scrollbar-width: thin;
@@ -28,4 +27,12 @@ body.admin-shell .sg-workflow-tabs button[aria-selected="true"] {
 body.admin-shell .sg-workflow-tabs button:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: -3px;
+}
+/* Phones: keep the three tabs on one line so the header stays within its height budget. */
+@media (max-width: 480px) {
+    body.admin-shell .sg-workflow-tabs { flex-wrap: nowrap; gap: .25rem; }
+    body.admin-shell .sg-workflow-tabs button {
+        flex: 1 1 auto; min-width: 0; padding: .35rem .45rem;
+        font-size: .8125rem; white-space: normal; line-height: 1.15;
+    }
 }

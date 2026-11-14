@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: every distinct operation pair isolates matching resolution through the real bootstrap
+ok 1 - every distinct operation pair isolates matching resolution through the real bootstrap
+  ---
+  duration_ms: 65.022723
+  type: 'test'
+  ...
+# Subtest: same operation retains independent target failures
+ok 2 - same operation retains independent target failures
+  ---
+  duration_ms: 0.505963
+  type: 'test'
+  ...
+# Subtest: one success expires at five seconds without erasing another operation error
+ok 3 - one success expires at five seconds without erasing another operation error
+  ---
+  duration_ms: 0.494652
+  type: 'test'
+  ...
+# Subtest: superseded tickets cannot overwrite or clear current failures
+ok 4 - superseded tickets cannot overwrite or clear current failures
+  ---
+  duration_ms: 0.513797
+  type: 'test'
+  ...
+# Subtest: away-and-back scope transitions cannot revive an old operation ticket
+ok 5 - away-and-back scope transitions cannot revive an old operation ticket
+  ---
+  duration_ms: 0.666174
+  type: 'test'
+  ...
+# Subtest: Stage 4: retired pane compatibility rejects untyped pane delivery without changing feedback
+ok 6 - Stage 4: retired pane compatibility rejects untyped pane delivery without changing feedback
+  ---
+  duration_ms: 1.1519
+  type: 'test'
+  ...
+# Subtest: untyped global publish and clear reject without changing explicit feedback
+ok 7 - untyped global publish and clear reject without changing explicit feedback
+  ---
+  duration_ms: 0.703182
+  type: 'test'
+  ...
+# Subtest: actual End and Reset All producers preserve independent errors across explicit retry
+ok 8 - actual End and Reset All producers preserve independent errors across explicit retry
+  ---
+  duration_ms: 1.307574
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 165.794196

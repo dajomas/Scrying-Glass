@@ -1,5 +1,5 @@
 LOGIN = '''<!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -9,6 +9,7 @@ LOGIN = '''<!doctype html>
   <link rel="stylesheet" href="/static/login.css">
 </head>
 <body>
+  <main>
   <form method="post">
     <h1>Scrying Glass</h1>
 
@@ -30,5 +31,6 @@ LOGIN = '''<!doctype html>
 
     {error}
   </form>
+  </main>
 </body>
 </html>'''

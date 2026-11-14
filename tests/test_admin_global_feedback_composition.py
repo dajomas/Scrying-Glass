@@ -87,8 +87,10 @@ class GlobalFeedbackCompositionTests(unittest.TestCase):
                     r.fulfill(content_type=kind, body=target.read_bytes())
             elif path.startswith('/api/'):
                 if r.request.method != 'GET':
+                    # Uploads are binary multipart; post_data decodes strictly as UTF-8 in Playwright.
+                    raw = r.request.post_data_buffer
                     h['writes'].append({'path': path, 'method': r.request.method,
-                                        'body': r.request.post_data})
+                                        'body': None if raw is None else raw.decode('utf-8', 'replace')})
                 if path == '/api/battle/end' and h['hold_end']:
                     h['held'].append(r)
                     return

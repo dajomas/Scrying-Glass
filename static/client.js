@@ -364,7 +364,8 @@ function connectDisplay() {
             if(socket!==current||stopped)return;
             console.info('Display WebSocket closed',{code:event.code,reason:event.reason,clean:event.wasClean});
             status('Disconnected · last display retained');
-            if(event.code===1008&&!(await checkSignIn()))return;
+            // A restart drops sessions; the rejected handshake closes with 1006, not 1008.
+            if(!(await checkSignIn()))return;
             if(socket!==current||stopped)return;
             scheduleReconnect();
         };

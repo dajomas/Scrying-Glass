@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: network loss shows one persistent global warning on the page lane
+ok 1 - network loss shows one persistent global warning on the page lane
+  ---
+  duration_ms: 6.918386
+  type: 'test'
+  ...
+# Subtest: identical polling failures keep the same record without re-publishing
+ok 2 - identical polling failures keep the same record without re-publishing
+  ---
+  duration_ms: 1.652914
+  type: 'test'
+  ...
+# Subtest: a different failure replaces the warning in place (one record)
+ok 3 - a different failure replaces the warning in place (one record)
+  ---
+  duration_ms: 2.543768
+  type: 'test'
+  ...
+# Subtest: recovery resolves only the connection identity and keeps unrelated errors
+ok 4 - recovery resolves only the connection identity and keeps unrelated errors
+  ---
+  duration_ms: 1.432723
+  type: 'test'
+  ...
+# Subtest: successful polls without an outstanding warning publish nothing
+ok 5 - successful polls without an outstanding warning publish nothing
+  ---
+  duration_ms: 1.305481
+  type: 'test'
+  ...
+# Subtest: a dismissed warning is not re-announced by identical failures; a new failure or recovery is
+ok 6 - a dismissed warning is not re-announced by identical failures; a new failure or recovery is
+  ---
+  duration_ms: 1.673402
+  type: 'test'
+  ...
+# Subtest: campaign/setup scope changes do not clear the connection warning
+ok 7 - campaign/setup scope changes do not clear the connection warning
+  ---
+  duration_ms: 1.808288
+  type: 'test'
+  ...
+# Subtest: manual Refresh failure stays a tools error and does not raise the connection warning
+ok 8 - manual Refresh failure stays a tools error and does not raise the connection warning
+  ---
+  duration_ms: 1.374346
+  type: 'test'
+  ...
+# Subtest: manual success after a background loss also resolves the warning
+ok 9 - manual success after a background loss also resolves the warning
+  ---
+  duration_ms: 1.607997
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 106.213267

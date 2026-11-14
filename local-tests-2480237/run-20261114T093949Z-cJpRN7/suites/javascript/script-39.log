@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: success precedes refresh and expires after exactly three seconds
+ok 1 - success precedes refresh and expires after exactly three seconds
+  ---
+  duration_ms: 2.899607
+  type: 'test'
+  ...
+# Subtest: refresh failure stays actionable after success expires and does not replay activation
+ok 2 - refresh failure stays actionable after success expires and does not replay activation
+  ---
+  duration_ms: 1.059151
+  type: 'test'
+  ...
+# Subtest: new selection, leave-return and registry suppress late refresh errors and UI work
+ok 3 - new selection, leave-return and registry suppress late refresh errors and UI work
+  ---
+  duration_ms: 2.127038
+  type: 'test'
+  ...
+# Subtest: empty setup branch does not render after a superseding selection
+ok 4 - empty setup branch does not render after a superseding selection
+  ---
+  duration_ms: 0.489963
+  type: 'test'
+  ...
+# Subtest: newer refresh ticket survives an older completion
+ok 5 - newer refresh ticket survives an older completion
+  ---
+  duration_ms: 0.558728
+  type: 'test'
+  ...
+# Subtest: successful refresh resolves only its matching campaign refresh failure
+ok 6 - successful refresh resolves only its matching campaign refresh failure
+  ---
+  duration_ms: 1.470131
+  type: 'test'
+  ...
+# Subtest: stale success timer cannot remove newer matching error
+ok 7 - stale success timer cannot remove newer matching error
+  ---
+  duration_ms: 0.659612
+  type: 'test'
+  ...
+# Subtest: unapplied refresh is not falsely reported as recovered
+ok 8 - unapplied refresh is not falsely reported as recovered
+  ---
+  duration_ms: 0.579226
+  type: 'test'
+  ...
+# Subtest: post-activation label/render failures remain applied-refresh failures
+ok 9 - post-activation label/render failures remain applied-refresh failures
+  ---
+  duration_ms: 0.640117
+  type: 'test'
+  ...
+# Subtest: superseding refresh prevents late empty-setup rendering
+ok 10 - superseding refresh prevents late empty-setup rendering
+  ---
+  duration_ms: 0.775233
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 99.813668

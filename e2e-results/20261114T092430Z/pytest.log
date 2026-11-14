@@ -1,0 +1,130 @@
+Now running test 001/127: Admin login (wrong and correct password), logout and login redirects [chromium] ... SUCCESS
+Now running test 002/127: Role routing: superadmin to Users, admin denied Users, client denied Admin [chromium] ... SUCCESS
+Now running test 003/127: Superadmin creates a client user who can sign in to the display [chromium] ... SUCCESS
+Now running test 004/127: Campaign ownership: unassign hides, reassign restores the campaign [chromium] ... SUCCESS
+Now running test 005/127: Viewer access grant and revoke update the Client display [chromium] ... SUCCESS
+Now running test 006/127: Create, edit and switch campaigns; choice survives reload [chromium] ... SUCCESS
+Now running test 007/127: New campaign requires a name; cancel leaves campaigns unchanged [chromium] ... SUCCESS
+Now running test 008/127: The last remaining campaign cannot be deleted [chromium] ... SUCCESS
+Now running test 009/127: Delete a campaign and move its setups to another campaign [chromium] ... SUCCESS
+Now running test 010/127: Delete a campaign together with its setups [chromium] ... SUCCESS
+Now running test 011/127: Battle setup save, load, rename and delete [chromium] ... SUCCESS
+Now running test 012/127: Copy a saved setup to another campaign [chromium] ... SUCCESS
+Now running test 013/127: Export a campaign bundle and import it as a new campaign [chromium] ... SUCCESS
+Now running test 014/127: A viewer without campaign access sees the no-access message and an empty display [chromium] ... SUCCESS
+Now running test 015/127: The display names the campaign and shows a card for each monster in battle [chromium] ... SUCCESS
+Now running test 016/127: Only visible combatants appear in the display's battle order, with the round shown [chromium] ... SUCCESS
+Now running test 017/127: HP display, turn changes and ending the battle reach the display without a reload [chromium] ... SUCCESS
+Now running test 018/127: The admin's Encounter tools report the connected display [chromium] ... SUCCESS
+Now running test 019/127: Start needs a turn-eligible participant and End needs an active battle [chromium] ... SUCCESS
+Now running test 020/127: Starting a battle shows round 1 with the highest initiative on turn [chromium] ... SUCCESS
+Now running test 021/127: Battle actions apply damage and healing, lock applied rows and update HP [chromium] ... SUCCESS
+Now running test 022/127: Start-of-turn damage is applied before healing to the current combatant [chromium] ... SUCCESS
+Now running test 023/127: Next in the action dialog opens the next combatant, and the round advances after the last [chromium] ... SUCCESS
+Now running test 024/127: Battle actions for a combatant that is not on turn are refused [chromium] ... SUCCESS
+Now running test 025/127: A Max HP reduction lowers maximum HP; restoring it does not heal current HP [chromium] ... SUCCESS
+Now running test 026/127: Encounter tools preview damage, absorb it with temporary HP first and update HP [chromium] ... SUCCESS
+Now running test 027/127: Ending a battle asks first and keeps combatant HP and roster state [chromium] ... SUCCESS
+Now running test 028/127: A pane success message clears after about 3 seconds [chromium] ... SUCCESS
+Now running test 029/127: A global success message clears after about 5 seconds [chromium] ... SUCCESS
+Now running test 030/127: Errors stay past the success timeouts until dismissed [chromium] ... SUCCESS
+Now running test 031/127: A field-linked error marks its field invalid until the error is dismissed [chromium] ... SUCCESS
+Now running test 032/127: A lost connection shows a lasting warning; reconnecting shows recovery [chromium] ... SUCCESS
+Now running test 033/127: During an outage the Client Display keeps its last state; after a restart it asks for sign-in and is live again [chromium] ... SUCCESS
+Now running test 034/127: Loading a setup during an outage keeps the active setup; retrying afterwards works [chromium] ... SUCCESS
+Now running test 035/127: A server restart keeps campaign data and sends the signed-out Admin to the sign-in page [chromium] ... SUCCESS
+Now running test 036/127: Join Battle is refused until initiative is set, with the error linked to the field [chromium] ... SUCCESS
+Now running test 037/127: A monster without a raw roll cannot join; with a roll it can [chromium] ... SUCCESS
+Now running test 038/127: A monster's total is the raw roll plus its bonus, also after editing the bonus [chromium] ... SUCCESS
+Now running test 039/127: Roll monster initiatives asks first, then rolls a d20 for every monster [chromium] ... SUCCESS
+Now running test 040/127: Roll shared initiative gives the selected monsters one common roll [chromium] ... SUCCESS
+Now running test 041/127: Inline and dialog initiative edits for a character are saved [chromium] ... SUCCESS
+Now running test 042/127: Battle order sorts by initiative, and the tie dialog decides equal totals [chromium] ... SUCCESS
+Now running test 043/127: Cancelling the tie dialog does not start the battle [chromium] ... SUCCESS
+Now running test 044/127: Tab and Shift+Tab move between initiative fields, save typed values, and Escape leaves the roster [chromium] ... SUCCESS
+Now running test 045/127: Admin, Client Display, login and Users pages fit the viewport width; header tabs and toggles wrap inside it [chromium] ... SUCCESS
+Now running test 046/127: Admin, Client Display, login and Users pages fit the viewport width; header tabs and toggles wrap inside it [chromium] ... SUCCESS
+Now running test 047/127: Admin, Client Display, login and Users pages fit the viewport width; header tabs and toggles wrap inside it [chromium] ... SUCCESS
+Now running test 048/127: Admin, Client Display, login and Users pages fit the viewport width; header tabs and toggles wrap inside it [chromium] ... SUCCESS
+Now running test 049/127: The statistics dialog takes focus, keeps Tab inside, closes on Escape and returns focus to its opener [chromium] ... SUCCESS
+Now running test 050/127: The New campaign dialog takes focus, keeps Tab inside and closes on Escape [chromium] ... SUCCESS
+Now running test 051/127: Closing the New campaign dialog returns focus to the New campaign button [chromium] ... SUCCESS
+Now running test 052/127: Automated axe scans of login, Admin, Users and Client Display find no violations [chromium] ... SUCCESS
+Now running test 053/127: Add, edit and remove a character; changes survive reload [chromium] ... SUCCESS
+Now running test 054/127: The character form requires a name and a starting HP [chromium] ... SUCCESS
+Now running test 055/127: Add numbered monsters, edit one and remove another [chromium] ... SUCCESS
+Now running test 056/127: A dice expression in HP Range start rolls HP within its range [chromium] ... SUCCESS
+Now running test 057/127: Bulk select-all, unselect-all and remove for characters and monsters [chromium] ... SUCCESS
+Now running test 058/127: Bulk actions stay disabled until a combatant is selected [chromium] ... SUCCESS
+Now running test 059/127: Inline initiative inputs in both rosters use the compact 7.5ch width [chromium] ... SUCCESS
+Now running test 060/127: Refresh from source reviews only the selected monsters and applies nothing when no source exists [chromium] ... SUCCESS
+Now running test 061/127: A reload keeps the selected workflow tab and which panels are open or closed [chromium] ... SUCCESS
+Now running test 062/127: During a battle a reload keeps the Live tab and reopened panels, and closes open dialogs [chromium] ... SUCCESS
+Now running test 063/127: Opening the Admin page again (not a reload) starts with the default view [chromium] ... SUCCESS
+Now running test 064/127: Admin login (wrong and correct password), logout and login redirects [firefox] ... SUCCESS
+Now running test 065/127: Role routing: superadmin to Users, admin denied Users, client denied Admin [firefox] ... SUCCESS
+Now running test 066/127: Superadmin creates a client user who can sign in to the display [firefox] ... SUCCESS
+Now running test 067/127: Campaign ownership: unassign hides, reassign restores the campaign [firefox] ... SUCCESS
+Now running test 068/127: Viewer access grant and revoke update the Client display [firefox] ... SUCCESS
+Now running test 069/127: Create, edit and switch campaigns; choice survives reload [firefox] ... SUCCESS
+Now running test 070/127: New campaign requires a name; cancel leaves campaigns unchanged [firefox] ... SUCCESS
+Now running test 071/127: The last remaining campaign cannot be deleted [firefox] ... SUCCESS
+Now running test 072/127: Delete a campaign and move its setups to another campaign [firefox] ... SUCCESS
+Now running test 073/127: Delete a campaign together with its setups [firefox] ... SUCCESS
+Now running test 074/127: Battle setup save, load, rename and delete [firefox] ... SUCCESS
+Now running test 075/127: Copy a saved setup to another campaign [firefox] ... SUCCESS
+Now running test 076/127: Export a campaign bundle and import it as a new campaign [firefox] ... SUCCESS
+Now running test 077/127: A viewer without campaign access sees the no-access message and an empty display [firefox] ... SUCCESS
+Now running test 078/127: The display names the campaign and shows a card for each monster in battle [firefox] ... SUCCESS
+Now running test 079/127: Only visible combatants appear in the display's battle order, with the round shown [firefox] ... SUCCESS
+Now running test 080/127: HP display, turn changes and ending the battle reach the display without a reload [firefox] ... SUCCESS
+Now running test 081/127: The admin's Encounter tools report the connected display [firefox] ... SUCCESS
+Now running test 082/127: Start needs a turn-eligible participant and End needs an active battle [firefox] ... SUCCESS
+Now running test 083/127: Starting a battle shows round 1 with the highest initiative on turn [firefox] ... SUCCESS
+Now running test 084/127: Battle actions apply damage and healing, lock applied rows and update HP [firefox] ... SUCCESS
+Now running test 085/127: Start-of-turn damage is applied before healing to the current combatant [firefox] ... SUCCESS
+Now running test 086/127: Next in the action dialog opens the next combatant, and the round advances after the last [firefox] ... SUCCESS
+Now running test 087/127: Battle actions for a combatant that is not on turn are refused [firefox] ... SUCCESS
+Now running test 088/127: A Max HP reduction lowers maximum HP; restoring it does not heal current HP [firefox] ... SUCCESS
+Now running test 089/127: Encounter tools preview damage, absorb it with temporary HP first and update HP [firefox] ... SUCCESS
+Now running test 090/127: Ending a battle asks first and keeps combatant HP and roster state [firefox] ... SUCCESS
+Now running test 091/127: A pane success message clears after about 3 seconds [firefox] ... SUCCESS
+Now running test 092/127: A global success message clears after about 5 seconds [firefox] ... SUCCESS
+Now running test 093/127: Errors stay past the success timeouts until dismissed [firefox] ... SUCCESS
+Now running test 094/127: A field-linked error marks its field invalid until the error is dismissed [firefox] ... SUCCESS
+Now running test 095/127: A lost connection shows a lasting warning; reconnecting shows recovery [firefox] ... SUCCESS
+Now running test 096/127: During an outage the Client Display keeps its last state; after a restart it asks for sign-in and is live again [firefox] ... SUCCESS
+Now running test 097/127: Loading a setup during an outage keeps the active setup; retrying afterwards works [firefox] ... SUCCESS
+Now running test 098/127: A server restart keeps campaign data and sends the signed-out Admin to the sign-in page [firefox] ... SUCCESS
+Now running test 099/127: Join Battle is refused until initiative is set, with the error linked to the field [firefox] ... SUCCESS
+Now running test 100/127: A monster without a raw roll cannot join; with a roll it can [firefox] ... SUCCESS
+Now running test 101/127: A monster's total is the raw roll plus its bonus, also after editing the bonus [firefox] ... SUCCESS
+Now running test 102/127: Roll monster initiatives asks first, then rolls a d20 for every monster [firefox] ... SUCCESS
+Now running test 103/127: Roll shared initiative gives the selected monsters one common roll [firefox] ... SUCCESS
+Now running test 104/127: Inline and dialog initiative edits for a character are saved [firefox] ... SUCCESS
+Now running test 105/127: Battle order sorts by initiative, and the tie dialog decides equal totals [firefox] ... SUCCESS
+Now running test 106/127: Cancelling the tie dialog does not start the battle [firefox] ... SUCCESS
+Now running test 107/127: Tab and Shift+Tab move between initiative fields, save typed values, and Escape leaves the roster [firefox] ... SUCCESS
+Now running test 108/127: Admin, Client Display, login and Users pages fit the viewport width; header tabs and toggles wrap inside it [firefox] ... SUCCESS
+Now running test 109/127: Admin, Client Display, login and Users pages fit the viewport width; header tabs and toggles wrap inside it [firefox] ... SUCCESS
+Now running test 110/127: Admin, Client Display, login and Users pages fit the viewport width; header tabs and toggles wrap inside it [firefox] ... SUCCESS
+Now running test 111/127: Admin, Client Display, login and Users pages fit the viewport width; header tabs and toggles wrap inside it [firefox] ... SUCCESS
+Now running test 112/127: The statistics dialog takes focus, keeps Tab inside, closes on Escape and returns focus to its opener [firefox] ... SUCCESS
+Now running test 113/127: The New campaign dialog takes focus, keeps Tab inside and closes on Escape [firefox] ... SUCCESS
+Now running test 114/127: Closing the New campaign dialog returns focus to the New campaign button [firefox] ... SUCCESS
+Now running test 115/127: Automated axe scans of login, Admin, Users and Client Display find no violations [firefox] ... SUCCESS
+Now running test 116/127: Add, edit and remove a character; changes survive reload [firefox] ... SUCCESS
+Now running test 117/127: The character form requires a name and a starting HP [firefox] ... SUCCESS
+Now running test 118/127: Add numbered monsters, edit one and remove another [firefox] ... SUCCESS
+Now running test 119/127: A dice expression in HP Range start rolls HP within its range [firefox] ... SUCCESS
+Now running test 120/127: Bulk select-all, unselect-all and remove for characters and monsters [firefox] ... SUCCESS
+Now running test 121/127: Bulk actions stay disabled until a combatant is selected [firefox] ... SUCCESS
+Now running test 122/127: Inline initiative inputs in both rosters use the compact 7.5ch width [firefox] ... SUCCESS
+Now running test 123/127: Refresh from source reviews only the selected monsters and applies nothing when no source exists [firefox] ... SUCCESS
+Now running test 124/127: A reload keeps the selected workflow tab and which panels are open or closed [firefox] ... SUCCESS
+Now running test 125/127: During a battle a reload keeps the Live tab and reopened panels, and closes open dialogs [firefox] ... SUCCESS
+Now running test 126/127: Opening the Admin page again (not a reload) starts with the default view [firefox] ... SUCCESS
+Now running test 127/127: Unauthenticated API requests are rejected on both portals ... SUCCESS
+
+- Generated html report: file:///mnt/d/git/Scrying-Glass/e2e-results/20261114T092430Z/report.html -
+127 passed in 905.10s (0:15:05)
