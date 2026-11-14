@@ -47,3 +47,9 @@ Partial image lookups (user report: Open5e timed out, and the bulk row for Shado
 - Cache version `monster-source-image.js?v=4`.
 
 Validation: through `tools/run_split_tests.py`, the new `test_image_lookup_partial` (4) and every test module that uses the lookup, combined lookup or Open5e provider (20 modules, including the source-image browser test with a new partial-warning case): 159 tests OK. Not checked against the real Open5e service. User run and acceptance pending.
+
+## Acceptance
+
+- The user tested and accepted this work on 2026-11-14 and asked to close it. That covers the original delivery `46e3788a` and the follow-ups `b157aef8` (per-monster rows, lookup progress, one lookup per species, aligned Edit button, fixed flaky tampered-token test), `115eb7a6` (even tiles in the bulk dialog) and `11bbe512` (partial image lookups when a source times out). Earlier "user run and acceptance pending" notes in this document are superseded.
+- CI on `features/perplexity`, observed: run 43635715705 (`46e3788a`), 43637464939 (`b157aef8`), 43638272866 (`115eb7a6`) and 43639327765 (`11bbe512`) all concluded success. Run 43636503802 on `93ffbd0e` (the port message commit) failed only on the flaky `test_edit_rejects_a_tampered_token`, which was fixed in `b157aef8`.
+- Status: completed and closed.
