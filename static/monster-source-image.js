@@ -37,13 +37,13 @@
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'monster-image-option';
-        button.style.cssText = 'display:grid;gap:.25rem;justify-items:center;width:9rem;padding:.4rem;';
+        button.style.cssText = 'display:grid;gap:.25rem;justify-items:center;align-content:start;width:9rem;padding:.4rem;outline-offset:-3px;';
         const thumb = document.createElement('img');
         if (image) thumb.src = image;
         thumb.alt = '';
         thumb.loading = 'lazy';
         thumb.referrerPolicy = 'no-referrer';
-        thumb.style.cssText = 'width:7rem;height:7rem;object-fit:contain;';
+        thumb.style.cssText = 'width:7rem;height:7rem;object-fit:contain;border-radius:.35rem;background:rgba(0,0,0,.25);';
         const text = document.createElement('span');
         text.textContent = caption;
         text.style.fontSize = '.8rem';
@@ -287,7 +287,7 @@
                 grid.style.cssText = 'display:flex;flex-wrap:wrap;gap:.5rem;align-items:flex-start;';
                 const note = document.createElement('p');
                 note.className = 'monster-source-image-row-status';
-                note.style.margin = '0';
+                note.style.cssText = 'margin:.4rem 0 0;font-size:.85rem;opacity:.8;';
                 const species = (monster.monster_species || '').trim();
                 note.textContent = species ? `Looking up images for ${species}…` : 'No species to look up.';
                 row.append(heading, grid, note);
