@@ -1,0 +1,25 @@
+est suite (including browser fixtures)	2026-11-14T20:09:15.3252653Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3252887Z TimeoutError: fixture
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3253037Z 
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3253293Z The above exception was the direct cause of the following exception:
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3253558Z 
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3253706Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3254273Z   File "/tmp/scrying-tests-dnhfdagu/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3254785Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3255267Z   File "/tmp/scrying-tests-dnhfdagu/repo/python/scrying_glass_monster_selection.py", line 263, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3255799Z     lambda: dnd_candidates(context, species),
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3256336Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3256936Z   File "/tmp/scrying-tests-dnhfdagu/repo/python/scrying_glass_monster_selection.py", line 93, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3257672Z     raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3258422Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3258931Z ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3385338Z test_all_retrieval_failures (test_dndbeyond_lookup_diagnostics.LookupTests.test_all_retrieval_failures) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3411182Z test_blank_species_is_rejected_before_providers (test_dndbeyond_lookup_diagnostics.LookupTests.test_blank_species_is_rejected_before_providers) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3433061Z test_both_providers_disabled_do_no_lookup (test_dndbeyond_lookup_diagnostics.LookupTests.test_both_providers_disabled_do_no_lookup) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3461261Z test_cancellation (test_dndbeyond_lookup_diagnostics.LookupTests.test_cancellation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3490437Z test_candidate_failure_falls_back (test_dndbeyond_lookup_diagnostics.LookupTests.test_candidate_failure_falls_back) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3516833Z test_disabled (test_dndbeyond_lookup_diagnostics.LookupTests.test_disabled) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3543072Z test_disabled_primary_can_still_use_fallback (test_dndbeyond_lookup_diagnostics.LookupTests.test_disabled_primary_can_still_use_fallback) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3574627Z test_empty_primary_search_can_still_use_fallback (test_dndbeyond_lookup_diagnostics.LookupTests.test_empty_primary_search_can_still_use_fallback) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3600542Z test_empty_search (test_dndbeyond_lookup_diagnostics.LookupTests.test_empty_search) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:09:15.3634597Z test_fallback_exception_is_sanitized (test_dndbeyond_lookup_diagnostics.LookupTes

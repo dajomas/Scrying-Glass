@@ -1,0 +1,22 @@
+n ms.fivetools_source_entries(display, source)]
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:49.5265027Z                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:49.5265682Z   File "/tmp/scrying-tests-dnhfdagu/repo/python/scrying_glass_monster_selection.py", line 229, in fivetools_source_entries
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:49.5266562Z     raise ValueError("5e.tools source is not configured")
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:49.5267177Z ValueError: 5e.tools source is not configured
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:49.5303777Z ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:50.7188506Z test_help_and_checkbox_label_render_without_mutation (test_monster_source_help_text.SourceHelpBrowserTests.test_help_and_checkbox_label_render_without_mutation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:50.7448380Z test_config_comments_explain_compatibility_without_changing_defaults (test_monster_source_help_text.SourceHelpTests.test_config_comments_explain_compatibility_without_changing_defaults) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:50.7459430Z test_lookup_help_is_concise_and_preserves_essential_guidance (test_monster_source_help_text.SourceHelpTests.test_lookup_help_is_concise_and_preserves_essential_guidance) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:50.7461478Z test_bulk_rejects_species_mismatch_and_missing_image (test_monster_source_image.MonsterSourceImageTests.test_bulk_rejects_species_mismatch_and_missing_image)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:50.7474268Z Bulk action rejects a token for another species or without an image. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:50.7479588Z test_bulk_rejects_unknown_monsters (test_monster_source_image.MonsterSourceImageTests.test_bulk_rejects_unknown_monsters)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:50.7490987Z Bulk action fails without changes when a selected monster is gone. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:50.7496061Z test_bulk_sets_the_image_on_all_selected_monsters (test_monster_source_image.MonsterSourceImageTests.test_bulk_sets_the_image_on_all_selected_monsters)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:50.7509007Z Bulk action sets the chosen source image on every selected monster only. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:50.7513905Z test_edit_rejects_a_tampered_token (test_monster_source_image.MonsterSourceImageTests.test_edit_rejects_a_tampered_token)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:50.7525320Z Edit rejects a source image token with a bad signature. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:50.7530537Z test_edit_upload_takes_precedence_over_source_image (test_monster_source_image.MonsterSourceImageTests.test_edit_upload_takes_precedence_over_source_image)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:50.7544176Z Edit prefers an uploaded file over a chosen source image. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:50.7549355Z test_edit_uses_the_signed_source_image (test_monster_source_image.MonsterSourceImageTests.test_edit_uses_the_signed_source_image)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:50.7593731Z Edit saves the image of the chosen source candidate. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:10:50.7599084Z test_edit_without_token_keeps_the_image (test_monster_source_image.MonsterSourceImageTests.test_edit_wit
