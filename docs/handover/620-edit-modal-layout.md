@@ -30,4 +30,4 @@ User-reported fix, 2026-11-13, delivered on `features/perplexity-021` (not part 
 - Not passing locally, with or without this change (sandbox environment, not caused by it): `tests/test_admin_global_feedback_composition.py` (5 tests time out in `wait_for_function`) and `tests/test_lair_pane_visibility.js` (exit 1). CI is the reference for these.
 - Screenshots of both modals at 375 and 1440 px were checked by eye.
 - The user's e2e run `180b15c8` tested `325c685f` (this fix included): 119 passed, 2 expected failures, 0 failed. That suite does not open the Edit modals' layout directly; it covers roster editing.
-- No CI runs on `features/perplexity-021`. User acceptance pending.
+- No CI runs on `features/perplexity-021`. Accepted by the user 2026-11-14 at 19:47 CET.

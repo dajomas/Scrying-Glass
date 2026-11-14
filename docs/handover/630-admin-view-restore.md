@@ -42,4 +42,4 @@ Without the new script, the first two tests fail (checked in Chromium).
   - `test_battle_action_statistics.py` and `test_monster_image_previews.py` together: 11 failed and 4 passed both ways.
   
   CI is the reference for these.
-- No CI runs on `features/perplexity-021`. User acceptance pending.
+- No CI runs on `features/perplexity-021`. Accepted by the user 2026-11-14 at 19:47 CET.
