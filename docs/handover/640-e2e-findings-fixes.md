@@ -49,3 +49,9 @@ Follow-up change:
 Correction to the validation above: the "sandbox-only failures" of `test_admin_header_hierarchy.py`, `test_monster_image_previews.py` and `test_setup_feedback_composition.py` came from running them with plain pytest, without the assembled `admin.js`. Through `tools/run_split_tests.py` they run normally; at `f34cc559` this reproduces the 430.5 px header failure.
 
 Validation of the follow-up (this sandbox, via `tools/run_split_tests.py`): `test_admin_header_hierarchy`, `test_local_runner_publication`, `test_setup_feedback_composition` and `test_monster_image_previews` 27 tests OK; `e2e/test_layout_accessibility.py` in Chromium and Firefox: 16 passed. User run and acceptance pending.
+
+Background-upload test cause:
+- The user re-ran `test_setup_feedback_composition.SetupTransferBackgroundCompositionTests.test_loaded_background_apply_upload_and_refresh_failure` at `d347813a` and `f34cc559`: it failed the same way on both, so `f34cc559` did not cause it.
+- Cause: the route handler in `tests/test_admin_global_feedback_composition.py` stored `request.post_data`, which the user's Playwright decodes strictly as UTF-8. The PNG upload body is binary (`UnicodeDecodeError` at byte `0x89`), so the handler raised, the request was never fulfilled, and the test timed out waiting for the upload feedback. The sandbox Playwright build does not raise here, so the test passed in this sandbox.
+- Fix: the handler reads `request.post_data_buffer` and decodes it with `errors='replace'`; JSON bodies decode unchanged.
+- Validation (this sandbox, via `tools/run_split_tests.py`): the 7 modules that use this fixture (`test_admin_global_feedback_composition`, `test_setup_feedback_composition`, `test_local_feature_feedback_composition`, `test_activity_log_result_render`, `test_admin_accessibility_composition`, `test_admin_deliverable2_composition`, `test_campaign_feedback_composition`): 55 tests OK. User run pending.
