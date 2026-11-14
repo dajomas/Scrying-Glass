@@ -50,7 +50,7 @@ Deploy admin-feedback-controller.js?v=2, admin-feedback-view.js?v=2,
 admin-feedback.css?v=2, admin-feedback-admin.js?v=6, initiative-join-gate.js?v=2,
 features.js?v=6, monster-initiative-edit.js?v=3, monster-initiative-roll.js?v=3 and
 setup-switch.js?v=4 with all eight fragments and templates. Retain non-superseded
-Stage 4 assets including admin-dialog-accessibility.js?v=1; deploy the complete tree.
+Stage 4 assets including admin-dialog-accessibility.js?v=1 (plus admin-view-restore.js?v=1); deploy the complete tree.
 The final core bundle is 131,939 bytes and the Admin script inventory is 44.
 Existing endpoints, payloads, permissions, combat/initiative/server gates, drafts
 and selections remain. [Deliverable 2 scope and limits](docs/handover/560-connection-field-feedback.md)
@@ -80,7 +80,7 @@ scope/history; earlier README detail is preserved in the
 [pre-016-close-out README](https://github.com/dajomas/Scrying-Glass/blob/49822ee7cacfd3bc4e2bd520b98917aef036db2c/README.md).
 
 The Playwright end-to-end suite in `e2e/` (login and access, campaigns and setups, rosters and
-initiative, combat, Client Display, feedback and connection handling, screen widths, dialog focus and axe accessibility scans) runs against a real local server in Chromium and Firefox and is not part of CI ([SG-TODO-021](docs/todo/210-playwright-end-to-end-suite.md)).
+initiative, combat, Client Display, feedback and connection handling, screen widths, dialog focus, axe accessibility scans and keeping the Admin view after a reload) runs against a real local server in Chromium and Firefox and is not part of CI ([SG-TODO-021](docs/todo/210-playwright-end-to-end-suite.md)).
 `tools/run_e2e.sh` runs it and commits only the latest `e2e-results/<timestamp>/` folder with
 `[skip ci]` to `features/perplexity-021`. On dnf-based systems (Rocky, AlmaLinux, RHEL, Fedora) it first checks the
 required rpm packages and prints the `dnf install` command if any are missing. It checks

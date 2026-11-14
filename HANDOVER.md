@@ -77,6 +77,7 @@ This is the index; substantive handover lives in numbered docs/handover sections
 61. [Test-suite cleanup (SG-TODO-020)](docs/handover/600-test-suite-cleanup.md) - obsolete pins/oracles and duplicates removed, standalone scripts converted to unittest, composition files consolidated; closed 2026-11-13 after covering CI run 43428109475 succeeded.
 62. [Playwright end-to-end suite (SG-TODO-021)](docs/handover/610-playwright-end-to-end-suite.md) - Stage 1: real-server fixtures, access and campaign tests in Chromium and Firefox, `tools/run_e2e.sh`, 2026-11-13 on `features/perplexity-021` (no CI trigger there); user run 58556e4c passed 27/27; Stage 1 accepted and closed 2026-11-13. Stage 2: roster and initiative tests, 2026-11-13; user run 29ff6123 passed 61/61, acceptance pending. Stages 3-4: combat, Client Display, feedback/connection, width, dialog-focus and axe tests, 2026-11-13; local 119 passed + 2 expected failures (known focus finding); user run and acceptance pending.
 63. [Character and Monster Edit modal layout](docs/handover/620-edit-modal-layout.md) - user-reported fix 2026-11-13 on `features/perplexity-021`: required asterisks on the label line, the initiative bonus help text removed, label "Initiative bonus (Leave blank for 0)" (blank now saves 0), and edit fields fit narrow widths; relevant tests passed locally, acceptance pending.
+64. [Keep the Admin view after a reload](docs/handover/630-admin-view-restore.md) - user request 2026-11-14 on `features/perplexity-021`: `static/admin-view-restore.js` restores the workflow tab, panel open/closed state and scroll position after a reload (sessionStorage, per browser tab); dialogs close; new navigations keep the default view. E2E `test_view_restore.py` added; acceptance pending.
 
 <a id="current-state---2026-11-11"></a>
 <a id="current-state---2026-11-12"></a>
@@ -118,7 +119,7 @@ workstream is complete; no further feature acceptance request remains for it.
 
 No agreed 009.7/009, SG-TODO-019 or SG-TODO-016/017 implementation/acceptance action
 remains. The deferred post-009 test-suite cleanup was requested on 2026-11-13 and is
-completed and closed as SG-TODO-020 ([600](docs/handover/600-test-suite-cleanup.md)). SG-TODO-021 (Playwright end-to-end suite) is in progress: Stage 1 accepted and closed, Stages 2-4 delivered ([610](docs/handover/610-playwright-end-to-end-suite.md)), acceptance of Stages 2-4 pending. The Edit modal layout fix ([620](docs/handover/620-edit-modal-layout.md)) is delivered, acceptance pending. Existing 115 order is unchanged. No new owner/deadline, scope,
+completed and closed as SG-TODO-020 ([600](docs/handover/600-test-suite-cleanup.md)). SG-TODO-021 (Playwright end-to-end suite) is in progress: Stage 1 accepted and closed, Stages 2-4 delivered ([610](docs/handover/610-playwright-end-to-end-suite.md)), acceptance of Stages 2-4 pending. The Edit modal layout fix ([620](docs/handover/620-edit-modal-layout.md)) is delivered, acceptance pending. Keeping the Admin view after a reload ([630](docs/handover/630-admin-view-restore.md)) is delivered, acceptance pending. Existing 115 order is unchanged. No new owner/deadline, scope,
 merge/deployment/release operation or blanket future-write approval.
 
 This SG-TODO-016 close-out changes documentation only and uses [skip ci]. No
