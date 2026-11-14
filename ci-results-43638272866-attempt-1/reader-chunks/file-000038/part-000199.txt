@@ -1,0 +1,47 @@
+aScript tests	2026-11-14T20:40:19.9092397Z ##[endgroup]
+tests	JavaScript tests	2026-11-14T20:40:19.9093299Z ##[group]tests/encounter-tools-feedback.test.cjs
+tests	JavaScript tests	2026-11-14T20:40:20.1045396Z TAP version 13
+tests	JavaScript tests	2026-11-14T20:40:20.4340761Z # Subtest: tools error persists in the tools region and keeps the draft; next success resolves it
+tests	JavaScript tests	2026-11-14T20:40:20.4347456Z ok 1 - tools error persists in the tools region and keeps the draft; next success resolves it
+tests	JavaScript tests	2026-11-14T20:40:20.4348136Z   ---
+tests	JavaScript tests	2026-11-14T20:40:20.4348445Z   duration_ms: 295.53325
+tests	JavaScript tests	2026-11-14T20:40:20.4348806Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:40:20.4349136Z   ...
+tests	JavaScript tests	2026-11-14T20:40:20.4371724Z # Subtest: declined confirmation is silent, sends nothing and keeps the earlier error
+tests	JavaScript tests	2026-11-14T20:40:20.4374713Z ok 2 - declined confirmation is silent, sends nothing and keeps the earlier error
+tests	JavaScript tests	2026-11-14T20:40:20.4375386Z   ---
+tests	JavaScript tests	2026-11-14T20:40:20.4376280Z   duration_ms: 3.584968
+tests	JavaScript tests	2026-11-14T20:40:20.4376636Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:40:20.4376868Z   ...
+tests	JavaScript tests	2026-11-14T20:40:20.4397572Z # Subtest: failed refresh after success is a separate no-replay error
+tests	JavaScript tests	2026-11-14T20:40:20.4398466Z ok 3 - failed refresh after success is a separate no-replay error
+tests	JavaScript tests	2026-11-14T20:40:20.4399549Z   ---
+tests	JavaScript tests	2026-11-14T20:40:20.4399897Z   duration_ms: 2.573833
+tests	JavaScript tests	2026-11-14T20:40:20.4400271Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:40:20.4400542Z   ...
+tests	JavaScript tests	2026-11-14T20:40:20.4423349Z # Subtest: manual refresh failure is a persistent tools error and success resolves it
+tests	JavaScript tests	2026-11-14T20:40:20.4424429Z ok 4 - manual refresh failure is a persistent tools error and success resolves it
+tests	JavaScript tests	2026-11-14T20:40:20.4424877Z   ---
+tests	JavaScript tests	2026-11-14T20:40:20.4425160Z   duration_ms: 2.355626
+tests	JavaScript tests	2026-11-14T20:40:20.4425495Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:40:20.4425822Z   ...
+tests	JavaScript tests	2026-11-14T20:40:20.4453334Z # Subtest: encounter scope change clears tools records and stale completion cannot publish
+tests	JavaScript tests	2026-11-14T20:40:20.4454510Z ok 5 - encounter scope change clears tools records and stale completion cannot publish
+tests	JavaScript tests	2026-11-14T20:40:20.4455170Z   ---
+tests	JavaScript tests	2026-11-14T20:40:20.4455515Z   duration_ms: 2.995142
+tests	JavaScript tests	2026-11-14T20:40:20.4455910Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:40:20.4456233Z   ...
+tests	JavaScript tests	2026-11-14T20:40:20.4471564Z # Subtest: checkpoint restore success uses the page lane and survives the setup transition
+tests	JavaScript tests	2026-11-14T20:40:20.4483706Z ok 6 - checkpoint restore success uses the page lane and survives the setup transition
+tests	JavaScript tests	2026-11-14T20:40:20.4484514Z   ---
+tests	JavaScript tests	2026-11-14T20:40:20.4484888Z   duration_ms: 1.98908
+tests	JavaScript tests	2026-11-14T20:40:20.4485298Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:40:20.4485633Z   ...
+tests	JavaScript tests	2026-11-14T20:40:20.4486258Z # Subtest: busy duplicate is suppressed without starting feedback
+tests	JavaScript tests	2026-11-14T20:40:20.4487168Z ok 7 - busy duplicate is suppressed without starting feedback
+tests	JavaScript tests	2026-11-14T20:40:20.4487759Z   ---
+tests	JavaScript tests	2026-11-14T20:40:20.4488099Z   duration_ms: 1.864512
+tests	JavaScript tests	2026-11-14T20:40:20.4488480Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:40:20.4488818Z   ...
+tests	JavaScript tests	2026-11-14T20:40:20.4574948Z 1..7
+tests	JavaScript tests	2026-11

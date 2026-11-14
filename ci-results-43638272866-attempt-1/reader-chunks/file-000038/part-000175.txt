@@ -1,0 +1,47 @@
+t tests	2026-11-14T20:40:13.9180086Z ##[endgroup]
+tests	JavaScript tests	2026-11-14T20:40:13.9180841Z ##[group]tests/battle-action-eligibility-feedback.test.cjs
+tests	JavaScript tests	2026-11-14T20:40:14.1094607Z TAP version 13
+tests	JavaScript tests	2026-11-14T20:40:14.1698792Z # Subtest: missing actor yields explicit persistent ID-targeted error without opening or mutation
+tests	JavaScript tests	2026-11-14T20:40:14.1702716Z ok 1 - missing actor yields explicit persistent ID-targeted error without opening or mutation
+tests	JavaScript tests	2026-11-14T20:40:14.1703550Z   ---
+tests	JavaScript tests	2026-11-14T20:40:14.1704007Z   duration_ms: 3.874263
+tests	JavaScript tests	2026-11-14T20:40:14.1704534Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:40:14.1704967Z   ...
+tests	JavaScript tests	2026-11-14T20:40:14.1707991Z # Subtest: inactive actor retains existing eligibility gate and name label
+tests	JavaScript tests	2026-11-14T20:40:14.1709888Z ok 2 - inactive actor retains existing eligibility gate and name label
+tests	JavaScript tests	2026-11-14T20:40:14.1712944Z   ---
+tests	JavaScript tests	2026-11-14T20:40:14.1713298Z   duration_ms: 0.869657
+tests	JavaScript tests	2026-11-14T20:40:14.1713697Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:40:14.1714033Z   ...
+tests	JavaScript tests	2026-11-14T20:40:14.1714525Z # Subtest: off-turn active actor remains rejected
+tests	JavaScript tests	2026-11-14T20:40:14.1715204Z ok 3 - off-turn active actor remains rejected
+tests	JavaScript tests	2026-11-14T20:40:14.1734400Z   ---
+tests	JavaScript tests	2026-11-14T20:40:14.1743953Z   duration_ms: 0.806472
+tests	JavaScript tests	2026-11-14T20:40:14.1744543Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:40:14.1744973Z   ...
+tests	JavaScript tests	2026-11-14T20:40:14.1745885Z # Subtest: matching valid opening silently resolves its actual earlier eligibility failure
+tests	JavaScript tests	2026-11-14T20:40:14.1747126Z ok 4 - matching valid opening silently resolves its actual earlier eligibility failure
+tests	JavaScript tests	2026-11-14T20:40:14.1747899Z   ---
+tests	JavaScript tests	2026-11-14T20:40:14.1748327Z   duration_ms: 1.741209
+tests	JavaScript tests	2026-11-14T20:40:14.1748832Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:40:14.1749255Z   ...
+tests	JavaScript tests	2026-11-14T20:40:14.1749950Z # Subtest: opening another valid actor cannot clear the first actors error
+tests	JavaScript tests	2026-11-14T20:40:14.1750908Z ok 5 - opening another valid actor cannot clear the first actors error
+tests	JavaScript tests	2026-11-14T20:40:14.1753284Z   ---
+tests	JavaScript tests	2026-11-14T20:40:14.1753662Z   duration_ms: 1.351744
+tests	JavaScript tests	2026-11-14T20:40:14.1754053Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:40:14.1754394Z   ...
+tests	JavaScript tests	2026-11-14T20:40:14.1755022Z # Subtest: matching valid opening leaves unrelated operation error intact
+tests	JavaScript tests	2026-11-14T20:40:14.1755902Z ok 6 - matching valid opening leaves unrelated operation error intact
+tests	JavaScript tests	2026-11-14T20:40:14.1756455Z   ---
+tests	JavaScript tests	2026-11-14T20:40:14.1756800Z   duration_ms: 1.379521
+tests	JavaScript tests	2026-11-14T20:40:14.1757197Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:40:14.1757504Z   ...
+tests	JavaScript tests	2026-11-14T20:40:14.1758088Z # Subtest: repeated same actor rejection replaces its error with no timer
+tests	JavaScript tests	2026-11-14T20:40:14.1758891Z ok 7 - repeated same actor rejection replaces its error with no timer
+tests	JavaScript tests	2026-11-14T20:40:14.1759456Z   ---
+tests	JavaScript tests	2026-11-14T20:40:14.1759786Z   duration_ms: 1.222952
+tests	JavaScript tests	2026-11-14T20:40:14.1760172Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:40:14.1760739Z   ...
+tests	JavaScript tests	2026-11-14T20:40:14.1761365Z # Subtest: actor rename does not change retry identity
+tests	JavaScript tests	2026-11-14T20:40:14.1762121Z ok 8 - actor rename does n

@@ -1,0 +1,27 @@
+h81a7/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6124434Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6124901Z   File "/tmp/scrying-tests-eplh81a7/repo/python/scrying_glass_monster_selection.py", line 263, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6125409Z     lambda: dnd_candidates(context, species),
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6125727Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6126245Z   File "/tmp/scrying-tests-eplh81a7/repo/python/scrying_glass_monster_selection.py", line 93, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6126943Z     raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6128001Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6128719Z ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6129486Z test_fivetools_sources_and_deduplication (test_monster_candidate_selection.CandidateTests.test_fivetools_sources_and_deduplication) ... 5e.tools candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6130161Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6130721Z   File "/tmp/scrying-tests-eplh81a7/repo/python/scrying_glass_monster_selection.py", line 199, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6131239Z     index = _fivetools_index(root)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6131782Z   File "/tmp/scrying-tests-eplh81a7/repo/python/scrying_glass_monster_selection.py", line 167, in _fivetools_index
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6132303Z     index = ft.load_json(root + "/index.json")
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6132990Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6133499Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6133820Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6134338Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6134840Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6135179Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6135721Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6136249Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6136555Z OSError: secret
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6136886Z ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6137567Z test_incomplete_search_is_error (test_monster_candidate_selection.CandidateTests.test_incomplete_search_is_error) ... D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-14T20:38:42.6138200Z Traceback (most rec

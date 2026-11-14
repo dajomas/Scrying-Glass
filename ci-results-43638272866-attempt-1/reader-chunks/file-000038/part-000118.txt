@@ -1,0 +1,21 @@
+st suite (including browser fixtures)	2026-11-14T20:39:37.1270730Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1271587Z   File "/tmp/scrying-tests-eplh81a7/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1272352Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1273249Z   File "/tmp/scrying-tests-eplh81a7/repo/python/scrying_glass_monster_selection.py", line 268, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1274234Z     extra=(("Open5e", open5e_enabled, lambda: open5e_candidates(species, display)),))
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1274941Z                                               ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1275859Z   File "/tmp/scrying-tests-eplh81a7/repo/python/scrying_glass_monster_selection.py", line 250, in open5e_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1276702Z     raise ProviderError("Open5e lookup failed; enter stats manually or retry.") from exc
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1277383Z python.scrying_glass_monster_selection.ProviderError: Open5e lookup failed; enter stats manually or retry.
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1277844Z ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1278607Z test_refresh_resolves_retained_open5e_identity_when_enabled (test_open5e_provider.Open5eLookupIntegrationTests.test_refresh_resolves_retained_open5e_identity_when_enabled) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1279804Z test_refresh_skips_retained_open5e_identity_when_disabled (test_open5e_provider.Open5eLookupIntegrationTests.test_refresh_skips_retained_open5e_identity_when_disabled) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1280791Z test_base_url_requires_plain_https (test_open5e_provider.Open5eProviderTests.test_base_url_requires_plain_https) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1281753Z test_exact_name_candidates_are_mapped_with_attribution (test_open5e_provider.Open5eProviderTests.test_exact_name_candidates_are_mapped_with_attribution) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1283770Z test_hit_points_prefer_matching_dice_otherwise_average (test_open5e_provider.Open5eProviderTests.test_hit_points_prefer_matching_dice_otherwise_average) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1285552Z test_ignored_filter_results_are_validated_not_trusted (test_open5e_provider.Open5eProviderTests.test_ignored_filter_results_are_validated_not_trusted) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1287151Z test_illustrations_stay_on_the_configured_https_host (test_open5e_provider.Open5eProviderTests.test_illustrations_stay_on_the_configured_https_host) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1288642Z test_incomplete_or_invalid_listings_raise (test_open5e_provider.Open5eProviderTests.test_incomplete_or_invalid_listings_raise) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1289753Z test_initiative_bonus_offer_states (test_open5e_provider.Open5eProviderTests.test_initiative_bonus_offer_states) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1290920Z test_next_pages_are_followed_until_null (test_open5e_provider.Open5eProviderTests.test_next_pages_are_followed_until_null) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:39:37.1292184Z test_source_identity_and_snapshot_round_tr
