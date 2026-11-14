@@ -13,11 +13,11 @@ from helpers import add_character, add_monster, admin, grant_viewer, open_workfl
 WIDTHS = (360, 768, 1024, 1440)
 WORKFLOWS = ("campaign", "preparation", "live")
 OVERFLOW = "() => document.documentElement.scrollWidth - document.documentElement.clientWidth"
-# Workflow tabs and panel toggles must wrap inside the viewport, not run past its edge.
-CLIPPED = """() => [...document.querySelectorAll('#adminWorkflowTabs button, .sg-pane-strip button')]
+# Workflow tabs and the panel toggle strip must stay inside the viewport; toggles scroll within the strip.
+CLIPPED = """() => [...document.querySelectorAll('#adminWorkflowTabs button, .sg-pane-strip')]
     .filter(node => node.getClientRects().length)
     .filter(node => { const box = node.getBoundingClientRect(); return box.left < -0.5 || box.right > innerWidth + 0.5; })
-    .map(node => node.id || node.textContent.trim())"""
+    .map(node => node.id || node.className || node.textContent.trim())"""
 
 # Every scanned page must be free of axe violations (the Stage 4 baseline is fixed).
 PAGES = ("login", "admin-campaign", "admin-preparation", "admin-live", "users", "client")
@@ -30,7 +30,7 @@ def no_horizontal_scroll(page, label):
 
 @pytest.mark.parametrize("width", WIDTHS)
 def test_pages_fit_viewport_width(sessions, server, width):
-    """Admin, Client Display, login and Users pages fit the viewport width; header tabs and toggles wrap inside it."""
+    """Admin, Client Display, login and Users pages fit the viewport width; header tabs and the toggle strip stay inside it."""
     size = {"width": width, "height": 900}
     login = sessions("anonymous").page()
     login.set_viewport_size(size)
@@ -48,7 +48,7 @@ def test_pages_fit_viewport_width(sessions, server, width):
         clipped = page.evaluate(CLIPPED)
         assert not clipped, f"admin {workflow}: header controls outside the viewport: {clipped}"
         for toggle in page.locator("[aria-label='Panel visibility'] button:not([aria-haspopup]):visible").all():
-            toggle.click()
+            toggle.click()  # Playwright scrolls the strip to the toggle, as a user or keyboard focus would.
             toggle.click()
 
     users = sessions("super").login("superadmin")

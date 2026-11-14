@@ -33,8 +33,8 @@ class LocalRunnerPublicationTests(unittest.TestCase):
         self.git('init', '-b', 'features/perplexity')
         self.git('config', 'user.name', 'Runner Fixture')
         self.git('config', 'user.email', 'runner-fixture@example.invalid')
-        shutil.copyfile(ROOT / 'runlocaltests.sh', self.repo / 'runlocaltests.sh')
         (self.repo / 'tools').mkdir()
+        shutil.copyfile(ROOT / 'tools/runlocaltests.sh', self.repo / 'tools/runlocaltests.sh')
         (self.repo / 'tools/run_split_tests.py').write_text('', encoding='utf-8')
         (self.repo / 'tests').mkdir()
         (self.repo / 'tests/fixture.txt').write_text('fixture', encoding='utf-8')
@@ -53,7 +53,7 @@ class LocalRunnerPublicationTests(unittest.TestCase):
         self.python.chmod(0o755)
 
     def run_runner(self, *args):
-        result = subprocess.run(['bash', 'runlocaltests.sh', '--suite', 'syntax',
+        result = subprocess.run(['bash', 'tools/runlocaltests.sh', '--suite', 'syntax',
                                  '--python', str(self.python), *args], cwd=self.repo,
                                 env=self.env, capture_output=True, text=True, timeout=30)
         runs = list(self.repo.glob('local-tests-*/run-*'))
