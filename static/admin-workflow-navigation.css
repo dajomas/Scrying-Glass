@@ -4,9 +4,8 @@ body.admin-shell[data-workflow-navigation="ready"] [data-workflow-excluded="true
 }
 .sg-workflow-tabs {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap; /* Narrow screens wrap the tabs instead of clipping them. */
     gap: .35rem;
-    overflow-x: auto;
     min-width: 0;
     padding: .4rem .2rem;
     scrollbar-width: thin;

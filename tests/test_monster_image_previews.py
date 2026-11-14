@@ -15,9 +15,9 @@ class PreviewSourceTests(unittest.TestCase):
         end = (ROOT / 'templates/admin/190_document_end.html').read_text()
         self.assertEqual(head.count('/static/monster-image-previews.css?v=1'), 1)
         self.assertLess(head.index('/static/admin-panel-forms.css'), head.index('/static/monster-image-previews.css'))
-        self.assertEqual(end.count('/static/monster-image-previews.js?v=1'), 1)
+        self.assertEqual(end.count('/static/monster-image-previews.js?v=2'), 1)
         self.assertLess(end.index('/static/admin-panel-forms.js'), end.index('/static/monster-image-previews.js'))
-        self.assertIn('<script src="/static/monster-image-previews.js?v=1" defer></script>', end)
+        self.assertIn('<script src="/static/monster-image-previews.js?v=2" defer></script>', end)
         for name in ('monster-image-previews.js', 'monster-image-previews.css', 'monster-candidate-selection.js',
                      'monster-image-choice.js'):
             self.assertLessEqual((ROOT / 'static' / name).stat().st_size, 20000)

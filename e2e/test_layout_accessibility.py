@@ -1,8 +1,7 @@
 """Responsive widths, dialog focus handling and automated accessibility scans (SG-TODO-021 Stage 4).
 
-The axe scans compare against a documented baseline of known findings (docs/handover/610); a rule
-that is not in the baseline fails the test. The baseline is a record for follow-up work, not an
-acceptance of the findings.
+The axe scans must find no violations; the earlier baseline findings (docs/handover/610) are fixed
+(docs/handover/640).
 """
 import pytest
 from axe_playwright_python.sync_playwright import Axe
@@ -14,16 +13,14 @@ from helpers import add_character, add_monster, admin, grant_viewer, open_workfl
 WIDTHS = (360, 768, 1024, 1440)
 WORKFLOWS = ("campaign", "preparation", "live")
 OVERFLOW = "() => document.documentElement.scrollWidth - document.documentElement.clientWidth"
+# Workflow tabs and panel toggles must wrap inside the viewport, not run past its edge.
+CLIPPED = """() => [...document.querySelectorAll('#adminWorkflowTabs button, .sg-pane-strip button')]
+    .filter(node => node.getClientRects().length)
+    .filter(node => { const box = node.getBoundingClientRect(); return box.left < -0.5 || box.right > innerWidth + 0.5; })
+    .map(node => node.id || node.textContent.trim())"""
 
-# Known axe findings per page (rule ids), recorded in docs/handover/610 for a follow-up.
-AXE_BASELINE = {
-    "login": {"html-has-lang", "landmark-one-main", "region"},
-    "admin-campaign": set(),
-    "admin-preparation": {"aria-allowed-role"},
-    "admin-live": set(),
-    "users": set(),
-    "client": {"html-has-lang", "landmark-one-main", "page-has-heading-one"},
-}
+# Every scanned page must be free of axe violations (the Stage 4 baseline is fixed).
+PAGES = ("login", "admin-campaign", "admin-preparation", "admin-live", "users", "client")
 
 
 def no_horizontal_scroll(page, label):
@@ -33,7 +30,7 @@ def no_horizontal_scroll(page, label):
 
 @pytest.mark.parametrize("width", WIDTHS)
 def test_pages_fit_viewport_width(sessions, server, width):
-    """Admin, Client Display, login and Users pages fit the viewport width without horizontal scrolling."""
+    """Admin, Client Display, login and Users pages fit the viewport width; header tabs and toggles wrap inside it."""
     size = {"width": width, "height": 900}
     login = sessions("anonymous").page()
     login.set_viewport_size(size)
@@ -48,6 +45,8 @@ def test_pages_fit_viewport_width(sessions, server, width):
         open_workflow(page, workflow)  # Clicking the tab proves it is reachable at this width.
         page.wait_for_timeout(200)
         no_horizontal_scroll(page, f"admin {workflow}")
+        clipped = page.evaluate(CLIPPED)
+        assert not clipped, f"admin {workflow}: header controls outside the viewport: {clipped}"
         for toggle in page.locator("[aria-label='Panel visibility'] button:not([aria-haspopup]):visible").all():
             toggle.click()
             toggle.click()
@@ -95,7 +94,6 @@ def test_campaign_dialog_traps_focus_and_closes_on_escape(sessions):
     expect(page.locator("#campaignModal")).to_be_hidden()
 
 
-@pytest.mark.xfail(strict=True, reason="Known finding: focus falls to the page body when the campaign dialog closes")
 def test_campaign_dialog_returns_focus_to_opener(sessions):
     """Closing the New campaign dialog returns focus to the New campaign button."""
     _, page = admin(sessions)
@@ -107,8 +105,8 @@ def test_campaign_dialog_returns_focus_to_opener(sessions):
     expect(opener).to_be_focused(timeout=2000)
 
 
-def test_axe_scan_finds_no_new_violations(sessions, server):
-    """Automated axe scans of login, Admin, Users and Client Display find no violations beyond the baseline."""
+def test_axe_scan_finds_no_violations(sessions, server):
+    """Automated axe scans of login, Admin, Users and Client Display find no violations."""
     axe = Axe()
     found = {}
 
@@ -132,5 +130,6 @@ def test_axe_scan_finds_no_new_violations(sessions, server):
     expect(display.locator("#displaySync")).to_contain_text("Live", timeout=15000)
     scan(display, "client")
 
-    new = {label: sorted(rules - AXE_BASELINE[label]) for label, rules in found.items() if rules - AXE_BASELINE[label]}
-    assert not new, f"New axe violations beyond the documented baseline: {new}"
+    assert set(found) == set(PAGES)
+    violations = {label: sorted(rules) for label, rules in found.items() if rules}
+    assert not violations, f"axe violations: {violations}"

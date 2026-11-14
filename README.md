@@ -86,6 +86,7 @@ initiative, combat, Client Display, feedback and connection handling, screen wid
 required rpm packages and prints the `dnf install` command if any are missing. It checks
 that both browsers start, then prints
 `Now running test ###/###: <description> [browser] ... SUCCESS|FAILED|XFAIL (known finding)` per test; `tools/run_e2e.sh --no-push` only runs it.
+The axe scans require zero violations; the earlier Stage 4 findings are fixed ([640](docs/handover/640-e2e-findings-fixes.md)).
 
 Legacy source-reading tests use a disposable assembled checkout:
 

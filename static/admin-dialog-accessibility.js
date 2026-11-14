@@ -12,6 +12,11 @@
         battleActionModal: 'closeBattleActions'};
     const FOCUSABLE = 'a[href], button, input, select, textarea, summary, [tabindex]';
     const stack = [], openers = new Map();
+    // Last control used outside every overlay: an opener may move focus into its
+    // dialog before the hidden-attribute observer runs, so record it beforehand.
+    let lastOutside = null;
+    const outside = node => node instanceof Element && node !== document.body && !node.closest('.modal');
+    const remember = event => { if (outside(event.target)) lastOutside = event.target; };
     const visible = node => node && node.isConnected && node.getClientRects().length > 0;
     const dialogOf = modal => modal.getAttribute('role') === 'dialog' ? modal
         : modal.querySelector('[role="dialog"]') || modal.firstElementChild;
@@ -38,6 +43,7 @@
         if (OWNED_ELSEWHERE.has(modal.id)) return;
         const dialog = dialogOf(modal), active = document.activeElement;
         if (active && active !== document.body && !modal.contains(active)) openers.set(modal, active);
+        else if (lastOutside && lastOutside.isConnected) openers.set(modal, lastOutside);
         // Openers that already placed focus (for example a first field) keep it.
         if (dialog && !dialog.contains(document.activeElement)) {
             (focusables(dialog)[0] || dialog).focus({preventScroll: true});
@@ -65,6 +71,12 @@
     };
 
     function install() {
+        document.addEventListener('focusin', remember, true);
+        // Some browsers do not focus a clicked button; the click still names the opener.
+        document.addEventListener('pointerdown', event => {
+            const control = event.target instanceof Element && event.target.closest(FOCUSABLE);
+            if (control && outside(control)) lastOutside = control;
+        }, true);
         const modals = [...document.querySelectorAll('.modal')];
         const observer = new MutationObserver(records => {
             for (const record of records) {

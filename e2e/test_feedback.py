@@ -92,7 +92,7 @@ def test_connection_warning_and_recovery(sessions):
 
 
 def test_display_keeps_last_state_while_server_is_down(sessions, server):
-    """During a server outage the Client Display keeps its last state; after a restart and sign-in it is live again."""
+    """During an outage the Client Display keeps its last state; after a restart it asks for sign-in and is live again."""
     _, dm = admin(sessions)
     grant_viewer(dm, ACCOUNTS["client"][0])
     prepare_battle(dm)
@@ -107,7 +107,8 @@ def test_display_keeps_last_state_while_server_is_down(sessions, server):
     expect(display.locator("#stage article.monster")).to_have_count(1)
     expect(display.locator("#initiative .round-indicator")).to_have_text("Round 1")
     server.start()
-    # Sessions live in server memory, so the display stays in "Reconnecting" until the viewer signs in again.
+    # Sessions live in server memory, so the display goes to the sign-in page by itself.
+    expect(display).to_have_url(server.client + "/login", timeout=60000)
     display = viewer.login("client", portal="client")
     expect(display.locator("#displaySync")).to_contain_text("Live", timeout=POLL)
     expect(display.locator("#initiative .round-indicator")).to_have_text("Round 1")
@@ -136,13 +137,12 @@ def test_setup_switch_fails_safely_and_retries(sessions):
 
 
 def test_server_restart_keeps_data_and_requires_sign_in(sessions, server):
-    """A server restart keeps campaign data but signs users out (sessions are held in memory)."""
+    """A server restart keeps campaign data and sends the signed-out Admin to the sign-in page."""
     session, page = admin(sessions)
     add_character(page, "Aelwyn")
     server.stop()
     expect(page.locator("#message")).to_contain_text("Connection to the server was lost", timeout=POLL)
     server.start()
-    expect(page.locator("#message")).to_contain_text(
-        "Warning: Background refresh failed: Sign in required. Retrying automatically.", timeout=POLL)
+    expect(page).to_have_url(server.admin + "/login", timeout=POLL)
     page = session.login("admin")
     expect(page.locator("#characters")).to_contain_text("Aelwyn")

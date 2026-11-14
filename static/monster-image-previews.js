@@ -23,7 +23,6 @@
         preview.id = id + 'Preview';
         preview.setAttribute('aria-label', allowProvider ? 'Monster image preview' : 'Replacement image preview');
         const status = document.createElement('figcaption');
-        status.setAttribute('role', 'status');
         status.setAttribute('aria-live', 'polite');
         wrap.append(label, preview);
         let localFile = null, objectUrl = '', sourceKey = null, image = null;
