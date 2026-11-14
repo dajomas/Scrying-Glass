@@ -1,0 +1,24 @@
+uite (including browser fixtures)	2026-11-14T20:49:44.5691874Z test_all_locked_keeps_fivetools_results (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_all_locked_keeps_fivetools_results) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5753252Z test_locked_then_usable_keeps_both_providers (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_locked_then_usable_keeps_both_providers) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5813474Z test_secondary_failure_blocks_accessible_primary_without_signing (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_secondary_failure_blocks_accessible_primary_without_signing) ... Combined monster lookup: 5e.tools did not respond (private endpoint)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5815475Z ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5854941Z test_unclassified_failure_and_search_failure_block_all_results (test_dndbeyond_locked_pages.SelectionIntegrationTests.test_unclassified_failure_and_search_failure_block_all_results) ... /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/tempfile.py:538: ResourceWarning: Implicitly cleaning up <HTTPError 500: 'fixture'>
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5858060Z   _warnings.warn(self.warn_message, ResourceWarning)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5883980Z D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5884643Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5885679Z   File "/tmp/scrying-tests-mk5kkr80/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5886672Z     html = context.dnd_monster_detail_html(href)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5887755Z   File "/tmp/scrying-tests-mk5kkr80/repo/python/scrying_glass_dndbeyond.py", line 128, in dnd_monster_detail_html
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5888783Z     response = urlopen(request, timeout=15)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5889837Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5890768Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5891313Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5892444Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5893381Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5893944Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5894808Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5895594Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5896160Z urllib.error.HTTPError: HTTP Error 403: fixture
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5897044Z Combined monster lookup: D&D Beyond did not respond (HTTP Error 403: fixture)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5898007Z D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-14T20:49:44.5898584Z Traceback (most recent call l

@@ -1,0 +1,31 @@
+__
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.1157058Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.1157728Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.1158915Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.1160132Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.1160875Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.1161938Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.1162537Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.1162837Z OSError: private detail
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.1163202Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.1163585Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.1164171Z   File "python/scrying_glass_monster_selection.py", line 196, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.1164881Z     sources = ft.configured_sources(display)
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.1166056Z   File "/tmp/scrying-tests-konjj_6q/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.1167829Z     raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.1168887Z ValueError: fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.2029821Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.2030323Z Ran 12 tests in 0.096s
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.2030510Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.2030626Z OK
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.2031197Z test_fivetools_source_configuration.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.2210563Z Connection audit: test_healing_max_hp_cap.py
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.3016493Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.3017012Z Ran 12 tests in 0.003s
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.3017367Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.3017880Z test_healing_max_hp_cap.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.3018505Z OK
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.3156617Z Connection audit: test_image_lookup_partial.py
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.3937853Z Combined monster lookup: D&D Beyond did not respond (The read operation timed out)
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.3939050Z Combined monster lookup: 5e.tools did not respond (The read operation timed out)
+tests	Standalone Python browser and audit checks	2026-11-14T20:54:51.3940120Z Combined monster lookup: Open

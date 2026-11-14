@@ -1,0 +1,42 @@
+avaScript tests	2026-11-14T20:51:50.4772499Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	JavaScript tests	2026-11-14T20:51:50.4772935Z ^[[36;1m  python tools/run_split_tests.py -- node --test "$test" || status=1^[[0m
+tests	JavaScript tests	2026-11-14T20:51:50.4773388Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	JavaScript tests	2026-11-14T20:51:50.4773851Z ^[[36;1mdone < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)^[[0m
+tests	JavaScript tests	2026-11-14T20:51:50.4774319Z ^[[36;1mexit "$status"^[[0m
+tests	JavaScript tests	2026-11-14T20:51:50.4808177Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	JavaScript tests	2026-11-14T20:51:50.4808558Z env:
+tests	JavaScript tests	2026-11-14T20:51:50.4808993Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	JavaScript tests	2026-11-14T20:51:50.4809558Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-14T20:51:50.4809968Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	JavaScript tests	2026-11-14T20:51:50.4810423Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-14T20:51:50.4810800Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-14T20:51:50.4811165Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-14T20:51:50.4811740Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	JavaScript tests	2026-11-14T20:51:50.4812067Z ##[endgroup]
+tests	JavaScript tests	2026-11-14T20:51:50.4895863Z ##[group]tests/admin-activity-log-clear-feedback.test.cjs
+tests	JavaScript tests	2026-11-14T20:51:50.7094162Z TAP version 13
+tests	JavaScript tests	2026-11-14T20:51:50.7702768Z # Subtest: cancel retains count confirmation, existing error and pending identity
+tests	JavaScript tests	2026-11-14T20:51:50.7707422Z ok 1 - cancel retains count confirmation, existing error and pending identity
+tests	JavaScript tests	2026-11-14T20:51:50.7708309Z   ---
+tests	JavaScript tests	2026-11-14T20:51:50.7708805Z   duration_ms: 4.100757
+tests	JavaScript tests	2026-11-14T20:51:50.7709333Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:51:50.7709771Z   ...
+tests	JavaScript tests	2026-11-14T20:51:50.7714285Z # Subtest: empty emits explicit info without confirmation, request or refresh
+tests	JavaScript tests	2026-11-14T20:51:50.7715710Z ok 2 - empty emits explicit info without confirmation, request or refresh
+tests	JavaScript tests	2026-11-14T20:51:50.7716580Z   ---
+tests	JavaScript tests	2026-11-14T20:51:50.7722542Z   duration_ms: 0.951035
+tests	JavaScript tests	2026-11-14T20:51:50.7722999Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:51:50.7723319Z   ...
+tests	JavaScript tests	2026-11-14T20:51:50.7724016Z # Subtest: empty is not server success and cannot erase a matching clear failure
+tests	JavaScript tests	2026-11-14T20:51:50.7724977Z ok 3 - empty is not server success and cannot erase a matching clear failure
+tests	JavaScript tests	2026-11-14T20:51:50.7725604Z   ---
+tests	JavaScript tests	2026-11-14T20:51:50.7725939Z   duration_ms: 0.976047
+tests	JavaScript tests	2026-11-14T20:51:50.7726341Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:51:50.7726754Z   ...
+tests	JavaScript tests	2026-11-14T20:51:50.7727480Z # Subtest: repeated empty notices replace one info record without erasing errors
+tests	JavaScript tests	2026-11-14T20:51:50.7728558Z ok 4 - repeated empty notices replace one info record without erasing errors
+tests	JavaScript tests	2026-11-14T20:51:50.7729212Z   ---
+tests	JavaScript tests	2026-11-14T20:51:50.7729570Z   duration_ms: 1.020913
+tests	JavaScript tests	2026-11-14T20:51:50.7729962Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:51:50.7730315Z   ...
+tests	JavaScript tests	2026-11-14T20:51:50.7731856Z # Subtest: confirmed clear preserves one bodyless POST and publishes before re

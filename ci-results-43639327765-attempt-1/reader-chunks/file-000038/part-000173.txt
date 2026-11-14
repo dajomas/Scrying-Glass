@@ -1,0 +1,50 @@
+11-14T20:51:59.6964059Z   ...
+tests	JavaScript tests	2026-11-14T20:51:59.6964356Z 1..1
+tests	JavaScript tests	2026-11-14T20:51:59.6964651Z # tests 1
+tests	JavaScript tests	2026-11-14T20:51:59.6966005Z # suites 0
+tests	JavaScript tests	2026-11-14T20:51:59.6966712Z # pass 1
+tests	JavaScript tests	2026-11-14T20:51:59.6968574Z # fail 0
+tests	JavaScript tests	2026-11-14T20:51:59.6969088Z # cancelled 0
+tests	JavaScript tests	2026-11-14T20:51:59.6969541Z # skipped 0
+tests	JavaScript tests	2026-11-14T20:51:59.6969977Z # todo 0
+tests	JavaScript tests	2026-11-14T20:51:59.6971157Z # duration_ms 41.062425
+tests	JavaScript tests	2026-11-14T20:51:59.7255813Z ##[endgroup]
+tests	JavaScript tests	2026-11-14T20:51:59.7256307Z ##[group]tests/campaign-bundle-import-feedback.test.cjs
+tests	JavaScript tests	2026-11-14T20:51:59.9457968Z TAP version 13
+tests	JavaScript tests	2026-11-14T20:51:59.9889617Z # Subtest: confirmed import keeps file POST and full recovery wording, without alert
+tests	JavaScript tests	2026-11-14T20:51:59.9897997Z ok 1 - confirmed import keeps file POST and full recovery wording, without alert
+tests	JavaScript tests	2026-11-14T20:51:59.9899083Z   ---
+tests	JavaScript tests	2026-11-14T20:51:59.9899882Z   duration_ms: 9.152255
+tests	JavaScript tests	2026-11-14T20:51:59.9900226Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:51:59.9900458Z   ...
+tests	JavaScript tests	2026-11-14T20:51:59.9919186Z # Subtest: success expires at five seconds without clearing unrelated persistent error
+tests	JavaScript tests	2026-11-14T20:51:59.9920405Z ok 2 - success expires at five seconds without clearing unrelated persistent error
+tests	JavaScript tests	2026-11-14T20:51:59.9921611Z   ---
+tests	JavaScript tests	2026-11-14T20:51:59.9921903Z   duration_ms: 3.096511
+tests	JavaScript tests	2026-11-14T20:51:59.9922155Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:51:59.9922364Z   ...
+tests	JavaScript tests	2026-11-14T20:51:59.9930610Z # Subtest: cancellation does not start import feedback
+tests	JavaScript tests	2026-11-14T20:51:59.9934088Z ok 3 - cancellation does not start import feedback
+tests	JavaScript tests	2026-11-14T20:51:59.9934667Z   ---
+tests	JavaScript tests	2026-11-14T20:51:59.9934968Z   duration_ms: 1.232757
+tests	JavaScript tests	2026-11-14T20:51:59.9935213Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:51:59.9935414Z   ...
+tests	JavaScript tests	2026-11-14T20:51:59.9947869Z # Subtest: missing file does not start import feedback
+tests	JavaScript tests	2026-11-14T20:51:59.9949035Z ok 4 - missing file does not start import feedback
+tests	JavaScript tests	2026-11-14T20:51:59.9951088Z   ---
+tests	JavaScript tests	2026-11-14T20:51:59.9951735Z   duration_ms: 1.300592
+tests	JavaScript tests	2026-11-14T20:51:59.9952118Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:51:59.9952456Z   ...
+tests	JavaScript tests	2026-11-14T20:51:59.9972206Z # Subtest: busy duplicate is suppressed and release permits only an explicit later import
+tests	JavaScript tests	2026-11-14T20:51:59.9973601Z ok 5 - busy duplicate is suppressed and release permits only an explicit later import
+tests	JavaScript tests	2026-11-14T20:51:59.9974306Z   ---
+tests	JavaScript tests	2026-11-14T20:51:59.9974694Z   duration_ms: 2.653218
+tests	JavaScript tests	2026-11-14T20:51:59.9975066Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:51:59.9975421Z   ...
+tests	JavaScript tests	2026-11-14T20:52:00.0000050Z # Subtest: rejected POST remains local and is not retried or announced as success
+tests	JavaScript tests	2026-11-14T20:52:00.0001653Z ok 6 - rejected POST remains local and is not retried or announced as success
+tests	JavaScript tests	2026-11-14T20:52:00.0002675Z   ---
+tests	JavaScript tests	2026-11-14T20:52:00.0003280Z   duration_ms: 2.727372
+tests	JavaScript tests	2026-11-14T20:52:00.0003820Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:52:00.0004378Z   ...
+tests	JavaScript tests	2026-11-14T20:52:00.0016902Z # Subtest: scope transition suppresses stale 

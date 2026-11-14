@@ -1,0 +1,26 @@
+~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4654201Z   File "/tmp/scrying-tests-mk5kkr80/repo/python/scrying_glass_monster_selection.py", line 222, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4654917Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4655632Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4656106Z ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4659209Z test_secondary_failure_returns_no_candidates_and_never_signs (test_monster_candidate_selection.CandidateTests.test_secondary_failure_returns_no_candidates_and_never_signs) ... Combined monster lookup failed for 5e.tools
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4660078Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4660640Z   File "/tmp/scrying-tests-mk5kkr80/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4661135Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4661919Z   File "/tmp/scrying-tests-mk5kkr80/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4662489Z     lambda: fivetools_candidates(species, display),
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4662845Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4663362Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4664177Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4664706Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4665634Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4666218Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4666902Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4667934Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4668785Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4669130Z python.scrying_glass_monster_selection.ProviderError: secret
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4669454Z ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4669840Z test_tokens (test_monster_candidate_selection.CandidateTests.test_tokens) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4670691Z test_unconfigured_entry_source_is_not_offered (test_monster_candidate_selection.CandidateTests.test_unconfigured_entry_source_is_not_offered) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4672475Z test_unusable_duplicates_and_image (test_monster_candidate_selection.CandidateTests.test_unusable_duplicates_and_image) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4695897Z test_selection_and_manual_never_relookup (test_

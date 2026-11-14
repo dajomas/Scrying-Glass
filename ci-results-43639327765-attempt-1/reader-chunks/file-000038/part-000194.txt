@@ -1,0 +1,53 @@
+onsuming response
+tests	JavaScript tests	2026-11-14T20:52:04.9660431Z ok 6 - bulk server rejection reaches message without consuming response
+tests	JavaScript tests	2026-11-14T20:52:04.9661161Z   ---
+tests	JavaScript tests	2026-11-14T20:52:04.9661800Z   duration_ms: 21.715071
+tests	JavaScript tests	2026-11-14T20:52:04.9662461Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:52:04.9663027Z   ...
+tests	JavaScript tests	2026-11-14T20:52:04.9664671Z # Subtest: single join server rejection also reaches message
+tests	JavaScript tests	2026-11-14T20:52:04.9665602Z ok 7 - single join server rejection also reaches message
+tests	JavaScript tests	2026-11-14T20:52:04.9666248Z   ---
+tests	JavaScript tests	2026-11-14T20:52:04.9666631Z   duration_ms: 1.364463
+tests	JavaScript tests	2026-11-14T20:52:04.9667115Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:52:04.9667540Z   ...
+tests	JavaScript tests	2026-11-14T20:52:04.9667988Z # Subtest: non-JSON rejection uses HTTP fallback
+tests	JavaScript tests	2026-11-14T20:52:04.9679223Z ok 8 - non-JSON rejection uses HTTP fallback
+tests	JavaScript tests	2026-11-14T20:52:04.9680033Z   ---
+tests	JavaScript tests	2026-11-14T20:52:04.9680511Z   duration_ms: 1.30296
+tests	JavaScript tests	2026-11-14T20:52:04.9681063Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:52:04.9681732Z   ...
+tests	JavaScript tests	2026-11-14T20:52:04.9682576Z # Subtest: unrelated rejection does not change global message
+tests	JavaScript tests	2026-11-14T20:52:04.9683679Z ok 9 - unrelated rejection does not change global message
+tests	JavaScript tests	2026-11-14T20:52:04.9684432Z   ---
+tests	JavaScript tests	2026-11-14T20:52:04.9684975Z   duration_ms: 0.964194
+tests	JavaScript tests	2026-11-14T20:52:04.9685553Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:52:04.9686068Z   ...
+tests	JavaScript tests	2026-11-14T20:52:04.9686858Z # Subtest: successful join does not create rejection message
+tests	JavaScript tests	2026-11-14T20:52:04.9687884Z ok 10 - successful join does not create rejection message
+tests	JavaScript tests	2026-11-14T20:52:04.9688625Z   ---
+tests	JavaScript tests	2026-11-14T20:52:04.9689084Z   duration_ms: 1.077597
+tests	JavaScript tests	2026-11-14T20:52:04.9689590Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:52:04.9690025Z   ...
+tests	JavaScript tests	2026-11-14T20:52:04.9690783Z # Subtest: blocked join publishes an explicit operation-scoped error
+tests	JavaScript tests	2026-11-14T20:52:04.9693368Z ok 11 - blocked join publishes an explicit operation-scoped error
+tests	JavaScript tests	2026-11-14T20:52:04.9696053Z   ---
+tests	JavaScript tests	2026-11-14T20:52:04.9696420Z   duration_ms: 0.690633
+tests	JavaScript tests	2026-11-14T20:52:04.9696843Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:52:04.9697199Z   ...
+tests	JavaScript tests	2026-11-14T20:52:04.9698568Z # Subtest: successful retry resolves its join error without clearing an unrelated error
+tests	JavaScript tests	2026-11-14T20:52:04.9700026Z ok 12 - successful retry resolves its join error without clearing an unrelated error
+tests	JavaScript tests	2026-11-14T20:52:04.9713686Z   ---
+tests	JavaScript tests	2026-11-14T20:52:04.9714289Z   duration_ms: 1.04808
+tests	JavaScript tests	2026-11-14T20:52:04.9714817Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:52:04.9715227Z   ...
+tests	JavaScript tests	2026-11-14T20:52:04.9794419Z 1..12
+tests	JavaScript tests	2026-11-14T20:52:04.9794830Z # tests 12
+tests	JavaScript tests	2026-11-14T20:52:04.9795146Z # suites 0
+tests	JavaScript tests	2026-11-14T20:52:04.9795483Z # pass 12
+tests	JavaScript tests	2026-11-14T20:52:04.9795826Z # fail 0
+tests	JavaScript tests	2026-11-14T20:52:04.9796173Z # cancelled 0
+tests	JavaScript tests	2026-11-14T20:52:04.9796540Z # skipped 0
+tests	JavaScript tests	2026-11-14T20:52:04.9796894Z # todo 0
+tests	JavaScript tests	2026-11-14T20:52:04.9797595Z # duration_ms 97.394746
+tests	JavaScript tests	2026-11-14T20:52:05.0125977Z ##[endgroup]
+tests	JavaScript tests	2

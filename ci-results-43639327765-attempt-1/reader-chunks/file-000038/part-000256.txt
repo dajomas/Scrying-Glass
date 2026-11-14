@@ -1,0 +1,34 @@
+e 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.2067887Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.2068254Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.2068949Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.2069774Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.2070113Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.2070678Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.2071291Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.2071781Z sqlite3.OperationalError: locked
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.2072177Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.2072546Z Ran 10 tests in 0.152s
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.2072688Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.2072786Z OK
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.2073219Z test_lookup_provider_settings.py: connections opened: 18; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.2639708Z Connection audit: test_manual_monster_bonus_creation.py
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.5550421Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.5552448Z test_manual_monster_bonus_creation.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.5553859Z Ran 8 tests in 0.017s
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.5554260Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.5554507Z OK
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:12.5995211Z Connection audit: test_manual_monster_bonus_form.py
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:15.4929286Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:15.4930435Z Ran 5 tests in 2.811s
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:15.4930844Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:15.4931073Z OK
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:15.4932542Z test_manual_monster_bonus_form.py: connections opened: 1; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:15.5591913Z Connection audit: test_monster_bonus_edit_ui.py
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:17.9460092Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:17.9460840Z Ran 3 tests in 2.301s
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:17.9461095Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:17.9461243Z OK
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:17.9462128Z test_monster_bonus_edit_ui.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:17.9804974Z Connection audit: test_monster_bonus_import.py
+tests	Standalone Python browser and audit checks	2026-11-14T20:55:18.2816131Z --------------
