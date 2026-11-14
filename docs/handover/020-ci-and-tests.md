@@ -45,6 +45,8 @@ This is one selected CI environment, not a compatibility matrix. Dependency spec
 5. Execute standalone Python files under `tests/` whose names do not match `test_*.py`, excluding `__init__.py`. Since SG-TODO-020 these are the connection audit and the shared browser fixture helper; the browser smoke check and the activity-log/round-three audits are unittest modules ([600](600-test-suite-cleanup.md)).
 6. The `patched` argument special case for `tests/audit_log_clear.py` is unused since that script became `tests/test_activity_log_clear.py`.
 
+The Playwright end-to-end suite under `e2e/` is outside these steps; it runs only on demand through `tools/run_e2e.sh` ([610](610-playwright-end-to-end-suite.md)).
+
 The unittest, pytest, JavaScript and standalone test steps use `if: ${{ !cancelled() }}` so later test groups still run after earlier failures unless the job is cancelled. File loops accumulate failures and return a nonzero exit code after processing the remaining files.
 
 Installing pytest fixes the two module imports but does not make unittest execute their pytest-style functions. The separate pytest step follows unittest and precedes JavaScript; see [diagnosis and validation limits](120-pytest-module-imports.md).

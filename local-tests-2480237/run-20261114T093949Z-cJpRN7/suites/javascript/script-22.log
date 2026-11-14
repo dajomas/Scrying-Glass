@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: active targets publish persistent explicit error without legacy feedback
+ok 1 - active targets publish persistent explicit error without legacy feedback
+  ---
+  duration_ms: 2.41312
+  type: 'test'
+  ...
+# Subtest: active and living conditions resolve independently
+ok 2 - active and living conditions resolve independently
+  ---
+  duration_ms: 1.721799
+  type: 'test'
+  ...
+# Subtest: repeated failures replace only the matching target record
+ok 3 - repeated failures replace only the matching target record
+  ---
+  duration_ms: 0.659493
+  type: 'test'
+  ...
+# Subtest: busy target handlers leave records and rows unchanged
+ok 4 - busy target handlers leave records and rows unchanged
+  ---
+  duration_ms: 0.486888
+  type: 'test'
+  ...
+# Subtest: no pending uses actor-specific info without requests or legacy messages
+ok 5 - no pending uses actor-specific info without requests or legacy messages
+  ---
+  duration_ms: 0.87202
+  type: 'test'
+  ...
+# Subtest: pending batch resolves matching info and preserves unrelated errors and payload
+ok 6 - pending batch resolves matching info and preserves unrelated errors and payload
+  ---
+  duration_ms: 5.741399
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 98.611475

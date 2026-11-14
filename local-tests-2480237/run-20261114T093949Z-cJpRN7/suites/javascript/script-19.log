@@ -1,0 +1,118 @@
+TAP version 13
+# Subtest: POST preserves endpoint, JSON direction and header; success is silent
+ok 1 - POST preserves endpoint, JSON direction and header; success is silent
+  ---
+  duration_ms: 3.193964
+  type: 'test'
+  ...
+# Subtest: pending blocks both directions and disables both controls until completion
+ok 2 - pending blocks both directions and disables both controls until completion
+  ---
+  duration_ms: 0.564609
+  type: 'test'
+  ...
+# Subtest: request failure persists with own identity and restores controls without replay
+ok 3 - request failure persists with own identity and restores controls without replay
+  ---
+  duration_ms: 0.764223
+  type: 'test'
+  ...
+# Subtest: non-Error rejection retains existing fallback wording
+ok 4 - non-Error rejection retains existing fallback wording
+  ---
+  duration_ms: 0.587511
+  type: 'test'
+  ...
+# Subtest: opposite-direction successful retry resolves only related error
+ok 5 - opposite-direction successful retry resolves only related error
+  ---
+  duration_ms: 0.83912
+  type: 'test'
+  ...
+# Subtest: unrelated success and control rerender do not resolve font failure
+ok 6 - unrelated success and control rerender do not resolve font failure
+  ---
+  duration_ms: 0.54836
+  type: 'test'
+  ...
+# Subtest: minimum and maximum retain boundary disabling after success
+ok 7 - minimum and maximum retain boundary disabling after success
+  ---
+  duration_ms: 0.551115
+  type: 'test'
+  ...
+# Subtest: boundary disabling is retained after request failure
+ok 8 - boundary disabling is retained after request failure
+  ---
+  duration_ms: 1.03622
+  type: 'test'
+  ...
+# Subtest: control helper retains clamp and invalid-value default
+ok 9 - control helper retains clamp and invalid-value default
+  ---
+  duration_ms: 0.550113
+  type: 'test'
+  ...
+# Subtest: old-scope success cannot alter latest display, resolve current error or render old value
+ok 10 - old-scope success cannot alter latest display, resolve current error or render old value
+  ---
+  duration_ms: 0.809356
+  type: 'test'
+  ...
+# Subtest: old-scope error cannot overwrite current feedback; pending cleanup still runs
+ok 11 - old-scope error cannot overwrite current feedback; pending cleanup still runs
+  ---
+  duration_ms: 0.545965
+  type: 'test'
+  ...
+# Subtest: away-and-back scope cannot revive original response
+ok 12 - away-and-back scope cannot revive original response
+  ---
+  duration_ms: 0.448097
+  type: 'test'
+  ...
+# Subtest: newer same-operation ticket suppresses older completion without bypassing lock
+ok 13 - newer same-operation ticket suppresses older completion without bypassing lock
+  ---
+  duration_ms: 0.512976
+  type: 'test'
+  ...
+# Subtest: confirmed request resolves its error even if subsequent control update throws
+ok 14 - confirmed request resolves its error even if subsequent control update throws
+  ---
+  duration_ms: 0.633605
+  type: 'test'
+  ...
+# Subtest: initial control rendering failure still releases pending and does not send POST
+ok 15 - initial control rendering failure still releases pending and does not send POST
+  ---
+  duration_ms: 0.481107
+  type: 'test'
+  ...
+# Subtest: missing latest display retains no-assignment path and default final controls
+ok 16 - missing latest display retains no-assignment path and default final controls
+  ---
+  duration_ms: 1.329533
+  type: 'test'
+  ...
+# Subtest: both original click listeners retain directions
+ok 17 - both original click listeners retain directions
+  ---
+  duration_ms: 6.09765
+  type: 'test'
+  ...
+# Subtest: full fragment retains color-preview and startup wiring with no extra refresh
+ok 18 - full fragment retains color-preview and startup wiring with no extra refresh
+  ---
+  duration_ms: 0.560812
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 103.453222

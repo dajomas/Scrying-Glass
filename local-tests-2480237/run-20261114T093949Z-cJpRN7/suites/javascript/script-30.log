@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: confirmed import keeps file POST and full recovery wording, without alert
+ok 1 - confirmed import keeps file POST and full recovery wording, without alert
+  ---
+  duration_ms: 7.784985
+  type: 'test'
+  ...
+# Subtest: success expires at five seconds without clearing unrelated persistent error
+ok 2 - success expires at five seconds without clearing unrelated persistent error
+  ---
+  duration_ms: 1.444684
+  type: 'test'
+  ...
+# Subtest: cancellation does not start import feedback
+ok 3 - cancellation does not start import feedback
+  ---
+  duration_ms: 1.428114
+  type: 'test'
+  ...
+# Subtest: missing file does not start import feedback
+ok 4 - missing file does not start import feedback
+  ---
+  duration_ms: 0.906313
+  type: 'test'
+  ...
+# Subtest: busy duplicate is suppressed and release permits only an explicit later import
+ok 5 - busy duplicate is suppressed and release permits only an explicit later import
+  ---
+  duration_ms: 2.043586
+  type: 'test'
+  ...
+# Subtest: rejected POST remains local and is not retried or announced as success
+ok 6 - rejected POST remains local and is not retried or announced as success
+  ---
+  duration_ms: 1.119592
+  type: 'test'
+  ...
+# Subtest: scope transition suppresses stale import success
+ok 7 - scope transition suppresses stale import success
+  ---
+  duration_ms: 1.068147
+  type: 'test'
+  ...
+# Subtest: away-and-back epoch suppresses stale import success
+ok 8 - away-and-back epoch suppresses stale import success
+  ---
+  duration_ms: 1.0915
+  type: 'test'
+  ...
+# Subtest: failSetups does not recast confirmed import or replay POST
+ok 9 - failSetups does not recast confirmed import or replay POST
+  ---
+  duration_ms: 2.162082
+  type: 'test'
+  ...
+# Subtest: failLoad does not recast confirmed import or replay POST
+ok 10 - failLoad does not recast confirmed import or replay POST
+  ---
+  duration_ms: 1.180142
+  type: 'test'
+  ...
+# Subtest: failRefresh does not recast confirmed import or replay POST
+ok 11 - failRefresh does not recast confirmed import or replay POST
+  ---
+  duration_ms: 1.178459
+  type: 'test'
+  ...
+# Subtest: a later successful import resolves the earlier rejection
+ok 12 - a later successful import resolves the earlier rejection
+  ---
+  duration_ms: 1.274935
+  type: 'test'
+  ...
+# Subtest: same-scope feature refresh preserves an unsaved field during import
+ok 13 - same-scope feature refresh preserves an unsaved field during import
+  ---
+  duration_ms: 1.374026
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 107.861598

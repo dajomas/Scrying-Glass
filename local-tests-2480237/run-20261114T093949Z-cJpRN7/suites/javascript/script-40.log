@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: empty selection and already-active validation do not mutate and recover by matching identity
+ok 1 - empty selection and already-active validation do not mutate and recover by matching identity
+  ---
+  duration_ms: 3.298855
+  type: 'test'
+  ...
+# Subtest: confirmation cancellation reverts, preserves existing warning and performs no request
+ok 2 - confirmation cancellation reverts, preserves existing warning and performs no request
+  ---
+  duration_ms: 0.533082
+  type: 'test'
+  ...
+# Subtest: exact encoded activation POST has no invented headers or payload; rejection is persistent
+ok 3 - exact encoded activation POST has no invented headers or payload; rejection is persistent
+  ---
+  duration_ms: 0.814565
+  type: 'test'
+  ...
+# Subtest: successful retry resolves matching request error but preserves another target
+ok 4 - successful retry resolves matching request error but preserves another target
+  ---
+  duration_ms: 1.47473
+  type: 'test'
+  ...
+# Subtest: button and dropdown duplicate submissions are blocked through refresh
+ok 5 - button and dropdown duplicate submissions are blocked through refresh
+  ---
+  duration_ms: 0.634817
+  type: 'test'
+  ...
+# Subtest: new selection, away-return, registry and encounter epoch suppress stale success/rejection
+ok 6 - new selection, away-return, registry and encounter epoch suppress stale success/rejection
+  ---
+  duration_ms: 3.207519
+  type: 'test'
+  ...
+# Subtest: newer same-target feedback supersedes old completion
+ok 7 - newer same-target feedback supersedes old completion
+  ---
+  duration_ms: 0.857494
+  type: 'test'
+  ...
+# Subtest: expected activation arriving before response remains valid
+ok 8 - expected activation arriving before response remains valid
+  ---
+  duration_ms: 1.308276
+  type: 'test'
+  ...
+# Subtest: both opened and empty setup paths retain setup behavior with propagated refresh errors
+ok 9 - both opened and empty setup paths retain setup behavior with propagated refresh errors
+  ---
+  duration_ms: 1.240592
+  type: 'test'
+  ...
+# Subtest: prior disabled state is restored and rendering failure is separate from activation failure
+ok 10 - prior disabled state is restored and rendering failure is separate from activation failure
+  ---
+  duration_ms: 0.709483
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 100.858102
