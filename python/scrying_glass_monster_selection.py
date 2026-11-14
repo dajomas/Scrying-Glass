@@ -245,14 +245,17 @@ def open5e_candidates(species, display):
     from . import scrying_glass_open5e as open5e
     try:
         return open5e.candidates(species, display, max_candidates=MAX_CANDIDATES)
+    except OSError as exc:
+        raise ProviderError("Open5e did not respond; enter stats manually or retry.") from exc
     except Exception as exc:
         LOG.warning("Open5e candidate lookup failed", exc_info=True)
         raise ProviderError("Open5e lookup failed; enter stats manually or retry.") from exc
 
-def lookup_candidates(context, species, *, include_open5e=True):
+def lookup_candidates(context, species, *, include_open5e=True, images=False):
     """Ordered D&D Beyond, 5e.tools, Open5e lookup with saved provider toggles.
 
     Monster refresh includes Open5e when its provider switch is enabled.
+    `images=True` (source image picking) still returns the providers that answered.
     """
     from .scrying_glass_combined_lookup import combined_candidates
     from .scrying_glass_provider_settings import effective_display
@@ -265,7 +268,8 @@ def lookup_candidates(context, species, *, include_open5e=True):
         dnd_enabled=display.get("dndbeyond_image_lookup", True),
         fivetools_enabled=display.get("fivetools_fallback", True),
         max_candidates=MAX_CANDIDATES,
-        extra=(("Open5e", open5e_enabled, lambda: open5e_candidates(species, display)),))
+        extra=(("Open5e", open5e_enabled, lambda: open5e_candidates(species, display)),),
+        partial=images is True)
     if result["status"] != "ok":
         return result
     for candidate in result["candidates"]:
@@ -286,11 +290,11 @@ def sign_candidate(candidate, issue_bonus_offer=None):
 class CandidateMonstersMixin(AdminMonstersMixin):
     """Extend creation with an optional signed image snapshot."""
 
-    async def monster_lookup_candidates(self, species: str):
+    async def monster_lookup_candidates(self, species: str, images: bool = False):
         species = species.strip()
         if not 1 <= len(species) <= 100:
             raise self.context.HTTPException(400, "Monster species must contain 1-100 characters")
-        return await asyncio.to_thread(lookup_candidates, self.context, species)
+        return await asyncio.to_thread(lookup_candidates, self.context, species, images=images is True)
 
     async def create_monster(self, name: str = Form(...), monster_species: str = Form(...),
                              ac: int = Form(...), hprangestart: str = Form(...),

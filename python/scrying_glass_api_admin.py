@@ -52,6 +52,7 @@ ADMIN_ROUTES = (
     ('/api/combatants/{ident}/reset', 'reset_one_combatant', 'POST', True),
     ('/api/characters/bulk', 'bulk_characters', 'POST', True),
     ('/api/monsters/bulk', 'bulk_monsters', 'POST', True),
+    ('/api/monsters/source-image', 'set_monster_source_image', 'POST', True),
     ('/api/battle/end', 'battle_end', 'POST', True),
     ('/api/battle/reset-all', 'reset_all', 'POST', True),
     ('/api/battle/start', 'battle_start', 'POST', True),

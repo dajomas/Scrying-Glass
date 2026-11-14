@@ -205,6 +205,14 @@ results are not offered as exhaustive. D&D Beyond book metadata that is unavaila
 remains explicitly unavailable rather than guessed. No account authentication or
 entitlement filtering is added.
 
+Choosing an image only is the exception. "Select image from sources" in Edit monster,
+and the same option in the Monster action dropdown, show the images from the
+providers that answered and name any provider that failed or timed out (for example
+Open5e). The bulk dialog has one row per selected monster with its own image choice,
+shows the lookup progress, and looks up each species once (reused for 10 minutes;
+failed or partial lookups are retried next time). Statistics are never taken from
+these partial lookups ([650](docs/handover/650-monster-source-image.md)).
+
 In Add monster, one candidate is automatic and multiple candidates open a selection
 dialog; D&D Beyond choices name their book and sort by it, "Choose again" next to
 Monster species reopens the same list, and a "Select monster image" dialog offers the

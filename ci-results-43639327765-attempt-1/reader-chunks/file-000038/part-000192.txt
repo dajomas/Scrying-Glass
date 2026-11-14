@@ -1,0 +1,44 @@
+avaScript tests	2026-11-14T20:52:04.3306570Z # todo 0
+tests	JavaScript tests	2026-11-14T20:52:04.3307000Z # duration_ms 105.883959
+tests	JavaScript tests	2026-11-14T20:52:04.3593279Z ##[endgroup]
+tests	JavaScript tests	2026-11-14T20:52:04.3593937Z ##[group]tests/fivetools-source-labels.test.cjs
+tests	JavaScript tests	2026-11-14T20:52:04.5783883Z TAP version 13
+tests	JavaScript tests	2026-11-14T20:52:04.6268106Z # Optional monster stats lookup failed: Error: Fixture provider unavailable
+tests	JavaScript tests	2026-11-14T20:52:04.6269453Z #     at c.request (/tmp/scrying-tests-5rs53t5p/repo/tests/fivetools-source-labels.test.cjs:83:31)
+tests	JavaScript tests	2026-11-14T20:52:04.6272466Z #     at Object.lookupMonsterSpeciesStats (evalmachine.<anonymous>:90:34)
+tests	JavaScript tests	2026-11-14T20:52:04.6273957Z #     at TestContext.<anonymous> (/tmp/scrying-tests-5rs53t5p/repo/tests/fivetools-source-labels.test.cjs:84:13)
+tests	JavaScript tests	2026-11-14T20:52:04.6275292Z #     at Test.runInAsyncScope (node:async_hooks:214:14)
+tests	JavaScript tests	2026-11-14T20:52:04.6276160Z #     at Test.run (node:internal/test_runner/test:1047:25)
+tests	JavaScript tests	2026-11-14T20:52:04.6277204Z #     at Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+tests	JavaScript tests	2026-11-14T20:52:04.6278222Z #     at Test.postRun (node:internal/test_runner/test:1173:19)
+tests	JavaScript tests	2026-11-14T20:52:04.6279113Z #     at Test.run (node:internal/test_runner/test:1101:12)
+tests	JavaScript tests	2026-11-14T20:52:04.6280118Z #     at async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+tests	JavaScript tests	2026-11-14T20:52:04.6302092Z # Subtest: six exact labels retain immutable raw source identity
+tests	JavaScript tests	2026-11-14T20:52:04.6308161Z ok 1 - six exact labels retain immutable raw source identity
+tests	JavaScript tests	2026-11-14T20:52:04.6309050Z   ---
+tests	JavaScript tests	2026-11-14T20:52:04.6309794Z   duration_ms: 2.487969
+tests	JavaScript tests	2026-11-14T20:52:04.6310318Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:52:04.6310684Z   ...
+tests	JavaScript tests	2026-11-14T20:52:04.6311261Z # Subtest: custom codes and D&D Beyond wording remain intact
+tests	JavaScript tests	2026-11-14T20:52:04.6322890Z ok 2 - custom codes and D&D Beyond wording remain intact
+tests	JavaScript tests	2026-11-14T20:52:04.6323557Z   ---
+tests	JavaScript tests	2026-11-14T20:52:04.6323981Z   duration_ms: 1.435161
+tests	JavaScript tests	2026-11-14T20:52:04.6324433Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:52:04.6324833Z   ...
+tests	JavaScript tests	2026-11-14T20:52:04.6325646Z # Subtest: actual lookup notifications and overwrite/edit guards
+tests	JavaScript tests	2026-11-14T20:52:04.6326903Z ok 3 - actual lookup notifications and overwrite/edit guards
+tests	JavaScript tests	2026-11-14T20:52:04.6327729Z   ---
+tests	JavaScript tests	2026-11-14T20:52:04.6328347Z   duration_ms: 6.818864
+tests	JavaScript tests	2026-11-14T20:52:04.6328927Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:52:04.6329635Z   ...
+tests	JavaScript tests	2026-11-14T20:52:04.6330473Z # Subtest: lookup success metadata and clearing preserve unrelated feedback
+tests	JavaScript tests	2026-11-14T20:52:04.6331836Z ok 4 - lookup success metadata and clearing preserve unrelated feedback
+tests	JavaScript tests	2026-11-14T20:52:04.6332669Z   ---
+tests	JavaScript tests	2026-11-14T20:52:04.6333199Z   duration_ms: 1.626027
+tests	JavaScript tests	2026-11-14T20:52:04.6333758Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:52:04.6334224Z   ...
+tests	JavaScript tests	2026-11-14T20:52:04.6334985Z # Subtest: lookup request failure uses persistent error feedback
+tests	JavaScript tests	2026-11-14T20:52:04.6335995Z ok 5 - lookup request failure uses persistent error feedback
+tests	JavaScript tests	2026-11-14T20:52:04.6336699Z   ---
+tests	JavaScript tests	2026-11-14T20:52:04.6337161Z   duration_ms: 1.723762
+tests	JavaScript tests	20

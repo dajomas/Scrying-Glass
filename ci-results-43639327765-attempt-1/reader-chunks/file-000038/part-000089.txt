@@ -1,0 +1,27 @@
+ng browser fixtures)	2026-11-14T20:50:29.4635275Z Combined monster lookup: D&D Beyond did not respond (secret)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4635589Z ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4640515Z test_missing_configured_book_blocks_partial_candidates (test_monster_candidate_selection.CandidateTests.test_missing_configured_book_blocks_partial_candidates) ... 5e.tools candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4641662Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4642307Z   File "/tmp/scrying-tests-mk5kkr80/repo/python/scrying_glass_monster_selection.py", line 202, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4642912Z     for monster in _fivetools_source_data(root, index, source):
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4643294Z                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4643898Z   File "/tmp/scrying-tests-mk5kkr80/repo/python/scrying_glass_monster_selection.py", line 154, in _fivetools_source_data
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4644576Z     raise ValueError("Configured source is missing from the provider index")
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4645081Z ValueError: Configured source is missing from the provider index
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4645992Z Combined monster lookup failed for 5e.tools
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4646546Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4647282Z   File "/tmp/scrying-tests-mk5kkr80/repo/python/scrying_glass_monster_selection.py", line 202, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4647888Z     for monster in _fivetools_source_data(root, index, source):
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4648269Z                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4648875Z   File "/tmp/scrying-tests-mk5kkr80/repo/python/scrying_glass_monster_selection.py", line 154, in _fivetools_source_data
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4649550Z     raise ValueError("Configured source is missing from the provider index")
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4650058Z ValueError: Configured source is missing from the provider index
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4650318Z 
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4650566Z The above exception was the direct cause of the following exception:
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4650833Z 
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4650966Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4651675Z   File "/tmp/scrying-tests-mk5kkr80/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4652160Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4652656Z   File "/tmp/scrying-tests-mk5kkr80/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4653290Z     lambda: fivetools_candidates(species, display),
+tests	Python test suite (including browser fixtures)	2026-11-14T20:50:29.4653624Z             ~~~~~~~~~~~~~~
