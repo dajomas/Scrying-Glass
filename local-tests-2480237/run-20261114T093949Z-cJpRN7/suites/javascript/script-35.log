@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: last-campaign opening validation persists and resolves after another campaign exists
+ok 1 - last-campaign opening validation persists and resolves after another campaign exists
+  ---
+  duration_ms: 2.388555
+  type: 'test'
+  ...
+# Subtest: missing campaign and invalid move destination validate without DELETE; matching correction resolves
+ok 2 - missing campaign and invalid move destination validate without DELETE; matching correction resolves
+  ---
+  duration_ms: 1.214955
+  type: 'test'
+  ...
+# Subtest: move, permanent-delete and empty campaign keep exact endpoint/query/options
+ok 3 - move, permanent-delete and empty campaign keep exact endpoint/query/options
+  ---
+  duration_ms: 1.461285
+  type: 'test'
+  ...
+# Subtest: confirmation cancellation preserves modal, options and exact move warning
+ok 4 - confirmation cancellation preserves modal, options and exact move warning
+  ---
+  duration_ms: 0.504209
+  type: 'test'
+  ...
+# Subtest: active and destructive confirmations retain replacement/permanent-deletion warnings
+ok 5 - active and destructive confirmations retain replacement/permanent-deletion warnings
+  ---
+  duration_ms: 0.475617
+  type: 'test'
+  ...
+# Subtest: DELETE rejection retains dialog/options and persistent campaign identity
+ok 6 - DELETE rejection retains dialog/options and persistent campaign identity
+  ---
+  duration_ms: 0.750218
+  type: 'test'
+  ...
+# Subtest: successful retry resolves only matching delete error, preserving other target errors
+ok 7 - successful retry resolves only matching delete error, preserving other target errors
+  ---
+  duration_ms: 1.533707
+  type: 'test'
+  ...
+# Subtest: cancel, Escape/reopen, same-dialog reopen and changed target/options suppress old responses
+ok 8 - cancel, Escape/reopen, same-dialog reopen and changed target/options suppress old responses
+  ---
+  duration_ms: 7.823156
+  type: 'test'
+  ...
+# Subtest: newer same-operation feedback supersedes an older completion
+ok 9 - newer same-operation feedback supersedes an older completion
+  ---
+  duration_ms: 0.621023
+  type: 'test'
+  ...
+# Subtest: duplicates are blocked through retained follow-up, including a reopened dialog
+ok 10 - duplicates are blocked through retained follow-up, including a reopened dialog
+  ---
+  duration_ms: 0.860659
+  type: 'test'
+  ...
+# Subtest: prior disabled state is restored and legacy follow-up errors are not DELETE errors
+ok 11 - prior disabled state is restored and legacy follow-up errors are not DELETE errors
+  ---
+  duration_ms: 0.686261
+  type: 'test'
+  ...
+# Subtest: the expected active-campaign transition before DELETE response remains allowed
+ok 12 - the expected active-campaign transition before DELETE response remains allowed
+  ---
+  duration_ms: 1.479608
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 108.164796

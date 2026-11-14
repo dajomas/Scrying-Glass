@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: open: direct campaign refresh, fills the modal; failures and a single campaign persist
+ok 1 - open: direct campaign refresh, fills the modal; failures and a single campaign persist
+  ---
+  duration_ms: 3.904929
+  type: 'test'
+  ...
+# Subtest: submit validation persists in the campaign pane without requests
+ok 2 - submit validation persists in the campaign pane without requests
+  ---
+  duration_ms: 1.439735
+  type: 'test'
+  ...
+# Subtest: copy: exact POST, busy guard, modal closes, success expires without a load
+ok 3 - copy: exact POST, busy guard, modal closes, success expires without a load
+  ---
+  duration_ms: 0.660364
+  type: 'test'
+  ...
+# Subtest: moving the loaded setup expects the unloaded scope and refreshes; failures never replay
+ok 4 - moving the loaded setup expects the unloaded scope and refreshes; failures never replay
+  ---
+  duration_ms: 1.029287
+  type: 'test'
+  ...
+# Subtest: request failure persists; cancel during the request keeps the reopened modal open
+ok 5 - request failure persists; cancel during the request keeps the reopened modal open
+  ---
+  duration_ms: 0.711517
+  type: 'test'
+  ...
+# Subtest: background apply/clear: exact PATCH, shared busy key, guarded refresh
+ok 6 - background apply/clear: exact PATCH, shared busy key, guarded refresh
+  ---
+  duration_ms: 0.960962
+  type: 'test'
+  ...
+# Subtest: background upload: FormData POST, value update, input reset, silent without a file
+ok 7 - background upload: FormData POST, value update, input reset, silent without a file
+  ---
+  duration_ms: 0.814445
+  type: 'test'
+  ...
+# Subtest: stale background results are suppressed after a setup switch
+ok 8 - stale background results are suppressed after a setup switch
+  ---
+  duration_ms: 0.529345
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 95.784822

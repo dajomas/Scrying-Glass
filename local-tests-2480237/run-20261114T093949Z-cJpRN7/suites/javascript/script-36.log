@@ -1,0 +1,76 @@
+TAP version 13
+# Subtest: edit selection validation is persistent and resolves on a valid selection
+ok 1 - edit selection validation is persistent and resolves on a valid selection
+  ---
+  duration_ms: 2.32507
+  type: 'test'
+  ...
+# Subtest: empty name and native form validation block PATCH; matching validation resolves
+ok 2 - empty name and native form validation block PATCH; matching validation resolves
+  ---
+  duration_ms: 1.164153
+  type: 'test'
+  ...
+# Subtest: PATCH has exact encoded target and trimmed metadata, with no confirmation/reload
+ok 3 - PATCH has exact encoded target and trimmed metadata, with no confirmation/reload
+  ---
+  duration_ms: 1.378944
+  type: 'test'
+  ...
+# Subtest: request failure retains draft, modal and persistent campaign identity
+ok 4 - request failure retains draft, modal and persistent campaign identity
+  ---
+  duration_ms: 0.601486
+  type: 'test'
+  ...
+# Subtest: successful retry resolves only matching campaign error, including a reopened edit
+ok 5 - successful retry resolves only matching campaign error, including a reopened edit
+  ---
+  duration_ms: 0.788738
+  type: 'test'
+  ...
+# Subtest: other campaign errors remain independent
+ok 6 - other campaign errors remain independent
+  ---
+  duration_ms: 0.579506
+  type: 'test'
+  ...
+# Subtest: newer input and edit-revert suppress obsolete success and rejection
+ok 7 - newer input and edit-revert suppress obsolete success and rejection
+  ---
+  duration_ms: 1.848651
+  type: 'test'
+  ...
+# Subtest: cancel, reopen, target, selection, registry and leave-return guard obsolete outcomes
+ok 8 - cancel, reopen, target, selection, registry and leave-return guard obsolete outcomes
+  ---
+  duration_ms: 5.814493
+  type: 'test'
+  ...
+# Subtest: busy edit blocks edit and reopened create, then restores prior disabled state
+ok 9 - busy edit blocks edit and reopened create, then restores prior disabled state
+  ---
+  duration_ms: 1.048321
+  type: 'test'
+  ...
+# Subtest: render failure reports saved metadata and never replays PATCH
+ok 10 - render failure reports saved metadata and never replays PATCH
+  ---
+  duration_ms: 0.821959
+  type: 'test'
+  ...
+# Subtest: newer feedback supersedes old results and old timers cannot dismiss new errors
+ok 11 - newer feedback supersedes old results and old timers cannot dismiss new errors
+  ---
+  duration_ms: 0.829012
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 103.013732

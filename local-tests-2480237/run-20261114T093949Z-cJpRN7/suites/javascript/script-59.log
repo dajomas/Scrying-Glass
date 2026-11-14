@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: migrated owner replaces the legacy handler; passive readers keep loading
+ok 1 - migrated owner replaces the legacy handler; passive readers keep loading
+  ---
+  duration_ms: 3.352773
+  type: 'test'
+  ...
+# Subtest: blank and case-insensitive duplicate names persist validation errors without POST
+ok 2 - blank and case-insensitive duplicate names persist validation errors without POST
+  ---
+  duration_ms: 0.791282
+  type: 'test'
+  ...
+# Subtest: valid input resolves validation; cancelled confirmation sends nothing
+ok 3 - valid input resolves validation; cancelled confirmation sends nothing
+  ---
+  duration_ms: 0.775805
+  type: 'test'
+  ...
+# Subtest: exact POST, early pane success, guarded refresh and three-second expiry
+ok 4 - exact POST, early pane success, guarded refresh and three-second expiry
+  ---
+  duration_ms: 1.043332
+  type: 'test'
+  ...
+# Subtest: request rejection persists; matching retry resolves it and keeps unrelated errors
+ok 5 - request rejection persists; matching retry resolves it and keeps unrelated errors
+  ---
+  duration_ms: 0.836906
+  type: 'test'
+  ...
+# Subtest: completed creation followed by failed refresh persists no-replay guidance
+ok 6 - completed creation followed by failed refresh persists no-replay guidance
+  ---
+  duration_ms: 1.89833
+  type: 'test'
+  ...
+# Subtest: duplicate clicks are ignored through POST and refresh; prior disabled state is restored
+ok 7 - duplicate clicks are ignored through POST and refresh; prior disabled state is restored
+  ---
+  duration_ms: 0.645887
+  type: 'test'
+  ...
+# Subtest: newer typing is preserved while the created setup is still reported
+ok 8 - newer typing is preserved while the created setup is still reported
+  ---
+  duration_ms: 0.518626
+  type: 'test'
+  ...
+# Subtest: campaign switch or unrelated scope change suppresses obsolete completion
+ok 9 - campaign switch or unrelated scope change suppresses obsolete completion
+  ---
+  duration_ms: 2.423303
+  type: 'test'
+  ...
+# Subtest: obsolete request rejection after a scope change is suppressed
+ok 10 - obsolete request rejection after a scope change is suppressed
+  ---
+  duration_ms: 0.675442
+  type: 'test'
+  ...
+# Subtest: expected transition may arrive before the POST response
+ok 11 - expected transition may arrive before the POST response
+  ---
+  duration_ms: 0.847486
+  type: 'test'
+  ...
+# Subtest: older success timer cannot clear a newer same-identity error
+ok 12 - older success timer cannot clear a newer same-identity error
+  ---
+  duration_ms: 0.517774
+  type: 'test'
+  ...
+# Subtest: server-moved setups keep the existing campaign notice
+ok 13 - server-moved setups keep the existing campaign notice
+  ---
+  duration_ms: 0.683046
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 104.320135

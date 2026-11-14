@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: tools error persists in the tools region and keeps the draft; next success resolves it
+ok 1 - tools error persists in the tools region and keeps the draft; next success resolves it
+  ---
+  duration_ms: 37.493339
+  type: 'test'
+  ...
+# Subtest: declined confirmation is silent, sends nothing and keeps the earlier error
+ok 2 - declined confirmation is silent, sends nothing and keeps the earlier error
+  ---
+  duration_ms: 1.614314
+  type: 'test'
+  ...
+# Subtest: failed refresh after success is a separate no-replay error
+ok 3 - failed refresh after success is a separate no-replay error
+  ---
+  duration_ms: 2.524474
+  type: 'test'
+  ...
+# Subtest: manual refresh failure is a persistent tools error and success resolves it
+ok 4 - manual refresh failure is a persistent tools error and success resolves it
+  ---
+  duration_ms: 1.703236
+  type: 'test'
+  ...
+# Subtest: encounter scope change clears tools records and stale completion cannot publish
+ok 5 - encounter scope change clears tools records and stale completion cannot publish
+  ---
+  duration_ms: 1.386228
+  type: 'test'
+  ...
+# Subtest: checkpoint restore success uses the page lane and survives the setup transition
+ok 6 - checkpoint restore success uses the page lane and survives the setup transition
+  ---
+  duration_ms: 1.333632
+  type: 'test'
+  ...
+# Subtest: busy duplicate is suppressed without starting feedback
+ok 7 - busy duplicate is suppressed without starting feedback
+  ---
+  duration_ms: 2.193159
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 132.504778

@@ -1,0 +1,1938 @@
+Connection audit: test_accounts.py
+----------------------------------------------------------------------
+Ran 13 tests in 3.457s
+
+OK
+test_accounts.py: connections opened: 18; without explicit close: 0
+Connection audit: test_activity_life_states.py
+----------------------------------------------------------------------
+Ran 8 tests in 2.126s
+
+OK
+test_activity_life_states.py: connections opened: 3; without explicit close: 0
+Connection audit: test_activity_log_clear.py
+----------------------------------------------------------------------
+Ran 2 tests in 0.105s
+
+OK
+test_activity_log_clear.py: connections opened: 2; without explicit close: 0
+Connection audit: test_activity_log_result_details.py
+----------------------------------------------------------------------
+Ran 15 tests in 1.750s
+
+OK
+test_activity_log_result_details.py: connections opened: 8; without explicit close: 0
+Connection audit: test_activity_log_result_render.py
+----------------------------------------------------------------------
+Ran 2 tests in 3.743s
+
+OK
+test_activity_log_result_render.py: connections opened: 3; without explicit close: 0
+Connection audit: test_admin_accessibility_composition.py
+----------------------------------------------------------------------
+Ran 9 tests in 10.591s
+
+OK
+test_admin_accessibility_composition.py: connections opened: 9; without explicit close: 0
+Connection audit: test_admin_asset_wiring.py
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+OK
+test_admin_asset_wiring.py: connections opened: 0; without explicit close: 0
+Connection audit: test_admin_deliverable2_composition.py
+----------------------------------------------------------------------
+Ran 4 tests in 17.763s
+
+OK
+test_admin_deliverable2_composition.py: connections opened: 4; without explicit close: 0
+Connection audit: test_admin_dependent_controls.py
+----------------------------------------------------------------------
+Ran 5 tests in 4.290s
+
+OK
+test_admin_dependent_controls.py: connections opened: 0; without explicit close: 0
+Connection audit: test_admin_feedback_loading.py
+----------------------------------------------------------------------
+Ran 15 tests in 3.634s
+
+OK
+test_admin_feedback_loading.py: connections opened: 0; without explicit close: 0
+Connection audit: test_admin_feedback_rendering.py
+----------------------------------------------------------------------
+Ran 14 tests in 1.954s
+
+OK
+test_admin_feedback_rendering.py: connections opened: 0; without explicit close: 0
+Connection audit: test_admin_foundations.py
+----------------------------------------------------------------------
+Ran 6 tests in 11.210s
+
+OK
+test_admin_foundations.py: connections opened: 1; without explicit close: 0
+Connection audit: test_admin_global_feedback_composition.py
+----------------------------------------------------------------------
+Ran 5 tests in 7.485s
+
+OK
+test_admin_global_feedback_composition.py: connections opened: 5; without explicit close: 0
+Connection audit: test_admin_global_feedback_inventory.py
+----------------------------------------------------------------------
+Ran 3 tests in 0.004s
+
+OK
+test_admin_global_feedback_inventory.py: connections opened: 0; without explicit close: 0
+Connection audit: test_admin_header_hierarchy.py
+======================================================================
+FAIL: test_header_scrolling_feedback_and_pane_preferences (test_admin_header_hierarchy.HeaderHierarchyBrowserTests.test_header_scrolling_feedback_and_pane_preferences) (width=375)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_admin_header_hierarchy.py", line 112, in test_header_scrolling_feedback_and_pane_preferences
+    self.assertLess(initial['header']['height'], 320)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 430.515625 not less than 320
+
+----------------------------------------------------------------------
+Ran 6 tests in 13.412s
+
+FAILED (failures=1)
+test_admin_header_hierarchy.py: connections opened: 1; without explicit close: 0
+FAIL: test_admin_header_hierarchy.py (exit 1)
+Connection audit: test_admin_initial_visibility.py
+----------------------------------------------------------------------
+Ran 8 tests in 7.206s
+
+OK
+test_admin_initial_visibility.py: connections opened: 0; without explicit close: 0
+Connection audit: test_admin_initial_visibility_page.py
+----------------------------------------------------------------------
+Ran 1 test in 3.261s
+
+OK
+test_admin_initial_visibility_page.py: connections opened: 1; without explicit close: 0
+Connection audit: test_admin_live_workspace.py
+----------------------------------------------------------------------
+Ran 4 tests in 8.871s
+
+OK
+test_admin_live_workspace.py: connections opened: 1; without explicit close: 0
+Connection audit: test_admin_panel_forms.py
+----------------------------------------------------------------------
+Ran 6 tests in 15.174s
+
+OK
+test_admin_panel_forms.py: connections opened: 1; without explicit close: 0
+Connection audit: test_admin_rosters.py
+----------------------------------------------------------------------
+Ran 3 tests in 6.341s
+
+OK
+test_admin_rosters.py: connections opened: 1; without explicit close: 0
+Connection audit: test_admin_shell_layout.py
+----------------------------------------------------------------------
+Ran 9 tests in 1.909s
+
+OK
+test_admin_shell_layout.py: connections opened: 0; without explicit close: 0
+Connection audit: test_admin_source.py
+----------------------------------------------------------------------
+Ran 5 tests in 0.676s
+
+OK
+test_admin_source.py: connections opened: 0; without explicit close: 0
+Connection audit: test_admin_split_runtime.py
+Executing <Task pending name='Task-2' coro=<AdminSplitRuntimeTests.test_get_head_conditional_range_and_delegation() running at /tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_admin_split_runtime.py:42> cb=[_run_until_complete_cb() at /usr/lib64/python3.14/asyncio/base_events.py:181] created at /usr/lib64/python3.14/asyncio/runners.py:110> took 0.131 seconds
+----------------------------------------------------------------------
+Ran 3 tests in 2.277s
+
+OK
+test_admin_split_runtime.py: connections opened: 0; without explicit close: 0
+Connection audit: test_admin_workflow_navigation.py
+----------------------------------------------------------------------
+Ran 5 tests in 12.053s
+
+OK
+test_admin_workflow_navigation.py: connections opened: 1; without explicit close: 0
+Connection audit: test_asset_cache_busting.py
+----------------------------------------------------------------------
+Ran 14 tests in 0.002s
+
+OK
+test_asset_cache_busting.py: connections opened: 0; without explicit close: 0
+Connection audit: test_attack_statistics.py
+----------------------------------------------------------------------
+Ran 21 tests in 2.537s
+
+OK
+test_attack_statistics.py: connections opened: 26; without explicit close: 0
+Connection audit: test_attack_statistics_cleanup.py
+----------------------------------------------------------------------
+Ran 2 tests in 0.216s
+
+OK
+test_attack_statistics_cleanup.py: connections opened: 10; without explicit close: 0
+Connection audit: test_batch_ab59844.py
+----------------------------------------------------------------------
+Ran 12 tests in 2.009s
+
+OK
+test_batch_ab59844.py: connections opened: 12; without explicit close: 0
+Connection audit: test_battle_action_alignment.py
+----------------------------------------------------------------------
+Ran 2 tests in 5.135s
+
+OK
+test_battle_action_alignment.py: connections opened: 1; without explicit close: 0
+Connection audit: test_battle_action_statistics.py
+----------------------------------------------------------------------
+Ran 6 tests in 9.440s
+
+OK
+test_battle_action_statistics.py: connections opened: 1; without explicit close: 0
+Connection audit: test_battle_actions_next.py
+----------------------------------------------------------------------
+Ran 13 tests in 8.567s
+
+OK
+test_battle_actions_next.py: connections opened: 0; without explicit close: 0
+Connection audit: test_battle_actions_next_boot.py
+----------------------------------------------------------------------
+Ran 1 test in 1.173s
+
+OK
+test_battle_actions_next_boot.py: connections opened: 0; without explicit close: 0
+Connection audit: test_battle_reactions.py
+----------------------------------------------------------------------
+Ran 8 tests in 1.646s
+
+OK
+test_battle_reactions.py: connections opened: 8; without explicit close: 0
+Connection audit: test_browser_smoke.py
+----------------------------------------------------------------------
+Ran 1 test in 4.746s
+
+OK
+test_browser_smoke.py: connections opened: 1; without explicit close: 0
+Connection audit: test_bughunt_130f875.py
+----------------------------------------------------------------------
+Ran 17 tests in 0.012s
+
+OK
+test_bughunt_130f875.py: connections opened: 0; without explicit close: 0
+Connection audit: test_bughunt_210aac8.py
+D&D Beyond candidate unavailable (/monsters/old): Unavailable
+D&D Beyond candidate unavailable (/monsters/new): Unavailable
+D&D Beyond candidate unavailable (/monsters/old): Unavailable
+D&D Beyond candidate unavailable (/monsters/new): Unavailable
+D&D Beyond candidate unavailable (/monsters/old): Unavailable
+D&D Beyond candidate unavailable (/monsters/old): Bad candidate
+D&D Beyond candidate has no usable AC/HP (/monsters/old)
+D&D Beyond candidate unavailable (/monsters/old): Unavailable
+D&D Beyond candidate unavailable (/monsters/new): Unavailable
+----------------------------------------------------------------------
+Ran 51 tests in 1.213s
+
+OK
+test_bughunt_210aac8.py: connections opened: 2; without explicit close: 0
+Connection audit: test_bughunt_3d5b2d4.py
+----------------------------------------------------------------------
+Ran 18 tests in 0.003s
+
+OK
+test_bughunt_3d5b2d4.py: connections opened: 1; without explicit close: 0
+Connection audit: test_bughunt_4d1df12.py
+----------------------------------------------------------------------
+Ran 26 tests in 0.039s
+
+OK
+test_bughunt_4d1df12.py: connections opened: 17; without explicit close: 0
+Connection audit: test_bughunt_4eb87b6.py
+----------------------------------------------------------------------
+Ran 19 tests in 0.003s
+
+OK
+test_bughunt_4eb87b6.py: connections opened: 19; without explicit close: 0
+Connection audit: test_bughunt_711881a.py
+----------------------------------------------------------------------
+Ran 35 tests in 0.019s
+
+OK
+test_bughunt_711881a.py: connections opened: 16; without explicit close: 0
+Connection audit: test_bughunt_73ecbf8.py
+----------------------------------------------------------------------
+Ran 30 tests in 0.001s
+
+OK
+test_bughunt_73ecbf8.py: connections opened: 0; without explicit close: 0
+Connection audit: test_bughunt_fixes.py
+----------------------------------------------------------------------
+Ran 10 tests in 2.711s
+
+OK
+test_bughunt_fixes.py: connections opened: 11; without explicit close: 0
+Connection audit: test_bughunt_round10.py
+----------------------------------------------------------------------
+Ran 8 tests in 1.621s
+
+OK
+test_bughunt_round10.py: connections opened: 8; without explicit close: 0
+Connection audit: test_bughunt_round11.py
+----------------------------------------------------------------------
+Ran 8 tests in 2.410s
+
+OK
+test_bughunt_round11.py: connections opened: 8; without explicit close: 0
+Connection audit: test_bughunt_round12.py
+----------------------------------------------------------------------
+Ran 9 tests in 2.375s
+
+OK
+test_bughunt_round12.py: connections opened: 9; without explicit close: 0
+Connection audit: test_bughunt_round13.py
+----------------------------------------------------------------------
+Ran 7 tests in 2.325s
+
+OK
+test_bughunt_round13.py: connections opened: 7; without explicit close: 0
+Connection audit: test_bughunt_round14.py
+----------------------------------------------------------------------
+Ran 9 tests in 1.588s
+
+OK
+test_bughunt_round14.py: connections opened: 9; without explicit close: 0
+Connection audit: test_bughunt_round15.py
+----------------------------------------------------------------------
+Ran 6 tests in 2.197s
+
+OK
+test_bughunt_round15.py: connections opened: 6; without explicit close: 0
+Connection audit: test_bughunt_round16.py
+----------------------------------------------------------------------
+Ran 8 tests in 2.700s
+
+OK
+test_bughunt_round16.py: connections opened: 8; without explicit close: 0
+Connection audit: test_bughunt_round17.py
+----------------------------------------------------------------------
+Ran 8 tests in 2.428s
+
+OK
+test_bughunt_round17.py: connections opened: 8; without explicit close: 0
+Connection audit: test_bughunt_round18.py
+----------------------------------------------------------------------
+Ran 8 tests in 1.725s
+
+OK
+test_bughunt_round18.py: connections opened: 8; without explicit close: 0
+Connection audit: test_bughunt_round19.py
+----------------------------------------------------------------------
+Ran 8 tests in 1.711s
+
+OK
+test_bughunt_round19.py: connections opened: 8; without explicit close: 0
+Connection audit: test_bughunt_round2.py
+----------------------------------------------------------------------
+Ran 12 tests in 2.672s
+
+OK
+test_bughunt_round2.py: connections opened: 12; without explicit close: 0
+Connection audit: test_bughunt_round20.py
+----------------------------------------------------------------------
+Ran 8 tests in 1.248s
+
+OK
+test_bughunt_round20.py: connections opened: 2; without explicit close: 0
+Connection audit: test_bughunt_round21.py
+----------------------------------------------------------------------
+Ran 8 tests in 1.980s
+
+OK
+test_bughunt_round21.py: connections opened: 8; without explicit close: 0
+Connection audit: test_bughunt_round22.py
+----------------------------------------------------------------------
+Ran 8 tests in 1.591s
+
+OK
+test_bughunt_round22.py: connections opened: 8; without explicit close: 0
+Connection audit: test_bughunt_round23.py
+----------------------------------------------------------------------
+Ran 12 tests in 2.064s
+
+OK
+test_bughunt_round23.py: connections opened: 12; without explicit close: 0
+Connection audit: test_bughunt_round24.py
+----------------------------------------------------------------------
+Ran 8 tests in 1.812s
+
+OK
+test_bughunt_round24.py: connections opened: 8; without explicit close: 0
+Connection audit: test_bughunt_round25.py
+----------------------------------------------------------------------
+Ran 8 tests in 1.673s
+
+OK
+test_bughunt_round25.py: connections opened: 8; without explicit close: 0
+Connection audit: test_bughunt_round26.py
+----------------------------------------------------------------------
+Ran 8 tests in 1.657s
+
+OK
+test_bughunt_round26.py: connections opened: 8; without explicit close: 0
+Connection audit: test_bughunt_round27.py
+----------------------------------------------------------------------
+Ran 8 tests in 1.686s
+
+OK
+test_bughunt_round27.py: connections opened: 8; without explicit close: 0
+Connection audit: test_bughunt_round28.py
+----------------------------------------------------------------------
+Ran 6 tests in 1.585s
+
+OK
+test_bughunt_round28.py: connections opened: 6; without explicit close: 0
+Connection audit: test_bughunt_round29.py
+----------------------------------------------------------------------
+Ran 8 tests in 2.377s
+
+OK
+test_bughunt_round29.py: connections opened: 8; without explicit close: 0
+Connection audit: test_bughunt_round3.py
+----------------------------------------------------------------------
+Ran 15 tests in 2.490s
+
+OK
+test_bughunt_round3.py: connections opened: 13; without explicit close: 0
+Connection audit: test_bughunt_round30.py
+----------------------------------------------------------------------
+Ran 8 tests in 2.436s
+
+OK
+test_bughunt_round30.py: connections opened: 8; without explicit close: 0
+Connection audit: test_bughunt_round31.py
+----------------------------------------------------------------------
+Ran 8 tests in 1.769s
+
+OK
+test_bughunt_round31.py: connections opened: 8; without explicit close: 0
+Connection audit: test_bughunt_round4.py
+----------------------------------------------------------------------
+Ran 9 tests in 2.535s
+
+OK
+test_bughunt_round4.py: connections opened: 9; without explicit close: 0
+Connection audit: test_bughunt_round5.py
+----------------------------------------------------------------------
+Ran 4 tests in 2.155s
+
+OK
+test_bughunt_round5.py: connections opened: 4; without explicit close: 0
+Connection audit: test_bughunt_round7.py
+----------------------------------------------------------------------
+Ran 3 tests in 2.040s
+
+OK
+test_bughunt_round7.py: connections opened: 3; without explicit close: 0
+Connection audit: test_bughunt_round8.py
+----------------------------------------------------------------------
+Ran 5 tests in 2.117s
+
+OK
+test_bughunt_round8.py: connections opened: 5; without explicit close: 0
+Connection audit: test_bughunt_round9.py
+----------------------------------------------------------------------
+Ran 5 tests in 1.403s
+
+OK
+test_bughunt_round9.py: connections opened: 5; without explicit close: 0
+Connection audit: test_campaign_display_status.py
+----------------------------------------------------------------------
+Ran 5 tests in 0.442s
+
+OK
+test_campaign_display_status.py: connections opened: 10; without explicit close: 0
+Connection audit: test_campaign_feedback_composition.py
+----------------------------------------------------------------------
+Ran 21 tests in 37.080s
+
+OK
+test_campaign_feedback_composition.py: connections opened: 23; without explicit close: 0
+Connection audit: test_campaign_ownership.py
+----------------------------------------------------------------------
+Ran 23 tests in 2.001s
+
+OK
+test_campaign_ownership.py: connections opened: 57; without explicit close: 0
+Connection audit: test_campaign_viewer_admin_selection.py
+----------------------------------------------------------------------
+Ran 14 tests in 9.890s
+
+OK
+test_campaign_viewer_admin_selection.py: connections opened: 0; without explicit close: 0
+Connection audit: test_campaign_viewer_browser.py
+----------------------------------------------------------------------
+Ran 8 tests in 1.710s
+
+OK
+test_campaign_viewer_browser.py: connections opened: 0; without explicit close: 0
+Connection audit: test_campaign_viewer_lifespan_integration.py
+----------------------------------------------------------------------
+Ran 2 tests in 0.202s
+
+OK
+test_campaign_viewer_lifespan_integration.py: connections opened: 0; without explicit close: 0
+Connection audit: test_campaign_viewer_routes.py
+----------------------------------------------------------------------
+Ran 10 tests in 0.020s
+
+OK
+test_campaign_viewer_routes.py: connections opened: 0; without explicit close: 0
+Connection audit: test_campaign_viewers.py
+----------------------------------------------------------------------
+Ran 19 tests in 1.629s
+
+OK
+test_campaign_viewers.py: connections opened: 39; without explicit close: 0
+Connection audit: test_character_hp_display.py
+----------------------------------------------------------------------
+Ran 2 tests in 6.990s
+
+OK
+test_character_hp_display.py: connections opened: 1; without explicit close: 0
+Connection audit: test_ci_browser_provisioning.py
+Chromium provisioning failed: Command 'download' returned non-zero exit status 1.
+Chromium headless launch/render preflight passed.
+Chromium preflight failed: missing library
+Attempting native dependency installation, then rechecking Chromium.
+Chromium headless launch/render preflight passed.
+Chromium preflight failed: cannot launch
+Attempting native dependency installation, then rechecking Chromium.
+Chromium provisioning failed: cannot launch
+Chromium preflight failed: missing library
+Attempting native dependency installation, then rechecking Chromium.
+Chromium provisioning failed: Command 'apt' returned non-zero exit status 100.
+----------------------------------------------------------------------
+Ran 10 tests in 0.009s
+
+OK
+test_ci_browser_provisioning.py: connections opened: 0; without explicit close: 0
+Connection audit: test_ci_publication_branch_allowlists.py
+----------------------------------------------------------------------
+Ran 3 tests in 0.012s
+
+OK
+test_ci_publication_branch_allowlists.py: connections opened: 0; without explicit close: 0
+Connection audit: test_client_campaign.py
+----------------------------------------------------------------------
+Ran 6 tests in 0.017s
+
+OK
+test_client_campaign.py: connections opened: 0; without explicit close: 0
+Connection audit: test_combined_monster_lookup.py
+Combined monster lookup failed for D&D Beyond
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+    found = fetch()
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+RuntimeError: secret one
+Combined monster lookup failed for 5e.tools
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+    found = fetch()
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+ValueError: secret two
+Combined monster lookup failed for D&D Beyond
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+    found = fetch()
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+OSError: private endpoint or credentials
+Combined monster lookup failed for 5e.tools
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 40, in ordered_candidates
+    raise ValueError("Incomplete or unsupported candidate list")
+ValueError: Incomplete or unsupported candidate list
+Combined monster lookup failed for 5e.tools
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 40, in ordered_candidates
+    raise ValueError("Incomplete or unsupported candidate list")
+ValueError: Incomplete or unsupported candidate list
+Combined monster lookup failed for 5e.tools
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 40, in ordered_candidates
+    raise ValueError("Incomplete or unsupported candidate list")
+ValueError: Incomplete or unsupported candidate list
+Combined monster lookup failed for 5e.tools
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 40, in ordered_candidates
+    raise ValueError("Incomplete or unsupported candidate list")
+ValueError: Incomplete or unsupported candidate list
+Combined monster lookup failed for 5e.tools
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 40, in ordered_candidates
+    raise ValueError("Incomplete or unsupported candidate list")
+ValueError: Incomplete or unsupported candidate list
+Combined monster lookup failed for 5e.tools
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 40, in ordered_candidates
+    raise ValueError("Incomplete or unsupported candidate list")
+ValueError: Incomplete or unsupported candidate list
+Combined monster lookup failed for 5e.tools
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+    found = fetch()
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+TimeoutError: secret
+----------------------------------------------------------------------
+Ran 12 tests in 0.003s
+
+OK
+test_combined_monster_lookup.py: connections opened: 0; without explicit close: 0
+Connection audit: test_combined_monster_lookup_application.py
+D&D Beyond candidate lookup failed
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+    hits = context.dnd_monster_candidates(species)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+TimeoutError: secret D&D endpoint
+Combined monster lookup failed for D&D Beyond
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+    hits = context.dnd_monster_candidates(species)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+TimeoutError: secret D&D endpoint
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+    found = fetch()
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 263, in <lambda>
+    lambda: dnd_candidates(context, species),
+            ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 93, in dnd_candidates
+    raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+python.scrying_glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+5e.tools candidate lookup failed
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 199, in fivetools_candidates
+    index = _fivetools_index(root)
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 167, in _fivetools_index
+    index = ft.load_json(root + "/index.json")
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+OSError: secret 5e.tools endpoint
+Combined monster lookup failed for 5e.tools
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 199, in fivetools_candidates
+    index = _fivetools_index(root)
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 167, in _fivetools_index
+    index = ft.load_json(root + "/index.json")
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+OSError: secret 5e.tools endpoint
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+    found = fetch()
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 264, in <lambda>
+    lambda: fivetools_candidates(species, display),
+            ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 222, in fivetools_candidates
+    raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+----------------------------------------------------------------------
+Ran 4 tests in 0.671s
+
+OK
+test_combined_monster_lookup_application.py: connections opened: 15; without explicit close: 0
+Connection audit: test_compact_combatant_inputs.py
+----------------------------------------------------------------------
+Ran 1 test in 0.701s
+
+OK
+test_compact_combatant_inputs.py: connections opened: 0; without explicit close: 0
+Connection audit: test_connection_lifetime_audit.py
+----------------------------------------------------------------------
+Ran 7 tests in 1.951s
+
+OK
+test_connection_lifetime_audit.py: connections opened: 0; without explicit close: 0
+Connection audit: test_damage_logic.py
+----------------------------------------------------------------------
+Ran 30 tests in 0.710s
+
+OK
+test_damage_logic.py: connections opened: 2; without explicit close: 0
+Connection audit: test_death_save_validation_2ba6607.py
+----------------------------------------------------------------------
+Ran 0 tests in 0.000s
+
+NO TESTS RAN
+test_death_save_validation_2ba6607.py: connections opened: 0; without explicit close: 0
+Connection audit: test_deployment_preflight.py
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+OK
+test_deployment_preflight.py: connections opened: 0; without explicit close: 0
+Connection audit: test_display_connection.py
+----------------------------------------------------------------------
+Ran 18 tests in 0.043s
+
+OK
+test_display_connection.py: connections opened: 0; without explicit close: 0
+Connection audit: test_dnd_initiative_candidates.py
+----------------------------------------------------------------------
+Ran 4 tests in 0.006s
+
+OK
+test_dnd_initiative_candidates.py: connections opened: 0; without explicit close: 0
+Connection audit: test_dnd_initiative_offer.py
+----------------------------------------------------------------------
+Ran 16 tests in 0.003s
+
+OK
+test_dnd_initiative_offer.py: connections opened: 0; without explicit close: 0
+Connection audit: test_dndbeyond_locked_pages.py
+Combined monster lookup failed for 5e.tools
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+    found = fetch()
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 264, in <lambda>
+    lambda: fivetools_candidates(species, display),
+            ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+TimeoutError: private endpoint
+D&D Beyond candidate lookup failed
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+    html = context.dnd_monster_detail_html(href)
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_dndbeyond.py", line 128, in dnd_monster_detail_html
+    response = urlopen(request, timeout=15)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+urllib.error.HTTPError: HTTP Error 403: fixture
+Combined monster lookup failed for D&D Beyond
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+    html = context.dnd_monster_detail_html(href)
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_dndbeyond.py", line 128, in dnd_monster_detail_html
+    response = urlopen(request, timeout=15)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+urllib.error.HTTPError: HTTP Error 403: fixture
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+    found = fetch()
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 263, in <lambda>
+    lambda: dnd_candidates(context, species),
+            ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 93, in dnd_candidates
+    raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+python.scrying_glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+D&D Beyond candidate lookup failed
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+    hits = context.dnd_monster_candidates(species)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+TimeoutError: fixture
+Combined monster lookup failed for D&D Beyond
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+    hits = context.dnd_monster_candidates(species)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+TimeoutError: fixture
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+    found = fetch()
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 263, in <lambda>
+    lambda: dnd_candidates(context, species),
+            ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 93, in dnd_candidates
+    raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+python.scrying_glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+----------------------------------------------------------------------
+Ran 10 tests in 1.874s
+
+OK
+test_dndbeyond_locked_pages.py: connections opened: 0; without explicit close: 0
+Connection audit: test_dndbeyond_lookup_diagnostics.py
+----------------------------------------------------------------------
+Ran 17 tests in 1.884s
+
+OK
+test_dndbeyond_lookup_diagnostics.py: connections opened: 0; without explicit close: 0
+Connection audit: test_encounter_features.py
+----------------------------------------------------------------------
+Ran 30 tests in 4.059s
+
+OK
+test_encounter_features.py: connections opened: 35; without explicit close: 0
+Connection audit: test_feature_logging.py
+----------------------------------------------------------------------
+Ran 10 tests in 0.003s
+
+OK
+test_feature_logging.py: connections opened: 0; without explicit close: 0
+Connection audit: test_fivetools_fallback.py
+----------------------------------------------------------------------
+Ran 15 tests in 1.977s
+
+OK
+test_fivetools_fallback.py: connections opened: 0; without explicit close: 0
+Connection audit: test_fivetools_initiative.py
+----------------------------------------------------------------------
+Ran 10 tests in 0.000s
+
+OK
+test_fivetools_initiative.py: connections opened: 0; without explicit close: 0
+Connection audit: test_fivetools_initiative_flow.py
+Executing <Task finished name='Task-2' coro=<FivetoolsInitiativeFlowTests.test_creation_signed_values_source_identity_and_storage_reopen() done, defined at /tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_fivetools_initiative_flow.py:65> result=None created at /usr/lib64/python3.14/asyncio/runners.py:110> took 0.137 seconds
+Selected monster source refresh failed for 67e6580f838c4710a69285a72f011543
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+    candidate = _fetch_exact(context, monster, identity)
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_refresh_sources.py", line 93, in _fetch_exact
+    raise ValueError('Retained source missing or ambiguous')
+ValueError: Retained source missing or ambiguous
+Executing <Task finished name='Task-7' coro=<FivetoolsInitiativeFlowTests.test_refresh_recalculation_missing_invalid_and_exact_edition() done, defined at /tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_fivetools_initiative_flow.py:79> result=None created at /usr/lib64/python3.14/asyncio/runners.py:110> took 0.132 seconds
+----------------------------------------------------------------------
+Ran 2 tests in 0.594s
+
+OK
+test_fivetools_initiative_flow.py: connections opened: 13; without explicit close: 0
+Connection audit: test_fivetools_source_configuration.py
+5e.tools candidate lookup failed
+Traceback (most recent call last):
+  File "python/scrying_glass_monster_selection.py", line 199, in fivetools_candidates
+    index = _fivetools_index(root)
+  File "python/scrying_glass_monster_selection.py", line 167, in _fivetools_index
+    index = ft.load_json(root + "/index.json")
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+OSError: private detail
+5e.tools candidate lookup failed
+Traceback (most recent call last):
+  File "python/scrying_glass_monster_selection.py", line 196, in fivetools_candidates
+    sources = ft.configured_sources(display)
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+    raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+ValueError: fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace
+----------------------------------------------------------------------
+Ran 12 tests in 0.043s
+
+OK
+test_fivetools_source_configuration.py: connections opened: 0; without explicit close: 0
+Connection audit: test_healing_max_hp_cap.py
+----------------------------------------------------------------------
+Ran 12 tests in 0.002s
+
+OK
+test_healing_max_hp_cap.py: connections opened: 0; without explicit close: 0
+Connection audit: test_independent_panel_controls.py
+----------------------------------------------------------------------
+Ran 2 tests in 7.562s
+
+OK
+test_independent_panel_controls.py: connections opened: 1; without explicit close: 0
+Connection audit: test_initiative_bonus_input.py
+----------------------------------------------------------------------
+Ran 7 tests in 0.000s
+
+OK
+test_initiative_bonus_input.py: connections opened: 0; without explicit close: 0
+Connection audit: test_initiative_join_gate.py
+----------------------------------------------------------------------
+Ran 10 tests in 0.004s
+
+OK
+test_initiative_join_gate.py: connections opened: 10; without explicit close: 0
+Connection audit: test_initiative_keyboard_navigation.py
+----------------------------------------------------------------------
+Ran 8 tests in 10.844s
+
+OK
+test_initiative_keyboard_navigation.py: connections opened: 1; without explicit close: 0
+Connection audit: test_initiative_ordering.py
+----------------------------------------------------------------------
+Ran 5 tests in 0.040s
+
+OK
+test_initiative_ordering.py: connections opened: 1; without explicit close: 0
+Connection audit: test_lair_damage_logging.py
+----------------------------------------------------------------------
+Ran 8 tests in 0.031s
+
+OK
+test_lair_damage_logging.py: connections opened: 0; without explicit close: 0
+Connection audit: test_lair_state_buttons.py
+----------------------------------------------------------------------
+Ran 10 tests in 0.026s
+
+OK
+test_lair_state_buttons.py: connections opened: 0; without explicit close: 0
+Connection audit: test_lairs.py
+----------------------------------------------------------------------
+Ran 42 tests in 4.390s
+
+OK
+test_lairs.py: connections opened: 47; without explicit close: 0
+Connection audit: test_launcher_python310.py
+----------------------------------------------------------------------
+Ran 10 tests in 6.020s
+
+OK
+test_launcher_python310.py: connections opened: 0; without explicit close: 0
+Connection audit: test_launcher_runtime_82860c4.py
+----------------------------------------------------------------------
+Ran 2 tests in 0.005s
+
+OK
+test_launcher_runtime_82860c4.py: connections opened: 0; without explicit close: 0
+Connection audit: test_live_roster_widths.py
+----------------------------------------------------------------------
+Ran 2 tests in 7.702s
+
+OK
+test_live_roster_widths.py: connections opened: 1; without explicit close: 0
+Connection audit: test_live_sidebar_corrections.py
+----------------------------------------------------------------------
+Ran 2 tests in 6.437s
+
+OK
+test_live_sidebar_corrections.py: connections opened: 1; without explicit close: 0
+Connection audit: test_local_feature_feedback_composition.py
+----------------------------------------------------------------------
+Ran 4 tests in 6.327s
+
+OK
+test_local_feature_feedback_composition.py: connections opened: 4; without explicit close: 0
+Connection audit: test_local_runner_publication.py
+======================================================================
+ERROR: test_cleanup_failure_reports_failure_after_successful_push (test_local_runner_publication.LocalRunnerPublicationTests.test_cleanup_failure_reports_failure_after_successful_push)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_local_runner_publication.py", line 36, in setUp
+    shutil.copyfile(ROOT / 'runlocaltests.sh', self.repo / 'runlocaltests.sh')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/shutil.py", line 313, in copyfile
+    with open(src, 'rb') as fsrc:
+         ~~~~^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/runlocaltests.sh'
+
+======================================================================
+ERROR: test_failed_push_preserves_publication_log_and_evidence (test_local_runner_publication.LocalRunnerPublicationTests.test_failed_push_preserves_publication_log_and_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_local_runner_publication.py", line 36, in setUp
+    shutil.copyfile(ROOT / 'runlocaltests.sh', self.repo / 'runlocaltests.sh')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/shutil.py", line 313, in copyfile
+    with open(src, 'rb') as fsrc:
+         ~~~~^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/runlocaltests.sh'
+
+======================================================================
+ERROR: test_failed_tests_still_remove_log_when_publication_succeeds (test_local_runner_publication.LocalRunnerPublicationTests.test_failed_tests_still_remove_log_when_publication_succeeds)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_local_runner_publication.py", line 36, in setUp
+    shutil.copyfile(ROOT / 'runlocaltests.sh', self.repo / 'runlocaltests.sh')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/shutil.py", line 313, in copyfile
+    with open(src, 'rb') as fsrc:
+         ~~~~^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/runlocaltests.sh'
+
+======================================================================
+ERROR: test_no_publish_does_not_create_publication_log (test_local_runner_publication.LocalRunnerPublicationTests.test_no_publish_does_not_create_publication_log)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_local_runner_publication.py", line 36, in setUp
+    shutil.copyfile(ROOT / 'runlocaltests.sh', self.repo / 'runlocaltests.sh')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/shutil.py", line 313, in copyfile
+    with open(src, 'rb') as fsrc:
+         ~~~~^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/runlocaltests.sh'
+
+======================================================================
+ERROR: test_staged_changes_refuse_publication_and_preserve_log (test_local_runner_publication.LocalRunnerPublicationTests.test_staged_changes_refuse_publication_and_preserve_log)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_local_runner_publication.py", line 36, in setUp
+    shutil.copyfile(ROOT / 'runlocaltests.sh', self.repo / 'runlocaltests.sh')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/shutil.py", line 313, in copyfile
+    with open(src, 'rb') as fsrc:
+         ~~~~^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/runlocaltests.sh'
+
+======================================================================
+ERROR: test_successful_push_removes_only_current_publication_log (test_local_runner_publication.LocalRunnerPublicationTests.test_successful_push_removes_only_current_publication_log)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_local_runner_publication.py", line 36, in setUp
+    shutil.copyfile(ROOT / 'runlocaltests.sh', self.repo / 'runlocaltests.sh')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/shutil.py", line 313, in copyfile
+    with open(src, 'rb') as fsrc:
+         ~~~~^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/runlocaltests.sh'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.057s
+
+FAILED (errors=6)
+test_local_runner_publication.py: connections opened: 0; without explicit close: 0
+FAIL: test_local_runner_publication.py (exit 1)
+Connection audit: test_logout.py
+----------------------------------------------------------------------
+Ran 14 tests in 2.874s
+
+OK
+test_logout.py: connections opened: 0; without explicit close: 0
+Connection audit: test_lookup_provider_settings.py
+Provider settings unreadable; optional lookups disabled
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_provider_settings.py", line 67, in effective_display
+    saved = overrides(context)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+sqlite3.OperationalError: locked
+----------------------------------------------------------------------
+Ran 10 tests in 0.676s
+
+OK
+test_lookup_provider_settings.py: connections opened: 18; without explicit close: 0
+Connection audit: test_manual_monster_bonus_creation.py
+----------------------------------------------------------------------
+Ran 8 tests in 0.011s
+
+OK
+test_manual_monster_bonus_creation.py: connections opened: 0; without explicit close: 0
+Connection audit: test_manual_monster_bonus_form.py
+----------------------------------------------------------------------
+Ran 5 tests in 8.147s
+
+OK
+test_manual_monster_bonus_form.py: connections opened: 1; without explicit close: 0
+Connection audit: test_monster_bonus_edit_ui.py
+----------------------------------------------------------------------
+Ran 3 tests in 3.828s
+
+OK
+test_monster_bonus_edit_ui.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_bonus_import.py
+Executing <Task pending name='Task-2' coro=<ImportedConstructionTests.test_invalid_import_rejected_before_media_lookup_or_append() running at /tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_monster_bonus_import.py:117> cb=[_run_until_complete_cb() at /usr/lib64/python3.14/asyncio/base_events.py:181] created at /usr/lib64/python3.14/asyncio/runners.py:110> took 0.123 seconds
+----------------------------------------------------------------------
+Ran 13 tests in 0.187s
+
+OK
+test_monster_bonus_import.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_bonus_roster.py
+----------------------------------------------------------------------
+Ran 2 tests in 2.238s
+
+OK
+test_monster_bonus_roster.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_button_layout.py
+----------------------------------------------------------------------
+Ran 4 tests in 14.993s
+
+OK
+test_monster_button_layout.py: connections opened: 1; without explicit close: 0
+Connection audit: test_monster_candidate_browser.py
+----------------------------------------------------------------------
+Ran 12 tests in 10.006s
+
+OK
+test_monster_candidate_browser.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_candidate_pending_feedback.py
+----------------------------------------------------------------------
+Ran 8 tests in 8.462s
+
+OK
+test_monster_candidate_pending_feedback.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_candidate_selection.py
+Combined monster lookup failed for D&D Beyond
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+    found = fetch()
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 263, in <lambda>
+    lambda: dnd_candidates(context, species),
+            ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 66, in dnd_candidates
+    raise ProviderError("D&D Beyond returned an invalid candidate link.")
+python.scrying_glass_monster_selection.ProviderError: D&D Beyond returned an invalid candidate link.
+D&D Beyond candidate lookup failed
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+    hits = context.dnd_monster_candidates(species)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+OSError: secret
+Combined monster lookup failed for D&D Beyond
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+    hits = context.dnd_monster_candidates(species)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+OSError: secret
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+    found = fetch()
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 263, in <lambda>
+    lambda: dnd_candidates(context, species),
+            ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 93, in dnd_candidates
+    raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+python.scrying_glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+5e.tools candidate lookup failed
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 199, in fivetools_candidates
+    index = _fivetools_index(root)
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 167, in _fivetools_index
+    index = ft.load_json(root + "/index.json")
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+OSError: secret
+D&D Beyond candidate lookup failed
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+    html = context.dnd_monster_detail_html(href)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+    raise result
+OSError: secret
+Combined monster lookup failed for D&D Beyond
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+    html = context.dnd_monster_detail_html(href)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+    raise result
+OSError: secret
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+    found = fetch()
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 263, in <lambda>
+    lambda: dnd_candidates(context, species),
+            ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 93, in dnd_candidates
+    raise ProviderError("D&D Beyond lookup failed; enter stats manually or retry.") from exc
+python.scrying_glass_monster_selection.ProviderError: D&D Beyond lookup failed; enter stats manually or retry.
+5e.tools candidate lookup failed
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 202, in fivetools_candidates
+    for monster in _fivetools_source_data(root, index, source):
+                   ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 154, in _fivetools_source_data
+    raise ValueError("Configured source is missing from the provider index")
+ValueError: Configured source is missing from the provider index
+Combined monster lookup failed for 5e.tools
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 202, in fivetools_candidates
+    for monster in _fivetools_source_data(root, index, source):
+                   ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 154, in _fivetools_source_data
+    raise ValueError("Configured source is missing from the provider index")
+ValueError: Configured source is missing from the provider index
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+    found = fetch()
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 264, in <lambda>
+    lambda: fivetools_candidates(species, display),
+            ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 222, in fivetools_candidates
+    raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+Combined monster lookup failed for 5e.tools
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+    found = fetch()
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 264, in <lambda>
+    lambda: fivetools_candidates(species, display),
+            ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+python.scrying_glass_monster_selection.ProviderError: secret
+----------------------------------------------------------------------
+Ran 12 tests in 0.011s
+
+OK
+test_monster_candidate_selection.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_edit_order.py
+----------------------------------------------------------------------
+Ran 3 tests in 0.014s
+
+OK
+test_monster_edit_order.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_image_preview_alignment.py
+----------------------------------------------------------------------
+Ran 1 test in 7.475s
+
+OK
+test_monster_image_preview_alignment.py: connections opened: 1; without explicit close: 0
+Connection audit: test_monster_image_previews.py
+----------------------------------------------------------------------
+Ran 5 tests in 8.461s
+
+OK
+test_monster_image_previews.py: connections opened: 1; without explicit close: 0
+Connection audit: test_monster_initiative_bonus_edit.py
+----------------------------------------------------------------------
+Ran 14 tests in 0.015s
+
+OK
+test_monster_initiative_bonus_edit.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_initiative_edit_composition.py
+----------------------------------------------------------------------
+Ran 7 tests in 2.152s
+
+OK
+test_monster_initiative_edit_composition.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_initiative_handlers.py
+----------------------------------------------------------------------
+Ran 7 tests in 0.009s
+
+OK
+test_monster_initiative_handlers.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_initiative_order.py
+----------------------------------------------------------------------
+Ran 11 tests in 0.000s
+
+OK
+test_monster_initiative_order.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_initiative_refresh.py
+----------------------------------------------------------------------
+Ran 22 tests in 0.001s
+
+OK
+test_monster_initiative_refresh.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_initiative_reset_storage.py
+----------------------------------------------------------------------
+Ran 16 tests in 0.101s
+
+OK
+test_monster_initiative_reset_storage.py: connections opened: 7; without explicit close: 0
+Connection audit: test_monster_initiative_state.py
+----------------------------------------------------------------------
+Ran 20 tests in 0.001s
+
+OK
+test_monster_initiative_state.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_lookup_focus_browser.py
+----------------------------------------------------------------------
+Ran 8 tests in 16.001s
+
+OK
+test_monster_lookup_focus_browser.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_lookup_live_regressions.py
+----------------------------------------------------------------------
+Ran 4 tests in 0.004s
+
+OK
+test_monster_lookup_live_regressions.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_name_layout.py
+----------------------------------------------------------------------
+Ran 8 tests in 7.628s
+
+OK
+test_monster_name_layout.py: connections opened: 1; without explicit close: 0
+Connection audit: test_monster_raw_roll_composition.py
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+OK
+test_monster_raw_roll_composition.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_raw_roll_handler.py
+----------------------------------------------------------------------
+Ran 5 tests in 0.014s
+
+OK
+test_monster_raw_roll_handler.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_raw_roll_rules.py
+----------------------------------------------------------------------
+Ran 9 tests in 0.000s
+
+OK
+test_monster_raw_roll_rules.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_raw_roll_ui.py
+----------------------------------------------------------------------
+Ran 3 tests in 1.328s
+
+OK
+test_monster_raw_roll_ui.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_refresh_end_to_end.py
+Executing <Task pending name='Task-1' coro=<MonsterRefreshEndToEndTests.asyncSetUp() running at /tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_monster_refresh_end_to_end.py:67> wait_for=<Future pending cb=[Task.task_wakeup()] created at /usr/lib64/python3.14/asyncio/base_events.py:460> cb=[_run_until_complete_cb() at /usr/lib64/python3.14/asyncio/base_events.py:181] created at /usr/lib64/python3.14/asyncio/runners.py:110> took 0.351 seconds
+Executing <Task pending name='Task-282' coro=<MonsterRefreshEndToEndTests.asyncSetUp() running at /tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_monster_refresh_end_to_end.py:67> wait_for=<Future pending cb=[Task.task_wakeup()] created at /usr/lib64/python3.14/asyncio/base_events.py:460> cb=[_run_until_complete_cb() at /usr/lib64/python3.14/asyncio/base_events.py:181] created at /usr/lib64/python3.14/asyncio/runners.py:110> took 0.119 seconds
+Executing <Task pending name='Task-837' coro=<MonsterRefreshEndToEndTests.asyncSetUp() running at /tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_monster_refresh_end_to_end.py:67> wait_for=<Future pending cb=[Task.task_wakeup()] created at /usr/lib64/python3.14/asyncio/base_events.py:460> cb=[_run_until_complete_cb() at /usr/lib64/python3.14/asyncio/base_events.py:181] created at /usr/lib64/python3.14/asyncio/runners.py:110> took 0.127 seconds
+Executing <Task pending name='Task-1127' coro=<MonsterRefreshEndToEndTests.asyncSetUp() running at /tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_monster_refresh_end_to_end.py:67> wait_for=<Future pending cb=[Task.task_wakeup()] created at /usr/lib64/python3.14/asyncio/base_events.py:460> cb=[_run_until_complete_cb() at /usr/lib64/python3.14/asyncio/base_events.py:181] created at /usr/lib64/python3.14/asyncio/runners.py:110> took 0.121 seconds
+Executing <Task pending name='Task-1682' coro=<MonsterRefreshEndToEndTests.asyncSetUp() running at /tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_monster_refresh_end_to_end.py:67> wait_for=<Future pending cb=[Task.task_wakeup()] created at /usr/lib64/python3.14/asyncio/base_events.py:460> cb=[_run_until_complete_cb() at /usr/lib64/python3.14/asyncio/base_events.py:181] created at /usr/lib64/python3.14/asyncio/runners.py:110> took 0.118 seconds
+----------------------------------------------------------------------
+Ran 5 tests in 42.199s
+
+OK
+test_monster_refresh_end_to_end.py: connections opened: 18; without explicit close: 0
+Connection audit: test_monster_refresh_review.py
+----------------------------------------------------------------------
+Ran 8 tests in 1.053s
+
+OK
+test_monster_refresh_review.py: connections opened: 24; without explicit close: 0
+Connection audit: test_monster_refresh_review_browser.py
+----------------------------------------------------------------------
+Ran 12 tests in 12.600s
+
+OK
+test_monster_refresh_review_browser.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_refresh_scope.py
+----------------------------------------------------------------------
+Ran 4 tests in 0.536s
+
+OK
+test_monster_refresh_scope.py: connections opened: 9; without explicit close: 0
+Connection audit: test_monster_refresh_sole_candidate.py
+Executing <Task finished name='Task-2' coro=<SoleRefreshApplicationTests.test_continuation_keeps_automatic_and_explicit_rows_without_refetch() done, defined at /tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_monster_refresh_sole_candidate.py:64> result=None created at /usr/lib64/python3.14/asyncio/runners.py:110> took 0.121 seconds
+----------------------------------------------------------------------
+Ran 5 tests in 2.497s
+
+OK
+test_monster_refresh_sole_candidate.py: connections opened: 10; without explicit close: 0
+Connection audit: test_monster_refresh_sources.py
+Selected monster source refresh failed for m
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+    candidate = _fetch_exact(context, monster, identity)
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_refresh_sources.py", line 82, in _fetch_exact
+    raise ValueError('Provider disabled')
+ValueError: Provider disabled
+Selected monster source refresh failed for m
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+    candidate = _fetch_exact(context, monster, identity)
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_refresh_sources.py", line 93, in _fetch_exact
+    raise ValueError('Retained source missing or ambiguous')
+ValueError: Retained source missing or ambiguous
+Selected monster source refresh failed for m
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+    candidate = _fetch_exact(context, monster, identity)
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+    html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+OSError: secret
+----------------------------------------------------------------------
+Ran 11 tests in 0.006s
+
+OK
+test_monster_refresh_sources.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_refresh_startup_browser.py
+----------------------------------------------------------------------
+Ran 1 test in 0.731s
+
+OK
+test_monster_refresh_startup_browser.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_roll_order.py
+----------------------------------------------------------------------
+Ran 15 tests in 0.001s
+
+OK
+test_monster_roll_order.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_roll_order_handlers.py
+----------------------------------------------------------------------
+Ran 6 tests in 0.010s
+
+OK
+test_monster_roll_order_handlers.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_source_catalog.py
+Open5e document list failed
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_source_catalog.py", line 31, in sources
+    catalog = open5e.documents(open5e.base_url(display))
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_open5e.py", line 101, in documents
+    for item in _pages(base + "/documents/?" + urlencode({"limit": 200, "format": "json"}), base):
+                ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_open5e.py", line 79, in _pages
+    data = load_json(url)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+python.scrying_glass_open5e.Open5eError: down
+Monster source catalog failed
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_source_catalog.py", line 81, in run
+    return await asyncio.to_thread(function, effective_display(context), *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/asyncio/threads.py", line 26, in to_thread
+    return await loop.run_in_executor(None, func_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/usr/lib64/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_source_catalog.py", line 47, in monsters
+    items = [{"id": name, "name": name} for name, _ in ms.fivetools_source_entries(display, source)]
+                                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 229, in fivetools_source_entries
+    raise ValueError("5e.tools source is not configured")
+ValueError: 5e.tools source is not configured
+----------------------------------------------------------------------
+Ran 6 tests in 0.335s
+
+OK
+test_monster_source_catalog.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_source_help_text.py
+----------------------------------------------------------------------
+Ran 3 tests in 5.164s
+
+OK
+test_monster_source_help_text.py: connections opened: 1; without explicit close: 0
+Connection audit: test_monster_source_picker_browser.py
+----------------------------------------------------------------------
+Ran 3 tests in 2.405s
+
+OK
+test_monster_source_picker_browser.py: connections opened: 0; without explicit close: 0
+Connection audit: test_monster_source_snapshot.py
+----------------------------------------------------------------------
+Ran 20 tests in 0.001s
+
+OK
+test_monster_source_snapshot.py: connections opened: 0; without explicit close: 0
+Connection audit: test_open5e_provider.py
+Open5e candidate lookup failed
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 247, in open5e_candidates
+    return open5e.candidates(species, display, max_candidates=MAX_CANDIDATES)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_open5e.py", line 174, in candidates
+    found = _pages(base + "/creatures/?" + query, base, limit=max_candidates)
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_open5e.py", line 79, in _pages
+    data = load_json(url)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+OSError: secret
+Combined monster lookup failed for Open5e
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 247, in open5e_candidates
+    return open5e.candidates(species, display, max_candidates=MAX_CANDIDATES)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_open5e.py", line 174, in candidates
+    found = _pages(base + "/creatures/?" + query, base, limit=max_candidates)
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_open5e.py", line 79, in _pages
+    data = load_json(url)
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+OSError: secret
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+    found = fetch()
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 268, in <lambda>
+    extra=(("Open5e", open5e_enabled, lambda: open5e_candidates(species, display)),))
+                                              ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/python/scrying_glass_monster_selection.py", line 250, in open5e_candidates
+    raise ProviderError("Open5e lookup failed; enter stats manually or retry.") from exc
+python.scrying_glass_monster_selection.ProviderError: Open5e lookup failed; enter stats manually or retry.
+----------------------------------------------------------------------
+Ran 18 tests in 0.129s
+
+OK
+test_open5e_provider.py: connections opened: 0; without explicit close: 0
+Connection audit: test_reset_health.py
+----------------------------------------------------------------------
+Ran 9 tests in 2.390s
+
+OK
+test_reset_health.py: connections opened: 9; without explicit close: 0
+Connection audit: test_role_pages.py
+----------------------------------------------------------------------
+Ran 10 tests in 1.845s
+
+OK
+test_role_pages.py: connections opened: 0; without explicit close: 0
+Connection audit: test_roster_status_spacing.py
+----------------------------------------------------------------------
+Ran 1 test in 8.828s
+
+OK
+test_roster_status_spacing.py: connections opened: 1; without explicit close: 0
+Connection audit: test_selected_monster_source_creation.py
+----------------------------------------------------------------------
+Ran 8 tests in 0.009s
+
+OK
+test_selected_monster_source_creation.py: connections opened: 0; without explicit close: 0
+Connection audit: test_setup_feedback_composition.py
+Error occurred in event listener
+Traceback (most recent call last):
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_page.py", line 312, in _on_route
+    handled = await route_handler.handle(route)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_helper.py", line 456, in handle
+    raise e
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_helper.py", line 443, in handle
+    return await self._handle_internal(route)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_helper.py", line 479, in _handle_internal
+    await handler_finished_future
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_helper.py", line 470, in _handler
+    self.handler(route, route.request)  # type: ignore
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 140, in wrapper_func
+    return handler(
+        *list(map(lambda a: self.from_maybe_impl(a), args))[:arg_count]
+    )
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_admin_global_feedback_composition.py", line 91, in route
+    'body': r.request.post_data})
+            ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/sync_api/_generated.py", line 21969, in post_data
+    return mapping.from_maybe_impl(self._impl_obj.post_data)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_network.py", line 254, in post_data
+    return base64.b64decode(base64_post_data).decode()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x89 in position 135: invalid start byte
+Error occurred in event listener
+Traceback (most recent call last):
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_connection.py", line 634, in wrap_api_call
+    return await cb()
+           ^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_connection.py", line 143, in _inner_send
+    raise error
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_page.py", line 312, in _on_route
+    handled = await route_handler.handle(route)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_helper.py", line 456, in handle
+    raise e
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_helper.py", line 443, in handle
+    return await self._handle_internal(route)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_helper.py", line 479, in _handle_internal
+    await handler_finished_future
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_helper.py", line 470, in _handler
+    self.handler(route, route.request)  # type: ignore
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 140, in wrapper_func
+    return handler(
+        *list(map(lambda a: self.from_maybe_impl(a), args))[:arg_count]
+    )
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_admin_global_feedback_composition.py", line 91, in route
+    'body': r.request.post_data})
+            ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/sync_api/_generated.py", line 21969, in post_data
+    return mapping.from_maybe_impl(self._impl_obj.post_data)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_network.py", line 254, in post_data
+    return base64.b64decode(base64_post_data).decode()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x89 in position 135: invalid start byte
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_page.py", line 312, in _on_route
+    handled = await route_handler.handle(route)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_helper.py", line 456, in handle
+    raise e
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_helper.py", line 443, in handle
+    return await self._handle_internal(route)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_helper.py", line 479, in _handle_internal
+    await handler_finished_future
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_helper.py", line 470, in _handler
+    self.handler(route, route.request)  # type: ignore
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 140, in wrapper_func
+    return handler(
+        *list(map(lambda a: self.from_maybe_impl(a), args))[:arg_count]
+    )
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_admin_global_feedback_composition.py", line 98, in route
+    r.fulfill(status=status, json=payload)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/sync_api/_generated.py", line 22711, in fulfill
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.fulfill(
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        )
+        ^
+    )
+    ^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_network.py", line 430, in fulfill
+    await self._handle_route(
+    ...<3 lines>...
+    )
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_network.py", line 508, in _handle_route
+    raise e
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_network.py", line 504, in _handle_route
+    await callback()
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_network.py", line 499, in _inner_fulfill
+    await self._race_with_page_close(self._channel.send("fulfill", None, params))
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_network.py", line 604, in _race_with_page_close
+    raise cast(BaseException, fut.exception())
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+          ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_errors.py", line 58, in rewrite_error
+    rewritten_exc = type(error)(message)
+TypeError: function takes exactly 5 arguments (1 given)
+======================================================================
+ERROR: test_loaded_background_apply_upload_and_refresh_failure (test_setup_feedback_composition.SetupTransferBackgroundCompositionTests.test_loaded_background_apply_upload_and_refresh_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/scrying-local-tests-8sqW8O/tmp/scrying-tests-jks2dnl2/repo/tests/test_setup_feedback_composition.py", line 271, in test_loaded_background_apply_upload_and_refresh_failure
+    page.wait_for_function("scryingAdminFeedback.snapshot().some(x => x.operation === 'background.upload')")
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/sync_api/_generated.py", line 21235, in wait_for_function
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.wait_for_function(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        )
+        ^
+    )
+    ^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_page.py", line 1158, in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_frame.py", line 945, in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 5000ms exceeded.
+
+======================================================================
+ERROR: test_loaded_background_apply_upload_and_refresh_failure (test_setup_feedback_composition.SetupTransferBackgroundCompositionTests.test_loaded_background_apply_upload_and_refresh_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/sync_api/_generated.py", line 16321, in close
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.close(reason=reason, runBeforeUnload=run_before_unload)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_sync_base.py", line 111, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_page.py", line 871, in close
+    raise e
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_page.py", line 863, in close
+    await self._owned_context.close()
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_browser_context.py", line 568, in close
+    await self.request.dispose(reason=reason)
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_fetch.py", line 129, in dispose
+    await self._channel.send("dispose", None, {"reason": reason})
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_connection.py", line 78, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/mnt/d/git/Scrying-Glass/.venv/lib64/python3.14/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+TypeError: Page.close: function takes exactly 5 arguments (1 given)
+
+----------------------------------------------------------------------
+Ran 10 tests in 18.760s
+
+FAILED (errors=2)
+test_setup_feedback_composition.py: connections opened: 10; without explicit close: 0
+FAIL: test_setup_feedback_composition.py (exit 1)
+Connection audit: test_setup_has_lair.py
+----------------------------------------------------------------------
+Ran 8 tests in 0.361s
+
+OK
+test_setup_has_lair.py: connections opened: 12; without explicit close: 0
+Connection audit: test_setup_import_life_filter.py
+----------------------------------------------------------------------
+Ran 7 tests in 1.529s
+
+OK
+test_setup_import_life_filter.py: connections opened: 7; without explicit close: 0
+Connection audit: test_shared_monster_initiative.py
+----------------------------------------------------------------------
+Ran 5 tests in 0.013s
+
+OK
+test_shared_monster_initiative.py: connections opened: 0; without explicit close: 0
+Connection audit: test_slug_truncation_82860c4.py
+----------------------------------------------------------------------
+Ran 0 tests in 0.000s
+
+NO TESTS RAN
+test_slug_truncation_82860c4.py: connections opened: 0; without explicit close: 0
+Connection audit: test_source_bonus_offer.py
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+OK
+test_source_bonus_offer.py: connections opened: 0; without explicit close: 0
+Connection audit: test_source_bonus_offer_acceptance.py
+----------------------------------------------------------------------
+Ran 6 tests in 0.721s
+
+OK
+test_source_bonus_offer_acceptance.py: connections opened: 19; without explicit close: 0
+Connection audit: test_source_bonus_offer_browser.py
+----------------------------------------------------------------------
+Ran 14 tests in 18.125s
+
+OK
+test_source_bonus_offer_browser.py: connections opened: 1; without explicit close: 0
+Connection audit: test_source_bonus_offer_creation.py
+----------------------------------------------------------------------
+Ran 6 tests in 0.009s
+
+OK
+test_source_bonus_offer_creation.py: connections opened: 0; without explicit close: 0
+Connection audit: test_source_bonus_offer_http.py
+----------------------------------------------------------------------
+Ran 5 tests in 0.360s
+
+OK
+test_source_bonus_offer_http.py: connections opened: 0; without explicit close: 0
+Connection audit: test_source_bonus_offer_lookup.py
+----------------------------------------------------------------------
+Ran 3 tests in 0.003s
+
+OK
+test_source_bonus_offer_lookup.py: connections opened: 0; without explicit close: 0
+Connection audit: test_sqlite_storage.py
+----------------------------------------------------------------------
+Ran 34 tests in 1.220s
+
+OK
+test_sqlite_storage.py: connections opened: 57; without explicit close: 0
+Connection audit: test_stage_b_rosters.py
+----------------------------------------------------------------------
+Ran 3 tests in 11.633s
+
+OK
+test_stage_b_rosters.py: connections opened: 1; without explicit close: 0
+Connection audit: test_statistics_layout.py
+----------------------------------------------------------------------
+Ran 1 test in 1.151s
+
+OK
+test_statistics_layout.py: connections opened: 0; without explicit close: 0
+Connection audit: test_storage_facade.py
+----------------------------------------------------------------------
+Ran 13 tests in 0.083s
+
+OK
+test_storage_facade.py: connections opened: 13; without explicit close: 0
+Connection audit: test_technical_documentation_split.py
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+OK
+test_technical_documentation_split.py: connections opened: 0; without explicit close: 0
+Connection audit: test_turn_eligibility.py
+----------------------------------------------------------------------
+Ran 8 tests in 0.282s
+
+OK
+test_turn_eligibility.py: connections opened: 8; without explicit close: 0
+Connection audit modules: 179; failed: 3

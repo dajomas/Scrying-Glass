@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: encounter context starts with the existing uninitialized scope
+ok 1 - encounter context starts with the existing uninitialized scope
+  ---
+  duration_ms: 2.195924
+  type: 'test'
+  ...
+# Subtest: context is a fresh immutable snapshot and cannot mutate feedback scope
+ok 2 - context is a fresh immutable snapshot and cannot mutate feedback scope
+  ---
+  duration_ms: 0.632823
+  type: 'test'
+  ...
+# Subtest: same accepted scope does not advance its epoch
+ok 3 - same accepted scope does not advance its epoch
+  ---
+  duration_ms: 0.635108
+  type: 'test'
+  ...
+# Subtest: leaving and returning to the same identity advances the epoch twice
+ok 4 - leaving and returning to the same identity advances the epoch twice
+  ---
+  duration_ms: 0.406461
+  type: 'test'
+  ...
+# Subtest: obsolete and invalid state observations cannot change context
+ok 5 - obsolete and invalid state observations cannot change context
+  ---
+  duration_ms: 0.454108
+  type: 'test'
+  ...
+# Subtest: reading context preserves tickets, errors and page-lane feedback
+ok 6 - reading context preserves tickets, errors and page-lane feedback
+  ---
+  duration_ms: 0.933782
+  type: 'test'
+  ...
+# Subtest: lookup invalidation does not advance encounter context
+ok 7 - lookup invalidation does not advance encounter context
+  ---
+  duration_ms: 0.649755
+  type: 'test'
+  ...
+# Subtest: reloading the bootstrap retains the original API and context
+ok 8 - reloading the bootstrap retains the original API and context
+  ---
+  duration_ms: 0.553779
+  type: 'test'
+  ...
+# Subtest: header versions only the changed bootstrap and retains asset order
+ok 9 - header versions only the changed bootstrap and retains asset order
+  ---
+  duration_ms: 0.54862
+  type: 'test'
+  ...
+# Subtest: owner guard can decline state load before transport starts
+ok 10 - owner guard can decline state load before transport starts
+  ---
+  duration_ms: 0.8939
+  type: 'test'
+  ...
+# Subtest: obsolete successful state response cannot observe scope or render
+ok 11 - obsolete successful state response cannot observe scope or render
+  ---
+  duration_ms: 0.926099
+  type: 'test'
+  ...
+# Subtest: obsolete transport rejection neither publishes global error nor rethrows
+ok 12 - obsolete transport rejection neither publishes global error nor rethrows
+  ---
+  duration_ms: 0.9267
+  type: 'test'
+  ...
+# Subtest: current guarded state request preserves transport options and accepted rendering
+ok 13 - current guarded state request preserves transport options and accepted rendering
+  ---
+  duration_ms: 1.041038
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 100.172502
