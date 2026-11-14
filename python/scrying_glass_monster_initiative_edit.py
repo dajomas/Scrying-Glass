@@ -1,5 +1,5 @@
 """Existing-monster bonus editing on the standard authenticated edit route."""
-from fastapi import File, Form, UploadFile
+from fastapi import Body, File, Form, UploadFile
 from fastapi.params import Form as FormParameter
 from pydantic import ValidationError
 import copy
@@ -18,6 +18,8 @@ class InitiativeEditMonstersMixin(CandidateMonstersMixin):
         initiative: str = Form(""), ally: str = Form("false"),
         image: UploadFile | None = File(None),
         initiative_bonus: str = Form(""),
+        image_selection_token: str = Form(""),
+        image_species: str = Form(""),
     ):
         """Blank or omitted bonus preserves assignment; explicit numbers are manual."""
         monster = next((item for item in self.context.STATE["monsters"]
@@ -26,6 +28,10 @@ class InitiativeEditMonstersMixin(CandidateMonstersMixin):
             raise self.context.HTTPException(404, "Monster not found")
         if isinstance(initiative_bonus, FormParameter):
             initiative_bonus = initiative_bonus.default
+        if isinstance(image_selection_token, FormParameter):
+            image_selection_token = image_selection_token.default
+        if isinstance(image_species, FormParameter):
+            image_species = image_species.default
         try:
             bonus = (None if not initiative_bonus.strip()
                      else creation_bonus_fields(initiative_bonus))
@@ -79,6 +85,10 @@ class InitiativeEditMonstersMixin(CandidateMonstersMixin):
                 raise self.context.HTTPException(409, str(exc)) from exc
         if image is not None and image.filename:
             candidate["image_url"] = self.context.save_image(image)
+        elif image_selection_token:
+            # Image chosen from a found source; an upload takes precedence.
+            candidate["image_url"] = self.source_image(image_selection_token,
+                                                       image_species or monster_species)
         self.context.remember_turn_successors()
         monster.update(candidate)
         if proposed_order is not None:
@@ -88,6 +98,37 @@ class InitiativeEditMonstersMixin(CandidateMonstersMixin):
         self.context.clean_order()
         await self.context.combatants_changed(monsters=True, characters=False)
         return monster
+
+    def source_image(self, token, species):
+        """Return the signed https image of a looked-up candidate, or raise 422."""
+        from .scrying_glass_monster_selection import selected_snapshot
+        try:
+            image_url = selected_snapshot(token, str(species).strip())[0]
+        except ValueError as exc:
+            raise self.context.HTTPException(422, str(exc)) from exc
+        if not image_url:
+            raise self.context.HTTPException(422, "Chosen image is unavailable; repeat lookup.")
+        return image_url
+
+    async def set_monster_source_image(self, body: dict = Body(...)):
+        """Set a looked-up source image per monster; all tokens are checked before any change."""
+        items = body.get("items")
+        if not isinstance(items, list) or not 1 <= len(items) <= 500:
+            raise self.context.HTTPException(422, "Choose an image for 1-500 monsters")
+        images = {}
+        for item in items:
+            ident = item.get("id") if isinstance(item, dict) else None
+            token = item.get("image_selection_token") if isinstance(item, dict) else None
+            species = item.get("image_species") if isinstance(item, dict) else None
+            if (not isinstance(ident, str) or ident in images or not isinstance(token, str) or not token
+                    or not isinstance(species, str)):
+                raise self.context.HTTPException(422, "Each monster needs one image chosen from a monster source")
+            images[ident] = self.source_image(token, species)
+        targets = self.context.selected_entities("monsters", list(images))
+        for monster in targets:
+            monster["image_url"] = images[monster["id"]]
+        await self.context.combatants_changed(monsters=True, characters=False)
+        return {"count": len(targets)}
 
     async def roll_monster_initiative(self):
         """Roll once per monster and update the existing active order atomically."""

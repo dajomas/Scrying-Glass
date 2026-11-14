@@ -186,6 +186,11 @@ if __name__ == '__main__':
         CONFIG['network']['client_port'] = args.client_port
     if args.storage_dir:
         CONFIG['storage_dir'] = str(args.storage_dir)
+    from python.scrying_glass_port_check import port_message, port_problems
+    problems = port_problems(CONFIG['network']['bind'], (('Admin', CONFIG['network']['admin_port']),
+                                                         ('Client Display', CONFIG['network']['client_port'])))
+    if problems:
+        sys.exit(port_message(CONFIG['network']['bind'], problems))
     DATA_DIR = Path(CONFIG['storage_dir']).expanduser().resolve()
     legacy_dir = Path(LEGACY_STORAGE_DIR).expanduser().resolve()
     if DATA_DIR == Path(DEFAULT_STORAGE_DIR).expanduser().resolve() and not DATA_DIR.exists() and legacy_dir.is_dir():
