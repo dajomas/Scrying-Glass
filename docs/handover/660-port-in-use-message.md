@@ -27,3 +27,9 @@ Scrying Glass (or another program) may already be running. Stop it first, or cho
 - Started one instance, then a second on the same ports: the second printed the message above (both ports), exited with status 1 and created no storage directory. With only the Admin port taken, only that port was listed.
 - Through `tools/run_split_tests.py`: new `tests/test_port_check.py` (3 tests) with `test_launcher_python310`, `test_launcher_runtime_82860c4` and `test_admin_split_runtime`: 18 tests OK.
 - User run and acceptance pending.
+
+## Acceptance
+
+- The user tested and accepted the port-in-use message (`93ffbd0e`) on 2026-11-14. The earlier "User run and acceptance pending" note is superseded.
+- CI: run 43636503802 on `93ffbd0e` failed only on the unrelated flaky `test_edit_rejects_a_tampered_token` (fixed in `b157aef8`); the later runs on `features/perplexity` that include this change (43637464939, 43638272866, 43639327765) concluded success.
+- Status: completed and closed.
