@@ -22,3 +22,17 @@ New `static/monster-source-image.js?v=1`, loaded after `monster-refresh-review.j
 - Through `tools/run_split_tests.py`: the two new files plus the related monster edit, initiative, route, feedback-inventory, split-runtime, refresh-review, image-preview, candidate and roster tests: 101 tests OK.
 - `e2e/test_layout_accessibility.py` and `e2e/test_rosters.py` in Chromium: 16 passed.
 - Not tested against live D&D Beyond, 5e.tools or Open5e lookups (the sandbox tests intercept the lookup). User run and acceptance pending.
+
+## Follow-up - 2026-11-14
+
+User instruction: "In the Edit monster modal, the Select image from source button needs to be bottom aligned with the Image file selection text box and the Selected text needs to go under the button. When selecting multiple monsters, and using the dropdown action, provide a row per monster with the images found for that monster and allow to select an image per monster. Also let the user know the image lookup is in progress. Make the lookup smart enough that only a single lookup will be done per monster species".
+
+- Edit monster: the button is bottom-aligned with the file input (`align-self: end`); the status text ("Looking up…", "Selected: … Save to apply.") is its own grid item in the next row, under the button, and is hidden while empty.
+- Monster action dropdown: the dialog opens at once with one row per selected monster (name and species). Each row has a "Keep current" tile (selected by default) and the images found for that monster's species; one image can be chosen per monster. "Apply images (N)" sends only the changed monsters. A status line shows "Looking up images… X of Y species done", and each row shows "Looking up images for <species>…" until its lookup returns, or the reason when nothing was found or the lookup failed.
+- One lookup per species: lookups are cached by species (case-insensitive) for 10 minutes and shared by concurrent requests, the Edit button and the bulk dialog; the selection tokens stay valid for 30 minutes on the server. Failed lookups are not cached. In the bulk dialog the species are looked up one after another.
+- `POST /api/monsters/source-image` now takes `{items: [{id, image_selection_token, image_species}]}` (1-500 items, unique ids). All tokens are checked before any monster changes.
+- Cache version: `monster-source-image.js?v=2`.
+
+Validation of the follow-up (this sandbox): through `tools/run_split_tests.py`, `test_monster_source_image` (8) and `test_monster_source_image_browser` (8, including button/file-input bottom alignment, one row per monster, per-monster choices, progress text and one lookup per species across two runs) with `test_admin_split_runtime`, `test_admin_global_feedback_inventory`, `test_asset_cache_busting` and `test_admin_asset_wiring`: 39 tests OK. The real Edit and bulk dialogs were checked on a live local server in Chromium with stubbed lookups and images. User run and acceptance pending.
+
+CI run 43636503802 (on `93ffbd0e`) failed one test: `test_edit_rejects_a_tampered_token`. It replaced the last two token characters with `00`, which changes nothing when a token already ends in `00`. The test now always changes the last character; it passed 8 of 8 in `test_monster_source_image`.

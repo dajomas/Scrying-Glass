@@ -30,7 +30,7 @@ class MonsterSourceImageBrowserTests(unittest.TestCase):
         self.page.route('http://fixture.test/', lambda route: route.fulfill(content_type='text/html', body=(
             '<select id="monsterBulkAction"><option value="">Actions</option>'
             '<option value="remove">Remove</option></select><div id="monsterAddNotification"></div>'
-            '<div id="editModal" hidden><form id="editForm"></form></div>')))
+            '<div id="editModal" hidden><form id="editForm" class="edit-form" style="width:640px"></form></div>')))
         self.page.route('**/api/img-stub/**', lambda route: route.fulfill(status=204))
         self.page.route('https://img.test/**', lambda route: route.fulfill(status=200, content_type='image/png', body=b''))
 
@@ -48,7 +48,8 @@ class MonsterSourceImageBrowserTests(unittest.TestCase):
         install_feedback(self.page)
         self.page.add_script_tag(content="""
             let latest = {monsters: [{id:'a',name:'Goblin 1',monster_species:'goblin'},
-                                     {id:'b',name:'Orc 1',monster_species:'orc'}]};
+                                     {id:'b',name:'Orc 1',monster_species:'orc'},
+                                     {id:'c',name:'Goblin 2',monster_species:'goblin'}]};
             let editing = null;
             const editModal = document.querySelector('#editModal');
             let chosen = [];
@@ -62,10 +63,13 @@ class MonsterSourceImageBrowserTests(unittest.TestCase):
                 editing = {kind, id};
                 document.querySelector('#editForm').innerHTML =
                     '<label>Monster species <input name="monster_species" value="goblin"></label>' +
-                    '<label>Replace image <input name="image" type="file"></label>';
+                    '<label>Ally <select><option>No</option></select></label>' +
+                    '<label>Replace image <input name="image" type="file"></label>' +
+                    '<div class="actions"><button>Save monster</button></div>';
                 editModal.hidden = false;
             }
         """)
+        self.page.add_style_tag(content=(ROOT / 'static/admin.css').read_text())
         self.page.add_script_tag(content=(ROOT / 'static/monster-source-image.js').read_text())
 
     def test_edit_button_stores_the_chosen_source_image(self):
@@ -91,20 +95,66 @@ class MonsterSourceImageBrowserTests(unittest.TestCase):
         self.assertEqual(self.page.locator('input[name="image_selection_token"]').input_value(), '')
         self.assertEqual(self.page.locator('dialog').count(), 0)
 
-    def test_bulk_option_applies_one_image_to_the_selected_monsters(self):
-        """Monster action option sets one chosen source image on all selected monsters."""
-        option = self.page.locator('#monsterBulkAction option[value="select-source-image"]')
-        self.assertEqual(option.text_content(), 'Select image from sources')
-        self.assertEqual(self.page.eval_on_selector('#monsterBulkAction', 'el => el.options[2].value'), 'remove')
-        self.page.evaluate("chosen = ['a', 'b']; window.running = runBulkAction('monsters', 'select-source-image'); void 0")
-        self.page.locator('dialog .monster-image-option').first.wait_for()
-        self.assertEqual(self.page.locator('dialog .monster-image-option').count(), 3)
-        self.page.get_by_role('button', name='Use image: orc: 5e.tools / MM').click()
-        self.page.evaluate('window.running')
-        self.assertEqual(self.posts, [{'ids': ['a', 'b'], 'image_selection_token': 'tok-o1', 'image_species': 'orc'}])
-        self.assertTrue(self.page.evaluate('window.reloaded'))
+    def test_edit_button_is_bottom_aligned_and_status_is_below(self):
+        """Edit button bottom-aligns with the file input and the Selected text sits under it."""
+        self.page.evaluate("openEdit('monsters', 'a')")
+        self.page.get_by_role('button', name='Select image from sources').click()
+        self.page.get_by_role('button', name='Use image: 5e.tools / MM').click()
+        box = lambda selector: self.page.locator(selector).bounding_box()
+        button, file = box('.monster-source-image-edit button'), box('#editForm input[name="image"]')
+        status = box('.monster-source-image-status')
+        self.assertAlmostEqual(button['y'] + button['height'], file['y'] + file['height'], delta=1.5)
+        self.assertGreaterEqual(status['y'], button['y'] + button['height'])
+        self.assertAlmostEqual(status['x'], box('.monster-source-image-edit')['x'], delta=1.5)
+
+    def test_bulk_offers_one_row_per_monster_with_one_lookup_per_species(self):
+        """Monster action shows a row per selected monster, looks up each species once and applies per-monster choices."""
+        self.page.evaluate("chosen = ['a', 'b', 'c']; window.running = runBulkAction('monsters', 'select-source-image'); void 0")
+        dialog = self.page.locator('dialog')
+        self.page.wait_for_function("document.querySelector('dialog')?.getAttribute('aria-busy') === 'false'")
+        self.assertIn('Image lookup finished for 2 species', dialog.get_by_role('status').text_content())
         self.assertEqual(sorted(self.lookups), ['goblin', 'orc'])
+        self.assertEqual(dialog.locator('.monster-source-image-row').count(), 3)
+        for ident, count in (('a', 3), ('b', 2), ('c', 3)):
+            row = dialog.locator(f'.monster-source-image-row[data-monster-id="{ident}"] .monster-image-option')
+            self.assertEqual(row.count(), count)
+        apply = dialog.get_by_role('button', name='Apply images')
+        self.assertTrue(apply.is_disabled())
+        dialog.get_by_role('button', name='Use image for Goblin 1: 5e.tools / XMM').click()
+        dialog.get_by_role('button', name='Use image for Orc 1: 5e.tools / MM').click()
+        self.assertEqual(apply.text_content(), 'Apply images (2)')
+        apply.click()
+        self.page.evaluate('window.running')
+        self.assertEqual(self.posts, [{'items': [
+            {'id': 'a', 'image_selection_token': 'tok-g2', 'image_species': 'goblin'},
+            {'id': 'b', 'image_selection_token': 'tok-o1', 'image_species': 'orc'}]}])
+        self.assertTrue(self.page.evaluate('window.reloaded'))
         self.assertEqual(self.errors, [])
+
+    def test_bulk_shows_progress_and_reuses_lookups(self):
+        """Monster action reports the lookup in progress and a second run reuses the species lookups."""
+        release = []
+        def slow(route):
+            release.append(route)
+        self.page.unroute('**/api/monsters/lookup?*')
+        self.page.route('**/api/monsters/lookup?*', slow)
+        self.page.evaluate("chosen = ['a', 'c']; window.running = runBulkAction('monsters', 'select-source-image'); void 0")
+        status = self.page.locator('dialog').get_by_role('status')
+        status.wait_for()
+        self.assertIn('Looking up images', status.text_content())
+        self.assertIn('Looking up images for goblin', self.page.locator('.monster-source-image-row-status').first.text_content())
+        self.page.wait_for_function('true')
+        while not release:
+            self.page.wait_for_timeout(50)
+        self.assertEqual(len(release), 1)
+        release[0].fulfill(json={'status': 'ok', 'candidates': CANDIDATES['goblin']})
+        self.page.wait_for_function("document.querySelector('dialog')?.getAttribute('aria-busy') === 'false'")
+        self.page.get_by_role('button', name='Cancel', exact=True).click()
+        self.page.evaluate('window.running')
+        self.page.evaluate("window.running = runBulkAction('monsters', 'select-source-image'); void 0")
+        self.page.wait_for_function("document.querySelector('dialog')?.getAttribute('aria-busy') === 'false'")
+        self.assertEqual(len(release), 1)
+        self.assertEqual(self.posts, [])
 
     def test_bulk_without_selection_reports_an_error(self):
         """Monster action without selected monsters reports an error and posts nothing."""

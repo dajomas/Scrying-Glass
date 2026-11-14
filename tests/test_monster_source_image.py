@@ -14,6 +14,10 @@ def token(species="goblin", image=IMAGE):
     return issue_token({"species": species, "image_url": image})
 
 
+def tampered(value):
+    return value[:-1] + ("A" if value[-1] != "A" else "B")
+
+
 class MonsterSourceImageTests(unittest.IsolatedAsyncioTestCase):
     def setUp(self):
         self.monsters = [dict(id=i, name=f"Goblin {i}", monster_species="goblin", ac=15, hp=7, max_hp=7,
@@ -49,7 +53,7 @@ class MonsterSourceImageTests(unittest.IsolatedAsyncioTestCase):
     async def test_edit_rejects_a_tampered_token(self):
         """Edit rejects a source image token with a bad signature."""
         with self.assertRaises(HTTPException) as caught:
-            await self.edit(image_selection_token=token()[:-2] + "00", image_species="goblin")
+            await self.edit(image_selection_token=tampered(token()), image_species="goblin")
         self.assertEqual(caught.exception.status_code, 422)
         self.assertEqual(self.monsters[0]["image_url"], "/media/old.png")
 
@@ -58,19 +62,25 @@ class MonsterSourceImageTests(unittest.IsolatedAsyncioTestCase):
         result = await self.edit()
         self.assertEqual(result["image_url"], "/media/old.png")
 
-    async def test_bulk_sets_the_image_on_all_selected_monsters(self):
-        """Bulk action sets the chosen source image on every selected monster only."""
+    def item(self, ident, species="goblin", image=IMAGE):
+        return {"id": ident, "image_selection_token": token(species, image), "image_species": species}
+
+    async def test_bulk_sets_one_image_per_selected_monster(self):
+        """Bulk action sets each chosen source image on its own monster only."""
+        other = "https://example.test/goblin-2.png"
         result = await self.handler.set_monster_source_image(
-            {"ids": ["a", "c"], "image_selection_token": token("Goblin"), "image_species": "Goblin"})
+            {"items": [self.item("a", "Goblin"), self.item("c", image=other)]})
         self.assertEqual(result["count"], 2)
-        self.assertEqual([m["image_url"] for m in self.monsters], [IMAGE, "/media/old.png", IMAGE])
+        self.assertEqual([m["image_url"] for m in self.monsters], [IMAGE, "/media/old.png", other])
         self.context.combatants_changed.assert_awaited_once_with(monsters=True, characters=False)
 
-    async def test_bulk_rejects_species_mismatch_and_missing_image(self):
-        """Bulk action rejects a token for another species or without an image."""
-        for body in ({"ids": ["a"], "image_selection_token": token("orc"), "image_species": "goblin"},
-                     {"ids": ["a"], "image_selection_token": token(image=None), "image_species": "goblin"},
-                     {"ids": [], "image_selection_token": token(), "image_species": "goblin"}):
+    async def test_bulk_rejects_bad_items_without_changes(self):
+        """Bulk action rejects a wrong species, a missing image, duplicates or no items, changing nothing."""
+        bodies = ({"items": [self.item("a"), self.item("b", "orc") | {"image_species": "goblin"}]},
+                  {"items": [self.item("a"), self.item("b", image=None)]},
+                  {"items": [self.item("a"), self.item("a")]},
+                  {"items": []}, {"ids": ["a"]})
+        for body in bodies:
             with self.subTest(body=body), self.assertRaises(HTTPException) as caught:
                 await self.handler.set_monster_source_image(body)
             self.assertEqual(caught.exception.status_code, 422)
@@ -80,8 +90,7 @@ class MonsterSourceImageTests(unittest.IsolatedAsyncioTestCase):
     async def test_bulk_rejects_unknown_monsters(self):
         """Bulk action fails without changes when a selected monster is gone."""
         with self.assertRaises(HTTPException) as caught:
-            await self.handler.set_monster_source_image(
-                {"ids": ["a", "zz"], "image_selection_token": token(), "image_species": "goblin"})
+            await self.handler.set_monster_source_image({"items": [self.item("a"), self.item("zz")]})
         self.assertEqual(caught.exception.status_code, 404)
         self.assertEqual(self.monsters[0]["image_url"], "/media/old.png")
 

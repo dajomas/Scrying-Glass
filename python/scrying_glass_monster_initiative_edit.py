@@ -111,19 +111,24 @@ class InitiativeEditMonstersMixin(CandidateMonstersMixin):
         return image_url
 
     async def set_monster_source_image(self, body: dict = Body(...)):
-        """Set one looked-up source image on every selected monster."""
-        ids, token, species = body.get("ids"), body.get("image_selection_token"), body.get("image_species")
-        if (not isinstance(ids, list) or not 1 <= len(ids) <= 500
-                or not all(isinstance(item, str) for item in ids)):
-            raise self.context.HTTPException(422, "Select 1-500 monsters")
-        if not isinstance(token, str) or not token or not isinstance(species, str):
-            raise self.context.HTTPException(422, "Choose an image from a monster source")
-        image_url = self.source_image(token, species)
-        targets = self.context.selected_entities("monsters", ids)
+        """Set a looked-up source image per monster; all tokens are checked before any change."""
+        items = body.get("items")
+        if not isinstance(items, list) or not 1 <= len(items) <= 500:
+            raise self.context.HTTPException(422, "Choose an image for 1-500 monsters")
+        images = {}
+        for item in items:
+            ident = item.get("id") if isinstance(item, dict) else None
+            token = item.get("image_selection_token") if isinstance(item, dict) else None
+            species = item.get("image_species") if isinstance(item, dict) else None
+            if (not isinstance(ident, str) or ident in images or not isinstance(token, str) or not token
+                    or not isinstance(species, str)):
+                raise self.context.HTTPException(422, "Each monster needs one image chosen from a monster source")
+            images[ident] = self.source_image(token, species)
+        targets = self.context.selected_entities("monsters", list(images))
         for monster in targets:
-            monster["image_url"] = image_url
+            monster["image_url"] = images[monster["id"]]
         await self.context.combatants_changed(monsters=True, characters=False)
-        return {"count": len(targets), "image_url": image_url}
+        return {"count": len(targets)}
 
     async def roll_monster_initiative(self):
         """Roll once per monster and update the existing active order atomically."""
