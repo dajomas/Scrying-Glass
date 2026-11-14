@@ -1,0 +1,27 @@
+election.py", line 167, in _fivetools_index
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6909847Z     index = ft.load_json(root + "/index.json")
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6910280Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6910541Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6910710Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6910981Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6911376Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6911557Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6911855Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6912118Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6912264Z OSError: secret 5e.tools endpoint
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6912362Z 
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6912498Z The above exception was the direct cause of the following exception:
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6912645Z 
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6912725Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6913023Z   File "/tmp/scrying-tests-141e035j/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6913293Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6913550Z   File "/tmp/scrying-tests-141e035j/repo/python/scrying_glass_monster_selection.py", line 264, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6913836Z     lambda: fivetools_candidates(species, display),
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6914024Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6914337Z   File "/tmp/scrying-tests-141e035j/repo/python/scrying_glass_monster_selection.py", line 222, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6914735Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6915132Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.6927998Z ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:11.7278469Z test_refresh_choice_apply_retains_identity_raw_roll_and_unselected_state (test_combined_monster_lookup_application.CombinedLookupApplicationTests.test_refresh_choice_apply_retains_identity_raw_roll_and_unselected_state) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:12.0701134Z test_width_halved_without_height_or_unrelated_field_changes (test_compact_combatant_inputs.CompactInputsTests.test_width_halved_without_height_or_unrelated_field_changes) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-14T20:17:12.1842702Z test_connection_opened_during_

@@ -1,0 +1,33 @@
+thon3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8816469Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8816596Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8816672Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8816824Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8816987Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8817076Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8817572Z   File "/tmp/scrying-tests-8w1c5b4e/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8817890Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8818172Z   File "/tmp/scrying-tests-8w1c5b4e/repo/python/scrying_glass_monster_selection.py", line 268, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8818557Z     extra=(("Open5e", open5e_enabled, lambda: open5e_candidates(species, display)),))
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8818982Z                                               ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8819426Z   File "/tmp/scrying-tests-8w1c5b4e/repo/python/scrying_glass_monster_selection.py", line 250, in open5e_candidates
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8819855Z     raise ProviderError("Open5e lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8820277Z python.scrying_glass_monster_selection.ProviderError: Open5e lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8833057Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8833400Z Ran 18 tests in 0.015s
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8833522Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8833581Z OK
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.8833826Z test_open5e_provider.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.9153018Z Connection audit: test_port_check.py
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.9725034Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.9725333Z Ran 3 tests in 0.000s
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.9725454Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.9725541Z OK
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.9725795Z test_port_check.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:22.9807531Z Connection audit: test_reset_health.py
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:23.3670024Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:23.3670479Z Ran 9 tests in 0.321s
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:23.3670621Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:23.3670705Z OK
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:23.3671102Z test_reset_health.py: connections opened: 9; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-14T20:22:23.4004508Z C

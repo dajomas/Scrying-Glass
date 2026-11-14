@@ -1,0 +1,32 @@
+manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0561073Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0561359Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0561662Z   File "/tmp/scrying-tests-8w1c5b4e/repo/python/scrying_glass_combined_lookup.py", line 36, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0561939Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0562202Z   File "/tmp/scrying-tests-8w1c5b4e/repo/python/scrying_glass_monster_selection.py", line 264, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0562499Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0562690Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0562985Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0563265Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0563436Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0563825Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0564193Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0564385Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0564688Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0564957Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0565149Z python.scrying_glass_monster_selection.ProviderError: secret
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0588752Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0589064Z Ran 12 tests in 0.011s
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0589193Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0589276Z OK
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0589681Z test_monster_candidate_selection.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.0885338Z Connection audit: test_monster_edit_order.py
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.2760288Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.2760643Z Ran 3 tests in 0.014s
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.2760741Z 
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.2760801Z OK
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.2761066Z test_monster_edit_order.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:36.3043278Z Connection audit: test_monster_image_preview_alignment.py
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:37.9792218Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:37.9792558Z Ran 1 test in 1.623s
+tests	Standalone Python browser and audit checks	2026-11-14T20:21:37

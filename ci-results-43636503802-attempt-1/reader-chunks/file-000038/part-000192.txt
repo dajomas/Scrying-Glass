@@ -1,0 +1,47 @@
+5291637Z ##[endgroup]
+tests	JavaScript tests	2026-11-14T20:18:53.5292030Z ##[group]tests/campaign-switch-refresh-feedback.test.cjs
+tests	JavaScript tests	2026-11-14T20:18:53.6285331Z TAP version 13
+tests	JavaScript tests	2026-11-14T20:18:53.6608976Z # Subtest: success precedes refresh and expires after exactly three seconds
+tests	JavaScript tests	2026-11-14T20:18:53.6628204Z ok 1 - success precedes refresh and expires after exactly three seconds
+tests	JavaScript tests	2026-11-14T20:18:53.6628603Z   ---
+tests	JavaScript tests	2026-11-14T20:18:53.6628811Z   duration_ms: 2.736945
+tests	JavaScript tests	2026-11-14T20:18:53.6629025Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:18:53.6629225Z   ...
+tests	JavaScript tests	2026-11-14T20:18:53.6629662Z # Subtest: refresh failure stays actionable after success expires and does not replay activation
+tests	JavaScript tests	2026-11-14T20:18:53.6630309Z ok 2 - refresh failure stays actionable after success expires and does not replay activation
+tests	JavaScript tests	2026-11-14T20:18:53.6630716Z   ---
+tests	JavaScript tests	2026-11-14T20:18:53.6630893Z   duration_ms: 0.914265
+tests	JavaScript tests	2026-11-14T20:18:53.6631108Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:18:53.6631654Z   ...
+tests	JavaScript tests	2026-11-14T20:18:53.6632071Z # Subtest: new selection, leave-return and registry suppress late refresh errors and UI work
+tests	JavaScript tests	2026-11-14T20:18:53.6632705Z ok 3 - new selection, leave-return and registry suppress late refresh errors and UI work
+tests	JavaScript tests	2026-11-14T20:18:53.6633242Z   ---
+tests	JavaScript tests	2026-11-14T20:18:53.6633435Z   duration_ms: 2.02454
+tests	JavaScript tests	2026-11-14T20:18:53.6633632Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:18:53.6633826Z   ...
+tests	JavaScript tests	2026-11-14T20:18:53.6634191Z # Subtest: empty setup branch does not render after a superseding selection
+tests	JavaScript tests	2026-11-14T20:18:53.6634707Z ok 4 - empty setup branch does not render after a superseding selection
+tests	JavaScript tests	2026-11-14T20:18:53.6635058Z   ---
+tests	JavaScript tests	2026-11-14T20:18:53.6635245Z   duration_ms: 1.002456
+tests	JavaScript tests	2026-11-14T20:18:53.6635467Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:18:53.6635687Z   ...
+tests	JavaScript tests	2026-11-14T20:18:53.6635990Z # Subtest: newer refresh ticket survives an older completion
+tests	JavaScript tests	2026-11-14T20:18:53.6636407Z ok 5 - newer refresh ticket survives an older completion
+tests	JavaScript tests	2026-11-14T20:18:53.6636709Z   ---
+tests	JavaScript tests	2026-11-14T20:18:53.6636901Z   duration_ms: 0.617695
+tests	JavaScript tests	2026-11-14T20:18:53.6637116Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:18:53.6637311Z   ...
+tests	JavaScript tests	2026-11-14T20:18:53.6637815Z # Subtest: successful refresh resolves only its matching campaign refresh failure
+tests	JavaScript tests	2026-11-14T20:18:53.6638373Z ok 6 - successful refresh resolves only its matching campaign refresh failure
+tests	JavaScript tests	2026-11-14T20:18:53.6638781Z   ---
+tests	JavaScript tests	2026-11-14T20:18:53.6638992Z   duration_ms: 0.986381
+tests	JavaScript tests	2026-11-14T20:18:53.6639186Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:18:53.6639371Z   ...
+tests	JavaScript tests	2026-11-14T20:18:53.6639712Z # Subtest: stale success timer cannot remove newer matching error
+tests	JavaScript tests	2026-11-14T20:18:53.6640195Z ok 7 - stale success timer cannot remove newer matching error
+tests	JavaScript tests	2026-11-14T20:18:53.6640494Z   ---
+tests	JavaScript tests	2026-11-14T20:18:53.6640684Z   duration_ms: 0.567681
+tests	JavaScript tests	2026-11-14T20:18:53.6640880Z   type: 'test'
+tests	JavaScript tests	2026-11-14T20:18:53.6641047Z   ...
+tests	JavaScript tests	2026-11-14T20:18:53.6641358Z # Subtest: unapplied refresh is not falsely reported as recovered
+tests	JavaScript tests	2026-11-14T20:18:53.6641761Z ok 8 - unapplied r
