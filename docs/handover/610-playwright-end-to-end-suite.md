@@ -207,3 +207,9 @@ Deviation from the plan: the plan said connection loss would be tested by stoppi
 The user pushed `180b15c8` (`E2E results 20261113T161147Z: 119 passed, 0 failed (chromium, firefox) [skip ci]`). It tested `325c685f`, which also contains the Edit modal fix ([620](620-edit-modal-layout.md)). pytest exit status 0: 121 tests, 119 passed, and 2 expected failures (`XFAIL (known finding)`, the New campaign focus return, one per browser) counted as skipped. Every Stage 3 and Stage 4 test passed in Chromium and Firefox. Stages 2-4 are validated by the user's runs; formal acceptance is the user's decision.
 
 Cosmetic note: the `tools/run_e2e.sh` summary groups results by the last bracketed test id, so the width tests show up as `chromium-360`, `firefox-1440` and so on, next to `chromium` and `firefox`. The totals are correct.
+
+## Stages 3-4 acceptance and SG-TODO-021 close-out - 2026-11-14
+
+User instruction: "Mark SG-TODO-021 Stages 3-4 as accepted and close the docs entry".
+
+Stages 3-4 are accepted: the combat, Client Display, feedback/connection, width, dialog-focus and axe tests. The acceptance is based on the user's run `180b15c8` (tested `325c685f`: 121 tests, 119 passed, 2 expected failures for the known focus finding, 0 failed). SG-TODO-021 is completed and closed. Stage 2 (run `29ff6123`, 61 of 61) had no separate acceptance statement and is closed with the task. Later changes on the branch (`ac9c4ed5`, the Admin view restore and its `e2e/test_view_restore.py`) are not covered by run `180b15c8`; see [630](630-admin-view-restore.md). The Stage 4 findings above (focus return, restart sign-out, axe baseline, header overflow at narrow widths) and the cosmetic summary grouping are not fixed and are left for a possible follow-up. No CI runs on `features/perplexity-021`.
