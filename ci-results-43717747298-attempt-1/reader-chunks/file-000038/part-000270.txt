@@ -1,0 +1,30 @@
+xplicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:58.5299412Z Connection audit: test_monster_roll_order_handlers.py
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:58.8688206Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:58.8689208Z test_monster_roll_order_handlers.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:58.8690543Z Ran 6 tests in 0.019s
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:58.8690754Z 
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:58.8690881Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:58.9095706Z Connection audit: test_monster_source_catalog.py
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2554483Z Open5e document list failed
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2555189Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2556615Z   File "/tmp/scrying-tests-ftq01seb/repo/python/scrying_glass_source_catalog.py", line 31, in sources
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2557715Z     catalog = open5e.documents(open5e.base_url(display))
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2558833Z   File "/tmp/scrying-tests-ftq01seb/repo/python/scrying_glass_open5e.py", line 101, in documents
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2560346Z     for item in _pages(base + "/documents/?" + urlencode({"limit": 200, "format": "json"}), base):
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2561404Z                 ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2562506Z   File "/tmp/scrying-tests-ftq01seb/repo/python/scrying_glass_open5e.py", line 79, in _pages
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2563406Z     data = load_json(url)
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2564410Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2565435Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2566048Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2567117Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2568190Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2568864Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2570251Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2571252Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.2571839Z python.scrying_glass_open5e.Open5eError: down
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.3096396Z Monster source catalog failed
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.3097140Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.3098636Z   File "/tmp/scrying-tests-ftq01seb/repo/python/scrying_glass_source_catalog.py", line 81, in run
+tests	Standalone Python browser and audit checks	2026-11-15T13:21:59.3099409Z     return await asyncio.to_thread(function, effective_
