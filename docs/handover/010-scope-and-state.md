@@ -183,6 +183,28 @@ workflow was read; unittest discovery includes the new test module. No workflow
 edit/dispatch; [skip ci] remains on intermediate deliveries. 2B/022.03 stay in
 progress, not validated or accepted. Matching code/data backup guidance remains.
 
+## 022.03 private save and refresh - 2026-11-15
+
+Baseline: 4bf95480f2670adda80d798fa73aefe2a7ed58e7. 2B.8 adds a native SQLite
+private flush after protected tracker saves and before history/revision processing.
+It requires the caller's outer transaction, resolves the active-campaign setup or
+unsaved runtime encounter, verifies monster identities and writes through the
+existing private adapter with a no-op tracker callback. Fresh saved metadata is
+assigned only after success. Plain state preserves stored graphs; explicit private
+omission still rejects clearing. No standalone persistence API, route, schema or
+permission change is introduced. Preparation limits and authorization remain
+caller duties; copy/import and 2B.9 acceptance are not closed by this wiring.
+[Task and validation gates](../todo/223-statblock-lifecycle.md#2b8-private-save-and-refresh---2026-11-15).
+
+Six production-fixture tests are prepared, not executed, for setup/private-only
+replacement and reload, unchanged/tracker-only revisions, runtime isolation,
+stale/omission rejection, late refresh rollback and rebuilt rows. Three changed
+Python files AST-parse; no new functional pass or full-import/service/HTTP/browser
+validation is claimed. Earlier isolated passes are not rerun or promoted. Root
+README/index and workflow identities match prior complete reads; no cosmetic root
+edits, workflow edits or dispatch. Intermediate [skip ci] and deferred final Stage 3
+covering CI remain. 2B.9, 2C/2D, bundles and overall acceptance remain pending.
+
 ## Documentation entry points
 
 - [README](../../README.md)

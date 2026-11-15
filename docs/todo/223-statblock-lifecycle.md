@@ -94,6 +94,26 @@ metadata, with revision/no-op/isolation/rollback tests. 2B.9: integrate history,
 undo/revision/broadcast, clearing/reload/rebuild regressions and acceptance evidence.
 Detection alone cannot satisfy either follow-on scope or close 2B/022.03.
 
+## 2B.8 private save and refresh - 2026-11-15
+
+Status: implementation supplied, validation pending. Protected transactions now
+flush private changes after ordinary tracker saves and before after_transaction.
+The native SQLite path resolves the current setup in the active campaign or the
+singleton unsaved-runtime binding, checks monster identities, and uses the private
+adapter with a no-op plain callback so already-persisted tracker rows are not
+rewritten again. It refreshes live metadata only after the saved result is ready.
+Non-native storage retains its existing path; standalone persistence methods are
+not new private-write entry points. Authorization/preparation remain caller duties.
+Ordinary omission still fails closed; trusted clearing stays the separate kernel.
+[Handover](../handover/010-scope-and-state.md#02203-private-save-and-refresh---2026-11-15).
+
+Six production-fixture tests are prepared, unexecuted: setup replacement/reload,
+unchanged/tracker-only metadata, runtime/setup isolation, stale/omission rejection,
+late refresh rollback including tracker/counter/timestamp/memory, and row rebuild
+with exactly one content advance. Three changed Python files AST-parse; no new
+functional pass, full import, HTTP/browser or CI result is claimed. Existing
+unittest discovery includes the new module. Earlier isolated passes are historical.
+
 ## Validation and remaining work
 
 Executed: six exact isolated ClearSqlTests against real in-memory SQLite and the
@@ -113,8 +133,8 @@ covering CI remain pending. Existing unittest discovery includes both test modul
 Workflow identity and README/root index identities were verified against prior
 complete reads; no workflow changes or dispatch. Final Stage 3 CI stays deferred.
 
-Next 2B: 2B.8 private-only save/refresh and 2B.9 integration, expanded
-scope/restart/limits/undo/rollback validation and covering acceptance. Stage 1/2,
+Next 2B: 2B.9 integration, expanded scope/restart/limits/undo/rollback validation,
+any necessary save/refresh corrections and covering acceptance. Stage 1/2,
 2B and 022.03 are not complete or accepted. 2C independent copy/Save As ownership/
 revisions, source immutability, move preservation, references and rollback remain.
 2D selected/life-filtered import remapping and clone revisions remain. Stage 3

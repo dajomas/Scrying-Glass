@@ -74,6 +74,8 @@ def transactional_handler(context, handler, *, role=None, cookie_name=None):
                         context.save_active_campaign_characters()
                         context.save_active_setup_monsters()
                         context.save_state()
+                        from .scrying_glass_statblock_saving import flush_private_state
+                        flush_private_state(context)
                     features.after_transaction(handler.__name__,original,campaign_before)
             pending = context._database_broadcast_pending
         except BaseException as exc:
