@@ -1,0 +1,21 @@
+Z test_input_is_not_mutated (test_fivetools_initiative.FivetoolsInitiativeTests.test_input_is_not_mutated) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.8166238Z test_invalid_dexterity_or_cr_cannot_create_source_zero (test_fivetools_initiative.FivetoolsInitiativeTests.test_invalid_dexterity_or_cr_cannot_create_source_zero) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.8167956Z test_malformed_or_unknown_explicit_formats_are_unavailable (test_fivetools_initiative.FivetoolsInitiativeTests.test_malformed_or_unknown_explicit_formats_are_unavailable) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.8169591Z test_missing_initiative_never_uses_dexterity (test_fivetools_initiative.FivetoolsInitiativeTests.test_missing_initiative_never_uses_dexterity) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.8170914Z test_noble_prodigy_explicit_proficiency_is_seven (test_fivetools_initiative.FivetoolsInitiativeTests.test_noble_prodigy_explicit_proficiency_is_seven) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.8172196Z test_signed_numeric_and_object_totals_override_abilities (test_fivetools_initiative.FivetoolsInitiativeTests.test_signed_numeric_and_object_totals_override_abilities) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.8173577Z test_unresolved_copies_are_not_resolved_by_guessing (test_fivetools_initiative.FivetoolsInitiativeTests.test_unresolved_copies_are_not_resolved_by_guessing) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.8774112Z test_creation_signed_values_source_identity_and_storage_reopen (test_fivetools_initiative_flow.FivetoolsInitiativeFlowTests.test_creation_signed_values_source_identity_and_storage_reopen) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.9466218Z test_refresh_recalculation_missing_invalid_and_exact_edition (test_fivetools_initiative_flow.FivetoolsInitiativeFlowTests.test_refresh_recalculation_missing_invalid_and_exact_edition) ... Selected monster source refresh failed for f9ca5e4f3b9e4f8798c3e8575f821700
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.9467831Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.9468864Z   File "/tmp/scrying-tests-2ukz0g_s/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.9469912Z     candidate = _fetch_exact(context, monster, identity)
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.9471120Z   File "/tmp/scrying-tests-2ukz0g_s/repo/python/scrying_glass_monster_refresh_sources.py", line 93, in _fetch_exact
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.9505717Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.9516936Z ValueError: Retained source missing or ambiguous
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.9517534Z ok
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.9620572Z test_candidate_errors_are_not_zero_matches (test_fivetools_source_configuration.SourceConfigurationTests.test_candidate_errors_are_not_zero_matches) ... 5e.tools candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.9622233Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.9623050Z   File "python/scrying_glass_monster_selection.py", line 199, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.9623737Z     index = _fivetools_index(root)
+tests	Python test suite (including browser fixtures)	2026-11-15T09:26:15.9

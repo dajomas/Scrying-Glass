@@ -1,0 +1,32 @@
+audit checks	2026-11-15T09:31:28.3368957Z   File "/tmp/scrying-tests-b9do8pk7/repo/python/scrying_glass_monster_selection.py", line 167, in _fivetools_index
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:28.3370449Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:28.3371618Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:28.3372485Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:28.3373056Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:28.3374013Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:28.3374960Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:28.3375622Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:28.3376939Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:28.3377863Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:28.3378817Z OSError: secret 5e.tools endpoint
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:28.3379650Z Combined monster lookup: 5e.tools did not respond (secret 5e.tools endpoint)
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:28.4077901Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:28.4078543Z Ran 4 tests in 0.237s
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:28.4078709Z 
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:28.4078821Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:28.4079367Z test_combined_monster_lookup_application.py: connections opened: 15; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:28.5056476Z Connection audit: test_compact_combatant_inputs.py
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:29.1783041Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:29.1784034Z Ran 1 test in 0.535s
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:29.1784354Z 
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:29.1784556Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:29.1785583Z test_compact_combatant_inputs.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:29.2233588Z Connection audit: test_connection_lifetime_audit.py
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:30.8261295Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:30.8262818Z test_connection_lifetime_audit.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:30.8263930Z Ran 7 tests in 1.515s
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:30.8264252Z 
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:30.8264450Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:30.8436572Z Connection audit: test_damage_logic.py
+tests	Standalone Python browser and audit checks	2026-11-15T09:31:31.0724986Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit ch
