@@ -28,13 +28,17 @@ constructor; stage-two tests below must cover that distinction.
 
 Preparatory sequence (each write requires its own bound approval):
 
-1. A: shared pre-statblock fixture helper, its five regression tests and the
-   setup-lair v6 migration fixture are included in this preparation delivery.
+1. A delivered at 6f8e44dfe7e1d9de166e21d61b697d34e3c89679: shared
+   pre-statblock fixture helper, five regression tests and setup-lair v6 fixture.
    Four isolated helper tests passed locally; production-constructor helper
    test and changed setup-lair tests remain pending final covering CI.
-2. Prepare lair v5 and encounter-feature v4 migration fixtures in bounded
-   follow-up commits. Construct pre-statblock databases before removing older
-   additions; reopen using the unpatched production constructor.
+2. B: lair v5 and encounter-feature v4 migration fixtures are included in this
+   preparation delivery. Both construct pre-statblock databases before removing
+   later additions and reopen with the unpatched production constructor. V4
+   also removes the v6 lairs table. Backup checks preserve legacy versions and
+   reject residual statblock/lair tables; account values and FK checks remain.
+   These changed tests have not been run locally; final covering CI is pending.
+   [Current handover](../handover/010-scope-and-state.md#activation-preparation-b---2026-11-15).
 3. Prepare attack-statistics v7 backup and its AST-extracted resource-cleanup
    fixture without changing their assertions into weaker migration coverage.
 4. Final activation: wire upgrade_statblocks into SQLiteStorage, update every

@@ -133,6 +133,32 @@ not claimed enforced by this model-only module. README and the HANDOVER root
 index remain unchanged: delivered runtime behavior and existing index links
 are accurate; this section is already indexed by Scope and current state.
 
+## Activation preparation B - 2026-11-15
+
+[Current staging and validation](../todo/222-statblock-persistence.md) and
+[storage foundation/preparation A](240-sqlite-storage-split.md#activation-preparation-a---2026-11-15)
+supersede the earlier model-delivery progress notes above. Preparation A was
+delivered at 6f8e44dfe7e1d9de166e21d61b697d34e3c89679. Model and storage
+foundation covering CI succeeded; neither result validates this preparation.
+
+This bounded change updates only the lair-v5 and encounter-feature-v4 migration
+fixtures plus task/handover records. Both use pre_statblock_storage only while
+constructing a disposable starting database. The subsequent reopen is unpatched,
+so it exercises real production upgrades, including schema 9 once activated.
+The v4 fixture now also removes the later lairs table rather than retaining a
+hybrid schema. Backup assertions verify legacy version and absence of both
+statblock/lair tables; v4 account username/role/password_hash values and final
+foreign-key checks are preserved. Fixture connections close on preparation or
+assertion failure. Unrelated test methods and production modules are unchanged.
+
+Validation is pending: these changed tests have not been executed locally.
+Source review is not a test pass. This intermediate commit uses [skip ci] per
+the user's instruction; no workflow changes or separate dispatch. Full suites
+and connection audit run with the final activation commit without [skip ci].
+Startup remains schema 8; attack-backup preparation and final production-
+constructor activation/tests remain outstanding. README, HANDOVER and TODO root
+index links remain accurate and unchanged. 022.02b is still in progress.
+
 ## Documentation entry points
 
 - [README](../../README.md)

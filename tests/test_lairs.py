@@ -12,6 +12,7 @@ from contextlib import closing
 from unittest.mock import patch
 import test_encounter_features as feature_tests
 from test_sqlite_storage import HTTPError
+from storage_migration_fixtures import pre_statblock_storage
 from python.scrying_glass_service_lairs import LairService
 from python.scrying_glass_database_transactions import transactional_handler
 from python.scrying_glass_lair_rules import normalize_lairs
@@ -183,16 +184,19 @@ class LairTests(unittest.TestCase):
         imported=self.c.STORAGE.load_setup(result['campaign_id'],'default')
         self.assertEqual(imported['lairs'][0]['name'],'Volcano')
     def test_schema_v5_upgrade_and_backup(self):
-        path=Path(self.tmp.name)/'upgrade.sqlite3';db=SQLiteStorage(path)
-        for table in ('characters', 'monsters', 'snapshot_characters'):
-            for column in ('mechanical_version', 'reduction_stat', 'reduction_amount'):
-                db.connection.execute(f'ALTER TABLE {table}_effects DROP COLUMN {column}')
-        db.connection.execute('DROP TABLE lairs');db.connection.execute('ALTER TABLE encounters DROP COLUMN has_lair');db.connection.execute('PRAGMA user_version=5');db.close()
-        db=SQLiteStorage(path)
+        path=Path(self.tmp.name)/'upgrade.sqlite3';db=pre_statblock_storage(SQLiteStorage,path)
         try:
+            for table in ('characters', 'monsters', 'snapshot_characters'):
+                for column in ('mechanical_version', 'reduction_stat', 'reduction_amount'):
+                    db.connection.execute(f'ALTER TABLE {table}_effects DROP COLUMN {column}')
+            db.connection.execute('DROP TABLE lairs');db.connection.execute('ALTER TABLE encounters DROP COLUMN has_lair');db.connection.execute('PRAGMA user_version=5');db.close()
+            db=SQLiteStorage(path)
             self.assertEqual(db.connection.execute('PRAGMA user_version').fetchone()[0],SQLiteStorage.SCHEMA_VERSION)
             self.assertTrue(db.migration_backup.is_file())
-            with closing(sqlite3.connect(db.migration_backup)) as backup:self.assertEqual(backup.execute('PRAGMA user_version').fetchone()[0],5)
+            with closing(sqlite3.connect(db.migration_backup)) as backup:
+                self.assertEqual(backup.execute('PRAGMA user_version').fetchone()[0],5)
+                self.assertIsNone(backup.execute("SELECT 1 FROM sqlite_master WHERE name='monster_statblocks'").fetchone())
+                self.assertIsNone(backup.execute("SELECT 1 FROM sqlite_master WHERE name='lairs'").fetchone())
             self.assertEqual(list(db.connection.execute('PRAGMA foreign_key_check')),[])
         finally:db.close()
     def test_route_registration_guards(self):
