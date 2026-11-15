@@ -107,3 +107,30 @@ code changes. Intermediate [skip ci] policy remains; final Stage 3 CI is pending
 Private-only metadata changes are not detected by ordinary dictionary equality,
 and copying/restoring metadata is not implemented by these tracker-mutation tests.
 Next review the private save/normalization lifecycle before Stage 1 close-out.
+
+## Stage 2 contract-test preparation - 2026-11-15
+
+At 15:35 CET the user requested proceeding to Stage 2 validation/tests. This
+does not accept/close Stage 1 or waive its private-save/normalization gaps.
+Latest mutation-test baseline: 5ecf122b7e9a2c7decde8dd26167d93c7e4711d0.
+
+Ten tests in test_statblock_stage2_contracts.py specify reset persistence,
+checkpoint capture/reference retention, replacement restore with increasing
+revision, explicit missing-content restore, independent setup copy, scoped move,
+Save As, imported-monster binding remapping, private-only fingerprints and failed
+restore rollback. Supporting definition/reference nodes are included; assertions
+compare canonical content and independent database ownership rather than requiring
+globally distinct opaque local strings in separate snapshots.
+
+These are ordinary contract assertions, not skipped/expected-failure tests.
+Stage 2 implementation is unfinished, so several are expected from source review
+to fail until implemented; no observed failing/passing count is claimed. The
+9,286-byte source AST-parses; none of the ten tests executed. This is test
+preparation only, not a delivered recovery/copy fix or Stage 2 completion.
+
+Next implement capture/restore, explicit clearing and private-aware change
+detection, then copy/Save As/import binding propagation and independent ownership.
+Add undo, cross-campaign rejection, stale confirmation, deletion and additional
+rollback/limit tests as needed. Preserve all existing privacy and tracker-field
+contracts. Stage 3 bundles and final covering CI remain pending; intermediate
+push uses [skip ci] with no workflow change or separate dispatch.

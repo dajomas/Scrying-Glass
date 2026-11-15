@@ -193,3 +193,31 @@ checkpoint/copy/bundle preservation and local-ID remapping stay there.
 022.03-022.16 remain open/pending with their existing requirements intact.
 README runtime/capability descriptions and HANDOVER index links were reviewed
 against unchanged live identities and remain accurate; no cosmetic edits.
+
+## 022.03 Stage 2 validation preparation - 2026-11-15
+
+The user requested Stage 2 validation/tests at 15:35 CET after mutation-privacy
+test delivery 5ecf122b7e9a2c7decde8dd26167d93c7e4711d0. This advances test
+preparation, not Stage 1 acceptance. Dated 022.03-unimplemented notes above are
+history; current partial wiring and gates are in the [lifecycle task](../todo/223-statblock-lifecycle.md).
+
+Ten new contract tests specify reset, checkpoint capture/replace/explicit absence,
+copy/move/Save As, imported binding remapping, private-aware fingerprinting and
+restore rollback. A supporting-definition/reference graph exercises more than a
+header-only snapshot. Copy checks independent stored ownership and source
+immutability; restore checks increasing destination revision rather than blindly
+reusing historical revision. Move is tested as preservation of the moved existing
+encounter, not creation of a second owner. This is not complete undo/access/limit
+or HTTP/browser coverage. No production implementation changes are included.
+
+Executed: AST parsing of the 9,286-byte test file, containing ten ordinary test
+methods. Tests have not run. Source inspection identifies unfinished capture/
+restore/copy/import/fingerprint paths; expected failures are predictions, not
+observed run results. Tests have no skip/expected-failure decorators and must
+be satisfied by implementation, not suppressed. No Stage 2 or Stage 1 pass or
+completion is claimed. See the task for implementation order and remaining gates.
+
+Intermediate [skip ci] instruction remains in force until the final Stage 3
+code push. No workflow change, dispatch, schema change, deployment or merge.
+README runtime guidance and existing HANDOVER/TODO index links remain applicable
+and unchanged. 022.02 remains accepted/closed; 022.03 and overall 022 remain open.
