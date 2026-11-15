@@ -173,3 +173,33 @@ the final activation commit, whose message must omit [skip ci]. Application
 startup and SCHEMA_VERSION remain 8. TODO status stays in progress; no activation
 or whole-feature completion is claimed. README and HANDOVER index links remain
 accurate; TODO's existing persistence entry links to the updated staging record.
+
+## 022.03 Stage 1 private adapter - 2026-11-15
+
+[Lifecycle task and approved staging](../todo/223-statblock-lifecycle.md).
+022.02 remains accepted/closed at 30b8dc0885eb8445189a3520330c4f88e1da00ec;
+its schema-9 activation and green run 43713643326 attempt 1 are not changed or
+relabelled validation of this new work. Earlier schema-8 notes above are history.
+
+This first Stage 1 increment adds an opt-in PrivateEncounterStorage adapter and
+recursive public_payload utility, plus six tests. It uses a private `_statblocks`
+map keyed by encounter-scoped monster combatant IDs, canonical typed snapshots,
+transactionally captured old bindings and metadata-preserving reattachment when
+rows are rebuilt. Plain callbacks permit later nonrecursive hooks. Ordinary
+saves preserve revisions; actual replacements increment them. Graph validation
+precedes writes; failures roll back tracker edits and content. Explicit omission
+of a surviving snapshot fails closed; deletion of its monster still cascades.
+
+The adapter is trusted internal tooling, not an authorization/import budget
+boundary. Defaults allow stored content accepted under earlier larger operator
+limits; untrusted preparation/import callers must supply validated server limits.
+Projection tests verify the utility, not existing HTTP/WebSocket privacy wiring.
+No ordinary storage/service/API/transport caller is changed yet. Stage 1 wiring,
+service-path/privacy regression coverage and covering CI remain pending. Neither
+Stage 1, 022.03 nor the viewer/import feature is complete. Schema remains 9.
+
+Tests were prepared/reviewed but have not been executed locally. Normal configured
+CI applies to this code commit, without [skip ci], workflow changes or separate
+dispatch. Runtime behavior and README descriptions remain unchanged; existing
+HANDOVER index links remain valid. TODO index and the new indexed lifecycle task
+record this partial delivery and all remaining stages rather than claiming closure.
