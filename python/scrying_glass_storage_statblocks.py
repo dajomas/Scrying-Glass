@@ -1,7 +1,7 @@
-"""Production setup/runtime saves preserving existing encounter-local statblocks.
+"""Production setup/runtime saves preserving encounter-local snapshots and counters.
 
-Read projections stay unchanged. Private snapshot import/copy/restore wiring is
-not activated here, and ordinary save entry points still reject the private key.
+Read projections stay unchanged. Ordinary save entry points reject private input;
+copy/clear/restore semantics are separate trusted contracts.
 """
 import copy
 import time
@@ -19,9 +19,12 @@ class StatblockOperationsMixin(StorageOperationsMixin):
         version = self.connection.execute('PRAGMA user_version').fetchone()[0]
         if version != 9:
             return self._save_encounter(encounter, state, runtime=runtime)
+        from .scrying_glass_statblock_revisions import REVISION_FIELD
         present = self.connection.execute(
-            'SELECT 1 FROM monster_statblocks s JOIN monsters m ON m.id=s.monster_id '
-            'WHERE m.encounter_id=? LIMIT 1', (encounter,)).fetchone()
+            'SELECT 1 FROM monsters m WHERE m.encounter_id=? AND ('
+            'EXISTS(SELECT 1 FROM monster_statblocks s WHERE s.monster_id=m.id) OR '
+            'EXISTS(SELECT 1 FROM monsters_attributes a WHERE a.parent_id=m.id AND a.field_name=?)) LIMIT 1',
+            (encounter, REVISION_FIELD)).fetchone()
         if present is None or not isinstance(state.get('monsters', []), list):
             return self._save_encounter(encounter, state, runtime=runtime)
         candidate = copy.deepcopy(dict(state))

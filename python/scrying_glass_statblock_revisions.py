@@ -11,7 +11,7 @@ def _integer(value, minimum=1):
 
 
 def _ledger(row):
-    if row['value_kind'] != REVISION_KIND or row['text_value'] is not None or row['real_value'] is not None:
+    if row['value_kind'] != 'integer' or row['text_value'] != REVISION_KIND or row['real_value'] is not None:
         raise ValueError('Invalid private statblock revision ledger')
     return _integer(row['integer_value'])
 
@@ -27,9 +27,9 @@ def revision_head(db, monster):
 
 def _store(db, monster, revision):
     _integer(monster); _integer(revision)
-    db.execute('INSERT INTO monsters_attributes(parent_id,field_name,value_kind,integer_value) VALUES (?,?,?,?) '
+    db.execute("INSERT INTO monsters_attributes(parent_id,field_name,value_kind,text_value,integer_value) VALUES (?,?,'integer',?,?) "
                'ON CONFLICT(parent_id,field_name) DO UPDATE SET value_kind=excluded.value_kind,'
-               'integer_value=excluded.integer_value,text_value=NULL,real_value=NULL',
+               'text_value=excluded.text_value,integer_value=excluded.integer_value,real_value=NULL',
                (monster, REVISION_FIELD, REVISION_KIND, revision))
 
 
@@ -47,6 +47,9 @@ def record_revision(db, monster, revision):
 
 class StatblockRevisionMixin:
     """Caller owns transactions. Ordinary state never supplies or exports counters."""
+    def _statblock_revision_head(self, monster):
+        return revision_head(self.connection, monster)
+
     def _next_statblock_revision(self, monster):
         return next_revision(self.connection, monster)
 

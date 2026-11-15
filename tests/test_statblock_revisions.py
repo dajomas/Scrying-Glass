@@ -1,4 +1,4 @@
-"""Ledger unit tests and separately pending production writer integration tests."""
+"""Constrained SQLite ledger tests; production writer/rebuild validation is separate."""
 import json
 import sqlite3
 import tempfile
@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 from python import scrying_glass_statblock_revisions as subject
+from python import scrying_glass_statblock_encounters as adapter
 
 
 class RevisionLedgerTests(unittest.TestCase):
@@ -17,7 +18,8 @@ class RevisionLedgerTests(unittest.TestCase):
             INSERT INTO monsters VALUES(1),(2);
             CREATE TABLE monster_statblocks(monster_id INTEGER UNIQUE REFERENCES monsters(id) ON DELETE CASCADE,revision INTEGER);
             CREATE TABLE monsters_attributes(id INTEGER PRIMARY KEY,parent_id INTEGER NOT NULL REFERENCES monsters(id) ON DELETE CASCADE,
-                field_name TEXT NOT NULL,value_kind TEXT NOT NULL,text_value TEXT,integer_value INTEGER,real_value REAL,UNIQUE(parent_id,field_name));
+                field_name TEXT NOT NULL,value_kind TEXT NOT NULL CHECK(value_kind IN ('null','text','integer','real','boolean','present')),
+                text_value TEXT,integer_value INTEGER,real_value REAL,UNIQUE(parent_id,field_name));
         """)
 
     def test_legacy_header_bootstraps_counter(self):
@@ -69,10 +71,46 @@ class RevisionLedgerTests(unittest.TestCase):
 
     def test_counter_collision_or_corruption_fails_closed(self):
         subject.record_revision(self.db, 1, 3)
-        self.db.execute("UPDATE monsters_attributes SET value_kind='integer' WHERE parent_id=1")
+        self.db.execute('UPDATE monsters_attributes SET text_value=NULL WHERE parent_id=1')
         with self.assertRaises(ValueError): subject.revision_head(self.db, 1)
         reader = subject.StatblockRevisionMixin(); reader.connection = self.db
         with self.assertRaises(ValueError): reader._read_attributes('monsters', 1)
+
+    def counter_adapter(self):
+        storage = subject.StatblockRevisionMixin(); storage.connection = self.db
+        api = object.__new__(adapter.PrivateEncounterStorage); api.storage = storage
+        return api
+
+    def test_encoding_matches_production_kind_constraint(self):
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.db.execute('INSERT INTO monsters_attributes(parent_id,field_name,value_kind,integer_value) VALUES(?,?,?,1)',
+                            (1, subject.REVISION_FIELD, subject.REVISION_KIND))
+        subject.record_revision(self.db, 1, 7)
+        row = self.db.execute('SELECT * FROM monsters_attributes WHERE parent_id=1').fetchone()
+        self.assertEqual((row['value_kind'], row['text_value'], row['integer_value']), ('integer', subject.REVISION_KIND, 7))
+
+    def test_counter_rebinding_and_ownership_guards(self):
+        api = self.counter_adapter(); subject.record_revision(self.db, 1, 7)
+        self.db.execute('DELETE FROM monsters WHERE id=1'); self.db.execute('INSERT INTO monsters VALUES(3)')
+        api._rebind_counter(3, 1, 7)
+        self.assertEqual(subject.next_revision(self.db, 3), 8)
+        with self.assertRaises(ValueError): api._rebind_counter(3, 3, 8)
+        subject.record_revision(self.db, 2, 9)
+        with self.assertRaises(ValueError): api._rebind_counter(2, 1, 7)
+        self.assertEqual(subject.revision_head(self.db, 2), 9)
+        api.storage = type('Partial', (), {'_record_statblock_revision':lambda *args: None})()
+        with self.assertRaises(RuntimeError): api._counter_protocol()
+
+    def test_rebound_counter_and_deleted_owner_rollback_together(self):
+        api = self.counter_adapter(); subject.record_revision(self.db, 1, 7)
+        self.db.execute('BEGIN')
+        try:
+            self.db.execute('DELETE FROM monsters WHERE id=1'); self.db.execute('INSERT INTO monsters VALUES(3)')
+            api._rebind_counter(3, 1, 7)
+            self.assertEqual(subject.revision_head(self.db, 3), 7)
+        finally: self.db.execute('ROLLBACK')
+        self.assertEqual(subject.revision_head(self.db, 1), 7)
+        self.assertIsNone(self.db.execute('SELECT id FROM monsters WHERE id=3').fetchone())
 
 
 class ProductionRevisionTests(unittest.TestCase):
@@ -135,6 +173,91 @@ class ProductionRevisionTests(unittest.TestCase):
         self.api = StatblockStorage(self.storage)
         self.assertEqual(self.api.save(self.monster, self.sample(), expected_revision=0)['revision'], 2)
         self.assertEqual(self.storage.connection.execute('PRAGMA user_version').fetchone()[0], 9)
+
+    def encounter_api(self):
+        encounter = self.storage.connection.execute('SELECT encounter_id FROM battle_setups WHERE campaign_id=? AND name=?', (self.campaign, 'one')).fetchone()[0]
+        return encounter, adapter.PrivateEncounterStorage(self.storage)
+
+    def counter_only(self):
+        self.saved()
+        with self.storage.transaction():
+            self.storage.connection.execute('DELETE FROM monster_statblocks WHERE monster_id=?', (self.monster,))
+
+    def rebuild(self, table, owner_name, owner, items):
+        if table == 'monsters': self.storage.connection.execute('DELETE FROM monsters WHERE encounter_id=?', (owner,))
+        return self.original_entities(table, owner_name, owner, items)
+
+    def test_setup_counter_only_rebuild_reopen_and_next_revision(self):
+        from python.scrying_glass_statblock_storage import StatblockStorage
+        self.counter_only(); old = self.monster; encounter, api = self.encounter_api()
+        self.original_entities = self.storage._save_entities
+        with patch.object(self.storage, '_save_entities', side_effect=self.rebuild):
+            self.storage.save_setup(self.campaign, 'one', {'monsters':[{'id':'m','hp':4}]})
+        self.monster = api._rows(encounter)['m']; self.assertNotEqual(self.monster, old)
+        self.assertEqual(subject.revision_head(self.storage.connection, self.monster), 1)
+        loaded = api.load(encounter); self.assertEqual(loaded[adapter.PRIVATE_KEY], {})
+        self.assertEqual(loaded['monsters'][0]['hp'], 4)
+        self.assertNotIn(subject.REVISION_FIELD, json.dumps(loaded))
+        self.storage.close(); self.storage = self.storage.__class__(self.path); self.addCleanup(self.storage.close)
+        self.api = StatblockStorage(self.storage)
+        self.assertEqual(self.api.save(self.monster, self.sample(), expected_revision=0)['revision'], 2)
+
+    def test_runtime_counter_only_rebuild_is_separate_from_setup(self):
+        self.counter_only(); self.storage.set_value('runtime_state', {'monsters':[{'id':'m','hp':30}]})
+        db = self.storage.connection
+        encounter = db.execute('SELECT runtime_encounter_id FROM application_state WHERE id=1').fetchone()[0]
+        runtime = adapter.PrivateEncounterStorage(self.storage)
+        subject.record_revision(db, runtime._rows(encounter)['m'], 9)
+        self.original_entities = self.storage._save_entities
+        with patch.object(self.storage, '_save_entities', side_effect=self.rebuild):
+            self.storage.set_value('runtime_state', {'monsters':[{'id':'m','hp':20}]})
+        row = runtime._rows(encounter)['m']
+        self.assertEqual(subject.revision_head(db, row), 9)
+        self.assertEqual(subject.revision_head(db, self.monster), 1)
+        self.assertEqual(self.api.save(row, self.sample(), expected_revision=0)['revision'], 10)
+        self.assertIsNone(self.api.load(self.monster))
+
+    def test_reattached_snapshot_preserves_then_advances_counter_once(self):
+        self.saved(); encounter, api = self.encounter_api(); before = api.load(encounter)
+        self.original_entities = self.storage._save_entities
+        with patch.object(self.storage, '_save_entities', side_effect=self.rebuild):
+            unchanged = api.save(encounter, before)
+            self.assertEqual(unchanged[adapter.PRIVATE_KEY], before[adapter.PRIVATE_KEY])
+            unchanged[adapter.PRIVATE_KEY]['m']['source_label'] = 'Changed'
+            changed = api.save(encounter, unchanged)
+        row = api._rows(encounter)['m']
+        self.assertEqual(changed[adapter.PRIVATE_KEY]['m']['revision'], 2)
+        self.assertEqual(subject.revision_head(self.storage.connection, row), 2)
+        self.assertEqual(self.api.save(row, self.sample(), expected_revision=2)['revision'], 3)
+
+    def test_late_rebuild_failure_rolls_back_counter_and_tracker(self):
+        self.counter_only(); before = self.storage.load_setup(self.campaign, 'one')
+        self.original_entities = self.storage._save_entities
+        with patch.object(self.storage, '_save_entities', side_effect=self.rebuild), patch.object(adapter.PrivateEncounterStorage, 'load', side_effect=OSError('late refresh')):
+            with self.assertRaises(OSError):
+                self.storage.save_setup(self.campaign, 'one', {'monsters':[{'id':'m','hp':1}]})
+        self.assertEqual(self.storage.load_setup(self.campaign, 'one'), before)
+        self.assertEqual(subject.revision_head(self.storage.connection, self.monster), 1)
+        self.storage._check_foreign_keys()
+
+    def test_callback_counter_mutation_is_rejected_atomically(self):
+        self.counter_only(); original = self.storage._save_encounter
+        def mutate(encounter, state, *, runtime=False):
+            original(encounter, state, runtime=runtime)
+            subject.record_revision(self.storage.connection, self.monster, 2)
+        with patch.object(self.storage, '_save_encounter', side_effect=mutate):
+            with self.assertRaises(ValueError):
+                self.storage.save_setup(self.campaign, 'one', {'monsters':[{'id':'m','hp':1}]})
+        self.assertEqual(subject.revision_head(self.storage.connection, self.monster), 1)
+        self.assertEqual(self.storage.load_setup(self.campaign, 'one')['monsters'][0]['hp'], 12)
+
+    def test_deleted_counter_does_not_attach_to_new_identity(self):
+        self.counter_only(); self.storage.save_setup(self.campaign, 'one', {'monsters':[]})
+        self.assertEqual(self.storage.connection.execute('SELECT count(*) FROM monsters_attributes WHERE field_name=?', (subject.REVISION_FIELD,)).fetchone()[0], 0)
+        self.storage.save_setup(self.campaign, 'one', {'monsters':[{'id':'fresh','hp':5}]})
+        encounter, api = self.encounter_api(); row = api._rows(encounter)['fresh']
+        self.assertEqual(subject.revision_head(self.storage.connection, row), 0)
+        self.assertEqual(self.api.save(row, self.sample(), expected_revision=0)['revision'], 1)
 
 
 if __name__ == '__main__': unittest.main()

@@ -75,123 +75,74 @@ cancelled task, with none active or on hold.
 
 ## SG-TODO-022 model foundation - 2026-11-15
 
-[Task and design](../todo/220-admin-statblock-viewer.md) · [022.04 plan](../todo/224-fivetools-statblock-resolution.md).
-This indexed current-state subsection is the implementation continuity record for
-the first 022 delivery. These dated progress notes supersede the design close-out's
-022.02-ready status, not its approved display/model/limit contracts. 022.01 remains
-complete. The user agreed to split 022.02 into 022.02a model/validation and 022.02b
-persistence/migration. 022.02a code/tests are included in this delivery with full
-repository CI validation pending; parent 022.02 remains in progress and 022.02b
-remains pending. No statblock UI, provider adapter or persistence is delivered.
-
-New `python/scrying_glass_statblock_model.py` exposes `ModelLimits`,
-`StatblockError(code, path)`, `validate_snapshot`, `canonical_bytes` and
-`content_digest`. No storage/server import wiring, schema change, network request,
-runtime configuration change or new dependency is included. Schema remains 8.
-
-The model enforces positive integer limits with default snapshot/text/node/depth/
-definition budgets 2 MiB/64 KiB/16,384/16/256; strict fields/types, selected
-provenance, ordered positions, owner isolation, known reference targets, acyclic
-content parents, valid UTC metadata and HTTPS links without credentials. Flat
-reference cycles are allowed; source/inheritance traversal is future adapter work.
-Main facts cannot duplicate SG-owned name/species/AC/HP/initiative values, while
-supporting definitions may retain their own values. Imported strings are data,
-not HTML rendering: safe rendering still belongs to the viewer unit.
-
-Wire conventions concretized for persistence: provenance embeds ordered `credits`
-in the logical model; 022.02b must store credits in separate typed rows. Nodes have
-explicit nullable `definition_id` and `parent_local_id`; facts/warnings/provenance
-may omit their nullable owner. Optional metadata is permitted before persistence;
-supplied revisions are >=1 and timestamps use UTC Z format. A supplied digest
-must match. Partial snapshots require a warning. Unavailable supporting references
-are represented by readable text/warnings, not dangling resolved-reference nodes.
-Original source_label is provenance/import context, never a displayed SG name.
-These conventions refine the design's logical shorthand without changing its
-separate relational-table or six-field requirements.
-
-Canonical encoding orders records/children and remaps local node/definition IDs
-deterministically. The content digest excludes revision/time/digest and cannot
-include live SG fields; reference identity/content and warnings remain covered.
-Inline paragraph text is measured across formatting nodes to prevent splitting
-from bypassing the text-value allowance. Validation returns an independent copy.
-
-Validation actually executed during preparation: AST parsing and unittest discovery
-against the two exact staged files in a disposable minimal Python package, 35
-tests passed, zero failures/errors (2026-11-15). This was not a full checkout,
-application integration, persistence/migration, browser, live-provider or CI run.
-`tests/test_statblock_model.py` is discoverable by the existing main unittest CI
-step; normal push CI applies, with no skip marker or separate workflow dispatch.
-Do not mark 022.02a fully validated until covering repository results are reviewed.
-No commit SHA or workflow-run identity is invented before publication.
-
-Next: review covering CI, make any bounded corrective delivery, then 022.02b
-typed save/load/replacement, revisions/cascade, backed-up migration and initializer
-version guards with new/legacy/reopen/rollback tests. 022.03 retains lifecycle
-export/import/copy/recovery integration. Runtime configuration mapping of the
-five ModelLimits keys belongs to later server wiring; other agreed limits are
-not claimed enforced by this model-only module. README and the HANDOVER root
-index remain unchanged: delivered runtime behavior and existing index links
-are accurate; this section is already indexed by Scope and current state.
+Historical model/preparation details, original test scopes and limitations are
+preserved in the [pre-rebuild current-state record](https://github.com/dajomas/Scrying-Glass/blob/1eb80fc389519542daf6f7a2ebfead214347848b/docs/handover/010-scope-and-state.md).
+The model-only delivery supplied validation, canonical IDs/content digests and
+limits, not a usable viewer. Its schema-8/pending-persistence wording is historical.
+022.02 model/storage/startup is now accepted and closed, with reviewed activation
+CI 43713643326 attempt 1 for 28d75d08febf5b595afe8145b4097410eb987986 and the
+user's 13:48 CET sign-off. [Accepted record](../todo/222-statblock-persistence.md).
+The approved display, model, ownership, limit and backup contracts remain binding.
 
 ## Activation preparation B - 2026-11-15
 
-[Current staging and validation](../todo/222-statblock-persistence.md) and
-[storage foundation/preparation A](240-sqlite-storage-split.md#activation-preparation-a---2026-11-15)
-supersede the earlier model-delivery progress notes above. Preparation A was
-delivered at 6f8e44dfe7e1d9de166e21d61b697d34e3c89679. Model and storage
-foundation covering CI succeeded; neither result validates this preparation.
-
-This bounded change updates only the lair-v5 and encounter-feature-v4 migration
-fixtures plus task/handover records. Both use pre_statblock_storage only while
-constructing a disposable starting database. The subsequent reopen is unpatched,
-so it exercises real production upgrades, including schema 9 once activated.
-The v4 fixture now also removes the later lairs table rather than retaining a
-hybrid schema. Backup assertions verify legacy version and absence of both
-statblock/lair tables; v4 account username/role/password_hash values and final
-foreign-key checks are preserved. Fixture connections close on preparation or
-assertion failure. Unrelated test methods and production modules are unchanged.
-
-Validation is pending: these changed tests have not been executed locally.
-Source review is not a test pass. This intermediate commit uses [skip ci] per
-the user's instruction; no workflow changes or separate dispatch. Full suites
-and connection audit run with the final activation commit without [skip ci].
-Startup remains schema 8; attack-backup preparation and final production-
-constructor activation/tests remain outstanding. README, HANDOVER and TODO root
-index links remain accurate and unchanged. 022.02b is still in progress.
+Historical preparation B: a44727ef76f810ab593305033947c84eb9af26ae, lair-v5 and
+feature-v4 fixtures, backup/account/FK checks, no claimed local production pass.
+Full details remain in the linked pre-rebuild record. Later activation evidence
+and acceptance supersede its pending status, not its recorded evidence limits.
 
 ## Activation preparation C - 2026-11-15
 
-Preparation B was delivered at a44727ef76f810ab593305033947c84eb9af26ae.
-[Current staging](../todo/222-statblock-persistence.md) remains authoritative
-for per-stage delivery and pending final validation.
+Historical preparation C: 1ccd5c36afb88a99b812b79bacd5a63c7c194654, attack-v7
+backup and cleanup fixtures; three isolated resource-lifetime tests passed, not
+full startup or hosted CI. Full details remain in the linked pre-rebuild record.
+Later accepted activation supersedes its pending status. Existing anchors remain.
 
-This change prepares test_attack_statistics.py:test_v7_backup and its
-AST-extracted test_attack_statistics_cleanup.py fixture. The real migration
-test constructs a disposable v8 database via pre_statblock_storage before
-removing v8 effect columns. The reopen is unpatched, expected user_version
-comes from the storage class, and its backup must remain v7 with no statblock
-table. A finally block closes the storage even when version/backup assertions
-fail; the backup reader retains its explicit closing context.
+## 022.03 counter-only row rebuilds - 2026-11-15
 
-The resource-only MinimalStorage keeps its own SCHEMA_VERSION=8, not a copy of
-the production migration implementation. Cleanup now requires zero unclosed
-connections both on success and injected backup assertion failure. A third
-test injects failure at the upgraded-version assertion and verifies all
-connections are closed there too. Unrelated attack-statistics test methods,
-production modules, helper behavior and workflows remain unchanged.
+Baseline: 1eb80fc389519542daf6f7a2ebfead214347848b. [Current lifecycle details,
+acceptance gates and remaining work](../todo/223-statblock-lifecycle.md).
+This current-state entry supersedes earlier dated 2B.4 claims in 030 only for
+counter encoding/coordination, not accepted 022.02 or unrelated task history.
 
-Local checks: AST parsing of the changed backup method and cleanup module;
-all three cleanup tests passed with real SQLite and tracked explicit closes
-in a disposable minimal directory, using the committed helper and an isolated
-stub statblock-migration target. This is resource-lifetime validation only,
-not actual SQLiteStorage startup, a complete production migration, the full
-attack-statistics suite or hosted CI. Those remain pending final covering CI.
+Inspection found that 2B.4's custom value_kind violates the actual attribute-table
+CHECK; its eight earlier isolated passes used an incomplete fixture. Do not treat
+that result as production ledger validation. The corrected row uses supported
+integer kind, integer_value for the counter and text_value for the exact private
+version marker, with null real_value. No DDL/schema-version change or weakening
+of schema assertions. Ordinary input cannot supply the reserved field; malformed
+markers fail closed. The facade filters the row from ordinary dictionaries.
 
-This intermediate commit uses [skip ci] by the user's 13:00 instruction; no
-separate workflow dispatch. Startup stays schema 8. Final production startup
-activation/version guards and fresh/legacy/reopen/backup/failure tests remain
-pending, and the final code commit must omit [skip ci]. README and root index
-links remain accurate and unchanged. No whole-task completion is claimed.
+Setup/runtime preservation now detects counters as well as snapshots. The adapter
+captures encounter-local combatant bindings and max(header,counter) before the
+plain save, requires unchanged heads on stable rows and unowned rebuilt rows,
+and seeds counters for retained identities even without content. Snapshot ownership
+checks remain. Unchanged reattachment keeps historical content metadata; changed
+content advances once; the final counter is recorded under the same transaction.
+Counter-only monsters stay without snapshots. Removed IDs never seed other IDs.
+Partial read/record protocols fail; legacy header-only protocols do not gain clear.
+
+Executed: eleven exact isolated ledger/rebinding methods against real SQLite with
+the production value-kind CHECK, all passed. New coverage rejects the old kind,
+checks stable/foreign counter guards and partial protocols, and rolls back rebound
+counters with deleted owners. This is not a full production adapter-save pass.
+Eleven production writer/rebuild methods are prepared, not executed, including
+setup/reopen, runtime isolation, reattachment metadata, late rollback, tampering
+and deletion/new-owner separation. Header deletion is only controlled fixture
+absence, not service clearing. Four changed Python modules AST-parse. Full import,
+constructor/model/service, HTTP/WS/browser and covering CI remain pending.
+
+Configured unittest discovery covers these tests; tests.yml was read, not changed
+or dispatched. The intermediate commit uses [skip ci]; covering CI is deferred
+until final Stage 3 code. Clearing still fails closed, and arbitrary private-only
+transaction saves remain pending. 2C/2D, bundles, Stage 1/2 validation and 022.03
+acceptance remain open. No viewer/provider/listener or feature completion.
+
+README whole-tree/backup guidance, root index links and storage history were
+reviewed; no cosmetic root/index edits. Deploy matching code/data only after
+validation/acceptance. Schema remains 9 but older code lacks private-marker/filter
+handling, so do not roll code back alone over ledger-bearing data. Keep matching
+storage/config/media/code backups. No merge/deployment/release is authorized.
 
 ## Documentation entry points
 

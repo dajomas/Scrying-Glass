@@ -1,4 +1,4 @@
-"""Opt-in private encounter persistence; normal application wiring is a later increment."""
+"""Trusted encounter-local private persistence, including counter-only row rebuilds."""
 import copy
 import json
 
@@ -55,15 +55,35 @@ class PrivateEncounterStorage:
                 result[ident] = value
         return result
 
-    def _reattach(self, record, wanted, revision, policy):
-        """Insert the final metadata once after an encounter-local row rebuild.
+    def _counter_protocol(self):
+        read = getattr(self.storage, '_statblock_revision_head', None)
+        record = getattr(self.storage, '_record_statblock_revision', None)
+        if read is None and record is None:
+            return None, None
+        if not callable(read) or not callable(record):
+            raise RuntimeError('Incomplete private revision storage protocol')
+        return read, record
 
-        Caller holds the transaction, verified the combatant binding and confirmed
-        the destination has no snapshot. Never use this as a public restore API.
-        """
+    def _rebind_counter(self, record, previous_record, previous_head):
+        """Preserve destination history, never import another row's counter."""
+        read, write = self._counter_protocol()
+        if read is None:
+            return
+        current = read(record)
+        expected = previous_head if previous_record == record else 0
+        if current != expected:
+            raise ValueError('Counter ownership changed during encounter save')
+        if previous_head > current:
+            write(record, previous_head)
+
+    def _reattach(self, record, wanted, revision, policy):
+        """Insert final metadata once after a validated encounter-local rebuild."""
         from datetime import datetime, timezone
         from .scrying_glass_statblock_model import validate_snapshot, content_digest
         from .scrying_glass_statblock_storage import HEADER, _insert
+        if type(revision) is not int or not 0 < revision < 2**63:
+            raise ValueError('Invalid statblock revision')
+        read, write = self._counter_protocol()
         value = copy.deepcopy(wanted)
         value['revision'] = revision
         value.setdefault('prepared_at', datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'))
@@ -81,6 +101,8 @@ class PrivateEncounterStorage:
                 if kind == 'provenance':
                     for credit in item['credits']:
                         _insert(self.db, 'credits', parent, credit, {})
+        if write is not None:
+            write(record, max(revision, read(record)))
 
     def load(self, encounter):
         with self.storage.transaction():
@@ -115,6 +137,9 @@ class PrivateEncounterStorage:
         with self.storage.transaction():
             before_rows = self._rows(encounter)
             before = self._snapshots(before_rows)
+            read, _ = self._counter_protocol()
+            heads = {ident: read(record) if read is not None else before.get(ident, {}).get('revision', 0)
+                     for ident, record in before_rows.items()}
             if set(prepared) - (set(ids) | set(before_rows)):
                 raise ValueError('Snapshot target is outside this encounter')
             if explicit and (set(before) & set(ids)) - set(prepared):
@@ -133,13 +158,14 @@ class PrivateEncounterStorage:
                 current = self.snapshots.load(record)
                 if current is not None and (before_rows.get(ident) != record or current != previous):
                     raise ValueError('Snapshot ownership changed during encounter save')
+                self._rebind_counter(record, before_rows.get(ident), heads.get(ident, 0))
                 wanted = desired.get(ident)
                 if wanted is None:
                     continue
                 if current is not None and current['content_digest'] == wanted['content_digest']:
                     continue
                 unchanged = previous is not None and previous['content_digest'] == wanted['content_digest']
-                revision = previous['revision'] if unchanged else (previous['revision'] if previous else 0) + 1
+                revision = previous['revision'] if unchanged else heads.get(ident, 0) + 1
                 if previous is not None and current is None:
                     self._reattach(record, previous if unchanged else wanted, revision, policy)
                 else:
