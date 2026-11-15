@@ -1,0 +1,32 @@
+py
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:20.5564406Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:20.5565155Z Ran 4 tests in 5.327s
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:20.5565415Z 
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:20.5565568Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:20.5566359Z test_monster_button_layout.py: connections opened: 1; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:20.6228972Z Connection audit: test_monster_candidate_browser.py
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:28.8241970Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:28.8242655Z Ran 12 tests in 8.062s
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:28.8242825Z 
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:28.8242915Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:28.8243411Z test_monster_candidate_browser.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:28.8599901Z Connection audit: test_monster_candidate_pending_feedback.py
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.3140388Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.3141106Z Ran 8 tests in 7.317s
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.3141384Z 
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.3141533Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.3142346Z test_monster_candidate_pending_feedback.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.3478092Z Connection audit: test_monster_candidate_selection.py
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.6705799Z Combined monster lookup failed for D&D Beyond
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.6706759Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.6708195Z   File "/tmp/scrying-tests-6a4gw3a1/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.6709961Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.6711128Z   File "/tmp/scrying-tests-6a4gw3a1/repo/python/scrying_glass_monster_selection.py", line 266, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.6711841Z     lambda: dnd_candidates(context, species),
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.6712246Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.6712984Z   File "/tmp/scrying-tests-6a4gw3a1/repo/python/scrying_glass_monster_selection.py", line 66, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.6713879Z     raise ProviderError("D&D Beyond returned an invalid candidate link.")
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.6714749Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond returned an invalid candidate link.
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.6717794Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.6718420Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-15T11:16:36.6719520Z   File "/tmp/scrying-tests-6a4gw3a1/repo/python/scrying_glass_monster_selection.py", line 60,

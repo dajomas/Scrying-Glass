@@ -1,0 +1,47 @@
+/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-15T11:12:24.7219139Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-15T11:12:24.7219554Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	JavaScript tests	2026-11-15T11:12:24.7219909Z ##[endgroup]
+tests	JavaScript tests	2026-11-15T11:12:24.7334846Z ##[group]tests/admin-activity-log-clear-feedback.test.cjs
+tests	JavaScript tests	2026-11-15T11:12:25.0560978Z TAP version 13
+tests	JavaScript tests	2026-11-15T11:12:25.1244044Z # Subtest: cancel retains count confirmation, existing error and pending identity
+tests	JavaScript tests	2026-11-15T11:12:25.1252366Z ok 1 - cancel retains count confirmation, existing error and pending identity
+tests	JavaScript tests	2026-11-15T11:12:25.1253384Z   ---
+tests	JavaScript tests	2026-11-15T11:12:25.1254070Z   duration_ms: 5.047184
+tests	JavaScript tests	2026-11-15T11:12:25.1254689Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:12:25.1255231Z   ...
+tests	JavaScript tests	2026-11-15T11:12:25.1261017Z # Subtest: empty emits explicit info without confirmation, request or refresh
+tests	JavaScript tests	2026-11-15T11:12:25.1262963Z ok 2 - empty emits explicit info without confirmation, request or refresh
+tests	JavaScript tests	2026-11-15T11:12:25.1291306Z   ---
+tests	JavaScript tests	2026-11-15T11:12:25.1321398Z   duration_ms: 1.052377
+tests	JavaScript tests	2026-11-15T11:12:25.1322064Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:12:25.1322620Z   ...
+tests	JavaScript tests	2026-11-15T11:12:25.1323617Z # Subtest: empty is not server success and cannot erase a matching clear failure
+tests	JavaScript tests	2026-11-15T11:12:25.1325030Z ok 3 - empty is not server success and cannot erase a matching clear failure
+tests	JavaScript tests	2026-11-15T11:12:25.1325964Z   ---
+tests	JavaScript tests	2026-11-15T11:12:25.1326544Z   duration_ms: 1.149878
+tests	JavaScript tests	2026-11-15T11:12:25.1327177Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:12:25.1327744Z   ...
+tests	JavaScript tests	2026-11-15T11:12:25.1328811Z # Subtest: repeated empty notices replace one info record without erasing errors
+tests	JavaScript tests	2026-11-15T11:12:25.1330415Z ok 4 - repeated empty notices replace one info record without erasing errors
+tests	JavaScript tests	2026-11-15T11:12:25.1331882Z   ---
+tests	JavaScript tests	2026-11-15T11:12:25.1332486Z   duration_ms: 1.098432
+tests	JavaScript tests	2026-11-15T11:12:25.1333125Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:12:25.1333719Z   ...
+tests	JavaScript tests	2026-11-15T11:12:25.1334793Z # Subtest: confirmed clear preserves one bodyless POST and publishes before refresh
+tests	JavaScript tests	2026-11-15T11:12:25.1336237Z ok 5 - confirmed clear preserves one bodyless POST and publishes before refresh
+tests	JavaScript tests	2026-11-15T11:12:25.1337174Z   ---
+tests	JavaScript tests	2026-11-15T11:12:25.1337710Z   duration_ms: 1.915401
+tests	JavaScript tests	2026-11-15T11:12:25.1338311Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:12:25.1338842Z   ...
+tests	JavaScript tests	2026-11-15T11:12:25.1339626Z # Subtest: success reports server count with singular wording
+tests	JavaScript tests	2026-11-15T11:12:25.1340839Z ok 6 - success reports server count with singular wording
+tests	JavaScript tests	2026-11-15T11:12:25.1341662Z   ---
+tests	JavaScript tests	2026-11-15T11:12:25.1342217Z   duration_ms: 1.923667
+tests	JavaScript tests	2026-11-15T11:12:25.1351278Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:12:25.1351854Z   ...
+tests	JavaScript tests	2026-11-15T11:12:25.1352870Z # Subtest: server-confirmed zero is success, distinct from the local empty shortcut
+tests	JavaScript tests	2026-11-15T11:12:25.1354307Z ok 7 - server-confirmed zero is success, distinct from the local empty shortcut
+tests	JavaScript tests	2026-11-15T11:12:25.1355312Z   ---
+tests	JavaScript tests	2026-11-15T11:12:25.1355964Z   duration_ms: 0.957309
+tests	JavaScript te

@@ -1,0 +1,32 @@
+ser and audit checks	2026-11-15T11:18:11.3737369Z Connection audit: test_technical_documentation_split.py
+tests	Standalone Python browser and audit checks	2026-11-15T11:18:11.4635066Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-15T11:18:11.4635972Z Ran 2 tests in 0.004s
+tests	Standalone Python browser and audit checks	2026-11-15T11:18:11.4636295Z 
+tests	Standalone Python browser and audit checks	2026-11-15T11:18:11.4636496Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T11:18:11.4637506Z test_technical_documentation_split.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T11:18:11.4768632Z Connection audit: test_turn_eligibility.py
+tests	Standalone Python browser and audit checks	2026-11-15T11:18:11.7336810Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-15T11:18:11.7337574Z Ran 8 tests in 0.159s
+tests	Standalone Python browser and audit checks	2026-11-15T11:18:11.7337812Z 
+tests	Standalone Python browser and audit checks	2026-11-15T11:18:11.7337944Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T11:18:11.7341435Z test_turn_eligibility.py: connections opened: 8; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T11:18:11.7502382Z Connection audit modules: 184; failed: 0
+tests	Standalone Python browser and audit checks	2026-11-15T11:18:11.7503101Z PASS: all audited modules passed and closed their tracked connections
+tests	Standalone Python browser and audit checks	2026-11-15T11:18:11.9463003Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-15T11:18:11.9463732Z ##[group]tests/feedback_browser_fixture.py
+tests	Standalone Python browser and audit checks	2026-11-15T11:18:12.2872300Z ##[endgroup]
+tests	Post Run actions/setup-node@v4	﻿2026-11-15T11:18:12.2960718Z Post job cleanup.
+tests	Post Run actions/setup-node@v4	2026-11-15T11:18:12.4193297Z (node:35389) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-node@v4	2026-11-15T11:18:12.4194151Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/setup-python@v5	﻿2026-11-15T11:18:12.4398311Z Post job cleanup.
+tests	Post Run actions/setup-python@v5	2026-11-15T11:18:12.5634055Z Cache hit occurred on the primary key setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e, not saving cache.
+tests	Post Run actions/setup-python@v5	2026-11-15T11:18:12.5635872Z (node:35397) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-python@v5	2026-11-15T11:18:12.5637079Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/checkout@v4	﻿2026-11-15T11:18:12.5771581Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-15T11:18:12.6643524Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-15T11:18:12.6687166Z git version 2.56.1
+tests	Post Run actions/checkout@v4	2026-11-15T11:18:12.6728280Z Temporarily overriding HOME='/home/runner/work/_temp/10a9c6b7-8f5a-4f5a-a15d-81c72a9ffe9d' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-15T11:18:12.6730380Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-15T11:18:12.6734300Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-15T11:18:12.6775221Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-15T11:18:12.6830430Z [

@@ -1,0 +1,33 @@
+dalone Python browser and audit checks	2026-11-15T11:17:29.7171794Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:29.7172805Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:29.7173217Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:29.7178906Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:29.7179572Z Ran 11 tests in 0.010s
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:29.7179856Z 
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:29.7180013Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:29.7181015Z test_monster_refresh_sources.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:29.7563922Z Connection audit: test_monster_refresh_startup_browser.py
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.4260558Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.4261293Z Ran 1 test in 0.533s
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.4261545Z 
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.4261696Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.4262621Z test_monster_refresh_startup_browser.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.4555913Z Connection audit: test_monster_roll_order.py
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.5477465Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.5478403Z Ran 15 tests in 0.002s
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.5478686Z 
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.5478810Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.5479432Z test_monster_roll_order.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.5595159Z Connection audit: test_monster_roll_order_handlers.py
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.8947552Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.8948539Z test_monster_roll_order_handlers.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.8949532Z Ran 6 tests in 0.019s
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.8949903Z 
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.8950348Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:30.9355766Z Connection audit: test_monster_source_catalog.py
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:31.2778529Z Open5e document list failed
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:31.2779267Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:31.2780581Z   File "/tmp/scrying-tests-6a4gw3a1/repo/python/scrying_glass_source_catalog.py", line 31, in sources
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:31.2781759Z     catalog = open5e.documents(open5e.base_url(display))
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:31.2783334Z   File "/tmp/scrying-tests-6a4gw3a1/repo/python/scrying_glass_open5e.py", line 101, in documents
+tests	Standalone Python browser and audit checks	2026-11-15T11:17:31.2784675Z     for item in _pages(base + "/documen

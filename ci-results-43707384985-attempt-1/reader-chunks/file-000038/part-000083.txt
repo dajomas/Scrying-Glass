@@ -1,0 +1,23 @@
+ures)	2026-11-15T11:10:30.7402168Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7403267Z   File "/tmp/scrying-tests-cpyui4kd/repo/python/scrying_glass_provider_settings.py", line 67, in effective_display
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7404416Z     saved = overrides(context)
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7405371Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7406271Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7406842Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7407859Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7408857Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7409470Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7410738Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7411698Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7412188Z sqlite3.OperationalError: locked
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7412652Z ok
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7427501Z test_explicit_manual_bonus_and_unset_roll_total (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_explicit_manual_bonus_and_unset_roll_total) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7451601Z test_explicit_zero_and_blank_have_distinct_origins (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_explicit_zero_and_blank_have_distinct_origins) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7470556Z test_invalid_bonus_before_side_effects (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_invalid_bonus_before_side_effects) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7491729Z test_omitted_bonus_direct_call_default (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_omitted_bonus_direct_call_default) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7513776Z test_quantity_keeps_negative_bonus_and_unique_ids (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_quantity_keeps_negative_bonus_and_unique_ids) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7538871Z test_scope_change_during_lookup_still_rejected (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_scope_change_during_lookup_still_rejected) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7575265Z test_selected_image_snapshot_is_retained (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_selected_image_snapshot_is_retained) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:30.7595608Z test_uploaded_image_precedence_is_unchanged (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_uploaded_image_precedence_is_unchanged) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T11:10:32.0342265Z test_bonus_in_combat_statistics_without_help_and_idempotence (test_manual_monster_bonus_form.AssembledMonsterEntryTests.test_bonus_in_combat_statistics_without_help_and_idempotence) ... ok
+tests	Python test suite (includ

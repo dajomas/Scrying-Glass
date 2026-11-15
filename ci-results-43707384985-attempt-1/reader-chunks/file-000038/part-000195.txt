@@ -1,0 +1,50 @@
+group]tests/initiative-join-gate.test.cjs
+tests	JavaScript tests	2026-11-15T11:12:44.7558189Z TAP version 13
+tests	JavaScript tests	2026-11-15T11:12:44.8298997Z # Subtest: characters: blocked click reports the name and prevents join handler
+tests	JavaScript tests	2026-11-15T11:12:44.8304103Z ok 1 - characters: blocked click reports the name and prevents join handler
+tests	JavaScript tests	2026-11-15T11:12:44.8311049Z   ---
+tests	JavaScript tests	2026-11-15T11:12:44.8321444Z   duration_ms: 3.066432
+tests	JavaScript tests	2026-11-15T11:12:44.8322290Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:12:44.8322910Z   ...
+tests	JavaScript tests	2026-11-15T11:12:44.8323901Z # Subtest: monsters: blocked click reports the name and prevents join handler
+tests	JavaScript tests	2026-11-15T11:12:44.8325282Z ok 2 - monsters: blocked click reports the name and prevents join handler
+tests	JavaScript tests	2026-11-15T11:12:44.8326190Z   ---
+tests	JavaScript tests	2026-11-15T11:12:44.8326790Z   duration_ms: 0.688601
+tests	JavaScript tests	2026-11-15T11:12:44.8327459Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:12:44.8328054Z   ...
+tests	JavaScript tests	2026-11-15T11:12:44.8329028Z # Subtest: numeric initiative permits joining, including zero and negatives
+tests	JavaScript tests	2026-11-15T11:12:44.8330593Z ok 3 - numeric initiative permits joining, including zero and negatives
+tests	JavaScript tests	2026-11-15T11:12:44.8332094Z   ---
+tests	JavaScript tests	2026-11-15T11:12:44.8332708Z   duration_ms: 1.788476
+tests	JavaScript tests	2026-11-15T11:12:44.8333377Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:12:44.8333977Z   ...
+tests	JavaScript tests	2026-11-15T11:12:44.8334771Z # Subtest: leaving remains allowed without initiative
+tests	JavaScript tests	2026-11-15T11:12:44.8335809Z ok 4 - leaving remains allowed without initiative
+tests	JavaScript tests	2026-11-15T11:12:44.8336614Z   ---
+tests	JavaScript tests	2026-11-15T11:12:44.8337220Z   duration_ms: 0.650559
+tests	JavaScript tests	2026-11-15T11:12:44.8337875Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:12:44.8338468Z   ...
+tests	JavaScript tests	2026-11-15T11:12:44.8339307Z # Subtest: saved-state refresh removes blocked metadata
+tests	JavaScript tests	2026-11-15T11:12:44.8340461Z ok 5 - saved-state refresh removes blocked metadata
+tests	JavaScript tests	2026-11-15T11:12:44.8341182Z   ---
+tests	JavaScript tests	2026-11-15T11:12:44.8348181Z   duration_ms: 0.75278
+tests	JavaScript tests	2026-11-15T11:12:44.8348821Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:12:44.8349339Z   ...
+tests	JavaScript tests	2026-11-15T11:12:44.8350404Z # Subtest: bulk server rejection reaches message without consuming response
+tests	JavaScript tests	2026-11-15T11:12:44.8351683Z ok 6 - bulk server rejection reaches message without consuming response
+tests	JavaScript tests	2026-11-15T11:12:44.8352583Z   ---
+tests	JavaScript tests	2026-11-15T11:12:44.8353132Z   duration_ms: 23.308879
+tests	JavaScript tests	2026-11-15T11:12:44.8353780Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:12:44.8354358Z   ...
+tests	JavaScript tests	2026-11-15T11:12:44.8355111Z # Subtest: single join server rejection also reaches message
+tests	JavaScript tests	2026-11-15T11:12:44.8356393Z ok 7 - single join server rejection also reaches message
+tests	JavaScript tests	2026-11-15T11:12:44.8357111Z   ---
+tests	JavaScript tests	2026-11-15T11:12:44.8357604Z   duration_ms: 1.440388
+tests	JavaScript tests	2026-11-15T11:12:44.8358158Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:12:44.8358655Z   ...
+tests	JavaScript tests	2026-11-15T11:12:44.8359316Z # Subtest: non-JSON rejection uses HTTP fallback
+tests	JavaScript tests	2026-11-15T11:12:44.8360337Z ok 8 - non-JSON rejection uses HTTP fallback
+tests	JavaScript tests	2026-11-15T11:12:44.8361022Z   ---
+tests	JavaScript tests	2026-11-15T11:12:44.8361524Z   duration_ms: 1.360419
+tests	JavaScript tests	2026-11-15T11:12:44.8362120Z   type: 'test'
+tests	JavaScript 
