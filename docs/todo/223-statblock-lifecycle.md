@@ -4,93 +4,78 @@
 
 ## Status and delivery rules - 2026-11-15
 
-022.03 and overall SG-TODO-022 remain in progress; 022.02 remains accepted/
-closed. Stage 1 has not been accepted or fully validated. Approved order remains
-storage/private state, recovery/reset/copy, then bundles. All intermediate
-022.03 commits include [skip ci] by the 14:14 user instruction. Final Stage 3
-code push must omit it; no workflow changes or separate dispatch. Each write
-requires its own bound approval and relevant tests/documentation.
+SG-TODO-022.03 and overall 022 remain in progress. 022.02 stays accepted/closed.
+Stage 1 remains unvalidated/unaccepted. Approved order remains private storage,
+recovery/reset/copy, then bundles. Intermediate 022.03 commits include [skip ci];
+only the final Stage 3 code push omits it. No workflow edits or separate dispatch.
+Each write requires bound approval, implementation tests and documentation.
 
-## Baseline and retained contracts
+## Retained contracts
 
-Latest 2A delivery: b1754d78ada3e66780b0b426b8bd70483c4d3f50. Earlier adapter,
-service, privacy and contract-test history remains in linked handovers/Git,
-including ten Stage 2 contracts at 831c94249de8ef057cdcdbd0ead673d97ef98923.
-Prepared repository tests have not executed locally; AST parsing and isolated
-JSON/deepcopy checks are not model/storage/service/transport or CI passes.
+Typed snapshots remain encounter/combatant-scoped and private. Raw serialized
+_statblocks input is not trusted. PrivateEncounterState keeps metadata outside
+ordinary JSON; deepcopy retains it. Trusted stored-state validation uses permissive
+read budgets; new untrusted preparation/imports require server limits. Tracker-only
+edits preserve metadata; replacement uses destination revisions. Content digests
+exclude revision/prepared_at/itself; recovery fingerprints include those metadata.
+Ordinary omission fails closed, deletion cascades, and explicit recovery absence
+requires a separate trusted clear contract. No source/provenance promotion.
 
-Snapshots remain typed, encounter/combatant-scoped and private. Raw serialized
-_statblocks fields are not trusted. Internal PrivateEncounterState attributes
-survive deepcopy, not ordinary JSON. Stored reads use permissive budgets so
-reduced preparation settings do not erase accepted content; untrusted new
-preparation/imports require server limits. Tracker edits preserve content metadata;
-replacement revisions increase. The content digest excludes revision/time/itself.
-Ordinary save omission fails closed; explicit recovery absence needs its own
-trusted clear semantics. Deletion cascades. No source/provenance promotion.
+## Delivery history and current implementation
 
-## Stage 2 increments
+- Stage 1: normalization/filter helpers, adapter corrections, ordinary save
+  preservation, private loading and response/privacy tests supplied; covering
+  validation and acceptance still pending. Earlier handovers/Git retain details.
+- Stage 2 contracts: ten tests at 831c94249de8ef057cdcdbd0ead673d97ef98923;
+  assertions are not skipped or weakened to claim completion.
+- 2A: b1754d78ada3e66780b0b426b8bd70483c4d3f50 captures/loads checkpoint and undo
+  images with independent typed ownership, historical metadata and explicit empty
+  maps. Ten prepared tests, not executed.
+- 2B.1: 1214bed0833ee312f305ce88937dae8f7d60170f adds production private-aware
+  fingerprints and reconciliation pruning, plus an unwired full comparison helper.
+  Nine prepared tests, not executed. Older mismatching undo digests remain stale.
+- 2B.2: 5c8b4776c72a949cbecfef0f00194064a07fdc46 adds a replacement-only kernel
+  with exact stored-row/revision binding checks and atomic tracker/reference
+  writes. Nine prepared tests, not executed. It rejects surviving-content clearing.
+- 2B.3: FeaturesService.restore_state now calls that kernel for checkpoint and undo
+  recovery after the existing campaign/reference/roster validation. Internal
+  recovery metadata survives normalization, including an explicit empty map.
+  Setup destinations resolve by active campaign/name; unsaved encounters resolve
+  the singleton runtime binding. Live private metadata refreshes from saved output.
+  Existing endpoint authorization, confirmation and outer transaction still own
+  roster/runtime/audit/undo/version persistence and rollback; no new route exists.
 
-2A supplies atomic checkpoint/undo capture/read using existing relations,
-independent stored ownership, historical metadata and explicit empty maps.
-Its ten tests are prepared; restore/apply was not delivered by 2A.
+Undo may update only the immediate predecessor whose existing after_digest equals
+that exact recovery image's fingerprint, and only when restored tracker content
+and private content digests match. This accounts for fresh destination metadata;
+foreign/stale/nonmatching entries are not rewritten or made actionable. Tracker-only
+undo keeps current snapshot metadata. No general stale-digest migration is added.
 
-2B.1 adds canonical private metadata to production recovery fingerprints and
-prunes removed-monster bindings during feature reconciliation. No-content hashes
-retain the previous algorithm; logs and active-turn markers remain excluded.
-Private revisions/preparation times are intentionally included in recovery
-fingerprints even though excluded from the content digest. Nonmatching older
-undo after_digest values stay stale, not rewritten or silently accepted.
+## Validation and unfinished work
 
-A full state_changed helper also detects private differences but is not wired
-into the transaction save gate yet. Nine tests cover legacy hashes, private-only
-and metadata-only differences, canonical IDs/order, log exclusions, copy/privacy,
-invalid input and pruning. Helper/test AST parsing passed; tests have not run.
+Seven additional prepared service tests cover kernel invocation/live refresh and
+JSON projection, sequential private undo, nonmatching predecessor rejection,
+tracker-only undo metadata, rejected clearing, late save rollback and unsaved
+runtime/setup isolation. Changed method snippets and the test module AST-parse;
+no full module/server import, repository tests, HTTP/WS/browser or CI execution
+is claimed. Existing configured unittest discovery includes test_*.py; no workflow
+changes or separate dispatch. Final Stage 3 covering CI remains pending.
 
-Remaining 2B: trusted replacement/clear restoration, metadata-preserving
-normalization, destination revision policy, transaction private-save integration
-and live-metadata refresh. Do not merely activate comparison while ordinary
-saves still ignore private attributes. Add undo, stale/cross-campaign/absence,
-deletion/replacement and failure/rollback coverage.
+Remaining 2B: coordinated durable counter/clear/all-writer behavior; complete
+service and transaction private-save integration for arbitrary private-only edits;
+undo/absence/stale/scope/restart/limits and rollback validation. Merely activating
+the full comparison helper is insufficient while ordinary saves ignore attributes.
+The explicit-empty checkpoint contract still fails closed until clearing exists.
+This production replacement wiring is not completion or acceptance of 2B/Stage 2.
 
-2C: setup copy/Save As with independent ownership/revisions and unchanged source,
-move preservation, canonical reference integrity and rollback. 2D: selected/
-life-filtered imported-monster binding remapping and independent clone revisions.
-Local strings are snapshot-scoped; stored ownership must remain independent.
+2C: independent setup copy/Save As ownership/revisions and source immutability,
+move preservation, canonical references and rollback. 2D: selected/life-filtered
+import binding remapping and independent clone revisions. Local IDs are snapshot-
+scoped, not shared stored ownership. Stage 3: bundle representation, aggregate/
+snapshot/member limits, malformed input, untrusted provenance and rollback; no
+silent 10 MiB manifest/archive loss. All remain pending.
 
-## Open gates
-
-- Stage 1: private save/normalization review and covering service, storage,
-  migration/restart, limits and HTTP/WS privacy execution. Prepared fixture apps
-  are not full registration/startup/password-login/network/browser coverage.
-- Stage 2: complete and satisfy reset, checkpoint/undo, explicit absence, copy/
-  move/Save As, import remapping and private-only changes. Remaining contracts
-  can still fail; no assertions are skipped or weakened to claim completion.
-- Stage 3: bundle representation, aggregate/snapshot/member limits, malformed
-  data, untrusted provenance and rollback; no silent 10 MiB manifest/archive loss.
-
-Covering final Stage 3 CI and acceptance remain pending. No schema/migration,
-viewer/provider/listener, merge, deployment, release or whole-feature closure.
-
-## Increment 2B.2 replacement kernel
-
-2B.1 baseline: 1214bed0833ee312f305ce88937dae8f7d60170f. The new internal
-restore_encounter primitive accepts only PrivateEncounterState recovery images,
-validates graphs before writes, checks exact encounter-local stored-row/revision
-bindings, and restores tracker/reference content in one transaction. Historical
-revision fields are stripped before the normal destination revision policy runs;
-identical content retains current metadata. Monster removal still cascades.
-
-This is replacement-only and is not wired into FeaturesService restoration. It
-rejects clearing surviving content before tracker writes, rather than silently
-retaining the wrong snapshot. Coordinated durable counters across clearing and
-all private writers remain required before enabling that case. No counter/ledger
-prototype is delivered by this increment. Callers must still authorize campaign/
-recovery ownership, validate global confirmation revision, persist character
-rosters and assign refreshed live state within their protected operation.
-
-Nine tests cover historical replacement/tracker values, same-content metadata,
-clear rejection, stale/foreign bindings, failed-write rollback, deletion, raw
-dictionary rejection and invalid graphs. Kernel/test sources AST-parse (2,960/
-5,251 bytes); tests have not run. No restoration-service, ledger, HTTP/WS or CI
-pass/completion claimed. Remaining 2B service/normalization/save wiring and
-clearing, 2C/2D and Stage 3 stay open under the same deferred-CI policy.
+Stage 1 still needs covering service/storage/migration/restart/limit/HTTP/WS privacy
+execution; fixture apps do not prove full startup/authenticated/browser behavior.
+No viewer/provider/listener, schema/migration, merge/deployment/release or overall
+feature completion is implied. README and root index links remain applicable.

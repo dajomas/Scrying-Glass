@@ -196,123 +196,72 @@ against unchanged live identities and remain accurate; no cosmetic edits.
 
 ## 022.03 Stage 2 validation preparation - 2026-11-15
 
-The user requested Stage 2 validation/tests at 15:35 CET after mutation-privacy
-test delivery 5ecf122b7e9a2c7decde8dd26167d93c7e4711d0. This advances test
-preparation, not Stage 1 acceptance. Dated 022.03-unimplemented notes above are
-history; current partial wiring and gates are in the [lifecycle task](../todo/223-statblock-lifecycle.md).
-
-Ten new contract tests specify reset, checkpoint capture/replace/explicit absence,
-copy/move/Save As, imported binding remapping, private-aware fingerprinting and
-restore rollback. A supporting-definition/reference graph exercises more than a
-header-only snapshot. Copy checks independent stored ownership and source
-immutability; restore checks increasing destination revision rather than blindly
-reusing historical revision. Move is tested as preservation of the moved existing
-encounter, not creation of a second owner. This is not complete undo/access/limit
-or HTTP/browser coverage. No production implementation changes are included.
-
-Executed: AST parsing of the 9,286-byte test file, containing ten ordinary test
-methods. Tests have not run. Source inspection identifies unfinished capture/
-restore/copy/import/fingerprint paths; expected failures are predictions, not
-observed run results. Tests have no skip/expected-failure decorators and must
-be satisfied by implementation, not suppressed. No Stage 2 or Stage 1 pass or
-completion is claimed. See the task for implementation order and remaining gates.
-
-Intermediate [skip ci] instruction remains in force until the final Stage 3
-code push. No workflow change, dispatch, schema change, deployment or merge.
-README runtime guidance and existing HANDOVER/TODO index links remain applicable
-and unchanged. 022.02 remains accepted/closed; 022.03 and overall 022 remain open.
+Ten unchanged Stage 2 contract tests at 831c94249de8ef057cdcdbd0ead673d97ef98923
+specify reset, capture/restore/absence, copy/move/Save As, import remapping, private
+fingerprints and rollback. They are not skips/expected failures and have not run
+in this work. Stage 1 remains unvalidated. [Full historical preparation details](https://github.com/dajomas/Scrying-Glass/blob/5c8b4776c72a949cbecfef0f00194064a07fdc46/docs/handover/030-validation-and-next-steps.md)
+retain exact earlier AST byte counts, test scopes and limitations; the following
+summaries consolidate only this task's Stage 2 history, retaining section anchors.
 
 ## 022.03 Increment 2A recovery capture - 2026-11-15
 
-Contract baseline: 831c94249de8ef057cdcdbd0ead673d97ef98923. Increment 2A
-wires FeatureStorage capture/load for both checkpoint and undo images to typed
-private content. A new recovery helper validates internal attribute maps before
-the capture transaction and inserts independent snapshot rows using the existing
-typed writers. Captured historical revision/time/digest are retained, not reset
-or confused with the later current-destination restore revision policy.
-
-FeatureStorage.save_snapshot now owns a transaction/savepoint covering encounter,
-metadata, tracker rows, private graph, character snapshot rows and pruning. Load
-owns a consistent scoped transaction; campaign/kind/ID rejection precedes private
-reads. Explicit empty recovery maps are retained even with no statblock rows.
-Ordinary serialized private fields are not accepted as trusted capture input.
-Pre-statblock empty reads are compatible; private writes still require schema 9.
-No new relations, migration, auth policy, HTTP payload or listener is introduced.
-
-Ten prepared regression methods cover checkpoint/undo full metadata and reference
-round trips, explicit absence without source guessing, independent ownership,
-invalid-graph/raw-field rejection, late-write and nested rollback, scope/ID guards,
-pruning/deletion cascades and text above default preparation limits. Executed
-checks: AST parsing for helper (2,347 bytes), storage module (7,641 bytes) and
-tests (8,000 bytes). Tests have not executed; no live model/storage/service/HTTP/
-WS/browser or CI pass is claimed. Existing Stage 2 contract tests are unchanged.
-
-2A does not implement restore/apply, explicit live-content clearing, fingerprints
-or private-only change detection, setup copy/Save As or import remapping. Those
-remain 2B-2D and some existing contracts can still fail until implemented. Capture
-code delivery is distinct from validation or Stage 1/2 acceptance. Final Stage 3
-covering CI remains pending; intermediate message includes [skip ci] by instruction.
-No workflow change/dispatch, merge, deployment, release or whole-feature closure.
-
-The lifecycle task is consolidated without removing remaining gates; earlier
-preparation history stays in handovers/Git. README and root-index identities were
-verified unchanged and remain applicable; deploy the complete matching Python
-tree only after the staged feature's required validation/acceptance.
+b1754d78ada3e66780b0b426b8bd70483c4d3f50 provides typed checkpoint/undo
+capture/load with independent owners, historical metadata and explicit empty maps,
+scoped consistent reads, transaction/savepoint rollback and pruning/cascades.
+Ten prepared tests were AST-parsed, not executed. Ordinary serialized private input
+is not trusted. Capture is not restore/apply or full Stage 2 acceptance.
 
 ## 022.03 Increment 2B.1 fingerprints - 2026-11-15
 
-2A baseline: b1754d78ada3e66780b0b426b8bd70483c4d3f50. This bounded first
-2B increment routes production recovery fingerprints through canonical validated
-private metadata and prunes removed-monster bindings at feature reconciliation.
-Legacy no-content hashes retain their algorithm; activity logs/turn markers stay
-excluded. Recovery hashes intentionally include private revision/prepared_at,
-unlike the content digest. Equivalent snapshot-local IDs/order canonicalize alike.
-Older undo after_digest values that no longer match are stale, not rewritten.
-
-A private-aware full comparison helper is supplied for the later transaction
-save integration, not activated in the save gate here. Restore/apply, explicit
-clearing, metadata-preserving restore normalization, destination revisions and
-private writes/live-metadata refresh remain pending. Merely detecting private
-changes is not sufficient to claim they persist through ordinary saves.
-
-Nine prepared tests cover legacy hashes, private-only/metadata differences,
-canonical IDs/order, log exclusions, copy/privacy isolation, bad input and pruning.
-Executed: helper/test AST parsing (1,782 and 5,374 bytes). Tests have not executed;
-no repository/model/storage/service/transport/CI pass claimed. No new schema,
-auth policy, public snapshot payload, workflow edit/dispatch or deployment.
-
-The task is condensed with prior history retained here/Git and all unfinished
-gates explicit. Existing README/index guidance remains applicable. Intermediate
-[skip ci] remains required; covering final Stage 3 CI and acceptance are pending.
-Stage 1, Stage 2 and 022.03 are not complete or accepted by this delivery.
+1214bed0833ee312f305ce88937dae8f7d60170f routes recovery fingerprints through
+canonical private metadata and prunes removed bindings. No-content hashes retain
+the legacy algorithm; logs/turn markers stay excluded, revisions/times included.
+Nine prepared tests were AST-parsed, not executed. The full comparison helper
+remains unwired for arbitrary private-only transaction persistence. Older stale
+undo digests are not automatically migrated.
 
 ## 022.03 Increment 2B.2 replacement kernel - 2026-11-15
 
-Baseline: 1214bed0833ee312f305ce88937dae8f7d60170f. The new internal kernel
-accepts validated PrivateEncounterState recovery images and checks exact
-encounter-local row/revision descriptors under the write transaction. It removes
-historical revision fields before invoking the existing destination writer. Changed
-content receives the current destination's next revision; identical content keeps
-current metadata. Tracker and reference writes roll back together on failure.
-Deleting a monster still cascades, but surviving-content clearing is rejected
-before tracker writes. This is not production FeaturesService restoration wiring.
+5c8b4776c72a949cbecfef0f00194064a07fdc46 supplies an internal replacement-only
+kernel, stored-row/revision checks and atomic tracker/reference writes. Historical
+revisions do not replace destination revisions; unchanged content keeps metadata.
+Nine prepared tests were AST-parsed, not executed. Surviving-content clearing is
+rejected before tracker writes; durable counters and all-writer coordination remain
+pending. Counter/ledger prototypes were not delivered. No production service was
+wired by 2B.2. Source/caller authorization and confirmation remain service duties.
 
-Clearing exposed a dependency: durable revision counters must be honored by all
-private writers to avoid reusing an old revision after a clear. Ledger/counter
-prototypes were explored during preparation but are not part of this write. The
-first bounded kernel deliberately fails closed for unsupported absence instead
-of claiming safe clearing. Coordinated counter/clear/writer behavior, service
-authorization/confirmation, character-roster persistence, live-state refresh and
-transaction save-gate integration remain pending. No new HTTP restore channel.
+## 022.03 Increment 2B.3 production restoration - 2026-11-15
 
-Nine prepared tests cover historical replacement, unchanged metadata, rejected
-clearing, stale/foreign bindings, failed content-write rollback, monster deletion,
-raw input and invalid graphs. Executed: AST parsing of kernel/test source (2,960
-and 5,251 bytes). Tests have not run; no model/storage/service/HTTP/WS/browser/CI
-pass claimed. No schema, migration, auth-policy or workflow changes. Existing
-Stage 2 contract assertions remain unchanged and can still fail until completion.
+Baseline: 5c8b4776c72a949cbecfef0f00194064a07fdc46. FeaturesService now passes
+trusted recovery images through the kernel for both checkpoint restore and undo.
+The existing campaign/reference/retained-roster checks still precede writes.
+Normalization retains private metadata via an explicit internal carrier, including
+empty maps. The destination is the campaign/name setup or singleton unsaved-runtime
+encounter, never a recovery row. Saved private metadata refreshes live state only
+after kernel success; outer production transactions still own roster/runtime saves,
+audit, history, feature revisions and memory/DB rollback. No new HTTP route,
+permission policy, schema/migration, provider or workflow is introduced.
 
-The existing lifecycle task records the bounded scope and remaining gates.
-README and index guidance remain applicable. This intermediate commit contains
-[skip ci]; final Stage 3 covering validation and Stage 1/2 acceptance remain open.
-No merge, deployment, release or whole-feature completion is implied.
+Repeated private restores advance destination revisions. Undo therefore rebases
+only the immediate predecessor whose old after_digest matches the exact recovery
+image, and only if restored tracker fields and private content digests match that
+image. The SQL update is ID/campaign/kind/old-digest guarded and stays inside the
+outer transaction. Nonmatching stale/foreign history stays stale; this is not a
+general rewrite of older undo digests. Tracker-only undo preserves metadata.
+
+Seven new regression methods cover kernel invocation/live refresh/JSON projection,
+sequential private undo, mismatching predecessor rejection, tracker-only metadata,
+clear rejection, late runtime-save rollback and unsaved runtime/setup isolation.
+Executed: AST parsing of the two changed method snippets and new test module.
+These tests have not run; no full-module/server import, model/storage/service,
+authenticated HTTP/WS/browser or covering CI pass is claimed. Existing CI unittest
+discovery includes the file, but this intermediate [skip ci] push intentionally
+defers covering execution until the final Stage 3 code push. No separate dispatch.
+
+Surviving-content clearing still fails closed with a conflict; the explicit-absence
+contract is not claimed satisfied. Durable counter/clear/all-writer handling,
+arbitrary private-only transaction save integration, expanded scope/restart/limit/
+rollback execution, 2C/2D and Stage 3 remain open. Stage 1/2/022.03 are not complete
+or accepted. README deployment guidance and existing root index links remain
+applicable; deploy the matching complete tree only after required validation and
+acceptance. No merge, deployment, release or whole-feature closure is implied.

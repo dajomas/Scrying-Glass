@@ -54,6 +54,10 @@ class FeaturesService:
         normalize_features(target);return target
     async def persist(self): await self.context.combatants_changed(monsters=True,characters=True)
     def restore_state(self,state):
+        from .scrying_glass_statblock_loading import PrivateEncounterState
+        from .scrying_glass_statblock_recovery import prepare_capture
+        from .scrying_glass_statblock_restore import restore_bindings, restore_encounter
+        from .scrying_glass_statblock_encounters import PRIVATE_KEY
         ref=state.get('active_setup')
         if ref and (str(ref['campaign_id'])!=str(self.context.active_campaign()) or not self.context.STORAGE.setup_exists(ref['campaign_id'],ref['name'])):
             raise self.context.HTTPException(409,'Referenced setup no longer exists')
@@ -68,20 +72,56 @@ class FeaturesService:
             if name != replaced_name
         }
         try:
-            validate_roster_setup_ids(
-                candidate['characters'], retained_setups, label='Restored roster',
-            )
+            validate_roster_setup_ids(candidate['characters'], retained_setups, label='Restored roster')
         except ValueError as exc:
             raise self.context.HTTPException(409, str(exc)) from exc
+        if not isinstance(state, PrivateEncounterState):
+            raise self.context.HTTPException(422,'Restoration requires an internal private recovery image')
         candidate['activity_log']=copy.deepcopy(self.context.STATE.get('activity_log',[]))
+        image = PrivateEncounterState(candidate, state._statblocks)
+        try: prepare_capture(image)
+        except ValueError as exc: raise self.context.HTTPException(422,str(exc)) from exc
+        storage = self.context.STORAGE
+        try:
+            with storage.transaction():
+                if reference:
+                    row = storage.connection.execute(
+                        'SELECT encounter_id FROM battle_setups WHERE campaign_id=? AND name=?',
+                        (campaign, reference['name'])).fetchone()
+                    if row is None: raise ValueError('Referenced setup no longer exists')
+                    encounter = row[0]
+                else:
+                    row = storage.connection.execute('SELECT runtime_encounter_id FROM application_state WHERE id=1').fetchone()
+                    if row is None: raise ValueError('Runtime binding is missing')
+                    encounter = row[0]
+                    if encounter is None:
+                        encounter = storage.connection.execute('INSERT INTO encounters DEFAULT VALUES').lastrowid
+                        storage.connection.execute('UPDATE application_state SET runtime_encounter_id=? WHERE id=1', (encounter,))
+                bindings = restore_bindings(storage, encounter, [item['id'] for item in candidate['monsters']])
+                saved = restore_encounter(storage, encounter, image, expected_bindings=bindings, runtime=reference is None)
+                candidate = PrivateEncounterState(candidate, saved[PRIVATE_KEY])
+        except ValueError as exc:
+            raise self.context.HTTPException(409,str(exc)) from exc
         self.context.STATE=candidate
     async def undo(self,body):
         top=self.store.latest_undo(self.context.active_campaign())
         if not top: raise self.context.HTTPException(409,'Nothing to undo')
         if type(body.get('id')) is not int or body['id']!=top['id'] or top['after_digest']!=fingerprint(self.context.STATE): raise self.context.HTTPException(409,'Encounter changed; refresh before undoing')
-        self.restore_state(self.store.load(top['id'],self.context.active_campaign(),'undo'))
+        image = self.store.load(top['id'],self.context.active_campaign(),'undo')
+        self.restore_state(image)
         self.store.delete(top['id'],self.context.active_campaign(),'undo');self.log('undo',note=top['name'])
-        await self.persist();return {'undone':top['name']}
+        await self.persist()
+        # Only rebase a predecessor proven to describe this exact recovery target.
+        predecessor = self.store.latest_undo(self.context.active_campaign())
+        expected = fingerprint(image); actual = fingerprint(self.context.STATE)
+        if predecessor and predecessor['after_digest'] == expected and actual != expected:
+            before_content = {key:value['content_digest'] for key,value in image._statblocks.items()}
+            after_content = {key:value['content_digest'] for key,value in self.context.STATE._statblocks.items()}
+            if before_content == after_content and fingerprint(dict(image)) == fingerprint(dict(self.context.STATE)):
+                self.store.db.execute(
+                    "UPDATE encounter_snapshots SET after_digest=? WHERE id=? AND campaign_id=? AND kind='undo' AND after_digest=?",
+                    (actual, predecessor['id'], self.context.active_campaign(), expected))
+        return {'undone':top['name']}
     async def edit_features(self,ident,body):
         allowed={'temp_hp','life_state','death_successes','death_failures','concentrating','hp_delta','absorb_temp'}
         if not isinstance(body,dict) or set(body)-allowed or not body: raise self.context.HTTPException(422,'Invalid feature fields')
