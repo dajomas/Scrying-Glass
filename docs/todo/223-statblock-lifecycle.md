@@ -50,3 +50,21 @@ existing HTTP/WebSocket response boundaries have been integrated or tested.
 Keep 022.03 and overall SG-TODO-022 open until all agreed stages, covering CI and
 acceptance are satisfied. No provider adapter, statblock UI or listener is added
 by this increment. No new migration, merge, deployment or release operation.
+
+## Helper increment and CI deferral - 2026-11-15
+
+The user's 14:14 instruction supersedes normal-CI wording above for intermediate
+022.03 pushes: use [skip ci] until the final Stage 3 code push, which must omit
+it. Do not modify workflows or separately dispatch CI.
+
+This bounded increment adds scrying_glass_statblock_state.py and four tests in
+test_statblock_state.py. Helpers reject the reserved key in ordinary input,
+validate separately supplied snapshots against normalized monster identities,
+and recursively project private keys out of copied payloads. Invalid falsey
+maps are rejected rather than silently treated as empty. This does not activate
+application normalization, storage, responses or transports. Adapter corrections
+and production wiring remain Stage 1 work, not delivered fixes in this commit.
+
+The four repository tests are prepared, not executed. Earlier disposable stub
+experiments are not evidence that these exact tests or the real model passed.
+Full model/storage/service/privacy and covering CI validation remain pending.

@@ -203,3 +203,24 @@ CI applies to this code commit, without [skip ci], workflow changes or separate
 dispatch. Runtime behavior and README descriptions remain unchanged; existing
 HANDOVER index links remain valid. TODO index and the new indexed lifecycle task
 record this partial delivery and all remaining stages rather than claiming closure.
+
+## 022.03 helper restaging - 2026-11-15
+
+This increment adds opt-in normalization/projection helpers and four focused
+repository tests. It validates separately supplied private snapshots against
+normalized monster IDs and keeps them outside tracker records. Ordinary input
+cannot supply the reserved envelope. Response projection recursively strips it
+without mutating source payloads. These utilities are not production wiring,
+authorization, trusted stored-state policy, or adapter corrections. See the
+[lifecycle task](../todo/223-statblock-lifecycle.md) for remaining Stage 1 gates.
+
+The four tests are prepared, not executed; earlier stub experiments do not
+validate these exact tests or the live model. Prior conversation overstated that
+evidence. Adapter revision/digest and row-ownership concerns still require
+verification against the real repository before fixes or integration are claimed.
+
+The user's 14:14 instruction supersedes earlier normal-CI wording for remaining
+intermediate 022.03 pushes: include [skip ci] until the final Stage 3 code push,
+which must omit it. No workflow modification or separate dispatch. Validation
+and acceptance remain pending. Earlier blocked helper writes changed no files.
+README runtime guidance and existing index links remain applicable and unchanged.
