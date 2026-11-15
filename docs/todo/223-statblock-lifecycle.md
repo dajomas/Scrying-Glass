@@ -71,3 +71,22 @@ for these tests, the real model or production services. Covering CI is pending.
 
 All stages, final covering CI and acceptance remain open. No schema change,
 migration, merge, deployment, release or whole-feature completion is claimed.
+
+## HTTP/WebSocket privacy validation preparation - 2026-11-15
+
+Service loading was pushed in 737bd81b2400cef6d172429a88feaeffd24f22e4.
+Seven in-process ASGI regression methods are prepared for ordinary Admin HTTP,
+live/saved Client HTTP, auth/grant error responses, WS initial/resync/heartbeat,
+broadcast/revocation, denied selections, and unauthenticated/cross-origin WS.
+They seed distinct private markers in real SQLite snapshots and load through
+production services, mount production handlers/auth/serialization in small test
+apps, and check public identity/HP filtering as positive controls. They do not
+construct the full application or run password login, lifespan or network servers.
+
+Test source AST parsing passed. FastAPI import failed in the preparation
+environment, so none of these transport tests executed. Four isolated checks
+of the exact state-class body passed for standard-library JSON omission,
+metadata presence, deepcopy retention and independence; these are not transport,
+model/storage integration or repository-suite evidence. No privacy leak was
+confirmed or ruled out by execution. Final Stage 3 CI and Stage 1 review remain
+pending; no production auth/routes/projections or workflow changes here.
