@@ -64,13 +64,16 @@ class PersistenceService:
     ) -> dict[str, Any]:
         """Load encounter data without reviving historical runtime turns."""
         import copy
+        from .scrying_glass_statblock_loading import load_setup_private, carry_private
 
         campaign = self.context.require_campaign(campaign)
         name = self.context.setup_slug(name)
         try:
-            raw = self.context.STORAGE.load_setup(campaign, name)
+            raw = load_setup_private(self.context.STORAGE, campaign, name)
         except FileNotFoundError as exc:
             raise self.context.HTTPException(404, "Saved setup not found") from exc
+        except ValueError as exc:
+            raise self.context.HTTPException(400, f"Unable to load setup: {exc}") from exc
 
         if not isinstance(raw, dict):
             raise self.context.HTTPException(
@@ -119,7 +122,7 @@ class PersistenceService:
         candidate.pop("active_turn_id", None)
 
         try:
-            return self.context.normalize_state(candidate)
+            return carry_private(candidate, self.context.normalize_state(candidate))
         except ValueError as exc:
             raise self.context.HTTPException(
                 400,
@@ -130,6 +133,7 @@ class PersistenceService:
         """Restore an encounter completely, or fail without replacing live state."""
         import copy
         import logging
+        from .scrying_glass_statblock_loading import load_setup_private, load_runtime_private, carry_private
 
         logger = logging.getLogger(__name__)
 
@@ -142,12 +146,17 @@ class PersistenceService:
                 f"Unable to load the active campaign roster: {detail}"
             ) from exc
 
-        if self.context.STORAGE.get_value("runtime_state") is None:
+        try:
+            saved = load_runtime_private(self.context.STORAGE)
+        except ValueError as exc:
+            raise RuntimeError(f"Unable to restore private runtime state: {exc}") from exc
+
+        if saved is None:
             candidate = copy.deepcopy(self.context.STATE)
             candidate["characters"] = characters
 
             try:
-                normalized = self.context.normalize_state(candidate)
+                normalized = carry_private(candidate, self.context.normalize_state(candidate))
             except ValueError as exc:
                 raise RuntimeError(
                     f"Unable to initialize encounter state: {exc}"
@@ -156,7 +165,6 @@ class PersistenceService:
             self.context.STATE = normalized
             return
 
-        saved = self.context.STORAGE.get_value("runtime_state")
         if not isinstance(saved, dict):
             raise RuntimeError("Persisted runtime state must be an object")
 
@@ -212,9 +220,11 @@ class PersistenceService:
                 ) from exc
 
             try:
-                setup = self.context.STORAGE.load_setup(campaign, name)
+                setup = load_setup_private(self.context.STORAGE, campaign, name)
             except FileNotFoundError as exc:
                 raise RuntimeError(f"Referenced setup is missing: {campaign}/{name}") from exc
+            except ValueError as exc:
+                raise RuntimeError(f"Unable to load private setup state: {exc}") from exc
 
             setup_monsters = setup.get("monsters", [])
             if not isinstance(setup_monsters, list):
@@ -225,6 +235,7 @@ class PersistenceService:
 
             if not working_monsters:
                 candidate["monsters"] = copy.deepcopy(setup_monsters)
+                candidate = carry_private(setup, candidate)
 
             candidate["active_setup"] = {
                 "campaign_id": campaign,
@@ -286,7 +297,7 @@ class PersistenceService:
         candidate.pop("active_turn_id", None)
 
         try:
-            normalized = self.context.normalize_state(candidate)
+            normalized = carry_private(candidate, self.context.normalize_state(candidate))
         except ValueError as exc:
             raise RuntimeError(
                 f"Unable to restore encounter state: {exc}"

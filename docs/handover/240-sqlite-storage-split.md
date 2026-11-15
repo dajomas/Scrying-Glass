@@ -278,3 +278,36 @@ mixin as well as the existing adapter/model/storage modules. README already
 requires the complete tree and remains accurate; index links remain unchanged.
 Stage 1 and 022.03 remain in progress. Earlier unwired notes are historical and
 superseded only for ordinary setup/runtime save preservation by this increment.
+
+## 022.03 production private loading - 2026-11-15
+
+Save-preservation baseline: c76f2e1a6ccf85b3a172418839ba8db7c6104d45.
+PersistenceService now uses trusted setup/runtime loaders and carries validated
+private metadata through its normalization paths. Setup authorization precedes
+reads. SQLite resolves the exact owner and checks tracker/private consistency
+inside a transaction. Empty-runtime setup fallback takes both monsters and
+metadata from that setup; nonempty runtime retains runtime metadata. Failed
+restoration does not replace STATE. Loading an import source has no live-state
+side effect. Non-SQLite test doubles retain the plain storage protocol.
+
+PrivateEncounterState is dict-compatible with a private _statblocks attribute,
+not a serialized dictionary key or monster field. Deepcopy retains this metadata,
+ordinary JSON and existing public/display projections do not expose it. This
+loading-only representation differs from the opt-in adapter's explicit map; it
+is not a new untrusted write channel or complete lifecycle serialization format.
+Trusted read validation uses permissive stored-content budgets, not current
+untrusted preparation defaults. No provider/network fallback or new auth policy.
+
+Seven service tests are prepared for setup/privacy/deepcopy, fallback, runtime
+precedence, unsaved restart/save, reduced-default compatibility, failed reads,
+and source-load isolation. The helper and test source AST-parse. Tests were not
+executed; no real service/model/SQLite/HTTP/WebSocket/browser/CI pass is claimed.
+Existing JSON recovery, copy/Save As, out-of-path normalization and bundles do
+not yet preserve this attribute; Stage 2/3 must explicitly handle those cases.
+Do not describe the feature or Stage 1 as complete or ready for deployment.
+
+The lifecycle TODO is consolidated with explicit retained remaining gates and
+commit history. Existing handover history, README runtime guidance and index
+links remain unchanged. Deploy matching complete python files only after the
+staged feature's required validation/acceptance. This intermediate commit uses
+[skip ci]; final Stage 3 covering CI and acceptance remain pending.

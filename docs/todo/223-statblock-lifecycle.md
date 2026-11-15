@@ -2,109 +2,72 @@
 
 [Back to TODO index](../../TODO.md) · [Parent contract](220-admin-statblock-viewer.md) · [Storage handover](../handover/240-sqlite-storage-split.md#02203-stage-1-private-adapter---2026-11-15)
 
-## Task and staging - 2026-11-15
+## Status and agreed staging - 2026-11-15
 
-SG-TODO-022.03 is in progress. The user approved the staged delivery order at
-13:59 CET: (1) storage/private state, (2) recovery/reset/copy, (3) bundles.
-Each stage may use bounded commits with its tests/documentation and its own
-write approval. Normal CI applies to code commits; the earlier 022.02 skip-CI
-sequence ended at activation. 022.02 remains accepted and closed.
+SG-TODO-022.03 and overall SG-TODO-022 remain in progress. 022.02 remains
+accepted/closed. Approved delivery order: (1) storage/private state,
+(2) recovery/reset/copy, (3) bundles. Each bounded commit requires its own
+complete write approval, tests and documentation. Under the user's 14:14
+instruction all intermediate 022.03 pushes use [skip ci]; the final Stage 3
+code push must omit it. No workflow edits or separate CI dispatch.
 
-Stage 1 first increment includes an opt-in PrivateEncounterStorage adapter,
-recursive private-payload projection and six regression tests. Covering CI is
-pending; tests were prepared/reviewed, not executed locally. Normal application
-storage, StateService normalization, endpoints and transports are not wired to
-it yet. Do not describe this increment as complete Stage 1 or user-facing support.
+Delivered preparation history is retained in the linked handover and commits:
+- First opt-in encounter adapter and six tests; no production wiring then.
+- Helpers/four tests: 34d9d417246ebff4c3481056d425ef2bbd54f6a7.
+- Adapter revision correction/six tests: 7c721a5586bdc7a582edbb6467d1b0d0f1c4c6dc.
+- Production save preservation/six tests: c76f2e1a6ccf85b3a172418839ba8db7c6104d45.
 
-The internal `_statblocks` map is keyed by monster combatant ID within a verified
-encounter, never by database row ID or display name. Before-row snapshots are
-captured under the transaction and reattached if the backend rebuilds rows.
-Ordinary content-preserving saves keep revision/time/digest; replacements bump
-the logical instance's revision. Missing legacy maps preserve existing content.
-Explicit maps that omit an existing surviving snapshot fail closed; clearing/
-restore semantics remain Stage 2, not a new partially implemented clear API.
-Deleted monster bindings cascade; unrelated encounter IDs are rejected.
+The adapter is internal and encounter-scoped, not an authorization/network
+boundary. New untrusted preparation/imports require validated server ModelLimits.
+Stored reads retain permissive budgets so reduced preparation settings do not
+erase accepted data. Snapshots bind to combatant identity within an encounter,
+not names or globally unique database row assumptions. Tracker edits preserve
+content metadata; content replacement increments logical revisions. Explicit
+omission of surviving snapshots fails closed; removed monster bindings cascade.
+The real content digest excludes revision/prepared_at/content_digest: the earlier
+claim that revision-only patching necessarily corrupted it was incorrect.
 
-Adapter defaults are for trusted stored-state round trips, preserving content
-accepted under larger operator limits. New untrusted preparations/imports must
-supply validated server-controlled ModelLimits and enforce their full budgets.
-The adapter is not an authorization or network boundary. Canonicalization and
-graph validation precede the save transaction; SQL failures roll back tracker
-edits and content together. Projection tests are utility tests, not proof that
-existing HTTP/WebSocket response boundaries have been integrated or tested.
+## Private service-loading increment
 
-## Remaining gates
+PersistenceService now loads private content for saved setups and runtime.
+SQLite reads resolve the exact campaign/name or singleton runtime encounter
+inside a transaction and check the plain/private views agree. Non-SQLite test
+doubles keep their existing plain loader protocol; there is no provider/source
+fallback. Campaign authorization remains before setup reads.
 
-- Stage 1 follow-ups: wire the existing plain encounter and private normalized
-  state boundaries without recursive delegation; preserve authoritative-setup
-  fallback/restart behavior; keep private data out of ordinary Admin replies,
-  Client Display and transports. Test actual service paths, stale ownership,
-  deletion/replacement, rollback and lowered-limit stored-state preservation.
-- Stage 2: reset, undo/checkpoint capture/restore, setup copy/move and imported
-  monster local-ID remapping; independent destination ownership/revisions and
-  explicit missing-content restoration, without silent loss or source promotion.
-- Stage 3: choose/test the bundle representation, aggregate/snapshot/member
-  limits, malformed input, attribution/untrusted provenance and atomic rollback.
-  Existing 10 MiB manifest and archive limits must not silently discard content.
+Internal PrivateEncounterState keeps the map in its _statblocks attribute, not
+in dictionary fields or monster tracker dictionaries. Deepcopy retains it;
+ordinary JSON does not. Existing raw _statblocks input remains rejected. The
+normalizer used by service loads validates private content separately with stored
+read limits and attaches it after tracker normalization. Loading a setup as an
+import source does not replace live state or its metadata.
 
-Keep 022.03 and overall SG-TODO-022 open until all agreed stages, covering CI and
-acceptance are satisfied. No provider adapter, statblock UI or listener is added
-by this increment. No new migration, merge, deployment or release operation.
+Empty-runtime fallback takes private content from the same setup supplying
+monsters. Nonempty runtime retains its own metadata, never the setup's copy.
+State assignment occurs only after successful restoration. Existing database
+save-preservation still handles ordinary saves; this increment does not serialize
+private metadata into JSON or implement source-to-destination copying.
 
-## Helper increment and CI deferral - 2026-11-15
+Seven prepared service tests cover setup/privacy/deepcopy, fallback, runtime
+precedence, unsaved restart/save, stored text above preparation defaults, failed
+read atomicity and non-mutating source loads. Helper/test AST parsing passed;
+these repository tests have not executed. Earlier stub passes are not evidence
+for these tests, the real model or production services. Covering CI is pending.
 
-The user's 14:14 instruction supersedes normal-CI wording above for intermediate
-022.03 pushes: use [skip ci] until the final Stage 3 code push, which must omit
-it. Do not modify workflows or separately dispatch CI.
+## Remaining acceptance gates
 
-This bounded increment adds scrying_glass_statblock_state.py and four tests in
-test_statblock_state.py. Helpers reject the reserved key in ordinary input,
-validate separately supplied snapshots against normalized monster identities,
-and recursively project private keys out of copied payloads. Invalid falsey
-maps are rejected rather than silently treated as empty. This does not activate
-application normalization, storage, responses or transports. Adapter corrections
-and production wiring remain Stage 1 work, not delivered fixes in this commit.
+- Stage 1: finish/review private save/normalization lifecycle and real HTTP/WS
+  response-boundary privacy tests, stale ownership, deletion/replacement,
+  rollback, migration/restart and stored-limit coverage. Do not mark complete
+  from helper/source review or a push. No statblock viewer/provider/listener yet.
+- Stage 2: reset, undo/checkpoints, setup copy/move/Save As, local-ID remapping,
+  independent destination ownership/revisions and explicit missing-content
+  restoration. JSON recovery does not preserve the internal attribute yet;
+  normalizing outside the integrated load paths may also lose it. Implement
+  this explicitly, without silently retaining the wrong current snapshot.
+- Stage 3: bundle representation, aggregate/snapshot/member budgets, malformed
+  input, attribution/untrusted provenance, atomic rollback. Existing 10 MiB
+  manifest/archive limits must not silently discard content or metadata.
 
-The four repository tests are prepared, not executed. Earlier disposable stub
-experiments are not evidence that these exact tests or the real model passed.
-Full model/storage/service/privacy and covering CI validation remain pending.
-
-## Adapter correction increment - 2026-11-15
-
-The helper increment was pushed as 34d9d417246ebff4c3481056d425ef2bbd54f6a7.
-This next bounded increment replaces post-save revision patching on rebuilt
-monster rows with a direct, validated typed-row reattachment under the existing
-transaction. Unchanged content retains the original metadata; changed content
-advances the encounter-local revision once. Supplied stale revisions are rejected
-before plain tracker writes. It adds six regression methods for rebuilt metadata,
-changed rebuilds, stale writes, encounter isolation, tracker-only edits and rollback.
-AST parsing passed for both proposed Python files; the tests have not executed.
-
-Correction to earlier conversation: the real model digest explicitly excludes
-revision, prepared_at and content_digest. Revision-only patching did not itself
-corrupt that digest. Separate setup/runtime encounters are an integration
-responsibility, not evidence that this explicitly encounter-scoped adapter
-queries the wrong owner. No production wiring is activated here.
-Stage 1 service/storage/privacy integration and covering CI remain pending.
-
-## Production save wiring increment - 2026-11-15
-
-Adapter correction was pushed as 7c721a5586bdc7a582edbb6467d1b0d0f1c4c6dc.
-SQLiteStorage now selects StatblockOperationsMixin for ordinary save_setup and
-runtime set_value calls. Existing snapshots are preserved transactionally,
-including backend row rebuilds; missing monster IDs retain legacy allocation
-without mutating caller input. The underlying _save_encounter callback stays
-plain and nonrecursive. Older migration schemas bypass statblock handling.
-
-Existing load_setup/get_value outputs stay unchanged and do not gain private
-envelopes; ordinary save methods still reject that reserved field. This is
-preservation of content already bound in the database, not private import,
-copy/restore, service-state loading, source retrieval or a UI feature.
-
-Six new production-storage tests cover setup/runtime rebuilds, rejected private
-input, legacy IDs, rollback and encounter-local deletion. The new mixin/test
-sources AST-parse; tests are prepared, not executed. CI remains deferred until
-final Stage 3. Full migration, service, restart/setup fallback, private state and
-response-boundary validation remain pending. Historical unwired notes above
-describe their earlier increments; this section supersedes them for save paths
-only. Stage 1 and 022.03 remain in progress.
+All stages, final covering CI and acceptance remain open. No schema change,
+migration, merge, deployment, release or whole-feature completion is claimed.
