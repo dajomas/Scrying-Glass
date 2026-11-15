@@ -1,0 +1,24 @@
+st_monster_roll_order_handlers.MonsterRollOrderHandlerTests.test_missing_selection_rejected_before_dice) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9331997Z test_other_bulk_actions_delegate_without_rolling (test_monster_roll_order_handlers.MonsterRollOrderHandlerTests.test_other_bulk_actions_delegate_without_rolling) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9353568Z test_shared_one_roll_deduplicates_and_only_changes_selection (test_monster_roll_order_handlers.MonsterRollOrderHandlerTests.test_shared_one_roll_deduplicates_and_only_changes_selection) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9376017Z test_disabled_providers_are_not_offered_and_open5e_failure_is_reported (test_monster_source_catalog.CatalogFunctionTests.test_disabled_providers_are_not_offered_and_open5e_failure_is_reported) ... Open5e document list failed
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9377399Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9378448Z   File "/tmp/scrying-tests-a2nba6b9/repo/python/scrying_glass_source_catalog.py", line 31, in sources
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9379183Z     catalog = open5e.documents(open5e.base_url(display))
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9379912Z   File "/tmp/scrying-tests-a2nba6b9/repo/python/scrying_glass_open5e.py", line 101, in documents
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9380768Z     for item in _pages(base + "/documents/?" + urlencode({"limit": 200, "format": "json"}), base):
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9381438Z                 ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9382163Z   File "/tmp/scrying-tests-a2nba6b9/repo/python/scrying_glass_open5e.py", line 79, in _pages
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9382744Z     data = load_json(url)
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9383394Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9384094Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9384620Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9385332Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9386294Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9386697Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9387403Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9388013Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9388358Z python.scrying_glass_open5e.Open5eError: down
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9388697Z ok
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9389784Z test_fivetools_source_lists_usable_monsters_sorted_and_signs_a_pick (test_monster_source_catalog.CatalogFunctionTests.test_fivetools_source_lists_usable_monsters_sorted_and_signs_a_pick) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-15T12:28:29.9395325Z test_open5e_document_list_is_

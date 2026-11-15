@@ -1,0 +1,31 @@
+s	Standalone Python browser and audit checks	2026-11-15T12:34:28.5310562Z     return await loop.run_in_executor(None, func_call)
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:28.5311294Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:28.5312123Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:28.5313245Z     result = ctx.run(self.task)
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:28.5314385Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:28.5315818Z     return fn(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:28.5316876Z   File "/tmp/scrying-tests-e06836pw/repo/python/scrying_glass_source_catalog.py", line 47, in monsters
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:28.5318085Z     items = [{"id": name, "name": name} for name, _ in ms.fivetools_source_entries(display, source)]
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:28.5319200Z                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:28.5320307Z   File "/tmp/scrying-tests-e06836pw/repo/python/scrying_glass_monster_selection.py", line 229, in fivetools_source_entries
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:28.5321027Z     raise ValueError("5e.tools source is not configured")
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:28.5321463Z ValueError: 5e.tools source is not configured
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:28.5358521Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:28.5359202Z Ran 6 tests in 0.066s
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:28.5359461Z 
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:28.5368397Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:28.5386784Z test_monster_source_catalog.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:28.6044862Z Connection audit: test_monster_source_help_text.py
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:30.2761519Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:30.2762120Z Ran 3 tests in 1.578s
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:30.2762300Z 
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:30.2762401Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:30.2766527Z test_monster_source_help_text.py: connections opened: 1; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:30.3467925Z Connection audit: test_monster_source_image.py
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:30.6944077Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:30.6945014Z Ran 8 tests in 0.020s
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:30.6945338Z 
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:30.6945735Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:30.6946845Z test_monster_source_image.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T12:34:30.7419005Z Connection audit: test_monster_source_image_browser.py
+tests	Standalone Python browser and audit checks	2026

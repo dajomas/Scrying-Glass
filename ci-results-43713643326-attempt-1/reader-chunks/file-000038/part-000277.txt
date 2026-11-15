@@ -1,0 +1,31 @@
+on browser and audit checks	2026-11-15T12:35:11.8010560Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T12:35:11.8151928Z Connection audit: test_turn_eligibility.py
+tests	Standalone Python browser and audit checks	2026-11-15T12:35:12.1059185Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-15T12:35:12.1060148Z Ran 8 tests in 0.187s
+tests	Standalone Python browser and audit checks	2026-11-15T12:35:12.1060924Z 
+tests	Standalone Python browser and audit checks	2026-11-15T12:35:12.1061136Z OK
+tests	Standalone Python browser and audit checks	2026-11-15T12:35:12.1062133Z test_turn_eligibility.py: connections opened: 8; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-15T12:35:12.1245452Z Connection audit modules: 187; failed: 0
+tests	Standalone Python browser and audit checks	2026-11-15T12:35:12.1246525Z PASS: all audited modules passed and closed their tracked connections
+tests	Standalone Python browser and audit checks	2026-11-15T12:35:12.3423699Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-15T12:35:12.3424185Z ##[group]tests/feedback_browser_fixture.py
+tests	Standalone Python browser and audit checks	2026-11-15T12:35:12.6912918Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-15T12:35:12.6913485Z ##[group]tests/storage_migration_fixtures.py
+tests	Standalone Python browser and audit checks	2026-11-15T12:35:13.0925302Z ##[endgroup]
+tests	Post Run actions/setup-node@v4	﻿2026-11-15T12:35:13.1012597Z Post job cleanup.
+tests	Post Run actions/setup-node@v4	2026-11-15T12:35:13.2317632Z (node:35160) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-node@v4	2026-11-15T12:35:13.2319108Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/setup-python@v5	﻿2026-11-15T12:35:13.2519428Z Post job cleanup.
+tests	Post Run actions/setup-python@v5	2026-11-15T12:35:13.3921127Z Cache hit occurred on the primary key setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e, not saving cache.
+tests	Post Run actions/setup-python@v5	2026-11-15T12:35:13.3923810Z (node:35168) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-python@v5	2026-11-15T12:35:13.3925288Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/checkout@v4	﻿2026-11-15T12:35:13.4086472Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-15T12:35:13.5199374Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-15T12:35:13.5263818Z git version 2.56.1
+tests	Post Run actions/checkout@v4	2026-11-15T12:35:13.5321246Z Temporarily overriding HOME='/home/runner/work/_temp/7c5ed677-a558-47cc-adae-c423bad29da9' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-15T12:35:13.5322918Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-15T12:35:13.5329351Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-15T12:35:13.5398333Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-15T12:35:13.5461184Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-15T12:35:13.5796615Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-15T12:35:13.584
