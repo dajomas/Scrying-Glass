@@ -151,3 +151,45 @@ recovery/undo/checkpoint/copy/bundle integration remains 022.03. SG-TODO-022.02b
 and parent 022.02 remain in progress until the activation evidence is reviewed.
 README backup/runtime guidance and root index links remain accurate and unchanged;
 indexed task 222 carries the current operational/status details.
+
+## SG-TODO-022.02 accepted close-out - 2026-11-15
+
+The user explicitly signed off on 022.02 and requested closure/documentation
+on 2026-11-15 at 13:48 CET. 022.02, including 022.02a model/validation and
+022.02b typed persistence/migration/startup activation, is completed and closed
+for its agreed bounded scope. This entry and the [accepted task record](../todo/222-statblock-persistence.md)
+supersede only the earlier 022.02 pending/ready/in-progress notes in the parent,
+indexes and dated handovers, including the activation-pending paragraphs above.
+Their original evidence and limitations remain historical, not reopened gates.
+
+Covering Branch tests 43713643326 attempt 1 tested activation revision
+28d75d08febf5b595afe8145b4097410eb987986 on features/perplexity-statblock
+and completed successfully at 2026-11-15 12:35:16 UTC / 13:35:16 CET.
+Published evidence is ci-results-43713643326-attempt-1. Main Python ran 1,717
+tests OK. Detailed log review verified all seven new production startup methods
+and all eight storage methods passed; syntax/server import, Python, pytest,
+JavaScript and standalone browser/audit stages all succeeded. Full logs and
+artifacts downloaded successfully. Artifacts are run-scoped, not necessarily
+attempt-specific; no exhaustive artifact/screenshot review is claimed.
+
+Code/test/workflow identities compared during close-out match the tested
+activation revision, including python/ tree 3aeca9cdf0164a7622d5abace1e7590750a3d73f,
+tests/ tree 3f8e04641f800e96fd9a68e5b1e3d9c6d1636afc and .github/ tree
+76cf2730ff173cb654012206b05c2fa9e29f1d14. No new runtime, test, configuration,
+dependency or workflow change is included in this documentation close-out.
+No tests were rerun or fresh CI outcome inferred. The commit contains [skip ci]
+under the standing documentation-only policy; no separate workflow dispatch.
+
+The sign-off is explicit user acceptance, not assistant live-environment
+execution. No step-by-step live command output, additional manual results,
+exhaustive authenticated/browser/provider verification, merge, release or actual
+deployment operation is implied. Schema-9 backup/rollback guidance above remains
+applicable: restore matching pre-upgrade code/data, never lower user_version.
+
+Overall SG-TODO-022 remains in progress; no usable statblock viewer/import UI,
+provider conversion or complete lifecycle preservation is claimed. 022.03 is
+the next planned unit and remains unimplemented; runtime/setup/recovery/undo/
+checkpoint/copy/bundle preservation and local-ID remapping stay there.
+022.03-022.16 remain open/pending with their existing requirements intact.
+README runtime/capability descriptions and HANDOVER index links were reviewed
+against unchanged live identities and remain accurate; no cosmetic edits.
