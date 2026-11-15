@@ -1,0 +1,416 @@
+{
+  "created_utc": "2026-11-15T07:50:06.677602+00:00",
+  "target": "Vampire",
+  "scope": "Three online providers; exact-name variants kept separate; no source fallback. Defaults unless --display-json supplied. Provider enable switches intentionally ignored for this diagnostic.",
+  "proposed_limits": {
+    "response": 10485760,
+    "normalized": 524288,
+    "text": 65536,
+    "nodes": 4096,
+    "depth": 16
+  },
+  "requests": [
+    {
+      "url": "https://api.open5e.com/v2/creatures/?name__iexact=Vampire&limit=100&format=json",
+      "label": "open5e-list-0",
+      "started_utc": "2026-11-15T07:49:54.625585+00:00",
+      "status": 200,
+      "final_url": "https://api.open5e.com/v2/creatures/?name__iexact=Vampire&limit=100&format=json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 39264,
+      "sha256": "07d6e3f1dd372fc0a9c5ada1218a7d53d065f8eac0f57361937b66a9c60ef0ac",
+      "file": "raw/001-open5e-list-0.json",
+      "truncated": false,
+      "elapsed_seconds": 0.901
+    },
+    {
+      "url": "https://api.open5e.com/v2/creatures/a5e-mm_vampire/?format=json",
+      "label": "open5e-detail-1",
+      "started_utc": "2026-11-15T07:49:55.527196+00:00",
+      "status": 200,
+      "final_url": "https://api.open5e.com/v2/creatures/a5e-mm_vampire/?format=json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 8929,
+      "sha256": "f9171115acebb084a90dabc7b2a348ef92f6c83c60fb0059bed018656a68846d",
+      "file": "raw/002-open5e-detail-1.json",
+      "truncated": false,
+      "elapsed_seconds": 0.597
+    },
+    {
+      "url": "https://api.open5e.com/v2/creatures/bfrd_vampire/?format=json",
+      "label": "open5e-detail-2",
+      "started_utc": "2026-11-15T07:49:56.127701+00:00",
+      "status": 200,
+      "final_url": "https://api.open5e.com/v2/creatures/bfrd_vampire/?format=json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 12658,
+      "sha256": "80a475a9a76815c89f65197b08f35d958c5121d495323468b560ed2759beafd8",
+      "file": "raw/003-open5e-detail-2.json",
+      "truncated": false,
+      "elapsed_seconds": 1.698
+    },
+    {
+      "url": "https://api.open5e.com/v2/creatures/srd-2024_vampire/?format=json",
+      "label": "open5e-detail-3",
+      "started_utc": "2026-11-15T07:49:57.829660+00:00",
+      "status": 200,
+      "final_url": "https://api.open5e.com/v2/creatures/srd-2024_vampire/?format=json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 7658,
+      "sha256": "2b3ed8feae439774110d4998f08985c7b103998eb9664175c6af8d7082c1440a",
+      "file": "raw/004-open5e-detail-3.json",
+      "truncated": false,
+      "elapsed_seconds": 0.655
+    },
+    {
+      "url": "https://api.open5e.com/v2/creatures/srd_vampire/?format=json",
+      "label": "open5e-detail-4",
+      "started_utc": "2026-11-15T07:49:58.488167+00:00",
+      "status": 200,
+      "final_url": "https://api.open5e.com/v2/creatures/srd_vampire/?format=json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 9964,
+      "sha256": "d619eee8550b2a61a44aa389abadf881bdea47051a1a09700bbc0ebe07c8ac73",
+      "file": "raw/005-open5e-detail-4.json",
+      "truncated": false,
+      "elapsed_seconds": 0.626
+    },
+    {
+      "url": "https://5e.tools/data/bestiary/index.json",
+      "label": "fivetools-index",
+      "started_utc": "2026-11-15T07:49:59.117538+00:00",
+      "status": 200,
+      "final_url": "https://5e.tools/data/bestiary/index.json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 3569,
+      "sha256": "ca7d3cca00f8900865c92c1ca740f571d42aaa5832a114faf0c179cc46e14c14",
+      "file": "raw/006-fivetools-index.json",
+      "truncated": false,
+      "elapsed_seconds": 0.262
+    },
+    {
+      "url": "https://5e.tools/data/bestiary/bestiary-mm.json",
+      "label": "fivetools-dataset-1",
+      "started_utc": "2026-11-15T07:49:59.379577+00:00",
+      "status": 200,
+      "final_url": "https://5e.tools/data/bestiary/bestiary-mm.json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 1573620,
+      "sha256": "1de17a0363f1a74cf2f31fa4016677a72b102bd16e045680e46f40114eb0a5e8",
+      "file": "raw/007-fivetools-dataset-1.json",
+      "truncated": false,
+      "elapsed_seconds": 0.605
+    },
+    {
+      "url": "https://5e.tools/data/bestiary/bestiary-xmm.json",
+      "label": "fivetools-dataset-2",
+      "started_utc": "2026-11-15T07:49:59.990488+00:00",
+      "status": 200,
+      "final_url": "https://5e.tools/data/bestiary/bestiary-xmm.json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 1281795,
+      "sha256": "0b8eb2a65ef98864cf644ab75eeb47d1079c945841815ffb3f5b7fe19782baf1",
+      "file": "raw/008-fivetools-dataset-2.json",
+      "truncated": false,
+      "elapsed_seconds": 0.377
+    },
+    {
+      "url": "https://5e.tools/data/bestiary/bestiary-phb.json",
+      "label": "fivetools-dataset-3",
+      "started_utc": "2026-11-15T07:50:00.373263+00:00",
+      "status": 200,
+      "final_url": "https://5e.tools/data/bestiary/bestiary-phb.json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 7402,
+      "sha256": "00608adf2424c8787f5ef6fdd071e2759312280e64734a13da888422c9d28c2a",
+      "file": "raw/009-fivetools-dataset-3.json",
+      "truncated": false,
+      "elapsed_seconds": 1.394
+    },
+    {
+      "url": "https://5e.tools/data/bestiary/bestiary-xphb.json",
+      "label": "fivetools-dataset-4",
+      "started_utc": "2026-11-15T07:50:01.769334+00:00",
+      "status": 200,
+      "final_url": "https://5e.tools/data/bestiary/bestiary-xphb.json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 57897,
+      "sha256": "915c418b82d54637ac77b24b9c5ed481505e2130a5ad24768cd3d0c92bbd8566",
+      "file": "raw/010-fivetools-dataset-4.json",
+      "truncated": false,
+      "elapsed_seconds": 0.197
+    },
+    {
+      "url": "https://5e.tools/data/bestiary/bestiary-dmg.json",
+      "label": "fivetools-dataset-5",
+      "started_utc": "2026-11-15T07:50:01.966201+00:00",
+      "status": 200,
+      "final_url": "https://5e.tools/data/bestiary/bestiary-dmg.json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 3318,
+      "sha256": "a9123613f5f214cbd36f215bef11d0eeb7b5620ee65409830c68a8b9897c85ac",
+      "file": "raw/011-fivetools-dataset-5.json",
+      "truncated": false,
+      "elapsed_seconds": 0.264
+    },
+    {
+      "url": "https://5e.tools/data/bestiary/bestiary-xdmg.json",
+      "label": "fivetools-dataset-6",
+      "started_utc": "2026-11-15T07:50:02.230030+00:00",
+      "status": 200,
+      "final_url": "https://5e.tools/data/bestiary/bestiary-xdmg.json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 2395,
+      "sha256": "158cd7a03976d7b2e9d7b2c8c38ab2e53533e0b0eb19a538dfd34ccd19d091f6",
+      "file": "raw/012-fivetools-dataset-6.json",
+      "truncated": false,
+      "elapsed_seconds": 0.256
+    },
+    {
+      "url": "https://www.dndbeyond.com/monsters?filter-search=Vampire",
+      "label": "dndbeyond-search",
+      "started_utc": "2026-11-15T07:50:02.485797+00:00",
+      "status": 200,
+      "final_url": "https://www.dndbeyond.com/monsters?filter-search=Vampire",
+      "content_type": "text/html; charset=utf-8",
+      "content_encoding": null,
+      "bytes": 406055,
+      "sha256": "ca00db877b089fb990ad5a5222483f94e409e6b3d4695c8570434401ffd9ec96",
+      "file": "raw/013-dndbeyond-search.html",
+      "truncated": false,
+      "elapsed_seconds": 0.906
+    },
+    {
+      "url": "https://www.dndbeyond.com/monsters/5195251-vampire",
+      "label": "dndbeyond-detail-0",
+      "started_utc": "2026-11-15T07:50:03.408906+00:00",
+      "status": 200,
+      "final_url": "https://www.dndbeyond.com/monsters/5195251-vampire",
+      "content_type": "text/html; charset=utf-8",
+      "content_encoding": null,
+      "bytes": 372370,
+      "sha256": "d33d215d43e1b838fabd6f4f658d04be4cc6624d2e84a684b07d36fcf2f9613a",
+      "file": "raw/014-dndbeyond-detail-0.html",
+      "truncated": false,
+      "elapsed_seconds": 1.137
+    },
+    {
+      "url": "https://www.dndbeyond.com/monsters/17043-vampire",
+      "label": "dndbeyond-detail-1",
+      "started_utc": "2026-11-15T07:50:04.564153+00:00",
+      "status": 200,
+      "final_url": "https://www.dndbeyond.com/monsters/17043-vampire",
+      "content_type": "text/html; charset=utf-8",
+      "content_encoding": null,
+      "bytes": 375538,
+      "sha256": "1aad0c00409a3ae771659ca5024fee29a7428134e4e7932d26e36b5350e96399",
+      "file": "raw/015-dndbeyond-detail-1.html",
+      "truncated": false,
+      "elapsed_seconds": 2.096
+    }
+  ],
+  "records": [
+    {
+      "provider": "open5e",
+      "identity": {
+        "key": "a5e-mm_vampire",
+        "document": {
+          "name": "Monstrous Menagerie",
+          "key": "a5e-mm",
+          "type": "SOURCE",
+          "display_name": "Monstrous Menagerie",
+          "publisher": {
+            "name": "EN Publishing",
+            "key": "en-publishing"
+          },
+          "gamesystem": {
+            "name": "Advanced 5th Edition",
+            "key": "a5e"
+          },
+          "permalink": "https://enpublishingrpg.com/collections/level-up-advanced-5th-edition-a5e/products/level-up-monstrous-menagerie-a5e"
+        }
+      },
+      "file": "001-open5e.json",
+      "note": "",
+      "objects": 49,
+      "arrays": 28,
+      "scalars": 193,
+      "max_depth": 6,
+      "source_values": 270,
+      "compact_json_bytes": 8929,
+      "largest_string_bytes": 688
+    },
+    {
+      "provider": "open5e",
+      "identity": {
+        "key": "bfrd_vampire",
+        "document": {
+          "name": "Black Flag SRD",
+          "key": "bfrd",
+          "type": "SOURCE",
+          "display_name": "Black Flag SRD",
+          "publisher": {
+            "name": "Kobold Press",
+            "key": "kobold-press"
+          },
+          "gamesystem": {
+            "name": "5th Edition 2014",
+            "key": "5e-2014"
+          },
+          "permalink": "https://koboldpress.com/black-flag-reference-document/"
+        }
+      },
+      "file": "002-open5e.json",
+      "note": "",
+      "objects": 63,
+      "arrays": 36,
+      "scalars": 263,
+      "max_depth": 6,
+      "source_values": 362,
+      "compact_json_bytes": 12658,
+      "largest_string_bytes": 620
+    },
+    {
+      "provider": "open5e",
+      "identity": {
+        "key": "srd-2024_vampire",
+        "document": {
+          "name": "System Reference Document 5.2",
+          "key": "srd-2024",
+          "type": "SOURCE",
+          "display_name": "5e 2024 Rules",
+          "publisher": {
+            "name": "Wizards of the Coast",
+            "key": "wizards-of-the-coast"
+          },
+          "gamesystem": {
+            "name": "5th Edition 2024",
+            "key": "5e-2024"
+          },
+          "permalink": "https://dnd.wizards.com/resources/systems-reference-document"
+        }
+      },
+      "file": "003-open5e.json",
+      "note": "",
+      "objects": 40,
+      "arrays": 24,
+      "scalars": 173,
+      "max_depth": 6,
+      "source_values": 237,
+      "compact_json_bytes": 7658,
+      "largest_string_bytes": 682
+    },
+    {
+      "provider": "open5e",
+      "identity": {
+        "key": "srd_vampire",
+        "document": {
+          "name": "System Reference Document 5.1",
+          "key": "srd-2014",
+          "type": "SOURCE",
+          "display_name": "5e 2014 Rules",
+          "publisher": {
+            "name": "Wizards of the Coast",
+            "key": "wizards-of-the-coast"
+          },
+          "gamesystem": {
+            "name": "5th Edition 2014",
+            "key": "5e-2014"
+          },
+          "permalink": "https://dnd.wizards.com/resources/systems-reference-document"
+        }
+      },
+      "file": "004-open5e.json",
+      "note": "",
+      "objects": 56,
+      "arrays": 26,
+      "scalars": 215,
+      "max_depth": 6,
+      "source_values": 297,
+      "compact_json_bytes": 9964,
+      "largest_string_bytes": 924
+    },
+    {
+      "provider": "fivetools",
+      "identity": {
+        "source": "MM",
+        "name": "Vampire",
+        "file": "bestiary-mm.json",
+        "index": 401
+      },
+      "file": "005-fivetools.json",
+      "note": "Raw source record; inline tags are not normalized nodes",
+      "objects": 29,
+      "arrays": 38,
+      "scalars": 126,
+      "max_depth": 7,
+      "source_values": 193,
+      "compact_json_bytes": 7209,
+      "largest_string_bytes": 679
+    },
+    {
+      "provider": "fivetools",
+      "identity": {
+        "source": "XMM",
+        "name": "Vampire",
+        "file": "bestiary-xmm.json",
+        "index": 450
+      },
+      "file": "006-fivetools.json",
+      "note": "Raw source record; inline tags are not normalized nodes",
+      "objects": 27,
+      "arrays": 47,
+      "scalars": 120,
+      "max_depth": 8,
+      "source_values": 194,
+      "compact_json_bytes": 6291,
+      "largest_string_bytes": 656
+    },
+    {
+      "provider": "dndbeyond",
+      "identity": {
+        "href": "/monsters/5195251-vampire",
+        "block": 0
+      },
+      "file": "007-dndbeyond.json",
+      "note": "Extracted DOM text segments, NOT a verified normalized statblock; inspect raw page for gates/completeness",
+      "objects": 135,
+      "arrays": 1,
+      "scalars": 405,
+      "max_depth": 3,
+      "source_values": 541,
+      "compact_json_bytes": 10895,
+      "largest_string_bytes": 317
+    },
+    {
+      "provider": "dndbeyond",
+      "identity": {
+        "href": "/monsters/17043-vampire",
+        "block": 0
+      },
+      "file": "008-dndbeyond.json",
+      "note": "Extracted DOM text segments, NOT a verified normalized statblock; inspect raw page for gates/completeness",
+      "objects": 139,
+      "arrays": 1,
+      "scalars": 417,
+      "max_depth": 3,
+      "source_values": 557,
+      "compact_json_bytes": 12903,
+      "largest_string_bytes": 483
+    }
+  ],
+  "issues": [],
+  "normalization": "No production normalizer exists. JSON depth/value counts and HTML DOM counts are source metrics, NOT normalized node counts/depth. No normalized-limit pass is asserted."
+}
