@@ -80,3 +80,58 @@ README, HANDOVER index/maintenance rules and workflow were reviewed or identity-
 verified unchanged; paths and runtime commands remain valid. No archive, manifest
 refresh, workflow dispatch or CI skip. Keep SG-TODO-008 open until corrected exact-SHA
 CI is reviewed and remaining Admin/oversized-source acceptance is addressed.
+
+## Statblock storage foundation - 2026-11-15
+
+[022.02b staged task](../todo/222-statblock-persistence.md) · [Parent contract](../todo/220-admin-statblock-viewer.md).
+The user approved foundation then startup activation as separate commits. This
+section supersedes progress notes saying all 022.02b work is pending; it does
+not reopen the historical SG-TODO-008 task or change approved statblock scope.
+
+New python/scrying_glass_statblock_storage.py contains the seven typed relations,
+upgrade_statblocks(storage, backup=True), and internal StatblockStorage.save/load.
+Storage is a protocol providing connection, transaction, backup and FK-check
+helpers. IDs here are stored monsters.id integers, not public combatant IDs.
+Future callers must resolve campaign/encounter identity and authorization.
+Validation/canonicalization and complete metadata-size checking happen before
+the save transaction. Expected revision 0 means missing; replacements increment
+the current matching revision and are atomic, including nested rollback. Six SG
+display fields are never written by this API. Optional-field presence uses a
+scalar bitmask; provenance credits are separate ordered rows, not JSON columns.
+Local IDs are canonicalized; same-snapshot definition and same-owner node-parent
+constraints use composite deferred FKs, with null-safe unique ordering indexes.
+Flat reference cycles remain supported. Load validates integrity/digest using
+permissive read budgets so lowered preparation defaults do not erase accepted
+saved content. Private read/API response budgets and authorization remain future
+integration responsibilities, not guarantees made by this internal layer.
+
+No imports/callers were added to SQLiteStorage, services, runtime state, public
+projections or UI. Normal application startup still creates/opens schema 8;
+only an explicit call on an existing schema-8 connection creates schema 9. It
+reuses an earlier upgrade-chain backup when present, checks FKs, and rolls back
+the new DDL/version on failure. Do not manually upgrade deployed storage before
+stage-two matching constructor code and full storage/config/media backups are
+available: the current constructor rejects schema 9. A database-only automatic
+backup is not a complete installation backup. Rollback restores matching code
+and data, not a lowered PRAGMA. Existing facade/runtime behavior is unchanged.
+
+Validation: four SchemaTests in tests/test_statblock_storage.py passed during
+preparation against real file-backed SQLite protocol fixtures. They cover v8
+backup, v9 reopen/idempotence, invalid versions, injected DDL rollback, null-owner
+uniqueness, cascades and cross-owner/snapshot constraints. Four RepositoryTests
+are prepared for model-integrated round trips, revisions, references, lowered
+limits, tracker independence and replacement/outer rollback; these have not been
+run locally. Neither fixture class is the production SQLiteStorage constructor
+or a complete legacy database. Both classes are discoverable by configured CI;
+full CI and its connection audit remain pending for this new delivery. No live
+server, browser, provider or migration-on-deployed-data test is claimed.
+
+Previously reviewed 022.02a covering Branch tests 43707384985 attempt 1 succeeded
+at 0ed81a834d0973179c2c030eb84bb36b35c7e325; that is not a run for this foundation.
+Next review foundation CI, then deliver startup activation/version guards and
+real fresh/legacy/reopen/backup/failure fixtures. 022.03 retains runtime, setup,
+recovery, undo/checkpoint, copy and bundle preservation. The parent remains in
+progress; no whole-feature or migration activation completion is claimed.
+README runtime/backup guidance and HANDOVER index links remain accurate and are
+unchanged. TODO index/addendum record the approved split in this same commit.
+Normal push CI applies; no skip marker or separate workflow dispatch.
