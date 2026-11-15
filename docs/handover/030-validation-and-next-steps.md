@@ -258,3 +258,30 @@ The lifecycle task is consolidated without removing remaining gates; earlier
 preparation history stays in handovers/Git. README and root-index identities were
 verified unchanged and remain applicable; deploy the complete matching Python
 tree only after the staged feature's required validation/acceptance.
+
+## 022.03 Increment 2B.1 fingerprints - 2026-11-15
+
+2A baseline: b1754d78ada3e66780b0b426b8bd70483c4d3f50. This bounded first
+2B increment routes production recovery fingerprints through canonical validated
+private metadata and prunes removed-monster bindings at feature reconciliation.
+Legacy no-content hashes retain their algorithm; activity logs/turn markers stay
+excluded. Recovery hashes intentionally include private revision/prepared_at,
+unlike the content digest. Equivalent snapshot-local IDs/order canonicalize alike.
+Older undo after_digest values that no longer match are stale, not rewritten.
+
+A private-aware full comparison helper is supplied for the later transaction
+save integration, not activated in the save gate here. Restore/apply, explicit
+clearing, metadata-preserving restore normalization, destination revisions and
+private writes/live-metadata refresh remain pending. Merely detecting private
+changes is not sufficient to claim they persist through ordinary saves.
+
+Nine prepared tests cover legacy hashes, private-only/metadata differences,
+canonical IDs/order, log exclusions, copy/privacy isolation, bad input and pruning.
+Executed: helper/test AST parsing (1,782 and 5,374 bytes). Tests have not executed;
+no repository/model/storage/service/transport/CI pass claimed. No new schema,
+auth policy, public snapshot payload, workflow edit/dispatch or deployment.
+
+The task is condensed with prior history retained here/Git and all unfinished
+gates explicit. Existing README/index guidance remains applicable. Intermediate
+[skip ci] remains required; covering final Stage 3 CI and acceptance are pending.
+Stage 1, Stage 2 and 022.03 are not complete or accepted by this delivery.

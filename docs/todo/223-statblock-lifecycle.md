@@ -1,95 +1,72 @@
 # 223 - Statblock lifecycle integration
 
-[Back to TODO index](../../TODO.md) · [Parent contract](220-admin-statblock-viewer.md) · [Storage handover](../handover/240-sqlite-storage-split.md) · [Validation](../handover/030-validation-and-next-steps.md)
+[Back to TODO index](../../TODO.md) · [Parent contract](220-admin-statblock-viewer.md) · [Storage handover](../handover/240-sqlite-storage-split.md) · [Validation/history](../handover/030-validation-and-next-steps.md)
 
 ## Status and delivery rules - 2026-11-15
 
-SG-TODO-022.03 and overall SG-TODO-022 remain in progress. 022.02 remains
-accepted/closed. Approved order: Stage 1 storage/private state; Stage 2 recovery/
-reset/copy; Stage 3 bundles. Stage 1 is not accepted or fully validated by the
-user's request to advance Stage 2 test preparation. Each bounded write requires
-its own complete approval, implementation/tests as applicable and documentation.
-Intermediate 022.03 commits use [skip ci] by the user's 14:14 instruction; final
-Stage 3 code push must omit it. No workflow edits or separate dispatch.
+022.03 and overall SG-TODO-022 remain in progress; 022.02 remains accepted/
+closed. Stage 1 has not been accepted or fully validated. Approved order remains
+storage/private state, recovery/reset/copy, then bundles. All intermediate
+022.03 commits include [skip ci] by the 14:14 user instruction. Final Stage 3
+code push must omit it; no workflow changes or separate dispatch. Each write
+requires its own bound approval and relevant tests/documentation.
 
-## Delivered baseline and evidence limits
+## Baseline and retained contracts
 
-Detailed dated history remains in the linked handovers and Git history:
-- Opt-in encounter adapter/six tests; schema/model activation remains separate 022.02.
-- Private-state helpers/four tests: 34d9d417246ebff4c3481056d425ef2bbd54f6a7.
-- Revision reattachment/six tests: 7c721a5586bdc7a582edbb6467d1b0d0f1c4c6dc.
-- Production save preservation/six tests: c76f2e1a6ccf85b3a172418839ba8db7c6104d45.
-- Service loading/seven tests: 737bd81b2400cef6d172429a88feaeffd24f22e4.
-- Transport privacy/seven tests: a208e3410507555e22e0d82b50e0d81708f54ffe.
-- Mutation privacy/five tests: 5ecf122b7e9a2c7decde8dd26167d93c7e4711d0.
-- Stage 2 contracts/ten tests: 831c94249de8ef057cdcdbd0ead673d97ef98923.
+Latest 2A delivery: b1754d78ada3e66780b0b426b8bd70483c4d3f50. Earlier adapter,
+service, privacy and contract-test history remains in linked handovers/Git,
+including ten Stage 2 contracts at 831c94249de8ef057cdcdbd0ead673d97ef98923.
+Prepared repository tests have not executed locally; AST parsing and isolated
+JSON/deepcopy checks are not model/storage/service/transport or CI passes.
 
-These repository regressions were prepared, not executed locally. Source AST
-checks and four isolated standard-library JSON/deepcopy checks do not prove
-model/storage/service/HTTP/WS behavior. FastAPI was absent from the preparation
-environment. No observed privacy pass/leak or new covering CI result is claimed.
-The Stage 2 tests are ordinary assertions, not skipped/expected-failure tests;
-unfinished restore/copy/import/fingerprint contracts may still fail until built.
+Snapshots remain typed, encounter/combatant-scoped and private. Raw serialized
+_statblocks fields are not trusted. Internal PrivateEncounterState attributes
+survive deepcopy, not ordinary JSON. Stored reads use permissive budgets so
+reduced preparation settings do not erase accepted content; untrusted new
+preparation/imports require server limits. Tracker edits preserve content metadata;
+replacement revisions increase. The content digest excludes revision/time/itself.
+Ordinary save omission fails closed; explicit recovery absence needs its own
+trusted clear semantics. Deletion cascades. No source/provenance promotion.
 
-## Current private-state contract
+## Stage 2 increments
 
-The internal adapter binds snapshots by encounter-local monster combatant ID,
-not display name or a guessed global row owner. It is not an authorization or
-network boundary. Untrusted preparations/imports require validated server limits.
-Trusted stored reads must survive lowered preparation settings. Ordinary tracker
-saves preserve current content, metadata and revisions; replacements advance
-logical revisions. Explicit omission of surviving content fails closed in the
-ordinary adapter; deleting a monster cascades. The digest excludes revision,
-prepared_at and content_digest; earlier claims to the contrary were corrected.
+2A supplies atomic checkpoint/undo capture/read using existing relations,
+independent stored ownership, historical metadata and explicit empty maps.
+Its ten tests are prepared; restore/apply was not delivered by 2A.
 
-PrivateEncounterState carries _statblocks as an internal attribute, not a JSON
-field or monster field. Deepcopy retains it; plain JSON does not. Service loads
-authorize/setup-scope reads, retain runtime metadata for nonempty runtime, and
-take setup metadata only with the empty-runtime monster fallback. Import-source
-loads do not change live state. Raw serialized _statblocks fields stay rejected.
-Private-only changes are not yet covered by ordinary dictionary equality.
+2B.1 adds canonical private metadata to production recovery fingerprints and
+prunes removed-monster bindings during feature reconciliation. No-content hashes
+retain the previous algorithm; logs and active-turn markers remain excluded.
+Private revisions/preparation times are intentionally included in recovery
+fingerprints even though excluded from the content digest. Nonmatching older
+undo after_digest values stay stale, not rewritten or silently accepted.
 
-## Stage 2 implementation increments
+A full state_changed helper also detects private differences but is not wired
+into the transaction save gate yet. Nine tests cover legacy hashes, private-only
+and metadata-only differences, canonical IDs/order, log exclusions, copy/privacy,
+invalid input and pruning. Helper/test AST parsing passed; tests have not run.
 
-2A captures/reloads checkpoint and undo private content using existing typed
-relations. Private graphs validate before capture writes; capture/load have
-transaction boundaries. Captured rows are independent from the source and keep
-historical revision/time/digest, not a current-destination restore revision. Empty
-recovery content loads as an explicit empty attribute map without guessing the
-source setup's current content. Campaign/kind scoping precedes private loads.
-No schema change or serialized payload column is introduced.
+Remaining 2B: trusted replacement/clear restoration, metadata-preserving
+normalization, destination revision policy, transaction private-save integration
+and live-metadata refresh. Do not merely activate comparison while ordinary
+saves still ignore private attributes. Add undo, stale/cross-campaign/absence,
+deletion/replacement and failure/rollback coverage.
 
-Ten focused 2A tests cover round trips/references/full metadata, explicit absence,
-independent ownership, pre-write invalid-graph/raw-field rejection, direct and
-nested rollback, scope/ID guards, pruning/cascades and larger accepted text.
-The helper (2,347 bytes), storage module (7,641 bytes) and tests (8,000 bytes)
-AST-parse. These ten tests have not executed. Capture implementation is not
-restore/apply completion; the earlier ten Stage 2 contracts remain unchanged.
+2C: setup copy/Save As with independent ownership/revisions and unchanged source,
+move preservation, canonical reference integrity and rollback. 2D: selected/
+life-filtered imported-monster binding remapping and independent clone revisions.
+Local strings are snapshot-scoped; stored ownership must remain independent.
 
-2B remains: trusted replacement/explicit-clear restoration, metadata-preserving
-normalization, private-aware fingerprints/transaction change detection, increasing
-destination revisions and undo/checkpoint apply. Prevent silently retaining the
-wrong current snapshot. Add stale confirmation, cross-campaign rejection, absent
-content, deletion/replacement and rollback tests.
+## Open gates
 
-2C remains: independently owned setup copies and Save As, move preservation,
-source immutability, local graph integrity and atomic failure. 2D remains:
-selected/life-filtered imported-monster binding remapping and independent clone
-revisions without provenance promotion. Copied local strings need only be unique
-within their own canonical snapshot; relational IDs/ownership must be independent.
+- Stage 1: private save/normalization review and covering service, storage,
+  migration/restart, limits and HTTP/WS privacy execution. Prepared fixture apps
+  are not full registration/startup/password-login/network/browser coverage.
+- Stage 2: complete and satisfy reset, checkpoint/undo, explicit absence, copy/
+  move/Save As, import remapping and private-only changes. Remaining contracts
+  can still fail; no assertions are skipped or weakened to claim completion.
+- Stage 3: bundle representation, aggregate/snapshot/member limits, malformed
+  data, untrusted provenance and rollback; no silent 10 MiB manifest/archive loss.
 
-## Remaining acceptance gates
-
-- Stage 1: finish private save/normalization lifecycle review and execute the
-  prepared service/privacy suites, including representative mutation replies,
-  rollback, scoped ownership, restart/migration and stored-limit checks. Fixture
-  apps are not full registration/startup/password-login/network/browser coverage.
-- Stage 2: satisfy reset, checkpoint/undo, copy/move/Save As, import remapping,
-  missing-content restoration and metadata-only change contracts. 2A does not
-  make current restore/normalize/copy/bundle paths preserve the attribute.
-- Stage 3: select/test bundle representation, aggregate/snapshot/member budgets,
-  malformed data, untrusted provenance and atomic rollback. Existing 10 MiB
-  manifest/archive limits must not silently discard content or metadata.
-
-Covering final Stage 3 CI and acceptance remain pending. No viewer/provider/
-listener feature, merge, deployment, release or whole-feature completion claimed.
+Covering final Stage 3 CI and acceptance remain pending. No schema/migration,
+viewer/provider/listener, merge, deployment, release or whole-feature closure.

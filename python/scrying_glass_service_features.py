@@ -14,9 +14,8 @@ TRACKED={'edit_statistics','edit_monster','update_monster','update_character','b
 BOUNDARIES={'load_setup','new_setup','activate_campaign','delete_campaign','delete_setup','rename_setup','add_setup_to_campaign','clear_activity_log'}
 
 def fingerprint(state):
-    payload=copy.deepcopy(state);payload.pop('activity_log',None);payload.pop('active_turn_id',None)
-    for item in payload.get('monsters',[])+payload.get('characters',[]): normalize_features(item)
-    return hashlib.sha256(json.dumps(payload,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+    from .scrying_glass_statblock_changes import recovery_fingerprint
+    return recovery_fingerprint(state)
 
 class FeaturesService:
     def __init__(self,context): self.context=context;self.displays={}
@@ -167,6 +166,8 @@ class FeaturesService:
                 keep.append(e)
             item['effects']=keep
     def reconcile(self):
+        from .scrying_glass_statblock_changes import prune_private
+        prune_private(self.context.STATE)
         ids={x['id'] for x in self.context.entities()}
         participant_ids=ids | {x['id'] for x in self.context.STATE.get('lairs', [])}
         for item in self.context.entities():
