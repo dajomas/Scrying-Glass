@@ -32,19 +32,24 @@ Preparatory sequence (each write requires its own bound approval):
    pre-statblock fixture helper, five regression tests and setup-lair v6 fixture.
    Four isolated helper tests passed locally; production-constructor helper
    test and changed setup-lair tests remain pending final covering CI.
-2. B: lair v5 and encounter-feature v4 migration fixtures are included in this
-   preparation delivery. Both construct pre-statblock databases before removing
-   later additions and reopen with the unpatched production constructor. V4
-   also removes the v6 lairs table. Backup checks preserve legacy versions and
-   reject residual statblock/lair tables; account values and FK checks remain.
-   These changed tests have not been run locally; final covering CI is pending.
-   [Current handover](../handover/010-scope-and-state.md#activation-preparation-b---2026-11-15).
-3. Prepare attack-statistics v7 backup and its AST-extracted resource-cleanup
-   fixture without changing their assertions into weaker migration coverage.
-4. Final activation: wire upgrade_statblocks into SQLiteStorage, update every
-   applicable version guard and version-pinned storage fixture, and add actual
-   production-constructor fresh/legacy/reopen/backup/failure tests. Omit
-   [skip ci] from this final code commit; review its complete covering run.
+2. B delivered at a44727ef76f810ab593305033947c84eb9af26ae: lair v5 and
+   encounter-feature v4 fixtures construct pre-statblock databases and reopen
+   with the unpatched production constructor. V4 removes the later lairs table;
+   backup/account/FK assertions are retained or strengthened. Tests have not
+   been run locally; final covering CI is pending.
+   [B handover](../handover/010-scope-and-state.md#activation-preparation-b---2026-11-15).
+3. C: attack-statistics v7 backup and AST-extracted cleanup changes are included
+   in this preparation delivery. Initial construction uses the shared helper;
+   reopen is unpatched. The upgraded version must equal the storage class's
+   SCHEMA_VERSION; the backup must remain v7 without statblock tables. Both
+   reader and storage close on assertion failure. Three isolated resource-
+   lifetime checks passed locally; real production migration and the complete
+   attack suite remain pending final CI.
+   [C handover](../handover/010-scope-and-state.md#activation-preparation-c---2026-11-15).
+4. Final activation remains pending: wire upgrade_statblocks into SQLiteStorage,
+   update every applicable version guard and version-pinned storage fixture,
+   and add actual production-constructor fresh/legacy/reopen/backup/failure
+   tests. Omit [skip ci] from the final code commit and review its full run.
 
 Intermediate commits explicitly use [skip ci]. Do not dispatch separate CI
 or alter workflows to achieve skipping. Their full validation is deferred,

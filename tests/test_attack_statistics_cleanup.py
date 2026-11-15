@@ -26,7 +26,7 @@ def backup_test_method():
 
 
 class BackupConnectionCleanupTests(unittest.TestCase):
-    def exercise(self, fail_assertion=False):
+    def exercise(self, fail_assertion=False, fail_current=False):
         opened = []
         connect = sqlite3.connect
         class TrackedConnection(sqlite3.Connection):
@@ -40,6 +40,7 @@ class BackupConnectionCleanupTests(unittest.TestCase):
             opened.append(connection)
             return connection
         class MinimalStorage:
+            SCHEMA_VERSION = 8
             def __init__(self, path):
                 self.connection = sqlite3.connect(path)
                 self.migration_backup = path.with_suffix('.backup.sqlite3')
@@ -57,10 +58,12 @@ class BackupConnectionCleanupTests(unittest.TestCase):
             def close(self):
                 self.connection.close()
         case = unittest.TestCase()
-        if fail_assertion:
+        if fail_assertion or fail_current:
             def assert_equal(left, right):
-                if right == 7:
+                if fail_assertion and right == 7:
                     raise AssertionError('injected backup assertion failure')
+                if fail_current and right == MinimalStorage.SCHEMA_VERSION:
+                    raise AssertionError('injected current-version assertion failure')
                 unittest.TestCase().assertEqual(left, right)
             case.assertEqual = assert_equal
         try:
@@ -69,17 +72,14 @@ class BackupConnectionCleanupTests(unittest.TestCase):
                 initial.close()
                 case.c = types.SimpleNamespace(DATA_DIR=Path(directory), STORAGE=initial)
                 try:
-                    if fail_assertion:
-                        with self.assertRaisesRegex(AssertionError, 'injected backup'):
+                    if fail_assertion or fail_current:
+                        with self.assertRaisesRegex(AssertionError, 'injected'):
                             backup_test_method()(case)
                     else:
                         backup_test_method()(case)
                     read_connections = [c for c in opened if not c.closed_explicitly]
-                    # On assertion failure, the method's later db.close() is skipped;
-                    # the final opened connection is the backup reader and must close.
                     self.assertTrue(opened[-1].closed_explicitly)
-                    if not fail_assertion:
-                        self.assertEqual(read_connections, [])
+                    self.assertEqual(read_connections, [])
                 finally:
                     for connection in opened:
                         if not connection.closed_explicitly:
@@ -94,6 +94,9 @@ class BackupConnectionCleanupTests(unittest.TestCase):
 
     def test_backup_reader_closes_after_assertion_failure(self):
         self.exercise(fail_assertion=True)
+
+    def test_storage_closes_after_current_version_assertion_failure(self):
+        self.exercise(fail_current=True)
 
 
 if __name__ == '__main__':

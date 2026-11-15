@@ -159,6 +159,40 @@ Startup remains schema 8; attack-backup preparation and final production-
 constructor activation/tests remain outstanding. README, HANDOVER and TODO root
 index links remain accurate and unchanged. 022.02b is still in progress.
 
+## Activation preparation C - 2026-11-15
+
+Preparation B was delivered at a44727ef76f810ab593305033947c84eb9af26ae.
+[Current staging](../todo/222-statblock-persistence.md) remains authoritative
+for per-stage delivery and pending final validation.
+
+This change prepares test_attack_statistics.py:test_v7_backup and its
+AST-extracted test_attack_statistics_cleanup.py fixture. The real migration
+test constructs a disposable v8 database via pre_statblock_storage before
+removing v8 effect columns. The reopen is unpatched, expected user_version
+comes from the storage class, and its backup must remain v7 with no statblock
+table. A finally block closes the storage even when version/backup assertions
+fail; the backup reader retains its explicit closing context.
+
+The resource-only MinimalStorage keeps its own SCHEMA_VERSION=8, not a copy of
+the production migration implementation. Cleanup now requires zero unclosed
+connections both on success and injected backup assertion failure. A third
+test injects failure at the upgraded-version assertion and verifies all
+connections are closed there too. Unrelated attack-statistics test methods,
+production modules, helper behavior and workflows remain unchanged.
+
+Local checks: AST parsing of the changed backup method and cleanup module;
+all three cleanup tests passed with real SQLite and tracked explicit closes
+in a disposable minimal directory, using the committed helper and an isolated
+stub statblock-migration target. This is resource-lifetime validation only,
+not actual SQLiteStorage startup, a complete production migration, the full
+attack-statistics suite or hosted CI. Those remain pending final covering CI.
+
+This intermediate commit uses [skip ci] by the user's 13:00 instruction; no
+separate workflow dispatch. Startup stays schema 8. Final production startup
+activation/version guards and fresh/legacy/reopen/backup/failure tests remain
+pending, and the final code commit must omit [skip ci]. README and root index
+links remain accurate and unchanged. No whole-task completion is claimed.
+
 ## Documentation entry points
 
 - [README](../../README.md)
