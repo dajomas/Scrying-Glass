@@ -221,7 +221,7 @@ class StorageOperationTests(unittest.TestCase):
 
 class StorageRuntimeTests(unittest.TestCase):
     def test_dispatch_modules_and_file_limits(self):
-        self.assertEqual(SQLiteStorage.SCHEMA_VERSION, 8)
+        self.assertEqual(SQLiteStorage.SCHEMA_VERSION, 9)
         self.assertIsInstance(getattr_static(SQLiteStorage, 'convert_campaign_references'), staticmethod)
         self.assertIsInstance(getattr_static(SQLiteStorage, '_typed'), staticmethod)
         self.assertEqual(SQLiteStorage.__module__, 'python.scrying_glass_storage')
@@ -234,11 +234,11 @@ class StorageRuntimeTests(unittest.TestCase):
             tree = ast.parse(data.decode())
             self.assertFalse(any(isinstance(n, ast.Call) and isinstance(n.func, ast.Name) and n.func.id in ('exec','eval','compile') for n in ast.walk(tree)))
 
-    def test_v8_persistence_reopen_and_transaction_rollback(self):
+    def test_v9_persistence_reopen_and_transaction_rollback(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory)/'storage.sqlite3'
             with closing(SQLiteStorage(path)) as s:
-                self.assertEqual(s.connection.execute('PRAGMA user_version').fetchone()[0],8)
+                self.assertEqual(s.connection.execute('PRAGMA user_version').fetchone()[0],9)
                 self.assertIsNone(s.migration_backup)
                 c = s.create_campaign('Fixture','','now')
                 s.save_characters(c,[{'id':'hero','hp':12,'effects':[]}])

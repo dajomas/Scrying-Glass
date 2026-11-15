@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Last updated: 2026-11-01.
+Last updated: 2026-11-15. Earlier dated sections retain their historical scope.
 
 ## Inspected CI evidence
 
@@ -99,3 +99,55 @@ Complete approval/delivery, covering results/corrections and bounded acceptance
 remain pending. README and root indexes retain accurate links/open scopes and are
 unchanged. Stage 2 and both deliverables remain open; no merge/deployment or
 unobserved CI/commit identity is claimed. [Current tasks](../todo/098-character-edit-feedback.md).
+
+## Statblock startup activation - 2026-11-15
+
+[Current task and gates](../todo/222-statblock-persistence.md) · [Storage foundation](240-sqlite-storage-split.md#statblock-storage-foundation---2026-11-15).
+This record supersedes earlier dated SG-TODO-022 notes saying startup remains
+schema 8 or activation is not wired. Other task history above is not reopened.
+
+Final activation sets SQLiteStorage.SCHEMA_VERSION=9, extends both constructor
+version guards through 9 and calls upgrade_statblocks after upgrade_statistics.
+Existing v1-v8 migration ordering, transaction/savepoint helpers, scalar field
+exports and base-v3 _create_schema remain. Fresh installs create all seven typed
+statblock tables without a migration backup. Existing databases keep the
+original pre-chain database backup; the new step reuses it instead of backing
+up an already-upgraded intermediate version. Ordinary v9 reopen is idempotent
+and must not recreate users/account_migration or generate another backup.
+Historical staging comments in foundation modules describe their original
+delivery state; the facade constructor is authoritative for activation wiring.
+
+Stop the single process and back up the entire storage directory, configuration
+and media before deploying the complete matching Python tree. Startup upgrades
+existing supported databases automatically. Automatic SQLite backups alone are
+not a full installation backup. If the new step fails, its DDL/version roll
+back and constructor error handling closes the connection. Earlier successful
+steps in a legacy migration chain can already be committed: full rollback
+restores matching original code/data from the original backup, not a lowered
+user_version. A failed backup must prevent the new migration from starting.
+
+Preparation commits A 6f8e44dfe7e1d9de166e21d61b697d34e3c89679,
+B a44727ef76f810ab593305033947c84eb9af26ae and
+C 1ccd5c36afb88a99b812b79bacd5a63c7c194654 used [skip ci] as requested.
+This final code commit omits that marker and relies on configured normal push
+CI. No workflow change or separate dispatch. Review the actual covering commit,
+attempt and complete stage conclusions; do not infer success from publication.
+
+Strict facade schema assertions move from 8 to 9; no range/skip replaces them.
+Seven new production-constructor test methods exercise fresh/reopen, all
+supported legacy versions 1-8 with original backups, account/setup preservation,
+statblock persistence over reopen, backup-file collision, injected DDL rollback
+and constructor cleanup, backup denial and future-version rejection. Preparatory
+helper/resource checks retain their narrower scopes. New and changed activation
+tests were reviewed but not executed locally; neither syntax review nor earlier
+foundation run 43709292836 attempt 1 validates this activation. Full CI, including
+the connection audit and preparations A-C, is pending. No live deployment,
+authenticated HTTP/browser or provider coverage is claimed.
+
+No statblock UI, provider conversion, public-state projection or whole lifecycle
+preservation is delivered here. The internal API accepts stored monster-row IDs;
+future callers must enforce campaign/encounter authorization. Runtime/setup/
+recovery/undo/checkpoint/copy/bundle integration remains 022.03. SG-TODO-022.02b
+and parent 022.02 remain in progress until the activation evidence is reviewed.
+README backup/runtime guidance and root index links remain accurate and unchanged;
+indexed task 222 carries the current operational/status details.

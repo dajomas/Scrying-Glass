@@ -1,81 +1,78 @@
 # 222 - Statblock persistence delivery
 
-[Back to TODO index](../../TODO.md) · [Parent contract](220-admin-statblock-viewer.md) · [Storage handover](../handover/240-sqlite-storage-split.md#statblock-storage-foundation---2026-11-15)
+[Back to TODO index](../../TODO.md) · [Parent contract](220-admin-statblock-viewer.md) · [Storage foundation](../handover/240-sqlite-storage-split.md#statblock-storage-foundation---2026-11-15) · [Activation/validation](../handover/030-validation-and-next-steps.md#statblock-startup-activation---2026-11-15)
 
 ## Task and status - 2026-11-15
 
-SG-TODO-022.02b is in progress. The initial foundation/activation split was
-approved at 12:25 CET. At 13:00 CET the user authorized smaller direct-GitHub
-preparatory commits with [skip ci] until the final startup-activation commit.
-This addendum governs staging/progress only; the parent's model, typed-table,
-migration and lifecycle requirements remain. All writes stay on
-features/perplexity-statblock. No owner/deadline assigned.
+SG-TODO-022.02b remains in progress with activation implementation included in
+this delivery and covering CI pending. The 12:25 foundation/activation split
+was refined by the user's 13:00 authorization for smaller direct-GitHub
+preparatory commits with [skip ci] until the final activation commit. This is
+that final code activation, with normal push CI and no skip marker. All work
+stays on features/perplexity-statblock. No owner/deadline assigned. The parent's
+model, typed-table, migration and lifecycle contracts are unchanged.
 
-## Foundation - delivered with covering CI verified
+## Foundation and preparations
 
-Implementation 4a3f930cb4a0df109b06259bd9ca9a23f01638ee has successful
-Branch tests 43709292836 attempt 1. Main unittest ran 1,704 tests OK, including
-all eight new storage tests. All configured validation stages succeeded and
-evidence was published under ci-results-43709292836-attempt-1. This verifies
-the foundation, not startup activation or complete lifecycle integration.
+- Foundation 4a3f930cb4a0df109b06259bd9ca9a23f01638ee: covering Branch tests
+  43709292836 attempt 1 succeeded; 1,704 main Python tests OK including all
+  eight storage tests. Evidence is ci-results-43709292836-attempt-1. This is
+  foundation evidence, not validation of activation.
+- A: 6f8e44dfe7e1d9de166e21d61b697d34e3c89679 supplied the test-only v8
+  constructor helper, its five tests and setup-lair v6 fixture. Four isolated
+  helper checks passed locally; full production fixture validation is pending.
+- B: a44727ef76f810ab593305033947c84eb9af26ae supplied lair-v5 and feature-v4
+  fixture preparation, backup/account/FK assertions. Not executed locally.
+- C: 1ccd5c36afb88a99b812b79bacd5a63c7c194654 supplied attack-v7 backup and
+  AST cleanup preparation. Three isolated lifetime checks passed locally;
+  they are not production migration or complete attack-suite verification.
+- All three preparations intentionally used [skip ci]. Their complete combined
+  validation is delegated to this final code commit's configured suites and
+  connection audit. No separate workflow dispatch or workflow change.
 
-Seven typed relations, callable backed-up 8-to-9 upgrade, atomic save/load/
-replacement, revisions, references and optional-field presence are delivered.
-Foundation fixtures use a SQLite storage protocol, not the complete production
-constructor; stage-two tests below must cover that distinction.
+## Activation implementation - supplied, validation pending
 
-## Startup activation - in progress, not enabled
+SQLiteStorage.SCHEMA_VERSION becomes 9. Both the accepted-version whitelist
+and pre-account-schema guard include 9, so reopen does not recreate user tables.
+The constructor calls upgrade_statblocks after statistics migration. Fresh
+databases reach 9 without an upgrade backup; existing supported versions 1-8
+retain the original pre-chain backup via the existing upgrade helpers. The
+last 8-to-9 step is transactional with FK checks. Backup failure blocks that
+step; failed DDL rolls back its new tables and version. Existing earlier
+migration functions and base-v3 _create_schema fixtures remain unchanged.
 
-Preparatory sequence (each write requires its own bound approval):
+Strict facade assertions require schema 9, not a range or skipped assertion.
+Seven new production-constructor methods cover fresh/reopen, versions 1-8,
+original backup reuse, account/setup preservation, statblock save/reopen,
+backup-name collision, injected DDL/backup failure and future-version refusal.
+These new/updated activation tests have not been executed locally. Source
+review is not a pass. Inspect the actual covering run before closing 022.02b.
 
-1. A delivered at 6f8e44dfe7e1d9de166e21d61b697d34e3c89679: shared
-   pre-statblock fixture helper, five regression tests and setup-lair v6 fixture.
-   Four isolated helper tests passed locally; production-constructor helper
-   test and changed setup-lair tests remain pending final covering CI.
-2. B delivered at a44727ef76f810ab593305033947c84eb9af26ae: lair v5 and
-   encounter-feature v4 fixtures construct pre-statblock databases and reopen
-   with the unpatched production constructor. V4 removes the later lairs table;
-   backup/account/FK assertions are retained or strengthened. Tests have not
-   been run locally; final covering CI is pending.
-   [B handover](../handover/010-scope-and-state.md#activation-preparation-b---2026-11-15).
-3. C: attack-statistics v7 backup and AST-extracted cleanup changes are included
-   in this preparation delivery. Initial construction uses the shared helper;
-   reopen is unpatched. The upgraded version must equal the storage class's
-   SCHEMA_VERSION; the backup must remain v7 without statblock tables. Both
-   reader and storage close on assertion failure. Three isolated resource-
-   lifetime checks passed locally; real production migration and the complete
-   attack suite remain pending final CI.
-   [C handover](../handover/010-scope-and-state.md#activation-preparation-c---2026-11-15).
-4. Final activation remains pending: wire upgrade_statblocks into SQLiteStorage,
-   update every applicable version guard and version-pinned storage fixture,
-   and add actual production-constructor fresh/legacy/reopen/backup/failure
-   tests. Omit [skip ci] from the final code commit and review its full run.
+## Operational and acceptance gates
 
-Intermediate commits explicitly use [skip ci]. Do not dispatch separate CI
-or alter workflows to achieve skipping. Their full validation is deferred,
-not claimed passed. Startup remains schema 8 during all preparatory commits.
+Startup now automatically upgrades supported existing databases. Stop the
+application and back up the full storage directory, configuration and media
+before deploying the complete matching python/ tree. Automatic SQLite backups
+do not include all installation files. Ordinary v9 reopen must not make another
+migration backup. Never roll back by lowering user_version: restore matching
+pre-upgrade code and data. A failed late upgrade may follow committed earlier
+steps in a legacy chain; retain and use its original backup for full rollback.
 
-## Acceptance and validation
+Require covering CI to pass all configured stages, including preparations A-C,
+production startup tests, existing legacy/account/storage suites and the
+explicit-close audit. Verify each result's commit and attempt. Until then this
+unit and parent 022.02 remain in progress, not completed or fully validated.
+Earlier dated notes saying startup remains 8 are historical and superseded by
+this activation record; their evidence limits remain intact.
 
-The test-only helper suppresses just the statblock migration while constructing
-a disposable fixture. It verifies version 8 and absence of statblock tables,
-restores the patched function before returning or propagating construction
-failure, and closes invalid returned storage. It never removes statblock data
-from a newer database. It is for single-threaded tests, not deployed storage.
+The fixture helper suppresses only statblock migration while constructing a
+disposable old database, validates version 8/no statblock tables, restores the
+function and closes invalid results. It remains single-threaded test tooling;
+the migration test's real reopen and normal application startup are unpatched.
 
-Stage two must verify complete production databases and constructor cleanup,
-matching pre-upgrade backups, transactional DDL rollback, no backup on ordinary
-reopen, legacy no-statblock compatibility and future-version rejection. Earlier
-migrations must remain intact. Do not mark 022.02b complete before all agreed
-activation work and its covering CI are verified.
-
-The normal constructor still rejects schema 9. Do not run the callable upgrade
-on deployed storage until matching activation code and a full storage/config/
-media backup are available. Rollback restores matching pre-upgrade code/data,
-never merely lowers user_version. No end-user statblock UI is available.
-
-Runtime/setup/recovery/undo/checkpoint/copy/bundle preservation and identity
-remapping remain 022.03; private saved content must not enter public Client
-Display payloads or overwrite SG-owned fields. 022.02a's earlier green run
-43707384985 attempt 1 at 0ed81a834d0973179c2c030eb84bb36b35c7e325 is retained
-as model history, not relabelled activation evidence.
+No statblock UI, listener, provider adapter, public projection or lifecycle
+wiring is added. Runtime/setup/recovery/undo/checkpoint/copy/bundle preservation
+and identity remapping remain 022.03. Source-model/cache/configuration and
+authorization work retain their later units. No whole SG-TODO-022 closure.
+Model history remains run 43707384985 attempt 1 at
+0ed81a834d0973179c2c030eb84bb36b35c7e325, not activation evidence.
