@@ -69,7 +69,8 @@ def transactional_handler(context, handler, *, role=None, cookie_name=None):
                         ownership(context).assign_created(campaign_id)
                 if features:
                     features.reconcile()
-                    if context.STATE != original:
+                    from .scrying_glass_statblock_changes import state_changed
+                    if state_changed(original, context.STATE):
                         context.save_active_campaign_characters()
                         context.save_active_setup_monsters()
                         context.save_state()

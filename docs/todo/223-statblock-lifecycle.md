@@ -29,7 +29,7 @@ and linked handovers. No outstanding requirement is removed by consolidation.
 - 2A b1754d78ada3e66780b0b426b8bd70483c4d3f50: typed independent checkpoint/
   undo capture, historical metadata and explicit absence; ten tests unexecuted.
 - 2B.1 1214bed0833ee312f305ce88937dae8f7d60170f: private-aware fingerprints/
-  pruning; nine tests unexecuted. General private-only comparison remains unwired.
+  pruning; nine tests unexecuted. Save detection is wired separately in 2B.7.
 - 2B.2 5c8b4776c72a949cbecfef0f00194064a07fdc46: replacement-only kernel,
   exact bindings and atomic writes; nine original tests unexecuted at delivery.
 - 2B.3 8e4d625d7785275c935a3c40b5f45323de329801: production checkpoint/undo
@@ -70,6 +70,30 @@ restoration transaction. The existing service refreshes live metadata from the
 saved private map, including empty maps, and protected rollback/broadcast handling
 remains. General private-only transaction save integration is not delivered here.
 
+## 2B.7 save-decision detection - 2026-11-15
+
+Status: implementation supplied, full-import/integration validation pending.
+The user selected a bounded detection-only delivery after two reported timeouts;
+their cause was not established. The transaction wrapper now calls the existing
+state_changed(original, current) after feature reconciliation instead of ordinary
+dictionary equality. It retains the existing character/setup/runtime save order,
+outer rollback, after-transaction hook and deferred-broadcast boundary. It does
+not implement private graph writes or refresh; this is not a complete private-only
+save feature. [Evidence/limits](../handover/010-scope-and-state.md#02203-save-decision-detection---2026-11-15).
+
+Six focused routing tests passed in an isolated harness with signature/save/
+authorization test doubles and a real SQLite sentinel transaction. Both changed
+Python files AST-parse. Full-module imports, canonical model validation and real
+setup/runtime persistence are not covered by those passes. Existing fingerprint
+and production integration tests remain pending. Existing unittest discovery
+includes the new test module; no workflow edits or dispatch. Earlier 2B.6 evidence
+below is retained, not relabelled as a fresh run.
+
+Follow-on 2B.8: carry private changes through setup/runtime saves and refresh saved
+metadata, with revision/no-op/isolation/rollback tests. 2B.9: integrate history,
+undo/revision/broadcast, clearing/reload/rebuild regressions and acceptance evidence.
+Detection alone cannot satisfy either follow-on scope or close 2B/022.03.
+
 ## Validation and remaining work
 
 Executed: six exact isolated ClearSqlTests against real in-memory SQLite and the
@@ -89,7 +113,7 @@ covering CI remain pending. Existing unittest discovery includes both test modul
 Workflow identity and README/root index identities were verified against prior
 complete reads; no workflow changes or dispatch. Final Stage 3 CI stays deferred.
 
-Next 2B: arbitrary private-only transaction comparison/save/refresh, expanded
+Next 2B: 2B.8 private-only save/refresh and 2B.9 integration, expanded
 scope/restart/limits/undo/rollback validation and covering acceptance. Stage 1/2,
 2B and 022.03 are not complete or accepted. 2C independent copy/Save As ownership/
 revisions, source immutability, move preservation, references and rollback remain.

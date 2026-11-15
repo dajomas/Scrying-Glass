@@ -158,6 +158,31 @@ acceptance; old code lacks private marker/filter rules, so do not roll code back
 alone over ledger-bearing data. Retain full storage/config/media/code backups.
 No viewer/provider/listener, merge/deployment/release or whole-feature closure.
 
+## 022.03 save-decision detection - 2026-11-15
+
+Baseline: f38d7c3a4ba86f45dfbf167b25da189f3825c152. 2B.7 wires the existing
+private-aware state_changed comparison into the transaction save decision after
+reconciliation. Character/setup/runtime save order and surrounding rollback,
+after-transaction and broadcast handling are retained. No private graph writer,
+refresh, clear authority, schema or route change is added. This is detection only;
+2B.8 must implement private-content save/refresh and 2B.9 integration/acceptance.
+[Current task and retained gates](../todo/223-statblock-lifecycle.md#2b7-save-decision-detection---2026-11-15).
+
+Six exact focused test methods passed in an isolated function-body harness with
+signature, save and authorization test doubles plus a real SQLite sentinel. The
+initial notebook-loop harness could not use asyncio.run; rerunning on a worker
+thread passed all six without changing production code for the harness. These
+passes prove routing/order, unchanged/tracker/private/combined decisions and
+sentinel/memory rollback on comparison/save failure, not model validation, actual
+private graph persistence, full imports or authenticated services. Both changed
+Python files AST-parse. Existing canonical fingerprint/production suites and
+covering CI remain pending; no earlier evidence is relabelled as a fresh run.
+
+README and root indexes were read and remain applicable, so are unchanged. The
+workflow was read; unittest discovery includes the new test module. No workflow
+edit/dispatch; [skip ci] remains on intermediate deliveries. 2B/022.03 stay in
+progress, not validated or accepted. Matching code/data backup guidance remains.
+
 ## Documentation entry points
 
 - [README](../../README.md)
