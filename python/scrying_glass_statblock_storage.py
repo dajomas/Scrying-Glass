@@ -128,12 +128,19 @@ class StatblockStorage:
         value.setdefault('prepared_at', datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'))
         value['content_digest'] = content_digest(value, limits)
         value = validate_snapshot(value, limits)
+        allocator = getattr(self.storage, '_next_statblock_revision', None)
+        recorder = getattr(self.storage, '_record_statblock_revision', None)
+        if (allocator is None) != (recorder is None):
+            raise RuntimeError('Incomplete private revision storage protocol')
         with self.storage.transaction():
             if not self.db.execute('SELECT 1 FROM monsters WHERE id=?', (monster_id,)).fetchone():
                 raise ValueError('Stored monster not found')
             row = self.db.execute('SELECT revision FROM monster_statblocks WHERE monster_id=?', (monster_id,)).fetchone()
             if (row[0] if row else 0) != expected_revision:
                 raise ValueError('Stale statblock revision')
+            if allocator is not None:
+                value['revision'] = allocator(monster_id)
+                value = validate_snapshot(value, limits)
             self.db.execute('DELETE FROM monster_statblocks WHERE monster_id=?', (monster_id,))
             ident = self.db.execute(f"INSERT INTO monster_statblocks(monster_id,{','.join(HEADER)}) VALUES ({','.join('?' for _ in range(len(HEADER)+1))})", [monster_id] + [value[k] for k in HEADER]).lastrowid
             definitions = {}
@@ -145,6 +152,8 @@ class StatblockStorage:
                     if kind == 'provenance':
                         for credit in record['credits']:
                             _insert(self.db, 'credits', parent, credit, {})
+            if recorder is not None:
+                recorder(monster_id, value['revision'])
             self.storage._check_foreign_keys()
         return value
 

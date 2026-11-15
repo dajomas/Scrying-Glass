@@ -265,3 +265,47 @@ rollback execution, 2C/2D and Stage 3 remain open. Stage 1/2/022.03 are not comp
 or accepted. README deployment guidance and existing root index links remain
 applicable; deploy the matching complete tree only after required validation and
 acceptance. No merge, deployment, release or whole-feature closure is implied.
+
+## 022.03 Increment 2B.4 revision-counter foundation - 2026-11-15
+
+Baseline: 8e4d625d7785275c935a3c40b5f45323de329801. This first increment
+under the user's 18:20 request for remaining 022.03 adds durable per-stored-monster
+counters to existing monsters_attributes rows, with a reserved private field and
+versioned private scalar kind. No table, DDL, schema-version or migration changes.
+The facade hides/validates these rows on reads, forbids ordinary counter input
+and preserves them during stable-row attribute updates. Non-monster attributes
+retain the old dispatch. Header revisions bootstrap older records lazily.
+
+StatblockStorage uses paired optional allocation/recording hooks. Production
+SQLite allocates max(header,counter)+1 after its existing ownership/revision checks,
+revalidates complete final metadata and records the counter under the same save
+transaction. Partial hook protocols fail; the original minimal header-only protocol
+fixtures remain supported without gaining clearing capability. Overflow/decrease,
+malformed private markers and ordinary reserved-field input fail closed.
+
+Eight exact new ledger unit methods passed against real in-memory SQLite in an
+isolated namespace using representative tables. They cover legacy bootstrap,
+header absence, invalid integers/decrease/overflow, rollback, owner/cascade/FKs,
+hidden decoding/input rejection and malformed/colliding marker rejection. These
+are not production constructor/model/storage/service passes. Five additional
+production tests are prepared, not run, for lazy bootstrap, header-absence tracker
+preservation/privacy, prohibited input, failed/outer rollback and reopen. Header
+deletions are controlled test simulations, not service clearing. New module/test
+source and changed writer snippet AST-parse; full imports and covering suites
+have not run. This updates the earlier blanket no-tests-executed wording only
+for these eight isolated ledger methods, not any previous staged suite.
+
+Adapter reattachment and counter-only row rebuild preservation remain next,
+followed by trusted clear activation and arbitrary private-only save integration.
+The current restore kernel still rejects surviving-content clearing. Do not claim
+all writers or Stage 2 are complete. 2C/2D, bundles and covering final Stage 3 CI
+remain open. Existing discovery includes the tests. Intermediate [skip ci] policy
+remains; no dispatch, workflow edit, deployment or merge. 022.02 stays closed and
+Stage 1 unvalidated. Parent/index status wording predating these increments remains
+historical; the lifecycle task is the current detailed progress record.
+
+Deploy only matching complete code/data after validation/acceptance. Older code
+cannot decode the private ledger kind despite the unchanged schema number; do not
+roll back code alone over ledger-bearing data. Retain full matching code/storage/
+configuration/media backups. README whole-tree/backup instructions and existing
+index links remain applicable; no cosmetic README/index edits are included.

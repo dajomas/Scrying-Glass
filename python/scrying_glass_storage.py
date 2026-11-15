@@ -15,9 +15,10 @@ from .scrying_glass_storage_schema import StorageSchemaMixin
 from .scrying_glass_storage_records import StorageRecordsMixin
 from .scrying_glass_storage_operations import StorageOperationsMixin
 from .scrying_glass_storage_statblocks import StatblockOperationsMixin
+from .scrying_glass_statblock_revisions import StatblockRevisionMixin
 
 
-class SQLiteStorage(StorageSchemaMixin, StorageRecordsMixin, StatblockOperationsMixin):
+class SQLiteStorage(StorageSchemaMixin, StatblockRevisionMixin, StorageRecordsMixin, StatblockOperationsMixin):
     SCHEMA_VERSION = 9
 
     def __init__(self, path: Path):
