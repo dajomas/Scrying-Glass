@@ -69,13 +69,15 @@ def transactional_handler(context, handler, *, role=None, cookie_name=None):
                         ownership(context).assign_created(campaign_id)
                 if features:
                     features.reconcile()
-                    from .scrying_glass_statblock_changes import state_changed
+                    from .scrying_glass_statblock_changes import state_changed, private_signature
                     if state_changed(original, context.STATE):
                         context.save_active_campaign_characters()
                         context.save_active_setup_monsters()
                         context.save_state()
                         from .scrying_glass_statblock_saving import flush_private_state
                         flush_private_state(context)
+                        if private_signature(original) != private_signature(context.STATE):
+                            context._database_broadcast_pending = True
                     features.after_transaction(handler.__name__,original,campaign_before)
             pending = context._database_broadcast_pending
         except BaseException as exc:

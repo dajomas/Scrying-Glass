@@ -22,7 +22,10 @@ class PrivateTransactionSaveTests(unittest.TestCase):
 
     def replace(self, label, hp=None):
         async def private_replace():
-            self.c.STATE._statblocks['m']['source_label'] = label
+            value = self.c.STATE._statblocks['m']
+            if value['source_label'] != label:
+                value.pop('content_digest', None)
+                value['source_label'] = label
             if hp is not None: self.c.STATE['monsters'][0]['hp'] = hp
         asyncio.run(transactional_handler(self.c, private_replace)())
 
@@ -66,6 +69,7 @@ class PrivateTransactionSaveTests(unittest.TestCase):
         self.seed(); stale = copy.deepcopy(self.c.STATE); current = self.seed('Current')
         async def stale_change():
             self.c.STATE = stale
+            self.c.STATE._statblocks['m'].pop('content_digest', None)
             self.c.STATE._statblocks['m']['source_label'] = 'Stale change'
         with self.assertRaisesRegex(ValueError, 'Stale'):
             asyncio.run(transactional_handler(self.c, stale_change)())

@@ -16,13 +16,13 @@ class PrivateEncounterState(dict):
 
 
 def carry_private(source, normalized):
-    """Attach validated stored metadata only from an internal state instance."""
+    """Retain validated metadata, including explicit absence, from trusted state."""
     plain = dict(normalized)
     if not isinstance(source, PrivateEncounterState):
         return plain
     snapshots = prepare_private_state(
         source._statblocks, {item['id'] for item in plain.get('monsters', [])}, _policy(None))
-    return PrivateEncounterState(plain, snapshots) if snapshots else plain
+    return PrivateEncounterState(plain, snapshots)
 
 
 def _attach(storage, encounter, plain):
