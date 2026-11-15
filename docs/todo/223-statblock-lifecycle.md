@@ -70,3 +70,27 @@ Local strings are snapshot-scoped; stored ownership must remain independent.
 
 Covering final Stage 3 CI and acceptance remain pending. No schema/migration,
 viewer/provider/listener, merge, deployment, release or whole-feature closure.
+
+## Increment 2B.2 replacement kernel
+
+2B.1 baseline: 1214bed0833ee312f305ce88937dae8f7d60170f. The new internal
+restore_encounter primitive accepts only PrivateEncounterState recovery images,
+validates graphs before writes, checks exact encounter-local stored-row/revision
+bindings, and restores tracker/reference content in one transaction. Historical
+revision fields are stripped before the normal destination revision policy runs;
+identical content retains current metadata. Monster removal still cascades.
+
+This is replacement-only and is not wired into FeaturesService restoration. It
+rejects clearing surviving content before tracker writes, rather than silently
+retaining the wrong snapshot. Coordinated durable counters across clearing and
+all private writers remain required before enabling that case. No counter/ledger
+prototype is delivered by this increment. Callers must still authorize campaign/
+recovery ownership, validate global confirmation revision, persist character
+rosters and assign refreshed live state within their protected operation.
+
+Nine tests cover historical replacement/tracker values, same-content metadata,
+clear rejection, stale/foreign bindings, failed-write rollback, deletion, raw
+dictionary rejection and invalid graphs. Kernel/test sources AST-parse (2,960/
+5,251 bytes); tests have not run. No restoration-service, ledger, HTTP/WS or CI
+pass/completion claimed. Remaining 2B service/normalization/save wiring and
+clearing, 2C/2D and Stage 3 stay open under the same deferred-CI policy.

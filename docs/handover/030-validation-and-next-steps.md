@@ -285,3 +285,34 @@ The task is condensed with prior history retained here/Git and all unfinished
 gates explicit. Existing README/index guidance remains applicable. Intermediate
 [skip ci] remains required; covering final Stage 3 CI and acceptance are pending.
 Stage 1, Stage 2 and 022.03 are not complete or accepted by this delivery.
+
+## 022.03 Increment 2B.2 replacement kernel - 2026-11-15
+
+Baseline: 1214bed0833ee312f305ce88937dae8f7d60170f. The new internal kernel
+accepts validated PrivateEncounterState recovery images and checks exact
+encounter-local row/revision descriptors under the write transaction. It removes
+historical revision fields before invoking the existing destination writer. Changed
+content receives the current destination's next revision; identical content keeps
+current metadata. Tracker and reference writes roll back together on failure.
+Deleting a monster still cascades, but surviving-content clearing is rejected
+before tracker writes. This is not production FeaturesService restoration wiring.
+
+Clearing exposed a dependency: durable revision counters must be honored by all
+private writers to avoid reusing an old revision after a clear. Ledger/counter
+prototypes were explored during preparation but are not part of this write. The
+first bounded kernel deliberately fails closed for unsupported absence instead
+of claiming safe clearing. Coordinated counter/clear/writer behavior, service
+authorization/confirmation, character-roster persistence, live-state refresh and
+transaction save-gate integration remain pending. No new HTTP restore channel.
+
+Nine prepared tests cover historical replacement, unchanged metadata, rejected
+clearing, stale/foreign bindings, failed content-write rollback, monster deletion,
+raw input and invalid graphs. Executed: AST parsing of kernel/test source (2,960
+and 5,251 bytes). Tests have not run; no model/storage/service/HTTP/WS/browser/CI
+pass claimed. No schema, migration, auth-policy or workflow changes. Existing
+Stage 2 contract assertions remain unchanged and can still fail until completion.
+
+The existing lifecycle task records the bounded scope and remaining gates.
+README and index guidance remain applicable. This intermediate commit contains
+[skip ci]; final Stage 3 covering validation and Stage 1/2 acceptance remain open.
+No merge, deployment, release or whole-feature completion is implied.
