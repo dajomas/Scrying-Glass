@@ -1,224 +1,256 @@
 # 220 - Admin-only active-battle statblock viewer and imports
 
-[Back to TODO index](../../TODO.md)
+[Back to TODO index](../../TODO.md) · [022.04 inheritance/reference plan](224-fivetools-statblock-resolution.md)
 
 ## Task and status
 
-- Identifier: SG-TODO-022.
-- Status: proposed feature; 022.01 design review in progress as of 2026-11-14. Feature implementation and executable validation have not started.
-- Priority: not assigned. No owner or deadline agreed.
-- Required development branch: `features/perplexity-statblock` in `dajomas/Scrying-Glass`. All development for this TODO item, including implementation, tests and task-related documentation, must be pushed to this branch. Do not write this work to another branch or merge without explicit approval.
-- This addition records planned work only; it does not deliver a working statblock viewer or imports.
+SG-TODO-022 remains an unimplemented feature. Design unit 022.01 is completed by this consolidated record on 2026-11-15 following the user's seven-item review, sixteen limit/policy decisions and 09:58 CET close-out request. 022.02 is ready to begin, not implemented; 022.03-022.16 remain pending. No owner, priority or deadline is assigned. All development remains on `features/perplexity-statblock` in `dajomas/Scrying-Glass`; no merge, deployment or release is implied.
+
+This record is authoritative over earlier proposals and the dated continuation/status notes in the 022.04 addendum. The addendum's 022.04a-022.04f implementation scope remains required. The full earlier task, original sixteen-unit wording, inspection findings and dated decisions are preserved in the [pre-consolidation record](https://github.com/dajomas/Scrying-Glass/blob/320a0c0e3b1acedd5cdeb1b188264ec8074f1243/docs/todo/220-admin-statblock-viewer.md). Consolidation does not delete unfinished requirements or claim executable validation.
 
 ## User-requested scope
 
 ### Separate admin-only viewer
 
-1. Add an extra viewing screen on default port `3200`, restricted to regular admins with access to the active campaign. A superadmin role alone does not grant access.
-2. Display tiles for the same monster instances actually displayed on the existing viewer screen, including its alive/dead rendering behavior. Do not use a separate In Battle-only filter. Each tile shows the monster name and species, with a border in that monster's configured colour.
-3. Take each monster's statblock from the source used for that monster: D&D Beyond, 5e.tools, Open5e or a `.monster` file. Preserve the exact source identity, including book/edition/document where available, rather than silently substituting another same-name monster.
-4. Clicking a tile expands it to display the entire available statblock, not only the AC/HP/initiative fields used by the tracker. At most one statblock is expanded at a time.
-5. Arrow keys navigate/select tiles; Enter expands the selected tile.
-6. Clicking the expanded tile/header again or pressing Escape collapses it. Selecting text, scrolling and following a supported link must not collapse it.
+Add a separately configurable listener defaulting to port 3200. Require a regular admin with access to the active campaign; superadmin status alone and client viewer grants are insufficient. Protect pages, read APIs, preparation/apply APIs and update transports. Revoke access and clear old content on logout, role/ownership/access changes or campaign changes. Do not alter unrelated Admin or Client Display permissions.
+
+Match the existing viewer's logical monster-card membership for the same state snapshot: `monster.active && (monster.alive || ['down', 'stable'].includes(monster.life_state))`. Preserve monster-array order and distinct instance IDs. Do not use initiative membership, `visible`, or an independent In Battle filter. Existing 750 ms exit animations do not extend logical membership or require cross-browser animation synchronization. Tiles show SG name/species and configured border colour.
+
+At most one monster tile is expanded. Click or Enter expands; another tile replaces it. Tile/header click or Escape collapses with appropriate focus return. Arrow keys navigate the responsive grid with visible focus. Text selection, scrolling, links and supporting-reference controls must not trigger collapse. Show explicit no-campaign/empty/missing/loading/error/partial states.
 
 ### Individual import
 
-Add an import-statblock button in the Edit Monster modal. Present all viable statblock source options for that monster, following the existing monster-image selection interaction. Include the supported online providers and `.monster` file import where viable; do not silently choose one candidate when multiple viable variants exist.
+Edit Monster offers discovery, file upload, candidate selection and preview without saving. Source-selector cancellation discards its unconfirmed choice; cancelling Edit discards all staged edits. Save atomically applies explicit ordinary monster edits and the staged statblock. Imported reference content itself never changes SG name, species, AC, current HP, max HP or initiative bonus. Preserve image and original tracker lookup identity.
 
 ### Bulk import
 
-Add a load-statblocks option to the monster bulk-action dropdown for selected monsters. Present all viable source options similarly to the monster-image workflow, with a row and independent choice per selected monster. Show progress and useful per-monster lookup/import results. Cancel or keeping the current choice must leave existing statblocks unchanged.
+The selected-monster dropdown offers statblock loading, with one row and independent candidate/keep-current choice per monster. Show progress, failures and cancellation clearly; do not present partial discovery as exhaustive. Apply is atomic per request. Unselected/keep-current rows remain unchanged. Explicitly report separate batches for more than 50 targets; completed batches are not rolled back by later failures. Closing a dialog after successful Apply is not undo.
 
-## Dependencies and implementation preparation
+## Final display and normalization contract
 
-- Follow the live `PERPLEXITY_INSTRUCTIONS.md` and inspect the actual server, authentication, active-battle projection, provider adapters, `.monster` parser, persistence, deployment and tests before implementation.
-- Reuse the established image-selector interaction where appropriate: [source-image workflow and accepted follow-ups](../handover/650-monster-source-image.md). This is an interaction reference, not evidence that the current image lookup already supplies complete statblocks.
-- Preserve existing source-selection and provider-switch rules: [SG-TODO-016](160-source-based-monster-selection.md), [SG-TODO-017](170-open5e-monster-source.md) and [source workstream history](../handover/590-monster-source-workstream.md).
-- Verify which full-statblock fields each viable provider and the current `.monster` format can actually supply. D&D Beyond is limited by user agreement to publicly retrievable content through the existing integration. Do not reopen cancelled account-backed access ([SG-TODO-004](040-dndbeyond-account-access.md)), bypass access restrictions or promise unavailable content. Explicit unavailable/partial states and administrator-selected alternative-source or file import are accepted; silent substitution is not.
-- Determine the necessary persistence/import/export migration so a statblock remains associated with the correct monster and source. Document any backup or migration requirement before delivery.
-- Add the third listener's configuration/start-up/deployment support, including collision handling consistent with the existing plain port-in-use error. Update operator/user documentation when the capability is implemented, not as if already delivered.
+SG exclusively supplies monster name, monster species, AC, current HP, max HP and initiative bonus (not rolled initiative). No source fallback or competing displayed values for these six fields; existing SG processes handle absent values. Live changes update the display without re-import or changing the reference-content revision. All other available selected-source statblock information must be presented; source numerical content is not recalculated from these SG overrides.
 
-## Proposed implementation safeguards and details
+Resolve Tetra-cube numerical placeholders from source ability scores/proficiency using a restricted parser. Unknown expressions remain readable with a warning. `[MON]` and `[MONS]` resolve to current SG species verbatim, without automatic pluralization and without Tetra-cube regular/short/plural names. At import, replace case-insensitive complete source-creature-label occurrences in the selected creature's descriptive text with explicit species-placeholder nodes. Match full Unicode-aware words/phrases, not substrings; do not infer aliases/plurals. Preserve existing placeholders, possessive suffixes and original surrounding text. Any matching references to another creature of that same species are intentionally normalized too. Source-label fields remain provenance only. Never alter source IDs, URLs, licences or attribution.
 
-These clarify a proposed implementation; they are not claims of completed work or separately agreed product decisions except where explicitly identified as agreed below.
+Perform inheritance/source calculations first, then selected-creature species normalization. Reference definitions keep their own identities and are not globally rewritten as the owning creature: `Vampire Spawn` must not become `[MON] Spawn`. Root properties/type/subtitle must not duplicate the source creature name as the displayed SG identity. Preserve meaningful source qualifiers without letting source identity override SG species.
 
-- Enforce authentication and campaign authorization on the viewer, its data endpoints and live-update connections. A separate port or a hidden link is not access control. Deny client-only and unauthenticated access and prevent leakage to Client Display payloads or public media.
-- Agreed 2026-11-14: require a regular admin account with access to the active campaign. Do not inherit the current generic admin dependency's superadmin bypass or treat client viewer grants as sufficient access.
-- Keep the tile set identical to the existing viewer's displayed monster set when the battle, viewer membership, name/species or colour changes. Include browser-side alive/dead filtering in parity checks; do not infer membership solely from the server's active flag. Display explicit empty, missing-statblock, loading and error states rather than stale data.
-- Use visible keyboard focus, predictable navigation matching the responsive tile grid, and return focus to the originating tile after collapse. At most one block is expanded. The expanded tile/header is the click-to-collapse target; text selection, scrolling and supported links remain usable.
-- Render complete supported statblock content, including abilities, traits, actions and other sections present in the source; safely handle provider-specific formatting and untrusted imported text/HTML. Show source attribution and applicable provider licence metadata. Missing content must be explicit, never invented or assembled from unrelated editions.
-- Distinguish automatic original-source retrieval from an admin's explicit alternative-source import. Preserve statblock provenance and do not accidentally change the monster's existing combat values, image or lookup provenance when importing a statblock.
-- Deduplicate matching source/species lookups while retaining independent choices for monsters of the same species. Report unavailable providers without presenting a reduced set as exhaustive or importing another source automatically. Define statblock-specific failure and retry behavior rather than inheriting partial image-lookup semantics without review.
-- Validate file type, size and content for `.monster` imports; handle older files or formats with no complete statblock explicitly. Do not claim file compatibility before inspecting the parser and fixtures.
+Integral linked content, such as regional effects, appears in its main section. Supporting spells, conditions, actions, rules, items, skills and related creatures are saved definitions accessible through labelled inline controls and a References section within the one expanded monster. Details start collapsed; multiple reference details may be open. Each shows its own source. Related creatures use their own reference values, not the owner's six SG values. Repeated/circular references navigate to an existing definition, never recursively nest copies. Escape collapses the monster and restores tile focus. External provider links are supplementary, not substitutes for required available saved content.
+
+Distinguish persisted completeness `available`/`partial` from operational `missing`/`loading`/`unavailable`/`error`. An absent optional section or absent source version of an SG-owned field does not cause partial status. Unsupported/unresolved meaningful content must be preserved safely where possible, with a warning; never invent rules, silently discard content, generate assumed legendary boilerplate or substitute editions. Failed replacements leave old content intact. A successfully prepared partial replacement is visibly partial and requires explicit Save/Apply.
+
+## Version 1 model and relational persistence
+
+The logical snapshot is `{model_version:1, source_label, subtitle, completeness, provenance:[], facts:[], definitions:[], nodes:[], warnings:[]}`. Arrays preserve explicit order. Header/runtime metadata additionally carries a monotonically increasing `revision`, UTC `prepared_at`, and SHA-256 `content_digest`. Integers reject booleans; missing optional values are null, not fabricated defaults. IDs inside a snapshot are opaque local strings, remapped on copy/import. Source scores may be retained for derived content, but the six SG-owned values are not duplicated as authoritative display facts.
+
+Concrete record layout, to be implemented in 022.02:
+
+| Relation | Required fields and constraints |
+|---|---|
+| `monster_statblocks` | `id INTEGER PK`, `monster_id INTEGER NOT NULL UNIQUE FK monsters(id) ON DELETE CASCADE`, `model_version INTEGER CHECK=1`, `revision INTEGER >=1`, `source_label TEXT`, `subtitle TEXT`, `completeness TEXT in available/partial`, `prepared_at TEXT UTC`, `content_digest TEXT SHA-256` |
+| `statblock_definitions` | `id INTEGER PK`, `statblock_id FK CASCADE`, `local_id TEXT`, `kind TEXT`, `name TEXT`, `source_code TEXT nullable`, `source_key TEXT`, `position INTEGER >=0`; unique local_id and position per snapshot; exact kind/source_key deduplication |
+| `statblock_provenance` | `id INTEGER PK`, `statblock_id FK CASCADE`, nullable same-snapshot `definition_id`, `role TEXT selected/base/template/reference`, `provider TEXT`, `endpoint TEXT nullable`, `api_version TEXT nullable`, `entity_id TEXT`, `source_code TEXT nullable`, `edition TEXT nullable`, `source_url TEXT nullable`, `file_name TEXT nullable`, `file_sha256 TEXT nullable`, `adapter_version TEXT`, `position INTEGER >=0` |
+| `statblock_credits` | `id INTEGER PK`, `provenance_id FK CASCADE`, `position INTEGER >=0`, `publisher TEXT nullable`, `attribution TEXT`, `license_name TEXT nullable`, `license_url TEXT nullable`; ordered multiple credits allowed |
+| `statblock_facts` | `id INTEGER PK`, `statblock_id FK CASCADE`, nullable same-snapshot `definition_id`, `position INTEGER >=0`, `key TEXT`, `label TEXT`, `display_text TEXT`, `integer_value INTEGER nullable`; ordered positions unique per owner |
+| `statblock_nodes` | `id INTEGER PK`, `statblock_id FK CASCADE`, `local_id TEXT`, nullable same-snapshot `definition_id`, nullable same-owner `parent_local_id TEXT`, `position INTEGER >=0`, `kind TEXT`, nullable `text`, `url`, `target_definition_local_id`, `source_path`, `label`, `enabled INTEGER 0/1`, `ordered INTEGER 0/1`; unique local_id and sibling positions |
+| `statblock_warnings` | `id INTEGER PK`, `statblock_id FK CASCADE`, nullable same-snapshot `definition_id`, `position INTEGER >=0`, `code TEXT`, `source_path TEXT nullable`, `message TEXT` |
+
+All fields are typed scalar columns, never serialized JSON payload columns. Same-snapshot/owner FKs and uniqueness must be enforced with composite constraints/indexes; root positions need a null-safe unique index. Validate parent existence, acyclicity and allowed parent/child types before any transaction. Definitions are flat roots linked by references, not cyclic content trees.
+
+Node kinds: `section`, `entry`, `paragraph`, `list`, `list_item`, `table`, `row`, `cell`, `text`, `emphasis`, `strong`, `line_break`, `link`, `species_placeholder`, `reference`. Top-level roots are sections/entries/paragraphs/lists/tables. Lists contain list items; tables contain rows, rows cells; paragraphs and inline styles contain only inline content; text/break/placeholders/reference/link targets cannot create structural cycles. Entries/sections/cells/list items may contain ordered blocks. Preserve introductory/concluding paragraphs, names, optional enabled-state and source ordering. Tetra-cube disabled-but-populated sections remain accessible with a disabled label, including sections gated by isLegendary. Render with safe DOM construction; validated HTTPS links only, no imported HTML/JS/styles/handlers, no arbitrary URL fetches. Formatting that cannot be converted remains escaped readable text with warnings.
+
+Digest canonicalization: compact sorted-object-key JSON, UTF-8 with non-ASCII unescaped, finite numbers only, deterministic local IDs/order. Digest covers normalized content/provenance/credits/warnings but excludes revision, prepared_at, own digest and SG live fields. Size validation covers the complete exported logical snapshot including metadata/credits/references. An adapter change invalidates conversion caches even if the resulting content digest is unchanged.
+
+Current schema base is 8; recheck before allocating the migration version in 022.02. Back up storage, configuration and media before upgrade. Migrate transactionally with foreign-key checks and legacy no-statblock compatibility; rollback restores matching pre-upgrade code/data, not a lowered version integer. Each stored `monsters.id` owns an independent snapshot; runtime/setup/recovery/copy/undo/checkpoint/bundle round trips must explicitly preserve it. Encounter reset preserves content; deleting a row cascades. Existing encounter-save paths that rebuild rows must reattach content by validated encounter/combatant identity inside the transaction, not rely on the old database row ID. Copy/import remaps local IDs and does not confer verified online provenance. Bundle manifest limits must accommodate configured snapshots through separately validated reference members or explicitly report an aggregate limit; no silent loss. 022.03 must test the actual chosen bundle representation. Legacy imports discarded full `.monster` content, so recovery requires re-importing original files.
+
+## Exact sources and provider capability contract
+
+Source identity, adapter version and content digest are separate concepts. Use a canonical structured tuple, never display name alone:
+
+| Source | Exact identity |
+|---|---|
+| 5e.tools | configured data-root/dataset identity, entity kind, source code, exact record name plus disambiguating record discriminator if needed; source edition/version where supplied |
+| Open5e | configured HTTPS endpoint, API version, creature key, document key and ruleset/edition where supplied |
+| D&D Beyond | exact numeric monster ID/canonical public monster URL, book/edition only where available |
+| File | local-file provider marker and SHA-256 of original file bytes; filename is reference metadata, not identity |
+
+Automatic retrieval uses only the retained exact identity. Manual/identity-less rows require explicit selection or file import. Explicit alternative selection updates statblock provenance only, not tracker lookup provenance or six SG fields. Validate candidate authenticity server-side; file claims of online identity are untrusted. No credentials/tokens in provenance. Preserve source attribution/licences. Respect existing provider switches for new fetches; disabling a provider does not delete saved snapshots.
+
+| Content/evidence | 5e.tools | Open5e v2 | Public D&D Beyond | Tetra-cube file |
+|---|---|---|---|---|
+| Properties, abilities, saves, skills, movement, senses/languages | Source structures inspected in captured Vampire records; tags/nesting require conversion tests | Full serializer inspected; direct captured v2 records verified; preserve explicit bonuses/display strings rather than implicit all-skill defaults | Captured public Vampire pages contain content; markup extraction beyond basic tracker fields remains implementation work | Full JS model/helpers inspected; derive source values only where format defines them |
+| Traits/actions/spellcasting/special sections | Traits/action/bonus/legendary/spellcasting and exact legendary groups observed; `_copy` interpreter required | Traits and action_type/order/usage mapping required; absent lair/mythic fields not invented | Old/new Vampire structures observed, not proof all public monsters work | Ordered name/desc arrays and intro/end text mapped; preserve section flags |
+| Supporting definitions | Required available datasets collected by exact kind/name/source, transitive references bounded and cycle-safe | Preserve supplied content/attribution; no 5e.tools substitution | No account access/bypass or foreign-source substitution; unavailable/partial accepted | Local provenance; no assumed online authenticity or automatic source substitution |
+| Unverified work disposition | Runtime pin/mode/template/default-source compatibility and complete recursive closure: 022.04a-f | All-section conversion/error fixtures: 022.05 | Changed markup, access gates, complete supported extraction: 022.06 | Older/malformed/unsafe/derived/tag fixtures: 022.07 |
+
+Matrix labels distinguish inspected mapping, conditional mapping, genuinely not supplied, unsupported/unresolved and unverified; no row claims a tested production adapter. Preserve every available meaningful statblock field, including additional sections outside a fixed catalogue. Partial source limitations other than the accepted public-only D&D Beyond boundary remain explicit implementation blockers requiring resolution, not silent scope reduction.
+
+Tetra-cube uses Open5e v1 conversion, not an interchangeable v2 model. Full inspected JS blob `a8520dcbf739ffb4f24ec7a50607bce29886d950`, added by `828a39e56d171d6361aa4812550f316a524daba7`, present in `5faece210f1bd5b4ce2c9a8557999faea6fff516`. `.monster` is JSON.stringify(mon). Source customHP/customSpeed govern overrides; source HP/AC formulas, CR/customProf, save/skill expertise, senses and language shapes are known. Do not reproduce lossy truthiness/bonus inference, generated descriptions, hover-presence or mythic-description conversion defects. SG's six fields override only display, not source intermediate calculations. Full compatibility still requires parser fixtures.
+
+5e.tools pipeline: exact selected record -> inheritance/templates/ordered modifications -> required-reference collection -> safe normalization -> species placeholders -> private snapshot. Required datasets include bestiary index/files/legendarygroups, condition/disease/status, items/base items, skills, spells index/source files, variantrules and actions. `spells_` in uploaded names means `/data/spells/`. Use configured trusted roots and source-specific defaults verified against pinned runtime; never infer another edition. Follow semantic dependencies, not every metadata/reprint link. Every lookup checks the current path before following a dependency; reuse completed definitions. Inheritance/template cycles fail; supporting-reference cycles link to existing definitions. Full interpreter architecture/tests remain in 224; its dated pending-review notes are superseded here. Unknown modes cannot masquerade as resolved inheritance. Safe formula/regex implementation, upstream pin and oracle tests are mandatory 022.04 gates, not claimed done by design closure.
+
+## Selection, read and apply interfaces
+
+IDs are opaque strings, revisions nonnegative integers (0 means no existing statblock). Proposed private routes become the implementation contract; do not change existing image/tracker APIs:
+
+- `GET /api/statblocks/state`: campaign_id, encounter_token, projection_revision and ordered tile summaries `{monster_id,name,species,color,ac,hp,max_hp,initiative_bonus,statblock_revision,status,warnings}`. Same authorization for private update transport; never add these snapshots to Client Display/media payloads.
+- `GET /api/statblocks/monsters/{id}`: authorized same-encounter live six-field overlay plus reference snapshot, source identity and revision. No-store private responses; revisions permit avoiding redundant content transfer, not skipping permission checks.
+- `POST /api/statblocks/discover`: `{campaign_id,encounter_token,monster_ids}` -> per-monster candidate summaries and per-provider completeness/failure status. Candidate IDs are server-held references, not arbitrary URLs.
+- `POST /api/statblocks/prepare`: `{campaign_id,encounter_token,monster_id,expected_statblock_revision,candidate_id}` or multipart equivalent with one `.monster` file -> job_id/status. A job starts its deadline on acceptance. Completion yields selection_id, expires_at, source, completeness/warnings and preview; acceptance is not a saved change. Bind all references to session, campaign, encounter, target/species/original-source identity and revisions. Bound job results share prepared-selection lifecycle; cancellation removes unneeded jobs.
+- `POST /api/statblocks/apply`: `{operation_id,campaign_id,encounter_token,items:[{monster_id,expected_statblock_revision,selection_id}]}`. Keep-current rows are omitted. Reject duplicates. Validate all rows before writing; one atomic transaction. Return applied monster IDs/new revisions or structured errors with no changes.
+
+Edit Monster extends its ordinary save with a staged selection_id and operation_id plus expected values/revisions for fields explicitly edited. Save normal edits and statblock together. An intentional species edit in the same save is allowed, with placeholders rendering new SG species. Concurrent saved species/original-source/statblock changes invalidate preparation; unrelated newer HP/AC changes must not be overwritten by stale dialog snapshots. Conflicts on explicitly edited fields reject atomically.
+
+Recheck authorization, campaign, encounter token, target existence, candidate/source binding, expiry and revisions in the protected apply transaction. Network/normalization happens outside the DB lock. Operation IDs bind to session and canonical request digest. A duplicate identical successful request returns its recorded outcome; changed content under the same ID conflicts. Reserve bounded outcome capacity before mutation. Outcome records share the global 1,000-reference accounting and retain through the consumed selection's original expiry (including failed retries of the same request); do not evict unexpired outcomes to admit more work. Restarts invalidate sessions/selections. Each write requires current authorization even for result replay.
+
+Error envelope: `{code,message,items:[{monster_id,code,message,source_path?}],retry_at?}`. Use 401 unauthenticated, 403 unauthorized, 404 unavailable target, 409 stale/conflict/provider-disabled, 410 expired, 413 size/count overflow, 422 malformed/unresolvable, 429 capacity/cooldown, 504 deadline; no remote content or tokens leaked to unauthorized callers. Discovery failures distinguish unavailable/partial/error from complete zero-match results. A bounded transient retry may occur only within the same remaining end-to-end deadline and provider retry instruction; it never restarts the clock. No separate 20/45-second network budgets exist.
+
+## Approved limits and configuration
+
+Runtime namespace `statblocks.limits` below is the concrete naming contract. All integers are positive unless noted; MiB/KiB use 1,048,576/1,024 bytes. Values are server/operator controlled, not import-request overrides; reject invalid configuration clearly. Validate all budgets on cached/shared results too. Lowered limits apply to new preparation/import validation, not silent deletion of existing saved snapshots. All sixteen points were approved; defaults are engineering allowances, not proven universal bounds.
+
+| Key | Default | Counting and boundary |
+|---|---:|---|
+| inheritance_steps | 16 | selected depth 0, each `_copy` edge +1; reject beyond cap; cycles fail immediately; cached chain logical depth still counts |
+| modification_operations | 1024 | whole selected inheritance/template resolution; each instruction/removal counts, even no-match; operation lists count individually; reject beyond cap |
+| reference_steps | 16 | selected depth 0; breadth-first shortest-path entity references; depth-cap definitions included, new definitions beyond cap readable/unresolved + partial |
+| supporting_definitions | 256 | unique kind/name/source; includes legendary groups/related creatures, excludes selected creature and inheritance-only intermediates; deterministic BFS, overflow references explicitly partial |
+| intermediate_creature_bytes | 8388608 | compact UTF-8 JSON per intermediate creature; check input/root/template/each operation, anticipate expansion before allocation; overflow fails |
+| preparation_seconds | 10 | one monotonic end-to-end deadline from acceptance, including queue/network/retries/inheritance/references/normalization/validation; expiry fails without saving |
+| supporting_reference_bytes | 16777216 | unique collected reference records + retained identities, before normalization; exclude datasets/main intermediate; oversized additions not added/expanded, warn partial and continue eligible smaller definitions |
+| snapshot_bytes | 2097152 | complete normalized logical snapshot including metadata/provenance/credits/references/warnings; overflow fails, no silent dropping |
+| content_nodes | 16384 | structural + inline nodes across snapshot; each saved definition once, each reference-link occurrence separately; facts/provenance/warnings byte-bounded, not counted as nodes; overflow fails |
+| content_depth | 16 | top-level node depth 1, inline/structural child +1; each definition independent roots; no cyclic trees; overflow fails |
+| text_value_bytes | 65536 | UTF-8 per logical text value before inline splitting; includes facts/credits/warnings; no artificial splitting to evade cap; overflow fails |
+| response_bytes | 10485760 | each response body after decompression, enforced during reading; reject truncated/oversized result, never success-cache; core/inheritance dependency failure fails, support-only failure may yield explicit partial |
+| active_jobs | 2 | global preparation jobs, bulk uses same scheduler |
+| queued_jobs | 16 | global accepted waiting jobs; queued time consumes deadline; full queue rejects explicitly; fair scheduling prevents bulk monopolization |
+| outbound_requests | 4 | application-wide including shared fetches |
+| provider_requests | 2 | per provider, also bounded by global cap |
+| worker_memory_bytes | 268435456 | total memory per isolated terminable worker; supported-platform hard enforcement must be verified; unsupported enforcement explicitly disables preparation rather than claiming a hard ceiling |
+| cache_entries | 64 | shared provider/conversion LRU, bounded by bytes too |
+| cache_bytes | 67108864 | retained response/conversion content separately accounted; not total process memory; successful TTL only |
+| cache_seconds | 3600 | successful entries; invalidate on provider config/adapter changes |
+| failure_cooldown_seconds | 30 | automatic fetch cooldown by exact identity; return reason/retry time, not false zero-match |
+| selection_seconds | 600 | from completion, viewing does not extend; distinct from 10-second preparation deadline |
+| prepared_snapshots | 200 | unique immutable prepared snapshots, byte limit also applies |
+| prepared_bytes | 134217728 | prepared content storage; no guarantee all count slots fit at max snapshot size |
+| session_selection_references | 200 | private bindings per session |
+| selection_references | 1000 | global bindings including retained operation outcomes |
+
+Retained existing preparation/apply bounds: `.monster` uploads 5 MiB; at most 50 unique targets and 1 MiB body per apply request. These are named server constants initially; changed values require documented validation. Redirects at most 3, HTTPS and configured approved provider destinations only; no credentials, arbitrary browser URLs or local/private destination traversal. Captured-file evidence is not permission to bypass access controls. In-flight cancellation/redirect/size/deadline validation must run before accepting results. Operator-trusted custom roots must still satisfy fetch safety rules.
+
+Workers cover parsing/inheritance/modifications/references/normalization under deadline and memory isolation. Two default workers allow up to 512 MiB worker memory, excluding server/shared caches; do not call this a total process cap. Check deadline in loops and terminate blocked regex/formula workers; no eval/imported JS. A stage's working data cannot grow unbounded merely because its final serialized output would fit. Inheritance-only base/template processing is sequential and subject to the same operation/time/memory/intermediate limits; do not retain an unbounded graph. Worker-start/platform enforcement failures are explicit preparation errors, not application permission changes.
+
+Bulk jobs are submitted successively as capacity allows; distinguish not-yet-submitted rows from accepted jobs with running deadlines. Shared exact fetches have per-consumer deadlines and logical accounting. One expired consumer does not cancel another valid consumer, but can never resume/save. Cancel queued unneeded work; stop in-flight work when no consumers remain where practical, otherwise discard it.
+
+Cache and prepared stores are separate. Enforce both counts and bytes; failed/truncated content never becomes a successful entry. Prepared content can be shared immutably, but bindings remain private and target-specific. At capacity reject new work, never silently evict another user's unexpired selection. Release snapshots after all references expire/cancel/consume; invalidate on logout/revocation/restart and recheck permission on every use. Cache eviction does not invalidate prepared content. Provider/cache changes never automatically replace saved content. Explicit successful Apply consumes bindings; bounded outcome replay survives through original expiry as above.
+
+## Evidence, limits and 022.01 exit audit
+
+Inspection evidence from the original task covers server composition, auth/ownership bypasses, active storage scalar extras/schema 8, provider projections, import loss and lifecycle paths. New schema inspection confirms `monsters.id` is the database PK, scoped by encounter/combatant identity. Existing schema-module staged docstrings are not evidence the mixins are inactive. `static/client.js` blob `a528632fae747bf2016838d8afe72eb866ce47d3` establishes the membership predicate above. Open5e complete serializer blob `8e03cb97136154f68905098d9f4c111ab779ee06` was inspected upstream, not proof of deployed API revision. Tetra-cube full addition was inspected, not executed.
+
+User-run Vampire capture at 2026-11-15T07:50:06Z: four Open5e variants, two 5e.tools books and two public D&D Beyond blocks. Python analysis decoded concatenated base64/gzip output, verified all 15 raw-response manifest hashes and independently remeasured eight extracted records. All captured HTTP statuses were 200 without truncation. Largest full dataset 1,573,620 B; largest extracted candidate 12,903 B; largest source string 924 B. MM/XMM + exact legendary groups were 7,987/7,418 B. Adding available conditions/item/skills/direct related creatures produced 20,973/14,380 B, not recursive closure. New XPHB spell and variant-rule definitions added 7,153 B before wrapper overhead; actions upload 45,532 B was inspected. These are source measurements, not normalized-node/depth/size or broad provider guarantees. Uploaded data/analysis artifacts were conversation evidence and are not bundled into this documentation commit. No third-party dataset redistribution is added.
+
+| Original 022.01 gate | Disposition |
+|---|---|
+| Membership/auth/interaction/source limitations | agreed and concrete above; no unresolved product decision |
+| Provider/parser feasibility and capabilities | inspected with explicit conditional/unverified matrix and assigned adapter verification gates; public-only D&D Beyond disposition accepted |
+| Model/storage/migration/lifecycle contract | version 1 typed records/ownership/invariants, schema-upgrade backup and preservation rules specified; DDL implementation and round-trip tests assigned 022.02/03 |
+| Exact-source/select/apply/stale/transaction policy | canonical identities, route payloads, private bindings, atomic save/conflicts/outcomes specified |
+| Limits/caching/invalidation/reference presentation | seven review items and sixteen detailed policy points approved; numeric defaults/config keys and boundary behavior consolidated |
+| Evidence and remaining work | captured-source analysis distinguished from application, live, upstream-oracle and normalized validation; all implementation gates remain required |
+
+Audit result: 022.01 design complete; 022.02 ready. Detailed upstream runtime pin/operation compatibility belongs to 022.04a, not an assertion that an interpreter exists. Numeric allowances are configurable and must be measured during implementation. No remaining design uncertainty is silently converted into a passing test. Any newly discovered consequential incompatibility requires an explicit corrective design record, not guessed behavior or reopened settled decisions.
 
 ## Acceptance criteria
 
-- [ ] A separate configurable listener defaults to port 3200; start-up, port-in-use errors and deployment instructions cover it.
-- [ ] Only regular admins with access to the active campaign can access the viewer and its data/live-update transports; unauthenticated, client-only and superadmin-only access is rejected. Campaign reassignment, role changes and logout revoke access.
-- [ ] Tile monster IDs match the instances actually displayed by the existing viewer, including alive/dead display behavior, and show each monster's name, species and configured border colour. Distinct same-species instances remain separate tiles.
-- [ ] Available statblocks are associated with the exact source used for the monster; unavailable or ambiguous sources show an actionable state without silent substitution.
-- [ ] Click and Enter expand a tile to the entire available statblock, at most one at a time; clicking the tile/header again and Escape collapse it. Arrow navigation, visible focus and focus restoration work; text selection, scrolling and supported links do not collapse it.
-- [ ] Edit Monster includes statblock import with all viable source options and explicit source/candidate selection where needed.
-- [ ] The bulk dropdown loads statblocks only for selected monsters and permits independent source choices, with progress, cancellation and per-monster outcomes.
-- [ ] D&D Beyond, 5e.tools, Open5e and `.monster` source paths are implemented and verified where viable. D&D Beyond is public-content only; explicit unavailable/partial states with manual alternative-source/file import are accepted. Other nonviable requested paths require documented user resolution before closure.
-- [ ] Imported statblocks and provenance survive the agreed persistence/reload and supported export/import workflows without unintended changes to combat values or images.
-- [ ] Rendering/imports reject unsafe content and malformed input, preserve source attribution and handle missing/long statblocks and provider failures clearly.
-- [ ] Existing Admin, Client Display, image selection, monster lookup, combat and campaign authorization workflows remain functional.
-- [ ] Implementation, tests, documentation and evidence are delivered on `features/perplexity-statblock`; required validation and user acceptance are recorded before closure.
+- [ ] Configurable protected third listener defaults to 3200, with pairwise port/occupied-port handling and deployment guidance.
+- [ ] Regular-admin campaign authorization on every page/API/transport, superadmin-only/client-only/unauthenticated rejection and revocation/stale-content coverage.
+- [ ] Logical tile-ID parity with existing viewer, correct SG name/species/colour and six live values; same-species instances remain separate.
+- [ ] One expanded monster, mouse/Enter/arrows/Escape/focus behavior, no collapse from text/scroll/links/reference controls, responsive/accessibility coverage.
+- [ ] Full safe source content and required available reference snapshots with exact-source identity, species placeholders, attribution, explicit partial/failure states and no silent substitution.
+- [ ] Individual staged import and independent selected-monster bulk workflows, progress/cancel/keep-current, atomic batches, conflicts and retry-safe apply.
+- [ ] All provider/file paths verified where viable; accepted D&D Beyond public-only limits; unsupported requested paths explicitly resolved before whole-feature closure.
+- [ ] Backed-up migration and persistence/setup/copy/reset/recovery/undo/checkpoint/bundle preservation without changing SG combat/image/original-source data.
+- [ ] Configured size/depth/work/memory/deadline/cache boundaries enforced, safe inheritance/formulas/regex and bounded cycle-safe references tested.
+- [ ] Existing Admin/Client Display/image/provider/combat/campaign workflows regressions pass; actual CI/e2e/manual evidence and user acceptance recorded before closing SG-TODO-022.
 
 ## Required validation
 
-Prepare and run relevant server/unit tests for source mapping, exact-source identity, persistence, `.monster` parsing, individual/bulk imports, input validation, permissions and the additional listener/port conflict. Add browser coverage for tile membership parity with the real viewer, click/Enter expansion, arrow navigation, Escape/header-click collapse, one-expanded-block behavior, focus return, source selection, independent bulk choices and active-battle updates. Include Chromium/Firefox end-to-end checks and responsive/accessibility checks where supported by the project tooling, and regression coverage for existing viewer/image workflows.
+This close-out changes documentation only and uses `[skip ci]`; no application tests, migration, browser/CI/upstream-oracle run or new live fetch was performed for it. Earlier probe syntax/synthetic helper checks and captured-data calculations are not production tests. Reuse reviewed reads by verified blob identity. README and HANDOVER describe delivered behavior and stay unchanged; add a dedicated indexed 022 implementation handover at the first code delivery. The existing 224 addendum and its shipped plan at `320a0c0e3b1acedd5cdeb1b188264ec8074f1243` remain linked.
 
-Use fixtures for deterministic provider variants and failures, but distinguish them from live provider verification. Record actual checks, covered commits and limitations; do not claim live-source availability, passing CI or manual acceptance without evidence. Documentation-only task/design updates use `[skip ci]`. No executable tests have been run for these design updates.
+Run relevant unit/integration/provider/security/limit tests as each unit is delivered, configured Branch tests for implementation commits, and real-server Chromium/Firefox e2e for 022.15. The workflow includes this branch but the full e2e suite is separate; automatic CI-results publication's separate branch restriction is unchanged. Do not infer CI run state merely from the marker or claim undocumented tests ran. Keep fixture/live/captured/upstream results separate and tie evidence to covered commits. Review the CI-results directory only when requested/supplied as implementation evidence; its mere presence is not statblock verification.
 
 ## Bounded implementation plan - 2026-11-14
 
-### Delivery rules
-
-This is the proposed implementation sequence, not evidence of implementation or an authorization for future writes. Each numbered unit targets one focused assistant implementation/review cycle and preferably one coherent commit, including its tests and necessary documentation. No duration or single-attempt success is guaranteed. Execute in order unless the dependency notes permit otherwise; never combine provider adapters or both import UIs merely to reduce the number of commits. Current unit status is recorded in the progress section below.
-
-Before each unit, inspect its live code and tests. If it exposes an unresolved contract, unsupported source format, substantial refactor or delivery-size risk, stop at that boundary and propose a smaller named subunit before preparing a large change. Do not silently omit tests or requirements to fit one cycle. Fix a failed unit before building on it; preserve a working branch between units. Foundation units explicitly do not constitute a complete usable feature.
-
-Every implementation unit updates this task's progress/evidence and the relevant indexed handover; add a handover section/index link at the first implementation delivery. Preserve existing task/index links. Update user/technical/deployment documentation as the relevant capability is delivered. Each write needs its own complete bound confirmation. Documentation-only commits use `[skip ci]`; implementation/workflow commits do not unless explicitly requested.
-
-### Starting evidence and planning limits
-
-Planning baseline: branch commit `821db20b5591e219c269f017e6af2a6d9d4119a4`, following task addition `9b475ba5c7961d370e8767dfa3a0b6262cb1b18e`. The branch-test trigger includes this branch; no CI result was reviewed. Automatic evidence publication remains separately blocked by the publisher's branch filter on `main`; do not modify `main` under this plan without explicit approval. Tests can still be reviewed from user-supplied CI evidence. The full Playwright e2e suite remains separate from CI unless explicitly changed.
-
-Code inspected for initial planning: `scrying_glass_server.py` currently composes two FastAPI applications sharing runtime state; `python/scrying_glass_monster_source_snapshot.py` validates/signs online source identities, not full statblocks; `python/scrying_glass_fivetools.py` exposes a limited stats/image projection; `python/scrying_glass_json_import.py` validates JSON text but does not establish `.monster` format support. Existing image-selector behavior is documented in handover 650. Additional 022.01 findings appear below. These reads inform boundaries, not a claim that all affected code or live providers have been audited.
+The original sixteen-unit sequence remains; 022.04 expands into the shipped 224 subunits. Prefer one coherent bounded commit per implementation cycle including tests/docs; split at a newly discovered substantial boundary, never omit requirements to fit. Every external write needs fresh bound approval. Documentation-only messages include `[skip ci]`; implementation normally runs CI. No owner/deadline or release authority is added. Full original unit descriptions remain in the immutable pre-consolidation record above; the following exit gates retain all pending work.
 
 ### Units and exit gates
 
 #### 022.01 - Resolve feasibility and freeze the contract
 
-Depends on: none. Deliver a short design record in this task/relevant handover, not feature code. Inspect all three current provider adapters, the actual `.monster` parser and representative files, storage/import/export/copy/reset paths, viewer membership and auth/session composition. Establish a source/section capability matrix from fixtures and permitted live probes where available. Decide the versioned statblock shape, exact-source key, missing/error states, selection/apply contract, payload limits, caching and invalidation rules. Viewer-parity membership, regular-admin campaign access, one-expanded-block interaction and public-only D&D Beyond behavior are agreed below. Finish the remaining contract detail and record migration/backup requirements. Gate: consequential choices are resolved, source/format limitations explicitly dispositioned, and subsequent units have stable interfaces. Do not infer complete D&D Beyond access from name lookup or silently reduce the requested scope.
+Completed design-only by this record and audit; all seven items and limits agreed. No feature implementation implied.
 
 #### 022.02 - Implement the statblock model and persistence
 
-Depends on: 01. Add bounded, versioned normalized content and provenance storage using the agreed schema. Cover database load/save and any required migration without adding provider/network behavior. Keep absent statblocks compatible with existing rows; never alter combat values or image/source identity accidentally. Tests: valid/invalid model, limits, legacy load, persistence round trip and migration/rollback where applicable. Gate: storage contract is tested; no viewer or importing UI is promised.
+Ready; depends 01. Implement typed version 1 records, validation/digests, backed-up migration and storage round trips, with legacy absent content and independent ownership. Gate: model/limits/migration/rollback tests; no provider/UI claim.
 
 #### 022.03 - Preserve statblocks across lifecycle operations
 
-Depends on: 02. Wire the agreed model into setup/campaign export/import, copy/move, checkpoints/undo and reset paths identified in 01. Preserve or invalidate provenance according to the frozen contract; prevent leakage into client projections or unauthenticated media. Tests: round trips, distinct same-species instances, reset/copy behavior, malformed imported content and client-data exclusion. Gate: one persisted statblock survives the supported lifecycle, independently of provider lookups.
+Pending; depends 02. Setup/campaign export/import, copy/move, checkpoints/undo, recovery and reset, remapped snapshots and client-data exclusion. Gate: lifecycle/malformed/bundle-boundary tests, no silent loss.
 
 #### 022.04 - Add the 5e.tools statblock adapter
 
-Depends on: 01-02. Implement exact-source full-content conversion in a focused module without changing the existing stats/image projection. Preserve section order, nested entries, source/book identity and supported special sections. Explicitly reject or mark unresolved copy/unsupported constructs rather than borrowing another edition. Tests: representative complete/nested records, same-name editions, missing fields, unsupported copy entries and malformed data. Gate: deterministic normalized output and actionable limitations; no UI work.
+Pending; depends 01-02. Execute [022.04a-f](224-fivetools-statblock-resolution.md): upstream pin/interfaces, exact inheritance graph, ordered general modes, creature modes/templates, supporting-reference collector/full conversion, compatibility/integration evidence. Preserve nested sections/order/identity/credits; no tracker/image regression. Gate: full required support and tested diagnostics, not routine unresolved-copy omission.
 
 #### 022.05 - Add the Open5e statblock adapter
 
-Depends on: 01-02. Implement the agreed exact-creature/document fetch and conversion, with provider switches, attribution/licence metadata and bounded requests. Tests: representative API records, actions and optional sections, missing sections, identity mismatch, timeout and malformed payload. Gate: no source substitution and no regression of existing Open5e stats/image lookup.
+Pending; depends 01-02. Exact v2 creature/document full conversion, ordering/usage/attribution, provider switches, identity/timeout/malformed/missing-section tests. Gate: complete available content, no source substitution or lookup regression.
 
 #### 022.06 - Add the viable D&D Beyond statblock adapter
 
-Depends on: 01-02 and the feasibility decision. Convert only publicly retrievable content tied to the exact monster identity; distinguish blocked/unavailable content from an empty statblock and label partial content explicitly. No account/entitlement bypass or authenticated-access project. Tests: permitted representative HTML/data fixtures, formatting, identity mismatch, blocked response, changed markup and missing sections. Gate: requested sections are supported where retrievable, with the accepted explicit unavailable/partial behavior and manual alternative-source/file import otherwise; do not write a guessed parser.
+Pending; depends 01-02. Exact public record only; complete supported extraction, blocked/changed-markup/identity/formatting fixtures, explicit partial/unavailable. Gate: accepted public-only boundary, no account bypass or guessed parser.
 
 #### 022.07 - Add `.monster` statblock ingestion
 
-Depends on: 01-03. Extend the actual file parser/import path to preserve complete supported statblock content and local provenance. Supply an explicit file-selection path for existing monsters according to the agreed format. Handle older files without content without fabricating fields. Tests: representative supported versions, malformed/oversized files, UTF-8/unsafe input and import/export preservation. Gate: importing content changes only intended statblock fields and a valid file can feed the shared model.
+Pending; depends 01-03. Full supported Tetra-cube mapping, file selection for existing monsters, local provenance, older files/custom/derived/tag/unsafe/malformed/size fixtures and export preservation. Gate: correct shared-model content without imported overrides of the six SG fields.
 
 #### 022.08 - Implement source resolution and authenticated apply APIs
 
-Depends on: 03-07, allowing only explicitly resolved nonviable paths. Add a shared exact-source resolver and candidate discovery for explicit replacement. Deduplicate by the agreed exact-source key, respect provider switches, bound work/cache size and reject arbitrary fetch URLs. Validate signed selections or equivalent server-held candidate references against monster, campaign, species, source and expiry. Add individual and per-monster bulk apply with explicit transaction/failure policy and stale-state checks. Tests: regular-admin campaign access, tampering/expiry, disabled providers, mixed failures, unknown IDs, concurrent/stale responses, atomicity and unchanged combat/image fields. Gate: reusable backend works without either import UI; original-source retrieval never silently substitutes candidates.
+Pending; depends 03-07 except explicitly resolved nonviable paths. Exact discovery/preparation/private bindings, dedup/cache/deadline/worker policies, atomic individual/bulk apply and Edit conflicts. Gate: tamper/expiry/stale/cross-campaign/provider/capacity/idempotency/concurrency tests; no silent substitution.
 
 #### 022.09 - Add the protected third listener and read API
 
-Depends on: 02-03 and agreed auth contract from 01. Add the statblock FastAPI application, configuration/CLI default 3200, safe static wiring, port validation/collision reporting and shared lifecycle/shutdown behavior. Implement the regular-admin-only campaign-authorized viewer-parity projection/read endpoint; no public statblock media mount and no generic superadmin bypass. Include deployment/preflight adjustments and session-expiry behavior. Tests: listener/config construction, all pairwise duplicate ports, occupied port, regular-admin/client/unauthenticated/superadmin-only and cross-campaign access, logout/restart/reassignment and private-data exclusion. Gate: protected shell and read data work; no complete viewer interaction is claimed yet.
+Pending; depends 02-03 and auth contract. CLI/config/default3200, private static/read/transport wiring, shared startup/shutdown and preflight/deployment, all duplicate/occupied-port combinations. Gate: regular-admin-only ownership/revocation/logout/restart/campaign tests, no private-data leakage.
 
 #### 022.10 - Render tiles and complete safe statblocks
 
-Depends on: 08-09. Add focused viewer assets and safe rendering for the normalized format. Show one tile per monster actually displayed by the existing viewer, with name/species/configured border colour. Clicking expands full supported content, replacing any currently expanded block, and clicking the expanded tile/header collapses it. Display attribution, long-content scrolling and explicit empty/loading/error/missing/partial states. Tests: real rendered fixtures covering every agreed section, malicious content/URLs, viewer membership parity, duplicate species, colours, long names and mouse expansion/collapse. Gate: useful mouse-driven viewer with fixture-backed complete rendering; no keyboard or live-sync completion claim.
+Pending; depends 08-09. Logical membership, six-field overlay, all supported sections/definitions, source credits/status/warnings, one mouse-expanded block. Gate: malicious content/URLs, same-species instances, colours/long text/membership and reference interactions tested.
 
 #### 022.11 - Add keyboard and accessibility behavior
 
-Depends on: 10. Implement grid-aware arrow navigation, Enter expansion, Escape collapse, visible focus, accessible names/expanded state and focus return. Prevent expansion/collapse handlers from disrupting text selection, links or scrolling. Tests: first/last rows, resized/incomplete grids, removed focused tile, narrow widths, one-expanded-block rule, focus containment as applicable and axe checks in both supported browsers. Gate: keyboard and mouse paths meet the same behavior contract.
+Pending; depends 10. Grid-aware arrows/Enter/Escape/focus, resized/incomplete grids, removed focused tiles, labels/expanded states and non-disruptive text/scroll/links/reference details. Gate: keyboard/mouse parity, responsive and axe checks in both browsers.
 
 #### 022.12 - Add live synchronization and original-source loading
 
-Depends on: 08, 10-11. Connect authorized state updates/recovery to viewer-parity membership, names/species/colours and selected statblocks. Retrieve missing original-source statblocks automatically at the agreed lifecycle point, not on every broadcast/render. Recheck regular-admin campaign access after campaign/session/role/ownership changes; discard stale in-flight results. Tests: start/end/switch battle, viewer alive/dead membership changes, join/remove/update, same-species distinct sources, reconnect/logout/restart, slow provider after campaign switch and failed lookup retry/deduplication. Gate: viewer stays current without exposing a prior campaign or losing safe keyboard focus.
+Pending; depends 08,10-11. Authorized state/recovery, membership/six-field/colour updates, missing original-source loading on stable lifecycle events, no repeated render fetch. Gate: battle/campaign/role/reconnect/stale-fetch/removal/focus/dedup/retry tests; never expose old campaign.
 
 #### 022.13 - Add Edit Monster statblock import
 
-Depends on: 07-08 and 10. Add the button and shared source-selection dialog, showing all viable provider/file options with attribution and progress. Use staged selection saved with the agreed Edit action; Cancel keeps existing content. Protect against species changes, stale lookup results and replacement of unrelated fields. Tests: each viable source, variant selection, file input, save/cancel, errors and coexistence with image selection. Gate: one monster can import/replace its statblock end to end; bulk UI remains pending.
+Pending; depends 07-08,10. Button/dialog/all viable source-file choices, staged atomic save, progress/errors/variants/species edits, image coexistence. Gate: every viable source save/cancel/stale flow end-to-end for one monster.
 
 #### 022.14 - Add selected-monster bulk statblock import
 
-Depends on: 08 and 13. Add the bulk dropdown option and one row per selected monster with independent choice/keep-current, shared in-flight lookups, progress and explicit apply outcomes. Preserve unselected monsters and enforce the frozen failure/transaction policy. Tests: empty selection, mixed species/sources, same-species independent choices, cancel/retry, malformed/unknown items and double submission. Gate: bulk workflow works without regressing existing image/bulk actions.
+Pending; depends 08,13. Independent choices/keep-current, shared lookups, bounded jobs/batches, progress/cancel/retry/outcomes. Gate: mixed/same-species/empty/unknown/double-submit tests and existing bulk/image regressions.
 
 #### 022.15 - Integrated verification and bounded corrections
 
-Depends on: 03-14. Run/review the configured full CI suite for the actual implementation commit and the real-server Chromium/Firefox e2e checks, including third-listener fixtures, regular-admin campaign authorization, superadmin-only rejection, viewer membership parity, provider/file imports, keyboard, accessibility, persistence and deployment startup. Add any missing integration tests rather than treating unit fixtures as end-to-end coverage. Keep live-provider observations separate from intercepted fixtures. Record actual results/limits. If findings appear, create one narrowly scoped corrective unit per coherent cause with its own tests and approval; do not turn this unit into an unbounded redesign. Gate: every acceptance criterion has reviewed evidence or an explicit unresolved blocker.
+Pending; depends 03-14. Actual implementation-commit full configured CI plus real-server Chromium/Firefox e2e, access, ports, persistence, providers/files, keyboard/accessibility/refs, limits and deployment. Record live-vs-fixture limits and covered revisions; findings become narrow corrective units with tests/approval. Gate: every criterion has evidence or explicit blocker.
 
 #### 022.16 - User acceptance and documentation close-out
 
-Depends on: 15. Reconcile the acceptance checklist, delivered behavior, source capability matrix, backup/migration/port/auth guidance and known limitations. Obtain explicit user acceptance of the usable viewer and both import workflows, including any agreed unavailable-source disposition. Update the TODO index/task and indexed handover with tested commit/run identities. Documentation-only close-out uses `[skip ci]`. Gate: close SG-TODO-022 only after required validation and user acceptance; no merge, deployment or release is implied.
+Pending; depends 15. Reconcile capability/acceptance/backup/limits/port/auth/operator docs and indexed handover/TODO with tested identities. Explicit user acceptance required for usable viewer and individual/bulk flows. Gate: whole SG-TODO-022 closes only after evidence/acceptance; no merge/release/deployment inferred.
 
 ### Progress and continuation checklist
 
-022.01 is in progress: first code-review findings and user decisions are recorded below; detailed contract and mapping work remains. 022.02-022.16 are pending. For each unit record: scope delivered; exact implementation commit; tests actually run; CI/e2e evidence and covered revision; outstanding checks; limitations/user decisions; and the next unit. A pushed unit with unreviewed CI is delivered with validation pending, not verified complete. Approval of a documentation commit does not authorize subsequent code writes or guarantee every unit finishes without a corrective cycle.
-
-Planning-only validation: task requirements and inspected code were reviewed for scope/dependency coverage. No application tests, successful live-provider probes, CI runs or browser checks were executed for this design. README, HANDOVER and TODO index remain unchanged because this adds detail inside the already indexed proposed task and does not change delivered capabilities or close an implementation unit.
-
-### Tetra-cube `.monster` format reference - 2026-11-14
-
-User-supplied format reference for 022.01 and 022.07: [Tetra-cube statblock-script.js](https://github.com/dajomas/Tetra-cube/blob/master/dnd/js/statblock-script.js), repository `dajomas/Tetra-cube`, ref `master`, path `dnd/js/statblock-script.js`. Inspected Git blob SHA: `a8520dcbf739ffb4f24ec7a50607bce29886d950` (a blob identity, not a commit SHA). The GitHub connector returned a truncated file; the initial `mon`, save/load, rendering and `ReplaceTags` sections were available, but the complete helper implementation was not audited.
-
-Confirmed in the retrieved code: `SavedData.SaveToFile` writes `JSON.stringify(mon)` into a text Blob named `<lowercase monster name>.monster`; `RetrieveFromFile` reads the file as text and assigns `JSON.parse(reader.result)` to `mon`. The file therefore contains the monster object directly, not JavaScript source or a `mon` wrapper. Treat imported content as untrusted JSON, never execute it.
-
-Apply to 022.01: use the `mon` declaration together with save/load, `UpdateStatblock`, `AddToTraitList`, `ReplaceTags` and their helpers to establish the field/section mapping and fixtures. Cover identity/size/type/tag/alignment; armor fields and shield/natural armor; hit dice and custom HP; normal/custom movement; six ability scores; senses, saves, skills, damage/condition modifiers, languages, challenge/proficiency; custom properties; and optional action sections. Distinguish defaults and derived values from values explicitly supplied in a file. Follow helper/data-table dependencies for actual nested array shapes, armor/HP/speed calculations, formatting and proficiency; empty arrays in the declaration do not define their element schema.
-
-Apply to 022.07: ingest and preserve supported `abilities`, `actions`, `bonusActions`, `reactions`, `legendaries`, `mythics`, `lairs` and `regionals`, including `isLegendary`, `isMythic`, `isLair`, `isRegional` and the corresponding introductory/ending descriptions. Retrieved trait rendering accesses entries as `name`/`desc`. Verify the original conditional section-display semantics and avoid silently discarding supplied content. Retain useful raw source/provenance under the agreed bounded model where necessary; `doubleColumns` and `separationPoint` are presentation hints, not combat statistics.
-
-Account for `ReplaceTags` semantics, including `[mon]`, `[mons]`, ability modifiers, attack/save expressions and dice expressions. Name substitutions use `shortName`/`pluralName` when provided. Inspect the complete helper dependencies before implementing safe substitution; do not use JavaScript evaluation or substitute current battle-modified scores for source scores accidentally. Test custom HP/speed overrides, derived values, optional/empty sections, older/missing fields, malformed nested arrays, unknown tokens, unsafe text and representative tag expressions. Do not claim compatibility with every historical `.monster` variant solely from the default object.
-
-This reference narrows the format-discovery work but does not complete 022.01 or 022.07. No parser, renderer, migration or tests are delivered by this documentation update. Subsequent user decisions below supersede earlier proposed defaults; the development branch remains unchanged.
-
-## 022.01 - Design review and agreed decisions - 2026-11-14
-
-### Agreed behavior - user confirmation at 23:18 CET
-
-1. Membership: the same monster instances actually displayed on the existing viewer screen must appear as tiles on the statblock screen. The earlier proposal to include every In Battle monster, including dead monsters regardless of viewer rendering, is superseded. Inspect the real browser renderer and share or equivalently test its membership predicate; server `active` flags and initiative order alone are not sufficient. Do not alter the existing viewer to obtain parity.
-2. Access: only regular admins that have access to the active campaign may access the statblock screen. Superadmin status alone grants no access. Reuse campaign access relationships, not the current generic superadmin bypass. Client-only viewer grants are insufficient. Protect pages, summaries, expanded content and update transports; clear stale content and revoke access after logout, role/ownership changes or campaign changes. Do not change unrelated Admin/Client Display permissions.
-3. Interaction: at most one statblock expanded at a time. Click or Enter expands; selecting another tile replaces the expanded block. Clicking its tile/header again or Escape collapses it and restores appropriate focus. Selecting text, scrolling and following supported links do not collapse it. Arrow navigation and visible focus remain required.
-4. Source limitations: D&D Beyond support is limited to publicly retrievable content through the existing integration. Explicit unavailable/partial states with manual alternative-source or `.monster` import are accepted. No account-backed access, access-control bypass, fabricated content or silent source substitution.
-
-These decisions replace conflicting earlier proposals, including the suggestion to inherit superadmin access. They do not assert implementation or executable verification.
-
-### Observed code findings
-
-- `.monster`: `python/scrying_glass_monster_csv.py::parse_monster` retains only name, type-as-species, AC, HP and optional initiative bonus. Other Tetra-cube content is discarded. It reads a number from `hpText` without consulting `customHP`, and may use `natArmorBonus` as a direct AC fallback rather than computing displayed AC. `python/scrying_glass_admin_monsters.py::import_monster` accepts files up to 5 MiB and passes the reduced fields to construction. `python/scrying_glass_service_images.py::make_monster` preserves supplied fields, so the parser is an important information-loss boundary. Existing imported rows cannot reconstruct discarded content; the original file must be imported again. Full-statblock normalization must not silently change existing combat-import behavior.
-- Persistence: `python/scrying_glass_storage.py` actively composes the records/schema/operations mixins at schema version 8. Despite historical staged/not-wired module docstrings, `StorageRecordsMixin` is active. Its scalar-extra encoder rejects dict/list extras. The technical architecture specifies normalized typed records rather than JSON payload columns. A nested statblock cannot simply be appended to a monster and persisted unchanged.
-- Lifecycle: `python/scrying_glass_combatant.py` uses deep copies for setup snapshots and imported monsters; reset changes battle/health flags rather than reconstructing the entire row. `python/scrying_glass_feature_storage.py` stores recovery monsters through encounter persistence. `python/scrying_glass_campaign_bundle.py` normalizes and saves imported setup/encounter content and has a 10 MiB manifest limit. Dedicated statblock persistence/validation must be included in these paths; no automatic nested-data compatibility is claimed.
-- 5e.tools: `python/scrying_glass_monster_selection.py` reads source records and projects them through `fivetools_candidate`; the current output contains limited tracker statistics/image/source identity, not full content. Add complete conversion without changing the existing candidate contract or borrowing unresolved copy data from another edition.
-- Open5e: `python/scrying_glass_open5e.py::FIELDS` explicitly restricts requests to identity/document, AC/HP/dice, initiative and illustration. A separate full-detail projection is needed. `tests/test_open5e_provider.py` fixtures exercise that limited shape, not complete statblocks. Publisher/licence attribution is already mapped for candidates.
-- D&D Beyond: `python/scrying_glass_dndbeyond.py` has bounded public-detail retrieval and access-gate/redirect checks, but the stats extractor only reads AC/HP. `monster_selection.py` adds image, source and initiative information. Complete public-content parsing remains future work; successful name lookup does not establish full-content availability.
-- Membership: `python/scrying_glass_service_state.py::display_state` includes active monster cards and leaves alive/dead card behavior to the browser. `service_battle.py::clean_order` filters turn eligibility, so initiative membership is not equivalent to displayed card membership. Browser-side membership inspection remains required.
-- Authorization: `python/scrying_glass_service_auth.py::require('admin', ...)` currently permits admin and superadmin; `python/scrying_glass_campaign_ownership.py` also allows superadmins. The new statblock gate must explicitly enforce the narrower agreed rule instead of inheriting either bypass.
-
-### Proposed shared model and persistence direction
-
-Use one provider-independent, versioned statblock model with source identity, ordered facts, ordered safe content blocks and explicit warnings. Source identity includes provider and stable monster/source identifiers (book/document/edition where available); file imports retain local provenance. Keep statblock provenance separate from the monster's original lookup identity and current name/species. Explicit replacement imports never change combat values, image or original lookup provenance accidentally.
-
-Persist this model in dedicated relational records: a statblock header for version/provenance/attribution/content digest/import-or-fetch time; ordered facts for displayed properties; ordered section/content-block records for paragraphs/lists and supported nested content; and warnings for missing/unresolved sections. Use typed scalar columns/rows, not a nested extra or a serialized JSON payload column. Link records to the correct stored monster instance and cascade cleanup. Runtime, setups and recovery snapshots must have independent content snapshots when copied. The exact DDL and model field/type definitions remain to be frozen before 022.02.
-
-A backed-up schema migration is proposed; the current base is version 8. Recheck the live schema before allocating the next version. Legacy monsters have no statblock until fetched/imported; never synthesize a full block from AC/HP alone. Back up the whole storage/config/media before upgrade; migration backup alone is not a full installation backup. Rollback restores matching pre-upgrade code and data rather than editing the schema version down.
-
-Preserve complete available source text and ordering through validated content blocks; never execute imported JS or render unsanitized provider HTML. Tetra-cube derived display values and placeholders use source values, not battle-modified values. Unsupported constructs require explicit warnings/partial status, not invented replacements or silent loss.
-
-### Proposed retrieval, status and apply boundaries
-
-- Separate lightweight tile summaries from expanded content to avoid retransmitting every complete statblock during routine state updates. Use a private statblock projection/transport, never the Client Display payload or public media mounts.
-- Distinguish `missing`, `loading`, `available`, `partial`, `unavailable` and `error`. Mark partial content and explain missing sections. An empty optional section is not by itself a provider error.
-- Resolve an existing monster only against its retained exact source. Identity-less legacy/manual rows require explicit import/source selection, not an inferred original provider. Explicit alternative imports update only statblock content/provenance.
-- Perform provider discovery/detail work outside the database operation lock. Recheck regular-admin campaign access, encounter identity, monster/species/source and stale selection state inside the protected apply transaction. Discard results from a changed encounter or revoked authorization.
-- Use signed selections or server-held candidate references bound to campaign, monster, species, source and expiry; do not trust arbitrary browser URLs or imported claims of provider authenticity.
-- Deduplicate matching exact-source work without merging editions/documents or coupling independent per-monster choices. Respect provider switches for new fetches. Define bounded cache, invalidation and retry behavior before backend implementation rather than inheriting image-only partial-result semantics.
-
-### Remaining 022.01 work and validation limits
-
-Finish the concrete versioned field/block schema, exact-source key details, selection/apply payloads and transaction policy, numeric payload/cache/depth limits, invalidation rules and provider/section capability matrix. Inspect the complete Tetra-cube helper/data dependencies and representative full `.monster` records, plus the real viewer's browser membership rule. These are remaining design/verification work, not reasons to ask the user to repeat the agreed behavior decisions.
-
-URL-tool attempts to retrieve Tetra-cube raw JS, the Open5e API and the 5e.tools index returned no content. This establishes an environment retrieval limitation, not provider downtime or a live compatibility result. The Tetra-cube connector read was truncated as noted above. No application tests, live-provider availability verification, CI or browser checks were run. Relevant existing parser/provider fixtures were inspected, not executed.
-
-Status: 022.01 in progress, with the above user-facing decisions settled and findings recorded; not yet a fully frozen implementation contract. 022.02-022.16 remain pending. This documentation commit uses `[skip ci]` at the user's request and does not implement a migration, listener, parser, API or UI. No other branch, merge, release or deployment is authorized.
+022.01 complete, 022.02 ready, remainder pending. Next implementation unit is 022.02. For every delivery record actual scope/commit/tests/CI-e2e coverage/limitations/user decisions/next step. A push with unreviewed tests is delivered with validation pending, not verified complete. Planning closure never authorizes later writes.
