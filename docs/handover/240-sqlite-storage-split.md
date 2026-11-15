@@ -135,3 +135,41 @@ progress; no whole-feature or migration activation completion is claimed.
 README runtime/backup guidance and HANDOVER index links remain accurate and are
 unchanged. TODO index/addendum record the approved split in this same commit.
 Normal push CI applies; no skip marker or separate workflow dispatch.
+
+## Activation preparation A - 2026-11-15
+
+Foundation CI is now reviewed: Branch tests 43709292836 attempt 1 completed
+successfully for 4a3f930cb4a0df109b06259bd9ca9a23f01638ee. Main Python ran
+1,704 tests OK including all eight statblock-storage methods, and all configured
+stages passed. Evidence exists at ci-results-43709292836-attempt-1. This
+supersedes foundation-CI-pending notes above, not their coverage limitations.
+
+At 13:00 CET the user authorized direct GitHub fixture-preparation commits with
+[skip ci] until the final code activation commit. The activation task is now
+delivered as bounded preparations followed by one final startup change, rather
+than the originally proposed single large second commit. See the staged task
+for outstanding lair/feature, attack-backup and final activation work.
+
+This preparation adds tests/storage_migration_fixtures.py and five regression
+methods in tests/test_storage_migration_fixtures.py. The helper temporarily
+suppresses only upgrade_statblocks during disposable legacy-fixture construction,
+verifies schema 8 with no statblock tables, restores the function and closes
+invalid results. It neither deletes statblock data nor changes production
+migrations. Use it only in single-threaded tests. The setup-lair v6 test now
+recreates a pre-statblock fixture before removing v7/v8 additions; its later
+reopen is unpatched and still exercises production upgrades. Backup checks now
+assert version 6 and absence of statblock tables in the pre-upgrade copy.
+
+Local checks executed: AST parsing of the new helper/test modules and four
+FixtureHelperTests passed with real SQLite in-memory connections and an isolated
+stub migration target. These verify helper control flow, rejection/close and
+patch restoration only. The fifth production-constructor test and changed
+setup-lair tests have not been run locally. No full-checkout, actual startup-
+activation, browser, provider or fresh hosted CI execution is claimed.
+
+This intermediate commit includes the exact [skip ci] marker by user instruction;
+no workflow is changed or separately dispatched. Full validation is deferred to
+the final activation commit, whose message must omit [skip ci]. Application
+startup and SCHEMA_VERSION remain 8. TODO status stays in progress; no activation
+or whole-feature completion is claimed. README and HANDOVER index links remain
+accurate; TODO's existing persistence entry links to the updated staging record.
