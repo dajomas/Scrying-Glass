@@ -249,3 +249,32 @@ deferred by user instruction until the final Stage 3 code push.
 This increment is still opt-in: no application/service/response/transport wiring,
 new schema, migration, viewer or provider work. Stage 1 and 022.03 remain open.
 README runtime guidance and existing handover/TODO index links remain unchanged.
+
+## 022.03 production save wiring - 2026-11-15
+
+The adapter correction was delivered as 7c721a5586bdc7a582edbb6467d1b0d0f1c4c6dc.
+This increment activates StatblockOperationsMixin in SQLiteStorage. Ordinary
+setup and runtime saves preserve existing encounter-bound snapshots, including
+row rebuilds, under the existing transaction. The plain records callback remains
+unchanged, avoiding adapter recursion; schemas before 9 bypass private handling.
+The no-content path retains plain storage behavior. Legacy missing monster IDs
+are allocated in a private copy when preservation requires adapter validation.
+
+Read API shapes remain plain. Reserved _statblocks input is rejected by ordinary
+setup/runtime saves, so untrusted imports cannot acquire a new private-write path.
+No service private-state loading, authoritative setup fallback, restart integration,
+copy/restore/bundle behavior, response-boundary activation or UI is claimed.
+Normal monster deletion still cascades within the selected encounter.
+
+Six prepared production-storage regression methods exercise setup/runtime rebuilds,
+private-input rejection, legacy IDs, rollback and encounter-local deletion. AST
+parsing passed for the new mixin (3,544 bytes) and test file (5,172 bytes). These
+tests were not executed; no full-constructor/migration/service/HTTP/WebSocket or
+CI success is claimed. Final Stage 3 CI remains pending under the user's deferral.
+No workflow change, separate dispatch, schema change, deployment or merge.
+
+Deploy the matching complete python tree: the facade now imports the new storage
+mixin as well as the existing adapter/model/storage modules. README already
+requires the complete tree and remains accurate; index links remain unchanged.
+Stage 1 and 022.03 remain in progress. Earlier unwired notes are historical and
+superseded only for ordinary setup/runtime save preservation by this increment.

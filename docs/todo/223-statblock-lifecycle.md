@@ -86,3 +86,25 @@ corrupt that digest. Separate setup/runtime encounters are an integration
 responsibility, not evidence that this explicitly encounter-scoped adapter
 queries the wrong owner. No production wiring is activated here.
 Stage 1 service/storage/privacy integration and covering CI remain pending.
+
+## Production save wiring increment - 2026-11-15
+
+Adapter correction was pushed as 7c721a5586bdc7a582edbb6467d1b0d0f1c4c6dc.
+SQLiteStorage now selects StatblockOperationsMixin for ordinary save_setup and
+runtime set_value calls. Existing snapshots are preserved transactionally,
+including backend row rebuilds; missing monster IDs retain legacy allocation
+without mutating caller input. The underlying _save_encounter callback stays
+plain and nonrecursive. Older migration schemas bypass statblock handling.
+
+Existing load_setup/get_value outputs stay unchanged and do not gain private
+envelopes; ordinary save methods still reject that reserved field. This is
+preservation of content already bound in the database, not private import,
+copy/restore, service-state loading, source retrieval or a UI feature.
+
+Six new production-storage tests cover setup/runtime rebuilds, rejected private
+input, legacy IDs, rollback and encounter-local deletion. The new mixin/test
+sources AST-parse; tests are prepared, not executed. CI remains deferred until
+final Stage 3. Full migration, service, restart/setup fallback, private state and
+response-boundary validation remain pending. Historical unwired notes above
+describe their earlier increments; this section supersedes them for save paths
+only. Stage 1 and 022.03 remain in progress.
