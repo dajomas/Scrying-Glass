@@ -90,3 +90,20 @@ metadata presence, deepcopy retention and independence; these are not transport,
 model/storage integration or repository-suite evidence. No privacy leak was
 confirmed or ruled out by execution. Final Stage 3 CI and Stage 1 review remain
 pending; no production auth/routes/projections or workflow changes here.
+
+## Mutation-response validation preparation - 2026-11-15
+
+Transport tests were pushed as a208e3410507555e22e0d82b50e0d81708f54ffe.
+Five further in-process ASGI tests cover a full-state background update reply,
+a monster-row name update reply, their broadcasts/resync, rejected mutations
+(401/403/422/400/404), and injected-persistence rollback including private
+metadata and database revision. They use real models, handlers, transaction/auth/
+origin guards, battle/features services and SQLite behind selected fixture routes.
+These are representative routes, not a complete mutation or full-app inventory.
+
+The 7,556-byte test source AST-parses; these five tests have not executed. No
+new transport/privacy/model/storage pass is claimed. No application or workflow
+code changes. Intermediate [skip ci] policy remains; final Stage 3 CI is pending.
+Private-only metadata changes are not detected by ordinary dictionary equality,
+and copying/restoring metadata is not implemented by these tracker-mutation tests.
+Next review the private save/normalization lifecycle before Stage 1 close-out.

@@ -163,3 +163,23 @@ e802409c0d8148a5b25c7aeb9fd2b8068df3affe, not a workflow change in this commit.
 README runtime guidance and existing HANDOVER/TODO index links remain valid.
 Stage 1/022.03 remain in progress; mutation-response and broader lifecycle/privacy
 acceptance gates are not closed by these prepared tests.
+
+## 022.03 mutation privacy preparation - 2026-11-15
+
+Transport-test baseline: a208e3410507555e22e0d82b50e0d81708f54ffe.
+Five new tests in test_statblock_mutation_privacy.py reuse its seeded private
+state/ASGI harness and add representative production PATCH handlers returning
+full state or a monster row. Real request models, same-origin/auth guards,
+transaction wrapper, battle/features services, persistence and broadcast paths
+are used in the fixture. Tests assert private markers/fields stay out of replies
+and frames and that tracker edits retain stored/memory snapshot metadata.
+Rejections and injected persistence failure check state/metadata/revision rollback.
+
+Executed: AST parsing of the 7,556-byte test source. The five tests were not
+executed; no new model/storage/ASGI/HTTP/WebSocket or CI pass is claimed. Earlier
+FastAPI-unavailable and isolated JSON/deepcopy evidence retains its narrow scope.
+Full application registration/startup/login, complete mutation coverage, recovery
+serialization and metadata-only change persistence are not validated here.
+Stage 1 private save/normalization review remains pending. No production code or
+workflow change; [skip ci] remains required until final Stage 3 code push.
+README and existing HANDOVER/TODO index links remain unchanged and applicable.
