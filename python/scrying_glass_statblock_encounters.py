@@ -55,6 +55,33 @@ class PrivateEncounterStorage:
                 result[ident] = value
         return result
 
+    def _reattach(self, record, wanted, revision, policy):
+        """Insert the final metadata once after an encounter-local row rebuild.
+
+        Caller holds the transaction, verified the combatant binding and confirmed
+        the destination has no snapshot. Never use this as a public restore API.
+        """
+        from datetime import datetime, timezone
+        from .scrying_glass_statblock_model import validate_snapshot, content_digest
+        from .scrying_glass_statblock_storage import HEADER, _insert
+        value = copy.deepcopy(wanted)
+        value['revision'] = revision
+        value.setdefault('prepared_at', datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'))
+        value['content_digest'] = content_digest(value, policy)
+        value = validate_snapshot(value, policy)
+        ident = self.db.execute(
+            f"INSERT INTO monster_statblocks(monster_id,{','.join(HEADER)}) VALUES ({','.join('?' for _ in range(len(HEADER)+1))})",
+            [record] + [value[key] for key in HEADER]).lastrowid
+        definitions = {}
+        for item in value['definitions']:
+            definitions[item['local_id']] = _insert(self.db, 'definitions', ident, item, {})
+        for kind in ('facts', 'nodes', 'warnings', 'provenance'):
+            for item in value[kind]:
+                parent = _insert(self.db, kind, ident, item, definitions)
+                if kind == 'provenance':
+                    for credit in item['credits']:
+                        _insert(self.db, 'credits', parent, credit, {})
+
     def load(self, encounter):
         with self.storage.transaction():
             rows = self._rows(encounter)
@@ -92,6 +119,10 @@ class PrivateEncounterStorage:
                 raise ValueError('Snapshot target is outside this encounter')
             if explicit and (set(before) & set(ids)) - set(prepared):
                 raise ValueError('Omitted existing snapshot; clearing requires a later explicit restore contract')
+            for ident, wanted in prepared.items():
+                previous = before.get(ident)
+                if previous is not None and 'revision' in wanted and wanted['revision'] != previous['revision']:
+                    raise ValueError('Stale statblock revision')
             desired = prepared if explicit else before
             self.save_plain(encounter, plain, runtime=runtime)
             after_rows = self._rows(encounter)
@@ -109,10 +140,9 @@ class PrivateEncounterStorage:
                     continue
                 unchanged = previous is not None and previous['content_digest'] == wanted['content_digest']
                 revision = previous['revision'] if unchanged else (previous['revision'] if previous else 0) + 1
-                saved = self.snapshots.save(record, wanted, expected_revision=current['revision'] if current else 0, limits=policy)
-                if saved['revision'] != revision:
-                    saved['revision'] = revision
-                    validate_snapshot(saved, policy)
-                    self.db.execute('UPDATE monster_statblocks SET revision=? WHERE monster_id=?', (revision, record))
+                if previous is not None and current is None:
+                    self._reattach(record, previous if unchanged else wanted, revision, policy)
+                else:
+                    self.snapshots.save(record, wanted, expected_revision=current['revision'] if current else 0, limits=policy)
             self.storage._check_foreign_keys()
             return self.load(encounter)

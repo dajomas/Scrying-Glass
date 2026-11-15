@@ -224,3 +224,28 @@ intermediate 022.03 pushes: include [skip ci] until the final Stage 3 code push,
 which must omit it. No workflow modification or separate dispatch. Validation
 and acceptance remain pending. Earlier blocked helper writes changed no files.
 README runtime guidance and existing index links remain applicable and unchanged.
+
+## 022.03 adapter correction preparation - 2026-11-15
+
+Helper delivery: 34d9d417246ebff4c3481056d425ef2bbd54f6a7. The next increment
+removes the adapter's save-then-UPDATE revision repair after monster-row rebuilds.
+A private reattachment routine now validates and inserts final metadata and typed
+children under the existing transaction after combatant ownership checks. Unchanged
+rebuilt content uses the original snapshot metadata; changed content advances the
+logical revision once. Explicit stale revisions fail before tracker writes.
+
+Review of the real model corrects an earlier claim: its digest excludes revision,
+prepared_at and content_digest, so revision patching alone did not corrupt it. The
+existing adapter is encounter-scoped already; separate setup/runtime rows require
+careful integration, not a guessed shared owner. Existing ownership guards remain.
+
+Six added tests target final metadata without UPDATE, changed rebuild revision,
+stale rejection, equal combatant IDs in separate encounters, tracker-only metadata
+preservation, and reattachment rollback. Both proposed Python modules passed AST
+parsing (adapter 7,769 bytes; tests 4,145 bytes). These tests were not executed; no
+SQLite/model/service/HTTP/WebSocket/browser or CI pass is claimed. CI remains
+deferred by user instruction until the final Stage 3 code push.
+
+This increment is still opt-in: no application/service/response/transport wiring,
+new schema, migration, viewer or provider work. Stage 1 and 022.03 remain open.
+README runtime guidance and existing handover/TODO index links remain unchanged.

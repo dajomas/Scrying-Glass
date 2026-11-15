@@ -68,3 +68,21 @@ and production wiring remain Stage 1 work, not delivered fixes in this commit.
 The four repository tests are prepared, not executed. Earlier disposable stub
 experiments are not evidence that these exact tests or the real model passed.
 Full model/storage/service/privacy and covering CI validation remain pending.
+
+## Adapter correction increment - 2026-11-15
+
+The helper increment was pushed as 34d9d417246ebff4c3481056d425ef2bbd54f6a7.
+This next bounded increment replaces post-save revision patching on rebuilt
+monster rows with a direct, validated typed-row reattachment under the existing
+transaction. Unchanged content retains the original metadata; changed content
+advances the encounter-local revision once. Supplied stale revisions are rejected
+before plain tracker writes. It adds six regression methods for rebuilt metadata,
+changed rebuilds, stale writes, encounter isolation, tracker-only edits and rollback.
+AST parsing passed for both proposed Python files; the tests have not executed.
+
+Correction to earlier conversation: the real model digest explicitly excludes
+revision, prepared_at and content_digest. Revision-only patching did not itself
+corrupt that digest. Separate setup/runtime encounters are an integration
+responsibility, not evidence that this explicitly encounter-scoped adapter
+queries the wrong owner. No production wiring is activated here.
+Stage 1 service/storage/privacy integration and covering CI remain pending.
