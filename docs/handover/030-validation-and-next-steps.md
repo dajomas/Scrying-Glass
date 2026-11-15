@@ -221,3 +221,40 @@ Intermediate [skip ci] instruction remains in force until the final Stage 3
 code push. No workflow change, dispatch, schema change, deployment or merge.
 README runtime guidance and existing HANDOVER/TODO index links remain applicable
 and unchanged. 022.02 remains accepted/closed; 022.03 and overall 022 remain open.
+
+## 022.03 Increment 2A recovery capture - 2026-11-15
+
+Contract baseline: 831c94249de8ef057cdcdbd0ead673d97ef98923. Increment 2A
+wires FeatureStorage capture/load for both checkpoint and undo images to typed
+private content. A new recovery helper validates internal attribute maps before
+the capture transaction and inserts independent snapshot rows using the existing
+typed writers. Captured historical revision/time/digest are retained, not reset
+or confused with the later current-destination restore revision policy.
+
+FeatureStorage.save_snapshot now owns a transaction/savepoint covering encounter,
+metadata, tracker rows, private graph, character snapshot rows and pruning. Load
+owns a consistent scoped transaction; campaign/kind/ID rejection precedes private
+reads. Explicit empty recovery maps are retained even with no statblock rows.
+Ordinary serialized private fields are not accepted as trusted capture input.
+Pre-statblock empty reads are compatible; private writes still require schema 9.
+No new relations, migration, auth policy, HTTP payload or listener is introduced.
+
+Ten prepared regression methods cover checkpoint/undo full metadata and reference
+round trips, explicit absence without source guessing, independent ownership,
+invalid-graph/raw-field rejection, late-write and nested rollback, scope/ID guards,
+pruning/deletion cascades and text above default preparation limits. Executed
+checks: AST parsing for helper (2,347 bytes), storage module (7,641 bytes) and
+tests (8,000 bytes). Tests have not executed; no live model/storage/service/HTTP/
+WS/browser or CI pass is claimed. Existing Stage 2 contract tests are unchanged.
+
+2A does not implement restore/apply, explicit live-content clearing, fingerprints
+or private-only change detection, setup copy/Save As or import remapping. Those
+remain 2B-2D and some existing contracts can still fail until implemented. Capture
+code delivery is distinct from validation or Stage 1/2 acceptance. Final Stage 3
+covering CI remains pending; intermediate message includes [skip ci] by instruction.
+No workflow change/dispatch, merge, deployment, release or whole-feature closure.
+
+The lifecycle task is consolidated without removing remaining gates; earlier
+preparation history stays in handovers/Git. README and root-index identities were
+verified unchanged and remain applicable; deploy the complete matching Python
+tree only after the staged feature's required validation/acceptance.
