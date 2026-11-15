@@ -1,4 +1,4 @@
-"""Trusted replacement-only recovery kernel; explicit clearing is not enabled yet."""
+"""Trusted recovery replacement/clearing; ordinary save omission is not authority."""
 import copy
 from .scrying_glass_statblock_loading import PrivateEncounterState
 from .scrying_glass_statblock_recovery import prepare_capture
@@ -6,21 +6,62 @@ from .scrying_glass_statblock_encounters import PRIVATE_KEY, PrivateEncounterSto
 
 
 def restore_bindings(storage, encounter, monster_ids=()):
-    """Capture exact encounter-local stored-row and content-revision descriptors."""
+    """Capture row IDs and highest revisions, including counter-only absence.
+
+    These are internal comparison tokens, not historical content revisions.
+    Header-only protocols remain usable for replacement, never trusted clearing.
+    """
     with storage.transaction():
         api = PrivateEncounterStorage(storage)
         rows = api._rows(encounter); snapshots = api._snapshots(rows)
-        return {ident:(rows[ident], snapshots.get(ident, {}).get('revision', 0)) if ident in rows else (None, 0)
+        read, _ = api._counter_protocol()
+        heads = {ident: read(row) if read is not None else snapshots.get(ident, {}).get('revision', 0)
+                 for ident, row in rows.items()}
+        return {ident:(rows[ident], heads[ident]) if ident in rows else (None, 0)
                 for ident in set(rows) | set(monster_ids)}
 
 
+def _clear_survivors(storage, encounter, ids, prepared, bindings):
+    """Caller holds the restoration transaction and has checked all bindings."""
+    db = storage.connection
+    read = getattr(storage, '_statblock_revision_head', None)
+    allocate = getattr(storage, '_next_statblock_revision', None)
+    record = getattr(storage, '_record_statblock_revision', None)
+    plan = []
+    for ident in sorted(set(ids) - set(prepared)):
+        owner, head = bindings[ident]
+        if owner is None:
+            continue
+        row = db.execute('SELECT encounter_id,combatant_id FROM monsters WHERE id=?', (owner,)).fetchone()
+        if row is None or row['encounter_id'] != encounter or row['combatant_id'] != ident:
+            raise ValueError('Stale clearing scope')
+        header = db.execute('SELECT revision FROM monster_statblocks WHERE monster_id=?', (owner,)).fetchone()
+        if header is None:
+            continue
+        if not all(callable(hook) for hook in (read, allocate, record)):
+            raise ValueError('Trusted clearing requires durable revision counters')
+        if read(owner) != head:
+            raise ValueError('Stale clearing revision')
+        revision = allocate(owner)
+        if type(revision) is not int or not 0 < revision < 2**63 or revision != head + 1:
+            raise ValueError('Invalid clearing revision')
+        plan.append((owner, header[0], revision))
+    for owner, previous, revision in plan:
+        record(owner, revision)
+        if read(owner) != revision:
+            raise ValueError('Counter recording failed during clearing')
+        deleted = db.execute('DELETE FROM monster_statblocks WHERE monster_id=? AND revision=?', (owner, previous))
+        if deleted.rowcount != 1 or read(owner) != revision:
+            raise ValueError('Stale clearing revision')
+
+
 def restore_encounter(storage, encounter, state, *, expected_bindings, runtime=False):
-    """Restore tracker/reference content atomically, rejecting unsupported clearing.
+    """Restore tracker/reference content and explicit absence atomically.
 
     Caller owns campaign/recovery authorization, global confirmation revision,
     character-roster persistence and live-state assignment. No HTTP route is added.
-    Historical revisions never replace destination revisions. Removing a monster
-    still cascades; clearing content on a surviving monster requires later work.
+    Only the internal recovery carrier authorizes absence. Clear advances a durable
+    counter before deleting content; later content cannot reuse its old revision.
     """
     if not isinstance(state, PrivateEncounterState):
         raise ValueError('Restoration requires an internal private recovery image')
@@ -36,7 +77,6 @@ def restore_encounter(storage, encounter, state, *, expected_bindings, runtime=F
             or type(value[1]) is not int or not 0 <= value[1] < 2**63):
             raise ValueError('Invalid expected restoration binding')
     candidate = copy.deepcopy(dict(state)); candidate['characters'] = []
-    # Expected revisions below concern current bindings, not historical metadata.
     for value in prepared.values():
         value.pop('revision', None)
     candidate[PRIVATE_KEY] = prepared
@@ -45,7 +85,5 @@ def restore_encounter(storage, encounter, state, *, expected_bindings, runtime=F
         current = restore_bindings(storage, encounter, ids)
         if current != expected_bindings:
             raise ValueError('Stale restoration bindings')
-        needed = {ident for ident, binding in current.items() if ident in ids and binding[1] > 0}
-        if needed - set(prepared):
-            raise ValueError('Explicit statblock clearing is not enabled yet')
+        _clear_survivors(storage, encounter, ids, prepared, current)
         return api.save(encounter, candidate, runtime=runtime, limits=_policy(None))

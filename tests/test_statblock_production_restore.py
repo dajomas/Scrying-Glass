@@ -5,7 +5,7 @@ import unittest
 from unittest.mock import AsyncMock, patch
 import test_statblock_stage2_contracts as contracts
 from python.scrying_glass_statblock_encounters import PRIVATE_KEY, PrivateEncounterStorage
-from python.scrying_glass_statblock_restore import restore_encounter
+from python.scrying_glass_statblock_restore import restore_encounter, restore_bindings
 
 
 class ProductionRestoreTests(unittest.TestCase):
@@ -68,16 +68,17 @@ class ProductionRestoreTests(unittest.TestCase):
         self.assertEqual(self.stored()['m'], original)
         self.assertEqual(self.item()['hp'], 12)
 
-    def test_clear_rejection_rolls_back_memory_content_revision_and_history(self):
-        ident = self.checkpoint('Empty'); self.seed('Added later')
-        before = copy.deepcopy(self.c.STATE); content = self.stored(); revision = self.f.store.revision()
-        history = self.f.store.list(self.c.active_campaign(), 'undo'); self.c.broadcast = AsyncMock()
-        with self.assertRaises(self.c.HTTPException) as caught: self.restore(ident)
-        self.assertEqual(caught.exception.status_code, 409)
-        self.assertEqual(self.c.STATE, before); self.assertEqual(self.c.STATE._statblocks, before._statblocks)
-        self.assertEqual(self.stored(), content); self.assertEqual(self.f.store.revision(), revision)
-        self.assertEqual(self.f.store.list(self.c.active_campaign(), 'undo'), history)
-        self.c.broadcast.assert_not_awaited()
+    def test_clear_refreshes_memory_survives_reload_and_can_be_undone(self):
+        ident = self.checkpoint('Empty'); original = self.seed('Added later')
+        self.restore(ident)
+        self.assertEqual(self.c.STATE._statblocks, {}); self.assertEqual(self.stored(), {})
+        self.c.load_state(); self.assertEqual(self.c.STATE._statblocks, {})
+        head = restore_bindings(self.c.STORAGE, self.encounter())['m'][1]
+        self.assertGreater(head, original['revision'])
+        self.call('undo', {'id':self.f.summary()['undo']['id']})
+        self.assert_content(self.stored()['m'], original)
+        self.assertGreater(self.stored()['m']['revision'], head)
+        self.assertEqual(self.c.STATE._statblocks, self.stored())
 
     def test_late_runtime_save_failure_rolls_back_kernel_write(self):
         self.seed(); ident = self.checkpoint('Original'); self.seed('Current')
@@ -104,7 +105,32 @@ class ProductionRestoreTests(unittest.TestCase):
         self.assertGreater(self.c.STATE._statblocks['m']['revision'], current['revision'])
         self.assertEqual(self.stored()['m'], setup)
 
+    def test_late_clear_failure_restores_memory_graph_counter_and_history(self):
+        ident = self.checkpoint('Empty'); self.seed('Current')
+        before = copy.deepcopy(self.c.STATE); content = self.stored(); revision = self.f.store.revision()
+        bindings = restore_bindings(self.c.STORAGE, self.encounter())
+        history = self.f.store.list(self.c.active_campaign(), 'undo'); self.c.broadcast = AsyncMock()
+        with patch.object(self.c, 'save_state', side_effect=OSError('after clear')):
+            with self.assertRaises(OSError): self.restore(ident)
+        self.assertEqual(self.c.STATE, before); self.assertEqual(self.c.STATE._statblocks, before._statblocks)
+        self.assertEqual(self.stored(), content); self.assertEqual(self.f.store.revision(), revision)
+        self.assertEqual(restore_bindings(self.c.STORAGE, self.encounter()), bindings)
+        self.assertEqual(self.f.store.list(self.c.active_campaign(), 'undo'), history)
+        self.c.broadcast.assert_not_awaited()
 
+    def test_unsaved_runtime_clear_keeps_saved_setup_and_reloads_absence(self):
+        setup = self.seed(); self.c.clear_active_setup(); self.c.save_state()
+        db = self.c.STORAGE
+        encounter = db.connection.execute('SELECT runtime_encounter_id FROM application_state WHERE id=1').fetchone()[0]
+        self.c.load_state(); ident = self.checkpoint('Empty runtime')
+        api = PrivateEncounterStorage(db); state = api.load(encounter)
+        state[PRIVATE_KEY]['m'] = contracts.reference_snapshot('Runtime only')
+        added = api.save(encounter, state, runtime=True)[PRIVATE_KEY]['m']; self.c.load_state()
+        self.restore(ident)
+        self.assertEqual(api.load(encounter)[PRIVATE_KEY], {}); self.assertEqual(self.c.STATE._statblocks, {})
+        self.assertEqual(self.stored()['m'], setup)
+        self.assertGreater(restore_bindings(db, encounter)['m'][1], added['revision'])
+        self.c.load_state(); self.assertEqual(self.c.STATE._statblocks, {})
 
 
 if __name__ == '__main__': unittest.main()

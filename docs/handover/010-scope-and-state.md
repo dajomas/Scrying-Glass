@@ -100,49 +100,63 @@ Later accepted activation supersedes its pending status. Existing anchors remain
 
 ## 022.03 counter-only row rebuilds - 2026-11-15
 
-Baseline: 1eb80fc389519542daf6f7a2ebfead214347848b. [Current lifecycle details,
-acceptance gates and remaining work](../todo/223-statblock-lifecycle.md).
-This current-state entry supersedes earlier dated 2B.4 claims in 030 only for
-counter encoding/coordination, not accepted 022.02 or unrelated task history.
+Delivered as da7654059808795880361ae643e6b5523ffc5c0f. [Full dated record](https://github.com/dajomas/Scrying-Glass/blob/da7654059808795880361ae643e6b5523ffc5c0f/docs/handover/010-scope-and-state.md#02203-counter-only-row-rebuilds---2026-11-15)
+retains the encoding defect/correction, exact eleven isolated constrained-SQLite
+passes, eleven pending production tests and deployment limits. It corrected
+2B.4's CHECK-incompatible custom kind to supported integer kind with a validated
+private text marker. Counter-only setup/runtime row rebuild preservation and
+reattachment are supplied, not fully validated. No DDL/schema change. Its earlier
+clearing-disabled status is superseded only by the following bounded increment.
 
-Inspection found that 2B.4's custom value_kind violates the actual attribute-table
-CHECK; its eight earlier isolated passes used an incomplete fixture. Do not treat
-that result as production ledger validation. The corrected row uses supported
-integer kind, integer_value for the counter and text_value for the exact private
-version marker, with null real_value. No DDL/schema-version change or weakening
-of schema assertions. Ordinary input cannot supply the reserved field; malformed
-markers fail closed. The facade filters the row from ordinary dictionaries.
+## 022.03 trusted clearing - 2026-11-15
 
-Setup/runtime preservation now detects counters as well as snapshots. The adapter
-captures encounter-local combatant bindings and max(header,counter) before the
-plain save, requires unchanged heads on stable rows and unowned rebuilt rows,
-and seeds counters for retained identities even without content. Snapshot ownership
-checks remain. Unchanged reattachment keeps historical content metadata; changed
-content advances once; the final counter is recorded under the same transaction.
-Counter-only monsters stay without snapshots. Removed IDs never seed other IDs.
-Partial read/record protocols fail; legacy header-only protocols do not gain clear.
+Baseline: da7654059808795880361ae643e6b5523ffc5c0f. [Current task, retained
+contracts and unfinished work](../todo/223-statblock-lifecycle.md). 022.02 stays
+accepted/closed; 022.03 and Stage 1/2 remain unvalidated/unaccepted.
 
-Executed: eleven exact isolated ledger/rebinding methods against real SQLite with
-the production value-kind CHECK, all passed. New coverage rejects the old kind,
-checks stable/foreign counter guards and partial protocols, and rolls back rebound
-counters with deleted owners. This is not a full production adapter-save pass.
-Eleven production writer/rebuild methods are prepared, not executed, including
-setup/reopen, runtime isolation, reattachment metadata, late rollback, tampering
-and deletion/new-owner separation. Header deletion is only controlled fixture
-absence, not service clearing. Four changed Python modules AST-parse. Full import,
-constructor/model/service, HTTP/WS/browser and covering CI remain pending.
+The recovery kernel now interprets absence only from an internal recovery carrier.
+It compares row IDs and highest revisions, including counter-only history, under
+its transaction. Counter-only binding tokens therefore cannot become valid again
+after clear/re-add/clear. Campaign/reference/roster authorization and global
+confirmation remain service responsibilities; no public route or clear flag is
+added. Ordinary omission/serialized private fields still have no clearing authority.
 
-Configured unittest discovery covers these tests; tests.yml was read, not changed
-or dispatched. The intermediate commit uses [skip ci]; covering CI is deferred
-until final Stage 3 code. Clearing still fails closed, and arbitrary private-only
-transaction saves remain pending. 2C/2D, bundles, Stage 1/2 validation and 022.03
-acceptance remain open. No viewer/provider/listener or feature completion.
+All clears preflight scope, durable hooks and overflow before mutation. Each
+surviving-content clear records/verifies the next counter and conditionally deletes
+the header/cascading graph, then verifies the counter survived. Already-absent
+content does not bump again. Later content starts beyond that tombstone. Plain
+row rebuild preservation carries counter-only history forward. Removing a monster
+still cascades normally without seeding unrelated IDs.
 
-README whole-tree/backup guidance, root index links and storage history were
-reviewed; no cosmetic root/index edits. Deploy matching code/data only after
-validation/acceptance. Schema remains 9 but older code lacks private-marker/filter
-handling, so do not roll code back alone over ledger-bearing data. Keep matching
-storage/config/media/code backups. No merge/deployment/release is authorized.
+Existing service wiring already replaces live private metadata with the saved
+map, including empty maps. Existing protected outer transactions retain rollback
+of memory, tracker/content/counters, roster/runtime, history/audit/revision and
+broadcast deferral. Mixed replacement and clearing is atomic under that boundary.
+No generic private-only transaction-save fix is claimed by this bounded change.
+
+Executed: six exact isolated SQL clear methods passed using real SQLite, native
+ledger helpers/read-allocation-record methods, representative headers/child FKs
+and the production value-kind CHECK. This does not exercise the full model,
+constructor, actual graph tables or services. Twelve kernel and nine production
+service methods are prepared, unexecuted: positive clear/reload/undo, stale absence
+cycles, ordinary omission/raw input rejection, unsupported counters, mixed failure,
+late full rollback and unsaved-runtime/setup isolation. Three changed Python files
+AST-parse. Full imports and covering repository/HTTP/WS/browser validation remain
+pending; no fresh CI result is claimed. Previous rejection assertions are replaced
+with positive required behavior, not skipped or suppressed.
+
+README, HANDOVER/TODO root identities and unchanged workflow tree match prior
+complete reads; relevant source/persistence/transaction and task records were
+reviewed. Existing discovery includes both test modules. This intermediate commit
+uses [skip ci]; no workflow change/dispatch. Final Stage 3 covering CI remains
+deferred. Earlier dated clearing-disabled notes in 030/240 are historical, not
+current gates. All remaining 2B/private-only integration, 2C/2D, bundle limits/
+representation and acceptance requirements remain in the lifecycle task.
+
+Schema remains 9. Deploy matching complete code/data only after validation and
+acceptance; old code lacks private marker/filter rules, so do not roll code back
+alone over ledger-bearing data. Retain full storage/config/media/code backups.
+No viewer/provider/listener, merge/deployment/release or whole-feature closure.
 
 ## Documentation entry points
 
