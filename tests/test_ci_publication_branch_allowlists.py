@@ -7,7 +7,13 @@ import subprocess
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED = {"features/perplexity", "features/perplexity-018", "features/perplexity-009.7"}
+EXPECTED = {"features/perplexity", "features/perplexity-statblock"}
+REJECTED = (
+    "main", "features/perplexity-018", "features/perplexity-009.7",
+    "features/perplexity-009.70", "features/perplexity-009.7/other",
+    "features/perplexity-statblock/other", "features/perplexity-statblock-extra",
+    "features/perplexity-statbloc", "untrusted", "",
+)
 
 
 class PublicationBranchAllowlistsTests(unittest.TestCase):
@@ -21,7 +27,7 @@ class PublicationBranchAllowlistsTests(unittest.TestCase):
     def test_collector_gate(self):
         source = (ROOT / "tools/publish_ci_results.sh").read_text()
         gate = next(line for line in source.splitlines() if line.startswith('case "$BRANCH" in '))
-        for branch in sorted(EXPECTED) + ["main", "features/perplexity-009.70", "features/perplexity-009.7/other", "untrusted"]:
+        for branch in sorted(EXPECTED) + list(REJECTED):
             with self.subTest(branch=branch):
                 result = subprocess.run(["bash", "-c", gate], env={**os.environ, "BRANCH": branch}, capture_output=True)
                 self.assertEqual(result.returncode, 0 if branch in EXPECTED else 1)
