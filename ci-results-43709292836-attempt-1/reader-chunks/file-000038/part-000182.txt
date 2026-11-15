@@ -1,0 +1,45 @@
+/campaign-delete-request-feedback.test.cjs
+tests	JavaScript tests	2026-11-15T11:36:15.9232521Z TAP version 13
+tests	JavaScript tests	2026-11-15T11:36:15.9951596Z # Subtest: last-campaign opening validation persists and resolves after another campaign exists
+tests	JavaScript tests	2026-11-15T11:36:15.9958110Z ok 1 - last-campaign opening validation persists and resolves after another campaign exists
+tests	JavaScript tests	2026-11-15T11:36:15.9959612Z   ---
+tests	JavaScript tests	2026-11-15T11:36:15.9960333Z   duration_ms: 3.429744
+tests	JavaScript tests	2026-11-15T11:36:15.9961627Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:36:15.9962271Z   ...
+tests	JavaScript tests	2026-11-15T11:36:15.9966012Z # Subtest: missing campaign and invalid move destination validate without DELETE; matching correction resolves
+tests	JavaScript tests	2026-11-15T11:36:15.9968289Z ok 2 - missing campaign and invalid move destination validate without DELETE; matching correction resolves
+tests	JavaScript tests	2026-11-15T11:36:15.9969718Z   ---
+tests	JavaScript tests	2026-11-15T11:36:15.9970158Z   duration_ms: 2.686645
+tests	JavaScript tests	2026-11-15T11:36:15.9970652Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:36:15.9971047Z   ...
+tests	JavaScript tests	2026-11-15T11:36:15.9972419Z # Subtest: move, permanent-delete and empty campaign keep exact endpoint/query/options
+tests	JavaScript tests	2026-11-15T11:36:15.9975423Z ok 3 - move, permanent-delete and empty campaign keep exact endpoint/query/options
+tests	JavaScript tests	2026-11-15T11:36:15.9976794Z   ---
+tests	JavaScript tests	2026-11-15T11:36:15.9977223Z   duration_ms: 2.790309
+tests	JavaScript tests	2026-11-15T11:36:15.9977669Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:36:15.9978069Z   ...
+tests	JavaScript tests	2026-11-15T11:36:15.9979569Z # Subtest: confirmation cancellation preserves modal, options and exact move warning
+tests	JavaScript tests	2026-11-15T11:36:15.9989977Z ok 4 - confirmation cancellation preserves modal, options and exact move warning
+tests	JavaScript tests	2026-11-15T11:36:15.9991359Z   ---
+tests	JavaScript tests	2026-11-15T11:36:15.9992134Z   duration_ms: 0.815084
+tests	JavaScript tests	2026-11-15T11:36:15.9992940Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:36:15.9993624Z   ...
+tests	JavaScript tests	2026-11-15T11:36:15.9994824Z # Subtest: active and destructive confirmations retain replacement/permanent-deletion warnings
+tests	JavaScript tests	2026-11-15T11:36:15.9996922Z ok 5 - active and destructive confirmations retain replacement/permanent-deletion warnings
+tests	JavaScript tests	2026-11-15T11:36:15.9998020Z   ---
+tests	JavaScript tests	2026-11-15T11:36:15.9998896Z   duration_ms: 0.875557
+tests	JavaScript tests	2026-11-15T11:36:15.9999625Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:36:16.0000268Z   ...
+tests	JavaScript tests	2026-11-15T11:36:16.0001393Z # Subtest: DELETE rejection retains dialog/options and persistent campaign identity
+tests	JavaScript tests	2026-11-15T11:36:16.0002954Z ok 6 - DELETE rejection retains dialog/options and persistent campaign identity
+tests	JavaScript tests	2026-11-15T11:36:16.0004027Z   ---
+tests	JavaScript tests	2026-11-15T11:36:16.0004622Z   duration_ms: 0.936781
+tests	JavaScript tests	2026-11-15T11:36:16.0005231Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:36:16.0005754Z   ...
+tests	JavaScript tests	2026-11-15T11:36:16.0006802Z # Subtest: successful retry resolves only matching delete error, preserving other target errors
+tests	JavaScript tests	2026-11-15T11:36:16.0008291Z ok 7 - successful retry resolves only matching delete error, preserving other target errors
+tests	JavaScript tests	2026-11-15T11:36:16.0009552Z   ---
+tests	JavaScript tests	2026-11-15T11:36:16.0010102Z   duration_ms: 1.921994
+tests	JavaScript tests	2026-11-15T11:36:16.0010700Z   type: 'test'
+tests	JavaScript tests	2026-11-15T11:36:16.0011257Z   ...
+tests	JavaScript tests	2026-11-15T11:36:16.0012409Z # Subtest: cancel
