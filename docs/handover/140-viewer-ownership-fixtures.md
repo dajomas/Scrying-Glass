@@ -4,155 +4,96 @@
 
 ## Current state - 2026-11-16
 
-022.02 and bounded 2B/2C/2D remain accepted and closed. Bounded 3A is completed,
-accepted and closed at the user's explicit 2026-11-16 22:31 CET request after the
-criterion review below. Covering CI 43958297280 attempt 1 succeeded for exactly
-26725005de3a1ed80ee06db5a23328f8ae33a0c0. Increment 3B, whole Stage 3, final lifecycle
-acceptance, SG-TODO-022 Stage 1/2, 022.03 and overall 022 remain open/unaccepted.
-No merge, deployment or release is authorized. Earlier 3A pending/failure wording
-below is historical and superseded by the bounded close-out, not erased evidence.
+022.02, bounded 2B/2C/2D and bounded 3A remain accepted/closed. 3B boundary-test
+implementation is included in this delivery with execution/CI/acceptance pending.
+Whole Stage 3, Stage 1/2, 022.03 and overall 022 remain unaccepted. No merge,
+deployment or release. SG-TODO-023 remains separate and ready for review.
 
 ## Preserved evidence and historical sections
 
-[Complete preceding handover](https://github.com/dajomas/Scrying-Glass/blob/e8546fb1ec14e4163faa89c326592948d6d81c46/docs/handover/140-viewer-ownership-fixtures.md)
-retains every prior heading, diagnosis, correction, criterion map, CI count,
-immutable archive and evidence limitation. These historical records remain part
-of the handover; 3A preparation does not replace their proof or reopen accepted work.
+[Complete pre-3B handover](https://github.com/dajomas/Scrying-Glass/blob/070563ffc9ae4c1e8c35f8c39c8d387792ff10d6/docs/handover/140-viewer-ownership-fixtures.md)
+retains all earlier diagnoses, preparation/failed-run/correction records, exact
+counts, criterion maps, accepted close-outs and prior immutable archives. None
+of their evidence limits or unfinished requirements is removed by this delivery.
 
 ## 2B bounded close-out - 2026-11-16
 
-Accepted at bcb55bb4f6542ac99d95684a247ffadeb05f3a32; reviewed covering run
-43899670266 attempt 1. Full criteria and limits remain in the preceding record.
+Accepted; full criterion map, 43899670266 attempt 1 evidence and limits remain
+in the complete preceding handover and its linked immutable archives.
 
 ## 2C bounded close-out - 2026-11-16
 
-Accepted for the agreed clone/copy/move/Save-As scope. Tested
-7c703c4d66f63bd765a780f8e5ed6a2cd465521c; successful covering run 43933600072
-attempt 1; publication dae492f2e95bc378d73425f22dd5e85d9c681215. Thirteen 2C.3c
-methods passed, main unittest 1,956 OK, selected pytest 43 passed, audit 218 modules
-with zero failures. Counts are not unique aggregates. Full map/limits stay archived.
+Accepted; full criterion map and successful 43933600072 attempt 1 evidence remain
+in the complete preceding handover. No accepted clone/copy/move/Save-As scope reopens.
 
 ## 2D bounded close-out - 2026-11-16
 
-Accepted close-out e8546fb1ec14e4163faa89c326592948d6d81c46. Tested
- ecd56957f9f147ac36d5196c23aec96d8889129c; successful covering run 43941792616
-attempt 1; publication 0742d36fa6186b3764d9b3c6e4153c20f6071b08. Seventeen import
-methods passed within 1,962 main tests OK; selected pytest 43 passed; audit 219
-modules, zero failed. Full six-group criterion map and evidence limits remain in
-the preceding handover and lifecycle record, not discarded or widened by 3A.
+Accepted at e8546fb1ec14e4163faa89c326592948d6d81c46; full criterion map and
+43941792616 attempt 1 evidence remain in the preceding handover.
 
 ## 3A private bundle roundtrip - 2026-11-16
 
-The actual campaign bundle path now exports version 2 when setup/runtime private
-snapshots exist. A separate statblocks envelope has exact setup-name maps and an
-encounter map keyed by normalized monster identity. Tracker-only exports stay at
-version 1; imports accept versions 1 and 2. Version 1 cannot smuggle private content.
-Ordinary _statblocks fields reject. No separate reference members are introduced.
-
-Incoming maps, target identities, digests, graph shape and safe provenance URLs
-validate before allocation under operator ModelLimits. Trusted stored reads/export
-remain permissive when incoming limits are lowered. Imported revision/prepared_at
-are removed; canonical local IDs and fresh destination metadata are assigned through
-existing private storage. Source provenance/credits remain content, not verified
-online authority. No provider requests, credentials, fetch authority or permissions
-are added. New setups use save_new_setup; the imported recovery image is an internal
-PrivateEncounterState captured by FeatureStorage. The active campaign is not switched.
-
-The complete manifest, including private content, must fit 10 MiB or export rejects
-explicitly with 413. Existing 25 MiB compressed, 100 MiB expanded and 1,000 member
-limits remain. Import requires the protected outer transaction. Media paths are
-registered for cleanup before write_bytes, including partial-write failure.
-
-Eight new tests cover rich graph/credits roundtrip, checkpoint restore and reload,
-independent ownership/source isolation/privacy, distinct unsaved runtime content,
-legacy import/empty export, malformed maps/digest/URL/version/private-field rejection,
-lowered incoming limits, explicit aggregate overflow, late private DB failure and
-partial media failure cleanup. They use native SQLite/service fixtures, not actual
-HTTP sessions, full-server startup or real network WebSockets.
-
-Executed here: compile() on the complete production and test source, both successful;
-AST inventory found eight new test methods. Native tests executed here: zero. No
-server import, full suite, browser/E2E or fresh CI result is claimed. The existing
-Branch tests workflow discovers test_*.py on features/perplexity-statblock; this code/
-test delivery omits [skip ci]. Await actual covering results before acceptance.
-
-README and HANDOVER index were reviewed and remain applicable; no new section path,
-listener, UI or installation-backup claim. The TODO index retains the pending parent
-scope; detailed current 3A status below supersedes its older unimplemented-bundle
-wording, not its open gates. Schema remains 9; retain matching whole code/storage/
-config/media backups and never roll older code alone over ledger-bearing data.
-[Current task and remaining 3B gates](../todo/223-statblock-lifecycle.md).
+Version-2 private campaign bundles, version-1 compatibility, trusted checkpoint
+capture, independent ownership, validation and core rollback remain implemented.
+The complete representation and operational description remains in the preceding
+handover under this same heading. No representation/schema change is made in 3B.
 
 ## 3A Store ZIP-harness correction - 2026-11-16
 
-First covering Branch tests 43955177051 attempt 1 tested exactly
- ea8b4c7342ba2b86e8c2ca7b07892fdf4ce7f7b9 and concluded failure; publication
-6ca1fefebe459f797e3014331019f2f72d7cd1c4. Main Python and standalone/audit stages
-failed; setup, Chromium, syntax/server import, pytest, JavaScript and artifact upload
-passed. This supersedes the earlier pending-execution wording, not the scope limits.
-The complete failure inventory and other possible failures have not been reconciled.
-
-Inspected tracebacks identify Store.connection AttributeError in the ZIP-only AST
-harness tests/test_bughunt_130f875.py. That harness intentionally replaces relative-
-import collaborators and is not native storage proof. Repair the harness, not the
-production transaction guard: provide its explicit in_transaction fixture, recursively
-replace relative imports including the new function-local save_new_setup collaborator,
-and supply tracker-only adapters/PRIVATE_KEY/participant-validation fixture. The
-private carrier adapter rejects nonempty graphs. Version 2 is supported now, so the
-unknown-version case uses 3; a separate case retains version-2 missing-envelope rejection.
-No existing ZIP/media/corruption assertion is dropped; no production file is changed.
-
-Executed locally in the Python tool: reconstructed complete production source was
-verified against Git blob d2d85fc473520c43a58b6c3627bb9d77d8dad61c, then the corrected
-harness ran all 20 cases: 0 failures, 0 errors, 0 skips. Real ZIP/compression/corruption/
-media I/O ran with isolated collaborators. A separate mutation run removed the guard;
-the single guard regression failed as expected (1 expected failure), showing that
-this assertion detects guard removal. Corrected test source compilation also passed.
-These are not native SQLite, full repository, HTTP, browser, private persistence or
-rollback results. Full/native suites and corrected covering CI remain pending.
-
-This test/documentation correction runs normal push CI without [skip ci]; no workflow
-change, manual dispatch or SG-TODO-023 cleanup is included. 3A remains unaccepted.
+Correction 26725005de3a1ed80ee06db5a23328f8ae33a0c0 retained the production transaction
+guard. Its isolated 20-case run and guard-removal probe are supplementary, not native
+private persistence proof. Full failed-run/correction history remains archived above.
 
 ## 3A bounded accepted close-out - 2026-11-16
 
-The user explicitly requested formal close-out at 22:31 CET after criterion review.
-Bounded 3A is completed, accepted and closed for the agreed private campaign-bundle
-roundtrip/core-validation/core-rollback scope. No outstanding agreed 3A criterion was
-identified. This is criterion-based acceptance, not automatic closure from green CI.
+Accepted/closed at the user's explicit 22:31 CET request, recorded by
+070563ffc9ae4c1e8c35f8c39c8d387792ff10d6. Successful Branch tests 43958297280 attempt 1
+covers 26725005de3a1ed80ee06db5a23328f8ae33a0c0; publication
+e839ca64e44ce43b8528069d928c97999768aed1. Eight 3A methods explicitly OK within
+1,973 main tests OK. Full nine-group criterion reconciliation and limits remain
+in the exact preceding lifecycle/handover records, not widened by this delivery.
 
-Successful push-triggered Branch tests 43958297280 attempt 1 covers exactly
-26725005de3a1ed80ee06db5a23328f8ae33a0c0 (Store harness correction over original
-3A implementation ea8b4c7342ba2b86e8c2ca7b07892fdf4ce7f7b9). Evidence publication:
-e839ca64e44ce43b8528069d928c97999768aed1. Reviewed run.json/jobs.json establish the
-head, attempt and successful configured stages. Workflow log parts 121-122 explicitly
-report all eight test_statblock_bundles.PrivateBundleTests methods OK. Part 140 reports
-1,973 main Python tests OK in 199.059 seconds; those eight are included, not added.
-Syntax/server import, dependencies/Chromium, selected pytest, JavaScript, standalone
-browser/audit and artifact upload stages succeeded. No uninspected numeric pytest/
-audit totals or exhaustive artifact review is inferred.
+## 3B boundary implementation - 2026-11-16
 
-Review combined these executed assertions with the actual campaign bundle, private
-validation, save_new_setup and FeatureStorage implementation. The lifecycle task maps
-representation/versioning, legacy compatibility, rich content/provenance, independent
-ownership, checkpoint restore/reload, saved/runtime separation, incoming validation/
-limits, aggregate rejection and core rollback to their evidence.
+Fourteen new methods: seven native archive/model boundaries in
+ tests/test_statblock_3b_boundaries.py and seven actual selected-route methods in
+ tests/test_statblock_3b_http.py. The latter imports the non-TestCase fixture through
+a module alias, avoiding rediscovery of the native TestCase as an imported class.
 
-Limits remain: native service/SQLite fixtures are not authenticated HTTP/browser or
-real-network WebSocket tests; projection checks are not network-delivery proof. The
-aggregate rejection test lowers the manifest constant, not every real-size boundary.
-Source provenance is preserved as content, not promoted to verified online authority.
-The 20-case isolated Store harness and its guard mutation remain supplementary, never
-native private persistence/rollback proof. The first failed run and preparation counts
-above remain historical; their 3A CI/acceptance-pending statements are superseded.
+Coverage prepared: real 10 MiB manifest, 25 MiB stored ZIP and 100 MiB expanded
+admission boundaries (inclusive and one byte over); 1,000 total members including
+manifest; malformed/duplicate/unsafe members; forged expanded metadata rejected
+before reads; all five operator ModelLimits at/over the fixture boundary; graph/
+identity/credential/false-verification rejection; actual multipart upload cap.
+The 10 MiB import fixture uses inert top-level padding for aggregate byte admission;
+the export mechanism also checks exact computed manifest size and one byte below it.
+The real-size media fixtures use supported extensions, not a media-decoder test.
 
-Next is 3B: route authorization/post-lock checks, unsafe archives, aggregate/member/
-snapshot boundaries, later checkpoint/history/media failures, notification/privacy
-and combined lifecycle regressions; then final lifecycle acceptance. Whole Stage 3,
-Stage 1/2, 022.03 and overall 022 remain unaccepted. 022.02 and bounded 2B/2C/2D stay
-closed. SG-TODO-023 remains ready for review and does not change the agreed order.
+Actual feature/AdminAPI installers, AuthService, ownership, SQLite and production
+notification logic are retained. Import is intentionally permitted for a regular
+admin without access to the active campaign because it creates a new campaign owned
+by that caller; export still requires active-campaign access. Existing superadmin
+policy is retained. Tests cover no-session/client/origin/multipart/corrupt denials,
+post-lock export ownership and import role/session revocation, unchanged SQL/private/
+ledger/live/history/files and zero notifications for inactive-campaign import.
 
-This close-out changes only three Markdown files with [skip ci]; no code/tests/schema/
-workflow changes, rerun, manual dispatch, merge, deployment or release. README and the
-HANDOVER index remain applicable; TODO.md updates only the related 022.03 summaries.
-Keep matching complete code/storage/config/media backups; no older-code-only rollback.
+Late failure injection occurs after real checkpoint, owner assignment, history hook
+and partial media write. Combined export/import/actual activation/trusted private
+edit/actual checkpoint restore/undo/re-export asserts monotonic revisions, preserved
+source, reload and one final post-commit private-free frame per active mutation.
+The private edit is an internal fixture transaction, not a new public private-edit API.
+
+Executed in this environment: compile() passed for both complete test sources; AST
+inventory found 14 methods. Pure ZIP builder checks verified a 10,485,760-byte
+manifest and a valid 26,214,400-byte ZIP; multipart literal CRLF was inspected.
+These checks did not execute any native/ASGI regression: zero of the 14 ran here.
+No checkout/full suite/browser/network verification or fresh CI result is claimed.
+Existing unittest discovery includes both modules. Push runs normal CI without
+[skip ci]; await covering results before 3B/Stage 3 acceptance. No production change
+is included without an executed regression demonstrating a defect.
+
+README, TODO index, HANDOVER index and workflow were reviewed/reused at verified
+identities and remain applicable; parent scope/3B acceptance stay pending. Detailed
+3B implementation status supersedes older next-3B wording, not any gate. Schema 9
+and matching complete code/storage/config/media backup guidance remain unchanged.
+[Task and remaining acceptance](../todo/223-statblock-lifecycle.md).
