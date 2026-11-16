@@ -9,9 +9,11 @@ accepted. Stage 1/2 remain unaccepted; 022.02 stays accepted/closed. Approved or
 remains private storage, recovery/reset/copy, then bundles. 022.04-022.16 remain
 pending. No merge, deployment, release or whole-feature closure is authorized.
 
-Corrections 1-8 are pushed with [skip ci]. Correction 9 below is supplied for
-approval/delivery with validation pending and MUST omit [skip ci], allowing the
-configured push-triggered Branch tests workflow. No separate dispatch/workflow edit.
+Corrections 1-8 were pushed with [skip ci]. Correction 9 was pushed without it;
+its covering run failed and the diagnosed request-type follow-up below is prepared.
+Follow-up code commits use configured push CI, with no [skip ci], manual dispatch
+or workflow edit. The earlier nine-commit skip agreement does not extend to fixes
+required by that failed covering run.
 Each write needs complete exact-payload approval. Review the covering commit/run/
 attempt before claiming the series passes. Further failures require diagnosis and
 freshly approved fixes; never skip/weaken assertions. A green configured suite is
@@ -63,11 +65,12 @@ One issue per corrective commit; delivered corrections:
 6. Native/legacy facade-copy fixture: c093d772513051f5c88623af1b72c63d89cde19a.
 7. Facade dispatch guards: f2d4fa699e2ef1a56d56332e4c37a0d94057f8d6.
 8. Protected Save As contract: 8162e812c3cb2e90df4e427bfa76d1d115f8a276.
-   This reconciles the pushed payload's earlier prepared wording. Native contracts
-   and covering corrective CI remain unverified; five isolated routing checks are
-   not native persistence/rollback/authorization evidence.
-9. Private setup-import remapping: supplied for approval in this increment; not
-   yet pushed or validated. Exact selected/life-filtered handler map drives graph
+   This reconciles the pushed payload's earlier prepared wording. Its contract
+   methods passed in the failed covering run below; five preparation-time isolated
+   checks were not native persistence/rollback/authorization evidence.
+9. Private setup-import remapping: delivered at
+   14ad1d3075f4e737c38270ea2a9734fd1f5b9ad3; eleven native methods passed
+   in the failed covering run below, not acceptance. Exact handler map drives graph
    remapping to clone IDs. Existing destination metadata is retained; incoming
    graphs face the five ModelLimits budgets from CONFIG.statblocks.limits. Incoming
    revision/time is removed; existing flush allocates destination ownership and
@@ -80,18 +83,46 @@ dead/all filters, graphs/references/facts/warnings/provenance/credits, independe
 rows/revisions/edit isolation, unsaved-runtime import/reload, lowered limits,
 tracker-save and post-private-flush/history rollback, commit-only notification,
 privacy, serialized/plain input, bad maps/missing source, counter-only absence,
-subset/empty maps and configuration. Native methods and the unchanged original
-Stage 2 contract have NOT run here. Three Python files compile/AST-parse; the
+subset/empty maps and configuration. They and the unchanged original Stage 2
+contract passed in the covering CI below; they were not run locally. At preparation,
+three Python files compiled/AST-parsed; the
 attachment matches the live admin blob and reverse replacement preserves its bytes;
 unrelated methods are AST-identical. Eleven isolated exact-helper check groups
 passed with capture/validation/carrier/limit doubles, not real model/SQLite/
 transaction integration. Service fixtures and emitter seams do not establish
 actor/HTTP authorization or actual WebSocket delivery. [Detailed current handover](../handover/130-accounts-migration-fixture.md#private-setup-import-correction---2026-11-16).
 
+## Covering CI and request-type follow-up - 2026-11-16
+
+Run 43889177129 attempt 1 covers 14ad1d3075f4e737c38270ea2a9734fd1f5b9ad3;
+evidence publication/current baseline: 7ca39865274281bf02b3c7ad6da663b84af147a5.
+Overall failure: 1,928 main tests, one failure and nine errors; standalone audit
+213 modules, three failed (not proof of leaks). Syntax/server import, selected
+pytest and JavaScript steps passed. Reviewed workflow parts 130-132 show all eleven
+new setup-import methods, all fourteen Stage 2 contracts and six save-handler
+methods passing. These passes do not establish a green combined corrective suite.
+
+Prepared follow-up: only concrete Request types may suppress wrapper injection.
+The object placeholder used by ownership/viewer/lair fixtures otherwise matches
+ordinary annotations and inspect.Parameter.empty, misrouting campaign IDs/payloads
+into authentication. Exclude object as the Request type and empty annotations;
+retain concrete subtype forwarding and post-lock auth. Transaction body, failing
+fixtures and original route/auth assertions remain unchanged. Four regressions
+are added to the seven retained serialized-request methods. Production/test AST
+and compile checks pass; six exact selected methods passed in an extracted wrapper
+harness with Request/HTTP/ownership doubles, versus two failures with the old
+wrapper. An isolated inspected-lair-installer check preserves all five routes and
+auth/origin dependencies, restoring injection on all five; service/dependency
+collaborators were doubled. FastAPI/Starlette are absent locally; no native ASGI/full fixture/module
+or follow-up CI pass is claimed. Delivery awaits exact-payload approval; use normal
+push CI and inspect its actual results before proceeding. [Diagnosis/history/limits](../handover/140-viewer-ownership-fixtures.md#generic-request-placeholder-follow-up---2026-11-16).
+
 ## Remaining gates and delivery order
 
-After the approved correction-9 push, review actual covering CI and diagnose/fix
-demonstrated failures with fresh approval before continuing the lifecycle order.
+The correction-9 covering run is reviewed above and failed. Deliver/review the
+separately approved follow-up and resolve demonstrated failures before continuing
+the lifecycle order. Do not infer that these selected passing suites close every
+remaining lifecycle or authorization gate.
 
 1. 2B: execute/review recovery capture, fingerprints/pruning, replacement and service
    restore, counter-ledger/all-writer, trusted-clear and protected-flush suites.

@@ -136,4 +136,68 @@ class SerializedRequestTests(unittest.IsolatedAsyncioTestCase):
         self.assertIsNone(actor(c))
 
 
+    async def test_object_request_placeholder_keeps_unannotated_payload_out_of_auth(self):
+        from types import ModuleType
+        from unittest.mock import patch
+        fake = ModuleType('fastapi'); fake.Request = object
+        payload = {'campaign':'1'}
+        def endpoint(body):
+            self.assertIs(body, payload)
+            self.handler_requests.append(body)
+            return {'accepted':True}
+        with patch.dict('sys.modules', {'fastapi':fake}):
+            wrapped = serialized_handler(self.c, endpoint, role='client', cookie_name='client')
+        self.assertIn('_operation_request', inspect.signature(wrapped).parameters)
+        request = Request({'type':'http','headers':[(b'cookie',b'client=alice')]})
+        self.assertEqual(await wrapped(payload, _operation_request=request), {'accepted':True})
+        self.assertEqual(self.handler_requests, [payload]); self.assertIs(self.auth_requests[0], request)
+
+    async def test_object_request_placeholder_preserves_typed_arguments_and_denial(self):
+        from types import ModuleType
+        from unittest.mock import patch
+        fake = ModuleType('fastapi'); fake.Request = object
+        body = {'value':3}
+        async def endpoint(campaign: str, payload: dict, count: int=2):
+            self.assertEqual(campaign, '1'); self.assertIs(payload, body)
+            self.handler_requests.append(count)
+            return {'count':count}
+        with patch.dict('sys.modules', {'fastapi':fake}):
+            wrapped = serialized_handler(self.c, endpoint, role='client', cookie_name='client')
+        self.assertEqual(list(inspect.signature(wrapped).parameters),
+                         ['campaign','payload','count','_operation_request'])
+        request = Request({'type':'http','headers':[(b'cookie',b'client=alice')]})
+        self.assertEqual(await wrapped('1', body, _operation_request=request), {'count':2})
+        self.assertEqual(await wrapped(campaign='1', payload=body, count=4,
+                                       _operation_request=request), {'count':4})
+        self.allowed = False
+        with self.assertRaises(HTTPException) as raised:
+            await wrapped('1', body, _operation_request=request)
+        self.assertEqual(raised.exception.status_code, 401)
+        self.assertEqual(self.handler_requests, [2,4])
+        self.assertTrue(all(item is request for item in self.auth_requests))
+        self.assertIsNone(actor(self.c)); self.assertFalse(operation_lock(self.c).locked())
+
+    async def test_concrete_request_subclass_is_reused_not_duplicated(self):
+        class IncomingRequest(Request): pass
+        request = IncomingRequest({'type':'http','headers':[(b'cookie',b'client=alice')]})
+        def endpoint(incoming: IncomingRequest, value: str='kept'):
+            self.handler_requests.append(incoming)
+            return {'value':value}
+        wrapped = serialized_handler(self.c, endpoint, role='client', cookie_name='client')
+        self.assertNotIn('_operation_request', inspect.signature(wrapped).parameters)
+        self.assertEqual(await wrapped(request), {'value':'kept'})
+        self.assertIs(self.auth_requests[0], request); self.assertIs(self.handler_requests[0], request)
+
+    async def test_real_request_type_does_not_capture_object_or_missing_annotations(self):
+        payload = object()
+        def endpoint(body, metadata: object):
+            self.assertIs(body, payload); self.assertIs(metadata, payload)
+            return {'accepted':True}
+        wrapped = self.wrap(endpoint)
+        self.assertIn('_operation_request', inspect.signature(wrapped).parameters)
+        request = Request({'type':'http','headers':[(b'cookie',b'client=alice')]})
+        self.assertEqual(await wrapped(payload, payload, _operation_request=request), {'accepted':True})
+        self.assertIs(self.auth_requests[0], request)
+
+
 if __name__ == '__main__': unittest.main()

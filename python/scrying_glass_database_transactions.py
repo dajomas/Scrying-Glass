@@ -46,9 +46,13 @@ def serialized_handler(context, handler, *, role=None, cookie_name=None):
     if role is not None:
         from fastapi import Request
         request_parameter = next((parameter.name for parameter in signature.parameters.values()
-                                  if isinstance(parameter.annotation, type)
+                                  if Request is not object
+                                  and parameter.annotation is not inspect.Parameter.empty
+                                  and isinstance(parameter.annotation, type)
                                   and issubclass(parameter.annotation, Request)), None)
-        # FastAPI injects one Request per endpoint. Reuse the handler's parameter.
+        # A generic object placeholder matches every annotation, even inspect.empty;
+        # it cannot identify an existing Request parameter. Keep injection in that case.
+        # FastAPI injects one Request per endpoint. Reuse a concrete Request parameter.
         if request_parameter is None:
             wrapped.__signature__ = signature.replace(parameters=[
                 *signature.parameters.values(),
