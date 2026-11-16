@@ -1,0 +1,23 @@
+self.c.STATE))
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4047240Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4050196Z AssertionError: '02ba496661b345a88d61f1e50c14b0cb' not found in {'m': {'model_version': 1, 'revision': 1, 'source_label': 'Original', 'subtitle': '', 'completeness': 'available', 'prepared_at': '2026-11-16T10:14:28.628673Z', 'content_digest': '83b1455ba1765e022b85303ae8c93c0a4544e58b6f710e31b8101a299c1d0b39', 'definitions': [{'local_id': 'd0', 'kind': 'spell', 'name': 'Fixture spell', 'source_key': 'fixture:spell', 'position': 0}], 'facts': [], 'nodes': [{'local_id': 'n0', 'parent_local_id': None, 'definition_id': None, 'position': 0, 'kind': 'paragraph'}, {'local_id': 'n1', 'parent_local_id': 'n0', 'definition_id': None, 'position': 0, 'kind': 'reference', 'target_definition_local_id': 'd0'}, {'local_id': 'n2', 'parent_local_id': None, 'definition_id': 'd0', 'position': 0, 'kind': 'paragraph'}, {'local_id': 'n3', 'parent_local_id': 'n2', 'definition_id': 'd0', 'position': 0, 'kind': 'text', 'text': 'Retain this supporting rule.'}], 'warnings': [], 'provenance': [{'position': 0, 'role': 'selected', 'provider': 'file', 'entity_id': 'fixture', 'adapter_version': '1', 'credits': []}]}}
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4052867Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4053018Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4053530Z FAIL: test_dispatch_modules_and_file_limits (test_storage_facade.StorageRuntimeTests.test_dispatch_modules_and_file_limits)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4054034Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4054320Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4054774Z   File "/tmp/scrying-tests-po_yof8h/repo/tests/test_storage_facade.py", line 230, in test_dispatch_modules_and_file_limits
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4055332Z     self.assertEqual(SQLiteStorage.save_setup.__module__, 'python.scrying_glass_storage_operations')
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4055762Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4056217Z AssertionError: 'python.scrying_glass_storage_statblocks' != 'python.scrying_glass_storage_operations'
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4056603Z - python.scrying_glass_storage_statblocks
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4056844Z ?                              ^^  ^^ ^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4057088Z + python.scrying_glass_storage_operations
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4057321Z ?                              ^^^^  ^ ^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4057512Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4057518Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4057676Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4057940Z Ran 1896 tests in 203.607s
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4058051Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4058159Z FAILED (failures=3, errors=14)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.6540152Z #

@@ -1,0 +1,23 @@
+6497316Z test_invalid_bodies_and_missing_storage_are_rejected (test_lookup_provider_settings.ProviderSettingsStorageTests.test_invalid_bodies_and_missing_storage_are_rejected) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6601803Z test_lookup_and_image_paths_honour_saved_toggles (test_lookup_provider_settings.ProviderSettingsStorageTests.test_lookup_and_image_paths_honour_saved_toggles) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6708949Z test_saved_toggles_override_configuration_and_persist (test_lookup_provider_settings.ProviderSettingsStorageTests.test_saved_toggles_override_configuration_and_persist) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6803649Z test_unreadable_settings_fail_closed (test_lookup_provider_settings.ProviderSettingsStorageTests.test_unreadable_settings_fail_closed) ... Provider settings unreadable; optional lookups disabled
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6804527Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6805123Z   File "/tmp/scrying-tests-po_yof8h/repo/python/scrying_glass_provider_settings.py", line 67, in effective_display
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6805649Z     saved = overrides(context)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6806152Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6806911Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6807246Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6807800Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6808355Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6808691Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6809274Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6809827Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6810116Z sqlite3.OperationalError: locked
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6810424Z ok
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6821926Z test_explicit_manual_bonus_and_unset_roll_total (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_explicit_manual_bonus_and_unset_roll_total) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6835840Z test_explicit_zero_and_blank_have_distinct_origins (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_explicit_zero_and_blank_have_distinct_origins) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6852467Z test_invalid_bonus_before_side_effects (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_invalid_bonus_before_side_effects) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6865334Z test_omitted_bonus_direct_call_default (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_omitted_bonus_direct_call_default) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T10:13:00.6878149Z test_quantity_keeps_negative_bonus_and_unique_ids (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_quantity_keeps_negative_bonus_and_unique_ids) ... ok
+tests	

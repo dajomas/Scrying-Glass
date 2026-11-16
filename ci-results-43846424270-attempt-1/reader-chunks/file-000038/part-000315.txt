@@ -1,0 +1,28 @@
+it checks	2026-11-16T10:19:05.3236403Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3236769Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3237433Z   File "/tmp/scrying-tests-w16cig29/repo/tests/test_storage_facade.py", line 197, in test_setup_names_checkpoint_references_move_and_copy
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3238396Z     self.assertEqual(s.transfer_setup(a,b,'renamed','copy'), 'renamed')
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3238842Z                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3239468Z   File "/tmp/scrying-tests-w16cig29/repo/python/scrying_glass_storage_statblocks.py", line 74, in transfer_setup
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3240152Z     clone_private_snapshots(self, source_row[0], destination_row[0])
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3240634Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3241515Z   File "/tmp/scrying-tests-w16cig29/repo/python/scrying_glass_statblock_cloning.py", line 17, in clone_private_snapshots
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3242258Z     source = api._rows(source_encounter)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3242800Z   File "/tmp/scrying-tests-w16cig29/repo/python/scrying_glass_statblock_encounters.py", line 44, in _rows
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3243726Z ##[error]    raise RuntimeError('Private encounters require schema 9')
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3244710Z RuntimeError: Private encounters require schema 9
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3244945Z 
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3245113Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3245841Z FAIL: test_dispatch_modules_and_file_limits (test_storage_facade.StorageRuntimeTests.test_dispatch_modules_and_file_limits)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3246592Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3247017Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3247654Z   File "/tmp/scrying-tests-w16cig29/repo/tests/test_storage_facade.py", line 230, in test_dispatch_modules_and_file_limits
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3248499Z     self.assertEqual(SQLiteStorage.save_setup.__module__, 'python.scrying_glass_storage_operations')
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3249110Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3249815Z AssertionError: 'python.scrying_glass_storage_statblocks' != 'python.scrying_glass_storage_operations'
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3250354Z - python.scrying_glass_storage_statblocks
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3250946Z ?                              ^^  ^^ ^^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3251309Z + python.scrying_glass_storage_operations
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3251664Z ?                              ^^^^  ^ ^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3251855Z 
+tests	Standalone Pyt

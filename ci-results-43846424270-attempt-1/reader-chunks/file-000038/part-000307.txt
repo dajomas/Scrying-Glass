@@ -1,0 +1,24 @@
+2026-11-16T10:19:02.0565200Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.0565645Z Ran 6 tests in 0.391s
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.0566026Z test_statblock_setup_saving.py: connections opened: 6; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.0566267Z 
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.0566387Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.1042972Z Connection audit: test_statblock_stage2_contracts.py
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6082864Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6083988Z test_statblock_stage2_contracts.py: connections opened: 10; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6085992Z FAIL: test_save_as_preserves_content_in_the_new_setup (test_statblock_stage2_contracts.StatblockStage2ContractTests.test_save_as_preserves_content_in_the_new_setup)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6087581Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6088336Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6089664Z   File "/tmp/scrying-tests-w16cig29/repo/tests/test_statblock_stage2_contracts.py", line 129, in test_save_as_preserves_content_in_the_new_setup
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6091406Z     self.assertIn('m', copied); self.assert_content(copied['m'], before)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6092139Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6093155Z AssertionError: 'm' not found in {}
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6093560Z 
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6094116Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6096110Z FAIL: test_setup_import_remaps_monster_binding_and_keeps_reference_graph (test_statblock_stage2_contracts.StatblockStage2ContractTests.test_setup_import_remaps_monster_binding_and_keeps_reference_graph)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6097909Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6098578Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6099997Z   File "/tmp/scrying-tests-w16cig29/repo/tests/test_statblock_stage2_contracts.py", line 140, in test_setup_import_remaps_monster_binding_and_keeps_reference_graph
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6101674Z     self.assertIn(ident, private_map(self.c.STATE))
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6102295Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:02.6110366Z AssertionError: '823fcc09ebca4910a9e7cac1d1935ccc' not found in {'m': {'model_version': 1, 'revision': 1, 'source_label': 'Original', 'subtitle': '', 'completeness': 'available', 'prepared_at': '2026-11-16T10:19:02.568810Z', 'content_digest': '83b1455ba1765e022b85303ae8c93c0a4544e58b6f710e31b8101a299c1d0b39', 'definitions': [{'local_id': 'd0', 'kind': 'spell', 'name': 'Fixture spell', 'source_key': 'fixture:spell', 'position': 0}], 'facts': [], 'nodes': [{'local_id': 'n0', 'parent_local_id': None, 'definition_id': None, 'position': 0, 'kind': 'paragraph'}, {'local_id': 'n1', 'p

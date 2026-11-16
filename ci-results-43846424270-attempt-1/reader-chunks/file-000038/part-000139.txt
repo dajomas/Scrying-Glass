@@ -1,0 +1,27 @@
+ytes
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3969100Z     return _dump(_canonical(validate_snapshot(snapshot, limits)))
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3969402Z                             ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3969826Z   File "/tmp/scrying-tests-po_yof8h/repo/python/scrying_glass_statblock_model.py", line 380, in validate_snapshot
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3970225Z     _fail('digest_mismatch', '$/content_digest')
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3970474Z     ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3970983Z   File "/tmp/scrying-tests-po_yof8h/repo/python/scrying_glass_statblock_model.py", line 57, in _fail
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3971500Z     raise StatblockError(code, path)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3971896Z python.scrying_glass_statblock_model.StatblockError: digest_mismatch: $/content_digest
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3972165Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3972391Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3973178Z ERROR: test_client_http_live_and_saved_campaigns_are_scoped_and_private (test_statblock_transport_privacy.StatblockTransportPrivacyTests.test_client_http_live_and_saved_campaigns_are_scoped_and_private)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3973873Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3974171Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3974580Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3974988Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3975258Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3975694Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3976099Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3976321Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3976855Z   File "/tmp/scrying-tests-po_yof8h/repo/tests/test_statblock_transport_privacy.py", line 124, in test_client_http_live_and_saved_campaigns_are_scoped_and_private
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3977442Z     status, body = await self.http(self.client_app, 'client=alice', campaign)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3977780Z                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3978177Z   File "/tmp/scrying-tests-po_yof8h/repo/tests/test_statblock_transport_privacy.py", line 86, in http
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3978565Z     await app(scope, receive, send)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3979022Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/fastapi/applications.py", line 1194, in __call__
+tests	Python test suite (including browser fi

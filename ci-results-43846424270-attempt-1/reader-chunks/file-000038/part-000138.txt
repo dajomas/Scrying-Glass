@@ -1,0 +1,26 @@
+r fixtures)	2026-11-16T10:14:30.3959491Z   File "/tmp/scrying-tests-po_yof8h/repo/tests/test_bughunt_711881a.py", line 165, in test
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3959992Z     with self.assertRaisesRegex(ValueError,'Snapshot not found'):self.store.load(value,1,'checkpoint')
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3960426Z                                                                  ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3960862Z   File "production-extract", line 69, in load
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3961133Z KeyError: "'__name__' not in globals"
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3961265Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3961402Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3961767Z ERROR: test_load_underflow (test_bughunt_711881a.SnapshotTests.test_load_underflow)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3962150Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3962425Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3962790Z   File "/tmp/scrying-tests-po_yof8h/repo/tests/test_bughunt_711881a.py", line 165, in test
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3963281Z     with self.assertRaisesRegex(ValueError,'Snapshot not found'):self.store.load(value,1,'checkpoint')
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3963701Z                                                                  ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3964070Z   File "production-extract", line 69, in load
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3964327Z KeyError: "'__name__' not in globals"
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3964461Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3964590Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3965252Z ERROR: test_reattached_snapshot_preserves_then_advances_counter_once (test_statblock_revisions.ProductionRevisionTests.test_reattached_snapshot_preserves_then_advances_counter_once)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3965866Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3966137Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3966657Z   File "/tmp/scrying-tests-po_yof8h/repo/tests/test_statblock_revisions.py", line 227, in test_reattached_snapshot_preserves_then_advances_counter_once
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3967136Z     changed = api.save(encounter, unchanged)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3967547Z   File "/tmp/scrying-tests-po_yof8h/repo/python/scrying_glass_statblock_encounters.py", line 132, in save
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3967963Z     value = json.loads(canonical_bytes(snapshot, policy))
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3968245Z                        ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3968661Z   File "/tmp/scrying-tests-po_yof8h/repo/python/scrying_glass_statblock_model.py", line 388, in canonical_b

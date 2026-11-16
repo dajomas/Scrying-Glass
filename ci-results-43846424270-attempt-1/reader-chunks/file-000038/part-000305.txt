@@ -1,0 +1,30 @@
+
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.0195087Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.0195512Z Ran 10 tests in 0.610s
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.0195637Z 
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.0195719Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.0196063Z test_statblock_recovery_capture.py: connections opened: 10; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.0658216Z Connection audit: test_statblock_restore_kernel.py
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.5687282Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.5687876Z test_statblock_restore_kernel.py: connections opened: 18; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.5688206Z Ran 18 tests in 0.427s
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.5688326Z 
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.5688403Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.6145094Z Connection audit: test_statblock_revisions.py
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.8313877Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.8315843Z ERROR: test_reattached_snapshot_preserves_then_advances_counter_once (test_statblock_revisions.ProductionRevisionTests.test_reattached_snapshot_preserves_then_advances_counter_once)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.8317577Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.8318262Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.8319631Z   File "/tmp/scrying-tests-w16cig29/repo/tests/test_statblock_revisions.py", line 227, in test_reattached_snapshot_preserves_then_advances_counter_once
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.8321109Z     changed = api.save(encounter, unchanged)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.8321952Z   File "/tmp/scrying-tests-w16cig29/repo/python/scrying_glass_statblock_encounters.py", line 132, in save
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.8323006Z     value = json.loads(canonical_bytes(snapshot, policy))
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.8323370Z                        ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.8323898Z   File "/tmp/scrying-tests-w16cig29/repo/python/scrying_glass_statblock_model.py", line 388, in canonical_bytes
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.8324409Z     return _dump(_canonical(validate_snapshot(snapshot, limits)))
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.8324765Z                             ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.8325722Z   File "/tmp/scrying-tests-w16cig29/repo/python/scrying_glass_statblock_model.py", line 380, in validate_snapshot
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.8326306Z     _fail('digest_mismatch', '$/content_digest')
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.8326640Z     ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:00.8327146Z   File "/tmp/scrying-tests-w16cig29/repo/python/scrying_glass_statblock_model.py", line 57, in _fail
+tests	Standalone Pyt

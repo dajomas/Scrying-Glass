@@ -1,0 +1,29 @@
+on test suite (including browser fixtures)	2026-11-16T10:14:30.3950366Z KeyError: "'__name__' not in globals"
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3950500Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3950637Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3951297Z ERROR: test_lair_anchor_and_source_preserved (test_bughunt_4eb87b6.ServiceTests.test_lair_anchor_and_source_preserved)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3951768Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3952052Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3952484Z   File "/tmp/scrying-tests-po_yof8h/repo/tests/test_bughunt_4eb87b6.py", line 101, in test_lair_anchor_and_source_preserved
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3952863Z     self.f.reconcile()
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3953046Z     ~~~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3953403Z   File "/tmp/scrying-tests-po_yof8h/repo/python/scrying_glass_service_features.py", line 209, in reconcile
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3953807Z     from .scrying_glass_statblock_changes import prune_private
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3954152Z KeyError: "'__name__' not in globals"
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3954285Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3954426Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3954848Z ERROR: test_reconcile_is_idempotent (test_bughunt_4eb87b6.ServiceTests.test_reconcile_is_idempotent)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3955264Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3955551Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3955958Z   File "/tmp/scrying-tests-po_yof8h/repo/tests/test_bughunt_4eb87b6.py", line 111, in test_reconcile_is_idempotent
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3956431Z     self.f.reconcile();before=copy.deepcopy(self.state);self.f.reconcile()
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3956773Z     ~~~~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3957134Z   File "/tmp/scrying-tests-po_yof8h/repo/python/scrying_glass_service_features.py", line 209, in reconcile
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3957557Z     from .scrying_glass_statblock_changes import prune_private
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3957841Z KeyError: "'__name__' not in globals"
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3957976Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3958110Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3958481Z ERROR: test_load_overflow (test_bughunt_711881a.SnapshotTests.test_load_overflow)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3958862Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3959138Z Traceback (most recent call last):
+tests	Python test suite (including browse

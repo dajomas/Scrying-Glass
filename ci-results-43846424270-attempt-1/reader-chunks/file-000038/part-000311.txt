@@ -1,0 +1,29 @@
+6T10:19:04.3794647Z     raise exc
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3795213Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3795769Z     await app(scope, receive, sender)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3796307Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/fastapi/routing.py", line 152, in app
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3796820Z     response = await f(request)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3797094Z                ^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3797617Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/fastapi/routing.py", line 745, in app
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3798141Z     raw_response = await run_endpoint_function(
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3798476Z                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3798731Z     ...<3 lines>...
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3798950Z     )
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3799145Z     ^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3799664Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/fastapi/routing.py", line 372, in run_endpoint_function
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3800208Z     return await dependant.call(**values)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3800517Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3801325Z   File "/tmp/scrying-tests-w16cig29/repo/python/scrying_glass_database_transactions.py", line 31, in wrapped
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3801852Z     result = handler(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3802543Z TypeError: StatblockTransportPrivacyTests.setUp.<locals>.client_state() missing 1 required positional argument: 'request'
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3802972Z 
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3803167Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3804082Z ERROR: test_http_auth_and_grant_errors_do_not_expose_private_content (test_statblock_transport_privacy.StatblockTransportPrivacyTests.test_http_auth_and_grant_errors_do_not_expose_private_content)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3804923Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3805280Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3805753Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3806277Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3806572Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3807104Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3807572Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-16T10

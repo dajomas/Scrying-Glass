@@ -1,0 +1,21 @@
+s	Python test suite (including browser fixtures)	2026-11-16T10:12:43.5061722Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:43.5062095Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:43.5062345Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:43.5062739Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:43.5063141Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:43.5063403Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:43.5063809Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:43.5064166Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:43.5064380Z OSError: secret 5e.tools endpoint
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:43.5064714Z Combined monster lookup: 5e.tools did not respond (secret 5e.tools endpoint)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:43.5079352Z ok
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:43.5455161Z test_refresh_choice_apply_retains_identity_raw_roll_and_unselected_state (test_combined_monster_lookup_application.CombinedLookupApplicationTests.test_refresh_choice_apply_retains_identity_raw_roll_and_unselected_state) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:43.9228994Z test_width_halved_without_height_or_unrelated_field_changes (test_compact_combatant_inputs.CompactInputsTests.test_width_halved_without_height_or_unrelated_field_changes) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:44.0613898Z test_connection_opened_during_import_is_not_missed (test_connection_lifetime_audit.ConnectionLifetimeAuditTests.test_connection_opened_during_import_is_not_missed) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:44.1258178Z test_empty_inventory_is_not_a_success (test_connection_lifetime_audit.ConnectionLifetimeAuditTests.test_empty_inventory_is_not_a_success) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:44.4102381Z test_failed_setup_loop_cannot_contaminate_next_async_module (test_connection_lifetime_audit.ConnectionLifetimeAuditTests.test_failed_setup_loop_cannot_contaminate_next_async_module) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:44.6163443Z test_import_error_is_failure_and_later_module_still_runs (test_connection_lifetime_audit.ConnectionLifetimeAuditTests.test_import_error_is_failure_and_later_module_still_runs) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:44.6176915Z test_initialization_probe_precedes_workers_and_worker_status_propagates (test_connection_lifetime_audit.ConnectionLifetimeAuditTests.test_initialization_probe_precedes_workers_and_worker_status_propagates) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:44.8259525Z test_sync_and_async_connections_are_tracked_and_closed (test_connection_lifetime_audit.ConnectionLifetimeAuditTests.test_sync_and_async_connections_are_tracked_and_closed) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T10:12:44.9652483Z test_test_body_leak_fails_even_when_unittest_passes (test_connection_lifetime_audit.ConnectionLifetimeAuditTests.test_test_body_leak_fails_even_when_unittest_passes) ... ok
+tests	Python test suite (including browser fixtures)	202

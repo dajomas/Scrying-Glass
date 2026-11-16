@@ -1,0 +1,52 @@
+ts	JavaScript tests	2026-11-16T10:14:43.7894361Z ##[group]tests/initiative-tie-swap.test.cjs
+tests	JavaScript tests	2026-11-16T10:14:43.9149769Z TAP version 13
+tests	JavaScript tests	2026-11-16T10:14:43.9450886Z # Subtest: M2 choosing 2 gives C2 its previous position 4
+tests	JavaScript tests	2026-11-16T10:14:43.9454712Z ok 1 - M2 choosing 2 gives C2 its previous position 4
+tests	JavaScript tests	2026-11-16T10:14:43.9455459Z   ---
+tests	JavaScript tests	2026-11-16T10:14:43.9456003Z   duration_ms: 1.021317
+tests	JavaScript tests	2026-11-16T10:14:43.9456326Z   type: 'test'
+tests	JavaScript tests	2026-11-16T10:14:43.9456559Z   ...
+tests	JavaScript tests	2026-11-16T10:14:43.9456946Z # Subtest: repeated swaps use updated previous positions
+tests	JavaScript tests	2026-11-16T10:14:43.9457434Z ok 2 - repeated swaps use updated previous positions
+tests	JavaScript tests	2026-11-16T10:14:43.9458073Z   ---
+tests	JavaScript tests	2026-11-16T10:14:43.9458344Z   duration_ms: 0.129118
+tests	JavaScript tests	2026-11-16T10:14:43.9458576Z   type: 'test'
+tests	JavaScript tests	2026-11-16T10:14:43.9458794Z   ...
+tests	JavaScript tests	2026-11-16T10:14:43.9461796Z # Subtest: swaps stay in the same initiative bucket
+tests	JavaScript tests	2026-11-16T10:14:43.9463276Z ok 3 - swaps stay in the same initiative bucket
+tests	JavaScript tests	2026-11-16T10:14:43.9464030Z   ---
+tests	JavaScript tests	2026-11-16T10:14:43.9464287Z   duration_ms: 0.087454
+tests	JavaScript tests	2026-11-16T10:14:43.9464564Z   type: 'test'
+tests	JavaScript tests	2026-11-16T10:14:43.9464791Z   ...
+tests	JavaScript tests	2026-11-16T10:14:43.9465171Z # Subtest: unchanged value does not change another combatant
+tests	JavaScript tests	2026-11-16T10:14:43.9465974Z ok 4 - unchanged value does not change another combatant
+tests	JavaScript tests	2026-11-16T10:14:43.9466600Z   ---
+tests	JavaScript tests	2026-11-16T10:14:43.9466842Z   duration_ms: 0.116955
+tests	JavaScript tests	2026-11-16T10:14:43.9467120Z   type: 'test'
+tests	JavaScript tests	2026-11-16T10:14:43.9467347Z   ...
+tests	JavaScript tests	2026-11-16T10:14:43.9467672Z # Subtest: unrelated change events are ignored
+tests	JavaScript tests	2026-11-16T10:14:43.9468099Z ok 5 - unrelated change events are ignored
+tests	JavaScript tests	2026-11-16T10:14:43.9468425Z   ---
+tests	JavaScript tests	2026-11-16T10:14:43.9468656Z   duration_ms: 0.114853
+tests	JavaScript tests	2026-11-16T10:14:43.9469018Z   type: 'test'
+tests	JavaScript tests	2026-11-16T10:14:43.9469252Z   ...
+tests	JavaScript tests	2026-11-16T10:14:43.9469620Z # Subtest: rendered selects initialize their tracked position
+tests	JavaScript tests	2026-11-16T10:14:43.9470473Z ok 6 - rendered selects initialize their tracked position
+tests	JavaScript tests	2026-11-16T10:14:43.9471165Z   ---
+tests	JavaScript tests	2026-11-16T10:14:43.9471411Z   duration_ms: 0.834683
+tests	JavaScript tests	2026-11-16T10:14:43.9471673Z   type: 'test'
+tests	JavaScript tests	2026-11-16T10:14:43.9471904Z   ...
+tests	JavaScript tests	2026-11-16T10:14:43.9516041Z 1..6
+tests	JavaScript tests	2026-11-16T10:14:43.9516331Z # tests 6
+tests	JavaScript tests	2026-11-16T10:14:43.9516580Z # suites 0
+tests	JavaScript tests	2026-11-16T10:14:43.9516812Z # pass 6
+tests	JavaScript tests	2026-11-16T10:14:43.9518128Z # fail 0
+tests	JavaScript tests	2026-11-16T10:14:43.9518433Z # cancelled 0
+tests	JavaScript tests	2026-11-16T10:14:43.9518647Z # skipped 0
+tests	JavaScript tests	2026-11-16T10:14:43.9518848Z # todo 0
+tests	JavaScript tests	2026-11-16T10:14:43.9519060Z # duration_ms 44.993197
+tests	JavaScript tests	2026-11-16T10:14:43.9724418Z ##[endgroup]
+tests	JavaScript tests	2026-11-16T10:14:43.9724881Z ##[group]tests/lair-status.test.cjs
+tests	JavaScript tests	2026-11-16T10:14:44.1026112Z TAP version 13
+tests	JavaScript tests	2026-11-16T10:14:44.1217466Z # Exact three-state wording, status transitions, hook preservation, text safety and unchanged-render checks passed.
+tests	JavaScript tests	2026-11-16T10:14:44.1249506Z #

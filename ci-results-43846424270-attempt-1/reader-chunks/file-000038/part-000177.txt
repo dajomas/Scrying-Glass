@@ -1,0 +1,48 @@
+irmed deletion and real loadState refresh failure coexist without a second DELETE
+tests	JavaScript tests	2026-11-16T10:14:37.1493405Z   ---
+tests	JavaScript tests	2026-11-16T10:14:37.1493708Z   duration_ms: 0.982531
+tests	JavaScript tests	2026-11-16T10:14:37.1494069Z   type: 'test'
+tests	JavaScript tests	2026-11-16T10:14:37.1494409Z   ...
+tests	JavaScript tests	2026-11-16T10:14:37.1495075Z # Subtest: unexpected refresh rejection is not labelled as a failed DELETE or reenabled for replay
+tests	JavaScript tests	2026-11-16T10:14:37.1495988Z ok 11 - unexpected refresh rejection is not labelled as a failed DELETE or reenabled for replay
+tests	JavaScript tests	2026-11-16T10:14:37.1496588Z   ---
+tests	JavaScript tests	2026-11-16T10:14:37.1496914Z   duration_ms: 0.958821
+tests	JavaScript tests	2026-11-16T10:14:37.1497292Z   type: 'test'
+tests	JavaScript tests	2026-11-16T10:14:37.1497614Z   ...
+tests	JavaScript tests	2026-11-16T10:14:37.1498136Z # Subtest: old-setup success cannot publish or refresh the new setup
+tests	JavaScript tests	2026-11-16T10:14:37.1498817Z ok 12 - old-setup success cannot publish or refresh the new setup
+tests	JavaScript tests	2026-11-16T10:14:37.1499300Z   ---
+tests	JavaScript tests	2026-11-16T10:14:37.1499619Z   duration_ms: 0.688021
+tests	JavaScript tests	2026-11-16T10:14:37.1499988Z   type: 'test'
+tests	JavaScript tests	2026-11-16T10:14:37.1500311Z   ...
+tests	JavaScript tests	2026-11-16T10:14:37.1501010Z # Subtest: old-campaign failure cannot publish or alter a new control
+tests	JavaScript tests	2026-11-16T10:14:37.1501631Z ok 13 - old-campaign failure cannot publish or alter a new control
+tests	JavaScript tests	2026-11-16T10:14:37.1502049Z   ---
+tests	JavaScript tests	2026-11-16T10:14:37.1502336Z   duration_ms: 0.589501
+tests	JavaScript tests	2026-11-16T10:14:37.1502667Z   type: 'test'
+tests	JavaScript tests	2026-11-16T10:14:37.1502981Z   ...
+tests	JavaScript tests	2026-11-16T10:14:37.1503514Z # Subtest: away-and-back scope changes cannot revive the original deletion response
+tests	JavaScript tests	2026-11-16T10:14:37.1504197Z ok 14 - away-and-back scope changes cannot revive the original deletion response
+tests	JavaScript tests	2026-11-16T10:14:37.1504661Z   ---
+tests	JavaScript tests	2026-11-16T10:14:37.1505114Z   duration_ms: 0.631836
+tests	JavaScript tests	2026-11-16T10:14:37.1505468Z   type: 'test'
+tests	JavaScript tests	2026-11-16T10:14:37.1505762Z   ...
+tests	JavaScript tests	2026-11-16T10:14:37.1506233Z # Subtest: superseded success preserves newer same-target failure
+tests	JavaScript tests	2026-11-16T10:14:37.1506822Z ok 15 - superseded success preserves newer same-target failure
+tests	JavaScript tests	2026-11-16T10:14:37.1507239Z   ---
+tests	JavaScript tests	2026-11-16T10:14:37.1507522Z   duration_ms: 1.206554
+tests	JavaScript tests	2026-11-16T10:14:37.1507847Z   type: 'test'
+tests	JavaScript tests	2026-11-16T10:14:37.1508125Z   ...
+tests	JavaScript tests	2026-11-16T10:14:37.1508687Z # Subtest: superseded failure cannot reenable the same button during a newer pending attempt
+tests	JavaScript tests	2026-11-16T10:14:37.1509573Z ok 16 - superseded failure cannot reenable the same button during a newer pending attempt
+tests	JavaScript tests	2026-11-16T10:14:37.1510127Z   ---
+tests	JavaScript tests	2026-11-16T10:14:37.1510464Z   duration_ms: 0.687375
+tests	JavaScript tests	2026-11-16T10:14:37.1511098Z   type: 'test'
+tests	JavaScript tests	2026-11-16T10:14:37.1511445Z   ...
+tests	JavaScript tests	2026-11-16T10:14:37.1512002Z # Subtest: different-target concurrent outcomes do not supersede each other
+tests	JavaScript tests	2026-11-16T10:14:37.1512751Z ok 17 - different-target concurrent outcomes do not supersede each other
+tests	JavaScript tests	2026-11-16T10:14:37.1513209Z   ---
+tests	JavaScript tests	2026-11-16T10:14:37.1513545Z   duration_ms: 0.740014
+tests	JavaScript tests	2026-11-16T10:14:37.1513901Z   type: 'test'
+tests	JavaScript tests	2026-11-16T10:14:37.1514222Z   ...
+tests	JavaScript tests	20

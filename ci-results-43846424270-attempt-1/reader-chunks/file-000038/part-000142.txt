@@ -1,0 +1,25 @@
+ (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4001565Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4001946Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4002203Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4002650Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4003043Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4003258Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4003780Z   File "/tmp/scrying-tests-po_yof8h/repo/tests/test_statblock_transport_privacy.py", line 134, in test_http_auth_and_grant_errors_do_not_expose_private_content
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4004392Z     self.assertEqual((await self.http(self.client_app, 'client=alice', self.b))[0], 403)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4004842Z                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4005261Z   File "/tmp/scrying-tests-po_yof8h/repo/tests/test_statblock_transport_privacy.py", line 86, in http
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4005651Z     await app(scope, receive, send)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4006100Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/fastapi/applications.py", line 1194, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4006540Z     await super().__call__(scope, receive, send)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4007015Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4007467Z     await self.middleware_stack(scope, receive, send)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4007977Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4008384Z     raise exc
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4008812Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4009227Z     await self.app(scope, receive, _send)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4009664Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4010103Z     await self.app(scope, receive, send)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4010573Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4011238Z     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4011781Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/starlette/_exception_handler.py", line

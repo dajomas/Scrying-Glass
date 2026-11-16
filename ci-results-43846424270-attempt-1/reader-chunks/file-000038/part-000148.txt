@@ -1,0 +1,35 @@
+ures has been successfully uploaded! Final size is 2451695 bytes. Artifact ID is 14216430329
+tests	Upload Admin foundations visual fixtures	2026-11-16T10:14:32.7699763Z Artifact download URL: https://github.com/dajomas/Scrying-Glass/actions/runs/43846424270/artifacts/14216430329
+tests	Pytest regression modules	﻿2026-11-16T10:14:32.7816429Z ##[group]Run python tools/run_split_tests.py -- python -m pytest -q tests/test_death_save_validation_2ba6607.py tests/test_slug_truncation_82860c4.py
+tests	Pytest regression modules	2026-11-16T10:14:32.7817125Z ^[[36;1mpython tools/run_split_tests.py -- python -m pytest -q tests/test_death_save_validation_2ba6607.py tests/test_slug_truncation_82860c4.py^[[0m
+tests	Pytest regression modules	2026-11-16T10:14:32.7836424Z shell: /usr/bin/bash -e {0}
+tests	Pytest regression modules	2026-11-16T10:14:32.7836626Z env:
+tests	Pytest regression modules	2026-11-16T10:14:32.7836969Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Pytest regression modules	2026-11-16T10:14:32.7837392Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-16T10:14:32.7837724Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Pytest regression modules	2026-11-16T10:14:32.7838036Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-16T10:14:32.7838330Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-16T10:14:32.7838758Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-16T10:14:32.7839185Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Pytest regression modules	2026-11-16T10:14:32.7839439Z ##[endgroup]
+tests	Pytest regression modules	2026-11-16T10:14:34.3467205Z ...........................................                              [100%]
+tests	Pytest regression modules	2026-11-16T10:14:34.3467639Z 43 passed in 0.95s
+tests	JavaScript tests	﻿2026-11-16T10:14:34.4325790Z ##[group]Run status=0
+tests	JavaScript tests	2026-11-16T10:14:34.4326034Z ^[[36;1mstatus=0^[[0m
+tests	JavaScript tests	2026-11-16T10:14:34.4326220Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	JavaScript tests	2026-11-16T10:14:34.4326450Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	JavaScript tests	2026-11-16T10:14:34.4326726Z ^[[36;1m  python tools/run_split_tests.py -- node --test "$test" || status=1^[[0m
+tests	JavaScript tests	2026-11-16T10:14:34.4327010Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	JavaScript tests	2026-11-16T10:14:34.4327305Z ^[[36;1mdone < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)^[[0m
+tests	JavaScript tests	2026-11-16T10:14:34.4327618Z ^[[36;1mexit "$status"^[[0m
+tests	JavaScript tests	2026-11-16T10:14:34.4348697Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	JavaScript tests	2026-11-16T10:14:34.4348993Z env:
+tests	JavaScript tests	2026-11-16T10:14:34.4349340Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	JavaScript tests	2026-11-16T10:14:34.4349768Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-16T10:14:34.4350093Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	JavaScript tests	2026-11-16T10:14:34.4350448Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-16T10:14:34.4350864Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-16T10:14:34.4351159Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-16T10:14:34.4351443Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	JavaScript tests	2026-11-16T10:14:34.4351686Z ##[endgroup]
+tests	JavaScript tests	2026-11-16T10:14:34.4416033Z ##[group]te

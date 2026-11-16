@@ -1,0 +1,25 @@
+xtures)	2026-11-16T10:14:30.3979483Z     await super().__call__(scope, receive, send)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3979957Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3980492Z     await self.middleware_stack(scope, receive, send)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3981136Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3981560Z     raise exc
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3981993Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3982432Z     await self.app(scope, receive, _send)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3982907Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3983333Z     await self.app(scope, receive, send)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3983808Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3984350Z     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3984897Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3985327Z     raise exc
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3985753Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3986209Z     await app(scope, receive, sender)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3986686Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3987139Z     await self.app(scope, receive, send)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3987597Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/starlette/routing.py", line 683, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3988094Z     await self.middleware_stack(scope, receive, send)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3988564Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/fastapi/routing.py", line 2811, in app
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3988982Z     await route.handle(scope, receive, send)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3989433Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/fastapi/routing.py", line 1330, in handle
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3989853Z     await super().handle(scope, receive, send)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.3990299Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/starlette/routing.py", line 289, in handle
+tests	Python test suite 

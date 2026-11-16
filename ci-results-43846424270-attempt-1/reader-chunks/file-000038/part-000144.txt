@@ -1,0 +1,28 @@
+
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4022917Z     ...<3 lines>...
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4023096Z     )
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4023257Z     ^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4023691Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/fastapi/routing.py", line 372, in run_endpoint_function
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4024133Z     return await dependant.call(**values)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4024375Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4024803Z   File "/tmp/scrying-tests-po_yof8h/repo/python/scrying_glass_database_transactions.py", line 31, in wrapped
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4025278Z     result = handler(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4025792Z TypeError: StatblockTransportPrivacyTests.setUp.<locals>.client_state() missing 1 required positional argument: 'request'
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4026130Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4026285Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4026868Z ERROR: test_effect_rewrite_at_mocked_snapshot_boundary (test_storage_facade.StorageOperationTests.test_effect_rewrite_at_mocked_snapshot_boundary)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4027437Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4027757Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4028245Z   File "/tmp/scrying-tests-po_yof8h/repo/tests/test_storage_facade.py", line 216, in test_effect_rewrite_at_mocked_snapshot_boundary
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4028683Z     s.transfer_setup(a,b,'saved','copy')
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4028921Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4029350Z   File "/tmp/scrying-tests-po_yof8h/repo/python/scrying_glass_storage_statblocks.py", line 73, in transfer_setup
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4030374Z ##[error]    raise ValueError('Copied setup binding is missing')
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4031750Z ValueError: Copied setup binding is missing
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4031954Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4032144Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4032957Z ERROR: test_setup_names_checkpoint_references_move_and_copy (test_storage_facade.StorageOperationTests.test_setup_names_checkpoint_references_move_and_copy)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4033747Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4034119Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4034771Z   File "/tmp/scrying-tests-po_yof8h/repo/tests/test_storage_facade.py", line 197, in test_setup_names_checkpoint_references_move_and_copy
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4035389Z     self.assertEqual(s.transfer_

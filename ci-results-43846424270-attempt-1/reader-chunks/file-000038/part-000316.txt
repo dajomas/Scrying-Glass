@@ -1,0 +1,36 @@
+hon browser and audit checks	2026-11-16T10:19:05.3251863Z 
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3252054Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3252498Z Ran 13 tests in 0.038s
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3252646Z 
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3252770Z FAILED (failures=1, errors=2)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3363637Z FAIL: test_storage_facade.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.3364431Z Connection audit: test_storage_migration_fixtures.py
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.4103284Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.4103878Z test_storage_migration_fixtures.py: connections opened: 5; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.4104254Z Ran 5 tests in 0.012s
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.4104371Z 
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.4104448Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.4231658Z Connection audit: test_technical_documentation_split.py
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.4849832Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.4850425Z test_technical_documentation_split.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.4851078Z Ran 2 tests in 0.002s
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.4851204Z 
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.4851282Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.4964919Z Connection audit: test_turn_eligibility.py
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.6807143Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.6807523Z Ran 8 tests in 0.116s
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.6807678Z 
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.6807759Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.6808073Z test_turn_eligibility.py: connections opened: 8; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.6987837Z Connection audit modules: 211; failed: 6
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.7386829Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.7387446Z ##[group]tests/feedback_browser_fixture.py
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.8716167Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:05.8716721Z ##[group]tests/storage_migration_fixtures.py
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:06.0484064Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:06.0487322Z ##[error]Process completed with exit code 1.
+tests	Post Run actions/checkout@v4	﻿2026-11-16T10:19:06.0568227Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-16T10:19:06.1219551Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-16T10:19:06.1246140Z git version 2.56.1
+tests	Post Run actions/checkout@v4	2026-11-16T10:19:06.1271277Z Temporarily overriding HOME='/home/runner/work/_temp/f0eda5f3-04e9-43c7-8710-5a59515fe8bf' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-16T10:19:06.1272287Z Adding reposi

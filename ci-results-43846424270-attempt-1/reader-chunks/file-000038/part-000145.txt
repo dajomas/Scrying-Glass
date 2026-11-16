@@ -1,0 +1,26 @@
+setup(a,b,'renamed','copy'), 'renamed')
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4035718Z                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4036144Z   File "/tmp/scrying-tests-po_yof8h/repo/python/scrying_glass_storage_statblocks.py", line 74, in transfer_setup
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4036592Z     clone_private_snapshots(self, source_row[0], destination_row[0])
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4036894Z     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4037339Z   File "/tmp/scrying-tests-po_yof8h/repo/python/scrying_glass_statblock_cloning.py", line 17, in clone_private_snapshots
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4037747Z     source = api._rows(source_encounter)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4038131Z   File "/tmp/scrying-tests-po_yof8h/repo/python/scrying_glass_statblock_encounters.py", line 44, in _rows
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4038856Z ##[error]    raise RuntimeError('Private encounters require schema 9')
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4039737Z RuntimeError: Private encounters require schema 9
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4039958Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4040136Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4041423Z FAIL: test_save_as_preserves_content_in_the_new_setup (test_statblock_stage2_contracts.StatblockStage2ContractTests.test_save_as_preserves_content_in_the_new_setup)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4042133Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4042416Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4042915Z   File "/tmp/scrying-tests-po_yof8h/repo/tests/test_statblock_stage2_contracts.py", line 129, in test_save_as_preserves_content_in_the_new_setup
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4043426Z     self.assertIn('m', copied); self.assert_content(copied['m'], before)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4043708Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4043984Z AssertionError: 'm' not found in {}
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4044114Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4044257Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4044984Z FAIL: test_setup_import_remaps_monster_binding_and_keeps_reference_graph (test_statblock_stage2_contracts.StatblockStage2ContractTests.test_setup_import_remaps_monster_binding_and_keeps_reference_graph)
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4045650Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4045919Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4046465Z   File "/tmp/scrying-tests-po_yof8h/repo/tests/test_statblock_stage2_contracts.py", line 140, in test_setup_import_remaps_monster_binding_and_keeps_reference_graph
+tests	Python test suite (including browser fixtures)	2026-11-16T10:14:30.4046980Z     self.assertIn(ident, private_map(

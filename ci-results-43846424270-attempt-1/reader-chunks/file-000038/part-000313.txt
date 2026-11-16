@@ -1,0 +1,28 @@
+site-packages/starlette/routing.py", line 683, in __call__
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3823584Z     await self.middleware_stack(scope, receive, send)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3824147Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/fastapi/routing.py", line 2811, in app
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3824667Z     await route.handle(scope, receive, send)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3825244Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/fastapi/routing.py", line 1330, in handle
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3825750Z     await super().handle(scope, receive, send)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3826312Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/starlette/routing.py", line 289, in handle
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3826813Z     await self.app(scope, receive, send)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3827355Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/fastapi/routing.py", line 166, in app
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3827946Z     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3828652Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3829190Z     raise exc
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3829749Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3830512Z     await app(scope, receive, sender)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3831292Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/fastapi/routing.py", line 152, in app
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3831800Z     response = await f(request)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3832055Z                ^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3832569Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/fastapi/routing.py", line 745, in app
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3833097Z     raw_response = await run_endpoint_function(
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3833423Z                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3833673Z     ...<3 lines>...
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3834018Z     )
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3834207Z     ^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3834744Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages/fastapi/routing.py", line 372, in run_endpoint_function
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3835320Z     return await dependant.call(**values)
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3835643Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3836193Z   File "/tmp/scrying-tests-w16cig29/repo/python/scrying_glass_database_transactions.py", line 31, in wrapped
+tests	Standalone Python browser and audit checks	2026-11-16T10:19:04.3836731Z     result = handler(*args, **kwa
