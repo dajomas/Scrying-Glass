@@ -83,3 +83,32 @@ needs complete bound approval. Remaining corrections, final-run review and wider
 022.03/2C.3c/2D/Stage 3 gates remain in the [lifecycle task](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).
 README, HANDOVER/TODO indexes, scope handover and CI configuration were reviewed;
 no unrelated application guidance or index links change. No merge or deployment.
+
+## Service AST harness correction - 2026-11-16
+
+Correction 2 baseline is 4935fddbcdf14fe241ed052f4f81ff63275b4370, the delivered
+request-wrapper correction. Only tests/test_bughunt_4eb87b6.py and this handover/
+lifecycle tracking change. The extraction namespace now supplies __name__ and
+__package__ so reconcile can import the real private pruning helper. No shipped
+pruning stub, production service change or assertion removal is introduced.
+
+The original nineteen tests, including all seven effect-reconciliation assertions,
+are retained unchanged. Two new methods check module/package identity and pruning
+of removed private bindings while preserving survivors, source-map independence
+and repeated-reconciliation stability. The latter uses a trusted carrier with
+synthetic metadata to test pruning only, not model/graph validity or persistence.
+
+Preparation matched original test blob aa97ebec4059d140648a3b2f2e4983a52b8ae78f;
+inspected service blob is 58bbec24fb02534e8c80246c03fc3910f9b8e653. Syntax/AST
+checks passed, with original method bodies unchanged. An isolated reconstruction
+used eight selected inspected service method bodies, extracted PrivateEncounterState
+and prune_private bodies, real SQLite checkpoint names and the existing collaborator
+doubles. Original: nineteen tests, exactly seven missing-__name__ errors. Corrected:
+twenty-one tests passed. Disabling pruning made the new pruning test fail as intended.
+This did not execute full native package imports, full production storage, ASGI,
+server startup or CI. Native-module and covering-suite validation remain pending.
+No temporary reconstruction files or module doubles are included in the commit.
+
+This intermediate correction uses [skip ci], without workflow changes or dispatch.
+Correction 3's snapshot harness and corrections 4-9 remain separate. README and
+index guidance are unchanged; [current status and remaining gates](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).

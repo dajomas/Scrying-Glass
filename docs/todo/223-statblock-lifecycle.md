@@ -210,7 +210,7 @@ notes describe delivery-time execution, not a claim that no CI has since run.
 
 Planned separate corrective commits; no assertion skipping or validation weakening:
 
-1. Request forwarding: implementation and seven new native/ASGI methods prepared,
+1. Request forwarding: delivered at 4935fddbcdf14fe241ed052f4f81ff63275b4370,
    validation pending. Reuse an existing Request parameter for post-lock auth and
    ownership rather than exposing a second injected Request. Preserve requestless
    injection, positional/keyword invocation and unchanged transaction processing.
@@ -219,7 +219,12 @@ Planned separate corrective commits; no assertion skipping or validation weakeni
    runner hit an already-running-loop error; the same checks passed in a thread.
    FastAPI is absent locally; no native/ASGI or corrected CI pass is claimed.
    [Diagnosis, scope and evidence](../handover/140-viewer-ownership-fixtures.md#client-request-forwarding-correction---2026-11-16).
-2. Service AST extraction harness: seven missing-module-context errors; pending.
+2. Service AST extraction harness: prepared correction for seven missing-module-context
+   errors. Restore module/package globals and add two regressions, retaining all
+   nineteen original tests. Twenty-one checks passed in a selected-method/extracted-
+   dependency reconstruction; original harness reproduced seven errors and disabled
+   pruning failed the new pruning check. Native package imports and CI remain pending.
+   [Evidence and limits](../handover/140-viewer-ownership-fixtures.md#service-ast-harness-correction---2026-11-16).
 3. Snapshot AST extraction harness: two missing-module-context errors; pending.
 4. Revision-test mutation producer: stale self-digest error; pending. Keep strict
    digest validation and original counter/revision assertions.
@@ -233,11 +238,11 @@ Planned separate corrective commits; no assertion skipping or validation weakeni
    pending implementation with selected/life-filtered mapping, independent revisions,
    rollback and privacy coverage. Planned final corrective commit enables CI.
 
-Only issue 1 is prepared in this delivery; the other corrections are not supplied.
-The final corrective push will omit [skip ci] and its actual run must be reviewed.
-No manual dispatch, workflow edit, 2C.3c/2D completion, bundle work, final Stage 3
-validation or feature acceptance is implied by this sequence or by a future green
-configured suite. New failures require diagnosis and fresh approved corrections.
+Issue 1 is delivered; only issue 2 is prepared in this delivery. Corrections 3-9
+are not supplied. The final corrective push will omit [skip ci] and its run must
+be reviewed. No manual dispatch, workflow edit, 2C.3c/2D completion, bundle work,
+final Stage 3 validation or feature acceptance is implied by this sequence or by
+a future green configured suite. New failures require diagnosis and fresh approval.
 
 ## Remaining gates and delivery order
 
