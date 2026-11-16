@@ -1,35 +1,31 @@
 # 223 - Statblock lifecycle integration
 
-[Back to TODO index](../../TODO.md) · [Parent contract](220-admin-statblock-viewer.md) · [Current handover](../handover/130-accounts-migration-fixture.md#private-setup-import-correction---2026-11-16)
+[Back to TODO index](../../TODO.md) · [Parent contract](220-admin-statblock-viewer.md) · [Current handover](../handover/140-viewer-ownership-fixtures.md#2b-bounded-close-out---2026-11-16)
 
 ## Status and delivery rules - 2026-11-16
 
-SG-TODO-022.03, 2B, 2C and overall 022 remain in progress, not validated or
-accepted. Stage 1/2 remain unaccepted; 022.02 stays accepted/closed. Approved order
-remains private storage, recovery/reset/copy, then bundles. 022.04-022.16 remain
-pending. No merge, deployment, release or whole-feature closure is authorized.
+2B is completed and accepted for its bounded recovery/reset/private-lifecycle scope
+by approval of this exact close-out payload. SG-TODO-022.03, 2C and overall 022
+remain in progress and unaccepted. Stage 1/2 remain unaccepted; 022.02 stays closed.
+022.04-022.16 remain pending. No merge, deployment, release or whole-feature closure.
 
-Corrections 1-8 were pushed with [skip ci]. Correction 9 was pushed without it;
-its first covering run failed. The request-type follow-up is delivered and the
-combined corrective suite passed as recorded below; new boundary tests are pending.
-Follow-up code commits use configured push CI, with no [skip ci], manual dispatch
-or workflow edit. The earlier nine-commit skip agreement does not extend to fixes
-required by that failed covering run.
-Each write needs complete exact-payload approval. Review the covering commit/run/
-attempt before claiming the series passes. Further failures require diagnosis and
-freshly approved fixes; never skip/weaken assertions. A green configured suite is
-not acceptance of Stage 1/2, 022.03 or 022. Documentation-only commits still skip CI.
+Delivery order remains 2C/2C.3c, 2D reconciliation, Stage 3 bundles and final lifecycle
+acceptance. Implementation or configured CI success alone never closes wider gates.
+Each external write requires complete exact-payload approval. Code/test commits use
+normal push CI, without [skip ci], unless explicitly instructed otherwise. The earlier
+nine-commit skip agreement does not extend to subsequent fixes. Documentation-only
+commits, including this close-out, always use [skip ci], with no workflow edit/manual
+dispatch. Do not weaken assertions or infer live-server evidence from fixtures.
 
 ## Preserved history and contracts
 
-[Complete correction-8 baseline lifecycle record](https://github.com/dajomas/Scrying-Glass/blob/8162e812c3cb2e90df4e427bfa76d1d115f8a276/docs/todo/223-statblock-lifecycle.md)
-retains every dated increment, test count, correction diagnosis, commit and evidence
-limit previously recorded here. This current-state reconciliation supersedes only
-its correction-8-prepared/correction-9-unimplemented wording. Its linked pre-2C.3b
-archives and [scope](../handover/010-scope-and-state.md), [validation](../handover/030-validation-and-next-steps.md),
-[fixture](../handover/130-accounts-migration-fixture.md) and [ownership](../handover/140-viewer-ownership-fixtures.md)
-handovers remain historical evidence; no earlier pass is promoted and no unfinished
-requirement is removed by this consolidation.
+[Complete pre-close-out lifecycle record](https://github.com/dajomas/Scrying-Glass/blob/3126dfed318158d3e6bc1fc2cbed878e1921c360/docs/todo/223-statblock-lifecycle.md)
+retains every increment/correction identity, exact local/CI count, failed-run diagnosis,
+harness limitation and boundary preparation record, together with its earlier archives.
+This reconciliation preserves section anchors and all remaining requirements while
+superseding stale prepared/unexecuted/CI-pending/2B-in-progress wording. Older notes in
+scope, fixture and parent documents describe dated deliveries; this task controls
+current lifecycle status, not a change to the parent's feature contract.
 
 Snapshots remain encounter/combatant-scoped and private. PrivateEncounterState
 carries metadata outside JSON and through deepcopy; serialized input and attributes
@@ -37,168 +33,125 @@ on ordinary dicts confer no private authority. Trusted stored reads use permissi
 budgets; incoming preparation/imports use operator budgets. Digests exclude revision/
 time/self-digest; recovery fingerprints include metadata. Ordinary omission fails
 closed, removed combatants cascade and clearing remains trusted recovery-only.
-There is no public clear flag, new route/permission or provenance promotion.
+Header-only protocols cannot clear. Actual clear advances a durable counter;
+re-addition advances beyond it. Counter-only rebuilds preserve hidden markers and
+bindings. Ordinary input/corruption rejects. No public clear flag, new permission,
+serialized authority or provenance promotion is introduced.
 
 Raw SQLiteStorage.save_setup stays tracker-only: it preserves destination-owned
-content but does not infer source ownership from a carrier or matching combatant ID.
-Save As uses transactional_handler(context, AdminSetupsMixin.save_setup), routing
-through save_setup_with_private/save_new_setup. Correction 8 retained all four
-original preservation assertions, added ownership/live/reload checks and four native
-cases. The original import-remapping contract is unchanged by correction 9.
+content but never infers source ownership from a carrier or matching combatant ID.
+Protected Save As uses transactional_handler(context, AdminSetupsMixin.save_setup)
+and save_setup_with_private/save_new_setup. Same-owner saves retain stale guards;
+other existing destinations retain their own counter history and rebase incoming
+revision/time, never reset owner/ledger. Omission is not clearing.
+
+<a id="2c3b-save-handler-integration---2026-11-16"></a>
+
+Protected Save As saves roster/references and refreshes live destination metadata
+before changed()/final flush. New destinations have independent ownership and fresh
+revision/time. Runtime/source isolation, reload and late rollback remain required.
+The original preservation and import-remapping assertions are not relaxed.
 
 ## CI correction series - 2026-11-16
 
-Historical Branch tests 43846424270 attempt 1 covers implementation
-812de5ae6717f8a7f34892e0031858a0a3e089c6; publication
-355598a1a571095b7f2bde58637a1fe2249bfd05. Overall failure: main unittest
-1,896 tests, three failures, fourteen errors. Reader parts 135-146 contain failures;
-part 130 records all six 2C.3b save-handler methods passing. Standalone connection
-audit: 211 modules, six failed. Duplicate failures alone do not demonstrate leaks.
-Those six baseline passes do not validate corrections 1-9.
+Corrections 1-8 were pushed with [skip ci]; correction 9 was pushed without it.
+Failed run 43846424270 attempt 1 covered 812de5ae6717f8a7f34892e0031858a0a3e089c6:
+1,896 main tests, three failures/fourteen errors; audit 211 modules/six failed.
+Failed run 43889177129 attempt 1 covered correction 9,
+14ad1d3075f4e737c38270ea2a9734fd1f5b9ad3: 1,928 tests, one failure/nine errors;
+audit 213 modules/three failed. Failed-module counts alone do not demonstrate leaks.
+All nine delivered correction SHAs and the exact diagnoses remain in the complete
+record. These failed totals are historical, not current combined-suite results.
 
-One issue per corrective commit; delivered corrections:
-
-1. Request forwarding: 4935fddbcdf14fe241ed052f4f81ff63275b4370.
-2. Service AST extraction harness: 293376ea594eadb8077f97c1b076f7b36b3d1cd1.
-3. Snapshot AST extraction harness: d68cccc128c8444d7fd6b917d7970820e857a17f.
-4. Revision-test mutation producer: c69db3b112cf675ac9ba0c6c08afcc2fa2b7e904.
-5. Facade mocked-copy boundary: 5109e0c152d99a2e2c9e33101c43e0e0739ced9c.
-6. Native/legacy facade-copy fixture: c093d772513051f5c88623af1b72c63d89cde19a.
-7. Facade dispatch guards: f2d4fa699e2ef1a56d56332e4c37a0d94057f8d6.
-8. Protected Save As contract: 8162e812c3cb2e90df4e427bfa76d1d115f8a276.
-   This reconciles the pushed payload's earlier prepared wording. Its contract
-   methods passed in the failed covering run below; five preparation-time isolated
-   checks were not native persistence/rollback/authorization evidence.
-9. Private setup-import remapping: delivered at
-   14ad1d3075f4e737c38270ea2a9734fd1f5b9ad3; eleven native methods passed
-   in the failed covering run below, not acceptance. Exact handler map drives graph
-   remapping to clone IDs. Existing destination metadata is retained; incoming
-   graphs face the five ModelLimits budgets from CONFIG.statblocks.limits. Incoming
-   revision/time is removed; existing flush allocates destination ownership and
-   fresh revision/time, without source counters/tombstones. Tracker/reset/effect
-   mapping and the existing protected transaction remain. No serialized authority,
-   clearing, provenance promotion, route, permissions, schema or workflow changes.
-
-Correction 9 adds eleven native methods covering same-setup/cross-campaign alive,
-dead/all filters, graphs/references/facts/warnings/provenance/credits, independent
-rows/revisions/edit isolation, unsaved-runtime import/reload, lowered limits,
-tracker-save and post-private-flush/history rollback, commit-only notification,
-privacy, serialized/plain input, bad maps/missing source, counter-only absence,
-subset/empty maps and configuration. They and the unchanged original Stage 2
-contract passed in the covering CI below; they were not run locally. At preparation,
-three Python files compiled/AST-parsed; the
-attachment matches the live admin blob and reverse replacement preserves its bytes;
-unrelated methods are AST-identical. Eleven isolated exact-helper check groups
-passed with capture/validation/carrier/limit doubles, not real model/SQLite/
-transaction integration. Service fixtures and emitter seams do not establish
-actor/HTTP authorization or actual WebSocket delivery. [Detailed current handover](../handover/130-accounts-migration-fixture.md#private-setup-import-correction---2026-11-16).
+Correction 8 preserves the protected Save As contract, including raw tracker-only
+semantics. Correction 9 implements selected/life-filtered setup imports using the
+handler's exact ID map and operator ModelLimits budgets. Existing destination graphs
+are retained, incoming revision/time stripped and destination ownership/revision/time
+allocated by protected flush. Source counter-only history is not exported. Native
+cases cover same/cross-campaign alive/dead/all, graphs/references/facts/warnings/
+provenance/credits, independent edits, runtime/reload, lowered limits, tracker-save
+and late-history rollback, privacy, plain/serialized input, invalid/missing maps and
+counter-only absence. It is delivered and tested, not unimplemented; 2D acceptance
+still requires reconciliation after 2C. [Detailed import record](../handover/130-accounts-migration-fixture.md#private-setup-import-correction---2026-11-16).
 
 ## Covering CI and request-type follow-up - 2026-11-16
 
-Run 43889177129 attempt 1 covers 14ad1d3075f4e737c38270ea2a9734fd1f5b9ad3;
-evidence publication/current baseline: 7ca39865274281bf02b3c7ad6da663b84af147a5.
-Overall failure: 1,928 main tests, one failure and nine errors; standalone audit
-213 modules, three failed (not proof of leaks). Syntax/server import, selected
-pytest and JavaScript steps passed. Reviewed workflow parts 130-132 show all eleven
-new setup-import methods, all fourteen Stage 2 contracts and six save-handler
-methods passing. These passes do not establish a green combined corrective suite.
+Follow-up de3f69bb6453553704df2a68cc73511f69c21dff rejects catch-all object and
+inspect.Parameter.empty as concrete Request detection while preserving subtype
+forwarding, requestless injection and post-lock authorization. Transaction body,
+original failing fixtures and route/auth assertions remain. Four added regressions
+retain the original seven methods. Earlier extracted/harness checks are not native
+integration; their exact counts and missing-import corrections stay archived.
 
-Delivered follow-up de3f69bb6453553704df2a68cc73511f69c21dff: only concrete
-Request types may suppress wrapper injection.
-The object placeholder used by ownership/viewer/lair fixtures otherwise matches
-ordinary annotations and inspect.Parameter.empty, misrouting campaign IDs/payloads
-into authentication. Exclude object as the Request type and empty annotations;
-retain concrete subtype forwarding and post-lock auth. Transaction body, failing
-fixtures and original route/auth assertions remain unchanged. Four regressions
-are added to the seven retained serialized-request methods. Production/test AST
-and compile checks pass; six exact selected methods passed in an extracted wrapper
-harness with Request/HTTP/ownership doubles, versus two failures with the old
-wrapper. An isolated inspected-lair-installer check preserves all five routes and
-auth/origin dependencies, restoring injection on all five; service/dependency
-collaborators were doubled. FastAPI/Starlette are absent locally; no native ASGI/full fixture/module
-execution was claimed at preparation. The successful covering run below supersedes
-that follow-up delivery/CI-pending status, not its isolated-check limitations. [Diagnosis/history/limits](../handover/140-viewer-ownership-fixtures.md#generic-request-placeholder-follow-up---2026-11-16).
+Green Branch tests 43893014815 attempt 1 covers that follow-up; publication
+51a2fe7a8b9b06a6b9d23fc82843f39d1f55db01: 1,932 main tests OK, selected pytest
+43 passed and all configured stages passed. Audit: 213 modules, zero failed, all
+tracked connections closed. This supersedes the combined-corrective-suite failure/
+CI-pending status, not its historical evidence limitations or wider acceptance gates.
 
 ## Green evidence reconciliation and 2B boundaries - 2026-11-16
 
-Successful Branch tests 43893014815 attempt 1 covers
- de3f69bb6453553704df2a68cc73511f69c21dff; publication/current baseline
-51a2fe7a8b9b06a6b9d23fc82843f39d1f55db01. Main unittest: 1,932 OK; selected
-pytest: 43 passed. Syntax/server import, JavaScript and standalone stages passed.
-Connection audit: 213 modules, zero failed, all tracked connections closed. This
-validates the configured combined corrective suite, not feature acceptance.
+Boundary delivery 5d1165ea12d361833558ee5e9dd021c3a1078668 adds
+ tests/test_statblock_2b_boundaries.py and documentation only, no production changes.
+Covering push-triggered Branch tests 43899670266 attempt 1 completed successfully;
+evidence publication 3126dfed318158d3e6bc1fc2cbed878e1921c360. Main unittest:
+1,943 tests OK; selected pytest: 43 passed. Syntax/server import, JavaScript,
+standalone browser/audit and visual-artifact upload steps passed. run.json/jobs.json
+establish exact coverage; workflow part 120 explicitly records all eleven new
+methods OK. Parts 125-129 and 138-139 supply reviewed core entries and suite totals.
 
-Reviewed test bodies and successful workflow entries reconcile core 2B scope,
-restart/reload, lowered trusted-read budgets, sequential undo/stale predecessors,
-fingerprints/pruning, late rollback, private projections, clear/reopen/tombstone
-history and replacement exhaustion to native storage/service evidence. Do not keep
-these suites labelled unexecuted. ClearSqlTests remain constrained-SQLite and
-TransactionDetectionTests remain mocked routing tests. Existing selected ASGI
-privacy evidence does not prove recovery authorization or all socket boundaries.
+### 2B criterion-to-evidence reconciliation
 
-The user agreed a bounded completion increment for three remaining integration
-boundaries. tests/test_statblock_2b_boundaries.py prepares eleven methods:
-1. Six ASGI methods mount the actual feature installer, real AuthService/ownership/
-   SQLite and seeded sessions. Cover owner checkpoint restore/undo, retained existing
-   superadmin policy, unauthenticated/client/non-owner/origin denials, foreign/kind-
-   confused snapshots, missing confirmation/stale revision, stale undo ID/digest,
-   unchanged full SQL/live/private/history state on rejection and private replies.
-2. Two native protected restore cases combine multiple clears and replacement,
-   exhausting the second clear at MAX_REVISION in saved and detached-runtime scopes.
-   Assert preflight before real tracker/counter writes, exact SQL/binding/live/source
-   preservation and no broadcast. Constrained-SQLite proof is not substituted here.
-3. Three notification cases retain production broadcast/deferral and real viewer
-   projection, using recording sockets only to observe sends. Cover dual producers
-   coalescing to one post-commit/final-history frame, late rollback suppression and
-   true no-op silence, including final private metadata and feature revisions.
+| Agreed gate | Evidence and disposition |
+|---|---|
+| Capture, fingerprints, pruning, private history | RecoveryCaptureTests and Stage 2 contract assertions preserve full metadata/definitions/references, explicit empty capture, private-aware fingerprints, snapshot independence, pruning/cascades and wrong-scope/kind/ID rejection. Native passing evidence, not earlier capture doubles. |
+| Restore, reset, scope, reload and lowered trusted-read limits | RestoreKernelTests, ProductionRestoreTests and Stage 2 contracts exercise stored replacement, reset preservation, saved/runtime isolation, restart/reload, oversized trusted stored content and configured preparation-limit separation. Native pass evidence from reviewed core suites and prior source/assertion reconciliation. |
+| Sequential undo and stale predecessors | ProductionRestoreTests explicitly passes two private replacements undone in sequence, tracker undo, mismatched predecessor rejection and runtime isolation. Private-only metadata changes remain fingerprint-significant. |
+| Durable counters, all-writer preservation and trusted clearing | ProductionRevisionTests, counter-writer/restore suites and prior assertion review retain hidden counters/bindings through rebuild/reopen, clear/re-add history, stale/digest/corruption rejection, and rollback. Constrained-SQLite ClearSqlTests and mocked TransactionDetectionTests remain supplementary, not native proof. |
+| Protected flush, live refresh, rollback and projection privacy | PrivateTransactionSaveTests, ProductionRestoreTests, mutation/transport privacy and Stage 2 assertions cover tracker/private write order, one revision advance, unchanged/tracker-only metadata, final refresh, history rollback, source/runtime separation and no private JSON fields. |
+| Actual recovery-route authorization | Six new RecoveryRouteBoundaryTests pass with the actual feature installer, AuthService, ownership and SQLite: owner restore/undo, existing superadmin policy, missing/client/non-owner/origin denials, foreign/kind-confused snapshots, confirmation/stale revision and stale undo ID/digest. Rejections preserve complete SQL/live/private/history state and send no frame. |
+| Native mixed-clear exhaustion | Two new NativeClearExhaustionTests pass for saved and detached-runtime destinations. A second clear binding at MAX_REVISION rejects mixed clear/replace before tracker/counter writes, preserving exact SQL/bindings/live/source state and emitting nothing. |
+| Production notification coalescing | Three new NotificationBoundaryTests pass through real broadcast/deferral and viewer projection: handler/private-flush requests coalesce into one post-commit frame with final metadata/revision/history; late rollback and true no-op send nothing. |
 
-Status: prepared for exact-payload approval, not pushed or executed. The module
-compiles/AST-parses and static discovery/boundary checks pass; FastAPI is absent
-locally. None of the eleven native methods ran and the earlier green run does not
-cover them. Seeded-session ASGI/recording sockets are not login/full-server/browser/
-real-WebSocket delivery tests. No production or existing-test changes are supplied;
-there is no demonstrated production defect. Normal push CI applies without [skip ci],
-manual dispatch or workflow edits. Review actual covering results, fix demonstrated
-failures with fresh approval, then reconcile 2B acceptance. [Scope/evidence limits](../handover/140-viewer-ownership-fixtures.md#2b-boundary-completion-preparation---2026-11-16).
+Disposition: completed/accepted for bounded 2B by approval of this payload. No
+outstanding agreed 2B criterion was identified in the reconciliation. This does not
+claim exhaustive schedules/cases or substitute green CI for criterion review.
+Seeded-session in-process ASGI is not password login/full application startup;
+recording sockets are not real-network WebSockets or browser delivery. No new
+live-server, human visual, provider, listener or exhaustive E2E proof. No tests ran
+locally for this documentation update and no fresh CI is claimed or dispatched.
 
 ## Remaining gates and delivery order
 
-The corrective series and request-type follow-up now have reviewed green covering
-CI. Deliver/review the agreed 2B boundary tests above before moving to 2C/2C.3c.
-Preserve the remaining gates below; do not infer blanket lifecycle acceptance.
-
-1. 2B: execute/review recovery capture, fingerprints/pruning, replacement and service
-   restore, counter-ledger/all-writer, trusted-clear and protected-flush suites.
-   Retain scope/restart/lowered-limit, sequential undo, stale/unrelated predecessor,
-   rollback, private projection, clear/reopen/tombstone, no-op/late notification and
-   exhaustion gates. Header-only protocols cannot clear; actual clear advances a
-   durable counter and re-addition advances beyond it. Counter-only rebuilds must
-   preserve hidden markers/bindings; ordinary inputs/corruption reject. Earlier
-   isolated SQL/double passes and prepared suites do not close these gates.
-2. 2C: execute/review clone, stored-copy, move-preservation, protected transfer,
-   loaded-move detachment and Save As suites (2C.1/2C.2a-b/2C.2c.1-3/2C.3a-b).
-   Check independent rows/destination revisions, immutable source/counters, fresh
-   ownership/time without counter-only export, canonical references, collision/
-   naming/roster rules, matching bindings, shared-runtime-owner rejection and late
-   rollback. 2C.3c still requires combined protected Save As/copy/move operations,
-   recovery/history/revision/notifications/privacy, actual authorization coverage
-   and acceptance reconciliation. Seeded-session selected-route ASGI is not full
-   server/login/browser/socket coverage. Same-owner stale-save and different-owner
-   overwrite counter continuity remain required; omission is not clearing.
-3. 2D: correction 9 supplies selected/life-filtered import implementation, not
-   acceptance. Execute/review its native cases and reconcile remaining scope,
-   authorization, independent revisions, source preservation, runtime, limits,
-   rollback and privacy after 2B/2C. Do not label delivered work unimplemented.
-4. Stage 3: implement/test the actual bundle representation and roundtrip, aggregate/
-   snapshot/member limits, malformed/untrusted input, provenance and rollback.
-   No silent loss at 10 MiB manifest/archive limits; report aggregate rejection or
-   use separately validated reference members. Bundles remain unimplemented here.
-5. Final covering validation and reconciliation of every parent acceptance
-   criterion remain mandatory. Keep Stage 1/2, 022.03 and overall 022 unaccepted
-   until their separate gates are met. Later viewer/provider/listener units remain
-   pending; this corrective series does not complete the feature.
+1. 2B is closed only for the bounded scope/evidence above. Do not reopen accepted
+   022.02 or mark Stage 1/2, 022.03 or overall 022 accepted from this decision.
+2. 2C/2C.3c is next and remains in progress. Existing clone, stored-copy, move,
+   protected transfer, loaded-move detachment and Save As suites now have passing
+   native/selected-ASGI evidence; do not retain blanket unexecuted labels. Reconcile
+   independent rows/destination revisions, immutable source/counters, fresh ownership/
+   time without counter-only export, references/collisions/naming/rosters, matching
+   bindings, shared-runtime rejection and rollback. Prepare combined protected Save
+   As -> copy -> loaded move -> runtime Save As sequences with recovery/history,
+   final revision/live metadata, production notifications, private projections and
+   actual Save As authorization/denials. Preserve same-owner stale-save and other-
+   owner overwrite counter continuity; omission never clears. Keep seeded-session
+   ASGI distinct from full login/server/browser/socket coverage. Production changes
+   only if new regressions demonstrate a defect; exact approval and covering CI
+   review precede 2C acceptance.
+3. 2D: reconcile delivered correction-9 imports after 2C: scope, authorization,
+   independent revisions, immutable source, runtime, limits, rollback and privacy.
+   Do not label delivered selected/life-filtered import work unimplemented or accepted.
+4. Stage 3: implement/test the actual private bundle representation and roundtrip,
+   aggregate/snapshot/member limits, malformed/untrusted input, provenance and
+   rollback. No silent loss at 10 MiB manifest/archive limits: explicit aggregate
+   rejection or separately validated reference members. This private-content bundle
+   work remains unimplemented, distinct from existing tracker-only bundles.
+5. Final covering validation and every parent acceptance criterion remain mandatory.
+   Stage 1/2, 022.03 and overall 022 remain unaccepted; later viewer/provider/listener
+   units remain pending. No incomplete later requirement is deleted by this close-out.
 
 Schema stays 9; no migration/DDL. Deploy matching complete code/data only after
-validation/acceptance. Older code lacks marker/filter handling: do not roll code
-back alone over ledger-bearing data. Keep matching storage/config/media/code backups.
-README/root index links remain applicable and unchanged.
+validation/acceptance. Keep matching storage/config/media/code backups; never roll
+older code alone over ledger-bearing data. README and HANDOVER.md index links stay
+unchanged. TODO.md updates only the obsolete 022.03 initial-adapter/CI-pending index
+summary. This is a documentation-only [skip ci] close-out, not a new test delivery.
