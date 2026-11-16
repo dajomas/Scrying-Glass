@@ -119,8 +119,9 @@ own complete approval payload, relevant tests and documentation.
   and cross-cutting regression preparation below. Covering validation and acceptance
   remain pending. Preserve roster/campaign validation, canonical references, source
   immutability and rollback throughout. No partial delivery establishes acceptance.
-- 022.03-2C.3: planned, follows 2C.2. Wire Save As and destination live-metadata
-  refresh, then test combined copy/move/Save As flows and reconcile acceptance.
+- 022.03-2C.3: in progress, split below into 2C.3a new-destination kernel,
+  2C.3b existing-handler/live-metadata wiring and 2C.3c combined regressions.
+  Handler integration, overwrite distinctions and covering acceptance remain open.
 
 Four focused production-fixture methods are prepared, not executed: graph/reference/
 credit independence and fresh metadata, same/mismatched/owned target rejection,
@@ -256,6 +257,35 @@ retains final Stage 3 covering CI deferral. Execute/review these and earlier sui
 correct failures and reconcile acceptance; supplying tests does not close 2C.2c,
 2C or 022.03. [Handover](../handover/010-scope-and-state.md#02203-transfer-boundary-regressions---2026-11-16).
 
+## 2C.3a new-destination Save As kernel - 2026-11-16
+
+Status: internal implementation and four native-fixture methods supplied; native
+validation and acceptance pending. The user requested splitting 2C.3 and starting
+its first item, then requested this delivery. The bounded sequence is:
+- 2C.3a: new-destination kernel, atomic tracker/private writes, independent ownership,
+  fresh revision/time, source immutability and focused rollback/authority tests.
+- 2C.3b: existing save-handler integration and destination live-metadata refresh;
+  preserve ordinary saves, overwrite history, campaign/roster guards and rollback.
+- 2C.3c: combined protected Save As/copy/move, recovery/history/notification/privacy/
+  authorization regressions and acceptance reconciliation. Earlier suites remain open.
+
+save_new_setup is internal and native schema-9 only. Caller authorizes campaign/name
+and supplies the existing setup projection. Trusted live carrier content, including
+unsaved private edits, is used instead of potentially older stored source content.
+It strips source revision/time, rejects an existing destination inside the transaction,
+reuses save_setup, resolves the campaign/name binding and writes private content through
+the existing adapter. It returns independently stored metadata for later live refresh;
+source/input state is not changed. Plain inputs acquire no private snapshots and
+serialized private fields reject. Ordinary save/overwrite semantics are not changed.
+No endpoint calls the kernel in this increment; this is not a complete Save As flow.
+
+Four native-fixture methods cover live unsaved tracker/private edits, independent
+owner rows and return-map isolation, source/input immutability, existing destination
+rejection, rollback after actual private writes, and plain/empty/forged authority.
+Both new Python files AST-parse; all four methods are unexecuted. No full imports,
+native/service/HTTP/browser or CI pass is claimed. Existing unittest discovery covers
+the filename; no workflow changes/dispatch. [Handover](../handover/010-scope-and-state.md#02203-save-as-kernel---2026-11-16).
+
 ## Remaining gates and delivery order
 
 For 2B: execute/review the relevant suites and outstanding scope/restart/limits/
@@ -264,8 +294,8 @@ undo/rollback/privacy checks, correct failures and reconcile acceptance evidence
 and 022.03 are also not accepted. Covering CI stays deferred to final Stage 3 code;
 no separate dispatch or observed workflow-run status is claimed here.
 
-2C: execute/review 2C.1/2C.2a/2C.2b/2C.2c.1/2C.2c.2/2C.2c.3 tests, correct any
-failures, finish Save As 2C.3 and covering validation of independent copy/Save As
+2C: execute/review 2C.1/2C.2a/2C.2b/2C.2c.1/2C.2c.2/2C.2c.3/2C.3a tests, correct
+any failures, finish 2C.3b/2C.3c and covering validation of independent copy/Save As
 ownership and destination revisions, source immutability, move preservation,
 canonical references and rollback. Partial delivery closes none of these wider gates.
 2D: selected/life-filtered import remapping and independent clone revisions. Stage 3:

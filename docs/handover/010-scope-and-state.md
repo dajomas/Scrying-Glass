@@ -342,6 +342,36 @@ superseded only for regression preparation. Intermediate [skip ci], final Stage 
 covering CI, schema 9 and matching code/data backups remain. Neither 2C.2c, 2C nor
 022.03 is accepted or closed by supplying these tests.
 
+## 022.03 Save As kernel - 2026-11-16
+
+Baseline: bfea8bb3ae4234c3fe1689607ac9b6e05e4be1a2. At the user's request,
+2C.3 is split into 2C.3a internal new-destination kernel, 2C.3b existing-handler/
+live-metadata integration and ordinary-save/overwrite distinctions, then 2C.3c
+combined protected regressions and acceptance reconciliation. Earlier gates remain.
+
+2C.3a supplies save_new_setup in python/scrying_glass_statblock_save_as.py for native
+schema 9. Caller owns authorization, canonical names and the existing setup projection.
+The helper validates trusted live carrier graphs, not potentially stale stored source
+content, strips source revision/time, rejects existing destinations and atomically
+saves tracker rows plus independent destination-private content. It returns saved
+metadata for later service refresh without changing the source/input state. Plain
+input contributes no snapshots; serialized private fields reject. The save handler
+is not wired in this increment, so this is a foundation, not a complete Save As flow.
+Ordinary save/overwrite, roster/service integration and permissions remain unchanged.
+
+Four native-fixture methods prepare coverage for live unsaved tracker/private edits,
+fresh independent ownership and return-map isolation, source/input immutability,
+existing target rejection, late writer rollback and plain/empty/forged authority.
+Both new Python files passed AST parsing; all four native methods are unexecuted.
+No full imports, native persistence, service/HTTP/browser or CI success is claimed.
+[Split and current gates](../todo/223-statblock-lifecycle.md#2c3a-new-destination-save-as-kernel---2026-11-16)
+retain 2C.3b/2C.3c, earlier test execution/corrections, bundles and acceptance.
+
+Existing unittest discovery includes the new test filename. README/root indexes
+remain accurate and unchanged; no workflow edit/dispatch or run-status check.
+Intermediate [skip ci], final Stage 3 covering CI, schema 9 and matching code/data
+backup rules remain; no new route, viewer, merge/deployment/release or feature closure.
+
 ## Documentation entry points
 
 - [README](../../README.md)
