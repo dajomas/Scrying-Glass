@@ -130,3 +130,43 @@ commits keep [skip ci]. No workflow change/manual dispatch/merge/deployment/rele
 Schema stays 9; retain matching complete code/storage/config/media backups and never
 roll older code alone over ledger-bearing data. README/HANDOVER.md index stay
 applicable; TODO.md changes only two related current 022.03 status summaries.
+
+## 2D single boundary-completion delivery - 2026-11-16
+
+Existing importing helper/handler and eleven tests/test_statblock_setup_importing.py
+methods are retained unchanged. Prior source/assertion review and covering run
+43933600072 attempt 1 establish native life-filter/map/remapping/graph/revision/source/
+runtime/limit/rollback/privacy/counter-only coverage, not actual import-route auth or
+production notification proof from the suite's custom emitter. No production defect
+was demonstrated during this preparation, so no production change is supplied.
+
+Prepared tests/test_statblock_2d_http_boundaries.py adds six methods in one payload:
+owner same/cross-campaign/runtime imports and existing superadmin behavior; atomic
+session/client/source-owner/destination-owner/origin/model/missing-source rejection;
+post-lock source/destination ownership, role and session revocation; real production
+broadcast with final clone metadata/revision, undo-boundary clearing and retained
+checkpoint/source; failure after real private flush/history with exact SQL/live/private/
+history rollback and no emission; zero-selection history/revision preservation with
+only the existing explicit handler refresh. Inactive owned import sources remain
+allowed; no Save As active-campaign restriction or new permission is imposed.
+
+Auth/session/ownership decisions and actual selected AdminAPI/model/transaction/
+notification/viewer paths are retained. Observational spies do not inject denials or
+replace deferral; native writes only seed rich private fixtures/history. Selected-route
+seeded-session ASGI/recording sockets are not login/full startup, real-network WebSocket,
+provider fetches or a new viewer/import UI. Zero-selection does not create a private
+revision or clear undo, but the unchanged handler still requests its one refresh.
+
+Preparation executed: changed module compiles and AST-parses; six non-skipped methods
+counted, new file below 20,000 bytes. Zero native methods executed locally because
+FastAPI is absent. No new application/CI pass or 2D acceptance is claimed. All six
+new methods plus the eleven existing import-specific methods need reviewed covering
+results. Deliver only after exact-payload approval, with normal push CI and no
+[skip ci], workflow edits or manual dispatch. Fix demonstrated failures with fresh
+approval, then reconcile bounded 2D acceptance separately; do not advance Stage 3 now.
+
+README, root indexes and lifecycle TODO were reviewed/reused and remain accurate: 2D
+is delivered but unaccepted, and its same scope/auth/revision/source/runtime/limit/
+rollback/privacy criteria and validation requirements stay open. No duplicate status
+edit or historical consolidation is included. Bounded 2B/2C and 022.02 remain closed;
+SG-TODO-022 Stage 1/2, 022.03 and overall 022 remain unaccepted.
