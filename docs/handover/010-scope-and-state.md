@@ -307,6 +307,41 @@ module. No workflow edit/dispatch or run-status check. Intermediate [skip ci], f
 Stage 3 covering CI, schema 9 and matching code/data backup rules remain; no viewer,
 new route, permissions, merge/deployment/release or whole-feature closure.
 
+## 022.03 transfer-boundary regressions - 2026-11-16
+
+Baseline: 9400b9b60563e679bffe6fdd1cfa710c7bf30ed1. 2C.2c.3 supplies six
+regression methods, not an additional production-code change. Static review of
+feature boundary processing, protected transactions, the route registrar and real
+session/ownership checks found no demonstrated gap requiring another speculative
+fix. Execution may still reveal defects; this increment establishes no acceptance.
+
+Four native methods prepare coverage for copy undo-boundary clearing with unchanged
+live state/revision/no emission, checkpoint preservation, loaded-move final revision
+and saved runtime metadata at one post-commit emission, full rollback after actual
+copy/move history processing, missing-source pre-move checkpoint rejection, and
+privacy of responses/admin/display/JSON carrier projections. Notification observation
+uses a deferred-emitter seam, not actual WebSocket delivery.
+
+Two real-ASGI methods filter AdminAPI.register_routes to the existing transfer route,
+using production CampaignSetupAdd, AuthService session/role checks, ownership scope,
+transaction wrapper and native SQLite. Seeded in-memory sessions for admin/client/
+superadmin users exercise absent session, wrong role, foreign source/destination,
+cross-origin and invalid-mode rejection with no transfer/write; owner copy and loaded
+move plus superadmin copy assert response privacy and actor cleanup. This prepares
+selected authenticated endpoint coverage, not login/password, full server startup,
+listeners, browser or socket verification. No test is skipped or weakened to claim
+completion.
+
+The module AST-parses. All four native and two ASGI methods are unexecuted; there is
+no native, HTTP/authorization, full-import or CI pass. Existing workflow discovery
+includes the filename; no workflow edit/dispatch or run-status check. README/root
+indexes remain accurate and unchanged. [Current gates](../todo/223-statblock-lifecycle.md#2c2c3-transfer-boundaries---2026-11-16)
+retain execution/review/corrections for all earlier increments, Save As 2C.3, bundles
+and covering validation/acceptance. Earlier 2C.2c.3-delivery-pending descriptions are
+superseded only for regression preparation. Intermediate [skip ci], final Stage 3
+covering CI, schema 9 and matching code/data backups remain. Neither 2C.2c, 2C nor
+022.03 is accepted or closed by supplying these tests.
+
 ## Documentation entry points
 
 - [README](../../README.md)

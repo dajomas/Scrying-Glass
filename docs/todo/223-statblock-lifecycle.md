@@ -115,11 +115,10 @@ own complete approval payload, relevant tests and documentation.
   both encounters and wraps tracker creation with this transaction for an atomic copy.
 - 022.03-2C.2: in progress, split further after reported timeouts. 2C.2a supplies
   storage-copy wiring; 2C.2b supplies move-regression preparation, with functional
-  verification pending. 2C.2c is split below, starting with protected-copy tests;
-  loaded-move detachment is supplied in 2C.2c.2; cross-cutting integration and
-  covering validation remain pending. Preserve roster/campaign validation,
-  canonical references, source immutability and rollback throughout. No partial
-  delivery establishes wider acceptance.
+  verification pending. 2C.2c supplies protected-copy tests, loaded-move detachment
+  and cross-cutting regression preparation below. Covering validation and acceptance
+  remain pending. Preserve roster/campaign validation, canonical references, source
+  immutability and rollback throughout. No partial delivery establishes acceptance.
 - 022.03-2C.3: planned, follows 2C.2. Wire Save As and destination live-metadata
   refresh, then test combined copy/move/Save As flows and reconcile acceptance.
 
@@ -185,9 +184,9 @@ The cause remains unconfirmed. The protected handler already delegates copy to
 - 2C.2c.2: loaded-setup moves and detached runtime private ownership/metadata,
   binding safeguards and focused rollback implementation are supplied below;
   functional validation remains pending.
-- 2C.2c.3: combined transaction-end/history/revision/notification/privacy checks,
-  real actor-based authorization and relevant authenticated endpoint coverage remain
-  pending. Save As stays in 2C.3. No earlier validation/acceptance gate is removed.
+- 2C.2c.3: cross-cutting transfer/history/notification/privacy and selected real-ASGI
+  authorization regression implementation is supplied below; execution, corrections
+  and acceptance remain pending. Save As stays in 2C.3. No earlier gate is removed.
 
 The new module AST-parses; all three native-fixture methods are unexecuted. Five
 isolated exact-handler-body checks passed with stub context/storage for copy,
@@ -228,6 +227,35 @@ four native methods remain unexecuted. No full imports, authenticated HTTP/brows
 or CI success is claimed. Existing discovery includes the new module; no workflow
 edit/dispatch. [Handover](../handover/010-scope-and-state.md#02203-loaded-move-detachment---2026-11-16).
 
+## 2C.2c.3 transfer boundaries - 2026-11-16
+
+Status: six regression methods supplied; native/ASGI execution and acceptance pending.
+No production-code change is justified by the present static review. Four native
+methods exercise the actual protected transfer handler and feature processing for:
+copy boundary undo clearing without live-state/revision/notification changes;
+checkpoint preservation; loaded-move final revision and saved runtime metadata at
+one post-commit emission; copy/move rollback after real history processing; and
+409 rejection of pre-move checkpoints whose source setup is now missing. Private
+source labels, reference text and serialized private fields must stay out of
+responses, admin/display projections and JSON-encoded carrier state.
+
+Two selected-route ASGI methods use real FastAPI, AdminAPI.register_routes filtered
+to the existing transfer route, the production request model, AuthService, ownership
+checks, transaction wrapper and SQLite. In-memory sessions are seeded, not obtained
+through login. Cases cover missing sessions, client roles, source/target ownership
+denials, cross-origin requests, invalid mode, owner copies/loaded moves, superadmin
+copy, actor cleanup and response privacy. Denials assert no storage transfer or
+persistent/live-state change. This is not a full-server/login/password/listener,
+browser or WebSocket fixture; the native notification test uses a deferred-emitter
+seam rather than real socket delivery.
+
+The module AST-parses. All four native and two ASGI methods are unexecuted; no
+functional, HTTP, authorization or covering CI pass is claimed. Existing unittest
+discovery covers the new filename. No workflow edit/dispatch; intermediate [skip ci]
+retains final Stage 3 covering CI deferral. Execute/review these and earlier suites,
+correct failures and reconcile acceptance; supplying tests does not close 2C.2c,
+2C or 022.03. [Handover](../handover/010-scope-and-state.md#02203-transfer-boundary-regressions---2026-11-16).
+
 ## Remaining gates and delivery order
 
 For 2B: execute/review the relevant suites and outstanding scope/restart/limits/
@@ -236,10 +264,10 @@ undo/rollback/privacy checks, correct failures and reconcile acceptance evidence
 and 022.03 are also not accepted. Covering CI stays deferred to final Stage 3 code;
 no separate dispatch or observed workflow-run status is claimed here.
 
-2C: execute/review 2C.1/2C.2a/2C.2b/2C.2c.1/2C.2c.2 tests, correct any failures,
-finish 2C.2c.3/2C.3 and covering validation of independent copy/Save As ownership
-and destination revisions, source immutability, move preservation, canonical
-references and rollback. Partial delivery closes none of these wider gates.
+2C: execute/review 2C.1/2C.2a/2C.2b/2C.2c.1/2C.2c.2/2C.2c.3 tests, correct any
+failures, finish Save As 2C.3 and covering validation of independent copy/Save As
+ownership and destination revisions, source immutability, move preservation,
+canonical references and rollback. Partial delivery closes none of these wider gates.
 2D: selected/life-filtered import remapping and independent clone revisions. Stage 3:
 actual bundle format/roundtrip, aggregate/snapshot/member limits, malformed/untrusted
 input, provenance and rollback; no silent 10 MiB manifest/archive loss. Retain every
