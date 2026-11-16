@@ -1,0 +1,33 @@
+&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0719708Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0720433Z   File "/tmp/scrying-tests-o7bdm7o_/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0721106Z     hits = context.dnd_monster_candidates(species)
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0721792Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0722375Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0722959Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0723595Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0724238Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0724642Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0725350Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0725984Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0726252Z TimeoutError: fixture
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0726690Z Combined monster lookup: D&D Beyond did not respond (fixture)
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0727241Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0727648Z Ran 10 tests in 0.201s
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0727815Z 
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0727909Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.0728418Z test_dndbeyond_locked_pages.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.1362819Z Connection audit: test_dndbeyond_lookup_diagnostics.py
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.4367382Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.4368008Z test_dndbeyond_lookup_diagnostics.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.4368945Z Ran 17 tests in 0.204s
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.4369240Z 
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.4369344Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:07.4855254Z Connection audit: test_encounter_features.py
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:10.5475474Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:10.5476095Z Ran 30 tests in 2.973s
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:10.5476248Z 
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:10.5476329Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:10.5480496Z test_encounter_features.py: connections opened: 35; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T21:55:10.6030572Z Connection audit: test_feature_logging.py
+tests	Standalone Python browser and audit checks
