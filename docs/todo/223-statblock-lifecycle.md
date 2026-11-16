@@ -100,6 +100,32 @@ production integration, authenticated HTTP/WS/browser or covering CI pass is cla
 Existing unittest discovery includes the module. Earlier passes are historical,
 not rerun or relabelled. [Current evidence](../handover/010-scope-and-state.md#02203-lifecycle-integration---2026-11-15).
 
+## 2C split and first foundation - 2026-11-15
+
+The user requested splitting 2C after a timeout and starting the first part. The
+cause of the timeout is not established. Each following delivery still needs its
+own complete approval payload, relevant tests and documentation.
+
+- 022.03-2C.1: clone-kernel foundation supplied, validation pending. Internal helper
+  only; not called by public setup copy/move or Save As. Source/destination must be
+  distinct schema-9 encounters with matching monster IDs. Destination snapshots
+  and counter-only history are rejected. Source graphs/counters remain unchanged;
+  copies get independent rows, revision 1 and fresh preparation time. Counter-only
+  source history is not exported. Caller authorizes both encounters and wraps
+  tracker creation with this transaction for an atomic overall copy.
+- 022.03-2C.2: planned, depends on 2C.1. Wire setup copy/move, preserving move
+  ownership/history and existing roster/campaign validation, canonical references
+  and rollback. Copy destinations must be independent and source-immutable.
+- 022.03-2C.3: planned, follows 2C.2. Wire Save As and destination live-metadata
+  refresh, then test combined copy/move/Save As flows and reconcile acceptance.
+
+Four focused production-fixture methods are prepared, not executed: graph/reference/
+credit independence and fresh metadata, same/mismatched/owned target rejection,
+counter-only source isolation, and partial-write/outer-tracker-creation rollback.
+Both new Python files AST-parse. No full imports, actual kernel test pass, public
+service/HTTP/browser validation or CI run is claimed. Existing discovery includes
+the new module. [Scope/limits](../handover/010-scope-and-state.md#02203-clone-kernel-foundation---2026-11-15).
+
 ## Remaining gates and delivery order
 
 For 2B: execute/review the relevant suites and outstanding scope/restart/limits/
@@ -108,11 +134,13 @@ undo/rollback/privacy checks, correct failures and reconcile acceptance evidence
 and 022.03 are also not accepted. Covering CI stays deferred to final Stage 3 code;
 no separate dispatch or observed workflow-run status is claimed here.
 
-2C: independent copy/Save As ownership and destination revisions, source immutability,
-move preservation, canonical references and rollback. 2D: selected/life-filtered
-import remapping and independent clone revisions. Stage 3: actual bundle format/
-roundtrip, aggregate/snapshot/member limits, malformed/untrusted input, provenance
-and rollback; no silent 10 MiB manifest/archive loss. Retain every parent criterion.
+2C: finish 2C.2/2C.3 and covering validation of independent copy/Save As ownership
+and destination revisions, source immutability, move preservation, canonical
+references and rollback; foundation delivery does not close these requirements.
+2D: selected/life-filtered import remapping and independent clone revisions.
+Stage 3: actual bundle format/roundtrip, aggregate/snapshot/member limits,
+malformed/untrusted input, provenance and rollback; no silent 10 MiB manifest/
+archive loss. Retain every parent criterion.
 
 Schema stays 9, no migration/DDL. Deploy matching complete code/data only after
 validation/acceptance. Older code lacks marker/filter handling: do not roll code

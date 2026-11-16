@@ -164,6 +164,29 @@ acceptance; do not roll old code alone over ledger-bearing data. Keep matching
 storage/config/media/code backups. No viewer/provider/listener, merge/deployment/
 release or whole-feature closure is authorized.
 
+## 022.03 clone-kernel foundation - 2026-11-15
+
+Baseline: 68ec127ea8e974ba3cdf582f38d2f5fc4223af6e. After the reported 2C timeout,
+the first bounded part supplies only an internal clone helper and four focused
+production-fixture tests, not setup transfer or Save As wiring. Existing source/
+destination encounters must have matching monster IDs and distinct ownership;
+any destination snapshot or counter history rejects. The helper validates stored
+source content and copies graphs/references/credits through the existing writer,
+starting verified destination revisions at 1 with fresh preparation times. It
+copies no source counter history and never writes source tracker rows or metadata.
+Caller authorization and outer atomic tracker creation remain caller duties.
+
+Both new Python files AST-parse. The four methods cover independent graph ownership/
+source immutability, fresh metadata, target guards, counter-only isolation and
+partial/outer rollback; they are prepared, not executed. No constructor/full-import,
+actual SQLite/kernel, service/HTTP/browser or CI pass is claimed. Existing discovery
+includes the module. [Staged plan and remaining requirements](../todo/223-statblock-lifecycle.md#2c-split-and-first-foundation---2026-11-15):
+2C.2 wires setup copy/move; 2C.3 wires Save As/live refresh and combined regressions.
+Each needs its own approved delivery. Root README/index/workflow identities remain
+unchanged; no workflow edit/dispatch. Intermediate [skip ci], schema 9, code/data
+backup rules and pending covering validation/acceptance remain. This foundation
+closes neither 2C nor 022.03; earlier 2B validation is not promoted.
+
 ## Documentation entry points
 
 - [README](../../README.md)
