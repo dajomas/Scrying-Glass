@@ -1,7 +1,7 @@
 """Production setup/runtime saves preserving encounter-local snapshots and counters.
 
 Read projections stay unchanged. Ordinary save entry points reject private input;
-copy/clear/restore semantics are separate trusted contracts.
+Setup copies use the trusted clone kernel; clear/restore remain separate contracts.
 """
 import copy
 import time
@@ -53,6 +53,26 @@ class StatblockOperationsMixin(StorageOperationsMixin):
             self.connection.execute(
                 'UPDATE battle_setups SET updated_at=? WHERE campaign_id=? AND name=?',
                 (time.time() if updated_at is None else updated_at, campaign, name))
+
+    def transfer_setup(self, source, target, name, mode):
+        """Keep tracker creation and trusted private copying in one transaction."""
+        if mode != 'copy':
+            return super().transfer_setup(source, target, name, mode)
+        from .scrying_glass_statblock_cloning import clone_private_snapshots
+        with self.transaction():
+            source_row = self.connection.execute(
+                'SELECT encounter_id FROM battle_setups WHERE campaign_id=? AND name=?',
+                (source, name)).fetchone()
+            if source_row is None:
+                raise FileNotFoundError(name)
+            result = super().transfer_setup(source, target, name, mode)
+            destination_row = self.connection.execute(
+                'SELECT encounter_id FROM battle_setups WHERE campaign_id=? AND name=?',
+                (target, result)).fetchone()
+            if destination_row is None:
+                raise ValueError('Copied setup binding is missing')
+            clone_private_snapshots(self, source_row[0], destination_row[0])
+            return result
 
     def set_value(self, key, value):
         if key != 'runtime_state':

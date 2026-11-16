@@ -107,15 +107,16 @@ cause of the timeout is not established. Each following delivery still needs its
 own complete approval payload, relevant tests and documentation.
 
 - 022.03-2C.1: clone-kernel foundation supplied, validation pending. Internal helper
-  only; not called by public setup copy/move or Save As. Source/destination must be
-  distinct schema-9 encounters with matching monster IDs. Destination snapshots
-  and counter-only history are rejected. Source graphs/counters remain unchanged;
-  copies get independent rows, revision 1 and fresh preparation time. Counter-only
-  source history is not exported. Caller authorizes both encounters and wraps
-  tracker creation with this transaction for an atomic overall copy.
-- 022.03-2C.2: planned, depends on 2C.1. Wire setup copy/move, preserving move
-  ownership/history and existing roster/campaign validation, canonical references
-  and rollback. Copy destinations must be independent and source-immutable.
+  only; not called by public setup copy/move or Save As in that increment. Source/
+  destination must be distinct schema-9 encounters with matching monster IDs.
+  Destination snapshots and counter-only history are rejected. Source graphs/
+  counters remain unchanged; copies get independent rows, revision 1 and fresh
+  preparation time. Counter-only source history is not exported. Caller authorizes
+  both encounters and wraps tracker creation with this transaction for an atomic copy.
+- 022.03-2C.2: in progress, split further after reported timeouts. 2C.2a supplies
+  storage-copy wiring below; 2C.2b move-preservation verification/fixes and 2C.2c
+  protected service integration remain pending. Preserve existing roster/campaign
+  validation, canonical references, source immutability and rollback throughout.
 - 022.03-2C.3: planned, follows 2C.2. Wire Save As and destination live-metadata
   refresh, then test combined copy/move/Save As flows and reconcile acceptance.
 
@@ -126,6 +127,27 @@ Both new Python files AST-parse. No full imports, actual kernel test pass, publi
 service/HTTP/browser validation or CI run is claimed. Existing discovery includes
 the new module. [Scope/limits](../handover/010-scope-and-state.md#02203-clone-kernel-foundation---2026-11-15).
 
+## 2C.2a stored-setup copy - 2026-11-16
+
+Status: implementation and six production-fixture methods supplied; functional
+validation and acceptance pending. StatblockOperationsMixin now overrides only
+copy routing: resolve campaign-scoped source, call the inherited tracker transfer,
+resolve the returned destination name, and invoke the 2C.1 clone helper inside one
+outer transaction. Existing naming, roster validation, cross-campaign effect cleanup
+and active_setup normalization remain inherited. Non-copy modes delegate unchanged.
+Caller authorization remains required; no new route, permission or clear authority.
+
+Prepared coverage: same/cross-campaign independent graphs and fresh revisions/time,
+source immutability after destination edits, complete rollback after graph writes,
+roster conflicts, plain/counter-only sources, missing/wrong-campaign source, effect
+cleanup and destination-name collisions. Tests reuse the native encounter and 2C.1
+reference-graph fixtures. Both Python files AST-parse; the three pre-existing mixin
+methods are AST-identical. Five isolated exact-override routing checks passed with
+a stub parent/clone and minimal SQLite tables, not the real transfer, clone kernel
+or native schema. The six production-fixture methods are unexecuted. Workflow
+unittest discovery covers the filename; no workflow changes, dispatch or run claim.
+[Handover](../handover/010-scope-and-state.md#02203-stored-setup-copy---2026-11-16).
+
 ## Remaining gates and delivery order
 
 For 2B: execute/review the relevant suites and outstanding scope/restart/limits/
@@ -134,13 +156,13 @@ undo/rollback/privacy checks, correct failures and reconcile acceptance evidence
 and 022.03 are also not accepted. Covering CI stays deferred to final Stage 3 code;
 no separate dispatch or observed workflow-run status is claimed here.
 
-2C: finish 2C.2/2C.3 and covering validation of independent copy/Save As ownership
-and destination revisions, source immutability, move preservation, canonical
-references and rollback; foundation delivery does not close these requirements.
-2D: selected/life-filtered import remapping and independent clone revisions.
-Stage 3: actual bundle format/roundtrip, aggregate/snapshot/member limits,
-malformed/untrusted input, provenance and rollback; no silent 10 MiB manifest/
-archive loss. Retain every parent criterion.
+2C: execute/review 2C.1/2C.2a tests, finish 2C.2b/2C.2c/2C.3 and covering validation
+of independent copy/Save As ownership and destination revisions, source immutability,
+move preservation, canonical references and rollback. Partial delivery closes none
+of these wider gates. 2D: selected/life-filtered import remapping and independent
+clone revisions. Stage 3: actual bundle format/roundtrip, aggregate/snapshot/member
+limits, malformed/untrusted input, provenance and rollback; no silent 10 MiB
+manifest/archive loss. Retain every parent criterion.
 
 Schema stays 9, no migration/DDL. Deploy matching complete code/data only after
 validation/acceptance. Older code lacks marker/filter handling: do not roll code

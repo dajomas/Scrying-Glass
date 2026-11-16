@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Last updated: 2026-11-15. Dated sections below retain their historical scope.
+Last updated: 2026-11-16. Dated sections below retain their historical scope.
 
 ## Repository and branch
 
@@ -146,7 +146,7 @@ plain input does not gain private authority. Model/digest validation is unchange
 Eight production-fixture regression methods are prepared, unexecuted: committed
 history/revision/notification and privacy, sequential undo, no-op behavior, failure
 after history writes, clear/reopen/undo counter continuity, lowered preparation
-budgets, missing/foreign scope and revision exhaustion. The six corrected 2B.8
+budgets, missing/foreign setup scope and revision exhaustion. The six corrected 2B.8
 methods are also unexecuted; existing older suites retain their pending status.
 Three exact empty-carrier methods passed in an isolated function-body harness with
 an unused budget-policy stub, exercising no graph validation, SQLite/services or
@@ -186,6 +186,34 @@ Each needs its own approved delivery. Root README/index/workflow identities rema
 unchanged; no workflow edit/dispatch. Intermediate [skip ci], schema 9, code/data
 backup rules and pending covering validation/acceptance remain. This foundation
 closes neither 2C nor 022.03; earlier 2B validation is not promoted.
+
+## 022.03 stored-setup copy - 2026-11-16
+
+Baseline: d4d286d062e76b891992f01c160216b6786af1af. 2C.2a supplies a copy-only
+override in StatblockOperationsMixin. It resolves the source campaign/name binding,
+runs the inherited transfer unchanged, resolves its returned destination name and
+calls the trusted clone kernel inside an outer transaction. Clone failure therefore
+rolls back destination tracker creation and private writes together. Existing roster
+checks, name collision handling, cross-campaign effect cleanup and active_setup
+normalization remain inherited. Non-copy modes delegate directly; this is not move
+verification, protected-service integration or Save As delivery. Caller authorization
+remains unchanged. Earlier no-copy-wiring descriptions retain their dated scope.
+
+The prepared module contains six native-fixture methods for independent same/cross-
+campaign copies, source immutability, fresh metadata, late graph-write rollback,
+roster conflicts, absent/counter-only sources, source-scope failures, effect cleanup
+and collision naming. They are unexecuted. Both files AST-parse; the three existing
+mixin methods are AST-identical. Five isolated exact-override routing checks passed
+with a stub parent transfer/clone and minimal SQLite tables; they do not establish
+real transfer/kernel/native-schema success. Workflow discovery includes the new
+filename; no complete-module import, service/HTTP/browser or CI pass is claimed.
+
+[Remaining scope and validation gates](../todo/223-statblock-lifecycle.md#2c2a-stored-setup-copy---2026-11-16):
+2C.2b move preservation, 2C.2c protected service integration, 2C.3 Save As and earlier
+2B/2C validation remain open. README and root indexes were reviewed and left unchanged;
+no workflow edit/dispatch or run status check. Intermediate [skip ci], final Stage 3
+covering CI, schema 9 and matching code/data backup rules remain. Neither 2C.2a nor
+2C/022.03 is accepted merely by supplying this code and its tests.
 
 ## Documentation entry points
 
