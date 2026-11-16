@@ -268,6 +268,45 @@ intermediate [skip ci], final Stage 3 covering CI, schema 9 and matching code/da
 backup rules remain. No loaded-move/Save As delivery, new route, permission,
 release/deployment or whole-feature acceptance is implied.
 
+## 022.03 loaded-move detachment - 2026-11-16
+
+Baseline: 32252413e88ed97cd51e7b33f747e82a86528eac. 2C.2c.2 wires only the
+existing moving_loaded_setup branch to an internal detachment helper before
+changed(). Authorization and storage transfer remain inherited. The saved setup
+moves with its encounter/monster owners, graphs, counters and metadata intact.
+The still-live source-campaign battle becomes unsaved and receives independent
+runtime ownership, revision 1 and fresh preparation time; counter-only source
+history is not exported. Old same-ID runtime content can otherwise have unrelated
+revisions or explicit-absence conflicts, so it is not an ordinary destination save.
+
+The helper requires an outer transaction and active-campaign setup reference,
+validates trusted carrier graphs, strips source revision/time for the new writer,
+persists fresh runtime tracker/private content, switches the singleton, and retires
+the superseded runtime encounter with owned children. It rejects old runtime owners
+shared with saved setups or recovery images before allocation/deletion. Plain state
+supplies no private snapshots; serialized private input rejects. Live assignment
+follows nested success; existing protected rollback restores the transfer, runtime
+binding/content and memory after later errors. No ordinary clearing authority is
+added. Non-native storage keeps legacy clearing; copies/background moves bypass it.
+
+Helper and test-module AST parsing passed. Nine isolated exact-helper checks passed
+with minimal SQLite and stub facade/private writer/capture: trusted/plain/empty
+state, no outer transaction, foreign reference, shared setup/recovery, serialized
+input and writer failure. A missing-copy-import harness error was corrected, not
+production. These checks do not exercise the actual schema/model/graph writer,
+service wrapper or full imports. Four native-fixture methods are prepared and
+unexecuted for stale same-ID runtime, moved ownership/collision isolation, runtime
+edit/reopen independence, absent/MAX_REVISION source history, late rollback, shared
+binding rejection and background routing. No native/HTTP/browser/CI pass is claimed.
+
+[Remaining gates](../todo/223-statblock-lifecycle.md#2c2c2-loaded-move-detachment---2026-11-16)
+retain 2C.2c.3, Save As 2C.3 and all earlier validation/corrections/acceptance. Earlier
+loaded-move-delivery-pending wording is superseded only for this bounded increment.
+README/root indexes remain accurate and unchanged; discovery includes the new test
+module. No workflow edit/dispatch or run-status check. Intermediate [skip ci], final
+Stage 3 covering CI, schema 9 and matching code/data backup rules remain; no viewer,
+new route, permissions, merge/deployment/release or whole-feature closure.
+
 ## Documentation entry points
 
 - [README](../../README.md)

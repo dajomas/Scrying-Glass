@@ -116,9 +116,10 @@ own complete approval payload, relevant tests and documentation.
 - 022.03-2C.2: in progress, split further after reported timeouts. 2C.2a supplies
   storage-copy wiring; 2C.2b supplies move-regression preparation, with functional
   verification pending. 2C.2c is split below, starting with protected-copy tests;
-  loaded moves and cross-cutting protected integration remain pending. Preserve
-  roster/campaign validation, canonical references, source immutability and rollback
-  throughout. No partial delivery establishes wider acceptance.
+  loaded-move detachment is supplied in 2C.2c.2; cross-cutting integration and
+  covering validation remain pending. Preserve roster/campaign validation,
+  canonical references, source immutability and rollback throughout. No partial
+  delivery establishes wider acceptance.
 - 022.03-2C.3: planned, follows 2C.2. Wire Save As and destination live-metadata
   refresh, then test combined copy/move/Save As flows and reconcile acceptance.
 
@@ -182,7 +183,8 @@ The cause remains unconfirmed. The protected handler already delegates copy to
   metadata, trusted destination loading, rollback after the real clone writes, and
   injected denial at either campaign gate before storage transfer.
 - 2C.2c.2: loaded-setup moves and detached runtime private ownership/metadata,
-  binding safeguards and focused rollback tests remain pending.
+  binding safeguards and focused rollback implementation are supplied below;
+  functional validation remains pending.
 - 2C.2c.3: combined transaction-end/history/revision/notification/privacy checks,
   real actor-based authorization and relevant authenticated endpoint coverage remain
   pending. Save As stays in 2C.3. No earlier validation/acceptance gate is removed.
@@ -195,6 +197,37 @@ workflow unittest discovery includes the filename; intermediate [skip ci] defers
 covering CI to final Stage 3. No workflow edit/dispatch or observed run result.
 [Handover and limits](../handover/010-scope-and-state.md#02203-protected-copy-regressions---2026-11-16).
 
+## 2C.2c.2 loaded-move detachment - 2026-11-16
+
+Status: implementation and four native-fixture methods supplied; functional
+validation and acceptance pending. The existing authorized loaded-move branch calls
+an internal helper before changed(). The moved setup retains its encounter, monster
+owners, graphs, metadata and counters. The live battle stays in the active source
+campaign but becomes unsaved, with a newly allocated runtime encounter and independent
+private rows at revision 1/fresh preparation time. Source counter-only history is not
+exported. This avoids comparing source revisions with obsolete same-ID runtime data.
+
+The helper requires the protected outer transaction and an active-campaign reference.
+It validates trusted carrier content; plain state supplies no snapshots and serialized
+private input rejects. The singleton binding is switched only after fresh runtime
+persistence; the superseded runtime encounter is deleted with owned child rows.
+Shared setup/recovery ownership rejects before allocation/deletion. Live assignment
+follows helper success; the existing wrapper rolls back move, runtime replacement
+and memory on later failure. This is an internal ownership transition, not ordinary
+snapshot clearing or a public replacement API. Non-native storage keeps legacy
+reference clearing; copy and background moves do not call the helper.
+
+Prepared tests cover stale same-ID runtime history, collision naming, moved-owner
+preservation, independent runtime editing/reopen, absent/MAX_REVISION source counters,
+late rollback, shared binding rejection and background-move routing. Helper and
+native-test module AST-parse. Nine isolated exact-helper checks passed using minimal
+SQLite tables and stub facade/private writer/capture for trusted/plain/empty state,
+missing outer transaction, foreign reference, shared setup/recovery, serialized
+input and writer failure. They are not native graph/schema/service validation; all
+four native methods remain unexecuted. No full imports, authenticated HTTP/browser
+or CI success is claimed. Existing discovery includes the new module; no workflow
+edit/dispatch. [Handover](../handover/010-scope-and-state.md#02203-loaded-move-detachment---2026-11-16).
+
 ## Remaining gates and delivery order
 
 For 2B: execute/review the relevant suites and outstanding scope/restart/limits/
@@ -203,8 +236,8 @@ undo/rollback/privacy checks, correct failures and reconcile acceptance evidence
 and 022.03 are also not accepted. Covering CI stays deferred to final Stage 3 code;
 no separate dispatch or observed workflow-run status is claimed here.
 
-2C: execute/review 2C.1/2C.2a/2C.2b/2C.2c.1 tests, correct any failures, finish
-2C.2c.2/2C.2c.3/2C.3 and covering validation of independent copy/Save As ownership
+2C: execute/review 2C.1/2C.2a/2C.2b/2C.2c.1/2C.2c.2 tests, correct any failures,
+finish 2C.2c.3/2C.3 and covering validation of independent copy/Save As ownership
 and destination revisions, source immutability, move preservation, canonical
 references and rollback. Partial delivery closes none of these wider gates.
 2D: selected/life-filtered import remapping and independent clone revisions. Stage 3:
