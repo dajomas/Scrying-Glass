@@ -2,7 +2,8 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Last updated: 2026-11-16. Dated sections below retain their historical scope.
+Last updated: 2026-11-16. Dated sections retain their historical scope. Complete
+pre-2C.3b statblock records are linked below; no prior validation is promoted.
 
 ## Repository and branch
 
@@ -75,302 +76,183 @@ cancelled task, with none active or on hold.
 
 ## SG-TODO-022 model foundation - 2026-11-15
 
-Historical model/preparation details, original test scopes and limitations are
-preserved in the [pre-rebuild current-state record](https://github.com/dajomas/Scrying-Glass/blob/1eb80fc389519542daf6f7a2ebfead214347848b/docs/handover/010-scope-and-state.md).
-The model-only delivery supplied validation, canonical IDs/content digests and
-limits, not a usable viewer. Its schema-8/pending-persistence wording is historical.
-022.02 model/storage/startup is now accepted and closed, with reviewed activation
-CI 43713643326 attempt 1 for 28d75d08febf5b595afe8145b4097410eb987986 and the
-user's 13:48 CET sign-off. [Accepted record](../todo/222-statblock-persistence.md).
-The approved display, model, ownership, limit and backup contracts remain binding.
+022.02 model/storage/startup remains accepted and closed: activation
+28d75d08febf5b595afe8145b4097410eb987986, reviewed Branch tests 43713643326
+attempt 1 and the user's 2026-11-15 13:48 CET sign-off.
+[Accepted record](../todo/222-statblock-persistence.md). The approved display,
+model, ownership, limits and backup contracts remain binding. Historical model-only
+schema-8/unwired wording is superseded, not a reason to reopen accepted 022.02.
+
+[Complete pre-2C.3b scope, commits, failures and evidence](https://github.com/dajomas/Scrying-Glass/blob/13cc61b95fa3e62ec9e1f2a6a85ec0dcff981e5d/docs/handover/010-scope-and-state.md)
+and [complete pre-2C.3b lifecycle TODO](https://github.com/dajomas/Scrying-Glass/blob/13cc61b95fa3e62ec9e1f2a6a85ec0dcff981e5d/docs/todo/223-statblock-lifecycle.md)
+retain every dated delivery, test count, limitation and unfinished requirement.
+The headings below preserve existing anchors while current contracts/gates are
+summarized in the [lifecycle task](../todo/223-statblock-lifecycle.md). Consolidation
+promotes no result and removes no requirement. Prior intermediate [skip ci]/final-
+Stage-3-only validation descriptions are historical for the current CI-enabled
+2C.3b delivery; final covering validation remains mandatory.
 
 ## Activation preparation B - 2026-11-15
 
-Historical preparation B: a44727ef76f810ab593305033947c84eb9af26ae, lair-v5 and
-feature-v4 fixtures, backup/account/FK checks, no claimed local production pass.
-Full details remain in the linked pre-rebuild record. Later activation evidence
-and acceptance supersede its pending status, not its recorded evidence limits.
+Historical a44727ef76f810ab593305033947c84eb9af26ae: lair-v5/feature-v4 fixtures,
+backup/account/FK checks, no local production pass. The full record is archived
+above; later accepted activation supersedes pending status, not evidence limits.
 
 ## Activation preparation C - 2026-11-15
 
-Historical preparation C: 1ccd5c36afb88a99b812b79bacd5a63c7c194654, attack-v7
-backup and cleanup fixtures; three isolated resource-lifetime tests passed, not
-full startup or hosted CI. Full details remain in the linked pre-rebuild record.
-Later accepted activation supersedes its pending status. Existing anchors remain.
+Historical 1ccd5c36afb88a99b812b79bacd5a63c7c194654: attack-v7 fixtures and three
+isolated resource-lifetime passes, not full startup/CI. Full evidence is archived;
+later accepted activation supersedes pending status, not its recorded limits.
 
 ## 022.03 counter-only row rebuilds - 2026-11-15
 
-da7654059808795880361ae643e6b5523ffc5c0f corrected 2B.4's CHECK-incompatible
-counter encoding and supplied counter-only setup/runtime rebuild preservation.
-Supported integer rows use the exact private marker; no schema weakening or DDL.
-Eleven isolated constrained-SQLite methods passed; eleven production writer methods
-remain pending. The earlier eight incomplete-fixture passes were not production
-proof. [Complete pre-2B.9 record](https://github.com/dajomas/Scrying-Glass/blob/a1230d9ebf945ef3f2cdad202bbad68a5f504279/docs/handover/010-scope-and-state.md)
-preserves all detailed decisions, evidence limits and previous dated scopes below.
-No unfinished requirement or acceptance gate is removed by this consolidation.
+da7654059808795880361ae643e6b5523ffc5c0f corrected CHECK-incompatible counter
+encoding without weakening accepted schema/CI. Eleven isolated constrained-SQLite
+methods passed; eleven production writer methods remained unexecuted. The eight
+earlier incomplete-fixture passes were not production proof. Durable hidden marker/
+filter/rebinding/corruption contracts and detailed failures remain in the archive.
 
 ## 022.03 trusted clearing - 2026-11-15
 
-f38d7c3a4ba86f45dfbf167b25da189f3825c152 supplies trusted recovery clearing with
-scope/highest-revision bindings, durable tombstone counters, preflight and atomic
-graph deletion/replacement. Ordinary omission has no clearing authority. Six
-isolated SQL methods passed, not full graph/service tests. Twelve kernel and nine
-service methods remain unexecuted. See the complete record and current task.
+Recovery-only scope/highest-revision bindings, durable tombstones, overflow preflight
+and atomic clearing/replacement were supplied. Ordinary omission has no clearing
+authority. Six isolated SQL passes were not graph/service validation; twelve kernel
+and nine service methods remained unexecuted. Authorization, confirmation, roster/
+runtime/history and rollback gates remain; see the archive and current task.
 
 ## 022.03 save-decision detection - 2026-11-15
 
-4bf95480f2670adda80d798fa73aefe2a7ed58e7 supplies private-aware save detection
-after reconciliation. Six mock-signature/save/authorization routing tests passed
-with a SQLite sentinel; actual graph persistence/imports were not established.
-Earlier timeout causes were not determined. The notebook-loop harness correction
-was not a production change. Full dated limits remain in the archived record.
+Private-aware post-reconciliation save detection preserves character/setup/runtime
+save order. Six isolated mock routing passes were not production persistence.
+Timeout causes remained unconfirmed; notebook harness corrections were not app fixes.
+Full import/integration validation remains pending in the linked lifecycle record.
 
 ## 022.03 private save and refresh - 2026-11-15
 
-a1230d9ebf945ef3f2cdad202bbad68a5f504279 adds the protected native private flush
-after tracker saves and before history/revision processing, exact encounter/monster
-selection, a no-op tracker callback and saved live metadata. Standalone persistence
-is not a new private API; caller authorization/preparation and trusted clear rules
-remain. Six production-fixture tests remain unexecuted. Their content-mutating
-producers are corrected in 2B.9 without relaxing digest validation.
+Protected private flush follows tracker saves and precedes history/revisions, with
+exact native bindings and post-success live metadata refresh. Non-native behavior,
+caller authority and separate trusted clearing remain. Six prepared native methods
+were unexecuted; mutation producers were corrected in 2B.9 without relaxing digests.
 
 ## 022.03 lifecycle integration - 2026-11-15
 
-Baseline: a1230d9ebf945ef3f2cdad202bbad68a5f504279. The wrapper now queues the
-existing deferred broadcast when final saved private metadata differs from the
-original image, even without a handler notification. Requests coalesce and emit
-only after history/revision processing and commit; rollback discards them. Trusted
-carry/load preserves explicit empty metadata, fixing absence loss on reload;
-plain input does not gain private authority. Model/digest validation is unchanged.
-
-Eight production-fixture regression methods are prepared, unexecuted: committed
-history/revision/notification and privacy, sequential undo, no-op behavior, failure
-after history writes, clear/reopen/undo counter continuity, lowered preparation
-budgets, missing/foreign setup scope and revision exhaustion. The six corrected 2B.8
-methods are also unexecuted; existing older suites retain their pending status.
-Three exact empty-carrier methods passed in an isolated function-body harness with
-an unused budget-policy stub, exercising no graph validation, SQLite/services or
-full module imports. The new integration module AST-parses. No covering integration,
-authenticated HTTP/WS/browser, CI success or 2B acceptance is inferred.
-
-[Current contracts, delivery order and acceptance gates](../todo/223-statblock-lifecycle.md).
-Root README/HANDOVER/TODO and workflow identities match prior complete reads; they
-remain unchanged. Existing unittest discovery includes the new module. No workflow
-edit/dispatch; intermediate [skip ci] and final Stage 3 covering CI deferral remain.
-2B/Stage 1/Stage 2/022.03 are not validated or accepted. 2C/2D, bundles, failure
-corrections and acceptance remain; earlier clearing-disabled notes are historical.
-Schema remains 9. Deploy matching complete code/data only after validation and
-acceptance; do not roll old code alone over ledger-bearing data. Keep matching
-storage/config/media/code backups. No viewer/provider/listener, merge/deployment/
-release or whole-feature closure is authorized.
+2B.9 coalesces final private-signature notifications, emits after history/revisions
+and commit, suppresses no-op extra notifications and discards rollback requests.
+Trusted carry/load retains explicit absence; plain input gains no authority. Eight
+new native methods plus six 2B.8 methods remained unexecuted; older suites remain
+separate. Three isolated empty-carrier checks passed without graph/SQLite/services.
+No 2B, Stage 1/2 or 022.03 acceptance was inferred. Retain all historical restart,
+undo, limits, scope, exhaustion, privacy and rollback gates in the current task.
 
 ## 022.03 clone-kernel foundation - 2026-11-15
 
-Baseline: 68ec127ea8e974ba3cdf582f38d2f5fc4223af6e. After the reported 2C timeout,
-the first bounded part supplies only an internal clone helper and four focused
-production-fixture tests, not setup transfer or Save As wiring. Existing source/
-destination encounters must have matching monster IDs and distinct ownership;
-any destination snapshot or counter history rejects. The helper validates stored
-source content and copies graphs/references/credits through the existing writer,
-starting verified destination revisions at 1 with fresh preparation times. It
-copies no source counter history and never writes source tracker rows or metadata.
-Caller authorization and outer atomic tracker creation remain caller duties.
-
-Both new Python files AST-parse. The four methods cover independent graph ownership/
-source immutability, fresh metadata, target guards, counter-only isolation and
-partial/outer rollback; they are prepared, not executed. No constructor/full-import,
-actual SQLite/kernel, service/HTTP/browser or CI pass is claimed. Existing discovery
-includes the module. [Staged plan and remaining requirements](../todo/223-statblock-lifecycle.md#2c-split-and-first-foundation---2026-11-15):
-2C.2 wires setup copy/move; 2C.3 wires Save As/live refresh and combined regressions.
-Each needs its own approved delivery. Root README/index/workflow identities remain
-unchanged; no workflow edit/dispatch. Intermediate [skip ci], schema 9, code/data
-backup rules and pending covering validation/acceptance remain. This foundation
-closes neither 2C nor 022.03; earlier 2B validation is not promoted.
+2C.1 supplied an internal matching-encounter clone kernel, not transfer/Save As
+wiring at that date. Source content/counters remain immutable; destination owners,
+revision/time and graph rows are independent, without exporting counter-only history.
+Four native methods were prepared/unexecuted; AST parsing did not establish a pass.
+Caller authorization and outer tracker-creation atomicity remain required.
 
 ## 022.03 stored-setup copy - 2026-11-16
 
-Baseline: d4d286d062e76b891992f01c160216b6786af1af. 2C.2a supplies a copy-only
-override in StatblockOperationsMixin. It resolves the source campaign/name binding,
-runs the inherited transfer unchanged, resolves its returned destination name and
-calls the trusted clone kernel inside an outer transaction. Clone failure therefore
-rolls back destination tracker creation and private writes together. Existing roster
-checks, name collision handling, cross-campaign effect cleanup and active_setup
-normalization remain inherited. Non-copy modes delegate directly; this is not move
-verification, protected-service integration or Save As delivery. Caller authorization
-remains unchanged. Earlier no-copy-wiring descriptions retain their dated scope.
-
-The prepared module contains six native-fixture methods for independent same/cross-
-campaign copies, source immutability, fresh metadata, late graph-write rollback,
-roster conflicts, absent/counter-only sources, source-scope failures, effect cleanup
-and collision naming. They are unexecuted. Both files AST-parse; the three existing
-mixin methods are AST-identical. Five isolated exact-override routing checks passed
-with a stub parent transfer/clone and minimal SQLite tables; they do not establish
-real transfer/kernel/native-schema success. Workflow discovery includes the new
-filename; no complete-module import, service/HTTP/browser or CI pass is claimed.
-
-[Remaining scope and validation gates](../todo/223-statblock-lifecycle.md#2c2a-stored-setup-copy---2026-11-16):
-2C.2b move preservation, 2C.2c protected service integration, 2C.3 Save As and earlier
-2B/2C validation remain open. README and root indexes were reviewed and left unchanged;
-no workflow edit/dispatch or run status check. Intermediate [skip ci], final Stage 3
-covering CI, schema 9 and matching code/data backup rules remain. Neither 2C.2a nor
-2C/022.03 is accepted merely by supplying this code and its tests.
+2C.2a added the copy-only storage override around inherited tracker transfer and
+private clone, resolving the actual returned name. Naming, roster/effect/reference
+rules remain inherited; other modes delegate. Six native methods were unexecuted;
+five isolated stub routing checks passed, not native transfer/kernel/schema tests.
+Source/input privacy and rollback gates remain; historical no-copy-wiring statements
+apply only to their earlier increments.
 
 ## 022.03 move-preservation regressions - 2026-11-16
 
-Baseline: e4473d93fcb9f2bf3033442bf70e141e5ce7e9a3. 2C.2b supplies four native-
-fixture regression methods, with no production-code change. Static inspection of
-transfer_setup, the upsert writer, private adapter's unchanged-content path and
-counter mixin found no demonstrated production gap; execution may still reveal one.
-The tests assert retained setup/encounter/monster ownership, exact private graph/
-counter rows, revision/preparation metadata, canonical stored runtime references,
-collision-target isolation, counter-only continuity through reopen at normal and
-maximum revisions, and late rollback of graph-bearing/counter-only moves including
-source last-setup binding. They also cover source-scope and destination-roster rejection
-and fail if a move invokes the clone helper or snapshot writer.
-
-The module AST-parses; all four production-fixture methods remain unexecuted.
-No actual move verification, full-module import, service/HTTP/browser or CI pass is
-claimed. Existing discovery includes the module; no workflow edit/dispatch or run
-status check. README/root indexes remain accurate for this regression-only scope
-and are unchanged. [Current gates](../todo/223-statblock-lifecycle.md#2c2b-move-preservation---2026-11-16)
-retain 2C.2c/2C.3 and earlier integration execution/corrections/acceptance. No schema,
-runtime, permission, release/deployment or acceptance change; intermediate [skip ci]
-and final Stage 3 covering CI remain. This delivery does not close 2C.2b or 022.03.
+2C.2b supplied four unexecuted native methods for ownership, exact metadata/counters,
+canonical references, collision/last-setup isolation, reopen/MAX_REVISION, rollback
+and scope/roster rejection. Static inspection found no demonstrated production gap,
+not proof that none exists. No production-code change or move acceptance was claimed.
 
 ## 022.03 protected-copy regressions - 2026-11-16
 
-Baseline: 0e246ca8b464bc178cdeca6db0be33ca0afdf5fe. Following the reported
-2C.2c timeout (cause unconfirmed), delivery is split into protected-copy tests
-(2C.2c.1), loaded-move/runtime preservation (2C.2c.2), then cross-cutting rollback,
-history/revision/notification/privacy and real actor/HTTP authorization (2C.2c.3).
-Save As remains 2C.3; earlier acceptance and validation requirements are retained.
-
-2C.2c.1 supplies three native-fixture methods using the actual campaign handler
-through transactional_handler: copy with collision naming, stable source/live
-metadata, independent destination ownership and fresh metadata, trusted destination
-loading, rollback after the real clone has written, and injected source/target
-campaign-gate denial before storage transfer. The existing copy handler already
-delegates to 2C.2a storage wiring; no production-code change is included. Gate
-injection tests routing, not actual actor authorization or an authenticated request.
-
-The module AST-parses; all three production-fixture methods are unexecuted. Five
-isolated exact-handler-body checks passed using stub context/storage for copy,
-target/source denial, missing source and transfer failure. They do not execute the
-protected wrapper, native persistence or real ownership/HTTP authorization. An
-initial notebook event-loop harness error was corrected by running the isolated
-harness in a worker thread; no application change was made. Full module/native
-execution and any demonstrated fixes remain pending.
-
-[Current split and gates](../todo/223-statblock-lifecycle.md#2c2c1-protected-copy---2026-11-16).
-Existing unittest discovery includes the new filename. README and root indexes
-remain accurate and unchanged. No workflow edit/dispatch or run-status check;
-intermediate [skip ci], final Stage 3 covering CI, schema 9 and matching code/data
-backup rules remain. No loaded-move/Save As delivery, new route, permission,
-release/deployment or whole-feature acceptance is implied.
+2C.2c.1 supplied three unexecuted protected-copy native methods and five isolated
+stub handler passes. Actual destination ownership, source/live metadata isolation,
+trusted loading, collision naming, late clone rollback and injected campaign denial
+were covered by prepared assertions, not executed integration/HTTP evidence.
 
 ## 022.03 loaded-move detachment - 2026-11-16
 
-Baseline: 32252413e88ed97cd51e7b33f747e82a86528eac. 2C.2c.2 wires only the
-existing moving_loaded_setup branch to an internal detachment helper before
-changed(). Authorization and storage transfer remain inherited. The saved setup
-moves with its encounter/monster owners, graphs, counters and metadata intact.
-The still-live source-campaign battle becomes unsaved and receives independent
-runtime ownership, revision 1 and fresh preparation time; counter-only source
-history is not exported. Old same-ID runtime content can otherwise have unrelated
-revisions or explicit-absence conflicts, so it is not an ordinary destination save.
-
-The helper requires an outer transaction and active-campaign setup reference,
-validates trusted carrier graphs, strips source revision/time for the new writer,
-persists fresh runtime tracker/private content, switches the singleton, and retires
-the superseded runtime encounter with owned children. It rejects old runtime owners
-shared with saved setups or recovery images before allocation/deletion. Plain state
-supplies no private snapshots; serialized private input rejects. Live assignment
-follows nested success; existing protected rollback restores the transfer, runtime
-binding/content and memory after later errors. No ordinary clearing authority is
-added. Non-native storage keeps legacy clearing; copies/background moves bypass it.
-
-Helper and test-module AST parsing passed. Nine isolated exact-helper checks passed
-with minimal SQLite and stub facade/private writer/capture: trusted/plain/empty
-state, no outer transaction, foreign reference, shared setup/recovery, serialized
-input and writer failure. A missing-copy-import harness error was corrected, not
-production. These checks do not exercise the actual schema/model/graph writer,
-service wrapper or full imports. Four native-fixture methods are prepared and
-unexecuted for stale same-ID runtime, moved ownership/collision isolation, runtime
-edit/reopen independence, absent/MAX_REVISION source history, late rollback, shared
-binding rejection and background routing. No native/HTTP/browser/CI pass is claimed.
-
-[Remaining gates](../todo/223-statblock-lifecycle.md#2c2c2-loaded-move-detachment---2026-11-16)
-retain 2C.2c.3, Save As 2C.3 and all earlier validation/corrections/acceptance. Earlier
-loaded-move-delivery-pending wording is superseded only for this bounded increment.
-README/root indexes remain accurate and unchanged; discovery includes the new test
-module. No workflow edit/dispatch or run-status check. Intermediate [skip ci], final
-Stage 3 covering CI, schema 9 and matching code/data backup rules remain; no viewer,
-new route, permissions, merge/deployment/release or whole-feature closure.
+2C.2c.2 wires only loaded moves to fresh runtime ownership before changed(), keeping
+the moved setup's owners/content/metadata/counters. The helper requires a protected
+outer transaction and active-campaign reference, validates trusted graphs and refuses
+shared setup/recovery ownership. Singleton replacement retires only the old exclusive
+runtime with owned children; plain input supplies no graphs and serialized private
+input rejects. Runtime revisions/time are fresh; counter-only source history is not
+exported. Copies/background moves bypass it; non-native clearing stays legacy.
+Four native methods were unexecuted; nine minimal-SQLite/stub helper checks passed,
+not schema/model/graph/service validation. Missing-import harness corrections were
+not production fixes. Broader history/privacy/authorization gates remain.
 
 ## 022.03 transfer-boundary regressions - 2026-11-16
 
-Baseline: 9400b9b60563e679bffe6fdd1cfa710c7bf30ed1. 2C.2c.3 supplies six
-regression methods, not an additional production-code change. Static review of
-feature boundary processing, protected transactions, the route registrar and real
-session/ownership checks found no demonstrated gap requiring another speculative
-fix. Execution may still reveal defects; this increment establishes no acceptance.
-
-Four native methods prepare coverage for copy undo-boundary clearing with unchanged
-live state/revision/no emission, checkpoint preservation, loaded-move final revision
-and saved runtime metadata at one post-commit emission, full rollback after actual
-copy/move history processing, missing-source pre-move checkpoint rejection, and
-privacy of responses/admin/display/JSON carrier projections. Notification observation
-uses a deferred-emitter seam, not actual WebSocket delivery.
-
-Two real-ASGI methods filter AdminAPI.register_routes to the existing transfer route,
-using production CampaignSetupAdd, AuthService session/role checks, ownership scope,
-transaction wrapper and native SQLite. Seeded in-memory sessions for admin/client/
-superadmin users exercise absent session, wrong role, foreign source/destination,
-cross-origin and invalid-mode rejection with no transfer/write; owner copy and loaded
-move plus superadmin copy assert response privacy and actor cleanup. This prepares
-selected authenticated endpoint coverage, not login/password, full server startup,
-listeners, browser or socket verification. No test is skipped or weakened to claim
-completion.
-
-The module AST-parses. All four native and two ASGI methods are unexecuted; there is
-no native, HTTP/authorization, full-import or CI pass. Existing workflow discovery
-includes the filename; no workflow edit/dispatch or run-status check. README/root
-indexes remain accurate and unchanged. [Current gates](../todo/223-statblock-lifecycle.md#2c2c3-transfer-boundaries---2026-11-16)
-retain execution/review/corrections for all earlier increments, Save As 2C.3, bundles
-and covering validation/acceptance. Earlier 2C.2c.3-delivery-pending descriptions are
-superseded only for regression preparation. Intermediate [skip ci], final Stage 3
-covering CI, schema 9 and matching code/data backups remain. Neither 2C.2c, 2C nor
-022.03 is accepted or closed by supplying these tests.
+2C.2c.3 supplied four native and two selected-route ASGI methods, all unexecuted.
+Prepared coverage includes history/revision boundaries, checkpoint preservation,
+commit-only notifications, late rollback, missing-source checkpoint rejection and
+privacy. ASGI uses actual route/model/AuthService/ownership/SQLite with seeded
+sessions, not login/password/full-server/browser/socket validation. Notification
+observation uses a deferred-emitter seam. The module AST-parsed; no native/HTTP/
+authorization/CI pass or feature acceptance was claimed.
 
 ## 022.03 Save As kernel - 2026-11-16
 
-Baseline: bfea8bb3ae4234c3fe1689607ac9b6e05e4be1a2. At the user's request,
-2C.3 is split into 2C.3a internal new-destination kernel, 2C.3b existing-handler/
-live-metadata integration and ordinary-save/overwrite distinctions, then 2C.3c
-combined protected regressions and acceptance reconciliation. Earlier gates remain.
+2C.3a supplies native schema-9 save_new_setup: caller-authorized canonical campaign/
+name and setup projection, trusted live private content, new destination rejection
+for existing names, atomic tracker/private writes, independent ownership/revision 1/
+fresh time, immutable source/input and returned saved metadata. Plain input contributes
+no graphs; serialized private input rejects. Four native methods were unexecuted;
+two files AST-parsed. The kernel-only delivery had no handler wiring; 2C.3b supplies
+that integration without promoting earlier evidence. 2C.3c remains combined protected
+Save As/copy/move/history/notification/privacy/authorization and acceptance work.
 
-2C.3a supplies save_new_setup in python/scrying_glass_statblock_save_as.py for native
-schema 9. Caller owns authorization, canonical names and the existing setup projection.
-The helper validates trusted live carrier graphs, not potentially stale stored source
-content, strips source revision/time, rejects existing destinations and atomically
-saves tracker rows plus independent destination-private content. It returns saved
-metadata for later service refresh without changing the source/input state. Plain
-input contributes no snapshots; serialized private fields reject. The save handler
-is not wired in this increment, so this is a foundation, not a complete Save As flow.
-Ordinary save/overwrite, roster/service integration and permissions remain unchanged.
+## 022.03 Save As handler integration - 2026-11-16
 
-Four native-fixture methods prepare coverage for live unsaved tracker/private edits,
-fresh independent ownership and return-map isolation, source/input immutability,
-existing target rejection, late writer rollback and plain/empty/forged authority.
-Both new Python files passed AST parsing; all four native methods are unexecuted.
-No full imports, native persistence, service/HTTP/browser or CI success is claimed.
-[Split and current gates](../todo/223-statblock-lifecycle.md#2c3a-new-destination-save-as-kernel---2026-11-16)
-retain 2C.3b/2C.3c, earlier test execution/corrections, bundles and acceptance.
+Baseline: 13cc61b95fa3e62ec9e1f2a6a85ec0dcff981e5d. 2C.3b adds protected
+save_setup_with_private and narrow existing AdminSetupsMixin.save_setup wiring.
+Authorization and active-campaign checks still precede writes. New native destinations
+use 2C.3a. Same-owner saves retain revision/stale guards; other existing destinations
+rebase incoming revision/time onto destination-owned counter history, without owner
+or ledger resets. Surviving private omission rejects, not clears. Plain state retains
+existing destination metadata without importing source authority. Legacy storage
+keeps its save path and returns no metadata refresh request.
 
-Existing unittest discovery includes the new test filename. README/root indexes
-remain accurate and unchanged; no workflow edit/dispatch or run-status check.
-Intermediate [skip ci], final Stage 3 covering CI, schema 9 and matching code/data
-backup rules remain; no new route, viewer, merge/deployment/release or feature closure.
+The handler saves the roster, updates active/last-setup references, then refreshes
+live private metadata from the stored destination before changed() and transaction-
+end flush. Native calls require the protected outer transaction; existing rollback
+restores database and live state after later roster/reference/refresh failures.
+No route, permissions, schema, import or ordinary clearing authority changes.
+
+Executed during preparation: ten isolated exact-helper tests using simplified SQLite/
+JSON bindings and stub native facade, capture, kernel and private adapter; five
+changed-handler routing/order tests with stub helper/context. All fifteen passed.
+The first handler-harness run had five missing-asyncio-import errors; correcting
+the harness and rerunning produced five passes, not an application fix. These are
+not native-schema, actual graph-writer, full-module or protected integration results.
+Helper, changed handler method and six-method native regression module AST-parsed.
+Six native methods remain unexecuted for new/live and unsaved-runtime Save As,
+ordinary/no-op/stale saves, overwrite history/source isolation, omission and rollback
+after roster writes/live refresh.
+
+Local checkout/test files and FastAPI were checked and are absent. GitHub exposes
+file tools but no test runner/dispatch here. The user's test request selects a
+CI-enabled code/test push with no [skip ci], superseding earlier intermediate CI
+skip/deferral for this delivery. The existing workflow discovers the new filename;
+no workflow edit or separate dispatch is included. A configured/expected run is not
+an observed trigger, completion or pass. Review user-published run/log evidence
+against the actual pushed commit and attempt; correct failures with fresh approval.
+Final Stage 3 covering validation remains required; docs-only commits still skip CI.
+
+[Current contracts, test counts, pending work and acceptance gates](../todo/223-statblock-lifecycle.md#2c3b-save-handler-integration---2026-11-16).
+Implementation delivery is not acceptance: 2C.3c, earlier execution/corrections,
+2D/bundles and Stage 1/2/022.03 remain open. README/root indexes were reviewed and
+remain accurate/unchanged. Schema stays 9; deploy matching complete code/data only
+after validation/acceptance, keep matching storage/config/media/code backups, and
+never roll old code alone over ledger-bearing data. No viewer/provider/listener,
+merge/deployment/release or whole-feature closure is implied.
 
 ## Documentation entry points
 
