@@ -225,17 +225,23 @@ Planned separate corrective commits; no assertion skipping or validation weakeni
    reconstruction; original harness reproduced seven errors and disabled pruning
    failed the new pruning check. Native package imports and CI remain pending.
    [Evidence and limits](../handover/140-viewer-ownership-fixtures.md#service-ast-harness-correction---2026-11-16).
-3. Snapshot AST extraction harness: prepared module/package context and transaction
-   fixture correction. Original sixteen snapshot checks reproduced two context errors;
-   package context alone reproduced two missing-transaction errors. Nineteen corrected
-   snapshot checks passed against four inspected method bodies and an unused decoder
-   double; disabling the row guard made the added invalid-load check error. Three new
-   regressions retain original boundary assertions and test fixture rollback/seed
-   preservation. WebSocket tests are AST-unchanged, not rerun here. Native imports,
-   graph/transaction integration and CI remain pending.
+3. Snapshot AST extraction harness: delivered at d68cccc128c8444d7fd6b917d7970820e857a17f.
+   Corrected module/package context and transaction fixture. Original sixteen snapshot
+   checks reproduced two context errors; context alone exposed two transaction errors.
+   Nineteen corrected checks passed against four inspected method bodies and an unused
+   decoder double; disabling the row guard made the added invalid-load check error.
+   Three new regressions preserve original assertions and test rollback/seed retention.
+   WebSocket tests are AST-unchanged, not rerun here. Native imports, graph/transaction
+   integration and CI remain pending.
    [Evidence and limits](../handover/140-viewer-ownership-fixtures.md#snapshot-ast-harness-correction---2026-11-16).
-4. Revision-test mutation producer: stale self-digest error; pending. Keep strict
-   digest validation and original counter/revision assertions.
+4. Revision-test mutation producer: prepared removal of obsolete content_digest before
+   content mutation, retaining all four original rebuild assertions and adding label/
+   digest checks. Added a native stale-digest rejection test asserting unchanged SQL,
+   tracker HP and counter/header revisions. Both changed methods compile/AST-parse;
+   four isolated canonicalization/digest-calculation checks passed, not production
+   validation or persistence. Changed/added native tests and final CI remain pending.
+   Strict production digest validation is unchanged.
+   [Evidence and limits](../handover/140-viewer-ownership-fixtures.md#revision-test-digest-mutation-correction---2026-11-16).
 5. Facade mocked-copy boundary: no persisted destination binding; pending.
 6. Facade copy fixture: schema-3 fixture reaches schema-9-only cloning; pending.
 7. Facade dispatch expectation: old save_setup module pin; pending. Retain behavior
@@ -246,8 +252,8 @@ Planned separate corrective commits; no assertion skipping or validation weakeni
    pending implementation with selected/life-filtered mapping, independent revisions,
    rollback and privacy coverage. Planned final corrective commit enables CI.
 
-Issues 1-2 are delivered; only issue 3 is prepared in this delivery. Corrections
-4-9 are not supplied. The final corrective push will omit [skip ci] and its run
+Issues 1-3 are delivered; only issue 4 is prepared in this delivery. Corrections
+5-9 are not supplied. The final corrective push will omit [skip ci] and its run
 must be reviewed. No manual dispatch, workflow edit, 2C.3c/2D completion, bundle
 work, final Stage 3 validation or feature acceptance is implied by this sequence
 or by a future green configured suite. New failures need diagnosis/fresh approval.

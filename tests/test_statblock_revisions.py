@@ -223,12 +223,30 @@ class ProductionRevisionTests(unittest.TestCase):
         with patch.object(self.storage, '_save_entities', side_effect=self.rebuild):
             unchanged = api.save(encounter, before)
             self.assertEqual(unchanged[adapter.PRIVATE_KEY], before[adapter.PRIVATE_KEY])
+            unchanged[adapter.PRIVATE_KEY]['m'].pop('content_digest', None)
             unchanged[adapter.PRIVATE_KEY]['m']['source_label'] = 'Changed'
             changed = api.save(encounter, unchanged)
         row = api._rows(encounter)['m']
         self.assertEqual(changed[adapter.PRIVATE_KEY]['m']['revision'], 2)
         self.assertEqual(subject.revision_head(self.storage.connection, row), 2)
         self.assertEqual(self.api.save(row, self.sample(), expected_revision=2)['revision'], 3)
+        self.assertEqual(changed[adapter.PRIVATE_KEY]['m']['source_label'], 'Changed')
+        self.assertNotEqual(changed[adapter.PRIVATE_KEY]['m']['content_digest'],
+                            before[adapter.PRIVATE_KEY]['m']['content_digest'])
+
+    def test_stale_content_digest_rejects_without_changing_tracker_or_counter(self):
+        self.saved(); encounter, api = self.encounter_api()
+        state = api.load(encounter)
+        state['monsters'][0]['hp'] = 1
+        state[adapter.PRIVATE_KEY]['m']['source_label'] = 'Changed with stale digest'
+        before = list(self.storage.connection.iterdump())
+        with self.assertRaisesRegex(ValueError, 'digest_mismatch'):
+            api.save(encounter, state)
+        self.assertEqual(list(self.storage.connection.iterdump()), before)
+        self.assertEqual(subject.revision_head(self.storage.connection, self.monster), 1)
+        self.assertEqual(self.api.load(self.monster)['revision'], 1)
+        self.assertEqual(self.storage.load_setup(self.campaign, 'one')['monsters'][0]['hp'], 12)
+        self.assertFalse(self.storage.connection.in_transaction)
 
     def test_late_rebuild_failure_rolls_back_counter_and_tracker(self):
         self.counter_only(); before = self.storage.load_setup(self.campaign, 'one')

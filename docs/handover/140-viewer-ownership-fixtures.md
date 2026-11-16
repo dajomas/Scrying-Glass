@@ -145,3 +145,31 @@ Only the snapshot harness and existing handover/TODO tracking change here. This
 intermediate push uses [skip ci], without workflow edits or separate dispatch.
 Corrections 4-9 remain separate; README and root index links remain applicable.
 [Current status and wider gates](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).
+
+## Revision-test digest mutation correction - 2026-11-16
+
+Correction 4 baseline is d68cccc128c8444d7fd6b917d7970820e857a17f, the delivered
+snapshot-harness correction. The revision rebuild test now removes the old
+content_digest before changing source_label. All four original no-op/revision/
+counter assertions remain, with added checks for the saved label and changed digest.
+A new native regression submits changed content with its stale digest plus a
+tracker HP edit, expecting digest_mismatch and unchanged SQL dump, counter/header
+revision, persisted HP and transaction state. No production validator or save path
+is changed; malformed supplied digests still must fail closed.
+
+Inspected test blob: 577f15bf1278701adec5b27cd723d9020526da52; model:
+4b51b2acf162f30b48de107905a78ba395554d2b; adapter:
+8a5bc1c2389f22aa50ecdf8ac7795136c4526be4. Both changed test methods AST-parse
+and compile; all four original assertions remain in their ASTs. Four isolated
+checks of the inspected canonicalization body and SHA-256 calculation passed:
+old mutation retains a mismatching digest, removing it permits a fresh different
+digest, revision/time-only changes preserve content digest, and canonicalization
+leaves its input unchanged. These checks did not execute production validation,
+SQLite writes, rebuilds, atomic rejection or the complete native module. The
+changed native method, added rejection regression and covering CI remain pending.
+
+Only the revision test and existing handover/TODO tracking change. This intermediate
+push uses [skip ci], with no workflow edit or separate dispatch. Corrections 5-9
+remain separate, and wider 022.03/Stage 3 acceptance gates remain open.
+README, root indexes and runtime/backup guidance remain unchanged and applicable.
+[Current status](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).
