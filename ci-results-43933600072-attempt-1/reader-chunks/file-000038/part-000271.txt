@@ -1,0 +1,31 @@
+Standalone Python browser and audit checks	2026-11-16T19:00:17.5830712Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.5831061Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.5831594Z   File "python/scrying_glass_monster_selection.py", line 196, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.5832343Z     sources = ft.configured_sources(display)
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.5833014Z   File "/tmp/scrying-tests-jw_umbha/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.5833974Z     raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.5835006Z ValueError: fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.6433015Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.6434214Z test_fivetools_source_configuration.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.6435399Z Ran 12 tests in 0.067s
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.6435741Z 
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.6435973Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.6594130Z Connection audit: test_healing_max_hp_cap.py
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.7223447Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.7223879Z Ran 12 tests in 0.002s
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.7224003Z 
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.7224244Z test_healing_max_hp_cap.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.7224561Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.7342143Z Connection audit: test_image_lookup_partial.py
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.7954162Z Combined monster lookup: D&D Beyond did not respond (The read operation timed out)
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.7955090Z Combined monster lookup: 5e.tools did not respond (The read operation timed out)
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.7955913Z Combined monster lookup: Open5e did not respond (The read operation timed out)
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.7962820Z Combined monster lookup: Open5e did not respond (The read operation timed out)
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.7963575Z test_image_lookup_partial.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.7983181Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.7984074Z Ran 4 tests in 0.001s
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.7984439Z 
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.7984664Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:17.8080173Z Connection audit: test_independent_panel_controls.py
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:20.1596061Z ----------------------------------------------------------------------
+tests	Standalone Python browser and

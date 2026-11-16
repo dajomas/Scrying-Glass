@@ -1,0 +1,23 @@
+pTests.test_returned_candidates_are_independent_deep_copies) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.4991778Z test_same_name_candidates_are_not_collapsed_or_field_merged (test_combined_monster_lookup.CombinedLookupTests.test_same_name_candidates_are_not_collapsed_or_field_merged) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.4992998Z test_secondary_failure_discards_primary_candidates_and_tokens (test_combined_monster_lookup.CombinedLookupTests.test_secondary_failure_discards_primary_candidates_and_tokens) ... Combined monster lookup: 5e.tools did not respond (secret)
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.4993643Z ok
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.4994157Z test_two_successful_zero_match_searches_are_not_errors (test_combined_monster_lookup.CombinedLookupTests.test_two_successful_zero_match_searches_are_not_errors) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.5305540Z test_both_selected_sources_survive_creation_and_storage_reopen (test_combined_monster_lookup_application.CombinedLookupApplicationTests.test_both_selected_sources_survive_creation_and_storage_reopen) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.5504549Z test_disabled_providers_and_empty_source_list_make_no_disabled_requests (test_combined_monster_lookup_application.CombinedLookupApplicationTests.test_disabled_providers_and_empty_source_list_make_no_disabled_requests) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.5687543Z test_either_provider_failure_blocks_candidates_signing_and_mutation (test_combined_monster_lookup_application.CombinedLookupApplicationTests.test_either_provider_failure_blocks_candidates_signing_and_mutation) ... D&D Beyond candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.5688350Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.5688987Z   File "/tmp/scrying-tests-b71kyz78/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.5689636Z     hits = context.dnd_monster_candidates(species)
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.5690245Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.5690825Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.5691165Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.5692127Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.5692716Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.5693057Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.5693672Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.5694196Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.5694479Z TimeoutError: secret D&D endpoint
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.5694964Z Combined monster lookup: D&D Beyond did not respond (secret D&D endpoint)
+tests	Python test suite (including browser fixtures)	2026-11-16T18:56:02.5728524Z 5e.tools candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-16T18:

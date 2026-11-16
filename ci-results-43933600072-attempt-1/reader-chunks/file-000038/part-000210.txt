@@ -1,0 +1,47 @@
+sts	2026-11-16T18:58:02.7870926Z ok 3 - failed refresh after success is a separate no-replay error
+tests	JavaScript tests	2026-11-16T18:58:02.7871699Z   ---
+tests	JavaScript tests	2026-11-16T18:58:02.7872533Z   duration_ms: 1.993677
+tests	JavaScript tests	2026-11-16T18:58:02.7872836Z   type: 'test'
+tests	JavaScript tests	2026-11-16T18:58:02.7873032Z   ...
+tests	JavaScript tests	2026-11-16T18:58:02.7889594Z # Subtest: manual refresh failure is a persistent tools error and success resolves it
+tests	JavaScript tests	2026-11-16T18:58:02.7890898Z ok 4 - manual refresh failure is a persistent tools error and success resolves it
+tests	JavaScript tests	2026-11-16T18:58:02.7891330Z   ---
+tests	JavaScript tests	2026-11-16T18:58:02.7891566Z   duration_ms: 1.759417
+tests	JavaScript tests	2026-11-16T18:58:02.7891969Z   type: 'test'
+tests	JavaScript tests	2026-11-16T18:58:02.7892197Z   ...
+tests	JavaScript tests	2026-11-16T18:58:02.7910084Z # Subtest: encounter scope change clears tools records and stale completion cannot publish
+tests	JavaScript tests	2026-11-16T18:58:02.7910841Z ok 5 - encounter scope change clears tools records and stale completion cannot publish
+tests	JavaScript tests	2026-11-16T18:58:02.7911149Z   ---
+tests	JavaScript tests	2026-11-16T18:58:02.7911316Z   duration_ms: 2.263086
+tests	JavaScript tests	2026-11-16T18:58:02.7911493Z   type: 'test'
+tests	JavaScript tests	2026-11-16T18:58:02.7911653Z   ...
+tests	JavaScript tests	2026-11-16T18:58:02.7923783Z # Subtest: checkpoint restore success uses the page lane and survives the setup transition
+tests	JavaScript tests	2026-11-16T18:58:02.7933082Z ok 6 - checkpoint restore success uses the page lane and survives the setup transition
+tests	JavaScript tests	2026-11-16T18:58:02.7933551Z   ---
+tests	JavaScript tests	2026-11-16T18:58:02.7933786Z   duration_ms: 1.418734
+tests	JavaScript tests	2026-11-16T18:58:02.7934064Z   type: 'test'
+tests	JavaScript tests	2026-11-16T18:58:02.7934275Z   ...
+tests	JavaScript tests	2026-11-16T18:58:02.7934674Z # Subtest: busy duplicate is suppressed without starting feedback
+tests	JavaScript tests	2026-11-16T18:58:02.7935103Z ok 7 - busy duplicate is suppressed without starting feedback
+tests	JavaScript tests	2026-11-16T18:58:02.7935352Z   ---
+tests	JavaScript tests	2026-11-16T18:58:02.7935505Z   duration_ms: 1.420428
+tests	JavaScript tests	2026-11-16T18:58:02.7935687Z   type: 'test'
+tests	JavaScript tests	2026-11-16T18:58:02.7935837Z   ...
+tests	JavaScript tests	2026-11-16T18:58:02.7995339Z 1..7
+tests	JavaScript tests	2026-11-16T18:58:02.7995604Z # tests 7
+tests	JavaScript tests	2026-11-16T18:58:02.7995825Z # suites 0
+tests	JavaScript tests	2026-11-16T18:58:02.7996053Z # pass 7
+tests	JavaScript tests	2026-11-16T18:58:02.8002416Z # fail 0
+tests	JavaScript tests	2026-11-16T18:58:02.8002662Z # cancelled 0
+tests	JavaScript tests	2026-11-16T18:58:02.8002858Z # skipped 0
+tests	JavaScript tests	2026-11-16T18:58:02.8003053Z # todo 0
+tests	JavaScript tests	2026-11-16T18:58:02.8003246Z # duration_ms 623.799773
+tests	JavaScript tests	2026-11-16T18:58:02.8213186Z ##[endgroup]
+tests	JavaScript tests	2026-11-16T18:58:02.8215894Z ##[group]tests/fivetools-source-labels.test.cjs
+tests	JavaScript tests	2026-11-16T18:58:02.9484732Z TAP version 13
+tests	JavaScript tests	2026-11-16T18:58:02.9817626Z # Optional monster stats lookup failed: Error: Fixture provider unavailable
+tests	JavaScript tests	2026-11-16T18:58:02.9818540Z #     at c.request (/tmp/scrying-tests-gev4tovt/repo/tests/fivetools-source-labels.test.cjs:83:31)
+tests	JavaScript tests	2026-11-16T18:58:02.9819279Z #     at Object.lookupMonsterSpeciesStats (evalmachine.<anonymous>:90:34)
+tests	JavaScript tests	2026-11-16T18:58:02.9820114Z #     at TestContext.<anonymous> (/tmp/scrying-tests-gev4tovt/repo/tests/fivetools-source-labels.test.cjs:84:13)
+tests	JavaScript tests	2026-11-16T18:58:02.9820862Z #     at Test.runInAsyncScope (node:async_hooks:214:14)
+tests	JavaScript tests	2026-11-16T18:58:02.9821363Z #   

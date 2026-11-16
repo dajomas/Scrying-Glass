@@ -1,0 +1,28 @@
+it checks	2026-11-16T19:00:56.6082920Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6083402Z   File "/tmp/scrying-tests-jw_umbha/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6083798Z     html = context.dnd_monster_detail_html(href)
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6084184Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6084547Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6084764Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6085132Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6085583Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6085831Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6086230Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6086593Z     raise result
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6086752Z OSError: secret
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6087008Z Combined monster lookup: D&D Beyond did not respond (secret)
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6088156Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6088456Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6088950Z   File "/tmp/scrying-tests-jw_umbha/repo/python/scrying_glass_monster_selection.py", line 202, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6089404Z     for monster in _fivetools_source_data(root, index, source):
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6089692Z                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6090144Z   File "/tmp/scrying-tests-jw_umbha/repo/python/scrying_glass_monster_selection.py", line 154, in _fivetools_source_data
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6090660Z     raise ValueError("Configured source is missing from the provider index")
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6091038Z ValueError: Configured source is missing from the provider index
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6092177Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6092581Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6093084Z   File "/tmp/scrying-tests-jw_umbha/repo/python/scrying_glass_monster_selection.py", line 202, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6093522Z     for monster in _fivetools_source_data(root, index, source):
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6093814Z                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6094247Z   File "/tmp/scrying-tests-jw_umbha/repo/python/scrying_glass_monster_selection.py", line 154, in _fivetools_source_data
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6094754Z     raise ValueError("C

@@ -1,0 +1,29 @@
+onfigured source is missing from the provider index")
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6095125Z ValueError: Configured source is missing from the provider index
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6095312Z 
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6095498Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6095691Z 
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6095791Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6096278Z   File "/tmp/scrying-tests-jw_umbha/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6096643Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6096989Z   File "/tmp/scrying-tests-jw_umbha/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6097376Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6097626Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6098050Z   File "/tmp/scrying-tests-jw_umbha/repo/python/scrying_glass_monster_selection.py", line 222, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6098566Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6099103Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6100360Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6100692Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6101162Z   File "/tmp/scrying-tests-jw_umbha/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6101529Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6102027Z   File "/tmp/scrying-tests-jw_umbha/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6102423Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6102673Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6103059Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6103414Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6103721Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6104092Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6104472Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6104726Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T19:00:56.6105118Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-16T19:0
