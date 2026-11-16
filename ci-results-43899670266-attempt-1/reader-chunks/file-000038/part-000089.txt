@@ -1,0 +1,27 @@
+xt.dnd_monster_detail_html(href)
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7193197Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7193741Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7194063Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7194639Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7195209Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7195552Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7196151Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7196686Z     raise result
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7196893Z OSError: secret
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7197247Z Combined monster lookup: D&D Beyond did not respond (secret)
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7197588Z ok
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7215910Z test_missing_configured_book_blocks_partial_candidates (test_monster_candidate_selection.CandidateTests.test_missing_configured_book_blocks_partial_candidates) ... 5e.tools candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7217684Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7218946Z   File "/tmp/scrying-tests-8gdljcak/repo/python/scrying_glass_monster_selection.py", line 202, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7220290Z     for monster in _fivetools_source_data(root, index, source):
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7221110Z                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7222630Z   File "/tmp/scrying-tests-8gdljcak/repo/python/scrying_glass_monster_selection.py", line 154, in _fivetools_source_data
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7224127Z     raise ValueError("Configured source is missing from the provider index")
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7225253Z ValueError: Configured source is missing from the provider index
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7226159Z Combined monster lookup failed for 5e.tools
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7226838Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7228407Z   File "/tmp/scrying-tests-8gdljcak/repo/python/scrying_glass_monster_selection.py", line 202, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7229704Z     for monster in _fivetools_source_data(root, index, source):
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7230502Z                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7232065Z   File "/tmp/scrying-tests-8gdljcak/repo/python/scrying_glass_monster_selection.py", line 154, in _fivetools_source_data
+tests	Python test suite (including browser fixtures)	2026-11-16T15:48:05.7233517Z     raise ValueError("Configured

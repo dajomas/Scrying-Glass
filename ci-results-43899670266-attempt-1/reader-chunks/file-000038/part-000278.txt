@@ -1,0 +1,28 @@
+ests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9853152Z ValueError: Configured source is missing from the provider index
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9856749Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9857203Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9857837Z   File "/tmp/scrying-tests-_r9ns04e/repo/python/scrying_glass_monster_selection.py", line 202, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9858512Z     for monster in _fivetools_source_data(root, index, source):
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9858926Z                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9859572Z   File "/tmp/scrying-tests-_r9ns04e/repo/python/scrying_glass_monster_selection.py", line 154, in _fivetools_source_data
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9860313Z     raise ValueError("Configured source is missing from the provider index")
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9860863Z ValueError: Configured source is missing from the provider index
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9861133Z 
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9861418Z The above exception was the direct cause of the following exception:
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9861936Z 
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9862086Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9862688Z   File "/tmp/scrying-tests-_r9ns04e/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9863228Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9863752Z   File "/tmp/scrying-tests-_r9ns04e/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9864329Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9864685Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9865323Z   File "/tmp/scrying-tests-_r9ns04e/repo/python/scrying_glass_monster_selection.py", line 222, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9866103Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9866899Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9869173Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9869739Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9879818Z   File "/tmp/scrying-tests-_r9ns04e/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9880411Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9881171Z   File "/tmp/scrying-tests-_r9ns04e/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9882057Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-16T15:54:05.9882434Z             ~~~~~~~~~~~
