@@ -1,0 +1,49 @@
+: patch retains encoded URL, method, headers and exact JSON values
+tests	JavaScript tests	2026-11-16T19:45:53.9500720Z ok 11 - patch retains encoded URL, method, headers and exact JSON values
+tests	JavaScript tests	2026-11-16T19:45:53.9501107Z   ---
+tests	JavaScript tests	2026-11-16T19:45:53.9501354Z   duration_ms: 0.9505
+tests	JavaScript tests	2026-11-16T19:45:53.9501697Z   type: 'test'
+tests	JavaScript tests	2026-11-16T19:45:53.9501973Z   ...
+tests	JavaScript tests	2026-11-16T19:45:53.9600076Z # Subtest: duplicate same-field patch stays guarded through refresh
+tests	JavaScript tests	2026-11-16T19:45:53.9600824Z ok 12 - duplicate same-field patch stays guarded through refresh
+tests	JavaScript tests	2026-11-16T19:45:53.9601283Z   ---
+tests	JavaScript tests	2026-11-16T19:45:53.9601540Z   duration_ms: 7.185874
+tests	JavaScript tests	2026-11-16T19:45:53.9601846Z   type: 'test'
+tests	JavaScript tests	2026-11-16T19:45:53.9602104Z   ...
+tests	JavaScript tests	2026-11-16T19:45:53.9602556Z # Subtest: old-scope cleanup cannot remove a newer pending guard
+tests	JavaScript tests	2026-11-16T19:45:53.9603420Z ok 13 - old-scope cleanup cannot remove a newer pending guard
+tests	JavaScript tests	2026-11-16T19:45:53.9603830Z   ---
+tests	JavaScript tests	2026-11-16T19:45:53.9604083Z   duration_ms: 2.241993
+tests	JavaScript tests	2026-11-16T19:45:53.9604364Z   type: 'test'
+tests	JavaScript tests	2026-11-16T19:45:53.9604619Z   ...
+tests	JavaScript tests	2026-11-16T19:45:53.9605098Z # Subtest: different field patches have independent pending identities
+tests	JavaScript tests	2026-11-16T19:45:53.9605782Z ok 14 - different field patches have independent pending identities
+tests	JavaScript tests	2026-11-16T19:45:53.9606212Z   ---
+tests	JavaScript tests	2026-11-16T19:45:53.9606444Z   duration_ms: 1.354055
+tests	JavaScript tests	2026-11-16T19:45:53.9606742Z   type: 'test'
+tests	JavaScript tests	2026-11-16T19:45:53.9606981Z   ...
+tests	JavaScript tests	2026-11-16T19:45:53.9607447Z # Subtest: successful refresh settles only its matching refresh error
+tests	JavaScript tests	2026-11-16T19:45:53.9608163Z ok 15 - successful refresh settles only its matching refresh error
+tests	JavaScript tests	2026-11-16T19:45:53.9608590Z   ---
+tests	JavaScript tests	2026-11-16T19:45:53.9608830Z   duration_ms: 1.362667
+tests	JavaScript tests	2026-11-16T19:45:53.9609194Z   type: 'test'
+tests	JavaScript tests	2026-11-16T19:45:53.9609378Z   ...
+tests	JavaScript tests	2026-11-16T19:45:53.9609679Z # Subtest: same IDs in different rosters do not replace each other
+tests	JavaScript tests	2026-11-16T19:45:53.9610092Z ok 16 - same IDs in different rosters do not replace each other
+tests	JavaScript tests	2026-11-16T19:45:53.9610363Z   ---
+tests	JavaScript tests	2026-11-16T19:45:53.9610545Z   duration_ms: 0.888228
+tests	JavaScript tests	2026-11-16T19:45:53.9610747Z   type: 'test'
+tests	JavaScript tests	2026-11-16T19:45:53.9610931Z   ...
+tests	JavaScript tests	2026-11-16T19:45:53.9611292Z # Subtest: characters patch: loaded Join owner still reports one global rejection
+tests	JavaScript tests	2026-11-16T19:45:53.9611782Z ok 17 - characters patch: loaded Join owner still reports one global rejection
+tests	JavaScript tests	2026-11-16T19:45:53.9612097Z   ---
+tests	JavaScript tests	2026-11-16T19:45:53.9612279Z   duration_ms: 1.72414
+tests	JavaScript tests	2026-11-16T19:45:53.9612477Z   type: 'test'
+tests	JavaScript tests	2026-11-16T19:45:53.9612643Z   ...
+tests	JavaScript tests	2026-11-16T19:45:53.9612985Z # Subtest: characters bulk: loaded Join owner still reports one global rejection
+tests	JavaScript tests	2026-11-16T19:45:53.9613460Z ok 18 - characters bulk: loaded Join owner still reports one global rejection
+tests	JavaScript tests	2026-11-16T19:45:53.9613764Z   ---
+tests	JavaScript tests	2026-11-16T19:45:53.9613935Z   duration_ms: 1.785529
+tests	JavaScript tests	2026-11-16T19:45:53.9614138Z   type: 'test'
+tests	JavaScript tests	2026-11-16T19:45:53.9614307Z   ...
+tests	JavaScript tests	2

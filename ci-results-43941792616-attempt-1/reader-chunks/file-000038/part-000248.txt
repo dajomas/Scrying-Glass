@@ -1,0 +1,33 @@
+aScript tests	2026-11-16T19:46:24.9019471Z # duration_ms 3047.47459
+tests	JavaScript tests	2026-11-16T19:46:24.9442594Z ##[endgroup]
+tests	Standalone Python browser and audit checks	﻿2026-11-16T19:46:24.9478856Z ##[group]Run status=0
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9479386Z ^[[36;1mstatus=0^[[0m
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9479599Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9479860Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9480086Z ^[[36;1m  args=()^[[0m
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9480330Z ^[[36;1m  if [[ "$test" == tests/audit_log_clear.py ]]; then^[[0m
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9480605Z ^[[36;1m    args=(patched)^[[0m
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9480813Z ^[[36;1m  fi^[[0m
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9481101Z ^[[36;1m  python tools/run_split_tests.py -- python "$test" "${args[@]}" || status=1^[[0m
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9481442Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9481812Z ^[[36;1mdone < <(find tests -type f -name '*.py' ! -name 'test_*.py' ! -name '__init__.py' -print0 | sort -z)^[[0m
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9482194Z ^[[36;1mexit "$status"^[[0m
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9528437Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9528729Z env:
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9529286Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9529829Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9530178Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9530532Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9530844Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9531166Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9531481Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9531755Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:24.9642635Z ##[group]tests/audit_connection_lifetime.py
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:25.2599393Z Connection audit: test_accounts.py
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:27.2306564Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:27.2307163Z Ran 13 tests in 1.888s
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:27.2307333Z 
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:27.2307472Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:27.2310042Z test_accounts.py: connections opened: 18; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:27.2782081Z Connection audit: test_activity_life_states.py
+tests	Standalone Python browser and audit checks	2026-11-16T19:46:28.2668192Z ---------------------------------------------------------
