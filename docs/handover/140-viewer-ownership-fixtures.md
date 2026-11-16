@@ -113,3 +113,23 @@ This close-out changes documentation only and uses [skip ci], with no workflow
 edit or manual dispatch. README and HANDOVER.md index links remain applicable and
 unchanged. TODO.md removes stale initial-adapter/CI-pending summaries for 022.03;
 other index entries remain untouched. Historical source handovers stay dated history.
+
+## 2C.3c first combined-operation slice - 2026-11-16
+
+Prepared tests/test_statblock_combined_setup_operations.py adds two native protected
+regressions using the existing Save As/recovery fixtures, not a new production path.
+One sequence covers live Save As, cross-campaign copy, loaded move with collision,
+independent runtime and runtime Save As: exact saved owners/graphs/bindings, fresh
+metadata, source preservation, two checkpoints, reload, missing-source recovery
+rejection, private projections and foreign-key checks. The second injects failure
+after real final-Save-As history/revision processing and asserts exact SQL/live/undo/
+reference rollback while earlier committed copy/move operations remain committed.
+
+Validation: the new module compiles and AST-parses; two test methods identified.
+Zero native tests executed locally: FastAPI remains unavailable. No extracted/double
+harness pass or new CI pass is claimed. Await exact-payload approval, then normal
+push CI without [skip ci]; the existing unittest discovery includes the new file.
+No production, existing-test or workflow changes. README/root indexes remain accurate
+for this partial step and are unchanged. Bounded 2B remains closed; 2C.3c stays open
+for actual Save As authorization, combined production notifications, further revision/
+recovery reconciliation and covering CI/acceptance. [Current task](../todo/223-statblock-lifecycle.md#2c3c-first-combined-operation-slice---2026-11-16).

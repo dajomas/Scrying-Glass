@@ -155,3 +155,24 @@ validation/acceptance. Keep matching storage/config/media/code backups; never ro
 older code alone over ledger-bearing data. README and HANDOVER.md index links stay
 unchanged. TODO.md updates only the obsolete 022.03 initial-adapter/CI-pending index
 summary. This is a documentation-only [skip ci] close-out, not a new test delivery.
+
+## 2C.3c first combined-operation slice - 2026-11-16
+
+Status: prepared for exact-payload approval; native execution and covering CI pending.
+Two methods in tests/test_statblock_combined_setup_operations.py use actual protected
+Save As/copy/move handlers, SQLite, private adapters and recovery/history services.
+The successful sequence checks unsaved live content through Save As -> copy -> loaded
+move -> runtime Save As, independent/fresh destination ownership and metadata, exact
+preserved source/copy/moved bindings, collision naming, live/last-setup references,
+checkpoint preservation, reload, missing-source checkpoint rejection and privacy.
+The failure sequence runs real final-Save-As history processing before raising and
+asserts exact SQL/live/private/history/reference rollback, preserving earlier commits.
+
+Preparation checks: Python compilation and AST parsing pass; two test methods found.
+Zero native methods ran locally because FastAPI is absent. No new native/CI pass or
+full 2C.3c acceptance is claimed; no production, existing-test or workflow change.
+Push this mixed test/documentation increment without [skip ci], then review its
+covering CI and fix demonstrated failures with fresh approval. Remaining 2C.3c
+authorization, production-notification and revision/recovery reconciliation gates
+above remain open; 2B stays closed and later stages are not advanced.
+[Scope and limits](../handover/140-viewer-ownership-fixtures.md#2c3c-first-combined-operation-slice---2026-11-16).
