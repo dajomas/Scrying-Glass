@@ -4,11 +4,11 @@
 
 ## Current state - 2026-11-16
 
-022.02 and bounded 2B/2C/2D remain accepted and closed. Increment 3A now has an
-implementation and eight native regression methods in this delivery; execution,
-covering CI review and acceptance remain pending. Increment 3B, final lifecycle
-acceptance, SG-TODO-022 Stage 1/2, 022.03 and overall 022 remain open/unaccepted.
-No merge, deployment or release is authorized.
+022.02 and bounded 2B/2C/2D remain accepted and closed. Increment 3A is delivered
+but its first covering CI failed. The narrow Store ZIP-harness correction below
+passes locally; corrected covering CI and acceptance remain pending. Increment 3B,
+final lifecycle acceptance, SG-TODO-022 Stage 1/2, 022.03 and overall 022 remain
+open/unaccepted. No merge, deployment or release is authorized.
 
 ## Preserved evidence and historical sections
 
@@ -80,3 +80,34 @@ scope; detailed current 3A status below supersedes its older unimplemented-bundl
 wording, not its open gates. Schema remains 9; retain matching whole code/storage/
 config/media backups and never roll older code alone over ledger-bearing data.
 [Current task and remaining 3B gates](../todo/223-statblock-lifecycle.md).
+
+## 3A Store ZIP-harness correction - 2026-11-16
+
+First covering Branch tests 43955177051 attempt 1 tested exactly
+ ea8b4c7342ba2b86e8c2ca7b07892fdf4ce7f7b9 and concluded failure; publication
+6ca1fefebe459f797e3014331019f2f72d7cd1c4. Main Python and standalone/audit stages
+failed; setup, Chromium, syntax/server import, pytest, JavaScript and artifact upload
+passed. This supersedes the earlier pending-execution wording, not the scope limits.
+The complete failure inventory and other possible failures have not been reconciled.
+
+Inspected tracebacks identify Store.connection AttributeError in the ZIP-only AST
+harness tests/test_bughunt_130f875.py. That harness intentionally replaces relative-
+import collaborators and is not native storage proof. Repair the harness, not the
+production transaction guard: provide its explicit in_transaction fixture, recursively
+replace relative imports including the new function-local save_new_setup collaborator,
+and supply tracker-only adapters/PRIVATE_KEY/participant-validation fixture. The
+private carrier adapter rejects nonempty graphs. Version 2 is supported now, so the
+unknown-version case uses 3; a separate case retains version-2 missing-envelope rejection.
+No existing ZIP/media/corruption assertion is dropped; no production file is changed.
+
+Executed locally in the Python tool: reconstructed complete production source was
+verified against Git blob d2d85fc473520c43a58b6c3627bb9d77d8dad61c, then the corrected
+harness ran all 20 cases: 0 failures, 0 errors, 0 skips. Real ZIP/compression/corruption/
+media I/O ran with isolated collaborators. A separate mutation run removed the guard;
+the single guard regression failed as expected (1 expected failure), showing that
+this assertion detects guard removal. Corrected test source compilation also passed.
+These are not native SQLite, full repository, HTTP, browser, private persistence or
+rollback results. Full/native suites and corrected covering CI remain pending.
+
+This test/documentation correction runs normal push CI without [skip ci]; no workflow
+change, manual dispatch or SG-TODO-023 cleanup is included. 3A remains unaccepted.

@@ -5,11 +5,12 @@
 ## Status and delivery rules - 2026-11-16
 
 022.02 and bounded 2B/2C/2D remain accepted/closed. Increment 3A is in progress:
-implementation plus eight native regression methods are included in this delivery,
-but native execution, covering CI review and acceptance remain pending. Increment
-3B and final lifecycle acceptance remain required. SG-TODO-022 Stage 1/2, 022.03 and
-overall 022 remain unaccepted; 022.04-022.16 remain pending. No usable viewer/import
-UI, merge, deployment, release or whole-feature completion is claimed.
+implementation and eight native regression methods were delivered, but first covering
+CI 43955177051 attempt 1 failed. The isolated Store harness correction below passes
+locally; corrected covering CI and acceptance remain pending. Increment 3B and final
+lifecycle acceptance remain required. SG-TODO-022 Stage 1/2, 022.03 and overall 022
+remain unaccepted; 022.04-022.16 remain pending. No usable viewer/import UI, merge,
+deployment, release or whole-feature completion is claimed.
 
 This current 3A status supersedes dated unimplemented-bundle/next-Stage-3 wording in
 the TODO index and preceding delivery records, not any unfinished criterion.
@@ -59,7 +60,8 @@ zero-selection refresh semantics remain unchanged. No wider acceptance is inferr
 
 ## 3A - complete private bundle roundtrip
 
-Status: implementation and tests supplied; execution/CI/acceptance pending.
+Status: implementation and tests delivered; first covering CI failed; correction and
+its covering validation remain pending. No 3A acceptance is recorded.
 
 - Actual representation: version-2 campaign.json statblocks envelope with exact setup
   maps and encounter map. Version-1 tracker-only imports and empty exports remain.
@@ -82,6 +84,25 @@ The aggregate overflow regression lowers the manifest constant to exercise rejec
 it is not a measurement of all real-size boundary combinations. No HTTP/auth, real
 WebSocket, exhaustive scheduling/platform, browser/E2E, provider or human visual proof
 is claimed by the 3A fixture preparation. Full details: current handover above.
+
+## Store harness correction and remaining validation - 2026-11-16
+
+Covering run 43955177051 attempt 1 for ea8b4c7342ba2b86e8c2ca7b07892fdf4ce7f7b9
+failed in main Python and standalone/audit stages. Inspected Store.connection errors
+come from the isolated ZIP harness, which omitted new collaborators/transaction state.
+Correction updates tests/test_bughunt_130f875.py only, plus these documentation records;
+production transaction checks and private persistence remain unchanged.
+
+Retain all original corruption/media/version checks, move the unsupported version to
+3, retain version-2 missing-envelope rejection separately, assert guard enforcement
+before writes and make the private carrier fixture refuse nonempty graphs. Locally,
+20 isolated cases passed, 0 failures/errors/skips, against the exact blob-verified
+production source. One separate guard-removal mutation produced the expected failing
+regression. Compilation passed. These are isolated ZIP/media tests, not native/private/
+HTTP/rollback proof. Full failure inventory, other possible failures, native suites and
+corrected covering CI are still to be reviewed; do not declare the entire CI repaired.
+[Exact preparation/execution evidence](../handover/140-viewer-ownership-fixtures.md#3a-store-zip-harness-correction---2026-11-16).
+SG-TODO-023 remains separate; no tests are removed or CI workflow optimized here.
 
 ## Remaining gates and delivery order
 
