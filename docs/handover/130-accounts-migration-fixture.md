@@ -135,3 +135,43 @@ commit uses [skip ci], with no workflow edit or dispatch. Correction 9 still
 requires private setup-import implementation; broader 2C.3c/2D, bundle, Stage 3
 and acceptance gates remain open. README and root index links remain applicable.
 [Current status](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).
+
+## Private setup-import correction - 2026-11-16
+
+Correction 8 is delivered at 8162e812c3cb2e90df4e427bfa76d1d115f8a276, not
+merely prepared. That HEAD is this correction 9 baseline. The supplied attachment
+matches live admin blob 76de5c4374ab28e458024c9b540598b24a405a38 exactly.
+Only its final tracker append changes; unrelated methods/reset/effect mapping and
+the entire Stage 2 contracts module, including the original import test, remain.
+
+prepare_setup_import validates identities and the handler's exact selected clone
+map, captures trusted metadata permissively, validates selected incoming graphs
+under operator CONFIG.statblocks.limits ModelLimits, strips incoming revision/time
+and returns merged PrivateEncounterState. Existing metadata survives lowered import
+budgets; other documented limit keys coexist. Plain dict attributes confer no
+private authority and serialized private fields reject. Existing protected flush
+allocates independent destination owners/revisions/time before history/revision
+completion and commit-only notification. Source counters and counter-only history
+are not copied. No clearing/provenance promotion/route/permission/schema changes.
+
+Eleven native methods are prepared for graph/reference/fact/warning/provenance/
+credit preservation, same/cross-campaign life filters, independent edits/revisions,
+runtime/reload, limits, tracker and post-flush/history rollback, notifications,
+privacy, forged/plain input, bad maps/missing source, counter-only absence, subsets
+and configuration. Module imports avoid duplicate TestCase discovery. Service
+fixtures/emitter seams are not actor/HTTP authorization or socket-delivery proof.
+
+Executed: three Python compile/AST checks, byte-exact reverse handler replacement,
+unrelated-method AST comparison and eleven isolated exact-helper check groups with
+capture/validation/carrier/limit doubles (eight invalid-map/four invalid-config
+variants). No native graph/SQLite/transaction test ran. Covering corrective CI is
+pending; previous isolated/baseline results do not validate the series. This final
+planned corrective code commit omits [skip ci]; no workflow edit/manual dispatch.
+Fresh failures require diagnosis and separately approved fixes, not weakened tests.
+
+The lifecycle record reconciles correction 8 delivery and correction 9 preparation,
+retains immutable historical links and every unfinished gate. 2D implementation is
+supplied, not accepted. Continue 2B, 2C/2C.3c, 2D reconciliation, actual Stage 3
+bundles and final criteria. 022.02 stays closed; Stage 1/2/022.03/022 stay unaccepted.
+README/indexes and other reviewed handovers need no cosmetic change. No deployment.
+[Current status and remaining gates](../todo/223-statblock-lifecycle.md).

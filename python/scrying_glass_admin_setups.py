@@ -256,7 +256,9 @@ class AdminSetupsMixin:
                 effects.append(effect)
             monster["effects"] = effects
 
-        self.context.STATE["monsters"].extend(imported_monsters)
+        from .scrying_glass_statblock_importing import prepare_setup_import
+        self.context.STATE = prepare_setup_import(
+            self.context, source, imported_monsters, id_map)
 
         await self.context.combatants_changed(monsters=True, characters=False)
 
