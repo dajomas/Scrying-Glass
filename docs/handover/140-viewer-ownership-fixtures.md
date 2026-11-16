@@ -4,11 +4,13 @@
 
 ## Current state - 2026-11-16
 
-022.02 and bounded 2B/2C/2D remain accepted and closed. Increment 3A is delivered
-but its first covering CI failed. The narrow Store ZIP-harness correction below
-passes locally; corrected covering CI and acceptance remain pending. Increment 3B,
-final lifecycle acceptance, SG-TODO-022 Stage 1/2, 022.03 and overall 022 remain
-open/unaccepted. No merge, deployment or release is authorized.
+022.02 and bounded 2B/2C/2D remain accepted and closed. Bounded 3A is completed,
+accepted and closed at the user's explicit 2026-11-16 22:31 CET request after the
+criterion review below. Covering CI 43958297280 attempt 1 succeeded for exactly
+26725005de3a1ed80ee06db5a23328f8ae33a0c0. Increment 3B, whole Stage 3, final lifecycle
+acceptance, SG-TODO-022 Stage 1/2, 022.03 and overall 022 remain open/unaccepted.
+No merge, deployment or release is authorized. Earlier 3A pending/failure wording
+below is historical and superseded by the bounded close-out, not erased evidence.
 
 ## Preserved evidence and historical sections
 
@@ -111,3 +113,46 @@ rollback results. Full/native suites and corrected covering CI remain pending.
 
 This test/documentation correction runs normal push CI without [skip ci]; no workflow
 change, manual dispatch or SG-TODO-023 cleanup is included. 3A remains unaccepted.
+
+## 3A bounded accepted close-out - 2026-11-16
+
+The user explicitly requested formal close-out at 22:31 CET after criterion review.
+Bounded 3A is completed, accepted and closed for the agreed private campaign-bundle
+roundtrip/core-validation/core-rollback scope. No outstanding agreed 3A criterion was
+identified. This is criterion-based acceptance, not automatic closure from green CI.
+
+Successful push-triggered Branch tests 43958297280 attempt 1 covers exactly
+26725005de3a1ed80ee06db5a23328f8ae33a0c0 (Store harness correction over original
+3A implementation ea8b4c7342ba2b86e8c2ca7b07892fdf4ce7f7b9). Evidence publication:
+e839ca64e44ce43b8528069d928c97999768aed1. Reviewed run.json/jobs.json establish the
+head, attempt and successful configured stages. Workflow log parts 121-122 explicitly
+report all eight test_statblock_bundles.PrivateBundleTests methods OK. Part 140 reports
+1,973 main Python tests OK in 199.059 seconds; those eight are included, not added.
+Syntax/server import, dependencies/Chromium, selected pytest, JavaScript, standalone
+browser/audit and artifact upload stages succeeded. No uninspected numeric pytest/
+audit totals or exhaustive artifact review is inferred.
+
+Review combined these executed assertions with the actual campaign bundle, private
+validation, save_new_setup and FeatureStorage implementation. The lifecycle task maps
+representation/versioning, legacy compatibility, rich content/provenance, independent
+ownership, checkpoint restore/reload, saved/runtime separation, incoming validation/
+limits, aggregate rejection and core rollback to their evidence.
+
+Limits remain: native service/SQLite fixtures are not authenticated HTTP/browser or
+real-network WebSocket tests; projection checks are not network-delivery proof. The
+aggregate rejection test lowers the manifest constant, not every real-size boundary.
+Source provenance is preserved as content, not promoted to verified online authority.
+The 20-case isolated Store harness and its guard mutation remain supplementary, never
+native private persistence/rollback proof. The first failed run and preparation counts
+above remain historical; their 3A CI/acceptance-pending statements are superseded.
+
+Next is 3B: route authorization/post-lock checks, unsafe archives, aggregate/member/
+snapshot boundaries, later checkpoint/history/media failures, notification/privacy
+and combined lifecycle regressions; then final lifecycle acceptance. Whole Stage 3,
+Stage 1/2, 022.03 and overall 022 remain unaccepted. 022.02 and bounded 2B/2C/2D stay
+closed. SG-TODO-023 remains ready for review and does not change the agreed order.
+
+This close-out changes only three Markdown files with [skip ci]; no code/tests/schema/
+workflow changes, rerun, manual dispatch, merge, deployment or release. README and the
+HANDOVER index remain applicable; TODO.md updates only the related 022.03 summaries.
+Keep matching complete code/storage/config/media backups; no older-code-only rollback.
