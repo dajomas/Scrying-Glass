@@ -158,3 +158,28 @@ Documentation-only close-outs retain the standing [skip ci] rule. Pending produc
 notification and revision/recovery reconciliation work stays open, as do final
 covering validation and 2C acceptance. README/root indexes remain accurate/unchanged.
 [Current task](../todo/223-statblock-lifecycle.md#2c3c-save-as-authorization-slice---2026-11-16).
+
+## 2C.3c production-notification slice - 2026-11-16
+
+Authorization slice delivered at 601699ce07735baf3fac09d2b5dc9fb01284eefb with
+[skip ci]; its five methods remain unexecuted locally and await final covering CI.
+Prepared tests/test_statblock_setup_notifications.py adds three ASGI/native methods
+using the same real-auth routes, production NotificationsService.broadcast/deferral
+and real viewer projection. A wraps spy counts calls without replacing production
+logic; the existing recording socket observes sends, metadata and transaction state.
+
+Assertions cover Save As/copy/loaded-move/runtime-Save-As with one post-commit frame
+per changed live step, none for non-live copy, final feature/private metadata and
+source preservation; late failures after real history processing for Save As, copy
+and loaded move preserve exact SQL/live/history state and emit nothing. An unchanged
+explicit Save intentionally retains its existing single handler-requested refresh
+at unchanged feature/private revision; it must not gain an extra private-flush frame.
+A separate true no-op transaction is silent. No new no-op Save behavior is introduced.
+
+Preparation: compilation and AST parsing passed; three methods counted; zero native
+methods executed locally (FastAPI absent). No production/existing-test/workflow
+changes or CI/acceptance pass. This intermediate test/documentation commit uses
+[skip ci] under the user's 18:32 CET instruction; final 2C code/test commit must omit
+it for covering CI. Revision/recovery continuity, covering results and 2C acceptance
+remain open. No real-network WebSocket/full-server/login proof. README/root indexes
+remain accurate/unchanged. [Current task](../todo/223-statblock-lifecycle.md#2c3c-production-notification-slice---2026-11-16).

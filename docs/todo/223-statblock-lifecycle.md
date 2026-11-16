@@ -207,3 +207,30 @@ Next: combined production notification and revision/recovery continuity coverage
 remaining 2C acceptance reconciliation and final covering CI. Bounded 2B stays closed;
 Stage 1/2, 022.03 and overall 022 remain unaccepted. README/root indexes remain
 accurate/unchanged. [Details/limits](../handover/140-viewer-ownership-fixtures.md#2c3c-save-as-authorization-slice---2026-11-16).
+
+## 2C.3c production-notification slice - 2026-11-16
+
+Status: prepared for exact-payload approval; three native/ASGI methods unexecuted.
+Authorization slice delivered at 601699ce07735baf3fac09d2b5dc9fb01284eefb with
+[skip ci]; covering validation remains pending. tests/test_statblock_setup_notifications.py
+retains actual authenticated routes, NotificationsService.broadcast/deferral, final
+private-state reads and viewer projection, with recording sockets and wraps-only
+broadcast observation. Three methods cover the full operation sequence, unchanged
+explicit Save versus true no-op, and three late-history rollback cases. Assert one
+post-commit/final-metadata frame per changed live step, no copy-only frame/revision,
+source preservation, exact rollback and no sends after failed Save As/copy/move.
+Unchanged explicit Save keeps its existing one refresh without feature/private
+revision change or an extra private-flush frame; a separate true no-op is silent.
+This preserves existing Save semantics rather than introducing a zero-frame Save rule.
+
+Preparation checks: compilation and AST parsing passed; three methods counted; zero
+native methods executed locally (FastAPI absent). No new CI/native pass or acceptance,
+no production/existing-test/workflow changes. Recording sockets are not real-network
+WebSockets; selected-route seeded-session ASGI is not login/full application startup.
+
+This intermediate 2C payload uses [skip ci] per the user's 18:32 CET instruction,
+without workflow edits/manual dispatch or cancellation. Next: revision/recovery
+continuity and remaining 2C reconciliation; the final 2C code/test commit must omit
+[skip ci] for reviewed covering CI before acceptance. Bounded 2B remains closed;
+Stage 1/2, 022.03 and overall 022 remain unaccepted. README/root indexes remain
+accurate/unchanged. [Details/limits](../handover/140-viewer-ownership-fixtures.md#2c3c-production-notification-slice---2026-11-16).
