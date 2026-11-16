@@ -1,0 +1,48 @@
+confirmed clear preserves one bodyless POST and publishes before refresh
+tests	JavaScript tests	2026-11-16T21:19:45.0024363Z   ---
+tests	JavaScript tests	2026-11-16T21:19:45.0024506Z   duration_ms: 1.547923
+tests	JavaScript tests	2026-11-16T21:19:45.0028715Z   type: 'test'
+tests	JavaScript tests	2026-11-16T21:19:45.0028930Z   ...
+tests	JavaScript tests	2026-11-16T21:19:45.0029249Z # Subtest: success reports server count with singular wording
+tests	JavaScript tests	2026-11-16T21:19:45.0029674Z ok 6 - success reports server count with singular wording
+tests	JavaScript tests	2026-11-16T21:19:45.0029958Z   ---
+tests	JavaScript tests	2026-11-16T21:19:45.0030146Z   duration_ms: 1.405688
+tests	JavaScript tests	2026-11-16T21:19:45.0030356Z   type: 'test'
+tests	JavaScript tests	2026-11-16T21:19:45.0030539Z   ...
+tests	JavaScript tests	2026-11-16T21:19:45.0030920Z # Subtest: server-confirmed zero is success, distinct from the local empty shortcut
+tests	JavaScript tests	2026-11-16T21:19:45.0031501Z ok 7 - server-confirmed zero is success, distinct from the local empty shortcut
+tests	JavaScript tests	2026-11-16T21:19:45.0031869Z   ---
+tests	JavaScript tests	2026-11-16T21:19:45.0032052Z   duration_ms: 0.775198
+tests	JavaScript tests	2026-11-16T21:19:45.0032587Z   type: 'test'
+tests	JavaScript tests	2026-11-16T21:19:45.0032768Z   ...
+tests	JavaScript tests	2026-11-16T21:19:45.0033163Z # Subtest: request failure is persistent and never refreshes or automatically retries
+tests	JavaScript tests	2026-11-16T21:19:45.0033746Z ok 8 - request failure is persistent and never refreshes or automatically retries
+tests	JavaScript tests	2026-11-16T21:19:45.0034113Z   ---
+tests	JavaScript tests	2026-11-16T21:19:45.0034295Z   duration_ms: 0.791343
+tests	JavaScript tests	2026-11-16T21:19:45.0034507Z   type: 'test'
+tests	JavaScript tests	2026-11-16T21:19:45.0047910Z   ...
+tests	JavaScript tests	2026-11-16T21:19:45.0048321Z # Subtest: successful retry with changed count clears only related error and info
+tests	JavaScript tests	2026-11-16T21:19:45.0048727Z ok 9 - successful retry with changed count clears only related error and info
+tests	JavaScript tests	2026-11-16T21:19:45.0048957Z   ---
+tests	JavaScript tests	2026-11-16T21:19:45.0049082Z   duration_ms: 1.162812
+tests	JavaScript tests	2026-11-16T21:19:45.0049217Z   type: 'test'
+tests	JavaScript tests	2026-11-16T21:19:45.0049387Z   ...
+tests	JavaScript tests	2026-11-16T21:19:45.0049728Z # Subtest: success expires at five seconds without removing unrelated error
+tests	JavaScript tests	2026-11-16T21:19:45.0050231Z ok 10 - success expires at five seconds without removing unrelated error
+tests	JavaScript tests	2026-11-16T21:19:45.0050578Z   ---
+tests	JavaScript tests	2026-11-16T21:19:45.0050775Z   duration_ms: 0.750381
+tests	JavaScript tests	2026-11-16T21:19:45.0050993Z   type: 'test'
+tests	JavaScript tests	2026-11-16T21:19:45.0051187Z   ...
+tests	JavaScript tests	2026-11-16T21:19:45.0051559Z # Subtest: ordinary refresh and unrelated success cannot clear a failed clear
+tests	JavaScript tests	2026-11-16T21:19:45.0052098Z ok 11 - ordinary refresh and unrelated success cannot clear a failed clear
+tests	JavaScript tests	2026-11-16T21:19:45.0052458Z   ---
+tests	JavaScript tests	2026-11-16T21:19:45.0052644Z   duration_ms: 0.544341
+tests	JavaScript tests	2026-11-16T21:19:45.0052883Z   type: 'test'
+tests	JavaScript tests	2026-11-16T21:19:45.0053069Z   ...
+tests	JavaScript tests	2026-11-16T21:19:45.0053471Z # Subtest: confirmed clear and real loadState refresh failure coexist with one POST
+tests	JavaScript tests	2026-11-16T21:19:45.0054251Z ok 12 - confirmed clear and real loadState refresh failure coexist with one POST
+tests	JavaScript tests	2026-11-16T21:19:45.0054752Z   ---
+tests	JavaScript tests	2026-11-16T21:19:45.0054936Z   duration_ms: 0.624841
+tests	JavaScript tests	2026-11-16T21:19:45.0055155Z   type: 'test'
+tests	JavaScript tests	2026-11-16T21:19:45.0055341Z   ...
+tests	JavaScript tests	2026-11-16T21:19:45.00557
