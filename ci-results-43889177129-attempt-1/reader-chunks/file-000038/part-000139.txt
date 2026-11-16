@@ -1,0 +1,25 @@
+uite (including browser fixtures)	2026-11-16T14:49:40.9205371Z   File "/tmp/scrying-tests-3fnmt80a/repo/tests/test_campaign_ownership.py", line 34, in check
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9205664Z     value=session(request.cookies.get(cookie,''))
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9205860Z                   ^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9206116Z AttributeError: 'types.SimpleNamespace' object has no attribute 'cookies'
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9206289Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9206401Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9206786Z ERROR: test_regular_admin_cannot_reassign (test_campaign_ownership.OwnershipTests.test_regular_admin_cannot_reassign)
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9207169Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9207391Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9207922Z   File "/tmp/scrying-tests-3fnmt80a/repo/tests/test_campaign_ownership.py", line 100, in test_regular_admin_cannot_reassign
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9218700Z     with self.assertRaises(HTTPError):self.call('alice','/api/campaign-ownership/1',reassign_campaign_owner,self.a,{'owner_user_id':self.ids['alice']},write=True,role='superadmin')
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9219507Z                                       ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9220215Z   File "/tmp/scrying-tests-3fnmt80a/repo/tests/test_campaign_ownership.py", line 50, in call
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9220673Z     return asyncio.run(wrapper(self.c,handler,role=role,cookie_name='admin')(*args,_operation_request=self.request(name,path),**kwargs))
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9221103Z            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9221464Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 205, in run
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9221735Z     return runner.run(main)
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9221891Z            ~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9222167Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9222471Z     return self._loop.run_until_complete(task)
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9222666Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9223004Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9223310Z     return future.result()
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9223460Z            ~~~~~~~~~~~~~^^
+tests	Python test suite (including browser fixtures)	2026-11-16T14:49:40.9223762Z   File "/tmp/scrying-tests-3fnmt80a/repo/p

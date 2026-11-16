@@ -1,0 +1,27 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2570657Z   File "/tmp/scrying-tests-djjwe8tm/repo/tests/test_campaign_ownership.py", line 50, in call
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2571095Z     return asyncio.run(wrapper(self.c,handler,role=role,cookie_name='admin')(*args,_operation_request=self.request(name,path),**kwargs))
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2571494Z            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2571842Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 205, in run
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2572102Z     return runner.run(main)
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2572245Z            ~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2572535Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2572821Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2573008Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2573339Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2573631Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2573777Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2574073Z   File "/tmp/scrying-tests-djjwe8tm/repo/python/scrying_glass_database_transactions.py", line 34, in wrapped
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2574413Z     session = await context.require(role, cookie_name)(request)
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2574643Z               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2574937Z   File "/tmp/scrying-tests-djjwe8tm/repo/tests/test_campaign_ownership.py", line 34, in check
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2575226Z     value=session(request.cookies.get(cookie,''))
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2575419Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2575630Z AttributeError: 'str' object has no attribute 'cookies'
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2575768Z 
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2575879Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2576320Z ERROR: test_transfer_checks_both_source_and_destination (test_campaign_ownership.OwnershipTests.test_transfer_checks_both_source_and_destination)
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2576739Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2576958Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2577326Z   File "/tmp/scrying-tests-djjwe8tm/repo/tests/test_campaign_ownership.py", line 92, in test_transfer_checks_both_source_and_destination
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2577831Z     with self.assertRaises(HTTPError):self.call('alice',f'/api/campaigns/{self.

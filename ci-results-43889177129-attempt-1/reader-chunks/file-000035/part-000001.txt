@@ -1,0 +1,125 @@
+[
+  {
+    "check_run_url": "https://api.github.com/repos/dajomas/Scrying-Glass/check-runs/133375380686",
+    "completed_at": "2026-11-16T14:54:18Z",
+    "conclusion": "failure",
+    "created_at": "2026-11-16T14:45:55Z",
+    "head_branch": "features/perplexity-statblock",
+    "head_sha": "14ad1d3075f4e737c38270ea2a9734fd1f5b9ad3",
+    "html_url": "https://github.com/dajomas/Scrying-Glass/actions/runs/43889177129/job/133375380686",
+    "id": 133375380686,
+    "labels": [
+      "ubuntu-latest"
+    ],
+    "name": "tests",
+    "node_id": "CR_kwDOUq6MkM8AAAAfDcrMzg",
+    "run_attempt": 1,
+    "run_id": 43889177129,
+    "run_url": "https://api.github.com/repos/dajomas/Scrying-Glass/actions/runs/43889177129",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions",
+    "runner_id": 1000000908,
+    "runner_name": "GitHub Actions 1000000908",
+    "started_at": "2026-11-16T14:45:58Z",
+    "status": "completed",
+    "steps": [
+      {
+        "completed_at": "2026-11-16T14:45:59Z",
+        "conclusion": "success",
+        "name": "Set up job",
+        "number": 1,
+        "started_at": "2026-11-16T14:45:58Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-16T14:46:00Z",
+        "conclusion": "success",
+        "name": "Run actions/checkout@v4",
+        "number": 2,
+        "started_at": "2026-11-16T14:45:59Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-16T14:46:03Z",
+        "conclusion": "success",
+        "name": "Run actions/setup-python@v5",
+        "number": 3,
+        "started_at": "2026-11-16T14:46:00Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-16T14:46:03Z",
+        "conclusion": "success",
+        "name": "Run actions/setup-node@v4",
+        "number": 4,
+        "started_at": "2026-11-16T14:46:03Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-16T14:46:09Z",
+        "conclusion": "success",
+        "name": "Install Python test dependencies",
+        "number": 5,
+        "started_at": "2026-11-16T14:46:03Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-16T14:46:16Z",
+        "conclusion": "success",
+        "name": "Provision and verify Chromium",
+        "number": 6,
+        "started_at": "2026-11-16T14:46:09Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-16T14:46:17Z",
+        "conclusion": "success",
+        "name": "Python syntax and server import checks",
+        "number": 7,
+        "started_at": "2026-11-16T14:46:16Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-16T14:49:41Z",
+        "conclusion": "failure",
+        "name": "Python test suite (including browser fixtures)",
+        "number": 8,
+        "started_at": "2026-11-16T14:46:17Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-16T14:49:42Z",
+        "conclusion": "success",
+        "name": "Upload Admin foundations visual fixtures",
+        "number": 9,
+        "started_at": "2026-11-16T14:49:41Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-16T14:49:44Z",
+        "conclusion": "success",
+        "name": "Pytest regression modules",
+        "number": 10,
+        "started_at": "2026-11-16T14:49:42Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-16T14:50:14Z",
+        "conclusion": "success",
+        "name": "JavaScript tests",
+        "number": 11,
+        "started_at": "2026-11-16T14:49:44Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-16T14:54:16Z",
+        "conclusion": "failure",
+        "name": "Standalone Python browser and audit checks",
+        "number": 12,
+        "started_at": "2026-11-16T14:50:14Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-11-16T14:54:16Z",
+        "conclusion": "skipped",
+        "name": "Post Run actions/

@@ -1,0 +1,27 @@
+a}/setups',add_setup_to_campaign,self.a,payload)
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2578226Z                                       ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2578561Z   File "/tmp/scrying-tests-djjwe8tm/repo/tests/test_campaign_ownership.py", line 50, in call
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2579099Z     return asyncio.run(wrapper(self.c,handler,role=role,cookie_name='admin')(*args,_operation_request=self.request(name,path),**kwargs))
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2579510Z            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2580034Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 205, in run
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2580307Z     return runner.run(main)
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2580455Z            ~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2580725Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2581008Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2581201Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2581530Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2581824Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2581967Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2582355Z   File "/tmp/scrying-tests-djjwe8tm/repo/python/scrying_glass_database_transactions.py", line 34, in wrapped
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2582692Z     session = await context.require(role, cookie_name)(request)
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2582923Z               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2583218Z   File "/tmp/scrying-tests-djjwe8tm/repo/tests/test_campaign_ownership.py", line 34, in check
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2583506Z     value=session(request.cookies.get(cookie,''))
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2583693Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2583902Z AttributeError: 'str' object has no attribute 'cookies'
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2584038Z 
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2584144Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2584593Z ERROR: test_viewer_grants_cannot_be_read_for_another_owner (test_campaign_ownership.OwnershipTests.test_viewer_grants_cannot_be_read_for_another_owner)
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2585027Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2585246Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2585628Z   File "/tmp/scrying-tests-djjwe8tm/repo/tests/test_campaign_ownership.py", line 149, in test_viewer_

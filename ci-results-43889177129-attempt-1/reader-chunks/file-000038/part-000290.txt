@@ -1,0 +1,35 @@
+rds
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:19.4294782Z     self.assertIn('_operation_request',__import__('inspect').signature(handler).parameters)
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:19.4295241Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:19.4295878Z AssertionError: '_operation_request' not found in mappingproxy(OrderedDict({'body': <Parameter "body: dict = Ellipsis">}))
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:19.4296269Z 
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:19.4296474Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:19.4296790Z Ran 42 tests in 1.192s
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:19.4296923Z 
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:19.4297016Z FAILED (failures=1)
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:19.4297694Z test_lairs.py: connections opened: 47; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:19.4655168Z FAIL: test_lairs.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:19.4655491Z Connection audit: test_launcher_python310.py
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:20.7716479Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:20.7716818Z Ran 10 tests in 1.249s
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:20.7716912Z 
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:20.7716971Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:20.7730637Z test_launcher_python310.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:20.7841656Z Connection audit: test_launcher_runtime_82860c4.py
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:20.8477006Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:20.8477348Z Ran 2 tests in 0.007s
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:20.8477446Z 
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:20.8477504Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:20.8477803Z test_launcher_runtime_82860c4.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:20.8609889Z Connection audit: test_live_roster_widths.py
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:22.9349302Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:22.9349666Z Ran 2 tests in 2.015s
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:22.9349876Z 
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:22.9349947Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:22.9351070Z test_live_roster_widths.py: connections opened: 1; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:23.0036980Z Connection audit: test_live_sidebar_corrections.py
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:24.7484892Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:24.7485363Z Ran 2 tests in 1.689s
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:24.7485497Z 
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:24.7485588Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:24.7486027Z test_live

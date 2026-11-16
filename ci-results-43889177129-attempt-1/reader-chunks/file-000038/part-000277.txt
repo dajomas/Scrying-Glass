@@ -1,0 +1,29 @@
+11-16T14:52:03.9310357Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9310645Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9311121Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9311541Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9311745Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9312175Z   File "/tmp/scrying-tests-djjwe8tm/repo/python/scrying_glass_database_transactions.py", line 34, in wrapped
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9312683Z     session = await context.require(role, cookie_name)(request)
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9313019Z               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9313469Z   File "/tmp/scrying-tests-djjwe8tm/repo/tests/test_campaign_viewer_routes.py", line 47, in guard
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9313878Z     if request.role not in allowed:
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9314098Z        ^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9314367Z AttributeError: 'str' object has no attribute 'role'
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9314566Z 
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9314737Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9315459Z ERROR: test_regular_admin_cannot_execute_ownership_handlers (test_campaign_viewer_routes.ViewerRouteTests.test_regular_admin_cannot_execute_ownership_handlers)
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9316149Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9316475Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9317066Z   File "/tmp/scrying-tests-djjwe8tm/repo/tests/test_campaign_viewer_routes.py", line 153, in test_regular_admin_cannot_execute_ownership_handlers
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9317583Z     asyncio.run(handler(**kwargs))
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9317819Z     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9318238Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 205, in run
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9318622Z     return runner.run(main)
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9318830Z            ~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9319416Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9319947Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9320224Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9320710Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9321131Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-16T14:52:03.9321338Z            ~~~~~~~~~~~~~^^

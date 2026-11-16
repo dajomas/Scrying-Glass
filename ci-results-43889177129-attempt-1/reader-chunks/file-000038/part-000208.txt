@@ -1,0 +1,46 @@
+s	2026-11-16T14:49:53.2218842Z ##[endgroup]
+tests	JavaScript tests	2026-11-16T14:49:53.2219220Z ##[group]tests/campaign-edit-feedback.test.cjs
+tests	JavaScript tests	2026-11-16T14:49:53.3941437Z TAP version 13
+tests	JavaScript tests	2026-11-16T14:49:53.4327425Z # Subtest: edit selection validation is persistent and resolves on a valid selection
+tests	JavaScript tests	2026-11-16T14:49:53.4383185Z ok 1 - edit selection validation is persistent and resolves on a valid selection
+tests	JavaScript tests	2026-11-16T14:49:53.4383854Z   ---
+tests	JavaScript tests	2026-11-16T14:49:53.4384088Z   duration_ms: 1.812286
+tests	JavaScript tests	2026-11-16T14:49:53.4384383Z   type: 'test'
+tests	JavaScript tests	2026-11-16T14:49:53.4384560Z   ...
+tests	JavaScript tests	2026-11-16T14:49:53.4384994Z # Subtest: empty name and native form validation block PATCH; matching validation resolves
+tests	JavaScript tests	2026-11-16T14:49:53.4385590Z ok 2 - empty name and native form validation block PATCH; matching validation resolves
+tests	JavaScript tests	2026-11-16T14:49:53.4385937Z   ---
+tests	JavaScript tests	2026-11-16T14:49:53.4386105Z   duration_ms: 1.479545
+tests	JavaScript tests	2026-11-16T14:49:53.4386304Z   type: 'test'
+tests	JavaScript tests	2026-11-16T14:49:53.4386476Z   ...
+tests	JavaScript tests	2026-11-16T14:49:53.4386858Z # Subtest: PATCH has exact encoded target and trimmed metadata, with no confirmation/reload
+tests	JavaScript tests	2026-11-16T14:49:53.4387425Z ok 3 - PATCH has exact encoded target and trimmed metadata, with no confirmation/reload
+tests	JavaScript tests	2026-11-16T14:49:53.4387767Z   ---
+tests	JavaScript tests	2026-11-16T14:49:53.4387937Z   duration_ms: 1.010079
+tests	JavaScript tests	2026-11-16T14:49:53.4388123Z   type: 'test'
+tests	JavaScript tests	2026-11-16T14:49:53.4388289Z   ...
+tests	JavaScript tests	2026-11-16T14:49:53.4388633Z # Subtest: request failure retains draft, modal and persistent campaign identity
+tests	JavaScript tests	2026-11-16T14:49:53.4389132Z ok 4 - request failure retains draft, modal and persistent campaign identity
+tests	JavaScript tests	2026-11-16T14:49:53.4389444Z   ---
+tests	JavaScript tests	2026-11-16T14:49:53.4389605Z   duration_ms: 0.55863
+tests	JavaScript tests	2026-11-16T14:49:53.4389920Z   type: 'test'
+tests	JavaScript tests	2026-11-16T14:49:53.4390098Z   ...
+tests	JavaScript tests	2026-11-16T14:49:53.4390496Z # Subtest: successful retry resolves only matching campaign error, including a reopened edit
+tests	JavaScript tests	2026-11-16T14:49:53.4391066Z ok 5 - successful retry resolves only matching campaign error, including a reopened edit
+tests	JavaScript tests	2026-11-16T14:49:53.4391417Z   ---
+tests	JavaScript tests	2026-11-16T14:49:53.4391588Z   duration_ms: 0.742456
+tests	JavaScript tests	2026-11-16T14:49:53.4391788Z   type: 'test'
+tests	JavaScript tests	2026-11-16T14:49:53.4391964Z   ...
+tests	JavaScript tests	2026-11-16T14:49:53.4392219Z # Subtest: other campaign errors remain independent
+tests	JavaScript tests	2026-11-16T14:49:53.4392557Z ok 6 - other campaign errors remain independent
+tests	JavaScript tests	2026-11-16T14:49:53.4392810Z   ---
+tests	JavaScript tests	2026-11-16T14:49:53.4392992Z   duration_ms: 0.554674
+tests	JavaScript tests	2026-11-16T14:49:53.4393183Z   type: 'test'
+tests	JavaScript tests	2026-11-16T14:49:53.4393364Z   ...
+tests	JavaScript tests	2026-11-16T14:49:53.4393702Z # Subtest: newer input and edit-revert suppress obsolete success and rejection
+tests	JavaScript tests	2026-11-16T14:49:53.4394576Z ok 7 - newer input and edit-revert suppress obsolete success and rejection
+tests	JavaScript tests	2026-11-16T14:49:53.4394891Z   ---
+tests	JavaScript tests	2026-11-16T14:49:53.4395067Z   duration_ms: 2.171676
+tests	JavaScript tests	2026-11-16T14:49:53.4395269Z   type: 'test'
+tests	JavaScript tests	2026-11-16T14:49:53.4395444Z   ...
+tests	JavaScript tests	2026-11-16T14:49:53.4395852Z # Subtest: cancel, reopen, target, selection, registry and leave-return guard ob

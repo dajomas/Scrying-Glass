@@ -1,0 +1,49 @@
+cript tests	2026-11-16T14:49:48.9784755Z ok 1 - load error has explicit identity, persists and never uses the legacy route
+tests	JavaScript tests	2026-11-16T14:49:48.9785164Z   ---
+tests	JavaScript tests	2026-11-16T14:49:48.9785367Z   duration_ms: 2.784258
+tests	JavaScript tests	2026-11-16T14:49:48.9785641Z   type: 'test'
+tests	JavaScript tests	2026-11-16T14:49:48.9785836Z   ...
+tests	JavaScript tests	2026-11-16T14:49:48.9786635Z # Subtest: matching retry clears only load error, including the no-battle early return
+tests	JavaScript tests	2026-11-16T14:49:48.9789660Z ok 2 - matching retry clears only load error, including the no-battle early return
+tests	JavaScript tests	2026-11-16T14:49:48.9800414Z   ---
+tests	JavaScript tests	2026-11-16T14:49:48.9800740Z   duration_ms: 1.269019
+tests	JavaScript tests	2026-11-16T14:49:48.9803302Z   type: 'test'
+tests	JavaScript tests	2026-11-16T14:49:48.9803586Z   ...
+tests	JavaScript tests	2026-11-16T14:49:48.9803955Z # Subtest: unrelated success does not clear the load error
+tests	JavaScript tests	2026-11-16T14:49:48.9804445Z ok 3 - unrelated success does not clear the load error
+tests	JavaScript tests	2026-11-16T14:49:48.9817840Z   ---
+tests	JavaScript tests	2026-11-16T14:49:48.9818084Z   duration_ms: 0.719532
+tests	JavaScript tests	2026-11-16T14:49:48.9818237Z   type: 'test'
+tests	JavaScript tests	2026-11-16T14:49:48.9818358Z   ...
+tests	JavaScript tests	2026-11-16T14:49:48.9818622Z # Subtest: retry failure replaces the related error instead of duplicating it
+tests	JavaScript tests	2026-11-16T14:49:48.9818964Z ok 4 - retry failure replaces the related error instead of duplicating it
+tests	JavaScript tests	2026-11-16T14:49:48.9819185Z   ---
+tests	JavaScript tests	2026-11-16T14:49:48.9819307Z   duration_ms: 1.109298
+tests	JavaScript tests	2026-11-16T14:49:48.9819468Z   type: 'test'
+tests	JavaScript tests	2026-11-16T14:49:48.9819600Z   ...
+tests	JavaScript tests	2026-11-16T14:49:48.9820000Z # Subtest: out-of-order success cannot restore latest, scope or feedback
+tests	JavaScript tests	2026-11-16T14:49:48.9820306Z ok 5 - out-of-order success cannot restore latest, scope or feedback
+tests	JavaScript tests	2026-11-16T14:49:48.9820810Z   ---
+tests	JavaScript tests	2026-11-16T14:49:48.9820941Z   duration_ms: 0.767945
+tests	JavaScript tests	2026-11-16T14:49:48.9821078Z   type: 'test'
+tests	JavaScript tests	2026-11-16T14:49:48.9821208Z   ...
+tests	JavaScript tests	2026-11-16T14:49:48.9821396Z # Subtest: old success cannot clear a newer failed load
+tests	JavaScript tests	2026-11-16T14:49:48.9821639Z ok 6 - old success cannot clear a newer failed load
+tests	JavaScript tests	2026-11-16T14:49:48.9821809Z   ---
+tests	JavaScript tests	2026-11-16T14:49:48.9821938Z   duration_ms: 0.622686
+tests	JavaScript tests	2026-11-16T14:49:48.9822080Z   type: 'test'
+tests	JavaScript tests	2026-11-16T14:49:48.9822202Z   ...
+tests	JavaScript tests	2026-11-16T14:49:48.9822410Z # Subtest: old failure cannot replace feedback after newer success
+tests	JavaScript tests	2026-11-16T14:49:48.9822695Z ok 7 - old failure cannot replace feedback after newer success
+tests	JavaScript tests	2026-11-16T14:49:48.9822894Z   ---
+tests	JavaScript tests	2026-11-16T14:49:48.9823023Z   duration_ms: 0.648285
+tests	JavaScript tests	2026-11-16T14:49:48.9823274Z   type: 'test'
+tests	JavaScript tests	2026-11-16T14:49:48.9823393Z   ...
+tests	JavaScript tests	2026-11-16T14:49:48.9823597Z # Subtest: a direct state request also supersedes a pending load
+tests	JavaScript tests	2026-11-16T14:49:48.9823885Z ok 8 - a direct state request also supersedes a pending load
+tests	JavaScript tests	2026-11-16T14:49:48.9824075Z   ---
+tests	JavaScript tests	2026-11-16T14:49:48.9824206Z   duration_ms: 0.539212
+tests	JavaScript tests	2026-11-16T14:49:48.9824353Z   type: 'test'
+tests	JavaScript tests	2026-11-16T14:49:48.9824470Z   ...
+tests	JavaScript tests	2026-11-16T14:49:48.9824715Z # Subtest: scope change without another request rejects the pending old state
+tests

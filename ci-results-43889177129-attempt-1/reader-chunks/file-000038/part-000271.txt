@@ -1,0 +1,26 @@
+on browser and audit checks	2026-11-16T14:51:53.2562608Z     return asyncio.run(wrapper(self.c,handler,role=role,cookie_name='admin')(*args,_operation_request=self.request(name,path),**kwargs))
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2563015Z            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2563359Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 205, in run
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2563626Z     return runner.run(main)
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2563771Z            ~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2564042Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/runners.py", line 128, in run
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2564330Z     return self._loop.run_until_complete(task)
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2564523Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2564851Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2565147Z     return future.result()
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2565288Z            ~~~~~~~~~~~~~^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2565586Z   File "/tmp/scrying-tests-djjwe8tm/repo/python/scrying_glass_database_transactions.py", line 34, in wrapped
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2565922Z     session = await context.require(role, cookie_name)(request)
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2566154Z               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2566451Z   File "/tmp/scrying-tests-djjwe8tm/repo/tests/test_campaign_ownership.py", line 34, in check
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2566741Z     value=session(request.cookies.get(cookie,''))
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2566932Z                   ^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2567248Z AttributeError: 'str' object has no attribute 'cookies'
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2567388Z 
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2567492Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2567997Z ERROR: test_superadmin_reassigns_without_changing_client_grants (test_campaign_ownership.OwnershipTests.test_superadmin_reassigns_without_changing_client_grants)
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2568446Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2568669Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2569061Z   File "/tmp/scrying-tests-djjwe8tm/repo/tests/test_campaign_ownership.py", line 105, in test_superadmin_reassigns_without_changing_client_grants
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2569625Z     self.call('root',f'/api/campaign-ownership/{self.a}',reassign_campaign_owner,self.a,{'owner_user_id':self.ids['bob']},write=True,role='superadmin')
+tests	Standalone Python browser and audit checks	2026-11-16T14:51:53.2570216Z     ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
