@@ -2,242 +2,131 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Last updated: 2026-11-16. Current bounded 2B close-out is below; older records keep
-their original scope and evidence limits.
+Last updated: 2026-11-16. Bounded 2B/2C are accepted as recorded below;
+SG-TODO-022 Stage 1/2, 022.03 and overall 022 remain unaccepted.
 
 ## Historical evidence and retained records
 
-[Complete pre-close-out record](https://github.com/dajomas/Scrying-Glass/blob/3126dfed318158d3e6bc1fc2cbed878e1921c360/docs/handover/140-viewer-ownership-fixtures.md)
-preserves every earlier diagnosis, commit/blob identity, test count, harness failure,
-request-type correction and the complete eleven-method boundary preparation record.
-Its own immutable links retain November 1 and correction-1-5 detail. This current
-reconciliation supersedes delivery/CI/2B-acceptance-pending wording only as stated
-below; it does not relabel isolated checks as native evidence or discard requirements.
-[Lifecycle contracts and remaining gates](../todo/223-statblock-lifecycle.md).
+[Complete pre-2C-close-out handover](https://github.com/dajomas/Scrying-Glass/blob/dae492f2e95bc378d73425f22dd5e85d9c681215/docs/handover/140-viewer-ownership-fixtures.md)
+preserves all diagnoses, implementation/correction identities, exact local/CI counts,
+harness failures, 2B acceptance, four 2C.3c deliveries and their earlier immutable
+archives. Current reconciliation supersedes 2C open/prepared/unexecuted/CI-pending
+wording only where supported below, not historical limits or unfinished later work.
+Original anchors remain. [Current lifecycle task](../todo/223-statblock-lifecycle.md).
 
 ## Separate diagnoses
 
-November 1 browser/lifespan/ownership fixtures and later request-type handling had
-separate causes. No permission rules were relaxed; complete diagnoses are archived.
+Complete dated scope, identities, assertions, counts and evidence limits remain
+in the immutable record above; no isolated/static result is promoted by this summary.
 
 ## Source identity and local checks
 
-Original blob checks, AST comparisons and isolated Node/SQLite/Request-double
-counts remain in the complete record. They are not new production execution.
+Complete dated scope, identities, assertions, counts and evidence limits remain
+in the immutable record above; no isolated/static result is promoted by this summary.
 
 ## Outstanding verification
 
-2C/2C.3c, 2D reconciliation, Stage 3 and final lifecycle acceptance remain open.
-022.02 remains closed. No Stage 1/2, 022.03 or overall 022 acceptance is implied.
+2D reconciliation, Stage 3 private bundles and final lifecycle acceptance remain.
+022.02 and bounded 2B stay closed; no wider acceptance/merge/deployment/release.
 
 ## Client request forwarding correction - 2026-11-16
 
-Correction 1: 4935fddbcdf14fe241ed052f4f81ff63275b4370. Concrete Request reuse,
-requestless injection and post-lock auth remain. Later placeholder correction and
-covering evidence supersede its failed combined-run status, not historical limits.
+Complete dated scope, identities, assertions, counts and evidence limits remain
+in the immutable record above; no isolated/static result is promoted by this summary.
 
 ## Service AST harness correction - 2026-11-16
 
-Correction 2: 293376ea594eadb8077f97c1b076f7b36b3d1cd1. Package/module context;
-nineteen original tests retained, two added. Isolated counts remain archived.
+Complete dated scope, identities, assertions, counts and evidence limits remain
+in the immutable record above; no isolated/static result is promoted by this summary.
 
 ## Snapshot AST harness correction - 2026-11-16
 
-Correction 3: d68cccc128c8444d7fd6b917d7970820e857a17f. Package context and
-committed SQLite fixture; sixteen original tests retained, three added.
+Complete dated scope, identities, assertions, counts and evidence limits remain
+in the immutable record above; no isolated/static result is promoted by this summary.
 
 ## Revision-test digest mutation correction - 2026-11-16
 
-Correction 4: c69db3b112cf675ac9ba0c6c08afcc2fa2b7e904. Correct mutation producer
-plus stale-digest rejection; four original rebuild assertions and validation retained.
+Complete dated scope, identities, assertions, counts and evidence limits remain
+in the immutable record above; no isolated/static result is promoted by this summary.
 
 ## Mocked copy boundary correction - 2026-11-16
 
-Correction 5: 5109e0c152d99a2e2c9e33101c43e0e0739ced9c. Separate mocked cleanup
-and facade rejection; cleanup assertions and production clone guards retained.
+Complete dated scope, identities, assertions, counts and evidence limits remain
+in the immutable record above; no isolated/static result is promoted by this summary.
 
 ## Generic Request placeholder follow-up - 2026-11-16
 
-Delivered de3f69bb6453553704df2a68cc73511f69c21dff excludes catch-all object and
-inspect.Parameter.empty from concrete Request detection, retaining actual subtype
-forwarding and post-lock checks. All seven original methods plus four regressions
-remain. Transaction body and existing authorization assertions were unchanged.
-Green run 43893014815 attempt 1 covered it: 1,932 main tests OK, pytest 43 passed,
-all configured stages passed; publication 51a2fe7a8b9b06a6b9d23fc82843f39d1f55db01.
-The full old/corrected harness comparisons and failed-run history remain archived.
+Complete dated scope, identities, assertions, counts and evidence limits remain
+in the immutable record above; no isolated/static result is promoted by this summary.
 
 ## 2B boundary-completion preparation - 2026-11-16
 
-Delivered 5d1165ea12d361833558ee5e9dd021c3a1078668 adds only
- tests/test_statblock_2b_boundaries.py and evidence/status documentation. Six actual
-feature-installer ASGI methods, two protected native mixed-clear exhaustion cases
-and three production-notification methods were prepared. Compilation/AST/static
-checks passed locally; native tests were not run locally because FastAPI was absent.
-The covering run below now proves execution, superseding prepared/unexecuted status.
-No production, existing test, route, permission, schema or workflow was changed.
+Complete dated scope, identities, assertions, counts and evidence limits remain
+in the immutable record above; no isolated/static result is promoted by this summary.
 
 ## 2B bounded close-out - 2026-11-16
 
-2B is completed and accepted for the agreed recovery/reset/private-lifecycle scope
-by approval of this exact close-out payload. This is a bounded component decision,
-not automatic acceptance from a green badge or closure of Stage 1/2/022.03/022.
-
-Evidence: successful push-triggered Branch tests 43899670266 attempt 1 covers
-5d1165ea12d361833558ee5e9dd021c3a1078668; published at
-3126dfed318158d3e6bc1fc2cbed878e1921c360. run.json, jobs.json and workflow log
-parts 120, 125-129, 138-139 were reviewed for run identity, native pass entries and
-suite results. Main unittest: 1,943 OK; selected pytest: 43 passed. Syntax/server
-import, JavaScript, standalone browser/audit and visual-artifact upload steps passed.
-No fresh test run is claimed by this documentation-only close-out.
-
-The criterion map in the lifecycle task combines prior storage/service evidence
-with all eleven new passes. Part 120 explicitly records six real-auth recovery-route
-methods, saved/runtime mixed-clear exhaustion and production coalescing/rollback/
-no-op methods OK. Thus the three agreed boundary gaps are resolved at their stated
-scope. Existing core recovery/counter/flush/privacy passes are execution evidence,
-not still-unexecuted preparation. Constrained-SQLite and mocked routing methods
-remain labelled as such and are not the sole basis for native acceptance.
-
-Limits: sessions are seeded, not logged in; ASGI mounts selected production routes,
-not full application startup. Recording sockets observe production sends/deferral
-and real viewer projection, not real-network WebSocket/browser delivery. No new
-listener/viewer/provider, exhaustive E2E, human visual or deployment verification.
-
-Next: combined protected 2C.3c Save As/copy/move, history/recovery/revision/privacy,
-real authorization and production notification regressions; then 2D reconciliation,
-Stage 3 bundles and final lifecycle acceptance. No unfinished later gate is removed.
-Schema remains 9; keep matching code/storage/config/media backups and never roll
-older code alone over ledger-bearing data. No merge, deployment or release.
-
-This close-out changes documentation only and uses [skip ci], with no workflow
-edit or manual dispatch. README and HANDOVER.md index links remain applicable and
-unchanged. TODO.md removes stale initial-adapter/CI-pending summaries for 022.03;
-other index entries remain untouched. Historical source handovers stay dated history.
+Accepted/closed at bcb55bb4f6542ac99d95684a247ffadeb05f3a32 after criterion
+review and green 43899670266 attempt 1. Complete criterion map/limits stay archived;
+this 2C decision does not reopen 2B or imply wider-stage acceptance.
 
 ## 2C.3c first combined-operation slice - 2026-11-16
 
-Prepared tests/test_statblock_combined_setup_operations.py adds two native protected
-regressions using the existing Save As/recovery fixtures, not a new production path.
-One sequence covers live Save As, cross-campaign copy, loaded move with collision,
-independent runtime and runtime Save As: exact saved owners/graphs/bindings, fresh
-metadata, source preservation, two checkpoints, reload, missing-source recovery
-rejection, private projections and foreign-key checks. The second injects failure
-after real final-Save-As history/revision processing and asserts exact SQL/live/undo/
-reference rollback while earlier committed copy/move operations remain committed.
-
-Validation: the new module compiles and AST-parses; two test methods identified.
-Zero native tests executed locally: FastAPI remains unavailable. No extracted/double
-harness pass or new CI pass is claimed. Await exact-payload approval, then normal
-push CI without [skip ci]; the existing unittest discovery includes the new file.
-No production, existing-test or workflow changes. README/root indexes remain accurate
-for this partial step and are unchanged. Bounded 2B remains closed; 2C.3c stays open
-for actual Save As authorization, combined production notifications, further revision/
-recovery reconciliation and covering CI/acceptance. [Current task](../todo/223-statblock-lifecycle.md#2c3c-first-combined-operation-slice---2026-11-16).
+Complete dated scope, identities, assertions, counts and evidence limits remain
+in the immutable record above; no isolated/static result is promoted by this summary.
 
 ## 2C.3c Save As authorization slice - 2026-11-16
 
-First combined slice delivered at 8482acf420fa18051d56a429a6853515b9ff5202;
-its covering CI has not been reviewed here. New tests/test_statblock_setup_saving_http.py
-prepares five selected-route ASGI methods using actual AdminAPI route registration,
-SetupName/CampaignSetupAdd, AuthService, ownership, SQLite and seeded sessions.
-Cases cover owner live Save As/source isolation, retained existing superadmin policy,
-missing/client/non-owner/origin/foreign/inactive/malformed denials, an authenticated
-Save As/copy/loaded-move/runtime-Save-As chain, and ownership/role/session revocation
-while waiting for the real operation lock. The session observer calls the original
-method and only signals initial authentication; it does not inject a deny decision.
-Rejected requests compare complete SQL/live/private/history state and no emission;
-responses/projections/sent frames are checked for private content. This is not login,
-full application startup or real-network WebSocket coverage. No production change.
-
-Preparation: module compiles/AST-parses; five methods counted; zero native methods
-ran locally (FastAPI absent). No new CI or acceptance result is claimed. At the user's
-18:32 CET instruction, remaining intermediate 2C commits use [skip ci], including
-this slice; final 2C code/test commit omits it for a covering run. Do not edit workflows,
-manually dispatch, cancel the earlier run or extend this skip scope beyond 2C.
-Documentation-only close-outs retain the standing [skip ci] rule. Pending production
-notification and revision/recovery reconciliation work stays open, as do final
-covering validation and 2C acceptance. README/root indexes remain accurate/unchanged.
-[Current task](../todo/223-statblock-lifecycle.md#2c3c-save-as-authorization-slice---2026-11-16).
+Complete dated scope, identities, assertions, counts and evidence limits remain
+in the immutable record above; no isolated/static result is promoted by this summary.
 
 ## 2C.3c production-notification slice - 2026-11-16
 
-Authorization slice delivered at 601699ce07735baf3fac09d2b5dc9fb01284eefb with
-[skip ci]; its five methods remain unexecuted locally and await final covering CI.
-Prepared tests/test_statblock_setup_notifications.py adds three ASGI/native methods
-using the same real-auth routes, production NotificationsService.broadcast/deferral
-and real viewer projection. A wraps spy counts calls without replacing production
-logic; the existing recording socket observes sends, metadata and transaction state.
-
-Assertions cover Save As/copy/loaded-move/runtime-Save-As with one post-commit frame
-per changed live step, none for non-live copy, final feature/private metadata and
-source preservation; late failures after real history processing for Save As, copy
-and loaded move preserve exact SQL/live/history state and emit nothing. An unchanged
-explicit Save intentionally retains its existing single handler-requested refresh
-at unchanged feature/private revision; it must not gain an extra private-flush frame.
-A separate true no-op transaction is silent. No new no-op Save behavior is introduced.
-
-Preparation: compilation and AST parsing passed; three methods counted; zero native
-methods executed locally (FastAPI absent). No production/existing-test/workflow
-changes or CI/acceptance pass. This intermediate test/documentation commit uses
-[skip ci] under the user's 18:32 CET instruction; final 2C code/test commit must omit
-it for covering CI. Revision/recovery continuity, covering results and 2C acceptance
-remain open. No real-network WebSocket/full-server/login proof. README/root indexes
-remain accurate/unchanged. [Current task](../todo/223-statblock-lifecycle.md#2c3c-production-notification-slice---2026-11-16).
+Complete dated scope, identities, assertions, counts and evidence limits remain
+in the immutable record above; no isolated/static result is promoted by this summary.
 
 ## 2C.3c continuity and final planned code delivery - 2026-11-16
 
-Prepared tests/test_statblock_setup_recovery_continuity.py adds three native methods
-after the combined Save As/copy/loaded-move fixture sequence. They exercise runtime
-checkpoint replacement plus sequential undo with strictly advancing private heads;
-different-owner overwrite followed by unchanged/same-owner edit, stale-save rejection,
-destination checkpoint restore and undo without ledger reset; counter-only destination
-reopen/overwrite and atomic MAX_REVISION rejection. Assert stable row bindings, exact
-saved-source/checkpoint preservation, restart/reload, privacy and foreign keys. Native
-fixture writes seed historical content/markers; tested Save As and recovery calls use
-the production protected handlers/services, not fabricated HTTP/apply authority.
-
-Preparation: changed module compiles/AST-parses; three methods counted; zero native
-methods ran locally (FastAPI absent). No extracted harness or new execution pass.
-No production, existing-test, route, permission, schema or workflow change.
-
-First-slice evidence is now reviewed: successful Branch tests 43918397854 attempt 1
-covers 8482acf420fa18051d56a429a6853515b9ff5202, publication
-769412efd47124f41cf9e6fb53d825ed576f93dd. run.json confirms exact head/attempt and
-success; workflow part 122 explicitly records both combined-operation methods OK.
-This supersedes earlier first-slice CI-unreviewed wording, not the later slices'
-pending validation. It does not cover authorization 601699ce07735baf3fac09d2b5dc9fb01284eefb,
-notification 86e2112586db84a7ec944cddec0616f24256056c or this continuity module.
+All three continuity methods supplied at 7c703c4d66f63bd765a780f8e5ed6a2cd465521c
+pass in the covering run below. Original preparation record remains archived.
 
 ### 2C final covering-review map
 
-- Clone/copy: existing clone kernel, stored/protected copy and transfer suites retain
-  independent rows/graphs/revision/time, immutable sources, counter-only exclusion,
-  canonical references, collision/roster/effect rules and rollback assertions.
-- Moves: existing preservation/detachment suites retain owner/ledger identity,
-  exclusive fresh runtime, reopen/MAX_REVISION and shared-runtime rejection cases.
-- Save As and continuity: existing kernel/handler tests plus the three new methods
-  retain source isolation, same-owner stale guards, other-owner ledger continuity,
-  ordinary omission rejection, checkpoint/undo continuity and overflow rollback.
-- Cross-operation integration: first two combined methods have explicit native pass
-  evidence; five auth and three notification methods are delivered but pending final
-  execution; the three continuity methods here are prepared/unexecuted. These four
-  modules contain thirteen 2C.3c methods, not thirteen already-passing methods.
-- Authorization/privacy/notifications: final CI must execute all actual selected-route
-  seeded-session, post-lock revocation, projection, production deferral/coalescing,
-  unchanged-Save/true-no-op and rollback assertions. Recording sockets are not real
-  network/browser/login/full-server evidence. No existing assertion is weakened.
+The current criterion map is in the lifecycle task; its complete predecessor is archived.
 
-This is the final planned 2C code/test slice, subject to fixes demonstrated by covering
-CI. Its proposed/approved/actual commit message omits [skip ci] under the user's
-18:32 CET instruction; use configured push CI, no workflow edit/manual dispatch.
-Review exact final head/attempt, new method entries, retained suites and audit outcomes
-before bounded 2C acceptance; prepare any demonstrated correction with fresh approval.
-No 2C, Stage 1/2, 022.03 or overall 022 acceptance is recorded here. Bounded 2B and
-022.02 stay closed. 2D reconciliation and Stage 3 still follow, not this delivery.
+## 2C bounded close-out - 2026-11-16
 
-README, HANDOVER.md/TODO.md indexes and lifecycle TODO were reviewed/reused. Their
-links, in-progress status, criteria and covering-CI/acceptance requirements remain
-accurate, so no mechanical duplicate edits are included. This current evidence record
-supersedes only earlier next-continuity/unreviewed-first-run delivery wording, not
-any unfinished lifecycle acceptance gate. Schema stays 9; retained operational and
-matching-backup/rollback guidance remains binding. No merge/deployment/release.
+2C (2C.1, 2C.2a-b, 2C.2c.1-3 and 2C.3a-c) is completed and accepted for the
+agreed clone/copy/move/Save-As private-lifecycle scope by user approval of this exact
+close-out payload. No outstanding agreed 2C criterion was identified. This is a
+bounded criterion-based decision, not acceptance from a green badge alone.
+
+Successful push-triggered Branch tests 43933600072 attempt 1 covers exactly
+7c703c4d66f63bd765a780f8e5ed6a2cd465521c; evidence publication
+ dae492f2e95bc378d73425f22dd5e85d9c681215. Main unittest: 1,956 OK; selected pytest:
+43 passed. Syntax/server import, JavaScript, standalone browser/audit and visual
+artifact upload stages passed. Audit: 218 modules, zero failed; explicit PASS that
+all audited modules passed and closed tracked connections. No tests rerun or fresh
+CI claimed by this documentation-only [skip ci] close-out.
+
+Review combines inspected implementation/test bodies, run.json/jobs.json and explicit
+workflow entries: thirteen 2C.3c methods OK (two combined, five actual-auth Save As/
+sequence, three production notifications, three continuity), plus retained clone/
+copy/move/Save As/transfer suites. Reviewed parts include 121-123, 131-133, 136,
+139-140 and audit completion 298. Lifecycle TODO maps every agreed criterion.
+
+Limits: selected-route ASGI uses seeded sessions, not login/full application startup;
+recording sockets observe actual notification logic/viewer projection, not network/
+browser delivery. Injected-denial routing, mocks/static/extracted harnesses remain
+supplementary, not real-auth/native proof. No exhaustive concurrency/platform, new
+viewer/listener/provider, human visual/screen-reader, live-provider or deployed-server
+acceptance. Existing unrelated Admin/Client permissions remain unchanged.
+
+Next: delivered 2D import reconciliation, then actual Stage 3 private bundles and
+final lifecycle acceptance. SG-TODO-022 Stage 1/2, 022.03 and overall 022 remain
+unaccepted; 022.04-022.16 remain pending. The intermediate-2C skip scope ended with
+the final code/test covering run; it does not extend to 2D/Stage 3. Documentation-only
+commits keep [skip ci]. No workflow change/manual dispatch/merge/deployment/release.
+Schema stays 9; retain matching complete code/storage/config/media backups and never
+roll older code alone over ledger-bearing data. README/HANDOVER.md index stay
+applicable; TODO.md changes only two related current 022.03 status summaries.
