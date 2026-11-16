@@ -237,6 +237,37 @@ retain 2C.2c/2C.3 and earlier integration execution/corrections/acceptance. No s
 runtime, permission, release/deployment or acceptance change; intermediate [skip ci]
 and final Stage 3 covering CI remain. This delivery does not close 2C.2b or 022.03.
 
+## 022.03 protected-copy regressions - 2026-11-16
+
+Baseline: 0e246ca8b464bc178cdeca6db0be33ca0afdf5fe. Following the reported
+2C.2c timeout (cause unconfirmed), delivery is split into protected-copy tests
+(2C.2c.1), loaded-move/runtime preservation (2C.2c.2), then cross-cutting rollback,
+history/revision/notification/privacy and real actor/HTTP authorization (2C.2c.3).
+Save As remains 2C.3; earlier acceptance and validation requirements are retained.
+
+2C.2c.1 supplies three native-fixture methods using the actual campaign handler
+through transactional_handler: copy with collision naming, stable source/live
+metadata, independent destination ownership and fresh metadata, trusted destination
+loading, rollback after the real clone has written, and injected source/target
+campaign-gate denial before storage transfer. The existing copy handler already
+delegates to 2C.2a storage wiring; no production-code change is included. Gate
+injection tests routing, not actual actor authorization or an authenticated request.
+
+The module AST-parses; all three production-fixture methods are unexecuted. Five
+isolated exact-handler-body checks passed using stub context/storage for copy,
+target/source denial, missing source and transfer failure. They do not execute the
+protected wrapper, native persistence or real ownership/HTTP authorization. An
+initial notebook event-loop harness error was corrected by running the isolated
+harness in a worker thread; no application change was made. Full module/native
+execution and any demonstrated fixes remain pending.
+
+[Current split and gates](../todo/223-statblock-lifecycle.md#2c2c1-protected-copy---2026-11-16).
+Existing unittest discovery includes the new filename. README and root indexes
+remain accurate and unchanged. No workflow edit/dispatch or run-status check;
+intermediate [skip ci], final Stage 3 covering CI, schema 9 and matching code/data
+backup rules remain. No loaded-move/Save As delivery, new route, permission,
+release/deployment or whole-feature acceptance is implied.
+
 ## Documentation entry points
 
 - [README](../../README.md)

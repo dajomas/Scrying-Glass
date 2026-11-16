@@ -115,9 +115,10 @@ own complete approval payload, relevant tests and documentation.
   both encounters and wraps tracker creation with this transaction for an atomic copy.
 - 022.03-2C.2: in progress, split further after reported timeouts. 2C.2a supplies
   storage-copy wiring; 2C.2b supplies move-regression preparation, with functional
-  verification pending. 2C.2c protected service integration remains pending.
-  Preserve roster/campaign validation, canonical references, source immutability
-  and rollback throughout. No partial delivery establishes wider acceptance.
+  verification pending. 2C.2c is split below, starting with protected-copy tests;
+  loaded moves and cross-cutting protected integration remain pending. Preserve
+  roster/campaign validation, canonical references, source immutability and rollback
+  throughout. No partial delivery establishes wider acceptance.
 - 022.03-2C.3: planned, follows 2C.2. Wire Save As and destination live-metadata
   refresh, then test combined copy/move/Save As flows and reconcile acceptance.
 
@@ -168,6 +169,32 @@ the four methods are unexecuted. Discovery includes the filename. No native func
 full-import, protected service, HTTP/browser or CI success is claimed. Schema, runtime,
 permissions and workflow are unchanged. [Handover](../handover/010-scope-and-state.md#02203-move-preservation-regressions---2026-11-16).
 
+## 2C.2c.1 protected copy - 2026-11-16
+
+Status: regression implementation supplied; native validation and acceptance pending.
+After the reported 2C.2c timeout, the user requested a split and the first delivery.
+The cause remains unconfirmed. The protected handler already delegates copy to
+2C.2a storage wiring; inspection does not justify a speculative production change.
+
+- 2C.2c.1: three native-fixture methods in test_statblock_protected_setup_copy.py
+  exercise the actual campaign handler through transactional_handler: collision
+  naming, stable source/live metadata, independent destination ownership and fresh
+  metadata, trusted destination loading, rollback after the real clone writes, and
+  injected denial at either campaign gate before storage transfer.
+- 2C.2c.2: loaded-setup moves and detached runtime private ownership/metadata,
+  binding safeguards and focused rollback tests remain pending.
+- 2C.2c.3: combined transaction-end/history/revision/notification/privacy checks,
+  real actor-based authorization and relevant authenticated endpoint coverage remain
+  pending. Save As stays in 2C.3. No earlier validation/acceptance gate is removed.
+
+The new module AST-parses; all three native-fixture methods are unexecuted. Five
+isolated exact-handler-body checks passed with stub context/storage for copy,
+target/source denial, missing source and transfer failure. These checks execute no
+protected wrapper, native persistence or real ownership/HTTP authorization. Existing
+workflow unittest discovery includes the filename; intermediate [skip ci] defers
+covering CI to final Stage 3. No workflow edit/dispatch or observed run result.
+[Handover and limits](../handover/010-scope-and-state.md#02203-protected-copy-regressions---2026-11-16).
+
 ## Remaining gates and delivery order
 
 For 2B: execute/review the relevant suites and outstanding scope/restart/limits/
@@ -176,13 +203,14 @@ undo/rollback/privacy checks, correct failures and reconcile acceptance evidence
 and 022.03 are also not accepted. Covering CI stays deferred to final Stage 3 code;
 no separate dispatch or observed workflow-run status is claimed here.
 
-2C: execute/review 2C.1/2C.2a/2C.2b tests, correct any failures, finish 2C.2c/2C.3
-and covering validation of independent copy/Save As ownership and destination
-revisions, source immutability, move preservation, canonical references and rollback.
-Partial delivery closes none of these wider gates. 2D: selected/life-filtered import
-remapping and independent clone revisions. Stage 3: actual bundle format/roundtrip,
-aggregate/snapshot/member limits, malformed/untrusted input, provenance and rollback;
-no silent 10 MiB manifest/archive loss. Retain every parent criterion.
+2C: execute/review 2C.1/2C.2a/2C.2b/2C.2c.1 tests, correct any failures, finish
+2C.2c.2/2C.2c.3/2C.3 and covering validation of independent copy/Save As ownership
+and destination revisions, source immutability, move preservation, canonical
+references and rollback. Partial delivery closes none of these wider gates.
+2D: selected/life-filtered import remapping and independent clone revisions. Stage 3:
+actual bundle format/roundtrip, aggregate/snapshot/member limits, malformed/untrusted
+input, provenance and rollback; no silent 10 MiB manifest/archive loss. Retain every
+parent criterion.
 
 Schema stays 9, no migration/DDL. Deploy matching complete code/data only after
 validation/acceptance. Older code lacks marker/filter handling: do not roll code
