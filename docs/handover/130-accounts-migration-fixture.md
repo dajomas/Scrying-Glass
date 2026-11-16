@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Last updated: 2026-11-01.
+Last updated: 2026-11-16. Original accounts-fixture record: 2026-11-01.
 
 ## Diagnosis
 
@@ -29,3 +29,39 @@ This was not execution against the complete production storage module or the ful
 Full-checkout execution, the complete accounts module, Python 3.14 and full CI remain unverified for this repair. Inspect the actual push-triggered run after approved delivery; no skip marker or extra dispatch is requested. Other viewer, lifespan, JavaScript and standalone failures are not repaired here; see [open validation](030-validation-and-next-steps.md).
 
 README and TODO index were reviewed; no application behavior or unrelated feature-task status changes are needed. The unfinished broader source split remains inactive.
+
+## Native and legacy storage fixture separation - 2026-11-16
+
+This correction 6 record concerns facade copy integration, not reopening the
+historical accounts repair above. Baseline: 5109e0c152d99a2e2c9e33101c43e0e0739ced9c
+on features/perplexity-statblock. The naming/checkpoint/copy/move test now explicitly
+requests the real SQLiteStorage constructor and asserts schema 9. Legacy fixture
+callers still receive the unchanged base schema 3; no fake upgrade or relaxed
+private-clone version check is introduced. Temporary-directory/database cleanup
+is registered in close-before-directory order. Constructor failures retain their
+existing self-close behavior.
+
+The current-schema branch does not create the legacy four-column snapshot table.
+Checkpoint seeding uses FeatureStorage.save_snapshot with the source setup reference,
+so the original checkpoint-rename assertion tests a real recovery record. Original
+naming, suffix, stable move identity, deletion, roster rejection and rollback checks
+remain. Two new native methods check fixture separation and rollback after the real
+clone has produced a matching revision-one snapshot and a persisted destination.
+The latter compares the complete SQL dump and original private snapshot after an
+injected late failure. Production code, base_storage, other legacy tests, correction
+5's unit/guard tests and correction 7's old dispatch expectation are unchanged.
+
+Four changed/added methods compile and AST-parse; all thirteen original assertion/
+assert-raises nodes in the copy/move case remain. Four isolated checks passed for
+the exact proposed fixture's legacy/native routing and wrong-version rejection,
+plus the inspected production transaction body's nested SQL rollback. Constructor/
+legacy callbacks were doubles with real constrained SQLite, not actual migrations.
+No native constructor, checkpoint writer, graph clone, changed copy/move case or
+new native regression was executed. Full-module and final covering CI remain pending.
+Inspected facade blob: b67d5d8b360311d1eaa71f49e76422a0d3d8a400; clone kernel:
+350764b76bd617aee4f7cbf702d6299c2c908d74; feature storage:
+981c10c866218b14dc332edda737800a2162e668. No local doubles are committed.
+
+This intermediate correction uses [skip ci], without workflow edits or manual
+dispatch. README, existing indexes and backup/runtime guidance remain applicable.
+[Series status and remaining gates](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).

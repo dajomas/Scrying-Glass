@@ -242,16 +242,23 @@ Planned separate corrective commits; no assertion skipping or validation weakeni
    validation/persistence. Native tests and final CI remain pending; strict production
    digest validation is unchanged.
    [Evidence and limits](../handover/140-viewer-ownership-fixtures.md#revision-test-digest-mutation-correction---2026-11-16).
-5. Facade mocked-copy boundary: prepared explicit plain-mixin effect-cleanup unit,
-   retaining both original assertions and adding exact call/name/input checks.
-   Added a separate private-facade missing-binding rejection regression with zero
-   clone calls, unchanged SQL, no destination and closed transaction. Two isolated
-   checks passed with inspected method bodies and constrained SQLite/callback doubles;
-   old failure reproduced and bypassing the guard failed the new regression. No
-   production guard, shared schema fixture or dispatch pin changes. Native facade,
-   graph/schema integration, complete module and final CI remain pending.
+5. Facade mocked-copy boundary: delivered at 5109e0c152d99a2e2c9e33101c43e0e0739ced9c.
+   Explicit plain-mixin effect-cleanup unit retains both original assertions and adds
+   exact call/name/input checks. Separate private-facade missing-binding rejection
+   regression checks zero clone calls, unchanged SQL, no destination and closed
+   transaction. Two isolated checks passed; old failure reproduced and bypassing
+   the guard failed the new regression. Native facade/graph/schema and CI remain
+   pending; production guards and dispatch expectations were not changed.
    [Evidence and limits](../handover/140-viewer-ownership-fixtures.md#mocked-copy-boundary-correction---2026-11-16).
-6. Facade copy fixture: schema-3 fixture reaches schema-9-only cloning; pending.
+6. Facade copy fixture: prepared opt-in real schema-9 constructor branch, leaving
+   base/legacy schema-3 callers unchanged. Copy/move checkpoint seeding uses the real
+   snapshot writer; original naming/rename/identity/deletion/rejection assertions
+   remain. Added native fixture-separation and post-private-clone rollback methods.
+   Four changed/added methods compile/AST-parse, and four isolated routing/version/
+   nested-SQL-rollback checks passed with constructor/legacy doubles. Native constructor,
+   checkpoint capture, graph copy/rollback, complete module and CI remain unexecuted.
+   No production version guard or dispatch pin is changed.
+   [Evidence and limits](../handover/130-accounts-migration-fixture.md#native-and-legacy-storage-fixture-separation---2026-11-16).
 7. Facade dispatch expectation: old save_setup module pin; pending. Retain behavior
    and size guards; do not infer a size overrun from this earlier failed assertion.
 8. Lower-level Save As contract: private map empty after raw storage save; pending.
@@ -260,8 +267,8 @@ Planned separate corrective commits; no assertion skipping or validation weakeni
    pending implementation with selected/life-filtered mapping, independent revisions,
    rollback and privacy coverage. Planned final corrective commit enables CI.
 
-Issues 1-4 are delivered; only issue 5 is prepared in this delivery. Corrections
-6-9 are not supplied. The final corrective push will omit [skip ci] and its run
+Issues 1-5 are delivered; only issue 6 is prepared in this delivery. Corrections
+7-9 are not supplied. The final corrective push will omit [skip ci] and its run
 must be reviewed. No manual dispatch, workflow edit, 2C.3c/2D completion, bundle
 work, final Stage 3 validation or feature acceptance is implied by this sequence
 or by a future green configured suite. New failures need diagnosis/fresh approval.
