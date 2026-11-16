@@ -10,7 +10,8 @@ remains private storage, recovery/reset/copy, then bundles. 022.04-022.16 remain
 pending. No merge, deployment, release or whole-feature closure is authorized.
 
 Corrections 1-8 were pushed with [skip ci]. Correction 9 was pushed without it;
-its covering run failed and the diagnosed request-type follow-up below is prepared.
+its first covering run failed. The request-type follow-up is delivered and the
+combined corrective suite passed as recorded below; new boundary tests are pending.
 Follow-up code commits use configured push CI, with no [skip ci], manual dispatch
 or workflow edit. The earlier nine-commit skip agreement does not extend to fixes
 required by that failed covering run.
@@ -102,7 +103,8 @@ pytest and JavaScript steps passed. Reviewed workflow parts 130-132 show all ele
 new setup-import methods, all fourteen Stage 2 contracts and six save-handler
 methods passing. These passes do not establish a green combined corrective suite.
 
-Prepared follow-up: only concrete Request types may suppress wrapper injection.
+Delivered follow-up de3f69bb6453553704df2a68cc73511f69c21dff: only concrete
+Request types may suppress wrapper injection.
 The object placeholder used by ownership/viewer/lair fixtures otherwise matches
 ordinary annotations and inspect.Parameter.empty, misrouting campaign IDs/payloads
 into authentication. Exclude object as the Request type and empty annotations;
@@ -114,15 +116,56 @@ harness with Request/HTTP/ownership doubles, versus two failures with the old
 wrapper. An isolated inspected-lair-installer check preserves all five routes and
 auth/origin dependencies, restoring injection on all five; service/dependency
 collaborators were doubled. FastAPI/Starlette are absent locally; no native ASGI/full fixture/module
-or follow-up CI pass is claimed. Delivery awaits exact-payload approval; use normal
-push CI and inspect its actual results before proceeding. [Diagnosis/history/limits](../handover/140-viewer-ownership-fixtures.md#generic-request-placeholder-follow-up---2026-11-16).
+execution was claimed at preparation. The successful covering run below supersedes
+that follow-up delivery/CI-pending status, not its isolated-check limitations. [Diagnosis/history/limits](../handover/140-viewer-ownership-fixtures.md#generic-request-placeholder-follow-up---2026-11-16).
+
+## Green evidence reconciliation and 2B boundaries - 2026-11-16
+
+Successful Branch tests 43893014815 attempt 1 covers
+ de3f69bb6453553704df2a68cc73511f69c21dff; publication/current baseline
+51a2fe7a8b9b06a6b9d23fc82843f39d1f55db01. Main unittest: 1,932 OK; selected
+pytest: 43 passed. Syntax/server import, JavaScript and standalone stages passed.
+Connection audit: 213 modules, zero failed, all tracked connections closed. This
+validates the configured combined corrective suite, not feature acceptance.
+
+Reviewed test bodies and successful workflow entries reconcile core 2B scope,
+restart/reload, lowered trusted-read budgets, sequential undo/stale predecessors,
+fingerprints/pruning, late rollback, private projections, clear/reopen/tombstone
+history and replacement exhaustion to native storage/service evidence. Do not keep
+these suites labelled unexecuted. ClearSqlTests remain constrained-SQLite and
+TransactionDetectionTests remain mocked routing tests. Existing selected ASGI
+privacy evidence does not prove recovery authorization or all socket boundaries.
+
+The user agreed a bounded completion increment for three remaining integration
+boundaries. tests/test_statblock_2b_boundaries.py prepares eleven methods:
+1. Six ASGI methods mount the actual feature installer, real AuthService/ownership/
+   SQLite and seeded sessions. Cover owner checkpoint restore/undo, retained existing
+   superadmin policy, unauthenticated/client/non-owner/origin denials, foreign/kind-
+   confused snapshots, missing confirmation/stale revision, stale undo ID/digest,
+   unchanged full SQL/live/private/history state on rejection and private replies.
+2. Two native protected restore cases combine multiple clears and replacement,
+   exhausting the second clear at MAX_REVISION in saved and detached-runtime scopes.
+   Assert preflight before real tracker/counter writes, exact SQL/binding/live/source
+   preservation and no broadcast. Constrained-SQLite proof is not substituted here.
+3. Three notification cases retain production broadcast/deferral and real viewer
+   projection, using recording sockets only to observe sends. Cover dual producers
+   coalescing to one post-commit/final-history frame, late rollback suppression and
+   true no-op silence, including final private metadata and feature revisions.
+
+Status: prepared for exact-payload approval, not pushed or executed. The module
+compiles/AST-parses and static discovery/boundary checks pass; FastAPI is absent
+locally. None of the eleven native methods ran and the earlier green run does not
+cover them. Seeded-session ASGI/recording sockets are not login/full-server/browser/
+real-WebSocket delivery tests. No production or existing-test changes are supplied;
+there is no demonstrated production defect. Normal push CI applies without [skip ci],
+manual dispatch or workflow edits. Review actual covering results, fix demonstrated
+failures with fresh approval, then reconcile 2B acceptance. [Scope/evidence limits](../handover/140-viewer-ownership-fixtures.md#2b-boundary-completion-preparation---2026-11-16).
 
 ## Remaining gates and delivery order
 
-The correction-9 covering run is reviewed above and failed. Deliver/review the
-separately approved follow-up and resolve demonstrated failures before continuing
-the lifecycle order. Do not infer that these selected passing suites close every
-remaining lifecycle or authorization gate.
+The corrective series and request-type follow-up now have reviewed green covering
+CI. Deliver/review the agreed 2B boundary tests above before moving to 2C/2C.3c.
+Preserve the remaining gates below; do not infer blanket lifecycle acceptance.
 
 1. 2B: execute/review recovery capture, fingerprints/pruning, replacement and service
    restore, counter-ledger/all-writer, trusted-clear and protected-flush suites.

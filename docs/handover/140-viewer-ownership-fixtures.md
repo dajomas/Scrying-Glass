@@ -122,3 +122,53 @@ edit/manual dispatch. Review its actual results and diagnose remaining failures
 before continuing 2B, 2C/2C.3c, 2D reconciliation and Stage 3 bundles. 022.02 stays
 accepted/closed; Stage 1/2, 022.03 and 022 stay unaccepted. README and root indexes
 remain applicable without cosmetic edits; no merge, release or deployment.
+
+## 2B boundary-completion preparation - 2026-11-16
+
+The request-type follow-up was delivered at de3f69bb6453553704df2a68cc73511f69c21dff.
+Successful Branch tests 43893014815 attempt 1 covers that implementation; evidence
+publication/current baseline is 51a2fe7a8b9b06a6b9d23fc82843f39d1f55db01.
+The earlier prepared/unexecuted/failed-suite notes above retain delivery-time history,
+not current run status. Main unittest ran 1,932 tests OK; selected pytest 43 passed;
+syntax/server import, JavaScript and standalone stages succeeded. Audit: 213 modules,
+zero failed, with an explicit all-tracked-connections-closed result. This is green
+covering evidence for the corrective series, not Stage 1/2/022.03/022 acceptance.
+
+Source/assertion review plus passing log entries establish native storage/service
+scope, restart, lowered trusted-read budgets, sequential undo/stale predecessors,
+fingerprints/pruning, late rollback, private projections, clearing/tombstones and
+replacement exhaustion. ClearSqlTests remain constrained-SQLite; transaction-
+detection mocks remain routing evidence. Existing transport ASGI checks cover
+selected reads/mutations, not private recovery-route authorization. Service emitter
+seams do not establish real notification coalescing. Three remaining boundary groups
+were agreed before continuing 2C/2C.3c, 2D reconciliation and Stage 3 bundles.
+
+New tests/test_statblock_2b_boundaries.py supplies eleven prepared methods:
+- Six actual feature-installer ASGI methods use AuthService, ownership, SQLite and
+  seeded sessions for owner checkpoint restore/undo, retained existing superadmin
+  permission, missing/wrong-role/non-owner/origin denials, foreign/kind-confused
+  snapshots, confirmation/revision rejection and stale undo fingerprints. Replies
+  and sent frames are checked for private content; rejected operations compare full
+  SQL dumps, live metadata and notification state. No injected authorization gate.
+- Two protected native recovery cases preflight mixed clear/replace with an exhausted
+  second clear binding, for saved and detached-runtime destinations. Real write hooks
+  are wrapped only as non-call spies; full SQL/live/binding/source preservation and
+  zero emission are asserted. No lower-level exhaustion bypass is introduced.
+- Three notification methods retain NotificationsService.broadcast and the real
+  campaign viewer projection. Recording sockets observe sends after commit/history,
+  final saved metadata/revision, one coalesced frame, late rollback suppression and
+  no-op silence. A wraps spy observes broadcast calls without replacing deferral.
+
+These are seeded-session in-process ASGI/native fixtures and recording sockets, not
+password login, full application startup, browsers or real WebSocket/network delivery.
+No production, existing test, route, permission, schema or workflow changes are
+proposed: no production defect was demonstrated during review. Compilation/AST and
+static discovery/boundary checks passed for the new module; FastAPI is absent locally,
+so none of its eleven native methods ran. The existing green run predates them.
+
+Deliver this coherent test/documentation increment only after exact-payload approval,
+without [skip ci], using configured push CI and no manual dispatch/workflow change.
+Review its covering run and fix any demonstrated failures with separate approval.
+2B remains in progress pending boundary results and acceptance reconciliation;
+022.02 remains closed. Existing README/index guidance needs no cosmetic edits.
+[Current lifecycle task](../todo/223-statblock-lifecycle.md).
