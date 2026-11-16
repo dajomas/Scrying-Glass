@@ -1,0 +1,28 @@
+repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5087038Z     candidate = _fetch_exact(context, monster, identity)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5087651Z   File "/tmp/scrying-tests-o00d15xg/repo/python/scrying_glass_monster_refresh_sources.py", line 93, in _fetch_exact
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5110917Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5118124Z ValueError: Retained source missing or ambiguous
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5122529Z ok
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5214755Z test_candidate_errors_are_not_zero_matches (test_fivetools_source_configuration.SourceConfigurationTests.test_candidate_errors_are_not_zero_matches) ... 5e.tools candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5216167Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5216977Z   File "python/scrying_glass_monster_selection.py", line 199, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5217699Z     index = _fivetools_index(root)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5218380Z   File "python/scrying_glass_monster_selection.py", line 167, in _fivetools_index
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5219074Z     index = ft.load_json(root + "/index.json")
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5219945Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5220751Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5221251Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5222073Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5223064Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5223618Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5224522Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5225607Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5226000Z OSError: private detail
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5226474Z 5e.tools candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5226952Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5227688Z   File "python/scrying_glass_monster_selection.py", line 196, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5228408Z     sources = ft.configured_sources(display)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5229238Z   File "/tmp/scrying-tests-o00d15xg/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+tests	Python test suite (including browser fixtures)	2026-11-16T21:00:38.5230530Z     raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+tests	Python

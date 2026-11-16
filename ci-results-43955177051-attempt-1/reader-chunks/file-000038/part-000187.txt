@@ -1,0 +1,50 @@
+ # Subtest: older success cannot clear a newer failure or collapse/refresh its view
+tests	JavaScript tests	2026-11-16T21:03:10.5897980Z ok 7 - older success cannot clear a newer failure or collapse/refresh its view
+tests	JavaScript tests	2026-11-16T21:03:10.5898462Z   ---
+tests	JavaScript tests	2026-11-16T21:03:10.5898944Z   duration_ms: 0.863236
+tests	JavaScript tests	2026-11-16T21:03:10.5899561Z   type: 'test'
+tests	JavaScript tests	2026-11-16T21:03:10.5900010Z   ...
+tests	JavaScript tests	2026-11-16T21:03:10.5900826Z # Subtest: old-scope failure cannot publish in the new encounter
+tests	JavaScript tests	2026-11-16T21:03:10.5901582Z ok 8 - old-scope failure cannot publish in the new encounter
+tests	JavaScript tests	2026-11-16T21:03:10.5902018Z   ---
+tests	JavaScript tests	2026-11-16T21:03:10.5902469Z   duration_ms: 0.850868
+tests	JavaScript tests	2026-11-16T21:03:10.5903214Z   type: 'test'
+tests	JavaScript tests	2026-11-16T21:03:10.5903714Z   ...
+tests	JavaScript tests	2026-11-16T21:03:10.5912900Z # Subtest: old-scope success cannot collapse or refresh the new encounter
+tests	JavaScript tests	2026-11-16T21:03:10.5914779Z ok 9 - old-scope success cannot collapse or refresh the new encounter
+tests	JavaScript tests	2026-11-16T21:03:10.5915365Z   ---
+tests	JavaScript tests	2026-11-16T21:03:10.5915759Z   duration_ms: 0.999723
+tests	JavaScript tests	2026-11-16T21:03:10.5916153Z   type: 'test'
+tests	JavaScript tests	2026-11-16T21:03:10.5916594Z   ...
+tests	JavaScript tests	2026-11-16T21:03:10.5917222Z # Subtest: scope A-B-A still rejects the old request via epoch
+tests	JavaScript tests	2026-11-16T21:03:10.5917915Z ok 10 - scope A-B-A still rejects the old request via epoch
+tests	JavaScript tests	2026-11-16T21:03:10.5918331Z   ---
+tests	JavaScript tests	2026-11-16T21:03:10.5918721Z   duration_ms: 1.927299
+tests	JavaScript tests	2026-11-16T21:03:10.5919173Z   type: 'test'
+tests	JavaScript tests	2026-11-16T21:03:10.5919632Z   ...
+tests	JavaScript tests	2026-11-16T21:03:10.5920363Z # Subtest: successful Start followed by handled refresh failure retains only state.load error, no retry
+tests	JavaScript tests	2026-11-16T21:03:10.5921248Z ok 11 - successful Start followed by handled refresh failure retains only state.load error, no retry
+tests	JavaScript tests	2026-11-16T21:03:10.5921775Z   ---
+tests	JavaScript tests	2026-11-16T21:03:10.5922247Z   duration_ms: 0.861626
+tests	JavaScript tests	2026-11-16T21:03:10.5922819Z   type: 'test'
+tests	JavaScript tests	2026-11-16T21:03:10.5923217Z   ...
+tests	JavaScript tests	2026-11-16T21:03:10.5927051Z # Subtest: duplicate asset installation preserves the installed wrapper
+tests	JavaScript tests	2026-11-16T21:03:10.5927865Z ok 12 - duplicate asset installation preserves the installed wrapper
+tests	JavaScript tests	2026-11-16T21:03:10.5931328Z   ---
+tests	JavaScript tests	2026-11-16T21:03:10.5931732Z   duration_ms: 0.625223
+tests	JavaScript tests	2026-11-16T21:03:10.5932188Z   type: 'test'
+tests	JavaScript tests	2026-11-16T21:03:10.5932756Z   ...
+tests	JavaScript tests	2026-11-16T21:03:10.5989680Z 1..12
+tests	JavaScript tests	2026-11-16T21:03:10.5990031Z # tests 12
+tests	JavaScript tests	2026-11-16T21:03:10.5990332Z # suites 0
+tests	JavaScript tests	2026-11-16T21:03:10.5990588Z # pass 12
+tests	JavaScript tests	2026-11-16T21:03:10.5990845Z # fail 0
+tests	JavaScript tests	2026-11-16T21:03:10.5991106Z # cancelled 0
+tests	JavaScript tests	2026-11-16T21:03:10.5991663Z # skipped 0
+tests	JavaScript tests	2026-11-16T21:03:10.5991935Z # todo 0
+tests	JavaScript tests	2026-11-16T21:03:10.5992261Z # duration_ms 73.31815
+tests	JavaScript tests	2026-11-16T21:03:10.6287865Z ##[endgroup]
+tests	JavaScript tests	2026-11-16T21:03:10.6288378Z ##[group]tests/admin-start-validation.test.cjs
+tests	JavaScript tests	2026-11-16T21:03:10.8084705Z TAP version 13
+tests	JavaScript tests	2026-11-16T21:03:10.8592028Z # Subtest: asset loads once after core and the 4A.2 override
+tests	JavaScript tests	2026-11-16T21:03:10.8600130Z ok 

@@ -1,0 +1,26 @@
+)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1651893Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1652247Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1653050Z   File "/tmp/scrying-tests-o00d15xg/repo/tests/test_bughunt_130f875.py", line 86, in test_corrupt_lzma_media
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1653780Z     self.invalid(corrupt_member(archive(payload(),zipfile.ZIP_LZMA,{'a.png':b'image contents'}),'media/a.png',lzma=True))
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1654651Z     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1655450Z   File "/tmp/scrying-tests-o00d15xg/repo/tests/test_bughunt_130f875.py", line 73, in invalid
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1656169Z     with self.assertRaises(HTTPError) as exc:import_bundle(self.context,raw)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1656790Z                                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1657412Z   File "/tmp/scrying-tests-o00d15xg/repo/python/scrying_glass_campaign_bundle.py", line 200, in import_bundle
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1657969Z     if not context.STORAGE.connection.in_transaction:
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1658383Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1658754Z AttributeError: 'Store' object has no attribute 'connection'
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1659118Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1659306Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1659995Z ERROR: test_empty_media_rejected (test_bughunt_130f875.BundleTests.test_empty_media_rejected)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1660601Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1660985Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1661692Z   File "/tmp/scrying-tests-o00d15xg/repo/tests/test_bughunt_130f875.py", line 97, in test_empty_media_rejected
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1662435Z     def test_empty_media_rejected(self):self.invalid(archive(payload(),media={'a.png':b''}))
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1663086Z                                         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1663706Z   File "/tmp/scrying-tests-o00d15xg/repo/tests/test_bughunt_130f875.py", line 73, in invalid
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1664416Z     with self.assertRaises(HTTPError) as exc:import_bundle(self.context,raw)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1664957Z                                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1665673Z   File "/tmp/scrying-tests-o00d15xg/repo/python/scrying_glass_campaign_bundle.py", line 200, in import_bundle
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1666351Z     if not context.STORAGE.connection.in_transaction:

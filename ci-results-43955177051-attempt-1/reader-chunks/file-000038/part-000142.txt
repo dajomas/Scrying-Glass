@@ -1,0 +1,27 @@
+a.png'))
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1639936Z     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1640465Z   File "/tmp/scrying-tests-o00d15xg/repo/tests/test_bughunt_130f875.py", line 73, in invalid
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1641130Z     with self.assertRaises(HTTPError) as exc:import_bundle(self.context,raw)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1641559Z                                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1642108Z   File "/tmp/scrying-tests-o00d15xg/repo/python/scrying_glass_campaign_bundle.py", line 200, in import_bundle
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1642823Z     if not context.STORAGE.connection.in_transaction:
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1643295Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1643673Z AttributeError: 'Store' object has no attribute 'connection'
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1643899Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1644080Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1644595Z ERROR: test_corrupt_lzma_manifest (test_bughunt_130f875.BundleTests.test_corrupt_lzma_manifest)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1645133Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1645591Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1646110Z   File "/tmp/scrying-tests-o00d15xg/repo/tests/test_bughunt_130f875.py", line 83, in test_corrupt_lzma_manifest
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1646763Z     self.invalid(corrupt_member(archive(payload(),zipfile.ZIP_LZMA),'campaign.json',lzma=True))
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1647260Z     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1647765Z   File "/tmp/scrying-tests-o00d15xg/repo/tests/test_bughunt_130f875.py", line 73, in invalid
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1648300Z     with self.assertRaises(HTTPError) as exc:import_bundle(self.context,raw)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1648729Z                                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1649269Z   File "/tmp/scrying-tests-o00d15xg/repo/python/scrying_glass_campaign_bundle.py", line 200, in import_bundle
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1649793Z     if not context.STORAGE.connection.in_transaction:
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1650134Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1650500Z AttributeError: 'Store' object has no attribute 'connection'
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1650732Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1650902Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1651392Z ERROR: test_corrupt_lzma_media (test_bughunt_130f875.BundleTests.test_corrupt_lzma_media

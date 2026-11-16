@@ -1,0 +1,27 @@
+tures)	2026-11-16T21:03:01.1696934Z                                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1697777Z   File "/tmp/scrying-tests-o00d15xg/repo/python/scrying_glass_campaign_bundle.py", line 200, in import_bundle
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1698597Z     if not context.STORAGE.connection.in_transaction:
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1699086Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1699637Z AttributeError: 'Store' object has no attribute 'connection'
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1699908Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1700088Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1700775Z ERROR: test_string_version_rejected (test_bughunt_130f875.BundleTests.test_string_version_rejected)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1701425Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1701787Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1702405Z   File "/tmp/scrying-tests-o00d15xg/repo/tests/test_bughunt_130f875.py", line 90, in test_string_version_rejected
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1703380Z     def test_string_version_rejected(self):self.invalid(archive(payload('1')))
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1703929Z                                            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1704541Z   File "/tmp/scrying-tests-o00d15xg/repo/tests/test_bughunt_130f875.py", line 73, in invalid
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1705157Z     with self.assertRaises(HTTPError) as exc:import_bundle(self.context,raw)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1705664Z                                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1706281Z   File "/tmp/scrying-tests-o00d15xg/repo/python/scrying_glass_campaign_bundle.py", line 200, in import_bundle
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1706897Z     if not context.STORAGE.connection.in_transaction:
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1707224Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1707679Z AttributeError: 'Store' object has no attribute 'connection'
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1707933Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1708122Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1708704Z ERROR: test_traversal_rejected (test_bughunt_130f875.BundleTests.test_traversal_rejected)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1709311Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1709682Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1710416Z   File "/tmp/scrying-tests-o00d15xg/repo/tests/test_bughunt_130f875.py", line 93, in test_traversal_rejected
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1711058Z     self.invalid(archive(payload(),media={'../a.png':b'

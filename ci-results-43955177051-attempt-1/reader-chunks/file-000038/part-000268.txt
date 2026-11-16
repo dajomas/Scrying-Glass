@@ -1,0 +1,28 @@
+-jzybuxjz/repo/tests/test_bughunt_130f875.py", line 88, in test_float_version_rejected
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4533958Z     def test_float_version_rejected(self):self.invalid(archive(payload(1.0)))
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4534620Z                                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4535330Z   File "/tmp/scrying-tests-jzybuxjz/repo/tests/test_bughunt_130f875.py", line 73, in invalid
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4536213Z     with self.assertRaises(HTTPError) as exc:import_bundle(self.context,raw)
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4536888Z                                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4537775Z   File "/tmp/scrying-tests-jzybuxjz/repo/python/scrying_glass_campaign_bundle.py", line 200, in import_bundle
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4538667Z     if not context.STORAGE.connection.in_transaction:
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4539183Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4539804Z AttributeError: 'Store' object has no attribute 'connection'
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4540185Z 
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4540465Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4541309Z ERROR: test_invalid_zip_rejected (test_bughunt_130f875.BundleTests.test_invalid_zip_rejected)
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4542413Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4543208Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4544069Z   File "/tmp/scrying-tests-jzybuxjz/repo/tests/test_bughunt_130f875.py", line 91, in test_invalid_zip_rejected
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4544990Z     def test_invalid_zip_rejected(self):self.invalid(b'not a ZIP archive')
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4545648Z                                         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4546422Z   File "/tmp/scrying-tests-jzybuxjz/repo/tests/test_bughunt_130f875.py", line 73, in invalid
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4547306Z     with self.assertRaises(HTTPError) as exc:import_bundle(self.context,raw)
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4547962Z                                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4548786Z   File "/tmp/scrying-tests-jzybuxjz/repo/python/scrying_glass_campaign_bundle.py", line 200, in import_bundle
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4549754Z     if not context.STORAGE.connection.in_transaction:
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4550304Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4550926Z AttributeError: 'Store' object has no attribute 'connection'
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4551335Z 
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4551636Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4552887Z ERROR: test_media_rewrite_

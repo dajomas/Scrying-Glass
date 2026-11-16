@@ -1,0 +1,29 @@
+
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4577055Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4578094Z   File "/tmp/scrying-tests-jzybuxjz/repo/tests/test_bughunt_130f875.py", line 90, in test_string_version_rejected
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4579057Z     def test_string_version_rejected(self):self.invalid(archive(payload('1')))
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4579757Z                                            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4580553Z   File "/tmp/scrying-tests-jzybuxjz/repo/tests/test_bughunt_130f875.py", line 73, in invalid
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4581451Z     with self.assertRaises(HTTPError) as exc:import_bundle(self.context,raw)
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4582124Z                                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4583103Z   File "/tmp/scrying-tests-jzybuxjz/repo/python/scrying_glass_campaign_bundle.py", line 200, in import_bundle
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4583754Z     if not context.STORAGE.connection.in_transaction:
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4584112Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4584499Z AttributeError: 'Store' object has no attribute 'connection'
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4584743Z 
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4584934Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4585448Z ERROR: test_traversal_rejected (test_bughunt_130f875.BundleTests.test_traversal_rejected)
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4585988Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4586369Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4586906Z   File "/tmp/scrying-tests-jzybuxjz/repo/tests/test_bughunt_130f875.py", line 93, in test_traversal_rejected
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4587480Z     self.invalid(archive(payload(),media={'../a.png':b'image'}))
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4587871Z     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4588361Z   File "/tmp/scrying-tests-jzybuxjz/repo/tests/test_bughunt_130f875.py", line 73, in invalid
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4588916Z     with self.assertRaises(HTTPError) as exc:import_bundle(self.context,raw)
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4589354Z                                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4589903Z   File "/tmp/scrying-tests-jzybuxjz/repo/python/scrying_glass_campaign_bundle.py", line 200, in import_bundle
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4590451Z     if not context.STORAGE.connection.in_transaction:
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4590942Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4591338Z AttributeError: 'Store' object has no attribute 'connection'
+tests	Standalone Python browser and audit checks	2026-11-16T21:05:05.4591574Z 
+tests	Standalone Python browser and audit checks	2026-11-1

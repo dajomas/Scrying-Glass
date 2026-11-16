@@ -1,0 +1,27 @@
+25186Z                                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1625862Z   File "/tmp/scrying-tests-o00d15xg/repo/python/scrying_glass_campaign_bundle.py", line 200, in import_bundle
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1626592Z     if not context.STORAGE.connection.in_transaction:
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1626988Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1627452Z AttributeError: 'Store' object has no attribute 'connection'
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1627754Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1627976Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1628629Z ERROR: test_corrupt_deflate_manifest (test_bughunt_130f875.BundleTests.test_corrupt_deflate_manifest)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1629497Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1630053Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1630884Z   File "/tmp/scrying-tests-o00d15xg/repo/tests/test_bughunt_130f875.py", line 78, in test_corrupt_deflate_manifest
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1631780Z     self.invalid(corrupt_member(archive(payload()),'campaign.json'))
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1632382Z     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1633351Z   File "/tmp/scrying-tests-o00d15xg/repo/tests/test_bughunt_130f875.py", line 73, in invalid
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1633913Z     with self.assertRaises(HTTPError) as exc:import_bundle(self.context,raw)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1634343Z                                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1634884Z   File "/tmp/scrying-tests-o00d15xg/repo/python/scrying_glass_campaign_bundle.py", line 200, in import_bundle
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1635422Z     if not context.STORAGE.connection.in_transaction:
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1635963Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1636350Z AttributeError: 'Store' object has no attribute 'connection'
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1636593Z 
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1636783Z ======================================================================
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1637309Z ERROR: test_corrupt_deflate_media (test_bughunt_130f875.BundleTests.test_corrupt_deflate_media)
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1637855Z ----------------------------------------------------------------------
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1638225Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1638752Z   File "/tmp/scrying-tests-o00d15xg/repo/tests/test_bughunt_130f875.py", line 80, in test_corrupt_deflate_media
+tests	Python test suite (including browser fixtures)	2026-11-16T21:03:01.1639420Z     self.invalid(corrupt_member(archive(payload(),media={'a.png':b'image contents'}),'media/
