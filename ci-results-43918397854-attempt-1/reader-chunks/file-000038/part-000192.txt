@@ -1,0 +1,48 @@
+aign-bundle-import-feedback.test.cjs
+tests	JavaScript tests	2026-11-16T17:31:00.0400462Z TAP version 13
+tests	JavaScript tests	2026-11-16T17:31:00.0746901Z # Subtest: confirmed import keeps file POST and full recovery wording, without alert
+tests	JavaScript tests	2026-11-16T17:31:00.0747522Z ok 1 - confirmed import keeps file POST and full recovery wording, without alert
+tests	JavaScript tests	2026-11-16T17:31:00.0748279Z   ---
+tests	JavaScript tests	2026-11-16T17:31:00.0748543Z   duration_ms: 7.537857
+tests	JavaScript tests	2026-11-16T17:31:00.0748758Z   type: 'test'
+tests	JavaScript tests	2026-11-16T17:31:00.0748948Z   ...
+tests	JavaScript tests	2026-11-16T17:31:00.0763122Z # Subtest: success expires at five seconds without clearing unrelated persistent error
+tests	JavaScript tests	2026-11-16T17:31:00.0764224Z ok 2 - success expires at five seconds without clearing unrelated persistent error
+tests	JavaScript tests	2026-11-16T17:31:00.0765133Z   ---
+tests	JavaScript tests	2026-11-16T17:31:00.0765456Z   duration_ms: 2.517396
+tests	JavaScript tests	2026-11-16T17:31:00.0765676Z   type: 'test'
+tests	JavaScript tests	2026-11-16T17:31:00.0765861Z   ...
+tests	JavaScript tests	2026-11-16T17:31:00.0773430Z # Subtest: cancellation does not start import feedback
+tests	JavaScript tests	2026-11-16T17:31:00.0774691Z ok 3 - cancellation does not start import feedback
+tests	JavaScript tests	2026-11-16T17:31:00.0775748Z   ---
+tests	JavaScript tests	2026-11-16T17:31:00.0776149Z   duration_ms: 0.993393
+tests	JavaScript tests	2026-11-16T17:31:00.0776548Z   type: 'test'
+tests	JavaScript tests	2026-11-16T17:31:00.0776885Z   ...
+tests	JavaScript tests	2026-11-16T17:31:00.0785747Z # Subtest: missing file does not start import feedback
+tests	JavaScript tests	2026-11-16T17:31:00.0786459Z ok 4 - missing file does not start import feedback
+tests	JavaScript tests	2026-11-16T17:31:00.0786980Z   ---
+tests	JavaScript tests	2026-11-16T17:31:00.0787290Z   duration_ms: 1.132367
+tests	JavaScript tests	2026-11-16T17:31:00.0787696Z   type: 'test'
+tests	JavaScript tests	2026-11-16T17:31:00.0787889Z   ...
+tests	JavaScript tests	2026-11-16T17:31:00.0805725Z # Subtest: busy duplicate is suppressed and release permits only an explicit later import
+tests	JavaScript tests	2026-11-16T17:31:00.0806941Z ok 5 - busy duplicate is suppressed and release permits only an explicit later import
+tests	JavaScript tests	2026-11-16T17:31:00.0807706Z   ---
+tests	JavaScript tests	2026-11-16T17:31:00.0808301Z   duration_ms: 2.008587
+tests	JavaScript tests	2026-11-16T17:31:00.0808788Z   type: 'test'
+tests	JavaScript tests	2026-11-16T17:31:00.0809218Z   ...
+tests	JavaScript tests	2026-11-16T17:31:00.0825288Z # Subtest: rejected POST remains local and is not retried or announced as success
+tests	JavaScript tests	2026-11-16T17:31:00.0826868Z ok 6 - rejected POST remains local and is not retried or announced as success
+tests	JavaScript tests	2026-11-16T17:31:00.0827417Z   ---
+tests	JavaScript tests	2026-11-16T17:31:00.0827717Z   duration_ms: 1.972273
+tests	JavaScript tests	2026-11-16T17:31:00.0828044Z   type: 'test'
+tests	JavaScript tests	2026-11-16T17:31:00.0828516Z   ...
+tests	JavaScript tests	2026-11-16T17:31:00.0838366Z # Subtest: scope transition suppresses stale import success
+tests	JavaScript tests	2026-11-16T17:31:00.0839356Z ok 7 - scope transition suppresses stale import success
+tests	JavaScript tests	2026-11-16T17:31:00.0840115Z   ---
+tests	JavaScript tests	2026-11-16T17:31:00.0840351Z   duration_ms: 1.296789
+tests	JavaScript tests	2026-11-16T17:31:00.0840576Z   type: 'test'
+tests	JavaScript tests	2026-11-16T17:31:00.0840763Z   ...
+tests	JavaScript tests	2026-11-16T17:31:00.0853079Z # Subtest: away-and-back epoch suppresses stale import success
+tests	JavaScript tests	2026-11-16T17:31:00.0853856Z ok 8 - away-and-back epoch suppresses stale import success
+tests	JavaScript tests	2026-11-16T17:31:00.0854320Z   ---
+tests	JavaScript tests	2026-11-16T17:31:00.0854747Z   duration_ms: 1.23

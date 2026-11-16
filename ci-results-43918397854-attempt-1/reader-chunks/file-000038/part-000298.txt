@@ -1,0 +1,27 @@
+alone Python browser and audit checks	2026-11-16T17:36:03.1353549Z ##[group]tests/feedback_browser_fixture.py
+tests	Standalone Python browser and audit checks	2026-11-16T17:36:03.3769792Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-16T17:36:03.3770240Z ##[group]tests/storage_migration_fixtures.py
+tests	Standalone Python browser and audit checks	2026-11-16T17:36:03.6742582Z ##[endgroup]
+tests	Post Run actions/setup-node@v4	﻿2026-11-16T17:36:03.6820892Z Post job cleanup.
+tests	Post Run actions/setup-node@v4	2026-11-16T17:36:03.7817243Z (node:35220) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-node@v4	2026-11-16T17:36:03.7817945Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/setup-python@v5	﻿2026-11-16T17:36:03.7935007Z Post job cleanup.
+tests	Post Run actions/setup-python@v5	2026-11-16T17:36:03.8985190Z Cache hit occurred on the primary key setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e, not saving cache.
+tests	Post Run actions/setup-python@v5	2026-11-16T17:36:03.8987067Z (node:35228) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-python@v5	2026-11-16T17:36:03.8987767Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/checkout@v4	﻿2026-11-16T17:36:03.9133512Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-16T17:36:03.9869104Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-16T17:36:03.9907632Z git version 2.56.1
+tests	Post Run actions/checkout@v4	2026-11-16T17:36:03.9940707Z Temporarily overriding HOME='/home/runner/work/_temp/d3fcbcdb-a2a6-435f-ae0f-e8239b2353b3' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-16T17:36:03.9941751Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-16T17:36:03.9944731Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-16T17:36:03.9979239Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-16T17:36:04.0009994Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-16T17:36:04.0275337Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-16T17:36:04.0297472Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-16T17:36:04.0308122Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-16T17:36:04.0354861Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Post Run actions/checkout@v4	2026-11-16T17:36:04.0614851Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	Post Run actions/checkout@v4	2026-11-16T17:36:04.0647099Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+tests	Complete job	﻿2026-11-16T17:36:04.1011273Z Cleaning up orphan processes
+tests	Complete job	2026-11-16T17:36:04.1261334Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v

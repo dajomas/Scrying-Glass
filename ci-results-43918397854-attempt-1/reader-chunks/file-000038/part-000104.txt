@@ -1,0 +1,23 @@
+_lookup_never_fetch_or_offer_partial_results) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5138740Z test_retained_dnd_url_is_fetched_without_search_or_fallback_or_mutation (test_monster_refresh_sources.MonsterRefreshSourceTests.test_retained_dnd_url_is_fetched_without_search_or_fallback_or_mutation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5147834Z test_retained_failure_never_uses_alternate_candidate (test_monster_refresh_sources.MonsterRefreshSourceTests.test_retained_failure_never_uses_alternate_candidate) ... Selected monster source refresh failed for m
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5149401Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5150347Z   File "/tmp/scrying-tests-5l2n5zv7/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5151263Z     candidate = _fetch_exact(context, monster, identity)
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5152167Z   File "/tmp/scrying-tests-5l2n5zv7/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5153089Z     html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5153974Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5154687Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5155137Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5156025Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5156677Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5157103Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5157892Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5158735Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5159023Z OSError: secret
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5159303Z ok
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.5164734Z test_sole_invalid_expired_wrong_species_or_identityless_token_cannot_resolve (test_monster_refresh_sources.MonsterRefreshSourceTests.test_sole_invalid_expired_wrong_species_or_identityless_token_cannot_resolve) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.9611461Z test_unready_states_do_not_prune_selection_or_dispatch_requests (test_monster_refresh_startup_browser.RefreshStartupBrowserTests.test_unready_states_do_not_prune_selection_or_dispatch_requests) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.9613254Z test_automatic_uses_one_die_per_monster_and_final_totals (test_monster_roll_order.MonsterRollOrderTests.test_automatic_uses_one_die_per_monster_and_final_totals) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.9615013Z test_duplicate_or_detached_targets_are_rejected_before_dice (test_monster_roll_order.MonsterRollOrderTests.test_duplicate_or_detached_targets_are_rejected_before_dice) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-16T17:30:09.9616

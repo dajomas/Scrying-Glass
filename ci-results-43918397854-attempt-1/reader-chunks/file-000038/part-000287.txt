@@ -1,0 +1,32 @@
+e Python browser and audit checks	2026-11-16T17:35:12.9130717Z     return fn(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:12.9131170Z   File "/tmp/scrying-tests-9s602zbe/repo/python/scrying_glass_source_catalog.py", line 47, in monsters
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:12.9131722Z     items = [{"id": name, "name": name} for name, _ in ms.fivetools_source_entries(display, source)]
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:12.9132165Z                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:12.9132750Z   File "/tmp/scrying-tests-9s602zbe/repo/python/scrying_glass_monster_selection.py", line 229, in fivetools_source_entries
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:12.9133283Z     raise ValueError("5e.tools source is not configured")
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:12.9133626Z ValueError: 5e.tools source is not configured
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:12.9162480Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:12.9162994Z Ran 6 tests in 0.047s
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:12.9163200Z 
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:12.9163314Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:12.9164128Z test_monster_source_catalog.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:12.9616825Z Connection audit: test_monster_source_help_text.py
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:14.2552372Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:14.2552800Z Ran 3 tests in 1.220s
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:14.2552934Z 
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:14.2553025Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:14.2554564Z test_monster_source_help_text.py: connections opened: 1; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:14.3153971Z Connection audit: test_monster_source_image.py
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:14.5773662Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:14.5774540Z test_monster_source_image.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:14.5775131Z Ran 8 tests in 0.015s
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:14.5775330Z 
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:14.5775448Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:14.6136233Z Connection audit: test_monster_source_image_browser.py
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:18.7616861Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:18.7617501Z Ran 8 tests in 4.037s
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:18.7617684Z 
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:18.7617791Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:18.7619878Z test_monster_source_image_browser.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:18.7926432Z Connection audit: test_monster_source_picker_browser.py
+tests	Standalone Python browser and audit checks	2026-11-16T17:35:20.4197459Z ------------------------------

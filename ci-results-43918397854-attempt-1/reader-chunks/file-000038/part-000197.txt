@@ -1,0 +1,48 @@
+1:01.0564214Z # Subtest: duplicate DELETE stays blocked until follow-up completes, including after reopen
+tests	JavaScript tests	2026-11-16T17:31:01.0565311Z ok 7 - duplicate DELETE stays blocked until follow-up completes, including after reopen
+tests	JavaScript tests	2026-11-16T17:31:01.0566013Z   ---
+tests	JavaScript tests	2026-11-16T17:31:01.0566348Z   duration_ms: 0.648345
+tests	JavaScript tests	2026-11-16T17:31:01.0566770Z   type: 'test'
+tests	JavaScript tests	2026-11-16T17:31:01.0567121Z   ...
+tests	JavaScript tests	2026-11-16T17:31:01.0567800Z # Subtest: persistent request failure, confirmation, method/query and retry safeguards remain
+tests	JavaScript tests	2026-11-16T17:31:01.0569402Z ok 8 - persistent request failure, confirmation, method/query and retry safeguards remain
+tests	JavaScript tests	2026-11-16T17:31:01.0569958Z   ---
+tests	JavaScript tests	2026-11-16T17:31:01.0570240Z   duration_ms: 1.325261
+tests	JavaScript tests	2026-11-16T17:31:01.0570561Z   type: 'test'
+tests	JavaScript tests	2026-11-16T17:31:01.0570828Z   ...
+tests	JavaScript tests	2026-11-16T17:31:01.0627649Z 1..8
+tests	JavaScript tests	2026-11-16T17:31:01.0627943Z # tests 8
+tests	JavaScript tests	2026-11-16T17:31:01.0628760Z # suites 0
+tests	JavaScript tests	2026-11-16T17:31:01.0629201Z # pass 8
+tests	JavaScript tests	2026-11-16T17:31:01.0629676Z # fail 0
+tests	JavaScript tests	2026-11-16T17:31:01.0629954Z # cancelled 0
+tests	JavaScript tests	2026-11-16T17:31:01.0630211Z # skipped 0
+tests	JavaScript tests	2026-11-16T17:31:01.0630417Z # todo 0
+tests	JavaScript tests	2026-11-16T17:31:01.0630619Z # duration_ms 62.119731
+tests	JavaScript tests	2026-11-16T17:31:01.1015410Z ##[endgroup]
+tests	JavaScript tests	2026-11-16T17:31:01.1016500Z ##[group]tests/campaign-delete-refresh-feedback.test.cjs
+tests	JavaScript tests	2026-11-16T17:31:01.3329436Z TAP version 13
+tests	JavaScript tests	2026-11-16T17:31:01.3720025Z # Subtest: success precedes refresh, lasts exactly 3000ms and busy spans completion
+tests	JavaScript tests	2026-11-16T17:31:01.3723814Z ok 1 - success precedes refresh, lasts exactly 3000ms and busy spans completion
+tests	JavaScript tests	2026-11-16T17:31:01.3724394Z   ---
+tests	JavaScript tests	2026-11-16T17:31:01.3748931Z   duration_ms: 2.794714
+tests	JavaScript tests	2026-11-16T17:31:01.3749428Z   type: 'test'
+tests	JavaScript tests	2026-11-16T17:31:01.3749884Z   ...
+tests	JavaScript tests	2026-11-16T17:31:01.3750592Z # Subtest: refresh failure persists after success expiry, preserves applied mutation and never replays
+tests	JavaScript tests	2026-11-16T17:31:01.3751420Z ok 2 - refresh failure persists after success expiry, preserves applied mutation and never replays
+tests	JavaScript tests	2026-11-16T17:31:01.3751810Z   ---
+tests	JavaScript tests	2026-11-16T17:31:01.3752001Z   duration_ms: 1.072819
+tests	JavaScript tests	2026-11-16T17:31:01.3752206Z   type: 'test'
+tests	JavaScript tests	2026-11-16T17:31:01.3752387Z   ...
+tests	JavaScript tests	2026-11-16T17:31:01.3752727Z # Subtest: obsolete success timer cannot remove a newer matching DELETE error
+tests	JavaScript tests	2026-11-16T17:31:01.3753509Z ok 3 - obsolete success timer cannot remove a newer matching DELETE error
+tests	JavaScript tests	2026-11-16T17:31:01.3753817Z   ---
+tests	JavaScript tests	2026-11-16T17:31:01.3753995Z   duration_ms: 0.818094
+tests	JavaScript tests	2026-11-16T17:31:01.3754207Z   type: 'test'
+tests	JavaScript tests	2026-11-16T17:31:01.3754387Z   ...
+tests	JavaScript tests	2026-11-16T17:31:01.3754752Z # Subtest: actual setup helper forwards owner and strict errors for opened/empty paths
+tests	JavaScript tests	2026-11-16T17:31:01.3755269Z ok 4 - actual setup helper forwards owner and strict errors for opened/empty paths
+tests	JavaScript tests	2026-11-16T17:31:01.3755598Z   ---
+tests	JavaScript tests	2026-11-16T17:31:01.3755776Z   duration_ms: 1.642678
+tests	JavaScript tests	2026-11-16T17:31:01.3755979Z   type: 'test'
+tests	JavaScript tests	2026-11-16T17:31:01.3756153Z   
