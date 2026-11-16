@@ -65,3 +65,34 @@ Inspected facade blob: b67d5d8b360311d1eaa71f49e76422a0d3d8a400; clone kernel:
 This intermediate correction uses [skip ci], without workflow edits or manual
 dispatch. README, existing indexes and backup/runtime guidance remain applicable.
 [Series status and remaining gates](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).
+
+## Facade dispatch guard correction - 2026-11-16
+
+Correction 7 baseline is c093d772513051f5c88623af1b72c63d89cde19a, the delivered
+fixture correction. The obsolete save_setup module expectation now names the
+active statblock storage mixin. Added identity assertions require the facade's
+save_setup, transfer_setup and set_value to resolve to that mixin, not merely to
+functions reporting the same module name. Existing schema, staticmethod and
+schema/records dispatch checks remain. The same 20,000-byte and no-exec/eval/compile
+loop body still checks the original five modules and now the active storage
+statblock module too. No size limit or forbidden-call condition is relaxed.
+
+A new native test spies on the real _save_preserving_statblocks hook with wraps,
+requiring one call with the resolved encounter and snapshot, then checking stored
+HP, schema 9 and no open transaction. The hook is not replaced by a no-op. Other
+fixture, migration, copy/move, rollback and rejection tests are unchanged. No
+production code, route, schema or permission changes are included.
+
+Both changed/added methods compile/AST-parse. AST comparison confirms the existing
+file-guard loop body is identical and its original five suffixes are retained.
+Six isolated guard checks passed with controlled class/file doubles: correct
+bindings pass, old pin fails, plain-save bypass fails, same-module counterfeit
+fails, 20,000 bytes passes while 20,001 fails, and eval in the new module fails.
+These are checks of the proposed assertions, not native method execution or actual
+repository file-size results. The native hook regression, complete module, real
+source-budget/AST checks and final covering CI remain pending. Inspected statblock
+mixin blob: a6d7b16fa0bebfd550ebc7a02d4aa305f7413f21.
+
+This intermediate commit uses [skip ci]; no workflow edit or separate dispatch.
+Corrections 8-9 and broader acceptance gates remain open. README/runtime guidance
+and root index links remain unchanged. [Series status](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).

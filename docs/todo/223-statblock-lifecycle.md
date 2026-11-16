@@ -250,25 +250,32 @@ Planned separate corrective commits; no assertion skipping or validation weakeni
    the guard failed the new regression. Native facade/graph/schema and CI remain
    pending; production guards and dispatch expectations were not changed.
    [Evidence and limits](../handover/140-viewer-ownership-fixtures.md#mocked-copy-boundary-correction---2026-11-16).
-6. Facade copy fixture: prepared opt-in real schema-9 constructor branch, leaving
-   base/legacy schema-3 callers unchanged. Copy/move checkpoint seeding uses the real
-   snapshot writer; original naming/rename/identity/deletion/rejection assertions
-   remain. Added native fixture-separation and post-private-clone rollback methods.
-   Four changed/added methods compile/AST-parse, and four isolated routing/version/
-   nested-SQL-rollback checks passed with constructor/legacy doubles. Native constructor,
+6. Facade copy fixture: delivered at c093d772513051f5c88623af1b72c63d89cde19a.
+   Opt-in real schema-9 constructor branch leaves base/legacy schema-3 callers unchanged.
+   Copy/move checkpoint seeding uses the real snapshot writer, retaining original
+   assertions. Added native fixture-separation and post-private-clone rollback methods.
+   Four changed/added methods compile/AST-parse; four isolated routing/version/nested-
+   SQL-rollback checks passed with constructor/legacy doubles. Native constructor,
    checkpoint capture, graph copy/rollback, complete module and CI remain unexecuted.
-   No production version guard or dispatch pin is changed.
+   Production guards and dispatch pin were unchanged by correction 6.
    [Evidence and limits](../handover/130-accounts-migration-fixture.md#native-and-legacy-storage-fixture-separation---2026-11-16).
-7. Facade dispatch expectation: old save_setup module pin; pending. Retain behavior
-   and size guards; do not infer a size overrun from this earlier failed assertion.
+7. Facade dispatch expectation: prepared current statblock module expectation plus
+   save/transfer/runtime method-identity assertions and an added native real-hook spy
+   regression. The original five source guards and exact loop body/20,000-byte limit
+   remain, extended to the active statblock storage module. Both changed/added methods
+   compile/AST-parse. Six isolated guard checks passed with controlled class/file
+   doubles, rejecting the old binding, same-module counterfeit, oversize and eval.
+   Native hook execution, actual repository source-budget/AST checks, complete module
+   and final CI remain pending. No production code or behavior is changed.
+   [Evidence and limits](../handover/130-accounts-migration-fixture.md#facade-dispatch-guard-correction---2026-11-16).
 8. Lower-level Save As contract: private map empty after raw storage save; pending.
    Resolve the trusted entry-point contract explicitly, not by dropping assertions.
 9. Private setup-import remapping: imported monster lacks its new private binding;
    pending implementation with selected/life-filtered mapping, independent revisions,
    rollback and privacy coverage. Planned final corrective commit enables CI.
 
-Issues 1-5 are delivered; only issue 6 is prepared in this delivery. Corrections
-7-9 are not supplied. The final corrective push will omit [skip ci] and its run
+Issues 1-6 are delivered; only issue 7 is prepared in this delivery. Corrections
+8-9 are not supplied. The final corrective push will omit [skip ci] and its run
 must be reviewed. No manual dispatch, workflow edit, 2C.3c/2D completion, bundle
 work, final Stage 3 validation or feature acceptance is implied by this sequence
 or by a future green configured suite. New failures need diagnosis/fresh approval.

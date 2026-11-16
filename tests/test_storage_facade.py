@@ -296,12 +296,32 @@ class StorageRuntimeTests(unittest.TestCase):
         self.assertEqual(SQLiteStorage.__module__, 'python.scrying_glass_storage')
         self.assertEqual(SQLiteStorage._upgrade.__module__, 'python.scrying_glass_storage_schema')
         self.assertEqual(SQLiteStorage._save_entities.__module__, 'python.scrying_glass_storage_records')
-        self.assertEqual(SQLiteStorage.save_setup.__module__, 'python.scrying_glass_storage_operations')
-        for suffix in ('', '_fields', '_schema', '_records', '_operations'):
+        from python.scrying_glass_storage_statblocks import StatblockOperationsMixin
+        self.assertEqual(SQLiteStorage.save_setup.__module__, 'python.scrying_glass_storage_statblocks')
+        self.assertIs(SQLiteStorage.save_setup, StatblockOperationsMixin.save_setup)
+        self.assertIs(SQLiteStorage.transfer_setup, StatblockOperationsMixin.transfer_setup)
+        self.assertIs(SQLiteStorage.set_value, StatblockOperationsMixin.set_value)
+        for suffix in ('', '_fields', '_schema', '_records', '_operations', '_statblocks'):
             data = (ROOT/f'python/scrying_glass_storage{suffix}.py').read_bytes()
             self.assertLessEqual(len(data), 20000)
             tree = ast.parse(data.decode())
             self.assertFalse(any(isinstance(n, ast.Call) and isinstance(n.func, ast.Name) and n.func.id in ('exec','eval','compile') for n in ast.walk(tree)))
+
+    def test_save_setup_dispatches_through_real_private_preservation_hook(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with closing(SQLiteStorage(Path(directory)/'dispatch.sqlite3')) as s:
+                campaign = s.create_campaign('Dispatch', '', 'now')
+                snapshot = {'monsters':[{'id':'m','hp':9}]}
+                with patch.object(s, '_save_preserving_statblocks',
+                                  wraps=s._save_preserving_statblocks) as preserve:
+                    s.save_setup(campaign, 'saved', snapshot, updated_at=12)
+                encounter = s.connection.execute(
+                    'SELECT encounter_id FROM battle_setups WHERE campaign_id=? AND name=?',
+                    (campaign, 'saved')).fetchone()[0]
+                preserve.assert_called_once_with(encounter, snapshot)
+                self.assertEqual(s.load_setup(campaign, 'saved')['monsters'][0]['hp'], 9)
+                self.assertEqual(s.connection.execute('PRAGMA user_version').fetchone()[0], 9)
+                self.assertFalse(s.connection.in_transaction)
 
     def test_v9_persistence_reopen_and_transaction_rollback(self):
         with tempfile.TemporaryDirectory() as directory:
