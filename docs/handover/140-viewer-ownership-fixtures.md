@@ -173,3 +173,31 @@ push uses [skip ci], with no workflow edit or separate dispatch. Corrections 5-9
 remain separate, and wider 022.03/Stage 3 acceptance gates remain open.
 README, root indexes and runtime/backup guidance remain unchanged and applicable.
 [Current status](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).
+
+## Mocked copy boundary correction - 2026-11-16
+
+Correction 5 baseline is c69db3b112cf675ac9ba0c6c08afcc2fa2b7e904. The effect-
+cleanup unit intentionally mocks saving, so it now explicitly calls the production
+StorageOperationsMixin.transfer_setup body rather than claiming to complete the
+private facade's persisted-destination contract. Both original cleanup assertions
+remain, supplemented by exact load/save calls, returned name, input independence
+and explicit absence of persistence. No private clone stub is used in that test.
+
+A separate facade regression keeps the mocked save and requires the existing
+missing-destination ValueError, zero clone calls, unchanged SQL dump, no destination
+and a closed transaction. It preserves the production fail-closed guard rather
+than fabricating a destination or suppressing private cloning. Existing native
+copy/graph tests remain separate and unchanged. This is not successful native-copy
+integration coverage; correction 6's schema fixture is deliberately untouched.
+
+Inspected facade-test blob: fbed4e58412193022b11f9fd75d1b428c0fa4c91; plain
+operations: 9f16de18019464def7e5bea811b711f0dfd7ceda; private wrapper:
+a6d7b16fa0bebfd550ebc7a02d4aa305f7413f21. Both proposed methods compile/AST-parse,
+and both original effect assertions are retained. Two isolated checks passed using
+the inspected transfer/identity bodies, real constrained SQLite and simplified
+callbacks. The old boundary reproduced the missing-binding error; bypassing the
+facade guard made the new regression fail as intended. Native facade/graph/schema
+execution, the full module and covering CI remain pending. No production changes,
+shared schema-fixture edit, dispatch-pin change, workflow edit or manual dispatch.
+This intermediate commit uses [skip ci]; corrections 6-9 remain separate.
+README and root index links remain applicable; [current task status](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).

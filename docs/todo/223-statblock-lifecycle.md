@@ -234,15 +234,23 @@ Planned separate corrective commits; no assertion skipping or validation weakeni
    WebSocket tests are AST-unchanged, not rerun here. Native imports, graph/transaction
    integration and CI remain pending.
    [Evidence and limits](../handover/140-viewer-ownership-fixtures.md#snapshot-ast-harness-correction---2026-11-16).
-4. Revision-test mutation producer: prepared removal of obsolete content_digest before
-   content mutation, retaining all four original rebuild assertions and adding label/
-   digest checks. Added a native stale-digest rejection test asserting unchanged SQL,
-   tracker HP and counter/header revisions. Both changed methods compile/AST-parse;
-   four isolated canonicalization/digest-calculation checks passed, not production
-   validation or persistence. Changed/added native tests and final CI remain pending.
-   Strict production digest validation is unchanged.
+4. Revision-test mutation producer: delivered at c69db3b112cf675ac9ba0c6c08afcc2fa2b7e904.
+   Removed obsolete content_digest before mutation, retained all four original rebuild
+   assertions and added label/digest checks plus a native stale-digest rejection test
+   for unchanged SQL, tracker HP and counter/header revisions. Both changed methods
+   compile/AST-parse; four isolated digest calculations passed, not production
+   validation/persistence. Native tests and final CI remain pending; strict production
+   digest validation is unchanged.
    [Evidence and limits](../handover/140-viewer-ownership-fixtures.md#revision-test-digest-mutation-correction---2026-11-16).
-5. Facade mocked-copy boundary: no persisted destination binding; pending.
+5. Facade mocked-copy boundary: prepared explicit plain-mixin effect-cleanup unit,
+   retaining both original assertions and adding exact call/name/input checks.
+   Added a separate private-facade missing-binding rejection regression with zero
+   clone calls, unchanged SQL, no destination and closed transaction. Two isolated
+   checks passed with inspected method bodies and constrained SQLite/callback doubles;
+   old failure reproduced and bypassing the guard failed the new regression. No
+   production guard, shared schema fixture or dispatch pin changes. Native facade,
+   graph/schema integration, complete module and final CI remain pending.
+   [Evidence and limits](../handover/140-viewer-ownership-fixtures.md#mocked-copy-boundary-correction---2026-11-16).
 6. Facade copy fixture: schema-3 fixture reaches schema-9-only cloning; pending.
 7. Facade dispatch expectation: old save_setup module pin; pending. Retain behavior
    and size guards; do not infer a size overrun from this earlier failed assertion.
@@ -252,8 +260,8 @@ Planned separate corrective commits; no assertion skipping or validation weakeni
    pending implementation with selected/life-filtered mapping, independent revisions,
    rollback and privacy coverage. Planned final corrective commit enables CI.
 
-Issues 1-3 are delivered; only issue 4 is prepared in this delivery. Corrections
-5-9 are not supplied. The final corrective push will omit [skip ci] and its run
+Issues 1-4 are delivered; only issue 5 is prepared in this delivery. Corrections
+6-9 are not supplied. The final corrective push will omit [skip ci] and its run
 must be reviewed. No manual dispatch, workflow edit, 2C.3c/2D completion, bundle
 work, final Stage 3 validation or feature acceptance is implied by this sequence
 or by a future green configured suite. New failures need diagnosis/fresh approval.

@@ -15,6 +15,7 @@ from unittest.mock import patch
 from python import scrying_glass_storage as facade
 from python import scrying_glass_storage_fields as fields
 from python.scrying_glass_storage import SQLiteStorage
+from python.scrying_glass_storage_operations import StorageOperationsMixin
 
 ROOT = Path(__file__).resolve().parents[1]
 FIELD_NAMES = ('TEXT_FIELDS', 'INT_FIELDS', 'BOOL_FIELDS', 'ENTITY_FIELDS', 'LOG_FIELDS', 'LIST_FIELDS', 'STATE_FIELDS')
@@ -207,16 +208,37 @@ class StorageOperationTests(unittest.TestCase):
         self.assertEqual(list(s.connection.iterdump()), before)
 
     def test_effect_rewrite_at_mocked_snapshot_boundary(self):
+        """Isolate plain cleanup; the private wrapper requires a persisted save."""
         s, a, b = self.fixture()
         s.save_setup(a,'saved',{},updated_at=12)
         external = {'source_id':'roster','anchor_id':'roster','timing':'end','turns':2,'concentration':False}
         internal = dict(external,source_id='monster',anchor_id='monster')
         state = {'monsters':[{'id':'monster','effects':[external,dict(external,concentration=True),internal]}]}
-        with patch.object(s,'load_setup',return_value=copy.deepcopy(state)), patch.object(s,'save_setup') as save:
-            s.transfer_setup(a,b,'saved','copy')
+        before = copy.deepcopy(state)
+        with patch.object(s,'load_setup',return_value=copy.deepcopy(state)) as load, patch.object(s,'save_setup') as save:
+            name = StorageOperationsMixin.transfer_setup(s,a,b,'saved','copy')
         result = save.call_args.args[2]
         self.assertIsNone(result['active_setup'])
         self.assertEqual(result['monsters'][0]['effects'],[dict(external,source_id=None,anchor_id=None,timing='manual',turns=None),internal])
+        self.assertEqual(name, 'saved')
+        load.assert_called_once_with(a, 'saved')
+        save.assert_called_once_with(b, 'saved', result, 12)
+        self.assertEqual(state, before)
+        self.assertFalse(s.setup_exists(b, 'saved'))
+
+    def test_private_copy_rejects_unpersisted_destination_binding(self):
+        s, a, b = self.fixture()
+        s.save_setup(a,'saved',{},updated_at=12)
+        before = list(s.connection.iterdump())
+        with patch.object(s,'save_setup') as save, patch(
+                'python.scrying_glass_statblock_cloning.clone_private_snapshots') as clone:
+            with self.assertRaisesRegex(ValueError, 'Copied setup binding is missing'):
+                s.transfer_setup(a,b,'saved','copy')
+        save.assert_called_once()
+        clone.assert_not_called()
+        self.assertEqual(list(s.connection.iterdump()), before)
+        self.assertFalse(s.setup_exists(b, 'saved'))
+        self.assertFalse(s.connection.in_transaction)
 
 
 class StorageRuntimeTests(unittest.TestCase):
