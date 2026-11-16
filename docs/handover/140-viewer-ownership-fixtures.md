@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Last updated: 2026-11-16. Bounded 2B/2C are accepted as recorded below;
+Last updated: 2026-11-16. Bounded 2B/2C/2D are accepted as recorded below;
 SG-TODO-022 Stage 1/2, 022.03 and overall 022 remain unaccepted.
 
 ## Historical evidence and retained records
@@ -26,8 +26,8 @@ in the immutable record above; no isolated/static result is promoted by this sum
 
 ## Outstanding verification
 
-2D reconciliation, Stage 3 private bundles and final lifecycle acceptance remain.
-022.02 and bounded 2B stay closed; no wider acceptance/merge/deployment/release.
+Stage 3 private bundles and final lifecycle acceptance remain.
+022.02 and bounded 2B/2C/2D stay closed; no wider acceptance/merge/deployment/release.
 
 ## Client request forwarding correction - 2026-11-16
 
@@ -133,40 +133,51 @@ applicable; TODO.md changes only two related current 022.03 status summaries.
 
 ## 2D single boundary-completion delivery - 2026-11-16
 
-Existing importing helper/handler and eleven tests/test_statblock_setup_importing.py
-methods are retained unchanged. Prior source/assertion review and covering run
-43933600072 attempt 1 establish native life-filter/map/remapping/graph/revision/source/
-runtime/limit/rollback/privacy/counter-only coverage, not actual import-route auth or
-production notification proof from the suite's custom emitter. No production defect
-was demonstrated during this preparation, so no production change is supplied.
+Delivered at ecd56957f9f147ac36d5196c23aec96d8889129c: six actual-route boundary
+methods and preparation record, with the import implementation and eleven native
+regressions unchanged. [Complete preparation record](https://github.com/dajomas/Scrying-Glass/blob/0742d36fa6186b3764d9b3c6e4153c20f6071b08/docs/handover/140-viewer-ownership-fixtures.md#2d-single-boundary-completion-delivery---2026-11-16)
+retains the exact assertions, six-method compile/AST checks, zero local native
+execution, scope and pending-status wording at delivery. Covering execution below
+supersedes only those pending/unaccepted statements; no isolated result is promoted.
 
-Prepared tests/test_statblock_2d_http_boundaries.py adds six methods in one payload:
-owner same/cross-campaign/runtime imports and existing superadmin behavior; atomic
-session/client/source-owner/destination-owner/origin/model/missing-source rejection;
-post-lock source/destination ownership, role and session revocation; real production
-broadcast with final clone metadata/revision, undo-boundary clearing and retained
-checkpoint/source; failure after real private flush/history with exact SQL/live/private/
-history rollback and no emission; zero-selection history/revision preservation with
-only the existing explicit handler refresh. Inactive owned import sources remain
-allowed; no Save As active-campaign restriction or new permission is imposed.
+## 2D bounded close-out - 2026-11-16
 
-Auth/session/ownership decisions and actual selected AdminAPI/model/transaction/
-notification/viewer paths are retained. Observational spies do not inject denials or
-replace deferral; native writes only seed rich private fixtures/history. Selected-route
-seeded-session ASGI/recording sockets are not login/full startup, real-network WebSocket,
-provider fetches or a new viewer/import UI. Zero-selection does not create a private
-revision or clear undo, but the unchanged handler still requests its one refresh.
+2D is completed and accepted for the agreed selected/life-filtered private setup-import
+scope by user approval of this exact close-out payload. Criterion reconciliation
+identified no outstanding agreed 2D criterion. This is not automatic acceptance from
+a green badge or closure of SG-TODO-022 Stage 1/2, 022.03 or overall 022. Bounded
+2B/2C and 022.02 remain closed. This decision supersedes earlier next-2D/open wording.
 
-Preparation executed: changed module compiles and AST-parses; six non-skipped methods
-counted, new file below 20,000 bytes. Zero native methods executed locally because
-FastAPI is absent. No new application/CI pass or 2D acceptance is claimed. All six
-new methods plus the eleven existing import-specific methods need reviewed covering
-results. Deliver only after exact-payload approval, with normal push CI and no
-[skip ci], workflow edits or manual dispatch. Fix demonstrated failures with fresh
-approval, then reconcile bounded 2D acceptance separately; do not advance Stage 3 now.
+Successful push-triggered Branch tests 43941792616 attempt 1 covers exactly
+ecd56957f9f147ac36d5196c23aec96d8889129c; publication
+0742d36fa6186b3764d9b3c6e4153c20f6071b08. Main unittest: 1,962 OK; selected pytest:
+43 passed. Syntax/server import, JavaScript, standalone browser/audit and visual
+artifact upload stages passed. Audit: 219 modules, zero failed; explicit PASS that
+all audited modules passed and closed tracked connections. All seventeen import-
+specific methods explicitly report OK in this run: eleven retained native and six
+new boundaries, included in 1,962 rather than added to that total.
 
-README, root indexes and lifecycle TODO were reviewed/reused and remain accurate: 2D
-is delivered but unaccepted, and its same scope/auth/revision/source/runtime/limit/
-rollback/privacy criteria and validation requirements stay open. No duplicate status
-edit or historical consolidation is included. Bounded 2B/2C and 022.02 remain closed;
-SG-TODO-022 Stage 1/2, 022.03 and overall 022 remain unaccepted.
+Reconciliation reuses inspected helper/handler/test bodies and reviewed run.json,
+jobs.json and workflow parts 120-121, 132, 139-141 and 300. The lifecycle task maps
+selection/identity, graph authority/fidelity, independent revisions/source isolation,
+limits, actual auth/post-lock checks and production notification/history/rollback/
+privacy to passing assertions. Inactive owned import sources remain allowed; existing
+Admin/superadmin permissions and zero-selection explicit-refresh semantics stay.
+No extra production change was required for boundary completion; correction 9 remains
+the delivered import implementation, not code newly implemented by these tests.
+
+Limits: sessions are seeded, not logged in; selected-route ASGI is not full application
+startup. Recording sockets retain actual broadcast/deferral/viewer projection but
+are not real-network/browser delivery. Native fixture writes seed rich graphs/history;
+observational spies preserve actual auth decisions. No provider fetch, new viewer/
+listener/import UI, exhaustive concurrency/platform or deployed-server/human visual/
+screen-reader/E2E acceptance is claimed. Static/mocked/extracted checks stay separate.
+
+Next is actual Stage 3 private bundle representation/roundtrip and its aggregate/
+snapshot/member/unsafe-input/provenance/rollback tests, then final lifecycle acceptance.
+Stage 1/2, 022.03 and overall 022 remain unaccepted; 022.04-022.16 remain pending.
+Schema stays 9; existing matching complete code/storage/config/media backup and
+code/data rollback guidance remains. No merge/deployment/release. This three-file
+close-out changes documentation only with [skip ci]; no tests rerun, fresh CI claimed,
+workflow edits or manual dispatch. README/HANDOVER.md index remain applicable.
+[Criterion map and remaining gates](../todo/223-statblock-lifecycle.md#2d-bounded-acceptance-reconciliation---2026-11-16).
