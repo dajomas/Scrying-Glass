@@ -219,13 +219,21 @@ Planned separate corrective commits; no assertion skipping or validation weakeni
    runner hit an already-running-loop error; the same checks passed in a thread.
    FastAPI is absent locally; no native/ASGI or corrected CI pass is claimed.
    [Diagnosis, scope and evidence](../handover/140-viewer-ownership-fixtures.md#client-request-forwarding-correction---2026-11-16).
-2. Service AST extraction harness: prepared correction for seven missing-module-context
-   errors. Restore module/package globals and add two regressions, retaining all
-   nineteen original tests. Twenty-one checks passed in a selected-method/extracted-
-   dependency reconstruction; original harness reproduced seven errors and disabled
-   pruning failed the new pruning check. Native package imports and CI remain pending.
+2. Service AST extraction harness: delivered at 293376ea594eadb8077f97c1b076f7b36b3d1cd1.
+   Restored module/package globals and added two regressions, retaining all nineteen
+   original tests. Twenty-one checks passed in a selected-method/extracted-dependency
+   reconstruction; original harness reproduced seven errors and disabled pruning
+   failed the new pruning check. Native package imports and CI remain pending.
    [Evidence and limits](../handover/140-viewer-ownership-fixtures.md#service-ast-harness-correction---2026-11-16).
-3. Snapshot AST extraction harness: two missing-module-context errors; pending.
+3. Snapshot AST extraction harness: prepared module/package context and transaction
+   fixture correction. Original sixteen snapshot checks reproduced two context errors;
+   package context alone reproduced two missing-transaction errors. Nineteen corrected
+   snapshot checks passed against four inspected method bodies and an unused decoder
+   double; disabling the row guard made the added invalid-load check error. Three new
+   regressions retain original boundary assertions and test fixture rollback/seed
+   preservation. WebSocket tests are AST-unchanged, not rerun here. Native imports,
+   graph/transaction integration and CI remain pending.
+   [Evidence and limits](../handover/140-viewer-ownership-fixtures.md#snapshot-ast-harness-correction---2026-11-16).
 4. Revision-test mutation producer: stale self-digest error; pending. Keep strict
    digest validation and original counter/revision assertions.
 5. Facade mocked-copy boundary: no persisted destination binding; pending.
@@ -238,11 +246,11 @@ Planned separate corrective commits; no assertion skipping or validation weakeni
    pending implementation with selected/life-filtered mapping, independent revisions,
    rollback and privacy coverage. Planned final corrective commit enables CI.
 
-Issue 1 is delivered; only issue 2 is prepared in this delivery. Corrections 3-9
-are not supplied. The final corrective push will omit [skip ci] and its run must
-be reviewed. No manual dispatch, workflow edit, 2C.3c/2D completion, bundle work,
-final Stage 3 validation or feature acceptance is implied by this sequence or by
-a future green configured suite. New failures require diagnosis and fresh approval.
+Issues 1-2 are delivered; only issue 3 is prepared in this delivery. Corrections
+4-9 are not supplied. The final corrective push will omit [skip ci] and its run
+must be reviewed. No manual dispatch, workflow edit, 2C.3c/2D completion, bundle
+work, final Stage 3 validation or feature acceptance is implied by this sequence
+or by a future green configured suite. New failures need diagnosis/fresh approval.
 
 ## Remaining gates and delivery order
 

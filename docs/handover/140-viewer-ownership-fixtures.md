@@ -112,3 +112,36 @@ No temporary reconstruction files or module doubles are included in the commit.
 This intermediate correction uses [skip ci], without workflow changes or dispatch.
 Correction 3's snapshot harness and corrections 4-9 remain separate. README and
 index guidance are unchanged; [current status and remaining gates](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).
+
+## Snapshot AST harness correction - 2026-11-16
+
+Correction 3 baseline is 293376ea594eadb8077f97c1b076f7b36b3d1cd1, the delivered
+service-harness correction. The snapshot extraction in test_bughunt_711881a.py
+now supplies module/package globals. The fixture also supplies a real SQLite
+connection context manager as its transaction factory, committing seed data first
+so a rejected load cannot roll back fixture initialization. No production code,
+WebSocket test body, original assertion or generated boundary case is changed.
+
+Three added methods cover extraction identity, fixture rollback retaining the
+seeded row and invalid loads preserving SQL rows without calling read_capture.
+The decoder is mocked only for the explicit invalid-ID non-call assertion; no
+read_capture replacement is added to the shared fixture or production code.
+This remains a minimal snapshot-ID fixture, not native storage transaction coverage.
+
+Preparation matched original test blob de024a946ec4afbe4dedebc6b4e08a2fa88dfde9;
+inspected feature-storage blob is 981c10c866218b14dc332edda737800a2162e668.
+Initial reconstruction hash mismatches were corrected before validation. Syntax/
+AST checks passed; original test method bodies and the WebSocket class are unchanged.
+Using four inspected FeatureStorage method bodies and an unused decoder double,
+the original sixteen snapshot tests reproduced two missing-module-context errors;
+package context alone exposed two missing-transaction errors. The corrected nineteen
+snapshot checks passed with zero decoder calls. Removing the row guard made the
+new invalid-load check error, demonstrating the retained boundary assertions.
+These are isolated reconstructions, not full native imports, recovery decoding,
+production graph/transaction integration, WebSocket execution, server startup or CI.
+Native module and final covering-suite validation remain pending.
+
+Only the snapshot harness and existing handover/TODO tracking change here. This
+intermediate push uses [skip ci], without workflow edits or separate dispatch.
+Corrections 4-9 remain separate; README and root index links remain applicable.
+[Current status and wider gates](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).
