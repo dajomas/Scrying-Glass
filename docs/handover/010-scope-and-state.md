@@ -215,6 +215,28 @@ no workflow edit/dispatch or run status check. Intermediate [skip ci], final Sta
 covering CI, schema 9 and matching code/data backup rules remain. Neither 2C.2a nor
 2C/022.03 is accepted merely by supplying this code and its tests.
 
+## 022.03 move-preservation regressions - 2026-11-16
+
+Baseline: e4473d93fcb9f2bf3033442bf70e141e5ce7e9a3. 2C.2b supplies four native-
+fixture regression methods, with no production-code change. Static inspection of
+transfer_setup, the upsert writer, private adapter's unchanged-content path and
+counter mixin found no demonstrated production gap; execution may still reveal one.
+The tests assert retained setup/encounter/monster ownership, exact private graph/
+counter rows, revision/preparation metadata, canonical stored runtime references,
+collision-target isolation, counter-only continuity through reopen at normal and
+maximum revisions, and late rollback of graph-bearing/counter-only moves including
+source last-setup binding. They also cover source-scope and destination-roster rejection
+and fail if a move invokes the clone helper or snapshot writer.
+
+The module AST-parses; all four production-fixture methods remain unexecuted.
+No actual move verification, full-module import, service/HTTP/browser or CI pass is
+claimed. Existing discovery includes the module; no workflow edit/dispatch or run
+status check. README/root indexes remain accurate for this regression-only scope
+and are unchanged. [Current gates](../todo/223-statblock-lifecycle.md#2c2b-move-preservation---2026-11-16)
+retain 2C.2c/2C.3 and earlier integration execution/corrections/acceptance. No schema,
+runtime, permission, release/deployment or acceptance change; intermediate [skip ci]
+and final Stage 3 covering CI remain. This delivery does not close 2C.2b or 022.03.
+
 ## Documentation entry points
 
 - [README](../../README.md)

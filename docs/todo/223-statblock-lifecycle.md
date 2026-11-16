@@ -114,9 +114,10 @@ own complete approval payload, relevant tests and documentation.
   preparation time. Counter-only source history is not exported. Caller authorizes
   both encounters and wraps tracker creation with this transaction for an atomic copy.
 - 022.03-2C.2: in progress, split further after reported timeouts. 2C.2a supplies
-  storage-copy wiring below; 2C.2b move-preservation verification/fixes and 2C.2c
-  protected service integration remain pending. Preserve existing roster/campaign
-  validation, canonical references, source immutability and rollback throughout.
+  storage-copy wiring; 2C.2b supplies move-regression preparation, with functional
+  verification pending. 2C.2c protected service integration remains pending.
+  Preserve roster/campaign validation, canonical references, source immutability
+  and rollback throughout. No partial delivery establishes wider acceptance.
 - 022.03-2C.3: planned, follows 2C.2. Wire Save As and destination live-metadata
   refresh, then test combined copy/move/Save As flows and reconcile acceptance.
 
@@ -148,6 +149,25 @@ or native schema. The six production-fixture methods are unexecuted. Workflow
 unittest discovery covers the filename; no workflow changes, dispatch or run claim.
 [Handover](../handover/010-scope-and-state.md#02203-stored-setup-copy---2026-11-16).
 
+## 2C.2b move preservation - 2026-11-16
+
+Status: regression implementation supplied; functional verification and acceptance
+pending. Static review of the inherited transfer, upsert writer, private adapter and
+counter mixin found no demonstrated gap requiring a production-code change. Moves
+reparent the existing setup binding; unchanged snapshots take the adapter's no-write
+path and counter attributes are preserved. This audit is not a runtime test pass.
+
+Four native-fixture methods are prepared in test_statblock_setup_move.py: same/cross-
+campaign moves with stable setup/encounter/monster IDs, raw graph/counter rows and
+complete metadata; canonical stored runtime references and unaffected collision
+target/last-setup binding; counter-only moves through reopen including MAX_REVISION;
+late post-save rollback for graph-bearing and counter-only sources, including source
+last-setup restoration; missing/wrong-campaign source and roster-conflict rejection.
+Guards fail if a move calls the clone helper or snapshot writer. The module AST-parses;
+the four methods are unexecuted. Discovery includes the filename. No native functional,
+full-import, protected service, HTTP/browser or CI success is claimed. Schema, runtime,
+permissions and workflow are unchanged. [Handover](../handover/010-scope-and-state.md#02203-move-preservation-regressions---2026-11-16).
+
 ## Remaining gates and delivery order
 
 For 2B: execute/review the relevant suites and outstanding scope/restart/limits/
@@ -156,13 +176,13 @@ undo/rollback/privacy checks, correct failures and reconcile acceptance evidence
 and 022.03 are also not accepted. Covering CI stays deferred to final Stage 3 code;
 no separate dispatch or observed workflow-run status is claimed here.
 
-2C: execute/review 2C.1/2C.2a tests, finish 2C.2b/2C.2c/2C.3 and covering validation
-of independent copy/Save As ownership and destination revisions, source immutability,
-move preservation, canonical references and rollback. Partial delivery closes none
-of these wider gates. 2D: selected/life-filtered import remapping and independent
-clone revisions. Stage 3: actual bundle format/roundtrip, aggregate/snapshot/member
-limits, malformed/untrusted input, provenance and rollback; no silent 10 MiB
-manifest/archive loss. Retain every parent criterion.
+2C: execute/review 2C.1/2C.2a/2C.2b tests, correct any failures, finish 2C.2c/2C.3
+and covering validation of independent copy/Save As ownership and destination
+revisions, source immutability, move preservation, canonical references and rollback.
+Partial delivery closes none of these wider gates. 2D: selected/life-filtered import
+remapping and independent clone revisions. Stage 3: actual bundle format/roundtrip,
+aggregate/snapshot/member limits, malformed/untrusted input, provenance and rollback;
+no silent 10 MiB manifest/archive loss. Retain every parent criterion.
 
 Schema stays 9, no migration/DDL. Deploy matching complete code/data only after
 validation/acceptance. Older code lacks marker/filter handling: do not roll code
