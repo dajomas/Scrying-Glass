@@ -19,9 +19,14 @@ def operation_lock(context):
 
 
 def serialized_handler(context, handler, *, role=None, cookie_name=None):
+    request_parameter = None
+    signature = inspect.signature(handler)
     @wraps(handler)
     async def wrapped(*args, **kwargs):
         request = kwargs.pop("_operation_request", None)
+        if request_parameter is not None:
+            bound = signature.bind_partial(*args, **kwargs)
+            request = bound.arguments.get(request_parameter, request)
         async with operation_lock(context):
             # Resolve the actor only after waiting for the serialized operation lock.
             session = None
@@ -40,12 +45,16 @@ def serialized_handler(context, handler, *, role=None, cookie_name=None):
 
     if role is not None:
         from fastapi import Request
-        signature = inspect.signature(handler)
-        wrapped.__signature__ = signature.replace(parameters=[
-            *signature.parameters.values(),
-            inspect.Parameter("_operation_request", inspect.Parameter.KEYWORD_ONLY,
-                              annotation=Request),
-        ])
+        request_parameter = next((parameter.name for parameter in signature.parameters.values()
+                                  if isinstance(parameter.annotation, type)
+                                  and issubclass(parameter.annotation, Request)), None)
+        # FastAPI injects one Request per endpoint. Reuse the handler's parameter.
+        if request_parameter is None:
+            wrapped.__signature__ = signature.replace(parameters=[
+                *signature.parameters.values(),
+                inspect.Parameter("_operation_request", inspect.Parameter.KEYWORD_ONLY,
+                                  annotation=Request),
+            ])
     return wrapped
 
 

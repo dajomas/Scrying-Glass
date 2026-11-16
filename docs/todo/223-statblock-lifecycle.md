@@ -8,13 +8,14 @@ SG-TODO-022.03, 2B, 2C and overall 022 remain in progress, not validated or
 accepted. 022.02 stays accepted/closed. Stage 1/2 are not accepted. Approved order
 remains private storage, recovery/reset/copy, then bundles.
 
-The user requested tests during 2C.3b preparation and then requested delivery.
-This code/test delivery uses push-triggered CI without [skip ci], superseding the
-previous intermediate-skip/final-Stage-3 deferral for this delivery. No workflow
-edit or separate dispatch is included. Configuration is not evidence of a triggered,
-completed or passing run; review actual results before claiming validation.
-Final Stage 3 covering validation remains required. Documentation-only commits keep
-the standing [skip ci] rule. Every external write needs exact-content approval.
+2C.3b was delivered with CI enabled at 812de5ae6717f8a7f34892e0031858a0a3e089c6.
+Run 43846424270 attempt 1 failed overall; all six new native save-handler methods
+passed. The user now requests one issue per corrective commit, [skip ci] on every
+intermediate correction and no skip marker on the final corrective code commit.
+No workflow edit or separate dispatch is included. Each write still needs complete
+bound approval. Review the final run before claiming corrected integration passes.
+Final Stage 3 covering validation remains required; this corrective series is not
+Stage 3 or feature acceptance. Documentation-only commits retain [skip ci].
 
 ## Retained contracts and archived detail
 
@@ -167,8 +168,8 @@ had no handler wiring; 2C.3b below supplies it without promoting earlier validat
 
 ## 2C.3b save-handler integration - 2026-11-16
 
-Status: implementation and six native methods supplied; native/CI validation and
-acceptance pending. save_setup_with_private is called by the existing save handler
+Status: delivered at 812de5ae6717f8a7f34892e0031858a0a3e089c6; six native methods
+passed in the failed CI run below. Wider validation and acceptance remain pending. save_setup_with_private is called by the existing save handler
 after authorization/active-campaign checks. New native destinations use 2C.3a.
 Existing same-owner saves retain source revision/stale checks; different-owner
 overwrites remove incoming revision/time so the existing destination's owner and
@@ -184,18 +185,59 @@ permission, schema, import or clearing authority is added.
 
 Six native methods cover saved/unsaved-source Save As with live edits/reload, ordinary
 no-op/stale saves, overwrite revision continuity/source isolation, omission rejection
-and rollback after roster writes or live refresh. They are unexecuted. Helper,
+and rollback after roster writes or live refresh. They passed in run 43846424270
+attempt 1; they were unexecuted at preparation. Helper,
 changed handler method and native module AST-parsed. Ten isolated exact-helper checks
 with simplified SQLite/JSON bindings and stub facade/capture/kernel/private adapter,
 plus five stub handler routing/order checks passed. These fifteen passes are not
 native graph/schema, full-module, protected integration or HTTP validation. An initial
 handler harness failed for a missing asyncio import; the corrected harness passed.
 
-The execution environment lacks checkout/test files and FastAPI; GitHub exposes no
-runner/dispatch tool here. The user's current test request selects CI-enabled delivery
-without [skip ci]. Existing workflow unittest discovery covers the new test filename.
-No native/CI pass, actual run status or separate dispatch is claimed. Review published
-results against this implementation before acceptance. [Handover](../handover/010-scope-and-state.md#02203-save-as-handler-integration---2026-11-16).
+At preparation the execution environment lacked checkout/test files and FastAPI;
+GitHub exposed no runner/dispatch tool here. Existing workflow discovery covered
+the new test filename. Later published CI establishes six native method passes,
+not an overall passing run or acceptance. Corrective execution is tracked below. [Handover](../handover/010-scope-and-state.md#02203-save-as-handler-integration---2026-11-16).
+
+## CI correction series - 2026-11-16
+
+In progress. Baseline HEAD 355598a1a571095b7f2bde58637a1fe2249bfd05 publishes
+Branch tests 43846424270 attempt 1 for implementation 812de5ae6717f8a7f34892e0031858a0a3e089c6.
+Main unittest: 1,896 tests, three failures, fourteen errors. Workflow reader parts
+135-146 contain the failures; part 130 explicitly records all six 2C.3b methods OK.
+The standalone connection audit reports 211 modules, six failed; observed duplicate
+test failures do not by themselves establish leaks. Existing historical pending
+notes describe delivery-time execution, not a claim that no CI has since run.
+
+Planned separate corrective commits; no assertion skipping or validation weakening:
+
+1. Request forwarding: implementation and seven new native/ASGI methods prepared,
+   validation pending. Reuse an existing Request parameter for post-lock auth and
+   ownership rather than exposing a second injected Request. Preserve requestless
+   injection, positional/keyword invocation and unchanged transaction processing.
+   Eight isolated exact-wrapper checks passed with Request/ownership doubles;
+   old duplicate-injection failure reproduced. AST checks passed. The first notebook
+   runner hit an already-running-loop error; the same checks passed in a thread.
+   FastAPI is absent locally; no native/ASGI or corrected CI pass is claimed.
+   [Diagnosis, scope and evidence](../handover/140-viewer-ownership-fixtures.md#client-request-forwarding-correction---2026-11-16).
+2. Service AST extraction harness: seven missing-module-context errors; pending.
+3. Snapshot AST extraction harness: two missing-module-context errors; pending.
+4. Revision-test mutation producer: stale self-digest error; pending. Keep strict
+   digest validation and original counter/revision assertions.
+5. Facade mocked-copy boundary: no persisted destination binding; pending.
+6. Facade copy fixture: schema-3 fixture reaches schema-9-only cloning; pending.
+7. Facade dispatch expectation: old save_setup module pin; pending. Retain behavior
+   and size guards; do not infer a size overrun from this earlier failed assertion.
+8. Lower-level Save As contract: private map empty after raw storage save; pending.
+   Resolve the trusted entry-point contract explicitly, not by dropping assertions.
+9. Private setup-import remapping: imported monster lacks its new private binding;
+   pending implementation with selected/life-filtered mapping, independent revisions,
+   rollback and privacy coverage. Planned final corrective commit enables CI.
+
+Only issue 1 is prepared in this delivery; the other corrections are not supplied.
+The final corrective push will omit [skip ci] and its actual run must be reviewed.
+No manual dispatch, workflow edit, 2C.3c/2D completion, bundle work, final Stage 3
+validation or feature acceptance is implied by this sequence or by a future green
+configured suite. New failures require diagnosis and fresh approved corrections.
 
 ## Remaining gates and delivery order
 

@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Last updated: 2026-11-01. Preparation baseline: `1cfb256cb090ca3834eb2f61d12eca23ce67d4f9`.
+Last updated: 2026-11-16. Original 2026-11-01 preparation baseline: `1cfb256cb090ca3834eb2f61d12eca23ce67d4f9`.
 
 ## Separate diagnoses
 
@@ -35,3 +35,51 @@ Viewer and ownership route sources matched blobs `8c4482f71d39f9b99e2ab85b722ece
 Current local FastAPI, Starlette and Chromium are unavailable; Playwright is importable but that does not provide a browser binary. Full test modules, real framework/browser behavior, Python 3.14 and full CI remain unverified for this repair. Inspect normal push-triggered CI after approved delivery, including that lifecycle tests run rather than skip. No skip marker or extra workflow dispatch is requested.
 
 The accounts migration repair already passed all 13 account tests in run 41318275558, and both pytest regression modules passed all 43 cases. This does not establish a passing full suite. JavaScript and standalone browser/audit failures remain separate; see [open validation](030-validation-and-next-steps.md).
+
+## Client request forwarding correction - 2026-11-16
+
+This is a production wrapper correction, not a fixture-only change to the
+historical repairs above. Working branch: features/perplexity-statblock; inspected
+HEAD 355598a1a571095b7f2bde58637a1fe2249bfd05 publishes Branch tests
+43846424270 attempt 1 for 812de5ae6717f8a7f34892e0031858a0a3e089c6.
+The main suite ran 1,896 tests with three failures and fourteen errors. All six
+2C.3b native save-handler methods explicitly passed in workflow reader part 130;
+that supersedes their delivery-time unexecuted status, not feature acceptance.
+
+Two transport tests reached the serialized client handler without its required
+request argument. The wrapper exposed both the handler's Request parameter and
+an injected _operation_request; FastAPI supplies one Request dependency per route.
+The same pattern is used by production ClientAPI.register_routes, so the failure
+must not be dismissed as merely a privacy-fixture problem.
+
+serialized_handler now detects an existing resolved Request annotation (including
+subclasses), retains the original signature and passes the handler's actual bound
+request to post-lock authentication and ownership checks. Requestless handlers
+retain the existing injected parameter, removed before invocation. Keyword and
+positional calls, sync/async results and response deepcopy remain supported. No
+permission rule, route, schema or transactional-handler body is changed.
+
+Seven new test_serialized_request.py methods cover single-request signatures,
+sync/async and keyword/positional forwarding, requestless injection, post-lock
+revocation, denied sessions and actual ClientAPI.register_routes ASGI requests
+for live/saved campaign selection and revoked grants. Existing transport privacy
+assertions are unchanged. Standard unittest discovery and the connection audit
+include this filename without a workflow edit.
+
+Preparation: original production source matched blob
+738bc574abe40b97f50c0b6beb7a964d2c1a16f5. Production/test AST parsing passed;
+transactional_handler remained AST-identical. Eight isolated exact-wrapper checks
+passed with Request/ownership doubles, including old duplicate-injection failure
+reproduction. The first notebook runner attempt failed because a loop was already
+running; executing the unchanged checks in an isolated thread passed. This is a
+harness correction, not an application fix. FastAPI is absent locally: the seven
+native/ASGI methods, original privacy regressions and full CI remain unexecuted
+for this correction. No new production transport or CI pass is claimed.
+
+The user requested one issue per commit, [skip ci] on intermediate corrections
+and normal push-triggered CI only on the final corrective commit. This first
+correction uses [skip ci]; no workflow edit or manual dispatch. Each push still
+needs complete bound approval. Remaining corrections, final-run review and wider
+022.03/2C.3c/2D/Stage 3 gates remain in the [lifecycle task](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).
+README, HANDOVER/TODO indexes, scope handover and CI configuration were reviewed;
+no unrelated application guidance or index links change. No merge or deployment.
