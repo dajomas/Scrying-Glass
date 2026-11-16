@@ -96,3 +96,42 @@ mixin blob: a6d7b16fa0bebfd550ebc7a02d4aa305f7413f21.
 This intermediate commit uses [skip ci]; no workflow edit or separate dispatch.
 Corrections 8-9 and broader acceptance gates remain open. README/runtime guidance
 and root index links remain unchanged. [Series status](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).
+
+## Save As contract entry-point correction - 2026-11-16
+
+Correction 8 baseline: f2d4fa699e2ef1a56d56332e4c37a0d94057f8d6. The earlier
+Stage 2 test invoked raw SQLiteStorage.save_setup, a tracker-only boundary that
+preserves a destination's existing content but does not acquire source/private
+write authority from a carrier or combatant ID. Save As is the protected admin
+save workflow using save_setup_with_private and save_new_setup. This correction
+changes that test invocation explicitly, not its four original content/revision/
+source-preservation assertions and not production storage's authority contract.
+
+The test now uses transactional_handler around the actual AdminSetupsMixin.save_setup
+method, starts from source revision greater than one and checks independent owner,
+fresh destination revision one, live metadata/reference refresh and reload. Four
+added native cases cover unsaved live edits/source isolation, raw tracker-only
+saving plus forged-envelope atomic rejection, inactive-campaign denial and rollback
+after a last-setup reference write. The original import-remapping test and every
+other original method are AST-unchanged. No assertions are skipped/xfail-marked,
+no production entry point changes and no raw private-write channel is added.
+These are native service fixtures, not actual actor/HTTP authorization coverage.
+
+Original test source was reconstructed to blob 5de4ff6486d975e564629bcb42db27e444d162cc.
+The complete proposed module compiles/AST-parses (fourteen test methods). All four
+original Save As assertion nodes remain; other original methods are unchanged.
+Five isolated helper/inspected-handler routing checks passed for protected dispatch,
+default/foreign campaign handling, operation order and error propagation. Transaction,
+private persistence and carrier collaborators were doubles. These checks did not
+execute SQLite graphs, native rollback, source ownership, raw-input rejection, full
+service integration or HTTP. All changed/added native contracts and final CI remain
+unexecuted for this correction. Earlier six 2C.3b passes are baseline evidence only.
+Inspected helper/kernel blobs: f519facf8c6f84a479af934a7690c729617ce0dd and
+d8be6cd1a7e04bb27ac90ea96e7957d8db7b96d9; admin module:
+76de5c4374ab28e458024c9b540598b24a405a38.
+
+Only the contract tests and existing documentation change. This intermediate
+commit uses [skip ci], with no workflow edit or dispatch. Correction 9 still
+requires private setup-import implementation; broader 2C.3c/2D, bundle, Stage 3
+and acceptance gates remain open. README and root index links remain applicable.
+[Current status](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).

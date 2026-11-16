@@ -36,9 +36,10 @@ Earlier CI-deferral wording is historical; the current delivery rule above contr
 
 Stage 1 helpers/adapter/application/privacy wiring is supplied only in parts, not
 accepted. The ten Stage 2 contracts at 831c94249de8ef057cdcdbd0ead673d97ef98923
-remain unchanged and unexecuted at their recorded delivery; they were not skipped
-or weakened, and some later-scope paths may still fail. No covering green result
-is assumed merely because a CI-enabled delivery is proposed.
+were unchanged and unexecuted at their recorded delivery, without skips or weakened
+preservation assertions. Later CI and caller correction 8 are recorded below; its
+Save As invocation now uses the protected workflow and gains four native cases.
+No covering green result is inferred from configured discovery or test preparation.
 
 ## 2A and 2B retained scope
 
@@ -259,26 +260,33 @@ Planned separate corrective commits; no assertion skipping or validation weakeni
    checkpoint capture, graph copy/rollback, complete module and CI remain unexecuted.
    Production guards and dispatch pin were unchanged by correction 6.
    [Evidence and limits](../handover/130-accounts-migration-fixture.md#native-and-legacy-storage-fixture-separation---2026-11-16).
-7. Facade dispatch expectation: prepared current statblock module expectation plus
-   save/transfer/runtime method-identity assertions and an added native real-hook spy
-   regression. The original five source guards and exact loop body/20,000-byte limit
-   remain, extended to the active statblock storage module. Both changed/added methods
-   compile/AST-parse. Six isolated guard checks passed with controlled class/file
-   doubles, rejecting the old binding, same-module counterfeit, oversize and eval.
-   Native hook execution, actual repository source-budget/AST checks, complete module
-   and final CI remain pending. No production code or behavior is changed.
+7. Facade dispatch expectation: delivered at f2d4fa699e2ef1a56d56332e4c37a0d94057f8d6.
+   Current statblock module and save/transfer/runtime identities are asserted; native
+   real-hook spy regression added. Original five source guards and exact loop body/
+   20,000-byte limit remain, extended to the active statblock storage module. Both
+   changed/added methods compile/AST-parse; six controlled class/file guard checks
+   passed. Native hook, actual repository budgets/AST, full module and CI remain pending.
+   No production code or behavior changed.
    [Evidence and limits](../handover/130-accounts-migration-fixture.md#facade-dispatch-guard-correction---2026-11-16).
-8. Lower-level Save As contract: private map empty after raw storage save; pending.
-   Resolve the trusted entry-point contract explicitly, not by dropping assertions.
+8. Save As contract: prepared explicit change from raw tracker save to the protected
+   admin save workflow; no new lower-level private-write authority. All four original
+   content/revision/source assertions remain, with owner/live-reference/reload checks
+   and four new native cases for live edits, raw/forged-input boundaries, inactive
+   campaign denial and late-reference rollback. Other original methods, including
+   the still-required import-remapping assertion, are AST-unchanged. Complete proposed
+   module compiles (fourteen methods). Five isolated helper/handler routing checks
+   passed with transaction/private doubles, not native graphs, rollback or real auth.
+   All changed/added native contracts and final CI remain unexecuted for this correction.
+   [Decision and evidence limits](../handover/130-accounts-migration-fixture.md#save-as-contract-entry-point-correction---2026-11-16).
 9. Private setup-import remapping: imported monster lacks its new private binding;
    pending implementation with selected/life-filtered mapping, independent revisions,
    rollback and privacy coverage. Planned final corrective commit enables CI.
 
-Issues 1-6 are delivered; only issue 7 is prepared in this delivery. Corrections
-8-9 are not supplied. The final corrective push will omit [skip ci] and its run
-must be reviewed. No manual dispatch, workflow edit, 2C.3c/2D completion, bundle
-work, final Stage 3 validation or feature acceptance is implied by this sequence
-or by a future green configured suite. New failures need diagnosis/fresh approval.
+Issues 1-7 are delivered; only issue 8 is prepared in this delivery. Correction 9
+is not supplied. The final corrective push will omit [skip ci] and its run must
+be reviewed. No manual dispatch, workflow edit, 2C.3c/2D completion, bundle work,
+final Stage 3 validation or feature acceptance is implied by this sequence or by
+a future green configured suite. New failures need diagnosis and fresh approval.
 
 ## Remaining gates and delivery order
 

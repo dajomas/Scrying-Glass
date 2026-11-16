@@ -60,6 +60,11 @@ class StatblockStage2ContractTests(unittest.TestCase):
         self.assertEqual(private_map(self.c.STATE)['m'], saved)
         return saved
 
+    def save_as(self, name, campaign=None):
+        handler = AdminSetupsMixin(); handler.context = self.c
+        payload = SimpleNamespace(name=name, campaign=self.c.active_campaign() if campaign is None else campaign)
+        return asyncio.run(transactional_handler(self.c, handler.save_setup)(payload))
+
     def assert_content(self, actual, expected):
         for key in ('content_digest', 'source_label', 'definitions', 'nodes', 'facts', 'warnings', 'provenance'):
             self.assertEqual(actual[key], expected[key], key)
@@ -123,12 +128,78 @@ class StatblockStage2ContractTests(unittest.TestCase):
         self.assertEqual(list(self.c.STORAGE.connection.execute('PRAGMA foreign_key_check')), [])
 
     def test_save_as_preserves_content_in_the_new_setup(self):
-        before = self.seed(); campaign = self.c.active_campaign()
-        self.c.STORAGE.save_setup(campaign, 'save-as', self.c.setup_snapshot(self.c.STATE))
+        # Save As is the protected workflow, not the ordinary tracker-only writer.
+        self.seed('Earlier')
+        before = self.seed(); campaign = self.c.active_campaign(); source = self.encounter()
+        result = self.save_as('save-as')
         copied = self.stored(campaign, 'save-as')
         self.assertIn('m', copied); self.assert_content(copied['m'], before)
         self.assertEqual(copied['m']['revision'], 1)
         self.assertEqual(self.stored()['m'], before)
+        self.assertGreater(before['revision'], 1)
+        self.assertEqual(result, {'name':'save-as', 'campaign':campaign})
+        self.assertNotEqual(self.encounter(campaign, 'save-as'), source)
+        self.assertEqual(private_map(self.c.STATE), copied)
+        self.assertEqual(self.c.active_setup_reference()['name'], 'save-as')
+        self.c.load_state()
+        self.assertEqual(private_map(self.c.STATE), copied)
+        self.assertEqual(self.stored()['m'], before)
+
+    def test_save_as_uses_unsaved_live_content_without_replacing_source(self):
+        before = self.seed(); campaign = self.c.active_campaign()
+        self.item()['hp'] = 3
+        private_map(self.c.STATE)['m'].pop('content_digest', None)
+        private_map(self.c.STATE)['m']['source_label'] = 'Unsaved live content'
+        self.save_as('live-save-as')
+        copied = self.stored(campaign, 'live-save-as')
+        self.assertEqual(copied['m']['source_label'], 'Unsaved live content')
+        self.assertEqual(copied['m']['revision'], 1)
+        self.assertEqual(self.stored()['m'], before)
+        self.assertEqual(self.c.STORAGE.load_setup(campaign, 'default')['monsters'][0]['hp'], 12)
+        self.assertEqual(self.c.STORAGE.load_setup(campaign, 'live-save-as')['monsters'][0]['hp'], 3)
+        self.assertEqual(private_map(self.c.STATE), copied)
+
+    def test_raw_tracker_save_does_not_gain_private_write_authority(self):
+        before = self.seed(); campaign = self.c.active_campaign()
+        state = copy.deepcopy(self.c.STATE)
+        projection = self.c.setup_snapshot(self.c.STATE)
+        self.c.STORAGE.save_setup(campaign, 'tracker-only', projection)
+        self.assertEqual(self.stored(campaign, 'tracker-only'), {})
+        self.assertEqual(self.stored()['m'], before)
+        self.assertEqual(dict(self.c.STATE), dict(state))
+        self.assertEqual(private_map(self.c.STATE), private_map(state))
+        self.assertEqual(private_map(projection)['m'], before)
+        forged = dict(projection); forged[PRIVATE_KEY] = {'m': before}
+        dump = list(self.c.STORAGE.connection.iterdump())
+        with self.assertRaises(ValueError):
+            self.c.STORAGE.save_setup(campaign, 'forged-private', forged)
+        self.assertEqual(list(self.c.STORAGE.connection.iterdump()), dump)
+        self.assertFalse(self.c.STORAGE.setup_exists(campaign, 'forged-private'))
+
+    def test_save_as_rejects_an_inactive_campaign_without_writes(self):
+        self.seed()
+        other = self.c.STORAGE.create_campaign('Other', '', 'now')
+        dump = list(self.c.STORAGE.connection.iterdump()); state = copy.deepcopy(self.c.STATE)
+        with self.assertRaises(self.c.HTTPException) as raised:
+            self.save_as('denied-save-as', campaign=other)
+        self.assertEqual(raised.exception.status_code, 409)
+        self.assertEqual(list(self.c.STORAGE.connection.iterdump()), dump)
+        self.assertEqual(dict(self.c.STATE), dict(state))
+        self.assertEqual(private_map(self.c.STATE), private_map(state))
+
+    def test_save_as_late_reference_failure_rolls_back_content_and_live_state(self):
+        self.seed(); dump = list(self.c.STORAGE.connection.iterdump())
+        state = copy.deepcopy(self.c.STATE); remember = self.c.remember_setup
+        def fail_after_reference(*args):
+            remember(*args)
+            raise OSError('after last-setup reference')
+        with patch.object(self.c, 'remember_setup', side_effect=fail_after_reference):
+            with self.assertRaisesRegex(OSError, 'after last-setup reference'):
+                self.save_as('failed-save-as')
+        self.assertEqual(list(self.c.STORAGE.connection.iterdump()), dump)
+        self.assertEqual(dict(self.c.STATE), dict(state))
+        self.assertEqual(private_map(self.c.STATE), private_map(state))
+        self.assertFalse(self.c.STORAGE.connection.in_transaction)
 
     def test_setup_import_remaps_monster_binding_and_keeps_reference_graph(self):
         before = self.seed()
