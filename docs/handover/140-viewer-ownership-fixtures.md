@@ -183,3 +183,61 @@ changes or CI/acceptance pass. This intermediate test/documentation commit uses
 it for covering CI. Revision/recovery continuity, covering results and 2C acceptance
 remain open. No real-network WebSocket/full-server/login proof. README/root indexes
 remain accurate/unchanged. [Current task](../todo/223-statblock-lifecycle.md#2c3c-production-notification-slice---2026-11-16).
+
+## 2C.3c continuity and final planned code delivery - 2026-11-16
+
+Prepared tests/test_statblock_setup_recovery_continuity.py adds three native methods
+after the combined Save As/copy/loaded-move fixture sequence. They exercise runtime
+checkpoint replacement plus sequential undo with strictly advancing private heads;
+different-owner overwrite followed by unchanged/same-owner edit, stale-save rejection,
+destination checkpoint restore and undo without ledger reset; counter-only destination
+reopen/overwrite and atomic MAX_REVISION rejection. Assert stable row bindings, exact
+saved-source/checkpoint preservation, restart/reload, privacy and foreign keys. Native
+fixture writes seed historical content/markers; tested Save As and recovery calls use
+the production protected handlers/services, not fabricated HTTP/apply authority.
+
+Preparation: changed module compiles/AST-parses; three methods counted; zero native
+methods ran locally (FastAPI absent). No extracted harness or new execution pass.
+No production, existing-test, route, permission, schema or workflow change.
+
+First-slice evidence is now reviewed: successful Branch tests 43918397854 attempt 1
+covers 8482acf420fa18051d56a429a6853515b9ff5202, publication
+769412efd47124f41cf9e6fb53d825ed576f93dd. run.json confirms exact head/attempt and
+success; workflow part 122 explicitly records both combined-operation methods OK.
+This supersedes earlier first-slice CI-unreviewed wording, not the later slices'
+pending validation. It does not cover authorization 601699ce07735baf3fac09d2b5dc9fb01284eefb,
+notification 86e2112586db84a7ec944cddec0616f24256056c or this continuity module.
+
+### 2C final covering-review map
+
+- Clone/copy: existing clone kernel, stored/protected copy and transfer suites retain
+  independent rows/graphs/revision/time, immutable sources, counter-only exclusion,
+  canonical references, collision/roster/effect rules and rollback assertions.
+- Moves: existing preservation/detachment suites retain owner/ledger identity,
+  exclusive fresh runtime, reopen/MAX_REVISION and shared-runtime rejection cases.
+- Save As and continuity: existing kernel/handler tests plus the three new methods
+  retain source isolation, same-owner stale guards, other-owner ledger continuity,
+  ordinary omission rejection, checkpoint/undo continuity and overflow rollback.
+- Cross-operation integration: first two combined methods have explicit native pass
+  evidence; five auth and three notification methods are delivered but pending final
+  execution; the three continuity methods here are prepared/unexecuted. These four
+  modules contain thirteen 2C.3c methods, not thirteen already-passing methods.
+- Authorization/privacy/notifications: final CI must execute all actual selected-route
+  seeded-session, post-lock revocation, projection, production deferral/coalescing,
+  unchanged-Save/true-no-op and rollback assertions. Recording sockets are not real
+  network/browser/login/full-server evidence. No existing assertion is weakened.
+
+This is the final planned 2C code/test slice, subject to fixes demonstrated by covering
+CI. Its proposed/approved/actual commit message omits [skip ci] under the user's
+18:32 CET instruction; use configured push CI, no workflow edit/manual dispatch.
+Review exact final head/attempt, new method entries, retained suites and audit outcomes
+before bounded 2C acceptance; prepare any demonstrated correction with fresh approval.
+No 2C, Stage 1/2, 022.03 or overall 022 acceptance is recorded here. Bounded 2B and
+022.02 stay closed. 2D reconciliation and Stage 3 still follow, not this delivery.
+
+README, HANDOVER.md/TODO.md indexes and lifecycle TODO were reviewed/reused. Their
+links, in-progress status, criteria and covering-CI/acceptance requirements remain
+accurate, so no mechanical duplicate edits are included. This current evidence record
+supersedes only earlier next-continuity/unreviewed-first-run delivery wording, not
+any unfinished lifecycle acceptance gate. Schema stays 9; retained operational and
+matching-backup/rollback guidance remains binding. No merge/deployment/release.
