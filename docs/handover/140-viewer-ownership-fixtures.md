@@ -133,3 +133,28 @@ No production, existing-test or workflow changes. README/root indexes remain acc
 for this partial step and are unchanged. Bounded 2B remains closed; 2C.3c stays open
 for actual Save As authorization, combined production notifications, further revision/
 recovery reconciliation and covering CI/acceptance. [Current task](../todo/223-statblock-lifecycle.md#2c3c-first-combined-operation-slice---2026-11-16).
+
+## 2C.3c Save As authorization slice - 2026-11-16
+
+First combined slice delivered at 8482acf420fa18051d56a429a6853515b9ff5202;
+its covering CI has not been reviewed here. New tests/test_statblock_setup_saving_http.py
+prepares five selected-route ASGI methods using actual AdminAPI route registration,
+SetupName/CampaignSetupAdd, AuthService, ownership, SQLite and seeded sessions.
+Cases cover owner live Save As/source isolation, retained existing superadmin policy,
+missing/client/non-owner/origin/foreign/inactive/malformed denials, an authenticated
+Save As/copy/loaded-move/runtime-Save-As chain, and ownership/role/session revocation
+while waiting for the real operation lock. The session observer calls the original
+method and only signals initial authentication; it does not inject a deny decision.
+Rejected requests compare complete SQL/live/private/history state and no emission;
+responses/projections/sent frames are checked for private content. This is not login,
+full application startup or real-network WebSocket coverage. No production change.
+
+Preparation: module compiles/AST-parses; five methods counted; zero native methods
+ran locally (FastAPI absent). No new CI or acceptance result is claimed. At the user's
+18:32 CET instruction, remaining intermediate 2C commits use [skip ci], including
+this slice; final 2C code/test commit omits it for a covering run. Do not edit workflows,
+manually dispatch, cancel the earlier run or extend this skip scope beyond 2C.
+Documentation-only close-outs retain the standing [skip ci] rule. Pending production
+notification and revision/recovery reconciliation work stays open, as do final
+covering validation and 2C acceptance. README/root indexes remain accurate/unchanged.
+[Current task](../todo/223-statblock-lifecycle.md#2c3c-save-as-authorization-slice---2026-11-16).

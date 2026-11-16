@@ -176,3 +176,34 @@ covering CI and fix demonstrated failures with fresh approval. Remaining 2C.3c
 authorization, production-notification and revision/recovery reconciliation gates
 above remain open; 2B stays closed and later stages are not advanced.
 [Scope and limits](../handover/140-viewer-ownership-fixtures.md#2c3c-first-combined-operation-slice---2026-11-16).
+
+## 2C.3c Save As authorization slice - 2026-11-16
+
+Status: prepared for exact-payload approval; five native ASGI methods unexecuted.
+First combined slice delivered at 8482acf420fa18051d56a429a6853515b9ff5202,
+with its CI results not yet reviewed. tests/test_statblock_setup_saving_http.py uses
+the actual selected AdminAPI installer/models/AuthService/ownership/SQLite and reused
+seeded-session/ASGI fixtures. It covers live owner Save As, existing superadmin
+permission, unauthenticated/client/non-owner/origin/foreign/inactive/malformed
+rejections, a complete authenticated Save As/copy/move/runtime Save As sequence,
+and post-lock ownership/role/session revocation. Initial-auth observation preserves
+real session decisions. Denials assert unchanged full SQL/live/private/history state,
+no tracker save and no emitted frame; sent payloads remain private. Not password
+login, full application startup, complete Admin routing or real-network WebSockets.
+
+Executed preparation: Python compilation and AST parsing pass; five methods counted.
+Zero native methods ran locally (FastAPI absent); no new native/CI pass or acceptance.
+No production, existing-test or workflow changes. Covering CI remains pending.
+
+The user's 2026-11-16 18:32 CET instruction supersedes normal per-push CI for the
+remaining intermediate 2C deliveries: include [skip ci] in proposed/approved/actual
+messages, including this authorization slice. Final 2C code/test delivery omits it
+for a covering run; review the exact head/attempt and all outstanding 2C assertions
+before acceptance. Do not change workflows, manually dispatch, cancel the prior
+run or extend this skip instruction to 2D/Stage 3. Documentation-only commits keep
+the standing [skip ci] rule. Each write still needs its own exact-payload approval.
+
+Next: combined production notification and revision/recovery continuity coverage,
+remaining 2C acceptance reconciliation and final covering CI. Bounded 2B stays closed;
+Stage 1/2, 022.03 and overall 022 remain unaccepted. README/root indexes remain
+accurate/unchanged. [Details/limits](../handover/140-viewer-ownership-fixtures.md#2c3c-save-as-authorization-slice---2026-11-16).
