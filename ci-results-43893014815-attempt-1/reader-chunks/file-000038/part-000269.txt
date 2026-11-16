@@ -1,0 +1,30 @@
+nections opened: 13; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.5665007Z Connection audit: test_fivetools_source_configuration.py
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6545737Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6546118Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6546443Z   File "python/scrying_glass_monster_selection.py", line 199, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6547165Z     index = _fivetools_index(root)
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6547433Z   File "python/scrying_glass_monster_selection.py", line 167, in _fivetools_index
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6547762Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6548280Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6548715Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6548917Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6549230Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6549549Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6549757Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6550099Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6550406Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6550556Z OSError: private detail
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6550736Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6550932Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6551208Z   File "python/scrying_glass_monster_selection.py", line 196, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6551497Z     sources = ft.configured_sources(display)
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6551850Z   File "/tmp/scrying-tests-s9mkubyi/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6552368Z     raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.6553071Z ValueError: fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.7161269Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.7161643Z Ran 12 tests in 0.068s
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.7161733Z 
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.7161813Z OK
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.7163214Z test_fivetools_source_configuration.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:18.7325772Z Connection aud

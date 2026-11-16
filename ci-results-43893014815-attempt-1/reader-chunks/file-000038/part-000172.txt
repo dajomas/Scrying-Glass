@@ -1,0 +1,49 @@
+-only actions preserve real selection sets without new feedback
+tests	JavaScript tests	2026-11-16T15:11:39.5810545Z   ---
+tests	JavaScript tests	2026-11-16T15:11:39.5810744Z   duration_ms: 0.610295
+tests	JavaScript tests	2026-11-16T15:11:39.5811027Z   type: 'test'
+tests	JavaScript tests	2026-11-16T15:11:39.5811235Z   ...
+tests	JavaScript tests	2026-11-16T15:11:39.5811673Z # Subtest: cancelled bulk removal preserves feedback and named confirmation
+tests	JavaScript tests	2026-11-16T15:11:39.5812246Z ok 5 - cancelled bulk removal preserves feedback and named confirmation
+tests	JavaScript tests	2026-11-16T15:11:39.5812782Z   ---
+tests	JavaScript tests	2026-11-16T15:11:39.5812998Z   duration_ms: 0.591577
+tests	JavaScript tests	2026-11-16T15:11:39.5813265Z   type: 'test'
+tests	JavaScript tests	2026-11-16T15:11:39.5813454Z   ...
+tests	JavaScript tests	2026-11-16T15:11:39.5813881Z # Subtest: bulk payload keeps selection order while feedback uses canonical targets
+tests	JavaScript tests	2026-11-16T15:11:39.5814482Z ok 6 - bulk payload keeps selection order while feedback uses canonical targets
+tests	JavaScript tests	2026-11-16T15:11:39.5814876Z   ---
+tests	JavaScript tests	2026-11-16T15:11:39.5815070Z   duration_ms: 0.860545
+tests	JavaScript tests	2026-11-16T15:11:39.5815330Z   type: 'test'
+tests	JavaScript tests	2026-11-16T15:11:39.5815522Z   ...
+tests	JavaScript tests	2026-11-16T15:11:39.5815942Z # Subtest: individual removal preserves payload, destination, name and success
+tests	JavaScript tests	2026-11-16T15:11:39.5816538Z ok 7 - individual removal preserves payload, destination, name and success
+tests	JavaScript tests	2026-11-16T15:11:39.5816956Z   ---
+tests	JavaScript tests	2026-11-16T15:11:39.5817515Z   duration_ms: 0.933855
+tests	JavaScript tests	2026-11-16T15:11:39.5817773Z   type: 'test'
+tests	JavaScript tests	2026-11-16T15:11:39.5817998Z   ...
+tests	JavaScript tests	2026-11-16T15:11:39.5818285Z # Subtest: stale success cannot refresh a new encounter
+tests	JavaScript tests	2026-11-16T15:11:39.5818717Z ok 8 - stale success cannot refresh a new encounter
+tests	JavaScript tests	2026-11-16T15:11:39.5819033Z   ---
+tests	JavaScript tests	2026-11-16T15:11:39.5819233Z   duration_ms: 0.703656
+tests	JavaScript tests	2026-11-16T15:11:39.5819495Z   type: 'test'
+tests	JavaScript tests	2026-11-16T15:11:39.5819729Z   ...
+tests	JavaScript tests	2026-11-16T15:11:39.5820067Z # Subtest: stale failure cannot publish to a new encounter
+tests	JavaScript tests	2026-11-16T15:11:39.5820533Z ok 9 - stale failure cannot publish to a new encounter
+tests	JavaScript tests	2026-11-16T15:11:39.5820866Z   ---
+tests	JavaScript tests	2026-11-16T15:11:39.5821111Z   duration_ms: 0.838491
+tests	JavaScript tests	2026-11-16T15:11:39.5821367Z   type: 'test'
+tests	JavaScript tests	2026-11-16T15:11:39.5821603Z   ...
+tests	JavaScript tests	2026-11-16T15:11:39.5822009Z # Subtest: bulk refresh failure stays separate from success and does not replay
+tests	JavaScript tests	2026-11-16T15:11:39.5822750Z ok 10 - bulk refresh failure stays separate from success and does not replay
+tests	JavaScript tests	2026-11-16T15:11:39.5823119Z   ---
+tests	JavaScript tests	2026-11-16T15:11:39.5823311Z   duration_ms: 1.088259
+tests	JavaScript tests	2026-11-16T15:11:39.5823525Z   type: 'test'
+tests	JavaScript tests	2026-11-16T15:11:39.5823718Z   ...
+tests	JavaScript tests	2026-11-16T15:11:39.5824085Z # Subtest: patch retains encoded URL, method, headers and exact JSON values
+tests	JavaScript tests	2026-11-16T15:11:39.5824604Z ok 11 - patch retains encoded URL, method, headers and exact JSON values
+tests	JavaScript tests	2026-11-16T15:11:39.5824942Z   ---
+tests	JavaScript tests	2026-11-16T15:11:39.5825131Z   duration_ms: 0.803868
+tests	JavaScript tests	2026-11-16T15:11:39.5825343Z   type: 'test'
+tests	JavaScript tests	2026-11-16T15:11:39.5825533Z   ...
+tests	JavaScript tests	2026-11-16T15:11:39.5904212Z # Subtest: duplicate same-field patch stays guarded through refresh
+tests	JavaScript tests

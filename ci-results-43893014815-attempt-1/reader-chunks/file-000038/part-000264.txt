@@ -1,0 +1,30 @@
+python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7898114Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7898327Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7898657Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7899266Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7899484Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7899836Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7900156Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7900338Z TimeoutError: secret D&D endpoint
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7900649Z Combined monster lookup: D&D Beyond did not respond (secret D&D endpoint)
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7937219Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7937836Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7938655Z   File "/tmp/scrying-tests-s9mkubyi/repo/python/scrying_glass_monster_selection.py", line 199, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7939356Z     index = _fivetools_index(root)
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7940168Z   File "/tmp/scrying-tests-s9mkubyi/repo/python/scrying_glass_monster_selection.py", line 167, in _fivetools_index
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7940844Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7941601Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7942262Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7942932Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7953975Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7954656Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7955026Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7955625Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7956132Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7956420Z OSError: secret 5e.tools endpoint
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.7956909Z Combined monster lookup: 5e.tools did not respond (secret 5e.tools endpoint)
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.8422612Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.8423470Z test_combined_monster_lookup_application.py: connections opened: 15; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-16T15:14:12.8424278Z Ran 4 tests in 0.168s
+tests
