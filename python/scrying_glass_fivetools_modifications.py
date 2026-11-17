@@ -1,4 +1,4 @@
-"""04c.1 pure literal-property executor; graph/worker integration is 04c.2.
+"""04c.2a pure property/array executor; graph/worker integration follows.
 
 Consumes compiler-shaped immutable instructions (property, mode, payload_json).
 No selected-identity normalization, substitutions, regex, formulas or networking.
@@ -13,6 +13,7 @@ ENTRY_PROPS = ('action', 'bonus', 'reaction', 'trait', 'legendary', 'mythic',
     'variant', 'spellcasting', 'actionHeader', 'bonusHeader', 'reactionHeader',
     'legendaryHeader', 'mythicHeader')
 LITERAL_MODES = frozenset(('appendStr', 'setProp', 'prefixSuffixStringProp'))
+SUPPORTED_MODES = LITERAL_MODES | frozenset(('remove', 'appendArr', 'prependArr'))
 
 @dataclass(frozen=True)
 class OperationDiagnostic:
@@ -106,6 +107,30 @@ def apply_modifications(record, instructions, *, check,
         except RecursionError:
             fail('execution_stack_limit')
         return result
+    def remove(obj, keys):
+        check()
+        if obj is None:
+            return obj
+        key, *tail = keys
+        if type(obj) is dict:
+            if key not in obj:
+                return obj
+            result, slot = obj.copy(), key
+        elif type(obj) is list:
+            slot = index(key, obj)
+            if not tail:
+                fail('unsupported_modification_path')
+            result = obj.copy()
+        else:
+            fail('unsupported_modification_path')
+        if tail:
+            try:
+                result[slot] = remove(obj[slot], tail)
+            except RecursionError:
+                fail('execution_stack_limit')
+        else:
+            del result[slot]
+        return result
     def string_option(info, key):
         value = info.get(key)
         if value is None:
@@ -140,24 +165,47 @@ def apply_modifications(record, instructions, *, check,
             for ordinal, instruction in enumerate(groups[prop]):
                 context[:] = prop, ordinal, instruction.mode
                 check()
-                if instruction.mode not in LITERAL_MODES:
+                if instruction.mode not in SUPPORTED_MODES:
                     fail('modification_execution_pending_04c')
                 try:
                     info = json.loads(instruction.payload_json, parse_constant=lambda _: (_ for _ in ()).throw(ValueError('nonfinite')))
                 except (ValueError, UnicodeError, RecursionError):
                     fail('malformed_modification_payload')
+                if instruction.mode == 'remove':
+                    if info != 'remove':
+                        fail('malformed_modification_payload')
+                    keys = ('null',) if target == '_' else path(target)
+                    if not keys:
+                        fail('unsafe_modification_path')
+                    proposed = remove(output, keys)
+                    size(proposed)
+                    output = proposed
+                    continue
                 if type(info) is not dict or info.get('mode') != instruction.mode:
                     fail('malformed_modification_payload')
                 reject_dynamic(info)
                 keys = () if target == '_' else path(target)
-                if instruction.mode != 'appendStr':
+                if instruction.mode not in {'appendStr', 'appendArr', 'prependArr'}:
                     keys += path(info.get('prop'))
                 if not keys:
-                    if instruction.mode == 'appendStr':
+                    if instruction.mode in {'appendStr', 'appendArr', 'prependArr'}:
                         fail('malformed_modification_path')
                     continue
                 old = get(output, keys)
-                if instruction.mode == 'setProp':
+                if instruction.mode in {'appendArr', 'prependArr'}:
+                    if 'items' not in info:
+                        fail('malformed_modification_payload')
+                    items = info['items'] if type(info['items']) is list else [info['items']]
+                    if truth(old) and type(old) is not list:
+                        fail('unsupported_modification_target')
+                    existing = old if type(old) is list else []
+                    proposed = put(output, keys, [])
+                    projected = size(proposed) + size(existing)-2 + size(items)-2 + bool(existing and items)
+                    if projected > intermediate_creature_bytes:
+                        fail('intermediate_creature_bytes_limit')
+                    value = existing + items if instruction.mode == 'appendArr' else items + existing
+                    proposed = put(output, keys, value)
+                elif instruction.mode == 'setProp':
                     if 'value' not in info:
                         fail('malformed_modification_payload')
                     proposed = put(output, keys, info['value'])

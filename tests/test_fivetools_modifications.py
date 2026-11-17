@@ -70,7 +70,7 @@ class ModificationTests(unittest.TestCase):
         self.assertEqual(apply({'trait': [{'name': 'A'}]}, op('*', 'prefixSuffixStringProp', prop='0.name', suffix='!'))['trait'][0]['name'], 'A!')
     def test_unsupported_modes_unknown_modes_and_atomic_failure(self):
         record = {'x': 'base'}
-        for mode in ('appendArr', 'remove', 'unknown'):
+        for mode in ('replaceArr', 'removeArr', 'unknown'):
             d = self.error('modification_execution_pending_04c', record,
                 op('x', 'appendStr', str='a'), op('x', mode))
             self.assertEqual((d.property, d.operation_index, d.mode), ('x', 1, mode))
