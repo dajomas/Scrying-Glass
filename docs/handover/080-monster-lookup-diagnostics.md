@@ -39,3 +39,21 @@ were not rerun on this payload. No full suite, live-provider or covering CI clai
 Intermediate 022.04 commits use [skip ci] by user instruction; no workflow edits/
 dispatch. Accepted lifecycle/016/017 scopes remain closed. Root README/index links
 remain accurate and unchanged; current 224 status supersedes dated pending notes.
+
+## 022.04b.1 cache content accounting - 2026-11-17
+
+Baseline: d13a439e28ed0829d2285831e01dab16170776a7, same working branch.
+User requested 04b splitting and delivery of its first increment;
+[224 increments](../todo/224-fivetools-statblock-resolution.md#04b-delivery-increments---2026-11-17)
+records gates and the exact content-ledger definition. b.1 replaces record-only
+cache accounting with key/provenance/path/depth/work-inclusive UTF-8 charges,
+consistently across staging, publication, eviction and expiry. No physical memory
+ceiling, worker, provider endpoint or modification execution is claimed.
+
+Twelve new actual resolver tests passed on Python 3.12.8, synthetic sources, no
+skips/errors/failures. Existing graph tests/assertions are unchanged, not rerun;
+full-suite/provider/3.14/oracle/CI validation remains pending. b.2/b.3 and 04a/c-f
+remain open. This is implementation with focused evidence, not formal acceptance.
+README, root indexes and workflow reviewed; no runtime user behavior or indexed
+paths changed, so unchanged. [skip ci] remains required until the final 04 code
+push. No manual dispatch, merge, deployment or release.

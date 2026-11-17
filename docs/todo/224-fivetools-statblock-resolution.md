@@ -18,7 +18,7 @@ record index, loader/result/provenance/diagnostic contracts, recursive base and
 template copy chains, root overrides, preservation/null rules, template root
 precedence/property order, separate active-path/caching, logical cached depth
 and operation accounting, deadline/cancellation, compact intermediate preflight,
-response-record cap and record-byte/entry LRU with TTL. One immutable configured
+response-record cap and content-byte/entry LRU with TTL. One immutable configured
 dataset generation per resolver. No network, DB, public API or JavaScript.
 
 All 28 runtime modes plus string removal are recognized and ordered; executing
@@ -60,11 +60,11 @@ condition/status/skill/spell/sense PHB. These never default missing copy sources
 
 04a: full operation/option/default matrix, complete relevant schema comparison,
 restricted formula/regex/substitution contract and fixture/oracle provenance.
-04b: provenance-inclusive cache accounting and complete resource-boundary tests.
-Current cache_bytes bounds record bytes only. In-process parsing/compilation does
-not enforce a hard worker memory/CPU ceiling. No production preparation endpoint
-is enabled; later integration must supply terminable supported-platform memory
-isolation and one accepted deadline including queue/network work.
+04b: complete the increments below; the 04b.1 ledger now includes provenance.
+In-process parsing/compilation does not enforce a hard worker memory/CPU ceiling.
+No production preparation endpoint is enabled; later integration must supply
+terminable supported-platform memory isolation and one accepted deadline including
+queue/network work.
 04c/d: general and creature operations, substitutions/versions and compatibility.
 04e: semantic exact-reference BFS, normalized model conversion and private provider
 integration, including fetch/provider safety outside the DB lock.
@@ -75,3 +75,44 @@ remain controlling. Existing stats/images/tracker/model/lifecycle behavior is un
 Intermediate pushes use [skip ci] until the final 022.04 code push, by explicit
 user instruction. No workflow edits or dispatch. Delivery, passing CI and formal
 acceptance are distinct. No merge, deployment, release or overall 022 closure.
+
+## 04b delivery increments - 2026-11-17
+
+User requested splitting 04b and implementing/pushing its first increment.
+Dependencies are sequential; no 04c-f scope or accepted earlier work is reopened.
+
+- SG-TODO-022.04b.1: implemented, focused validation passed; push/CI pending.
+  Provenance-inclusive logical cache-content accounting. Gate: every retained
+  record, full key, provenance role/identity/path occurrence and logical depth/work
+  is charged; equality admitted, over-budget content not retained; pending and
+  completed caches, LRU, TTL and isolation preserve the same ledger invariant.
+- SG-TODO-022.04b.2: ready after b.1 delivery. Complete remaining graph/intermediate
+  resource boundaries, expansion preflight and invalid-input limits. Gate: all
+  approved graph-level boundary/cached-work cases with structured diagnostics;
+  preserve existing assertions and exercise growth without silent truncation.
+- SG-TODO-022.04b.3: pending b.2. Supported-platform isolated worker/deadline
+  enforcement and remaining 04b integration/validation gates. Gate: terminate
+  over-budget work, fail closed if enforcement unavailable, discard cancelled/
+  expired results, and review graph/provider regressions. Scheduler/fetch/adapter
+  work remains coordinated with its parent units, not falsely delivered here.
+
+b.1 uses record_json byte length plus compact UTF-8 metadata JSON with ordered keys
+key/provenance/depth/operations. Identity arrays contain dataset/kind/source/name/
+discriminator/edition, including nulls; every repeated path identity is charged.
+Only provenance actually retained in a cached result is charged; returned selected
+provenance is not part of the cache. Shared Python object references earn no byte
+discount. Control timestamps/LRU links and Python allocator overhead are excluded:
+this is a retained-content allowance, NOT a process/worker memory bound. Raw loader
+storage, concurrent transient working data and hard CPU/memory enforcement remain
+separate. Oversized successful results may return but are never success-cached.
+
+Current b.1 validation: 12 new native tests passed on Python 3.12.8 via
+`python -m unittest discover -s tests -p 'test_fivetools_resolution_cache.py' -v`.
+Tests cover explicit metadata wire counts/Unicode/full identities, repeated paths,
+byte equality/one-over, record-only/long-key rejection, pending/committed template
+content, LRU hit order, entry eviction, TTL equality, failed/cancelled publication
+and return isolation. Existing 22 graph tests are unchanged but were not rerun
+for this increment; their earlier result above is historical. Full repository,
+provider, Python 3.14 and current-payload upstream-oracle checks remain pending.
+The unchanged workflow's test_*.py discovery includes the new module when CI runs;
+no hosted CI result is inferred from that configuration.

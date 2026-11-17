@@ -95,6 +95,27 @@ class Result:
     def record(self):
         return json.loads(self.record_json)
 
+def _cache_entry_bytes(identity, result):
+    """Logical retained content bytes, not Python heap/RSS or loader storage.
+
+    Count raw record bytes plus compact UTF-8 metadata: full cache key, every
+    provenance identity/role/path occurrence, cached logical depth and work.
+    Repeated identities are charged per occurrence; object sharing earns no
+    discount. LRU links, TTL timestamps and Python allocator overhead are not
+    content. The adapter/worker must separately enforce its memory ceiling.
+    """
+    def key(item):
+        return tuple(getattr(item, f.name) for f in fields(item))
+    metadata = {
+        'key': key(identity),
+        'provenance': [(key(p.identity), p.role, [key(i) for i in p.chain])
+                       for p in result.provenance],
+        'depth': result.inheritance_depth,
+        'operations': result.modification_operations,
+    }
+    encoder = json.JSONEncoder(ensure_ascii=False, allow_nan=False, separators=(',', ':'))
+    return len(result.record_json) + sum(len(s.encode('utf-8')) for s in encoder.iterencode(metadata))
+
 class ExactLoader(Protocol):
     def load(self, identity: Identity) -> tuple[bytes, ...]:
         """Return all exact matches; never search or substitute editions."""
@@ -142,8 +163,8 @@ def compile_modifications(mods):
 class Resolver:
     """Caller supplies the existing absolute monotonic preparation deadline.
 
-    Cache limits here count record bytes, not retained provenance metadata.
-    The later worker/adapter must enforce total memory and complete accounting.
+    Cache limits count record and identity/provenance content via a logical
+    UTF-8 ledger. They do not enforce total Python heap or worker memory.
     """
     def __init__(self, loader: ExactLoader, *, limits=None, clock=time.monotonic):
         self.loader, self.limits, self.clock = loader, limits or Limits(), clock
@@ -211,7 +232,7 @@ class Resolver:
                 if depth > self.limits.inheritance_steps:
                     fail('inheritance_steps_limit')
                 if ident in self._cache and self.clock() - self._cache_times[ident] >= self.limits.cache_seconds:
-                    self._cache_bytes -= len(self._cache.pop(ident).record_json)
+                    self._cache_bytes -= _cache_entry_bytes(ident, self._cache.pop(ident))
                     self._cache_times.pop(ident, None)
                 cached = pending.get(ident) or self._cache.get(ident)
                 if ident in self._cache:
@@ -300,7 +321,7 @@ class Resolver:
                     obj['_isCopy'] = True
                 result = Result(encode(obj), tuple(provenance), relative_depth, used - initial_used)
                 pending[ident] = result
-                while len(pending) > self.limits.cache_entries or sum(len(v.record_json) for v in pending.values()) > self.limits.cache_bytes:
+                while len(pending) > self.limits.cache_entries or sum(_cache_entry_bytes(k, v) for k, v in pending.items()) > self.limits.cache_bytes:
                     pending.popitem(last=False)
                 return result
             finally:
@@ -308,17 +329,17 @@ class Resolver:
         result = visit(selected, 0)
         check()
         for ident, item in pending.items():
-            amount = len(item.record_json)
+            amount = _cache_entry_bytes(ident, item)
             if amount > self.limits.cache_bytes:
                 continue
             previous = self._cache.pop(ident, None)
             if previous is not None:
-                self._cache_bytes -= len(previous.record_json)
+                self._cache_bytes -= _cache_entry_bytes(ident, previous)
             self._cache[ident], self._cache_times[ident] = item, self.clock()
             self._cache_bytes += amount
             while len(self._cache) > self.limits.cache_entries or self._cache_bytes > self.limits.cache_bytes:
                 old_id, evicted = self._cache.popitem(last=False)
                 self._cache_times.pop(old_id, None)
-                self._cache_bytes -= len(evicted.record_json)
+                self._cache_bytes -= _cache_entry_bytes(old_id, evicted)
         return Result(result.record_json, (Provenance(selected, 'selected', (selected,)),) + result.provenance,
                       result.inheritance_depth, result.modification_operations)
