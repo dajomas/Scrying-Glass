@@ -63,10 +63,22 @@ asked to continue with Stage D before CI results of C1/C2 were reviewed.
 
 ## Decisions
 
-- Original-source loading only runs while a permitted statblock viewer is connected and
-  only for tile (battle) monsters; nothing is loaded for unseen encounters.
-- After a stale automatic result is discarded, the next event may load again from the same
-  retained identity (for example after a species edit), which is a fresh preparation.
+User review 2026-11-17 (after push `1f754ba`), both accepted:
+
+1. Original-source loading only runs while a permitted statblock viewer is connected and
+   only for tile (battle) monsters; nothing is loaded for unseen encounters.
+2. After a stale automatic result is discarded (for example because the species was edited
+   while it loaded), the next event loads again from the same retained tracker source
+   (option A of three discussed). The user's rule: when the species changes and a new
+   statblock is chosen from any valid source, the new statblock is shown; when only the
+   species changes and the statblock stays, the new species is substituted in the saved
+   statblock. Both already hold: a statblock saved with the edit (Edit Monster staging,
+   [084](084-statblock-stage-c1-import-apis.md)) gets a new revision that the viewer fetches,
+   and automatic loading never replaces an existing statblock; species placeholders render
+   the current SG species at display time, so saved content is not rewritten. Covered by
+   `test_edit_staging_saves_the_statblock_with_the_ordinary_edit`,
+   `test_sg_values_override_and_species_placeholders_follow_live_species` and
+   `test_disabled_provider_no_viewer_and_changed_target_load_nothing`.
 
 ## Validation (Python 3.13.18, Chromium via local Google Chrome)
 

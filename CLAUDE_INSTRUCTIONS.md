@@ -65,3 +65,12 @@ Save any and all generic instructions the user gives Claude in this file.
 - The Open5e adapter may make one extra cached request per document for its
   licence and publisher.
 - Add user-supplied example files (such as `.monster` files) to `monsters_examples/`.
+
+## Stage D decisions - 2026-11-17
+
+- Automatic original-source statblock loading runs only while a permitted statblock viewer
+  is connected, and only for monsters in the battle.
+- When the monster species changes and a new statblock is chosen from any valid source,
+  the new statblock is shown. When only the species changes and the statblock stays, the
+  new species is substituted in the saved statblock (shown through species placeholders).
+  A discarded automatic load is retried from the same retained tracker source.
