@@ -2,12 +2,13 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-## Current state - 2026-11-16
+## Current state - 2026-11-17
 
-022.02, bounded 2B/2C/2D and bounded 3A remain accepted/closed. 3B boundary-test
-implementation is included in this delivery with execution/CI/acceptance pending.
-Whole Stage 3, Stage 1/2, 022.03 and overall 022 remain unaccepted. No merge,
-deployment or release. SG-TODO-023 remains separate and ready for review.
+022.02 and bounded 2B/2C/2D/3A/3B are accepted/closed. The user explicitly
+requested formal bounded 3B acceptance at 05:55 CET after passing covering CI
+and criterion review; details and limits follow. Whole Stage 3, whole Stage 1/2,
+022.03 and overall 022 remain unaccepted. No merge, deployment or release.
+SG-TODO-023 remains separate and ready for review.
 
 ## Preserved evidence and historical sections
 
@@ -55,45 +56,58 @@ in the exact preceding lifecycle/handover records, not widened by this delivery.
 
 ## 3B boundary implementation - 2026-11-16
 
-Fourteen new methods: seven native archive/model boundaries in
- tests/test_statblock_3b_boundaries.py and seven actual selected-route methods in
- tests/test_statblock_3b_http.py. The latter imports the non-TestCase fixture through
-a module alias, avoiding rediscovery of the native TestCase as an imported class.
+Fourteen methods at 0d1cec345b187f7ecbbb1b959fd185927c18c046: seven native
+archive/model boundaries in tests/test_statblock_3b_boundaries.py and seven
+selected-route ASGI methods in tests/test_statblock_3b_http.py. The latter
+imports the non-TestCase fixture through a module alias, avoiding rediscovery
+of the native TestCase as an imported class. No production change was required.
 
-Coverage prepared: real 10 MiB manifest, 25 MiB stored ZIP and 100 MiB expanded
-admission boundaries (inclusive and one byte over); 1,000 total members including
-manifest; malformed/duplicate/unsafe members; forged expanded metadata rejected
-before reads; all five operator ModelLimits at/over the fixture boundary; graph/
-identity/credential/false-verification rejection; actual multipart upload cap.
-The 10 MiB import fixture uses inert top-level padding for aggregate byte admission;
-the export mechanism also checks exact computed manifest size and one byte below it.
-The real-size media fixtures use supported extensions, not a media-decoder test.
+Real 10 MiB manifest, 25 MiB stored ZIP and 100 MiB expanded boundaries accept
+at equality and reject one byte over; 1,000 total members including manifest,
+unsafe/duplicate members, forged expanded metadata before read, five operator
+ModelLimits, bad graph/identity/URL/verification and actual multipart upload
+limit are tested. The 10 MiB manifest uses inert top-level padding; export
+checks its own computed-size boundary. Supported-extension media fixtures do
+not test media decoding.
 
-Actual feature/AdminAPI installers, AuthService, ownership, SQLite and production
-notification logic are retained. Import is intentionally permitted for a regular
-admin without access to the active campaign because it creates a new campaign owned
-by that caller; export still requires active-campaign access. Existing superadmin
-policy is retained. Tests cover no-session/client/origin/multipart/corrupt denials,
-post-lock export ownership and import role/session revocation, unchanged SQL/private/
-ledger/live/history/files and zero notifications for inactive-campaign import.
+Production feature/AdminAPI installers, seeded AuthService, ownership, SQLite,
+transaction wrapper and production notification logic are retained. Export
+requires active-campaign access; regular admin import creates a new owned
+campaign without active-campaign access. Superadmin policy is preserved. Denials
+include missing session, client, origin, missing multipart field, corrupt ZIP
+and post-lock ownership/role/session revocation, checked for atomicity.
 
-Late failure injection occurs after real checkpoint, owner assignment, history hook
-and partial media write. Combined export/import/actual activation/trusted private
-edit/actual checkpoint restore/undo/re-export asserts monotonic revisions, preserved
-source, reload and one final post-commit private-free frame per active mutation.
-The private edit is an internal fixture transaction, not a new public private-edit API.
+Failures after real checkpoint, owner assignment, history hook and partial media
+write restore SQL/private/ledger/live/bindings/media without notification.
+Combined export/import/actual activation/trusted internal private edit/actual
+checkpoint restore/undo/re-export checks source isolation, final post-commit
+private-free frames, monotonic revisions, reload, foreign keys and final digest.
+That edit is not a public private-edit endpoint.
 
-Executed in this environment: compile() passed for both complete test sources; AST
-inventory found 14 methods. Pure ZIP builder checks verified a 10,485,760-byte
-manifest and a valid 26,214,400-byte ZIP; multipart literal CRLF was inspected.
-These checks did not execute any native/ASGI regression: zero of the 14 ran here.
-No checkout/full suite/browser/network verification or fresh CI result is claimed.
-Existing unittest discovery includes both modules. Push runs normal CI without
-[skip ci]; await covering results before 3B/Stage 3 acceptance. No production change
-is included without an executed regression demonstrating a defect.
+## 3B bounded accepted close-out - 2026-11-17
 
-README, TODO index, HANDOVER index and workflow were reviewed/reused at verified
-identities and remain applicable; parent scope/3B acceptance stay pending. Detailed
-3B implementation status supersedes older next-3B wording, not any gate. Schema 9
-and matching complete code/storage/config/media backup guidance remain unchanged.
+The user explicitly requested formal acceptance at 05:55 CET following the
+criterion reconciliation. Successful Branch tests run 43963574986 attempt 1
+covered exact implementation commit 0d1cec345b187f7ecbbb1b959fd185927c18c046;
+immutable results published at 7aeb144b1e6adb3d28a08bc0e3262975742bed1b.
+Both archived log chunks show all 14 3B methods `ok` (seven native, seven HTTP)
+within the 1,987-test main Python suite `OK` in 259.975s. Workflow syntax/
+server-import, selected pytest, JavaScript and standalone Python browser/audit
+steps succeeded. No native/ASGI method ran locally before CI. This docs-only
+record has no new covering CI run and does not claim one.
+
+The eight groups in the [criterion map](../todo/223-statblock-lifecycle.md#3b-boundary-implementation-and-evidence-map---2026-11-16)
+were reviewed against assertions, inherited fixture and explicit test results.
+No blocking bounded-3B gap remains. Accept/close 3B only, preserving the
+selected-route/seeded-session/recording-socket limitation, no browser/network
+WebSocket or full-startup/password-login claim, no import UI or public private
+edit endpoint, no image-decoder assurance, no simultaneous-fault or process-crash
+proof and no general privacy-information-flow proof. Previous bounded
+acceptances are unchanged.
+
+Whole Stage 3, Stage 1/2, SG-TODO-022.03 and overall 022 remain open. Next:
+whole-Stage-3 reconciliation of accepted 3A+3B, then final lifecycle/parent
+acceptance review. SG-TODO-022.04-022.16 and SG-TODO-023 are separate. No merge,
+deployment or release is authorized by bounded acceptance. Schema 9 and matching
+complete code/storage/config/media backup guidance remain unchanged.
 [Task and remaining acceptance](../todo/223-statblock-lifecycle.md).

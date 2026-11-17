@@ -1,19 +1,19 @@
 # 223 - Statblock lifecycle integration
 
-[Back to TODO index](../../TODO.md) · [Parent contract](220-admin-statblock-viewer.md) · [Current handover](../handover/140-viewer-ownership-fixtures.md#3b-boundary-implementation---2026-11-16)
+[Back to TODO index](../../TODO.md) · [Parent contract](220-admin-statblock-viewer.md) · [Current handover](../handover/140-viewer-ownership-fixtures.md#3b-bounded-accepted-close-out---2026-11-17)
 
-## Status and delivery rules - 2026-11-16
+## Status and delivery rules - 2026-11-17
 
-022.02, bounded 2B/2C/2D and bounded 3A remain accepted/closed. 3B is in progress:
-14 boundary methods and documentation are supplied, with native/ASGI execution,
-covering CI and acceptance pending. Whole Stage 3, Stage 1/2, 022.03 and overall 022
-remain unaccepted; 022.04-022.16 remain pending. No usable viewer/import UI, merge,
-deployment, release or whole-feature closure. SG-TODO-023 stays ready for review;
-it does not interrupt or replace this lifecycle sequence.
+022.02 and bounded 2B/2C/2D/3A/3B are accepted/closed. The user's explicit
+2026-11-17 05:55 CET request formally accepts bounded 3B after criterion and
+covering-CI review; the decision and limits are recorded below. Whole Stage 3,
+whole Stage 1/2, 022.03 and overall 022 remain unaccepted; 022.04-022.16 remain
+pending. No usable viewer/import UI, merge, deployment, release or whole-feature
+closure. SG-TODO-023 stays separate and ready for review.
 
-Every external write needs exact bound approval. This test/documentation delivery
-runs normal push CI without [skip ci]; documentation-only writes retain [skip ci].
-No workflow edit, manual dispatch or production behavior/permission change is included.
+Every external write needs exact bound approval. This documentation-only close-out
+uses [skip ci]; the successful implementation run remains the covering CI evidence.
+No workflow, production behavior, permission, schema or test changes are made here.
 
 ## Preserved history, accepted criterion maps and contracts
 
@@ -49,7 +49,7 @@ Completed/accepted/closed for its bounded scope. Version-2 private representatio
 legacy version-1 compatibility, independent imported setup/checkpoint ownership,
 validated provenance/content, incoming limits and core DB/media rollback remain.
 The complete description, nine-group assertion map and limitations remain in the
-exact preceding task; this 3B delivery does not change that decision.
+exact preceding task; this 3B decision does not change that acceptance.
 
 ## Store harness correction and remaining validation - 2026-11-16
 
@@ -69,45 +69,61 @@ at the preceding-task link, not replaced by a green-badge-only acceptance.
 
 ## 3B boundary implementation and evidence map - 2026-11-16
 
-Status: test implementation supplied; execution and covering validation pending.
+Implementation 0d1cec345b187f7ecbbb1b959fd185927c18c046 adds seven native
+archive/model and seven selected-route ASGI methods. The tests run against SQLite,
+actual production feature/AdminAPI installers, seeded AuthService sessions, real
+transaction/ownership/private-persistence and production notification logic.
 
-| Required boundary | Prepared regression assertions |
+| Required boundary | Reconciled passing regression assertions |
 |---|---|
-| Actual export/import auth | Owner success/private ZIP/no-store; new campaign ownership and unchanged active state/history; client/no-session/origin/missing-file denials; existing regular-admin import and superadmin policy. |
-| Post-lock rechecks | Actual AuthService observation while operation lock is held; revoke export owner or import role/session, then assert expected denial and unchanged SQL/private/ledger/live/files with no emission. |
-| Manifest/archive/member limits | Real 10 MiB/25 MiB/100 MiB inclusive and one-over cases; 999 media plus manifest accepted, one more rejected; expanded metadata overflow rejects before read. Actual multipart upload rejects 25 MiB+1. |
-| Operator snapshot budgets | snapshot_bytes, content_nodes, content_depth, text_value_bytes and supporting_definitions exact fixture allowance then one lower; incoming rejection atomic while stored reads/export survive. |
-| Unsafe/untrusted input | Duplicate/unsafe/noncanonical/directory/empty/unsupported members and malformed ZIP; graph cycles, missing reference, unsafe credit URL, credential URL, forged verified field and duplicate monster ID reject atomically. |
-| Late rollback | Fail after actual checkpoint write, created-owner assignment, history hook and partial media write; compare full SQL/live/private/bindings/file bytes and no notification. |
-| Notification/history/privacy | Inactive campaign import emits nothing and leaves active undo/checkpoint/revision intact. Active private edit/restore/undo emits one final post-commit frame without private content. |
-| Combined lifecycle | Actual export/import/activation, internal fixture private edit, actual restore/undo and re-export; independent original source, monotonic revisions, reload, FK integrity and final digest. |
+| Actual export/import auth | Owner export includes private ZIP and no-store; new import ownership and unchanged active campaign/history; no-session/client/origin/missing-file denials; regular-admin import without active-campaign access and retained superadmin policy. |
+| Post-lock rechecks | AuthService observation while operation lock is held; revoked export owner or import role/session denied after the wait with SQL/private/ledger/live/files unchanged and no emission. |
+| Manifest/archive/member limits | Real 10 MiB manifest, 25 MiB ZIP, 100 MiB expanded bytes inclusive and one over; 999 media plus manifest accepted, one more rejected; oversized expanded metadata denied before reads; actual multipart upload denies 25 MiB+1. |
+| Operator snapshot budgets | snapshot_bytes, content_nodes, content_depth, text_value_bytes and supporting_definitions exact fixture allowances then one lower; import rejection atomic while trusted stored reads/export survive. |
+| Unsafe/untrusted input | Duplicate/unsafe/noncanonical/directory/empty/unsupported members and malformed ZIP; cycle, unresolved reference, unsafe credit URL, credential endpoint, forged verified field and duplicate monster ID reject atomically. |
+| Late rollback | Faults after real checkpoint save, owner assignment, history hook and during partial media write preserve complete SQL/live/private/bindings/file bytes, no frame, and valid foreign keys. |
+| Notification/history/privacy | Inactive import sends nothing and preserves active checkpoint/undo/revision. Active private edit, checkpoint restore and undo produce one final post-commit frame per mutation, checked for private markers. |
+| Combined lifecycle | Actual export/import/activation, internal trusted private edit, actual restore/undo and re-export preserve original source, monotonic revisions, reload, foreign keys and final digest. |
 
-The same production routes, transaction wrapper, AuthService, ownership, SQLite,
-private persistence and notification service are used; no fabricated permission or
-public private-edit endpoint. Import does not require active-campaign ownership under
-existing policy; export does. Seeded-session selected-route ASGI is not password login,
-full application startup, network WebSocket/browser or exhaustive platform proof.
-The mutation inside the combined sequence is trusted fixture input, not an import UI.
+## 3B bounded accepted close-out - 2026-11-17
 
-Executed here: both test sources compiled, AST counted seven native plus seven HTTP
-methods. Pure fixture-builder checks measured a real 10 MiB manifest and 25 MiB ZIP;
-multipart CRLF constants were checked. Zero native/HTTP methods executed locally.
-Those construction/syntax checks do not establish passing acceptance criteria.
-Normal CI discovery includes both test_*.py modules; no workflow change is needed.
-See the handover for exact assertions, counting basis and fixture limitations.
+The user explicitly requested formal 3B acceptance at 05:55 CET after the
+criterion-by-criterion review. Branch tests run 43963574986 attempt 1 (push)
+completed successfully for the exact implementation head
+0d1cec345b187f7ecbbb1b959fd185927c18c046; immutable result publication
+7aeb144b1e6adb3d28a08bc0e3262975742bed1b. Both log segments explicitly show
+all seven native plus seven HTTP 3B methods `ok` within 1,987 main Python tests
+`OK` (259.975s). The syntax/server-import, selected pytest, JavaScript and
+standalone Python browser/audit workflow steps also succeeded. This is covering
+CI, not a claimed local execution or a new run for this docs-only commit.
+
+The eight required boundaries above were reconciled against the actual assertions,
+inherited SQL/private/notification fixture and test log, not merely a green badge.
+No blocking gap was identified within bounded 3B; accept and close 3B only.
+No production modification or corrective test commit was needed.
+
+Scope of evidence: selected-route ASGI and seeded sessions, not password login,
+full application startup or network/browser WebSocket. Recording sockets exercise
+production notification logic. The private edit is a trusted internal fixture
+transaction, not a public edit API or import UI. The 10 MiB import manifest uses
+inert top-level padding; media admission fixtures use supported file extensions,
+not image decoding. Four separately injected late faults are not exhaustive
+simultaneous faults or crash/power-loss proof. Privacy assertions inspect selected
+markers, not a general information-flow proof. The native expanded-size and
+member/limit checks demonstrate their measured boundaries, not all possible ZIPs.
+These limitations do not widen 3B acceptance into broader feature acceptance.
 
 ## Remaining gates and delivery order
 
-1. Run/review all 14 methods and covering full configured CI for the exact delivered
-   commit/attempt. Diagnose failures, change production only for demonstrated defects,
-   obtain fresh approval for any corrective write and retain explicit unexecuted gaps.
-   Neither a push nor compilation accepts 3B or whole Stage 3.
-2. Reconcile every 3B criterion against actual assertions/results and obtain bounded
-   acceptance. Existing 022.02/2B/2C/2D/3A remain closed. Then perform final lifecycle
-   acceptance review, including the still-unaccepted Stage 1/2 and parent requirements.
-3. SG-TODO-022.03 and overall 022 are not closed by this delivery. Later viewer/listener/
-   provider/import-UI work and SG-TODO-023 remain separate pending tasks.
+1. Reconcile bounded accepted 3A plus 3B against the complete agreed Stage 3
+   contract and record whole Stage 3 acceptance only if satisfied. Do not treat
+   bounded acceptance as automatic acceptance of the whole stage.
+2. Perform final 022.03 lifecycle acceptance review including still-unaccepted
+   whole Stage 1/2 and parent requirements. Reuse accepted 2B/2C/2D/3A/3B evidence;
+   address only actual uncovered gaps, then obtain formal lifecycle acceptance.
+3. 022.03 and overall 022 remain open. 022.04-022.16 viewer/listener/provider/
+   import-UI units and SG-TODO-023 are separate pending tasks.
 
 Schema remains 9. Keep matching complete code/storage/config/media backups; no older-
-code-only rollback. README and root indexes remain applicable. No fresh CI success,
-merge, deployment, release or wider acceptance is claimed.
+code-only rollback. README and root indexes remain applicable. No merge, deployment,
+release or wider acceptance is claimed.
