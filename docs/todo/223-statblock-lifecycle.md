@@ -1,103 +1,86 @@
 # 223 - Statblock lifecycle integration
 
-[Back to TODO index](../../TODO.md) · [Parent contract](220-admin-statblock-viewer.md) · [Current handover](../handover/140-viewer-ownership-fixtures.md#whole-stage-3-accepted-close-out---2026-11-17)
+[Back to TODO index](../../TODO.md) · [Parent contract](220-admin-statblock-viewer.md) · [Current handover](../handover/140-viewer-ownership-fixtures.md#final-lifecycle-accepted-close-out---2026-11-17)
 
-## Current status - 2026-11-17
+## Status - 2026-11-17
 
-Whole Stage 3 is reconciled, accepted and closed at the user's explicit 05:59 CET
-request to reconcile, close and push accepted 3A+3B. Bounded 022.02, 2B/2C/2D,
-3A and 3B acceptances remain unchanged. Whole Stage 1/2, 022.03 and overall 022
-remain unaccepted. 022.04-022.16 and SG-TODO-023 remain separate pending work.
-No merge, deployment, release or usable statblock viewer/import UI is claimed.
+SG-TODO-022.03 is completed, accepted and closed. At 06:01 CET the user explicitly
+requested closure of whole Stage 1, whole Stage 2 and 022.03 after whole Stage 3
+acceptance. The final reconciliation below supports that decision; it is not an
+automatic promotion of a green badge. Stage 1, Stage 2 and Stage 3 are now closed.
+Existing 022.02 and bounded 2B/2C/2D/3A/3B acceptances remain unchanged.
 
-This docs-only close-out uses [skip ci]. No code, tests, workflow, permissions or
-schema change; no fresh test execution or new covering CI result is claimed.
-Every external write still requires exact bound approval.
+Overall SG-TODO-022 remains open. 022.04-022.16 provider/viewer/listener/import-UI
+work and SG-TODO-023 remain separate. No merge, deployment, release, usable private
+statblock viewer/import UI or whole-feature acceptance is claimed. This current
+lifecycle status supersedes older pending-022.03 summaries, not later requirements.
 
-## Preserved contracts and complete evidence
+## Preserved complete records
 
-The following immutable records retain the complete earlier headings, assertions,
-failures, correction history, criterion maps, counts, acceptance decisions and
-limitations. They are preserved evidence and requirements, not discarded backlog.
+[Whole Stage 3 map and evidence](https://github.com/dajomas/Scrying-Glass/blob/25b55cfbb6ba9fc25620d94e04ef21682db03414/docs/todo/223-statblock-lifecycle.md)
+and [preceding handover](https://github.com/dajomas/Scrying-Glass/blob/25b55cfbb6ba9fc25620d94e04ef21682db03414/docs/handover/140-viewer-ownership-fixtures.md)
+retain complete 3A/3B maps, failed-run/correction history, exact counts and evidence
+limitations through immutable links.
 
-- [Complete accepted 3A task and nine-group map](https://github.com/dajomas/Scrying-Glass/blob/070563ffc9ae4c1e8c35f8c39c8d387792ff10d6/docs/todo/223-statblock-lifecycle.md).
-- [Complete accepted 3B task and eight-group map](https://github.com/dajomas/Scrying-Glass/blob/bb4cbae45ddc7448734a5f0224074633c1c6bf37/docs/todo/223-statblock-lifecycle.md).
-- [Complete preceding handover](https://github.com/dajomas/Scrying-Glass/blob/bb4cbae45ddc7448734a5f0224074633c1c6bf37/docs/handover/140-viewer-ownership-fixtures.md).
+[Accepted 2B map](https://github.com/dajomas/Scrying-Glass/blob/dae492f2e95bc378d73425f22dd5e85d9c681215/docs/todo/223-statblock-lifecycle.md)
+and [accepted 2C/2D maps](https://github.com/dajomas/Scrying-Glass/blob/e8546fb1ec14e4163faa89c326592948d6d81c46/docs/todo/223-statblock-lifecycle.md)
+retain all earlier lifecycle contracts and archived implementation history.
+No unfinished requirement, failed evidence or limitation is deleted by this summary.
 
-The 3A task also retains original Stage 3 delivery order and links to the accepted
-2B/2C/2D records. Dated pending-Stage-3 wording is superseded only for Stage 3;
-no unfinished parent criterion is removed.
+## Final criterion reconciliation
 
-## Whole Stage 3 reconciliation - 2026-11-17
-
-Scope: actual campaign-bundle representation, private setup/runtime/checkpoint
-roundtrip and compatibility, safe independent import, validation and aggregate
-limits, rollback, actual-route authorization, notification/privacy and combined
-lifecycle boundary evidence. This is not final acceptance of all lifecycle paths.
-
-| Stage 3 requirement | Combined accepted evidence and disposition |
+| Lifecycle gate | Evidence and final disposition |
 |---|---|
-| Actual chosen representation | 3A exports/imports version-2 campaign.json statblocks setup and encounter maps; actual roundtrip tests the chosen format. Version-1 tracker-only compatibility and empty export remain. Satisfied. |
-| Content and provenance fidelity | 3A compares digest, definitions, nodes, facts, warnings and provenance/credits. Validation rejects unsafe URLs, credentials and forged authority; no verified online/fetch authority is granted. Satisfied with 3B hostile-input checks. |
-| Independent ownership and source isolation | 3A asserts distinct destination encounter, revision 1 and unchanged source; imported revision/time are not trusted. 3B actual routes check created campaign ownership, unchanged active state/history and preserved superadmin policy. Satisfied. |
-| Saved/runtime/checkpoint continuity | 3A preserves distinct saved setup and detached runtime private images and restores/reloads the imported checkpoint. 3B actual activation, trusted private edit, actual restore/undo/re-export verifies monotonic revisions, reload, source isolation, final digest and foreign keys. Satisfied. |
-| Incoming validation and operator budgets | 3A rejects invalid maps, targets, digests, versions and private-field smuggling. 3B adds graph/identity failures and exact/beyond checks for all five snapshot budgets while stored reads/export survive lower incoming limits. Satisfied. |
-| Explicit aggregate/archive/member admission | 3A rejects aggregate overflow rather than dropping private content. 3B measures real 10 MiB manifest, 25 MiB ZIP and 100 MiB expanded equality/one-over boundaries, 1,000 total members, unsafe/duplicate members, metadata-before-read rejection and actual upload cap. Satisfied. |
-| Protected transaction and late rollback | 3A injects failure after real private setup persistence and during partial media write. 3B adds post-checkpoint, post-owner, post-history and partial-media faults; SQL/live/private/bindings/files restored with no emission and valid foreign keys. Satisfied. |
-| Actual route and post-lock security | 3B selected production routes exercise owner/admin/superadmin policy, missing session/client/origin/multipart denials and ownership/role/session revocation after waiting for the operation lock. Satisfied. |
-| Notification, history and privacy | 3A checks ordinary/public/client projection privacy. 3B inactive import emits nothing and preserves active history/revision; active recovery produces one post-commit frame checked for private markers, with metadata/persistence consistency assertions. Satisfied within recorded fixture scope. |
+| Stage 1: encounter/combatant ownership and ordinary save preservation | ProductionStatblockSaveTests checks real setup/runtime row rebuilds, retained graphs, plain load/get projections, legacy ID allocation without input mutation, selected-encounter deletion cascade and late reattachment rollback. All six explicitly OK in final workflow part 129. Satisfied. |
+| Stage 1: trusted loading, restart and independent state | ServicePrivateLoadTests checks saved setup fallback versus nonempty runtime, deepcopy isolation, unsaved restart/subsequent save, lower preparation defaults, failed-read live-state preservation and source loading without live mutation. All seven explicitly OK in final workflow part 133. Satisfied. |
+| Stage 1: private authority and transport projection | Ordinary save rejects serialized private envelopes; trusted carrier metadata stays outside JSON. Service loading and StatblockTransportPrivacyTests exercise actual serializers, scoped admin/client HTTP and in-process WebSocket initial/resync/heartbeat/broadcast/revocation paths. No ordinary/private-authority promotion. Satisfied within fixture limits. |
+| Stage 2A/2B: recovery, reset, history and revision continuity | Accepted 2B map covers independent capture, explicit absence, fingerprint/pruning, reset preservation, replacement/reload, sequential undo and stale predecessors, monotonic durable counters, trusted clearing, exhaustion preflight, rollback and notification coalescing. Core protected private saves and production restore have explicit final-run passes in part 128; capture/kernel/counter passes in parts 129-132. Satisfied. |
+| Stage 2C: copy/move/Save As | Accepted eight-group map covers independent clone ownership, stable moved bindings, detached runtime, new/existing Save As, source/counter isolation, references/rosters/collision rules, overwrite/stale guards, combined recovery sequences, actual authorization/post-lock checks and rollback/privacy/notifications. Satisfied; bounded accepted work is not reopened. |
+| Stage 2D: selected/life-filtered import | Accepted six-group map covers actual ID remapping, independent content/revision, source and runtime isolation, incoming operator limits, actual-route authorization/post-lock checks, history/notifications/rollback/privacy and zero-selection semantics. Satisfied. |
+| Whole Stage 3: actual bundles | Accepted nine-group map at 25b55cfbb6ba9fc25620d94e04ef21682db03414 covers chosen version-2 representation, version-1 compatibility, full private setup/runtime/checkpoint fidelity, safe ownership/provenance, real archive/model boundaries, route security, rollback and combined lifecycle. Satisfied unchanged. |
+| Parent lifecycle preservation requirement | Reset, ordinary saves/rebuilds, runtime/restart, recovery/checkpoint/undo, copy/move/Save As, selected imports and actual bundle roundtrip are reconciled above. Deletion cascades; serialization cannot grant authority; no silent aggregate loss. Provider conversion/display/listener/apply-UI requirements remain later units, not waived or accepted here. Satisfied for 022.03. |
 
-No blocking uncovered Stage 3 requirement was identified. The reconciliation
-closes the union of agreed 3A implementation/core evidence and 3B boundary evidence,
-not merely two green badges. No further Stage 3 implementation increment is required
-by this review; actual later-discovered defects remain defects to address.
+No blocking unmet requirement was identified within the agreed 022.03 lifecycle
+scope. Accept and close whole Stage 1 and Stage 2 and, with already accepted
+whole Stage 3, SG-TODO-022.03. Later-discovered defects remain defects to address.
 
-## Exact accepted evidence identities
+## Covering validation and acceptance identities
 
-3A: original implementation ea8b4c7342ba2b86e8c2ca7b07892fdf4ce7f7b9; failed
-run 43955177051 retained in history. Store-fixture correction
-26725005de3a1ed80ee06db5a23328f8ae33a0c0 preserved production guards. Successful
-Branch tests 43958297280 attempt 1 covers that correction; publication
-e839ca64e44ce43b8528069d928c97999768aed1. All eight PrivateBundleTests methods
-explicitly OK within 1,973 main tests. Formal bounded acceptance
-070563ffc9ae4c1e8c35f8c39c8d387792ff10d6.
+Final covering Branch tests run 43963574986 attempt 1 is completed/success for
+0d1cec345b187f7ecbbb1b959fd185927c18c046; immutable publication
+7aeb144b1e6adb3d28a08bc0e3262975742bed1b. Main Python suite: 1,987 tests OK
+in 259.975s, including the 14 new 3B methods; configured syntax/import, selected
+pytest, JavaScript and standalone Python browser/audit stages succeeded.
+This review additionally inspected Stage 1 save/load test bodies and explicit
+core passes in final workflow parts 128-133. No new test execution is claimed.
 
-3B: implementation 0d1cec345b187f7ecbbb1b959fd185927c18c046; successful Branch
-tests 43963574986 attempt 1; publication 7aeb144b1e6adb3d28a08bc0e3262975742bed1b.
-All 14 new methods explicitly OK within 1,987 main Python tests in 259.975s;
-configured syntax/import, selected pytest, JavaScript and standalone Python
-browser/audit stages succeeded. Formal bounded acceptance
-bb4cbae45ddc7448734a5f0224074633c1c6bf37.
+Earlier accepted evidence remains: 2B run 43899670266 attempt 1; 2C run
+43933600072 attempt 1; 2D run 43941792616 attempt 1; 3A run 43958297280
+attempt 1. Exact heads/publications/counting limits remain in linked maps.
+3B acceptance bb4cbae45ddc7448734a5f0224074633c1c6bf37; whole Stage 3
+acceptance 25b55cfbb6ba9fc25620d94e04ef21682db03414. Do not sum CI-run totals
+or count reruns as unique coverage. No earlier isolated harness result is
+promoted to native persistence, actual authorization or live-network evidence.
 
-The reviewed 3B implementation tree retains tests/test_statblock_bundles.py's eight
-3A methods alongside the seven native and seven HTTP 3B methods. These are 22
-distinct Stage 3 test methods, not 22 additional tests beyond the suite counts.
-Do not add totals from separate CI runs or claim unique totals across reruns.
+## Retained limitations and operational rules
 
-## Retained limitations and operational contract
+Selected-route seeded-session ASGI is not password login/full application startup.
+In-process WebSocket and recording-socket notification tests are not browser/network
+delivery proof. Internal fixture edits are not a public private-edit API. Padded
+manifest/media-size fixtures are admission tests, not image decoding. Individual
+late fault injections are not exhaustive simultaneous-fault, crash or power-loss
+proof. Marker/privacy assertions are not a general information-flow proof. No
+live-provider, exhaustive platform/scheduling, deployed-server or human visual/
+screen-reader acceptance is inferred. Those limits do not waive later units.
 
-Seeded-session selected-route ASGI is not password login/full startup; recording
-sockets exercise production notification logic, not browser/network WebSockets.
-Private edit in the combined sequence is trusted fixture input, not a public API.
-Real-size manifest padding measures aggregate bytes; supported-extension media
-fixtures do not test decoding. Separately injected late faults are not exhaustive
-simultaneous-fault, process-crash or power-loss proof. Marker-based privacy checks
-are not a general information-flow proof. Provider authenticity, provider adapters,
-separate viewer/listener, import UI and exhaustive platform coverage are not accepted
-by Stage 3. Earlier Store harness results remain supplementary only.
+Private graphs remain encounter/combatant-scoped; ordinary omission cannot clear.
+Trusted recovery alone may clear; durable ledgers remain monotonic. Raw save_setup
+is tracker-only. Trusted stored reads/export use permissive budgets; new imports
+use operator limits. Bundles grant no verified online provenance/fetch authority.
+Schema remains 9. Keep matching complete code/storage/config/media backups; never
+roll older code alone over ledger-bearing data.
 
-Private graphs remain encounter/combatant-scoped. Ordinary serialization conveys no
-private authority; ordinary omission cannot clear; trusted recovery alone may clear.
-Durable ledgers remain monotonic. Raw save_setup remains tracker-only. Trusted stored
-reads/export use permissive budgets; new imports use server limits. Bundles grant no
-verified provenance/fetch authority. Schema remains 9; retain matching complete
-code/storage/config/media backups, never older-code-only rollback.
-
-## Remaining gates
-
-1. Final 022.03 lifecycle reconciliation, including still-unaccepted whole Stage 1/2
-   and parent requirements. Reuse accepted 2B/2C/2D and whole Stage 3 evidence without
-   reopening bounded accepted work; address only actual uncovered requirements.
-2. Obtain and record final lifecycle acceptance before closing 022.03. Overall 022
-   and later 022.04-022.16 units remain separate. SG-TODO-023 is not a prerequisite
-   introduced by this close-out. No merge, deployment or release is authorized.
+This exact-approved close-out is documentation-only [skip ci]: no production,
+test, workflow, permission or schema changes; no fresh CI claimed or dispatched.
+Next work belongs to still-pending 022.04-022.16, not another lifecycle acceptance
+gate. Overall 022 remains open; no merge/deployment/release is authorized.
