@@ -3,6 +3,9 @@ network:
   bind: "0.0.0.0"
   admin_port: 3000
   client_port: 3100
+  # Admin-only statblock listener (SG-TODO-022): regular admins assigned to the active
+  # campaign only. Keep it off untrusted networks like the Admin port.
+  statblock_port: 3200
 
 # SQLite schema-v4 encounter/accounts database and uploaded images live below this path.
 storage_dir: "./scrying-glass-data"

@@ -99,6 +99,10 @@ Client exposes GET /, GET/POST /login, GET /display, GET /api/state, POST /logou
 
 Only a signed-in regular admin assigned to the active campaign is accepted; superadmin-only and client sessions get 403. Writes are same-origin; every response is no-store. Errors use `{code, message, items:[{monster_id, code, message}], retry_at?}` (401/403/404/409/410/413/422/429/504). Candidate, job and selection IDs are opaque, held in memory, bound to session, user, campaign, encounter token, target monster, species and tracker source identity, and invalid after logout, role/ownership change or restart. Apply takes `{operation_id, campaign_id, encounter_token, items:[{monster_id, expected_statblock_revision, selection_id}]}` (at most 50 items, 1 MiB) and changes everything or nothing; an identical retry returns the recorded result, other content under the same operation ID is 409. Edit Monster accepts the optional form fields `statblock_selection_id`, `statblock_operation_id`, `statblock_expected_revision` and `expected_values` (JSON of the explicitly edited fields' previous values) and saves the statblock with the ordinary edit. Limits come from `statblocks.limits` (see `config.example.yaml`). Preparation runs in prlimit-bounded worker processes outside the operation lock. Details: [handover 084](../handover/084-statblock-stage-c1-import-apis.md).
 
+### Statblock listener (SG-TODO-022.09, default port 3200)
+
+GET /, GET/POST /login, POST /logout, GET /api/statblocks/state, GET /api/statblocks/monsters/{monster_id}, WebSocket /ws, /static. Own cookie `scrying_glass_statblock_session`; only regular admins can sign in, and every page, read and WebSocket frame is re-authorized against the active campaign. WebSocket frames: `state` (projection without statblock content), `heartbeat`, `revoked` (then close 1008); client messages `resync`, `ping`. No import routes and no /media. Details: [handover 085](../handover/085-statblock-stage-c2-listener.md).
+
 ## Request contracts
 
 - Setups use name and optional campaign ID; rename adds new_name. Import is monsters-only with life_filter=alive|dead|all.

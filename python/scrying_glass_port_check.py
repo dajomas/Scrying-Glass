@@ -1,4 +1,4 @@
-"""Check before start-up that the Admin and Client Display ports can be opened."""
+"""Check before start-up that the Admin, Client Display and Statblock ports can be opened."""
 import errno
 import socket
 
@@ -9,9 +9,23 @@ REASONS = {
 }
 
 
+DUPLICATE = "is configured for more than one listener"
+INVALID = "is not a port number from 1 to 65535"
+
+
 def port_problems(bind, ports):
-    """Return (label, port, reason) for every port that cannot be opened on `bind`."""
-    problems = []
+    """Return (label, port, reason) for every port that is invalid, shared or cannot be opened on `bind`."""
+    problems, seen = [], {}
+    for label, port in ports:
+        if type(port) is not int or not 1 <= port <= 65535:
+            problems.append((label, port, INVALID))
+            continue
+        if port in seen:
+            problems.append((label, port, f"{DUPLICATE} ({seen[port]} and {label})"))
+            continue
+        seen[port] = label
+    if problems:
+        return problems
     for label, port in ports:
         try:
             with socket.create_server((bind, port)):
@@ -27,5 +41,9 @@ def port_message(bind, problems):
     lines += [f"  - port {port} ({label}) {reason}" for label, port, reason in problems]
     if any(reason == REASONS[errno.EADDRINUSE] for _, _, reason in problems):
         lines.append("Scrying Glass (or another program) may already be running. Stop it first, or choose other "
-                     "ports with --admin-port and --client-port or network.admin_port/client_port in the config file.")
+                     "ports with --admin-port, --client-port and --statblock-port or network.admin_port/client_port/"
+                     "statblock_port in the config file.")
+    if any(reason == INVALID or reason.startswith(DUPLICATE) for _, _, reason in problems):
+        lines.append("Give each listener its own port with --admin-port, --client-port and --statblock-port or "
+                     "network.admin_port/client_port/statblock_port in the config file.")
     return "\n".join(lines)

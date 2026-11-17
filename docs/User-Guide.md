@@ -47,7 +47,7 @@ encounter after changing interpreters. For systemd deployments, follow the
 
 ## Accounts and sign-in
 
-Admin defaults to port 3000; Client defaults to 3100. Separate cookies allow both in one browser. Logout affects only the current interface; restart clears all sessions. Account edits invalidate that user's sessions and display sockets.
+Admin defaults to port 3000; Client defaults to 3100; the statblock listener (in development) to 3200. Separate cookies allow all three in one browser. Only a regular admin assigned to the active campaign can sign in to and use the statblock listener; superadmin and client accounts are refused, and its page clears when access ends. Logout affects only the current interface; restart clears all sessions. Account edits invalidate that user's sessions and display sockets.
 
 Superadmins manage accounts at /users; regular admins run battles at /. Superadmins authorize battle APIs but are redirected away from root battle HTML. Create a regular admin for interactive use.
 

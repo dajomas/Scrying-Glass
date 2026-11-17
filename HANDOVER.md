@@ -17,7 +17,8 @@ This is the index; substantive handover lives in numbered docs/handover sections
    - [SG-TODO-022.04c.3b array insertion](docs/handover/081-fivetools-array-insertion.md)
    - [SG-TODO-022 Stage A: complete 5e.tools adapter (022.04)](docs/handover/082-fivetools-statblock-stage-a.md) - delivered 2026-11-17 as an archive with `[skip ci]`; CI and acceptance pending; 04e.2 open.
    - [SG-TODO-022 Stage B: Open5e, D&D Beyond and .monster adapters (022.05-07)](docs/handover/083-statblock-stage-b-sources.md) - delivered 2026-11-17 as an archive with `[skip ci]`; CI and acceptance pending.
-   - [SG-TODO-022 Stage C1: discovery, preparation and apply APIs (022.08)](docs/handover/084-statblock-stage-c1-import-apis.md) - delivered 2026-11-17 as an archive with `[skip ci]`; C1 read as 022.08 (C2 = 022.09 pending); HTTP tests not run locally; CI and acceptance pending.
+   - [SG-TODO-022 Stage C1: discovery, preparation and apply APIs (022.08)](docs/handover/084-statblock-stage-c1-import-apis.md) - delivered 2026-11-17 as an archive with `[skip ci]`; C1 read as 022.08 (C2 = 022.09, below); HTTP tests not run locally; CI and acceptance pending.
+   - [SG-TODO-022 Stage C2: protected statblock listener and transport (022.09)](docs/handover/085-statblock-stage-c2-listener.md) - delivered 2026-11-17 as an archive with `[skip ci]`; FastAPI/WebSocket tests not run locally; CI and acceptance pending.
 9. [Stats fallback fixture repair](docs/handover/090-stats-fallback-fixture.md)
 10. [TODO tracking initialization](docs/handover/100-todo-tracking.md)
 11. [Composed campaign router tests](docs/handover/110-composed-campaign-routers.md)

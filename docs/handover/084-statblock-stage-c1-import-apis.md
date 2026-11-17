@@ -108,8 +108,7 @@ bulk import 022.14) and no viewer renders statblocks (022.10-022.12).
 
 ## Open work
 
-- 022.09 (Stage C2): protected 3200 listener, private transport, port preflight and
-  deployment guidance; mount the read routes there.
+- 022.09 (Stage C2): delivered later the same day, see [085](085-statblock-stage-c2-listener.md).
 - 022.13/022.14 UI; 022.12 automatic original-source loading uses `prepare` with
   the original candidate.
 - 5e.tools `_versions` candidates (needs version expansion in the adapter).

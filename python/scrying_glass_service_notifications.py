@@ -23,6 +23,11 @@ class NotificationsService:
 
         logger = logging.getLogger(__name__)
 
+        if getattr(self.context, "STATBLOCK_SOCKETS", None):
+            # Statblock listener sockets get their own authorized projection, never display frames.
+            from .scrying_glass_statblock_transport import notify
+            await notify(self.context)
+
         broadcast_lock = getattr(
             self.context,
             "_display_broadcast_lock",

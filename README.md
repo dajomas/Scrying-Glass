@@ -167,6 +167,7 @@ network:
   bind: "0.0.0.0"
   admin_port: 3000
   client_port: 3100
+  statblock_port: 3200
 storage_dir: "./scrying-glass-data"
 display:
   background: "#080b14"
@@ -181,13 +182,15 @@ display:
 Relative storage paths resolve from the working directory; use absolute paths for
 services. Saved encounter display settings override configured fallbacks. Accounts
 live in SQLite; legacy `security.users` imports only once. CLI overrides are
-`--config`, `--bind`, `--admin-port`, `--client-port`, `--storage-dir`.
+`--config`, `--bind`, `--admin-port`, `--client-port`, `--statblock-port`, `--storage-dir`.
+Every listener needs its own free port; start-up stops with a plain message otherwise.
 
 | Interface | Default URL | Role |
 |---|---|---|
 | Battle Admin | http://SERVER:3000/ | admin |
 | User Management | http://SERVER:3000/users | superadmin |
 | Client Display | http://SERVER:3100/display | permitted client/admin/superadmin |
+| Statblocks (in development, SG-TODO-022) | http://SERVER:3200/ | regular admin assigned to the active campaign |
 
 Fresh installs print a random superadmin password once; change it immediately.
 Create regular admin/client accounts and assign ownership and viewer grants

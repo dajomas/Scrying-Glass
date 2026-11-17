@@ -107,7 +107,7 @@ Composed router/application lifespans initialize additive campaign viewer/owners
 
 Relative storage resolves from working directory; templates/static resolve from source. An absent new default directory may fall back to the legacy monster-display-data directory. Explicit storage_dir remains authoritative.
 
-Configuration merges defaults. CLI: --config, --bind, --admin-port, --client-port, --storage-dir. Accounts are not current YAML settings; security.users imports once only.
+Configuration merges defaults. CLI: --config, --bind, --admin-port, --client-port, --statblock-port, --storage-dir. The three ports (default 3000/3100/3200) must be valid, distinct and free; start-up checks them before opening the database. Accounts are not current YAML settings; security.users imports once only.
 
 ## SQLite model and migration
 

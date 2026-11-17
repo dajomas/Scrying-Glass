@@ -13,8 +13,8 @@
 All routes need a signed-in regular admin assigned to the active campaign
 (superadmin-only and Client Display sessions are refused) and are
 ``Cache-Control: no-store``. Writes are same-origin. Network work runs outside
-the operation lock. The protected 3200 listener and its update transport are
-022.09; it will mount these same read routes.
+the operation lock. The protected statblock listener (022.09, default port
+3200) mounts the two read routes with its own session cookie.
 """
 import asyncio
 import json
@@ -28,10 +28,6 @@ from .scrying_glass_statblock_limits import APPLY_BODY_BYTES, MONSTER_FILE_BYTES
 from .scrying_glass_statblock_service import StatblockAPIError, statblock_service
 
 MULTIPART_OVERHEAD = 64 * 1024
-
-
-def _token(context, request):
-    return request.cookies.get(context.ADMIN_SESSION_COOKIE, '')
 
 
 async def _json_body(request, limit=APPLY_BODY_BYTES):
@@ -85,9 +81,12 @@ async def _form_body(request):
     return fields, data, getattr(upload, 'filename', None)
 
 
-def install_statblock_routes(context, app):
+def install_statblock_routes(context, app, *, cookie=None, writes=True):
+    """Admin app: all routes. Statblock listener (022.09): reads only, with its own cookie."""
     # No postponed annotations here: FastAPI and serialized_handler need the Request class.
-    cookie = context.ADMIN_SESSION_COOKIE
+    cookie = cookie or context.ADMIN_SESSION_COOKIE
+    def _token(context, request):
+        return request.cookies.get(cookie, '')
 
     async def envelope(request, exc):
         headers = {'Cache-Control': 'no-store'}
@@ -149,13 +148,13 @@ def install_statblock_routes(context, app):
 
     read = [Depends(context.require('admin', cookie))]
     write = read + [Depends(same_origin)]
-    for path, handler, method, dependencies, wrap in (
-        ('/api/statblocks/state', statblock_state, 'GET', read, True),
-        ('/api/statblocks/monsters/{monster_id}', statblock_monster, 'GET', read, True),
-        ('/api/statblocks/discover', discover_statblocks, 'POST', write, False),
-        ('/api/statblocks/prepare', prepare_statblock, 'POST', write, False),
-        ('/api/statblocks/jobs/{job_id}', statblock_job, 'GET', read, True),
-        ('/api/statblocks/jobs/{job_id}', cancel_statblock_job, 'DELETE', write, True),
-        ('/api/statblocks/apply', apply_statblocks, 'POST', write, False),
-    ):
+    routes = [('/api/statblocks/state', statblock_state, 'GET', read, True),
+              ('/api/statblocks/monsters/{monster_id}', statblock_monster, 'GET', read, True)]
+    if writes:
+        routes += [('/api/statblocks/discover', discover_statblocks, 'POST', write, False),
+                   ('/api/statblocks/prepare', prepare_statblock, 'POST', write, False),
+                   ('/api/statblocks/jobs/{job_id}', statblock_job, 'GET', read, True),
+                   ('/api/statblocks/jobs/{job_id}', cancel_statblock_job, 'DELETE', write, True),
+                   ('/api/statblocks/apply', apply_statblocks, 'POST', write, False)]
+    for path, handler, method, dependencies, wrap in routes:
         app.add_api_route(path, serialized(handler) if wrap else handler, methods=[method], dependencies=dependencies)
