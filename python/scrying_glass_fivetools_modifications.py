@@ -1,19 +1,19 @@
-"""04c.2a pure property/array executor; graph/worker integration follows.
+"""Pure ordered property/array executor; used by OrderedResolver and its worker.
 
 Consumes compiler-shaped immutable instructions (property, mode, payload_json).
 No selected-identity normalization, substitutions, regex, formulas or networking.
-Caller supplies its deadline/cancellation check; later integration must run inside
-the existing limited worker and wrap local diagnostics in graph provenance.
+Caller supplies its deadline/cancellation check; OrderedResolver wraps local
+diagnostics in graph provenance and the ordered worker enforces process limits.
 """
 import json
 from dataclasses import dataclass
-from .scrying_glass_fivetools_resolution_bounds import measure_json
+from .scrying_glass_fivetools_resolution_bounds import measure_json, json_equal
 
 ENTRY_PROPS = ('action', 'bonus', 'reaction', 'trait', 'legendary', 'mythic',
     'variant', 'spellcasting', 'actionHeader', 'bonusHeader', 'reactionHeader',
     'legendaryHeader', 'mythicHeader')
 LITERAL_MODES = frozenset(('appendStr', 'setProp', 'prefixSuffixStringProp'))
-SUPPORTED_MODES = LITERAL_MODES | frozenset(('remove', 'appendArr', 'prependArr'))
+SUPPORTED_MODES = LITERAL_MODES | frozenset(('remove', 'appendArr', 'prependArr', 'appendIfNotExistsArr'))
 
 @dataclass(frozen=True)
 class OperationDiagnostic:
@@ -185,14 +185,14 @@ def apply_modifications(record, instructions, *, check,
                     fail('malformed_modification_payload')
                 reject_dynamic(info)
                 keys = () if target == '_' else path(target)
-                if instruction.mode not in {'appendStr', 'appendArr', 'prependArr'}:
+                if instruction.mode not in {'appendStr', 'appendArr', 'prependArr', 'appendIfNotExistsArr'}:
                     keys += path(info.get('prop'))
                 if not keys:
-                    if instruction.mode in {'appendStr', 'appendArr', 'prependArr'}:
+                    if instruction.mode in {'appendStr', 'appendArr', 'prependArr', 'appendIfNotExistsArr'}:
                         fail('malformed_modification_path')
                     continue
                 old = get(output, keys)
-                if instruction.mode in {'appendArr', 'prependArr'}:
+                if instruction.mode in {'appendArr', 'prependArr', 'appendIfNotExistsArr'}:
                     if 'items' not in info:
                         fail('malformed_modification_payload')
                     items = info['items'] if type(info['items']) is list else [info['items']]
@@ -200,10 +200,24 @@ def apply_modifications(record, instructions, *, check,
                         fail('unsupported_modification_target')
                     existing = old if type(old) is list else []
                     proposed = put(output, keys, [])
+                    if instruction.mode == 'appendIfNotExistsArr':
+                        json_equal(existing, existing, check, fail)
+                        filtered = []
+                        projected = size(proposed) + size(existing)-2
+                        for item in items:
+                            check()
+                            json_equal(item, item, check, fail)
+                            if any(json_equal(item, prior, check, fail) for prior in existing):
+                                continue
+                            projected += size(item) + bool(existing or filtered)
+                            if projected > intermediate_creature_bytes:
+                                fail('intermediate_creature_bytes_limit')
+                            filtered.append(item)
+                        items = filtered
                     projected = size(proposed) + size(existing)-2 + size(items)-2 + bool(existing and items)
                     if projected > intermediate_creature_bytes:
                         fail('intermediate_creature_bytes_limit')
-                    value = existing + items if instruction.mode == 'appendArr' else items + existing
+                    value = items + existing if instruction.mode == 'prependArr' else existing + items
                     proposed = put(output, keys, value)
                 elif instruction.mode == 'setProp':
                     if 'value' not in info:

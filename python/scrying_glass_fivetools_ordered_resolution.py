@@ -1,4 +1,4 @@
-"""04c.2b ordered graph entry point; isolated-worker wiring is 04c.2c.
+"""Ordered graph entry; isolated execution is available through its worker.
 
 Resolver remains the backward-compatible foundation API. OrderedResolver uses
 its graph/cycle/cache/limit machinery and executes the declared kernel subset.
@@ -8,7 +8,7 @@ from .scrying_glass_fivetools_resolution import Resolver
 from .scrying_glass_fivetools_modifications import apply_modifications, ModificationError
 
 class OrderedResolver(Resolver):
-    ADAPTER_VERSION = '04c.2b-1'
+    ADAPTER_VERSION = '04c.3a-1'
 
     def _apply_compiled_modifications(self, record, mods, *, check, fail):
         try:
