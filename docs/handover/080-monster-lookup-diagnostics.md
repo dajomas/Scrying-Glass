@@ -2,76 +2,46 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Last updated: 2026-11-01.
+## Retained diagnostics repair and graph history
 
-## Scope and diagnosis
+The accepted diagnostics repair and its exact baseline/blob identities, original
+fixture failures, handler changes and verification limits are preserved in the
+[complete prior handover](https://github.com/dajomas/Scrying-Glass/blob/ca5cdd94c267395fcada8fe21249ef17acc1bdcc/docs/handover/080-monster-lookup-diagnostics.md).
+That record also retains the initial 04a/b graph, 04b.1 cache accounting and 04b.2
+resource-preflight preparations, failures/corrections, dated test counts and source
+pins. Consolidation does not reopen accepted work or relabel old results as CI.
+The diagnostics repair's 17 diagnostics/15 fallback tests and earlier graph/cache/
+bounds evidence remain historical; no new full provider validation is inferred.
 
-Baseline: `68adc77e6e0fc53e5db3b09853088f9f57ee3d46`. Original test blob: `648552b050c9a402d708e2aa46f2195d85ae975c`; original handler module blob: `7d6a94bddc96ffd248f917f45c0edd88a242176a`.
+## 022.04b.3 isolated worker - 2026-11-17
 
-All nine original diagnostics tests failed locally. The AST-extracted handler lacked package context, so importing the 5e.tools fallback failed before lookup. Fixing that fixture and isolating D&D-only cases left four failures: detailed diagnostics had also been lost from the production endpoint.
+Baseline ca5cdd94c267395fcada8fe21249ef17acc1bdcc on features/perplexity-statblock.
+New private blocking worker API wraps the unchanged exact graph in a fresh Linux
+process. [224 contract, operational requirements and remaining gates](../todo/224-fivetools-statblock-resolution.md)
+are authoritative for this preparation. Linux system prlimit applies address-space,
+file and CPU limits before Python starts; the child verifies inheritance and a
+refused cap-sized mapping. Missing/unsupported/unverified enforcement fails closed.
+The default address-space cap is 256 MiB, not a total server memory allowance.
 
-## Changes
+A fixed isolated-Python entry point exchanges bounded JSON/raw-byte data through
+anonymous temporary files. No shell, pickle, imported JS, network fallback or DB
+write. Absolute caller deadline is never reset. Cancellation/deadline failures
+kill the process group, reap the child and discard output; successful calls also
+leave no worker/cache behind. Global scheduling/fetch/provider gates and production
+normalization/validation integration remain unfinished parent/04 work.
 
-The fixture now supplies `__package__='python'`, explicitly disables fallback for D&D-only cases, mocks fallback lookup, and asserts that no real fallback HTTP request occurs. Original test methods and assertions remain unchanged; eight additional tests cover provider priority/order, independent flags, fallback success/errors, blank species and sanitized parser errors.
+Thirteen focused tests passed on Linux/Python 3.12.8, repeated with ResourceWarning
+as error: no skips/errors/failures. These include actual graph/output/provenance
+comparisons, real kernel allocation refusal at 64 MiB, next-job recovery, blocked
+infinite-loop kill and in-flight cancellation with reaping checks. Blocking/memory
+faults use modified temporary core copies, not new production test hooks. Ordinary
+subprocess tests use the SHA-verified live graph and bounds module. No assertion
+in existing suites changes; earlier 22/12/11 modules were not rerun here. Full
+provider/application/3.14/CI and final 04b acceptance remain pending.
 
-The production handler restores safe reasons for empty searches, failed searches, per-legacy/current page failures and unusable AC/HP, plus a warning for unusable pages. Raw exception details remain in server logs, not response reasons. D&D Beyond priority, partial-stat success, 5e.tools fallback, cancellation propagation, response structure and unrelated display handlers remain unchanged. Diagnostic text is intentionally more informative; this is not a production-code-free repair.
-
-## Verification and limitations
-
-On Python 3.12.8: 17 diagnostics tests and all 15 unchanged tests in `test_fivetools_fallback.py` passed together. Repeats with ImportWarning, ResourceWarning and DeprecationWarning treated as errors passed. Candidate Python files compile. Original diagnostic test methods and unrelated display-handler ASTs were checked unchanged.
-
-The focused local tree used the hash-verified display and 5e.tools modules, the original provider tests, and the pinned production image-lookup method as an AST-extraction input. It was not a full checkout or real FastAPI/browser integration run. All remote providers were mocked; live endpoints, full CI and Python 3.14 remain unverified for this repair.
-
-README was reviewed and remains accurate: provider selection and configuration did not change. TODO.md is absent and is not created. Source splitting, other failure categories and workflow changes are outside this commit. Normal CI should verify the approved push.
-
-## 022.04a/b core graph preparation - 2026-11-17
-
-Separate partial private-statblock graph work adds contextual dependency errors,
-exact-source loading, recursive inheritance/templates and immutable results.
-[224](../todo/224-fivetools-statblock-resolution.md) records pins, current evidence,
-unfinished matrix/resource gates and all remaining a-f requirements. This does
-not complete/accept 04a, 04b or the adapter or alter existing lookup behavior.
-
-Baseline: dcd55b68210948e1f142ba6c377cdab25e7f384e, features/perplexity-statblock.
-Current reconstructed payload: 22 native graph tests passed on Python 3.12.8,
-synthetic sources, no skips/errors/failures. Prior seven upstream comparisons
-were not rerun on this payload. No full suite, live-provider or covering CI claim.
-Intermediate 022.04 commits use [skip ci] by user instruction; no workflow edits/
-dispatch. Accepted lifecycle/016/017 scopes remain closed. Root README/index links
-remain accurate and unchanged; current 224 status supersedes dated pending notes.
-
-## 022.04b.1 cache content accounting - 2026-11-17
-
-Baseline: d13a439e28ed0829d2285831e01dab16170776a7, same working branch.
-User requested 04b splitting and delivery of its first increment;
-[224 increments](../todo/224-fivetools-statblock-resolution.md#04b-delivery-increments---2026-11-17)
-records gates and the exact content-ledger definition. b.1 replaces record-only
-cache accounting with key/provenance/path/depth/work-inclusive UTF-8 charges,
-consistently across staging, publication, eviction and expiry. No physical memory
-ceiling, worker, provider endpoint or modification execution is claimed.
-
-Twelve new actual resolver tests passed on Python 3.12.8, synthetic sources, no
-skips/errors/failures. Existing graph tests/assertions are unchanged, not rerun;
-full-suite/provider/3.14/oracle/CI validation remains pending. b.2/b.3 and 04a/c-f
-remain open. This is implementation with focused evidence, not formal acceptance.
-README, root indexes and workflow reviewed; no runtime user behavior or indexed
-paths changed, so unchanged. [skip ci] remains required until the final 04 code
-push. No manual dispatch, merge, deployment or release.
-
-## 022.04b.2 resource boundaries - 2026-11-17
-
-Baseline 485a4532d61c4ce729e8584f45e1becb0841b9b4. Implementation adds exact
-compact-JSON preflight before growth/output allocation, strict limit validation,
-instruction-budget preflight, changed-limit cache invalidation and atomic cache
-publication after cancellation/deadline checks. [224](../todo/224-fivetools-statblock-resolution.md)
-records scope, remaining gates and retained source/semantic history. The prior
-04b increments anchor is retained there for historical links.
-
-Eleven focused native tests passed on Python 3.12.8. The initial numeric-limit
-diagnostic failure was corrected in implementation; assertions were not weakened.
-Earlier 22 graph and 12 cache tests remain unchanged, not rerun here. No full
-provider suite, fresh oracle, Python 3.14, hosted CI or hard memory/CPU validation
-is claimed. Worker isolation and remaining regression review are 04b.3, not
-provided by byte preflight. No user-facing runtime or index-path changes; README,
-root indexes and workflow remain unchanged. [skip ci] until final 04 code push.
-No dispatch, merge, deployment, release or accepted-scope reopening.
+README, root indexes, workflow and maintenance rules were reviewed/reused against
+the verified baseline. The private helper changes no active application dependency,
+listener or user workflow; those files remain unchanged. The indexed 080/224 paths
+and old 04b increments anchor remain stable. [skip ci] on this and intermediate
+04 deliveries until its last code push; no manual dispatch, merge or deployment.
+022.01-022.03/lifecycle and accepted 016/017 stay closed; 04a/c-f remain open.
