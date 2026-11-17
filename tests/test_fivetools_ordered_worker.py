@@ -72,9 +72,10 @@ class OrderedWorkerTests(unittest.TestCase):
             with self.assertRaises(ResolutionError) as caught:
                 self.run_ordered({'trait': ['remove', mod('appendArr', items=[])]}, limits=limits)
             self.assertEqual(caught.exception.diagnostic.code, code)
+        self.assertEqual(self.run_ordered({'_': mod('setProp', prop='extra', value='<$name$>')}).record()['extra'], 'A')
         with self.assertRaises(ResolutionError) as caught:
-            self.run_ordered({'_': mod('setProp', prop='extra', value='<$name$>')})
-        self.assertEqual(caught.exception.diagnostic.code, 'dynamic_substitution_pending_04d')
+            self.run_ordered({'_': mod('setProp', prop='extra', value='<$dc__str$>')})
+        self.assertEqual(caught.exception.diagnostic.code, 'nonfinite_numeric_result')
     def test_new_job_and_returned_content_are_independent(self):
         ops = {'trait': mod('appendArr', items=[{'name': 'new'}])}
         first = self.run_ordered(ops); first.record()['trait'].append('changed')
@@ -83,9 +84,8 @@ class OrderedWorkerTests(unittest.TestCase):
     def fixture(self, root, addition='', worker_addition=''):
         package = Path(root)/'python'; package.mkdir(); (package/'__init__.py').write_text('')
         original = Path(worker.__file__).resolve().parent
-        for name in ('worker', 'resolution', 'resolution_bounds', 'ordered_resolution', 'modifications'):
-            filename = 'scrying_glass_fivetools_'+name+'.py'
-            shutil.copyfile(original/filename, package/filename)
+        for source in sorted(original.glob('scrying_glass_fivetools_*.py')):
+            shutil.copyfile(source, package/source.name)
         with (package/'scrying_glass_fivetools_ordered_resolution.py').open('a') as stream:
             stream.write(addition)
         with (package/'scrying_glass_fivetools_worker.py').open('a') as stream:

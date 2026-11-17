@@ -69,13 +69,15 @@ class OrderedGraphTests(unittest.TestCase):
         d = self.error('malformed_modification_payload', r)
         self.assertEqual((d.chain, d.property, d.operation_index, d.mode), ((self.a, self.t), 'trait', 1, 'appendArr'))
         self.assertEqual(d.source_path, '$/apply/_mod/trait'); self.assertFalse(r._cache)
-    def test_base_unsupported_mode_preserves_active_chain(self):
-        d = self.error('modification_execution_pending_04c', self.make(base={'trait': mod('removeArr', names=['x'])}))
+    def test_base_mode_failure_preserves_active_chain(self):
+        d = self.error('missing_modification_item', self.make(base={'trait': mod('removeArr', names=['x'])}))
         self.assertEqual((d.chain, d.mode), ((self.a, self.b), 'removeArr'))
     def test_dynamic_and_wildcard_contract(self):
         self.assertEqual(ENTRY_PROPS, COPY_ENTRY_PROPS)
-        r = self.make({'_': mod('setProp', prop='extra', value='<$name$>')})
-        self.error('dynamic_substitution_pending_04d', r); self.assertFalse(r._cache)
+        r = self.make({'_': mod('setProp', prop='extra', value='<$name$> of <$short_name$>')})
+        self.assertEqual(self.get(r).record()['extra'], 'A of the a')
+        r = self.make({'_': mod('setProp', prop='extra', value='<$dc__str$>')})
+        self.error('nonfinite_numeric_result', r); self.assertFalse(r._cache)
         result = self.get(self.make({'*': 'remove'}, modification_operations=1))
         self.assertNotIn('trait', result.record()); self.assertEqual(result.modification_operations, 1)
     def test_cached_result_base_and_cancellation_isolation(self):

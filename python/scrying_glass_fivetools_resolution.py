@@ -1,4 +1,4 @@
-"""Exact-source inheritance core; modification execution remains 022.04c/d.
+"""Exact-source inheritance core; OrderedResolver executes the modifications.
 
 No network, persistence, JavaScript execution or public apply API. Instantiate
 for one immutable configured dataset generation, inside a preparation worker.
@@ -50,6 +50,16 @@ class Identity:
                 v.encode('utf-8')
             except UnicodeError as exc:
                 raise ValueError('invalid_identity:' + f.name) from exc
+
+def entity_key(identity):
+    """Runtime entity match: the upstream URL hash lowercases name and source."""
+    return (identity.dataset, identity.kind, identity.source.lower(), identity.name.lower())
+
+def same_entity(found, requested):
+    """Discriminator/edition only constrain when the request specifies them."""
+    return entity_key(found) == entity_key(requested) and all(
+        getattr(requested, f) is None or getattr(found, f) == getattr(requested, f)
+        for f in ('discriminator', 'edition'))
 
 @dataclass(frozen=True)
 class Diagnostic:
@@ -270,7 +280,7 @@ class Resolver:
             check()
             path.append(ident)
             try:
-                if ident in path[:-1]:
+                if entity_key(ident) in {entity_key(i) for i in path[:-1]}:
                     fail('inheritance_cycle')
                 if depth > self.limits.inheritance_steps:
                     fail('inheritance_steps_limit')
@@ -307,7 +317,7 @@ class Resolver:
                         parse_constant=lambda _: (_ for _ in ()).throw(ValueError('nonfinite')))
                 except (ValueError, UnicodeError, RecursionError):
                     fail('malformed_record')
-                if type(obj) is not dict or identity(obj, ident, ident.kind) != ident:
+                if type(obj) is not dict or not same_entity(identity(obj, ident, ident.kind), ident):
                     fail('identity_mismatch')
                 encode(obj)
                 initial_used, provenance, relative_depth = used, [], 0

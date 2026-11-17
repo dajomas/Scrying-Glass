@@ -68,10 +68,12 @@ class ModificationTests(unittest.TestCase):
         out['action']['x'].append(1)
         self.assertEqual(out['trait']['x'], [])
         self.assertEqual(apply({'trait': [{'name': 'A'}]}, op('*', 'prefixSuffixStringProp', prop='0.name', suffix='!'))['trait'][0]['name'], 'A!')
-    def test_unsupported_modes_unknown_modes_and_atomic_failure(self):
+    def test_mode_failures_unknown_modes_and_atomic_failure(self):
         record = {'x': 'base'}
-        for mode in ('replaceArr', 'removeArr', 'unknown'):
-            d = self.error('modification_execution_pending_04c', record,
+        for mode, code in (('replaceArr', 'malformed_modification_payload'),
+                           ('removeArr', 'unsupported_modification_target'),
+                           ('unknown', 'unknown_modification_mode')):
+            d = self.error(code, record,
                 op('x', 'appendStr', str='a'), op('x', mode))
             self.assertEqual((d.property, d.operation_index, d.mode), ('x', 1, mode))
             self.assertEqual(record, {'x': 'base'})
@@ -81,7 +83,8 @@ class ModificationTests(unittest.TestCase):
         self.error('malformed_modification_path', {}, op('_', 'appendStr', str='x'))
         self.error('malformed_modification_payload', {}, op('x', 'setProp'))
         self.error('malformed_modification_payload', {}, op('x', 'appendStr', str=3))
-        self.error('dynamic_substitution_pending_04d', {}, op('x', 'setProp', value={'text': '<$name$>'}))
+        self.error('unsupported_substitution_value', {}, op('x', 'setProp', value={'text': '<$name$>'}))
+        self.assertEqual(apply({'name': 'Ogre'}, op('x', 'setProp', value={'text': '<$name$>'}))['x'], {'text': 'Ogre'})
         d = self.error('malformed_modification_payload', {}, op('a/b~c', 'appendStr', str=3))
         self.assertEqual(d.source_path, '$/_copy/_mod/a~1b~0c')
     def test_byte_equality_one_over_and_expansion_before_join(self):

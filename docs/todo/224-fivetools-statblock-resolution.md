@@ -9,6 +9,31 @@ closed. [Original a-f requirements](https://github.com/dajomas/Scrying-Glass/blo
 and [complete preceding contracts, pins, limitations and evidence](https://github.com/dajomas/Scrying-Glass/blob/ab9cf3dbea6ce67f7b1e1cdcb664affe43a7945a/docs/todo/224-fivetools-statblock-resolution.md)
 remain required/controlling by reference. Consolidation waives no unfinished gate.
 
+## Stage A delivery - 2026-11-17
+
+All remaining 04 subunits (04c.3b recorded at 1e78d75; 04c.3c/d, 04c.4, 04c.5,
+04a contract, 04d, 04e, 04f) are implemented in the Stage A archive delivery;
+details, decisions and evidence in
+[handover 082](../handover/082-fivetools-statblock-stage-a.md). Status:
+implementation delivered, validation pending CI (Stage A uses `[skip ci]`) and
+user acceptance. Not marked completed.
+
+| Unit | Status |
+|---|---|
+| 04a pinned contract | delivered; every runtime mode executes, oracle-verified |
+| 04b graph/isolation | accepted earlier; 04f.V1-V4 obligations below |
+| 04c.3a-d arrays, 04c.4 numeric/formulas, 04c.5 regex/text | delivered, oracle-verified |
+| 04d creature modes, templates, substitutions | delivered, oracle-verified |
+| 04e reference collection and normalization | delivered except 04e.2 |
+| 04e.2 generated magic-item variants and item enhancement | **open**: `magicvariants.json` specific/generic variants are not generated; references to them are explicit `reference_unavailable` partial warnings (55 of 4,683 real monsters) |
+| 04f integration evidence | local evidence recorded in 082; CI (Python 3.14) and acceptance pending |
+
+Acceptance for 04e.2: generated variants match the pinned
+`Renderer.item._createSpecificVariants` output for every referenced item
+(oracle comparison), item text includes the runtime's property/type entries,
+and the partial count drops accordingly. Proposed new limit `dataset_files`
+(64) awaits user agreement.
+
 <a id="04b-delivery-increments---2026-11-17"></a>
 <a id="04b-user-directed-implementation-close-out---2026-11-17"></a>
 04b closure 3cb3f7568558c88e562725fde6ee1fe8df815579 retains 04f.V1-V4: combined

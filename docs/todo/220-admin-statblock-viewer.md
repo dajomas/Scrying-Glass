@@ -4,6 +4,8 @@
 
 ## Task and status
 
+Current status - 2026-11-17: the [TODO index](../../TODO.md) entry is authoritative. 022.01-022.03 are accepted and closed; Stage A (022.04) is delivered with validation pending ([handover 082](../handover/082-fivetools-statblock-stage-a.md)); the remaining units follow the agreed Stage B-E plan. The paragraph below is the 2026-11-15 consolidation status, kept as history.
+
 SG-TODO-022 remains an unimplemented feature. Design unit 022.01 is completed by this consolidated record on 2026-11-15 following the user's seven-item review, sixteen limit/policy decisions and 09:58 CET close-out request. 022.02 is ready to begin, not implemented; 022.03-022.16 remain pending. No owner, priority or deadline is assigned. All development remains on `features/perplexity-statblock` in `dajomas/Scrying-Glass`; no merge, deployment or release is implied.
 
 This record is authoritative over earlier proposals and the dated continuation/status notes in the 022.04 addendum. The addendum's 022.04a-022.04f implementation scope remains required. The full earlier task, original sixteen-unit wording, inspection findings and dated decisions are preserved in the [pre-consolidation record](https://github.com/dajomas/Scrying-Glass/blob/320a0c0e3b1acedd5cdeb1b188264ec8074f1243/docs/todo/220-admin-statblock-viewer.md). Consolidation does not delete unfinished requirements or claim executable validation.

@@ -69,7 +69,8 @@ class AppendIfAbsentTests(unittest.TestCase):
         self.error('modification_operations_limit', {'a': [1]}, op([1]), op([1]), modification_operations=1)
         missing = op([]); missing.payload_json = b'{"mode":"appendIfNotExistsArr"}'
         self.error('malformed_modification_payload', {}, missing)
-        self.error('dynamic_substitution_pending_04d', {}, op(['<$name$>']))
+        self.error('unsupported_substitution_value', {}, op(['<$name$>']))
+        self.assertEqual(apply({'name': 'Ogre', 'a': ['Ogre']}, op(['<$name$>', 'x'])), {'name': 'Ogre', 'a': ['Ogre', 'x']})
     def test_unsupported_numbers_and_shadowing_fail_instead_of_approximating(self):
         d = self.error('unsupported_comparison_number', {'a': []}, op([2**53]))
         self.assertEqual((d.property, d.operation_index, d.mode), ('a', 0, 'appendIfNotExistsArr'))

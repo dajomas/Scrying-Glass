@@ -14,6 +14,8 @@ This is the index; substantive handover lives in numbered docs/handover sections
 6. [WebSocket regression fixture repair](docs/handover/060-websocket-regression-fixture.md)
 7. [Display-connection fixture repair](docs/handover/070-display-connection-fixture.md)
 8. [Monster lookup diagnostics repair](docs/handover/080-monster-lookup-diagnostics.md)
+   - [SG-TODO-022.04c.3b array insertion](docs/handover/081-fivetools-array-insertion.md)
+   - [SG-TODO-022 Stage A: complete 5e.tools adapter (022.04)](docs/handover/082-fivetools-statblock-stage-a.md) - delivered 2026-11-17 as an archive with `[skip ci]`; CI and acceptance pending; 04e.2 open.
 9. [Stats fallback fixture repair](docs/handover/090-stats-fallback-fixture.md)
 10. [TODO tracking initialization](docs/handover/100-todo-tracking.md)
 11. [Composed campaign router tests](docs/handover/110-composed-campaign-routers.md)

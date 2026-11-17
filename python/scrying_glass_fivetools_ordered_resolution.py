@@ -1,14 +1,15 @@
 """Ordered graph entry; isolated execution is available through its worker.
 
 Resolver remains the backward-compatible foundation API. OrderedResolver uses
-its graph/cycle/cache/limit machinery and executes the declared kernel subset.
-Both are internal pure interpreters, not production preparation endpoints.
+its graph/cycle/cache/limit machinery and executes every copy mode of the
+pinned runtime. Both are internal pure interpreters; statblock preparation
+(scrying_glass_fivetools_preparation) builds on OrderedResolver.
 """
 from .scrying_glass_fivetools_resolution import Resolver
 from .scrying_glass_fivetools_modifications import apply_modifications, ModificationError
 
 class OrderedResolver(Resolver):
-    ADAPTER_VERSION = '04c.3b-1'
+    ADAPTER_VERSION = '04f-1'
 
     def _apply_compiled_modifications(self, record, mods, *, check, fail):
         try:

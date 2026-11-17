@@ -71,7 +71,8 @@ class InsertArrayTests(unittest.TestCase):
         self.error('malformed_modification_payload',{'a':[1]},op('x',float('inf')))
     def test_payload_and_budget(self):
         self.error('malformed_modification_payload',{'a':[]},op(index=0))
-        self.error('dynamic_substitution_pending_04d',{'a':[]},op(['<$name$>'],0))
+        self.error('unsupported_substitution_value',{'a':[]},op(['<$name$>'],0))
+        self.assertEqual(apply({'name':'Imp','a':[1]},op(['<$name$>'],0))['a'],['Imp',1])
         self.assertEqual(apply({'a':[]},op([],0),modification_operations=1),{'a':[]})
         self.error('modification_operations_limit',{'a':[]},op([],0),op([],0),modification_operations=1)
     def test_cancellation(self):
