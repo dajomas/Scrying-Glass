@@ -49,6 +49,24 @@ def frame(context, token):
     return {'type': 'state', 'state': service.state_projection(principal)}, True
 
 
+def _authorized(context, token):
+    from .scrying_glass_statblock_service import statblock_service
+    try:
+        statblock_service(context).authorize(token)
+        return True
+    except StatblockAPIError:
+        return False
+
+
+def _schedule(context):
+    """Start missing original-source loads (022.12); never fails a notification."""
+    from .scrying_glass_statblock_service import statblock_service
+    try:
+        statblock_service(context).schedule_original_loads()
+    except Exception:
+        LOG.warning('Original-source statblock loading could not be scheduled', exc_info=True)
+
+
 async def _send(websocket, message):
     await asyncio.wait_for(websocket.send_text(json.dumps(message)), timeout=SEND_SECONDS)
 
@@ -68,6 +86,8 @@ async def notify(context):
     registry = sockets(context)
     if not registry:
         return
+    if any(_authorized(context, token) for token in set(registry.values())):
+        _schedule(context)  # only on behalf of a permitted viewer
     async with _lock(context):
         for websocket, token in list(registry.items()):
             message, authorized = frame(context, token)
@@ -111,6 +131,7 @@ async def statblock_socket(context, websocket, cookie):
                 await _close(context, websocket)
                 return False
             sockets(context)[websocket] = token
+            _schedule(context)
             return True
     try:
         await websocket.accept()

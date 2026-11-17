@@ -139,6 +139,8 @@ class PreparingMixin:
     def _finished(self, job, state, result, error):
         """Scheduler callback: store a completed preparation as a private selection."""
         info = job.info
+        if info.get('auto'):
+            return self._auto_finished(job, state, result, error)
         scope = info['scope']
         file_bytes, info['file_bytes'] = info.get('file_bytes'), None
         if state != 'completed':

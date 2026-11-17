@@ -101,7 +101,7 @@ Only a signed-in regular admin assigned to the active campaign is accepted; supe
 
 ### Statblock listener (SG-TODO-022.09, default port 3200)
 
-GET /, GET/POST /login, POST /logout, GET /api/statblocks/state, GET /api/statblocks/monsters/{monster_id}, WebSocket /ws, /static. Own cookie `scrying_glass_statblock_session`; only regular admins can sign in, and every page, read and WebSocket frame is re-authorized against the active campaign. WebSocket frames: `state` (projection without statblock content), `heartbeat`, `revoked` (then close 1008); client messages `resync`, `ping`. No import routes and no /media. Details: [handover 085](../handover/085-statblock-stage-c2-listener.md).
+GET /, GET/POST /login, POST /logout, GET /api/statblocks/state, GET /api/statblocks/monsters/{monster_id}, WebSocket /ws, /static. Own cookie `scrying_glass_statblock_session`; only regular admins can sign in, and every page, read and WebSocket frame is re-authorized against the active campaign. WebSocket frames: `state` (projection without statblock content), `heartbeat`, `revoked` (then close 1008); client messages `resync`, `ping`. No import routes and no /media. The page (static/statblocks.js, statblocks-render.js) renders tiles and one expanded statblock with DOM text only; tile statuses include automatic original-source loading (`loading`, `unavailable`, `error` with `status_detail`). Details: [handover 085](../handover/085-statblock-stage-c2-listener.md), [086](../handover/086-statblock-stage-d-viewer.md).
 
 ## Request contracts
 

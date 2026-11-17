@@ -154,7 +154,8 @@ class Session:
     def login(self, role, portal="admin"):
         name, password = ACCOUNTS[role]
         page = self.page()
-        base = self.server.admin if portal == "admin" else self.server.client
+        base = {"admin": self.server.admin, "client": self.server.client,
+                "statblocks": self.server.statblocks}[portal]
         page.goto(base + "/login")
         page.fill("[name=username]", name)
         page.fill("[name=password]", password)

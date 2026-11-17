@@ -47,7 +47,7 @@ encounter after changing interpreters. For systemd deployments, follow the
 
 ## Accounts and sign-in
 
-Admin defaults to port 3000; Client defaults to 3100; the statblock listener (in development) to 3200. Separate cookies allow all three in one browser. Only a regular admin assigned to the active campaign can sign in to and use the statblock listener; superadmin and client accounts are refused, and its page clears when access ends. Logout affects only the current interface; restart clears all sessions. Account edits invalidate that user's sessions and display sockets.
+Admin defaults to port 3000; Client defaults to 3100; the statblock listener (in development) to 3200. Separate cookies allow all three in one browser. Only a regular admin assigned to the active campaign can sign in to and use the statblock listener; superadmin and client accounts are refused, and its page clears when access ends. It shows each monster in battle as a tile; select a tile (or press Enter) to show its full statblock with the current name, species, AC, HP and initiative bonus, press Escape to close it, and use the arrow keys to move between tiles. References open below the statblock. Missing statblocks are loaded automatically from a monster's original lookup source when one is known. Logout affects only the current interface; restart clears all sessions. Account edits invalidate that user's sessions and display sockets.
 
 Superadmins manage accounts at /users; regular admins run battles at /. Superadmins authorize battle APIs but are redirected away from root battle HTML. Create a regular admin for interactive use.
 

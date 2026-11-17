@@ -23,6 +23,7 @@ import threading
 import time
 
 from .scrying_glass_statblock_applying import ApplyingMixin
+from .scrying_glass_statblock_autoloading import AutoLoadingMixin
 from .scrying_glass_statblock_contract import (  # noqa: F401 - re-exported for routes and tests
     ADAPTERS, FAILURE_MESSAGES, SELECTION_ERRORS, Principal, PreparationFailure, StatblockAPIError, commit_callback,
 )
@@ -35,7 +36,7 @@ from .scrying_glass_statblock_preparing import PreparingMixin
 from .scrying_glass_statblock_selections import Scope, SelectionStore, session_key
 
 
-class StatblockService(DiscoveringMixin, PreparingMixin, ApplyingMixin):
+class StatblockService(DiscoveringMixin, PreparingMixin, ApplyingMixin, AutoLoadingMixin):
     def __init__(self, context, *, limits=None, transport=None, runner=None, display=None,
                  clock=time.monotonic, wall=time.time):
         self.context = context
@@ -155,12 +156,16 @@ class StatblockService(DiscoveringMixin, PreparingMixin, ApplyingMixin):
             projection = features.store.revision() if features is not None else 0
         except Exception:
             projection = 0
-        private = self._private()
+        private, config = self._private(), self.config()
         tiles, monsters = [], []
         for item in self.context.STATE.get('monsters', []):
             snapshot = private.get(item['id'])
             summary = {'monster_id': item['id'], 'statblock_revision': snapshot.get('revision', 0) if snapshot else 0,
                        'status': self._status(snapshot), 'warnings': len(snapshot['warnings']) if snapshot else 0}
+            if snapshot is None:
+                summary['status'], detail = self.original_status(item, principal.campaign, config)
+                if detail:
+                    summary['status_detail'] = detail
             monsters.append(summary)
             member = item.get('active') and (item.get('alive') or item.get('life_state') in ('down', 'stable'))
             if member:
@@ -179,6 +184,10 @@ class StatblockService(DiscoveringMixin, PreparingMixin, ApplyingMixin):
                 'initiative_bonus': monster.get('initiative_bonus')}
         result = {'monster_id': monster_id, 'encounter_token': self.encounter_token(principal.campaign),
                   'live': live, 'statblock_revision': revision, 'status': self._status(snapshot)}
+        if snapshot is None:
+            result['status'], detail = self.original_status(monster, principal.campaign)
+            if detail:
+                result['status_detail'] = detail
         if snapshot and known_revision == revision:
             result['unchanged'] = True
         elif snapshot:

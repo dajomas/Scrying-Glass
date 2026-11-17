@@ -78,6 +78,9 @@ class TransportTests(service_tests.ImportFixture, unittest.TestCase):
     def setUp(self):
         super().setUp()
         self.c.broadcast = NotificationsService(self.c).broadcast
+        # No retained source identity: these frames are not mixed with automatic loading (test_statblock_autoload).
+        for key in ('monster_source_provider', 'monster_source_url', 'monster_source_name', 'monster_source_book'):
+            self.item('m').pop(key)
 
     def register(self, token, **kwargs):
         value = RecordingSocket(**kwargs)

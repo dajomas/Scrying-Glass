@@ -11,6 +11,7 @@ from .scrying_glass_turn_rules import can_take_turn
 from .scrying_glass_identity_rules import validate_roster_setup_ids
 
 TRACKED={'apply_statblocks','edit_statistics','edit_monster','update_monster','update_character','bulk_monsters','bulk_characters','reset_one_combatant','reset_all','battle_start','battle_next','battle_end','apply_battle_actions','edit_features','add_effect','remove_effect','end_concentration','restore_checkpoint','create_lair','update_lair','delete_lair','apply_lair_action'}
+NEUTRAL={'load_original_statblock'}
 BOUNDARIES={'load_setup','new_setup','activate_campaign','delete_campaign','delete_setup','rename_setup','add_setup_to_campaign','clear_activity_log'}
 
 def fingerprint(state):
@@ -26,6 +27,15 @@ class FeaturesService:
         self.context.STATE.setdefault('activity_log',[]).append({'id':uuid.uuid4().hex,'timestamp':self.context.now_iso(),'active_combatant_id':actor['id'] if actor else None,'active_combatant':actor['name'] if actor else 'System','active_combatant_state':self.context.combatant_state(actor),'target_combatant_id':target['id'] if target else None,'target_combatant':target['name'] if target else 'Encounter','target_combatant_state':self.context.combatant_state(target),'action':action,'amount':amount,'note':note})
     def after_transaction(self,name,before,campaign_before):
         campaign=self.context.active_campaign();different=fingerprint(before)!=fingerprint(self.context.STATE)
+        if name in NEUTRAL and campaign==campaign_before:
+            # Automatic content (original-source statblocks) keeps undo history usable:
+            # rebase a top entry that described the state just before this change.
+            top=self.store.latest_undo(campaign)
+            if different and top and top['after_digest']==fingerprint(before):
+                self.store.db.execute("UPDATE encounter_snapshots SET after_digest=? WHERE id=? AND campaign_id=? AND kind='undo'",
+                                      (fingerprint(self.context.STATE),top['id'],campaign))
+            if different: self.store.bump()
+            return
         if name=='undo': self.store.bump();return
         if campaign!=campaign_before or name in BOUNDARIES: self.store.clear_undo()
         elif different:

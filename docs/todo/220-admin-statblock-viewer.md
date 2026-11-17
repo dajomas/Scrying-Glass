@@ -4,7 +4,7 @@
 
 ## Task and status
 
-Current status - 2026-11-17: the [TODO index](../../TODO.md) entry is authoritative. 022.01-022.03 are accepted and closed; Stage A (022.04) is delivered with validation pending ([handover 082](../handover/082-fivetools-statblock-stage-a.md)); Stage B (022.05-022.07) is delivered with validation pending ([handover 083](../handover/083-statblock-stage-b-sources.md)), including the user's 2026-11-17 decisions to offer every Open5e document and fetch document licences; Stage C1 (022.08) is delivered with validation pending ([handover 084](../handover/084-statblock-stage-c1-import-apis.md)); the remaining units follow the agreed Stage C-E plan, with 022.09 delivered as Stage C2 ([handover 085](../handover/085-statblock-stage-c2-listener.md), validation pending). The paragraph below is the 2026-11-15 consolidation status, kept as history.
+Current status - 2026-11-17: the [TODO index](../../TODO.md) entry is authoritative. 022.01-022.03 are accepted and closed; Stage A (022.04) is delivered with validation pending ([handover 082](../handover/082-fivetools-statblock-stage-a.md)); Stage B (022.05-022.07) is delivered with validation pending ([handover 083](../handover/083-statblock-stage-b-sources.md)), including the user's 2026-11-17 decisions to offer every Open5e document and fetch document licences; Stage C1 (022.08) is delivered with validation pending ([handover 084](../handover/084-statblock-stage-c1-import-apis.md)); the remaining units follow the agreed Stage C-E plan, with 022.09 delivered as Stage C2 ([handover 085](../handover/085-statblock-stage-c2-listener.md)) and 022.10-022.12 as Stage D ([handover 086](../handover/086-statblock-stage-d-viewer.md)), validation pending. The paragraph below is the 2026-11-15 consolidation status, kept as history.
 
 SG-TODO-022 remains an unimplemented feature. Design unit 022.01 is completed by this consolidated record on 2026-11-15 following the user's seven-item review, sixteen limit/policy decisions and 09:58 CET close-out request. 022.02 is ready to begin, not implemented; 022.03-022.16 remain pending. No owner, priority or deadline is assigned. All development remains on `features/perplexity-statblock` in `dajomas/Scrying-Glass`; no merge, deployment or release is implied.
 
@@ -233,13 +233,19 @@ Status 2026-11-17: implemented as Stage C2 (archive, `[skip ci]`), validation pe
 
 Pending; depends 08-09. Logical membership, six-field overlay, all supported sections/definitions, source credits/status/warnings, one mouse-expanded block. Gate: malicious content/URLs, same-species instances, colours/long text/membership and reference interactions tested.
 
+Status 2026-11-17: implemented in Stage D (archive, `[skip ci]`), validation pending CI, e2e/axe and user acceptance; see [handover 086](../handover/086-statblock-stage-d-viewer.md).
+
 #### 022.11 - Add keyboard and accessibility behavior
 
 Pending; depends 10. Grid-aware arrows/Enter/Escape/focus, resized/incomplete grids, removed focused tiles, labels/expanded states and non-disruptive text/scroll/links/reference details. Gate: keyboard/mouse parity, responsive and axe checks in both browsers.
 
+Status 2026-11-17: implemented in Stage D (archive, `[skip ci]`), validation pending CI, e2e/axe and user acceptance; see [handover 086](../handover/086-statblock-stage-d-viewer.md).
+
 #### 022.12 - Add live synchronization and original-source loading
 
 Pending; depends 08,10-11. Authorized state/recovery, membership/six-field/colour updates, missing original-source loading on stable lifecycle events, no repeated render fetch. Gate: battle/campaign/role/reconnect/stale-fetch/removal/focus/dedup/retry tests; never expose old campaign.
+
+Status 2026-11-17: implemented in Stage D (archive, `[skip ci]`), validation pending CI, e2e/axe and user acceptance; see [handover 086](../handover/086-statblock-stage-d-viewer.md).
 
 #### 022.13 - Add Edit Monster statblock import
 
