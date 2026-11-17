@@ -142,6 +142,7 @@ class Instruction:
     index: int
     mode: str
     payload_json: bytes
+    chain: tuple[Identity, ...] = ()
 
 def compile_modifications(mods, *, check=lambda: None):
     """Freeze instructions in stable ordinary-property order, then _, then *."""
@@ -177,6 +178,10 @@ class Resolver:
         self._cache_bytes = 0
         self._cache_limits = self.limits
 
+    def _apply_compiled_modifications(self, record, mods, *, check, fail):
+        item = mods[0]
+        fail('modification_execution_pending_04c', '$/_copy/_mod', item.property, item.index, item.mode)
+
     def resolve(self, selected: Identity, *, deadline: float, cancelled=lambda: False):
         if not isinstance(selected, Identity):
             raise ValueError('invalid_selected_identity')
@@ -192,8 +197,8 @@ class Resolver:
             self._cache_bytes = 0
             self._cache_limits = self.limits
         path, pending, used = [], OrderedDict(), 0
-        def fail(code, source_path='$', prop=None, index=None, mode=None):
-            raise ResolutionError(Diagnostic(code, selected, tuple(path), source_path, prop, index, mode))
+        def fail(code, source_path='$', prop=None, index=None, mode=None, *, chain=None):
+            raise ResolutionError(Diagnostic(code, selected, tuple(path) if chain is None else chain, source_path, prop, index, mode))
         def now():
             value = self.clock()
             if type(value) not in (int, float) or not math.isfinite(value):
@@ -246,20 +251,21 @@ class Resolver:
                 return Identity(owner.dataset, kind, meta['source'], meta['name'], meta.get('discriminator'), meta.get('edition'))
             except (ValueError, KeyError, TypeError):
                 fail('malformed_identity', '$/_copy')
-        def instructions(mods):
+        def instructions(mods, origin=None):
             try:
                 if type(mods) is not dict:
-                    fail('malformed_modifications', '$/_copy/_mod')
+                    fail('malformed_modifications', '$/apply/_mod' if origin else '$/_copy/_mod', chain=origin)
                 for value in mods.values():
                     check()
                     charge(len(value) if type(value) is list else 1)
-                return list(compile_modifications(mods, check=check))
+                return [Instruction(x.property, x.index, x.mode, x.payload_json,
+                    tuple(path) if origin is None else origin) for x in compile_modifications(mods, check=check)]
             except ResolutionError:
                 raise
             except (ValueError, TypeError, UnicodeError, RecursionError) as exc:
                 args = exc.args
-                fail(args[0] if args else 'malformed_modifications', '$/_copy/_mod',
-                     *(list(args[1:4]) + [None] * 3)[:3])
+                fail(args[0] if args else 'malformed_modifications', '$/apply/_mod' if origin else '$/_copy/_mod',
+                     *(list(args[1:4]) + [None] * 3)[:3], chain=origin)
         def visit(ident, depth):
             check()
             path.append(ident)
@@ -349,10 +355,9 @@ class Resolver:
                             check()
                             if k not in original_keys:
                                 assign(obj, k, v)
-                        mods.extend(instructions(apply.get('_mod', {})))
+                        mods.extend(instructions(apply.get('_mod', {}), tuple(path)+(tid,)))
                     if mods:
-                        item = mods[0]
-                        fail('modification_execution_pending_04c', '$/_copy/_mod', item.property, item.index, item.mode)
+                        obj = self._apply_compiled_modifications(obj, mods, check=check, fail=fail)
                     obj.pop('_copy', None)
                     assign(obj, '_isCopy', True)
                 result = Result(encode(obj), tuple(provenance), relative_depth, used - initial_used)
