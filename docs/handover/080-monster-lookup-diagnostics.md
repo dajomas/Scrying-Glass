@@ -23,3 +23,19 @@ On Python 3.12.8: 17 diagnostics tests and all 15 unchanged tests in `test_fivet
 The focused local tree used the hash-verified display and 5e.tools modules, the original provider tests, and the pinned production image-lookup method as an AST-extraction input. It was not a full checkout or real FastAPI/browser integration run. All remote providers were mocked; live endpoints, full CI and Python 3.14 remain unverified for this repair.
 
 README was reviewed and remains accurate: provider selection and configuration did not change. TODO.md is absent and is not created. Source splitting, other failure categories and workflow changes are outside this commit. Normal CI should verify the approved push.
+
+## 022.04a/b core graph preparation - 2026-11-17
+
+Separate partial private-statblock graph work adds contextual dependency errors,
+exact-source loading, recursive inheritance/templates and immutable results.
+[224](../todo/224-fivetools-statblock-resolution.md) records pins, current evidence,
+unfinished matrix/resource gates and all remaining a-f requirements. This does
+not complete/accept 04a, 04b or the adapter or alter existing lookup behavior.
+
+Baseline: dcd55b68210948e1f142ba6c377cdab25e7f384e, features/perplexity-statblock.
+Current reconstructed payload: 22 native graph tests passed on Python 3.12.8,
+synthetic sources, no skips/errors/failures. Prior seven upstream comparisons
+were not rerun on this payload. No full suite, live-provider or covering CI claim.
+Intermediate 022.04 commits use [skip ci] by user instruction; no workflow edits/
+dispatch. Accepted lifecycle/016/017 scopes remain closed. Root README/index links
+remain accurate and unchanged; current 224 status supersedes dated pending notes.
