@@ -10,6 +10,7 @@ import time
 from collections import OrderedDict
 from dataclasses import dataclass, fields
 from typing import Protocol
+from .scrying_glass_fivetools_resolution_bounds import measure_json
 
 RUNTIME_COMMIT = '32ef600fab87a585a61dd1a22e9b02dfc58c728a'
 RUNTIME_BLOB = '80c10d0439a5179b7d7f6e1220b9efb535a626d2'
@@ -142,14 +143,16 @@ class Instruction:
     mode: str
     payload_json: bytes
 
-def compile_modifications(mods):
+def compile_modifications(mods, *, check=lambda: None):
     """Freeze instructions in stable ordinary-property order, then _, then *."""
     if type(mods) is not dict or any(type(k) is not str for k in mods):
         raise ValueError('malformed_modifications')
     out = []
     for prop in sorted(mods, key=lambda k: 1 if k == '_' else 2 if k == '*' else 0):
+        check()
         values = mods[prop] if type(mods[prop]) is list else [mods[prop]]
         for i, value in enumerate(values):
+            check()
             mode = value if type(value) is str else value.get('mode') if type(value) is dict else None
             if not (value == 'remove' if type(value) is str else type(mode) is str and mode in MODES):
                 raise ValueError('unknown_modification_mode', prop, i, mode if type(mode) is str else None)
@@ -167,32 +170,59 @@ class Resolver:
     UTF-8 ledger. They do not enforce total Python heap or worker memory.
     """
     def __init__(self, loader: ExactLoader, *, limits=None, clock=time.monotonic):
-        self.loader, self.limits, self.clock = loader, limits or Limits(), clock
+        self.loader, self.limits, self.clock = loader, Limits() if limits is None else limits, clock
         if not isinstance(self.limits, Limits):
             raise ValueError('invalid_limits')
         self._cache, self._cache_times = OrderedDict(), {}
         self._cache_bytes = 0
+        self._cache_limits = self.limits
 
     def resolve(self, selected: Identity, *, deadline: float, cancelled=lambda: False):
         if not isinstance(selected, Identity):
             raise ValueError('invalid_selected_identity')
         if type(deadline) not in (int, float) or not math.isfinite(deadline):
             raise ValueError('invalid_deadline')
+        if not isinstance(self.limits, Limits):
+            raise ValueError('invalid_limits')
+        if not callable(cancelled) or not callable(self.clock):
+            raise ValueError('invalid_callback')
+        if self.limits != self._cache_limits:
+            self._cache.clear()
+            self._cache_times.clear()
+            self._cache_bytes = 0
+            self._cache_limits = self.limits
         path, pending, used = [], OrderedDict(), 0
         def fail(code, source_path='$', prop=None, index=None, mode=None):
             raise ResolutionError(Diagnostic(code, selected, tuple(path), source_path, prop, index, mode))
+        def now():
+            value = self.clock()
+            if type(value) not in (int, float) or not math.isfinite(value):
+                fail('invalid_clock')
+            return value
         def check():
             if cancelled():
                 fail('cancelled')
-            if self.clock() >= deadline:
+            if now() >= deadline:
                 fail('deadline')
         def charge(amount):
             nonlocal used
             used += amount
             if used > self.limits.modification_operations:
                 fail('modification_operations_limit')
+        def size(obj):
+            return measure_json(obj, self.limits.intermediate_creature_bytes, check, fail)
+        def assign(obj, key, value):
+            projected = size(obj)
+            if key in obj:
+                projected -= size(obj[key])
+            else:
+                projected += size(key) + 1 + bool(obj)
+            projected += size(value)
+            if projected > self.limits.intermediate_creature_bytes:
+                fail('intermediate_creature_bytes_limit')
+            obj[key] = value
         def encode(obj):
-            check()
+            size(obj)
             parts, total = [], 0
             try:
                 for piece in json.JSONEncoder(ensure_ascii=False, allow_nan=False, separators=(',', ':')).iterencode(obj):
@@ -218,7 +248,14 @@ class Resolver:
                 fail('malformed_identity', '$/_copy')
         def instructions(mods):
             try:
-                return list(compile_modifications(mods))
+                if type(mods) is not dict:
+                    fail('malformed_modifications', '$/_copy/_mod')
+                for value in mods.values():
+                    check()
+                    charge(len(value) if type(value) is list else 1)
+                return list(compile_modifications(mods, check=check))
+            except ResolutionError:
+                raise
             except (ValueError, TypeError, UnicodeError, RecursionError) as exc:
                 args = exc.args
                 fail(args[0] if args else 'malformed_modifications', '$/_copy/_mod',
@@ -231,7 +268,7 @@ class Resolver:
                     fail('inheritance_cycle')
                 if depth > self.limits.inheritance_steps:
                     fail('inheritance_steps_limit')
-                if ident in self._cache and self.clock() - self._cache_times[ident] >= self.limits.cache_seconds:
+                if ident in self._cache and now() - self._cache_times[ident] >= self.limits.cache_seconds:
                     self._cache_bytes -= _cache_entry_bytes(ident, self._cache.pop(ident))
                     self._cache_times.pop(ident, None)
                 cached = pending.get(ident) or self._cache.get(ident)
@@ -279,7 +316,13 @@ class Resolver:
                     if type(templates) is not list or type(preserve) is not dict or any(v is not True for v in preserve.values()):
                         fail('malformed_copy_metadata', '$/_copy')
                     if templates:
-                        obj['_copy_templates'] = [{'name': t.get('name'), 'source': t.get('source')} if type(t) is dict else {} for t in templates]
+                        assign(obj, '_copy_templates', [])
+                        for t in templates:
+                            entry = {'name': t.get('name'), 'source': t.get('source')} if type(t) is dict else {}
+                            values = obj['_copy_templates']
+                            if size(obj) + size(entry) + bool(values) > self.limits.intermediate_creature_bytes:
+                                fail('intermediate_creature_bytes_limit')
+                            values.append(entry)
                     original_keys = frozenset(obj)
                     mods = instructions(meta.get('_mod', {}))
                     gated = PRESERVE_BASE | (PRESERVE_MONSTER if ident.kind == 'monster' else frozenset())
@@ -289,10 +332,7 @@ class Resolver:
                             charge(1)
                             del obj[k]
                         elif k not in obj and (k not in gated or preserve.get('*') or preserve.get(k)):
-                            trial = dict(obj)
-                            trial[k] = v
-                            encode(trial)
-                            obj[k] = v
+                            assign(obj, k, v)
                     for tm in templates:
                         check()
                         if ident.kind not in {'monster', 'legendaryGroup'}:
@@ -308,38 +348,42 @@ class Resolver:
                         for k, v in apply.get('_root', {}).items():
                             check()
                             if k not in original_keys:
-                                trial = dict(obj)
-                                trial[k] = v
-                                encode(trial)
-                                obj[k] = v
+                                assign(obj, k, v)
                         mods.extend(instructions(apply.get('_mod', {})))
-                    charge(len(mods))
                     if mods:
                         item = mods[0]
                         fail('modification_execution_pending_04c', '$/_copy/_mod', item.property, item.index, item.mode)
                     obj.pop('_copy', None)
-                    obj['_isCopy'] = True
+                    assign(obj, '_isCopy', True)
                 result = Result(encode(obj), tuple(provenance), relative_depth, used - initial_used)
                 pending[ident] = result
                 while len(pending) > self.limits.cache_entries or sum(_cache_entry_bytes(k, v) for k, v in pending.items()) > self.limits.cache_bytes:
                     pending.popitem(last=False)
                 return result
+            except RecursionError:
+                fail('execution_stack_limit')
             finally:
                 path.pop()
         result = visit(selected, 0)
         check()
+        cache, cache_times, cache_bytes = self._cache.copy(), self._cache_times.copy(), self._cache_bytes
         for ident, item in pending.items():
+            check()
             amount = _cache_entry_bytes(ident, item)
             if amount > self.limits.cache_bytes:
                 continue
-            previous = self._cache.pop(ident, None)
+            previous = cache.pop(ident, None)
             if previous is not None:
-                self._cache_bytes -= _cache_entry_bytes(ident, previous)
-            self._cache[ident], self._cache_times[ident] = item, self.clock()
-            self._cache_bytes += amount
-            while len(self._cache) > self.limits.cache_entries or self._cache_bytes > self.limits.cache_bytes:
-                old_id, evicted = self._cache.popitem(last=False)
-                self._cache_times.pop(old_id, None)
-                self._cache_bytes -= _cache_entry_bytes(old_id, evicted)
-        return Result(result.record_json, (Provenance(selected, 'selected', (selected,)),) + result.provenance,
-                      result.inheritance_depth, result.modification_operations)
+                cache_bytes -= _cache_entry_bytes(ident, previous)
+            cache[ident], cache_times[ident] = item, now()
+            cache_bytes += amount
+            while len(cache) > self.limits.cache_entries or cache_bytes > self.limits.cache_bytes:
+                old_id, evicted = cache.popitem(last=False)
+                cache_times.pop(old_id, None)
+                cache_bytes -= _cache_entry_bytes(old_id, evicted)
+        check()
+        output = Result(result.record_json, (Provenance(selected, 'selected', (selected,)),) + result.provenance,
+                        result.inheritance_depth, result.modification_operations)
+        check()
+        self._cache, self._cache_times, self._cache_bytes = cache, cache_times, cache_bytes
+        return output

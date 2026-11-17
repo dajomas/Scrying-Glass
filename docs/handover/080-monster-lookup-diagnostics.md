@@ -57,3 +57,21 @@ remain open. This is implementation with focused evidence, not formal acceptance
 README, root indexes and workflow reviewed; no runtime user behavior or indexed
 paths changed, so unchanged. [skip ci] remains required until the final 04 code
 push. No manual dispatch, merge, deployment or release.
+
+## 022.04b.2 resource boundaries - 2026-11-17
+
+Baseline 485a4532d61c4ce729e8584f45e1becb0841b9b4. Implementation adds exact
+compact-JSON preflight before growth/output allocation, strict limit validation,
+instruction-budget preflight, changed-limit cache invalidation and atomic cache
+publication after cancellation/deadline checks. [224](../todo/224-fivetools-statblock-resolution.md)
+records scope, remaining gates and retained source/semantic history. The prior
+04b increments anchor is retained there for historical links.
+
+Eleven focused native tests passed on Python 3.12.8. The initial numeric-limit
+diagnostic failure was corrected in implementation; assertions were not weakened.
+Earlier 22 graph and 12 cache tests remain unchanged, not rerun here. No full
+provider suite, fresh oracle, Python 3.14, hosted CI or hard memory/CPU validation
+is claimed. Worker isolation and remaining regression review are 04b.3, not
+provided by byte preflight. No user-facing runtime or index-path changes; README,
+root indexes and workflow remain unchanged. [skip ci] until final 04 code push.
+No dispatch, merge, deployment, release or accepted-scope reopening.
