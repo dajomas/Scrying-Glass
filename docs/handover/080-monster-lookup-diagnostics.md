@@ -36,12 +36,35 @@ comparisons, real kernel allocation refusal at 64 MiB, next-job recovery, blocke
 infinite-loop kill and in-flight cancellation with reaping checks. Blocking/memory
 faults use modified temporary core copies, not new production test hooks. Ordinary
 subprocess tests use the SHA-verified live graph and bounds module. No assertion
-in existing suites changes; earlier 22/12/11 modules were not rerun here. Full
-provider/application/3.14/CI and final 04b acceptance remain pending.
+in existing suites changes; earlier 22/12/11 modules were not rerun for b.3. Full
+provider/application/3.14/CI verification remains pending; the implementation
+acceptance disposition below supersedes the earlier acceptance-pending status.
 
 README, root indexes, workflow and maintenance rules were reviewed/reused against
 the verified baseline. The private helper changes no active application dependency,
-listener or user workflow; those files remain unchanged. The indexed 080/224 paths
-and old 04b increments anchor remain stable. [skip ci] on this and intermediate
-04 deliveries until its last code push; no manual dispatch, merge or deployment.
-022.01-022.03/lifecycle and accepted 016/017 stay closed; 04a/c-f remain open.
+listener or user workflow; those files remain unchanged at the b.3 delivery.
+The indexed 080/224 paths and old 04b increments anchor remain stable. [skip ci]
+on intermediate 04 deliveries until its last code push; no manual dispatch, merge
+or deployment. 022.01-022.03/lifecycle and accepted 016/017 stay closed; 04a/c-f
+remain open.
+
+## 04b user-directed implementation close-out - 2026-11-17
+
+Documentation baseline d85c04a5b6f80f324d2998a3be9baa1be8bea69e. Following the
+remaining-items disclosure, the user requested status reconciliation and closure
+at 08:47 CET. Bounded 022.04b implementation, including delivered b.1-b.3, is
+accepted and closed by user direction, with incomplete verification explicitly
+deferred to parent 04/04f. This is not fully validated closure or a claim that the
+combined suite/CI passed. [224 criterion map and 04f.V1-V4 disposition](../todo/224-fivetools-statblock-resolution.md#04b-user-directed-implementation-close-out---2026-11-17)
+retains all unmet validation obligations, operational limits and actual delivery
+commits. No additional planned 04b increment or repeat acceptance is required.
+Defects found by later validation still require fixes.
+
+Root TODO reconciles stale planned-04b and pending-022.03/Stages 1-3 statements
+with actual delivered/accepted status. Earlier lifecycle evidence remains in its
+accepted 223 record; nothing is reopened. Overall 04/022 remains in progress and
+04a/c-f remain open. The four test modules declare 58 methods in total, not a
+combined passing run. No tests or fresh CI executed for this reconciliation.
+README, root HANDOVER index, parent design contract and workflow remain unchanged:
+no active behavior, links, configuration or design requirement changes. This is
+documentation-only [skip ci], not merge/deployment/release authorization.

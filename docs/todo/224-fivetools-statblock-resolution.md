@@ -5,7 +5,9 @@
 ## Current status - 2026-11-17
 
 022.04 remains in progress, not a usable production adapter. Accepted 022.01-
-022.03/lifecycle and 016/017 stay closed. No merge, deployment or release.
+022.03/lifecycle and 016/017 stay closed. Bounded 04b implementation is accepted
+and closed by user direction; verification remains incomplete as explicitly
+recorded below. No merge, deployment, release or overall 022/04 closure.
 The [original a-f requirements](https://github.com/dajomas/Scrying-Glass/blob/dcd55b68210948e1f142ba6c377cdab25e7f384e/docs/todo/224-fivetools-statblock-resolution.md)
 and [prior pins, semantics, evidence and b.1/b.2 history](https://github.com/dajomas/Scrying-Glass/blob/ca5cdd94c267395fcada8fe21249ef17acc1bdcc/docs/todo/224-fivetools-statblock-resolution.md)
 remain required/retained by reference. The parent's final approved contract and
@@ -20,8 +22,10 @@ SG-TODO-023 is separate. No existing test/assertion is removed or relaxed.
 - 022.04b.2: delivered ca5cdd94c267395fcada8fe21249ef17acc1bdcc; strict limits,
   intermediate-growth preflight, changed-limit invalidation and atomic cache
   publication; focused 11-test evidence. Neither delivery is covering CI.
-- 022.04b.3: isolated worker implemented, focused validation passed; push/CI and
-  broader regression/acceptance review pending. Do not mark whole 04b completed.
+- 022.04b.3: delivered d85c04a5b6f80f324d2998a3be9baa1be8bea69e; isolated
+  worker implementation with focused 13-test evidence. All three increments are
+  included in the user-directed bounded implementation close-out below; deferred
+  verification is not relabelled as completed validation.
 
 ## b.3 worker contract and operations
 
@@ -69,12 +73,13 @@ Tests use synthetic records. Modified temporary core copies simulate blocked and
 memory-hungry workers; ordinary comparison uses the hash-verified unchanged core.
 
 `python -m unittest discover -s tests -p 'test_fivetools_worker.py' -v`:
-13 tests OK, no skips/failures/errors here. On unsupported hosts real Linux tests
-are explicitly skipped; that is not evidence of supported memory enforcement.
-Existing 22 graph, 12 cache and 11 bounds modules are unchanged, not rerun here.
-Full provider/application regression, Python 3.14, covering CI and formal 04b
-acceptance remain outstanding. Existing test_*.py workflow discovery includes
-this module when CI runs; no workflow edits or manual dispatch.
+13 tests OK, no skips/failures/errors at its preparation checkpoint. On unsupported
+hosts real Linux tests are explicitly skipped; that is not evidence of supported
+memory enforcement. Existing 22 graph, 12 cache and 11 bounds modules were not
+rerun for b.3. No new tests are executed by this documentation reconciliation.
+Combined/provider/application regression, Python 3.14 and covering CI remain
+outstanding under the explicit disposition below. Existing test_*.py workflow
+discovery includes these modules when CI runs; no workflow edits/manual dispatch.
 
 04a matrix/schema-lock/safe-expression/oracle gates remain open. Runtime pin
 32ef600fab87a585a61dd1a22e9b02dfc58c728a remains in the unchanged graph module;
@@ -85,3 +90,45 @@ mods still fail at 04c; source byte limits are not normalized snapshot/node limi
 Workers must later encompass conversion/validation too, not just inheritance.
 All intermediate 04 pushes include [skip ci] until the last 04 code push.
 Delivery, focused checks, covering CI and acceptance remain distinct.
+
+## 04b user-directed implementation close-out - 2026-11-17
+
+At 08:47 CET, after the remaining-validation checklist was disclosed, the user
+requested: "Reconcile status and close 04b". Status: accepted/closed for the
+delivered bounded implementation scope, including b.1-b.3, with explicit deferral
+of the unexecuted verification below to 04f/parent 04 integration validation. This
+is a user-directed implementation acceptance, NOT a finding that all original
+validation criteria have passed or that 04b is fully validated. No additional
+planned 04b implementation increment or repeat acceptance request is created.
+Later-discovered defects still require correction; test requirements are not waived.
+
+| Scope | Delivered basis and bounded disposition |
+|---|---|
+| Exact identity, recursive base/template graph, root/null/preservation semantics, active-path cycle detection, snapshot/cache isolation | Initial core d13a439e28ed0829d2285831e01dab16170776a7; historical 22 synthetic native tests and seven limited upstream comparisons. Implementation accepted; these are not a combined current-head result or full oracle coverage. |
+| Provenance-inclusive cache accounting, LRU/TTL and byte boundaries | b.1 485a4532d61c4ce729e8584f45e1becb0841b9b4; 12 focused native tests at preparation. Accepted implementation, integration verification retained below. |
+| Input/limit validation, growth preflight, changed-limit revalidation and atomic publication | b.2 ca5cdd94c267395fcada8fe21249ef17acc1bdcc; 11 focused native tests at preparation. Accepted implementation, not proof of every possible resource scenario. |
+| Isolated worker, Linux enforced limits, deadline/cancellation and process cleanup | b.3 d85c04a5b6f80f324d2998a3be9baa1be8bea69e; 13 focused tests including real process/kernel cases. Accepted within documented Linux/enforcement limits, not certification of other platforms or a production scheduler. |
+
+### Deferred verification retained under 04f/parent 04
+
+- 04f.V1 - pending: execute/review the four graph/cache/bounds/worker modules
+  together against an identified integrated revision (22+12+11+13 = 58 test
+  methods currently declared; this is an inventory, NOT 58 combined passes).
+- 04f.V2 - pending: relevant existing-provider/application regressions and
+  criterion-based review against the original graph/isolation/resource contract;
+  resolve any exposed defect or uncovered required case before overall 04 closure.
+- 04f.V3 - deferred until final 04 code push: covering Python 3.14 CI and review
+  of actual results/run/revision identities. Retain [skip ci] on intermediate
+  pushes; do not dispatch CI separately or infer a result from configuration.
+- 04f.V4 - pending: record that evidence and failure/correction history, integrate
+  later modifications/references/conversion/validation inside the resource boundary
+  and complete overall 04 acceptance. Source intermediates are not normalized
+  snapshot/node/text/reference measurements.
+
+Only bounded 04b implementation is closed. Overall 04 and 022 stay open; 04a/c-f
+and unrelated accepted scopes are unchanged. Root TODO now reflects already
+accepted 022.03/Stages 1-3 and the actual 04b deliveries, rather than stale planned
+wording. README, HANDOVER index, parent design contract and workflow need no
+behavior/path/configuration edits for this status-only change. No production,
+test, dependency, permission, schema or CI configuration changes. Documentation
+only [skip ci]; no fresh test/CI, dispatch, merge, deployment or release claim.
