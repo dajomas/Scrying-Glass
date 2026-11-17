@@ -254,6 +254,20 @@ class DiscoveryTests(ImportFixture, unittest.TestCase):
         ):
             self.assert_error(status, code, self.service.discover_begin, principal, body)
 
+    def test_edit_search_species_finds_candidates_bound_to_the_saved_monster(self):
+        principal = self.principal()
+        body = {'campaign_id': principal.campaign, 'encounter_token': self.token(), 'monster_ids': ['n'],
+                'species': 'Hobgoblin'}
+        plan = self.service.discover_begin(principal, body)
+        result = self.service.discover_finish(self.principal(), plan, self.service.discover_run(plan))
+        row = result['monsters'][0]
+        self.assertEqual((row['species'], [c['label'] for c in row['candidates'] if c['provider'] == '5e.tools']),
+                         ('Hobgoblin', ['Hobgoblin']))
+        job = self.prepare('n', candidate=row['candidates'][0]['candidate_id'])
+        self.assertEqual(job['status'], 'completed')
+        for bad in ('', ' ', 'x' * 101, 5):
+            self.assert_error(422, 'invalid_request', self.service.discover_begin, principal, dict(body, species=bad))
+
     def test_a_target_changed_during_discovery_gets_no_candidates(self):
         principal = self.principal()
         plan = self.service.discover_begin(principal, {'campaign_id': principal.campaign,

@@ -17,8 +17,14 @@ from .scrying_glass_statblock_selections import SelectionError
 class DiscoveringMixin:
     # -- discovery --------------------------------------------------------------
     def discover_begin(self, principal, body):
-        if type(body) is not dict or set(body) - {'campaign_id', 'encounter_token', 'monster_ids'}:
+        if type(body) is not dict or set(body) - {'campaign_id', 'encounter_token', 'monster_ids', 'species'}:
             raise StatblockAPIError(422, 'invalid_request', 'Expected campaign_id, encounter_token and monster_ids.')
+        # Optional search species (Edit Monster: the species being typed, saved with the edit).
+        # Candidates stay bound to the saved species and source; apply checks those.
+        search = body.get('species')
+        if search is not None and (type(search) is not str or not search.strip() or len(search) > 100
+                                   or any(ord(c) < 32 for c in search)):
+            raise StatblockAPIError(422, 'invalid_request', 'species must be 1-100 characters.')
         self._check_campaign(principal, body.get('campaign_id'))
         self._check_encounter(principal, body.get('encounter_token'))
         ids = body.get('monster_ids')
@@ -31,8 +37,9 @@ class DiscoveringMixin:
         targets = []
         for ident in ids:
             monster = self._target(ident, monsters)
-            targets.append((ident, str(monster.get('monster_species') or '').strip(), source_fields(monster),
-                            original_identity(monster, config)))
+            saved = str(monster.get('monster_species') or '').strip()
+            targets.append((ident, search.strip() if search else saved, source_fields(monster),
+                            original_identity(monster, config), saved))
         return DiscoveryPlan(principal, body['encounter_token'], targets, config,
                              self.clock() + self.limits.preparation_seconds)
 
@@ -73,9 +80,9 @@ class DiscoveringMixin:
         self._check_encounter(principal, plan.encounter_token)
         monsters, complete, out = self._monsters(), True, []
         config = self.config()
-        for ident, species, fields, original in plan.targets:
+        for ident, species, fields, original, saved in plan.targets:
             monster = monsters.get(ident)
-            if monster is None or str(monster.get('monster_species') or '').strip() != species or source_fields(monster) != fields:
+            if monster is None or str(monster.get('monster_species') or '').strip() != saved or source_fields(monster) != fields:
                 out.append({'monster_id': ident, 'status': 'target_changed', 'candidates': [], 'providers': []})
                 complete = False
                 continue
