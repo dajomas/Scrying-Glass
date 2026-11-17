@@ -61,6 +61,19 @@ def _kill_and_reap(process):
 
 def resolve_isolated(selected, records, *, deadline, limits=None,
                      worker_memory_bytes=268435456, cancelled=lambda: False):
+    """Backward-compatible foundation worker; nonempty mods remain rejected."""
+    return _resolve_isolated(selected, records, deadline=deadline, limits=limits,
+        worker_memory_bytes=worker_memory_bytes, cancelled=cancelled, ordered=False)
+
+def resolve_ordered_isolated(selected, records, *, deadline, limits=None,
+                             worker_memory_bytes=268435456, cancelled=lambda: False):
+    """Execute OrderedResolver in the same enforced worker boundary."""
+    return _resolve_isolated(selected, records, deadline=deadline, limits=limits,
+        worker_memory_bytes=worker_memory_bytes, cancelled=cancelled, ordered=True)
+
+def _resolve_isolated(selected, records, *, deadline, limits=None,
+                      worker_memory_bytes=268435456, cancelled=lambda: False,
+                      ordered=False):
     """Resolve one immutable dataset generation in a fresh restricted process.
 
     records is an immutable tuple of (Identity, bytes); duplicate exact keys survive
@@ -70,7 +83,7 @@ def resolve_isolated(selected, records, *, deadline, limits=None,
     This is resource isolation, not a general malicious-code/filesystem sandbox.
     """
     limits = Limits() if limits is None else limits
-    if not isinstance(selected, Identity) or not isinstance(limits, Limits) or type(records) is not tuple:
+    if type(ordered) is not bool or not isinstance(selected, Identity) or not isinstance(limits, Limits) or type(records) is not tuple:
         raise ValueError('invalid_worker_input')
     if type(worker_memory_bytes) is not int or not 0 < worker_memory_bytes <= 2**63-1:
         raise ValueError('invalid_worker_memory_bytes')
@@ -82,7 +95,7 @@ def resolve_isolated(selected, records, *, deadline, limits=None,
     cap = worker_memory_bytes
     with tempfile.TemporaryFile() as request, tempfile.TemporaryFile() as response:
         _write_json(request, {'selected': asdict(selected), 'limits': asdict(limits),
-                             'deadline': deadline}, cap, check)
+                             'deadline': deadline, 'ordered': ordered}, cap, check)
         for pair in records:
             check()
             if type(pair) is not tuple or len(pair) != 2:
@@ -142,6 +155,8 @@ def resolve_isolated(selected, records, *, deadline, limits=None,
                     if outcome['worker_error'] not in {'worker_enforcement_unavailable', 'worker_memory_limit', 'worker_input_invalid', 'worker_internal_error', 'worker_transport_limit'}:
                         raise ValueError('unknown_worker_error')
                     raise WorkerError(outcome['worker_error'])
+                if outcome.get('ordered') is not ordered:
+                    raise ValueError('worker_mode_mismatch')
                 record = base64.b64decode(outcome['record'], validate=True)
                 if len(record) > limits.intermediate_creature_bytes:
                     raise ValueError('record_limit')
@@ -184,6 +199,11 @@ def _child():
         source = sys.stdin.buffer
         head = json.loads(source.readline(cap+1))
         selected, limits = Identity(**head['selected']), Limits(**head['limits'])
+        if type(head.get('ordered')) is not bool:
+            raise WorkerError('worker_input_invalid')
+        if head['ordered']:
+            from .scrying_glass_fivetools_ordered_resolution import OrderedResolver
+            Resolver = OrderedResolver
         def check():
             _check(head['deadline'], lambda: False)
         rows = []
@@ -206,7 +226,8 @@ def _child():
         check()
         outcome = {'record': base64.b64encode(result.record_json).decode('ascii'),
                    'provenance': [asdict(p) for p in result.provenance],
-                   'depth': result.inheritance_depth, 'operations': result.modification_operations}
+                   'depth': result.inheritance_depth, 'operations': result.modification_operations,
+                   'ordered': head['ordered']}
     except ResolutionError as exc:
         outcome = {'error': asdict(exc.diagnostic)}
     except MemoryError:
