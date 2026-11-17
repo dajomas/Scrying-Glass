@@ -16,6 +16,10 @@ async def logout_session(context, request, cookie_name):
     token = request.cookies.get(cookie_name, "")
     if token:
         context.SESSIONS.pop(token, None)
+        statblocks = getattr(context, "statblocks", None)
+        if statblocks is not None:
+            # Private candidates, prepared selections and outcomes end with the session.
+            statblocks.revoke_session(token)
 
     async def close_socket(socket):
         try:

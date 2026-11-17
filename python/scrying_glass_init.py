@@ -45,6 +45,8 @@ def load_config(p: Path | None) -> dict[str, Any]:
         raise ValueError('display.open5e_lookup must be true or false')
     from python.scrying_glass_open5e import base_url as open5e_base_url
     open5e_base_url(display)
+    from python.scrying_glass_statblock_limits import StatblockLimits
+    StatblockLimits.from_config(config)
     return config
 
 def password_hash(password: str, salt: bytes | None=None) -> str:

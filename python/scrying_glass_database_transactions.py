@@ -71,6 +71,10 @@ def transactional_handler(context, handler, *, role=None, cookie_name=None):
         context._bundle_files = []
         context._defer_database_broadcast = True
         context._database_broadcast_pending = False
+        # Work registered by the handler (e.g. consuming statblock selections) that must
+        # happen only once the storage transaction has committed; still under the lock.
+        outer_callbacks = getattr(context, '_commit_callbacks', None)
+        context._commit_callbacks = callbacks = []
         try:
             with context.STORAGE.transaction():
                 existing_campaigns = ownership(context).ids() if actor(context) is not None else None
@@ -94,6 +98,7 @@ def transactional_handler(context, handler, *, role=None, cookie_name=None):
                     features.after_transaction(handler.__name__,original,campaign_before)
             pending = context._database_broadcast_pending
         except BaseException as exc:
+            callbacks.clear()
             context.STATE = original
             for path in getattr(context,'_bundle_files',[]):
                 try: path.unlink(missing_ok=True)
@@ -107,6 +112,9 @@ def transactional_handler(context, handler, *, role=None, cookie_name=None):
             context._bundle_files = []
             context._defer_database_broadcast = False
             context._database_broadcast_pending = False
+            context._commit_callbacks = outer_callbacks
+        for callback in callbacks:
+            callback()
         if pending:
             await context.broadcast()
         return result

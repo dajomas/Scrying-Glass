@@ -1,5 +1,5 @@
 """Existing-monster bonus editing on the standard authenticated edit route."""
-from fastapi import Body, File, Form, UploadFile
+from fastapi import Body, File, Form, Request, UploadFile
 from fastapi.params import Form as FormParameter
 from pydantic import ValidationError
 import copy
@@ -20,8 +20,18 @@ class InitiativeEditMonstersMixin(CandidateMonstersMixin):
         initiative_bonus: str = Form(""),
         image_selection_token: str = Form(""),
         image_species: str = Form(""),
+        statblock_selection_id: str = Form(""),
+        statblock_operation_id: str = Form(""),
+        statblock_expected_revision: str = Form(""),
+        expected_values: str = Form(""),
+        request: Request = None,
     ):
-        """Blank or omitted bonus preserves assignment; explicit numbers are manual."""
+        """Blank or omitted bonus preserves assignment; explicit numbers are manual.
+
+        A staged statblock (selection, operation ID and expected revision from the
+        statblock preparation API) is saved atomically with the ordinary edit;
+        expected_values rejects the save when explicitly edited fields changed.
+        """
         monster = next((item for item in self.context.STATE["monsters"]
                         if item["id"] == ident), None)
         if monster is None:
@@ -32,6 +42,17 @@ class InitiativeEditMonstersMixin(CandidateMonstersMixin):
             image_selection_token = image_selection_token.default
         if isinstance(image_species, FormParameter):
             image_species = image_species.default
+        staged = {"selection_id": statblock_selection_id, "operation_id": statblock_operation_id,
+                  "expected_revision": statblock_expected_revision, "expected_values": expected_values}
+        staged = {key: ("" if isinstance(value, FormParameter) or value is None else value)
+                  for key, value in staged.items()}
+        plan = None
+        if any(staged.values()):
+            from .scrying_glass_statblock_service import statblock_service
+            cookie = request.cookies.get(self.context.ADMIN_SESSION_COOKIE, "") if request is not None else ""
+            plan = statblock_service(self.context).stage_edit(cookie, monster, staged)
+            if isinstance(plan, dict):
+                return plan["replay"]
         try:
             bonus = (None if not initiative_bonus.strip()
                      else creation_bonus_fields(initiative_bonus))
@@ -91,6 +112,8 @@ class InitiativeEditMonstersMixin(CandidateMonstersMixin):
                                                        image_species or monster_species)
         self.context.remember_turn_successors()
         monster.update(candidate)
+        if plan is not None:
+            plan.install(monster)
         if proposed_order is not None:
             self.context.STATE["battle_order"] = proposed_order
         if monster.get("active") and monster.get("alive"):

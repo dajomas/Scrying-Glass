@@ -86,6 +86,19 @@ Paths are relative to the appropriate listener. Admin operations require admin/s
 
 Client exposes GET /, GET/POST /login, GET /display, GET /api/state, POST /logout and WebSocket /ws. Both apps mount /static and /media.
 
+### Statblock import (SG-TODO-022.08, Admin app)
+
+| Method | Path |
+|---|---|
+| GET | /api/statblocks/state |
+| GET | /api/statblocks/monsters/{monster_id}?known_revision=N |
+| POST | /api/statblocks/discover |
+| POST | /api/statblocks/prepare (JSON candidate or multipart `.monster` file, 202) |
+| GET, DELETE | /api/statblocks/jobs/{job_id} |
+| POST | /api/statblocks/apply |
+
+Only a signed-in regular admin assigned to the active campaign is accepted; superadmin-only and client sessions get 403. Writes are same-origin; every response is no-store. Errors use `{code, message, items:[{monster_id, code, message}], retry_at?}` (401/403/404/409/410/413/422/429/504). Candidate, job and selection IDs are opaque, held in memory, bound to session, user, campaign, encounter token, target monster, species and tracker source identity, and invalid after logout, role/ownership change or restart. Apply takes `{operation_id, campaign_id, encounter_token, items:[{monster_id, expected_statblock_revision, selection_id}]}` (at most 50 items, 1 MiB) and changes everything or nothing; an identical retry returns the recorded result, other content under the same operation ID is 409. Edit Monster accepts the optional form fields `statblock_selection_id`, `statblock_operation_id`, `statblock_expected_revision` and `expected_values` (JSON of the explicitly edited fields' previous values) and saves the statblock with the ordinary edit. Limits come from `statblocks.limits` (see `config.example.yaml`). Preparation runs in prlimit-bounded worker processes outside the operation lock. Details: [handover 084](../handover/084-statblock-stage-c1-import-apis.md).
+
 ## Request contracts
 
 - Setups use name and optional campaign ID; rename adds new_name. Import is monsters-only with life_filter=alive|dead|all.
