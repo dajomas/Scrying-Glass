@@ -68,6 +68,7 @@ known. CI not run (`[skip ci]`, agreed for Stage A-E until the last code deliver
 
 - Wiring into discovery/preparation APIs, provider switches, job scheduling,
   shared caching and running these adapters in the isolated worker.
-- Open5e document licence fields were not captured; the parser accepts
-  `licenses[0].name/url` and otherwise warns `license_unavailable`. Verify against a
-  live `/documents/` response.
+- Resolved 2026-11-17 (evidence commit 5f667ae, `monsters_examples/open5e-documents/`):
+  `/v2/documents/<key>/` lists licences as `[{name, key}]` without URLs (srd-2014 has
+  both CC-BY-4.0 and OGL 1.0a). The adapter now writes one credit per licence with
+  title, author and publisher; licence URLs are only used when supplied.

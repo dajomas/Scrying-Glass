@@ -153,20 +153,29 @@ def creature_sections(record, warn):
     return sections
 
 
-def _document_credit(document, detail):
-    publisher = _named(document.get('publisher'))
-    name = document.get('display_name') or document.get('name') or document.get('key')
-    licences = detail.get('licenses') if type(detail) is dict else None
-    licence = licences[0] if type(licences) is list and licences and type(licences[0]) is dict else None
-    url = None
-    if licence:
+def _document_credits(document, detail):
+    """One credit per licence (srd-2014 lists CC-BY-4.0 and OGL 1.0a).
+
+    Captured /v2/documents/ responses (monsters_examples/open5e-documents) give
+    licences as [{name, key}] without URLs; a URL is used only when supplied.
+    """
+    detail = detail if type(detail) is dict else {}
+    publisher = _named(detail.get('publisher')) or _named(document.get('publisher'))
+    title = detail.get('display_name') or document.get('display_name') or document.get('name') or document.get('key')
+    author = detail.get('author') if type(detail.get('author')) is str and detail.get('author').strip() else None
+    attribution = f"{title}{f' by {author}' if author else ''} via Open5e"
+    licences = [l for l in detail.get('licenses') or [] if type(l) is dict and (l.get('name') or l.get('key'))]
+    credits = []
+    for licence in licences or [None]:
+        url = None
         for key in ('url', 'permalink', 'link'):
-            value = licence.get(key)
+            value = licence.get(key) if licence else None
             if type(value) is str and urlsplit(value).scheme == 'https':
                 url = value
                 break
-    return credit(f"{name} via Open5e", publisher=publisher,
-                  license_name=(licence.get('name') or licence.get('key')) if licence else None, license_url=url)
+        credits.append(credit(attribution, publisher=publisher, position=len(credits),
+                              license_name=(licence.get('name') or licence.get('key')) if licence else None, license_url=url))
+    return credits
 
 
 def prepare_open5e(key, *, fetch, deadline, base_url='https://api.open5e.com/v2', limits=None, cancelled=lambda: False):
@@ -215,7 +224,7 @@ def prepare_open5e(key, *, fetch, deadline, base_url='https://api.open5e.com/v2'
     provenance = [{'role': 'selected', 'provider': PROVIDER, 'endpoint': base, 'api_version': 'v2',
                    'entity_id': f'creature|{key}', 'source_code': document_key if type(document_key) is str else None,
                    'edition': gamesystem, 'source_url': f"https://open5e.com/monsters/{quote(key, safe='')}",
-                   'credits': [_document_credit(document, detail)]}]
+                   'credits': _document_credits(document, detail)}]
     title = subtitle(record) + (f' — {document.get("display_name") or document.get("name")}' if document.get('name') else '')
     return assemble(source_label=record['name'], subtitle=title, facts=creature_facts(record), sections=sections,
                     provenance=provenance, warnings=warnings, check=check, parser=markdown_inline,

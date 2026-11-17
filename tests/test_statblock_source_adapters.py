@@ -263,6 +263,21 @@ class CapturedEvidenceTests(unittest.TestCase):
                 available += 1
         self.assertGreater(available, 0)
 
+    def test_captured_document_licences(self):
+        documents = {Path(f).stem: Path(f).read_bytes() for f in glob.glob(str(EXAMPLES / 'open5e-documents/*.json'))}
+        record = json.loads(next(Path(f).read_bytes() for f in glob.glob(str(EXAMPLES / 'lich/0*-open5e.json'))
+                                 if json.loads(Path(f).read_bytes())['document']['key'] == 'srd-2014'))
+        def fetch(url, deadline):
+            if '/documents/' in url:
+                return documents[url.split('/documents/')[1].split('/')[0]]
+            return json.dumps(record).encode()
+        snapshot, _ = prepare_open5e(record['key'], fetch=fetch, deadline=deadline())
+        credits = snapshot['provenance'][0]['credits']
+        self.assertEqual([c['license_name'] for c in credits], ['Creative Commons Attribution 4.0', 'OPEN GAME LICENSE Version 1.0a'])
+        self.assertEqual(credits[0]['publisher'], 'Wizards of the Coast')
+        self.assertTrue(credits[0]['attribution'].startswith('5e 2014 Rules by Mike Mearls'))
+        self.assertNotIn('license_unavailable', [w['code'] for w in snapshot['warnings']])
+
     def test_every_captured_monster_file(self):
         for path in sorted(glob.glob(str(EXAMPLES / 'tetra-cube/*.monster'))):
             with self.subTest(path=Path(path).name):
