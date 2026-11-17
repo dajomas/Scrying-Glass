@@ -132,3 +132,82 @@ wording. README, HANDOVER index, parent design contract and workflow need no
 behavior/path/configuration edits for this status-only change. No production,
 test, dependency, permission, schema or CI configuration changes. Documentation
 only [skip ci]; no fresh test/CI, dispatch, merge, deployment or release claim.
+
+## 04c split and first component - 2026-11-17
+
+User requested splitting 04c and implementing/pushing the first item at 09:21 CET,
+then explicitly requested completing the 04c.1 push at 09:33 CET. The coherent
+first item is a pure executable kernel, not graph/provider integration. The
+preceding documentation-only wording describes the 04b close-out, not this mixed
+code/test/documentation delivery. Accepted 04b and earlier lifecycle work stay closed.
+
+- 022.04c.1 - implementation included in this delivery; focused component checks
+  passed, CI/formal acceptance pending. Ordered executor for appendStr, setProp
+  and prefixSuffixStringProp with dotted/root/wildcard targets, independent results,
+  contextual local errors and pre-concatenation/per-operation byte checks. Gate:
+  declared literal subset executes deterministically, input/payloads remain
+  independent, ordering and no-op/limit behavior have focused evidence.
+- 022.04c.2 - ready after c.1 delivery: integrate compiler/graph/template grouping
+  and worker execution, wrap local errors in selected/dependency diagnostics,
+  implement string remove shorthand and basic prependArr/appendArr. Verify
+  selected/template instructions merge per property before tail groups, preserve
+  logical cached accounting without double charging, and add actual graph/worker
+  fixtures without weakening existing unique assertions.
+- 022.04c.3 - pending c.2: appendIfNotExistsArr, insertArr, replaceArr,
+  replaceOrAppendArr, removeArr and renameArr; selectors, absent/no-match/duplicate
+  behavior, ordering and expansion/resource boundaries against pinned runtime.
+- 022.04c.4 - pending c.3 and applicable 04a contracts: scalarAddProp/scalarMultProp
+  and calculateProp with a restricted expression evaluator, explicit numeric-string/
+  sign/rounding semantics and adversarial bounds. Never eval/import source code.
+- 022.04c.5 - pending earlier items and safe-regex contract: replaceTxt/replaceName,
+  deliberate supported JavaScript regex/tag semantics, bounded execution and
+  combined order-sensitive compatibility/oracle evidence. No silent approximation.
+
+### c.1 contract, limits and evidence
+
+New scrying_glass_fivetools_modifications.apply_modifications consumes compiler-
+shaped records with property/mode/payload_json and requires the caller's check
+callback. Ordinary groups keep first-seen order, then _, then *; groups merge in
+supplied selected/template append order. Wildcards are property-major over the
+13 pinned COPY_ENTRY_PROPS. Logical input instructions (including no-ops) count
+once; the fixed wildcard expansion does not multiply the source instruction count.
+Payloads are decoded independently per application. Returned content is independent
+of input; failures return no partially modified record. Nested dictionary paths
+and existing canonical list indices are supported. Prototype-related/empty paths,
+array holes, coercive truthy non-string appends and dynamic <$...$> payloads fail
+explicitly. Optional string options accept string/null; broad JS coercion and
+numeric-key enumeration compatibility are not established by this component.
+No-property setProp remains a no-op, and non-string prefix/suffix targets remain
+no-ops. Other modes, including remove, remain explicitly deferred.
+
+Graph Resolver, compiler, worker and all existing tests are unchanged: nonempty
+graph modifications still fail pending 04c.2, even for these three kernel modes.
+The local diagnostic intentionally lacks selected/dependency provenance until
+that adapter wraps it. The check callback and intermediate-byte preflight are
+not a standalone hard CPU/memory ceiling. c.2 must execute this kernel inside the
+existing limited worker; source calculations still precede later normalization.
+
+The exact reconstructed code/tests were rerun on Python 3.12.8:
+`python -m unittest discover -s tests -p 'test_fivetools_modifications.py' -v`
+reported 12 tests OK, no skips/errors/failures. These execute the actual new module
+with compiler-shaped fixtures, NOT the integrated compiler/graph/worker pipeline.
+Earlier preparation corrected a fixture parameter-name collision and the executor's
+incorrect inclusion of the opcode envelope in the creature-byte allowance; the
+byte-boundary assertion was retained. No existing assertion changed.
+
+Seventeen controlled operation-level comparisons on Node 20.20.1 now match the
+Python executor's records and top-level property order. They cover append falsey/
+missing values, dotted/list paths, setProp/prefix/suffix/no-ops, group merging and
+wildcards, not full getCopy or creature/provider compatibility. Oracle used the
+unmodified recovered utils.js, blob 80c10d0439a5179b7d7f6e1220b9efb535a626d2,
+SHA-256 67c28c64fa7cc98139923d7cfdbe4faa6807b6583a54451962a988567de1a172,
+from runtime commit 32ef600fab87a585a61dd1a22e9b02dfc58c728a. Captured Parser
+slice: 178960 bytes, SHA-256 e2a1828e524727332ce9c3a9f2d0b7a5bc98ea92a0e7d4731a478c0506ca93b8.
+These are bounded synthetic comparisons, not a full schema/mode matrix or live
+provider check; broad upstream oracle coverage remains 04a/c.5/04f work.
+
+No full repository/provider regression, new combined 04b suite, Python 3.14 or
+covering CI run is claimed. Existing workflow discovery includes the new test file
+when CI runs; no workflow changes/dispatch. README/root indexes remain accurate
+for the active application and unchanged indexed paths. [skip ci] remains in
+intermediate 04 pushes until the final code push. Overall 04c/04/022 remain open.

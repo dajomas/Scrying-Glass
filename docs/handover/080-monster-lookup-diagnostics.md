@@ -68,3 +68,30 @@ combined passing run. No tests or fresh CI executed for this reconciliation.
 README, root HANDOVER index, parent design contract and workflow remain unchanged:
 no active behavior, links, configuration or design requirement changes. This is
 documentation-only [skip ci], not merge/deployment/release authorization.
+
+## 022.04c.1 standalone operation kernel - 2026-11-17
+
+Baseline 8fa1235231f0947011ebd304b735f03464ea62bd. User requested 04c splitting
+and first-item implementation/push, then completion of that push. [224 five-item
+plan, literal subset, evidence and remaining gates](../todo/224-fivetools-statblock-resolution.md#04c-split-and-first-component---2026-11-17)
+records this mixed code/test/documentation delivery. The new pure executor runs
+appendStr/setProp/prefixSuffixStringProp on independent records with grouped/tail/
+wildcard ordering, local diagnostics and bounded-growth preflight. This is not
+complete 04c or a production provider feature.
+
+Reconstructed exact source/tests reran on Python 3.12.8: 12 native component tests
+OK, no skips/errors/failures. Seventeen additional controlled comparisons match
+records/root property order using pinned unmodified upstream utils.js in Node
+20.20.1 plus a captured Parser slice. These are operation-level synthetic checks,
+not full graph/template getCopy, integrated worker or live provider validation.
+No full-suite/3.14/CI result is claimed. Initial fixture and opcode-envelope
+byte-accounting corrections retain the original boundary assertion.
+
+The graph compiler/resolver/worker and existing tests remain unchanged. Nonempty
+graph modifications still fail pending c.2; it must connect merged property groups,
+selected/dependency error context and limited-worker execution. Local callback
+checks alone are not a hard worker memory/time boundary. Unsupported/coercive/
+dynamic paths fail explicitly as detailed in 224. c.2-c.5, 04a/d-f and overall
+04 remain open; accepted 04b/lifecycle/016/017 remain closed. README/root indexes/
+workflow need no active-behavior or path changes. Intermediate 04 [skip ci] rule
+remains; no workflow dispatch, merge, deployment or release.
