@@ -4,7 +4,7 @@
 
 ## Task and status
 
-Current status - 2026-11-17: the [TODO index](../../TODO.md) entry is authoritative. 022.01-022.03 are accepted and closed; Stage A (022.04) is delivered with validation pending ([handover 082](../handover/082-fivetools-statblock-stage-a.md)); the remaining units follow the agreed Stage B-E plan. The paragraph below is the 2026-11-15 consolidation status, kept as history.
+Current status - 2026-11-17: the [TODO index](../../TODO.md) entry is authoritative. 022.01-022.03 are accepted and closed; Stage A (022.04) is delivered with validation pending ([handover 082](../handover/082-fivetools-statblock-stage-a.md)); Stage B (022.05-022.07) is delivered with validation pending ([handover 083](../handover/083-statblock-stage-b-sources.md)), including the user's 2026-11-17 decisions to offer every Open5e document and fetch document licences; the remaining units follow the agreed Stage C-E plan. The paragraph below is the 2026-11-15 consolidation status, kept as history.
 
 SG-TODO-022 remains an unimplemented feature. Design unit 022.01 is completed by this consolidated record on 2026-11-15 following the user's seven-item review, sixteen limit/policy decisions and 09:58 CET close-out request. 022.02 is ready to begin, not implemented; 022.03-022.16 remain pending. No owner, priority or deadline is assigned. All development remains on `features/perplexity-statblock` in `dajomas/Scrying-Glass`; no merge, deployment or release is implied.
 

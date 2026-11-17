@@ -57,3 +57,11 @@ final correction round.
 ## Recording instructions - 2026-11-17
 
 Save any and all generic instructions the user gives Claude in this file.
+
+## Stage B decisions - 2026-11-17
+
+- Offer Open5e records from every document, including other game systems such as
+  Advanced 5th Edition, labelled with their document and game system.
+- The Open5e adapter may make one extra cached request per document for its
+  licence and publisher.
+- Add user-supplied example files (such as `.monster` files) to `monsters_examples/`.

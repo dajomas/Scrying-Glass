@@ -36,6 +36,7 @@ class NodeBuilder:
         self.rows, self._count, self._positions = [], 0, {}
         self.check, self.warn, self.reference = check, warn, reference
         self.placeholder = None
+        self.parser = parse_inline
 
     def add(self, kind, parent, owner, **fields):
         self.check()
@@ -86,6 +87,8 @@ class NodeBuilder:
                     self.inline(node, owner, item[2], in_link=True)
             elif kind == 'group':
                 self.inline(parent, owner, item[1], in_link=in_link)
+            elif kind == 'species':
+                node = self.add('species_placeholder', parent, owner, label=item[1])
             elif kind == 'unknown':
                 self.warn('unsupported_tag', f'Tag "{item[1]}" kept as text.', owner)
                 self._text(parent, owner, item[2])
@@ -94,10 +97,10 @@ class NodeBuilder:
         if text is None or text == '':
             return
         node = self.add('paragraph', parent, owner)
-        self.inline(node, owner, parse_inline(text))
+        self.inline(node, owner, self.parser(text))
 
     def inline_text(self, parent, owner, text):
-        self.inline(parent, owner, parse_inline(text))
+        self.inline(parent, owner, self.parser(text))
 
     # -- blocks ------------------------------------------------------------
     def entries(self, parent, owner, values, path):
@@ -123,6 +126,10 @@ class NodeBuilder:
             return
         kind = value.get('type', 'entries')
         if kind in SILENT_TYPES:
+            return
+        if kind == 'inlineItems':
+            node = self.add('paragraph', parent, owner)
+            self.inline(node, owner, value.get('items') or [])
             return
         if kind == 'list':
             self._list(parent, owner, value, path)
