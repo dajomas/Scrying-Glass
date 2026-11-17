@@ -13,7 +13,7 @@ ENTRY_PROPS = ('action', 'bonus', 'reaction', 'trait', 'legendary', 'mythic',
     'variant', 'spellcasting', 'actionHeader', 'bonusHeader', 'reactionHeader',
     'legendaryHeader', 'mythicHeader')
 LITERAL_MODES = frozenset(('appendStr', 'setProp', 'prefixSuffixStringProp'))
-SUPPORTED_MODES = LITERAL_MODES | frozenset(('remove', 'appendArr', 'prependArr', 'appendIfNotExistsArr'))
+SUPPORTED_MODES = LITERAL_MODES | frozenset(('remove', 'appendArr', 'prependArr', 'appendIfNotExistsArr', 'insertArr'))
 
 @dataclass(frozen=True)
 class OperationDiagnostic:
@@ -185,17 +185,19 @@ def apply_modifications(record, instructions, *, check,
                     fail('malformed_modification_payload')
                 reject_dynamic(info)
                 keys = () if target == '_' else path(target)
-                if instruction.mode not in {'appendStr', 'appendArr', 'prependArr', 'appendIfNotExistsArr'}:
+                if instruction.mode not in {'appendStr', 'appendArr', 'prependArr', 'appendIfNotExistsArr', 'insertArr'}:
                     keys += path(info.get('prop'))
                 if not keys:
-                    if instruction.mode in {'appendStr', 'appendArr', 'prependArr', 'appendIfNotExistsArr'}:
+                    if instruction.mode in {'appendStr', 'appendArr', 'prependArr', 'appendIfNotExistsArr', 'insertArr'}:
                         fail('malformed_modification_path')
                     continue
                 old = get(output, keys)
-                if instruction.mode in {'appendArr', 'prependArr', 'appendIfNotExistsArr'}:
+                if instruction.mode in {'appendArr', 'prependArr', 'appendIfNotExistsArr', 'insertArr'}:
                     if 'items' not in info:
                         fail('malformed_modification_payload')
                     items = info['items'] if type(info['items']) is list else [info['items']]
+                    if instruction.mode == 'insertArr' and not truth(old):
+                        fail('missing_modification_target')
                     if truth(old) and type(old) is not list:
                         fail('unsupported_modification_target')
                     existing = old if type(old) is list else []
@@ -217,7 +219,12 @@ def apply_modifications(record, instructions, *, check,
                     projected = size(proposed) + size(existing)-2 + size(items)-2 + bool(existing and items)
                     if projected > intermediate_creature_bytes:
                         fail('intermediate_creature_bytes_limit')
-                    value = items + existing if instruction.mode == 'prependArr' else existing + items
+                    if instruction.mode == 'insertArr':
+                        position = insert_position(info.get('index'), len(existing), check, fail)
+                        value = existing.copy()
+                        value[position:position] = items
+                    else:
+                        value = items + existing if instruction.mode == 'prependArr' else existing + items
                     proposed = put(output, keys, value)
                 elif instruction.mode == 'setProp':
                     if 'value' not in info:
@@ -242,3 +249,24 @@ def apply_modifications(record, instructions, *, check,
                 output = proposed
     check()
     return output
+
+def insert_position(value, length, check, fail):
+    """Pinned insertArr: ToInt32(index)==-1 appends, else splice clamps/truncates.
+
+    Missing/null means zero. No boolean/string/object coercion or unsafe integer
+    rounding; these leave an explicit diagnostic. length is an internal array len.
+    """
+    import math
+    check()
+    if value is None:
+        value = 0
+    if type(value) not in (int, float):
+        fail('malformed_modification_index')
+    if type(value) is int and abs(value) > 9007199254740991:
+        fail('unsupported_modification_index')
+    if not math.isfinite(value):
+        fail('malformed_modification_index')
+    number = math.trunc(value)
+    if number & 0xFFFFFFFF == 0xFFFFFFFF:
+        return length
+    return min(number, length) if number >= 0 else max(length+number, 0)
