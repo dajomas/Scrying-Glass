@@ -1,0 +1,47 @@
+78
+tests	JavaScript tests	2026-11-20T22:09:24.3510532Z ##[endgroup]
+tests	JavaScript tests	2026-11-20T22:09:24.3511321Z ##[group]tests/campaign-create-feedback.test.cjs
+tests	JavaScript tests	2026-11-20T22:09:24.7602353Z TAP version 13
+tests	JavaScript tests	2026-11-20T22:09:24.8212892Z # Subtest: validation and confirmation cancellation preserve drafts without POST
+tests	JavaScript tests	2026-11-20T22:09:24.8220447Z ok 1 - validation and confirmation cancellation preserve drafts without POST
+tests	JavaScript tests	2026-11-20T22:09:24.8221430Z   ---
+tests	JavaScript tests	2026-11-20T22:09:24.8221967Z   duration_ms: 4.595238
+tests	JavaScript tests	2026-11-20T22:09:24.8222588Z   type: 'test'
+tests	JavaScript tests	2026-11-20T22:09:24.8223095Z   ...
+tests	JavaScript tests	2026-11-20T22:09:24.8224249Z # Subtest: exact POST, early success, own transition and three-second pane expiry
+tests	JavaScript tests	2026-11-20T22:09:24.8227454Z ok 2 - exact POST, early success, own transition and three-second pane expiry
+tests	JavaScript tests	2026-11-20T22:09:24.8228418Z   ---
+tests	JavaScript tests	2026-11-20T22:09:24.8228980Z   duration_ms: 2.015261
+tests	JavaScript tests	2026-11-20T22:09:24.8229590Z   type: 'test'
+tests	JavaScript tests	2026-11-20T22:09:24.8230122Z   ...
+tests	JavaScript tests	2026-11-20T22:09:24.8231065Z # Subtest: request rejection preserves inputs and matching retry preserves unrelated error
+tests	JavaScript tests	2026-11-20T22:09:24.8232843Z ok 3 - request rejection preserves inputs and matching retry preserves unrelated error
+tests	JavaScript tests	2026-11-20T22:09:24.8234196Z   ---
+tests	JavaScript tests	2026-11-20T22:09:24.8234608Z   duration_ms: 1.311444
+tests	JavaScript tests	2026-11-20T22:09:24.8235055Z   type: 'test'
+tests	JavaScript tests	2026-11-20T22:09:24.8235437Z   ...
+tests	JavaScript tests	2026-11-20T22:09:24.8236350Z # Subtest: applied creation plus refresh failure persists with no mutation replay
+tests	JavaScript tests	2026-11-20T22:09:24.8237633Z ok 4 - applied creation plus refresh failure persists with no mutation replay
+tests	JavaScript tests	2026-11-20T22:09:24.8238610Z   ---
+tests	JavaScript tests	2026-11-20T22:09:24.8239218Z   duration_ms: 1.183405
+tests	JavaScript tests	2026-11-20T22:09:24.8239822Z   type: 'test'
+tests	JavaScript tests	2026-11-20T22:09:24.8240345Z   ...
+tests	JavaScript tests	2026-11-20T22:09:24.8241254Z # Subtest: duplicate protection covers POST, refresh and edit delegation
+tests	JavaScript tests	2026-11-20T22:09:24.8244799Z ok 5 - duplicate protection covers POST, refresh and edit delegation
+tests	JavaScript tests	2026-11-20T22:09:24.8245781Z   ---
+tests	JavaScript tests	2026-11-20T22:09:24.8246342Z   duration_ms: 1.393397
+tests	JavaScript tests	2026-11-20T22:09:24.8246931Z   type: 'test'
+tests	JavaScript tests	2026-11-20T22:09:24.8247473Z   ...
+tests	JavaScript tests	2026-11-20T22:09:24.8248607Z # Subtest: new input, including edit-revert, suppresses old success and retains modal
+tests	JavaScript tests	2026-11-20T22:09:24.8250034Z ok 6 - new input, including edit-revert, suppresses old success and retains modal
+tests	JavaScript tests	2026-11-20T22:09:24.8251594Z   ---
+tests	JavaScript tests	2026-11-20T22:09:24.8252035Z   duration_ms: 2.344126
+tests	JavaScript tests	2026-11-20T22:09:24.8252496Z   type: 'test'
+tests	JavaScript tests	2026-11-20T22:09:24.8252890Z   ...
+tests	JavaScript tests	2026-11-20T22:09:24.8253916Z # Subtest: cancel/reopen and unrelated scope suppress obsolete POST completion
+tests	JavaScript tests	2026-11-20T22:09:24.8255113Z ok 7 - cancel/reopen and unrelated scope suppress obsolete POST completion
+tests	JavaScript tests	2026-11-20T22:09:24.8255880Z   ---
+tests	JavaScript tests	2026-11-20T22:09:24.8256274Z   duration_ms: 2.240401
+tests	JavaScript tests	2026-11-20T22:09:24.8256714Z   type: 'test'
+tests	JavaScript tests	2026-11-20T22:09:24.8257108Z   ...
+tests	JavaScript tests	2026-11-20T22:09:24.8257785Z # Subtest: expected transition may arrive before PO

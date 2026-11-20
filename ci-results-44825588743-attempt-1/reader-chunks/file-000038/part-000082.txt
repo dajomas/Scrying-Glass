@@ -1,0 +1,26 @@
+back (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1909659Z   File "python/scrying_glass_monster_selection.py", line 199, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1910609Z     index = _fivetools_index(root)
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1911542Z   File "python/scrying_glass_monster_selection.py", line 167, in _fivetools_index
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1912442Z     index = ft.load_json(root + "/index.json")
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1913760Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1914755Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1915326Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1916381Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1917421Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1918055Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1919158Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1920105Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1920519Z OSError: private detail
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1921358Z 5e.tools candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1921924Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1922833Z   File "python/scrying_glass_monster_selection.py", line 196, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1923953Z     sources = ft.configured_sources(display)
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1925102Z   File "/tmp/scrying-tests-3ga4u5rj/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1926842Z     raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1928579Z ValueError: fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1929595Z ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.1992012Z test_candidate_explicit_order_and_duplicates (test_fivetools_source_configuration.SourceConfigurationTests.test_candidate_explicit_order_and_duplicates) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.2064692Z test_candidates_enumerate_six_sources_in_order (test_fivetools_source_configuration.SourceConfigurationTests.test_candidates_enumerate_six_sources_in_order) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.2138742Z test_config_omitted_defaults_and_no_aliasing (test_fivetools_source_configuration.SourceConfigurationTests.test_config_omitted_defaults_and_no_aliasing) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:05:47.2208038Z test_empty_list_does_not_even_fetch_index (test_fivetools_source_con

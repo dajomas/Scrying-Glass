@@ -1,0 +1,47 @@
+##[group]tests/admin-start-feedback.test.cjs
+tests	JavaScript tests	2026-11-20T22:09:16.7383780Z TAP version 13
+tests	JavaScript tests	2026-11-20T22:09:16.7919724Z # Subtest: Start keeps URL, method, JSON payload and undefined result; success collapses then refreshes
+tests	JavaScript tests	2026-11-20T22:09:16.7928350Z ok 1 - Start keeps URL, method, JSON payload and undefined result; success collapses then refreshes
+tests	JavaScript tests	2026-11-20T22:09:16.7929577Z   ---
+tests	JavaScript tests	2026-11-20T22:09:16.7930323Z   duration_ms: 3.444544
+tests	JavaScript tests	2026-11-20T22:09:16.7931029Z   type: 'test'
+tests	JavaScript tests	2026-11-20T22:09:16.7931668Z   ...
+tests	JavaScript tests	2026-11-20T22:09:16.7932810Z # Subtest: request failure is persistent, explicit and leaves panes/refresh untouched
+tests	JavaScript tests	2026-11-20T22:09:16.7935104Z ok 2 - request failure is persistent, explicit and leaves panes/refresh untouched
+tests	JavaScript tests	2026-11-20T22:09:16.7936471Z   ---
+tests	JavaScript tests	2026-11-20T22:09:16.7944303Z   duration_ms: 2.132129
+tests	JavaScript tests	2026-11-20T22:09:16.7944832Z   type: 'test'
+tests	JavaScript tests	2026-11-20T22:09:16.7945232Z   ...
+tests	JavaScript tests	2026-11-20T22:09:16.7946051Z # Subtest: matching successful retry resolves only Start error, before refreshing
+tests	JavaScript tests	2026-11-20T22:09:16.7947212Z ok 3 - matching successful retry resolves only Start error, before refreshing
+tests	JavaScript tests	2026-11-20T22:09:16.7964230Z   ---
+tests	JavaScript tests	2026-11-20T22:09:16.7964624Z   duration_ms: 1.210856
+tests	JavaScript tests	2026-11-20T22:09:16.7965045Z   type: 'test'
+tests	JavaScript tests	2026-11-20T22:09:16.7965405Z   ...
+tests	JavaScript tests	2026-11-20T22:09:16.7966028Z # Subtest: an unrelated success does not resolve a Start error
+tests	JavaScript tests	2026-11-20T22:09:16.7966894Z ok 4 - an unrelated success does not resolve a Start error
+tests	JavaScript tests	2026-11-20T22:09:16.7967478Z   ---
+tests	JavaScript tests	2026-11-20T22:09:16.7967838Z   duration_ms: 0.942474
+tests	JavaScript tests	2026-11-20T22:09:16.7968231Z   type: 'test'
+tests	JavaScript tests	2026-11-20T22:09:16.7968595Z   ...
+tests	JavaScript tests	2026-11-20T22:09:16.7969400Z # Subtest: repeated failure replaces the related notice rather than duplicating it
+tests	JavaScript tests	2026-11-20T22:09:16.7970616Z ok 5 - repeated failure replaces the related notice rather than duplicating it
+tests	JavaScript tests	2026-11-20T22:09:16.7971515Z   ---
+tests	JavaScript tests	2026-11-20T22:09:16.7971899Z   duration_ms: 1.000392
+tests	JavaScript tests	2026-11-20T22:09:16.7972353Z   type: 'test'
+tests	JavaScript tests	2026-11-20T22:09:16.7972725Z   ...
+tests	JavaScript tests	2026-11-20T22:09:16.7973639Z # Subtest: older failure cannot overwrite a newer request failure
+tests	JavaScript tests	2026-11-20T22:09:16.7974619Z ok 6 - older failure cannot overwrite a newer request failure
+tests	JavaScript tests	2026-11-20T22:09:16.7975285Z   ---
+tests	JavaScript tests	2026-11-20T22:09:16.7975663Z   duration_ms: 0.896447
+tests	JavaScript tests	2026-11-20T22:09:16.7976108Z   type: 'test'
+tests	JavaScript tests	2026-11-20T22:09:16.7976482Z   ...
+tests	JavaScript tests	2026-11-20T22:09:16.7977305Z # Subtest: older success cannot clear a newer failure or collapse/refresh its view
+tests	JavaScript tests	2026-11-20T22:09:16.7978559Z ok 7 - older success cannot clear a newer failure or collapse/refresh its view
+tests	JavaScript tests	2026-11-20T22:09:16.7979748Z   ---
+tests	JavaScript tests	2026-11-20T22:09:16.7980143Z   duration_ms: 0.941301
+tests	JavaScript tests	2026-11-20T22:09:16.7980580Z   type: 'test'
+tests	JavaScript tests	2026-11-20T22:09:16.7980960Z   ...
+tests	JavaScript tests	2026-11-20T22:09:16.7981643Z # Subtest: old-scope failure cannot publish in the new encounter
+tests	JavaScript tests	2026-11-20T22:09:16.7982628Z ok 8 - old-scope failure cannot publish in the new encounter
+tests	JavaS

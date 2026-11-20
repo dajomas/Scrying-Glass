@@ -1,0 +1,23 @@
+ticFormTests.test_bonus_parameter_is_optional_form_input) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:12.2601161Z test_optional_signed_field_and_order_without_help (test_manual_monster_bonus_form.StaticFormTests.test_optional_signed_field_and_order_without_help) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:12.9009375Z test_image_rejection_and_refresh_failure (test_monster_bonus_edit_ui.MonsterBonusEditUITests.test_image_rejection_and_refresh_failure) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6094753Z test_native_edit_render_submission_and_character_isolation (test_monster_bonus_edit_ui.MonsterBonusEditUITests.test_native_edit_render_submission_and_character_isolation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6139046Z test_script_is_loaded_after_admin (test_monster_bonus_edit_ui.MonsterBonusEditUITests.test_script_is_loaded_after_admin) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6199111Z test_import_hands_the_file_to_statblock_collection (test_monster_bonus_import.ImportedConstructionTests.test_import_hands_the_file_to_statblock_collection) ... Statblock collection for added monsters was not started
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6200371Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6201185Z   File "/tmp/scrying-tests-3ga4u5rj/repo/python/scrying_glass_statblock_collecting.py", line 229, in collect_after_add
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6202781Z     return service.collect_new_monsters([m['id'] for m in created], file_bytes=file_bytes, filename=filename)
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6203873Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6204697Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6205385Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6205761Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6206547Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6207683Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6208114Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6208753Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6209311Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6209587Z RuntimeError: collection failed
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6210333Z ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6252530Z test_invalid_import_rejected_before_media_lookup_or_append (test_monster_bonus_import.ImportedConstructionTests.test_invalid_import_rejected_before_media_lookup_or_append) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6270959Z test_legacy_import_uses_existing_default_normalization (test_monster_bonus_import.ImportedConstructionTests.test_legacy_import_uses_existing_default_normalization) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:06:14.6290841Z test_parsed_bonu

@@ -1,0 +1,32 @@
+t checks	2026-11-20T22:12:53.0772223Z OK
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.0932531Z Connection audit: test_fivetools_resolution_bounds.py
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.2027888Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.2028627Z Ran 11 tests in 0.009s
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.2028870Z 
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.2029000Z OK
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.2034586Z test_fivetools_resolution_bounds.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.2181464Z Connection audit: test_fivetools_resolution_cache.py
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.3280498Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.3281619Z test_fivetools_resolution_cache.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.3282545Z Ran 12 tests in 0.008s
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.3282876Z 
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.3283478Z OK
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.3443125Z Connection audit: test_fivetools_source_configuration.py
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4740846Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4741629Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4742636Z   File "python/scrying_glass_monster_selection.py", line 199, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4743811Z     index = _fivetools_index(root)
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4744777Z   File "python/scrying_glass_monster_selection.py", line 167, in _fivetools_index
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4745758Z     index = ft.load_json(root + "/index.json")
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4747509Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4748520Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4749094Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4750137Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4751202Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4751860Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4752994Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4754198Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4754619Z OSError: private detail
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4755154Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4755729Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-20T22:12:53.4756629Z   File "python/scrying_glass_monster_selection.py", line 196, in
