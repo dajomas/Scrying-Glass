@@ -16,9 +16,22 @@ here, dated.
   decide which TODO items are open and ready.
 - Follow `PERPLEXITY_INSTRUCTIONS.md`, except where this file says otherwise.
 
-## Delivery - 2026-11-17
+## Delivery - 2026-11-20
 
-Until the user says otherwise, this replaces delivery by GitHub push:
+This replaces the 2026-11-17 delivery instructions below:
+
+- Claude delivers by pushing to GitHub.
+- For now, Claude pushes to the branch `features/claude-statblock`.
+- When Claude pushes to GitHub, no zip archive and no `Patch/` folder are
+  provided.
+- The approval workflow in section 8 of `PERPLEXITY_INSTRUCTIONS.md` stays in
+  force: before every push, Claude shows the exact files, content and commit
+  message, and pushes only after the user approves them.
+
+## Delivery - 2026-11-17 (superseded 2026-11-20)
+
+Superseded by the 2026-11-20 delivery instructions above. Until the user said
+otherwise, this replaced delivery by GitHub push:
 
 - Claude does not push to GitHub.
 - For every implementation, Claude provides a zip archive with all new and
