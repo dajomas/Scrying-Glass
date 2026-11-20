@@ -1,0 +1,32 @@
+and audit checks	2026-11-20T19:48:56.9537039Z Ran 10 tests in 0.021s
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:56.9537271Z 
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:56.9537414Z OK
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:56.9546530Z test_ci_browser_provisioning.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:56.9664121Z Connection audit: test_ci_publication_branch_allowlists.py
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0713271Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0714186Z FAIL: test_workflow_allowlist (test_ci_publication_branch_allowlists.PublicationBranchAllowlistsTests.test_workflow_allowlist)
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0714978Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0715639Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0716345Z   File "/tmp/scrying-tests-usiexp_7/repo/tests/test_ci_publication_branch_allowlists.py", line 24, in test_workflow_allowlist
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0717150Z     self.assertEqual({value.strip() for value in match[1].split(",")}, EXPECTED)
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0717669Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0718151Z AssertionError: Items in the first set but not the second:
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0718531Z 'features/claude-statblock'
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0718802Z 'features/claude'
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0718938Z 
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0719176Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0719540Z Ran 3 tests in 0.022s
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0719686Z 
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0719803Z FAILED (failures=1)
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0736306Z test_ci_publication_branch_allowlists.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0838378Z FAIL: test_ci_publication_branch_allowlists.py (exit 1)
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.0839096Z Connection audit: test_client_campaign.py
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.2122082Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.2123226Z Ran 6 tests in 0.043s
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.2123646Z 
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.2123885Z OK
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.2125267Z test_client_campaign.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.2239878Z Connection audit: test_combined_monster_lookup.py
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.3129910Z Combined monster lookup failed for D&D Beyond
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.3130887Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-20T19:48:57.3132080Z   File "/tmp/scrying-tests-usiexp_7/repo/python/scrying_glass_com

@@ -1,0 +1,42 @@
+dules	2026-11-20T19:45:35.2457076Z ##[endgroup]
+tests	Pytest regression modules	2026-11-20T19:45:37.9644927Z ...........................................                              [100%]
+tests	Pytest regression modules	2026-11-20T19:45:37.9645852Z 43 passed in 1.46s
+tests	JavaScript tests	﻿2026-11-20T19:45:38.0824669Z ##[group]Run status=0
+tests	JavaScript tests	2026-11-20T19:45:38.0824978Z ^[[36;1mstatus=0^[[0m
+tests	JavaScript tests	2026-11-20T19:45:38.0825479Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	JavaScript tests	2026-11-20T19:45:38.0825785Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	JavaScript tests	2026-11-20T19:45:38.0826168Z ^[[36;1m  python tools/run_split_tests.py -- node --test "$test" || status=1^[[0m
+tests	JavaScript tests	2026-11-20T19:45:38.0826585Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	JavaScript tests	2026-11-20T19:45:38.0826991Z ^[[36;1mdone < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)^[[0m
+tests	JavaScript tests	2026-11-20T19:45:38.0827416Z ^[[36;1mexit "$status"^[[0m
+tests	JavaScript tests	2026-11-20T19:45:38.0861568Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	JavaScript tests	2026-11-20T19:45:38.0861916Z env:
+tests	JavaScript tests	2026-11-20T19:45:38.0862380Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	JavaScript tests	2026-11-20T19:45:38.0862977Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-20T19:45:38.0863410Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	JavaScript tests	2026-11-20T19:45:38.0863899Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-20T19:45:38.0864284Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-20T19:45:38.0864683Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-20T19:45:38.0865317Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	JavaScript tests	2026-11-20T19:45:38.0865669Z ##[endgroup]
+tests	JavaScript tests	2026-11-20T19:45:38.0964248Z ##[group]tests/admin-activity-log-clear-feedback.test.cjs
+tests	JavaScript tests	2026-11-20T19:45:38.4990389Z TAP version 13
+tests	JavaScript tests	2026-11-20T19:45:38.5658602Z # Subtest: cancel retains count confirmation, existing error and pending identity
+tests	JavaScript tests	2026-11-20T19:45:38.5665866Z ok 1 - cancel retains count confirmation, existing error and pending identity
+tests	JavaScript tests	2026-11-20T19:45:38.5666825Z   ---
+tests	JavaScript tests	2026-11-20T19:45:38.5667461Z   duration_ms: 4.411121
+tests	JavaScript tests	2026-11-20T19:45:38.5668081Z   type: 'test'
+tests	JavaScript tests	2026-11-20T19:45:38.5668638Z   ...
+tests	JavaScript tests	2026-11-20T19:45:38.5672193Z # Subtest: empty emits explicit info without confirmation, request or refresh
+tests	JavaScript tests	2026-11-20T19:45:38.5674806Z ok 2 - empty emits explicit info without confirmation, request or refresh
+tests	JavaScript tests	2026-11-20T19:45:38.5675780Z   ---
+tests	JavaScript tests	2026-11-20T19:45:38.5676106Z   duration_ms: 0.999971
+tests	JavaScript tests	2026-11-20T19:45:38.5676505Z   type: 'test'
+tests	JavaScript tests	2026-11-20T19:45:38.5682425Z   ...
+tests	JavaScript tests	2026-11-20T19:45:38.5706482Z # Subtest: empty is not server success and cannot erase a matching clear failure
+tests	JavaScript tests	2026-11-20T19:45:38.5720383Z ok 3 - empty is not server success and cannot erase a matching clear failure
+tests	JavaScript tests	2026-11-20T19:45:38.5721103Z   ---
+tests	JavaScript tests	2026-11-20T19:45:38.5721444Z   duration_ms: 1.037531
+tests	JavaScript tests	2026-11-20T19:45:38.5721842Z   type: 'test'
+tests	JavaScript tests	2026-11-20T19:45:38.5722173Z   ...
+tests	JavaScript tests	2026-11-20T19:45:38.5722888Z # Subtest: repeated empty notices replace one info record without erasing

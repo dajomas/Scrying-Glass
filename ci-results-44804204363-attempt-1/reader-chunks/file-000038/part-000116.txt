@@ -1,0 +1,23 @@
+g browser fixtures)	2026-11-20T19:44:07.5959726Z test_sources_list_configured_books_then_open5e_documents_without_dnd_beyond (test_monster_source_catalog.CatalogFunctionTests.test_sources_list_configured_books_then_open5e_documents_without_dnd_beyond) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6173704Z test_routes_require_admin_and_validate_input (test_monster_source_catalog.CatalogRouteTests.test_routes_require_admin_and_validate_input) ... Monster source catalog failed
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6174778Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6175711Z   File "/tmp/scrying-tests-z0v287us/repo/python/scrying_glass_source_catalog.py", line 81, in run
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6176533Z     return await asyncio.to_thread(function, effective_display(context), *args)
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6177145Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6177968Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/threads.py", line 26, in to_thread
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6178728Z     return await loop.run_in_executor(None, func_call)
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6179192Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6179957Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6180668Z     result = ctx.run(self.task)
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6181396Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6182090Z     return fn(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6182796Z   File "/tmp/scrying-tests-z0v287us/repo/python/scrying_glass_source_catalog.py", line 47, in monsters
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6183737Z     items = [{"id": name, "name": name} for name, _ in ms.fivetools_source_entries(display, source)]
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6184471Z                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6185906Z   File "/tmp/scrying-tests-z0v287us/repo/python/scrying_glass_monster_selection.py", line 229, in fivetools_source_entries
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6187117Z     raise ValueError("5e.tools source is not configured")
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6187663Z ValueError: 5e.tools source is not configured
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:07.6223731Z ok
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:08.9685609Z test_help_and_checkbox_label_render_without_mutation (test_monster_source_help_text.SourceHelpBrowserTests.test_help_and_checkbox_label_render_without_mutation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:09.0004319Z test_config_comments_explain_compatibility_without_changing_defaults (test_monster_source_help_text.SourceHelpTests.test_config_comments_explain_compatibility_without_changing_defaults) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T19:44:09.0018206Z test_lookup_help_is_concise_and_preserves_essential_guidance (test_monster_sou

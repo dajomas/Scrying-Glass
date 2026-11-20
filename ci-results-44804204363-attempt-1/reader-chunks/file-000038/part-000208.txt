@@ -1,0 +1,50 @@
+1.1251247Z ok 11 - stale actor after request cannot refresh, close or publish completion
+tests	JavaScript tests	2026-11-20T19:45:51.1251938Z   ---
+tests	JavaScript tests	2026-11-20T19:45:51.1252290Z   duration_ms: 0.839322
+tests	JavaScript tests	2026-11-20T19:45:51.1252716Z   type: 'test'
+tests	JavaScript tests	2026-11-20T19:45:51.1253083Z   ...
+tests	JavaScript tests	2026-11-20T19:45:51.1259024Z # Subtest: scope changing during refresh suppresses completion and closing
+tests	JavaScript tests	2026-11-20T19:45:51.1260653Z ok 12 - scope changing during refresh suppresses completion and closing
+tests	JavaScript tests	2026-11-20T19:45:51.1261843Z   ---
+tests	JavaScript tests	2026-11-20T19:45:51.1262497Z   duration_ms: 0.842759
+tests	JavaScript tests	2026-11-20T19:45:51.1262959Z   type: 'test'
+tests	JavaScript tests	2026-11-20T19:45:51.1263344Z   ...
+tests	JavaScript tests	2026-11-20T19:45:51.1264269Z # Subtest: request rejection remains local, restores controls and never replays automatically
+tests	JavaScript tests	2026-11-20T19:45:51.1265891Z ok 13 - request rejection remains local, restores controls and never replays automatically
+tests	JavaScript tests	2026-11-20T19:45:51.1266743Z   ---
+tests	JavaScript tests	2026-11-20T19:45:51.1267120Z   duration_ms: 0.895167
+tests	JavaScript tests	2026-11-20T19:45:51.1267549Z   type: 'test'
+tests	JavaScript tests	2026-11-20T19:45:51.1267930Z   ...
+tests	JavaScript tests	2026-11-20T19:45:51.1268787Z # Subtest: applied mutation with refresh rejection remains distinct and is not replayed
+tests	JavaScript tests	2026-11-20T19:45:51.1274535Z ok 14 - applied mutation with refresh rejection remains distinct and is not replayed
+tests	JavaScript tests	2026-11-20T19:45:51.1275234Z   ---
+tests	JavaScript tests	2026-11-20T19:45:51.1275544Z   duration_ms: 0.844272
+tests	JavaScript tests	2026-11-20T19:45:51.1275805Z   type: 'test'
+tests	JavaScript tests	2026-11-20T19:45:51.1276030Z   ...
+tests	JavaScript tests	2026-11-20T19:45:51.1276394Z # Subtest: duplicate submit during mutation sends one request
+tests	JavaScript tests	2026-11-20T19:45:51.1276910Z ok 15 - duplicate submit during mutation sends one request
+tests	JavaScript tests	2026-11-20T19:45:51.1277489Z   ---
+tests	JavaScript tests	2026-11-20T19:45:51.1277716Z   duration_ms: 1.447214
+tests	JavaScript tests	2026-11-20T19:45:51.1277969Z   type: 'test'
+tests	JavaScript tests	2026-11-20T19:45:51.1278191Z   ...
+tests	JavaScript tests	2026-11-20T19:45:51.1278589Z # Subtest: zero input and invalid actor remain local and send no request
+tests	JavaScript tests	2026-11-20T19:45:51.1279181Z ok 16 - zero input and invalid actor remain local and send no request
+tests	JavaScript tests	2026-11-20T19:45:51.1279566Z   ---
+tests	JavaScript tests	2026-11-20T19:45:51.1279789Z   duration_ms: 0.74155
+tests	JavaScript tests	2026-11-20T19:45:51.1280054Z   type: 'test'
+tests	JavaScript tests	2026-11-20T19:45:51.1280275Z   ...
+tests	JavaScript tests	2026-11-20T19:45:51.1338111Z 1..16
+tests	JavaScript tests	2026-11-20T19:45:51.1338575Z # tests 16
+tests	JavaScript tests	2026-11-20T19:45:51.1339125Z # suites 0
+tests	JavaScript tests	2026-11-20T19:45:51.1339650Z # pass 16
+tests	JavaScript tests	2026-11-20T19:45:51.1340169Z # fail 0
+tests	JavaScript tests	2026-11-20T19:45:51.1340695Z # cancelled 0
+tests	JavaScript tests	2026-11-20T19:45:51.1341206Z # skipped 0
+tests	JavaScript tests	2026-11-20T19:45:51.1341705Z # todo 0
+tests	JavaScript tests	2026-11-20T19:45:51.1342966Z # duration_ms 85.916949
+tests	JavaScript tests	2026-11-20T19:45:51.1916136Z ##[endgroup]
+tests	JavaScript tests	2026-11-20T19:45:51.1917089Z ##[group]tests/battle-action-selection.test.cjs
+tests	JavaScript tests	2026-11-20T19:45:51.5746582Z TAP version 13
+tests	JavaScript tests	2026-11-20T19:45:51.6137033Z # Explicit target/source selection regression tests passed.
+tests	JavaScript tests	2026-11-20T19:45:51.6190034Z # Subtest: tests/battle-action-selection.test.cjs
+tests	JavaScript tests	2026-11-20T19:45:51.619772
