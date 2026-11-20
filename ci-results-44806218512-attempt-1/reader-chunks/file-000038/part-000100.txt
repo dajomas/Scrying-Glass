@@ -1,0 +1,25 @@
+Python test suite (including browser fixtures)	2026-11-20T19:55:46.8579510Z ok
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8581524Z test_secondary_failure_returns_no_candidates_and_never_signs (test_monster_candidate_selection.CandidateTests.test_secondary_failure_returns_no_candidates_and_never_signs) ... Combined monster lookup failed for 5e.tools
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8582341Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8582784Z   File "/tmp/scrying-tests-333t7me3/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8583155Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8583519Z   File "/tmp/scrying-tests-333t7me3/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8583917Z     lambda: fivetools_candidates(species, display),
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8584207Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8584638Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8585092Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8585322Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8585721Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8586112Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8586364Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8586833Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8587216Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8587484Z python.scrying_glass_monster_selection.ProviderError: secret
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8587730Z ok
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8588035Z test_tokens (test_monster_candidate_selection.CandidateTests.test_tokens) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8588694Z test_unconfigured_entry_source_is_not_offered (test_monster_candidate_selection.CandidateTests.test_unconfigured_entry_source_is_not_offered) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8590855Z test_unusable_duplicates_and_image (test_monster_candidate_selection.CandidateTests.test_unusable_duplicates_and_image) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8609475Z test_selection_and_manual_never_relookup (test_monster_candidate_selection.CreationTests.test_selection_and_manual_never_relookup) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8624148Z test_bonus_edit_reorders_and_keeps_turn_round_and_character (test_monster_edit_order.MonsterEditOrderTests.test_bonus_edit_reorders_and_keeps_turn_round_and_character) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T19:55:46.8634910Z test_invalid_order_rejected_before_image_and_mutation (test_monster_edit_order.MonsterEditOrderTests.test_invalid_order_rejected_before_image_and_mutation) ... ok
+tes

@@ -1,0 +1,31 @@
+	2026-11-20T19:59:52.7655575Z Chromium provisioning failed: Command 'download' returned non-zero exit status 1.
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.7656139Z Chromium headless launch/render preflight passed.
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.7659091Z Chromium preflight failed: missing library
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.7659735Z Attempting native dependency installation, then rechecking Chromium.
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.7660293Z Chromium headless launch/render preflight passed.
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.7661990Z Chromium preflight failed: cannot launch
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.7662375Z Attempting native dependency installation, then rechecking Chromium.
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.7662799Z Chromium provisioning failed: cannot launch
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.7666323Z Chromium preflight failed: missing library
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.7666742Z Attempting native dependency installation, then rechecking Chromium.
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.7667173Z Chromium provisioning failed: Command 'apt' returned non-zero exit status 100.
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.7780382Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.7780932Z test_ci_browser_provisioning.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.7781273Z Ran 10 tests in 0.013s
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.7781396Z 
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.7781472Z OK
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.7899092Z Connection audit: test_ci_publication_branch_allowlists.py
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.8608138Z ======================================================================
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.8609616Z FAIL: test_workflow_allowlist (test_ci_publication_branch_allowlists.PublicationBranchAllowlistsTests.test_workflow_allowlist)
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.8610744Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.8611124Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.8612105Z   File "/tmp/scrying-tests-tqfkv31x/repo/tests/test_ci_publication_branch_allowlists.py", line 24, in test_workflow_allowlist
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.8612982Z     self.assertEqual({value.strip() for value in match[1].split(",")}, EXPECTED)
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.8613828Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.8614361Z AssertionError: Items in the first set but not the second:
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.8614735Z 'features/claude'
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.8615031Z 'features/claude-statblock'
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.8615206Z 
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.8615460Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-20T19:59:52.8615827Z Ran 3 tests in 0.013s
+tests	Standalone Python browser and aud
