@@ -1,0 +1,21 @@
+on test suite (including browser fixtures)	2026-11-20T21:08:53.1936340Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:53.1936838Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:53.1937364Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:53.1937979Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:53.1938520Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:53.1939336Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:53.1939858Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:53.1940155Z sqlite3.OperationalError: locked
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:53.1945052Z ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:53.1963172Z test_explicit_manual_bonus_and_unset_roll_total (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_explicit_manual_bonus_and_unset_roll_total) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:53.1981332Z test_explicit_zero_and_blank_have_distinct_origins (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_explicit_zero_and_blank_have_distinct_origins) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:53.1996170Z test_invalid_bonus_before_side_effects (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_invalid_bonus_before_side_effects) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:53.2013412Z test_omitted_bonus_direct_call_default (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_omitted_bonus_direct_call_default) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:53.2036997Z test_quantity_keeps_negative_bonus_and_unique_ids (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_quantity_keeps_negative_bonus_and_unique_ids) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:53.2061046Z test_scope_change_during_lookup_still_rejected (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_scope_change_during_lookup_still_rejected) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:53.2086839Z test_selected_image_snapshot_is_retained (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_selected_image_snapshot_is_retained) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:53.2104295Z test_uploaded_image_precedence_is_unchanged (test_manual_monster_bonus_creation.ManualBonusCreationTests.test_uploaded_image_precedence_is_unchanged) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:54.4408231Z test_bonus_in_combat_statistics_without_help_and_idempotence (test_manual_monster_bonus_form.AssembledMonsterEntryTests.test_bonus_in_combat_statistics_without_help_and_idempotence) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:55.3006698Z test_species_blur_defaults_only_blank_name (test_manual_monster_bonus_form.AssembledMonsterEntryTests.test_species_blur_defaults_only_blank_name) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:55.8593314Z test_native_values_reset_and_scope (test_manual_monster_bonus_form.NativeFormDataTests.test_native_values_reset_and_scope) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:08:55.8644876Z test_bonus_parameter_is_optional_form_input (test_manual_monster_bonus_form.Sta

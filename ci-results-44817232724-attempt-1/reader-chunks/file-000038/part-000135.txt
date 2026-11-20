@@ -1,0 +1,20 @@
+1:10:46.8505556Z test_counter_only_source_does_not_export_its_history (test_statblock_clone_kernel.PrivateCloneKernelTests.test_counter_only_source_does_not_export_its_history) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:46.8874208Z test_partial_graph_write_rolls_back_clone_and_outer_tracker_creation (test_statblock_clone_kernel.PrivateCloneKernelTests.test_partial_graph_write_rolls_back_clone_and_outer_tracker_creation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:46.9235416Z test_same_mismatched_and_owned_destinations_are_rejected (test_statblock_clone_kernel.PrivateCloneKernelTests.test_same_mismatched_and_owned_destinations_are_rejected) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:46.9733308Z test_a_context_without_the_service_and_any_failure_never_fail_the_add (test_statblock_collection.CollectionTests.test_a_context_without_the_service_and_any_failure_never_fail_the_add) ... Statblock collection for added monsters was not started
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:46.9734569Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:46.9735394Z   File "/tmp/scrying-tests-gl24niyh/repo/python/scrying_glass_statblock_collecting.py", line 229, in collect_after_add
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:46.9736599Z     return service.collect_new_monsters([m['id'] for m in created], file_bytes=file_bytes, filename=filename)
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:46.9737475Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:46.9738074Z   File "/tmp/scrying-tests-gl24niyh/repo/tests/test_statblock_collection.py", line 188, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:46.9738931Z     broken = type('Broken', (), {'collect_new_monsters': lambda *a, **k: 1 / 0})()
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:46.9739377Z                                                                          ~~^~~
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:46.9739747Z ZeroDivisionError: division by zero
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:46.9750431Z ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:47.0917780Z test_a_different_statblock_is_replaced_only_after_confirmation (test_statblock_collection.CollectionTests.test_a_different_statblock_is_replaced_only_after_confirmation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:47.1692212Z test_add_from_a_source_collects_one_statblock_for_every_copy (test_statblock_collection.CollectionTests.test_add_from_a_source_collects_one_statblock_for_every_copy) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:47.2471438Z test_an_unavailable_statblock_leaves_the_monsters_without_one (test_statblock_collection.CollectionTests.test_an_unavailable_statblock_leaves_the_monsters_without_one) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:47.3777150Z test_changed_monsters_wait_for_confirmation_and_removed_ones_are_skipped (test_statblock_collection.CollectionTests.test_changed_monsters_wait_for_confirmation_and_removed_ones_are_skipped) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:47.4587763Z test_held_statblocks_expire_and_requests_are_validated (test_statblock_collection.CollectionTests.test_held_statblocks_expire_and_requests_are_validated) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T21:10:47.5336695Z test_import_uses_the_file_as_the_statblock (test_statblock_collection.CollectionTests.test_import_uses_the_file_as_the_statblock) ... ok
+tests	Python test suite (in
