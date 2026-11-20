@@ -1,0 +1,50 @@
+ion rebinds render errors to the new scope
+tests	JavaScript tests	2026-11-20T20:43:14.7250857Z ok 10 - accepted transition rebinds render errors to the new scope
+tests	JavaScript tests	2026-11-20T20:43:14.7251745Z   ---
+tests	JavaScript tests	2026-11-20T20:43:14.7252300Z   duration_ms: 1.692575
+tests	JavaScript tests	2026-11-20T20:43:14.7253002Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:43:14.7253589Z   ...
+tests	JavaScript tests	2026-11-20T20:43:14.7254822Z # Subtest: load(true) rethrows the original network error; default load swallows it
+tests	JavaScript tests	2026-11-20T20:43:14.7256329Z ok 11 - load(true) rethrows the original network error; default load swallows it
+tests	JavaScript tests	2026-11-20T20:43:14.7257149Z   ---
+tests	JavaScript tests	2026-11-20T20:43:14.7257551Z   duration_ms: 1.722049
+tests	JavaScript tests	2026-11-20T20:43:14.7258017Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:43:14.7258403Z   ...
+tests	JavaScript tests	2026-11-20T20:43:14.7259128Z # Subtest: stale load(true) still rethrows while suppressing its feedback
+tests	JavaScript tests	2026-11-20T20:43:14.7260226Z ok 12 - stale load(true) still rethrows while suppressing its feedback
+tests	JavaScript tests	2026-11-20T20:43:14.7260873Z   ---
+tests	JavaScript tests	2026-11-20T20:43:14.7261240Z   duration_ms: 0.93828
+tests	JavaScript tests	2026-11-20T20:43:14.7261603Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:43:14.7261943Z   ...
+tests	JavaScript tests	2026-11-20T20:43:14.7262425Z # Subtest: only literal true enables rethrowing
+tests	JavaScript tests	2026-11-20T20:43:14.7263129Z ok 13 - only literal true enables rethrowing
+tests	JavaScript tests	2026-11-20T20:43:14.7263628Z   ---
+tests	JavaScript tests	2026-11-20T20:43:14.7263970Z   duration_ms: 0.844854
+tests	JavaScript tests	2026-11-20T20:43:14.7264575Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:43:14.7264933Z   ...
+tests	JavaScript tests	2026-11-20T20:43:14.7265543Z # Subtest: active-battle success also resolves a related load failure
+tests	JavaScript tests	2026-11-20T20:43:14.7266335Z ok 14 - active-battle success also resolves a related load failure
+tests	JavaScript tests	2026-11-20T20:43:14.7266913Z   ---
+tests	JavaScript tests	2026-11-20T20:43:14.7267242Z   duration_ms: 0.94903
+tests	JavaScript tests	2026-11-20T20:43:14.7267605Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:43:14.7267936Z   ...
+tests	JavaScript tests	2026-11-20T20:43:14.7268642Z # Subtest: invalid scope data cannot overwrite latest or silently resolve the error
+tests	JavaScript tests	2026-11-20T20:43:14.7269898Z ok 15 - invalid scope data cannot overwrite latest or silently resolve the error
+tests	JavaScript tests	2026-11-20T20:43:14.7270634Z   ---
+tests	JavaScript tests	2026-11-20T20:43:14.7271056Z   duration_ms: 0.920576
+tests	JavaScript tests	2026-11-20T20:43:14.7271523Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:43:14.7271927Z   ...
+tests	JavaScript tests	2026-11-20T20:43:14.7350664Z 1..15
+tests	JavaScript tests	2026-11-20T20:43:14.7351024Z # tests 15
+tests	JavaScript tests	2026-11-20T20:43:14.7355249Z # suites 0
+tests	JavaScript tests	2026-11-20T20:43:14.7365280Z # pass 15
+tests	JavaScript tests	2026-11-20T20:43:14.7365652Z # fail 0
+tests	JavaScript tests	2026-11-20T20:43:14.7365981Z # cancelled 0
+tests	JavaScript tests	2026-11-20T20:43:14.7366291Z # skipped 0
+tests	JavaScript tests	2026-11-20T20:43:14.7366569Z # todo 0
+tests	JavaScript tests	2026-11-20T20:43:14.7366818Z # duration_ms 93.303973
+tests	JavaScript tests	2026-11-20T20:43:14.7974670Z ##[endgroup]
+tests	JavaScript tests	2026-11-20T20:43:14.7975488Z ##[group]tests/admin-viewer-font-feedback.test.cjs
+tests	JavaScript tests	2026-11-20T20:43:15.2093724Z TAP version 13
+tests	JavaScript tests	2026-11-20T20:43:15.2695218Z # Subtest: POST preserves endpoint, JSON direction and header; success is silent
+tests	JavaScript tests	2026-11-20T20:43:15.2703517Z ok 1 - POST preserves endpoint, JSON direction and header; success 

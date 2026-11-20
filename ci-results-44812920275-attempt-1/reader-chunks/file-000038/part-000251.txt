@@ -1,0 +1,48 @@
+90738Z # tests 13
+tests	JavaScript tests	2026-11-20T20:43:36.8891090Z # suites 0
+tests	JavaScript tests	2026-11-20T20:43:36.8891431Z # pass 13
+tests	JavaScript tests	2026-11-20T20:43:36.8891812Z # fail 0
+tests	JavaScript tests	2026-11-20T20:43:36.8892257Z # cancelled 0
+tests	JavaScript tests	2026-11-20T20:43:36.8892705Z # skipped 0
+tests	JavaScript tests	2026-11-20T20:43:36.8893222Z # todo 0
+tests	JavaScript tests	2026-11-20T20:43:36.8893807Z # duration_ms 95.433032
+tests	JavaScript tests	2026-11-20T20:43:36.9522884Z ##[endgroup]
+tests	JavaScript tests	2026-11-20T20:43:36.9523461Z ##[group]tests/setup-operations-feedback.test.cjs
+tests	JavaScript tests	2026-11-20T20:43:37.3670459Z TAP version 13
+tests	JavaScript tests	2026-11-20T20:43:37.4326658Z # Subtest: legacy handlers are replaced; validation errors persist without requests
+tests	JavaScript tests	2026-11-20T20:43:37.4355789Z ok 1 - legacy handlers are replaced; validation errors persist without requests
+tests	JavaScript tests	2026-11-20T20:43:37.4368642Z   ---
+tests	JavaScript tests	2026-11-20T20:43:37.4369874Z   duration_ms: 6.224036
+tests	JavaScript tests	2026-11-20T20:43:37.4370664Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:43:37.4371388Z   ...
+tests	JavaScript tests	2026-11-20T20:43:37.4372465Z # Subtest: 2B save: exact POST, early success, ordered guarded refresh, 3 s expiry
+tests	JavaScript tests	2026-11-20T20:43:37.4373847Z ok 2 - 2B save: exact POST, early success, ordered guarded refresh, 3 s expiry
+tests	JavaScript tests	2026-11-20T20:43:37.4375068Z   ---
+tests	JavaScript tests	2026-11-20T20:43:37.4375771Z   duration_ms: 2.557675
+tests	JavaScript tests	2026-11-20T20:43:37.4376461Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:43:37.4377083Z   ...
+tests	JavaScript tests	2026-11-20T20:43:37.4378120Z # Subtest: 2B save over the current setup keeps scope; newer typing is preserved
+tests	JavaScript tests	2026-11-20T20:43:37.4379576Z ok 3 - 2B save over the current setup keeps scope; newer typing is preserved
+tests	JavaScript tests	2026-11-20T20:43:37.4380587Z   ---
+tests	JavaScript tests	2026-11-20T20:43:37.4381148Z   duration_ms: 1.272194
+tests	JavaScript tests	2026-11-20T20:43:37.4381748Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:43:37.4382312Z   ...
+tests	JavaScript tests	2026-11-20T20:43:37.4383322Z # Subtest: request failures persist and matching retry resolves them; refresh never replays
+tests	JavaScript tests	2026-11-20T20:43:37.4385213Z ok 4 - request failures persist and matching retry resolves them; refresh never replays
+tests	JavaScript tests	2026-11-20T20:43:37.4386236Z   ---
+tests	JavaScript tests	2026-11-20T20:43:37.4386773Z   duration_ms: 2.434303
+tests	JavaScript tests	2026-11-20T20:43:37.4387373Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:43:37.4387922Z   ...
+tests	JavaScript tests	2026-11-20T20:43:37.4388795Z # Subtest: unapplied resulting scope reports a persistent refresh error
+tests	JavaScript tests	2026-11-20T20:43:37.4389999Z ok 5 - unapplied resulting scope reports a persistent refresh error
+tests	JavaScript tests	2026-11-20T20:43:37.4392604Z   ---
+tests	JavaScript tests	2026-11-20T20:43:37.4393259Z   duration_ms: 1.294286
+tests	JavaScript tests	2026-11-20T20:43:37.4393966Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:43:37.4394792Z   ...
+tests	JavaScript tests	2026-11-20T20:43:37.4396056Z # Subtest: 2C load: no confirmation, guarded refresh, already-loaded no-op, failure restores selection
+tests	JavaScript tests	2026-11-20T20:43:37.4397849Z ok 6 - 2C load: no confirmation, guarded refresh, already-loaded no-op, failure restores selection
+tests	JavaScript tests	2026-11-20T20:43:37.4399011Z   ---
+tests	JavaScript tests	2026-11-20T20:43:37.4399669Z   duration_ms: 1.61131
+tests	JavaScript tests	2026-11-20T20:43:37.4400369Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:43:37.4400994Z   ...
+tests	JavaScript tests	2026-11-20T20:43:37.4402031Z # Subtest: 2C load failure keeps a newer selection; missing 

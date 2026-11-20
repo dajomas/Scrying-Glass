@@ -1,0 +1,28 @@
+ and audit checks	2026-11-20T20:48:00.5405595Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5406130Z   File "/tmp/scrying-tests-xdcw1h3o/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5406718Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5407096Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5407762Z   File "/tmp/scrying-tests-xdcw1h3o/repo/python/scrying_glass_monster_selection.py", line 222, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5408568Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5409369Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5411924Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5412409Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5413053Z   File "/tmp/scrying-tests-xdcw1h3o/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5413604Z     found = fetch()
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5414155Z   File "/tmp/scrying-tests-xdcw1h3o/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5414990Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5415360Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5415931Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5416469Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5416785Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5417343Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5417896Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5418616Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5419259Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5419790Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5420179Z python.scrying_glass_monster_selection.ProviderError: secret
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5578203Z Statblock collection for added monsters was not started
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5578916Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5579918Z   File "/tmp/scrying-tests-xdcw1h3o/repo/python/scrying_glass_statblock_collecting.py", line 229, in collect_after_add
+tests	Standalone Python browser and audit checks	2026-11-20T20:48:00.5581306Z     return service.collect_new_monsters([m['id'] for m in created], file_bytes=file_bytes, filename=filename)
+tests	Standalone Python browser and 
