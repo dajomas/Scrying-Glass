@@ -1,0 +1,30 @@
+2:58:13.6330022Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6330339Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6330843Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6331261Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6331576Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6332018Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6332479Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6333011Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6333500Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6333883Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6334143Z python.scrying_glass_monster_selection.ProviderError: secret
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6427070Z Statblock collection for added monsters was not started
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6427446Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6427976Z   File "/tmp/scrying-tests-i1moo6k4/repo/python/scrying_glass_statblock_collecting.py", line 229, in collect_after_add
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6428520Z     return service.collect_new_monsters([m['id'] for m in created], file_bytes=file_bytes, filename=filename)
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6428949Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6429380Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6429783Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6430013Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6430376Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6430751Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6430992Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6431395Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6431734Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6431937Z RuntimeError: collection failed
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6450401Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6450759Z Ran 13 tests in 0.022s
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6450866Z 
+tests	Standalone Python browser and audit checks	2026-11-20T22:58:13.6450946Z OK
+tes

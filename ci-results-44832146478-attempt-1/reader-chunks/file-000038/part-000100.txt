@@ -1,0 +1,27 @@
+thon test suite (including browser fixtures)	2026-11-20T22:53:02.7826601Z   File "/tmp/scrying-tests-ad0zcst2/repo/python/scrying_glass_monster_selection.py", line 154, in _fivetools_source_data
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7827110Z     raise ValueError("Configured source is missing from the provider index")
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7827495Z ValueError: Configured source is missing from the provider index
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7827682Z 
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7827874Z The above exception was the direct cause of the following exception:
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7828074Z 
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7828180Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7828586Z   File "/tmp/scrying-tests-ad0zcst2/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7828948Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7829314Z   File "/tmp/scrying-tests-ad0zcst2/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7829718Z     lambda: fivetools_candidates(species, display),
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7829969Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7830402Z   File "/tmp/scrying-tests-ad0zcst2/repo/python/scrying_glass_monster_selection.py", line 222, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7830932Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7831450Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7831796Z ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7834223Z test_secondary_failure_returns_no_candidates_and_never_signs (test_monster_candidate_selection.CandidateTests.test_secondary_failure_returns_no_candidates_and_never_signs) ... Combined monster lookup failed for 5e.tools
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7834854Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7835261Z   File "/tmp/scrying-tests-ad0zcst2/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7835696Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7836054Z   File "/tmp/scrying-tests-ad0zcst2/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7836446Z     lambda: fivetools_candidates(species, display),
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7836704Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7837094Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7837462Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-20T22:53:02.7837687Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtur

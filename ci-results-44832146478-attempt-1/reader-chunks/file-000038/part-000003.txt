@@ -1,0 +1,34 @@
+ut@v4	2026-11-20T22:50:11.6365838Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Run actions/checkout@v4	2026-11-20T22:50:11.6386757Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Run actions/checkout@v4	2026-11-20T22:50:12.0180292Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Run actions/checkout@v4	2026-11-20T22:50:12.0201577Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Run actions/checkout@v4	2026-11-20T22:50:12.0383702Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	Run actions/checkout@v4	2026-11-20T22:50:12.0404537Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+tests	Run actions/checkout@v4	2026-11-20T22:50:12.0573940Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+tests	Run actions/checkout@v4	2026-11-20T22:50:12.0597739Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-20T22:50:12.0598412Z ##[group]Fetching the repository
+tests	Run actions/checkout@v4	2026-11-20T22:50:12.0603893Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +524412dc3d8aa16626eda3cf741c1ff4e3d7a615:refs/remotes/origin/features/claude-statblock
+tests	Run actions/checkout@v4	2026-11-20T22:50:13.5739815Z From https://github.com/dajomas/Scrying-Glass
+tests	Run actions/checkout@v4	2026-11-20T22:50:13.5740596Z  * [new ref]         524412dc3d8aa16626eda3cf741c1ff4e3d7a615 -> origin/features/claude-statblock
+tests	Run actions/checkout@v4	2026-11-20T22:50:13.5745139Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-20T22:50:13.5745753Z ##[group]Determining the checkout info
+tests	Run actions/checkout@v4	2026-11-20T22:50:13.5746718Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-20T22:50:13.5751334Z [command]/usr/bin/git sparse-checkout disable
+tests	Run actions/checkout@v4	2026-11-20T22:50:13.5803399Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+tests	Run actions/checkout@v4	2026-11-20T22:50:13.5821423Z ##[group]Checking out the ref
+tests	Run actions/checkout@v4	2026-11-20T22:50:13.5825419Z [command]/usr/bin/git checkout --progress --force -B features/claude-statblock refs/remotes/origin/features/claude-statblock
+tests	Run actions/checkout@v4	2026-11-20T22:50:13.7412099Z Switched to a new branch 'features/claude-statblock'
+tests	Run actions/checkout@v4	2026-11-20T22:50:13.7420237Z branch 'features/claude-statblock' set up to track 'origin/features/claude-statblock'.
+tests	Run actions/checkout@v4	2026-11-20T22:50:13.7432486Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-20T22:50:13.7474180Z [command]/usr/bin/git log -1 --format=%H
+tests	Run actions/checkout@v4	2026-11-20T22:50:13.7492086Z 524412dc3d8aa16626eda3cf741c1ff4e3d7a615
+tests	Run actions/setup-python@v5	﻿2026-11-20T22:50:13.7690864Z ##[group]Run actions/setup-python@v5
+tests	Run actions/setup-python@v5	2026-11-20T22:50:13.7691159Z with:
+tests	Run actions/setup-python@v5	2026-11-20T22:50:13.7691391Z   python-version: 3.14
+tests	Run actions/setup-python@v5	2026-11-20T22:50:13.7691608Z   cache: pip
+tests	Run actions/setup-python@v5	2026-11-20T22:50:13.7691928Z   cache-dependency-path: requirements.txt
+tests	Run actions/setup-python@v5	requirements-test.txt
+tests	Run actions/setup-python@v5	
+tests	Run actions/setup-python@v5	2026-11-20T22:50:13.7692257Z   check-latest: false
+tests	Run actions/setup-python@v5	2026-11-20T22:50:13.7694291Z   token: ***
+tests	Run actions/setup-python@v5	2026-11-20T22:50:1

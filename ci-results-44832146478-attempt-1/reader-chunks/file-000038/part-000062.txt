@@ -1,0 +1,24 @@
+uite (including browser fixtures)	2026-11-20T22:52:17.9623897Z TimeoutError: secret D&D endpoint
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9624229Z Combined monster lookup: D&D Beyond did not respond (secret D&D endpoint)
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9657594Z 5e.tools candidate lookup failed
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9657982Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9658586Z   File "/tmp/scrying-tests-ad0zcst2/repo/python/scrying_glass_monster_selection.py", line 199, in fivetools_candidates
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9659136Z     index = _fivetools_index(root)
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9659557Z   File "/tmp/scrying-tests-ad0zcst2/repo/python/scrying_glass_monster_selection.py", line 167, in _fivetools_index
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9659960Z     index = ft.load_json(root + "/index.json")
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9660367Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9660729Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9660951Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9661333Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9661941Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9662198Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9662831Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9663277Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9663504Z OSError: secret 5e.tools endpoint
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9663837Z Combined monster lookup: 5e.tools did not respond (secret 5e.tools endpoint)
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:17.9678747Z ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:18.0057077Z test_refresh_choice_apply_retains_identity_raw_roll_and_unselected_state (test_combined_monster_lookup_application.CombinedLookupApplicationTests.test_refresh_choice_apply_retains_identity_raw_roll_and_unselected_state) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:18.3776069Z test_width_halved_without_height_or_unrelated_field_changes (test_compact_combatant_inputs.CompactInputsTests.test_width_halved_without_height_or_unrelated_field_changes) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:18.5168183Z test_connection_opened_during_import_is_not_missed (test_connection_lifetime_audit.ConnectionLifetimeAuditTests.test_connection_opened_during_import_is_not_missed) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:18.5803105Z test_empty_inventory_is_not_a_success (test_connection_lifetime_audit.ConnectionLifetimeAuditTests.test_empty_inventory_is_not_a_success) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T22:52:18.8604193Z test_failed_setup_loop_cannot_contaminate_next_async_module (test_connection_lifetime_audit.ConnectionLifetimeAuditTests.test_failed_setup_loop_cannot_contaminate_next_async_module) ... ok

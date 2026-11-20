@@ -1,0 +1,34 @@
+042Z OK
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:22.7465727Z Connection audit: test_technical_documentation_split.py
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:22.8089269Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:22.8089683Z Ran 2 tests in 0.002s
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:22.8089813Z 
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:22.8089882Z OK
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:22.8090260Z test_technical_documentation_split.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:22.8203260Z Connection audit: test_turn_eligibility.py
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.0009937Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.0010414Z Ran 8 tests in 0.112s
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.0010541Z 
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.0010619Z OK
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.0010931Z test_turn_eligibility.py: connections opened: 8; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.0180984Z Connection audit: test_worker_windows.py
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.4415071Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.4415439Z Ran 13 tests in 0.338s
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.4415597Z 
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.4415680Z OK (skipped=3)
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.4433462Z test_worker_windows.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.4629843Z Connection audit modules: 251; failed: 0
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.4630393Z PASS: all audited modules passed and closed their tracked connections
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.5136573Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.5136971Z ##[group]tests/feedback_browser_fixture.py
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.6974892Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.6975272Z ##[group]tests/storage_migration_fixtures.py
+tests	Standalone Python browser and audit checks	2026-11-20T23:00:23.9237911Z ##[endgroup]
+tests	Post Run actions/setup-node@v4	﻿2026-11-20T23:00:23.9302513Z Post job cleanup.
+tests	Post Run actions/setup-node@v4	2026-11-20T23:00:24.0201855Z (node:39443) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-node@v4	2026-11-20T23:00:24.0202788Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/setup-python@v5	﻿2026-11-20T23:00:24.0316846Z Post job cleanup.
+tests	Post Run actions/setup-python@v5	2026-11-20T23:00:24.1241276Z Cache hit occurred on the primary key setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e, not saving cache.
+tests	Post Run actions/setup-python@v5	2026-11-20T23:00:24.1242856Z (node:39451) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-python@v5	2026-11-20T23:00:24.1243564Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/checkout@v4	﻿2
