@@ -12,6 +12,7 @@
 """
 from __future__ import annotations
 
+import logging
 import secrets
 import threading
 import time
@@ -140,6 +141,8 @@ class JobScheduler:
                 result = job.work(job)
             except Exception as exc:  # work functions translate their own failures
                 code = getattr(exc, 'code', None) or 'preparation_failed'
+                if code == 'preparation_failed':  # untranslated: keep the cause in the server log
+                    logging.getLogger(__name__).exception('Statblock preparation failed unexpectedly')
                 error = (code, getattr(exc, 'message', None) or 'Preparation failed.', getattr(exc, 'retry_at', None))
                 state = 'failed'
             with self._cv:

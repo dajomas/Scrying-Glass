@@ -135,6 +135,17 @@ class JobObjectTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'worker_enforcement_unavailable'):
             win.guard_child(4096, kernel32=FakeKernel32(limits=weak), sleep=lambda s: None)
 
+    def test_a_windows_venv_launcher_is_replaced_by_its_base_interpreter(self):
+        from python import scrying_glass_fivetools_worker as worker
+        real = __file__  # any existing file stands in for the base python.exe
+        with patch.object(sys, 'platform', 'win32'), patch.object(sys, '_base_executable', real, create=True), \
+                patch.object(sys, 'executable', r'C:\\venv\\Scripts\\python.exe'):
+            self.assertEqual(worker._worker_python(), real)
+        with patch.object(sys, 'platform', 'win32'), patch.object(sys, '_base_executable', r'C:\\gone.exe', create=True):
+            self.assertEqual(worker._worker_python(), sys.executable)  # missing base: unchanged
+        with patch.object(sys, 'platform', 'linux'), patch.object(sys, '_base_executable', real, create=True):
+            self.assertEqual(worker._worker_python(), sys.executable)  # Linux venvs are links: unchanged
+
     def test_platform_selection(self):
         with patch.object(sys, 'platform', 'win32'):
             self.assertEqual(_launcher(), 'windows-job-object')
@@ -219,6 +230,24 @@ class RealJobObjectTests(unittest.TestCase):
             deadline=time.monotonic() + 30, limits=ModelLimits(), response_bytes=10 * 1024 * 1024,
             file_bytes=Path(files[0]).read_bytes())
         self.assertEqual(snapshot['provenance'][0]['file_name'], 'spider.monster')
+
+    def test_a_worker_started_from_a_virtual_environment(self):
+        # run.bat starts the server with the venv's python.exe, a launcher with a child process.
+        import subprocess
+        import tempfile
+        with tempfile.TemporaryDirectory() as folder:
+            venv = Path(folder) / 'venv'
+            subprocess.run([sys.executable, '-m', 'venv', '--without-pip', str(venv)], check=True, timeout=120)
+            python = venv / 'Scripts' / 'python.exe'
+            script = ("import sys,time,glob;sys.path.insert(0,sys.argv[1]);"
+                      "from python.scrying_glass_statblock_worker import prepare_source_isolated;"
+                      "from python.scrying_glass_statblock_model import ModelLimits;"
+                      "raw=open(sorted(glob.glob(sys.argv[1]+'/monsters_examples/tetra-cube/*.monster'))[0],'rb').read();"
+                      "s,_=prepare_source_isolated('file',{'filename':'x.monster'},fetch=lambda u,deadline:b'',"
+                      "hosts=frozenset(),deadline=time.monotonic()+30,limits=ModelLimits(),response_bytes=1<<20,file_bytes=raw);"
+                      "print(s['provenance'][0]['file_name'])")
+            done = subprocess.run([str(python), '-c', script, str(ROOT)], capture_output=True, text=True, timeout=120)
+        self.assertEqual(done.stdout.strip(), 'x.monster', done.stderr)
 
     def test_the_memory_cap_stops_a_large_allocation(self):
         import subprocess

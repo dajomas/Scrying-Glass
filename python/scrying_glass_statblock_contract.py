@@ -37,6 +37,12 @@ FAILURE_MESSAGES = {
     'statblock_unavailable': 'The page has no public statblock.',
     'worker_enforcement_unavailable': 'Isolated preparation is not available on this platform.',
     'worker_memory_limit': 'The preparation exceeded its memory limit.',
+    'worker_start_failed': 'The preparation worker could not be started.',
+    'worker_resource_or_start_failure': 'The preparation worker stopped unexpectedly (start failure or resource limit).',
+    'worker_protocol_error': 'The preparation worker returned an invalid answer.',
+    'worker_transport_limit': 'The preparation worker exceeded its transfer limit.',
+    'worker_internal_error': 'The preparation worker failed internally.',
+    'worker_input_invalid': 'The preparation worker rejected its input.',
     'snapshot_limit': 'The statblock exceeds the snapshot size limit.',
     'node_limit': 'The statblock exceeds the content node limit.',
     'depth_limit': 'The statblock exceeds the content depth limit.',
@@ -106,7 +112,7 @@ def commit_callback(context, callback):
 class PreparationFailure(Exception):
     def __init__(self, code, retry_at=None):
         self.code, self.retry_at = code, retry_at
-        self.message = FAILURE_MESSAGES.get(code, 'Preparation failed.')
+        self.message = FAILURE_MESSAGES.get(code, f'Preparation failed ({code}).')
         super().__init__(code)
 
 

@@ -57,6 +57,27 @@ Add Monster preview) failed with `worker_enforcement_unavailable`.
   worker tests ran (the 2 Windows-only tests are skipped on Linux). Evidence
   `ci-results-44817232724-attempt-1`, publication `1fc7c2a`.
 
+## Follow-up - workers started from the virtual environment (2026-11-20)
+
+With the server running through `run.bat` on Windows, every preparation (Find statblock,
+the Add Monster preview) failed with only "Preparation failed.". `run.bat` runs the server
+with the venv's `python.exe`, which on Windows is a launcher that starts the real
+interpreter as a second process; the Job Object allows one process, so the worker could
+not start. The Windows test run above used the system Python directly and did not hit
+this (diagnosis by reasoning; not reproduced by Claude on Windows).
+
+- `_worker_python()` (`scrying_glass_fivetools_worker.py`): on Windows the worker uses
+  `sys._base_executable` when it is a different, existing file (the base interpreter
+  behind the venv launcher). The workers import only the standard library and this
+  project, so the venv's packages are not needed. Linux is unchanged.
+- Worker failure codes now have messages (`worker_start_failed`,
+  `worker_resource_or_start_failure`, `worker_protocol_error`, ...); an unknown code shows
+  as "Preparation failed (<code>)."; a preparation that fails without any code is logged
+  with its traceback in the server console.
+- Tests: `_worker_python` choices (Windows venv, missing base, Linux) on every platform;
+  a Windows-only test that starts a worker from a fresh virtual environment's
+  `python.exe` (not yet run on Windows).
+
 ## Limitations
 
 - Verified on Windows only by the worker tests above (user run); the full server with

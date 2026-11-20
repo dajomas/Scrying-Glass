@@ -58,9 +58,20 @@ def _write_json(stream, value, cap, check):
         stream.write(data)
     stream.write(b'\n')
 
+def _worker_python():
+    """The interpreter for workers. A Windows venv ``python.exe`` is a launcher that starts the
+    real interpreter as a second process, which the Job Object's one-process limit refuses; the
+    workers need only the standard library and this project, so they use the base interpreter."""
+    base = getattr(sys, '_base_executable', None)
+    if (sys.platform == 'win32' and type(base) is str and base
+            and os.path.normcase(os.path.abspath(base)) != os.path.normcase(os.path.abspath(sys.executable))
+            and os.path.isfile(base)):
+        return base
+    return sys.executable
+
 def _start_worker(launcher, bootstrap, root, cap, cpu_seconds, **popen_kwargs):
     """Start the fixed Python worker entry point under the platform's resource limits."""
-    child = [sys.executable, '-I', '-c', bootstrap, root, str(cap)]
+    child = [_worker_python(), '-I', '-c', bootstrap, root, str(cap)]
     if launcher == WINDOWS_JOB:
         from .scrying_glass_worker_windows import launch
         try:
