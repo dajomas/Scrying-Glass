@@ -1,0 +1,32 @@
+opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Run actions/setup-node@v4	2026-11-20T20:23:18.8697289Z ##[endgroup]
+tests	Run actions/setup-node@v4	2026-11-20T20:23:19.1002589Z Found in cache @ /opt/hostedtoolcache/node/22.23.5/x64
+tests	Run actions/setup-node@v4	2026-11-20T20:23:19.1006680Z (node:2384) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Run actions/setup-node@v4	2026-11-20T20:23:19.1007339Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Run actions/setup-node@v4	2026-11-20T20:23:19.1010360Z ##[group]Environment details
+tests	Run actions/setup-node@v4	2026-11-20T20:23:23.9799421Z node: v22.23.5
+tests	Run actions/setup-node@v4	2026-11-20T20:23:23.9800042Z npm: 10.9.9
+tests	Run actions/setup-node@v4	2026-11-20T20:23:23.9800333Z yarn: 1.22.22
+tests	Run actions/setup-node@v4	2026-11-20T20:23:23.9801220Z ##[endgroup]
+tests	Install Python test dependencies	﻿2026-11-20T20:23:23.9898475Z ##[group]Run python -m pip install --upgrade pip
+tests	Install Python test dependencies	2026-11-20T20:23:23.9898960Z ^[[36;1mpython -m pip install --upgrade pip^[[0m
+tests	Install Python test dependencies	2026-11-20T20:23:23.9899289Z ^[[36;1mpython -m pip install -r requirements-test.txt^[[0m
+tests	Install Python test dependencies	2026-11-20T20:23:23.9927901Z shell: /usr/bin/bash -e {0}
+tests	Install Python test dependencies	2026-11-20T20:23:23.9928285Z env:
+tests	Install Python test dependencies	2026-11-20T20:23:23.9928734Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Install Python test dependencies	2026-11-20T20:23:23.9929252Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python test dependencies	2026-11-20T20:23:23.9929634Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Install Python test dependencies	2026-11-20T20:23:23.9930032Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python test dependencies	2026-11-20T20:23:23.9930427Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python test dependencies	2026-11-20T20:23:23.9930784Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python test dependencies	2026-11-20T20:23:23.9931143Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Install Python test dependencies	2026-11-20T20:23:23.9931503Z ##[endgroup]
+tests	Install Python test dependencies	2026-11-20T20:23:25.7382772Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages (26.3)
+tests	Install Python test dependencies	2026-11-20T20:23:27.0798029Z Collecting fastapi>=0.115 (from -r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 3))
+tests	Install Python test dependencies	2026-11-20T20:23:27.0806380Z   Using cached fastapi-0.165.0-py3-none-any.whl.metadata (27 kB)
+tests	Install Python test dependencies	2026-11-20T20:23:27.1064965Z Collecting uvicorn>=0.30 (from uvicorn[standard]>=0.30->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 4))
+tests	Install Python test dependencies	2026-11-20T20:23:27.1072303Z   Using cached uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+tests	Install Python test dependencies	2026-11-20T20:23:27.1355184Z Collecting PyYAML>=6.0 (from -r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 5))
+tests	Install Python test dependencies	2026-11-20T20:23:27.1363117Z   Using cached pyyaml-6.0.3-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+tests	Install Python test dependencies	2026-11-20T20:23:27.1514364Z Collecting python-multipart (from -r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 6))
+tests	Install Python test dependencies	2026-11-20T20:23:27.1521518Z   Using cached python_multipart-0.0.34-py3-non

@@ -1,0 +1,20 @@
+hon test suite (including browser fixtures)	2026-11-20T20:25:23.4670567Z test_mixed_browser_suites_require_verified_browser_not_previous_suite_success (test_ci_browser_provisioning.WorkflowPrerequisiteTests.test_mixed_browser_suites_require_verified_browser_not_previous_suite_success) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.4856041Z test_collector_gate (test_ci_publication_branch_allowlists.PublicationBranchAllowlistsTests.test_collector_gate) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.4868624Z test_collector_syntax (test_ci_publication_branch_allowlists.PublicationBranchAllowlistsTests.test_collector_syntax) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.4870717Z test_workflow_allowlist (test_ci_publication_branch_allowlists.PublicationBranchAllowlistsTests.test_workflow_allowlist) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.4938653Z test_campaign_id_and_name_only (test_client_campaign.CampaignTests.test_campaign_id_and_name_only) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.5026742Z test_metadata_does_not_leak (test_client_campaign.CampaignTests.test_metadata_does_not_leak) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.5069008Z test_name_is_raw_text_for_safe_textcontent_rendering (test_client_campaign.CampaignTests.test_name_is_raw_text_for_safe_textcontent_rendering) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.5110663Z test_no_active_campaign (test_client_campaign.CampaignTests.test_no_active_campaign) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.5130803Z test_rename_broadcasts_active_campaign (test_client_campaign.CampaignTests.test_rename_broadcasts_active_campaign) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.5173221Z test_unexpected_errors_not_hidden (test_client_campaign.CampaignTests.test_unexpected_errors_not_hidden) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.5174282Z test_all_book_versions_are_retained_without_cross_provider_deduplication (test_combined_monster_lookup.CombinedLookupTests.test_all_book_versions_are_retained_without_cross_provider_deduplication) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.5175321Z test_bad_settings_fail_before_provider_calls (test_combined_monster_lookup.CombinedLookupTests.test_bad_settings_fail_before_provider_calls) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.5176914Z test_both_enabled_versions_keep_their_own_statistics_and_identity (test_combined_monster_lookup.CombinedLookupTests.test_both_enabled_versions_keep_their_own_statistics_and_identity) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.5186250Z test_both_failures_are_reported_without_exception_details (test_combined_monster_lookup.CombinedLookupTests.test_both_failures_are_reported_without_exception_details) ... Combined monster lookup failed for D&D Beyond
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.5186960Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.5187422Z   File "/tmp/scrying-tests-1h3_vjm9/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.5187819Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.5188249Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.5188638Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-20T20:25:23.5188888Z            ~~~~~~~
