@@ -4,7 +4,7 @@ on:
   workflow_run:
     workflows: ['Branch tests']
     types: [completed]
-    branches: [features/perplexity, features/perplexity-statblock]
+    branches: [features/perplexity, features/perplexity-statblock, features/claude, features/claude-statblock]
 
 permissions:
   actions: read
