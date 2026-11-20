@@ -13,7 +13,7 @@ STATBLOCK_HTML = '''<!doctype html>
   <title>Statblocks — Scrying Glass</title>
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="/static/glass-theme.css?v=1">
-  <link rel="stylesheet" href="/static/statblocks.css?v=1">
+  <link rel="stylesheet" href="/static/statblocks.css?v=2">
 </head>
 <body class="sb-page">
   <header class="sb-page-header">
@@ -24,7 +24,7 @@ STATBLOCK_HTML = '''<!doctype html>
     <p id="status" class="sb-status" role="status" aria-live="polite">Connecting…</p>
     <ul id="tiles" class="sb-grid" aria-label="Monsters in battle"></ul>
   </main>
-  <script src="/static/statblocks-render.js?v=1"></script>
+  <script src="/static/statblocks-render.js?v=2"></script>
   <script src="/static/statblocks.js?v=1"></script>
 </body>
 </html>'''

@@ -28,24 +28,50 @@
 .sb-panel { padding: 0 .9rem .9rem; border-top: 1px solid var(--border); }
 .sb-note { color: var(--muted); }
 
-.sb-statblock { max-width: 60rem; overflow-wrap: anywhere; user-select: text; }
-.sb-header { margin: .75rem 0; }
-.sb-title { margin: 0; font-size: 1.3rem; }
-.sb-subtitle { margin: .1rem 0 .5rem; color: var(--muted); font-style: italic; }
-.sb-live, .sb-facts { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin: .5rem 0; }
-.sb-live div, .sb-facts div { display: flex; gap: .35rem; }
-.sb-live dt, .sb-facts dt { flex: none; font-weight: 600; color: var(--accent); overflow-wrap: normal; }
+/* Statblock layout after the D&D Beyond and Open5e statblocks (022.15 correction). */
+.sb-statblock { max-width: 72rem; overflow-wrap: anywhere; user-select: text; container-type: inline-size; }
+.sb-header { margin: .75rem 0 .6rem; padding-bottom: .45rem; border-bottom: 2px solid var(--accent); }
+.sb-title { margin: 0; font-family: var(--serif); font-size: 1.55rem; font-variant: small-caps; letter-spacing: .02em;
+  color: var(--accent); }
+.sb-subtitle { margin: .15rem 0 0; color: var(--muted); font-style: italic; }
+.sb-body { display: grid; gap: .25rem 2rem; grid-template-columns: minmax(0, 1fr); }
+@container (min-width: 48rem) {
+  .sb-body { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+.sb-stats > * { margin: 0; padding: .5rem 0; }
+.sb-stats > * + * { border-top: 1px solid var(--border); }
+.sb-live, .sb-facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: .25rem .9rem;
+  margin: .5rem 0; }
+.sb-live div, .sb-facts div { display: contents; }
+.sb-live dt, .sb-facts dt { font-weight: 700; color: var(--text); overflow-wrap: normal; }
 .sb-live dd, .sb-facts dd { margin: 0; }
+.sb-ability-tables { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
+.sb-abilities { border-collapse: separate; border-spacing: 0 .2rem; }
+.sb-abilities thead th { padding: 0 .5rem; font-size: .72rem; font-weight: 600; letter-spacing: .06em;
+  color: var(--muted); text-align: center; }
+.sb-abilities tbody th { padding: .2rem .6rem .2rem .3rem; text-align: left; font-weight: 700; }
+.sb-abilities td { padding: .2rem .5rem; text-align: center; font-variant-numeric: tabular-nums; }
+.sb-abilities td.sb-score { min-width: 2rem; }
+.sb-abilities td.sb-mod, .sb-abilities td.sb-save { min-width: 2.6rem; background: var(--surface-2); }
+.sb-abilities td.sb-mod { border-radius: 4px 0 0 4px; }
+.sb-abilities td.sb-save { border-radius: 0 4px 4px 0; border-left: 1px solid var(--border); }
+.sb-visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .sb-partial { color: var(--warn); border-left: 3px solid var(--warn); padding-left: .6rem; }
+.sb-sections > .sb-section:first-child { margin-top: .5rem; }
 .sb-section { margin: 1rem 0; }
-.sb-section-title { margin: 0 0 .4rem; padding-bottom: .2rem; border-bottom: 1px solid var(--accent);
-  color: var(--accent); font-size: 1.05rem; }
+.sb-section-title { margin: 0 0 .45rem; padding-bottom: .2rem; border-bottom: 1px solid var(--accent);
+  color: var(--accent); font-family: var(--serif); font-variant: small-caps; font-size: 1.2rem; font-weight: 600;
+  letter-spacing: .02em; }
 .sb-section-disabled, .sb-entry-disabled { opacity: .8; }
 .sb-disabled { font-weight: 400; color: var(--muted); font-size: .85rem; }
-.sb-entry { margin: .45rem 0; }
+.sb-entry { margin: .5rem 0; line-height: 1.45; }
 .sb-entry > p:first-of-type { display: inline; }
 .sb-entry > p { margin: .3rem 0; }
-.sb-entry-name { font-style: italic; }
+.sb-entry-name { font-style: italic; font-weight: 700; }
+.sb-footer { margin-top: 1rem; padding-top: .5rem; border-top: 1px solid var(--border); color: var(--muted);
+  font-size: .9rem; }
+.sb-footer dt { color: var(--muted); }
 .sb-table { border-collapse: collapse; margin: .5rem 0; }
 .sb-table td { border: 1px solid var(--border); padding: .2rem .5rem; vertical-align: top; }
 .sb-ref { padding: 0 .3rem; font-size: .95em; color: var(--blue); text-decoration: underline dotted; }

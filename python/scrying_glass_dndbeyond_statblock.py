@@ -259,6 +259,22 @@ def statblock_facts(root):
     return facts
 
 
+def statblock_roots(page):
+    return page.find_all(lambda e: e.tag == 'div' and ({'mon-stat-block', 'mon-stat-block-2024'} & set(e.classes())))
+
+
+def public_statblock(path, *, fetch, deadline):
+    """True when the public page of a discovered candidate has a statblock root.
+
+    Gated content (for example a Monster Manual creature outside the SRD) is
+    listed by the search page exactly like public content; only its own page
+    tells them apart. The page is fetched through the shared cache, so a later
+    preparation of the same candidate reuses it.
+    """
+    url, _ = canonical_url(path)
+    return bool(statblock_roots(parse_html(fetch(url, deadline=deadline).decode('utf-8', 'replace'))))
+
+
 def parse_page(text, monster_id):
     """-> (name, meta, facts, sections, footer_facts, warnings) or raise unavailable."""
     warnings = []
@@ -266,7 +282,7 @@ def parse_page(text, monster_id):
         if (code, message, path) not in warnings:
             warnings.append((code, message, path))
     page = parse_html(text)
-    roots = page.find_all(lambda e: e.tag == 'div' and ({'mon-stat-block', 'mon-stat-block-2024'} & set(e.classes())))
+    roots = statblock_roots(page)
     if not roots:
         raise SourceError('statblock_unavailable')
     root = roots[0]

@@ -67,11 +67,22 @@ class DiscoveringMixin:
         discovery = Discovery(plan.config, self._fetch(plan.config), plan.deadline)
         species = sorted({target[1] for target in plan.targets if target[1]})
         jobs = [(provider, name) for name in species for provider in ORDER]
+        # The tracker's original D&D Beyond candidate is checked for a public statblock too.
+        originals = sorted({target[3][1]['path'] for target in plan.targets
+                            if target[3] is not None and target[3][0] == DNDBEYOND})
+        work = [('search', job) for job in jobs] + [('original', path) for path in originals]
+
+        def run(item):
+            kind, value = item
+            if kind == 'search':
+                return discovery.run(*value)
+            return discovery.original_public(DNDBEYOND, {'path': value})
+
         results = {}
-        if jobs:
-            with ThreadPoolExecutor(max_workers=max(1, min(len(jobs), self.limits.outbound_requests))) as pool:
-                for key, value in zip(jobs, pool.map(lambda job: discovery.run(*job), jobs)):
-                    results[key] = value
+        if work:
+            with ThreadPoolExecutor(max_workers=max(1, min(len(work), self.limits.outbound_requests))) as pool:
+                for (kind, value), outcome in zip(work, pool.map(run, work)):
+                    results[value if kind == 'search' else ('original', value)] = outcome
         return results
 
     def discover_finish(self, principal, plan, results):
@@ -88,7 +99,9 @@ class DiscoveringMixin:
                 continue
             scope = self._scope(principal, plan.encounter_token, monster)
             candidates, seen, providers = [], set(), []
-            if original is not None:
+            unavailable_original = (original is not None and original[0] == DNDBEYOND
+                                    and results.get(('original', original[1]['path'])) is False)
+            if original is not None and not unavailable_original:
                 provider, identity = original
                 seen.add(identity_key(provider, identity))
                 summary = candidate_summary(provider, identity, monster.get('monster_source_name') or species or
@@ -105,6 +118,11 @@ class DiscoveringMixin:
                 for key in ('code', 'omitted_versions'):
                     if key in result:
                         row[key] = result[key]
+                unavailable = set(result.get('unavailable_paths') or ())
+                if provider == DNDBEYOND and unavailable_original:
+                    unavailable.add(original[1]['path'])
+                if unavailable:
+                    row['omitted_unavailable'] = len(unavailable)
                 if result.get('retry_at') is not None:
                     row['retry_at'] = _iso(self.wall() + max(0.0, result['retry_at'] - self.clock()))
                 providers.append(row)

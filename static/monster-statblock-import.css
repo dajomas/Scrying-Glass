@@ -5,7 +5,11 @@
 .monster-statblock-status, .monster-statblock-row-status, .monster-statblock-dialog-status { margin: 0; font-size: .9rem; }
 .monster-statblock-actions, .monster-statblock-dialog-actions, .monster-statblock-row-controls {
   display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+/* Edit Monster: buttons line up with the bottom of the file input below its caption. */
+.monster-statblock-edit .monster-statblock-actions { align-items: flex-end; }
 .monster-statblock-upload { display: inline-flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+.monster-statblock-edit .monster-statblock-upload { display: inline-grid; grid-template-columns: auto; gap: .25rem;
+  align-items: end; }
 .monster-statblock-dialog { width: min(60rem, 94vw); max-height: 90vh; color: var(--text); background: var(--surface);
   border: 1px solid var(--border); border-radius: var(--radius); }
 .monster-statblock-dialog h2 { margin-top: 0; }

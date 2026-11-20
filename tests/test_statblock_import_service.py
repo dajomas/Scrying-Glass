@@ -232,6 +232,55 @@ class DiscoveryTests(ImportFixture, unittest.TestCase):
         self.assertEqual(again['Open5e']['status'], 'cooldown')
         self.assertIn('retry_at', again['Open5e'])
 
+    def dndbeyond(self, details):
+        """Enable D&D Beyond with three Goblin search hits; details maps id -> page bytes or an exception."""
+        self.display.update(dndbeyond_image_lookup=True, fivetools_fallback=False, open5e_lookup=False)
+        links = ''.join(f'<div class="info"><span class="name"><a class="link" href="/monsters/{i}-goblin">Goblin</a>'
+                        f'</span></div>' for i in (1, 2, 3))
+        self.transport.responses['https://www.dndbeyond.com/monsters?filter-search=Goblin'] = \
+            f'<html><body>{links}</body></html>'.encode()
+        for ident, page in details.items():
+            self.transport.responses[f'https://www.dndbeyond.com/monsters/{ident}-goblin'] = page
+
+    PUBLIC = (b'<html><body><div class="mon-stat-block"><a class="mon-stat-block__name-link" '
+              b'href="/monsters/1-goblin">Goblin</a></div></body></html>')
+    GATED = b'<html><body><div class="more-info-content">Unlock this content</div></body></html>'
+
+    def test_dndbeyond_results_without_a_public_statblock_are_not_offered(self):
+        self.dndbeyond({1: self.PUBLIC, 2: self.GATED, 3: self.GATED})
+        row = self.discover(('n',))['monsters'][0]
+        self.assertEqual([c['provider'] for c in row['candidates']], ['D&D Beyond'])
+        provider = {p['provider']: p for p in row['providers']}['D&D Beyond']
+        self.assertEqual((provider['status'], provider['omitted_unavailable']), ('complete', 2))
+        self.assertNotIn('unavailable_paths', json.dumps(row))
+        # The checked page is cached for the preparation of the same candidate.
+        self.discover(('n',))
+        self.assertEqual(self.transport.calls.count('https://www.dndbeyond.com/monsters/1-goblin'), 1)
+
+    def test_an_unchecked_dndbeyond_result_is_still_offered_as_partial(self):
+        self.dndbeyond({1: self.PUBLIC, 2: SourceError('provider_error'), 3: self.GATED})
+        row = self.discover(('n',))['monsters'][0]
+        self.assertEqual(len(row['candidates']), 2)
+        provider = {p['provider']: p for p in row['providers']}['D&D Beyond']
+        self.assertEqual((provider['status'], provider['code'], provider['omitted_unavailable']),
+                         ('partial', 'provider_error', 1))
+
+    def test_a_gated_original_dndbeyond_source_is_not_offered(self):
+        self.dndbeyond({1: self.PUBLIC, 2: self.GATED, 3: self.GATED})
+        monster = next(m for m in self.c.STATE['monsters'] if m['id'] == 'm')
+        monster.update(monster_source_provider='D&D Beyond',
+                       monster_source_url='https://www.dndbeyond.com/monsters/2-goblin')
+        self.c.save_active_setup_monsters(); self.c.save_state(); self.c.load_state()
+        row = self.discover(('m',))['monsters'][0]
+        self.assertEqual([(c['provider'], c.get('original', False)) for c in row['candidates']], [('D&D Beyond', False)])
+        provider = {p['provider']: p for p in row['providers']}['D&D Beyond']
+        self.assertEqual(provider['omitted_unavailable'], 2)  # the original is also a search hit: counted once
+        monster = next(m for m in self.c.STATE['monsters'] if m['id'] == 'm')
+        monster.update(monster_source_url='https://www.dndbeyond.com/monsters/1-goblin')
+        self.c.save_active_setup_monsters(); self.c.save_state(); self.c.load_state()
+        row = self.discover(('m',))['monsters'][0]
+        self.assertEqual([c.get('original', False) for c in row['candidates']], [True])
+
     def test_disabled_providers_are_not_contacted(self):
         self.display.update(fivetools_fallback=False, open5e_lookup=False)
         result = self.discover(('m',))

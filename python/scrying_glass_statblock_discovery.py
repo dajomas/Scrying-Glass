@@ -165,7 +165,8 @@ class Discovery:
             raise SourceError('malformed_response') from None
 
     def run(self, provider, species):
-        """-> {'status', 'candidates': [(identity, summary)], 'code'?, 'retry_at'?, 'omitted_versions'?}"""
+        """-> {'status', 'candidates': [(identity, summary)], 'code'?, 'retry_at'?, 'omitted_versions'?,
+        'omitted_unavailable'?}"""
         if not self.config.enabled.get(provider):
             return {'status': 'disabled', 'candidates': []}
         try:
@@ -248,16 +249,48 @@ class Discovery:
                 **({} if len(found) <= CANDIDATES_PER_PROVIDER else {'code': 'candidate_limit'})}
 
     def _dndbeyond(self, species):
-        from .scrying_glass_dndbeyond_statblock import canonical_url, discover_dndbeyond
-        found = discover_dndbeyond(species, fetch=lambda url, deadline: self.fetch(DNDBEYOND, url, deadline),
-                                   deadline=self.deadline)
-        out = []
+        """Search-page candidates whose own page has a public statblock.
+
+        A candidate without one (gated content) is not offered and only counted
+        (``omitted_unavailable``). A candidate whose page could not be checked
+        is still offered and makes the result partial with that failure code.
+        """
+        from .scrying_glass_dndbeyond_statblock import canonical_url, discover_dndbeyond, public_statblock
+        fetch = lambda url, deadline: self.fetch(DNDBEYOND, url, deadline)
+        found = discover_dndbeyond(species, fetch=fetch, deadline=self.deadline)
+        out, omitted, failures = [], [], []
         for item in found[:CANDIDATES_PER_PROVIDER]:
             try:
                 canonical, _ = canonical_url(item['path'])
             except SourceError:
                 continue
             identity = {'path': urlsplit(canonical).path}
+            try:
+                if not public_statblock(identity['path'], fetch=fetch, deadline=self.deadline):
+                    omitted.append(identity['path'])
+                    continue
+            except (FetchFailure, SourceError) as exc:
+                if exc.code == 'cancelled' or self.cancelled():
+                    raise
+                failures.append(exc.code)
             out.append((identity, candidate_summary(DNDBEYOND, identity, item['name'], legacy=item.get('legacy'))))
-        return {'status': 'complete' if len(found) <= CANDIDATES_PER_PROVIDER else 'partial', 'candidates': out,
-                **({} if len(found) <= CANDIDATES_PER_PROVIDER else {'code': 'candidate_limit'})}
+        limited = len(found) > CANDIDATES_PER_PROVIDER
+        result = {'status': 'partial' if limited or failures else 'complete', 'candidates': out}
+        if limited or failures:
+            result['code'] = 'candidate_limit' if limited else failures[0]
+        if omitted:
+            result['omitted_unavailable'] = len(omitted)
+            result['unavailable_paths'] = omitted
+        return result
+
+    def original_public(self, provider, identity):
+        """For the tracker's original D&D Beyond candidate: False when its page has no
+        public statblock; True when it has one or cannot be checked (offered as before)."""
+        if provider != DNDBEYOND or not self.config.enabled.get(DNDBEYOND):
+            return True
+        from .scrying_glass_dndbeyond_statblock import public_statblock
+        try:
+            return public_statblock(identity['path'], fetch=lambda url, deadline: self.fetch(DNDBEYOND, url, deadline),
+                                    deadline=self.deadline)
+        except (FetchFailure, SourceError, ValueError, TypeError, KeyError):
+            return True

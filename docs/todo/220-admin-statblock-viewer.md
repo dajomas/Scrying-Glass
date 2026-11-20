@@ -261,6 +261,8 @@ Status 2026-11-17: implemented in Stage E (archive; CI runs on this commit), val
 
 #### 022.15 - Integrated verification and bounded corrections
 
+Status 2026-11-20: in progress. Correction round 1 (the user's four findings: gated D&D Beyond results in Find statblock, Edit control alignment, Show statblock, viewer statblock layout) delivered by push; CI and acceptance pending; see [handover 088](../handover/088-statblock-correction-round-1.md).
+
 Pending; depends 03-14. Actual implementation-commit full configured CI plus real-server Chromium/Firefox e2e, access, ports, persistence, providers/files, keyboard/accessibility/refs, limits and deployment. Record live-vs-fixture limits and covered revisions; findings become narrow corrective units with tests/approval. Gate: every criterion has evidence or explicit blocker.
 
 #### 022.16 - User acceptance and documentation close-out

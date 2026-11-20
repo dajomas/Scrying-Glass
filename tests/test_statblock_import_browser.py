@@ -33,6 +33,7 @@ class FakeServer:
     def __init__(self, page):
         self.page, self.calls, self.jobs, self.applies, self.deleted = page, [], {}, [], []
         self.revisions = {'a': 0, 'b': 3, 'c': 0}
+        self.shown = []
         self.fail_prepare, self.fail_apply = set(), None
         self.pending_polls = 1
         page.route('**/api/statblocks/**', self.handle)
@@ -46,6 +47,14 @@ class FakeServer:
                                 'monsters': [{'monster_id': k, 'statblock_revision': v,
                                               'status': 'available' if v else 'missing', 'warnings': 0}
                                              for k, v in self.revisions.items()]})
+        elif path.startswith('monsters/'):
+            ident = path.split('/')[1]
+            body = {'monster_id': ident, 'encounter_token': 'enc', 'live': {}, 'statblock_revision': self.revisions[ident],
+                    'status': 'available' if self.revisions[ident] else 'missing'}
+            if self.revisions[ident]:
+                body.update(statblock=copy.deepcopy(SNAPSHOT), source={'provider': '5e.tools', 'source_code': 'MM'})
+            self.shown.append(ident)
+            route.fulfill(json=body)
         elif path == 'discover':
             body = json.loads(request.post_data)
             self.discovered = body
@@ -186,6 +195,42 @@ class ImportBrowserTests(unittest.TestCase):
         self.page.wait_for_timeout(300)
         self.assertIn('job-1', self.server.deleted)
         self.assertEqual(self.errors, [])
+
+    def test_show_statblock_shows_the_staged_or_saved_statblock_with_form_values(self):
+        self.open_edit('a')
+        show = self.page.get_by_role('button', name='Show statblock')
+        self.assertTrue(show.is_disabled())  # nothing saved, nothing staged
+        self.page.get_by_role('button', name='Find statblock').click()
+        self.page.get_by_role('dialog', name='Choose a statblock for Goblin').get_by_role(
+            'button', name='Goblin · 5e.tools · MM — original source').click()
+        self.page.get_by_role('button', name='Use this statblock').click()
+        self.page.fill('input[name="name"]', 'Goblin chief')
+        show.click()
+        dialog = self.page.get_by_role('dialog', name='Statblock: Goblin chief')
+        self.assertIn('not saved until you save the monster', dialog.inner_text())
+        self.assertEqual(dialog.locator('[data-live="name"]').inner_text(), 'Goblin chief')
+        dialog.get_by_role('button', name='Close').click()
+        self.assertEqual(self.page.locator('dialog').count(), 0)
+        self.assertEqual(self.server.shown, [])  # the staged preview needs no request
+        self.page.get_by_role('button', name='Keep current statblock').click()
+        self.assertTrue(show.is_disabled())
+        self.page.evaluate('closeEdit()')
+        self.open_edit('b')
+        show.click()
+        dialog = self.page.get_by_role('dialog', name='Statblock: Goblin 2')
+        self.assertIn('Saved statblock (revision 3)', dialog.inner_text())
+        self.assertIn('Nimble Escape.', dialog.inner_text())
+        self.assertEqual(self.server.shown, ['b'])
+        self.page.keyboard.press('Escape')
+        self.assertEqual(self.page.locator('dialog').count(), 0)
+        self.assertEqual(self.errors, [])
+
+    def test_edit_statblock_controls_are_bottom_aligned(self):
+        self.open_edit('b')
+        bottoms = self.page.evaluate("""[...document.querySelectorAll('.monster-statblock-actions > :not([hidden])')]
+            .map(e => Math.round((e.matches('label') ? e.querySelector('input') : e).getBoundingClientRect().bottom))""")
+        self.assertEqual(len(bottoms), 3)
+        self.assertEqual(len(set(bottoms)), 1, bottoms)
 
     def test_edit_cancel_paths_discard_unconfirmed_and_staged_choices(self):
         self.open_edit('b')

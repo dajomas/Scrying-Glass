@@ -6,7 +6,7 @@ import time
 import unittest
 from pathlib import Path
 
-from python.scrying_glass_dndbeyond_statblock import canonical_url, discover_dndbeyond, prepare_dndbeyond
+from python.scrying_glass_dndbeyond_statblock import canonical_url, discover_dndbeyond, prepare_dndbeyond, public_statblock
 from python.scrying_glass_open5e_statblock import discover_open5e, prepare_open5e
 from python.scrying_glass_statblock_model import validate_snapshot
 from python.scrying_glass_statblock_sources import ProviderFetcher, SourceError, markdown_entries, name_key
@@ -247,21 +247,27 @@ class CapturedEvidenceTests(unittest.TestCase):
                 check_common(self, snapshot)
 
     def test_every_captured_dndbeyond_page(self):
-        pages, available = {}, 0
+        pages, available, unavailable = {}, 0, 0
         for manifest in glob.glob(str(EXAMPLES / '*/manifest.json')):
             for request in json.loads(Path(manifest).read_text(encoding='utf-8'))['requests']:
                 if request['label'].startswith('dndbeyond-detail') and request.get('file'):
                     pages[request['url']] = Path(manifest).parent / request['file']
         for url, path in pages.items():
             with self.subTest(url=url):
+                # Discovery's public check agrees with preparation for every captured page.
+                public = public_statblock(url, fetch=lambda u, deadline, p=path: p.read_bytes(), deadline=deadline())
                 try:
                     snapshot, _ = prepare_dndbeyond(url, fetch=lambda u, deadline, p=path: p.read_bytes(), deadline=deadline())
                 except SourceError as exc:
                     self.assertEqual(exc.code, 'statblock_unavailable')
+                    self.assertFalse(public)
+                    unavailable += 1
                     continue
+                self.assertTrue(public)
                 check_common(self, snapshot)
                 available += 1
         self.assertGreater(available, 0)
+        self.assertGreater(unavailable, 0)
 
     def test_captured_document_licences(self):
         documents = {Path(f).stem: Path(f).read_bytes() for f in glob.glob(str(EXAMPLES / 'open5e-documents/*.json'))}

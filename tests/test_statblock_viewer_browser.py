@@ -192,6 +192,44 @@ class ViewerBrowserTests(unittest.TestCase):
         self.assertEqual(len(self.fetches), before + 1)
         self.assertIn('known_revision=1', self.fetches[-1])
 
+    def test_statblock_layout_follows_the_published_statblocks(self):
+        self.toggle('Wight A').click()
+        self.wait_statblock()
+        block = self.page.locator('.sb-expanded .sb-statblock')
+        core = block.locator('.sb-live').inner_text()
+        for label in ('Armor Class', 'Hit Points', 'Initiative', 'Speed'):
+            self.assertIn(label, core)
+        rows = block.locator('.sb-abilities tbody tr')
+        self.assertEqual(rows.count(), 6)
+        self.assertEqual(rows.first.locator('th, td').all_inner_texts(), ['STR', '15', '+2', '+2'])
+        self.assertEqual(block.locator('.sb-abilities thead').first.inner_text().split(), ['MOD', 'SAVE'])
+        properties = block.locator('.sb-facts').first.inner_text()
+        self.assertNotIn('Speed', properties)
+        self.assertNotIn('Strength', properties)
+        # Wide statblocks: the sections sit in a second column beside the statistics.
+        stats = block.locator('.sb-stats').bounding_box()
+        sections = block.locator('.sb-sections').bounding_box()
+        self.assertGreater(sections['x'], stats['x'] + stats['width'] - 1)
+        self.assertLess(abs(sections['y'] - stats['y']), 2)
+        self.page.set_viewport_size({'width': 600, 'height': 900})
+        stats = block.locator('.sb-stats').bounding_box()
+        sections = block.locator('.sb-sections').bounding_box()
+        self.assertGreaterEqual(sections['y'], stats['y'] + stats['height'] - 1)
+
+    def test_saving_throws_fill_the_save_column(self):
+        snapshot = copy.deepcopy(self.snapshot)
+        snapshot['facts'] = [row for row in snapshot['facts'] if row['key'] != 'saving_throws']
+        snapshot['facts'].append(dict(position=len(snapshot['facts']), key='saving_throws', label='Saving Throws',
+                                      display_text='Con +6, Wis +4'))
+        self.statblocks['a'] = snapshot
+        self.toggle('Wight A').click()
+        self.wait_statblock()
+        block = self.page.locator('.sb-expanded .sb-statblock')
+        saves = dict(zip(block.locator('.sb-abilities tbody th').all_inner_texts(),
+                         block.locator('.sb-abilities tbody td.sb-save').all_inner_texts()))
+        self.assertEqual((saves['CON'], saves['WIS'], saves['STR']), ('+6', '+4', '+2'))
+        self.assertNotIn('Saving Throws', block.locator('.sb-facts').first.inner_text())
+
     def test_references_open_existing_definitions_without_nesting(self):
         self.toggle('Wight A').click()
         self.wait_statblock()

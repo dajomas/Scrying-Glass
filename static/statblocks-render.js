@@ -9,6 +9,12 @@
  * initiative bonus) come from `live`, never from the snapshot. Supporting
  * definitions are shown once each, collapsed, under References; inline
  * reference buttons open the existing definition instead of nesting copies.
+ *
+ * Layout (022.15 correction, after the D&D Beyond and Open5e statblocks): name
+ * and type line; Armor Class, Hit Points, Initiative and Speed; an ability
+ * table with MOD and SAVE columns; property rows (skills, immunities, senses,
+ * languages, challenge, ...); then the sections. Wide statblocks put the
+ * sections in a second column. Habitat/source facts follow the sections.
  */
 (() => {
   'use strict';
@@ -126,9 +132,87 @@
     }
   }
 
-  function facts(rows) {
+  const ABILITIES = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+  const SPEED = new Set(['speed', 'attribute_speed']);
+  const FOOTER = /^(footer_|environment$|creature_sets$)/;
+  const SIGNED = /^[+\-\u2212]\d+$/;
+  const ORDER = ['saving_throws', 'skills', 'tools', 'gear', 'vulnerable', 'damage_vulnerabilities', 'resist',
+    'resistances', 'damage_resistances', 'immune', 'immunities', 'damage_immunities', 'conditionImmune',
+    'condition_immunities', 'senses', 'languages', 'cr', 'challenge', 'proficiency_bonus'];
+
+  function signedText(number) {
+    return number < 0 ? '\u2212' + Math.abs(number) : '+' + number;
+  }
+
+  // Parse "CON +6, INT +8" / "Con +11" into {con: '+6', ...}; null when any part is not a plain bonus.
+  function savingThrows(row) {
+    if (!row) return {};
+    const out = {};
+    for (const part of String(row.display_text).split(',')) {
+      const match = part.trim().match(/^([A-Za-z]{3})[A-Za-z]*\s+([+\-\u2212]\d+)$/);
+      if (!match || !ABILITIES.includes(match[1].toLowerCase())) return null;
+      out[match[1].toLowerCase()] = match[2];
+    }
+    return out;
+  }
+
+  function abilityRows(rows, saves) {
+    const out = [];
+    for (const key of ABILITIES) {
+      const row = rows.find((fact) => fact.key === key);
+      if (!row) return null;
+      const text = String(row.display_text);
+      const score = Number.isInteger(row.integer_value) ? row.integer_value : null;
+      const modMatch = text.match(/\(([+\-\u2212]\d+)\)/);
+      const saveMatch = text.match(/save\s+([+\-\u2212]\d+)/i);
+      const mod = modMatch ? modMatch[1] : (score === null ? null : signedText(Math.floor((score - 10) / 2)));
+      out.push({key, label: key.toUpperCase(), score: score === null ? text : String(score),
+                mod: mod === null ? '' : mod, save: saveMatch ? saveMatch[1] : (saves && saves[key]) || mod || ''});
+    }
+    return out;
+  }
+
+  function abilityTable(rows) {
+    const half = (part, label) => {
+      const table = el('table', {className: 'sb-abilities'}, [
+        el('caption', {className: 'sb-visually-hidden', text: label}),
+        el('thead', {}, [el('tr', {}, [el('td'), el('td'), el('th', {scope: 'col', text: 'MOD'}),
+                                       el('th', {scope: 'col', text: 'SAVE'})])])]);
+      const body = el('tbody');
+      for (const row of part) {
+        body.append(el('tr', {'data-ability': row.key}, [
+          el('th', {scope: 'row', text: row.label}), el('td', {className: 'sb-score', text: row.score}),
+          el('td', {className: 'sb-mod', text: row.mod.replace('-', '\u2212')}),
+          el('td', {className: 'sb-save', text: row.save.replace('-', '\u2212')})]));
+      }
+      table.append(body);
+      return table;
+    };
+    return el('div', {className: 'sb-ability-tables', role: 'group', 'aria-label': 'Ability scores'},
+      [half(rows.slice(0, 3), 'Strength, Dexterity and Constitution'),
+       half(rows.slice(3), 'Intelligence, Wisdom and Charisma')]);
+  }
+
+  // Top-level facts split into the statblock's parts.
+  function layoutFacts(rows) {
+    const speed = rows.find((row) => SPEED.has(row.key)) || null;
+    const saveRow = rows.find((row) => row.key === 'saving_throws');
+    const saves = savingThrows(saveRow);
+    const abilities = abilityRows(rows, saves);
+    const used = new Set(speed ? [speed] : []);
+    if (abilities) for (const row of rows) if (ABILITIES.includes(row.key)) used.add(row);
+    if (abilities && saveRow && saves) used.add(saveRow);
+    const footer = rows.filter((row) => !used.has(row) && FOOTER.test(row.key));
+    const rank = (row) => (ORDER.includes(row.key) ? ORDER.indexOf(row.key) : ORDER.length);
+    const properties = rows.filter((row) => !used.has(row) && !FOOTER.test(row.key))
+      .map((row, position) => ({row, position}))
+      .sort((a, b) => rank(a.row) - rank(b.row) || a.position - b.position).map((item) => item.row);
+    return {speed, abilities, properties, footer};
+  }
+
+  function facts(rows, className) {
     if (!rows.length) return null;
-    const list = el('dl', {className: 'sb-facts'});
+    const list = el('dl', {className: className || 'sb-facts'});
     for (const row of rows) list.append(el('div', {}, [el('dt', {text: row.label}), el('dd', {text: row.display_text})]));
     return list;
   }
@@ -171,13 +255,17 @@
       el('h3', {className: 'sb-title', 'data-live': 'name', text: plain(live.name)}),
       el('p', {className: 'sb-subtitle', 'data-live': 'subtitle', 'data-source-subtitle': snapshot.subtitle || '',
                text: subtitle}),
-      el('dl', {className: 'sb-live'}, [
-        el('div', {}, [el('dt', {text: 'Armor Class'}), el('dd', {'data-live': 'ac', text: plain(live.ac)})]),
-        el('div', {}, [el('dt', {text: 'Hit Points'}),
-          el('dd', {'data-live': 'hp', text: plain(live.hp) + ' / ' + plain(live.max_hp)})]),
-        el('div', {}, [el('dt', {text: 'Initiative'}),
-          el('dd', {'data-live': 'initiative_bonus', text: signed(live.initiative_bonus)})]),
-      ]),
+    ]);
+  }
+
+  // Armor Class, Hit Points and Initiative are live Scrying Glass values; Speed comes from the source.
+  function core(live, speed) {
+    const pair = (label, props, text) => el('div', {}, [el('dt', {text: label}), el('dd', Object.assign({text}, props))]);
+    return el('dl', {className: 'sb-live'}, [
+      pair('Armor Class', {'data-live': 'ac'}, plain(live.ac)),
+      pair('Hit Points', {'data-live': 'hp'}, plain(live.hp) + ' / ' + plain(live.max_hp)),
+      pair('Initiative', {'data-live': 'initiative_bonus'}, signed(live.initiative_bonus)),
+      speed ? pair(speed.label, {}, speed.display_text) : null,
     ]);
   }
 
@@ -190,8 +278,12 @@
       root.append(el('p', {className: 'sb-partial', role: 'note',
         text: 'Partial statblock: some source content could not be resolved. See Warnings.'}));
     }
-    root.append(facts(ctx.idx.facts(null)) || '');
-    renderNodes(ctx, null, null, root);
+    const parts = layoutFacts(ctx.idx.facts(null));
+    const stats = el('div', {className: 'sb-stats'}, [core(ctx.live, parts.speed),
+      parts.abilities ? abilityTable(parts.abilities) : null, facts(parts.properties)]);
+    const sections = renderNodes(ctx, null, null, el('div', {className: 'sb-sections'}));
+    root.append(el('div', {className: 'sb-body'}, [stats, sections.childNodes.length ? sections : null]));
+    root.append(facts(parts.footer, 'sb-facts sb-footer') || '');
     root.append(warnings(ctx.idx.warnings(null)) || '');
     const definitions = [...ctx.idx.definitions.values()].sort((a, b) => a.position - b.position);
     if (definitions.length) {

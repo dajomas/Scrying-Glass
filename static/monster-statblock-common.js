@@ -115,6 +115,9 @@
                 notes.push(`${provider.provider}: failed recently; retry after ${time(provider.retry_at)}.`);
             }
             if (provider.omitted_versions) notes.push(`${provider.provider}: ${provider.omitted_versions} variant version(s) not offered.`);
+            if (provider.omitted_unavailable) {
+                notes.push(`${provider.provider}: ${provider.omitted_unavailable} result(s) without a public statblock not offered.`);
+            }
         }
         if (row.status === 'no_species') notes.push('No species to search for.');
         if (row.status === 'target_changed') notes.push('The monster changed during the search; search again.');

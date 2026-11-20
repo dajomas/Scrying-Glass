@@ -8,7 +8,9 @@
  * with the ordinary edit. Cancelling the chooser discards its unconfirmed
  * choice; cancelling Edit discards everything staged. expected_values carries
  * the previous values of explicitly edited fields so a concurrent change
- * rejects the save instead of being overwritten.
+ * rejects the save instead of being overwritten. "Show statblock" shows the
+ * staged statblock when there is one, otherwise the saved one, with the
+ * dialog's current name, species, AC and HP (022.15 correction).
  */
 (() => {
     'use strict';
@@ -16,7 +18,7 @@
     if (!sb || typeof openEdit !== 'function') return;
     const FIELDS = ['name', 'monster_species', 'ac', 'hp', 'max_hp', 'original_hp', 'color', 'initiative', 'ally'];
     const text = value => (value === null || value === undefined ? '' : String(value));
-    let staged = null; // {jobId, session}
+    let staged = null; // {jobId, session, job}
 
     const previousOpen = openEdit;
     openEdit = function(kind, id, ...rest) {
@@ -47,16 +49,21 @@
         const upload = sb.element('input', {type: 'file', accept: '.monster,application/json'});
         const uploadLabel = sb.element('label', {className: 'monster-statblock-upload'}, [
             sb.element('span', {text: 'Upload .monster file'}), upload]);
+        const show = sb.element('button', {type: 'button', text: 'Show statblock', disabled: true});
         const clear = sb.element('button', {type: 'button', text: 'Keep current statblock', hidden: true});
         const section = sb.element('fieldset', {className: 'monster-statblock-edit full'}, [
             sb.element('legend', {text: 'Statblock'}), status,
-            sb.element('div', {className: 'monster-statblock-actions'}, [find, uploadLabel, clear]),
+            sb.element('div', {className: 'monster-statblock-actions'}, [show, find, uploadLabel, clear]),
             selection, operation, revision, expected]);
         const actions = form.querySelector('.actions');
         if (actions) actions.before(section); else form.append(section);
         const current = () => editing === session && !editModal.hidden;
         const say = value => { status.textContent = value; };
         let saved = null;
+        const syncShow = () => { show.disabled = !(staged || saved?.statblock_revision); };
+        const live = () => ({name: form.elements.name?.value.trim(), species: form.elements.monster_species?.value.trim(),
+            ac: Number(form.elements.ac?.value), hp: Number(form.elements.hp?.value),
+            max_hp: Number(form.elements.max_hp?.value), initiative_bonus: item.initiative_bonus});
 
         const syncExpected = () => {
             const changed = {};
@@ -76,6 +83,7 @@
             if (!current()) return;
             saved = state.monsters.find(row => row.monster_id === id) || null;
             say(`Current: ${sb.statusText(saved)}.`);
+            syncShow();
         }).catch(error => { if (current()) say(`Current statblock unknown: ${error.message}`); });
 
         function unstage() {
@@ -83,6 +91,7 @@
             staged = null;
             selection.value = operation.value = revision.value = '';
             clear.hidden = true;
+            syncShow();
         }
         clear.addEventListener('click', () => { unstage(); say(`Current: ${sb.statusText(saved)}. No change.`); });
 
@@ -96,13 +105,11 @@
                 dialog.say('Preparing the statblock… This can take a few seconds.');
                 const job = await prepare(context, base, control);
                 if (control.cancelled || !current()) { sb.cancel(job.job_id); return; }
-                const live = {name: form.elements.name?.value.trim(), species: form.elements.monster_species?.value.trim(),
-                    ac: Number(form.elements.ac?.value), hp: Number(form.elements.hp?.value),
-                    max_hp: Number(form.elements.max_hp?.value), initiative_bonus: item.initiative_bonus};
-                const accepted = await dialog.review(job, live);
+                const accepted = await dialog.review(job, live());
                 if (!accepted || !current()) { sb.cancel(job.job_id); return; }
                 unstage();
-                staged = {jobId: job.job_id, session};
+                staged = {jobId: job.job_id, session, job};
+                syncShow();
                 selection.value = job.selection_id;
                 operation.value = sb.operationId();
                 revision.value = String(base);
@@ -115,6 +122,34 @@
                 if (error.code === 'cancelled') dialog.close();
             }
         }
+
+        show.addEventListener('click', async () => {
+            if (staged) {
+                viewer(`Statblock: ${form.elements.name?.value.trim() || item.name}`,
+                    'Selected statblock — not saved until you save the monster.', area => sb.preview(area, staged.job, live()));
+                return;
+            }
+            show.disabled = true;
+            show.setAttribute('aria-busy', 'true');
+            try {
+                const body = await sb.api('/api/statblocks/monsters/' + encodeURIComponent(id));
+                if (!current()) return;
+                if (!body.statblock) {
+                    say(`Current: ${sb.statusText(body)}.`);
+                    saved = body;
+                    return;
+                }
+                const label = [body.statblock.source_label, body.source?.provider, body.source?.source_code].filter(Boolean).join(' · ');
+                viewer(`Statblock: ${form.elements.name?.value.trim() || item.name}`,
+                    `Saved statblock (revision ${body.statblock_revision})${label ? ' — ' + label : ''}.`,
+                    area => area.append(window.ScryingStatblock.render(body.statblock, live(), {prefix: 'saved-' + id + '-'})));
+            } catch (error) {
+                if (current()) say(`The statblock could not be shown: ${error.message}`);
+            } finally {
+                show.removeAttribute('aria-busy');
+                if (current()) syncShow();
+            }
+        });
 
         find.addEventListener('click', async () => {
             const species = form.elements.monster_species?.value.trim();
@@ -165,6 +200,19 @@
         dialog.showModal();
         const close = () => { if (dialog.open) dialog.close(); dialog.remove(); previous?.focus?.(); };
         return {dialog, status, body, actions, close};
+    }
+
+    function viewer(title, note, fill) {
+        const view = shell(title);
+        view.status.textContent = note;
+        const area = sb.element('div', {className: 'monster-statblock-preview', tabindex: '0', 'aria-label': 'Statblock'});
+        if (window.ScryingStatblock) fill(area);
+        view.body.append(area);
+        const close = sb.element('button', {type: 'button', text: 'Close'});
+        close.addEventListener('click', view.close);
+        view.dialog.addEventListener('cancel', event => { event.preventDefault(); view.close(); });
+        view.actions.append(close);
+        close.focus();
     }
 
     function pick(species, candidates, notes) {

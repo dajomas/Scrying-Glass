@@ -21,6 +21,7 @@ This is the index; substantive handover lives in numbered docs/handover sections
    - [SG-TODO-022 Stage C2: protected statblock listener and transport (022.09)](docs/handover/085-statblock-stage-c2-listener.md) - delivered 2026-11-17 as an archive with `[skip ci]`; FastAPI/WebSocket tests not run locally; CI and acceptance pending.
    - [SG-TODO-022 Stage D: statblock viewer, keyboard and live sync (022.10-12)](docs/handover/086-statblock-stage-d-viewer.md) - delivered 2026-11-17 as an archive with `[skip ci]`; browser fixture tests pass locally; e2e/axe not run; CI and acceptance pending.
    - [SG-TODO-022 Stage E: Edit Monster and bulk statblock import (022.13-14)](docs/handover/087-statblock-stage-e-import-ui.md) - delivered 2026-11-17 as an archive without `[skip ci]` (last code stage; CI runs); e2e not run locally; acceptance pending.
+   - [SG-TODO-022.15 correction round 1: statblock search, Edit dialog and viewer layout](docs/handover/088-statblock-correction-round-1.md) - delivered 2026-11-20 by push (CI runs); gated D&D Beyond results omitted, Edit controls aligned, Show statblock added, viewer layout after D&D Beyond/Open5e; acceptance pending.
 9. [Stats fallback fixture repair](docs/handover/090-stats-fallback-fixture.md)
 10. [TODO tracking initialization](docs/handover/100-todo-tracking.md)
 11. [Composed campaign router tests](docs/handover/110-composed-campaign-routers.md)
