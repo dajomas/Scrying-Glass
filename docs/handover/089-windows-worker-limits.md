@@ -44,13 +44,18 @@ Add Monster preview) failed with `worker_enforcement_unavailable`.
   assignment, an unenforced cap), platform selection, and the real 5e.tools and source
   workers with the Windows `ThreadChannel` (a `.monster` file, a D&D Beyond fetch round
   trip, a 5e.tools preparation identical to the in-process result, an adapter error): 9
-  pass on Linux. Two Windows-only tests (a real worker in a real job; a 192 MiB
-  allocation refused under a 128 MiB cap) are skipped here: **not yet run on Windows.**
-  Run them on the Windows machine from the `tests` folder with
-  `python -m unittest test_worker_windows`.
+  pass on Linux. Two Windows-only tests: a real worker in a real job; a 192 MiB
+  allocation refused under a 128 MiB cap.
+- **Windows, user-run 2026-11-20 22:14 CET** (the user's Windows machine, 64-bit Python
+  3.15, checkout `D:\GIT\Scrying-Glass`): all 11 tests of `test_worker_windows` pass,
+  including both Windows-only tests. Run from the `tests` folder with the repository root
+  and `tests` on `PYTHONPATH` (as CI does):
+  `$env:PYTHONPATH = "<repo>;<repo>\tests"` then `python -m unittest test_worker_windows -v`.
+  The exact commit of that checkout was not reported; it contained this change (`dc56c5d`).
 
 ## Limitations
 
-- Not verified on Windows by Claude; the real Job Object behaviour needs the Windows test
-  run above. Until then, treat Windows preparation as unverified.
+- Verified on Windows only by the worker tests above (user run); the full server with
+  Find statblock, automatic loading, Add Monster collection and the preview has not been
+  exercised on Windows.
 - Resource isolation only, as on Linux: not a filesystem or network sandbox.
