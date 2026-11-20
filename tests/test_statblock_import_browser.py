@@ -33,6 +33,7 @@ class FakeServer:
     def __init__(self, page):
         self.page, self.calls, self.jobs, self.applies, self.deleted = page, [], {}, [], []
         self.revisions = {'a': 0, 'b': 3, 'c': 0}
+        self.collected, self.decisions = [], []
         self.shown = []
         self.fail_prepare, self.fail_apply = set(), None
         self.pending_polls = 1
@@ -47,6 +48,18 @@ class FakeServer:
                                 'monsters': [{'monster_id': k, 'statblock_revision': v,
                                               'status': 'available' if v else 'missing', 'warnings': 0}
                                              for k, v in self.revisions.items()]})
+        elif path == 'collected':
+            route.fulfill(json={'campaign_id': '1', 'encounter_token': 'enc', 'items': self.collected})
+        elif path.startswith('collected/'):
+            ident = path.split('/')[1]
+            body = json.loads(request.post_data)
+            self.decisions.append((ident, body))
+            if body['expected_statblock_revision'] == 99:
+                route.fulfill(status=409, json={'code': 'stale_revision', 'message': 'The statblock changed meanwhile.',
+                                                'items': []})
+                return
+            self.collected = [item for item in self.collected if item['collected_id'] != ident]
+            route.fulfill(json={'collected_id': ident, 'decision': body['decision']})
         elif path.startswith('monsters/'):
             ident = path.split('/')[1]
             body = {'monster_id': ident, 'encounter_token': 'enc', 'live': {}, 'statblock_revision': self.revisions[ident],
@@ -158,7 +171,7 @@ class ImportBrowserTests(unittest.TestCase):
         for name in ('glass-theme.css', 'statblocks.css', 'monster-statblock-import.css'):
             self.page.add_style_tag(content=(ROOT / 'static' / name).read_text())
         for name in ('statblocks-render.js', 'monster-statblock-common.js', 'monster-statblock-edit.js',
-                     'monster-statblock-bulk.js'):
+                     'monster-statblock-bulk.js', 'monster-statblock-collected.js'):
             self.page.add_script_tag(content=(ROOT / 'static' / name).read_text())
 
     def form_data(self):
@@ -223,6 +236,48 @@ class ImportBrowserTests(unittest.TestCase):
         self.assertEqual(self.server.shown, ['b'])
         self.page.keyboard.press('Escape')
         self.assertEqual(self.page.locator('dialog').count(), 0)
+        self.assertEqual(self.errors, [])
+
+    def collected(self, ident, name, reasons, revision, current=None):
+        return {'collected_id': ident, 'monster_id': ident, 'name': name, 'species': 'Goblin', 'reasons': reasons,
+                'statblock_revision': revision, 'current_source_label': current, 'provider': '5e.tools',
+                'source_label': 'Goblin', 'completeness': 'available', 'preview': copy.deepcopy(SNAPSHOT),
+                'live': {'name': name, 'species': 'Goblin', 'ac': 15, 'hp': 7, 'max_hp': 7, 'initiative_bonus': 2},
+                'expires_at': '2026-11-20T21:00:00Z'}
+
+    def test_collected_statblocks_are_replaced_or_kept_only_on_confirmation(self):
+        self.server.collected = [self.collected('c1', 'Goblin 1', ['has_statblock'], 2, 'Chosen in Edit'),
+                                 self.collected('c2', 'Goblin 2', ['changed'], 0)]
+        self.page.evaluate('window.scryingCollectedStatblocks.check()')
+        dialog = self.page.get_by_role('dialog', name='Replace statblocks?')
+        first = dialog.get_by_role('region', name='Goblin 1')
+        self.assertIn('already has a different statblock', first.inner_text())
+        self.assertIn('Chosen in Edit (revision 2)', first.inner_text())
+        self.assertIn('species or source was edited', dialog.get_by_role('region', name='Goblin 2').inner_text())
+        first.get_by_text('Show the collected statblock').click()
+        self.assertEqual(first.locator('[data-live="name"]').inner_text(), 'Goblin 1')
+        first.get_by_role('button', name='Replace').click()
+        self.page.wait_for_function('window.reloaded >= 1')
+        self.assertEqual(self.server.decisions[0], ('c1', {'decision': 'replace', 'expected_statblock_revision': 2}))
+        dialog.get_by_role('region', name='Goblin 2').get_by_role('button', name='Keep current').click()
+        self.page.locator('dialog.monster-statblock-collected').wait_for(state='detached')
+        self.assertEqual(self.server.decisions[1], ('c2', {'decision': 'keep', 'expected_statblock_revision': 0}))
+        self.assertEqual(self.errors, [])
+
+    def test_decide_later_and_a_changed_statblock(self):
+        self.server.collected = [self.collected('c1', 'Goblin 1', ['has_statblock'], 99, 'Chosen in Edit')]
+        self.page.evaluate('window.scryingCollectedStatblocks.check()')
+        dialog = self.page.get_by_role('dialog', name='Replace statblocks?')
+        dialog.get_by_role('button', name='Replace').click()  # the statblock changed since the question
+        self.page.locator('dialog.monster-statblock-collected').wait_for(state='detached')
+        self.server.collected = [self.collected('c3', 'Goblin 3', ['changed'], 0)]
+        self.page.evaluate('window.scryingCollectedStatblocks.check()')
+        dialog.get_by_role('button', name='Decide later').click()
+        self.assertEqual(self.page.locator('dialog').count(), 0)
+        self.page.evaluate('window.scryingCollectedStatblocks.check()')
+        self.page.wait_for_timeout(300)
+        self.assertEqual(self.page.locator('dialog').count(), 0)  # not asked again until the next add or reload
+        self.assertEqual([ident for ident, _ in self.server.decisions], ['c1'])
         self.assertEqual(self.errors, [])
 
     def test_edit_statblock_controls_are_bottom_aligned(self):

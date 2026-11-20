@@ -153,5 +153,31 @@ class CreationTests(unittest.IsolatedAsyncioTestCase):
                     selection_token='invalid')
             self.assertEqual(len(context.STATE['monsters']), 2)
 
+    async def test_a_selected_source_starts_statblock_collection(self):
+        # 022.15: Add Monster collects the statblock from the selected source, never for manual adds.
+        made = iter(range(100))
+        context = SimpleNamespace(STATE={'monsters': []}, hp_value_factory=lambda *a: lambda: 7,
+            make_monster=lambda fields, color, upload, url: {**fields, 'id': f'id{next(made)}', 'image_url': url},
+            combatants_changed=AsyncMock(), dnd_image=Mock(return_value=None), statblocks=Mock(),
+            HTTPException=lambda code, detail: ValueError(detail))
+        handler = ms.CandidateMonstersMixin()
+        handler.context = context
+        token = ms.issue_token({'species': 'Goblin', 'image_url': None, 'provider': '5e.tools',
+                                'source_url': 'https://5e.tools/bestiary.html#goblin_mm', 'name': 'Goblin',
+                                'source': 'MM'})
+        created = await handler.create_monster(name='Goblin', monster_species='Goblin', ac=12, hprangestart='7',
+            hprangeend='', color='#842029', quantity=2, image=None, selection_token=token)
+        self.assertEqual(created[0]['monster_source_provider'], '5e.tools')
+        context.statblocks.collect_new_monsters.assert_called_once_with(
+            [item['id'] for item in created], file_bytes=None, filename=None)
+        context.statblocks.collect_new_monsters.reset_mock()
+        await handler.create_monster(name='Goblin', monster_species='Goblin', ac=12, hprangestart='7',
+            hprangeend='', color='#842029', quantity=1, image=None, selection_token='manual')
+        context.statblocks.collect_new_monsters.assert_not_called()
+        context.statblocks.collect_new_monsters.side_effect = RuntimeError('collection failed')
+        created = await handler.create_monster(name='Goblin', monster_species='Goblin', ac=12, hprangestart='7',
+            hprangeend='', color='#842029', quantity=1, image=None, selection_token=token)
+        self.assertEqual(len(created), 1)  # a failing collection never fails the add
+
 if __name__ == '__main__':
     unittest.main()

@@ -110,6 +110,57 @@ main-suite tests with the same single allowlist failure, also in the standalone 
 Both runs were published by Publish CI results, which confirms the publication now works
 for this branch.
 
+Run 44807877763 attempt 1 for `a698717` (which includes `883d57d` and `95ef0ab`)
+**succeeded**: 2254 main-suite tests OK, the standalone browser and audit checks OK and
+pytest 43 passed; the statblock HTTP, listener, D&D Beyond gate, adapter, service and
+browser modules ran and passed. Evidence: `ci-results-44807877763-attempt-1`,
+publication `ad38bff`. No e2e suite was run.
+
+## Missing feature - statblock collection when adding monsters (2026-11-20)
+
+The user reported that Add Monster collected no statblock and asked: when a monster is
+selected from a source, use the same source for the statblock; when a `.monster` file is
+imported, use that file; when no statblock is collected nor available, carry on without.
+
+- `scrying_glass_statblock_collecting.py` (`CollectingMixin` on the statblock service):
+  after Add Monster with a selected source (the signed selection's exact
+  `monster_source_*` identity) or Import .monster (the uploaded bytes), one preparation
+  per add is submitted to the existing scheduler and isolated workers; the add returns
+  immediately. On completion one transaction saves the statblock to every monster of that
+  add that still has the same species and source identity and no statblock (revision 0);
+  the listener is notified. A manual add (no source), a disabled provider, a full queue,
+  an unavailable record or a failed preparation leaves the monsters without a statblock;
+  collection errors never fail the add. Removed monsters are skipped, and an identical
+  statblock (same content digest, for example from automatic loading) is not asked about.
+- **Overwrite only after confirmation** (user decision 2026-11-20: ask when the monster
+  already has a different statblock *or* its species or source was edited meanwhile; ask
+  in an Admin dialog). Such statblocks are held server-side (`collected_list`,
+  `collected_decide`; at most `prepared_snapshots`, expiring after `selection_seconds`,
+  the newest per monster). `GET /api/statblocks/collected` lists them;
+  `POST /api/statblocks/collected/{id}` with `{decision: replace|keep,
+  expected_statblock_revision}` replaces in one transaction (409 `stale_revision` when the
+  statblock changed after the question, 410 `collected_expired`, 409 `encounter_changed`)
+  or discards it. Both routes are Admin-only (not on the statblock listener).
+  `static/monster-statblock-collected.js` checks for waiting statblocks for 40 s after an
+  Add Monster or Import .monster submit and once on page load, and shows "Replace
+  statblocks?" with, per monster, the reason, the current statblock, the collected source,
+  an expandable preview (current form values) and Replace / Keep current; "Decide later"
+  leaves them waiting until the next add or reload.
+- Collection uses the application's statblock service only when it exists; the server now
+  creates it at start-up (`scrying_glass_server.py`), so contexts without one (test
+  fixtures) never start background network work.
+- Validation: `tests/test_statblock_collection.py` (8 tests: one preparation saved to
+  every copy, import file as statblock, nothing without source/provider/file, unavailable
+  record, changed monster held and replaced on confirmation, removed skipped, identical
+  not asked, different statblock replaced/kept only on confirmation with stale-revision
+  and expired checks, request validation and expiry, missing or failing service): pass
+  locally. `tests/test_statblock_import_browser.py` (2 new: Replace/Keep per monster with
+  preview and reload, stale revision and Decide later): pass locally. The two routes'
+  HTTP wiring has no dedicated test (FastAPI is not available here). Handler tests in `test_monster_candidate_selection.py` and
+  `test_monster_bonus_import.py` (source add starts collection, manual add does not,
+  import passes the file, failures never fail the add) need FastAPI: run here only against
+  a minimal FastAPI stand-in (27 tests pass), so CI is their first real run. No e2e test.
+
 ## Known limitations and open work
 
 - D&D Beyond habitat values run together (for example `ForestGrasslandHill`): the

@@ -9,6 +9,8 @@
 | GET  /api/statblocks/jobs/{job_id} | job status; on completion selection, expiry, source, warnings, preview |
 | DELETE /api/statblocks/jobs/{job_id} | cancel; a completed job's unused selection is released |
 | POST /api/statblocks/apply | atomic, idempotent apply of prepared selections |
+| GET  /api/statblocks/collected | statblocks collected for added monsters that wait for confirmation (022.15) |
+| POST /api/statblocks/collected/{id} | ``{decision: replace or keep, expected_statblock_revision}`` |
 
 All routes need a signed-in regular admin assigned to the active campaign
 (superadmin-only and Client Display sessions are refused) and are
@@ -146,6 +148,17 @@ def install_statblock_routes(context, app, *, cookie=None, writes=True):
             return service.apply(principal, body)
         return await transactional_handler(context, apply_statblocks, role='admin', cookie_name=cookie)(request)
 
+    async def collected_statblocks(request: Request):
+        service = statblock_service(context)
+        return service.collected_list(service.authorize(_token(context, request)))
+
+    async def decide_collected_statblock(collected_id: str, request: Request):
+        body = await _json_body(request)
+        service = statblock_service(context)
+        async def decide_collected_statblock(request: Request):
+            return service.collected_decide(service.authorize(_token(context, request)), collected_id, body)
+        return await transactional_handler(context, decide_collected_statblock, role='admin', cookie_name=cookie)(request)
+
     read = [Depends(context.require('admin', cookie))]
     write = read + [Depends(same_origin)]
     routes = [('/api/statblocks/state', statblock_state, 'GET', read, True),
@@ -155,6 +168,8 @@ def install_statblock_routes(context, app, *, cookie=None, writes=True):
                    ('/api/statblocks/prepare', prepare_statblock, 'POST', write, False),
                    ('/api/statblocks/jobs/{job_id}', statblock_job, 'GET', read, True),
                    ('/api/statblocks/jobs/{job_id}', cancel_statblock_job, 'DELETE', write, True),
-                   ('/api/statblocks/apply', apply_statblocks, 'POST', write, False)]
+                   ('/api/statblocks/apply', apply_statblocks, 'POST', write, False),
+                   ('/api/statblocks/collected', collected_statblocks, 'GET', read, True),
+                   ('/api/statblocks/collected/{collected_id}', decide_collected_statblock, 'POST', write, False)]
     for path, handler, method, dependencies, wrap in routes:
         app.add_api_route(path, serialized(handler) if wrap else handler, methods=[method], dependencies=dependencies)

@@ -241,6 +241,10 @@ if __name__ == '__main__':
     # Statblock listener: public static assets only (login/page styles); no media or private files.
     statblock_app.mount("/static", AdminScriptStaticFiles(directory=str(STATIC_DIR)), name="statblock-static")
 
+    # The statblock service exists from start-up, so Add Monster can collect statblocks (022.15).
+    from python.scrying_glass_statblock_service import statblock_service
+    statblock_service(_server_context)
+
     async def serve():
         """Run the admin and client servers concurrently with shared runtime state."""
         common = {'host': CONFIG['network']['bind'], 'log_level': 'info', 'access_log': False}

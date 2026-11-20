@@ -141,6 +141,8 @@ class PreparingMixin:
         info = job.info
         if info.get('auto'):
             return self._auto_finished(job, state, result, error)
+        if info.get('collect'):
+            return self._collect_finished(job, state, result, error)
         scope = info['scope']
         file_bytes, info['file_bytes'] = info.get('file_bytes'), None
         if state != 'completed':
