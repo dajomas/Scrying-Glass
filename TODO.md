@@ -56,6 +56,7 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 37. [HP field help in a folded block](docs/todo/300-hp-help-disclosure.md) - SG-TODO-030, proposed (requested 2026-11-20). Move the Add Monster HP field explanation into a closed help block at the bottom of the Combat statistics section.
 38. [Refresh from source above Remove](docs/todo/310-refresh-from-source-order.md) - SG-TODO-031, proposed (requested 2026-11-20). In the Monster bulk actions dropdown, Refresh from source comes directly before Remove.
 39. [Clear selection next to Select all](docs/todo/320-clear-selection-position.md) - SG-TODO-032, proposed (requested 2026-11-20). In the Characters and Monsters rosters, Clear selection moves to the right of Select all.
+40. [5e.tools monster versions and generated magic-item variants](docs/todo/330-fivetools-variants.md) - SG-TODO-033, proposed (split off from SG-TODO-022 by the user 2026-11-20). Offer 5e.tools `_versions` in Find statblock and generate magic-item variants (04e.2) so those statblocks are no longer partial.
 
 ## Maintenance
 

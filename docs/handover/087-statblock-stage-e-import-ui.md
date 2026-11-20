@@ -80,4 +80,5 @@ This is the last planned code stage of SG-TODO-022, so its commit message omits
 - Review this CI run, the FastAPI route tests (C1/C2) and the e2e suite including axe for the
   statblock page in both browsers; correct findings in narrow follow-ups.
 - Agreement still needed on the proposed engineering safeguards (C1) and Stage A's `dataset_files` (agreed 2026-11-20, see TODO 220).
-- 5e.tools `_versions` candidates and generated magic-item variants (04e.2) remain open.
+- 5e.tools `_versions` candidates and generated magic-item variants (04e.2) remain open
+  (moved to SG-TODO-033 on 2026-11-20; not required for SG-TODO-022).
