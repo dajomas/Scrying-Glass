@@ -1,0 +1,32 @@
+# 310 - Refresh from source above Remove in the Monster bulk actions
+
+[Back to TODO index](../../TODO.md)
+
+## Task and status
+
+SG-TODO-031 - proposed, requested by the user 2026-11-20. No owner, priority or
+deadline has been agreed.
+
+## Request
+
+In the Monster bulk "Choose action" dropdown, move **Refresh from source** above
+**Remove**.
+
+## Current behaviour (code at `2e492b6`)
+
+- The dropdown (`#monsterBulkAction`, `templates/admin/080_monster_display.html`) ends
+  with Reset and Remove.
+- `static/monster-refresh-review.js` appends "Refresh from source" at the end, below
+  Remove. `static/monster-statblock-bulk.js` already inserts "Load statblocks" before
+  Remove.
+
+## Acceptance criteria (proposed)
+
+- Remove is the last action; Refresh from source comes directly before it (after Load
+  statblocks, unless agreed otherwise), whatever order the scripts load in.
+- The action itself, its enabled/disabled state and its feedback are unchanged.
+
+## Validation requirements
+
+Admin browser test of the option order; existing refresh-review tests unchanged.
+Changes to code or tests run CI normally.

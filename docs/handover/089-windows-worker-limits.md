@@ -52,6 +52,10 @@ Add Monster preview) failed with `worker_enforcement_unavailable`.
   and `tests` on `PYTHONPATH` (as CI does):
   `$env:PYTHONPATH = "<repo>;<repo>\tests"` then `python -m unittest test_worker_windows -v`.
   The exact commit of that checkout was not reported; it contained this change (`dc56c5d`).
+- CI: run 44817232724 attempt 1 for `dc56c5d` **succeeded**: 2283 main-suite tests OK,
+  pytest 43 passed; the Linux worker tests ran with real prlimit and 9 of the 11 Windows
+  worker tests ran (the 2 Windows-only tests are skipped on Linux). Evidence
+  `ci-results-44817232724-attempt-1`, publication `1fc7c2a`.
 
 ## Limitations
 

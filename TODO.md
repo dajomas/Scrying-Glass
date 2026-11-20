@@ -53,6 +53,9 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 34. [Temporary hit points option](docs/todo/270-temporary-hit-points.md) - SG-TODO-027, proposed (requested 2026-11-20). Grant temporary HP in battle following the 5e rules (no stacking, not healing, no effect on life state); temporary HP storage and damage absorption already exist.
 35. [End battle hides combatants](docs/todo/280-end-battle-hides-combatants.md) - SG-TODO-028, proposed (requested 2026-11-20). End battle switches off visibility for all monsters and characters.
 36. [Distinct default monster color](docs/todo/290-distinct-monster-color.md) - SG-TODO-029, proposed (requested 2026-11-20). When adding a monster, the default color is one no monster in the current battle setup uses yet. Forms, palette and timing to agree.
+37. [HP field help in a folded block](docs/todo/300-hp-help-disclosure.md) - SG-TODO-030, proposed (requested 2026-11-20). Move the Add Monster HP field explanation into a closed help block at the bottom of the Combat statistics section.
+38. [Refresh from source above Remove](docs/todo/310-refresh-from-source-order.md) - SG-TODO-031, proposed (requested 2026-11-20). In the Monster bulk actions dropdown, Refresh from source comes directly before Remove.
+39. [Clear selection next to Select all](docs/todo/320-clear-selection-position.md) - SG-TODO-032, proposed (requested 2026-11-20). In the Characters and Monsters rosters, Clear selection moves to the right of Select all.
 
 ## Maintenance
 
