@@ -259,6 +259,43 @@ def statblock_facts(root):
     return facts
 
 
+GATE_HOST = 'marketplace.dndbeyond.com'
+GATE_PATHS = ('/marketplace', '/login', '/sign-in')
+
+
+def _monster_page(url):
+    parts = urlsplit(url)
+    return parts.hostname in HOSTS and MONSTER_PATH.match(parts.path) is not None
+
+
+def gated_redirect(url, target):
+    """A monster page redirected to the marketplace or a sign-in page: paywalled content.
+
+    The same rules as the Add Monster stats lookup (scrying_glass_dndbeyond.dnd_monster_detail_html).
+    """
+    if not _monster_page(url):
+        return False
+    parts = urlsplit(urljoin(url, target))
+    if parts.scheme != 'https' or parts.username or parts.password:
+        return False
+    if parts.hostname == GATE_HOST:
+        return parts.path.startswith('/category/')
+    path = parts.path.rstrip('/').casefold()
+    return parts.hostname in HOSTS and any(path == gate or path.startswith(gate + '/') for gate in GATE_PATHS)
+
+
+def gated_status(url, status, body):
+    """A missing monster page (404), or a 401/403 whose visible text says the content is locked."""
+    if not _monster_page(url):
+        return False
+    if status == 404:
+        return True
+    if status in (401, 403):
+        from .scrying_glass_dndbeyond import dnd_monster_content_locked
+        return dnd_monster_content_locked(body.decode('utf-8', 'replace'))
+    return False
+
+
 def statblock_roots(page):
     return page.find_all(lambda e: e.tag == 'div' and ({'mon-stat-block', 'mon-stat-block-2024'} & set(e.classes())))
 
@@ -268,11 +305,15 @@ def public_statblock(path, *, fetch, deadline):
 
     Gated content (for example a Monster Manual creature outside the SRD) is
     listed by the search page exactly like public content; only its own page
-    tells them apart. The page is fetched through the shared cache, so a later
+    tells them apart. Live, a gated page redirects to the marketplace; the
+    transport turns that (and the other gates in ``gated_redirect`` and
+    ``gated_status``) into an empty page. A page without a statblock root is
+    treated the same. The page is fetched through the shared cache, so a later
     preparation of the same candidate reuses it.
     """
     url, _ = canonical_url(path)
-    return bool(statblock_roots(parse_html(fetch(url, deadline=deadline).decode('utf-8', 'replace'))))
+    data = fetch(url, deadline=deadline)
+    return bool(data) and bool(statblock_roots(parse_html(data.decode('utf-8', 'replace'))))
 
 
 def parse_page(text, monster_id):

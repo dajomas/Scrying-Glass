@@ -68,7 +68,7 @@ def provider_config(display):
 
 def default_transport(limits):
     """(provider, url, deadline) -> bytes over the network, bounded per response."""
-    from .scrying_glass_dndbeyond_statblock import HOSTS
+    from .scrying_glass_dndbeyond_statblock import HOSTS, gated_redirect, gated_status
     from .scrying_glass_fivetools_fetch import HttpsFetcher
     def transport(provider, url, deadline, root=None):
         if provider == FIVETOOLS:
@@ -77,8 +77,8 @@ def default_transport(limits):
             host = urlsplit(url).hostname
             return ProviderFetcher({host}, response_bytes=limits.response_bytes)(url, deadline=deadline)
         if provider == DNDBEYOND:
-            return ProviderFetcher(HOSTS, response_bytes=limits.response_bytes,
-                                   accept='text/html,application/xhtml+xml')(url, deadline=deadline)
+            return ProviderFetcher(HOSTS, response_bytes=limits.response_bytes, accept='text/html,application/xhtml+xml',
+                                   gate_redirect=gated_redirect, gate_status=gated_status)(url, deadline=deadline)
         raise SourceError('unsafe_url')
     return transport
 

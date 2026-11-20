@@ -115,13 +115,21 @@ def markdown_entries(text, warn=None):
     return entries
 
 
+class _Gated(Exception):
+    """The provider answered with an access gate (paywall, sign-in) instead of the page."""
+
+
 class _Redirects(HTTPRedirectHandler):
-    def __init__(self, hosts):
+    def __init__(self, hosts, gate_redirect=None):
         super().__init__()
-        self.hosts, self.count = hosts, 0
+        self.hosts, self.count, self.gate_redirect = hosts, 0, gate_redirect
 
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         self.count += 1
+        if self.gate_redirect is not None and self.gate_redirect(req.full_url, newurl):
+            if fp is not None:
+                fp.close()
+            raise _Gated()  # not followed: the gate's host may be outside the allowlist
         target = urlsplit(newurl)
         if self.count > 3 or target.scheme != 'https' or target.hostname not in self.hosts:
             raise SourceError('unsafe_redirect')
@@ -129,11 +137,21 @@ class _Redirects(HTTPRedirectHandler):
 
 
 class ProviderFetcher:
-    """fetch(url, deadline=...) -> bytes for HTTPS URLs on allowlisted hosts."""
+    """fetch(url, deadline=...) -> bytes for HTTPS URLs on allowlisted hosts.
 
-    def __init__(self, hosts, *, response_bytes=10485760, accept='application/json', opener_factory=None):
+    Optional access-gate rules (D&D Beyond): ``gate_redirect(url, target)`` and
+    ``gate_status(url, status, body)`` identify a paywall or sign-in answer. A gated
+    request returns empty bytes -- "no statblock here", a cacheable answer -- as the
+    Add Monster stats lookup does, instead of a provider failure.
+    """
+
+    GATE_BODY_BYTES = 128000
+
+    def __init__(self, hosts, *, response_bytes=10485760, accept='application/json', opener_factory=None,
+                 gate_redirect=None, gate_status=None):
         self.hosts, self.response_bytes, self.accept = frozenset(hosts), response_bytes, accept
         self._opener_factory = opener_factory
+        self.gate_redirect, self.gate_status = gate_redirect, gate_status
 
     def __call__(self, url, *, deadline):
         parts = urlsplit(url)
@@ -142,7 +160,7 @@ class ProviderFetcher:
         remaining = deadline - time.monotonic()
         if remaining <= 0:
             raise SourceError('deadline')
-        redirects = _Redirects(self.hosts)
+        redirects = _Redirects(self.hosts, self.gate_redirect)
         opener = self._opener_factory(redirects) if self._opener_factory else build_opener(HTTPSHandler(), redirects)
         request = Request(url, headers={'User-Agent': 'ScryingGlass/1.0', 'Accept': self.accept, 'Accept-Encoding': 'identity'})
         try:
@@ -162,9 +180,19 @@ class ProviderFetcher:
                     if total > self.response_bytes:
                         raise SourceError('response_bytes_limit')
                     chunks.append(chunk)
+        except _Gated:
+            return b''
         except SourceError:
             raise
         except HTTPError as exc:
+            if self.gate_status is not None:
+                try:
+                    with exc:
+                        body = exc.read(self.GATE_BODY_BYTES + 1)
+                except Exception:
+                    body = b''
+                if len(body) <= self.GATE_BODY_BYTES and self.gate_status(url, exc.code, body):
+                    return b''
             raise SourceError('not_found' if exc.code == 404 else 'provider_error') from None
         except (URLError, OSError, ValueError):
             raise SourceError('provider_unavailable') from None

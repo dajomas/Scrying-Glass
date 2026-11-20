@@ -6,7 +6,9 @@ import time
 import unittest
 from pathlib import Path
 
-from python.scrying_glass_dndbeyond_statblock import canonical_url, discover_dndbeyond, prepare_dndbeyond, public_statblock
+from python.scrying_glass_dndbeyond_statblock import (
+    HOSTS, canonical_url, discover_dndbeyond, gated_redirect, gated_status, prepare_dndbeyond, public_statblock,
+)
 from python.scrying_glass_open5e_statblock import discover_open5e, prepare_open5e
 from python.scrying_glass_statblock_model import validate_snapshot
 from python.scrying_glass_statblock_sources import ProviderFetcher, SourceError, markdown_entries, name_key
@@ -232,6 +234,56 @@ class FetcherTests(unittest.TestCase):
                 ProviderFetcher({'api.open5e.com'}, response_bytes=4, opener_factory=opener)(url, deadline=deadline())
             self.assertEqual(caught.exception.code, code)
 
+    def test_dndbeyond_access_gates_become_empty_pages(self):
+        from urllib.error import HTTPError
+        from urllib.request import Request
+        monster = 'https://www.dndbeyond.com/monsters/5194923-beholder'
+
+        class Redirecting:
+            """Calls the fetcher's redirect handler like urllib does for a 302."""
+            def __init__(self, target):
+                self.target = target
+            def __call__(self, redirects):
+                self.redirects = redirects
+                return self
+            def open(self, request, timeout):
+                self.redirects.redirect_request(request, None, 302, 'Found', {}, self.target)
+                raise AssertionError('redirect not refused')
+
+        class Failing:
+            def __init__(self, status, body):
+                self.status, self.body = status, body
+            def __call__(self, redirects):
+                return self
+            def open(self, request, timeout):
+                raise HTTPError(request.full_url, self.status, 'x', {}, io.BytesIO(self.body))
+
+        def fetch(opener, url=monster, gates=True):
+            extra = dict(gate_redirect=gated_redirect, gate_status=gated_status) if gates else {}
+            return ProviderFetcher(HOSTS, opener_factory=opener, **extra)(url, deadline=deadline())
+
+        locked = b'<main>You do not have access to this content. Purchase this content to view.</main>'
+        for opener in (Redirecting('https://marketplace.dndbeyond.com/category/3711000'),
+                       Redirecting('/marketplace'), Redirecting('https://www.dndbeyond.com/sign-in?returnUrl=x'),
+                       Failing(403, locked), Failing(401, locked), Failing(404, b'')):
+            with self.subTest(opener=vars(opener)):
+                self.assertEqual(fetch(opener), b'')
+        for opener, url, code in ((Failing(403, b'Forbidden'), monster, 'provider_error'),
+                                  (Failing(500, locked), monster, 'provider_error'),
+                                  (Failing(404, b''), 'https://www.dndbeyond.com/monsters?filter-search=x', 'not_found'),
+                                  (Redirecting('https://marketplace.dndbeyond.com/'), monster, 'unsafe_redirect'),
+                                  (Redirecting('https://evil.example/category/1'), monster, 'unsafe_redirect')):
+            with self.subTest(url=url, opener=vars(opener)), self.assertRaises(SourceError) as caught:
+                fetch(opener, url)
+            self.assertEqual(caught.exception.code, code)
+        with self.assertRaises(SourceError) as caught:  # without the rules a gate stays a refused redirect
+            fetch(Redirecting('https://marketplace.dndbeyond.com/category/3711000'), gates=False)
+        self.assertEqual(caught.exception.code, 'unsafe_redirect')
+        self.assertFalse(public_statblock(monster, fetch=lambda url, deadline: b'', deadline=deadline()))
+        with self.assertRaises(SourceError) as caught:
+            prepare_dndbeyond(monster, fetch=lambda url, deadline: b'', deadline=deadline())
+        self.assertEqual(caught.exception.code, 'statblock_unavailable')
+
     def test_markdown_entries(self):
         self.assertEqual(markdown_entries('a\n* b\n- c\n\n> d'), ['a', {'type': 'list', 'items': ['b', 'c']}, 'd'])
 
@@ -247,11 +299,12 @@ class CapturedEvidenceTests(unittest.TestCase):
                 check_common(self, snapshot)
 
     def test_every_captured_dndbeyond_page(self):
-        pages, available, unavailable = {}, 0, 0
+        pages, available, unavailable, redirected = {}, 0, 0, {}
         for manifest in glob.glob(str(EXAMPLES / '*/manifest.json')):
             for request in json.loads(Path(manifest).read_text(encoding='utf-8'))['requests']:
                 if request['label'].startswith('dndbeyond-detail') and request.get('file'):
                     pages[request['url']] = Path(manifest).parent / request['file']
+                    redirected[request['url']] = request.get('final_url', request['url']) != request['url']
         for url, path in pages.items():
             with self.subTest(url=url):
                 # Discovery's public check agrees with preparation for every captured page.
@@ -261,13 +314,22 @@ class CapturedEvidenceTests(unittest.TestCase):
                 except SourceError as exc:
                     self.assertEqual(exc.code, 'statblock_unavailable')
                     self.assertFalse(public)
+                    # Live, each of these was a marketplace redirect, which the access gate recognizes.
+                    self.assertTrue(redirected[url])
                     unavailable += 1
                     continue
                 self.assertTrue(public)
+                self.assertFalse(redirected[url])
                 check_common(self, snapshot)
                 available += 1
         self.assertGreater(available, 0)
         self.assertGreater(unavailable, 0)
+        for manifest in glob.glob(str(EXAMPLES / '*/manifest.json')):
+            for request in json.loads(Path(manifest).read_text(encoding='utf-8'))['requests']:
+                if request['label'].startswith('dndbeyond-detail') and request.get('final_url'):
+                    with self.subTest(final=request['final_url']):
+                        self.assertEqual(gated_redirect(request['url'], request['final_url']),
+                                         request['final_url'] != request['url'])
 
     def test_captured_document_licences(self):
         documents = {Path(f).stem: Path(f).read_bytes() for f in glob.glob(str(EXAMPLES / 'open5e-documents/*.json'))}

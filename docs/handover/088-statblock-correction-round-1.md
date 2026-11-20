@@ -59,6 +59,38 @@ four findings while reviewing the delivered 022 implementation.
   identically here (FastAPI, httpx2 or aiohttp missing, or slow fixtures). The FastAPI
   route, HTTP and e2e tests were **not run** locally; CI covers the configured suites.
 
+## Follow-up - access gates as in the Add Monster stats lookup (2026-11-20)
+
+The user asked to use the Add Monster stats lookup's paywall detection. Review of
+`dnd_monster_detail_html` (`python/scrying_glass_dndbeyond.py`) and the captured
+evidence showed that finding 1 was **not fixed for live pages** by the first commit
+(`883d57d`): every captured gated page (Beholder, Mind Flayer, Death Knight, Drow Mage,
+2014 and 2024) answered with a redirect to `marketplace.dndbeyond.com/category/...`, not
+with a page without a statblock. The statblock fetcher refuses redirects to other hosts
+(`unsafe_redirect`), which discovery treated as "could not be checked" and still offered.
+The first commit's tests only used fake pages without a statblock root.
+
+The statblock fetcher (`ProviderFetcher`, D&D Beyond monster pages only) now applies the
+stats lookup's rules: a redirect to `marketplace.dndbeyond.com/category/...` or to
+`/marketplace`, `/login` or `/sign-in` on dndbeyond.com (not followed), a 401/403 whose
+visible text says the content is locked (`dnd_monster_content_locked`; the status alone
+is not enough), and a 404 (the stats lookup skips those) all return an empty page, as
+the stats lookup does. An empty page is cached like any answer, so a repeated search
+does not hit a failure cooldown, and both discovery (not offered, counted) and
+preparation (`statblock_unavailable`) treat it as having no statblock. Other failures
+and redirects are unchanged (`unsafe_redirect`, `provider_error`, `not_found` for the
+search page). Like the stats lookup, the decision needs one request per candidate page;
+the search listing has no paywall marker.
+
+Validation: new fetcher test drives the real redirect handler with marketplace, relative
+`/marketplace` and sign-in targets, 401/403 with and without lock text, 404 on a monster
+page versus the search page, and the rules switched off; a local HTTP server confirmed a
+real urllib 302 to the marketplace is stopped. The captured-evidence test now asserts that
+every captured gated page was a marketplace redirect recognized by the gate and no public
+page was. Service tests use the empty page for a redirected candidate. 124 related
+modules (statblock, D&D Beyond, monster lookup, 5e.tools, Open5e) give the same results
+as before this follow-up (74 pass; the rest need FastAPI/httpx2/aiohttp here).
+
 ## Known limitations and open work
 
 - D&D Beyond habitat values run together (for example `ForestGrasslandHill`): the

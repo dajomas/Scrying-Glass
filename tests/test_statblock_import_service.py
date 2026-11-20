@@ -245,9 +245,10 @@ class DiscoveryTests(ImportFixture, unittest.TestCase):
     PUBLIC = (b'<html><body><div class="mon-stat-block"><a class="mon-stat-block__name-link" '
               b'href="/monsters/1-goblin">Goblin</a></div></body></html>')
     GATED = b'<html><body><div class="more-info-content">Unlock this content</div></body></html>'
+    REDIRECTED = b''  # what the transport returns for a marketplace redirect (see ProviderFetcher gates)
 
     def test_dndbeyond_results_without_a_public_statblock_are_not_offered(self):
-        self.dndbeyond({1: self.PUBLIC, 2: self.GATED, 3: self.GATED})
+        self.dndbeyond({1: self.PUBLIC, 2: self.GATED, 3: self.REDIRECTED})
         row = self.discover(('n',))['monsters'][0]
         self.assertEqual([c['provider'] for c in row['candidates']], ['D&D Beyond'])
         provider = {p['provider']: p for p in row['providers']}['D&D Beyond']
