@@ -22,7 +22,7 @@ from dataclasses import asdict
 from pathlib import Path
 
 from .scrying_glass_fivetools_fetch import FetchError, allowed_dataset_path
-from .scrying_glass_fivetools_worker import WorkerError, _kill_and_reap, _launcher, _memory_guard
+from .scrying_glass_fivetools_worker import WorkerError, _kill_and_reap, _launcher, _memory_guard, _start_worker
 
 MAX_LINE = 65536
 WORKER_ERRORS = frozenset(('worker_enforcement_unavailable', 'worker_memory_limit', 'worker_input_invalid',
@@ -59,28 +59,19 @@ def prepare_isolated(name, source, *, fetch, deadline, limits=None, cancelled=la
     root = str(Path(__file__).resolve().parent.parent)
     bootstrap = ("import sys;sys.path.insert(0,sys.argv[1]);"
                  "from python.scrying_glass_fivetools_preparation_worker import _child;_child()")
-    command = [launcher, '--core=0', '--as=' + str(cap), '--fsize=' + str(cap),
-               '--cpu=' + str(max(1, math.ceil(deadline - time.monotonic()))), '--',
-               sys.executable, '-I', '-c', bootstrap, root, str(cap)]
-    try:
-        process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                                   stderr=subprocess.DEVNULL, close_fds=True, start_new_session=True)
-    except OSError as exc:
-        raise WorkerError('worker_start_failed') from exc
-    selector = selectors.DefaultSelector()
+    process = _start_worker(launcher, bootstrap, root, cap, max(1, math.ceil(deadline - time.monotonic())),
+                            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+    channel = None
     buffer = bytearray()
     try:
-        os.set_blocking(process.stdout.fileno(), False)
-        os.set_blocking(process.stdin.fileno(), False)
-        selector.register(process.stdout, selectors.EVENT_READ)
+        channel = open_channel(process)
         def send(data):
             view = memoryview(data)
             while view:
                 check()
-                _, writable, _ = select_write(process.stdin, deadline)
-                if writable:
+                if channel.writable(min(0.05, max(0.0, deadline - time.monotonic()))):
                     try:
-                        written = os.write(process.stdin.fileno(), view)
+                        written = channel.write(view)
                     except BlockingIOError:
                         continue
                     except BrokenPipeError:
@@ -96,9 +87,9 @@ def prepare_isolated(name, source, *, fetch, deadline, limits=None, cancelled=la
                 if len(buffer) > MAX_LINE:
                     raise WorkerError('worker_transport_limit')
                 check()
-                for _key, _mask in selector.select(timeout=min(0.05, max(0.0, deadline - time.monotonic()))):
+                if channel.readable(min(0.05, max(0.0, deadline - time.monotonic()))):
                     try:
-                        chunk = os.read(process.stdout.fileno(), 65536)
+                        chunk = channel.read(65536)
                     except BlockingIOError:
                         continue
                     if not chunk:
@@ -109,7 +100,7 @@ def prepare_isolated(name, source, *, fetch, deadline, limits=None, cancelled=la
                 if process.poll() is not None and buffer.find(b'\n') < 0:
                     rest = b''
                     try:
-                        rest = os.read(process.stdout.fileno(), 65536)
+                        rest = channel.read(65536)
                     except (BlockingIOError, OSError):
                         pass
                     if not rest:
@@ -152,8 +143,11 @@ def prepare_isolated(name, source, *, fetch, deadline, limits=None, cancelled=la
                     raise WorkerError('worker_transport_limit')
                 while len(buffer) < length + 1:
                     check()
-                    for _key, _mask in selector.select(timeout=0.05):
-                        chunk = os.read(process.stdout.fileno(), 1 << 20)
+                    if channel.readable(0.05):
+                        try:
+                            chunk = channel.read(1 << 20)
+                        except BlockingIOError:
+                            continue
                         if not chunk:
                             raise WorkerError('worker_protocol_error')
                         buffer.extend(chunk)
@@ -169,13 +163,48 @@ def prepare_isolated(name, source, *, fetch, deadline, limits=None, cancelled=la
                 return snapshot, measurements
             raise WorkerError('worker_protocol_error')
     finally:
-        selector.close()
+        if channel is not None:
+            channel.close()
         for stream in (process.stdin, process.stdout):
             try:
                 stream.close()
             except OSError:
                 pass
         _kill_and_reap(process)
+
+
+class PosixChannel:
+    """Non-blocking pipes with a selector (Linux); same interface as the Windows ThreadChannel."""
+
+    def __init__(self, process):
+        self.process = process
+        self.selector = selectors.DefaultSelector()
+        os.set_blocking(process.stdout.fileno(), False)
+        os.set_blocking(process.stdin.fileno(), False)
+        self.selector.register(process.stdout, selectors.EVENT_READ)
+
+    def readable(self, timeout):
+        return bool(self.selector.select(timeout=timeout))
+
+    def read(self, size):
+        return os.read(self.process.stdout.fileno(), size)
+
+    def writable(self, timeout):
+        import select
+        return bool(select.select([], [self.process.stdin], [], timeout)[1])
+
+    def write(self, view):
+        return os.write(self.process.stdin.fileno(), view)
+
+    def close(self):
+        self.selector.close()
+
+
+def open_channel(process):
+    if sys.platform == 'win32':
+        from .scrying_glass_worker_windows import ThreadChannel
+        return ThreadChannel(process)
+    return PosixChannel(process)
 
 
 def select_write(stream, deadline):

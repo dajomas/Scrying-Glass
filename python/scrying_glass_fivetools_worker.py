@@ -1,7 +1,9 @@
-"""Private Linux isolated inheritance runner; not an HTTP/job scheduler API.
+"""Private isolated inheritance runner; not an HTTP/job scheduler API.
 
-Requires util-linux prlimit at a trusted system path. Kernel address-space and
-file limits are set before Python starts. No shell, pickle or imported JS.
+Linux: requires util-linux prlimit at a trusted system path; kernel address-space
+and file limits are set before Python starts. Windows: a Job Object with the same
+memory and CPU limits (``scrying_glass_worker_windows``, loaded only on Windows);
+the child verifies its limits before reading input. Other platforms fail closed. No shell, pickle or imported JS.
 Caller supplies exact bounded bytes and its original absolute deadline. The
 caller must run this blocking function outside the event loop and DB lock.
 """
@@ -26,7 +28,12 @@ class WorkerError(ValueError):
     """Sanitized process/enforcement/transport error, never remote stderr."""
     pass
 
+WINDOWS_JOB = 'windows-job-object'
+
+
 def _launcher():
+    if sys.platform == 'win32':
+        return WINDOWS_JOB
     if sys.platform != 'linux':
         raise WorkerError('worker_enforcement_unavailable')
     for path in ('/usr/bin/prlimit', '/bin/prlimit'):
@@ -51,7 +58,28 @@ def _write_json(stream, value, cap, check):
         stream.write(data)
     stream.write(b'\n')
 
+def _start_worker(launcher, bootstrap, root, cap, cpu_seconds, **popen_kwargs):
+    """Start the fixed Python worker entry point under the platform's resource limits."""
+    child = [sys.executable, '-I', '-c', bootstrap, root, str(cap)]
+    if launcher == WINDOWS_JOB:
+        from .scrying_glass_worker_windows import launch
+        try:
+            return launch(child, cap, cpu_seconds, close_fds=True, **popen_kwargs)
+        except ValueError as exc:
+            raise WorkerError('worker_enforcement_unavailable') from exc
+        except OSError as exc:
+            raise WorkerError('worker_start_failed') from exc
+    command = [launcher, '--core=0', '--as=' + str(cap), '--fsize=' + str(cap), '--cpu=' + str(cpu_seconds), '--',
+               *child]
+    try:
+        return subprocess.Popen(command, close_fds=True, start_new_session=True, **popen_kwargs)
+    except OSError as exc:
+        raise WorkerError('worker_start_failed') from exc
+
 def _kill_and_reap(process):
+    if getattr(process, '_sg_job', None) is not None or sys.platform == 'win32':
+        from .scrying_glass_worker_windows import kill_and_reap
+        return kill_and_reap(process)
     if process.poll() is None:
         try:
             os.killpg(process.pid, signal.SIGKILL)
@@ -116,16 +144,9 @@ def _resolve_isolated(selected, records, *, deadline, limits=None,
         request.seek(0)
         root = str(Path(__file__).resolve().parent.parent)
         bootstrap = "import sys;sys.path.insert(0,sys.argv[1]);from python.scrying_glass_fivetools_worker import _child;_child()"
-        command = [launcher, '--core=0', '--as='+str(cap), '--fsize='+str(cap),
-                   '--cpu='+str(max(1, math.ceil(deadline-time.monotonic()))), '--',
-                   sys.executable, '-I', '-c', bootstrap, root, str(cap)]
         check()
-        try:
-            process = subprocess.Popen(command, stdin=request, stdout=response,
-                                       stderr=subprocess.DEVNULL, close_fds=True,
-                                       start_new_session=True)
-        except OSError as exc:
-            raise WorkerError('worker_start_failed') from exc
+        process = _start_worker(launcher, bootstrap, root, cap, max(1, math.ceil(deadline-time.monotonic())),
+                                stdin=request, stdout=response, stderr=subprocess.DEVNULL)
         try:
             while process.poll() is None:
                 check()
@@ -175,6 +196,14 @@ def _resolve_isolated(selected, records, *, deadline, limits=None,
             _kill_and_reap(process)
 
 def _memory_guard(cap):
+    if sys.platform == 'win32':
+        from .scrying_glass_worker_windows import guard_child
+        try:
+            return guard_child(cap)
+        except ValueError as exc:
+            raise WorkerError('worker_enforcement_unavailable') from exc
+        except OSError as exc:
+            raise WorkerError('worker_enforcement_unavailable') from exc
     import mmap
     import resource
     if sys.platform != 'linux' or resource.getrlimit(resource.RLIMIT_AS) != (cap, cap) or resource.getrlimit(resource.RLIMIT_FSIZE) != (cap, cap):

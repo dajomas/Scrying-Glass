@@ -3,7 +3,7 @@
 Same boundary as the 5e.tools preparation worker: the conversion -- parsing,
 Markdown/HTML extraction, placeholder resolution, normalization and snapshot
 validation -- runs in a fresh prlimit-bounded child (address space, file size
-and CPU), started without network use of its own. The child asks its parent
+and CPU; a Job Object on Windows), started without network use of its own. The child asks its parent
 for each URL; the parent fetches only HTTPS URLs on the provider's host
 allowlist, through the shared bounded fetcher, within the job's original
 absolute deadline. Late, malformed or oversized child output is rejected; the
@@ -15,7 +15,6 @@ from __future__ import annotations
 import json
 import math
 import os
-import selectors
 import subprocess
 import sys
 import time
@@ -23,8 +22,8 @@ from dataclasses import asdict
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from .scrying_glass_fivetools_preparation_worker import select_write
-from .scrying_glass_fivetools_worker import WorkerError, _kill_and_reap, _launcher, _memory_guard
+from .scrying_glass_fivetools_preparation_worker import open_channel
+from .scrying_glass_fivetools_worker import WorkerError, _kill_and_reap, _launcher, _memory_guard, _start_worker
 
 MAX_LINE = 65536
 KINDS = frozenset(('open5e', 'dndbeyond', 'file'))
@@ -76,28 +75,19 @@ def prepare_source_isolated(kind, request, *, fetch, hosts, deadline, limits, re
     root = str(Path(__file__).resolve().parent.parent)
     bootstrap = ("import sys;sys.path.insert(0,sys.argv[1]);"
                  "from python.scrying_glass_statblock_worker import _child;_child()")
-    command = [launcher, '--core=0', '--as=' + str(cap), '--fsize=' + str(cap),
-               '--cpu=' + str(max(1, math.ceil(deadline - time.monotonic()))), '--',
-               sys.executable, '-I', '-c', bootstrap, root, str(cap)]
-    try:
-        process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                                   stderr=subprocess.DEVNULL, close_fds=True, start_new_session=True)
-    except OSError as exc:
-        raise WorkerError('worker_start_failed') from exc
-    selector = selectors.DefaultSelector()
+    process = _start_worker(launcher, bootstrap, root, cap, max(1, math.ceil(deadline - time.monotonic())),
+                            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+    channel = None
     buffer = bytearray()
     try:
-        os.set_blocking(process.stdout.fileno(), False)
-        os.set_blocking(process.stdin.fileno(), False)
-        selector.register(process.stdout, selectors.EVENT_READ)
+        channel = open_channel(process)
         def send(data):
             view = memoryview(data)
             while view:
                 check()
-                _, writable, _ = select_write(process.stdin, deadline)
-                if writable:
+                if channel.writable(min(0.05, max(0.0, deadline - time.monotonic()))):
                     try:
-                        written = os.write(process.stdin.fileno(), view)
+                        written = channel.write(view)
                     except BlockingIOError:
                         continue
                     except BrokenPipeError:
@@ -106,9 +96,9 @@ def prepare_source_isolated(kind, request, *, fetch, hosts, deadline, limits, re
         def fill(minimum):
             while len(buffer) < minimum:
                 check()
-                for _key, _mask in selector.select(timeout=min(0.05, max(0.0, deadline - time.monotonic()))):
+                if channel.readable(min(0.05, max(0.0, deadline - time.monotonic()))):
                     try:
-                        chunk = os.read(process.stdout.fileno(), 1 << 20)
+                        chunk = channel.read(1 << 20)
                     except BlockingIOError:
                         continue
                     if not chunk:
@@ -118,7 +108,7 @@ def prepare_source_isolated(kind, request, *, fetch, hosts, deadline, limits, re
                         raise WorkerError('worker_transport_limit')
                 if process.poll() is not None and len(buffer) < minimum:
                     try:
-                        rest = os.read(process.stdout.fileno(), 1 << 20)
+                        rest = channel.read(1 << 20)
                     except (BlockingIOError, OSError):
                         rest = b''
                     if not rest:
@@ -188,7 +178,8 @@ def prepare_source_isolated(kind, request, *, fetch, hosts, deadline, limits, re
                 return snapshot, measurements
             raise WorkerError('worker_protocol_error')
     finally:
-        selector.close()
+        if channel is not None:
+            channel.close()
         for stream in (process.stdin, process.stdout):
             try:
                 stream.close()
