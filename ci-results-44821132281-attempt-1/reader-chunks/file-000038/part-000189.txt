@@ -1,0 +1,46 @@
+p]tests/admin-removal-fallback-feedback.test.cjs
+tests	JavaScript tests	2026-11-20T21:38:04.7316114Z TAP version 13
+tests	JavaScript tests	2026-11-20T21:38:04.7935881Z # Subtest: named confirmation is unchanged and cancellation preserves error, ticket and button
+tests	JavaScript tests	2026-11-20T21:38:04.7940795Z ok 1 - named confirmation is unchanged and cancellation preserves error, ticket and button
+tests	JavaScript tests	2026-11-20T21:38:04.7941764Z   ---
+tests	JavaScript tests	2026-11-20T21:38:04.7942170Z   duration_ms: 4.337681
+tests	JavaScript tests	2026-11-20T21:38:04.7942622Z   type: 'test'
+tests	JavaScript tests	2026-11-20T21:38:04.7943013Z   ...
+tests	JavaScript tests	2026-11-20T21:38:04.7945499Z # Subtest: button disables before one encoded bodyless DELETE, then success precedes refresh
+tests	JavaScript tests	2026-11-20T21:38:04.7947409Z ok 2 - button disables before one encoded bodyless DELETE, then success precedes refresh
+tests	JavaScript tests	2026-11-20T21:38:04.7948373Z   ---
+tests	JavaScript tests	2026-11-20T21:38:04.7948881Z   duration_ms: 1.673389
+tests	JavaScript tests	2026-11-20T21:38:04.7949465Z   type: 'test'
+tests	JavaScript tests	2026-11-20T21:38:04.7949966Z   ...
+tests	JavaScript tests	2026-11-20T21:38:04.7951031Z # Subtest: current request failure persists, reenables the button and never refreshes or retries
+tests	JavaScript tests	2026-11-20T21:38:04.7952778Z ok 3 - current request failure persists, reenables the button and never refreshes or retries
+tests	JavaScript tests	2026-11-20T21:38:04.7953782Z   ---
+tests	JavaScript tests	2026-11-20T21:38:04.7954300Z   duration_ms: 1.191358
+tests	JavaScript tests	2026-11-20T21:38:04.7954869Z   type: 'test'
+tests	JavaScript tests	2026-11-20T21:38:04.7955374Z   ...
+tests	JavaScript tests	2026-11-20T21:38:04.7956189Z # Subtest: actual failure followed by matching success replaces its error only
+tests	JavaScript tests	2026-11-20T21:38:04.7959483Z ok 4 - actual failure followed by matching success replaces its error only
+tests	JavaScript tests	2026-11-20T21:38:04.7960399Z   ---
+tests	JavaScript tests	2026-11-20T21:38:04.7960929Z   duration_ms: 1.33715
+tests	JavaScript tests	2026-11-20T21:38:04.7961488Z   type: 'test'
+tests	JavaScript tests	2026-11-20T21:38:04.7962011Z   ...
+tests	JavaScript tests	2026-11-20T21:38:04.7963267Z # Subtest: success expiry is five seconds and cannot remove unrelated persistent errors
+tests	JavaScript tests	2026-11-20T21:38:04.7964590Z ok 5 - success expiry is five seconds and cannot remove unrelated persistent errors
+tests	JavaScript tests	2026-11-20T21:38:04.7965525Z   ---
+tests	JavaScript tests	2026-11-20T21:38:04.7966031Z   duration_ms: 2.024045
+tests	JavaScript tests	2026-11-20T21:38:04.7966845Z   type: 'test'
+tests	JavaScript tests	2026-11-20T21:38:04.7967394Z   ...
+tests	JavaScript tests	2026-11-20T21:38:04.7968372Z # Subtest: removing another entity does not clear the first entity failure
+tests	JavaScript tests	2026-11-20T21:38:04.7969470Z ok 6 - removing another entity does not clear the first entity failure
+tests	JavaScript tests	2026-11-20T21:38:04.7970156Z   ---
+tests	JavaScript tests	2026-11-20T21:38:04.7970534Z   duration_ms: 0.948984
+tests	JavaScript tests	2026-11-20T21:38:04.7970988Z   type: 'test'
+tests	JavaScript tests	2026-11-20T21:38:04.7971359Z   ...
+tests	JavaScript tests	2026-11-20T21:38:04.7972284Z # Subtest: kind is display metadata: same endpoint ID retry resolves earlier default-kind error
+tests	JavaScript tests	2026-11-20T21:38:04.7986807Z ok 7 - kind is display metadata: same endpoint ID retry resolves earlier default-kind error
+tests	JavaScript tests	2026-11-20T21:38:04.7987925Z   ---
+tests	JavaScript tests	2026-11-20T21:38:04.7988594Z   duration_ms: 1.04801
+tests	JavaScript tests	2026-11-20T21:38:04.7989323Z   type: 'test'
+tests	JavaScript tests	2026-11-20T21:38:04.7989954Z   ...
+tests	JavaScript tests	2026-11-20T21:38:04.7990806Z # Subtest: refresh alone cannot clear a removal error
+tests	JavaScript test

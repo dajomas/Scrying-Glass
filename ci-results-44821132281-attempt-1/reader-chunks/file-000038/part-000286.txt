@@ -1,0 +1,30 @@
+hon browser and audit checks	2026-11-20T21:41:22.6780440Z Combined monster lookup failed for 5e.tools
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:22.6781053Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:22.6782145Z   File "/tmp/scrying-tests-yiqh95w5/repo/python/scrying_glass_combined_lookup.py", line 50, in ordered_candidates
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:22.6783341Z     raise ValueError("Incomplete or unsupported candidate list")
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:22.6784171Z ValueError: Incomplete or unsupported candidate list
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:22.6784960Z Combined monster lookup: 5e.tools did not respond (secret)
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:22.6785832Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:22.6786706Z Ran 12 tests in 0.007s
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:22.6787081Z 
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:22.6787317Z OK
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:22.6788419Z test_combined_monster_lookup.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:22.6909258Z Connection audit: test_combined_monster_lookup_application.py
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2374209Z D&D Beyond candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2374874Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2375616Z   File "/tmp/scrying-tests-yiqh95w5/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2387499Z     hits = context.dnd_monster_candidates(species)
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2388675Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2389691Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2390297Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2391344Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2392407Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2393058Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2394190Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2395584Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2396108Z TimeoutError: secret D&D endpoint
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2397846Z Combined monster lookup: D&D Beyond did not respond (secret D&D endpoint)
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2443142Z 5e.tools candidate lookup failed
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2443546Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2444230Z   File "/tmp/scrying-tests-yiqh95w5/repo/python/scrying_glass_monster_selection.py", line 199, in fivetools_candidates
+tests	Standalone Python browser and audit checks	2026-11-20T21:41:23.2444851Z     
