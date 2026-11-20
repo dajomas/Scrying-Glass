@@ -191,8 +191,12 @@ panel, inactive when no statblock is available.
   the previous one and jobs are private to the session) and 2 new tests in
   `tests/test_statblock_import_browser.py` (enabled only for the current species and a
   statblock source, live form values, disabled with a note when the source has none):
-  pass locally. Visual check of the Appearance group with the Admin stylesheets. The
-  route's HTTP wiring is first exercised by CI.
+  pass locally. Visual check of the Appearance group with the Admin stylesheets.
+- CI: run 44812920275 attempt 1 for `8a05db7` **succeeded**: 2272 main-suite tests OK,
+  pytest 43 passed, standalone checks OK; the preview tests (4), the Edit/import browser
+  tests (13) and the Admin browser tests that use the selection event (candidate
+  selection 12, image previews 5, initiative offer 14, lookup focus 8) ran and passed.
+  Evidence `ci-results-44812920275-attempt-1`, publication `e09de35`. No e2e suite run.
 
 ## Known limitations and open work
 
