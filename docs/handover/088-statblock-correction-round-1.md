@@ -198,6 +198,19 @@ panel, inactive when no statblock is available.
   selection 12, image previews 5, initiative offer 14, lookup focus 8) ran and passed.
   Evidence `ci-results-44812920275-attempt-1`, publication `e09de35`. No e2e suite run.
 
+## E2E run 20261120T222005Z and helper fix (2026-11-20)
+
+The user ran the e2e suite (`tools/run_e2e.sh`, Chromium and Firefox, WSL2) against
+`92e037d`; results pushed in `f34417b` (`e2e-results/20261120T222005Z/`): **71 passed,
+66 failed**. All 66 failures have one cause: the shared helper `add_monster`
+(`e2e/helpers.py`) clicked `#monsterForm button`, the *first* button in the Add Monster
+form, expecting "Add manually". The Show statblock button added to the Appearance group
+(`8a05db7`) is now the first button there and is disabled without a selected source, so
+every test that adds a monster timed out waiting for it to become enabled. Not a product
+defect. The helper now clicks the submit button (`#monsterForm button:not([type="button"])`;
+every other button the scripts add to that form is `type="button"`). The e2e suite must
+be run again to show the real state of the statblock work, including the axe scans.
+
 ## Known limitations and open work
 
 - D&D Beyond habitat values ran together (for example `ForestGrasslandHill`): fixed
