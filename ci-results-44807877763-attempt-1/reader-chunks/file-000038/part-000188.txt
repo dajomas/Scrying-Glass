@@ -1,0 +1,48 @@
+:08:01.2775773Z # cancelled 0
+tests	JavaScript tests	2026-11-20T20:08:01.2775955Z # skipped 0
+tests	JavaScript tests	2026-11-20T20:08:01.2776874Z # todo 0
+tests	JavaScript tests	2026-11-20T20:08:01.2777093Z # duration_ms 54.997567
+tests	JavaScript tests	2026-11-20T20:08:01.3205993Z ##[endgroup]
+tests	JavaScript tests	2026-11-20T20:08:01.3206480Z ##[group]tests/admin-reset-all-feedback.test.cjs
+tests	JavaScript tests	2026-11-20T20:08:01.5249594Z TAP version 13
+tests	JavaScript tests	2026-11-20T20:08:01.5579399Z # Subtest: asset loads once, deferred after core and End feedback
+tests	JavaScript tests	2026-11-20T20:08:01.5582312Z ok 1 - asset loads once, deferred after core and End feedback
+tests	JavaScript tests	2026-11-20T20:08:01.5582815Z   ---
+tests	JavaScript tests	2026-11-20T20:08:01.5583018Z   duration_ms: 0.632832
+tests	JavaScript tests	2026-11-20T20:08:01.5583236Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:08:01.5583438Z   ...
+tests	JavaScript tests	2026-11-20T20:08:01.5597108Z # Subtest: cancellation preserves the error and does not begin or supersede a request
+tests	JavaScript tests	2026-11-20T20:08:01.5597823Z ok 2 - cancellation preserves the error and does not begin or supersede a request
+tests	JavaScript tests	2026-11-20T20:08:01.5598223Z   ---
+tests	JavaScript tests	2026-11-20T20:08:01.5598446Z   duration_ms: 2.234133
+tests	JavaScript tests	2026-11-20T20:08:01.5598690Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:08:01.5598871Z   ...
+tests	JavaScript tests	2026-11-20T20:08:01.5599248Z # Subtest: one unchanged POST and refresh, without direct client state mutation
+tests	JavaScript tests	2026-11-20T20:08:01.5599757Z ok 3 - one unchanged POST and refresh, without direct client state mutation
+tests	JavaScript tests	2026-11-20T20:08:01.5600071Z   ---
+tests	JavaScript tests	2026-11-20T20:08:01.5600243Z   duration_ms: 0.648075
+tests	JavaScript tests	2026-11-20T20:08:01.5600446Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:08:01.5600621Z   ...
+tests	JavaScript tests	2026-11-20T20:08:01.5601012Z # Subtest: failure publishes persistent explicit error and neither refreshes nor retries
+tests	JavaScript tests	2026-11-20T20:08:01.5601591Z ok 4 - failure publishes persistent explicit error and neither refreshes nor retries
+tests	JavaScript tests	2026-11-20T20:08:01.5601936Z   ---
+tests	JavaScript tests	2026-11-20T20:08:01.5602112Z   duration_ms: 0.582627
+tests	JavaScript tests	2026-11-20T20:08:01.5602310Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:08:01.5602482Z   ...
+tests	JavaScript tests	2026-11-20T20:08:01.5602848Z # Subtest: actual failed attempt followed by success silently resolves only Reset All
+tests	JavaScript tests	2026-11-20T20:08:01.5603415Z ok 5 - actual failed attempt followed by success silently resolves only Reset All
+tests	JavaScript tests	2026-11-20T20:08:01.5603766Z   ---
+tests	JavaScript tests	2026-11-20T20:08:01.5603939Z   duration_ms: 0.636118
+tests	JavaScript tests	2026-11-20T20:08:01.5604143Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:08:01.5604322Z   ...
+tests	JavaScript tests	2026-11-20T20:08:01.5604589Z # Subtest: refresh alone cannot clear a Reset All error
+tests	JavaScript tests	2026-11-20T20:08:01.5604951Z ok 6 - refresh alone cannot clear a Reset All error
+tests	JavaScript tests	2026-11-20T20:08:01.5605214Z   ---
+tests	JavaScript tests	2026-11-20T20:08:01.5605386Z   duration_ms: 0.494985
+tests	JavaScript tests	2026-11-20T20:08:01.5605579Z   type: 'test'
+tests	JavaScript tests	2026-11-20T20:08:01.5605749Z   ...
+tests	JavaScript tests	2026-11-20T20:08:01.5606118Z # Subtest: unrelated success cannot clear Reset All errors or use the legacy route
+tests	JavaScript tests	2026-11-20T20:08:01.5606855Z ok 7 - unrelated success cannot clear Reset All errors or use the legacy route
+tests	JavaScript tests	2026-11-20T20:08:01.5607301Z   ---
+tests	JavaScript tests	2026-11-20T20:08:01.5607518Z   duration_ms: 0.540393
+tests	JavaScript tests	2026-11-20T20:08:01.5607761Z   ty

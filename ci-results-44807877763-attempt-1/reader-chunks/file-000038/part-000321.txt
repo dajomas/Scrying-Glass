@@ -1,0 +1,28 @@
+2:59.2071624Z PASS: all audited modules passed and closed their tracked connections
+tests	Standalone Python browser and audit checks	2026-11-20T20:12:59.5533293Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-20T20:12:59.5533555Z ##[group]tests/feedback_browser_fixture.py
+tests	Standalone Python browser and audit checks	2026-11-20T20:12:59.7826618Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-20T20:12:59.7827033Z ##[group]tests/storage_migration_fixtures.py
+tests	Standalone Python browser and audit checks	2026-11-20T20:13:00.0470535Z ##[endgroup]
+tests	Post Run actions/setup-node@v4	﻿2026-11-20T20:13:00.0529928Z Post job cleanup.
+tests	Post Run actions/setup-node@v4	2026-11-20T20:13:00.1309318Z (node:39156) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-node@v4	2026-11-20T20:13:00.1309877Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/setup-python@v5	﻿2026-11-20T20:13:00.1443588Z Post job cleanup.
+tests	Post Run actions/setup-python@v5	2026-11-20T20:13:00.2205631Z (node:39164) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-python@v5	2026-11-20T20:13:00.2206318Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/setup-python@v5	2026-11-20T20:13:00.2378587Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/Scrying-Glass/Scrying-Glass --files-from manifest.txt --use-compress-program zstdmt
+tests	Post Run actions/setup-python@v5	2026-11-20T20:13:00.4722059Z (node:39164) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+tests	Post Run actions/setup-python@v5	2026-11-20T20:13:01.4671960Z Sent 60817408 of 69175041 (87.9%), 57.9 MBs/sec
+tests	Post Run actions/setup-python@v5	2026-11-20T20:13:01.7301843Z Sent 69175041 of 69175041 (100.0%), 52.2 MBs/sec
+tests	Post Run actions/setup-python@v5	2026-11-20T20:13:01.9270134Z Cache saved with the key: setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e
+tests	Post Run actions/checkout@v4	﻿2026-11-20T20:13:01.9417295Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-20T20:13:01.9946878Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-20T20:13:01.9978129Z git version 2.56.1
+tests	Post Run actions/checkout@v4	2026-11-20T20:13:01.9999291Z Temporarily overriding HOME='/home/runner/work/_temp/4a7629ac-ad53-4830-9435-ccbd2b6c3341' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-20T20:13:02.0000158Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-20T20:13:02.0002147Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-20T20:13:02.0031520Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-20T20:13:02.0060081Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-20T20:13:02.0310867Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-20T20:13:02.0331706Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-20T20:13:02.0340153Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extrahe
