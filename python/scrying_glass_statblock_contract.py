@@ -11,7 +11,7 @@ from .scrying_glass_statblock_discovery import DNDBEYOND, FILE, FIVETOOLS, OPEN5
 
 OPERATION_ID = re.compile(r'[A-Za-z0-9_-]{1,128}\Z')
 REFERENCE_ID = re.compile(r'[A-Za-z0-9_-]{1,128}\Z')
-ADAPTERS = {FIVETOOLS: '5etools-04f-1', OPEN5E: 'open5e-v2-05-1', DNDBEYOND: 'dndbeyond-06-1', FILE: 'tetracube-07-1'}
+ADAPTERS = {FIVETOOLS: '5etools-04f-1', OPEN5E: 'open5e-v2-05-1', DNDBEYOND: 'dndbeyond-06-2', FILE: 'tetracube-07-1'}
 LIVE_FIELDS = ('name', 'monster_species', 'ac', 'hp', 'max_hp', 'initiative_bonus')
 EDITABLE_EXPECTED = frozenset(('name', 'monster_species', 'ac', 'hp', 'max_hp', 'original_hp', 'color',
                                'initiative', 'initiative_bonus', 'ally'))

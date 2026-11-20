@@ -331,6 +331,19 @@ class CapturedEvidenceTests(unittest.TestCase):
                         self.assertEqual(gated_redirect(request['url'], request['final_url']),
                                          request['final_url'] != request['url'])
 
+    def test_dndbeyond_footer_tags_are_separated(self):
+        manifest = EXAMPLES / 'wolf' / 'manifest.json'
+        if not manifest.is_file():
+            self.skipTest('captured wolf evidence not present')
+        rows = [r for r in json.loads(manifest.read_text(encoding='utf-8'))['requests']
+                if r['label'].startswith('dndbeyond-detail') and r.get('file') and r.get('final_url') == r['url']]
+        for row in rows:
+            snapshot, _ = prepare_dndbeyond(row['url'], deadline=deadline(),
+                                            fetch=lambda u, deadline, f=row['file']: (manifest.parent / f).read_bytes())
+            facts = {f['key']: f['display_text'] for f in snapshot['facts']}
+            with self.subTest(url=row['url']):
+                self.assertEqual(facts['footer_habitat'], 'Forest, Grassland, Hill')
+
     def test_captured_document_licences(self):
         documents = {Path(f).stem: Path(f).read_bytes() for f in glob.glob(str(EXAMPLES / 'open5e-documents/*.json'))}
         record = json.loads(next(Path(f).read_bytes() for f in glob.glob(str(EXAMPLES / 'lich/0*-open5e.json'))

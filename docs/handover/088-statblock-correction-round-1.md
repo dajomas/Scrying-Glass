@@ -200,8 +200,15 @@ panel, inactive when no statblock is available.
 
 ## Known limitations and open work
 
-- D&D Beyond habitat values run together (for example `ForestGrasslandHill`): the
-  adapter joins the footer links without separators. Not changed here.
+- D&D Beyond habitat values ran together (for example `ForestGrasslandHill`): fixed
+  2026-11-20 at the user's request. The footer's tag elements are joined with ", "
+  ("Forest, Grassland, Hill"); adapter version `dndbeyond-06-2`, so cached conversions are
+  rebuilt. Statblocks saved earlier keep their text until they are loaded again (for
+  example Edit Monster, Find statblock). Test: `test_dndbeyond_footer_tags_are_separated`.
+- **Acceptance 2026-11-20:** the user checked and accepted finding 1 (with the paywall
+  rules of the stats lookup), the statblock collection when adding monsters with its
+  confirmation dialog and the Show statblock button in Add Monster (findings 2-4 were
+  accepted earlier the same day).
 - Discovery now makes one extra D&D Beyond request per candidate (at most 32 per
   species, within the existing provider limits, deadline and cache).
 - 022.15 continues with the CI run for this commit, the e2e suite and further findings;

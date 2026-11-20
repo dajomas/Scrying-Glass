@@ -19,7 +19,7 @@ from urllib.parse import urljoin, urlencode, urlsplit
 from .scrying_glass_statblock_sources import SourceError, assemble, credit, name_key, toggle_items
 from .scrying_glass_statblock_model import ModelLimits
 
-ADAPTER_VERSION = 'dndbeyond-06-1'
+ADAPTER_VERSION = 'dndbeyond-06-2'  # 06-2: footer tags joined with commas
 PROVIDER = 'D&D Beyond'
 SITE = 'https://www.dndbeyond.com'
 HOSTS = frozenset(('www.dndbeyond.com', 'dndbeyond.com'))
@@ -347,7 +347,13 @@ def parse_page(text, monster_id):
     footer = []
     for tags in page.find_all(lambda e: e.tag == 'p' and ('tags' in e.classes() or 'source' in e.classes())):
         text = clean(tags.text())
-        if ':' in text:
+        items = [clean(tag.text()) for tag in tags.find_all(lambda e: 'tag' in e.classes())]
+        if ':' in text and any(items):
+            # Habitat/monster tags are separate elements: "Forest, Grassland, Hill", not run together.
+            label = text.partition(':')[0]
+            footer.append(('footer_' + re.sub(r'[^a-z0-9]+', '_', label.casefold()).strip('_'), label.strip(),
+                           ', '.join(item for item in items if item), None))
+        elif ':' in text:
             label, _, value = text.partition(':')
             footer.append(('footer_' + re.sub(r'[^a-z0-9]+', '_', label.casefold()).strip('_'), label.strip(), value.strip(), None))
         elif text:
