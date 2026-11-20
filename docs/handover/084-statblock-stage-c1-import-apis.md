@@ -78,7 +78,7 @@ bulk import 022.14) and no viewer renders statblocks (022.10-022.12).
   endpoint), adapter versions and limits are part of conversion-cache keys.
 - Failure cooldown is per exact request URL. Discovery deadline: one
   `preparation_seconds` budget per discovery request.
-- Engineering safeguards that are not agreed limits (proposed, awaiting agreement):
+- Engineering safeguards that are not agreed limits (proposed here; **agreed by the user 2026-11-20** as fixed constants, see TODO 220):
   32 candidates per provider and species, 4,000 held candidates (2,000 per session,
   a session at its cap loses its own oldest), failed job records kept 60 s (64 at most).
 - Preparation needs Linux with `prlimit` (as the Stage A worker). Elsewhere (for
@@ -112,4 +112,4 @@ bulk import 022.14) and no viewer renders statblocks (022.10-022.12).
 - 022.13/022.14 UI; 022.12 automatic original-source loading uses `prepare` with
   the original candidate.
 - 5e.tools `_versions` candidates (needs version expansion in the adapter).
-- Agreement on the proposed safeguards above and Stage A's `dataset_files`.
+- Agreement on the proposed safeguards above and Stage A's `dataset_files` (agreed 2026-11-20).

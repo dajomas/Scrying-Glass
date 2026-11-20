@@ -76,11 +76,19 @@ this (diagnosis by reasoning; not reproduced by Claude on Windows).
   with its traceback in the server console.
 - Tests: `_worker_python` choices (Windows venv, missing base, Linux) on every platform;
   a Windows-only test that starts a worker from a fresh virtual environment's
-  `python.exe` (not yet run on Windows).
+  `python.exe`.
+- **User-run 2026-11-20**: with the venv's `python.exe` (as `run.bat` uses), all 13 tests
+  of `test_worker_windows` pass on Windows, including the new virtual-environment test.
+  With the server started by `run.bat`, Find statblock and the Show statblock preview in
+  Add Monster work on Windows; a short regression check with `run.sh` on Linux (WSL2 on
+  the same machine) also works. (A first WSL2 start reported port 3000 in use just after
+  the Windows server stopped; it started normally a few seconds later.)
+- CI: run 44821132281 attempt 1 for `9503255` **succeeded**: 2285 main-suite tests OK,
+  pytest 43 passed. Evidence `ci-results-44821132281-attempt-1`, publication `b3c0155`.
 
 ## Limitations
 
-- Verified on Windows only by the worker tests above (user run); the full server with
-  Find statblock, automatic loading, Add Monster collection and the preview has not been
-  exercised on Windows.
+- On Windows the user checked Find statblock and the Add Monster preview with the real
+  server; automatic loading for the viewer and the collection after an add were not
+  checked separately (they use the same workers).
 - Resource isolation only, as on Linux: not a filesystem or network sandbox.

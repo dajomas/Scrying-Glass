@@ -69,8 +69,8 @@ All remaining 022.04 subunits are implemented:
   boilerplate intro is generated. Images in entries are omitted with a
   `media_omitted` warning.
 - New engineering limit `dataset_files` (64 dataset files per preparation) is
-  a proposed safeguard, not one of the agreed sixteen limits; awaiting user
-  agreement. Reaching it yields an explicit partial warning.
+  a proposed safeguard, not one of the agreed sixteen limits; agreed by the user
+  2026-11-20 as a fixed safeguard (TODO 220). Reaching it yields an explicit partial warning.
 
 ## Validation (executed in this environment, Python 3.13.18, Node 22.23.4)
 
