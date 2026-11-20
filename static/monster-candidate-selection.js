@@ -120,7 +120,8 @@
     function publishSelection() {
         document.dispatchEvent(new CustomEvent('scrying:monster-selection', {
             detail: selected ? {species: selected.species, provider: selected.provider,
-                image_url: (imageChoice || selected).image_url || null} : null
+                image_url: (imageChoice || selected).image_url || null,
+                selection_token: selected.selection_token || null} : null
         }));
     }
     function invalidate() {

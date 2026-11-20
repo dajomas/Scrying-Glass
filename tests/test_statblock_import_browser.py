@@ -33,7 +33,7 @@ class FakeServer:
     def __init__(self, page):
         self.page, self.calls, self.jobs, self.applies, self.deleted = page, [], {}, [], []
         self.revisions = {'a': 0, 'b': 3, 'c': 0}
-        self.collected, self.decisions = [], []
+        self.collected, self.decisions, self.previews = [], [], []
         self.shown = []
         self.fail_prepare, self.fail_apply = set(), None
         self.pending_polls = 1
@@ -92,6 +92,24 @@ class FakeServer:
             failed = body['candidate_id'] in self.fail_prepare
             self.jobs[job] = dict(body, polls=0, failed=failed)
             route.fulfill(status=202, json={'job_id': job, 'status': 'queued', 'monster_id': body['monster_id']})
+        elif path == 'preview':
+            body = json.loads(request.post_data)
+            job = 'preview-%d' % (len(self.jobs) + 1)
+            self.previews.append(body)
+            self.jobs[job] = dict(body, polls=0, preview=True, failed=body['selection_token'] in self.fail_prepare)
+            route.fulfill(status=202, json={'job_id': job, 'status': 'queued', 'monster_id': None})
+        elif path.startswith('jobs/') and self.jobs.get(path.split('/')[1], {}).get('preview'):
+            ident, job = path.split('/')[1], self.jobs[path.split('/')[1]]
+            if request.method == 'DELETE':
+                self.deleted.append(ident)
+                route.fulfill(json={'job_id': ident, 'status': 'cancelled'})
+            elif job['failed']:
+                route.fulfill(json={'job_id': ident, 'status': 'failed', 'monster_id': None, 'error': {
+                    'code': 'statblock_unavailable', 'message': 'The source has no public statblock.'}})
+            else:
+                route.fulfill(json={'job_id': ident, 'status': 'completed', 'monster_id': None, 'provider': '5e.tools',
+                                    'preview': copy.deepcopy(SNAPSHOT), 'source_label': 'Goblin',
+                                    'completeness': 'available'})
         elif path.startswith('jobs/'):
             job = self.jobs[path.split('/')[1]]
             ident = path.split('/')[1]
@@ -141,7 +159,12 @@ class ImportBrowserTests(unittest.TestCase):
         self.page.on('pageerror', lambda error: self.errors.append(str(error)))
         self.page.route('http://fixture.test/', lambda route: route.fulfill(content_type='text/html', body=(
             '<select id="monsterBulkAction"><option value="">Actions</option><option value="remove">Remove</option></select>'
-            '<div id="editModal" hidden><form id="editForm" class="edit-form"></form></div>')))
+            '<div id="editModal" hidden><form id="editForm" class="edit-form"></form></div>'
+            '<form id="monsterForm"><input name="name" value="Gruk"><input name="monster_species" value="Goblin">'
+            '<input name="ac" value="15"><input name="hprangestart" value="7"><input name="initiative_bonus" value="2">'
+            '<fieldset class="sg-field-group"><legend>Appearance</legend><div class="sg-group-row">'
+            '<label class="field"><span class="field-label">Image</span><input id="monsterImage" type="file"></label>'
+            '</div></fieldset></form>')))
         self.server = FakeServer(self.page)
         self.page.goto('http://fixture.test/')
         install_feedback(self.page)
@@ -171,7 +194,7 @@ class ImportBrowserTests(unittest.TestCase):
         for name in ('glass-theme.css', 'statblocks.css', 'monster-statblock-import.css'):
             self.page.add_style_tag(content=(ROOT / 'static' / name).read_text())
         for name in ('statblocks-render.js', 'monster-statblock-common.js', 'monster-statblock-edit.js',
-                     'monster-statblock-bulk.js', 'monster-statblock-collected.js'):
+                     'monster-statblock-bulk.js', 'monster-statblock-collected.js', 'monster-statblock-add-preview.js'):
             self.page.add_script_tag(content=(ROOT / 'static' / name).read_text())
 
     def form_data(self):
@@ -211,7 +234,7 @@ class ImportBrowserTests(unittest.TestCase):
 
     def test_show_statblock_shows_the_staged_or_saved_statblock_with_form_values(self):
         self.open_edit('a')
-        show = self.page.get_by_role('button', name='Show statblock')
+        show = self.page.locator('#editForm').get_by_role('button', name='Show statblock')
         self.assertTrue(show.is_disabled())  # nothing saved, nothing staged
         self.page.get_by_role('button', name='Find statblock').click()
         self.page.get_by_role('dialog', name='Choose a statblock for Goblin').get_by_role(
@@ -278,6 +301,52 @@ class ImportBrowserTests(unittest.TestCase):
         self.page.wait_for_timeout(300)
         self.assertEqual(self.page.locator('dialog').count(), 0)  # not asked again until the next add or reload
         self.assertEqual([ident for ident, _ in self.server.decisions], ['c1'])
+        self.assertEqual(self.errors, [])
+
+    def select(self, token, provider='5e.tools', species='Goblin'):
+        self.page.evaluate('''([token, provider, species]) => document.dispatchEvent(new CustomEvent(
+            'scrying:monster-selection', {detail: token ? {species, provider, image_url: null, selection_token: token} : null}))''',
+            [token, provider, species])
+
+    def test_add_monster_show_statblock_follows_the_selected_source(self):
+        button = self.page.locator('#monsterForm').get_by_role('button', name='Show statblock')
+        row = self.page.locator('#monsterForm .sg-group-row')
+        self.assertEqual(row.locator('.monster-statblock-add-preview').count(), 1)  # in the Appearance group
+        self.assertTrue(button.is_disabled())  # no source chosen
+        self.select('tok-1')
+        self.assertFalse(button.is_disabled())
+        self.assertIn('From 5e.tools', self.page.locator('#monsterStatblockPreviewNote').inner_text())
+        self.page.fill('#monsterForm input[name="monster_species"]', 'Hobgoblin')  # the selection no longer applies
+        self.page.dispatch_event('#monsterForm input[name="monster_species"]', 'input')
+        self.assertTrue(button.is_disabled())
+        self.page.fill('#monsterForm input[name="monster_species"]', 'Goblin')
+        self.page.dispatch_event('#monsterForm input[name="monster_species"]', 'input')
+        button.click()
+        dialog = self.page.get_by_role('dialog', name='Statblock: Gruk')
+        dialog.locator('.sb-statblock').wait_for()
+        self.assertIn('Preview only; nothing is saved', dialog.inner_text())
+        self.assertEqual((dialog.locator('[data-live="name"]').inner_text(), dialog.locator('[data-live="ac"]').inner_text(),
+                          dialog.locator('[data-live="hp"]').inner_text()), ('Gruk', '15', '7 / 7'))
+        self.assertEqual(self.server.previews, [{'selection_token': 'tok-1', 'species': 'Goblin'}])
+        dialog.get_by_role('button', name='Close').click()
+        self.select(None)
+        self.assertTrue(button.is_disabled())
+        self.assertEqual(self.errors, [])
+
+    def test_add_monster_show_statblock_is_disabled_when_the_source_has_none(self):
+        self.server.fail_prepare = {'tok-2'}
+        button = self.page.locator('#monsterForm').get_by_role('button', name='Show statblock')
+        self.select('tok-2', 'D&D Beyond')
+        button.click()
+        dialog = self.page.get_by_role('dialog', name='Statblock: Gruk')
+        dialog.get_by_text('The source has no public statblock.').wait_for()
+        self.assertTrue(button.is_disabled())
+        self.assertIn('No statblock is available from D&D Beyond', self.page.locator('#monsterStatblockPreviewNote').inner_text())
+        dialog.get_by_role('button', name='Close').click()
+        self.select('tok-3', 'D&D Beyond')  # another monster chosen: try again
+        self.assertFalse(button.is_disabled())
+        self.select('tok-4', 'Homebrew')  # not a statblock source
+        self.assertTrue(button.is_disabled())
         self.assertEqual(self.errors, [])
 
     def test_edit_statblock_controls_are_bottom_aligned(self):

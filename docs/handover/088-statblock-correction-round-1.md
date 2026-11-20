@@ -159,7 +159,40 @@ imported, use that file; when no statblock is collected nor available, carry on 
   HTTP wiring has no dedicated test (FastAPI is not available here). Handler tests in `test_monster_candidate_selection.py` and
   `test_monster_bonus_import.py` (source add starts collection, manual add does not,
   import passes the file, failures never fail the add) need FastAPI: run here only against
-  a minimal FastAPI stand-in (27 tests pass), so CI is their first real run. No e2e test.
+  a minimal FastAPI stand-in (27 tests pass). No e2e test.
+- CI: run 44810855502 attempt 1 for `313940c` **succeeded**: 2266 main-suite tests OK
+  (including the collection, handler and browser tests with real FastAPI), standalone
+  checks OK, pytest 43 passed. Evidence `ci-results-44810855502-attempt-1`, publication
+  `acad980`.
+
+## Show statblock in Add Monster (2026-11-20)
+
+The user asked for a Show statblock button in the Appearance section of the Add Monster
+panel, inactive when no statblock is available.
+
+- `static/monster-statblock-add-preview.js` adds a "Statblock" field with **Show
+  statblock** to the Appearance group. It is active only while a monster chosen from a
+  statblock source (D&D Beyond, 5e.tools, Open5e; lookup or source dropdown) is selected for
+  the species in the form; its note says where the statblock comes from. The selection
+  event (`scrying:monster-selection`, `monster-candidate-selection.js`) now carries the
+  signed `selection_token`. The dialog shows the statblock with the form's name, species,
+  AC, fixed HP and initiative bonus (a dice HP shows as unknown). A source without a
+  statblock (or a disabled provider) disables the button with a note until another
+  monster is chosen.
+- `POST /api/statblocks/preview` (`scrying_glass_statblock_previewing.py`, Admin-only)
+  takes `{selection_token, species}`, checks the signed selection (410 when expired or for
+  another species, 422 `no_source`, 409 `provider_disabled`) and prepares the selection's
+  exact source in the shared scheduler and isolated workers. The job is followed with the
+  existing job routes; its completed payload carries the preview and nothing is stored or
+  selectable. A new preview cancels the session's previous one. The conversion cache lets
+  the statblock collected after the add reuse the preparation.
+- Validation: `tests/test_statblock_add_preview.py` (4 tests: preview without saving, the
+  add reuses the preparation, unavailable/rejected/invalid requests, a new preview cancels
+  the previous one and jobs are private to the session) and 2 new tests in
+  `tests/test_statblock_import_browser.py` (enabled only for the current species and a
+  statblock source, live form values, disabled with a note when the source has none):
+  pass locally. Visual check of the Appearance group with the Admin stylesheets. The
+  route's HTTP wiring is first exercised by CI.
 
 ## Known limitations and open work
 

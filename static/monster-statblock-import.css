@@ -22,3 +22,7 @@
 .monster-statblock-row { padding: .6rem .75rem; border: 1px solid var(--border); border-radius: var(--radius); }
 .monster-statblock-row h3 { margin: 0 0 .4rem; font-size: 1rem; }
 .monster-statblock-row select { max-width: 100%; }
+/* Add Monster: Show statblock in the Appearance group (022.15). */
+.monster-statblock-add-preview { display: grid; gap: .25rem; align-content: start; max-width: 13rem; }
+.monster-statblock-add-preview > button { justify-self: start; width: auto; }
+.monster-statblock-add-note { color: var(--muted); font-size: .85rem; }

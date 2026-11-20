@@ -143,6 +143,8 @@ class PreparingMixin:
             return self._auto_finished(job, state, result, error)
         if info.get('collect'):
             return self._collect_finished(job, state, result, error)
+        if info.get('preview'):
+            return self._preview_finished(job, state, result, error)
         scope = info['scope']
         file_bytes, info['file_bytes'] = info.get('file_bytes'), None
         if state != 'completed':
@@ -183,9 +185,16 @@ class PreparingMixin:
                              'warnings': warnings, 'measurements': result.get('measurements')}, None
 
     def _job_payload(self, job):
-        payload = {'job_id': job.id, 'status': job.state, 'monster_id': job.info['scope'].monster_id,
+        preview = job.info.get('preview') is True
+        payload = {'job_id': job.id, 'status': job.state, 'monster_id': None if preview else job.info['scope'].monster_id,
                    'provider': job.info['provider'],
                    'deadline': _iso(self.wall() + max(0.0, job.deadline - self.clock()))}
+        if preview:  # Add Monster preview: the snapshot lives on the job, nothing is selected
+            if job.state == 'completed':
+                payload.update(job.result)
+            elif job.error is not None:
+                payload['error'] = {'code': job.error[0], 'message': job.error[1]}
+            return payload
         if job.state == 'completed':
             payload.update(copy.deepcopy(job.result))
             # The preview is read from the shared prepared store, never duplicated per job.
@@ -213,7 +222,7 @@ class PreparingMixin:
     def job_cancel(self, principal, job_id):
         job = self._job(principal, job_id)
         self.scheduler.cancel(job)
-        if job.state == 'completed' and job.result:
+        if job.state == 'completed' and job.result and not job.info.get('preview'):
             self.store.discard(job.result['selection_id'], principal.session)
             job.state, job.result, job.error = 'cancelled', None, ('cancelled', 'Preparation cancelled.', None)
         return self._job_payload(job)

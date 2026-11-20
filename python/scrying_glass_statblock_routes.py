@@ -9,6 +9,7 @@
 | GET  /api/statblocks/jobs/{job_id} | job status; on completion selection, expiry, source, warnings, preview |
 | DELETE /api/statblocks/jobs/{job_id} | cancel; a completed job's unused selection is released |
 | POST /api/statblocks/apply | atomic, idempotent apply of prepared selections |
+| POST /api/statblocks/preview | Add Monster: ``{selection_token, species}`` -> preview job (202), followed via jobs |
 | GET  /api/statblocks/collected | statblocks collected for added monsters that wait for confirmation (022.15) |
 | POST /api/statblocks/collected/{id} | ``{decision: replace or keep, expected_statblock_revision}`` |
 
@@ -148,6 +149,13 @@ def install_statblock_routes(context, app, *, cookie=None, writes=True):
             return service.apply(principal, body)
         return await transactional_handler(context, apply_statblocks, role='admin', cookie_name=cookie)(request)
 
+    async def preview_statblock(request: Request):
+        body = await _json_body(request)
+        service = statblock_service(context)
+        async def begin(request: Request):
+            return service.preview_begin(service.authorize(_token(context, request)), body)
+        return JSONResponse(await serialized(begin)(request), status_code=202)
+
     async def collected_statblocks(request: Request):
         service = statblock_service(context)
         return service.collected_list(service.authorize(_token(context, request)))
@@ -169,6 +177,7 @@ def install_statblock_routes(context, app, *, cookie=None, writes=True):
                    ('/api/statblocks/jobs/{job_id}', statblock_job, 'GET', read, True),
                    ('/api/statblocks/jobs/{job_id}', cancel_statblock_job, 'DELETE', write, True),
                    ('/api/statblocks/apply', apply_statblocks, 'POST', write, False),
+                   ('/api/statblocks/preview', preview_statblock, 'POST', write, False),
                    ('/api/statblocks/collected', collected_statblocks, 'GET', read, True),
                    ('/api/statblocks/collected/{collected_id}', decide_collected_statblock, 'POST', write, False)]
     for path, handler, method, dependencies, wrap in routes:

@@ -25,6 +25,7 @@ import time
 from .scrying_glass_statblock_applying import ApplyingMixin
 from .scrying_glass_statblock_autoloading import AutoLoadingMixin
 from .scrying_glass_statblock_collecting import CollectingMixin
+from .scrying_glass_statblock_previewing import PreviewingMixin
 from .scrying_glass_statblock_contract import (  # noqa: F401 - re-exported for routes and tests
     ADAPTERS, FAILURE_MESSAGES, SELECTION_ERRORS, Principal, PreparationFailure, StatblockAPIError, commit_callback,
 )
@@ -37,7 +38,8 @@ from .scrying_glass_statblock_preparing import PreparingMixin
 from .scrying_glass_statblock_selections import Scope, SelectionStore, session_key
 
 
-class StatblockService(DiscoveringMixin, PreparingMixin, ApplyingMixin, AutoLoadingMixin, CollectingMixin):
+class StatblockService(DiscoveringMixin, PreparingMixin, ApplyingMixin, AutoLoadingMixin, CollectingMixin,
+                       PreviewingMixin):
     def __init__(self, context, *, limits=None, transport=None, runner=None, display=None,
                  clock=time.monotonic, wall=time.time):
         self.context = context
