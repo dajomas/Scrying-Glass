@@ -7,12 +7,13 @@ import subprocess
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED = {"features/perplexity", "features/perplexity-statblock"}
+EXPECTED = {"features/perplexity", "features/perplexity-statblock", "features/claude", "features/claude-statblock"}
 REJECTED = (
     "main", "features/perplexity-018", "features/perplexity-009.7",
     "features/perplexity-009.70", "features/perplexity-009.7/other",
     "features/perplexity-statblock/other", "features/perplexity-statblock-extra",
-    "features/perplexity-statbloc", "untrusted", "",
+    "features/perplexity-statbloc", "features/claude-statblock/other", "features/claude-statblock-extra",
+    "features/claude-statbloc", "features/claude/other", "untrusted", "",
 )
 
 

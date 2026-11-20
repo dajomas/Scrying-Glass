@@ -91,6 +91,25 @@ page was. Service tests use the empty page for a redirected candidate. 124 relat
 modules (statblock, D&D Beyond, monster lookup, 5e.tools, Open5e) give the same results
 as before this follow-up (74 pass; the rest need FastAPI/httpx2/aiohttp here).
 
+## CI for `883d57d` and the publication allowlist test (2026-11-20)
+
+Branch tests run 44804204363 attempt 1 (push of `883d57d`, the first CI run on this
+branch) failed on one test: 2253 main-suite tests ran with 1 failure,
+`test_ci_publication_branch_allowlists.test_workflow_allowlist`, which also failed in the
+standalone step. It pins the publish workflow's branch list, which the user's commit
+`5a31190` had extended with `features/claude` and `features/claude-statblock`. All other
+tests passed, including the statblock modules; the Chromium provisioning messages in the
+log are preflight warnings, the browser tests ran. The branch's
+`tools/publish_ci_results.sh` gate still allowed only the Perplexity branches (the user
+had updated it on `main`, from where the publish workflow runs it). This follow-up makes
+the branch's gate identical to `main`'s and extends the test's expected branches and
+rejected look-alikes (`features/claude-statblock/other`, `-extra`, `features/claude-statbloc`,
+`features/claude/other`). Run 44806218512 attempt 1 for `95ef0ab` ended as `cancelled` (not by Claude); its
+published log (`ci-results-44806218512-attempt-1`, publication `c2206de`) shows 2254
+main-suite tests with the same single allowlist failure, also in the standalone step.
+Both runs were published by Publish CI results, which confirms the publication now works
+for this branch.
+
 ## Known limitations and open work
 
 - D&D Beyond habitat values run together (for example `ForestGrasslandHill`): the
