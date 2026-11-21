@@ -1,0 +1,31 @@
+elf._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.3264341Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.3265162Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.3266233Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.3266916Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.3268037Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.3269292Z     raise effect
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.3269717Z sqlite3.OperationalError: locked
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.3270172Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.3270588Z Ran 10 tests in 0.221s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.3270752Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.3270851Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.3271364Z test_lookup_provider_settings.py: connections opened: 18; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.3985456Z Connection audit: test_manual_monster_bonus_creation.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.7533543Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.7534082Z Ran 8 tests in 0.021s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.7534246Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.7534355Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.7539553Z test_manual_monster_bonus_creation.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:04.8026612Z Connection audit: test_manual_monster_bonus_form.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:08.1180448Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:08.1181401Z test_manual_monster_bonus_form.py: connections opened: 1; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:08.1182011Z Ran 5 tests in 3.220s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:08.1182457Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:08.1182595Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:08.2207337Z Connection audit: test_max_hp_increase.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:10.1980002Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:10.1980606Z Ran 13 tests in 1.769s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:10.1980802Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:10.1980919Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:53:10.1

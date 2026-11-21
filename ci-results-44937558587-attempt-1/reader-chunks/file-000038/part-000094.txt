@@ -1,0 +1,22 @@
+g browser fixtures)	2026-11-21T18:51:47.3577986Z test_admin_anonymous_and_cross_origin_writes_are_rejected (test_lookup_provider_settings.ProviderSettingsRouteTests.test_admin_anonymous_and_cross_origin_writes_are_rejected) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.3854853Z test_admin_reads_enabled_provider_labels_in_lookup_order (test_lookup_provider_settings.ProviderSettingsRouteTests.test_admin_reads_enabled_provider_labels_in_lookup_order) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4068092Z test_superadmin_reads_and_saves (test_lookup_provider_settings.ProviderSettingsRouteTests.test_superadmin_reads_and_saves) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4183775Z test_configuration_defaults_apply_without_creating_a_table (test_lookup_provider_settings.ProviderSettingsStorageTests.test_configuration_defaults_apply_without_creating_a_table) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4289730Z test_invalid_bodies_and_missing_storage_are_rejected (test_lookup_provider_settings.ProviderSettingsStorageTests.test_invalid_bodies_and_missing_storage_are_rejected) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4431091Z test_lookup_and_image_paths_honour_saved_toggles (test_lookup_provider_settings.ProviderSettingsStorageTests.test_lookup_and_image_paths_honour_saved_toggles) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4589554Z test_saved_toggles_override_configuration_and_persist (test_lookup_provider_settings.ProviderSettingsStorageTests.test_saved_toggles_override_configuration_and_persist) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4731710Z test_unreadable_settings_fail_closed (test_lookup_provider_settings.ProviderSettingsStorageTests.test_unreadable_settings_fail_closed) ... Provider settings unreadable; optional lookups disabled
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4732714Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4733345Z   File "/tmp/scrying-tests-6m72mp0b/repo/python/scrying_glass_provider_settings.py", line 67, in effective_display
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4733920Z     saved = overrides(context)
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4734447Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4734979Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4735260Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4735798Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4736343Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4736831Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4737347Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4737691Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4737884Z sqlite3.OperationalError: locked
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4739546Z ok
+tests	Python test suite (including browser fixtures)	2026-11-21T18:51:47.4755481Z test_explicit_manual_bonus_and_unset_roll_total (test_manual_monster_bonus_creation.Man

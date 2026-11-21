@@ -1,0 +1,33 @@
+-unset-all 'core.sshCommand' || :"
+connection-audit	Run actions/checkout@v4	2026-11-21T18:48:59.0211476Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+connection-audit	Run actions/checkout@v4	2026-11-21T18:48:59.0248946Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+connection-audit	Run actions/checkout@v4	2026-11-21T18:48:59.0525787Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+connection-audit	Run actions/checkout@v4	2026-11-21T18:48:59.0564942Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+connection-audit	Run actions/checkout@v4	2026-11-21T18:48:59.0867218Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+connection-audit	Run actions/checkout@v4	2026-11-21T18:48:59.0909992Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-21T18:48:59.0911546Z ##[group]Fetching the repository
+connection-audit	Run actions/checkout@v4	2026-11-21T18:48:59.0920486Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +f794d67b5f2d5b0f58506a89c1536703b5f798f4:refs/remotes/origin/features/claude
+connection-audit	Run actions/checkout@v4	2026-11-21T18:49:00.3851547Z From https://github.com/dajomas/Scrying-Glass
+connection-audit	Run actions/checkout@v4	2026-11-21T18:49:00.3855080Z  * [new ref]         f794d67b5f2d5b0f58506a89c1536703b5f798f4 -> origin/features/claude
+connection-audit	Run actions/checkout@v4	2026-11-21T18:49:00.3875109Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-21T18:49:00.3876364Z ##[group]Determining the checkout info
+connection-audit	Run actions/checkout@v4	2026-11-21T18:49:00.3877668Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-21T18:49:00.3878653Z [command]/usr/bin/git sparse-checkout disable
+connection-audit	Run actions/checkout@v4	2026-11-21T18:49:00.3929072Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+connection-audit	Run actions/checkout@v4	2026-11-21T18:49:00.3965829Z ##[group]Checking out the ref
+connection-audit	Run actions/checkout@v4	2026-11-21T18:49:00.3971490Z [command]/usr/bin/git checkout --progress --force -B features/claude refs/remotes/origin/features/claude
+connection-audit	Run actions/checkout@v4	2026-11-21T18:49:00.5835254Z Switched to a new branch 'features/claude'
+connection-audit	Run actions/checkout@v4	2026-11-21T18:49:00.5841516Z branch 'features/claude' set up to track 'origin/features/claude'.
+connection-audit	Run actions/checkout@v4	2026-11-21T18:49:00.5912927Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-21T18:49:00.5917150Z [command]/usr/bin/git log -1 --format=%H
+connection-audit	Run actions/checkout@v4	2026-11-21T18:49:00.5946680Z f794d67b5f2d5b0f58506a89c1536703b5f798f4
+connection-audit	Run actions/setup-python@v5	﻿2026-11-21T18:49:00.6294753Z ##[group]Run actions/setup-python@v5
+connection-audit	Run actions/setup-python@v5	2026-11-21T18:49:00.6295770Z with:
+connection-audit	Run actions/setup-python@v5	2026-11-21T18:49:00.6296573Z   python-version: 3.14
+connection-audit	Run actions/setup-python@v5	2026-11-21T18:49:00.6297415Z   cache: pip
+connection-audit	Run actions/setup-python@v5	2026-11-21T18:49:00.6298379Z   cache-dependency-path: requirements.txt
+connection-audit	Run actions/setup-python@v5	requirements-test.txt
+connection-audit	Run actions/setup-python@v5	
+connection-audit	Run actions/setup-python@v5	2026-11-21T18:49:00.6299449Z   check-latest: false
+connection-audit	Run actions/setup-python@v5	2026-11-21T18:49:00.6303151Z   token: ***
+connection-audit	Run actions/setup-python@v5	2026-11-21T18:49:00.6304006Z   update-environment: tru

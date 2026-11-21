@@ -1,0 +1,29 @@
+4.0548880Z Connection audit: test_fivetools_initiative.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.1580351Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.1581356Z test_fivetools_initiative.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.1582589Z Ran 10 tests in 0.001s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.1583074Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.1583451Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.1768580Z Connection audit: test_fivetools_initiative_flow.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.7786077Z Selected monster source refresh failed for e63c4f4d45d54a7c9b6aca161a5a639f
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.7786993Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.7788249Z   File "/tmp/scrying-tests-ci6se2v7/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.7789480Z     candidate = _fetch_exact(context, monster, identity)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.7790678Z   File "/tmp/scrying-tests-ci6se2v7/repo/python/scrying_glass_monster_refresh_sources.py", line 93, in _fetch_exact
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.7828502Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.7839766Z ValueError: Retained source missing or ambiguous
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.7869030Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.7869798Z Ran 2 tests in 0.209s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.7870061Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.7870191Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.7883634Z test_fivetools_initiative_flow.py: connections opened: 13; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:24.8991805Z Connection audit: test_fivetools_insert_array.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:25.0045924Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:25.0046520Z Ran 12 tests in 0.007s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:25.0047193Z test_fivetools_insert_array.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:25.0047921Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:25.0048138Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:25.0204695Z Connection audit: test_fivetools_jsregex.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:25.1434085Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:25.1435027Z test_fivetools_jsregex.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:52:25.1435976Z Ran 
