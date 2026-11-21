@@ -19,7 +19,7 @@
     const BATCH = 50;
     const PARALLEL = 2;
     const option = sb.element('option', {value: ACTION, text: 'Load statblocks'});
-    bulk.insertBefore(option, bulk.querySelector('option[value="remove"]') || null);
+    bulk.insertBefore(option, bulk.querySelector('option[value="refresh-source-review"], option[value="remove"]') || null);
     let open = false;
 
     const original = runBulkAction;

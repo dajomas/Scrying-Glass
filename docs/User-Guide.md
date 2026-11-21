@@ -98,6 +98,8 @@ Has lair, below setup name and above imports, exposes the lair pane/toggle subje
 
 Manual entry supports name, species, AC, color, quantity 1–50 and optional image. HP Range Start accepts fixed 24, range start 18 with end 30, or dice 3d8+9 with empty end. Each copy rolls independently. Uploaded images take precedence over optional best-effort D&D Beyond lookup. Enter stats manually when lookup fails.
 
+The color starts at the first of 12 palette colors that no monster in the battle setup uses yet (the least used one when all 12 are taken); characters do not count. A color you pick yourself stays until the form is reset. CSV rows without a color get the next free color the same way. The HP entry help is folded under "How to enter HP" at the end of Combat statistics.
+
 .monster imports are compatible UTF-8 JSON statblocks with usable name/type/AC/HP, not arbitrary archives.
 
 CSV must be UTF-8 (BOM allowed), contain headers and nonblank data. Headers are trimmed/case-insensitive. Monster required fields: name, monster_species (or type), ac, hp. Use monster_species rather than old monster_type. Character name is required; other fields default. HP/max HP must be nonnegative. Blank IDs are generated; duplicate/conflicting encounter IDs fail. Booleans accept true/false, yes/no, y/n, on/off, 1/0.
@@ -181,13 +183,13 @@ typed there while the preceding save completes is retained without replaying an
 already emitted save. Escape, moving focus elsewhere or changing campaign/setup
 cancels restoration. Initiative values and combat ordering are unchanged.
 
-Select all selects the list; Unselect all clears. Select dead replaces selection: characters match explicit death/three failures, monsters also match alive=False. Selection does not mutate. Reset restores baselines/runtime flags; Remove permanently deletes.
+Select all selects the list and Clear selection, right next to it, clears it; Unselect all in the Bulk list clears too. Select dead replaces selection: characters match explicit death/three failures, monsters also match alive=False. Selection does not mutate. Reset restores baselines/runtime flags; Remove permanently deletes.
 
 Start battle resolves ties. Characters default ahead of monsters within ties; changing a position swaps within that group. Roll shared initiative (d20) gives selected monsters one roll, not a shared turn or running-order reorder.
 
 Next advances eligible participants. Down/stable characters retain turns for manual death saves; dead characters and non-standing monsters do not receive future turns. A dead current participant may retain unresolved ownership until Next.
 
-Round starts at 1, increments on wrap and clears on End, Reset All or no eligible participants. Eligible runtime turn/round survive restart; loading saved setups does not revive old turns. End does not fully reset combatants.
+Round starts at 1, increments on wrap and clears on End, Reset All or no eligible participants. Eligible runtime turn/round survive restart; loading saved setups does not revive old turns. End does not fully reset combatants. End battle hides every monster, character and lair on the Client Display. Dead or downed creatures stay hidden too, until you show them yourself or the next battle starts; after that, a creature that drops is shown again as before.
 
 Viewer A−/A+ changes strip text 2 px at a time, default 16, bounds 12–40. Runtime persists it; setup Save captures display settings.
 

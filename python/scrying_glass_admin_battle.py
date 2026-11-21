@@ -10,12 +10,21 @@ class AdminBattleMixin:
     """Implement admin battle handlers using the shared server context."""
 
     async def battle_end(self) -> dict[str, str]:
-        """Battle end."""
+        """Battle end: clear the battle and hide every combatant and lair (SG-TODO-028).
+
+        Dead or downed creatures stay hidden until the GM shows them, resets them or the next
+        battle starts.
+        """
+        from .scrying_glass_feature_rules import hide_at_battle_end
         self.context.clear_turns()
         self.context.STATE["battle_round"] = 0
         self.context.STATE["turn_successors_before_wrap"] = []
         self.context.STATE["battle_order"] = []
         self.context.STATE["turn_successors"] = []
+        for combatant in self.context.entities():
+            hide_at_battle_end(combatant)
+        for lair in self.context.STATE.get('lairs', []):
+            lair['visible'] = False
 
         self.context.save_active_campaign_characters()
         await self.context.combatants_changed(monsters=True, characters=True)

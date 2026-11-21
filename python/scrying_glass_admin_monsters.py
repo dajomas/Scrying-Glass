@@ -166,6 +166,9 @@ class AdminMonstersMixin:
                 "The encounter changed while this request was running. Retry.",
             )
 
+        from python.scrying_glass_monster_palette import fill_missing_colors
+        fill_missing_colors(imported, working_state["monsters"])
+
         ids = [monster["id"] for monster in imported]
 
         existing_ids = {
@@ -387,11 +390,13 @@ class AdminMonstersMixin:
             hp_result = apply_hp(candidate,hp_delta,critical=critical_hit)
             hp_result["critical_hit"] = critical_hit
 
-        from .scrying_glass_feature_rules import sync_health
+        from .scrying_glass_feature_rules import release_battle_end_hiding, reveal_if_down, sync_health
+        if "visible" in values:
+            release_battle_end_hiding(candidate)
         sync_health(candidate)
 
         if not candidate["alive"]:
-            candidate["visible"] = True
+            reveal_if_down(candidate)
             candidate["in_turn"] = False
 
         if not candidate.get("active"):
@@ -413,6 +418,8 @@ class AdminMonstersMixin:
             self.context.log_hp_change(candidate, hp_delta, hp_result, snapshot(monster))
 
         monster.update(candidate)
+        if "hidden_at_battle_end" not in candidate:
+            monster.pop("hidden_at_battle_end", None)  # update() keeps keys the candidate dropped
         self.context.set_turn(monster, requested_turn)
 
         if monster.get("active") and monster.get("alive"):

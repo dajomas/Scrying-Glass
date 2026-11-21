@@ -111,6 +111,7 @@ async function load(rethrowErrors = false, current = () => true) {
         () => request('/api/state', {}, current), state => {
         latest = state;
         window.scryingStatisticsState?.(latest);
+        window.scryingMonsterColorState?.(latest);
         window.scryingLairsRender?.(latest);
         window.updateEncounterToolsVisibility?.(latest);
 

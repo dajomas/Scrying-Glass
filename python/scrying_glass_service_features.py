@@ -160,7 +160,9 @@ class FeaturesService:
         except ValueError as exc: raise self.context.HTTPException(422,str(exc)) from exc
         if body.get('concentrating') is True and not candidate['alive']: raise self.context.HTTPException(422,'Only standing combatants may concentrate')
         self.context.remember_turn_successors();target.update(candidate)
-        if not target['alive']: target['visible']=True
+        if not target['alive']:
+            from .scrying_glass_feature_rules import reveal_if_down
+            reveal_if_down(target)
         if delta is not None and delta<0 and target.get('concentrating'): self.log('concentration-reminder',target,note='Resolve concentration manually')
         if not target['alive'] or ('concentrating' in body and not target['concentrating']): self.clear_concentration(ident)
         self.context.clean_order()

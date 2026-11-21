@@ -170,8 +170,10 @@ class AdminCharactersMixin:
         if hp_changed or 'alive' in values or 'max_hp' in values:
             sync_health(candidate)
 
-        if not candidate.get("alive"):
-            candidate["visible"] = True
+        from python.scrying_glass_feature_rules import release_battle_end_hiding, reveal_if_down
+        if "visible" in values:
+            release_battle_end_hiding(candidate)
+        reveal_if_down(candidate)
         if not candidate.get("active"):
             candidate["in_turn"] = False
 
@@ -188,6 +190,8 @@ class AdminCharactersMixin:
             self.context.log_hp_change(candidate, hp_delta, hp_result, snapshot(character))
 
         character.update(candidate)
+        if "hidden_at_battle_end" not in candidate:
+            character.pop("hidden_at_battle_end", None)  # update() keeps keys the candidate dropped
         self.context.set_turn(character, requested_turn)
 
         if can_take_turn(character):

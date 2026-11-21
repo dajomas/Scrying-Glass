@@ -61,6 +61,8 @@ body.admin-shell .sg-form-disclosure > summary {
     overflow-wrap: anywhere;
 }
 body.admin-shell .sg-disclosure-body { padding: 0 var(--admin-space-3) var(--admin-space-3); }
+body.admin-shell .sg-field-help-disclosure { margin-bottom: 0; }
+body.admin-shell .sg-field-help-disclosure > .field-help { margin: 0; padding: 0 var(--admin-space-3) var(--admin-space-3); }
 /* Campaign setup: bottom-align the campaign selector with its buttons; space the CSV import below. */
 body.admin-shell #campaignInputPane .campaign-controls-row { align-items: flex-end; }
 body.admin-shell #campaignInputPane .campaign-controls-row > button { margin-block: 0; }

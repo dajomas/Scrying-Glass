@@ -290,7 +290,7 @@ def csv_monster(row: dict[str, str], row_number: int) -> dict[str, Any]:
     if len(monster_species) > 100:
         raise HTTPException(400, f"CSV row {row_number}: monster_species must not exceed 100 characters")
 
-    color = csv_text(row.get("color")) or "#842029"
+    color = csv_text(row.get("color"))  # empty: the import fills the next default
     if len(color) > 40:
         raise HTTPException(400, f"CSV row {row_number}: color must not exceed 40 characters")
 

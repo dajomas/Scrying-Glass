@@ -4,7 +4,7 @@
 
 ## Task and status
 
-SG-TODO-028 - agreed for implementation group 1 (2026-11-21), originally requested by the user 2026-11-20. No owner, priority or
+SG-TODO-028 - implemented 2026-11-21 on `features/claude` ([handover 670](../handover/670-group-1-quick-wins.md)); CI and user check pending. Agreed for implementation group 1 (2026-11-21), originally requested by the user 2026-11-20. No owner, priority or
 deadline has been agreed.
 
 ## Request

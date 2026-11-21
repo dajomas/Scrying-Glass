@@ -37,7 +37,10 @@
             toolbar.querySelector('[data-select-all-kind]')?.focus();
         });
         toolbar.prepend(count);
-        toolbar.append(clear);
+        // SG-TODO-032: count, Select all, Clear selection, Bulk.
+        const selectAll = toolbar.querySelector('[data-select-all-kind]');
+        if (selectAll) selectAll.after(clear);
+        else toolbar.append(clear);
         function update() {
             const boxes = [...region.querySelectorAll('input[data-select-kind][data-select-id]')];
             const selected = boxes.filter(box => box.checked).length;

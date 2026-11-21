@@ -134,6 +134,9 @@ class BattleService:
             raise self.context.HTTPException(400, "Activate at least one turn-eligible combatant before starting a battle")
 
         order = place_lair(order, self.context.entity)
+        for combatant in self.context.entities():
+            # feature_rules.release_battle_end_hiding, inline: this method is also run extracted.
+            combatant.pop("hidden_at_battle_end", None)  # End battle hiding lasts until the next battle
         self.context.STATE["battle_order"] = list(order)
         self.context.STATE["battle_round"] = 1
         self.context.STATE["turn_successors"] = []

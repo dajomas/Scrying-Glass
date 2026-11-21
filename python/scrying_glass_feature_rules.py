@@ -68,9 +68,31 @@ def normalize_features(item):
     if not item.get('active'): item['in_turn']=False
     return item
 
+HIDDEN_AT_BATTLE_END = 'hidden_at_battle_end'
+
+
+def reveal_if_down(item):
+    """Show a creature that is not alive, unless End battle hid it (SG-TODO-028).
+
+    The End battle mark stays until the GM changes the creature's visibility, resets it
+    or the next battle starts.
+    """
+    if not item.get('alive') and not item.get(HIDDEN_AT_BATTLE_END):
+        item['visible'] = True
+
+
+def hide_at_battle_end(item):
+    item['visible'] = False
+    item[HIDDEN_AT_BATTLE_END] = True
+
+
+def release_battle_end_hiding(item):
+    item.pop(HIDDEN_AT_BATTLE_END, None)
+
+
 def sync_health(item):
     normalize_features(item)
-    if not item['alive']: item['visible']=True
+    reveal_if_down(item)
 
 def apply_hp(item,delta,*,absorb=True,critical=False):
     """Apply damage or healing, capping healing at maximum HP."""
