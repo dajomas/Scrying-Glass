@@ -1,0 +1,21 @@
+kes_precedence_over_source_image (test_monster_source_image.MonsterSourceImageTests.test_edit_upload_takes_precedence_over_source_image)
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:53.8721653Z Edit prefers an uploaded file over a chosen source image. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:53.8727010Z test_edit_uses_the_signed_source_image (test_monster_source_image.MonsterSourceImageTests.test_edit_uses_the_signed_source_image)
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:53.8739317Z Edit saves the image of the chosen source candidate. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:53.8744507Z test_edit_without_token_keeps_the_image (test_monster_source_image.MonsterSourceImageTests.test_edit_without_token_keeps_the_image)
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:53.8756164Z Edit without upload or source choice keeps the current image. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:53.8761209Z test_route_is_registered_as_authenticated_post (test_monster_source_image.MonsterSourceImageTests.test_route_is_registered_as_authenticated_post)
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:53.8768016Z The bulk source-image route is an authenticated POST. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:53.8773684Z test_bulk_offers_one_row_per_monster_with_one_lookup_per_species (test_monster_source_image_browser.MonsterSourceImageBrowserTests.test_bulk_offers_one_row_per_monster_with_one_lookup_per_species)
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:54.4698911Z Monster action shows a row per selected monster, looks up each species once and applies per-monster choices. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:54.4700523Z test_bulk_shows_partial_lookup_warning_and_retries_it_later (test_monster_source_image_browser.MonsterSourceImageBrowserTests.test_bulk_shows_partial_lookup_warning_and_retries_it_later)
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:55.0177227Z A partial lookup shows its warning in the row and is not reused next time. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:55.0178599Z test_bulk_shows_progress_and_reuses_lookups (test_monster_source_image_browser.MonsterSourceImageBrowserTests.test_bulk_shows_progress_and_reuses_lookups)
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:55.5283906Z Monster action reports the lookup in progress and a second run reuses the species lookups. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:55.5284855Z test_bulk_without_selection_reports_an_error (test_monster_source_image_browser.MonsterSourceImageBrowserTests.test_bulk_without_selection_reports_an_error)
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:55.9439255Z Monster action without selected monsters reports an error and posts nothing. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:55.9440256Z test_edit_button_is_bottom_aligned_and_status_is_below (test_monster_source_image_browser.MonsterSourceImageBrowserTests.test_edit_button_is_bottom_aligned_and_status_is_below)
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:56.4974476Z Edit button bottom-aligns with the file input and the Selected text sits under it. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:56.4975413Z test_edit_button_stores_the_chosen_source_image (test_monster_source_image_browser.MonsterSourceImageBrowserTests.test_edit_button_stores_the_chosen_source_image)
+tests	Python test suite (including browser fixtures)	2026-11-21T08:42:57.0448487Z Edit modal button looks up the species and stores the chosen image token. ... ok
+tests	Python test suite (including browser fixtures)	20

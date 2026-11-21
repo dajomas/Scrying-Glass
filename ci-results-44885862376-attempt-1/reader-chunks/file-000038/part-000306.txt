@@ -1,0 +1,28 @@
+dit checks	2026-11-21T08:48:06.8457942Z   File "/tmp/scrying-tests-c9qr7xx9/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8458521Z     lambda: fivetools_candidates(species, display),
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8458799Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8459249Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8459771Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8460021Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8460438Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8460848Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8461127Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8461571Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8461959Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8462263Z python.scrying_glass_monster_selection.ProviderError: secret
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8577334Z Statblock collection for added monsters was not started
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8577875Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8578449Z   File "/tmp/scrying-tests-c9qr7xx9/repo/python/scrying_glass_statblock_collecting.py", line 229, in collect_after_add
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8579073Z     return service.collect_new_monsters([m['id'] for m in created], file_bytes=file_bytes, filename=filename)
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8579563Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8580049Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8580454Z     return self._mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8580697Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8581105Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8581526Z     return self._execute_mock_call(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8581798Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8582238Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8582637Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8583025Z RuntimeError: collection failed
+tests	Standalone Python browser and audit checks	2026-11-21T08:48:06.8605875Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11

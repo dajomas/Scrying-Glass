@@ -1,0 +1,29 @@
+6-11-21T08:39:04.5584634Z ^[[36;1mpython -m pip install -r requirements-test.txt^[[0m
+tests	Install Python test dependencies	2026-11-21T08:39:04.5623699Z shell: /usr/bin/bash -e {0}
+tests	Install Python test dependencies	2026-11-21T08:39:04.5623967Z env:
+tests	Install Python test dependencies	2026-11-21T08:39:04.5624369Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Install Python test dependencies	2026-11-21T08:39:04.5624837Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python test dependencies	2026-11-21T08:39:04.5625200Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Install Python test dependencies	2026-11-21T08:39:04.5625540Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python test dependencies	2026-11-21T08:39:04.5625857Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python test dependencies	2026-11-21T08:39:04.5626159Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Install Python test dependencies	2026-11-21T08:39:04.5626456Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Install Python test dependencies	2026-11-21T08:39:04.5626939Z ##[endgroup]
+tests	Install Python test dependencies	2026-11-21T08:39:05.6954849Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages (26.3)
+tests	Install Python test dependencies	2026-11-21T08:39:06.4179593Z Collecting fastapi>=0.115 (from -r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 3))
+tests	Install Python test dependencies	2026-11-21T08:39:06.4590449Z   Downloading fastapi-0.165.0-py3-none-any.whl.metadata (27 kB)
+tests	Install Python test dependencies	2026-11-21T08:39:06.4957604Z Collecting uvicorn>=0.30 (from uvicorn[standard]>=0.30->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 4))
+tests	Install Python test dependencies	2026-11-21T08:39:06.5060262Z   Downloading uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+tests	Install Python test dependencies	2026-11-21T08:39:06.5467546Z Collecting PyYAML>=6.0 (from -r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 5))
+tests	Install Python test dependencies	2026-11-21T08:39:06.5571209Z   Downloading pyyaml-6.0.4-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.3 kB)
+tests	Install Python test dependencies	2026-11-21T08:39:06.5833386Z Collecting python-multipart (from -r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 6))
+tests	Install Python test dependencies	2026-11-21T08:39:06.5936755Z   Downloading python_multipart-0.0.34-py3-none-any.whl.metadata (6.3 kB)
+tests	Install Python test dependencies	2026-11-21T08:39:06.6151759Z Collecting httpx2>=2.0.0 (from -r requirements-test.txt (line 4))
+tests	Install Python test dependencies	2026-11-21T08:39:06.6252794Z   Downloading httpx2-2.16.2-py3-none-any.whl.metadata (10.0 kB)
+tests	Install Python test dependencies	2026-11-21T08:39:06.6657411Z Collecting playwright (from -r requirements-test.txt (line 5))
+tests	Install Python test dependencies	2026-11-21T08:39:06.6759226Z   Downloading playwright-1.65.2-py3-none-manylinux1_x86_64.whl.metadata (3.3 kB)
+tests	Install Python test dependencies	2026-11-21T08:39:06.7096494Z Collecting pytest (from -r requirements-test.txt (line 6))
+tests	Install Python test dependencies	2026-11-21T08:39:06.7198300Z   Downloading pytest-9.2.0-py3-none-any.whl.metadata (7.9 kB)
+tests	Install Python test dependencies	2026-11-21T08:39:06.7495702Z Collecting starlette>=1.6.0 (from fastapi>=0.115->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 3))
+tests	Install Python test dependencies	2026-11-21T08:39:06.7596643Z   Downloading starlette-1.10.0-py3-none-any.whl.metadata (6.6 kB)
+tests	Install Python test dependencies	2026-11-21T08:39:06.80523
