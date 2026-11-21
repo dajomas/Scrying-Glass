@@ -1,0 +1,29 @@
+-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:26.4505288Z     return service.collect_new_monsters([m['id'] for m in created], file_bytes=file_bytes, filename=filename)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:26.4505732Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:26.4506174Z   File "/tmp/scrying-tests-udvrm7bj/repo/tests/test_statblock_collection.py", line 188, in <lambda>
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:26.4506632Z     broken = type('Broken', (), {'collect_new_monsters': lambda *a, **k: 1 / 0})()
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:26.4506964Z                                                                          ~~^~~
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:26.4507228Z ZeroDivisionError: division by zero
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:26.8117101Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:26.8117930Z test_statblock_collection.py: connections opened: 16; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:26.8118555Z Ran 8 tests in 0.527s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:26.8118797Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:26.8118937Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:26.8656490Z Connection audit: test_statblock_combined_setup_operations.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:27.3350023Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:27.3350788Z test_statblock_combined_setup_operations.py: connections opened: 2; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:27.3351277Z Ran 2 tests in 0.387s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:27.3351424Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:27.3351618Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:27.3845233Z Connection audit: test_statblock_encounters.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:27.5171672Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:27.5172242Z test_statblock_encounters.py: connections opened: 5; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:27.5172773Z Ran 6 tests in 0.068s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:27.5173146Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:27.5173608Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:27.5334715Z Connection audit: test_statblock_fingerprints.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:27.9303704Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:27.9304183Z Ran 9 tests in 0.320s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:27.9304617Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:27.9304697Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:50:27.9305044Z test_statblock_fingerprin

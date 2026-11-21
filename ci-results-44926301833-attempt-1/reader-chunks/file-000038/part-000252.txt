@@ -1,0 +1,47 @@
+icate names persist validation errors without POST
+tests	JavaScript tests	2026-11-21T16:52:30.7948663Z   ---
+tests	JavaScript tests	2026-11-21T16:52:30.7949096Z   duration_ms: 1.24833
+tests	JavaScript tests	2026-11-21T16:52:30.7949574Z   type: 'test'
+tests	JavaScript tests	2026-11-21T16:52:30.7950013Z   ...
+tests	JavaScript tests	2026-11-21T16:52:30.7954040Z # Subtest: valid input resolves validation; cancelled confirmation sends nothing
+tests	JavaScript tests	2026-11-21T16:52:30.7956104Z ok 3 - valid input resolves validation; cancelled confirmation sends nothing
+tests	JavaScript tests	2026-11-21T16:52:30.7956905Z   ---
+tests	JavaScript tests	2026-11-21T16:52:30.7968565Z   duration_ms: 1.202503
+tests	JavaScript tests	2026-11-21T16:52:30.7998861Z   type: 'test'
+tests	JavaScript tests	2026-11-21T16:52:30.7999429Z   ...
+tests	JavaScript tests	2026-11-21T16:52:30.8000340Z # Subtest: exact POST, early pane success, guarded refresh and three-second expiry
+tests	JavaScript tests	2026-11-21T16:52:30.8001792Z ok 4 - exact POST, early pane success, guarded refresh and three-second expiry
+tests	JavaScript tests	2026-11-21T16:52:30.8002673Z   ---
+tests	JavaScript tests	2026-11-21T16:52:30.8003238Z   duration_ms: 1.793752
+tests	JavaScript tests	2026-11-21T16:52:30.8003773Z   type: 'test'
+tests	JavaScript tests	2026-11-21T16:52:30.8004262Z   ...
+tests	JavaScript tests	2026-11-21T16:52:30.8005296Z # Subtest: request rejection persists; matching retry resolves it and keeps unrelated errors
+tests	JavaScript tests	2026-11-21T16:52:30.8006789Z ok 5 - request rejection persists; matching retry resolves it and keeps unrelated errors
+tests	JavaScript tests	2026-11-21T16:52:30.8008325Z   ---
+tests	JavaScript tests	2026-11-21T16:52:30.8009060Z   duration_ms: 2.129813
+tests	JavaScript tests	2026-11-21T16:52:30.8010163Z   type: 'test'
+tests	JavaScript tests	2026-11-21T16:52:30.8010785Z   ...
+tests	JavaScript tests	2026-11-21T16:52:30.8011906Z # Subtest: completed creation followed by failed refresh persists no-replay guidance
+tests	JavaScript tests	2026-11-21T16:52:30.8013491Z ok 6 - completed creation followed by failed refresh persists no-replay guidance
+tests	JavaScript tests	2026-11-21T16:52:30.8014657Z   ---
+tests	JavaScript tests	2026-11-21T16:52:30.8015424Z   duration_ms: 2.837037
+tests	JavaScript tests	2026-11-21T16:52:30.8016294Z   type: 'test'
+tests	JavaScript tests	2026-11-21T16:52:30.8016993Z   ...
+tests	JavaScript tests	2026-11-21T16:52:30.8018475Z # Subtest: duplicate clicks are ignored through POST and refresh; prior disabled state is restored
+tests	JavaScript tests	2026-11-21T16:52:30.8020321Z ok 7 - duplicate clicks are ignored through POST and refresh; prior disabled state is restored
+tests	JavaScript tests	2026-11-21T16:52:30.8021505Z   ---
+tests	JavaScript tests	2026-11-21T16:52:30.8022153Z   duration_ms: 1.092016
+tests	JavaScript tests	2026-11-21T16:52:30.8022854Z   type: 'test'
+tests	JavaScript tests	2026-11-21T16:52:30.8023496Z   ...
+tests	JavaScript tests	2026-11-21T16:52:30.8024528Z # Subtest: newer typing is preserved while the created setup is still reported
+tests	JavaScript tests	2026-11-21T16:52:30.8026001Z ok 8 - newer typing is preserved while the created setup is still reported
+tests	JavaScript tests	2026-11-21T16:52:30.8026964Z   ---
+tests	JavaScript tests	2026-11-21T16:52:30.8027586Z   duration_ms: 0.946294
+tests	JavaScript tests	2026-11-21T16:52:30.8028548Z   type: 'test'
+tests	JavaScript tests	2026-11-21T16:52:30.8029196Z   ...
+tests	JavaScript tests	2026-11-21T16:52:30.8030302Z # Subtest: campaign switch or unrelated scope change suppresses obsolete completion
+tests	JavaScript tests	2026-11-21T16:52:30.8031866Z ok 9 - campaign switch or unrelated scope change suppresses obsolete completion
+tests	JavaScript tests	2026-11-21T16:52:30.8033000Z   ---
+tests	JavaScript tests	2026-11-21T16:52:30.8033696Z   duration_ms: 2.391732
+tests	JavaScript tests	2026-11-21T16:52:30.8034419Z   type: 'test'
+tests	JavaScript tests	2026-

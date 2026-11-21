@@ -1,0 +1,28 @@
+s	2026-11-21T16:48:16.4798367Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.4798827Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.4799185Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.4799638Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.4800442Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.4800838Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.4801346Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.4801836Z     raise effect
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.4802086Z OSError: private detail
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.4802378Z 5e.tools candidate lookup failed
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.4802713Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.4803130Z   File "python/scrying_glass_monster_selection.py", line 196, in fivetools_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.4803573Z     sources = ft.configured_sources(display)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.4804101Z   File "/tmp/scrying-tests-udvrm7bj/repo/python/scrying_glass_fivetools.py", line 23, in configured_sources
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.4804816Z     raise ValueError("fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace")
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.4805567Z ValueError: fivetools_sources must be a list of at most 32 nonempty source identifiers without surrounding whitespace
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.5440761Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.5442350Z test_fivetools_source_configuration.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.5627585Z Ran 12 tests in 0.071s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.5628115Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.5628223Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:16.5628660Z Connection audit: test_fivetools_worker.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:18.7824135Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:18.7825640Z test_fivetools_worker.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:18.7826712Z Ran 13 tests in 2.147s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:18.7827019Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:18.7827236Z OK
+connection-audit	Connection audit of isolated unittest modu

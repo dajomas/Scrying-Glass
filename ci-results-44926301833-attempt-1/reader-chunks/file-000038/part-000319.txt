@@ -1,0 +1,29 @@
+s was not started
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8062381Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8063396Z   File "/tmp/scrying-tests-udvrm7bj/repo/python/scrying_glass_statblock_collecting.py", line 229, in collect_after_add
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8064078Z     return service.collect_new_monsters([m['id'] for m in created], file_bytes=file_bytes, filename=filename)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8064610Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8065146Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8065628Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8065950Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8066413Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8066958Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8067272Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8067794Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8068228Z     raise effect
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8068494Z RuntimeError: collection failed
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8159739Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8160474Z Ran 14 tests in 0.036s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8160653Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8160817Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8171196Z test_monster_bonus_import.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:43.8730484Z Connection audit: test_monster_bonus_roster.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:44.9609632Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:44.9610426Z Ran 2 tests in 1.024s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:44.9610584Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:44.9610702Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:44.9611784Z test_monster_bonus_roster.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:44.9961860Z Connection audit: test_monster_button_layout.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:49.3648507Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:48:49.3648994Z Ran 4 tests in 4.262s
+connection-audi

@@ -1,0 +1,28 @@
+nection-audit	Connection audit of isolated unittest modules	2026-11-21T16:51:13.8187517Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:51:13.8187585Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:51:13.8364024Z Connection audit: test_worker_windows.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:51:14.3478436Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:51:14.3478838Z Ran 13 tests in 0.349s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:51:14.3478968Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:51:14.3479204Z test_worker_windows.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:51:14.3480060Z OK (skipped=3)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:51:14.3685651Z Connection audit modules: 254; failed: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T16:51:14.3686169Z PASS: all audited modules passed and closed their tracked connections
+connection-audit	Post Run actions/setup-node@v4	﻿2026-11-21T16:51:14.4240450Z Post job cleanup.
+connection-audit	Post Run actions/setup-node@v4	2026-11-21T16:51:14.5178895Z (node:20626) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+connection-audit	Post Run actions/setup-node@v4	2026-11-21T16:51:14.5179532Z (Use `node --trace-deprecation ...` to show where the warning was created)
+connection-audit	Post Run actions/setup-python@v5	﻿2026-11-21T16:51:14.5281583Z Post job cleanup.
+connection-audit	Post Run actions/setup-python@v5	2026-11-21T16:51:14.6248566Z Cache hit occurred on the primary key setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e, not saving cache.
+connection-audit	Post Run actions/setup-python@v5	2026-11-21T16:51:14.6249663Z (node:20634) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+connection-audit	Post Run actions/setup-python@v5	2026-11-21T16:51:14.6250553Z (Use `node --trace-deprecation ...` to show where the warning was created)
+connection-audit	Post Run actions/checkout@v4	﻿2026-11-21T16:51:14.6351560Z Post job cleanup.
+connection-audit	Post Run actions/checkout@v4	2026-11-21T16:51:14.6989090Z [command]/usr/bin/git version
+connection-audit	Post Run actions/checkout@v4	2026-11-21T16:51:14.7025923Z git version 2.56.1
+connection-audit	Post Run actions/checkout@v4	2026-11-21T16:51:14.7057592Z Temporarily overriding HOME='/home/runner/work/_temp/e706f38b-bca4-4178-a266-f336a0bae0d6' before making global git config changes
+connection-audit	Post Run actions/checkout@v4	2026-11-21T16:51:14.7058263Z Adding repository directory to the temporary git global config as a safe directory
+connection-audit	Post Run actions/checkout@v4	2026-11-21T16:51:14.7063301Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+connection-audit	Post Run actions/checkout@v4	2026-11-21T16:51:14.7097882Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+connection-audit	Post Run actions/checkout@v4	2026-11-21T16:51:14.7125910Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+connection-audit	Post Run actions/checkout@v4	2026-11-21T16:51:14.7328363Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+connection-audit	Post Run actions/checkout@v4	2026-11-21T16:51:14.7346606Z http.https://github.com/.extraheader
+connection-audit	Post Run actions/checkou
