@@ -410,6 +410,20 @@ Special consequences of zero abilities, saves, mitigation and monster-specific
 rules stay GM-resolved. Derived AC, initiative and attack modifiers are not
 recalculated automatically.
 
+### Max HP increase
+
+Next to Add statistics reduction, Add Max HP increase raises a target's maximum HP,
+for example for *Aid*. Current HP rises by the same amount. A downed character whose
+HP rises above 0 is standing again; dead creatures and characters whose HP is not
+tracked cannot be chosen. Increases and reductions add up; the increase lasts until
+you remove it with Restore statistics, which lowers the maximum again and only caps
+current HP.
+
+Current HP also follows a higher maximum in the Edit dialog when you change only Max
+HP (if you type a new current HP as well, your values are used), and when Refresh
+from source raises a monster's maximum without its HP: damage already taken stays
+taken. Ending a Max HP reduction does not give back HP, as in the 5e rules.
+
 ### Restore statistics: affected values only
 
 Restore statistics is next to Reset in each character row and also available for
@@ -419,7 +433,8 @@ monsters. It now opens a table with separate columns:
 |---|---|---|---|
 | Max HP | 1 | 9 | 0 |
 
-Only statistics with active mechanical reductions appear. A zero effective value
+Only statistics with active mechanical reductions appear, and Max HP while it has an
+increase (shown next to the reduction, for example "0 (increase +5)"). A zero effective value
 still appears while its reduction exists. Unknown/unaffected abilities do not
 appear, and the table's original values are read-only. Reduction is the full
 stacked amount, not a value clipped to the base. The restore selector contains
@@ -427,11 +442,12 @@ only affected statistics; All affected statistics is offered when more than one
 statistic is reduced.
 
 Choose the statistic(s), click Restore selected statistics and confirm. Restoration
-removes their reductions and restores effective values to the originals. It never
+removes their reductions (and, for Max HP, its increases) and restores effective values
+to the originals. It never
 heals current HP or resurrects and does not reset initiative, temporary HP, battle
 membership or unrelated conditions. Cancelling makes no change. Restored rows
 and options disappear after refresh. With nothing left, the dialog says No statistic
-reductions to restore and disables the restore selector and button.
+reductions or increases to restore and disables the restore selector and button.
 
 ### Separate original/base editor
 

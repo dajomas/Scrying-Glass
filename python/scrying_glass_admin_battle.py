@@ -98,11 +98,11 @@ class AdminBattleMixin:
             )
 
         import copy
-        from python.scrying_glass_statistics import reduce_stat, statistics_token
+        from python.scrying_glass_statistics import reduce_stat, statistics_token, increase_max_hp
         if any(row.action == 'reduce-stat' for row in payload.actions):
             if getattr(payload, 'statistics_token', None) != statistics_token(self.context):
                 raise self.context.HTTPException(409, 'Encounter changed; reopen Battle actions before applying reductions')
-        valid_actions = {"damage", "heal", "buff", "debuff", "reduce-stat"}
+        valid_actions = {"damage", "heal", "buff", "debuff", "reduce-stat", "increase-max-hp"}
         prepared = []
 
         # Validate all rows before changing state, so a malformed row cannot leave
@@ -137,7 +137,7 @@ class AdminBattleMixin:
 
             if permanently_dead(target) and not source_id:
                 raise self.context.HTTPException(400,'Explicitly recover a dead combatant before applying battle actions')
-            if row.action not in {'damage','heal'} and not target.get("alive", True):
+            if row.action not in {'damage','heal','increase-max-hp'} and not target.get("alive", True):
                 raise self.context.HTTPException(
                     400,
                     f"Target {target['name']} must be alive for {row.action}",
@@ -149,7 +149,10 @@ class AdminBattleMixin:
             if row.action == 'reduce-stat':
                 try: reduce_stat(copy.deepcopy(target), stat, row.amount, source['id'])
                 except ValueError as exc: raise self.context.HTTPException(422, str(exc)) from exc
-            if row.action in {"damage", "heal", "reduce-stat"}:
+            if row.action == 'increase-max-hp':  # SG-TODO-025: a downed target may be raised too
+                try: increase_max_hp(copy.deepcopy(target), row.amount, source['id'])
+                except (ValueError, TypeError) as exc: raise self.context.HTTPException(422, str(exc)) from exc
+            if row.action in {"damage", "heal", "reduce-stat", "increase-max-hp"}:
                 if row.amount is None or row.amount <= 0:
                     raise self.context.HTTPException(
                         400,
@@ -183,6 +186,15 @@ class AdminBattleMixin:
                     self.context.features.clear_concentration(target['id'])
                 note = statistics_note(target, stats_before) + f"; source: {source['name']}"
                 self.context.features.log('statistic-reduced', target, amount, note=note)
+                continue
+            if action == 'increase-max-hp':
+                stats_before = statistics_snapshot(target)
+                try: increase_max_hp(target, amount, source['id'])
+                except ValueError as exc: raise self.context.HTTPException(422, str(exc)) from exc
+                if can_take_turn(target):
+                    self.context.insert_into_battle_order(target)
+                note = statistics_note(target, stats_before) + f"; source: {source['name']}"
+                self.context.features.log('max-hp-increased', target, amount, note=note)
                 continue
             if action == "damage":
                 result=apply_hp(target,-amount,critical=critical)

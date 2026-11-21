@@ -145,9 +145,10 @@ class AdminCharactersMixin:
             if key != "in_turn":
                 candidate[key] = value
 
-        from .scrying_glass_statistics import legacy_max_edit
+        from .scrying_glass_statistics import legacy_max_edit, follow_max_increase
         try: legacy_max_edit(candidate, values)
         except ValueError as exc: raise self.context.HTTPException(422, str(exc)) from exc
+        follow_max_increase(character, candidate, "hp" in values and values["hp"] != character.get("hp"))  # SG-TODO-026
         hp_result = None
         if hp_delta is not None:
             from .scrying_glass_feature_rules import apply_hp

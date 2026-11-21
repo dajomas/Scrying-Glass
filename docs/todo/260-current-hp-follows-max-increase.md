@@ -4,7 +4,7 @@
 
 ## Task and status
 
-SG-TODO-026 - decided 2026-11-21, implementation group 3 (with SG-TODO-025). Requested
+SG-TODO-026 - implemented 2026-11-21 on `features/claude` ([handover 700](../handover/700-max-hp-increase.md)); CI and user check pending. Decided 2026-11-21, implementation group 3 (with SG-TODO-025). Requested
 by the user 2026-11-20. Depends on [SG-TODO-025](250-max-hp-increase.md) for the
 in-battle increase; the other paths below can be done independently.
 

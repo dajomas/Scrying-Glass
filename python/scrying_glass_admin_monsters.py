@@ -312,9 +312,11 @@ class AdminMonstersMixin:
             except ValueError as exc:
                 raise self.context.HTTPException(422, str(exc)) from exc
 
-        from .scrying_glass_statistics import legacy_max_edit
-        try: legacy_max_edit(candidate, validated.model_dump(exclude_unset=True))
+        from .scrying_glass_statistics import legacy_max_edit, follow_max_increase
+        values = validated.model_dump(exclude_unset=True)
+        try: legacy_max_edit(candidate, values)
         except ValueError as exc: raise self.context.HTTPException(422, str(exc)) from exc
+        follow_max_increase(monster, candidate, "hp" in values and values["hp"] != monster.get("hp"))  # SG-TODO-026
         from .scrying_glass_feature_rules import sync_health
         sync_health(candidate)
 
@@ -386,9 +388,10 @@ class AdminMonstersMixin:
             except ValueError as exc:
                 raise self.context.HTTPException(422, str(exc)) from exc
 
-        from .scrying_glass_statistics import legacy_max_edit
+        from .scrying_glass_statistics import legacy_max_edit, follow_max_increase
         try: legacy_max_edit(candidate, values)
         except ValueError as exc: raise self.context.HTTPException(422, str(exc)) from exc
+        follow_max_increase(monster, candidate, "hp" in values and values["hp"] != monster.get("hp"))  # SG-TODO-026
         hp_result = None
         if hp_delta is not None:
             from .scrying_glass_feature_rules import apply_hp
