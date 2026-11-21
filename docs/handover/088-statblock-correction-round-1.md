@@ -208,8 +208,15 @@ form, expecting "Add manually". The Show statblock button added to the Appearanc
 (`8a05db7`) is now the first button there and is disabled without a selected source, so
 every test that adds a monster timed out waiting for it to become enabled. Not a product
 defect. The helper now clicks the submit button (`#monsterForm button:not([type="button"])`;
-every other button the scripts add to that form is `type="button"`). The e2e suite must
-be run again to show the real state of the statblock work, including the axe scans.
+every other button the scripts add to that form is `type="button"`). CI for the fix
+(`524412d`, run 44832146478) succeeded with 2286 tests.
+
+**E2E run 20261121T065222Z** (the user, Chromium and Firefox, against `1180299`, which
+contains the helper fix): **137 passed, 0 failed, 0 skipped**; results pushed in `73fe892`
+(`e2e-results/20261121T065222Z/`). It includes the Admin axe scan, the statblock viewer
+(sign-in rules, live tiles with keyboard and axe, sign-out) and both statblock import
+flows (`.monster` file in Edit Monster, bulk import shown in the viewer). With this,
+022.15 is complete.
 
 ## Known limitations and open work
 
