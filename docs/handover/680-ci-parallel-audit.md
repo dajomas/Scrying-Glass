@@ -25,4 +25,6 @@ both passes are needed, the options and the user's decision are in
 
 - Local: `test_ci_browser_provisioning` passes (12 tests); the new standalone loop finds
   `feedback_browser_fixture.py` and `storage_migration_fixtures.py`, as CI 44888887657 did.
-- Pending: the first CI run with both jobs (both green, audit shows 254 modules, wall time).
+- First run with both jobs, CI 44926301833 on d2262b1: both green. `tests` took 7 min 26 s
+  (combined pass: 2,310 tests in 345 s), `connection-audit` 5 min 44 s (254 modules,
+  0 failed). Wall time 7.5 minutes instead of about 13.5 before.

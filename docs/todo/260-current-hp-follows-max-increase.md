@@ -4,8 +4,8 @@
 
 ## Task and status
 
-SG-TODO-026 - proposed, requested by the user 2026-11-20. No owner, priority or
-deadline has been agreed. Depends on [SG-TODO-025](250-max-hp-increase.md) for the
+SG-TODO-026 - decided 2026-11-21, implementation group 3 (with SG-TODO-025). Requested
+by the user 2026-11-20. Depends on [SG-TODO-025](250-max-hp-increase.md) for the
 in-battle increase; the other paths below can be done independently.
 
 ## Request
@@ -25,7 +25,20 @@ tracking ([SG-TODO-024](240-character-hp-tracking-option.md)) is enabled.
   can change `max_hp`.
 - Statblock import or apply that changes a monster's maximum HP (SG-TODO-022).
 
-## Open decisions (to agree before implementation)
+## Decisions (2026-11-21)
+
+1. Removing a Max HP reduction (Restore statistics) does not raise current HP, following
+   the 5e rules (assumed: the user left this question unanswered and the recommended option was taken; open to change). All other paths below do.
+2. Edit dialog: when the DM changes both current and maximum HP in one save, the typed
+   values win; when only the maximum is raised, current HP rises by the same amount.
+3. A creature at 0 HP whose current HP rises above 0 is up again (death saves cleared);
+   a dead creature stays dead and keeps 0 HP.
+4. Monster refresh from source and statblock import/apply count as an increase: current
+   HP rises by the increase in maximum HP, so damage already taken stays taken.
+5. Applies to the in-battle increase (SG-TODO-025), the Edit dialog, monster refresh and
+   statblock import/apply; for characters only while HP tracking is on.
+
+## Open decisions as proposed (2026-11-20)
 
 1. Restoring a reduction: the user's "regardless of how" includes it, but in the
    D&D 5e rules ending a maximum-HP reduction does not restore lost HP. Confirm

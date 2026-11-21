@@ -4,8 +4,8 @@
 
 ## Task and status
 
-SG-TODO-027 - proposed, requested by the user 2026-11-20. No owner, priority or
-deadline has been agreed. The user asked for the D&D 5e rules to be checked.
+SG-TODO-027 - decided 2026-11-21, implementation group 3 (last item). Requested by the
+user 2026-11-20; the user asked for the D&D 5e rules to be checked.
 
 ## Request
 
@@ -36,7 +36,18 @@ Temporary HP already exists in part:
   creature, but the temporary HP can still absorb damage.
 - Unless the source gives a duration, they last until used up or until a long rest.
 
-## Open decisions (to agree before implementation)
+## Decisions (2026-11-21)
+
+1. Granting temporary HP is offered in Battle Actions, per target, next to damage and
+   healing (not in bulk actions). The Encounter tools "Set temporary HP" field stays for
+   corrections.
+2. No stacking: by default the creature keeps the higher value; a "replace" option takes
+   the new value even when it is lower (assumed: the user left this question unanswered and the recommended option was taken; open to change).
+3. No duration: temporary HP last until damage uses them up or the DM clears them; End
+   battle leaves them.
+4. Characters with HP tracking off get no temporary HP tracking.
+
+## Open decisions as proposed (2026-11-20)
 
 1. Where the option goes: Battle Actions (per target, next to damage and healing),
    bulk actions, or both. The existing Encounter tools field stays for corrections.

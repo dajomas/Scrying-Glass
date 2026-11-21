@@ -4,8 +4,8 @@
 
 ## Task and status
 
-SG-TODO-024 - proposed, requested by the user 2026-11-20. No owner, priority or
-deadline has been agreed.
+SG-TODO-024 - decided 2026-11-21, implementation group 3 (first item). Requested by the
+user 2026-11-20.
 
 ## Request
 
@@ -24,7 +24,23 @@ player manages their own HP.
 - Character current/max HP is shown read-only in the roster and edited through the
   row Edit dialog ([SG-TODO-012](120-character-hp-editors.md)).
 
-## Open decisions (to agree before implementation)
+## Decisions (2026-11-21)
+
+1. Scope: per character. A "Track HP" checkbox in Add character and in the Edit dialog,
+   on by default (existing characters keep today's behaviour), plus "Track HP" and
+   "Do not track HP" in the character bulk actions. Stored per character, no migration.
+2. Default: enabled.
+3. Display: for an untracked character the HP fields and bars are hidden in the Admin and
+   on the Client Display, and HP is not required in Add character. Stored HP values are
+   kept, so switching tracking back on resumes from them.
+4. Damage and healing on an untracked character never change current, maximum or
+   temporary HP; the DM sets life state and death saves by hand, with no automatic
+   transition from HP (assumed: the user left this question unanswered and the recommended option was taken; open to change).
+5. The damage or healing amount is still recorded in the activity log (assumed: the user left this question unanswered and the recommended option was taken; open to change).
+6. Switching off and on again keeps the stored values (see 3).
+7. Temporary HP is not tracked for untracked characters either (see SG-TODO-027).
+
+## Open decisions as proposed (2026-11-20)
 
 1. Scope of the option: global, per campaign, or per character.
 2. Default value. Proposed: enabled, so existing campaigns keep their behaviour.

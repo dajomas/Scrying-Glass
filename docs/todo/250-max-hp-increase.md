@@ -4,8 +4,8 @@
 
 ## Task and status
 
-SG-TODO-025 - proposed, requested by the user 2026-11-20. No owner, priority or
-deadline has been agreed.
+SG-TODO-025 - decided 2026-11-21, implementation group 3 (with SG-TODO-026). Requested
+by the user 2026-11-20.
 
 ## Request
 
@@ -23,7 +23,17 @@ applies to monsters, and to characters only when character HP tracking
 - `legacy_max_edit` rejects editing the maximum in the Edit dialog while reductions
   are active.
 
-## Open decisions (to agree before implementation)
+## Decisions (2026-11-21)
+
+1. Model: a separate "Max HP increase" mechanical effect, so the reduction validation
+   stays unchanged; reductions and increases combine against `base_max_hp`.
+2. Offered in Battle Actions statistics, next to Max HP reduction (not in Encounter tools
+   or bulk actions). For characters only while HP tracking is on.
+3. An increase lasts until removed by hand or by Restore statistics, like reductions.
+   Removing it lowers the maximum and caps current HP, as reductions do.
+4. Upper limit: `MAX_STORED_HP`.
+
+## Open decisions as proposed (2026-11-20)
 
 1. Model: a signed mechanical effect (reductions and increases netted against
    `base_max_hp`) or a separate increase effect. Proposed: a separate "Max HP
