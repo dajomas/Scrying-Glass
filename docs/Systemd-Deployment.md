@@ -13,7 +13,7 @@ mechanism; do not pip-install sqlite3. Run one non-root process per storage dire
 - /var/lib/scrying-glass: writable database, media and migration backups.
 - /etc/systemd/system/scrying-glass.service: service unit.
 
-Restrict network reachability before initial start. Default Admin/Client/Statblock ports are 3000/3100/3200; treat the statblock port like the Admin port.
+Restrict network reachability before initial start. Default Admin/Client/Statblock ports are 3000/3100/3200; treat the statblock port like the Admin port. Statblock preparation needs util-linux `prlimit` (`/usr/bin/prlimit` or `/bin/prlimit`); the unit's hardening below allows it, since lowering a worker's own limits needs no capabilities.
 
 ## Account and installation
 

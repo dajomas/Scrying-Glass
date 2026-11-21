@@ -3,7 +3,7 @@ network:
   bind: "0.0.0.0"
   admin_port: 3000
   client_port: 3100
-  # Admin-only statblock listener (SG-TODO-022): regular admins assigned to the active
+  # GM-only statblock viewer: regular admins assigned to the active
   # campaign only. Keep it off untrusted networks like the Admin port.
   statblock_port: 3200
 
@@ -62,7 +62,7 @@ display:
 #     queued_jobs: 16
 #     outbound_requests: 4
 #     provider_requests: 2
-#     worker_memory_bytes: 268435456   # per isolated worker process (Linux prlimit)
+#     worker_memory_bytes: 268435456   # per isolated worker process (Linux prlimit, Windows Job Object)
 #     cache_entries: 64
 #     cache_bytes: 67108864
 #     cache_seconds: 3600

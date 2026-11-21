@@ -67,11 +67,15 @@ workflows on copied data. Preserve this distinction in future compatibility clai
 
 ## Runtime and composition
 
-The root scrying_glass_server.py owns CONFIG, STATE, LOCK, SESSIONS, SOCKETS, STORAGE, paths and two FastAPI applications. Services bind methods to that live module before route construction and call each other through self.context. State replacement must update context.STATE. Services must not import the root server.
+The root scrying_glass_server.py owns CONFIG, STATE, LOCK, SESSIONS, SOCKETS, STORAGE, paths and three FastAPI applications (Admin, Client Display, statblock viewer). Services bind methods to that live module before route construction and call each other through self.context. State replacement must update context.STATE. Services must not import the root server.
 
 Root imports use python.* and web_html.*; siblings use relative imports. Retain __init__.py and avoid loading modules under two identities. web_html avoids standard-library html collision.
 
 AdminAPI composes domain mixins plus feature/lair/account/ownership/viewer installers. Annotation resolution uses live-context names; request models/FastAPI types must exist before handler registration. Historical route counts are obsolete after extensions.
+
+## Statblocks (SG-TODO-022)
+
+The statblock viewer listener (default 3200) accepts only a regular admin assigned to the active campaign and is read-only; statblock writes (selections, apply, collection decisions, previews) are Admin routes. `StatblockService` (`scrying_glass_statblock_service.py`, created at start-up) combines discovery, preparation, apply, automatic original-source loading, collection after Add Monster/Import and the Add Monster preview. Preparation runs in a bounded job scheduler and in isolated worker processes (`scrying_glass_statblock_worker.py`, `scrying_glass_fivetools_preparation_worker.py`) limited by util-linux prlimit on Linux or a Job Object on Windows (`scrying_glass_worker_windows.py`); outbound requests go through an allowlisted, cached, cooled-down shared fetcher. Validated version-1 snapshots are stored per monster with setups and the encounter, never in public projections, and travel in campaign bundles (version 2). Limits are `statblocks.limits` (see config.example.yaml) plus fixed safeguards recorded in TODO 220. Delivery history: handovers 082-089.
 
 ## Module map
 

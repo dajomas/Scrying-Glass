@@ -25,6 +25,13 @@ Run one application process per storage directory; multiple workers/replicas are
 unsupported. Runtime dependencies are in requirements.txt, not a lockfile. Node
 and Playwright are test dependencies, not server runtime requirements.
 
+Statblock preparation (statblock viewer, Find statblock, collection on Add Monster)
+starts resource-limited worker processes with the same interpreter: Linux needs
+util-linux `prlimit` at `/usr/bin/prlimit` or `/bin/prlimit`; Windows uses a Job Object
+(the base interpreter behind a virtual environment). Without enforceable limits,
+preparation fails explicitly and the rest of the tracker keeps working. The statblock
+port (default 3200) is GM-only: restrict it like the Admin port.
+
 Deploy `scrying_glass_server.py`, `python/`, `web_html/`, `templates/` and the
 complete `static/` tree together. Keep package __init__.py files. Do not deploy the
 tracked static/admin.js marker alone: the matching adapter assembles eight source

@@ -4,6 +4,8 @@
 
 ## Task and status
 
+**Closed 2026-11-21: SG-TODO-022 is completed and accepted by the user.** All units 022.01-022.16 are done; Stages A-E and the 022.15 corrections are validated by green CI (latest run 44832146478) and the e2e suite (137/137, run 20261121T065222Z) and accepted; Windows and Linux operation confirmed by the user. 5e.tools `_versions` candidates and generated magic-item variants (04e.2) continue as [SG-TODO-033](330-fivetools-variants.md). Close-out: [handover 091](../handover/091-statblock-close-out.md). The dated status paragraphs below are historical. No merge, deployment or release is implied; the user merges the branch.
+
 Current status - 2026-11-17: the [TODO index](../../TODO.md) entry is authoritative. 022.01-022.03 are accepted and closed; Stage A (022.04) is delivered with validation pending ([handover 082](../handover/082-fivetools-statblock-stage-a.md)); Stage B (022.05-022.07) is delivered with validation pending ([handover 083](../handover/083-statblock-stage-b-sources.md)), including the user's 2026-11-17 decisions to offer every Open5e document and fetch document licences; Stage C1 (022.08) is delivered with validation pending ([handover 084](../handover/084-statblock-stage-c1-import-apis.md)); the remaining units follow the agreed Stage C-E plan, with 022.09 delivered as Stage C2 ([handover 085](../handover/085-statblock-stage-c2-listener.md)) 022.10-022.12 as Stage D ([handover 086](../handover/086-statblock-stage-d-viewer.md)) and 022.13-022.14 as Stage E ([handover 087](../handover/087-statblock-stage-e-import-ui.md)), validation pending; 022.15/022.16 follow. The paragraph below is the 2026-11-15 consolidation status, kept as history.
 
 SG-TODO-022 remains an unimplemented feature. Design unit 022.01 is completed by this consolidated record on 2026-11-15 following the user's seven-item review, sixteen limit/policy decisions and 09:58 CET close-out request. 022.02 is ready to begin, not implemented; 022.03-022.16 remain pending. No owner, priority or deadline is assigned. All development remains on `features/perplexity-statblock` in `dajomas/Scrying-Glass`; no merge, deployment or release is implied.
@@ -269,8 +271,10 @@ Pending; depends 03-14. Actual implementation-commit full configured CI plus rea
 
 #### 022.16 - User acceptance and documentation close-out
 
-Pending; depends 15. Reconcile capability/acceptance/backup/limits/port/auth/operator docs and indexed handover/TODO with tested identities. Explicit user acceptance required for usable viewer and individual/bulk flows. Gate: whole SG-TODO-022 closes only after evidence/acceptance; no merge/release/deployment inferred.
+**Complete 2026-11-21.** README, User Guide (new Statblocks section), DEPLOYMENT, Systemd deployment, technical architecture documentation and config example reconciled with the delivered capability, access, ports, limits, backups and platform requirements; TODO and handover indexes updated. The user accepted the viewer and the individual, bulk and Add Monster flows (2026-11-20, close-out request 2026-11-21 08:21 CET) after green CI and e2e. SG-TODO-022 closed; no merge/release/deployment inferred. See [handover 091](../handover/091-statblock-close-out.md).
+
+Original gate: Reconcile capability/acceptance/backup/limits/port/auth/operator docs and indexed handover/TODO with tested identities. Explicit user acceptance required for usable viewer and individual/bulk flows. Gate: whole SG-TODO-022 closes only after evidence/acceptance; no merge/release/deployment inferred.
 
 ### Progress and continuation checklist
 
-022.01 complete, 022.02 ready, remainder pending. Next implementation unit is 022.02. For every delivery record actual scope/commit/tests/CI-e2e coverage/limitations/user decisions/next step. A push with unreviewed tests is delivered with validation pending, not verified complete. Planning closure never authorizes later writes.
+All units 022.01-022.16 complete; SG-TODO-022 closed 2026-11-21 (historical wording follows). For every delivery record actual scope/commit/tests/CI-e2e coverage/limitations/user decisions/next step. A push with unreviewed tests is delivered with validation pending, not verified complete. Planning closure never authorizes later writes.
