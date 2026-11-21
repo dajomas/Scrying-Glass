@@ -52,4 +52,11 @@ Implementation group 3, first item, on `features/claude`, 2026-11-21. Decisions 
   scripts pass apart from two that fail on HEAD as well. Connection check clean.
 - `edit_features` checks tracking inline, because legacy tests run it extracted from its
   module.
-- CI and the user's check are pending; e2e runs at the end of group 3.
+- CI 44932574915 green on d1fbf41.
+
+## Close-out
+
+Group 3 completed and closed 2026-11-21: CI 44937558587 green on f794d67 (both jobs);
+the user's e2e run 20261121T184951Z on f794d67: 137 passed, 0 failed, 0 skipped
+(Chromium and Firefox). The results push was first rejected because a CI publish commit
+had landed during the run; the user merged and pushed them (9825ea5).

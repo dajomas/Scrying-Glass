@@ -56,5 +56,11 @@ SG-TODO-024 before it: CI 44932574915 green on d1fbf41.
   1 browser test of the Battle Actions row.
 - Full unittest suite: 2,124 tests, no new failures against the baseline in this sandbox;
   Node tests for the touched scripts as before; connection check clean.
-- CI 44936112445 green on eb8f91e (both jobs; the two refresh tests ran there). User check
-  pending; e2e runs at the end of group 3.
+- CI 44936112445 green on eb8f91e (both jobs; the two refresh tests ran there).
+
+## Close-out
+
+Group 3 completed and closed 2026-11-21: CI 44937558587 green on f794d67 (both jobs);
+the user's e2e run 20261121T184951Z on f794d67: 137 passed, 0 failed, 0 skipped
+(Chromium and Firefox). The results push was first rejected because a CI publish commit
+had landed during the run; the user merged and pushed them (9825ea5).

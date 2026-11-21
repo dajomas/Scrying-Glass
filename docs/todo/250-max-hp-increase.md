@@ -4,7 +4,7 @@
 
 ## Task and status
 
-SG-TODO-025 - implemented 2026-11-21 on `features/claude` ([handover 700](../handover/700-max-hp-increase.md)); CI and user check pending. Decided 2026-11-21, implementation group 3 (with SG-TODO-026). Requested
+SG-TODO-025 - implemented 2026-11-21 on `features/claude` ([handover 700](../handover/700-max-hp-increase.md)); completed and closed 2026-11-21 after CI 44937558587 and e2e 20261121T184951Z. Decided 2026-11-21, implementation group 3 (with SG-TODO-026). Requested
 by the user 2026-11-20.
 
 ## Request
