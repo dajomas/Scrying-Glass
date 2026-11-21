@@ -25,7 +25,7 @@ user acceptance. Not marked completed.
 | 04c.3a-d arrays, 04c.4 numeric/formulas, 04c.5 regex/text | delivered, oracle-verified |
 | 04d creature modes, templates, substitutions | delivered, oracle-verified |
 | 04e reference collection and normalization | delivered except 04e.2 |
-| 04e.2 generated magic-item variants and item enhancement | **moved to [SG-TODO-033](330-fivetools-variants.md)** by the user 2026-11-20 (not required to close SG-TODO-022); `magicvariants.json` specific/generic variants are not generated; references to them are explicit `reference_unavailable` partial warnings (55 of 4,683 real monsters) |
+| 04e.2 generated magic-item variants and item enhancement | **moved to [SG-TODO-033](330-fivetools-variants.md)** by the user 2026-11-20 (not required to close SG-TODO-022); variants delivered there 2026-11-22 ([730](../handover/730-fivetools-magic-item-variants.md)), item enhancement split off as [SG-TODO-034](340-fivetools-item-enhancement.md); before that: `magicvariants.json` specific/generic variants are not generated; references to them are explicit `reference_unavailable` partial warnings (55 of 4,683 real monsters) |
 | 04f integration evidence | local evidence recorded in 082; CI (Python 3.14) and acceptance pending |
 
 Acceptance for 04e.2: generated variants match the pinned

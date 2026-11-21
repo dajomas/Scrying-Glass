@@ -10,6 +10,9 @@ is stored in this repository.
   node tools/fivetools_oracle/version_oracle.mjs <5etools-src> /tmp/versions.json
   python tools/fivetools_oracle/compare.py versions <5etools-src> /tmp/versions.json
 
+  node tools/fivetools_oracle/item_oracle.mjs <5etools-src> /tmp/items.json
+  python tools/fivetools_oracle/compare.py items <5etools-src> /tmp/items.json
+
   python tools/fivetools_oracle/generate_synthetic_cases.py /tmp/cases.json
   node tools/fivetools_oracle/synthetic_oracle.mjs <5etools-src> /tmp/cases.json /tmp/upstream.json
   python tools/fivetools_oracle/compare.py synthetic /tmp/cases.json /tmp/upstream.json
@@ -134,6 +137,47 @@ def compare_versions(root, oracle_path):
     return stats, failures
 
 
+def compare_items(root, oracle_path):
+    """SG-TODO-033 part 2: generated generic and specific magic-item variants, in order."""
+    from python.scrying_glass_fivetools_items import generate_variants
+    oracle = json.load(open(oracle_path, encoding='utf-8'))
+    data = lambda name: json.load(open(os.path.join(root, 'data', name), encoding='utf-8'))
+    generics, specifics = generate_variants(data('items-base.json'), data('magicvariants.json'),
+                                            deadline=time.monotonic() + 120)
+    stats, failures = {}, []
+    for kind, got_list in (('generic', generics), ('specific', specifics)):
+        expected_list = oracle[kind]
+        stats[kind + '_count'] = [len(got_list), len(expected_list)]
+        match = order = 0
+        for index, (expected, got) in enumerate(zip(expected_list, got_list)):
+            got = json.loads(json.dumps(got))
+            diff = same(expected, got)
+            if diff:
+                failures.append((kind, index, expected.get('name'), expected.get('source'), diff))
+            else:
+                match += 1
+                order += list(expected) != list(got)
+        stats[kind + '_match'] = match
+        stats[kind + '_key_order_differs'] = order
+        if len(got_list) != len(expected_list):
+            failures.append((kind, 'count', len(got_list), len(expected_list)))
+    # items.json _copy records through the resolver (item preserve rule).
+    records = data('items.json')['item']
+    loader = DatasetLoader('5etools', [(Identity('5etools', 'item', r['source'], r['name']), json.dumps(r).encode())
+                                       for r in records])
+    stats['item_copies'] = [0, len(oracle.get('itemCopies', {}))]
+    for key, expected in oracle.get('itemCopies', {}).items():
+        name, source = key.rsplit('|', 1)
+        got = OrderedResolver(loader, limits=Limits()).resolve(Identity('5etools', 'item', source, name),
+                                                               deadline=time.monotonic() + 30).record()
+        diff = same(expected, got)
+        if diff:
+            failures.append(('item copy', key, diff))
+        else:
+            stats['item_copies'][0] += 1
+    return stats, failures
+
+
 def compare_synthetic(cases_path, upstream_path):
     cases, upstream = json.load(open(cases_path)), json.load(open(upstream_path))
     stats, notes = {}, []
@@ -164,7 +208,8 @@ def compare_synthetic(cases_path, upstream_path):
 if __name__ == '__main__':
     mode = sys.argv[1]
     result = (compare_copies(sys.argv[2], sys.argv[3]) if mode == 'copies' else
-              compare_versions(sys.argv[2], sys.argv[3]) if mode == 'versions' else compare_synthetic(sys.argv[2], sys.argv[3]))
+              compare_versions(sys.argv[2], sys.argv[3]) if mode == 'versions' else
+              compare_items(sys.argv[2], sys.argv[3]) if mode == 'items' else compare_synthetic(sys.argv[2], sys.argv[3]))
     print(json.dumps(result[0]))
     for item in result[1][:50]:
         print(item)

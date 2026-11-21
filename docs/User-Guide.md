@@ -157,6 +157,9 @@ statblocks in a "Versions of …" option group. Searching for a version's own na
 version, labelled "version of …". A monster added from a 5e.tools link to a version uses
 that version as its original source.
 
+Magic items that 5e.tools generates, such as *+1 Longsword* or *Plate Barding*, now appear
+in a statblock's item references with their rarity and text, like any other item.
+
 **Automatic loading.** While a statblock viewer is open, monsters in battle that were
 added from a source and have no statblock yet get one from that source.
 

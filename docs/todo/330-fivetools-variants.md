@@ -4,7 +4,7 @@
 
 ## Task and status
 
-SG-TODO-033 - part 1 (monster versions) implemented 2026-11-22 on `features/claude` ([handover 720](../handover/720-fivetools-monster-versions.md)), CI and user check pending; part 2 (magic-item variants) open. Decided 2026-11-21 (implementation group 4); proposed 2026-11-20, split off from SG-TODO-022 by the user's decision on 2026-11-20 so
+SG-TODO-033 - implemented 2026-11-22 on `features/claude`: part 1 monster versions ([handover 720](../handover/720-fivetools-monster-versions.md), CI 44960931606 green), part 2 generated magic-item variants ([handover 730](../handover/730-fivetools-magic-item-variants.md)), CI and user check pending. The runtime's item type/property text was split off as [SG-TODO-034](340-fivetools-item-enhancement.md) by the user 2026-11-22. Decided 2026-11-21 (implementation group 4); proposed 2026-11-20, split off from SG-TODO-022 by the user's decision on 2026-11-20 so
 that SG-TODO-022 can close without it. No owner, priority or deadline has been agreed.
 
 ## Scope
@@ -35,6 +35,9 @@ version with 5 implementations) and 69 monsters whose `variant` entries carry `_
    name (directly).
 4. Original source: a monster whose 5e.tools link names a version uses that version as its
    original source (marked "original source" and auto-loaded like other originals).
+5. Part 2 scope (2026-11-22): generate the generic and specific magic-item variants now,
+   built like the runtime before `_enhanceItems`; the runtime's type/property text for all
+   items becomes [SG-TODO-034](340-fivetools-item-enhancement.md).
 
 ## Open decisions as proposed (2026-11-20)
 

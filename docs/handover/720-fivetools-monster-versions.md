@@ -65,4 +65,4 @@ source, and `_preserve` defaults to `{"*": true}`; the result gets the `_version
 - `tests/test_statblock_import_browser.py`: Edit chooser groups versions under the base; Load
   statblocks uses an option group.
 - Full unittest suite here: 2,147 tests, no new failures; Node tests as on HEAD; connection
-  check clean. CI and the user's check pending.
+  check clean. CI 44960931606 green on 9e8eb26; user check pending.

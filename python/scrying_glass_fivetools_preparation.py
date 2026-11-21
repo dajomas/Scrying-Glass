@@ -243,6 +243,8 @@ def _assemble(record, group, group_provenance, provenance, collector, limits, da
         for key, label, text in definition_facts(definition.kind, entity):
             fact(definition.local_id, key, label, text)
         for prop, label in ENTRY_KEYS.get(definition.kind, (('entries', None),)):
+            if definition.kind == 'item' and prop == 'entries' and entity.get('_fullEntries'):
+                prop = '_fullEntries'  # a generated variant's text, as the runtime renders it (SG-TODO-033)
             if not entity.get(prop):
                 continue
             parent = builder.add('section', None, definition.local_id, label=label) if label else None

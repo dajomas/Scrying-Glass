@@ -56,7 +56,8 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 37. [HP field help in a folded block](docs/todo/300-hp-help-disclosure.md) - SG-TODO-030, completed and closed 2026-11-21 ([670](docs/handover/670-group-1-quick-wins.md); requested 2026-11-20). Move the Add Monster HP field explanation into a closed help block at the bottom of the Combat statistics section.
 38. [Refresh from source above Remove](docs/todo/310-refresh-from-source-order.md) - SG-TODO-031, completed and closed 2026-11-21 ([670](docs/handover/670-group-1-quick-wins.md); requested 2026-11-20). In the Monster bulk actions dropdown, Refresh from source comes directly before Remove.
 39. [Clear selection next to Select all](docs/todo/320-clear-selection-position.md) - SG-TODO-032, completed and closed 2026-11-21 ([670](docs/handover/670-group-1-quick-wins.md); requested 2026-11-20). In the Characters and Monsters rosters, Clear selection moves to the right of Select all.
-40. [5e.tools monster versions and generated magic-item variants](docs/todo/330-fivetools-variants.md) - SG-TODO-033, part 1 (monster versions) implemented 2026-11-22, CI and user check pending ([720](docs/handover/720-fivetools-monster-versions.md)); part 2 (magic-item variants) open (split off from SG-TODO-022 by the user 2026-11-20). Offer 5e.tools `_versions` in Find statblock and generate magic-item variants (04e.2) so those statblocks are no longer partial.
+40. [5e.tools monster versions and generated magic-item variants](docs/todo/330-fivetools-variants.md) - SG-TODO-033, implemented 2026-11-22: part 1 monster versions (CI 44960931606 green, [720](docs/handover/720-fivetools-monster-versions.md)), part 2 generated magic-item variants (CI and user check pending, [730](docs/handover/730-fivetools-magic-item-variants.md)); split off from SG-TODO-022 by the user 2026-11-20.
+41. [5e.tools item type and property text](docs/todo/340-fivetools-item-enhancement.md) - SG-TODO-034, proposed 2026-11-22 (split off from SG-TODO-033 part 2 by the user). The runtime's `enhanceItem` text for all item definitions.
 
 ## Implementation order - agreed 2026-11-21
 
@@ -77,7 +78,8 @@ CI-checked and shown to the user before the next one starts.
    137 passed, 0 failed ([690](docs/handover/690-character-hp-tracking.md),
    [700](docs/handover/700-max-hp-increase.md), [710](docs/handover/710-temporary-hp-grant.md)).
 4. **SG-TODO-033:** 5e.tools monster versions first, generated magic-item variants second.
-   Decided 2026-11-21 (task file); monster versions implemented 2026-11-22.
+   Decided 2026-11-21 (task file); monster versions and magic-item variants implemented
+   2026-11-22; the item type/property text became SG-TODO-034.
 5. **SG-TODO-023 second half:** test consolidation, after the feature work.
 
 Note: `features/claude` contains `monsters_examples/` again (returned by the user

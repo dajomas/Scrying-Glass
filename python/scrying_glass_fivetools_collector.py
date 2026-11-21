@@ -38,7 +38,7 @@ INDEXED = {'monster': ('bestiary/index.json', 'bestiary', 'monster'), 'spell': (
 INHERITING = frozenset(('monster', 'monsterTemplate', 'legendaryGroup', 'item'))
 SCAN_KEYS = {
     'spell': ('entries', 'entriesHigherLevel', 'components', 'time'),
-    'item': ('entries', 'additionalEntries'),
+    'item': ('entries', 'additionalEntries', '_fullEntries'),
     'legendaryGroup': ('lairActions', 'regionalEffects', 'mythicEncounter'),
 }
 MONSTER_SKIP = frozenset(('name', 'source', 'page', '_copy_templates', '_versions', 'legendaryGroup',
@@ -79,6 +79,7 @@ class FiveToolsData:
         self._fetch, self._check = fetch, check
         self._response_bytes, self._max_files = response_bytes, dataset_files
         self._files, self._indexed, self._records = {}, set(), {}
+        self._base_items, self._generated = None, False
         self.fetched_bytes = 0
 
     def _file(self, path):
@@ -104,6 +105,8 @@ class FiveToolsData:
         if marker in self._indexed:
             return
         data = self._file(path)
+        if prop == 'baseitem':
+            self._base_items = list(data.get(prop) or [])  # in file order, for generated variants
         for record in data.get(prop) or []:
             self._check()
             if type(record) is dict and type(record.get('name')) is str and type(record.get('source')) is str:
@@ -129,7 +132,27 @@ class FiveToolsData:
         """ExactLoader: every record matching the runtime's entity hash."""
         for path, prop in self._paths(identity.kind, identity.source):
             self._index(path, prop, identity.kind)
-        return tuple(self._records.get(key_of(identity.kind, identity.name, identity.source), ()))
+        key = key_of(identity.kind, identity.name, identity.source)
+        if identity.kind == 'item' and key not in self._records and not self._generated:
+            self._generate_items()
+        return tuple(self._records.get(key, ()))
+
+    def _generate_items(self):
+        """SG-TODO-033: index the runtime's generic and specific magic-item variants."""
+        from .scrying_glass_fivetools_items import ItemVariantError, _entity_source, generate_variants
+        self._generated = True
+        variants = self._file('magicvariants.json')
+        try:
+            generics, specifics = generate_variants({'baseitem': self._base_items or []}, variants)
+        except (ItemVariantError, ValueError):
+            return  # references stay unavailable, as before
+        for record in generics + specifics:
+            self._check()
+            name, source = record.get('name'), _entity_source(record)
+            if type(name) is str and type(source) is str:
+                encoded = json.dumps(record, ensure_ascii=False, separators=(',', ':')).encode()
+                self._records.setdefault(key_of('item', name, source), []).append(encoded)
+        variants.pop('magicvariant', None)
 
     def records(self, kind, source):
         """Every indexed record of ``kind`` from the file(s) holding ``source`` (encoded JSON)."""
