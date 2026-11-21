@@ -2,24 +2,36 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Last updated: 2026-11-01.
+[Complete preceding handover](https://github.com/dajomas/Scrying-Glass/blob/ab9cf3dbea6ce67f7b1e1cdcb664affe43a7945a/docs/handover/080-monster-lookup-diagnostics.md)
+retains prior diagnoses/failures, pins, exact delivered revisions, tests, operational
+limits and accepted close-outs. No unfinished requirement or evidence limit waived.
 
-## Scope and diagnosis
+<a id="02204ab-core-graph-preparation---2026-11-17"></a>
+<a id="02204b1-cache-content-accounting---2026-11-17"></a>
+<a id="02204b2-resource-boundaries---2026-11-17"></a>
+<a id="02204b3-isolated-worker---2026-11-17"></a>
+<a id="04b-user-directed-implementation-close-out---2026-11-17"></a>
+<a id="02204c1-standalone-operation-kernel---2026-11-17"></a>
 
-Baseline: `68adc77e6e0fc53e5db3b09853088f9f57ee3d46`. Original test blob: `648552b050c9a402d708e2aa46f2195d85ae975c`; original handler module blob: `7d6a94bddc96ffd248f917f45c0edd88a242176a`.
+## 04c.3a append-if-absent - 2026-11-17
 
-All nine original diagnostics tests failed locally. The AST-extracted handler lacked package context, so importing the 5e.tools fallback failed before lookup. Fixing that fixture and isolating D&D-only cases left four failures: detailed diagnostics had also been lost from the production endpoint.
+Baseline ab9cf3dbea6ce67f7b1e1cdcb664affe43a7945a. [224 four-item split,
+comparison domain, evidence and remaining gates](../todo/224-fivetools-statblock-resolution.md#04c3-split---2026-11-17)
+records first-item implementation: appendIfNotExistsArr, checked JSON equality
+in the existing bounds module, pre-allocation retained-growth checks and adapter
+version 04c.3a-1. The graph/worker uses the shared executor without another module
+file dependency. Equality compares against the original existing array only, so
+new and old duplicates are not silently deduplicated. Conservative unsupported
+numeric/key/coercion cases are explicit errors, not resolved variants.
 
-## Changes
+Twelve native component tests passed on Python 3.12.8, no skips/errors/failures.
+Ninety-six supported-domain normalized-JSON/root-order comparisons matched the
+unmodified pinned runtime in Node 20.20.1 with the previously captured Parser
+slice. No fresh integrated graph/worker, full-provider, schema, 3.14 or CI evidence
+is claimed. Existing tests/assertions remain unchanged and were not rerun here.
 
-The fixture now supplies `__package__='python'`, explicitly disables fallback for D&D-only cases, mocks fallback lookup, and asserts that no real fallback HTTP request occurs. Original test methods and assertions remain unchanged; eight additional tests cover provider priority/order, independent flags, fallback success/errors, blank species and sanitized parser errors.
-
-The production handler restores safe reasons for empty searches, failed searches, per-legacy/current page failures and unusable AC/HP, plus a warning for unusable pages. Raw exception details remain in server logs, not response reasons. D&D Beyond priority, partial-stat success, 5e.tools fallback, cancellation propagation, response structure and unrelated display handlers remain unchanged. Diagnostic text is intentionally more informative; this is not a production-code-free repair.
-
-## Verification and limitations
-
-On Python 3.12.8: 17 diagnostics tests and all 15 unchanged tests in `test_fivetools_fallback.py` passed together. Repeats with ImportWarning, ResourceWarning and DeprecationWarning treated as errors passed. Candidate Python files compile. Original diagnostic test methods and unrelated display-handler ASTs were checked unchanged.
-
-The focused local tree used the hash-verified display and 5e.tools modules, the original provider tests, and the pinned production image-lookup method as an AST-extraction input. It was not a full checkout or real FastAPI/browser integration run. All remote providers were mocked; live endpoints, full CI and Python 3.14 remain unverified for this repair.
-
-README was reviewed and remains accurate: provider selection and configuration did not change. TODO.md is absent and is not created. Source splitting, other failure categories and workflow changes are outside this commit. Normal CI should verify the approved push.
+Overall 04c.3/04c/04/022 remains open; b-d of this split and all linked validation/
+compatibility obligations remain required. Accepted 04b/earlier lifecycle/016/017
+remain closed, including retained 04f.V1-V4 verification debt. README/root indexes/
+workflow reviewed/reused and unchanged for stable active behavior/paths. [skip ci]
+on intermediate 04 pushes; no workflow dispatch, merge, deployment or release.

@@ -19,9 +19,14 @@ def operation_lock(context):
 
 
 def serialized_handler(context, handler, *, role=None, cookie_name=None):
+    request_parameter = None
+    signature = inspect.signature(handler)
     @wraps(handler)
     async def wrapped(*args, **kwargs):
         request = kwargs.pop("_operation_request", None)
+        if request_parameter is not None:
+            bound = signature.bind_partial(*args, **kwargs)
+            request = bound.arguments.get(request_parameter, request)
         async with operation_lock(context):
             # Resolve the actor only after waiting for the serialized operation lock.
             session = None
@@ -40,12 +45,20 @@ def serialized_handler(context, handler, *, role=None, cookie_name=None):
 
     if role is not None:
         from fastapi import Request
-        signature = inspect.signature(handler)
-        wrapped.__signature__ = signature.replace(parameters=[
-            *signature.parameters.values(),
-            inspect.Parameter("_operation_request", inspect.Parameter.KEYWORD_ONLY,
-                              annotation=Request),
-        ])
+        request_parameter = next((parameter.name for parameter in signature.parameters.values()
+                                  if Request is not object
+                                  and parameter.annotation is not inspect.Parameter.empty
+                                  and isinstance(parameter.annotation, type)
+                                  and issubclass(parameter.annotation, Request)), None)
+        # A generic object placeholder matches every annotation, even inspect.empty;
+        # it cannot identify an existing Request parameter. Keep injection in that case.
+        # FastAPI injects one Request per endpoint. Reuse a concrete Request parameter.
+        if request_parameter is None:
+            wrapped.__signature__ = signature.replace(parameters=[
+                *signature.parameters.values(),
+                inspect.Parameter("_operation_request", inspect.Parameter.KEYWORD_ONLY,
+                                  annotation=Request),
+            ])
     return wrapped
 
 
@@ -58,6 +71,10 @@ def transactional_handler(context, handler, *, role=None, cookie_name=None):
         context._bundle_files = []
         context._defer_database_broadcast = True
         context._database_broadcast_pending = False
+        # Work registered by the handler (e.g. consuming statblock selections) that must
+        # happen only once the storage transaction has committed; still under the lock.
+        outer_callbacks = getattr(context, '_commit_callbacks', None)
+        context._commit_callbacks = callbacks = []
         try:
             with context.STORAGE.transaction():
                 existing_campaigns = ownership(context).ids() if actor(context) is not None else None
@@ -69,13 +86,19 @@ def transactional_handler(context, handler, *, role=None, cookie_name=None):
                         ownership(context).assign_created(campaign_id)
                 if features:
                     features.reconcile()
-                    if context.STATE != original:
+                    from .scrying_glass_statblock_changes import state_changed, private_signature
+                    if state_changed(original, context.STATE):
                         context.save_active_campaign_characters()
                         context.save_active_setup_monsters()
                         context.save_state()
+                        from .scrying_glass_statblock_saving import flush_private_state
+                        flush_private_state(context)
+                        if private_signature(original) != private_signature(context.STATE):
+                            context._database_broadcast_pending = True
                     features.after_transaction(handler.__name__,original,campaign_before)
             pending = context._database_broadcast_pending
         except BaseException as exc:
+            callbacks.clear()
             context.STATE = original
             for path in getattr(context,'_bundle_files',[]):
                 try: path.unlink(missing_ok=True)
@@ -89,6 +112,9 @@ def transactional_handler(context, handler, *, role=None, cookie_name=None):
             context._bundle_files = []
             context._defer_database_broadcast = False
             context._database_broadcast_pending = False
+            context._commit_callbacks = outer_callbacks
+        for callback in callbacks:
+            callback()
         if pending:
             await context.broadcast()
         return result

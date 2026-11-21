@@ -16,6 +16,10 @@ async def logout_session(context, request, cookie_name):
     token = request.cookies.get(cookie_name, "")
     if token:
         context.SESSIONS.pop(token, None)
+        statblocks = getattr(context, "statblocks", None)
+        if statblocks is not None:
+            # Private candidates, prepared selections and outcomes end with the session.
+            statblocks.revoke_session(token)
 
     async def close_socket(socket):
         try:
@@ -24,6 +28,10 @@ async def logout_session(context, request, cookie_name):
             raise
         except Exception:
             logging.getLogger(__name__).debug("Unable to close logged-out socket", exc_info=True)
+
+    if token and getattr(context, "STATBLOCK_SOCKETS", None):
+        from .scrying_glass_statblock_transport import close_session
+        await close_session(context, token)
 
     if cookie_name == context.CLIENT_SESSION_COOKIE and token:
         sockets = [socket for socket in tuple(context.SOCKETS)

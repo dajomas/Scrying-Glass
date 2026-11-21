@@ -1,12 +1,15 @@
 """Real SQLite persistence, migration and request-scope regression checks."""
 import asyncio
+import sqlite3
 import tempfile
 import unittest
+from contextlib import closing
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import AsyncMock, Mock
 from python.scrying_glass_storage import SQLiteStorage
 from python.scrying_glass_setup_lair import update_setup_lair
+from storage_migration_fixtures import pre_statblock_storage
 from test_sqlite_storage import context, HTTPError
 
 class SetupHasLairTests(unittest.TestCase):
@@ -43,6 +46,10 @@ class SetupHasLairTests(unittest.TestCase):
         self.assertTrue(loaded['lairs'][0]['active'])
 
     def test_v6_upgrade_checks_existing_lairs_and_creates_backup(self):
+        self.db.close()
+        self.path.unlink()
+        self.db = pre_statblock_storage(SQLiteStorage, self.path)
+        self.campaign = self.db.create_campaign('Test', '', 'now')
         state = self.state(True)
         state['lairs'] = [{'id': 'l', 'name': 'Lair', 'color': '#8064a2'}]
         self.db.save_setup(self.campaign, 'yes', state)
@@ -56,7 +63,11 @@ class SetupHasLairTests(unittest.TestCase):
         self.db = SQLiteStorage(self.path)
         self.assertTrue(self.db.load_setup(self.campaign, 'yes')['has_lair'])
         self.assertFalse(self.db.load_setup(self.campaign, 'no')['has_lair'])
+        self.assertEqual(self.db.connection.execute('PRAGMA user_version').fetchone()[0], SQLiteStorage.SCHEMA_VERSION)
         self.assertIsNotNone(self.db.migration_backup)
+        with closing(sqlite3.connect(self.db.migration_backup)) as backup:
+            self.assertEqual(backup.execute('PRAGMA user_version').fetchone()[0], 6)
+            self.assertIsNone(backup.execute("SELECT 1 FROM sqlite_master WHERE name='monster_statblocks'").fetchone())
 
     def test_non_boolean_storage_value_is_rejected(self):
         state = self.state(); state['has_lair'] = 'false'

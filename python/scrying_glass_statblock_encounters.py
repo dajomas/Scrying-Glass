@@ -1,0 +1,174 @@
+"""Trusted encounter-local private persistence, including counter-only row rebuilds."""
+import copy
+import json
+
+PRIVATE_KEY = '_statblocks'
+
+
+def public_payload(value):
+    """Copy JSON-like payloads without reserved private state at any container depth."""
+    if isinstance(value, dict):
+        return {key: public_payload(item) for key, item in value.items() if key != PRIVATE_KEY}
+    if isinstance(value, list):
+        return [public_payload(item) for item in value]
+    if isinstance(value, tuple):
+        return tuple(public_payload(item) for item in value)
+    return copy.deepcopy(value)
+
+
+def _policy(limits):
+    from .scrying_glass_statblock_model import ModelLimits
+    if limits is not None:
+        return limits
+    # Internal stored-state round trips must survive lowered preparation limits.
+    return ModelLimits(**{key: 2**63-1 for key in ModelLimits.__dataclass_fields__})
+
+
+class PrivateEncounterStorage:
+    """Trusted internal API; callers own authorization and import/preparation budgets.
+
+    `_statblocks` maps monster combatant IDs to snapshots, never tracker values.
+    Plain callbacks permit later storage hooks without recursive delegation.
+    """
+    def __init__(self, storage, *, save_plain=None, load_plain=None):
+        from .scrying_glass_statblock_storage import StatblockStorage
+        self.storage, self.db = storage, storage.connection
+        self.snapshots = StatblockStorage(storage)
+        self.save_plain = save_plain or storage._save_encounter
+        self.load_plain = load_plain or storage._load_encounter
+
+    def _rows(self, encounter):
+        if type(encounter) is not int or not 0 < encounter < 2**63:
+            raise ValueError('Invalid stored encounter ID')
+        if self.db.execute('PRAGMA user_version').fetchone()[0] != 9:
+            raise RuntimeError('Private encounters require schema 9')
+        if not self.db.execute('SELECT 1 FROM encounters WHERE id=?', (encounter,)).fetchone():
+            raise ValueError('Stored encounter not found')
+        return {row['combatant_id']: row['id'] for row in self.db.execute(
+            'SELECT id,combatant_id FROM monsters WHERE encounter_id=? ORDER BY position,id', (encounter,))}
+
+    def _snapshots(self, rows):
+        result = {}
+        for ident, record in rows.items():
+            value = self.snapshots.load(record)
+            if value is not None:
+                result[ident] = value
+        return result
+
+    def _counter_protocol(self):
+        read = getattr(self.storage, '_statblock_revision_head', None)
+        record = getattr(self.storage, '_record_statblock_revision', None)
+        if read is None and record is None:
+            return None, None
+        if not callable(read) or not callable(record):
+            raise RuntimeError('Incomplete private revision storage protocol')
+        return read, record
+
+    def _rebind_counter(self, record, previous_record, previous_head):
+        """Preserve destination history, never import another row's counter."""
+        read, write = self._counter_protocol()
+        if read is None:
+            return
+        current = read(record)
+        expected = previous_head if previous_record == record else 0
+        if current != expected:
+            raise ValueError('Counter ownership changed during encounter save')
+        if previous_head > current:
+            write(record, previous_head)
+
+    def _reattach(self, record, wanted, revision, policy):
+        """Insert final metadata once after a validated encounter-local rebuild."""
+        from datetime import datetime, timezone
+        from .scrying_glass_statblock_model import validate_snapshot, content_digest
+        from .scrying_glass_statblock_storage import HEADER, _insert
+        if type(revision) is not int or not 0 < revision < 2**63:
+            raise ValueError('Invalid statblock revision')
+        read, write = self._counter_protocol()
+        value = copy.deepcopy(wanted)
+        value['revision'] = revision
+        value.setdefault('prepared_at', datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'))
+        value['content_digest'] = content_digest(value, policy)
+        value = validate_snapshot(value, policy)
+        ident = self.db.execute(
+            f"INSERT INTO monster_statblocks(monster_id,{','.join(HEADER)}) VALUES ({','.join('?' for _ in range(len(HEADER)+1))})",
+            [record] + [value[key] for key in HEADER]).lastrowid
+        definitions = {}
+        for item in value['definitions']:
+            definitions[item['local_id']] = _insert(self.db, 'definitions', ident, item, {})
+        for kind in ('facts', 'nodes', 'warnings', 'provenance'):
+            for item in value[kind]:
+                parent = _insert(self.db, kind, ident, item, definitions)
+                if kind == 'provenance':
+                    for credit in item['credits']:
+                        _insert(self.db, 'credits', parent, credit, {})
+        if write is not None:
+            write(record, max(revision, read(record)))
+
+    def load(self, encounter):
+        with self.storage.transaction():
+            rows = self._rows(encounter)
+            state = copy.deepcopy(self.load_plain(encounter))
+            state[PRIVATE_KEY] = self._snapshots(rows)
+            return state
+
+    def save(self, encounter, state, *, runtime=False, limits=None):
+        from .scrying_glass_statblock_model import canonical_bytes, content_digest, validate_snapshot
+        if type(state) is not dict or type(state.get('monsters', [])) is not list:
+            raise ValueError('Invalid encounter state')
+        ids = []
+        for item in state.get('monsters', []):
+            if type(item) is not dict or type(item.get('id')) is not str or not item['id'].strip():
+                raise ValueError('Invalid monster identity')
+            ids.append(item['id'])
+        if len(ids) != len(set(ids)):
+            raise ValueError('Duplicate monster identity')
+        policy = _policy(limits)
+        explicit = PRIVATE_KEY in state
+        requested = state.get(PRIVATE_KEY, {})
+        if type(requested) is not dict or any(type(key) is not str or not key.strip() for key in requested):
+            raise ValueError('Invalid private snapshot map')
+        prepared = {}
+        for ident, snapshot in requested.items():
+            value = json.loads(canonical_bytes(snapshot, policy))
+            value['content_digest'] = content_digest(value, policy)
+            prepared[ident] = validate_snapshot(value, policy)
+        plain = copy.deepcopy(state)
+        plain.pop(PRIVATE_KEY, None)
+        with self.storage.transaction():
+            before_rows = self._rows(encounter)
+            before = self._snapshots(before_rows)
+            read, _ = self._counter_protocol()
+            heads = {ident: read(record) if read is not None else before.get(ident, {}).get('revision', 0)
+                     for ident, record in before_rows.items()}
+            if set(prepared) - (set(ids) | set(before_rows)):
+                raise ValueError('Snapshot target is outside this encounter')
+            if explicit and (set(before) & set(ids)) - set(prepared):
+                raise ValueError('Omitted existing snapshot; clearing requires a later explicit restore contract')
+            for ident, wanted in prepared.items():
+                previous = before.get(ident)
+                if previous is not None and 'revision' in wanted and wanted['revision'] != previous['revision']:
+                    raise ValueError('Stale statblock revision')
+            desired = prepared if explicit else before
+            self.save_plain(encounter, plain, runtime=runtime)
+            after_rows = self._rows(encounter)
+            if set(after_rows) != set(ids):
+                raise ValueError('Monster identities changed during encounter save')
+            for ident, record in after_rows.items():
+                previous = before.get(ident)
+                current = self.snapshots.load(record)
+                if current is not None and (before_rows.get(ident) != record or current != previous):
+                    raise ValueError('Snapshot ownership changed during encounter save')
+                self._rebind_counter(record, before_rows.get(ident), heads.get(ident, 0))
+                wanted = desired.get(ident)
+                if wanted is None:
+                    continue
+                if current is not None and current['content_digest'] == wanted['content_digest']:
+                    continue
+                unchanged = previous is not None and previous['content_digest'] == wanted['content_digest']
+                revision = previous['revision'] if unchanged else heads.get(ident, 0) + 1
+                if previous is not None and current is None:
+                    self._reattach(record, previous if unchanged else wanted, revision, policy)
+                else:
+                    self.snapshots.save(record, wanted, expected_revision=current['revision'] if current else 0, limits=policy)
+            self.storage._check_foreign_keys()
+            return self.load(encounter)

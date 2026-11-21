@@ -86,6 +86,8 @@ class AdminAPI(AdminPagesMixin, AdminDisplayMixin, AdminSetupsMixin, AdminCampai
         install_logout(context, app, context.ADMIN_SESSION_COOKIE)
         from .scrying_glass_monster_refresh_review import install_monster_refresh
         install_monster_refresh(context, app)
+        from .scrying_glass_statblock_routes import install_statblock_routes
+        install_statblock_routes(context, app)
 
     def register_routes(self) -> None:
         """Resolve types and register routes with unchanged paths and authorization."""

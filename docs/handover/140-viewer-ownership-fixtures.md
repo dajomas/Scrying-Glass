@@ -2,36 +2,60 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Last updated: 2026-11-01. Preparation baseline: `1cfb256cb090ca3834eb2f61d12eca23ce67d4f9`.
+## Current state - 2026-11-17
 
-## Separate diagnoses
+Whole lifecycle Stages 1, 2 and 3 and SG-TODO-022.03 are accepted and closed.
+The user requested Stage 1/2 and 022.03 close-out at 06:01 CET following whole
+Stage 3 acceptance. Existing 022.02 and bounded 2B/2C/2D/3A/3B decisions stand.
+Overall SG-TODO-022 remains open, with 022.04-022.16 and SG-TODO-023 separate.
+No merge, deployment, release or usable statblock viewer/import UI is claimed.
 
-Run 41318275558, attempt 1, tested `f031ccf9185ad0ab0e9ad7b4673adf1f7fb5f7ad` and reported four remaining unittest errors. Each affected path was inspected and reproduced in focused local checks rather than assuming all errors were fixture defects.
+## Preserved complete evidence
 
-- Browser: the `/api/campaigns` mock returned only `active`, omitting the authorized `campaigns` list required by `selectedCampaign`. The production script correctly cleared the panel and disabled saving; it never rendered the two expected users. Supply the campaign list and retain the exact two-user PUT assertion, adding heading, existing-check and save-enabled assertions. No timeout increase or production selection fallback is introduced.
-- Two lifespan tests: viewer installation intentionally composes viewer and ownership initializers. The fixtures doubled only viewers, so the real ownership initializer accessed missing `context.STORAGE`. Double both persistence services while retaining real FastAPI lifespan composition in the repository tests. Assert deferred initialization, one call to each initializer, existing lifespan/state preservation, and absence of both management endpoint families on the Client app. Do not remove either production initializer.
-- ACL: the fixture initialized grants but omitted ownership, so the regular-admin query failed on `campaign_owners`. Its shared admin/superadmin expectation was also obsolete: regular admins see owned campaigns; superadmins see all. Initialize ownership after users/campaigns exist, and separately test owned, unassigned, other-admin, zero-owned and reassigned cases plus superadmin access to unassigned campaigns. Existing client grant/privacy tests remain unchanged.
+[Complete preceding handover](https://github.com/dajomas/Scrying-Glass/blob/25b55cfbb6ba9fc25620d94e04ef21682db03414/docs/handover/140-viewer-ownership-fixtures.md)
+and [complete Stage 3/task record](https://github.com/dajomas/Scrying-Glass/blob/25b55cfbb6ba9fc25620d94e04ef21682db03414/docs/todo/223-statblock-lifecycle.md)
+retain original criterion maps, earlier acceptance identities, failures/corrections,
+counts and limits through immutable archives. No pending later requirement is
+removed. Dated Stage 1/2/022.03 pending wording is superseded by this decision only.
 
-Production application code, routes, migrations, authorization and runtime requirements are unchanged. The original broader source split remains unfinished and inactive. README and TODO index were reviewed; neither unrelated feature-task status changes.
+## Final lifecycle accepted close-out - 2026-11-17
 
-## Source identity and local checks
+[Final criterion reconciliation](../todo/223-statblock-lifecycle.md#final-criterion-reconciliation)
+maps whole Stage 1 native save/loading/privacy, Stage 2 recovery/reset/counter/
+copy/move/Save As/import, and accepted whole Stage 3 bundles to the lifecycle
+preservation contract. No blocking unmet agreed 022.03 requirement was found.
+Accept/close Stage 1 and Stage 2 and, with Stage 3, SG-TODO-022.03. This is
+criterion-based acceptance, not promotion from a green badge.
 
-All three reconstructed original test modules matched retrieved Git blobs:
+Additional final-review inspection: six ProductionStatblockSaveTests methods
+cover native setup/runtime rebuild preservation, ordinary input rejection, legacy
+ID allocation, scoped deletion and late rollback; seven ServicePrivateLoadTests
+cover private carrier loading/JSON/deepcopy, setup/runtime precedence, restart,
+trusted-read budgets, failed-read atomicity and source/live isolation. Their
+explicit final-run passes are in workflow parts 129 and 133. Actual in-process
+HTTP/WebSocket projection assertions were reviewed in StatblockTransportPrivacyTests.
+Core protected private flush/restore/capture/kernel/counter passes are in parts
+128-133. Accepted 2B/2C/2D maps and Stage 3 map supply the remaining lifecycle
+assertion-level evidence without reopening closed bounded work.
 
-- Browser: `f6b576b70f33877f45a982c5d6533026dbcab6d2`.
-- Lifespan: `529faf423f28e43a357cacf042a8c47b6d80cdd4`.
-- ACL: `e827c5b50fba63d6022ed8bdcd02f28d06839617`.
+Final covering run: Branch tests 43963574986 attempt 1, success for
+0d1cec345b187f7ecbbb1b959fd185927c18c046; publication
+7aeb144b1e6adb3d28a08bc0e3262975742bed1b. Main suite 1,987 OK in 259.975s;
+other configured syntax/import, selected pytest, JavaScript and standalone Python
+browser/audit stages succeeded. Earlier covering runs and exact identities remain
+in the task archives; totals are not added across runs. Whole Stage 3 acceptance
+25b55cfbb6ba9fc25620d94e04ef21682db03414 remains unchanged.
 
-On Python 3.12.8, all candidate modules compiled. AST comparison confirmed unrelated browser and ACL code remained unchanged outside the declared methods/import/fixture changes.
+This docs-only [skip ci] close-out reruns no tests and claims no fresh CI. No
+production/test/workflow/schema/permission change. Seeded-session selected ASGI,
+in-process WebSocket and recording sockets are not password login/full-startup/
+browser/network proof. Internal edits are fixture inputs, not public APIs. Size
+fixtures do not certify decoding; injected faults/privacy markers are not exhaustive
+crash/scheduling/information-flow proof. No provider adapter, listener/viewer or
+import UI is accepted. Earlier isolated/mocked checks remain supplementary.
 
-The production Admin script matched blob `cb916beacdd9fa2782bfc13982cbc24d07625d44`. A Node VM with DOM doubles reproduced the original missing-list behavior, passed corrected two-user rendering/save checks and preserved deny-by-default behavior with an empty campaign list. This was not a Playwright/Chromium run.
-
-Focused real-SQLite checks using copied inspected ownership initialization/reassignment and viewer choice methods reproduced the missing table and passed the scoped cases. Both exact new ACL test methods passed in that harness. This was not the complete application storage/context or full ACL module.
-
-Viewer and ownership route sources matched blobs `8c4482f71d39f9b99e2ab85b722ece1092c61132` and `5c307b61b0d2799f2b78cb39bb45ab47817d798b`. Copied installers with router/lock doubles reproduced missing STORAGE for both Admin and Client lifecycle paths. Doubling both initializer services passed focused checks for one initialization each, preserved existing state/cleanup and no Client management routes. These were not real FastAPI/Starlette integration runs. No local harness or substitute files are committed.
-
-## Outstanding verification
-
-Current local FastAPI, Starlette and Chromium are unavailable; Playwright is importable but that does not provide a browser binary. Full test modules, real framework/browser behavior, Python 3.14 and full CI remain unverified for this repair. Inspect normal push-triggered CI after approved delivery, including that lifecycle tests run rather than skip. No skip marker or extra workflow dispatch is requested.
-
-The accounts migration repair already passed all 13 account tests in run 41318275558, and both pytest regression modules passed all 43 cases. This does not establish a passing full suite. JavaScript and standalone browser/audit failures remain separate; see [open validation](030-validation-and-next-steps.md).
+Schema 9; matching complete code/storage/config/media backups remain required,
+not older-code-only rollback. Ordinary omission cannot clear private content;
+trusted recovery and durable counters retain their contracts. No online provenance
+authority is granted. Next work is pending 022.04-022.16; overall 022 stays open.
+SG-TODO-023 is separate. No merge, deployment or release is authorized.

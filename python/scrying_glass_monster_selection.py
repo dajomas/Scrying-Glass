@@ -365,4 +365,8 @@ class CandidateMonstersMixin(AdminMonstersMixin):
         created = [self.context.make_monster({**fields, "name": item, "hp": next_hp()}, color, None, image_url) for item in names]
         working_state["monsters"].extend(created)
         await self.context.combatants_changed(monsters=True, characters=False)
+        if source_fields:
+            # Statblock from the same selected source, in the background (022.15).
+            from .scrying_glass_statblock_collecting import collect_after_add
+            collect_after_add(self.context, created)
         return created

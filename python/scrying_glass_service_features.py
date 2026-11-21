@@ -10,13 +10,13 @@ from .scrying_glass_feature_logging import feature_changes
 from .scrying_glass_turn_rules import can_take_turn
 from .scrying_glass_identity_rules import validate_roster_setup_ids
 
-TRACKED={'edit_statistics','edit_monster','update_monster','update_character','bulk_monsters','bulk_characters','reset_one_combatant','reset_all','battle_start','battle_next','battle_end','apply_battle_actions','edit_features','add_effect','remove_effect','end_concentration','restore_checkpoint','create_lair','update_lair','delete_lair','apply_lair_action'}
+TRACKED={'apply_statblocks','edit_statistics','edit_monster','update_monster','update_character','bulk_monsters','bulk_characters','reset_one_combatant','reset_all','battle_start','battle_next','battle_end','apply_battle_actions','edit_features','add_effect','remove_effect','end_concentration','restore_checkpoint','create_lair','update_lair','delete_lair','apply_lair_action'}
+NEUTRAL={'load_original_statblock'}
 BOUNDARIES={'load_setup','new_setup','activate_campaign','delete_campaign','delete_setup','rename_setup','add_setup_to_campaign','clear_activity_log'}
 
 def fingerprint(state):
-    payload=copy.deepcopy(state);payload.pop('activity_log',None);payload.pop('active_turn_id',None)
-    for item in payload.get('monsters',[])+payload.get('characters',[]): normalize_features(item)
-    return hashlib.sha256(json.dumps(payload,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+    from .scrying_glass_statblock_changes import recovery_fingerprint
+    return recovery_fingerprint(state)
 
 class FeaturesService:
     def __init__(self,context): self.context=context;self.displays={}
@@ -27,6 +27,15 @@ class FeaturesService:
         self.context.STATE.setdefault('activity_log',[]).append({'id':uuid.uuid4().hex,'timestamp':self.context.now_iso(),'active_combatant_id':actor['id'] if actor else None,'active_combatant':actor['name'] if actor else 'System','active_combatant_state':self.context.combatant_state(actor),'target_combatant_id':target['id'] if target else None,'target_combatant':target['name'] if target else 'Encounter','target_combatant_state':self.context.combatant_state(target),'action':action,'amount':amount,'note':note})
     def after_transaction(self,name,before,campaign_before):
         campaign=self.context.active_campaign();different=fingerprint(before)!=fingerprint(self.context.STATE)
+        if name in NEUTRAL and campaign==campaign_before:
+            # Automatic content (original-source statblocks) keeps undo history usable:
+            # rebase a top entry that described the state just before this change.
+            top=self.store.latest_undo(campaign)
+            if different and top and top['after_digest']==fingerprint(before):
+                self.store.db.execute("UPDATE encounter_snapshots SET after_digest=? WHERE id=? AND campaign_id=? AND kind='undo'",
+                                      (fingerprint(self.context.STATE),top['id'],campaign))
+            if different: self.store.bump()
+            return
         if name=='undo': self.store.bump();return
         if campaign!=campaign_before or name in BOUNDARIES: self.store.clear_undo()
         elif different:
@@ -55,6 +64,10 @@ class FeaturesService:
         normalize_features(target);return target
     async def persist(self): await self.context.combatants_changed(monsters=True,characters=True)
     def restore_state(self,state):
+        from .scrying_glass_statblock_loading import PrivateEncounterState
+        from .scrying_glass_statblock_recovery import prepare_capture
+        from .scrying_glass_statblock_restore import restore_bindings, restore_encounter
+        from .scrying_glass_statblock_encounters import PRIVATE_KEY
         ref=state.get('active_setup')
         if ref and (str(ref['campaign_id'])!=str(self.context.active_campaign()) or not self.context.STORAGE.setup_exists(ref['campaign_id'],ref['name'])):
             raise self.context.HTTPException(409,'Referenced setup no longer exists')
@@ -69,20 +82,56 @@ class FeaturesService:
             if name != replaced_name
         }
         try:
-            validate_roster_setup_ids(
-                candidate['characters'], retained_setups, label='Restored roster',
-            )
+            validate_roster_setup_ids(candidate['characters'], retained_setups, label='Restored roster')
         except ValueError as exc:
             raise self.context.HTTPException(409, str(exc)) from exc
+        if not isinstance(state, PrivateEncounterState):
+            raise self.context.HTTPException(422,'Restoration requires an internal private recovery image')
         candidate['activity_log']=copy.deepcopy(self.context.STATE.get('activity_log',[]))
+        image = PrivateEncounterState(candidate, state._statblocks)
+        try: prepare_capture(image)
+        except ValueError as exc: raise self.context.HTTPException(422,str(exc)) from exc
+        storage = self.context.STORAGE
+        try:
+            with storage.transaction():
+                if reference:
+                    row = storage.connection.execute(
+                        'SELECT encounter_id FROM battle_setups WHERE campaign_id=? AND name=?',
+                        (campaign, reference['name'])).fetchone()
+                    if row is None: raise ValueError('Referenced setup no longer exists')
+                    encounter = row[0]
+                else:
+                    row = storage.connection.execute('SELECT runtime_encounter_id FROM application_state WHERE id=1').fetchone()
+                    if row is None: raise ValueError('Runtime binding is missing')
+                    encounter = row[0]
+                    if encounter is None:
+                        encounter = storage.connection.execute('INSERT INTO encounters DEFAULT VALUES').lastrowid
+                        storage.connection.execute('UPDATE application_state SET runtime_encounter_id=? WHERE id=1', (encounter,))
+                bindings = restore_bindings(storage, encounter, [item['id'] for item in candidate['monsters']])
+                saved = restore_encounter(storage, encounter, image, expected_bindings=bindings, runtime=reference is None)
+                candidate = PrivateEncounterState(candidate, saved[PRIVATE_KEY])
+        except ValueError as exc:
+            raise self.context.HTTPException(409,str(exc)) from exc
         self.context.STATE=candidate
     async def undo(self,body):
         top=self.store.latest_undo(self.context.active_campaign())
         if not top: raise self.context.HTTPException(409,'Nothing to undo')
         if type(body.get('id')) is not int or body['id']!=top['id'] or top['after_digest']!=fingerprint(self.context.STATE): raise self.context.HTTPException(409,'Encounter changed; refresh before undoing')
-        self.restore_state(self.store.load(top['id'],self.context.active_campaign(),'undo'))
+        image = self.store.load(top['id'],self.context.active_campaign(),'undo')
+        self.restore_state(image)
         self.store.delete(top['id'],self.context.active_campaign(),'undo');self.log('undo',note=top['name'])
-        await self.persist();return {'undone':top['name']}
+        await self.persist()
+        # Only rebase a predecessor proven to describe this exact recovery target.
+        predecessor = self.store.latest_undo(self.context.active_campaign())
+        expected = fingerprint(image); actual = fingerprint(self.context.STATE)
+        if predecessor and predecessor['after_digest'] == expected and actual != expected:
+            before_content = {key:value['content_digest'] for key,value in image._statblocks.items()}
+            after_content = {key:value['content_digest'] for key,value in self.context.STATE._statblocks.items()}
+            if before_content == after_content and fingerprint(dict(image)) == fingerprint(dict(self.context.STATE)):
+                self.store.db.execute(
+                    "UPDATE encounter_snapshots SET after_digest=? WHERE id=? AND campaign_id=? AND kind='undo' AND after_digest=?",
+                    (actual, predecessor['id'], self.context.active_campaign(), expected))
+        return {'undone':top['name']}
     async def edit_features(self,ident,body):
         allowed={'temp_hp','life_state','death_successes','death_failures','concentrating','hp_delta','absorb_temp'}
         if not isinstance(body,dict) or set(body)-allowed or not body: raise self.context.HTTPException(422,'Invalid feature fields')
@@ -167,6 +216,8 @@ class FeaturesService:
                 keep.append(e)
             item['effects']=keep
     def reconcile(self):
+        from .scrying_glass_statblock_changes import prune_private
+        prune_private(self.context.STATE)
         ids={x['id'] for x in self.context.entities()}
         participant_ids=ids | {x['id'] for x in self.context.STATE.get('lairs', [])}
         for item in self.context.entities():

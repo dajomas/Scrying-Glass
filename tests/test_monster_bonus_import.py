@@ -101,6 +101,26 @@ class ImportedConstructionTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(self.context.STATE["monsters"], items)
         self.context.combatants_changed.assert_awaited_once_with(monsters=True, characters=False)
 
+    async def test_import_hands_the_file_to_statblock_collection(self):
+        # 022.15: the imported file is also the statblock; collection never fails the import.
+        raw = file_data(initiative_bonus=1)
+        self.context.statblocks = Mock()
+        upload = UploadFile(filename="dragon.monster", file=io.BytesIO(raw))
+        try:
+            items = await self.handler.import_monster(monster_file=upload, color="#842029", quantity=2, image=None)
+        finally:
+            await upload.close()
+        self.context.statblocks.collect_new_monsters.assert_called_once_with(
+            [item["id"] for item in items], file_bytes=raw, filename="dragon.monster")
+        self.context.statblocks.collect_new_monsters.side_effect = RuntimeError("collection failed")
+        upload = UploadFile(filename="dragon.monster", file=io.BytesIO(raw))
+        try:
+            items = await self.handler.import_monster(monster_file=upload, color="#842029", quantity=1, image=None)
+        finally:
+            await upload.close()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(len(self.context.STATE["monsters"]), 3)
+
     async def test_legacy_import_uses_existing_default_normalization(self):
         item = self.images.make_monster(parse_monster(file_data()), "#842029", None)
         normalized = normalize_initiative(item)

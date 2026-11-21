@@ -47,7 +47,7 @@ encounter after changing interpreters. For systemd deployments, follow the
 
 ## Accounts and sign-in
 
-Admin defaults to port 3000; Client defaults to 3100. Separate cookies allow both in one browser. Logout affects only the current interface; restart clears all sessions. Account edits invalidate that user's sessions and display sockets.
+Admin defaults to port 3000; Client defaults to 3100; the statblock viewer to 3200 (see [Statblocks](#statblocks)). Separate cookies allow all three in one browser. Only a regular admin assigned to the active campaign can sign in to and use the statblock listener; superadmin and client accounts are refused, and its page clears when access ends. It shows each monster in battle as a tile; select a tile (or press Enter) to show its full statblock with the current name, species, AC, HP and initiative bonus, press Escape to close it, and use the arrow keys to move between tiles. References open below the statblock. Missing statblocks are loaded automatically from a monster's original lookup source when one is known. To choose a statblock yourself, open Edit monster and use Find statblock (searches the enabled sources for the species in the form) or Upload .monster file, check the preview, choose Use this statblock and save the monster. For several monsters, select them and choose Load statblocks in the Monster bulk menu: pick a statblock per monster (or Keep current), wait until the rows are ready and apply. Imported statblocks never change a monster's name, species, AC, HP or initiative bonus. Logout affects only the current interface; restart clears all sessions. Account edits invalidate that user's sessions and display sockets.
 
 Superadmins manage accounts at /users; regular admins run battles at /. Superadmins authorize battle APIs but are redirected away from root battle HTML. Create a regular admin for interactive use.
 
@@ -111,6 +111,47 @@ Goblin,goblin,15,7,7,14,#842029
 name,hp,max_hp,initiative,color
 Aelwyn,34,34,16,#1f4e79
 ```
+
+## Statblocks
+
+The statblock viewer (port 3200) is for the GM only. A regular admin assigned to the
+active campaign signs in there; superadmin and client accounts are refused, and
+statblocks never appear on the Client Display. Each monster in battle is a tile; select a
+tile (or press Enter) to open its statblock: name and type, Armor Class, Hit Points,
+Initiative and Speed, an ability table with MOD and SAVE, the property rows, then traits,
+actions and the other sections (in a second column on wide screens), and the source and
+credits. Name, species, AC, HP and initiative bonus are always the live tracker values.
+
+**Sources.** Statblocks come from D&D Beyond (public pages only: paywalled monsters are
+not offered), 5e.tools, Open5e, or a Tetra-cube `.monster` file. Disabled providers are
+not used. A statblock whose source could not be resolved completely is marked partial and
+lists what is missing; a failure names its cause.
+
+**Add Monster.** After you choose a monster from a source in the lookup, **Show statblock**
+in the Appearance group previews that source's statblock with the values in the form
+(nothing is saved). When you add the monster, its statblock is collected from the same
+source in the background; Import .monster uses the imported file. Without a source, or
+when the source has no statblock, the monster is added without one. If a monster changed
+meanwhile (species or source edited, or a different statblock chosen), **Replace
+statblocks?** asks per monster: Replace, Keep current, or Decide later (the question comes
+back after the next add or reload; it expires after 10 minutes).
+
+**Edit Monster.** The Statblock section shows the current state. **Show statblock** opens the
+chosen or saved statblock; **Find statblock** searches the enabled sources (the original
+source first) and previews a result before you use it; **Upload .monster file** uses a file;
+**Keep current statblock** discards the choice. A choice is saved with Save and expires if
+not saved in time.
+
+**Several monsters.** Select monsters in the roster and choose **Load statblocks** in the Bulk
+dropdown: each row keeps its current statblock unless you pick a source result or a
+`.monster` file; Apply statblocks saves the ready rows.
+
+**Automatic loading.** While a statblock viewer is open, monsters in battle that were
+added from a source and have no statblock yet get one from that source.
+
+Statblocks are stored with setups and the current encounter, in storage backups and in
+campaign bundles. Preparation runs in a resource-limited worker: `prlimit` on Linux, a Job
+Object on Windows; on other platforms it reports that it is not available.
 
 ## Participation and initiative
 

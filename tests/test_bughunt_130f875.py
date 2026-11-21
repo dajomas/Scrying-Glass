@@ -1,7 +1,7 @@
-"""Focused campaign-bundle regressions for 130f875.
-The production module is executed with only relative-import collaborators replaced
-by fixtures. ZIP parsing, compression, corruption and media I/O are real.
-Full storage, normalization, transactional wrappers and HTTP routing are not tested.
+"""Focused campaign-bundle ZIP/media regressions for 130f875.
+Relative-import collaborators and the protected transaction are explicit fixtures.
+ZIP parsing, compression, corruption, media I/O and production guard logic are real.
+Native storage, private persistence, transaction rollback and HTTP are not tested here.
 """
 import ast
 import copy
@@ -15,9 +15,27 @@ import zipfile
 from pathlib import Path
 
 SOURCE=Path(__file__).resolve().parents[1]/'python'/'scrying_glass_campaign_bundle.py'
-tree=ast.parse(SOURCE.read_text())
-tree.body=[n for n in tree.body if not(isinstance(n,ast.ImportFrom) and n.level)]
-scope=dict(load_import_json=json.loads,validate_roster_setup_ids=lambda *args,**kwargs:None)
+
+class CollaboratorImports(ast.NodeTransformer):
+    def visit_ImportFrom(self,node):
+        return None if node.level else node
+
+
+def private_state(plain,snapshots):
+    if snapshots:
+        raise AssertionError('ZIP fixture cannot supply private persistence authority')
+    return copy.deepcopy(plain)
+
+
+def save_new_setup(storage,campaign,name,snapshot):
+    storage.save_setup(campaign,name,snapshot)
+    return {}
+
+
+tree=ast.fix_missing_locations(CollaboratorImports().visit(ast.parse(SOURCE.read_text())))
+scope=dict(load_import_json=json.loads,validate_roster_setup_ids=lambda *args,**kwargs:None,
+           PRIVATE_KEY='_statblocks',PrivateEncounterState=private_state,save_new_setup=save_new_setup,
+           _participants=lambda value:None)
 exec(compile(tree,str(SOURCE),'exec'),scope)
 import_bundle=scope['import_bundle']
 
@@ -33,7 +51,10 @@ def payload(version=1):
                 setups={'default':state()},characters=[],encounter=state())
 
 class Store:
-    def __init__(self):self.created=[];self.setups={};self.rosters={}
+    def __init__(self):
+        self.created=[];self.setups={};self.rosters={}
+        # This ZIP-only harness assumes the caller entered its protected transaction.
+        self.connection=types.SimpleNamespace(in_transaction=True)
     def campaign_name_exists(self,name):return False
     def create_campaign(self,name,description,now):self.created.append((name,description));return 2
     def save_characters(self,campaign,characters):self.rosters[campaign]=copy.deepcopy(characters)
@@ -57,7 +78,7 @@ def corrupt_member(raw,name,lzma=False):
         if lzma:
             value[start:start+info.compress_size]=bytes(info.compress_size)
         else:
-            value[start]=6  # Reserved DEFLATE block type: deterministic zlib.error.
+            value[start]=6
     return bytes(value)
 
 class BundleTests(unittest.TestCase):
@@ -86,7 +107,8 @@ class BundleTests(unittest.TestCase):
         self.invalid(corrupt_member(archive(payload(),zipfile.ZIP_LZMA,{'a.png':b'image contents'}),'media/a.png',lzma=True))
     def test_boolean_version_rejected(self):self.invalid(archive(payload(True)))
     def test_float_version_rejected(self):self.invalid(archive(payload(1.0)))
-    def test_unknown_version_rejected(self):self.invalid(archive(payload(2)))
+    def test_unknown_version_rejected(self):self.invalid(archive(payload(3)))
+    def test_version_two_without_private_envelope_rejected(self):self.invalid(archive(payload(2)))
     def test_string_version_rejected(self):self.invalid(archive(payload('1')))
     def test_invalid_zip_rejected(self):self.invalid(b'not a ZIP archive')
     def test_traversal_rejected(self):
@@ -95,6 +117,16 @@ class BundleTests(unittest.TestCase):
         data=payload();data['setups']['default']['monsters']=[dict(id='m',image_url='/media/missing.png')]
         self.invalid(archive(data))
     def test_empty_media_rejected(self):self.invalid(archive(payload(),media={'a.png':b''}))
+    def test_outer_transaction_guard_is_still_enforced(self):
+        self.store.connection.in_transaction=False
+        with self.assertRaisesRegex(RuntimeError,'protected outer transaction'):
+            import_bundle(self.context,archive(payload()))
+        self.assertEqual(self.store.created,[]);self.assertEqual(self.checkpoints,[])
+        self.assertEqual(self.store.setups,{});self.assertEqual(self.store.rosters,{})
+        self.assertEqual(list(self.context.UPLOAD_DIR.iterdir()),[])
+    def test_private_carrier_fixture_refuses_nonempty_graphs(self):
+        with self.assertRaisesRegex(AssertionError,'private persistence authority'):
+            private_state(state(),{'m':{}})
     def test_media_rewrite_and_roundtrip(self):
         data=payload();data['setups']['default']['monsters']=[dict(id='m',image_url='/media/a.png?x=1#anchor')]
         data['setups']['default']['display']={'background':'url("/media/a.png")'}

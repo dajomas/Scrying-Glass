@@ -44,22 +44,23 @@ def _free_port():
 
 
 class Server:
-    """One Scrying Glass process: admin and client apps on free local ports."""
+    """One Scrying Glass process: admin, client and statblock apps on free local ports."""
 
     def __init__(self, directory):
         self.directory = Path(directory)
-        self.admin_port, self.client_port = _free_port(), _free_port()
+        self.admin_port, self.client_port, self.statblock_port = _free_port(), _free_port(), _free_port()
         self.admin = f"http://127.0.0.1:{self.admin_port}"
         self.client = f"http://127.0.0.1:{self.client_port}"
+        self.statblocks = f"http://127.0.0.1:{self.statblock_port}"
         self.log_path = self.directory / "server.log"
         users = "\n".join(f'    - {{username: {name}, role: {role}, password: "{password}"}}'
                           for role, (name, password) in ACCOUNTS.items())
         self.config = self.directory / "config.yaml"
         self.config.write_text(
-            "network: {bind: \"127.0.0.1\", admin_port: %d, client_port: %d}\n"
+            "network: {bind: \"127.0.0.1\", admin_port: %d, client_port: %d, statblock_port: %d}\n"
             "storage_dir: \"%s\"\n"
             "display: {dndbeyond_image_lookup: false, fivetools_fallback: false, open5e_lookup: false}\n"
-            "security:\n  users:\n%s\n" % (self.admin_port, self.client_port,
+            "security:\n  users:\n%s\n" % (self.admin_port, self.client_port, self.statblock_port,
                                            (self.directory / "data").as_posix(), users),
             encoding="utf-8")
         self.process = None
@@ -71,7 +72,7 @@ class Server:
             cwd=self.directory, stdout=log, stderr=subprocess.STDOUT)
         log.close()
         deadline = time.monotonic() + timeout
-        for port in (self.admin_port, self.client_port):
+        for port in (self.admin_port, self.client_port, self.statblock_port):
             while True:
                 if self.process.poll() is not None:
                     raise RuntimeError("Server exited early:\n" + self.log())
@@ -153,7 +154,8 @@ class Session:
     def login(self, role, portal="admin"):
         name, password = ACCOUNTS[role]
         page = self.page()
-        base = self.server.admin if portal == "admin" else self.server.client
+        base = {"admin": self.server.admin, "client": self.server.client,
+                "statblocks": self.server.statblocks}[portal]
         page.goto(base + "/login")
         page.fill("[name=username]", name)
         page.fill("[name=password]", password)

@@ -14,10 +14,12 @@ from .scrying_glass_storage_fields import (
 from .scrying_glass_storage_schema import StorageSchemaMixin
 from .scrying_glass_storage_records import StorageRecordsMixin
 from .scrying_glass_storage_operations import StorageOperationsMixin
+from .scrying_glass_storage_statblocks import StatblockOperationsMixin
+from .scrying_glass_statblock_revisions import StatblockRevisionMixin
 
 
-class SQLiteStorage(StorageSchemaMixin, StorageRecordsMixin, StorageOperationsMixin):
-    SCHEMA_VERSION = 8
+class SQLiteStorage(StorageSchemaMixin, StatblockRevisionMixin, StorageRecordsMixin, StatblockOperationsMixin):
+    SCHEMA_VERSION = 9
 
     def __init__(self, path: Path):
         self.path = Path(path)
@@ -29,7 +31,7 @@ class SQLiteStorage(StorageSchemaMixin, StorageRecordsMixin, StorageOperationsMi
             self.connection.execute("PRAGMA foreign_keys=ON")
             self.connection.execute("PRAGMA busy_timeout=10000")
             version = self.connection.execute("PRAGMA user_version").fetchone()[0]
-            if version not in (0, 1, 2, 3, 4, 5, 6, 7, 8):
+            if version not in (0, 1, 2, 3, 4, 5, 6, 7, 8, 9):
                 raise RuntimeError(f"Unsupported schema version: {version}")
             if version == 0:
                 if self.connection.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").fetchone():
@@ -40,7 +42,7 @@ class SQLiteStorage(StorageSchemaMixin, StorageRecordsMixin, StorageOperationsMi
             elif version in (1, 2):
                 self._backup()
                 self._upgrade(version)
-            if version not in (4, 5, 6, 7, 8):
+            if version not in (4, 5, 6, 7, 8, 9):
                 if version == 3:
                     self._backup()
                 with self.transaction():
@@ -55,6 +57,8 @@ class SQLiteStorage(StorageSchemaMixin, StorageRecordsMixin, StorageOperationsMi
             upgrade_setup_lair(self, backup=version != 0)
             from .scrying_glass_statistics_storage import upgrade_statistics
             upgrade_statistics(self, backup=version != 0)
+            from .scrying_glass_statblock_storage import upgrade_statblocks
+            upgrade_statblocks(self, backup=version != 0)
             self._check_foreign_keys()
         except BaseException:
             self.close()

@@ -449,6 +449,33 @@ If an approval request was empty, incorrect or incomplete, do not execute
 it. Prepare a corrected complete payload and request fresh confirmation;
 do not treat the invalid approval as authorization for different contents.
 
+### Standing implement/push directive - 2026-11-17
+
+The user explicitly requested this standing instruction:
+
+> From now on, If I say implement, do not ask proceed questions unless there is a decision to make that differs from prior decisions. And when I say push to github, I want you to push to github without me needing to tell you again to push to github. The regular yes confirmation to actually push to github is fine.
+
+Apply it consistently:
+
+- "Implement" authorizes carrying out inspection, implementation, relevant
+  tests, review and documentation updates without routine "proceed?" prompts.
+- Ask a decision question only for a genuinely new or changed consequential
+  choice not already settled by prior instructions/decisions. Resolve what
+  can be resolved from repository/source evidence rather than re-asking
+  settled questions or requesting permission for routine work.
+- "Push to GitHub" is a delivery instruction: prepare the complete reviewed
+  payload and present its required exact-payload confirmation without waiting
+  for a second instruction to push. After the user's "yes", execute that
+  exact approved push and report the actual result; do not ask another
+  routine proceed/push question.
+- Preserve the regular mandatory yes confirmation for each external write.
+  If new information changes the target, contents or commit message, obtain
+  fresh bound approval under this section rather than changing the approved
+  payload or treating the standing directive as blanket write authorization.
+
+This directive does not change agreed scope, branch restrictions, validation
+reporting, CI instructions or other mandatory approval/security requirements.
+
 ## 9. Completion reporting
 
 For GitHub delivery, report the actual commit SHA, target branch and changed
