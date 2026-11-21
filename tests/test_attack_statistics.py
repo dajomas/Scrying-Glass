@@ -174,13 +174,17 @@ class AttackStatisticsTests(unittest.TestCase):
         legacy_max_edit(self.item(),{'max_hp':7});self.assertEqual(self.item()['base_max_hp'],12)
 
     def test_v7_backup(self):
-        path=self.c.DATA_DIR/'v7.sqlite3';db=self.c.STORAGE.__class__(path)
-        for table in ('characters','monsters','snapshot_characters'):
-            for col in ('mechanical_version','reduction_stat','reduction_amount'):
-                db.connection.execute(f'ALTER TABLE {table}_effects DROP COLUMN {col}')
-        db.connection.execute('PRAGMA user_version=7');db.close();db=self.c.STORAGE.__class__(path)
-        self.assertEqual(db.connection.execute('PRAGMA user_version').fetchone()[0],8)
-        with closing(sqlite3.connect(db.migration_backup)) as backup:self.assertEqual(backup.execute('PRAGMA user_version').fetchone()[0],7)
-        db.close()
+        from storage_migration_fixtures import pre_statblock_storage
+        path=self.c.DATA_DIR/'v7.sqlite3';db=pre_statblock_storage(self.c.STORAGE.__class__,path)
+        try:
+            for table in ('characters','monsters','snapshot_characters'):
+                for col in ('mechanical_version','reduction_stat','reduction_amount'):
+                    db.connection.execute(f'ALTER TABLE {table}_effects DROP COLUMN {col}')
+            db.connection.execute('PRAGMA user_version=7');db.close();db=self.c.STORAGE.__class__(path)
+            self.assertEqual(db.connection.execute('PRAGMA user_version').fetchone()[0],self.c.STORAGE.SCHEMA_VERSION)
+            with closing(sqlite3.connect(db.migration_backup)) as backup:
+                self.assertEqual(backup.execute('PRAGMA user_version').fetchone()[0],7)
+                self.assertIsNone(backup.execute("SELECT 1 FROM sqlite_master WHERE name='monster_statblocks'").fetchone())
+        finally:db.close()
 
 if __name__=='__main__':unittest.main()

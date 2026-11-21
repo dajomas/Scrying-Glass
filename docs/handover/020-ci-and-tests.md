@@ -6,12 +6,12 @@
 
 Workflow: `Branch tests`, defined in [tests.yml](../../.github/workflows/tests.yml).
 
-- Trigger: pushes to `features/perplexity` only.
+- Trigger: pushes to `features/perplexity` and `features/perplexity-statblock`.
 - No path filter: changes to documentation also match the push trigger, but the standing project instruction requires every documentation-only commit to contain `[skip ci]`.
 - GitHub's native push-workflow skip behavior honors `[skip ci]` in commit messages. No custom skip job is used.
 - Every documentation-only commit must always include `[skip ci]` in its proposed, approved and actual commit message. No separate user skip request is needed. Do not modify or separately dispatch workflows to bypass that skip.
 - Mixed commits containing code, scripts, tests, templates, styles, runtime configuration, dependencies or workflow changes are not documentation-only; normal CI applies unless the user explicitly requests otherwise.
-- No pull-request, scheduled or manual-dispatch trigger is configured.
+- Manual `workflow_dispatch` is configured with a branch input. No pull-request or scheduled trigger is configured. The 022.03 deferral below does not authorize manual dispatch.
 
 Example documentation commit message:
 
@@ -69,7 +69,7 @@ Groups are syntax, python (unittest, including browser fixtures), pytest (the tw
 
 Install requirements-test.txt using Python 3.11+ (CI uses 3.14), Node and Playwright Chromium before running. The script does not install dependencies. SG_LOCAL_TEST_TMPDIR selects the scratch parent, default /tmp. Later groups continue after test-command failures. Each run records environment metadata, command logs and exit codes, script inventories and summary.tsv under local-tests-<short-hash>/run-<UTC>-<unique>/. Pytest also writes JUnit XML. Exit codes do not certify that tests ran without skips. Browser fixtures are not authenticated live-server verification.
 
-Publication is enabled by default; use --no-publish to prevent staging, committing and pushing. Completed failed-test runs are eligible for publication so diagnostics can be reviewed. Setup failures and interruptions are not published automatically. Publication requires the original checkout to remain on features/perplexity at the tested HEAD with no staged changes. Only the run directory is staged and committed; the result commit message includes [skip ci], then HEAD is pushed to origin features/perplexity. Publication status is logged temporarily outside the committed run directory: the current publication log is removed only after a successful push and retained when publication fails. Log-removal failure after a successful push is reported on stderr and makes the overall process exit nonzero; it does not rewrite already-pushed test evidence. Publication/late cleanup status affects process exit separately from exit-code.txt. Interrupted scratch is retained; completed scratch is removed. Logs can contain application diagnostics and local paths: review sensitive output before choosing publication.
+Publication is enabled by default; use --no-publish to prevent staging, committing and pushing. Completed failed-test runs are eligible for publication so diagnostics can be reviewed. Setup failures and interruptions are not published automatically. Publication requires the original checkout to remain on features/perplexity at the tested HEAD with no staged changes. Only the run directory is staged and committed; the result commit message includes [skip ci], then HEAD is pushed to origin features/perplexity. Publication status is logged temporarily outside the committed run directory: the current publication log is removed only after a successful push and retained when publication fails. Log-removal failure after a successful push is reported on stderr and makes the overall process exit nonzero; it does not rewrite already-pushed test evidence. The normal published-commit stdout message is retained. Publication/late cleanup status affects process exit separately from exit-code.txt. Interrupted scratch is retained; completed scratch is removed. Logs can contain application diagnostics and local paths: review sensitive output before choosing publication.
 
 Historical preparation: bash -n and --help execution passed for the supplied adapted file. The complete suites, clone lifecycle, failure paths and Git publication were not executed during preparation. Subsequent successful local evidence is recorded below; unexercised failure paths are not claimed validated. The user explicitly requested [skip ci] for the original runner delivery; no workflow configuration change or separate dispatch was included.
 
@@ -134,3 +134,52 @@ The approved delivery is intended to include [skip ci]; no workflow configuratio
 The user instructed that documentation-only commits always contain `[skip ci]`. The active rules above and [root instructions section 5](../../PERPLEXITY_INSTRUCTIONS.md#5-ci-execution-and-documentation-only-commits) now require that marker in proposed, approved and actual messages without a separate request. Mixed executable/configuration/test/workflow changes are not documentation-only. No workflow or enforcement code changes are included. Historical delivery records remain unchanged rather than retroactively altering their skip decisions.
 
 This policy update changes only the root instructions and existing CI/maintenance handover guidance. README, HANDOVER.md and TODO.md were reviewed and remain accurate and unchanged; SG-TODO-009.1/009.2 closure and later proposed stages are unaffected. No automated tests were executed for this documentation-only update, no separate workflow is dispatched, and no run-state claim is inferred from the marker.
+
+## 022.03 HTTP/WebSocket privacy preparation - 2026-11-15
+
+[Lifecycle task](../todo/223-statblock-lifecycle.md). Service-loading baseline:
+737bd81b2400cef6d172429a88feaeffd24f22e4. Seven new tests in
+test_statblock_transport_privacy.py drive FastAPI ASGI request/WS handling with
+real auth sessions/ACLs/SQLite and production state, socket and broadcast code.
+Small fixture applications mount selected handlers; full route composition,
+lifespan, password login, deployed networking and browsers are not exercised.
+Private markers are persisted in labels/facts/provenance, loaded by production
+services, and checked against HTTP bodies and WS frames with nonempty public
+identity controls. Cases include live/saved campaigns, error paths, initial and
+resync frames, heartbeat, broadcast/revocation, denied selection and bad origin.
+
+Executed: AST parsing of the 9,807-byte test source. Four checks of the exact
+PrivateEncounterState class body passed in isolation for JSON omission, private
+metadata outside dictionary keys, deepcopy retention and independent copies.
+A FastAPI import attempt failed because that dependency is absent locally. No
+transport regression, FastAPI encoder, actual service/SQLite integration, full
+repository test or new CI run executed. No observed privacy pass or leak is
+claimed. CI discovery includes test_*.py; covering execution is pending.
+
+By user instruction remaining intermediate 022.03 commits use [skip ci] until
+the final Stage 3 code push, which must omit it. No workflow edits/dispatch.
+Trigger/manual-dispatch wording above is corrected to match inspected workflow
+e802409c0d8148a5b25c7aeb9fd2b8068df3affe, not a workflow change in this commit.
+README runtime guidance and existing HANDOVER/TODO index links remain valid.
+Stage 1/022.03 remain in progress; mutation-response and broader lifecycle/privacy
+acceptance gates are not closed by these prepared tests.
+
+## 022.03 mutation privacy preparation - 2026-11-15
+
+Transport-test baseline: a208e3410507555e22e0d82b50e0d81708f54ffe.
+Five new tests in test_statblock_mutation_privacy.py reuse its seeded private
+state/ASGI harness and add representative production PATCH handlers returning
+full state or a monster row. Real request models, same-origin/auth guards,
+transaction wrapper, battle/features services, persistence and broadcast paths
+are used in the fixture. Tests assert private markers/fields stay out of replies
+and frames and that tracker edits retain stored/memory snapshot metadata.
+Rejections and injected persistence failure check state/metadata/revision rollback.
+
+Executed: AST parsing of the 7,556-byte test source. The five tests were not
+executed; no new model/storage/ASGI/HTTP/WebSocket or CI pass is claimed. Earlier
+FastAPI-unavailable and isolated JSON/deepcopy evidence retains its narrow scope.
+Full application registration/startup/login, complete mutation coverage, recovery
+serialization and metadata-only change persistence are not validated here.
+Stage 1 private save/normalization review remains pending. No production code or
+workflow change; [skip ci] remains required until final Stage 3 code push.
+README and existing HANDOVER/TODO index links remain unchanged and applicable.

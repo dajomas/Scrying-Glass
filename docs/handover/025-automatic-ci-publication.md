@@ -15,9 +15,10 @@ main before taking operational effect.
 
 ## Operation
 
-.github/workflows/publish-ci-results.yml listens for completed Branch tests push
-runs on features/perplexity, features/perplexity-018 and features/perplexity-009.7,
-including failed and cancelled runs. tools/publish_ci_results.sh collects exact-attempt metadata,
+As verified on 2026-11-15, .github/workflows/publish-ci-results.yml listens for
+completed Branch tests push runs on features/perplexity and
+features/perplexity-statblock, including failed and cancelled runs. Earlier
+dated branch lists below are historical. tools/publish_ci_results.sh collects exact-attempt metadata,
 jobs and logs, plus run-scoped artifacts, and builds/verifies lossless reading
 copies with tools/chunk_ci_evidence.py. Artifacts are not guaranteed to belong
 to the selected attempt; inspect provenance and collection warnings.
@@ -72,3 +73,44 @@ synchronization does not reopen or close any task. README, TODO and HANDOVER
 indexes were reviewed/reused against verified live identities and need no edits.
 The existing 020 CI history is retained rather than overwritten with main's
 older version; this section carries the branch-specific publication update.
+
+## Statblock branch allowlist correction - 2026-11-15
+
+Run 43699024223 attempt 1 tested b26ccc8acbfc0774c984b66afc75c98cf09b7578
+on features/perplexity-statblock. Evidence at publication commit
+0992030d496e2693614b30dbfb0791765fb37d3a records overall failure: main
+unittest discovery ran 1,696 tests with one failure in test_workflow_allowlist;
+the standalone connection audit repeated the same assertion. All 35 statblock
+model tests passed in main discovery and again in the connection audit.
+This is not a green full-suite result or completion of SG-TODO-022.
+
+Live preparation found the collector had already been changed on both main
+and features/perplexity-statblock: blob
+34e2a82225d2d0a6877851a06bf48208c1248215 permits exactly
+features/perplexity and features/perplexity-statblock. The feature workflow
+has the same branch set (blob 4b6c63a973466128a4cf238ab880f99bcce2036c).
+The remaining defect is the regression test's obsolete three-branch EXPECTED
+set. This correction changes it to the current two branches and explicitly
+checks rejection of the two retired branches, prefix/suffix near-matches,
+main, an unrelated branch and the empty string. It does not broaden collector
+access or revert the existing branch policy. No script, workflow, main branch,
+application, model or migration changes are included.
+
+Focused local validation: three updated unittest methods passed, zero skips,
+in a disposable minimal directory with the exact current collector (verified
+against its Git blob hash) and the workflow's exact branches line. Checks ran
+real Bash for two allowed and ten rejected values plus bash -n on the full
+collector. The fixture did not include the full workflow or application tree;
+no GitHub API calls, log downloads, pushes or live publisher run were executed.
+Normal configured push CI runs these tests in the full assembled checkout and
+connection audit. No skip marker or separate workflow dispatch is requested.
+
+Remaining validation: review a successful covering Branch tests run, then
+verify automatic evidence publication for its exact commit and attempt. A
+successful local allowlist test alone does not verify GitHub permissions,
+publication, concurrent writes or the full repository suite. 022.02a stays
+delivered with full-suite validation pending; 022.02b remains pending. See
+[022 implementation record](010-scope-and-state.md#sg-todo-022-model-foundation---2026-11-15)
+and [task contract](../todo/220-admin-statblock-viewer.md).
+README and existing HANDOVER index links remain accurate. TODO.md's 022.02a
+full-CI-pending status is retained, not closed by this corrective delivery.

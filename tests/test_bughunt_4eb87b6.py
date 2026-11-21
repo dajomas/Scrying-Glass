@@ -25,7 +25,8 @@ cls = next(n for n in tree.body if isinstance(n, ast.ClassDef) and n.name == 'Fe
 scope = dict(copy=copy, uuid=uuid, normalize_features=lambda item: item,
              FeatureStorage=lambda store: store, fingerprint=lambda state: 'digest',
              can_take_turn=lambda item: bool(item.get('active')),
-             feature_changes=lambda *args: [])
+             feature_changes=lambda *args: [],
+             __name__='python.scrying_glass_service_features', __package__='python')
 exec(compile(ast.fix_missing_locations(ast.Module(body=[cls], type_ignores=[])), str(SOURCE), 'exec'), scope)
 FeaturesService = scope['FeaturesService']
 
@@ -110,6 +111,23 @@ class ServiceTests(unittest.TestCase):
         self.hero['effects']=[effect()]
         self.f.reconcile();before=copy.deepcopy(self.state);self.f.reconcile()
         self.assertEqual(self.state,before)
+    def test_extracted_service_keeps_module_and_package_context(self):
+        self.assertEqual(FeaturesService.__module__, 'python.scrying_glass_service_features')
+        self.assertEqual(scope['__package__'], 'python')
+
+    def test_reconcile_prunes_removed_private_bindings_without_clearing_survivors(self):
+        from python.scrying_glass_statblock_loading import PrivateEncounterState
+        snapshots = {'m': {'source_label': 'Retained'}, 'removed': {'source_label': 'Removed'}}
+        self.state['monsters'] = [item('m')]
+        self.state = PrivateEncounterState(self.state, snapshots)
+        self.context.STATE = self.state
+        self.f.reconcile()
+        self.assertEqual(self.state._statblocks, {'m': snapshots['m']})
+        self.assertIn('removed', snapshots)
+        before = copy.deepcopy(self.state._statblocks)
+        self.f.reconcile()
+        self.assertEqual(self.state._statblocks, before)
+
     def test_checkpoint_surrogate_rejected_before_sqlite(self):
         with self.assertRaises(HTTPError) as raised: self.call('save_checkpoint',{'name':'\ud800'})
         self.assertEqual(raised.exception.status_code,422)

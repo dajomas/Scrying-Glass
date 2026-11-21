@@ -22,7 +22,8 @@ client_class=next(n for n in client_tree.body if isinstance(n,ast.ClassDef))
 ws_node=next(n for n in client_class.body if isinstance(n,ast.AsyncFunctionDef) and n.name=='ws')
 ws_handler=execute([ws_node],{'__name__':'regression_ws','__package__':'python','operation_lock':lambda context:context.operation_lock})['ws']
 storage_tree=ast.parse((ROOT/'python/scrying_glass_feature_storage.py').read_text())
-FeatureStorage=execute([next(n for n in storage_tree.body if isinstance(n,ast.ClassDef))],{})['FeatureStorage']
+FeatureStorage=execute([next(n for n in storage_tree.body if isinstance(n,ast.ClassDef))],
+    {'__name__':'python.scrying_glass_feature_storage','__package__':'python'})['FeatureStorage']
 
 class Disconnect(Exception):
     def __init__(self):self.code=1000;self.reason='test complete'
@@ -137,7 +138,8 @@ class SnapshotTests(unittest.TestCase):
         self.db=sqlite3.connect(':memory:');self.db.row_factory=sqlite3.Row
         self.db.execute('CREATE TABLE encounter_snapshots(id INTEGER PRIMARY KEY, campaign_id INTEGER, kind TEXT)')
         self.db.execute("INSERT INTO encounter_snapshots VALUES(1,1,'checkpoint')")
-        self.store=FeatureStorage(types.SimpleNamespace(connection=self.db))
+        self.db.commit()
+        self.store=FeatureStorage(types.SimpleNamespace(connection=self.db,transaction=lambda:self.db))
     def tearDown(self):self.db.close()
     def test_existing_row(self):self.assertEqual(self.store.row(1,1,'checkpoint')['id'],1)
     def test_other_campaign_cannot_read(self):self.assertIsNone(self.store.row(1,2,'checkpoint'))
@@ -147,6 +149,27 @@ class SnapshotTests(unittest.TestCase):
     def test_scoped_delete(self):
         self.store.delete(1,2,'checkpoint');self.assertIsNotNone(self.store.row(1,1,'checkpoint'))
     def test_maximum_in_range_is_missing(self):self.assertIsNone(self.store.row(2**63-1,1,'checkpoint'))
+
+    def test_extracted_storage_keeps_module_and_package_context(self):
+        self.assertEqual(FeatureStorage.__module__,'python.scrying_glass_feature_storage')
+        self.assertEqual(FeatureStorage.load.__globals__['__package__'],'python')
+    def test_fixture_transaction_rolls_back_without_losing_seed(self):
+        with self.assertRaisesRegex(RuntimeError,'fixture rollback'):
+            with self.store.storage.transaction():
+                self.db.execute('DELETE FROM encounter_snapshots')
+                raise RuntimeError('fixture rollback')
+        self.assertEqual(self.store.row(1,1,'checkpoint')['id'],1)
+        self.assertFalse(self.db.in_transaction)
+    def test_invalid_loads_leave_rows_unchanged_and_do_not_decode(self):
+        before=list(self.db.iterdump())
+        with patch('python.scrying_glass_statblock_recovery.read_capture') as read:
+            for value in (2**63,-(2**63)-1,True,1.0,0,-1,None,'1'):
+                with self.subTest(value=value):
+                    with self.assertRaisesRegex(ValueError,'Snapshot not found'):
+                        self.store.load(value,1,'checkpoint')
+                    self.assertEqual(list(self.db.iterdump()),before)
+                    self.assertFalse(self.db.in_transaction)
+            read.assert_not_called()
 
 def invalid_row_test(value):
     def test(self):self.assertIsNone(self.store.row(value,1,'checkpoint'))

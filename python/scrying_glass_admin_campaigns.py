@@ -198,6 +198,7 @@ class AdminCampaignsMixin:
 
         destination = self.context.STORAGE.transfer_setup(source_id, target_id, name, payload.mode)
         if moving_loaded_setup:
-            self.context.clear_active_setup()
+            from .scrying_glass_statblock_detaching import detach_loaded_setup
+            detach_loaded_setup(self.context)
             await self.context.changed()
         return {**self.context.campaigns_payload(), 'setup': destination, 'campaign': target_id, 'mode': payload.mode}

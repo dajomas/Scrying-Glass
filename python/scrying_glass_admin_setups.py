@@ -56,13 +56,17 @@ class AdminSetupsMixin:
                 409,
                 "Activate this campaign before saving, loading, or deleting its setup",
             )
-        self.context.STORAGE.save_setup(campaign, name, self.context.setup_snapshot(self.context.STATE))
+        from .scrying_glass_statblock_setup_saving import save_setup_with_private
+        metadata = save_setup_with_private(self.context, campaign, name)
 
         # Characters are campaign-owned, so save their current state separately.
         self.context.save_campaign_characters(campaign, self.context.STATE["characters"])
 
         self.context.set_active_setup(campaign, name)
         self.context.remember_setup(campaign, name)
+        if metadata is not None:
+            from .scrying_glass_statblock_loading import PrivateEncounterState
+            self.context.STATE = PrivateEncounterState(self.context.STATE, metadata)
 
         await self.context.changed()
 
@@ -252,7 +256,9 @@ class AdminSetupsMixin:
                 effects.append(effect)
             monster["effects"] = effects
 
-        self.context.STATE["monsters"].extend(imported_monsters)
+        from .scrying_glass_statblock_importing import prepare_setup_import
+        self.context.STATE = prepare_setup_import(
+            self.context, source, imported_monsters, id_map)
 
         await self.context.combatants_changed(monsters=True, characters=False)
 

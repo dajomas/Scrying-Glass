@@ -41,7 +41,8 @@ def add_monster(page, name, species="humanoid", ac=12, hp="7", bonus="", quantit
     page.fill("#monsterHpRangeStart", str(hp))
     page.fill("#monsterInitiativeBonus", str(bonus))
     page.fill("#monsterQuantity", str(quantity))
-    page.click("#monsterForm button")
+    # The submit button ("Add manually"); the form also holds type="button" controls such as Show statblock.
+    page.click('#monsterForm button:not([type="button"])')
     text = f"Monster {name} added" if quantity == 1 else f"{quantity} monsters added"
     expect(page.locator("#monsterAddNotification")).to_contain_text(text)
 

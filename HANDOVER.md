@@ -14,6 +14,16 @@ This is the index; substantive handover lives in numbered docs/handover sections
 6. [WebSocket regression fixture repair](docs/handover/060-websocket-regression-fixture.md)
 7. [Display-connection fixture repair](docs/handover/070-display-connection-fixture.md)
 8. [Monster lookup diagnostics repair](docs/handover/080-monster-lookup-diagnostics.md)
+   - [SG-TODO-022.04c.3b array insertion](docs/handover/081-fivetools-array-insertion.md)
+   - [SG-TODO-022 Stage A: complete 5e.tools adapter (022.04)](docs/handover/082-fivetools-statblock-stage-a.md) - delivered 2026-11-17 as an archive with `[skip ci]`; CI and acceptance pending; 04e.2 open.
+   - [SG-TODO-022 Stage B: Open5e, D&D Beyond and .monster adapters (022.05-07)](docs/handover/083-statblock-stage-b-sources.md) - delivered 2026-11-17 as an archive with `[skip ci]`; CI and acceptance pending.
+   - [SG-TODO-022 Stage C1: discovery, preparation and apply APIs (022.08)](docs/handover/084-statblock-stage-c1-import-apis.md) - delivered 2026-11-17 as an archive with `[skip ci]`; C1 read as 022.08 (C2 = 022.09, below); HTTP tests not run locally; CI and acceptance pending.
+   - [SG-TODO-022 Stage C2: protected statblock listener and transport (022.09)](docs/handover/085-statblock-stage-c2-listener.md) - delivered 2026-11-17 as an archive with `[skip ci]`; FastAPI/WebSocket tests not run locally; CI and acceptance pending.
+   - [SG-TODO-022 Stage D: statblock viewer, keyboard and live sync (022.10-12)](docs/handover/086-statblock-stage-d-viewer.md) - delivered 2026-11-17 as an archive with `[skip ci]`; browser fixture tests pass locally; e2e/axe not run; CI and acceptance pending.
+   - [SG-TODO-022 Stage E: Edit Monster and bulk statblock import (022.13-14)](docs/handover/087-statblock-stage-e-import-ui.md) - delivered 2026-11-17 as an archive without `[skip ci]` (last code stage; CI runs); e2e not run locally; acceptance pending.
+   - [SG-TODO-022.15 correction round 1: statblock search, Edit dialog and viewer layout](docs/handover/088-statblock-correction-round-1.md) - delivered 2026-11-20 by push (CI runs); gated D&D Beyond results omitted, Edit controls aligned, Show statblock added, viewer layout after D&D Beyond/Open5e; statblock collection on Add Monster/Import and Show statblock in Add Monster added; all accepted by the user 2026-11-20; D&D Beyond habitats separated by commas; e2e suite 137/137 passed 2026-11-21 (022.15 complete).
+   - [Statblock preparation workers on Windows (Job Object limits)](docs/handover/089-windows-worker-limits.md) - prepared 2026-11-20: Windows workers bounded by a Job Object instead of prlimit, thread pipe channel; Linux unchanged; Windows worker tests pass on the user's machine and Find statblock and the Add Monster preview work there and on Linux/WSL2 (2026-11-20).
+   - [SG-TODO-022 close-out: acceptance and documentation (022.16)](docs/handover/091-statblock-close-out.md) - 2026-11-21: documentation reconciled; SG-TODO-022 accepted by the user and closed; green CI and e2e 137/137; no merge/deployment/release implied.
 9. [Stats fallback fixture repair](docs/handover/090-stats-fallback-fixture.md)
 10. [TODO tracking initialization](docs/handover/100-todo-tracking.md)
 11. [Composed campaign router tests](docs/handover/110-composed-campaign-routers.md)

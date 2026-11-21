@@ -86,6 +86,23 @@ Paths are relative to the appropriate listener. Admin operations require admin/s
 
 Client exposes GET /, GET/POST /login, GET /display, GET /api/state, POST /logout and WebSocket /ws. Both apps mount /static and /media.
 
+### Statblock import (SG-TODO-022.08, Admin app)
+
+| Method | Path |
+|---|---|
+| GET | /api/statblocks/state |
+| GET | /api/statblocks/monsters/{monster_id}?known_revision=N |
+| POST | /api/statblocks/discover |
+| POST | /api/statblocks/prepare (JSON candidate or multipart `.monster` file, 202) |
+| GET, DELETE | /api/statblocks/jobs/{job_id} |
+| POST | /api/statblocks/apply |
+
+Only a signed-in regular admin assigned to the active campaign is accepted; superadmin-only and client sessions get 403. Writes are same-origin; every response is no-store. Errors use `{code, message, items:[{monster_id, code, message}], retry_at?}` (401/403/404/409/410/413/422/429/504). Candidate, job and selection IDs are opaque, held in memory, bound to session, user, campaign, encounter token, target monster, species and tracker source identity, and invalid after logout, role/ownership change or restart. Apply takes `{operation_id, campaign_id, encounter_token, items:[{monster_id, expected_statblock_revision, selection_id}]}` (at most 50 items, 1 MiB) and changes everything or nothing; an identical retry returns the recorded result, other content under the same operation ID is 409. Discover accepts an optional `species` to search for (Edit Monster sends the species in the form; candidates stay bound to the saved species and source). Edit Monster accepts the optional form fields `statblock_selection_id`, `statblock_operation_id`, `statblock_expected_revision` and `expected_values` (JSON of the explicitly edited fields' previous values) and saves the statblock with the ordinary edit. Limits come from `statblocks.limits` (see `config.example.yaml`). Preparation runs in resource-limited worker processes outside the operation lock (prlimit on Linux, a Job Object on Windows). Add Monster and Import .monster collect a statblock in the background; one that would replace a different statblock or belongs to an edited monster waits for `GET /api/statblocks/collected` and `POST /api/statblocks/collected/{id}` (`{decision: replace|keep, expected_statblock_revision}`). `POST /api/statblocks/preview` (`{selection_token, species}`) prepares the statblock of an Add Monster lookup selection as a job without saving it. Details: [handover 084](../handover/084-statblock-stage-c1-import-apis.md).
+
+### Statblock listener (SG-TODO-022.09, default port 3200)
+
+GET /, GET/POST /login, POST /logout, GET /api/statblocks/state, GET /api/statblocks/monsters/{monster_id}, WebSocket /ws, /static. Own cookie `scrying_glass_statblock_session`; only regular admins can sign in, and every page, read and WebSocket frame is re-authorized against the active campaign. WebSocket frames: `state` (projection without statblock content), `heartbeat`, `revoked` (then close 1008); client messages `resync`, `ping`. No import routes and no /media. The page (static/statblocks.js, statblocks-render.js) renders tiles and one expanded statblock with DOM text only; tile statuses include automatic original-source loading (`loading`, `unavailable`, `error` with `status_detail`). Details: [handover 085](../handover/085-statblock-stage-c2-listener.md), [086](../handover/086-statblock-stage-d-viewer.md).
+
 ## Request contracts
 
 - Setups use name and optional campaign ID; rename adds new_name. Import is monsters-only with life_filter=alive|dead|all.

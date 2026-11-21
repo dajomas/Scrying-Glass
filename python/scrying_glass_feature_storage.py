@@ -11,7 +11,7 @@ def upgrade_features(storage,*,backup=True):
         db.execute('CREATE TABLE feature_state (id INTEGER PRIMARY KEY CHECK(id=1), revision INTEGER NOT NULL DEFAULT 0)')
         db.execute('INSERT INTO feature_state(id) VALUES (1)')
         db.execute("CREATE TABLE encounter_snapshots (id INTEGER PRIMARY KEY AUTOINCREMENT, campaign_id INTEGER NOT NULL REFERENCES campaigns(id) ON DELETE CASCADE, encounter_id INTEGER NOT NULL UNIQUE REFERENCES encounters(id), kind TEXT NOT NULL CHECK(kind IN ('undo','checkpoint')), name TEXT NOT NULL, created REAL NOT NULL, setup_name TEXT, after_digest TEXT)")
-        db.execute('CREATE TRIGGER cleanup_snapshot AFTER DELETE ON encounter_snapshots BEGIN DELETE FROM encounters WHERE id=OLD.encounter_id; END')
+        db.execute('CREATE TRIGGER cleanup_snapshot AFTER DELETE ON encounter_snapshots BEGIN DELETE FROM encounterS WHERE id=OLD.encounter_id; END')
         columns=', '.join([f'{n} TEXT' for n in TEXT_FIELDS]+[f'{n} INTEGER' for n in INT_FIELDS]+[f'{n} INTEGER CHECK({n} IN (0,1) OR {n} IS NULL)' for n in BOOL_FIELDS])
         db.execute(f'CREATE TABLE snapshot_characters (id INTEGER PRIMARY KEY AUTOINCREMENT, snapshot_id INTEGER NOT NULL REFERENCES encounter_snapshots(id) ON DELETE CASCADE, combatant_id TEXT NOT NULL, position INTEGER NOT NULL CHECK(position>=0), {columns}, UNIQUE(snapshot_id,combatant_id))')
         db.execute('CREATE TABLE snapshot_characters_attributes (id INTEGER PRIMARY KEY AUTOINCREMENT, parent_id INTEGER NOT NULL REFERENCES snapshot_characters(id) ON DELETE CASCADE, field_name TEXT NOT NULL, value_kind TEXT NOT NULL, text_value TEXT, integer_value INTEGER, real_value REAL, UNIQUE(parent_id,field_name))')
@@ -45,27 +45,36 @@ class FeatureStorage:
     def revision(self): return self.db.execute('SELECT revision FROM feature_state WHERE id=1').fetchone()[0]
     def bump(self): self.db.execute('UPDATE feature_state SET revision=revision+1 WHERE id=1')
     def save_snapshot(self,campaign,state,kind,name,digest=None):
-        encounter=self.db.execute('INSERT INTO encounters DEFAULT VALUES').lastrowid
-        reference=state.get('active_setup')
-        ident=self.db.execute('INSERT INTO encounter_snapshots(campaign_id,encounter_id,kind,name,created,setup_name,after_digest) VALUES (?,?,?,?,?,?,?)',(campaign,encounter,kind,name,time.time(),reference.get('name') if reference else None,digest)).lastrowid
-        payload=copy.deepcopy(state);payload['characters']=[];payload['active_setup']=None
-        self.storage._save_encounter(encounter,payload)
-        self.storage._save_entities('snapshot_characters','snapshot_id',ident,state.get('characters',[]))
-        limit=30 if kind=='undo' else 50
-        for r in self.db.execute('SELECT id FROM encounter_snapshots WHERE campaign_id=? AND kind=? ORDER BY id DESC LIMIT -1 OFFSET ?',(campaign,kind,limit)).fetchall(): self.delete(r[0],campaign,kind)
-        return ident
+        from .scrying_glass_statblock_recovery import prepare_capture, write_capture
+        prepared=prepare_capture(state)
+        if kind not in ('undo','checkpoint'): raise ValueError('Invalid recovery snapshot kind')
+        with self.storage.transaction():
+            encounter=self.db.execute('INSERT INTO encounters DEFAULT VALUES').lastrowid
+            reference=state.get('active_setup')
+            ident=self.db.execute('INSERT INTO encounter_snapshots(campaign_id,encounter_id,kind,name,created,setup_name,after_digest) VALUES (?,?,?,?,?,?,?)',(campaign,encounter,kind,name,time.time(),reference.get('name') if reference else None,digest)).lastrowid
+            payload=copy.deepcopy(state);payload['characters']=[];payload['active_setup']=None
+            self.storage._save_encounter(encounter,payload)
+            write_capture(self.storage,encounter,prepared)
+            self.storage._save_entities('snapshot_characters','snapshot_id',ident,state.get('characters',[]))
+            limit=30 if kind=='undo' else 50
+            for r in self.db.execute('SELECT id FROM encounter_snapshots WHERE campaign_id=? AND kind=? ORDER BY id DESC LIMIT -1 OFFSET ?',(campaign,kind,limit)).fetchall(): self.delete(r[0],campaign,kind)
+            self.storage._check_foreign_keys()
+            return ident
     def row(self,ident,campaign,kind):
         # Route integers may exceed SQLite's binding range; treat them as absent.
         if type(ident) is not int or not 1 <= ident <= 2 ** 63 - 1:
             return None
         return self.db.execute('SELECT * FROM encounter_snapshots WHERE id=? AND campaign_id=? AND kind=?',(ident,campaign,kind)).fetchone()
     def load(self,ident,campaign,kind):
-        row=self.row(ident,campaign,kind)
-        if row is None: raise ValueError('Snapshot not found in active campaign')
-        state=self.storage._load_encounter(row['encounter_id']);state.pop('active_turn_id',None)
-        state['characters']=self.storage._load_entities('snapshot_characters','snapshot_id',ident)
-        state['active_setup']={'campaign_id':str(campaign),'name':row['setup_name']} if row['setup_name'] else None
-        return state
+        from .scrying_glass_statblock_recovery import read_capture
+        with self.storage.transaction():
+            row=self.row(ident,campaign,kind)
+            if row is None: raise ValueError('Snapshot not found in active campaign')
+            state=read_capture(self.storage,row['encounter_id'],self.storage._load_encounter(row['encounter_id']))
+            state.pop('active_turn_id',None)
+            state['characters']=self.storage._load_entities('snapshot_characters','snapshot_id',ident)
+            state['active_setup']={'campaign_id':str(campaign),'name':row['setup_name']} if row['setup_name'] else None
+            return state
     def delete(self,ident,campaign,kind):
         if type(ident) is not int or not 1 <= ident <= 2 ** 63 - 1:
             return

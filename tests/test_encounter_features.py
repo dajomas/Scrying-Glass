@@ -5,6 +5,7 @@ from contextlib import closing
 from unittest.mock import patch
 import importlib.util
 from test_sqlite_storage import context,HTTPError
+from storage_migration_fixtures import pre_statblock_storage
 from python.scrying_glass_feature_rules import normalize_features,apply_hp,public_features
 from python.scrying_glass_feature_storage import FeatureStorage
 from python.scrying_glass_service_features import FeaturesService
@@ -153,11 +154,20 @@ class FeatureTests(unittest.TestCase):
         self.call('add_effect','m',self.effect());self.call('edit_features','c',{'temp_hp':8});self.c.STORAGE.close();self.c.STORAGE=self.c.STORAGE.__class__(Path(self.tmp.name)/'scrying-glass.sqlite3');self.c.load_state()
         self.assertEqual(self.item('c')['temp_hp'],8);self.assertEqual(self.item()['effects'][0]['name'],'Blessed');self.call('undo',{'id':self.f.summary()['undo']['id']});self.assertEqual(self.item('c')['temp_hp'],0)
     def test_v4_upgrade_backup_preserves_accounts(self):
-        path=Path(self.tmp.name)/'v4.sqlite3';db=self.c.STORAGE.__class__(path);db.connection.execute("INSERT INTO users(username,role,password_hash) VALUES ('dm','admin','hash')")
-        for table in ('characters_effects','monsters_effects','snapshot_characters_effects','snapshot_characters_attributes','snapshot_characters','encounter_snapshots','feature_state'):db.connection.execute('DROP TABLE '+table)
-        db.connection.execute('DROP TRIGGER IF EXISTS cleanup_snapshot');db.connection.execute('ALTER TABLE encounters DROP COLUMN has_lair');db.connection.execute('PRAGMA user_version=4');db.close();db=self.c.STORAGE.__class__(path)
-        self.assertEqual(db.connection.execute('SELECT username FROM users').fetchone()[0],'dm');self.assertTrue(db.migration_backup.is_file())
-        with closing(sqlite3.connect(db.migration_backup)) as backup:self.assertEqual(backup.execute('PRAGMA user_version').fetchone()[0],4)
-        db.close()
+        path=Path(self.tmp.name)/'v4.sqlite3';db=pre_statblock_storage(self.c.STORAGE.__class__,path)
+        try:
+            db.connection.execute("INSERT INTO users(username,role,password_hash) VALUES ('dm','admin','hash')")
+            for table in ('characters_effects','monsters_effects','snapshot_characters_effects','snapshot_characters_attributes','snapshot_characters','encounter_snapshots','feature_state','lairs'):db.connection.execute('DROP TABLE '+table)
+            db.connection.execute('DROP TRIGGER IF EXISTS cleanup_snapshot');db.connection.execute('ALTER TABLE encounters DROP COLUMN has_lair');db.connection.execute('PRAGMA user_version=4');db.close();db=self.c.STORAGE.__class__(path)
+            self.assertEqual(db.connection.execute('PRAGMA user_version').fetchone()[0],self.c.STORAGE.SCHEMA_VERSION)
+            self.assertEqual(tuple(db.connection.execute('SELECT username,role,password_hash FROM users').fetchone()),('dm','admin','hash'))
+            self.assertTrue(db.migration_backup.is_file())
+            with closing(sqlite3.connect(db.migration_backup)) as backup:
+                self.assertEqual(backup.execute('PRAGMA user_version').fetchone()[0],4)
+                self.assertEqual(tuple(backup.execute('SELECT username,role,password_hash FROM users').fetchone()),('dm','admin','hash'))
+                self.assertIsNone(backup.execute("SELECT 1 FROM sqlite_master WHERE name='monster_statblocks'").fetchone())
+                self.assertIsNone(backup.execute("SELECT 1 FROM sqlite_master WHERE name='lairs'").fetchone())
+            self.assertEqual(list(db.connection.execute('PRAGMA foreign_key_check')),[])
+        finally:db.close()
 
 if __name__=='__main__':unittest.main()

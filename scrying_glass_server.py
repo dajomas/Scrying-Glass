@@ -48,6 +48,7 @@ DEFAULT_CAMPAIGN_NAME = 'Default'
 DEFAULT_VIEW_BACKGROUND = '#080b14'
 ADMIN_SESSION_COOKIE = "scrying_glass_admin_session"
 CLIENT_SESSION_COOKIE = "scrying_glass_client_session"
+STATBLOCK_SESSION_COOKIE = "scrying_glass_statblock_session"
 LEGACY_SESSION_COOKIES = ("monster_session", "monster_admin_session", "monster_client_session")
 
 # Extraction boundary: these helpers do not read live server state.
@@ -155,11 +156,15 @@ _services = install_services(sys.modules[__name__])
 
 admin = FastAPI(title='Scrying Glass Admin')
 client = FastAPI(title='Scrying Glass Client')
+statblock_app = FastAPI(title='Scrying Glass Statblocks')
 admin.add_middleware(AssetCacheBustingMiddleware)
 client.add_middleware(AssetCacheBustingMiddleware)
+statblock_app.add_middleware(AssetCacheBustingMiddleware)
 _server_context = sys.modules[__name__]
 admin_api = AdminAPI(_server_context, admin)
 client_api = ClientAPI(_server_context, client)
+from python.scrying_glass_statblock_viewer_app import install_statblock_viewer
+install_statblock_viewer(_server_context, statblock_app)
 
 # ============================================================================
 # Command-line configuration, storage initialization and servers
@@ -172,6 +177,7 @@ if __name__ == '__main__':
     parser.add_argument('--bind')
     parser.add_argument('--admin-port', type=int)
     parser.add_argument('--client-port', type=int)
+    parser.add_argument('--statblock-port', type=int)
     parser.add_argument('--storage-dir', type=Path)
     args = parser.parse_args()
     try:
@@ -184,11 +190,14 @@ if __name__ == '__main__':
         CONFIG['network']['admin_port'] = args.admin_port
     if args.client_port:
         CONFIG['network']['client_port'] = args.client_port
+    if args.statblock_port:
+        CONFIG['network']['statblock_port'] = args.statblock_port
     if args.storage_dir:
         CONFIG['storage_dir'] = str(args.storage_dir)
     from python.scrying_glass_port_check import port_message, port_problems
     problems = port_problems(CONFIG['network']['bind'], (('Admin', CONFIG['network']['admin_port']),
-                                                         ('Client Display', CONFIG['network']['client_port'])))
+                                                         ('Client Display', CONFIG['network']['client_port']),
+                                                         ('Statblocks', CONFIG['network']['statblock_port'])))
     if problems:
         sys.exit(port_message(CONFIG['network']['bind'], problems))
     DATA_DIR = Path(CONFIG['storage_dir']).expanduser().resolve()
@@ -229,14 +238,24 @@ if __name__ == '__main__':
     admin.mount('/media', StaticFiles(directory=str(UPLOAD_DIR)), name='admin-media')
     client.mount("/static", AdminScriptStaticFiles(directory=str(STATIC_DIR)), name="client-static")
     client.mount('/media', StaticFiles(directory=str(UPLOAD_DIR)), name='client-media')
+    # Statblock listener: public static assets only (login/page styles); no media or private files.
+    statblock_app.mount("/static", AdminScriptStaticFiles(directory=str(STATIC_DIR)), name="statblock-static")
+
+    # The statblock service exists from start-up, so Add Monster can collect statblocks (022.15).
+    from python.scrying_glass_statblock_service import statblock_service
+    statblock_service(_server_context)
 
     async def serve():
         """Run the admin and client servers concurrently with shared runtime state."""
         common = {'host': CONFIG['network']['bind'], 'log_level': 'info', 'access_log': False}
-        await asyncio.gather(uvicorn.Server(uvicorn.Config(admin, port=CONFIG['network']['admin_port'], **common)).serve(), uvicorn.Server(uvicorn.Config(client, port=CONFIG['network']['client_port'], **common)).serve())
+        await asyncio.gather(uvicorn.Server(uvicorn.Config(admin, port=CONFIG['network']['admin_port'], **common)).serve(),
+                             uvicorn.Server(uvicorn.Config(client, port=CONFIG['network']['client_port'], **common)).serve(),
+                             uvicorn.Server(uvicorn.Config(statblock_app, port=CONFIG['network']['statblock_port'], **common)).serve())
     try:
         asyncio.run(serve())
     except KeyboardInterrupt:
         pass
     finally:
+        if getattr(_server_context, 'statblocks', None) is not None:
+            _server_context.statblocks.scheduler.stop()  # cancel queued/running preparations
         STORAGE.close()

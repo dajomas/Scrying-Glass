@@ -3,6 +3,9 @@ network:
   bind: "0.0.0.0"
   admin_port: 3000
   client_port: 3100
+  # GM-only statblock viewer: regular admins assigned to the active
+  # campaign only. Keep it off untrusted networks like the Admin port.
+  statblock_port: 3200
 
 # SQLite schema-v4 encounter/accounts database and uploaded images live below this path.
 storage_dir: "./scrying-glass-data"
@@ -37,3 +40,35 @@ display:
   # A superadmin can override all three provider switches on the User management page.
   open5e_lookup: true
   open5e_base_url: "https://api.open5e.com/v2"
+
+# Statblock discovery, preparation and apply limits (SG-TODO-022). All values are
+# optional positive integers; omitted keys keep these defaults. Unknown keys are
+# rejected at start-up. Lowered limits apply to new preparations only.
+# statblocks:
+#   limits:
+#     inheritance_steps: 16
+#     modification_operations: 1024
+#     reference_steps: 16
+#     supporting_definitions: 256
+#     intermediate_creature_bytes: 8388608
+#     preparation_seconds: 10
+#     supporting_reference_bytes: 16777216
+#     snapshot_bytes: 2097152
+#     content_nodes: 16384
+#     content_depth: 16
+#     text_value_bytes: 65536
+#     response_bytes: 10485760
+#     active_jobs: 2
+#     queued_jobs: 16
+#     outbound_requests: 4
+#     provider_requests: 2
+#     worker_memory_bytes: 268435456   # per isolated worker process (Linux prlimit, Windows Job Object)
+#     cache_entries: 64
+#     cache_bytes: 67108864
+#     cache_seconds: 3600
+#     failure_cooldown_seconds: 30
+#     selection_seconds: 600
+#     prepared_snapshots: 200
+#     prepared_bytes: 134217728
+#     session_selection_references: 200
+#     selection_references: 1000

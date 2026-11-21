@@ -130,6 +130,10 @@ class AdminMonstersMixin:
             characters=False,
         )
 
+        # The imported file is also the statblock, prepared in the background (022.15).
+        from .scrying_glass_statblock_collecting import collect_after_add
+        collect_after_add(self.context, created, file_bytes=raw, filename=monster_file.filename)
+
         return created
 
     async def import_monsters_csv(

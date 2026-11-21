@@ -1,9 +1,9 @@
 # Scrying Glass
 
 Scrying Glass, formerly Monster Display, is a self-hosted tabletop encounter
-manager. An authenticated GM Admin interface and a separate Client Display run
-as two FastAPI applications in one Python process, with SQLite persistence and
-WebSocket updates.
+manager. An authenticated GM Admin interface, a separate Client Display and a
+GM-only statblock viewer run as three FastAPI applications in one Python process,
+with SQLite persistence and WebSocket updates.
 
 [Deployment](DEPLOYMENT.md) · [User Guide](docs/User-Guide.md) ·
 [Technical Documentation](docs/Technical-Documentation.md) ·
@@ -123,6 +123,10 @@ identity or independently generated release checksums for release integrity.
 - Private/public effects, concentration links and turn-boundary expiry.
 - Lairs at initiative 20, bounded undo, checkpoints and portable campaign bundles.
 - Activity exports, per-setup backgrounds, viewer font size and synchronization status.
+- GM-only statblock viewer with live tracker values; statblocks from D&D Beyond (public
+  pages), 5e.tools, Open5e or `.monster` files, chosen per monster, in bulk, previewed in
+  Add Monster and collected automatically when a monster is added from a source
+  ([User Guide](docs/User-Guide.md#statblocks)).
 
 This is a GM-assisted tracker, not a full rules engine. Resolve dice, saves,
 mitigation, concentration checks, reaction availability and resurrection manually.
@@ -160,6 +164,14 @@ recreating an environment. Systemd runs its explicit interpreter directly, not
 launcher discovery. Actual Windows execution and full Python 3.10 application
 validation remain distinct from mocked launcher contracts.
 
+Statblock preparation runs in resource-limited worker processes: on Linux this needs
+util-linux `prlimit` at `/usr/bin/prlimit` or `/bin/prlimit`; on Windows a Job Object is
+used (no extra install). On other platforms, and when the limits cannot be enforced,
+preparation fails with "not available on this platform"; the rest of the tracker works.
+Python 3.15 is too new for some dependencies on Windows (PyYAML has no 3.15 wheels, so
+pip tries to compile it); use Python 3.14 for the environment there
+(`py -3.14 -m venv %USERPROFILE%\dnd`).
+
 ## Configuration and interfaces
 
 ```yaml
@@ -167,6 +179,7 @@ network:
   bind: "0.0.0.0"
   admin_port: 3000
   client_port: 3100
+  statblock_port: 3200
 storage_dir: "./scrying-glass-data"
 display:
   background: "#080b14"
@@ -181,13 +194,15 @@ display:
 Relative storage paths resolve from the working directory; use absolute paths for
 services. Saved encounter display settings override configured fallbacks. Accounts
 live in SQLite; legacy `security.users` imports only once. CLI overrides are
-`--config`, `--bind`, `--admin-port`, `--client-port`, `--storage-dir`.
+`--config`, `--bind`, `--admin-port`, `--client-port`, `--statblock-port`, `--storage-dir`.
+Every listener needs its own free port; start-up stops with a plain message otherwise.
 
 | Interface | Default URL | Role |
 |---|---|---|
 | Battle Admin | http://SERVER:3000/ | admin |
 | User Management | http://SERVER:3000/users | superadmin |
 | Client Display | http://SERVER:3100/display | permitted client/admin/superadmin |
+| Statblock viewer | http://SERVER:3200/ | regular admin assigned to the active campaign |
 
 Fresh installs print a random superadmin password once; change it immediately.
 Create regular admin/client accounts and assign ownership and viewer grants
@@ -319,7 +334,8 @@ archived legacy data. It includes accounts, campaigns, rosters, setups, runtime,
 logs and recovery state. Stop the process and back up the whole storage directory,
 configuration and service unit. Migration backups omit media/configuration;
 campaign bundles omit accounts, other campaigns and accumulated recovery history
-and are not full installation backups.
+and are not full installation backups. Saved statblocks are in the database and in
+campaign bundles (bundle version 2, for setups and the current encounter).
 
 Use a trusted LAN or restricted VPN/HTTPS proxy, not public default HTTP listeners.
 Sessions are in memory and clear on restart; account changes revoke sessions.

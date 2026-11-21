@@ -15,6 +15,7 @@ from unittest.mock import patch
 from python import scrying_glass_storage as facade
 from python import scrying_glass_storage_fields as fields
 from python.scrying_glass_storage import SQLiteStorage
+from python.scrying_glass_storage_operations import StorageOperationsMixin
 
 ROOT = Path(__file__).resolve().parents[1]
 FIELD_NAMES = ('TEXT_FIELDS', 'INT_FIELDS', 'BOOL_FIELDS', 'ENTITY_FIELDS', 'LOG_FIELDS', 'LIST_FIELDS', 'STATE_FIELDS')
@@ -142,9 +143,15 @@ class StorageSchemaTests(unittest.TestCase):
 
 
 class StorageOperationTests(unittest.TestCase):
-    def fixture(self):
-        s = base_storage(self)
-        s.connection.execute("CREATE TABLE encounter_snapshots(id INTEGER PRIMARY KEY,campaign_id INTEGER,kind TEXT,setup_name TEXT)")
+    def fixture(self, *, current_schema=False):
+        if current_schema:
+            directory = tempfile.TemporaryDirectory(); self.addCleanup(directory.cleanup)
+            s = SQLiteStorage(Path(directory.name)/'storage.sqlite3')
+            self.addCleanup(s.close)
+            self.assertEqual(s.connection.execute('PRAGMA user_version').fetchone()[0], 9)
+        else:
+            s = base_storage(self)
+            s.connection.execute("CREATE TABLE encounter_snapshots(id INTEGER PRIMARY KEY,campaign_id INTEGER,kind TEXT,setup_name TEXT)")
         a = s.create_campaign('Alpha', '', 'now', metadata={'flag':True})
         b = s.create_campaign('Beta', '', 'now')
         return s, a, b
@@ -179,13 +186,15 @@ class StorageOperationTests(unittest.TestCase):
         self.assertEqual(s.get_value('legacy_import_complete'), {'at': 'now', 'counts': {'campaigns': 2, 'setups': 0, 'characters': 0}})
 
     def test_setup_names_checkpoint_references_move_and_copy(self):
-        s, a, b = self.fixture()
+        from python.scrying_glass_feature_storage import FeatureStorage
+        s, a, b = self.fixture(current_schema=True)
         self.assertIsNone(s.newest_setup(a))
         for name in ('beta','Alpha'):
             s.save_setup(a, name, {}, updated_at=10)
         self.assertEqual(s.list_setups(a), ['Alpha','beta'])
         self.assertEqual(s.newest_setup(a), 'Alpha')
-        s.connection.execute("INSERT INTO encounter_snapshots VALUES (1,?,'checkpoint','Alpha')", (a,))
+        FeatureStorage(s).save_snapshot(a, {'monsters':[], 'characters':[],
+            'active_setup':{'campaign_id':a,'name':'Alpha'}}, 'checkpoint', 'Fixture')
         s.rename_setup(a, 'Alpha', 'renamed')
         self.assertEqual(s.connection.execute('SELECT setup_name FROM encounter_snapshots').fetchone()[0], 'renamed')
         before = list(s.connection.iterdump())
@@ -206,39 +215,119 @@ class StorageOperationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Destination roster'): s.transfer_setup(a,b,'collision','move')
         self.assertEqual(list(s.connection.iterdump()), before)
 
+    def test_current_schema_fixture_does_not_replace_legacy_fixture(self):
+        current, _, _ = self.fixture(current_schema=True)
+        legacy, _, _ = self.fixture()
+        self.assertTrue(current.path.is_file())
+        self.assertIsNone(current.migration_backup)
+        self.assertEqual(current.connection.execute('PRAGMA user_version').fetchone()[0], 9)
+        self.assertEqual(legacy.connection.execute('PRAGMA user_version').fetchone()[0], 3)
+        self.assertIsNotNone(current.connection.execute(
+            "SELECT name FROM sqlite_master WHERE name='monster_statblocks'").fetchone())
+        self.assertIsNone(legacy.connection.execute(
+            "SELECT name FROM sqlite_master WHERE name='monster_statblocks'").fetchone())
+
+    def test_current_schema_copy_rolls_back_after_private_clone(self):
+        from python.scrying_glass_statblock_cloning import clone_private_snapshots
+        from python.scrying_glass_statblock_storage import StatblockStorage
+        from test_statblock_storage import sample
+        s, a, b = self.fixture(current_schema=True)
+        s.save_setup(a, 'saved', {'monsters':[{'id':'m','hp':7}]}, updated_at=12)
+        owner = s.connection.execute(
+            'SELECT encounter_id FROM battle_setups WHERE campaign_id=? AND name=?', (a,'saved')).fetchone()[0]
+        monster = s.connection.execute('SELECT id FROM monsters WHERE encounter_id=?', (owner,)).fetchone()[0]
+        original = StatblockStorage(s).save(monster, sample(), expected_revision=0)
+        before = list(s.connection.iterdump())
+        def fail_after_clone(storage, source, destination):
+            result = clone_private_snapshots(storage, source, destination)
+            self.assertEqual(result['m']['content_digest'], original['content_digest'])
+            self.assertEqual(result['m']['revision'], 1)
+            self.assertTrue(storage.setup_exists(b, 'saved'))
+            raise OSError('after private clone')
+        with patch('python.scrying_glass_statblock_cloning.clone_private_snapshots',
+                   side_effect=fail_after_clone) as clone:
+            with self.assertRaisesRegex(OSError, 'after private clone'):
+                s.transfer_setup(a,b,'saved','copy')
+        clone.assert_called_once()
+        self.assertEqual(list(s.connection.iterdump()), before)
+        self.assertFalse(s.setup_exists(b, 'saved'))
+        self.assertEqual(StatblockStorage(s).load(monster), original)
+        self.assertFalse(s.connection.in_transaction)
+
     def test_effect_rewrite_at_mocked_snapshot_boundary(self):
+        """Isolate plain cleanup; the private wrapper requires a persisted save."""
         s, a, b = self.fixture()
         s.save_setup(a,'saved',{},updated_at=12)
         external = {'source_id':'roster','anchor_id':'roster','timing':'end','turns':2,'concentration':False}
         internal = dict(external,source_id='monster',anchor_id='monster')
         state = {'monsters':[{'id':'monster','effects':[external,dict(external,concentration=True),internal]}]}
-        with patch.object(s,'load_setup',return_value=copy.deepcopy(state)), patch.object(s,'save_setup') as save:
-            s.transfer_setup(a,b,'saved','copy')
+        before = copy.deepcopy(state)
+        with patch.object(s,'load_setup',return_value=copy.deepcopy(state)) as load, patch.object(s,'save_setup') as save:
+            name = StorageOperationsMixin.transfer_setup(s,a,b,'saved','copy')
         result = save.call_args.args[2]
         self.assertIsNone(result['active_setup'])
         self.assertEqual(result['monsters'][0]['effects'],[dict(external,source_id=None,anchor_id=None,timing='manual',turns=None),internal])
+        self.assertEqual(name, 'saved')
+        load.assert_called_once_with(a, 'saved')
+        save.assert_called_once_with(b, 'saved', result, 12)
+        self.assertEqual(state, before)
+        self.assertFalse(s.setup_exists(b, 'saved'))
+
+    def test_private_copy_rejects_unpersisted_destination_binding(self):
+        s, a, b = self.fixture()
+        s.save_setup(a,'saved',{},updated_at=12)
+        before = list(s.connection.iterdump())
+        with patch.object(s,'save_setup') as save, patch(
+                'python.scrying_glass_statblock_cloning.clone_private_snapshots') as clone:
+            with self.assertRaisesRegex(ValueError, 'Copied setup binding is missing'):
+                s.transfer_setup(a,b,'saved','copy')
+        save.assert_called_once()
+        clone.assert_not_called()
+        self.assertEqual(list(s.connection.iterdump()), before)
+        self.assertFalse(s.setup_exists(b, 'saved'))
+        self.assertFalse(s.connection.in_transaction)
 
 
 class StorageRuntimeTests(unittest.TestCase):
     def test_dispatch_modules_and_file_limits(self):
-        self.assertEqual(SQLiteStorage.SCHEMA_VERSION, 8)
+        self.assertEqual(SQLiteStorage.SCHEMA_VERSION, 9)
         self.assertIsInstance(getattr_static(SQLiteStorage, 'convert_campaign_references'), staticmethod)
         self.assertIsInstance(getattr_static(SQLiteStorage, '_typed'), staticmethod)
         self.assertEqual(SQLiteStorage.__module__, 'python.scrying_glass_storage')
         self.assertEqual(SQLiteStorage._upgrade.__module__, 'python.scrying_glass_storage_schema')
         self.assertEqual(SQLiteStorage._save_entities.__module__, 'python.scrying_glass_storage_records')
-        self.assertEqual(SQLiteStorage.save_setup.__module__, 'python.scrying_glass_storage_operations')
-        for suffix in ('', '_fields', '_schema', '_records', '_operations'):
+        from python.scrying_glass_storage_statblocks import StatblockOperationsMixin
+        self.assertEqual(SQLiteStorage.save_setup.__module__, 'python.scrying_glass_storage_statblocks')
+        self.assertIs(SQLiteStorage.save_setup, StatblockOperationsMixin.save_setup)
+        self.assertIs(SQLiteStorage.transfer_setup, StatblockOperationsMixin.transfer_setup)
+        self.assertIs(SQLiteStorage.set_value, StatblockOperationsMixin.set_value)
+        for suffix in ('', '_fields', '_schema', '_records', '_operations', '_statblocks'):
             data = (ROOT/f'python/scrying_glass_storage{suffix}.py').read_bytes()
             self.assertLessEqual(len(data), 20000)
             tree = ast.parse(data.decode())
             self.assertFalse(any(isinstance(n, ast.Call) and isinstance(n.func, ast.Name) and n.func.id in ('exec','eval','compile') for n in ast.walk(tree)))
 
-    def test_v8_persistence_reopen_and_transaction_rollback(self):
+    def test_save_setup_dispatches_through_real_private_preservation_hook(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with closing(SQLiteStorage(Path(directory)/'dispatch.sqlite3')) as s:
+                campaign = s.create_campaign('Dispatch', '', 'now')
+                snapshot = {'monsters':[{'id':'m','hp':9}]}
+                with patch.object(s, '_save_preserving_statblocks',
+                                  wraps=s._save_preserving_statblocks) as preserve:
+                    s.save_setup(campaign, 'saved', snapshot, updated_at=12)
+                encounter = s.connection.execute(
+                    'SELECT encounter_id FROM battle_setups WHERE campaign_id=? AND name=?',
+                    (campaign, 'saved')).fetchone()[0]
+                preserve.assert_called_once_with(encounter, snapshot)
+                self.assertEqual(s.load_setup(campaign, 'saved')['monsters'][0]['hp'], 9)
+                self.assertEqual(s.connection.execute('PRAGMA user_version').fetchone()[0], 9)
+                self.assertFalse(s.connection.in_transaction)
+
+    def test_v9_persistence_reopen_and_transaction_rollback(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory)/'storage.sqlite3'
             with closing(SQLiteStorage(path)) as s:
-                self.assertEqual(s.connection.execute('PRAGMA user_version').fetchone()[0],8)
+                self.assertEqual(s.connection.execute('PRAGMA user_version').fetchone()[0],9)
                 self.assertIsNone(s.migration_backup)
                 c = s.create_campaign('Fixture','','now')
                 s.save_characters(c,[{'id':'hero','hp':12,'effects':[]}])
