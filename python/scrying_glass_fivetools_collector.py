@@ -131,6 +131,14 @@ class FiveToolsData:
             self._index(path, prop, identity.kind)
         return tuple(self._records.get(key_of(identity.kind, identity.name, identity.source), ()))
 
+    def records(self, kind, source):
+        """Every indexed record of ``kind`` from the file(s) holding ``source`` (encoded JSON)."""
+        paths = self._paths(kind, source)
+        for path, prop in paths:
+            self._index(path, prop, kind)
+        files = {key for key in self._records if key[0] == kind} if paths else set()
+        return [raw for key in sorted(files) for raw in self._records[key]]
+
 
 @dataclass
 class Definition:
@@ -176,6 +184,38 @@ class Collector:
         if len(matches) != 1:
             raise LookupError('reference_unavailable' if not matches else 'reference_ambiguous')
         return json.loads(matches[0]), ()
+
+    def resolve_selected(self, name, source, version_of=None):
+        """The selected creature: a monster, or a version of one (SG-TODO-033).
+
+        Without ``version_of`` an exact monster wins; otherwise the version's base is
+        searched among the monsters stored with the version's source.
+        """
+        from .scrying_glass_fivetools_versions import resolve_version
+        if version_of is None:
+            if self.data.load(Identity(DATASET, 'monster', source, name)):
+                return self.resolve('monster', name, source)
+            version_of = self._version_base(name, source)
+        parent, _ = self.resolve('monster', *version_of)
+        record, provenance = resolve_version(self.data, parent, name, source, limits=self.resolver.limits,
+                                             deadline=self.deadline, cancelled=self.cancelled, clock=self.clock,
+                                             dataset=DATASET)
+        record.pop('_isCopy', None)
+        return record, provenance
+
+    def _version_base(self, name, source):
+        from .scrying_glass_fivetools_versions import version_names
+        wanted = (name.lower(), source.lower())
+        for raw in self.data.records('monster', source):
+            self._check()
+            record = json.loads(raw)
+            if not (record.get('_versions') or record.get('variant') or record.get('_copy')):
+                continue
+            if '_copy' in record:
+                record, _ = self.resolve('monster', record['name'], record['source'])
+            if any((n.lower(), s.lower()) == wanted for n, s in version_names(record)):
+                return record['name'], record['source']
+        raise LookupError('selected_unavailable')
 
     def legendary_group(self, record):
         meta = record.get('legendaryGroup')

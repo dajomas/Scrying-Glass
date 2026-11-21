@@ -4,7 +4,7 @@
 
 ## Task and status
 
-SG-TODO-033 - proposed, split off from SG-TODO-022 by the user's decision on 2026-11-20 so
+SG-TODO-033 - part 1 (monster versions) implemented 2026-11-22 on `features/claude` ([handover 720](../handover/720-fivetools-monster-versions.md)), CI and user check pending; part 2 (magic-item variants) open. Decided 2026-11-21 (implementation group 4); proposed 2026-11-20, split off from SG-TODO-022 by the user's decision on 2026-11-20 so
 that SG-TODO-022 can close without it. No owner, priority or deadline has been agreed.
 
 ## Scope
@@ -20,7 +20,23 @@ that SG-TODO-022 can close without it. No owner, priority or deadline has been a
    partial warnings: 55 of 4,683 real monsters at the 2026-11-17 measurement. Needs the
    runtime's specific/generic variant generation and item enhancement.
 
-## Open decisions
+## Decisions (2026-11-21)
+
+Implementation group 4 on `features/claude`. Measured in the pinned data
+(5etools-src 32ef600): 85 monsters with `_versions` (286 basic versions, plus 1 template
+version with 5 implementations) and 69 monsters whose `variant` entries carry `_version`
+(77 versions); about 368 versions in total.
+
+1. Delivery: one after the other, monster versions first, then magic-item variants (plan
+   order agreed 2026-11-21).
+2. Chooser: versions are grouped under their base creature: one entry for the base, with
+   its versions in a sub-list opened under it, in 5e.tools order.
+3. Matching: a version is found by its base creature's name (with the base) and by its own
+   name (directly).
+4. Original source: a monster whose 5e.tools link names a version uses that version as its
+   original source (marked "original source" and auto-loaded like other originals).
+
+## Open decisions as proposed (2026-11-20)
 
 - How versions are labelled and ordered in the chooser, and whether a version can be the
   tracker's original source.

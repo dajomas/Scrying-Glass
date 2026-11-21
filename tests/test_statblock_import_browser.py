@@ -37,6 +37,7 @@ class FakeServer:
         self.shown = []
         self.fail_prepare, self.fail_apply = set(), None
         self.pending_polls = 1
+        self.extra = []  # more candidates per discovered monster (SG-TODO-033 versions)
         page.route('**/api/statblocks/**', self.handle)
 
     def handle(self, route):
@@ -77,7 +78,8 @@ class FakeServer:
                 species = body.get('species') or saved
                 candidates = [] if not species else [
                     {'candidate_id': f'{ident}-orig', 'provider': '5e.tools', 'label': species, 'source': 'MM', 'original': True},
-                    {'candidate_id': f'{ident}-o5e', 'provider': 'Open5e', 'label': species, 'document': 'SRD 5.1'}]
+                    {'candidate_id': f'{ident}-o5e', 'provider': 'Open5e', 'label': species, 'document': 'SRD 5.1'}] + [
+                    dict(extra, candidate_id=f"{ident}-{extra['candidate_id']}") for extra in self.extra]
                 rows.append({'monster_id': ident, 'species': species, 'status': 'ok' if species else 'no_species',
                              'statblock_revision': self.revisions[ident], 'candidates': candidates,
                              'providers': [{'provider': 'D&D Beyond', 'status': 'error', 'code': 'provider_unavailable'}]})
@@ -433,6 +435,53 @@ class ImportBrowserTests(unittest.TestCase):
         self.assertEqual(self.server.applies[0]['items'],
                          [{'monster_id': 'a', 'expected_statblock_revision': 0, 'selection_id': 'sel-job-1'}])
         self.assertEqual(self.page.evaluate('window.reloaded'), 1)
+        self.assertEqual(self.errors, [])
+
+    # -- 5e.tools versions (SG-TODO-033) ---------------------------------------------
+    VERSIONS = [
+        {'candidate_id': 'bf', 'provider': '5e.tools', 'label': 'Battle Familiar', 'name': 'Battle Familiar', 'source': 'AU'},
+        {'candidate_id': 'bf-brute', 'provider': '5e.tools', 'label': 'Battle Familiar (Brute)', 'name': 'Battle Familiar (Brute)',
+         'source': 'AU', 'version_of': {'name': 'Battle Familiar', 'source': 'AU', 'label': 'Battle Familiar'}},
+        {'candidate_id': 'bf-flyer', 'provider': '5e.tools', 'label': 'Battle Familiar (Flyer)', 'name': 'Battle Familiar (Flyer)',
+         'source': 'AU', 'version_of': {'name': 'Battle Familiar', 'source': 'AU', 'label': 'Battle Familiar'}},
+        {'candidate_id': 'forager', 'provider': '5e.tools', 'label': 'Animal Lord; Forager', 'name': 'Animal Lord; Forager',
+         'source': 'XMM', 'version_of': {'name': 'Animal Lord', 'source': 'XMM', 'label': 'Animal Lord'}},
+    ]
+
+    def test_edit_chooser_groups_versions_under_their_base(self):
+        self.server.extra = self.VERSIONS
+        self.open_edit()
+        self.page.get_by_role('button', name='Find statblock').click()
+        dialog = self.page.get_by_role('dialog', name='Choose a statblock for Goblin')
+        group = dialog.locator('details.monster-statblock-versions')
+        dialog.get_by_role('button', name='Battle Familiar · 5e.tools · AU').wait_for()
+        self.assertEqual(group.count(), 1)
+        self.assertFalse(group.evaluate('d => d.open'))
+        self.assertEqual(group.locator('summary').inner_text(), '2 version(s) of Battle Familiar')
+        # Base first, its versions right after it; a version whose base is not listed stands alone.
+        order = dialog.locator('.monster-statblock-candidates > *').evaluate_all(
+            "nodes => nodes.map(n => n.tagName === 'DETAILS' ? 'versions' : n.textContent)")
+        self.assertEqual(order[2:], ['Battle Familiar · 5e.tools · AU', 'versions',
+                                     'Animal Lord; Forager · 5e.tools · XMM — version of Animal Lord (XMM)'])
+        group.locator('summary').click()
+        group.get_by_role('button', name='Battle Familiar (Flyer) · 5e.tools · AU').click()
+        review = self.page.get_by_role('dialog', name='Statblock: Battle Familiar (Flyer) · 5e.tools · AU')
+        review.get_by_role('button', name='Use this statblock').wait_for()
+        self.assertEqual(self.server.jobs['job-1']['candidate_id'], 'a-bf-flyer')
+        self.assertEqual(self.errors, [])
+
+    def test_bulk_chooser_lists_versions_in_an_option_group(self):
+        self.server.extra = self.VERSIONS
+        self.start_bulk(['a'])
+        select = self.row('a').get_by_label('Statblock for Goblin 1')
+        groups = select.locator('optgroup').evaluate_all(
+            "gs => gs.map(g => [g.label, [...g.children].map(o => o.textContent), g.previousElementSibling.textContent])")
+        self.assertEqual(groups, [['Versions of Battle Familiar',
+                                   ['Battle Familiar (Brute) · 5e.tools · AU', 'Battle Familiar (Flyer) · 5e.tools · AU'],
+                                   'Battle Familiar · 5e.tools · AU']])
+        select.select_option(label='Battle Familiar (Brute) · 5e.tools · AU')
+        self.page.wait_for_timeout(300)
+        self.assertIn('a-bf-brute', [job['candidate_id'] for job in self.server.jobs.values()])
         self.assertEqual(self.errors, [])
 
     def test_bulk_failures_retry_and_rejected_batches_are_reported(self):

@@ -7,6 +7,9 @@ is stored in this repository.
   node tools/fivetools_oracle/copy_oracle.mjs <5etools-src> /tmp/copies.json
   python tools/fivetools_oracle/compare.py copies <5etools-src> /tmp/copies.json
 
+  node tools/fivetools_oracle/version_oracle.mjs <5etools-src> /tmp/versions.json
+  python tools/fivetools_oracle/compare.py versions <5etools-src> /tmp/versions.json
+
   python tools/fivetools_oracle/generate_synthetic_cases.py /tmp/cases.json
   node tools/fivetools_oracle/synthetic_oracle.mjs <5etools-src> /tmp/cases.json /tmp/upstream.json
   python tools/fivetools_oracle/compare.py synthetic /tmp/cases.json /tmp/upstream.json
@@ -85,6 +88,52 @@ def compare_copies(root, oracle_path):
     return stats, failures
 
 
+def compare_versions(root, oracle_path):
+    """SG-TODO-033: every upstream monster version against resolve_version."""
+    from python.scrying_glass_fivetools_versions import resolve_version, version_names
+    oracle, loader = json.load(open(oracle_path, encoding='utf-8')), Loader(root)
+    stats, failures = {'match': 0, 'mismatch': 0, 'python_error': 0, 'missing': 0, 'key_order_differs': 0}, []
+    expected_ids = set()
+    for key, expected in oracle.items():
+        name, source = key.rsplit('|', 1)
+        base_name, base_source = expected['base'].rsplit('|', 1)
+        expected_ids.add(key.lower())
+        if 'error' in expected:
+            stats['mismatch'] += 1
+            failures.append((key, 'upstream error: ' + expected['error']))
+            continue
+        try:
+            parent = OrderedResolver(loader, limits=Limits()).resolve(
+                Identity('5etools', 'monster', base_source, base_name), deadline=time.monotonic() + 30).record()
+            got, _ = resolve_version(loader, parent, name, source, limits=Limits(), deadline=time.monotonic() + 30,
+                                     cancelled=lambda: False, clock=time.monotonic, dataset='5etools')
+        except (ResolutionError, LookupError, ValueError) as exc:
+            stats['python_error'] += 1
+            failures.append((key, getattr(getattr(exc, 'diagnostic', None), 'code', None) or str(exc)))
+            continue
+        diff = same(expected['ok'], got)
+        stats['mismatch' if diff else 'match'] += 1
+        if diff:
+            failures.append((key, diff))
+        elif list(expected['ok']) != list(got):
+            stats['key_order_differs'] += 1
+    # Discovery names: every upstream version and nothing else.
+    listed = set()
+    for (kind, _, _), rows in loader.rows.items():
+        if kind != 'monster':
+            continue
+        for raw in rows:
+            record = json.loads(raw)
+            if '_copy' in record:
+                record = OrderedResolver(loader, limits=Limits()).resolve(
+                    Identity('5etools', 'monster', record['source'], record['name']), deadline=time.monotonic() + 30).record()
+            listed.update(f'{n}|{s}'.lower() for n, s in version_names(record))
+    stats['missing'] = len(expected_ids - listed)
+    stats['extra_names'] = len(listed - expected_ids)
+    failures.extend(('names', k) for k in sorted(expected_ids ^ listed)[:20])
+    return stats, failures
+
+
 def compare_synthetic(cases_path, upstream_path):
     cases, upstream = json.load(open(cases_path)), json.load(open(upstream_path))
     stats, notes = {}, []
@@ -114,7 +163,8 @@ def compare_synthetic(cases_path, upstream_path):
 
 if __name__ == '__main__':
     mode = sys.argv[1]
-    result = compare_copies(sys.argv[2], sys.argv[3]) if mode == 'copies' else compare_synthetic(sys.argv[2], sys.argv[3])
+    result = (compare_copies(sys.argv[2], sys.argv[3]) if mode == 'copies' else
+              compare_versions(sys.argv[2], sys.argv[3]) if mode == 'versions' else compare_synthetic(sys.argv[2], sys.argv[3]))
     print(json.dumps(result[0]))
     for item in result[1][:50]:
         print(item)

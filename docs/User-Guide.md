@@ -150,6 +150,13 @@ not saved in time.
 dropdown: each row keeps its current statblock unless you pick a source result or a
 `.monster` file; Apply statblocks saves the ready rows.
 
+**5e.tools versions.** Some 5e.tools creatures have versions, such as *Battle Familiar
+(Flyer)* or *Animal Lord; Forager*. Searching for the creature's name lists its versions
+under it: in Edit Monster in a closed "versions of …" block below the creature, in Load
+statblocks in a "Versions of …" option group. Searching for a version's own name finds that
+version, labelled "version of …". A monster added from a 5e.tools link to a version uses
+that version as its original source.
+
 **Automatic loading.** While a statblock viewer is open, monsters in battle that were
 added from a source and have no statblock yet get one from that source.
 

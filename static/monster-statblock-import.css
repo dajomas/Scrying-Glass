@@ -15,6 +15,10 @@
 .monster-statblock-dialog h2 { margin-top: 0; }
 .monster-statblock-candidates { display: grid; gap: .4rem; margin: .75rem 0; }
 .monster-statblock-candidates button { text-align: left; }
+/* SG-TODO-033: a base creature's 5e.tools versions, listed under it. */
+.monster-statblock-versions { margin: -.2rem 0 0 1.25rem; }
+.monster-statblock-versions > summary { cursor: pointer; padding: .15rem 0; }
+.monster-statblock-versions > [role="group"] { display: grid; gap: .4rem; margin-top: .35rem; }
 .monster-statblock-preview { max-height: 55vh; overflow: auto; margin: .75rem 0; padding: 0 .75rem;
   border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-2); }
 .monster-statblock-preview-source { margin: .5rem 0 0; color: var(--muted); font-size: .9rem; }
