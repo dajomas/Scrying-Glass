@@ -1,0 +1,27 @@
+xkq/repo/python/scrying_glass_dndbeyond.py", line 128, in dnd_monster_detail_html
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8296404Z     response = urlopen(request, timeout=15)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8297202Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8297827Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8298406Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8299436Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8300503Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8301304Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8302405Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8303456Z     raise effect
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8304067Z urllib.error.HTTPError: HTTP Error 403: fixture
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8305040Z Combined monster lookup: D&D Beyond did not respond (HTTP Error 403: fixture)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8306218Z D&D Beyond candidate lookup failed
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8306865Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8308013Z   File "/tmp/scrying-tests-hs3hmxkq/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8309129Z     hits = context.dnd_monster_candidates(species)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8310273Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8311297Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8311942Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8312988Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8314031Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8314726Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8316072Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8317117Z     raise effect
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8317577Z TimeoutError: fixture
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:38.8318382Z Combined monster lookup: D&D Beyond did not respond (fixture)
+connection-audit	Connection audit of isolated unittest modu

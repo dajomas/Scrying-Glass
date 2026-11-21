@@ -1,0 +1,49 @@
+23:21:28.1473584Z ok 25 - dispose clears timers and views, and stale timer callbacks are harmless
+tests	JavaScript tests	2026-11-21T23:21:28.1474002Z   ---
+tests	JavaScript tests	2026-11-21T23:21:28.1474236Z   duration_ms: 0.162325
+tests	JavaScript tests	2026-11-21T23:21:28.1474496Z   type: 'test'
+tests	JavaScript tests	2026-11-21T23:21:28.1474708Z   ...
+tests	JavaScript tests	2026-11-21T23:21:28.1475194Z # Subtest: warning persists without a timer and is replaced or resolved by its own identity
+tests	JavaScript tests	2026-11-21T23:21:28.1475929Z ok 26 - warning persists without a timer and is replaced or resolved by its own identity
+tests	JavaScript tests	2026-11-21T23:21:28.1476374Z   ---
+tests	JavaScript tests	2026-11-21T23:21:28.1476594Z   duration_ms: 0.189636
+tests	JavaScript tests	2026-11-21T23:21:28.1476864Z   type: 'test'
+tests	JavaScript tests	2026-11-21T23:21:28.1477094Z   ...
+tests	JavaScript tests	2026-11-21T23:21:28.1477589Z # Subtest: an explicit field selector is carried on the ticket and record; omitted otherwise
+tests	JavaScript tests	2026-11-21T23:21:28.1478763Z ok 27 - an explicit field selector is carried on the ticket and record; omitted otherwise
+tests	JavaScript tests	2026-11-21T23:21:28.1479200Z   ---
+tests	JavaScript tests	2026-11-21T23:21:28.1479455Z   duration_ms: 0.117017
+tests	JavaScript tests	2026-11-21T23:21:28.1479691Z   type: 'test'
+tests	JavaScript tests	2026-11-21T23:21:28.1479957Z   ...
+tests	JavaScript tests	2026-11-21T23:21:28.1533227Z 1..27
+tests	JavaScript tests	2026-11-21T23:21:28.1533468Z # tests 27
+tests	JavaScript tests	2026-11-21T23:21:28.1538625Z # suites 0
+tests	JavaScript tests	2026-11-21T23:21:28.1549421Z # pass 27
+tests	JavaScript tests	2026-11-21T23:21:28.1549660Z # fail 0
+tests	JavaScript tests	2026-11-21T23:21:28.1549897Z # cancelled 0
+tests	JavaScript tests	2026-11-21T23:21:28.1550133Z # skipped 0
+tests	JavaScript tests	2026-11-21T23:21:28.1550338Z # todo 0
+tests	JavaScript tests	2026-11-21T23:21:28.1550582Z # duration_ms 59.749273
+tests	JavaScript tests	2026-11-21T23:21:28.2080332Z ##[endgroup]
+tests	JavaScript tests	2026-11-21T23:21:28.2080885Z ##[group]tests/admin-feedback-encounter-context.test.cjs
+tests	JavaScript tests	2026-11-21T23:21:28.4580101Z TAP version 13
+tests	JavaScript tests	2026-11-21T23:21:28.5002805Z # Subtest: encounter context starts with the existing uninitialized scope
+tests	JavaScript tests	2026-11-21T23:21:28.5005555Z ok 1 - encounter context starts with the existing uninitialized scope
+tests	JavaScript tests	2026-11-21T23:21:28.5006271Z   ---
+tests	JavaScript tests	2026-11-21T23:21:28.5006830Z   duration_ms: 1.807565
+tests	JavaScript tests	2026-11-21T23:21:28.5007305Z   type: 'test'
+tests	JavaScript tests	2026-11-21T23:21:28.5007673Z   ...
+tests	JavaScript tests	2026-11-21T23:21:28.5008482Z # Subtest: context is a fresh immutable snapshot and cannot mutate feedback scope
+tests	JavaScript tests	2026-11-21T23:21:28.5009332Z ok 2 - context is a fresh immutable snapshot and cannot mutate feedback scope
+tests	JavaScript tests	2026-11-21T23:21:28.5009931Z   ---
+tests	JavaScript tests	2026-11-21T23:21:28.5010308Z   duration_ms: 1.40595
+tests	JavaScript tests	2026-11-21T23:21:28.5010708Z   type: 'test'
+tests	JavaScript tests	2026-11-21T23:21:28.5011068Z   ...
+tests	JavaScript tests	2026-11-21T23:21:28.5011590Z # Subtest: same accepted scope does not advance its epoch
+tests	JavaScript tests	2026-11-21T23:21:28.5014710Z ok 3 - same accepted scope does not advance its epoch
+tests	JavaScript tests	2026-11-21T23:21:28.5015605Z   ---
+tests	JavaScript tests	2026-11-21T23:21:28.5015917Z   duration_ms: 0.636289
+tests	JavaScript tests	2026-11-21T23:21:28.5016356Z   type: 'test'
+tests	JavaScript tests	2026-11-21T23:21:28.5016727Z   ...
+tests	JavaScript tests	2026-11-21T23:21:28.5017335Z # Subtest: leaving and returning to the same identity advances the epoch twice
+tests	JavaScript tests	2026-11-21T23:21:28.5018323Z ok 4 - leaving and returning to the same identity a

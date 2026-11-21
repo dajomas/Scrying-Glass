@@ -1,0 +1,29 @@
+ connections opened: 8; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:55.7151068Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:55.7621801Z Connection audit: test_statblock_clone_kernel.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:55.9110567Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:55.9111326Z Ran 4 tests in 0.083s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:55.9111578Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:55.9111723Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:55.9112489Z test_statblock_clone_kernel.py: connections opened: 4; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:55.9277129Z Connection audit: test_statblock_collection.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:56.1837304Z Statblock collection for added monsters was not started
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:56.1837700Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:56.1838155Z   File "/tmp/scrying-tests-hs3hmxkq/repo/python/scrying_glass_statblock_collecting.py", line 229, in collect_after_add
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:56.1838730Z     return service.collect_new_monsters([m['id'] for m in created], file_bytes=file_bytes, filename=filename)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:56.1839147Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:56.1839625Z   File "/tmp/scrying-tests-hs3hmxkq/repo/tests/test_statblock_collection.py", line 188, in <lambda>
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:56.1840271Z     broken = type('Broken', (), {'collect_new_monsters': lambda *a, **k: 1 / 0})()
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:56.1840598Z                                                                          ~~^~~
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:56.1840859Z ZeroDivisionError: division by zero
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:56.5421454Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:56.5422208Z Ran 8 tests in 0.522s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:56.5422445Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:56.5423032Z test_statblock_collection.py: connections opened: 16; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:56.5930348Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:56.5930743Z Connection audit: test_statblock_combined_setup_operations.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:57.0523171Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:57.0524188Z test_statblock_combined_setup_operations.py: connections opened: 2; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:57.0524556Z Ran 2 tests in 0.379s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:20:57.0524688Z 
+connection-audit	Connection audit 

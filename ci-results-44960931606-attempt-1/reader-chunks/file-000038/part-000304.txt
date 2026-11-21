@@ -1,0 +1,30 @@
+out explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.2315034Z Connection audit: test_ci_publication_branch_allowlists.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.3120659Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.3121129Z Ran 3 tests in 0.020s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.3121454Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.3121568Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.3122051Z test_ci_publication_branch_allowlists.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.3239199Z Connection audit: test_client_campaign.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4130226Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4130896Z Ran 6 tests in 0.028s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4131045Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4131164Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4131604Z test_client_campaign.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4255563Z Connection audit: test_combined_monster_lookup.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4896157Z Combined monster lookup failed for D&D Beyond
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4896932Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4897881Z   File "/tmp/scrying-tests-hs3hmxkq/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4898624Z     found = fetch()
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4899246Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4900323Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4900786Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4901542Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4902228Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4902698Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4903518Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4904175Z     raise effect
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4904552Z RuntimeError: secret one
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4904997Z Combined monster lookup failed for 5e.tools
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:18:35.4905707Z Traceback (most recent call last):
+connection-audit	Connection audit of 

@@ -1,0 +1,32 @@
+st Run actions/checkout@v4	2026-11-21T23:22:05.9029913Z Temporarily overriding HOME='/home/runner/work/_temp/300dac59-353b-4a18-9f0e-890dbb77c507' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-21T23:22:05.9030888Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-21T23:22:05.9034033Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-21T23:22:05.9076907Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-21T23:22:05.9113715Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-21T23:22:05.9432056Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-21T23:22:05.9459468Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-21T23:22:05.9469522Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-21T23:22:05.9515945Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Post Run actions/checkout@v4	2026-11-21T23:22:05.9804227Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	Post Run actions/checkout@v4	2026-11-21T23:22:05.9837955Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+tests	Complete job	﻿2026-11-21T23:22:06.0252928Z Cleaning up orphan processes
+tests	Complete job	2026-11-21T23:22:06.0528556Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+connection-audit	Set up job	﻿2026-11-21T23:16:03.3261841Z Current runner version: '2.338.2'
+connection-audit	Set up job	2026-11-21T23:16:03.3281044Z ##[group]Runner Image Provisioner
+connection-audit	Set up job	2026-11-21T23:16:03.3281773Z Hosted Compute Agent
+connection-audit	Set up job	2026-11-21T23:16:03.3282180Z Version: 20261111.635
+connection-audit	Set up job	2026-11-21T23:16:03.3282683Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+connection-audit	Set up job	2026-11-21T23:16:03.3283197Z Build Date: 2026-11-11T01:49:01Z
+connection-audit	Set up job	2026-11-21T23:16:03.3283693Z Worker ID: {5ecb47fd-3a3b-4bed-9cc1-fceac8e10ec4}
+connection-audit	Set up job	2026-11-21T23:16:03.3284227Z Region: us-west-2
+connection-audit	Set up job	2026-11-21T23:16:03.3284622Z Cloud: AWS
+connection-audit	Set up job	2026-11-21T23:16:03.3285032Z ##[endgroup]
+connection-audit	Set up job	2026-11-21T23:16:03.3286462Z ##[group]Operating System
+connection-audit	Set up job	2026-11-21T23:16:03.3286897Z Ubuntu
+connection-audit	Set up job	2026-11-21T23:16:03.3287320Z 26.04.1
+connection-audit	Set up job	2026-11-21T23:16:03.3287695Z LTS
+connection-audit	Set up job	2026-11-21T23:16:03.3288116Z ##[endgroup]
+connection-audit	Set up job	2026-11-21T23:16:03.3288493Z ##[group]Runner Image
+connection-audit	Set up job	2026-11-21T23:16:03.3288892Z Image: ubuntu-26.04
+connection-audit	Set up job	2026-11-21T23:16:03.3289316Z Version: 20261116.88.1
+connection-audit	Set up job	2026-11-21T23:16:03.3290074Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261116.88/images/ubuntu/Ubu

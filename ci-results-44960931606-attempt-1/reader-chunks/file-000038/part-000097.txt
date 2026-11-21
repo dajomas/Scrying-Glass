@@ -1,0 +1,23 @@
+e (test_max_hp_increase.MaxHpIncreaseAdminTests.test_battle_actions_row_sends_an_increase) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:50.8333254Z test_refresh_of_hp_and_max_hp_sets_both (test_max_hp_increase.RefreshIncreaseTests.test_refresh_of_hp_and_max_hp_sets_both) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:50.9109009Z test_refresh_of_max_hp_only_counts_as_an_increase (test_max_hp_increase.RefreshIncreaseTests.test_refresh_of_max_hp_only_counts_as_an_increase) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:51.4427088Z test_image_rejection_and_refresh_failure (test_monster_bonus_edit_ui.MonsterBonusEditUITests.test_image_rejection_and_refresh_failure) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8767934Z test_native_edit_render_submission_and_character_isolation (test_monster_bonus_edit_ui.MonsterBonusEditUITests.test_native_edit_render_submission_and_character_isolation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8794805Z test_script_is_loaded_after_admin (test_monster_bonus_edit_ui.MonsterBonusEditUITests.test_script_is_loaded_after_admin) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8841651Z test_import_hands_the_file_to_statblock_collection (test_monster_bonus_import.ImportedConstructionTests.test_import_hands_the_file_to_statblock_collection) ... Statblock collection for added monsters was not started
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8842713Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8843429Z   File "/tmp/scrying-tests-eixdvkya/repo/python/scrying_glass_statblock_collecting.py", line 229, in collect_after_add
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8844326Z     return service.collect_new_monsters([m['id'] for m in created], file_bytes=file_bytes, filename=filename)
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8845215Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8845902Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8846458Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8846810Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8847415Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8848004Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8848550Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8849202Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8849688Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8849979Z RuntimeError: collection failed
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8852032Z ok
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8881075Z test_invalid_import_rejected_before_media_lookup_or_append (test_monster_bonus_import.ImportedConstructionTests.test_invalid_import_rejected_before_media_lookup_or_append) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T23:18:52.8893772Z test_legacy_import_uses_exis

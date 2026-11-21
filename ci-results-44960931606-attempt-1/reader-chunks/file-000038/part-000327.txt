@@ -1,0 +1,25 @@
+ of isolated unittest modules	2026-11-21T23:19:33.5486405Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5487204Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5487851Z Combined monster lookup failed for 5e.tools
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5488181Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5488811Z   File "/tmp/scrying-tests-hs3hmxkq/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5489324Z     found = fetch()
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5489846Z   File "/tmp/scrying-tests-hs3hmxkq/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5490418Z     lambda: fivetools_candidates(species, display),
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5490753Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5491303Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5491774Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5492072Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5492560Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5492936Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5493179Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5493581Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5493932Z     raise effect
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5494322Z python.scrying_glass_monster_selection.ProviderError: secret
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5494692Z Statblock collection for added monsters was not started
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5494968Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5495633Z   File "/tmp/scrying-tests-hs3hmxkq/repo/python/scrying_glass_statblock_collecting.py", line 229, in collect_after_add
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5496206Z     return service.collect_new_monsters([m['id'] for m in created], file_bytes=file_bytes, filename=filename)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5496634Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T23:19:33.5497065Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11
