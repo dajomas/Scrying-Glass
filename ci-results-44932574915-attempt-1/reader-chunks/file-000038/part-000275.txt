@@ -1,0 +1,36 @@
+026-11-21T17:54:27.9131218Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-21T17:54:27.9132981Z ##[group]Fetching the repository
+connection-audit	Run actions/checkout@v4	2026-11-21T17:54:27.9143568Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +d1fbf413c0d83d1de2a8f372399d02acdbbc3826:refs/remotes/origin/features/claude
+connection-audit	Run actions/checkout@v4	2026-11-21T17:54:29.0854390Z From https://github.com/dajomas/Scrying-Glass
+connection-audit	Run actions/checkout@v4	2026-11-21T17:54:29.0856762Z  * [new ref]         d1fbf413c0d83d1de2a8f372399d02acdbbc3826 -> origin/features/claude
+connection-audit	Run actions/checkout@v4	2026-11-21T17:54:29.0861408Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-21T17:54:29.0863055Z ##[group]Determining the checkout info
+connection-audit	Run actions/checkout@v4	2026-11-21T17:54:29.0864515Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-21T17:54:29.0867976Z [command]/usr/bin/git sparse-checkout disable
+connection-audit	Run actions/checkout@v4	2026-11-21T17:54:29.0919037Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+connection-audit	Run actions/checkout@v4	2026-11-21T17:54:29.0951141Z ##[group]Checking out the ref
+connection-audit	Run actions/checkout@v4	2026-11-21T17:54:29.0962275Z [command]/usr/bin/git checkout --progress --force -B features/claude refs/remotes/origin/features/claude
+connection-audit	Run actions/checkout@v4	2026-11-21T17:54:29.2750492Z Switched to a new branch 'features/claude'
+connection-audit	Run actions/checkout@v4	2026-11-21T17:54:29.2765800Z branch 'features/claude' set up to track 'origin/features/claude'.
+connection-audit	Run actions/checkout@v4	2026-11-21T17:54:29.2771963Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-21T17:54:29.2820831Z [command]/usr/bin/git log -1 --format=%H
+connection-audit	Run actions/checkout@v4	2026-11-21T17:54:29.2844997Z d1fbf413c0d83d1de2a8f372399d02acdbbc3826
+connection-audit	Run actions/setup-python@v5	﻿2026-11-21T17:54:29.3234873Z ##[group]Run actions/setup-python@v5
+connection-audit	Run actions/setup-python@v5	2026-11-21T17:54:29.3236208Z with:
+connection-audit	Run actions/setup-python@v5	2026-11-21T17:54:29.3237128Z   python-version: 3.14
+connection-audit	Run actions/setup-python@v5	2026-11-21T17:54:29.3238162Z   cache: pip
+connection-audit	Run actions/setup-python@v5	2026-11-21T17:54:29.3239508Z   cache-dependency-path: requirements.txt
+connection-audit	Run actions/setup-python@v5	requirements-test.txt
+connection-audit	Run actions/setup-python@v5	
+connection-audit	Run actions/setup-python@v5	2026-11-21T17:54:29.3241368Z   check-latest: false
+connection-audit	Run actions/setup-python@v5	2026-11-21T17:54:29.3251860Z   token: ***
+connection-audit	Run actions/setup-python@v5	2026-11-21T17:54:29.3252908Z   update-environment: true
+connection-audit	Run actions/setup-python@v5	2026-11-21T17:54:29.3254064Z   allow-prereleases: false
+connection-audit	Run actions/setup-python@v5	2026-11-21T17:54:29.3255175Z   freethreaded: false
+connection-audit	Run actions/setup-python@v5	2026-11-21T17:54:29.3256168Z env:
+connection-audit	Run actions/setup-python@v5	2026-11-21T17:54:29.3258145Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+connection-audit	Run actions/setup-python@v5	2026-11-21T17:54:29.3260603Z ##[endgroup]
+connection-audit	Run actions/setup-python@v5	2026-11-21T17:54:29.4707892Z ##[group]Installed versions
+connection-audit	Run actions/setup-python@v5	2026-11-21T17:54:29.4807993Z (node:2588) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+connection-audit	Run actions/setup-python@v5	2026-11-21T17:54:29.4813989Z (Use `node --trace-deprecation ...` to show where the warning was created)
+connection-audit	Run actions/setup-python@v5	2026-11-21T17:54:29.4824819

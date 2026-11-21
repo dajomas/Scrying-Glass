@@ -1,0 +1,28 @@
+ction audit: test_monster_refresh_scope.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:31.5276984Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:31.5277754Z Ran 4 tests in 0.189s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:31.5278131Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:31.5278273Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:31.5291145Z test_monster_refresh_scope.py: connections opened: 9; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:31.5859288Z Connection audit: test_monster_refresh_sole_candidate.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:33.6601099Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:33.6601854Z Ran 5 tests in 1.688s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:33.6602090Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:33.6602216Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:33.6620976Z test_monster_refresh_sole_candidate.py: connections opened: 10; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:33.7451230Z Connection audit: test_monster_refresh_sources.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:34.0661334Z Selected monster source refresh failed for m
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:34.0662097Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:34.0663352Z   File "/tmp/scrying-tests-hpytshk7/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:34.0664554Z     candidate = _fetch_exact(context, monster, identity)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:34.0665732Z   File "/tmp/scrying-tests-hpytshk7/repo/python/scrying_glass_monster_refresh_sources.py", line 82, in _fetch_exact
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:34.0667555Z ##[error]    raise ValueError('Provider disabled')
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:34.0670646Z ValueError: Provider disabled
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:34.0679384Z Selected monster source refresh failed for m
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:34.0680120Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:34.0680881Z   File "/tmp/scrying-tests-hpytshk7/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:34.0681885Z     candidate = _fetch_exact(context, monster, identity)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:34.0682914Z   File "/tmp/scrying-tests-hpytshk7/repo/python/scrying_glass_monster_refresh_sources.py", line 93, in _fetch_exact
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:34.0684185Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:34.0685370Z ValueError: Retained source missing or ambiguous
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:34.0740682Z Selected monster source refresh failed

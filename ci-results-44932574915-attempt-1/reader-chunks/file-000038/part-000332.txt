@@ -1,0 +1,27 @@
+ion-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.0122370Z test_monster_roll_order.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.0125111Z Ran 15 tests in 0.002s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.0125487Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.0125633Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.0242163Z Connection audit: test_monster_roll_order_handlers.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.3581835Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.3583175Z test_monster_roll_order_handlers.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.3584193Z Ran 6 tests in 0.019s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.3584479Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.3584644Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.3967774Z Connection audit: test_monster_source_catalog.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.7434303Z Open5e document list failed
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.7434991Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.7436069Z   File "/tmp/scrying-tests-hpytshk7/repo/python/scrying_glass_source_catalog.py", line 31, in sources
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.7437210Z     catalog = open5e.documents(open5e.base_url(display))
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.7438369Z   File "/tmp/scrying-tests-hpytshk7/repo/python/scrying_glass_open5e.py", line 101, in documents
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.7439707Z     for item in _pages(base + "/documents/?" + urlencode({"limit": 200, "format": "json"}), base):
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.7441022Z                 ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.7442177Z   File "/tmp/scrying-tests-hpytshk7/repo/python/scrying_glass_open5e.py", line 79, in _pages
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.7443108Z     data = load_json(url)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.7444152Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.7445196Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.7445808Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.7446909Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.7448007Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.7448687Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:59:35.7450033Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, i

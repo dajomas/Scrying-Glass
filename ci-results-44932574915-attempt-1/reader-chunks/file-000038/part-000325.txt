@@ -1,0 +1,28 @@
+Connection audit of isolated unittest modules	2026-11-21T17:58:39.6831844Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6832506Z     raise effect
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6832887Z python.scrying_glass_monster_selection.ProviderError: secret
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6960963Z Statblock collection for added monsters was not started
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6961869Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6963290Z   File "/tmp/scrying-tests-hpytshk7/repo/python/scrying_glass_statblock_collecting.py", line 229, in collect_after_add
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6965110Z     return service.collect_new_monsters([m['id'] for m in created], file_bytes=file_bytes, filename=filename)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6966144Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6966965Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6967633Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6968031Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6968879Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6969576Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6970250Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6971000Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6971645Z     raise effect
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6971958Z RuntimeError: collection failed
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6997405Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6998107Z Ran 13 tests in 0.033s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6998354Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.6998503Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.7000539Z test_monster_candidate_selection.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:39.7413446Z Connection audit: test_monster_default_color.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:40.1481140Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:40.1481967Z Ran 11 tests in 0.301s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:40.1482263Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T17:58:40.1482433Z OK
+connection-a
