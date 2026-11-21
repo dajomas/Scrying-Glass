@@ -135,7 +135,7 @@ class BattleActionRow(_Utf8Model):
     stat: Literal['max_hp','strength','dexterity','constitution','intelligence','wisdom','charisma'] | None = None
     source_id: str | None = Field(default=None, min_length=1, max_length=100)
     target_id: str = Field(min_length=1, max_length=100)
-    action: Literal["damage", "heal", "buff", "debuff", "reduce-stat", "increase-max-hp"]
+    action: Literal["damage", "heal", "buff", "debuff", "reduce-stat", "increase-max-hp", "temp-hp", "temp-hp-replace"]
     amount: int | None = Field(default=None, ge=1, le=99999)
     critical_hit: bool = False
 

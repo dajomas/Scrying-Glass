@@ -56,4 +56,5 @@ SG-TODO-024 before it: CI 44932574915 green on d1fbf41.
   1 browser test of the Battle Actions row.
 - Full unittest suite: 2,124 tests, no new failures against the baseline in this sandbox;
   Node tests for the touched scripts as before; connection check clean.
-- CI and the user's check are pending; e2e runs at the end of group 3.
+- CI 44936112445 green on eb8f91e (both jobs; the two refresh tests ran there). User check
+  pending; e2e runs at the end of group 3.

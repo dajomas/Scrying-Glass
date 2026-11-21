@@ -4,7 +4,7 @@
 
 ## Task and status
 
-SG-TODO-027 - decided 2026-11-21, implementation group 3 (last item). Requested by the
+SG-TODO-027 - implemented 2026-11-21 on `features/claude` ([handover 710](../handover/710-temporary-hp-grant.md)); CI and user check pending. Decided 2026-11-21, implementation group 3 (last item). Requested by the
 user 2026-11-20; the user asked for the D&D 5e rules to be checked.
 
 ## Request

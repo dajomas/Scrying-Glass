@@ -146,5 +146,18 @@ def apply_hp(item,delta,*,absorb=True,critical=False):
     sync_health(item)
     return result
 
+def grant_temp_hp(item,amount,*,replace=False):
+    """SG-TODO-027, 5e: temporary HP never stack. Keep the higher value unless the DM replaces.
+
+    Not healing: current HP, life state and death saves stay as they are, also at 0 HP.
+    Returns (before, after).
+    """
+    if type(amount) is not int or not 1<=amount<=99999 or type(replace) is not bool: raise ValueError('Invalid temporary HP')
+    normalize_features(item)
+    if not tracks_hp(item): raise ValueError(f"HP is not tracked for {item.get('name')}")
+    if permanently_dead(item): raise ValueError(f"{item.get('name')} is dead; explicitly recover before granting temporary HP")
+    before=item['temp_hp'];item['temp_hp']=amount if replace else max(before,amount)
+    return before,item['temp_hp']
+
 def public_features(item):
     return {'life_state':item.get('life_state','standing' if item.get('alive',True) else 'down'),'effects':[{'name':e['name']} for e in item.get('effects',[]) if e.get('public')]}

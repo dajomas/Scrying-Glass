@@ -236,6 +236,8 @@ States: standing, down, stable, dead. Explicit recovery raises HP to at least 1 
 
 Temporary HP is a separate nonnegative pool: Set replaces, not stacks. Damage consumes it first unless bypass selected. Healing caps at max HP and does not replenish temporary HP. Absolute HP corrections bypass attack logic.
 
+To grant temporary HP during a battle, choose Temporary HP (keep higher) or Temporary HP (replace) as the Action of a target row in Battle actions. As in the 5e rules temporary HP never stack: keep higher takes the new amount only when it is higher than what the target has; replace always takes it, also when it is lower. Granting is not healing, so a creature at 0 HP keeps its life state and death saves. Temporary HP last until damage uses them up, you change them in Encounter tools or you use Reset; End battle leaves them. Reactions, dead creatures and characters whose HP is not tracked cannot get them. The activity log shows, for example, `Goblin: Temporary HP 6 → 6 (kept higher); source: Cleric`.
+
 For character damage events:
 - Clamp HP at zero; do not accumulate negative HP.
 - Excess damage at least maximum HP causes instant death.
