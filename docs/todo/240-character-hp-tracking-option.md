@@ -4,7 +4,7 @@
 
 ## Task and status
 
-SG-TODO-024 - decided 2026-11-21, implementation group 3 (first item). Requested by the
+SG-TODO-024 - implemented 2026-11-21 on `features/claude` ([handover 690](../handover/690-character-hp-tracking.md)); CI and user check pending. Decided 2026-11-21, implementation group 3 (first item). Requested by the
 user 2026-11-20.
 
 ## Request

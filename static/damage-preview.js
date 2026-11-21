@@ -1,5 +1,6 @@
 /* Pure preview; the server remains authoritative. No negative HP balance. */
 window.scryingDamagePreview=function(item,delta,absorb=true) {
+    if(window.scryingTracksHp&&!window.scryingTracksHp(item))return `${item.name}: HP not tracked; the ${delta<0?'damage':'healing'} is only logged. Apply?`;
     const hp=Math.max(0,item.hp||0),temp=item.temp_hp||0,maximum=Math.max(0,item.max_hp||0);
     const character=!('monster_species' in item);
     const dead=item.life_state==='dead'||(character&&(item.death_failures||0)>=3);

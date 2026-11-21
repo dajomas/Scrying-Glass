@@ -77,6 +77,8 @@ Clients with no grants see an access message; one campaign opens automatically; 
 
 Characters belong to the campaign, not setup snapshots. Add/edit name, color, HP, maximum HP and initiative. CSV imports append to the roster. Removing a character changes the roster across that campaign's setups. In the roster, HP is read-only; use Edit to change Current HP and Max HP. Initiative remains editable inline.
 
+Track HP (on by default) can be switched off per character in Add character and in Edit, or for several characters with the Bulk actions Track HP and Do not track HP. Use it for players who keep their own HP. For an untracked character the Admin shows "Not tracked" instead of HP and asks for none; damage and healing are still recorded in the activity log, but current, maximum and temporary HP never change. Set its life state and death saves yourself in Encounter tools or with the Alive button; nothing changes automatically from HP. A Max HP reduction and temporary HP are refused for it. The stored HP is kept, so switching Track HP back on continues from it.
+
 | Setup action | Result |
 |---|---|
 | New | Clears monsters/order/log; retains campaign characters |

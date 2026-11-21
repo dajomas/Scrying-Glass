@@ -142,9 +142,12 @@ document.querySelector('#characterForm').onsubmit = async event => {
     const form = event.currentTarget || event.target;
     return submitEntryForm(form, 'characters', 'character.create', () => {
         const payload = new FormData(form);
+        const box = form.elements.track_hp, track = box ? box.checked : true;  // SG-TODO-024
         const data = {
-            name: payload.get('name'), color: payload.get('color'), hp: +payload.get('hp'),
+            name: payload.get('name'), color: payload.get('color'),
+            ...(track ? {hp: +payload.get('hp')} : {}),
             initiative: payload.get('initiative') === '' ? null : +payload.get('initiative'),
+            ...(box ? {track_hp: track} : {}),
         };
         return {
             send: () => request('/api/characters', {method: 'POST',

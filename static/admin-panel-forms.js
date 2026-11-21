@@ -85,7 +85,7 @@
             }
         }
         group(byId('characterForm'), 'Character details', ['characterName', 'characterColor']);
-        group(byId('characterForm'), 'Starting statistics', ['characterHp', 'characterInitiative']);
+        group(byId('characterForm'), 'Starting statistics', ['characterTrackHp', 'characterHp', 'characterInitiative']);
         group(byId('monsterForm'), 'Monster identity', ['monsterName', 'monsterSpecies']);
         group(byId('monsterForm'), 'Combat statistics', ['monsterAc', 'monsterHpRangeStart', 'monsterHpRangeEnd', 'monsterInitiativeBonus', 'monsterQuantity']);
         hpHelp(byId('monsterHpRangeStart')?.closest('fieldset.sg-field-group'), byId('monsterHpRangeHelp'));

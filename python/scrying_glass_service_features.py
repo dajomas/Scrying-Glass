@@ -145,13 +145,15 @@ class FeaturesService:
         delta=body.get('hp_delta')
         if 'hp_delta' in body and (type(delta) is not int or not -99999<=delta<=99999): raise self.context.HTTPException(422,'Invalid HP delta')
         if 'absorb_temp' in body and type(body['absorb_temp']) is not bool: raise self.context.HTTPException(422,'absorb_temp must be boolean')
+        tracked=target.get('track_hp') is not False or 'monster_species' in target  # tracks_hp, inline (run extracted)
+        if not tracked and body.get('temp_hp',target['temp_hp'])!=target['temp_hp']: raise self.context.HTTPException(422,'HP is not tracked for '+target['name'])
         if delta is not None: apply_hp(candidate,delta,absorb=body.get('absorb_temp',True))
         for key in allowed-{'hp_delta','absorb_temp'}:
             if key in body: candidate[key]=body[key]
         state=body.get('life_state')
         if state=='standing':
-            candidate['hp']=max(candidate['hp'],1);candidate['death_successes']=candidate['death_failures']=0
-        elif state in ('down','stable'): candidate['hp']=min(candidate['hp'],0)
+            candidate['hp']=max(candidate['hp'],int(tracked));candidate['death_successes']=candidate['death_failures']=0
+        elif state in ('down','stable') and tracked: candidate['hp']=min(candidate['hp'],0)
         if 'death_successes' in body or 'death_failures' in body:
             if candidate.get('life_state') not in ('down','stable'): raise self.context.HTTPException(422,'Death-save counters require down/stable state')
             if candidate['death_failures']==3: candidate['life_state']='dead'
@@ -169,6 +171,7 @@ class FeaturesService:
         if can_take_turn(target): self.context.insert_into_battle_order(target)
         for action,amount,note in feature_changes(before,target,delta,target.get('name')):
             self.log(action,target,amount,note=note)
+        if delta and not tracked: self.log('heal' if delta>0 else 'damage',target,abs(delta),note=target['name']+': HP not tracked')
         await self.persist();return target
     async def edit_statistics(self,ident,body):
         from .scrying_glass_statistics_service import edit_statistics

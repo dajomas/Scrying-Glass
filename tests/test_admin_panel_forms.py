@@ -13,7 +13,7 @@ class PanelFormsSourceTests(unittest.TestCase):
         end = (ROOT / 'templates/admin/190_document_end.html').read_text(encoding='utf-8')
         self.assertEqual(head.count('/static/admin-panel-forms.css?v=3'), 1)
         self.assertLess(head.index('/static/admin-foundations.css'), head.index('/static/admin-panel-forms.css'))
-        self.assertEqual(end.count('/static/admin-panel-forms.js?v=2'), 1)
+        self.assertEqual(end.count('/static/admin-panel-forms.js?v=3'), 1)
         self.assertLess(end.index('/static/combatant-row-layout.js'), end.index('/static/admin-panel-forms.js'))
         source = (ROOT / 'static/admin-panel-forms.js').read_text(encoding='utf-8')
         for forbidden in ('fetch(', 'innerHTML', 'cloneNode', '.reset(', '.onsubmit =', 'localStorage'):

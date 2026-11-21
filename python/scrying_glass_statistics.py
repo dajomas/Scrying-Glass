@@ -52,6 +52,8 @@ def reduce_stat(item, stat, amount, source_id=None):
     if stat not in STATS:
         raise ValueError('Unsupported reduction statistic')
     integer(amount, 'Reduction amount', maximum=99999, minimum=1)
+    if stat == 'max_hp' and item.get('track_hp') is False and 'monster_species' not in item:
+        raise ValueError(f"HP is not tracked for {item.get('name')}")  # SG-TODO-024
     item.setdefault('base_max_hp', item['max_hp'])
     effect = dict(id=uuid.uuid4().hex, name=LABELS[stat] + ' reduction', source_id=source_id,
                   notes='', public=False, concentration=False, timing='manual',
