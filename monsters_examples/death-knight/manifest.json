@@ -1,0 +1,113 @@
+{
+  "created_utc": "2026-11-17T12:56:49.924787+00:00",
+  "species": "Death Knight",
+  "probe": "sizetest/monster_source_probe.py",
+  "requests": [
+    {
+      "url": "https://api.open5e.com/v2/creatures/?name__iexact=Death+Knight&limit=100&format=json",
+      "label": "open5e-list-0",
+      "started_utc": "2026-11-17T12:56:41.755564+00:00",
+      "status": 200,
+      "final_url": "https://api.open5e.com/v2/creatures/?name__iexact=Death+Knight&limit=100&format=json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 5803,
+      "sha256": "1119b4ad7d968d7ccb30ae6e354500d34eef4b05b3fbca37946a01730a745e41",
+      "truncated": false,
+      "file": "raw/001-open5e-list-0.json",
+      "elapsed_seconds": 0.821
+    },
+    {
+      "url": "https://api.open5e.com/v2/creatures/bfrd_death-knight/?format=json",
+      "label": "open5e-detail-1",
+      "started_utc": "2026-11-17T12:56:43.576334+00:00",
+      "status": 200,
+      "final_url": "https://api.open5e.com/v2/creatures/bfrd_death-knight/?format=json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 5751,
+      "sha256": "d8dec3548715898b741e76da86f0cfbcf626d92601aa49b00fcb1d13b513cfd6",
+      "truncated": false,
+      "file": "raw/002-open5e-detail-1.json",
+      "elapsed_seconds": 0.653
+    },
+    {
+      "url": "https://www.dndbeyond.com/monsters?filter-search=Death+Knight",
+      "label": "dndbeyond-search",
+      "started_utc": "2026-11-17T12:56:45.229648+00:00",
+      "status": 200,
+      "final_url": "https://www.dndbeyond.com/monsters?filter-search=Death+Knight",
+      "content_type": "text/html; charset=utf-8",
+      "content_encoding": null,
+      "bytes": 379509,
+      "sha256": "4ef09141f04d79980e282dc500d40b8d7dbc8446459e210bf4aa5527741f2304",
+      "truncated": false,
+      "file": "raw/003-dndbeyond-search.html",
+      "elapsed_seconds": 0.532
+    },
+    {
+      "url": "https://www.dndbeyond.com/monsters/5194963-death-knight",
+      "label": "dndbeyond-detail-0",
+      "started_utc": "2026-11-17T12:56:46.761904+00:00",
+      "status": 200,
+      "final_url": "https://marketplace.dndbeyond.com/category/3711000",
+      "content_type": "text/html; charset=utf-8",
+      "content_encoding": null,
+      "bytes": 1019778,
+      "sha256": "062136701a8ee5e9235c501e872da11e27126a0fb8e61a370f5a4205392ea321",
+      "truncated": false,
+      "file": "raw/004-dndbeyond-detail-0.html",
+      "elapsed_seconds": 0.893
+    },
+    {
+      "url": "https://www.dndbeyond.com/monsters/17128-death-knight",
+      "label": "dndbeyond-detail-1",
+      "started_utc": "2026-11-17T12:56:48.655291+00:00",
+      "status": 200,
+      "final_url": "https://marketplace.dndbeyond.com/category/monster-manual",
+      "content_type": "text/html; charset=utf-8",
+      "content_encoding": null,
+      "bytes": 1074497,
+      "sha256": "61632dc0305ca2bc40ef04ae12b075bd79f60656e8a989eb80a40cc456cd072e",
+      "truncated": false,
+      "file": "raw/005-dndbeyond-detail-1.html",
+      "elapsed_seconds": 1.255
+    }
+  ],
+  "records": [
+    {
+      "provider": "open5e",
+      "identity": {
+        "key": "bfrd_death-knight",
+        "document": {
+          "name": "Black Flag SRD",
+          "key": "bfrd",
+          "type": "SOURCE",
+          "display_name": "Black Flag SRD",
+          "publisher": {
+            "name": "Kobold Press",
+            "key": "kobold-press"
+          },
+          "gamesystem": {
+            "name": "5th Edition 2014",
+            "key": "5e-2014"
+          },
+          "permalink": "https://koboldpress.com/black-flag-reference-document/"
+        }
+      },
+      "file": "001-open5e.json",
+      "bytes": 5751,
+      "note": "Open5e v2 creature detail"
+    }
+  ],
+  "issues": [
+    {
+      "provider": "dndbeyond",
+      "error": "/monsters/5194963-death-knight: no statblock root (access gate, changed markup or absent content); raw page saved"
+    },
+    {
+      "provider": "dndbeyond",
+      "error": "/monsters/17128-death-knight: no statblock root (access gate, changed markup or absent content); raw page saved"
+    }
+  ]
+}
