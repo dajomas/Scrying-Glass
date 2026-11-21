@@ -58,6 +58,26 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 39. [Clear selection next to Select all](docs/todo/320-clear-selection-position.md) - SG-TODO-032, proposed (requested 2026-11-20). In the Characters and Monsters rosters, Clear selection moves to the right of Select all.
 40. [5e.tools monster versions and generated magic-item variants](docs/todo/330-fivetools-variants.md) - SG-TODO-033, proposed (split off from SG-TODO-022 by the user 2026-11-20). Offer 5e.tools `_versions` in Find statblock and generate magic-item variants (04e.2) so those statblocks are no longer partial.
 
+## Implementation order - agreed 2026-11-21
+
+Agreed by the user on 2026-11-21 (branch `features/claude`). Each group is delivered,
+CI-checked and shown to the user before the next one starts.
+
+1. **Quick wins:** SG-TODO-028 (End battle hides combatants), SG-TODO-029 (distinct default
+   monster color), SG-TODO-030 (HP help folded), SG-TODO-031 (Refresh from source above
+   Remove), SG-TODO-032 (Clear selection next to Select all). Decisions for 028 and 029 are
+   recorded in their task files.
+2. **SG-TODO-023 first half:** measure the test runs and decide on the duplicate CI pass.
+3. **HP rules:** decide SG-TODO-024 to 027 together, then deliver 024, then 025 + 026, then
+   027; one e2e run at the end of the group.
+4. **SG-TODO-033:** 5e.tools monster versions first, generated magic-item variants second.
+5. **SG-TODO-023 second half:** test consolidation, after the feature work.
+
+Note: `features/claude` no longer contains the captured provider evidence
+(`monsters_examples/`, `external_sourcefiles/`, `sizetest/`); the tests that use it skip
+there (13 unittest skips, the e2e statblock-import tests). The last runs with that
+evidence are CI 44880108435 and e2e 20261121T065222Z on `features/claude-statblock`.
+
 ## Maintenance
 
 Follow `PERPLEXITY_INSTRUCTIONS.md`. Add or update task details under `docs/todo/`, preserve stable task identifiers, and update this index in the same commit when sections are added, renamed, removed or reordered. Every section must link back to this index. Do not mark tasks complete before their acceptance criteria and required validation are satisfied.

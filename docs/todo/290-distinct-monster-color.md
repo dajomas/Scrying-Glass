@@ -4,7 +4,7 @@
 
 ## Task and status
 
-SG-TODO-029 - proposed, requested by the user 2026-11-20. No owner, priority or
+SG-TODO-029 - agreed for implementation group 1 (2026-11-21), originally requested by the user 2026-11-20. No owner, priority or
 deadline has been agreed.
 
 ## Request
@@ -22,16 +22,17 @@ any monster in the current battle setup.
   `python/scrying_glass_monster_csv.py`).
 - Nothing compares the default with the colors already in the battle setup.
 
-## Open decisions (to agree before implementation)
+## Decisions (user, 2026-11-21)
 
-1. Which forms: Add Monster only, or also Import .monster (and CSV rows without a color).
-2. When the default is chosen: when the form opens, after every add (so the next monster
-   gets the next free color), and when the battle setup changes (load, remove, edit).
-3. A color the user picked by hand stays as it is (proposed: yes, until the form is reset).
-4. The palette: a fixed list of clearly different colors that stay readable on the
-   Admin, Client Display and statblock tile backgrounds, and what happens when all are in
-   use (proposed: the least used color, or a generated one far from those in use).
-5. Whether "distinct" also considers the character colors.
+1. Forms: Add Monster, Import .monster **and** CSV rows without a color (each such CSV
+   row gets the next free color; copies from one row share it).
+2. Palette: a curated list of 12 clearly different colors, readable with white text and
+   on the dark displays; the first unused one is the default.
+3. When all 12 are in use: the palette color used by the fewest monsters.
+4. Only monsters in the current battle setup count (not characters).
+5. Timing: the default is recalculated when the page loads, after every add and when the
+   battle setup changes (load, remove, edit); a color picked by hand is kept until the
+   form is reset.
 
 ## Acceptance criteria (proposed)
 

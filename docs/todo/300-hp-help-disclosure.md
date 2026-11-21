@@ -4,7 +4,7 @@
 
 ## Task and status
 
-SG-TODO-030 - proposed, requested by the user 2026-11-20. No owner, priority or
+SG-TODO-030 - agreed for implementation group 1 (2026-11-21), originally requested by the user 2026-11-20. No owner, priority or
 deadline has been agreed.
 
 ## Request

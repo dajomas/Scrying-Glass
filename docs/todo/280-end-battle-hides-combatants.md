@@ -4,7 +4,7 @@
 
 ## Task and status
 
-SG-TODO-028 - proposed, requested by the user 2026-11-20. No owner, priority or
+SG-TODO-028 - agreed for implementation group 1 (2026-11-21), originally requested by the user 2026-11-20. No owner, priority or
 deadline has been agreed.
 
 ## Request
@@ -21,11 +21,11 @@ and characters.
   not alive to `visible = True`. A later health update could make a hidden dead or
   downed creature visible again, so the implementation has to take this into account.
 
-## Open decisions (to agree before implementation)
+## Decisions (user, 2026-11-21)
 
-1. Whether lairs are hidden too. Proposed: yes, matching Reset all.
-2. Whether dead or downed creatures stay hidden after End battle until the DM shows
-   them, despite the `sync_health` rule.
+1. Lairs are hidden too, matching Reset all.
+2. Dead or downed creatures stay hidden after End battle until the DM shows them; during a
+   battle the existing "not alive is visible" rule of `sync_health` still applies.
 
 ## Acceptance criteria (proposed)
 
