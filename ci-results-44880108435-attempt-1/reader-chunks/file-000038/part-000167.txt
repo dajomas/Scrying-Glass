@@ -1,0 +1,49 @@
+st as an individual reset request failure
+tests	JavaScript tests	2026-11-21T07:29:19.5003957Z   ---
+tests	JavaScript tests	2026-11-21T07:29:19.5004221Z   duration_ms: 1.022326
+tests	JavaScript tests	2026-11-21T07:29:19.5004456Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:19.5004657Z   ...
+tests	JavaScript tests	2026-11-21T07:29:19.5065122Z 1..17
+tests	JavaScript tests	2026-11-21T07:29:19.5065387Z # tests 17
+tests	JavaScript tests	2026-11-21T07:29:19.5065580Z # suites 0
+tests	JavaScript tests	2026-11-21T07:29:19.5065772Z # pass 17
+tests	JavaScript tests	2026-11-21T07:29:19.5065958Z # fail 0
+tests	JavaScript tests	2026-11-21T07:29:19.5066151Z # cancelled 0
+tests	JavaScript tests	2026-11-21T07:29:19.5066357Z # skipped 0
+tests	JavaScript tests	2026-11-21T07:29:19.5066537Z # todo 0
+tests	JavaScript tests	2026-11-21T07:29:19.5066755Z # duration_ms 67.140112
+tests	JavaScript tests	2026-11-21T07:29:19.5348049Z ##[endgroup]
+tests	JavaScript tests	2026-11-21T07:29:19.5348475Z ##[group]tests/admin-end-feedback.test.cjs
+tests	JavaScript tests	2026-11-21T07:29:19.6970713Z TAP version 13
+tests	JavaScript tests	2026-11-21T07:29:19.7371407Z # Subtest: End asset is deferred after core and Start validation, exactly once
+tests	JavaScript tests	2026-11-21T07:29:19.7374483Z ok 1 - End asset is deferred after core and Start validation, exactly once
+tests	JavaScript tests	2026-11-21T07:29:19.7374955Z   ---
+tests	JavaScript tests	2026-11-21T07:29:19.7376138Z   duration_ms: 0.764798
+tests	JavaScript tests	2026-11-21T07:29:19.7376515Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:19.7376788Z   ...
+tests	JavaScript tests	2026-11-21T07:29:19.7377755Z # Subtest: empty battle produces a persistent validation error without confirmation or POST
+tests	JavaScript tests	2026-11-21T07:29:19.7378717Z ok 2 - empty battle produces a persistent validation error without confirmation or POST
+tests	JavaScript tests	2026-11-21T07:29:19.7379268Z   ---
+tests	JavaScript tests	2026-11-21T07:29:19.7379552Z   duration_ms: 2.460588
+tests	JavaScript tests	2026-11-21T07:29:19.7379886Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:19.7380267Z   ...
+tests	JavaScript tests	2026-11-21T07:29:19.7381156Z # Subtest: cancelling confirmation leaves existing End errors intact
+tests	JavaScript tests	2026-11-21T07:29:19.7382972Z ok 3 - cancelling confirmation leaves existing End errors intact
+tests	JavaScript tests	2026-11-21T07:29:19.7383821Z   ---
+tests	JavaScript tests	2026-11-21T07:29:19.7384058Z   duration_ms: 1.090921
+tests	JavaScript tests	2026-11-21T07:29:19.7384321Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:19.7384576Z   ...
+tests	JavaScript tests	2026-11-21T07:29:19.7385097Z # Subtest: confirmed valid attempt resolves validation before sending the unchanged POST
+tests	JavaScript tests	2026-11-21T07:29:19.7391537Z ok 4 - confirmed valid attempt resolves validation before sending the unchanged POST
+tests	JavaScript tests	2026-11-21T07:29:19.7392095Z   ---
+tests	JavaScript tests	2026-11-21T07:29:19.7392378Z   duration_ms: 0.868399
+tests	JavaScript tests	2026-11-21T07:29:19.7392680Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:19.7392960Z   ...
+tests	JavaScript tests	2026-11-21T07:29:19.7393432Z # Subtest: request failure stays persistent and does not refresh or retry
+tests	JavaScript tests	2026-11-21T07:29:19.7394094Z ok 5 - request failure stays persistent and does not refresh or retry
+tests	JavaScript tests	2026-11-21T07:29:19.7394522Z   ---
+tests	JavaScript tests	2026-11-21T07:29:19.7394798Z   duration_ms: 0.685385
+tests	JavaScript tests	2026-11-21T07:29:19.7395079Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:19.7395317Z   ...
+tests	JavaScript tests	2026-11-21T07:29:19.7395826Z # Subtest: successful retry replaces only its request error and uses the global five-second deadline
+tests	JavaScript tests	2026-11-21T07:29:19.7396565Z ok 6 - successful retry replaces only its request error and uses the global five-second dead

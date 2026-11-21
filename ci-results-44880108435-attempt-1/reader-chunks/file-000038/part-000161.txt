@@ -1,0 +1,36 @@
+1T07:29:17.4757399Z ##[group]Run python tools/run_split_tests.py -- python -m pytest -q tests/test_death_save_validation_2ba6607.py tests/test_slug_truncation_82860c4.py
+tests	Pytest regression modules	2026-11-21T07:29:17.4758169Z ^[[36;1mpython tools/run_split_tests.py -- python -m pytest -q tests/test_death_save_validation_2ba6607.py tests/test_slug_truncation_82860c4.py^[[0m
+tests	Pytest regression modules	2026-11-21T07:29:17.4777594Z shell: /usr/bin/bash -e {0}
+tests	Pytest regression modules	2026-11-21T07:29:17.4777826Z env:
+tests	Pytest regression modules	2026-11-21T07:29:17.4778175Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Pytest regression modules	2026-11-21T07:29:17.4778616Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-21T07:29:17.4778940Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Pytest regression modules	2026-11-21T07:29:17.4779259Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-21T07:29:17.4779556Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-21T07:29:17.4779844Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Pytest regression modules	2026-11-21T07:29:17.4780186Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Pytest regression modules	2026-11-21T07:29:17.4780740Z ##[endgroup]
+tests	Pytest regression modules	2026-11-21T07:29:18.9247876Z ...........................................                              [100%]
+tests	Pytest regression modules	2026-11-21T07:29:18.9248685Z 43 passed in 0.89s
+tests	JavaScript tests	﻿2026-11-21T07:29:19.0211786Z ##[group]Run status=0
+tests	JavaScript tests	2026-11-21T07:29:19.0212042Z ^[[36;1mstatus=0^[[0m
+tests	JavaScript tests	2026-11-21T07:29:19.0212248Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	JavaScript tests	2026-11-21T07:29:19.0212479Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	JavaScript tests	2026-11-21T07:29:19.0212765Z ^[[36;1m  python tools/run_split_tests.py -- node --test "$test" || status=1^[[0m
+tests	JavaScript tests	2026-11-21T07:29:19.0213068Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	JavaScript tests	2026-11-21T07:29:19.0213361Z ^[[36;1mdone < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)^[[0m
+tests	JavaScript tests	2026-11-21T07:29:19.0213671Z ^[[36;1mexit "$status"^[[0m
+tests	JavaScript tests	2026-11-21T07:29:19.0236135Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	JavaScript tests	2026-11-21T07:29:19.0236425Z env:
+tests	JavaScript tests	2026-11-21T07:29:19.0236768Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	JavaScript tests	2026-11-21T07:29:19.0237232Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-21T07:29:19.0237559Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	JavaScript tests	2026-11-21T07:29:19.0237930Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-21T07:29:19.0238228Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-21T07:29:19.0238515Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-21T07:29:19.0238811Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	JavaScript tests	2026-11-21T07:29:19.0239075Z ##[endgroup]
+tests	JavaScript tests	2026-11-21T07:29:19.0308393Z ##[group]tests/admin-activity-log-clear-feedback.test.cjs
+tests	JavaScript tests	2026-11-21T07:29:19.1957190Z TAP version 13
+tests	JavaScript tests	2026-11-21T07:29:19.2439102Z # Subtest: cancel retains count confirmation, existing error and pending identity
+tests	JavaScript tests	2026-11-21T07:29:19.2439932Z ok 1 - cancel retains co

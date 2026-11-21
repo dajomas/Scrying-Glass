@@ -1,0 +1,47 @@
+84Z ##[group]tests/battle-action-global-followup.test.cjs
+tests	JavaScript tests	2026-11-21T07:29:25.0911567Z TAP version 13
+tests	JavaScript tests	2026-11-21T07:29:25.1362381Z # Subtest: active-target failure is explicit persistent error, not legacy feedback
+tests	JavaScript tests	2026-11-21T07:29:25.1363395Z ok 1 - active-target failure is explicit persistent error, not legacy feedback
+tests	JavaScript tests	2026-11-21T07:29:25.1364026Z   ---
+tests	JavaScript tests	2026-11-21T07:29:25.1364725Z   duration_ms: 2.458079
+tests	JavaScript tests	2026-11-21T07:29:25.1365094Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:25.1365345Z   ...
+tests	JavaScript tests	2026-11-21T07:29:25.1365785Z # Subtest: living target failure is independent from active targets
+tests	JavaScript tests	2026-11-21T07:29:25.1366423Z ok 2 - living target failure is independent from active targets
+tests	JavaScript tests	2026-11-21T07:29:25.1366814Z   ---
+tests	JavaScript tests	2026-11-21T07:29:25.1367057Z   duration_ms: 1.471913
+tests	JavaScript tests	2026-11-21T07:29:25.1367321Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:25.1367553Z   ...
+tests	JavaScript tests	2026-11-21T07:29:25.1367963Z # Subtest: repeated target failure replaces only its own record
+tests	JavaScript tests	2026-11-21T07:29:25.1368511Z ok 3 - repeated target failure replaces only its own record
+tests	JavaScript tests	2026-11-21T07:29:25.1368903Z   ---
+tests	JavaScript tests	2026-11-21T07:29:25.1369109Z   duration_ms: 0.74242
+tests	JavaScript tests	2026-11-21T07:29:25.1369355Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:25.1369575Z   ...
+tests	JavaScript tests	2026-11-21T07:29:25.1369970Z # Subtest: busy target handlers do not change feedback or rows
+tests	JavaScript tests	2026-11-21T07:29:25.1371012Z ok 4 - busy target handlers do not change feedback or rows
+tests	JavaScript tests	2026-11-21T07:29:25.1371389Z   ---
+tests	JavaScript tests	2026-11-21T07:29:25.1371593Z   duration_ms: 0.758667
+tests	JavaScript tests	2026-11-21T07:29:25.1371826Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:25.1372022Z   ...
+tests	JavaScript tests	2026-11-21T07:29:25.1372560Z # Subtest: no pending is scoped informational feedback and sends no mutation
+tests	JavaScript tests	2026-11-21T07:29:25.1373128Z ok 5 - no pending is scoped informational feedback and sends no mutation
+tests	JavaScript tests	2026-11-21T07:29:25.1373475Z   ---
+tests	JavaScript tests	2026-11-21T07:29:25.1373681Z   duration_ms: 0.899879
+tests	JavaScript tests	2026-11-21T07:29:25.1373896Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:25.1374105Z   ...
+tests	JavaScript tests	2026-11-21T07:29:25.1374560Z # Subtest: valid pending batch resolves matching info while preserving other errors and payload
+tests	JavaScript tests	2026-11-21T07:29:25.1375221Z ok 6 - valid pending batch resolves matching info while preserving other errors and payload
+tests	JavaScript tests	2026-11-21T07:29:25.1375646Z   ---
+tests	JavaScript tests	2026-11-21T07:29:25.1375857Z   duration_ms: 0.911832
+tests	JavaScript tests	2026-11-21T07:29:25.1376093Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:25.1376315Z   ...
+tests	JavaScript tests	2026-11-21T07:29:25.1376795Z # Subtest: ineligible completion publishes success for five seconds and preserves payload
+tests	JavaScript tests	2026-11-21T07:29:25.1377530Z ok 7 - ineligible completion publishes success for five seconds and preserves payload
+tests	JavaScript tests	2026-11-21T07:29:25.1377979Z   ---
+tests	JavaScript tests	2026-11-21T07:29:25.1378186Z   duration_ms: 1.424366
+tests	JavaScript tests	2026-11-21T07:29:25.1378428Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:25.1378635Z   ...
+tests	JavaScript tests	2026-11-21T07:29:25.1379091Z # Subtest: still eligible completion remains modal-local and preserves unrelated feedback
+tests	JavaScript tests	2026-11-21T07:29:25.1379731Z ok 8 - still eligible completion remains modal-local and preserves unrelated feedback
+t

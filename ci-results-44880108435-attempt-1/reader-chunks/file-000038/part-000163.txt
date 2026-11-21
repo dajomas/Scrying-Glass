@@ -1,0 +1,48 @@
+ successful retry with changed count clears only related error and info
+tests	JavaScript tests	2026-11-21T07:29:19.2486032Z ok 9 - successful retry with changed count clears only related error and info
+tests	JavaScript tests	2026-11-21T07:29:19.2486485Z   ---
+tests	JavaScript tests	2026-11-21T07:29:19.2486791Z   duration_ms: 1.02285
+tests	JavaScript tests	2026-11-21T07:29:19.2487165Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:19.2487399Z   ...
+tests	JavaScript tests	2026-11-21T07:29:19.2487791Z # Subtest: success expires at five seconds without removing unrelated error
+tests	JavaScript tests	2026-11-21T07:29:19.2488250Z ok 10 - success expires at five seconds without removing unrelated error
+tests	JavaScript tests	2026-11-21T07:29:19.2488541Z   ---
+tests	JavaScript tests	2026-11-21T07:29:19.2488705Z   duration_ms: 0.850051
+tests	JavaScript tests	2026-11-21T07:29:19.2488894Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:19.2489051Z   ...
+tests	JavaScript tests	2026-11-21T07:29:19.2489346Z # Subtest: ordinary refresh and unrelated success cannot clear a failed clear
+tests	JavaScript tests	2026-11-21T07:29:19.2489754Z ok 11 - ordinary refresh and unrelated success cannot clear a failed clear
+tests	JavaScript tests	2026-11-21T07:29:19.2490026Z   ---
+tests	JavaScript tests	2026-11-21T07:29:19.2490179Z   duration_ms: 0.691407
+tests	JavaScript tests	2026-11-21T07:29:19.2490598Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:19.2490796Z   ...
+tests	JavaScript tests	2026-11-21T07:29:19.2491154Z # Subtest: confirmed clear and real loadState refresh failure coexist with one POST
+tests	JavaScript tests	2026-11-21T07:29:19.2491722Z ok 12 - confirmed clear and real loadState refresh failure coexist with one POST
+tests	JavaScript tests	2026-11-21T07:29:19.2492084Z   ---
+tests	JavaScript tests	2026-11-21T07:29:19.2492275Z   duration_ms: 0.791312
+tests	JavaScript tests	2026-11-21T07:29:19.2492456Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:19.2492623Z   ...
+tests	JavaScript tests	2026-11-21T07:29:19.2492923Z # Subtest: unexpected refresh rejection is not mislabeled a clear request failure
+tests	JavaScript tests	2026-11-21T07:29:19.2493374Z ok 13 - unexpected refresh rejection is not mislabeled a clear request failure
+tests	JavaScript tests	2026-11-21T07:29:19.2493653Z   ---
+tests	JavaScript tests	2026-11-21T07:29:19.2493807Z   duration_ms: 0.832134
+tests	JavaScript tests	2026-11-21T07:29:19.2493991Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:19.2494147Z   ...
+tests	JavaScript tests	2026-11-21T07:29:19.2494408Z # Subtest: old-setup success cannot publish or refresh new setup
+tests	JavaScript tests	2026-11-21T07:29:19.2494760Z ok 14 - old-setup success cannot publish or refresh new setup
+tests	JavaScript tests	2026-11-21T07:29:19.2495009Z   ---
+tests	JavaScript tests	2026-11-21T07:29:19.2495181Z   duration_ms: 0.626413
+tests	JavaScript tests	2026-11-21T07:29:19.2495363Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:19.2495512Z   ...
+tests	JavaScript tests	2026-11-21T07:29:19.2495788Z # Subtest: old-campaign failure cannot overwrite new campaign feedback
+tests	JavaScript tests	2026-11-21T07:29:19.2496174Z ok 15 - old-campaign failure cannot overwrite new campaign feedback
+tests	JavaScript tests	2026-11-21T07:29:19.2496434Z   ---
+tests	JavaScript tests	2026-11-21T07:29:19.2496585Z   duration_ms: 0.602772
+tests	JavaScript tests	2026-11-21T07:29:19.2496759Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:19.2496926Z   ...
+tests	JavaScript tests	2026-11-21T07:29:19.2497195Z # Subtest: away-and-back scope changes cannot revive old clear response
+tests	JavaScript tests	2026-11-21T07:29:19.2497579Z ok 16 - away-and-back scope changes cannot revive old clear response
+tests	JavaScript tests	2026-11-21T07:29:19.2497834Z   ---
+tests	JavaScript tests	2026-11-21T07:29:19.2497991Z   duration_ms: 1.144687
+tests	JavaScript tests	2026-11-21T07:29:19.2498161Z   type: 'test'
+tests	JavaScript tests

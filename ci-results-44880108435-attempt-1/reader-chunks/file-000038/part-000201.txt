@@ -1,0 +1,48 @@
+tests	2026-11-21T07:29:23.4397037Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:23.4397197Z   ...
+tests	JavaScript tests	2026-11-21T07:29:23.4397459Z # Subtest: a direct state request also supersedes a pending load
+tests	JavaScript tests	2026-11-21T07:29:23.4397819Z ok 8 - a direct state request also supersedes a pending load
+tests	JavaScript tests	2026-11-21T07:29:23.4398071Z   ---
+tests	JavaScript tests	2026-11-21T07:29:23.4398228Z   duration_ms: 0.683479
+tests	JavaScript tests	2026-11-21T07:29:23.4398401Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:23.4398565Z   ...
+tests	JavaScript tests	2026-11-21T07:29:23.4398853Z # Subtest: scope change without another request rejects the pending old state
+tests	JavaScript tests	2026-11-21T07:29:23.4399276Z ok 9 - scope change without another request rejects the pending old state
+tests	JavaScript tests	2026-11-21T07:29:23.4399550Z   ---
+tests	JavaScript tests	2026-11-21T07:29:23.4399704Z   duration_ms: 0.919239
+tests	JavaScript tests	2026-11-21T07:29:23.4399885Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:23.4400049Z   ...
+tests	JavaScript tests	2026-11-21T07:29:23.4400545Z # Subtest: accepted transition rebinds render errors to the new scope
+tests	JavaScript tests	2026-11-21T07:29:23.4401017Z ok 10 - accepted transition rebinds render errors to the new scope
+tests	JavaScript tests	2026-11-21T07:29:23.4401311Z   ---
+tests	JavaScript tests	2026-11-21T07:29:23.4401467Z   duration_ms: 1.186316
+tests	JavaScript tests	2026-11-21T07:29:23.4401652Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:23.4401809Z   ...
+tests	JavaScript tests	2026-11-21T07:29:23.4402123Z # Subtest: load(true) rethrows the original network error; default load swallows it
+tests	JavaScript tests	2026-11-21T07:29:23.4402620Z ok 11 - load(true) rethrows the original network error; default load swallows it
+tests	JavaScript tests	2026-11-21T07:29:23.4402894Z   ---
+tests	JavaScript tests	2026-11-21T07:29:23.4403056Z   duration_ms: 0.762953
+tests	JavaScript tests	2026-11-21T07:29:23.4403227Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:23.4403386Z   ...
+tests	JavaScript tests	2026-11-21T07:29:23.4403654Z # Subtest: stale load(true) still rethrows while suppressing its feedback
+tests	JavaScript tests	2026-11-21T07:29:23.4404046Z ok 12 - stale load(true) still rethrows while suppressing its feedback
+tests	JavaScript tests	2026-11-21T07:29:23.4404306Z   ---
+tests	JavaScript tests	2026-11-21T07:29:23.4404465Z   duration_ms: 1.204128
+tests	JavaScript tests	2026-11-21T07:29:23.4404636Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:23.4404786Z   ...
+tests	JavaScript tests	2026-11-21T07:29:23.4405000Z # Subtest: only literal true enables rethrowing
+tests	JavaScript tests	2026-11-21T07:29:23.4405273Z ok 13 - only literal true enables rethrowing
+tests	JavaScript tests	2026-11-21T07:29:23.4405487Z   ---
+tests	JavaScript tests	2026-11-21T07:29:23.4405638Z   duration_ms: 0.611166
+tests	JavaScript tests	2026-11-21T07:29:23.4405816Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:23.4405966Z   ...
+tests	JavaScript tests	2026-11-21T07:29:23.4406231Z # Subtest: active-battle success also resolves a related load failure
+tests	JavaScript tests	2026-11-21T07:29:23.4406670Z ok 14 - active-battle success also resolves a related load failure
+tests	JavaScript tests	2026-11-21T07:29:23.4406929Z   ---
+tests	JavaScript tests	2026-11-21T07:29:23.4407082Z   duration_ms: 0.71229
+tests	JavaScript tests	2026-11-21T07:29:23.4407258Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:23.4407422Z   ...
+tests	JavaScript tests	2026-11-21T07:29:23.4407721Z # Subtest: invalid scope data cannot overwrite latest or silently resolve the error
+tests	JavaScript tests	2026-11-21T07:29:23.4408158Z ok 15 - invalid scope data cannot overwrite latest or silently resolve the error
+tests	JavaScript tests	2026-11-21T07:29:23.4408439Z   ---
+tests	JavaScript tests	2026-11-21T07:29:23.4408595Z   duration_ms: 0.5

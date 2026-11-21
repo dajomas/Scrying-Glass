@@ -1,0 +1,47 @@
+11-21T07:29:26.8878150Z # pass 8
+tests	JavaScript tests	2026-11-21T07:29:26.8878362Z # fail 0
+tests	JavaScript tests	2026-11-21T07:29:26.8878595Z # cancelled 0
+tests	JavaScript tests	2026-11-21T07:29:26.8878830Z # skipped 0
+tests	JavaScript tests	2026-11-21T07:29:26.8879050Z # todo 0
+tests	JavaScript tests	2026-11-21T07:29:26.8879282Z # duration_ms 59.163349
+tests	JavaScript tests	2026-11-21T07:29:26.9148859Z ##[endgroup]
+tests	JavaScript tests	2026-11-21T07:29:26.9149748Z ##[group]tests/campaign-delete-refresh-feedback.test.cjs
+tests	JavaScript tests	2026-11-21T07:29:27.0721059Z TAP version 13
+tests	JavaScript tests	2026-11-21T07:29:27.1087164Z # Subtest: success precedes refresh, lasts exactly 3000ms and busy spans completion
+tests	JavaScript tests	2026-11-21T07:29:27.1089729Z ok 1 - success precedes refresh, lasts exactly 3000ms and busy spans completion
+tests	JavaScript tests	2026-11-21T07:29:27.1090220Z   ---
+tests	JavaScript tests	2026-11-21T07:29:27.1090722Z   duration_ms: 2.612788
+tests	JavaScript tests	2026-11-21T07:29:27.1091031Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:27.1091304Z   ...
+tests	JavaScript tests	2026-11-21T07:29:27.1100044Z # Subtest: refresh failure persists after success expiry, preserves applied mutation and never replays
+tests	JavaScript tests	2026-11-21T07:29:27.1101337Z ok 2 - refresh failure persists after success expiry, preserves applied mutation and never replays
+tests	JavaScript tests	2026-11-21T07:29:27.1102204Z   ---
+tests	JavaScript tests	2026-11-21T07:29:27.1102593Z   duration_ms: 1.049188
+tests	JavaScript tests	2026-11-21T07:29:27.1103152Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:27.1103489Z   ...
+tests	JavaScript tests	2026-11-21T07:29:27.1104048Z # Subtest: obsolete success timer cannot remove a newer matching DELETE error
+tests	JavaScript tests	2026-11-21T07:29:27.1104752Z ok 3 - obsolete success timer cannot remove a newer matching DELETE error
+tests	JavaScript tests	2026-11-21T07:29:27.1105228Z   ---
+tests	JavaScript tests	2026-11-21T07:29:27.1105531Z   duration_ms: 0.758225
+tests	JavaScript tests	2026-11-21T07:29:27.1105884Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:27.1106206Z   ...
+tests	JavaScript tests	2026-11-21T07:29:27.1106797Z # Subtest: actual setup helper forwards owner and strict errors for opened/empty paths
+tests	JavaScript tests	2026-11-21T07:29:27.1107575Z ok 4 - actual setup helper forwards owner and strict errors for opened/empty paths
+tests	JavaScript tests	2026-11-21T07:29:27.1108221Z   ---
+tests	JavaScript tests	2026-11-21T07:29:27.1108537Z   duration_ms: 1.521479
+tests	JavaScript tests	2026-11-21T07:29:27.1108873Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:27.1109173Z   ...
+tests	JavaScript tests	2026-11-21T07:29:27.1109796Z # Subtest: actual helper cannot render an empty setup after dialog reopening during load
+tests	JavaScript tests	2026-11-21T07:29:27.1110807Z ok 5 - actual helper cannot render an empty setup after dialog reopening during load
+tests	JavaScript tests	2026-11-21T07:29:27.1111403Z   ---
+tests	JavaScript tests	2026-11-21T07:29:27.1111714Z   duration_ms: 0.858658
+tests	JavaScript tests	2026-11-21T07:29:27.1112073Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:27.1112380Z   ...
+tests	JavaScript tests	2026-11-21T07:29:27.1112948Z # Subtest: default setup helper keeps legacy load and return behavior for other callers
+tests	JavaScript tests	2026-11-21T07:29:27.1113699Z ok 6 - default setup helper keeps legacy load and return behavior for other callers
+tests	JavaScript tests	2026-11-21T07:29:27.1114142Z   ---
+tests	JavaScript tests	2026-11-21T07:29:27.1114434Z   duration_ms: 1.765453
+tests	JavaScript tests	2026-11-21T07:29:27.1114753Z   type: 'test'
+tests	JavaScript tests	2026-11-21T07:29:27.1115036Z   ...
+tests	JavaScript tests	2026-11-21T07:29:27.1115481Z # Subtest: render failure after DELETE is explicitly a refresh failure
+tests	JavaScript tests	2026-11-21T07:29:27.1116152Z ok 7 - rend

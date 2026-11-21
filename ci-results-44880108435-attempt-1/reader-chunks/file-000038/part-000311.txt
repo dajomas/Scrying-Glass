@@ -1,0 +1,29 @@
+^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8570903Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8571277Z     raise effect
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8571516Z python.scrying_glass_open5e.Open5eError: down
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8988785Z Monster source catalog failed
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8989325Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8989974Z   File "/tmp/scrying-tests-qvbejfyt/repo/python/scrying_glass_source_catalog.py", line 81, in run
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8990787Z     return await asyncio.to_thread(function, effective_display(context), *args)
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8991215Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8991689Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/threads.py", line 26, in to_thread
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8992198Z     return await loop.run_in_executor(None, func_call)
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8992533Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8992981Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8993421Z     result = ctx.run(self.task)
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8993986Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8994406Z     return fn(*args, **kwargs)
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8994812Z   File "/tmp/scrying-tests-qvbejfyt/repo/python/scrying_glass_source_catalog.py", line 47, in monsters
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8995396Z     items = [{"id": name, "name": name} for name, _ in ms.fivetools_source_entries(display, source)]
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8995797Z                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8996345Z   File "/tmp/scrying-tests-qvbejfyt/repo/python/scrying_glass_monster_selection.py", line 229, in fivetools_source_entries
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8997007Z     raise ValueError("5e.tools source is not configured")
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.8997419Z ValueError: 5e.tools source is not configured
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.9026413Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.9026847Z Ran 6 tests in 0.048s
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.9027003Z 
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.9027098Z OK
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.9027468Z test_monster_source_catalog.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:21.9606881Z Connection audit: test_monster_source_help_text.py
+tests	Standalone Python browser and audit checks	2026-11-21T07:33:23.1682577Z --------------------------------------
