@@ -79,7 +79,7 @@ jobs:
             echo "::endgroup::"
           done < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)
           exit "$status"
-      - name: Standalone Python browser and audit checks
+      - name: Standalone Python browser checks
         if: ${{ !cancelled() && steps.python_dependencies.conclusion == 'success' && steps.chromium.conclusion == 'success' }}
         shell: bash
         run: |
@@ -92,5 +92,39 @@ jobs:
             fi
             python tools/run_split_tests.py -- python "$test" "${args[@]}" || status=1
             echo "::endgroup::"
-          done < <(find tests -type f -name '*.py' ! -name 'test_*.py' ! -name '__init__.py' -print0 | sort -z)
+          done < <(find tests -type f -name '*.py' ! -name 'test_*.py' ! -name '__init__.py' \
+            ! -name 'audit_connection_lifetime.py' -print0 | sort -z)
           exit "$status"
+
+  # SG-TODO-023: the connection audit reruns every unittest module in its own process with
+  # SQLite tracking. It runs in parallel with the combined pass above; both stay complete,
+  # because each has caught failures the other missed (CI 43636503802 and 44885862376).
+  connection-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-test.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Python test dependencies
+        id: python_dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-test.txt
+      - name: Provision and verify Chromium
+        id: chromium
+        if: ${{ !cancelled() && steps.python_dependencies.conclusion == 'success' }}
+        run: python tools/prepare_ci_browser.py
+      - name: Connection audit of isolated unittest modules
+        if: ${{ !cancelled() && steps.python_dependencies.conclusion == 'success' && steps.chromium.conclusion == 'success' }}
+        run: python tools/run_split_tests.py -- python tests/audit_connection_lifetime.py

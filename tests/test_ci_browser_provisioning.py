@@ -80,7 +80,8 @@ class BrowserProvisioningTests(unittest.TestCase):
 
 class WorkflowPrerequisiteTests(unittest.TestCase):
     def setUp(self):
-        self.steps = yaml.safe_load((ROOT / '.github/workflows/tests.yml').read_text())['jobs']['tests']['steps']
+        self.jobs = yaml.safe_load((ROOT / '.github/workflows/tests.yml').read_text())['jobs']
+        self.steps = self.jobs['tests']['steps']
         self.by_name = {step.get('name'): step for step in self.steps}
 
     def test_browser_preflight_is_a_required_separate_step(self):
@@ -95,7 +96,7 @@ class WorkflowPrerequisiteTests(unittest.TestCase):
         self.assertLess(self.steps.index(python), self.steps.index(step))
 
     def test_mixed_browser_suites_require_verified_browser_not_previous_suite_success(self):
-        for name in ['Python test suite (including browser fixtures)', 'Standalone Python browser and audit checks']:
+        for name in ['Python test suite (including browser fixtures)', 'Standalone Python browser checks']:
             condition = self.by_name[name]['if']
             self.assertIn('!cancelled()', condition)
             self.assertIn("steps.chromium.conclusion == 'success'", condition)
@@ -107,7 +108,29 @@ class WorkflowPrerequisiteTests(unittest.TestCase):
         for name in ['Python syntax and server import checks', 'Pytest regression modules', 'JavaScript tests']:
             self.assertNotIn('steps.chromium', self.by_name[name]['if'])
         self.assertIn('node --test', self.by_name['JavaScript tests']['run'])
-        self.assertIn('args=(patched)', self.by_name['Standalone Python browser and audit checks']['run'])
+        self.assertIn('args=(patched)', self.by_name['Standalone Python browser checks']['run'])
+
+    def test_connection_audit_runs_complete_in_its_own_parallel_job(self):
+        """SG-TODO-023: both the combined pass and the audit stay complete, side by side."""
+        audit = self.jobs['connection-audit']
+        self.assertNotIn('needs', audit)  # parallel, not after the tests job
+        self.assertEqual(audit['env'], self.jobs['tests']['env'])
+        steps = {step.get('name'): step for step in audit['steps']}
+        for name in ['Install Python test dependencies', 'Provision and verify Chromium']:
+            self.assertEqual(steps[name], self.by_name[name], name)
+        setup = [step for step in audit['steps'] if 'uses' in step]
+        self.assertEqual(setup, [step for step in self.steps if 'uses' in step and 'upload-artifact' not in step['uses']])
+        step = steps['Connection audit of isolated unittest modules']
+        self.assertEqual(step['run'], 'python tools/run_split_tests.py -- python tests/audit_connection_lifetime.py')
+        self.assertIn("steps.chromium.conclusion == 'success'", step['if'])
+        self.assertNotIn('continue-on-error', step)
+        self.assertIn("-p 'test_*.py'", self.by_name['Python test suite (including browser fixtures)']['run'])
+
+    def test_every_standalone_script_runs_in_exactly_one_job(self):
+        run = self.by_name['Standalone Python browser checks']['run']
+        self.assertIn("! -name 'audit_connection_lifetime.py'", run)
+        self.assertEqual(run.count('! -name'), 3)  # test_*.py, __init__.py and the audit only
+        self.assertTrue((ROOT / 'tests/audit_connection_lifetime.py').is_file())
 
 
 if __name__ == '__main__':

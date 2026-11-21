@@ -46,16 +46,16 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
    - [022.02 accepted persistence delivery and retained operational guidance](docs/todo/222-statblock-persistence.md) - completed/closed, including both implementation stages and preparatory fixtures; covering activation CI verified and user acceptance recorded. Earlier in-progress/CI-pending notes are historical and superseded.
    - [022.03 lifecycle integration](docs/todo/223-statblock-lifecycle.md) - completed, accepted and closed, including whole Stages 1-3; no new lifecycle acceptance request.
    - [022.04 ordered inheritance and reference resolution](docs/todo/224-fivetools-statblock-resolution.md#stage-a-delivery---2026-11-17) - bounded 04b accepted/closed earlier; 04a, 04c-04f delivered in Stage A 2026-11-17 (validation pending CI/acceptance); 04e.2 generated magic-item variants open. Overall 04 not closed.
-30. [Test-suite necessity and execution review](docs/todo/230-test-suite-necessity-review.md) - SG-TODO-023, ready for review (requested 2026-11-16). Investigate duplicate CI execution, overlapping statblock service scenarios and brittle source assertions; preserve unique coverage and measure before changing the suite. Follow-up to closed SG-TODO-020, not a reopening or a change to the agreed SG-TODO-022 delivery order.
+30. [Test-suite necessity and execution review](docs/todo/230-test-suite-necessity-review.md) - SG-TODO-023, first half delivered 2026-11-21: the connection audit runs as a parallel CI job ([680](docs/handover/680-ci-parallel-audit.md)); second half open (requested 2026-11-16). Investigate duplicate CI execution, overlapping statblock service scenarios and brittle source assertions; preserve unique coverage and measure before changing the suite. Follow-up to closed SG-TODO-020, not a reopening or a change to the agreed SG-TODO-022 delivery order.
 31. [Optional character HP tracking](docs/todo/240-character-hp-tracking-option.md) - SG-TODO-024, proposed (requested 2026-11-20). When disabled, damage and healing do not change a character's HP; the player manages it. Scope, default and 0-HP behaviour to agree.
 32. [Maximum HP increase during battle](docs/todo/250-max-hp-increase.md) - SG-TODO-025, proposed (requested 2026-11-20). Raise maximum HP in battle as well as lowering it; monsters, and characters only when HP tracking (SG-TODO-024) is enabled.
 33. [Current HP follows a maximum HP increase](docs/todo/260-current-hp-follows-max-increase.md) - SG-TODO-026, proposed (requested 2026-11-20). Any increase in maximum HP raises current HP by the same amount; open question on restoring reductions, which 5e does not treat this way.
 34. [Temporary hit points option](docs/todo/270-temporary-hit-points.md) - SG-TODO-027, proposed (requested 2026-11-20). Grant temporary HP in battle following the 5e rules (no stacking, not healing, no effect on life state); temporary HP storage and damage absorption already exist.
-35. [End battle hides combatants](docs/todo/280-end-battle-hides-combatants.md) - SG-TODO-028, implemented 2026-11-21, CI and user check pending ([670](docs/handover/670-group-1-quick-wins.md); requested 2026-11-20). End battle switches off visibility for all monsters and characters.
-36. [Distinct default monster color](docs/todo/290-distinct-monster-color.md) - SG-TODO-029, implemented 2026-11-21, CI and user check pending ([670](docs/handover/670-group-1-quick-wins.md); requested 2026-11-20). When adding a monster, the default color is one no monster in the current battle setup uses yet.
-37. [HP field help in a folded block](docs/todo/300-hp-help-disclosure.md) - SG-TODO-030, implemented 2026-11-21, CI and user check pending ([670](docs/handover/670-group-1-quick-wins.md); requested 2026-11-20). Move the Add Monster HP field explanation into a closed help block at the bottom of the Combat statistics section.
-38. [Refresh from source above Remove](docs/todo/310-refresh-from-source-order.md) - SG-TODO-031, implemented 2026-11-21, CI and user check pending ([670](docs/handover/670-group-1-quick-wins.md); requested 2026-11-20). In the Monster bulk actions dropdown, Refresh from source comes directly before Remove.
-39. [Clear selection next to Select all](docs/todo/320-clear-selection-position.md) - SG-TODO-032, implemented 2026-11-21, CI and user check pending ([670](docs/handover/670-group-1-quick-wins.md); requested 2026-11-20). In the Characters and Monsters rosters, Clear selection moves to the right of Select all.
+35. [End battle hides combatants](docs/todo/280-end-battle-hides-combatants.md) - SG-TODO-028, completed and closed 2026-11-21 ([670](docs/handover/670-group-1-quick-wins.md); requested 2026-11-20). End battle switches off visibility for all monsters and characters.
+36. [Distinct default monster color](docs/todo/290-distinct-monster-color.md) - SG-TODO-029, completed and closed 2026-11-21 ([670](docs/handover/670-group-1-quick-wins.md); requested 2026-11-20). When adding a monster, the default color is one no monster in the current battle setup uses yet.
+37. [HP field help in a folded block](docs/todo/300-hp-help-disclosure.md) - SG-TODO-030, completed and closed 2026-11-21 ([670](docs/handover/670-group-1-quick-wins.md); requested 2026-11-20). Move the Add Monster HP field explanation into a closed help block at the bottom of the Combat statistics section.
+38. [Refresh from source above Remove](docs/todo/310-refresh-from-source-order.md) - SG-TODO-031, completed and closed 2026-11-21 ([670](docs/handover/670-group-1-quick-wins.md); requested 2026-11-20). In the Monster bulk actions dropdown, Refresh from source comes directly before Remove.
+39. [Clear selection next to Select all](docs/todo/320-clear-selection-position.md) - SG-TODO-032, completed and closed 2026-11-21 ([670](docs/handover/670-group-1-quick-wins.md); requested 2026-11-20). In the Characters and Monsters rosters, Clear selection moves to the right of Select all.
 40. [5e.tools monster versions and generated magic-item variants](docs/todo/330-fivetools-variants.md) - SG-TODO-033, proposed (split off from SG-TODO-022 by the user 2026-11-20). Offer 5e.tools `_versions` in Find statblock and generate magic-item variants (04e.2) so those statblocks are no longer partial.
 
 ## Implementation order - agreed 2026-11-21
@@ -66,17 +66,19 @@ CI-checked and shown to the user before the next one starts.
 1. **Quick wins:** SG-TODO-028 (End battle hides combatants), SG-TODO-029 (distinct default
    monster color), SG-TODO-030 (HP help folded), SG-TODO-031 (Refresh from source above
    Remove), SG-TODO-032 (Clear selection next to Select all). Decisions for 028 and 029 are
-   recorded in their task files.
+   recorded in their task files. Completed and closed 2026-11-21
+   ([handover 670](docs/handover/670-group-1-quick-wins.md)).
 2. **SG-TODO-023 first half:** measure the test runs and decide on the duplicate CI pass.
+   Decided 2026-11-21: two parallel CI jobs ([handover 680](docs/handover/680-ci-parallel-audit.md)).
 3. **HP rules:** decide SG-TODO-024 to 027 together, then deliver 024, then 025 + 026, then
    027; one e2e run at the end of the group.
 4. **SG-TODO-033:** 5e.tools monster versions first, generated magic-item variants second.
 5. **SG-TODO-023 second half:** test consolidation, after the feature work.
 
-Note: `features/claude` no longer contains the captured provider evidence
-(`monsters_examples/`, `external_sourcefiles/`, `sizetest/`); the tests that use it skip
-there (13 unittest skips, the e2e statblock-import tests). The last runs with that
-evidence are CI 44880108435 and e2e 20261121T065222Z on `features/claude-statblock`.
+Note: `features/claude` contains `monsters_examples/` again (returned by the user
+2026-11-21), but not `external_sourcefiles/` or `sizetest/`; the tests that use those
+skip there. The last runs with all evidence are CI 44880108435 and e2e 20261121T065222Z
+on `features/claude-statblock`.
 
 ## Maintenance
 

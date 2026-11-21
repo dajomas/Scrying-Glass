@@ -77,4 +77,9 @@ count, Select all, Clear selection, Bulk.
   `test_statblock_import_workers.py`: on `features/claude` (no `monsters_examples`)
   `CapturedProviderWorkerTests.setUp` skipped after the fixture opened SQLite, so tearDown never
   closed it. The skip now comes first.
-- CI and the user's e2e run are pending.
+- User finding after the first push: copies of a quantity add all got one colour; fixed in
+  13d36ef (see SG-TODO-029 above).
+- CI 44888887657 green on 13d36ef. E2E 20261121T150318Z on 2cf5bc6: 133 passed, 0 failed,
+  4 skipped (the statblock-import tests, because `monsters_examples` was briefly off the
+  branch; the user has put it back).
+- User checked 028, 030, 031, 032 and the 029 fix. Group 1 completed and closed 2026-11-21.

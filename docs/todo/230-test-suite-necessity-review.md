@@ -4,7 +4,8 @@
 
 ## Task and status
 
-SG-TODO-023 - ready for review, requested 2026-11-16. Record and investigate the
+SG-TODO-023 - first half (items 1 and 2) delivered 2026-11-21, see below; second half open.
+Requested 2026-11-16. Record and investigate the
 initial test-review suggestions; this task is not an instruction to delete tests
 or change CI immediately. No owner, deadline, deletion target or speedup target is
 assigned. This is the next numbered TODO, not an agreed interruption of the current
@@ -66,6 +67,42 @@ Do not add unittest, pytest, audit reruns and Node/browser totals as unique cove
 7. Build on the previous cleanup. Its removed self-derived oracles, frozen hashes,
    version/count pins and exact duplicates must not return. Historical bug-hunt
    filenames or old preparation docstrings alone do not prove tests are unnecessary.
+
+## First half: measurements and decision (2026-11-21)
+
+Implementation group 2 on `features/claude` ([handover 680](../handover/680-ci-parallel-audit.md)).
+Measured on green CI 44888887657 (commit 13d36ef, one `ubuntu-latest` job, 13.4 minutes of
+steps):
+
+| Stage | Inventory | Duration |
+| --- | --- | --- |
+| Setup (checkout, Python, Node, dependencies, Chromium, syntax/import) | - | 27 s |
+| Combined unittest pass (`discover`, one process) | 2,308 tests, 13 skipped | 327 s |
+| Pytest regression modules | 2 modules, 43 cases (pytest-only) | 3 s |
+| JavaScript tests (`node --test`, one process per file) | 83 files, 665 tests | 46 s |
+| Connection audit (`audit_connection_lifetime.py`) | the same 2,308 tests in 254 module processes | 393 s |
+| Other standalone scripts | 2 scripts | 1 s |
+| E2E (`tools/run_e2e.sh`, run separately by the user) | 137 tests, Chromium and Firefox | 17 min |
+
+The audit is a second complete execution of every unittest case, not extra coverage.
+Its output is one OK/FAILED line and a connection count per module, not per-test lines.
+
+Both passes have caught failures the other could not:
+
+- CI 43636503802 failed only in the combined pass:
+  `test_monster_source_image.test_edit_rejects_a_tampered_token` passed in its own process
+  but failed after other modules had run (state leaking between modules).
+- CI 44885862376 failed only in the audit: `test_statblock_import_workers.py` left two
+  SQLite connections open (skip in `setUp` after the fixture opened the database).
+
+Options put to the user: keep as is; two parallel jobs; audit as the only pass plus a small
+combined check; full audit less often. **Decision (user, 2026-11-21): two parallel jobs.**
+Both passes stay complete. `.github/workflows/tests.yml` now has a `connection-audit` job
+with its own setup that runs only the audit, in parallel with the `tests` job, whose
+standalone step skips the audit script. Expected wall time is about 7.5 instead of 13.5
+minutes, for about one extra minute of runner setup; to be confirmed by the first run.
+
+The second half (items 3 to 7: consolidation) stays open and follows the feature work.
 
 ## Acceptance and validation requirements
 
