@@ -1,0 +1,43 @@
+9.2121897Z ##[endgroup]
+tests	Pytest regression modules	2026-11-21T18:38:51.6184085Z ...........................................                              [100%]
+tests	Pytest regression modules	2026-11-21T18:38:51.6184605Z 43 passed in 1.37s
+tests	JavaScript tests	﻿2026-11-21T18:38:51.7869503Z ##[group]Run status=0
+tests	JavaScript tests	2026-11-21T18:38:51.7869818Z ^[[36;1mstatus=0^[[0m
+tests	JavaScript tests	2026-11-21T18:38:51.7870078Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	JavaScript tests	2026-11-21T18:38:51.7870399Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	JavaScript tests	2026-11-21T18:38:51.7870796Z ^[[36;1m  python tools/run_split_tests.py -- node --test "$test" || status=1^[[0m
+tests	JavaScript tests	2026-11-21T18:38:51.7871200Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	JavaScript tests	2026-11-21T18:38:51.7871825Z ^[[36;1mdone < <(find tests -type f \( -name '*.js' -o -name '*.cjs' \) -print0 | sort -z)^[[0m
+tests	JavaScript tests	2026-11-21T18:38:51.7872247Z ^[[36;1mexit "$status"^[[0m
+tests	JavaScript tests	2026-11-21T18:38:51.7909970Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	JavaScript tests	2026-11-21T18:38:51.7910334Z env:
+tests	JavaScript tests	2026-11-21T18:38:51.7910812Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	JavaScript tests	2026-11-21T18:38:51.7911402Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-21T18:38:51.7911842Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	JavaScript tests	2026-11-21T18:38:51.7912331Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-21T18:38:51.7912721Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-21T18:38:51.7913119Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	JavaScript tests	2026-11-21T18:38:51.7913509Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	JavaScript tests	2026-11-21T18:38:51.7913844Z ##[endgroup]
+tests	JavaScript tests	2026-11-21T18:38:51.8015639Z ##[group]tests/admin-activity-log-clear-feedback.test.cjs
+tests	JavaScript tests	2026-11-21T18:38:52.1681799Z TAP version 13
+tests	JavaScript tests	2026-11-21T18:38:52.2317214Z # Subtest: cancel retains count confirmation, existing error and pending identity
+tests	JavaScript tests	2026-11-21T18:38:52.2321633Z ok 1 - cancel retains count confirmation, existing error and pending identity
+tests	JavaScript tests	2026-11-21T18:38:52.2322921Z   ---
+tests	JavaScript tests	2026-11-21T18:38:52.2323308Z   duration_ms: 4.295608
+tests	JavaScript tests	2026-11-21T18:38:52.2323702Z   type: 'test'
+tests	JavaScript tests	2026-11-21T18:38:52.2324043Z   ...
+tests	JavaScript tests	2026-11-21T18:38:52.2325222Z # Subtest: empty emits explicit info without confirmation, request or refresh
+tests	JavaScript tests	2026-11-21T18:38:52.2332705Z ok 2 - empty emits explicit info without confirmation, request or refresh
+tests	JavaScript tests	2026-11-21T18:38:52.2333393Z   ---
+tests	JavaScript tests	2026-11-21T18:38:52.2333728Z   duration_ms: 1.018245
+tests	JavaScript tests	2026-11-21T18:38:52.2334127Z   type: 'test'
+tests	JavaScript tests	2026-11-21T18:38:52.2334457Z   ...
+tests	JavaScript tests	2026-11-21T18:38:52.2335180Z # Subtest: empty is not server success and cannot erase a matching clear failure
+tests	JavaScript tests	2026-11-21T18:38:52.2336689Z ok 3 - empty is not server success and cannot erase a matching clear failure
+tests	JavaScript tests	2026-11-21T18:38:52.2337510Z   ---
+tests	JavaScript tests	2026-11-21T18:38:52.2338124Z   duration_ms: 1.032377
+tests	JavaScript tests	2026-11-21T18:38:52.2338524Z   type: 'test'
+tests	JavaScript tests	2026-11-21T18:38:52.2338850Z   ...
+tests	JavaScript tests	2026-11-21T18:38:52.2339589Z # Subtest: repeated empty notices replace one info record without erasing errors
+tests	JavaScript

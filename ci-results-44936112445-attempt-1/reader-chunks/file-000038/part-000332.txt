@@ -1,0 +1,27 @@
+_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5437028Z     candidate = _fetch_exact(context, monster, identity)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5437778Z   File "/tmp/scrying-tests-f092o1ma/repo/python/scrying_glass_monster_refresh_sources.py", line 93, in _fetch_exact
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5438814Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5440108Z ValueError: Retained source missing or ambiguous
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5482140Z Selected monster source refresh failed for m
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5482810Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5483818Z   File "/tmp/scrying-tests-f092o1ma/repo/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5484623Z     candidate = _fetch_exact(context, monster, identity)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5485412Z   File "/tmp/scrying-tests-f092o1ma/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5486196Z     html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5486947Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5487552Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5487903Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5488538Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5489172Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5489615Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5490302Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5490905Z     raise effect
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5491757Z OSError: secret
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5497943Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5498551Z Ran 11 tests in 0.010s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5498712Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5498811Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5499290Z test_monster_refresh_sources.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:04.5953853Z Connection audit: test_monster_refresh_startup_browser.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:38:05.331168

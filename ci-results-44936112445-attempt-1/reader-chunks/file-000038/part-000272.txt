@@ -1,0 +1,31 @@
+owser checks	2026-11-21T18:39:41.6748768Z ^[[36;1mdone < <(find tests -type f -name '*.py' ! -name 'test_*.py' ! -name '__init__.py' \^[[0m
+tests	Standalone Python browser checks	2026-11-21T18:39:41.6749302Z ^[[36;1m  ! -name 'audit_connection_lifetime.py' -print0 | sort -z)^[[0m
+tests	Standalone Python browser checks	2026-11-21T18:39:41.6749668Z ^[[36;1mexit "$status"^[[0m
+tests	Standalone Python browser checks	2026-11-21T18:39:41.6785284Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	Standalone Python browser checks	2026-11-21T18:39:41.6785704Z env:
+tests	Standalone Python browser checks	2026-11-21T18:39:41.6786169Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Standalone Python browser checks	2026-11-21T18:39:41.6787017Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser checks	2026-11-21T18:39:41.6787465Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Standalone Python browser checks	2026-11-21T18:39:41.6787906Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser checks	2026-11-21T18:39:41.6788292Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser checks	2026-11-21T18:39:41.6788687Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser checks	2026-11-21T18:39:41.6789079Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Standalone Python browser checks	2026-11-21T18:39:41.6789419Z ##[endgroup]
+tests	Standalone Python browser checks	2026-11-21T18:39:41.6907914Z ##[group]tests/feedback_browser_fixture.py
+tests	Standalone Python browser checks	2026-11-21T18:39:42.0881343Z ##[endgroup]
+tests	Standalone Python browser checks	2026-11-21T18:39:42.0881864Z ##[group]tests/storage_migration_fixtures.py
+tests	Standalone Python browser checks	2026-11-21T18:39:42.5624462Z ##[endgroup]
+tests	Post Run actions/setup-node@v4	﻿2026-11-21T18:39:42.5711896Z Post job cleanup.
+tests	Post Run actions/setup-node@v4	2026-11-21T18:39:42.7021769Z (node:22018) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-node@v4	2026-11-21T18:39:42.7023118Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/setup-python@v5	﻿2026-11-21T18:39:42.7253926Z Post job cleanup.
+tests	Post Run actions/setup-python@v5	2026-11-21T18:39:42.8640464Z Cache hit occurred on the primary key setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e, not saving cache.
+tests	Post Run actions/setup-python@v5	2026-11-21T18:39:42.8642181Z (node:22026) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-python@v5	2026-11-21T18:39:42.8642986Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/checkout@v4	﻿2026-11-21T18:39:42.8789896Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-21T18:39:42.9660968Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-21T18:39:42.9707930Z git version 2.56.1
+tests	Post Run actions/checkout@v4	2026-11-21T18:39:42.9748439Z Temporarily overriding HOME='/home/runner/work/_temp/d25dfd98-d70b-43be-8313-1618e0eb6a20' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-21T18:39:42.9750100Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-21T18:39:42.9753665Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-21T18:39:42.9798580Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCo

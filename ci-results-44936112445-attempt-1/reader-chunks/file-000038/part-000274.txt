@@ -1,0 +1,38 @@
+t	Set up job	2026-11-21T18:32:49.1486657Z Cache mode: write
+connection-audit	Set up job	2026-11-21T18:32:49.1487706Z Prepare workflow directory
+connection-audit	Set up job	2026-11-21T18:32:49.2109679Z Prepare all required actions
+connection-audit	Set up job	2026-11-21T18:32:49.2159041Z Getting action download info
+connection-audit	Set up job	2026-11-21T18:32:49.5478309Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+connection-audit	Set up job	2026-11-21T18:32:49.6500337Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+connection-audit	Set up job	2026-11-21T18:32:49.7063022Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+connection-audit	Set up job	2026-11-21T18:32:49.8786788Z Complete job name: connection-audit
+connection-audit	Run actions/checkout@v4	﻿2026-11-21T18:32:49.9644914Z ##[group]Run actions/checkout@v4
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9645915Z with:
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9646435Z   repository: dajomas/Scrying-Glass
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9650711Z   token: ***
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9651359Z   ssh-strict: true
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9651854Z   ssh-user: git
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9652342Z   persist-credentials: true
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9652876Z   clean: true
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9653362Z   sparse-checkout-cone-mode: true
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9653943Z   fetch-depth: 1
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9654417Z   fetch-tags: false
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9654921Z   show-progress: true
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9655411Z   lfs: false
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9655856Z   submodules: false
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9656341Z   set-safe-directory: true
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9656899Z   allow-unsafe-pr-checkout: false
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9657798Z env:
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9658756Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:49.9659833Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:50.2376613Z Syncing repository: dajomas/Scrying-Glass
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:50.2379090Z ##[group]Getting Git version info
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:50.2380649Z Working directory is '/home/runner/work/Scrying-Glass/Scrying-Glass'
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:50.2382476Z [command]/usr/bin/git version
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:50.2439215Z git version 2.56.1
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:50.2472768Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:50.2494643Z Temporarily overriding HOME='/home/runner/work/_temp/248ba7d5-5be5-4564-8967-9ec3131cb6a4' before making global git config changes
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:50.2498152Z Adding repository directory to the temporary git global config as a safe directory
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:50.2502152Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+connection-audit	Run actions/checkout@v4	2026-11-21T18:32:50.2581386Z Deleting the contents of '/home/runner/work/Scrying-Glass/Scrying-Glass'
+connection-a

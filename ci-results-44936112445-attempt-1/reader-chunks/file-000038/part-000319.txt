@@ -1,0 +1,30 @@
+test modules	2026-11-21T18:36:33.2755466Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:33.2755642Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:33.2772428Z test_local_feature_feedback_composition.py: connections opened: 4; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:33.3527122Z Connection audit: test_local_runner_publication.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:34.4809915Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:34.4810708Z Ran 6 tests in 1.038s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:34.4811122Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:34.4811285Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:34.4812119Z test_local_runner_publication.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:34.4966765Z Connection audit: test_logout.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:35.8194649Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:35.8195706Z Ran 14 tests in 1.234s
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:35.8196472Z test_logout.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:35.8197270Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:35.8197600Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:35.8705153Z Connection audit: test_lookup_provider_settings.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:36.4347105Z Provider settings unreadable; optional lookups disabled
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:36.4347946Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:36.4349161Z   File "/tmp/scrying-tests-f092o1ma/repo/python/scrying_glass_provider_settings.py", line 67, in effective_display
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:36.4350199Z     saved = overrides(context)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:36.4351451Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:36.4352565Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:36.4353142Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:36.4354185Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:36.4355215Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:36.4355838Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:36.4356838Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:36.4358032Z     raise effect
+connection-audit	Connection audit of isolated unittest modules	2026-11-21T18:36:36.4358476Z sqlite3.OperationalError: locked
+c
