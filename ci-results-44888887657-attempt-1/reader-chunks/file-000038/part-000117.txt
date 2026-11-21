@@ -1,0 +1,22 @@
+onsterRollOrderHandlerTests.test_automatic_reorders_preserving_turn_round_and_unrelated_fields) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1123305Z test_invalid_bonus_rejected_before_dice_or_mutation (test_monster_roll_order_handlers.MonsterRollOrderHandlerTests.test_invalid_bonus_rejected_before_dice_or_mutation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1142942Z test_invalid_order_is_conflict_without_partial_mutation (test_monster_roll_order_handlers.MonsterRollOrderHandlerTests.test_invalid_order_is_conflict_without_partial_mutation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1161712Z test_missing_selection_rejected_before_dice (test_monster_roll_order_handlers.MonsterRollOrderHandlerTests.test_missing_selection_rejected_before_dice) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1182227Z test_other_bulk_actions_delegate_without_rolling (test_monster_roll_order_handlers.MonsterRollOrderHandlerTests.test_other_bulk_actions_delegate_without_rolling) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1203459Z test_shared_one_roll_deduplicates_and_only_changes_selection (test_monster_roll_order_handlers.MonsterRollOrderHandlerTests.test_shared_one_roll_deduplicates_and_only_changes_selection) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1225300Z test_disabled_providers_are_not_offered_and_open5e_failure_is_reported (test_monster_source_catalog.CatalogFunctionTests.test_disabled_providers_are_not_offered_and_open5e_failure_is_reported) ... Open5e document list failed
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1227086Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1228107Z   File "/tmp/scrying-tests-7eortmel/repo/python/scrying_glass_source_catalog.py", line 31, in sources
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1228910Z     catalog = open5e.documents(open5e.base_url(display))
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1229528Z   File "/tmp/scrying-tests-7eortmel/repo/python/scrying_glass_open5e.py", line 101, in documents
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1230223Z     for item in _pages(base + "/documents/?" + urlencode({"limit": 200, "format": "json"}), base):
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1230768Z                 ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1231356Z   File "/tmp/scrying-tests-7eortmel/repo/python/scrying_glass_open5e.py", line 79, in _pages
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1231819Z     data = load_json(url)
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1232356Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1232968Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1233536Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1234681Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1235672Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1236274Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-21T09:22:14.1237174Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.

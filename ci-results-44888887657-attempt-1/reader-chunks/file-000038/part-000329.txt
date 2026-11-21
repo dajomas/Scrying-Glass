@@ -1,0 +1,29 @@
+969498Z 
+tests	Standalone Python browser and audit checks	2026-11-21T09:31:06.5969600Z OK (skipped=5)
+tests	Standalone Python browser and audit checks	2026-11-21T09:31:06.5970088Z test_worker_windows.py: connections opened: 0; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-21T09:31:06.6175450Z Connection audit modules: 254; failed: 0
+tests	Standalone Python browser and audit checks	2026-11-21T09:31:06.6176324Z PASS: all audited modules passed and closed their tracked connections
+tests	Standalone Python browser and audit checks	2026-11-21T09:31:06.8452411Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-21T09:31:06.8453282Z ##[group]tests/feedback_browser_fixture.py
+tests	Standalone Python browser and audit checks	2026-11-21T09:31:07.2241995Z ##[endgroup]
+tests	Standalone Python browser and audit checks	2026-11-21T09:31:07.2242892Z ##[group]tests/storage_migration_fixtures.py
+tests	Standalone Python browser and audit checks	2026-11-21T09:31:07.6513675Z ##[endgroup]
+tests	Post Run actions/setup-node@v4	﻿2026-11-21T09:31:07.6601128Z Post job cleanup.
+tests	Post Run actions/setup-node@v4	2026-11-21T09:31:07.7919748Z (node:39759) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-node@v4	2026-11-21T09:31:07.7920706Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/setup-python@v5	﻿2026-11-21T09:31:07.8114416Z Post job cleanup.
+tests	Post Run actions/setup-python@v5	2026-11-21T09:31:07.9473618Z (node:39767) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Post Run actions/setup-python@v5	2026-11-21T09:31:07.9474736Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Post Run actions/setup-python@v5	2026-11-21T09:31:07.9715944Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/Scrying-Glass/Scrying-Glass --files-from manifest.txt --use-compress-program zstdmt
+tests	Post Run actions/setup-python@v5	2026-11-21T09:31:08.4200269Z (node:39767) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+tests	Post Run actions/setup-python@v5	2026-11-21T09:31:09.4113510Z Sent 23855104 of 69222526 (34.5%), 22.7 MBs/sec
+tests	Post Run actions/setup-python@v5	2026-11-21T09:31:10.3076853Z Sent 69222526 of 69222526 (100.0%), 34.8 MBs/sec
+tests	Post Run actions/setup-python@v5	2026-11-21T09:31:10.6029518Z Cache saved with the key: setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e
+tests	Post Run actions/checkout@v4	﻿2026-11-21T09:31:10.6238505Z Post job cleanup.
+tests	Post Run actions/checkout@v4	2026-11-21T09:31:10.7104847Z [command]/usr/bin/git version
+tests	Post Run actions/checkout@v4	2026-11-21T09:31:10.7142368Z git version 2.56.1
+tests	Post Run actions/checkout@v4	2026-11-21T09:31:10.7184635Z Temporarily overriding HOME='/home/runner/work/_temp/a1ca7e22-4ea9-4dbf-877c-bbf2d05f02c8' before making global git config changes
+tests	Post Run actions/checkout@v4	2026-11-21T09:31:10.7186299Z Adding repository directory to the temporary git global config as a safe directory
+tests	Post Run actions/checkout@v4	2026-11-21T09:31:10.7188609Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Post Run actions/checkout@v4	2026-11-21T09:31:10.7228883Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-21T09:31:10.7267403Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'cor

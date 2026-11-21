@@ -1,0 +1,32 @@
+alone Python browser and audit checks	2026-11-21T09:30:06.4518712Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:06.4519224Z Ran 4 tests in 0.378s
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:06.4519385Z 
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:06.4519476Z OK
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:06.4519968Z test_statblock_add_preview.py: connections opened: 8; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:06.4981281Z Connection audit: test_statblock_autoload.py
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:07.3059252Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:07.3059754Z Ran 5 tests in 0.678s
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:07.3059910Z 
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:07.3060006Z OK
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:07.3060479Z test_statblock_autoload.py: connections opened: 10; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:07.3521508Z Connection audit: test_statblock_bundles.py
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.2821816Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.2822386Z Ran 8 tests in 0.822s
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.2822550Z 
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.2822649Z OK
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.2824940Z test_statblock_bundles.py: connections opened: 8; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.3257427Z Connection audit: test_statblock_clone_kernel.py
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.5597325Z ----------------------------------------------------------------------
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.5598139Z Ran 4 tests in 0.143s
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.5598372Z 
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.5598510Z OK
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.5625000Z test_statblock_clone_kernel.py: connections opened: 4; without explicit close: 0
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.5773511Z Connection audit: test_statblock_collection.py
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.9564078Z Statblock collection for added monsters was not started
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.9564634Z Traceback (most recent call last):
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.9565390Z   File "/tmp/scrying-tests-8yjgo7xo/repo/python/scrying_glass_statblock_collecting.py", line 229, in collect_after_add
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.9566392Z     return service.collect_new_monsters([m['id'] for m in created], file_bytes=file_bytes, filename=filename)
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.9567120Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.9567870Z   File "/tmp/scrying-tests-8yjgo7xo/repo/tests/test_statblock_collection.py", line 188, in <lambda>
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.9568614Z     broken = type('Broken', (), {'collect_new_monsters': lambda *a, **k: 1 / 0})()
+tests	Standalone Python browser and audit checks	2026-11-21T09:30:08.9569173Z               

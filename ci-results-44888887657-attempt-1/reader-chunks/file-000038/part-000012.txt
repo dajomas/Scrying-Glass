@@ -1,0 +1,26 @@
+■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 125.7 MiB
+tests	Provision and verify Chromium	2026-11-21T09:18:10.4317538Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 125.7 MiB
+tests	Provision and verify Chromium	2026-11-21T09:18:10.4859021Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 125.7 MiB
+tests	Provision and verify Chromium	2026-11-21T09:18:12.8081816Z Chrome Headless Shell 159.0.8154.6 (playwright chromium-headless-shell v1255) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1255
+tests	Provision and verify Chromium	2026-11-21T09:18:14.0423386Z Chromium headless launch/render preflight passed.
+tests	Python syntax and server import checks	﻿2026-11-21T09:18:14.0780075Z ##[group]Run python -m compileall -q scrying_glass_server.py python web_html tests tools
+tests	Python syntax and server import checks	2026-11-21T09:18:14.0780743Z ^[[36;1mpython -m compileall -q scrying_glass_server.py python web_html tests tools^[[0m
+tests	Python syntax and server import checks	2026-11-21T09:18:14.0781192Z ^[[36;1mpython -c "import scrying_glass_server"^[[0m
+tests	Python syntax and server import checks	2026-11-21T09:18:14.0815083Z shell: /usr/bin/bash -e {0}
+tests	Python syntax and server import checks	2026-11-21T09:18:14.0815331Z env:
+tests	Python syntax and server import checks	2026-11-21T09:18:14.0815783Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Python syntax and server import checks	2026-11-21T09:18:14.0816377Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Python syntax and server import checks	2026-11-21T09:18:14.0816828Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Python syntax and server import checks	2026-11-21T09:18:14.0817250Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Python syntax and server import checks	2026-11-21T09:18:14.0817625Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Python syntax and server import checks	2026-11-21T09:18:14.0817988Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Python syntax and server import checks	2026-11-21T09:18:14.0818379Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Python syntax and server import checks	2026-11-21T09:18:14.0818733Z ##[endgroup]
+tests	Python test suite (including browser fixtures)	﻿2026-11-21T09:18:15.9219857Z ##[group]Run python tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_*.py' -v
+tests	Python test suite (including browser fixtures)	2026-11-21T09:18:15.9220611Z ^[[36;1mpython tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_*.py' -v^[[0m
+tests	Python test suite (including browser fixtures)	2026-11-21T09:18:15.9254838Z shell: /usr/bin/bash -e {0}
+tests	Python test suite (including browser fixtures)	2026-11-21T09:18:15.9255107Z env:
+tests	Python test suite (including browser fixtures)	2026-11-21T09:18:15.9255560Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Python test suite (including browser fixtures)	2026-11-21T09:18:15.9256174Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Python test suite (including browser fixtures)	2026-11-21T09:18:15.9256604Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Python test suite (including browser fixtures)	2026-11-21T09:18:15.9257024Z   Python_ROOT_DIR: /opt/hostedtoolcache/Pyth
