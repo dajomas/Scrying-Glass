@@ -1,0 +1,31 @@
+node@v4	2026-11-21T18:49:04.6643722Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+connection-audit	Run actions/setup-node@v4	2026-11-21T18:49:04.6644119Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+connection-audit	Run actions/setup-node@v4	2026-11-21T18:49:04.6644511Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+connection-audit	Run actions/setup-node@v4	2026-11-21T18:49:04.6644905Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+connection-audit	Run actions/setup-node@v4	2026-11-21T18:49:04.6645242Z ##[endgroup]
+connection-audit	Run actions/setup-node@v4	2026-11-21T18:49:04.8185678Z Found in cache @ /opt/hostedtoolcache/node/22.23.5/x64
+connection-audit	Run actions/setup-node@v4	2026-11-21T18:49:04.8186783Z (node:2499) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+connection-audit	Run actions/setup-node@v4	2026-11-21T18:49:04.8187626Z (Use `node --trace-deprecation ...` to show where the warning was created)
+connection-audit	Run actions/setup-node@v4	2026-11-21T18:49:04.8189785Z ##[group]Environment details
+connection-audit	Run actions/setup-node@v4	2026-11-21T18:49:05.2813688Z node: v22.23.5
+connection-audit	Run actions/setup-node@v4	2026-11-21T18:49:05.2814238Z npm: 10.9.9
+connection-audit	Run actions/setup-node@v4	2026-11-21T18:49:05.2814774Z yarn: 1.22.22
+connection-audit	Run actions/setup-node@v4	2026-11-21T18:49:05.2816134Z ##[endgroup]
+connection-audit	Install Python test dependencies	﻿2026-11-21T18:49:05.2983476Z ##[group]Run python -m pip install --upgrade pip
+connection-audit	Install Python test dependencies	2026-11-21T18:49:05.2984156Z ^[[36;1mpython -m pip install --upgrade pip^[[0m
+connection-audit	Install Python test dependencies	2026-11-21T18:49:05.2984559Z ^[[36;1mpython -m pip install -r requirements-test.txt^[[0m
+connection-audit	Install Python test dependencies	2026-11-21T18:49:05.3030767Z shell: /usr/bin/bash -e {0}
+connection-audit	Install Python test dependencies	2026-11-21T18:49:05.3031046Z env:
+connection-audit	Install Python test dependencies	2026-11-21T18:49:05.3031530Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+connection-audit	Install Python test dependencies	2026-11-21T18:49:05.3032443Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+connection-audit	Install Python test dependencies	2026-11-21T18:49:05.3032903Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+connection-audit	Install Python test dependencies	2026-11-21T18:49:05.3033339Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+connection-audit	Install Python test dependencies	2026-11-21T18:49:05.3033755Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+connection-audit	Install Python test dependencies	2026-11-21T18:49:05.3034156Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+connection-audit	Install Python test dependencies	2026-11-21T18:49:05.3034549Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+connection-audit	Install Python test dependencies	2026-11-21T18:49:05.3034877Z ##[endgroup]
+connection-audit	Install Python test dependencies	2026-11-21T18:49:06.4916479Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages (26.3)
+connection-audit	Install Python test dependencies	2026-11-21T18:49:07.2124102Z Collecting fastapi>=0.115 (from -r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 3))
+connection-audit	Install Python test dependencies	2026-11-21T18:49:07.2140244Z   Using cached fastapi-0.165.0-py3-none-any.whl.metadata (27 kB)
+connection-audit	Install Python test dependencies	2026-11-21T18:49:07.2514609Z Collecting uvicorn>=0.30 (from uvicorn[standard]>=0.30->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 4))
+connection-audit	Install Python test dependencies	2026-

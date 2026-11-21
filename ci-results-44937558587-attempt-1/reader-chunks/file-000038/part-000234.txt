@@ -1,0 +1,48 @@
+version 13
+tests	JavaScript tests	2026-11-21T18:54:26.3173295Z # Initial selection, manual override, monster/downed turns, dirty-field refresh, lair transition, scope change and no-turn checks passed.
+tests	JavaScript tests	2026-11-21T18:54:26.3222283Z # Subtest: tests/encounter-active-combatant.test.cjs
+tests	JavaScript tests	2026-11-21T18:54:26.3228108Z ok 1 - tests/encounter-active-combatant.test.cjs
+tests	JavaScript tests	2026-11-21T18:54:26.3228525Z   ---
+tests	JavaScript tests	2026-11-21T18:54:26.3228783Z   duration_ms: 28.850816
+tests	JavaScript tests	2026-11-21T18:54:26.3229059Z   type: 'test'
+tests	JavaScript tests	2026-11-21T18:54:26.3229309Z   ...
+tests	JavaScript tests	2026-11-21T18:54:26.3229525Z 1..1
+tests	JavaScript tests	2026-11-21T18:54:26.3229742Z # tests 1
+tests	JavaScript tests	2026-11-21T18:54:26.3230536Z # suites 0
+tests	JavaScript tests	2026-11-21T18:54:26.3231034Z # pass 1
+tests	JavaScript tests	2026-11-21T18:54:26.3232825Z # fail 0
+tests	JavaScript tests	2026-11-21T18:54:26.3233119Z # cancelled 0
+tests	JavaScript tests	2026-11-21T18:54:26.3233468Z # skipped 0
+tests	JavaScript tests	2026-11-21T18:54:26.3233718Z # todo 0
+tests	JavaScript tests	2026-11-21T18:54:26.3234524Z # duration_ms 34.09286
+tests	JavaScript tests	2026-11-21T18:54:26.3780975Z ##[endgroup]
+tests	JavaScript tests	2026-11-21T18:54:26.3781705Z ##[group]tests/encounter-tools-feedback.test.cjs
+tests	JavaScript tests	2026-11-21T18:54:26.6143492Z TAP version 13
+tests	JavaScript tests	2026-11-21T18:54:26.9501024Z # Subtest: tools error persists in the tools region and keeps the draft; next success resolves it
+tests	JavaScript tests	2026-11-21T18:54:26.9504521Z ok 1 - tools error persists in the tools region and keeps the draft; next success resolves it
+tests	JavaScript tests	2026-11-21T18:54:26.9505219Z   ---
+tests	JavaScript tests	2026-11-21T18:54:26.9505479Z   duration_ms: 310.339932
+tests	JavaScript tests	2026-11-21T18:54:26.9505739Z   type: 'test'
+tests	JavaScript tests	2026-11-21T18:54:26.9505960Z   ...
+tests	JavaScript tests	2026-11-21T18:54:26.9520989Z # Subtest: declined confirmation is silent, sends nothing and keeps the earlier error
+tests	JavaScript tests	2026-11-21T18:54:26.9522788Z ok 2 - declined confirmation is silent, sends nothing and keeps the earlier error
+tests	JavaScript tests	2026-11-21T18:54:26.9523248Z   ---
+tests	JavaScript tests	2026-11-21T18:54:26.9524052Z   duration_ms: 2.599841
+tests	JavaScript tests	2026-11-21T18:54:26.9524233Z   type: 'test'
+tests	JavaScript tests	2026-11-21T18:54:26.9524387Z   ...
+tests	JavaScript tests	2026-11-21T18:54:26.9539757Z # Subtest: failed refresh after success is a separate no-replay error
+tests	JavaScript tests	2026-11-21T18:54:26.9540566Z ok 3 - failed refresh after success is a separate no-replay error
+tests	JavaScript tests	2026-11-21T18:54:26.9541369Z   ---
+tests	JavaScript tests	2026-11-21T18:54:26.9541613Z   duration_ms: 1.856654
+tests	JavaScript tests	2026-11-21T18:54:26.9541852Z   type: 'test'
+tests	JavaScript tests	2026-11-21T18:54:26.9542001Z   ...
+tests	JavaScript tests	2026-11-21T18:54:26.9560953Z # Subtest: manual refresh failure is a persistent tools error and success resolves it
+tests	JavaScript tests	2026-11-21T18:54:26.9561803Z ok 4 - manual refresh failure is a persistent tools error and success resolves it
+tests	JavaScript tests	2026-11-21T18:54:26.9564316Z   ---
+tests	JavaScript tests	2026-11-21T18:54:26.9564933Z   duration_ms: 1.81366
+tests	JavaScript tests	2026-11-21T18:54:26.9565254Z   type: 'test'
+tests	JavaScript tests	2026-11-21T18:54:26.9565478Z   ...
+tests	JavaScript tests	2026-11-21T18:54:26.9586284Z # Subtest: encounter scope change clears tools records and stale completion cannot publish
+tests	JavaScript tests	2026-11-21T18:54:26.9587153Z ok 5 - encounter scope change clears tools records and stale completion cannot publish
+tests	JavaScript tests	2026-11-21T18:54:26.9587855Z   ---
+tests	JavaScript tests	2026-11-21T18:54:26.9588279Z   duration_ms: 2.5905
