@@ -1,7 +1,8 @@
 /* SG-TODO-029: distinct default monster color for the Add Monster and Import .monster forms.
  * Same palette and rule as python/scrying_glass_monster_palette.py: the first palette color
  * no monster in the battle setup uses, else the least used one. Characters do not count.
- * A color picked by hand is kept until its form is reset. */
+ * A color picked by hand is kept until its form is reset. While the computed default is
+ * used, the form sends color_auto=true and each further copy gets the next color. */
 (() => {
     const PALETTE = [
         '#842029', '#1d5fa8', '#2b7a34', '#7a3fa8',
@@ -23,11 +24,33 @@
         return PALETTE.reduce((best, color) => counts.get(color) < counts.get(best) ? color : best);
     }
 
+    function autoField(field) {
+        const form = document.querySelector(field.form);
+        if (!form) return null;
+        let hidden = form.querySelector('input[name="color_auto"]');
+        if (!hidden) {
+            hidden = document.createElement('input');
+            hidden.type = 'hidden';
+            hidden.name = 'color_auto';
+            form.append(hidden);
+        }
+        return hidden;
+    }
+
     function apply() {
         const color = nextColor(monsters);
         for (const field of fields) {
             const input = document.querySelector(field.input);
-            if (!input || input.dataset.handPicked === 'true') continue;
+            if (!input) continue;
+            const auto = autoField(field);
+            if (input.dataset.handPicked === 'true') {
+                if (auto) auto.value = '';
+                continue;
+            }
+            if (auto) {
+                auto.value = 'true';
+                auto.defaultValue = 'true';
+            }
             input.value = color;
             input.defaultValue = color;  // a later form.reset() keeps the computed default
             const preview = document.querySelector(field.preview);
@@ -42,7 +65,11 @@
         const input = document.querySelector(field.input);
         const form = document.querySelector(field.form);
         if (!input) continue;
-        input.addEventListener('input', () => { input.dataset.handPicked = 'true'; });
+        input.addEventListener('input', () => {
+            input.dataset.handPicked = 'true';
+            const auto = autoField(field);
+            if (auto) auto.value = '';
+        });
         form?.addEventListener('reset', () => {
             delete input.dataset.handPicked;
             setTimeout(apply);  // after the browser restores the defaults

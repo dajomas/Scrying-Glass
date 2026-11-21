@@ -98,7 +98,7 @@ Has lair, below setup name and above imports, exposes the lair pane/toggle subje
 
 Manual entry supports name, species, AC, color, quantity 1–50 and optional image. HP Range Start accepts fixed 24, range start 18 with end 30, or dice 3d8+9 with empty end. Each copy rolls independently. Uploaded images take precedence over optional best-effort D&D Beyond lookup. Enter stats manually when lookup fails.
 
-The color starts at the first of 12 palette colors that no monster in the battle setup uses yet (the least used one when all 12 are taken); characters do not count. A color you pick yourself stays until the form is reset. CSV rows without a color get the next free color the same way. The HP entry help is folded under "How to enter HP" at the end of Combat statistics.
+The color starts at the first of 12 palette colors that no monster in the battle setup uses yet (the least used one when all 12 are taken); characters do not count. With a quantity above 1, each copy gets the next free color; a color you pick yourself is used for every copy and stays until the form is reset. CSV rows without a color get the next free color the same way. The HP entry help is folded under "How to enter HP" at the end of Combat statistics.
 
 .monster imports are compatible UTF-8 JSON statblocks with usable name/type/AC/HP, not arbitrary archives.
 

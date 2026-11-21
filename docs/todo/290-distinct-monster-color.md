@@ -34,6 +34,9 @@ any monster in the current battle setup.
    battle setup changes (load, remove, edit); a color picked by hand is kept until the
    form is reset.
 
+Clarified by the user 2026-11-21: with quantity > 1, each added monster gets the next color
+(when the default is used; a hand-picked color stays on all copies).
+
 ## Acceptance criteria (proposed)
 
 - A new monster's default color is not used by any monster in the current battle setup

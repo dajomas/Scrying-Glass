@@ -31,6 +31,11 @@ User request, 2026-11-21, on `features/claude`: "start with group 1". Decisions 
   Import .monster colour after every state load (hook `window.scryingMonsterColorState` in
   `static/admin/030-source.js`), so after page load, every add and every setup change. A colour
   picked by hand is kept until that form is reset; reset restores the computed default.
+- Quantity > 1 (user finding 2026-11-21, after the first push): while the form shows the
+  computed default it sends `color_auto=true` (hidden field kept by the script). Then the first
+  copy keeps the shown colour and each further copy gets the next palette colour
+  (`spread_copy_colors`, in `create_monster` of both mixins and in `import_monster`). A
+  hand-picked colour sends no flag and stays on every copy.
 - Unchanged: the `#842029` fallback in `scrying_glass_service_state.py` for stored monsters
   without a colour, and existing monsters keep their colours.
 
@@ -54,13 +59,13 @@ count, Select all, Clear selection, Bulk.
 ## Cache busting
 
 `admin-panel-forms.css?v=3`, `admin-panel-forms.js?v=2`, `admin-rosters.js?v=2`,
-`monster-default-color.js?v=1` (new), `monster-refresh-review.js?v=3`,
+`monster-default-color.js?v=2` (new), `monster-refresh-review.js?v=3`,
 `monster-source-image.js?v=5`, `monster-statblock-bulk.js?v=2`.
 
 ## Validation (local, this sandbox)
 
 - New tests: `tests/test_end_battle_visibility.py` (7), `tests/test_monster_default_color.py`
-  (7, includes the CSV import through the handler), `tests/test_group1_admin_ui.py` (4 browser
+  (11, includes the CSV import and quantity adds through the handlers), `tests/test_group1_admin_ui.py` (4 browser
   tests for 029-032). Version expectations updated in `test_admin_rosters.py` and
   `test_admin_panel_forms.py`.
 - Full suite through `tools/run_split_tests.py`: 2090 tests; the same 92 failures/errors as the
@@ -68,4 +73,8 @@ count, Select all, Clear selection, Bulk.
   no new failures.
 - `begin_battle` removes the mark inline (no import), because legacy tests run that method
   extracted from its module.
+- First push 9491da6: CI 44885862376 failed only the connection audit of
+  `test_statblock_import_workers.py`: on `features/claude` (no `monsters_examples`)
+  `CapturedProviderWorkerTests.setUp` skipped after the fixture opened SQLite, so tearDown never
+  closed it. The skip now comes first.
 - CI and the user's e2e run are pending.

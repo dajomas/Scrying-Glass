@@ -24,7 +24,7 @@ class AdminMonstersMixin:
         await self.context.combatants_changed(monsters=True, characters=False)
         return {'count': len(self.context.STATE['monsters'])}
 
-    async def create_monster(self, name: str=Form(...), monster_species: str=Form(...), ac: int=Form(...), hprangestart: str=Form(...), hprangeend: str=Form(''), color: str=Form(...), quantity: int=Form(1, ge=1, le=50), image: UploadFile | None=File(None)) -> list[dict[str, Any]]:
+    async def create_monster(self, name: str=Form(...), monster_species: str=Form(...), ac: int=Form(...), hprangestart: str=Form(...), hprangeend: str=Form(''), color: str=Form(...), quantity: int=Form(1, ge=1, le=50), image: UploadFile | None=File(None), color_auto: str=Form('')) -> list[dict[str, Any]]:
         """Create monster."""
         next_hp = self.context.hp_value_factory(hprangestart, hprangeend)
 
@@ -76,6 +76,8 @@ class AdminMonstersMixin:
                 )
             )
 
+        from python.scrying_glass_monster_palette import spread_copy_colors
+        spread_copy_colors(created, self.context.STATE["monsters"], color_auto)
         self.context.STATE["monsters"].extend(created)
         await self.context.combatants_changed(monsters=True, characters=False)
         return created
@@ -86,6 +88,7 @@ class AdminMonstersMixin:
         color: str = Form(...),
         quantity: int = Form(1, ge=1, le=50),
         image: UploadFile | None = File(None),
+        color_auto: str = Form(""),
     ):
         """Import monsters only into the encounter where the request started."""
         working_state = self.context.STATE
@@ -123,6 +126,8 @@ class AdminMonstersMixin:
                 "The encounter changed while this request was running. Retry.",
             )
 
+        from python.scrying_glass_monster_palette import spread_copy_colors
+        spread_copy_colors(created, working_state["monsters"], color_auto)  # SG-TODO-029
         working_state["monsters"].extend(created)
 
         await self.context.combatants_changed(

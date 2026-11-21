@@ -38,3 +38,18 @@ def fill_missing_colors(rows: list[dict], monsters: Iterable[dict]) -> None:
         if not row.get("color"):
             row["color"] = next_monster_color(used)
         used.append(row["color"])
+
+
+def spread_copy_colors(created: list[dict], existing: Iterable[dict], auto: object) -> None:
+    """With the form's computed default (auto), give each copy after the first the next color.
+
+    The first copy keeps the submitted color, the one the form showed; a hand-picked color
+    (auto not "true") stays on every copy.
+    """
+    if auto != "true" or len(created) < 2:
+        return
+    used = [monster.get("color") for monster in existing]
+    used.append(created[0].get("color"))
+    for monster in created[1:]:
+        monster["color"] = next_monster_color(used)
+        used.append(monster["color"])

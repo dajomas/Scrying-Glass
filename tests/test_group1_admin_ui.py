@@ -30,6 +30,9 @@ class GroupOneAdminTests(unittest.TestCase):
             page.wait_for_function('([id, c]) => document.querySelector(id).value === c', arg=[ident, expected])
         self.assertEqual(page.evaluate("getComputedStyle(document.querySelector('#monsterColorPreview')).backgroundColor"),
                          'rgb(%d, %d, %d)' % tuple(int(expected[i:i + 2], 16) for i in (1, 3, 5)))
+        auto = "(id) => new FormData(document.querySelector(id)).getAll('color_auto')"
+        self.assertEqual(page.evaluate(auto, '#monsterForm'), ['true'])
+        self.assertEqual(page.evaluate(auto, '#monsterUpload'), ['true'])
         # A new monster in the setup moves the default on; a hand-picked color stays.
         page.evaluate("""() => { const input = document.querySelector('#monsterFileColor');
             input.value = '#00ff00'; input.dispatchEvent(new Event('input', {bubbles: true})); }""")
@@ -38,9 +41,12 @@ class GroupOneAdminTests(unittest.TestCase):
         self.assertNotEqual(following, expected)
         self.assertEqual(page.locator('#monsterColor').input_value(), following)
         self.assertEqual(page.locator('#monsterFileColor').input_value(), '#00ff00')
+        self.assertEqual(page.evaluate(auto, '#monsterUpload'), [''])  # hand pick: one color for all copies
+        self.assertEqual(page.evaluate(auto, '#monsterForm'), ['true'])
         # Reset ends the hand pick and restores the computed default.
         page.evaluate("document.querySelector('#monsterUpload').reset()")
         page.wait_for_function('([c]) => document.querySelector("#monsterFileColor").value === c', arg=[following])
+        self.assertEqual(page.evaluate(auto, '#monsterUpload'), ['true'])
         # All twelve in use: the least used color.
         page.evaluate("([p]) => window.scryingMonsterColorState({monsters: [...p, ...p.slice(1)].map(color => ({color}))})", [list(PALETTE)])
         self.assertEqual(page.locator('#monsterColor').input_value(), PALETTE[0])

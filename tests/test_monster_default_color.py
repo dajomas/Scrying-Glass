@@ -7,7 +7,7 @@ from pathlib import Path
 
 import test_bughunt_round11 as csv_fixture
 from python.scrying_glass_database_transactions import transactional_handler
-from python.scrying_glass_monster_palette import PALETTE, fill_missing_colors, next_monster_color
+from python.scrying_glass_monster_palette import PALETTE, fill_missing_colors, next_monster_color, spread_copy_colors
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -45,13 +45,102 @@ class PaletteRuleTests(unittest.TestCase):
         fill_missing_colors(rows, [{'color': PALETTE[0]}])
         self.assertEqual([row['color'] for row in rows], [PALETTE[1], PALETTE[2], PALETTE[3], PALETTE[4]])
 
+    def test_copies_each_get_the_next_color_only_with_the_computed_default(self):
+        existing = [{'color': PALETTE[0]}, {'color': PALETTE[2]}]
+        copies = [{'color': PALETTE[1]} for _ in range(4)]
+        spread_copy_colors(copies, existing, 'true')
+        self.assertEqual([c['color'] for c in copies], [PALETTE[1], PALETTE[3], PALETTE[4], PALETTE[5]])
+        for auto in ('', None, 'false'):
+            picked = [{'color': '#00ff00'} for _ in range(3)]
+            spread_copy_colors(picked, existing, auto)
+            self.assertEqual({c['color'] for c in picked}, {'#00ff00'}, auto)
+
     def test_browser_copy_uses_the_same_palette(self):
         source = (ROOT / 'static/monster-default-color.js').read_text(encoding='utf-8')
         self.assertEqual(tuple(re.findall(r"'(#[0-9a-f]{6})'", source)), PALETTE)
         end = (ROOT / 'templates/admin/190_document_end.html').read_text(encoding='utf-8')
-        self.assertEqual(end.count('/static/monster-default-color.js?v=1'), 1)
+        self.assertEqual(end.count('/static/monster-default-color.js?v=2'), 1)
         self.assertIn('window.scryingMonsterColorState?.(latest);',
                       (ROOT / 'static/admin/030-source.js').read_text(encoding='utf-8'))
+
+
+def fake_fastapi():
+    """Minimal fastapi stand-in so the handlers import where FastAPI is not installed."""
+    import importlib.util
+    if importlib.util.find_spec('fastapi') is not None:
+        return {}
+    class FormParameter:
+        def __init__(self, default=None, **_):
+            self.default = default
+    class HTTPException(Exception):
+        def __init__(self, status_code, detail=None):
+            super().__init__(detail)
+            self.status_code, self.detail = status_code, detail
+    fastapi = types.ModuleType('fastapi')
+    params = types.ModuleType('fastapi.params')
+    fastapi.Form = FormParameter
+    fastapi.File = FormParameter
+    fastapi.UploadFile = fastapi.Request = object
+    fastapi.HTTPException = HTTPException
+    fastapi.params = params
+    params.Form = FormParameter
+    return {'fastapi': fastapi, 'fastapi.params': params}
+
+
+class QuantityColorTests(unittest.IsolatedAsyncioTestCase):
+    """Add Monster and Import .monster with quantity > 1 (user finding 2026-11-21)."""
+
+    def setUp(self):
+        import sys
+        import uuid
+        from unittest.mock import AsyncMock, Mock, patch
+        patcher = patch.dict(sys.modules, fake_fastapi())
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        from python.scrying_glass_monster_selection import CandidateMonstersMixin
+        from python.scrying_glass_admin_monsters import AdminMonstersMixin
+        from python.scrying_glass_service_images import ImagesService
+        self.context = types.SimpleNamespace(
+            uuid=uuid, HTTPException=sys.modules['fastapi'].HTTPException,
+            STATE=dict(monsters=[{'id': 'old', 'color': PALETTE[0]}], characters=[{'id': 'pc', 'color': PALETTE[1]}],
+                       battle_order=[]),
+            hp_value_factory=Mock(return_value=Mock(return_value=20)), dnd_image=Mock(return_value=None),
+            save_image=Mock(return_value=None), combatants_changed=AsyncMock(),
+            parse_monster=Mock(return_value={'name': 'Spider', 'monster_species': 'spider', 'ac': 13, 'hp': 26,
+                                             'max_hp': 26, 'original_hp': 26}))
+        images = ImagesService(self.context)
+        self.context.make_monster = images.make_monster
+        self.context.make_monsters = images.make_monsters
+        self.create = CandidateMonstersMixin()
+        self.create.context = self.context
+        self.importer = AdminMonstersMixin()
+        self.importer.context = self.context
+        self.arguments = dict(name='Goblin', monster_species='goblin', ac=12, hprangestart='7', hprangeend='',
+                              quantity=3, image=None, selection_token='manual')
+
+    def colors(self, created):
+        return [monster['color'] for monster in created]
+
+    async def test_add_monster_copies_get_distinct_colors_with_the_default(self):
+        created = await self.create.create_monster(**self.arguments, color=PALETTE[1], color_auto='true')
+        self.assertEqual(self.colors(created), [PALETTE[1], PALETTE[2], PALETTE[3]])  # characters do not count
+
+    async def test_add_monster_hand_picked_color_stays_on_every_copy(self):
+        created = await self.create.create_monster(**self.arguments, color='#00ff00')
+        self.assertEqual(self.colors(created), ['#00ff00'] * 3)
+
+    async def test_import_monster_copies_get_distinct_colors_with_the_default(self):
+        from unittest.mock import patch
+        async def read(size=-1):
+            return b'{}'
+        upload = types.SimpleNamespace(filename='spider.monster', read=read)
+        with patch('python.scrying_glass_statblock_collecting.collect_after_add'):
+            created = await self.importer.import_monster(monster_file=upload, color=PALETTE[1], quantity=3,
+                                                         image=None, color_auto='true')
+            picked = await self.importer.import_monster(monster_file=upload, color='#00ff00', quantity=2,
+                                                        image=None, color_auto='')
+        self.assertEqual(self.colors(created), [PALETTE[1], PALETTE[2], PALETTE[3]])
+        self.assertEqual(self.colors(picked), ['#00ff00'] * 2)
 
 
 class CsvDefaultColorTests(unittest.TestCase):
