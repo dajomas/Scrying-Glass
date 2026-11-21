@@ -1,14 +1,14 @@
-# E2E results 20261121T150318Z
+# E2E results 20261121T184951Z
 
-- Commit tested: `2cf5bc682a0ebcca7b8acf0ceb22fca95f2c3b1d`
+- Commit tested: `f794d67b5f2d5b0f58506a89c1536703b5f798f4`
 - pytest exit status: 0
-- Total: 137; passed 133, failed 0, errors 0, skipped 4
-- chromium: passed 62, skipped 2
+- Total: 137; passed 137, failed 0, errors 0, skipped 0
+- chromium: passed 64
 - chromium-1024: passed 1
 - chromium-1440: passed 1
 - chromium-360: passed 1
 - chromium-768: passed 1
-- firefox: passed 62, skipped 2
+- firefox: passed 64
 - firefox-1024: passed 1
 - firefox-1440: passed 1
 - firefox-360: passed 1
