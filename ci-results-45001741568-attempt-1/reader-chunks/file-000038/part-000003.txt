@@ -1,0 +1,29 @@
+ckout@v4	2026-11-22T08:12:57.5683460Z Initialized empty Git repository in /home/runner/work/Scrying-Glass/Scrying-Glass/.git/
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:57.5694553Z [command]/usr/bin/git remote add origin https://github.com/dajomas/Scrying-Glass
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:57.5756482Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:57.5757207Z ##[group]Disabling automatic garbage collection
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:57.5761187Z [command]/usr/bin/git config --local gc.auto 0
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:57.5786172Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:57.5787020Z ##[group]Setting up auth
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:57.5790162Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:57.5816473Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:57.7857679Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:57.7880260Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:57.8059793Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:57.8081878Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:57.8259466Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:57.8284874Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:57.8285583Z ##[group]Fetching the repository
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:57.8290892Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +98c0a2d067413a6a95c0fa82d88a9987c29a54f0:refs/remotes/origin/features/claude
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:59.0766075Z From https://github.com/dajomas/Scrying-Glass
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:59.0766794Z  * [new ref]         98c0a2d067413a6a95c0fa82d88a9987c29a54f0 -> origin/features/claude
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:59.0769222Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:59.0769729Z ##[group]Determining the checkout info
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:59.0771316Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:59.0776095Z [command]/usr/bin/git sparse-checkout disable
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:59.0829741Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:59.0849935Z ##[group]Checking out the ref
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:59.0853966Z [command]/usr/bin/git checkout --progress --force -B features/claude refs/remotes/origin/features/claude
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:59.2034700Z Switched to a new branch 'features/claude'
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12:59.2039994Z branch 'features/claude' set up to track 'origin/features/claude'.
+connection-audit	Run actions/checkout@v4	2026-11-22T08:12

@@ -1,0 +1,27 @@
+f isolated unittest modules	2026-11-22T08:16:22.9995556Z OSError: secret
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9995864Z D&D Beyond candidate lookup failed
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9996239Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9996904Z   File "/tmp/scrying-tests-wk_gy_jl/repo/python/scrying_glass_monster_selection.py", line 71, in dnd_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9997573Z     html = context.dnd_monster_detail_html(href)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9998228Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9998862Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9999210Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9999988Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0000620Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0001020Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0001708Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0002536Z     raise result
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0002803Z OSError: secret
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0003183Z Combined monster lookup: D&D Beyond did not respond (secret)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0003628Z 5e.tools candidate lookup failed
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0003974Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0004686Z   File "/tmp/scrying-tests-wk_gy_jl/repo/python/scrying_glass_monster_selection.py", line 202, in fivetools_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0005430Z     for monster in _fivetools_source_data(root, index, source):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0005898Z                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0006624Z   File "/tmp/scrying-tests-wk_gy_jl/repo/python/scrying_glass_monster_selection.py", line 154, in _fivetools_source_data
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0007440Z     raise ValueError("Configured source is missing from the provider index")
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0008093Z ValueError: Configured source is missing from the provider index
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0008626Z Combined monster lookup failed for 5e.tools
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0009012Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0009663Z   File "/tmp/scrying-tests-wk_gy_jl/repo/python/scrying_glass_monster_selection.py", line 202, in fivetools_candidates
+connecti

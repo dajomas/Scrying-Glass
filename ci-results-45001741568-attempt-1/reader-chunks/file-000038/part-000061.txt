@@ -1,0 +1,29 @@
+ isolated unittest modules	2026-11-22T08:17:07.3820028Z Ran 1 test in 0.384s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.3820153Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.3820227Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.3820585Z test_monster_refresh_startup_browser.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.4143993Z Connection audit: test_monster_roll_order.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.4780074Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.4781092Z test_monster_roll_order.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.4782127Z Ran 15 tests in 0.001s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.4782756Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.4783163Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.4890369Z Connection audit: test_monster_roll_order_handlers.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.7158972Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.7160264Z test_monster_roll_order_handlers.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.7161514Z Ran 6 tests in 0.012s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.7161881Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.7162109Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.7564576Z Connection audit: test_monster_source_catalog.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.9893309Z Open5e document list failed
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.9893719Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.9894147Z   File "/tmp/scrying-tests-wk_gy_jl/repo/python/scrying_glass_source_catalog.py", line 31, in sources
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.9894580Z     catalog = open5e.documents(open5e.base_url(display))
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.9895000Z   File "/tmp/scrying-tests-wk_gy_jl/repo/python/scrying_glass_open5e.py", line 101, in documents
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.9895498Z     for item in _pages(base + "/documents/?" + urlencode({"limit": 200, "format": "json"}), base):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.9895900Z                 ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.9896330Z   File "/tmp/scrying-tests-wk_gy_jl/repo/python/scrying_glass_open5e.py", line 79, in _pages
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.9896666Z     data = load_json(url)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.9897039Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:17:07.9897422Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest 

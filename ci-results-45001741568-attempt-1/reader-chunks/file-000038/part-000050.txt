@@ -1,0 +1,29 @@
+
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:10.4027446Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:10.4027888Z test_monster_button_layout.py: connections opened: 1; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:10.4719972Z Connection audit: test_monster_candidate_browser.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:16.4671469Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:16.4672708Z Ran 12 tests in 5.897s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:16.4673030Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:16.4673206Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:16.4694031Z test_monster_candidate_browser.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:16.5065259Z Connection audit: test_monster_candidate_pending_feedback.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.7277684Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.7278204Z Ran 8 tests in 6.122s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.7278331Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.7278547Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.7279008Z test_monster_candidate_pending_feedback.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.7636534Z Connection audit: test_monster_candidate_selection.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9816534Z Combined monster lookup failed for D&D Beyond
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9817328Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9818126Z   File "/tmp/scrying-tests-wk_gy_jl/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9818877Z     found = fetch()
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9819539Z   File "/tmp/scrying-tests-wk_gy_jl/repo/python/scrying_glass_monster_selection.py", line 266, in <lambda>
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9820271Z     lambda: dnd_candidates(context, species),
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9820783Z             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9821496Z   File "/tmp/scrying-tests-wk_gy_jl/repo/python/scrying_glass_monster_selection.py", line 66, in dnd_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9822695Z     raise ProviderError("D&D Beyond returned an invalid candidate link.")
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9823585Z python.scrying_glass_monster_selection.ProviderError: D&D Beyond returned an invalid candidate link.
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9826441Z D&D Beyond candidate lookup failed
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9826932Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:22.9827695Z   File "/tmp/scrying-tests-wk_g

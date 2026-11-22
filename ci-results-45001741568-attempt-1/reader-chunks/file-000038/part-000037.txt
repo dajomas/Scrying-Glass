@@ -1,0 +1,29 @@
+onnection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.4511659Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.4512894Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.4513492Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.4514581Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.4515626Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.4516311Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.4517489Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.4518499Z     raise effect
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.4519017Z TimeoutError: fixture
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.4519865Z Combined monster lookup: D&D Beyond did not respond (fixture)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.4520889Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.4521616Z Ran 10 tests in 0.161s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.4521861Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.4522104Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.4523169Z test_dndbeyond_locked_pages.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.4928825Z Connection audit: test_dndbeyond_lookup_diagnostics.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.7427207Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.7427996Z test_dndbeyond_lookup_diagnostics.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.7428499Z Ran 17 tests in 0.175s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.7428667Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.7428756Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:28.7870373Z Connection audit: test_encounter_features.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:30.0049148Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:30.0050475Z test_encounter_features.py: connections opened: 35; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:30.0051991Z Ran 30 tests in 1.147s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:30.0052689Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:30.0053390Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:30.0508665Z Connection audit: test_end_battle_visibility.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:15:30.4030081Z -------------------------

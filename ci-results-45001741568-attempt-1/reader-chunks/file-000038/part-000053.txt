@@ -1,0 +1,26 @@
+on-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0010587Z     for monster in _fivetools_source_data(root, index, source):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0011033Z                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0011763Z   File "/tmp/scrying-tests-wk_gy_jl/repo/python/scrying_glass_monster_selection.py", line 154, in _fivetools_source_data
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0013247Z     raise ValueError("Configured source is missing from the provider index")
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0013744Z ValueError: Configured source is missing from the provider index
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0013950Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0014137Z The above exception was the direct cause of the following exception:
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0014344Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0014461Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0015115Z   File "/tmp/scrying-tests-wk_gy_jl/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0015506Z     found = fetch()
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0015887Z   File "/tmp/scrying-tests-wk_gy_jl/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0016293Z     lambda: fivetools_candidates(species, display),
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0016566Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0017010Z   File "/tmp/scrying-tests-wk_gy_jl/repo/python/scrying_glass_monster_selection.py", line 222, in fivetools_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0017557Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0018110Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0018528Z Combined monster lookup failed for 5e.tools
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0018828Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0019388Z   File "/tmp/scrying-tests-wk_gy_jl/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0019768Z     found = fetch()
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0020142Z   File "/tmp/scrying-tests-wk_gy_jl/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0020546Z     lambda: fivetools_candidates(species, display),
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0020814Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T08:16:23.0021229Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Conn
