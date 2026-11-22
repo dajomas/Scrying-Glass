@@ -58,6 +58,7 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 39. [Clear selection next to Select all](docs/todo/320-clear-selection-position.md) - SG-TODO-032, completed and closed 2026-11-21 ([670](docs/handover/670-group-1-quick-wins.md); requested 2026-11-20). In the Characters and Monsters rosters, Clear selection moves to the right of Select all.
 40. [5e.tools monster versions and generated magic-item variants](docs/todo/330-fivetools-variants.md) - SG-TODO-033, completed and closed 2026-11-22 (monster versions [720](docs/handover/720-fivetools-monster-versions.md), magic-item variants [730](docs/handover/730-fivetools-magic-item-variants.md); CI 44964454668, e2e 20261122T073821Z 137 passed); split off from SG-TODO-022 by the user 2026-11-20.
 41. [5e.tools item type and property text](docs/todo/340-fivetools-item-enhancement.md) - SG-TODO-034, proposed 2026-11-22 (split off from SG-TODO-033 part 2 by the user). The runtime's `enhanceItem` text for all item definitions: property, type and mastery text, as 5e.tools shows it. Delivered 2026-11-22 ([handover 750](docs/handover/750-fivetools-item-enhancement.md)); closure follows CI and e2e.
+42. [Remove the 20,000-byte file splitting](docs/todo/350-remove-file-size-splitting.md) - SG-TODO-035, proposed 2026-11-22 by the user: roll back the splitting done for the Perplexity connector's file size limit. Inventory made 2026-11-22; scope decisions open.
 
 ## Implementation order - agreed 2026-11-21, completed 2026-11-22
 
