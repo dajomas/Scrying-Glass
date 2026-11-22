@@ -7,7 +7,7 @@
 Delivered as 92183b55707759d57c361cbfe877c44c06af4f02 on
 features/perplexity-009.7, prepared against baseline
 2acd6a67fc76c770dcb6993e0abcf328295298d1 at the user's push request.
-[4A.9 task/status](../todo/097-feedback-delivery-plan.md#4a9-activity-log-clear-feedback---2026-11-10)
+[4A.9 task/status](../history/097-feedback-delivery-plan.md#4a9-activity-log-clear-feedback---2026-11-10)
 is now completed/closed for its bounded scope; see acceptance below.
 Preparation-time pending notes are historical, superseded by reviewed covering CI
 and explicit user-requested close-out, not new manual validation evidence.

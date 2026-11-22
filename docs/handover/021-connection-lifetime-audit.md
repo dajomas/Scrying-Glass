@@ -51,7 +51,7 @@ implementation are unchanged. Existing unittest/standalone discovery includes th
 new regression and updated audit without workflow edits. Normal CI applies, with
 no skip marker or separate dispatch. README and the CI coverage overview remain
 accurate; the audit still repeats unittest discovery, now per module. The existing
-[task record](../todo/100-httpx2-test-migration.md#connection-lifetime-audit-maintenance---2026-11-11)
+[task record](../history/100-httpx2-test-migration.md#connection-lifetime-audit-maintenance---2026-11-11)
 tracks this independent maintenance correction without reopening accepted migration
 scope. Stage 2, both feedback deliverables and 009.7 remain open. No commit identity,
 CI success, full-suite success, merge or deployment is claimed before it occurs.
@@ -107,7 +107,7 @@ its behavior is unchanged. Both deliverables, Stage 2 and 009.7 remain open.
 The user explicitly requested "Please close out the 2 maintenance records" at
 13:17 CET on 2026-11-13. Both connection-lifetime audit isolation and Chromium
 provisioning are completed and closed for their agreed maintenance scope. The
-[task statuses](../todo/100-httpx2-test-migration.md#connection-lifetime-audit-maintenance---2026-11-11)
+[task statuses](../history/100-httpx2-test-migration.md#connection-lifetime-audit-maintenance---2026-11-11)
 are reconciled in the same documentation-only change. Earlier delivery/covering-CI/
 acceptance-pending language is superseded; no additional acceptance gate is added.
 

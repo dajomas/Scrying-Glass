@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated: 2026-11-08. [SG-TODO-018 correction plan](../todo/185-monster-correction-plan.md). Status: completed and closed at the user's explicit request after review of remaining actions. Branch features/perplexity-018; no merge or other-branch write. Detailed historical records, preparation checks, original anchors and failed/passing evidence are preserved in the [immutable pre-close-out record](https://github.com/dajomas/Scrying-Glass/blob/17932b9b5ac1f02ccdc4cb53e39277fb589e6d96/docs/handover/340-combined-monster-lookup.md).
+Updated: 2026-11-08. [SG-TODO-018 correction plan](../history/185-monster-correction-plan.md). Status: completed and closed at the user's explicit request after review of remaining actions. Branch features/perplexity-018; no merge or other-branch write. Detailed historical records, preparation checks, original anchors and failed/passing evidence are preserved in the [immutable pre-close-out record](https://github.com/dajomas/Scrying-Glass/blob/17932b9b5ac1f02ccdc4cb53e39277fb589e6d96/docs/handover/340-combined-monster-lookup.md).
 
 ## Runtime and compatibility
 

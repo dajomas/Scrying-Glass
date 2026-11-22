@@ -4,7 +4,7 @@
 
 Implementation group 4, part 2, on `features/claude`, 2026-11-22. Scope decided by the user:
 generate the variants now; the runtime's item type/property text is
-[SG-TODO-034](../todo/340-fivetools-item-enhancement.md).
+[SG-TODO-034](../history/340-fivetools-item-enhancement.md).
 
 ## Before
 

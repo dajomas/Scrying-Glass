@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Task record: [097](../todo/097-feedback-delivery-plan.md).
+Task record: [097](../history/097-feedback-delivery-plan.md).
 Previous stage: [540 Stage 3 close-out](540-local-feature-feedback.md#stage-3-accepted-close-out---2026-11-12).
 
 ## Status - 2026-11-12
@@ -47,7 +47,7 @@ run result or close-out commit SHA is invented before publication.
 No Stage 4 implementation, publication, covering-CI or acceptance action remains.
 Next is the existing whole Deliverable 1 integrated evidence review and acceptance,
 then Deliverable 2 connection/recovery/polling/field association and final 009.7/009
-acceptance under [097](../todo/097-feedback-delivery-plan.md#remaining-scope-and-gates).
+acceptance under [097](../history/097-feedback-delivery-plan.md#remaining-scope-and-gates).
 No optional scope or new acceptance gate; test-suite cleanup stays deferred until
 after 009. Earlier implementation details and limits below are preserved.
 

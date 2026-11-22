@@ -7,7 +7,7 @@ with SQLite persistence and WebSocket updates.
 
 [Deployment](DEPLOYMENT.md) · [User Guide](docs/User-Guide.md) ·
 [Technical Documentation](docs/Technical-Documentation.md) ·
-[Systemd Deployment](docs/Systemd-Deployment.md) · [TODO](TODO.md) · [Handover](HANDOVER.md)
+[Systemd Deployment](docs/Systemd-Deployment.md) · [TODO](TODO.md) · [History](HISTORY.md) · [Handover](HANDOVER.md)
 
 ## Source layout and deployment
 
@@ -20,7 +20,7 @@ The Admin script is `static/admin.js`, one classic deferred script served as a p
 static file on both interfaces. From 2026-11-03 to 2026-11-22 it was kept as eight
 fragments under `static/admin/` and assembled by the server, because of a 20,000-byte file
 limit; that splitting was removed in SG-TODO-035
-([task 350](docs/todo/350-remove-file-size-splitting.md)).
+([task 350](docs/history/350-remove-file-size-splitting.md)).
 
 ### Accepted 009.7 and overall 009 - 2026-11-12
 
@@ -69,13 +69,13 @@ following final user acceptance 2026-11-13 at 09:04 CET; implementation
 evidence 5b1a0a6270adea9e67ca9ffd1def534b875f1317. [580 evidence limits](docs/handover/580-activity-log-result-details.md#sg-todo-019-accepted-close-out---2026-11-13)
 remain. No new authenticated live-server, human visual or screen-reader review is
 claimed by these close-outs. Closure does not authorize merge, deployment or a
-release operation. The [009.7 plan](docs/todo/097-feedback-delivery-plan.md) and
-[parent checklist](docs/todo/090-admin-usability-redesign.md) retain their accepted
+release operation. The [009.7 plan](docs/history/097-feedback-delivery-plan.md) and
+[parent checklist](docs/history/090-admin-usability-redesign.md) retain their accepted
 scope/history; earlier README detail is preserved in the
 [pre-016-close-out README](https://github.com/dajomas/Scrying-Glass/blob/49822ee7cacfd3bc4e2bd520b98917aef036db2c/README.md).
 
 The Playwright end-to-end suite in `e2e/` (login and access, campaigns and setups, rosters and
-initiative, combat, Client Display, feedback and connection handling, screen widths, dialog focus, axe accessibility scans and keeping the Admin view after a reload) runs against a real local server in Chromium and Firefox and is not part of CI ([SG-TODO-021](docs/todo/210-playwright-end-to-end-suite.md)).
+initiative, combat, Client Display, feedback and connection handling, screen widths, dialog focus, axe accessibility scans and keeping the Admin view after a reload) runs against a real local server in Chromium and Firefox and is not part of CI ([SG-TODO-021](docs/history/210-playwright-end-to-end-suite.md)).
 `tools/run_e2e.sh` runs it and commits only the latest `e2e-results/<timestamp>/` folder with
 `[skip ci]` to `features/perplexity-021` (or `E2E_BRANCH`). If a commit reached that branch during the run, such as a
 CI results commit, it rebases the results commit onto it and pushes again (up to three tries; it stops if the new

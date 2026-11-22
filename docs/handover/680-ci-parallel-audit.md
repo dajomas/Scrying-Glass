@@ -4,7 +4,7 @@
 
 Implementation group 2 on `features/claude`, 2026-11-21. Measurements, the evidence that
 both passes are needed, the options and the user's decision are in
-[230 - First half](../todo/230-test-suite-necessity-review.md#first-half-measurements-and-decision-2026-11-21).
+[230 - First half](../history/230-test-suite-necessity-review.md#first-half-measurements-and-decision-2026-11-21).
 
 ## Change
 

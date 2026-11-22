@@ -66,4 +66,4 @@ still pending. Global and pane compatibility remain intact; later pane/Deliverab
 work, both deliverables and 009.7 stay open. 4A.1-4A.12 remain closed. Root README/
 TODO links and source/CI conventions were reviewed/reused and remain accurate;
 HANDOVER index and task detail now link this bounded implementation. No archive/
-Patch/, merge or deployment. [Task](../todo/097-feedback-delivery-plan.md#4a13-global-reconciliation---2026-11-11).
+Patch/, merge or deployment. [Task](../history/097-feedback-delivery-plan.md#4a13-global-reconciliation---2026-11-11).

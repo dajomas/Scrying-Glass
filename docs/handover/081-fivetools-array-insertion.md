@@ -1,7 +1,7 @@
 # 081 - SG-TODO-022.04c.3b array insertion
 
 This delivery supplements, and does not replace or close, the requirements in
-[224](../todo/224-fivetools-statblock-resolution.md) and the history in
+[224](../history/224-fivetools-statblock-resolution.md) and the history in
 [080](080-monster-lookup-diagnostics.md). Baseline:
 `bd3100977e56a9e78cade27eb912864ef7a90c41`. Date: 2026-11-17.
 

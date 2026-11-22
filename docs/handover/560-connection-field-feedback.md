@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Task record: [097](../todo/097-feedback-delivery-plan.md#deliverable-2-implementation---2026-11-12).
+Task record: [097](../history/097-feedback-delivery-plan.md#deliverable-2-implementation---2026-11-12).
 Previous stage: [550 Stage 4 close-out](550-integration-accessibility-hardening.md#stage-4-accepted-close-out---2026-11-12).
 
 ## Status - 2026-11-12
@@ -47,7 +47,7 @@ no new run outcome or close-out commit SHA is invented before publication.
 
 Continuation: whole Deliverable 1 integrated evidence review and acceptance, then
 final integrated evidence/corrections, documentation and explicit 009.7/009 acceptance
-under [097](../todo/097-feedback-delivery-plan.md#remaining-scope-and-gates). No optional
+under [097](../history/097-feedback-delivery-plan.md#remaining-scope-and-gates). No optional
 scope or new acceptance gate; test-suite cleanup remains deferred until after 009.
 
 ## Scope

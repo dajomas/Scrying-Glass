@@ -3,7 +3,7 @@
 [Back to HANDOVER index](../../HANDOVER.md)
 
 Implementation group 4, part 1, on `features/claude`, 2026-11-22. Decisions:
-[330](../todo/330-fivetools-variants.md#decisions-2026-11-21).
+[330](../history/330-fivetools-variants.md#decisions-2026-11-21).
 
 ## Runtime behaviour reproduced
 

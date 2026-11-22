@@ -75,7 +75,7 @@ applicable manual/accessibility evidence and explicit bounded acceptance remain
 required. The complete eight-part bundle was not assembled/executed during
 materialization. Preparation/push or earlier green CI alone does not close 4A.11.
 Both feedback deliverables/009.7 and unrelated acceptance gates remain open.
-[Task/status](../todo/097-feedback-delivery-plan.md#4a11-battle-action-global-notices---2026-11-10).
+[Task/status](../history/097-feedback-delivery-plan.md#4a11-battle-action-global-notices---2026-11-10).
 
 ## Failed covering CI and selection-fixture correction - 2026-11-10
 
@@ -214,4 +214,4 @@ no new workflow outcome is inferred from that marker. Root README and TODO index
 remain accurate and unchanged; HANDOVER status/link and task section reconcile
 only this unit. No archive/Patch/, merge or deployment. 4A.12/4A.13, Deliverables
 1/2, phase 009.7, SG-TODO-019 and agreed delivery order retain their existing
-statuses and criteria. [Closed task](../todo/097-feedback-delivery-plan.md#4a11-battle-action-global-notices---2026-11-10).
+statuses and criteria. [Closed task](../history/097-feedback-delivery-plan.md#4a11-battle-action-global-notices---2026-11-10).

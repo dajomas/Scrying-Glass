@@ -1,6 +1,6 @@
 # 750 - 5e.tools item type and property text (SG-TODO-034)
 
-[Back to HANDOVER index](../../HANDOVER.md) · [Task 340](../todo/340-fivetools-item-enhancement.md) · [730 - magic-item variants](730-fivetools-magic-item-variants.md)
+[Back to HANDOVER index](../../HANDOVER.md) · [Task 340](../history/340-fivetools-item-enhancement.md) · [730 - magic-item variants](730-fivetools-magic-item-variants.md)
 
 On `features/claude`, 2026-11-22, after the five planned groups closed. User decisions: show
 the text "as 5e.tools"; property text, type text and weapon mastery; not the rarity-based

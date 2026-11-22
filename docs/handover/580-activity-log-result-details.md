@@ -1,6 +1,6 @@
 # 580 - Activity log affected unit and resulting value
 
-[Back to HANDOVER index](../../HANDOVER.md) · [SG-TODO-019 task](../todo/190-activity-log-result-details.md)
+[Back to HANDOVER index](../../HANDOVER.md) · [SG-TODO-019 task](../history/190-activity-log-result-details.md)
 
 ## SG-TODO-019 accepted close-out - 2026-11-13
 
@@ -20,7 +20,7 @@ standalone browser/audit stages succeeded. Run completion: 2026-11-13T07:40:39Z
 (08:40 CET). This review did not individually re-review every test log/screenshot or
 recount CI tests. Local preparation counts below are not promoted into CI totals.
 
-Accepted scope and boundaries are detailed below and in [190](../todo/190-activity-log-result-details.md#coverage-decisions---2026-11-13):
+Accepted scope and boundaries are detailed below and in [190](../history/190-activity-log-result-details.md#coverage-decisions---2026-11-13):
 affected unit/property/result in the existing Details/note field and exports for the
 listed value-change producers; no mutation replay, schema/renderer change or rewrite
 of older entries. Existing event-note exclusions and mixed old/new history remain.
@@ -94,7 +94,7 @@ before/after values in submission order.
   escaping tests pass as expected.
 
 Historical local preparation results (not hosted CI and not rerun for this close-out)
-remain in the [TODO validation entry](../todo/190-activity-log-result-details.md#validation---2026-11-13).
+remain in the [TODO validation entry](../history/190-activity-log-result-details.md#validation---2026-11-13).
 CI configuration at the tested SHA was reviewed and discovers test_*.py through the
 assembled runner; CI success is recorded above without invented per-test totals.
 

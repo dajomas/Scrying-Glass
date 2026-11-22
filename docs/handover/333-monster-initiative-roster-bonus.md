@@ -1,7 +1,7 @@
 # 333. Read-only monster roster initiative bonus
 
 [Edit dialog](332-monster-initiative-edit-dialog.md) |
-[Task SG-TODO-018](../todo/180-monster-initiative-bonus.md)
+[Task SG-TODO-018](../history/180-monster-initiative-bonus.md)
 
 Updated: 2026-11-07. Incremental delivery; task remains in progress on
 features/perplexity-018. No merge/write-back authorized.

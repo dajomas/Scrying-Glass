@@ -1,6 +1,6 @@
 # 091 - SG-TODO-022 close-out: acceptance and documentation (022.16)
 
-[Back to handover index](../../HANDOVER.md) · [TODO 220](../todo/220-admin-statblock-viewer.md) · [Correction round 1](088-statblock-correction-round-1.md) · [Windows workers](089-windows-worker-limits.md)
+[Back to handover index](../../HANDOVER.md) · [TODO 220](../history/220-admin-statblock-viewer.md) · [Correction round 1](088-statblock-correction-round-1.md) · [Windows workers](089-windows-worker-limits.md)
 
 Date: 2026-11-21. Branch `features/claude-statblock`, baseline `28ff23c`. SG-TODO-022 (GM-only
 statblock viewer and statblock imports) is **completed and closed**.

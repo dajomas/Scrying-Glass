@@ -4,7 +4,7 @@
 
 This is the continuity index and legacy-anchor entry point. Historical content
 is preserved verbatim in the numbered sections below; dated statuses are history,
-not a reversal of later acceptances. The [current task plan](../todo/097-feedback-delivery-plan.md)
+not a reversal of later acceptances. The [current task plan](../history/097-feedback-delivery-plan.md)
 and [4A.13 close-out](470-global-feedback-close-out.md) retain current scope.
 
 ## Stage 2 shared-roster checkpoint - 2026-11-11
@@ -179,7 +179,7 @@ four-stage Deliverable 1 scope and all acceptance gates remain authoritative.
 ## Documentation size maintenance - 2026-11-11, reversed 2026-11-22
 
 On 2026-11-11 the older sections below moved to handovers 381, 382 and 383 to keep each
-file under 20,000 bytes. SG-TODO-035 ([task 350](../todo/350-remove-file-size-splitting.md))
+file under 20,000 bytes. SG-TODO-035 ([task 350](../history/350-remove-file-size-splitting.md))
 moved them back unchanged on 2026-11-22; 381-383 no longer exist.
 
 ## 4A.5 bounded acceptance and close-out - 2026-11-10
@@ -206,7 +206,7 @@ The later covering configured CI success is separate evidence. This close-out
 claims no new local execution, individual-test log/assertion review, authenticated
 live-server or manual test. Historical delivery-time pending validation/acceptance
 wording below is superseded by this bounded close-out, not a claim of additional
-coverage. See the [completed task](../todo/097-feedback-delivery-plan.md#4a5-end-battle-feedback---2026-11-10).
+coverage. See the [completed task](../history/097-feedback-delivery-plan.md#4a5-end-battle-feedback---2026-11-10).
 
 4A.2/4A.3/4A.4 stay closed; 4A.1's formal status, SG-TODO-019 and agreed delivery
 order are unchanged. Deliverable 1, Deliverable 2 and SG-TODO-009.7 remain open.
@@ -231,7 +231,7 @@ is superseded by the bounded close-out above.
 
 Prepared at the user's implementation/push request on features/perplexity-009.7:
 static/admin-end-feedback.js, its deferred include after Start validation, the
-15-test Node fixture and existing task/handover updates. The [4A.5 task](../todo/097-feedback-delivery-plan.md#4a5-end-battle-feedback---2026-11-10)
+15-test Node fixture and existing task/handover updates. The [4A.5 task](../history/097-feedback-delivery-plan.md#4a5-end-battle-feedback---2026-11-10)
 remains in progress pending covering CI/full-browser review and bounded acceptance.
 Earlier acceptance intent did not close an unimplemented task. No commit or run
 identifier is invented before the write/results exist.
@@ -303,7 +303,7 @@ negative controls and restored-draft passes remain historical executed evidence.
 The later covering configured CI success is separate evidence. No new local test,
 individual-test log/assertion review, authenticated live-server or manual test is
 claimed by this close-out. Delivery-time pending-CI/acceptance statements below
-are historical and superseded by this record. See the [completed task](../todo/097-feedback-delivery-plan.md#4a4-stage-2-shared-next-feedback---2026-11-10).
+are historical and superseded by this record. See the [completed task](../history/097-feedback-delivery-plan.md#4a4-stage-2-shared-next-feedback---2026-11-10).
 
 4A.2/4A.3 remain closed; 4A.1's formal status, SG-TODO-019 and agreed delivery order
 are unchanged. Deliverable 1, Deliverable 2 and SG-TODO-009.7 remain open. 4A.5
@@ -330,7 +330,7 @@ Run and job/step metadata match the exact SHA and show all configured test stage
 successful. This is baseline evidence, not covering CI for the new Next handler.
 
 Prepared stage 2 changes only static/battle-actions-next.js, the new 20-test Node
-fixture and current [task/handover status](../todo/097-feedback-delivery-plan.md#4a4-stage-2-shared-next-feedback---2026-11-10).
+fixture and current [task/handover status](../history/097-feedback-delivery-plan.md#4a4-stage-2-shared-next-feedback---2026-11-10).
 The shared main/modal operation publishes explicit battle.next errors and resolves
 only a related error on complete success. An unpublished encounter-scoped lifetime
 guard survives a settled error ticket so failed follow-up reconciliation can
@@ -373,7 +373,7 @@ the verified stage 1 result above, not by a new local browser run.
 
 The user approved stage 1 fixture preparation after a two-stage delivery proposal.
 This proposed commit changes tests/test_battle_actions_next.py and its deferred-boot
-fixture, plus the existing [task status](../todo/097-feedback-delivery-plan.md#4a4-next-turn-feedback---stage-1-fixture-preparation---2026-11-10)
+fixture, plus the existing [task status](../history/097-feedback-delivery-plan.md#4a4-next-turn-feedback---stage-1-fixture-preparation---2026-11-10)
 and this record. Production battle-actions-next.js and all runtime assets remain
 unchanged. This foundation stage is not usable new Next feedback or completion
 of 4A.4; the draft handler migration remains separate stage 2 with its own complete
@@ -433,7 +433,7 @@ resolution, cancellation/open-dialog behavior and separation from accepted 4A.2
 request and 4A.1 refresh feedback without changing gates/order/payloads. The small
 ordered enhancement and its template/test integration are accepted for this unit.
 Delivery-time pending statements below are historical and superseded by this
-close-out. See the [completed task](../todo/097-feedback-delivery-plan.md#4a3-start-validation-feedback---2026-11-10).
+close-out. See the [completed task](../history/097-feedback-delivery-plan.md#4a3-start-validation-feedback---2026-11-10).
 
 4A.2 stays closed; 4A.1's formal status, SG-TODO-019 and agreed delivery order are
 unchanged. Deliverable 1, Deliverable 2 and SG-TODO-009.7 remain open. 4A.4 (shared
@@ -453,7 +453,7 @@ No documentation commit SHA is invented before the write.
 Prepared for delivery on features/perplexity-009.7 at the user's integration/push
 request: static/admin-start-validation.js, its ordered deferred template include,
 13-test Node regression file and existing TODO/handover status updates. The
-[4A.3 task](../todo/097-feedback-delivery-plan.md#4a3-start-validation-feedback---2026-11-10)
+[4A.3 task](../history/097-feedback-delivery-plan.md#4a3-start-validation-feedback---2026-11-10)
 remains in progress pending behavioral/covering CI validation and acceptance.
 No implementation SHA or passing workflow is invented before evidence exists.
 
@@ -512,7 +512,7 @@ failures; no automatic POST retry was introduced. Acceptance is limited to this
 unit by the user's close-out request, not inferred for neighboring producers or
 the phase. No separate mandatory manual-test gate was agreed for 4A.2.
 
-The [task record](../todo/097-feedback-delivery-plan.md#4a2-startrestart-request-feedback---2026-11-10)
+The [task record](../history/097-feedback-delivery-plan.md#4a2-startrestart-request-feedback---2026-11-10)
 and README remove stale pending-4A.2-validation wording. The preparation section
 below remains historical; its delivery-time pending statements are superseded by
 this close-out, not deleted or applied to the current result. 4A.1's formal status
@@ -533,7 +533,7 @@ No merge, deployment, whole-deliverable acceptance or new commit SHA is claimed.
 
 The user authorized continued 4A.2 preparation and compatibility review. This commit
 contains the narrowly scoped Start/restart request migration and its 12-test Node
-regression file, with README and [task status](../todo/097-feedback-delivery-plan.md#4a2-preparation-and-baseline-reconciliation---2026-11-10)
+regression file, with README and [task status](../history/097-feedback-delivery-plan.md#4a2-preparation-and-baseline-reconciliation---2026-11-10)
 reconciled. Implementation is prepared for delivery; covering CI/full-Admin validation
 and acceptance remain pending. Deliverable 1 and SG-TODO-009.7 remain open. No
 commit SHA is invented before the write. 4A.3 eligibility/tie-order producers and
@@ -641,7 +641,7 @@ invented before evidence exists.
 
 ## 4A.1 implementation checkpoint - 2026-11-10
 
-Prepared for this commit on features/perplexity-009.7: state-load migration in static/admin/030-source.js and static/admin-feedback-admin.js, plus tests/admin-state-load-feedback.test.cjs. The [4A.1 task status](../todo/097-feedback-delivery-plan.md#4a1-implementation-checkpoint---2026-11-10) keeps the unit, deliverable and phase open pending covering validation. No merge or deployment-ready claim is made.
+Prepared for this commit on features/perplexity-009.7: state-load migration in static/admin/030-source.js and static/admin-feedback-admin.js, plus tests/admin-state-load-feedback.test.cjs. The [4A.1 task status](../history/097-feedback-delivery-plan.md#4a1-implementation-checkpoint---2026-11-10) keeps the unit, deliverable and phase open pending covering validation. No merge or deployment-ready claim is made.
 
 The existing request-start sequence is retained, with an encounter epoch rejecting responses whose original scope changed. load() verifies accepted sequence/epoch before assigning latest or rendering. Persistent errors use the explicit state.load identity; matching successful rendering silently resolves only that operation. A legitimate accepted scope transition rebinds its original ticket. The no-battle early return and strict load(true) original-error rethrowing remain intact, including stale failures whose notices are suppressed. Current malformed scope data produces an actionable reload error instead of rendering or silently resolving an error.
 
@@ -653,7 +653,7 @@ Background uploads, character editing, Start/restart and other producers remain 
 
 ## Current status - 2026-11-09
 
-SG-TODO-009.7 and Deliverable 1 remain in progress/open. The [seven-step plan and ten-point policy](../todo/097-feedback-delivery-plan.md) remain authoritative. The user explicitly approved two work-in-progress checkpoints on features/perplexity-009.7 before continuing step 4. This is not a complete integrated feedback delivery or phase acceptance. The accepted [009.6 baseline](370-live-encounter-workspace.md#sg-todo-0096-close-out---2026-11-09) must remain intact.
+SG-TODO-009.7 and Deliverable 1 remain in progress/open. The [seven-step plan and ten-point policy](../history/097-feedback-delivery-plan.md) remain authoritative. The user explicitly approved two work-in-progress checkpoints on features/perplexity-009.7 before continuing step 4. This is not a complete integrated feedback delivery or phase acceptance. The accepted [009.6 baseline](370-live-encounter-workspace.md#sg-todo-0096-close-out---2026-11-09) must remain intact.
 
 The original planning record and detailed checkpoint-1 preparation history remain in [this section at checkpoint 1](https://github.com/dajomas/Scrying-Glass/blob/51e3e3bfcc8e56176b8bcc2559e74bee46e5f493/docs/handover/380-feedback-delivery-plan.md). Live instructions were read before preparation; previously complete reads were reused against verified commit/file identities, not assumed temporary execution files.
 
@@ -685,7 +685,7 @@ Deliverable 2 remains connection failure/recovery warnings, polling deduplicatio
 
 The user reported repeated interrupted attempts whose displayed output/artifacts disappeared, then requested smaller group-4A sub-tasks and asked that the suggestions be saved as documentation only. The cause of those interruptions has not been verified; do not label them a proven connector-size limit, timeout or temporary-file cleanup. Do not count disappeared output as durable implementation or validation evidence. The verified checkpoint above remains the continuation baseline.
 
-The [13 proposed 4A execution units and per-task boundaries](../todo/097-feedback-delivery-plan.md#bounded-group-4a-sub-tasks---2026-11-09) are now recorded in the existing delivery plan, without creating new deliverables or changing the approved feedback policy. All 4A.1-4A.13 remain proposed/not completed by this update. The first bounded unit is 4A.1, state-load feedback only. Live source/effective handlers must be verified before implementation; unrelated operations sharing a file must not be pulled into the same task.
+The [13 proposed 4A execution units and per-task boundaries](../history/097-feedback-delivery-plan.md#bounded-group-4a-sub-tasks---2026-11-09) are now recorded in the existing delivery plan, without creating new deliverables or changing the approved feedback policy. All 4A.1-4A.13 remain proposed/not completed by this update. The first bounded unit is 4A.1, state-load feedback only. Live source/effective handlers must be verified before implementation; unrelated operations sharing a file must not be pulled into the same task.
 
 Each bounded unit should reach a reviewed result with focused executed checks and explicit dependencies before another begins. Every subsequent external write still needs complete bound approval and its relevant tests/documentation. Focused tests are not full-Admin or CI acceptance; temporary artifacts are not the sole recovery point. The normal implementation CI rule resumes after checkpoint 2's one-off skip.
 

@@ -3,8 +3,8 @@
 [Back to HANDOVER index](../../HANDOVER.md)
 
 User request, 2026-11-21, on `features/claude`: "start with group 1". Decisions for 028 and
-029 are in their task files ([280](../todo/280-end-battle-hides-combatants.md),
-[290](../todo/290-distinct-monster-color.md)).
+029 are in their task files ([280](../history/280-end-battle-hides-combatants.md),
+[290](../history/290-distinct-monster-color.md)).
 
 ## SG-TODO-028 - End battle hides combatants
 

@@ -1,6 +1,6 @@
 # 760 - Remove the 20,000-byte file splitting (SG-TODO-035)
 
-[Back to HANDOVER index](../../HANDOVER.md) · [Task 350](../todo/350-remove-file-size-splitting.md) · [050 Admin split (history)](050-admin-script-split.md) · [240 Storage split (history)](240-sqlite-storage-split.md)
+[Back to HANDOVER index](../../HANDOVER.md) · [Task 350](../history/350-remove-file-size-splitting.md) · [050 Admin split (history)](050-admin-script-split.md) · [240 Storage split (history)](240-sqlite-storage-split.md)
 
 On `features/claude`, 2026-11-22. The 20,000-byte limit was imposed for the Perplexity git
 connector; the user asked to roll all splitting back. Decisions: categories A-E of the

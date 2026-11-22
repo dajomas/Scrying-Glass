@@ -113,6 +113,6 @@ successful local allowlist test alone does not verify GitHub permissions,
 publication, concurrent writes or the full repository suite. 022.02a stays
 delivered with full-suite validation pending; 022.02b remains pending. See
 [022 implementation record](010-scope-and-state.md#sg-todo-022-model-foundation---2026-11-15)
-and [task contract](../todo/220-admin-statblock-viewer.md).
+and [task contract](../history/220-admin-statblock-viewer.md).
 README and existing HANDOVER index links remain accurate. TODO.md's 022.02a
 full-CI-pending status is retained, not closed by this corrective delivery.

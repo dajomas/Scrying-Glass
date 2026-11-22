@@ -3,7 +3,7 @@
 [Back to HANDOVER index](../../HANDOVER.md)
 
 Implementation group 3, first item, on `features/claude`, 2026-11-21. Decisions are in
-[240](../todo/240-character-hp-tracking-option.md#decisions-2026-11-21).
+[240](../history/240-character-hp-tracking-option.md#decisions-2026-11-21).
 
 ## Rule (server)
 

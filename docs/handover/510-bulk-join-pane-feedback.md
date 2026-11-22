@@ -58,7 +58,7 @@ Combined covering/full-Admin/browser validation and bounded acceptance remain pe
 until the Stage 2 batch is pushed and tested. Final Stage 2 reconciliation follows;
 no compatibility retirement, other-stage/D2 work, deferred test cleanup, phase close-out,
 merge or deployment is included.
-[Task status](../todo/098-character-edit-feedback.md#bulk-join-pane-success---2026-11-12).
+[Task status](../history/098-character-edit-feedback.md#bulk-join-pane-success---2026-11-12).
 
 ## Final Stage 2 reconciliation - 2026-11-12
 
@@ -68,7 +68,7 @@ review, shared roster/row patches, creation/.monster import, CSV/saved-setup imp
 character Edit, monster raw-roll/Edit, roll-all, select-dead and bulk Join pane
 success. No further planned handler migration was identified in this bounded review.
 This reconciles source/delivery records, not runtime acceptance. The current
-[Stage 2 task record](../todo/098-character-edit-feedback.md) supersedes stale
+[Stage 2 task record](../history/098-character-edit-feedback.md) supersedes stale
 prepared/unfinished wording without reopening or deleting delivered work.
 
 The eight ordered fragment metadata sizes sum to 126,506 bytes, matching the pin;
@@ -144,7 +144,7 @@ preserved. Prior failed runs remain historical failures, not relabelled successe
 No new authenticated live-server/provider, human visual/manual combat, screen-reader
 or exhaustive accessibility exercise is inferred from fixture success. The user
 accepted the bounded scope on these stated evidence limits, not fictional checks.
-[Accepted task status and preserved wider boundaries](../todo/098-character-edit-feedback.md#stage-2-close-out---2026-11-12).
+[Accepted task status and preserved wider boundaries](../history/098-character-edit-feedback.md#stage-2-close-out---2026-11-12).
 
 This close-out is documentation only with [skip ci]. It executes no new tests,
 changes no runtime/test/template/asset/pin/workflow files and dispatches no workflow.

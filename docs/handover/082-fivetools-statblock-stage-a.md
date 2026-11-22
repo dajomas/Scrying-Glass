@@ -1,6 +1,6 @@
 # 082 - SG-TODO-022 Stage A: complete 5e.tools adapter (022.04)
 
-[Back to handover index](../../HANDOVER.md) · [TODO 224](../todo/224-fivetools-statblock-resolution.md) · [TODO 220](../todo/220-admin-statblock-viewer.md)
+[Back to handover index](../../HANDOVER.md) · [TODO 224](../history/224-fivetools-statblock-resolution.md) · [TODO 220](../history/220-admin-statblock-viewer.md)
 
 Date: 2026-11-17. Baseline: `1e78d7531c95c80ab571f464e640bd1d121cee41` on
 `features/perplexity-statblock`; prepared on `features/claude-statblock` (local

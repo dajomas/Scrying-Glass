@@ -3,7 +3,7 @@
 [Back to HANDOVER index](../../HANDOVER.md)
 
 Implementation group 3, last item, on `features/claude`, 2026-11-21. Decisions:
-[270](../todo/270-temporary-hit-points.md#decisions-2026-11-21). SG-TODO-025/026 before it:
+[270](../history/270-temporary-hit-points.md#decisions-2026-11-21). SG-TODO-025/026 before it:
 CI 44936112445 green on eb8f91e.
 
 ## Rule

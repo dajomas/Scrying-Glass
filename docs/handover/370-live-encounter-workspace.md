@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated: 2026-11-09. Task: [SG-TODO-009.6](../todo/090-admin-usability-redesign.md#sg-todo-0096---focused-live-encounter-workspace). Status: completed/closed after successful corrective CI and explicit renewed user sign-off/close request. The renewed acceptance supersedes the earlier revocation; it does not invent individually performed manual checks. Overall 009 remains in progress; 009.7 inspection/scoping begins at the user's request. 009.5/015 closure remains intact.
+Updated: 2026-11-09. Task: [SG-TODO-009.6](../history/090-admin-usability-redesign.md#sg-todo-0096---focused-live-encounter-workspace). Status: completed/closed after successful corrective CI and explicit renewed user sign-off/close request. The renewed acceptance supersedes the earlier revocation; it does not invent individually performed manual checks. Overall 009 remains in progress; 009.7 inspection/scoping begins at the user's request. 009.5/015 closure remains intact.
 
 ## Accepted final workflow
 
@@ -50,7 +50,7 @@ Evidence limits remain: fixtures use mocked/intercepted DOM/HTTP/state as docume
 
 ## Transition to SG-TODO-009.7
 
-009.7 is in progress for inspection/scoping at the user's explicit move-on request; no application increment is delivered here. The [current task scope](../todo/090-admin-usability-redesign.md#sg-todo-0097---feedback-and-final-usability-hardening) retains actionable feedback/near-field validation, connection recovery, destructive confirmation and responsive/accessibility hardening. Preserve the accepted 009.6 layout and independent controls. Existing message-expiry changes require explicit review before implementation.
+009.7 is in progress for inspection/scoping at the user's explicit move-on request; no application increment is delivered here. The [current task scope](../history/090-admin-usability-redesign.md#sg-todo-0097---feedback-and-final-usability-hardening) retains actionable feedback/near-field validation, connection recovery, destructive confirmation and responsive/accessibility hardening. Preserve the accepted 009.6 layout and independent controls. Existing message-expiry changes require explicit review before implementation.
 
 Initial live inspection read static/admin-notification-layout.js: it observes text in four pane notices and hides whitespace-only notices without changing messages/timers. Further global timer/error/Join-battle/connection/modal/test inspection and concrete behavior/acceptance planning remain. This source read is not an executed usability/accessibility audit. 016/017 stay proposed after 009.7; overall 009 is not closed by this transition.
 

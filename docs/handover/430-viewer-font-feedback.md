@@ -7,7 +7,7 @@
 Delivered as ca4ec4ec64c47d8b865c292e97f01ed4599108f2 on
 features/perplexity-009.7, prepared against baseline
 9bc8aa2c22a6051fec1bad0a823464e51d936ac0 at the user's push request.
-[4A.10 task/status](../todo/097-feedback-delivery-plan.md#4a10-viewer-font-adjustment-feedback---2026-11-10)
+[4A.10 task/status](../history/097-feedback-delivery-plan.md#4a10-viewer-font-adjustment-feedback---2026-11-10)
 is completed/closed for its bounded scope after reviewed successful covering CI
 and the user's explicit close-out request; see acceptance below. Earlier pending
 CI/acceptance notes are historical, not new manual validation evidence.

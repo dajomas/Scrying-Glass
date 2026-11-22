@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Recorded: 2026-11-02. Task: [SG-TODO-002](../todo/020-monster-damage-effects.md).
+Recorded: 2026-11-02. Task: [SG-TODO-002](../history/020-monster-damage-effects.md).
 
 ## Current completion record — 2026-11-02
 
@@ -18,7 +18,7 @@ Actions, original/base/effective values, manual stacking/restoration, affected-o
 restore UI and separate base editing, persistence/audit/undo/bundles/privacy, and
 the backup-reader cleanup fix. The original broader preset/automation ideas remain
 deferred proposals outside this accepted scope. They are not represented as
-implemented or covered by green CI. See the [completion task](../todo/020-monster-damage-effects.md)
+implemented or covered by green CI. See the [completion task](../history/020-monster-damage-effects.md)
 for the checklist, provenance and preserved historical design.
 
 This completion record supersedes the pending-CI/open-task language in historical

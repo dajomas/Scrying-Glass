@@ -20,7 +20,7 @@ removed. Dated Stage 1/2/022.03 pending wording is superseded by this decision o
 
 ## Final lifecycle accepted close-out - 2026-11-17
 
-[Final criterion reconciliation](../todo/223-statblock-lifecycle.md#final-criterion-reconciliation)
+[Final criterion reconciliation](../history/223-statblock-lifecycle.md#final-criterion-reconciliation)
 maps whole Stage 1 native save/loading/privacy, Stage 2 recovery/reset/counter/
 copy/move/Save As/import, and accepted whole Stage 3 bundles to the lifecycle
 preservation contract. No blocking unmet agreed 022.03 requirement was found.

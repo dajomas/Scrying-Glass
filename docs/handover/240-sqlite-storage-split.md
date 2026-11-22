@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated 2026-11-03. Task: [SG-TODO-008](../todo/080-source-size-refactors.md).
+Updated 2026-11-03. Task: [SG-TODO-008](../history/080-source-size-refactors.md).
 
 **Reversed 2026-11-22** by SG-TODO-035 ([handover 760](760-remove-file-size-splitting.md)):
 fields, schema, records and operations are back in `scrying_glass_storage.py`. This page is
@@ -87,7 +87,7 @@ CI is reviewed and remaining Admin/oversized-source acceptance is addressed.
 
 ## Statblock storage foundation - 2026-11-15
 
-[022.02b staged task](../todo/222-statblock-persistence.md) · [Parent contract](../todo/220-admin-statblock-viewer.md).
+[022.02b staged task](../history/222-statblock-persistence.md) · [Parent contract](../history/220-admin-statblock-viewer.md).
 The user approved foundation then startup activation as separate commits. This
 section supersedes progress notes saying all 022.02b work is pending; it does
 not reopen the historical SG-TODO-008 task or change approved statblock scope.
@@ -180,7 +180,7 @@ accurate; TODO's existing persistence entry links to the updated staging record.
 
 ## 022.03 Stage 1 private adapter - 2026-11-15
 
-[Lifecycle task and approved staging](../todo/223-statblock-lifecycle.md).
+[Lifecycle task and approved staging](../history/223-statblock-lifecycle.md).
 022.02 remains accepted/closed at 30b8dc0885eb8445189a3520330c4f88e1da00ec;
 its schema-9 activation and green run 43713643326 attempt 1 are not changed or
 relabelled validation of this new work. Earlier schema-8 notes above are history.
@@ -216,7 +216,7 @@ normalized monster IDs and keeps them outside tracker records. Ordinary input
 cannot supply the reserved envelope. Response projection recursively strips it
 without mutating source payloads. These utilities are not production wiring,
 authorization, trusted stored-state policy, or adapter corrections. See the
-[lifecycle task](../todo/223-statblock-lifecycle.md) for remaining Stage 1 gates.
+[lifecycle task](../history/223-statblock-lifecycle.md) for remaining Stage 1 gates.
 
 The four tests are prepared, not executed; earlier stub experiments do not
 validate these exact tests or the live model. Prior conversation overstated that

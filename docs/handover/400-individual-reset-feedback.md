@@ -34,7 +34,7 @@ Successful configured CI does not establish exhaustive rendering/browser/securit
 accessibility coverage; final combined producer-specific Admin validation remains
 open at Deliverable 1 level. Pending validation/acceptance wording in the historical
 delivery section below is superseded by this record, not an invented extra run.
-See the [completed task](../todo/097-feedback-delivery-plan.md#4a7-individual-combatant-reset-feedback---2026-11-10).
+See the [completed task](../history/097-feedback-delivery-plan.md#4a7-individual-combatant-reset-feedback---2026-11-10).
 
 4A.1-4A.6 stay closed. 4A.8 global removal fallback feedback is the next proposed
 bounded unit, not started by this close-out; later units remain proposed. Deliverable
@@ -58,7 +58,7 @@ Historical delivery follows; pending CI/validation/acceptance statements are
 superseded by the bounded close-out above, not by a new local behavioral run.
 
 Prepared at the user's finish/push request on features/perplexity-009.7, baseline
-502cfafa24658cd2b6ca75c9cdbf202a8f51647d. [4A.7](../todo/097-feedback-delivery-plan.md#4a7-individual-combatant-reset-feedback---2026-11-10)
+502cfafa24658cd2b6ca75c9cdbf202a8f51647d. [4A.7](../history/097-feedback-delivery-plan.md#4a7-individual-combatant-reset-feedback---2026-11-10)
 remains in progress pending covering CI/full-Admin validation and bounded acceptance.
 No implementation SHA or passing covering run is invented before evidence exists.
 

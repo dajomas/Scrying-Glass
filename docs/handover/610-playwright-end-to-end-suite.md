@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Plan and decisions: [TODO 210](../todo/210-playwright-end-to-end-suite.md).
+Plan and decisions: [TODO 210](../history/210-playwright-end-to-end-suite.md).
 
 ## Stage 1 - 2026-11-13
 

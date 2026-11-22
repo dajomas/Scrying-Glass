@@ -16,7 +16,7 @@ limits and accepted close-outs. No unfinished requirement or evidence limit waiv
 ## 04c.3a append-if-absent - 2026-11-17
 
 Baseline ab9cf3dbea6ce67f7b1e1cdcb664affe43a7945a. [224 four-item split,
-comparison domain, evidence and remaining gates](../todo/224-fivetools-statblock-resolution.md#04c3-split---2026-11-17)
+comparison domain, evidence and remaining gates](../history/224-fivetools-statblock-resolution.md#04c3-split---2026-11-17)
 records first-item implementation: appendIfNotExistsArr, checked JSON equality
 in the existing bounds module, pre-allocation retained-growth checks and adapter
 version 04c.3a-1. The graph/worker uses the shared executor without another module

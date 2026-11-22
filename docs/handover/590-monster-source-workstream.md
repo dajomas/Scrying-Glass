@@ -1,6 +1,6 @@
 # 590 - Monster source workstream (SG-TODO-016/017)
 
-[Back to HANDOVER index](../../HANDOVER.md) · [016 task](../todo/160-source-based-monster-selection.md) · [017 task](../todo/170-open5e-monster-source.md) · [delivery sequence](../todo/115-admin-delivery-sequence.md#source-integration-workstream-investigate-before-fixing-internal-order)
+[Back to HANDOVER index](../../HANDOVER.md) · [016 task](../history/160-source-based-monster-selection.md) · [017 task](../history/170-open5e-monster-source.md) · [delivery sequence](../history/115-admin-delivery-sequence.md#source-integration-workstream-investigate-before-fixing-internal-order)
 
 ## Stage 3 accepted close-out - 2026-11-13
 

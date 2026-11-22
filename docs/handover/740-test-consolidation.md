@@ -4,7 +4,7 @@
 
 Implementation group 5 on `features/claude`, 2026-11-22, after group 4 closed (CI
 44964454668, e2e 20261122T073821Z: 137 passed). The full disposition table is in
-[230 - Second half](../todo/230-test-suite-necessity-review.md#second-half-dispositions-2026-11-22).
+[230 - Second half](../history/230-test-suite-necessity-review.md#second-half-dispositions-2026-11-22).
 
 ## Changes
 

@@ -3,8 +3,8 @@
 [Back to HANDOVER index](../../HANDOVER.md)
 
 Implementation group 3, second item, on `features/claude`, 2026-11-21. Decisions:
-[250](../todo/250-max-hp-increase.md#decisions-2026-11-21) and
-[260](../todo/260-current-hp-follows-max-increase.md#decisions-2026-11-21).
+[250](../history/250-max-hp-increase.md#decisions-2026-11-21) and
+[260](../history/260-current-hp-follows-max-increase.md#decisions-2026-11-21).
 SG-TODO-024 before it: CI 44932574915 green on d1fbf41.
 
 ## Model (`python/scrying_glass_statistics.py`)
