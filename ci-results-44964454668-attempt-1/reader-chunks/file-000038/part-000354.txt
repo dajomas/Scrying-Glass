@@ -1,0 +1,18 @@
+ instead.
+connection-audit	Post Run actions/setup-python@v5	2026-11-22T00:05:55.6228374Z (Use `node --trace-deprecation ...` to show where the warning was created)
+connection-audit	Post Run actions/checkout@v4	﻿2026-11-22T00:05:55.6337822Z Post job cleanup.
+connection-audit	Post Run actions/checkout@v4	2026-11-22T00:05:55.6910976Z [command]/usr/bin/git version
+connection-audit	Post Run actions/checkout@v4	2026-11-22T00:05:55.6943474Z git version 2.56.1
+connection-audit	Post Run actions/checkout@v4	2026-11-22T00:05:55.6964702Z Temporarily overriding HOME='/home/runner/work/_temp/289f079d-7ea8-4fd6-919b-28d0431e9d6d' before making global git config changes
+connection-audit	Post Run actions/checkout@v4	2026-11-22T00:05:55.6965570Z Adding repository directory to the temporary git global config as a safe directory
+connection-audit	Post Run actions/checkout@v4	2026-11-22T00:05:55.6968339Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+connection-audit	Post Run actions/checkout@v4	2026-11-22T00:05:55.6999109Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+connection-audit	Post Run actions/checkout@v4	2026-11-22T00:05:55.7031577Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+connection-audit	Post Run actions/checkout@v4	2026-11-22T00:05:55.7294591Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+connection-audit	Post Run actions/checkout@v4	2026-11-22T00:05:55.7323965Z http.https://github.com/.extraheader
+connection-audit	Post Run actions/checkout@v4	2026-11-22T00:05:55.7333743Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+connection-audit	Post Run actions/checkout@v4	2026-11-22T00:05:55.7365737Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+connection-audit	Post Run actions/checkout@v4	2026-11-22T00:05:55.7601399Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+connection-audit	Post Run actions/checkout@v4	2026-11-22T00:05:55.7629582Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+connection-audit	Complete job	﻿2026-11-22T00:05:55.7965354Z Cleaning up orphan processes
+connection-audit	Complete job	2026-11-22T00:05:55.8200972Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

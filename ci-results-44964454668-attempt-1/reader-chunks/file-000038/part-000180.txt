@@ -1,0 +1,51 @@
+k 27 - an explicit field selector is carried on the ticket and record; omitted otherwise
+tests	JavaScript tests	2026-11-22T00:05:27.8832912Z   ---
+tests	JavaScript tests	2026-11-22T00:05:27.8833086Z   duration_ms: 0.155363
+tests	JavaScript tests	2026-11-22T00:05:27.8833283Z   type: 'test'
+tests	JavaScript tests	2026-11-22T00:05:27.8833445Z   ...
+tests	JavaScript tests	2026-11-22T00:05:27.8861509Z 1..27
+tests	JavaScript tests	2026-11-22T00:05:27.8861772Z # tests 27
+tests	JavaScript tests	2026-11-22T00:05:27.8862009Z # suites 0
+tests	JavaScript tests	2026-11-22T00:05:27.8862283Z # pass 27
+tests	JavaScript tests	2026-11-22T00:05:27.8862615Z # fail 0
+tests	JavaScript tests	2026-11-22T00:05:27.8862909Z # cancelled 0
+tests	JavaScript tests	2026-11-22T00:05:27.8863211Z # skipped 0
+tests	JavaScript tests	2026-11-22T00:05:27.8863496Z # todo 0
+tests	JavaScript tests	2026-11-22T00:05:27.8863841Z # duration_ms 59.449328
+tests	JavaScript tests	2026-11-22T00:05:27.9353961Z ##[endgroup]
+tests	JavaScript tests	2026-11-22T00:05:27.9356305Z ##[group]tests/admin-feedback-encounter-context.test.cjs
+tests	JavaScript tests	2026-11-22T00:05:28.2310140Z TAP version 13
+tests	JavaScript tests	2026-11-22T00:05:28.2721088Z # Subtest: encounter context starts with the existing uninitialized scope
+tests	JavaScript tests	2026-11-22T00:05:28.2724391Z ok 1 - encounter context starts with the existing uninitialized scope
+tests	JavaScript tests	2026-11-22T00:05:28.2725270Z   ---
+tests	JavaScript tests	2026-11-22T00:05:28.2725527Z   duration_ms: 1.91097
+tests	JavaScript tests	2026-11-22T00:05:28.2725794Z   type: 'test'
+tests	JavaScript tests	2026-11-22T00:05:28.2726049Z   ...
+tests	JavaScript tests	2026-11-22T00:05:28.2735238Z # Subtest: context is a fresh immutable snapshot and cannot mutate feedback scope
+tests	JavaScript tests	2026-11-22T00:05:28.2755019Z ok 2 - context is a fresh immutable snapshot and cannot mutate feedback scope
+tests	JavaScript tests	2026-11-22T00:05:28.2755576Z   ---
+tests	JavaScript tests	2026-11-22T00:05:28.2755847Z   duration_ms: 1.337542
+tests	JavaScript tests	2026-11-22T00:05:28.2756159Z   type: 'test'
+tests	JavaScript tests	2026-11-22T00:05:28.2756418Z   ...
+tests	JavaScript tests	2026-11-22T00:05:28.2756855Z # Subtest: same accepted scope does not advance its epoch
+tests	JavaScript tests	2026-11-22T00:05:28.2757430Z ok 3 - same accepted scope does not advance its epoch
+tests	JavaScript tests	2026-11-22T00:05:28.2758438Z   ---
+tests	JavaScript tests	2026-11-22T00:05:28.2758714Z   duration_ms: 0.672337
+tests	JavaScript tests	2026-11-22T00:05:28.2759084Z   type: 'test'
+tests	JavaScript tests	2026-11-22T00:05:28.2759417Z   ...
+tests	JavaScript tests	2026-11-22T00:05:28.2759981Z # Subtest: leaving and returning to the same identity advances the epoch twice
+tests	JavaScript tests	2026-11-22T00:05:28.2760866Z ok 4 - leaving and returning to the same identity advances the epoch twice
+tests	JavaScript tests	2026-11-22T00:05:28.2761444Z   ---
+tests	JavaScript tests	2026-11-22T00:05:28.2761713Z   duration_ms: 0.598817
+tests	JavaScript tests	2026-11-22T00:05:28.2762061Z   type: 'test'
+tests	JavaScript tests	2026-11-22T00:05:28.2762370Z   ...
+tests	JavaScript tests	2026-11-22T00:05:28.2762936Z # Subtest: obsolete and invalid state observations cannot change context
+tests	JavaScript tests	2026-11-22T00:05:28.2763732Z ok 5 - obsolete and invalid state observations cannot change context
+tests	JavaScript tests	2026-11-22T00:05:28.2764447Z   ---
+tests	JavaScript tests	2026-11-22T00:05:28.2764743Z   duration_ms: 0.602402
+tests	JavaScript tests	2026-11-22T00:05:28.2765122Z   type: 'test'
+tests	JavaScript tests	2026-11-22T00:05:28.2765451Z   ...
+tests	JavaScript tests	2026-11-22T00:05:28.2766012Z # Subtest: reading context preserves tickets, errors and page-lane feedback
+tests	JavaScript tests	2026-11-22T00:05:28.2766970Z ok 6 - reading context preserves tickets, errors and page-lane feedback
+tests	JavaScript tests	2026-11-22T00:05:28.2767557Z   ---
+t

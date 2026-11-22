@@ -1,0 +1,30 @@
+ hint: will change to "main" in Git 3.0. To configure the initial branch name
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1882302Z hint: to use in all of your new repositories, which will suppress this warning,
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1882768Z hint: call:
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1883000Z hint:
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1883301Z hint: 	git config --global init.defaultBranch <name>
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1883648Z hint:
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1884124Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1884645Z hint: 'development'. The just-created branch can be renamed via this command:
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1885063Z hint:
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1885297Z hint: 	git branch -m <name>
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1885564Z hint:
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1885915Z hint: Disable this message with "git config set advice.defaultBranchName false"
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1891474Z Initialized empty Git repository in /home/runner/work/Scrying-Glass/Scrying-Glass/.git/
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1901161Z [command]/usr/bin/git remote add origin https://github.com/dajomas/Scrying-Glass
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1955999Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1956736Z ##[group]Disabling automatic garbage collection
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1958680Z [command]/usr/bin/git config --local gc.auto 0
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1988085Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1988735Z ##[group]Setting up auth
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.1993274Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.2022341Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.2420515Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.2449250Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.2663280Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.2691277Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.2911854Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.2949213Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.2950015Z ##[group]Fetching the repository
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:05.2954936Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +69624cf8ee21c9b7d3c5f97c0ad31a76c4af2547:refs/remotes/origin/features/claude
+connection-audit	Run actions/checkout@v4	2026-11-22T00:00:06.5719779Z From https://gi

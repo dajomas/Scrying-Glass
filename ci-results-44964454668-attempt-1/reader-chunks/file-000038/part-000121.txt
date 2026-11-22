@@ -1,0 +1,24 @@
+26-11-22T00:03:57.9370463Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9371233Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9371912Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9372327Z python.scrying_glass_open5e.Open5eError: down
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9372717Z ok
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9374005Z test_fivetools_source_lists_usable_monsters_sorted_and_signs_a_pick (test_monster_source_catalog.CatalogFunctionTests.test_fivetools_source_lists_usable_monsters_sorted_and_signs_a_pick) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9377851Z test_open5e_document_list_is_validated_complete_and_sorted (test_monster_source_catalog.CatalogFunctionTests.test_open5e_document_list_is_validated_complete_and_sorted) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9384760Z test_open5e_pick_is_a_signed_candidate_from_the_chosen_document (test_monster_source_catalog.CatalogFunctionTests.test_open5e_pick_is_a_signed_candidate_from_the_chosen_document) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9387280Z test_sources_list_configured_books_then_open5e_documents_without_dnd_beyond (test_monster_source_catalog.CatalogFunctionTests.test_sources_list_configured_books_then_open5e_documents_without_dnd_beyond) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9536713Z test_routes_require_admin_and_validate_input (test_monster_source_catalog.CatalogRouteTests.test_routes_require_admin_and_validate_input) ... Monster source catalog failed
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9537739Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9538540Z   File "/tmp/scrying-tests-rvek53ao/repo/python/scrying_glass_source_catalog.py", line 81, in run
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9539370Z     return await asyncio.to_thread(function, effective_display(context), *args)
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9540241Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9541011Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/asyncio/threads.py", line 26, in to_thread
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9541706Z     return await loop.run_in_executor(None, func_call)
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9542174Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9542719Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9543341Z     result = ctx.run(self.task)
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9543925Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9544516Z     return fn(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9544945Z   File "/tmp/scrying-tests-rvek53ao/repo/python/scrying_glass_source_catalog.py", line 47, in monsters
+tests	Python test suite (including browser fixtures)	2026-11-22T00:03:57.9545852Z     items = [{"id": name, "name": name} for name, _ in ms.fivetools_source_entries(display, source)]
+te
