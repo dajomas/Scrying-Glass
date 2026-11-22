@@ -66,4 +66,10 @@ runtime generates from `magicvariants.json`: specific variants such as "+1 Short
   tables, failing closed, the item preserve rule, and a preparation whose generated item is a
   full definition (and stays unavailable without `magicvariants.json`).
 - Full unittest suite here: 2,157 tests, no new failures; Node tests as on HEAD; connection
-  check clean. CI and the user's check pending.
+  check clean. CI 44964454668 green on 69624cf.
+
+## Close-out
+
+Group 4 completed and closed 2026-11-22: CI 44964454668 green on 69624cf (both jobs); the
+user's e2e run 20261122T073821Z on 29b52d9 (69624cf plus its CI results commit): 137 passed,
+0 failed, 0 skipped (Chromium and Firefox).
