@@ -1,0 +1,22 @@
+ Chromium preflight failed: missing library
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5419725Z Attempting native dependency installation, then rechecking Chromium.
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5420274Z Chromium headless launch/render preflight passed.
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5420978Z ok
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5431250Z test_failed_second_launch_remains_failure (test_ci_browser_provisioning.BrowserProvisioningTests.test_failed_second_launch_remains_failure) ... Chromium preflight failed: cannot launch
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5432885Z Attempting native dependency installation, then rechecking Chromium.
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5433636Z Chromium provisioning failed: cannot launch
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5434088Z ok
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5436081Z test_native_dependency_failure_remains_failure (test_ci_browser_provisioning.BrowserProvisioningTests.test_native_dependency_failure_remains_failure) ... Chromium preflight failed: missing library
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5438165Z Attempting native dependency installation, then rechecking Chromium.
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5439174Z Chromium provisioning failed: Command 'apt' returned non-zero exit status 100.
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5439812Z ok
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5462947Z test_preflight_launches_headless_renders_and_closes (test_ci_browser_provisioning.BrowserProvisioningTests.test_preflight_launches_headless_renders_and_closes) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5483255Z test_render_failure_still_closes_browser_and_context (test_ci_browser_provisioning.BrowserProvisioningTests.test_render_failure_still_closes_browser_and_context) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5566020Z test_browser_preflight_is_a_required_separate_step (test_ci_browser_provisioning.WorkflowPrerequisiteTests.test_browser_preflight_is_a_required_separate_step) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5567604Z test_connection_audit_runs_complete_in_its_own_parallel_job (test_ci_browser_provisioning.WorkflowPrerequisiteTests.test_connection_audit_runs_complete_in_its_own_parallel_job)
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5640062Z SG-TODO-023: both the combined pass and the audit stay complete, side by side. ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5712279Z test_every_standalone_script_runs_in_exactly_one_job (test_ci_browser_provisioning.WorkflowPrerequisiteTests.test_every_standalone_script_runs_in_exactly_one_job) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5783284Z test_independent_groups_do_not_depend_on_chromium (test_ci_browser_provisioning.WorkflowPrerequisiteTests.test_independent_groups_do_not_depend_on_chromium) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.5854191Z test_mixed_browser_suites_require_verified_browser_not_previous_suite_success (test_ci_browser_provisioning.WorkflowPrerequisiteTests.test_mixed_browser_suites_require_verified_browser_not_previous_suite_success) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.6156619Z test_collector_gate (test_ci_publication_branch_allowlists.PublicationBranchAllowlistsTests.test_collector_gate) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T17:16:59.6173651Z test_collector_syntax (t

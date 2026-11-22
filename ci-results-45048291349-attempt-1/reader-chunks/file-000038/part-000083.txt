@@ -1,0 +1,37 @@
+he ref
+tests	Run actions/checkout@v4	2026-11-22T17:14:20.7896923Z [command]/usr/bin/git checkout --progress --force -B features/claude refs/remotes/origin/features/claude
+tests	Run actions/checkout@v4	2026-11-22T17:14:20.9710957Z Switched to a new branch 'features/claude'
+tests	Run actions/checkout@v4	2026-11-22T17:14:20.9713959Z branch 'features/claude' set up to track 'origin/features/claude'.
+tests	Run actions/checkout@v4	2026-11-22T17:14:20.9730075Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-22T17:14:20.9780840Z [command]/usr/bin/git log -1 --format=%H
+tests	Run actions/checkout@v4	2026-11-22T17:14:20.9806322Z dad62d4352f8d551465284a3006e0bfd2ec9a9c5
+tests	Run actions/setup-python@v5	﻿2026-11-22T17:14:21.0183116Z ##[group]Run actions/setup-python@v5
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.0184515Z with:
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.0185645Z   python-version: 3.14
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.0186740Z   cache: pip
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.0188105Z   cache-dependency-path: requirements.txt
+tests	Run actions/setup-python@v5	requirements-test.txt
+tests	Run actions/setup-python@v5	
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.0189776Z   check-latest: false
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.0200010Z   token: ***
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.0201055Z   update-environment: true
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.0202236Z   allow-prereleases: false
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.0203391Z   freethreaded: false
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.0204442Z env:
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.0206415Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.0208567Z ##[endgroup]
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.1650481Z ##[group]Installed versions
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.1754447Z (node:2414) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.1758222Z (Use `node --trace-deprecation ...` to show where the warning was created)
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.1760228Z Successfully set up CPython (3.14.10)
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.1762273Z ##[endgroup]
+tests	Run actions/setup-python@v5	2026-11-22T17:14:21.2382267Z [command]/opt/hostedtoolcache/Python/3.14.10/x64/bin/pip cache dir
+tests	Run actions/setup-python@v5	2026-11-22T17:14:22.7182921Z /home/runner/.cache/pip
+tests	Run actions/setup-python@v5	2026-11-22T17:14:23.0024588Z Cache hit for: setup-python-Linux-x64-26.04-Ubuntu-python-3.14.10-pip-12e96339a90b40b609191c97334a0bb44ec10070beaef012e5f4e907d57fa18e
+tests	Run actions/setup-python@v5	2026-11-22T17:14:23.0146771Z (node:2414) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+tests	Run actions/setup-python@v5	2026-11-22T17:14:24.2727989Z Received 16777216 of 69222526 (24.2%), 16.0 MBs/sec
+tests	Run actions/setup-python@v5	2026-11-22T17:14:24.6757518Z Received 69222526 of 69222526 (100.0%), 47.0 MBs/sec
+tests	Run actions/setup-python@v5	2026-11-22T17:14:24.6758428Z Cache Size: ~66 MB (69222526 B)
+tests	Run actions/setup-python@v5	2026-11-22T17:14:24.6788998Z [command]/usr/bin/tar -xf /home/runner/work/_temp/af19d141-2820-4302-887d-6859c71a4ef9/cache.tzst -P -C /home/runner/work/Scrying-Glass/Scrying-Glass --use-compress-program unzstd
+tests	Run actions/setup-python@v5	2026-11-22T17:14:24.7931452Z Cache restored successfully
+tests	Run actions/setup-python@v5	2026-11-22T17:14:24.7975757Z Cache restored from key: setup-python

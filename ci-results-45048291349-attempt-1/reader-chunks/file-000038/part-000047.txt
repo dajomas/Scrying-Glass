@@ -1,0 +1,28 @@
+it	Connection audit of isolated unittest modules	2026-11-22T17:17:23.0551820Z test_local_runner_publication.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:23.0693267Z Connection audit: test_logout.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.2808145Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.2809056Z Ran 14 tests in 1.151s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.2809345Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.2809885Z test_logout.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.2810624Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.3236611Z Connection audit: test_lookup_provider_settings.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6737729Z Provider settings unreadable; optional lookups disabled
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6738516Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6739353Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_provider_settings.py", line 67, in effective_display
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6740101Z     saved = overrides(context)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6740750Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6741629Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6742549Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6743579Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6744663Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6745371Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6746488Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6747665Z     raise effect
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6748207Z sqlite3.OperationalError: locked
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6748993Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6749899Z Ran 10 tests in 0.126s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6750162Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6750350Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.6751439Z test_lookup_provider_settings.py: connections opened: 18; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.7279034Z Connection audit: test_manual_monster_bonus_creation.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:17:24.9510901Z ---------------------------------------------------

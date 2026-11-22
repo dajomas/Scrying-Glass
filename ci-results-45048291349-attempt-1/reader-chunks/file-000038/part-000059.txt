@@ -1,0 +1,28 @@
+review_browser.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:30.2483481Z Connection audit: test_monster_refresh_scope.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:30.6055725Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:30.6056263Z test_monster_refresh_scope.py: connections opened: 9; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:30.6056647Z Ran 4 tests in 0.125s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:30.6056789Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:30.6056888Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:30.6611766Z Connection audit: test_monster_refresh_sole_candidate.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.1971997Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.1972837Z Ran 5 tests in 1.270s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.1973084Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.1973237Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.1974045Z test_monster_refresh_sole_candidate.py: connections opened: 10; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.2744555Z Connection audit: test_monster_refresh_sources.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.4910658Z Selected monster source refresh failed for m
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.4911395Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.4912032Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.4912528Z     candidate = _fetch_exact(context, monster, identity)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.4913006Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_monster_refresh_sources.py", line 82, in _fetch_exact
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.4914810Z ##[error]    raise ValueError('Provider disabled')
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.4915821Z ValueError: Provider disabled
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.4922220Z Selected monster source refresh failed for m
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.4922561Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.4923227Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_monster_refresh_sources.py", line 157, in resolve_selected_sources
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.4923883Z     candidate = _fetch_exact(context, monster, identity)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.4924351Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_monster_refresh_sources.py", line 93, in _fetch_exact
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:32.4925803Z ##[error]    raise ValueError('Retained source missing or ambiguous')
+connection-audit	Connection audit of isolated unittest

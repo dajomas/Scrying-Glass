@@ -1,0 +1,28 @@
+026-11-22T17:18:33.0630968Z Connection audit: test_monster_roll_order.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.1292392Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.1292822Z Ran 15 tests in 0.001s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.1292939Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.1293017Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.1293326Z test_monster_roll_order.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.1419591Z Connection audit: test_monster_roll_order_handlers.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.3737905Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.3738274Z Ran 6 tests in 0.013s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.3738394Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.3738516Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.3738868Z test_monster_roll_order_handlers.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.4173945Z Connection audit: test_monster_source_catalog.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.6570436Z Open5e document list failed
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.6570968Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.6571831Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_source_catalog.py", line 31, in sources
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.6572504Z     catalog = open5e.documents(open5e.base_url(display))
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.6573278Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_open5e.py", line 101, in documents
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.6574046Z     for item in _pages(base + "/documents/?" + urlencode({"limit": 200, "format": "json"}), base):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.6574601Z                 ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.6575277Z   File "/home/runner/work/Scrying-Glass/Scrying-Glass/python/scrying_glass_open5e.py", line 79, in _pages
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.6575848Z     data = load_json(url)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.6576426Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.6577009Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.6577347Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.6577950Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T17:18:33.6578563Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated un

@@ -1,0 +1,40 @@
+t up job	2026-11-22T17:14:19.1258270Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+tests	Set up job	2026-11-22T17:14:19.1932402Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+tests	Set up job	2026-11-22T17:14:19.3771096Z Complete job name: tests
+tests	Run actions/checkout@v4	﻿2026-11-22T17:14:19.4617103Z ##[group]Run actions/checkout@v4
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4618049Z with:
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4618517Z   repository: dajomas/Scrying-Glass
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4622531Z   token: ***
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4622973Z   ssh-strict: true
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4623416Z   ssh-user: git
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4623860Z   persist-credentials: true
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4624345Z   clean: true
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4624800Z   sparse-checkout-cone-mode: true
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4625513Z   fetch-depth: 1
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4625950Z   fetch-tags: false
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4626397Z   show-progress: true
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4626856Z   lfs: false
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4627273Z   submodules: false
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4627726Z   set-safe-directory: true
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4628237Z   allow-unsafe-pr-checkout: false
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4629436Z env:
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4630349Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.4631318Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7470591Z Syncing repository: dajomas/Scrying-Glass
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7472879Z ##[group]Getting Git version info
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7473760Z Working directory is '/home/runner/work/Scrying-Glass/Scrying-Glass'
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7475465Z [command]/usr/bin/git version
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7487424Z git version 2.56.1
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7512058Z ##[endgroup]
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7528865Z Temporarily overriding HOME='/home/runner/work/_temp/a57a091d-0255-43e6-8c1e-298cec68a279' before making global git config changes
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7531805Z Adding repository directory to the temporary git global config as a safe directory
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7535255Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7603592Z Deleting the contents of '/home/runner/work/Scrying-Glass/Scrying-Glass'
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7607363Z ##[group]Initializing the repository
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7612926Z [command]/usr/bin/git init /home/runner/work/Scrying-Glass/Scrying-Glass
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7722020Z hint: Using 'master' as the name for the initial branch. This default branch name
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7724063Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7726008Z hint: to use in all of your new repositories, which will suppress this warning,
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7732652Z hint: call:
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7733953Z hint:
+tests	Run actions/checkout@v4	2026-11-22T17:14:19.7735534Z hint: 	git
