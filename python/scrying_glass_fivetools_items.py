@@ -444,3 +444,196 @@ def generate_variants(base_data, variant_data, *, deadline=None):
                 continue
             specifics.append(_specific_variant(base, generic, loot_tables))
     return generics, specifics
+
+
+# -- SG-TODO-034: Renderer.item.enhanceItem, the parts the user chose ----------------------
+# Property text, type text (with the armor and spellcasting-focus lines and the tool notes)
+# and weapon mastery, in the runtime's order and with its merged-entry tags. Not ported, by
+# decision: the rarity-based value, the "Base items" and item-group lists ("magicvariant"
+# tags), additional sources and the baked type/attunement fields.
+
+STYLE_ONE_TEXT = {
+    'stealth': 'The wearer has {@variantrule Disadvantage|XPHB} on Dexterity ({@skill Stealth|XPHB}) checks.',
+    'arcane': 'An Arcane Focus takes a specific form and is bejeweled or carved to channel arcane magic. A '
+              '{@class Sorcerer|XPHB}, {@class Warlock|XPHB}, or {@class Wizard|XPHB} can use such an item as a '
+              '{@variantrule Spellcasting Focus|XPHB}.',
+    'druid': 'A Druidic Focus takes a specific form and is carved, tied with ribbon, or painted to channel primal magic. '
+             'A {@class Druid|XPHB} or {@class Ranger|XPHB} can use such an object as a {@variantrule Spellcasting Focus|XPHB}.',
+    'holy': 'A Holy Symbol takes a specific form and is bejeweled or painted to channel divine magic. A {@class Cleric|XPHB} '
+            'or {@class Paladin|XPHB} can use a Holy Symbol as a {@variantrule Spellcasting Focus|XPHB}.',
+}
+TOOL_TYPES = ('T', 'AT', 'INS', 'GS')  # compared exactly, as the runtime does: not their |XPHB forms
+
+
+def _unpack_type(uid, lower=False):
+    """DataUtil.itemType/itemProperty.unpackUid: abbreviation|source, source defaults to PHB."""
+    uid = uid.lower() if lower else uid
+    parts = [p.strip() for p in uid.split('|')]
+    abbreviation = parts[0]
+    source = parts[1] if len(parts) > 1 and parts[1] else ('phb' if lower else 'PHB')
+    return abbreviation, source
+
+
+def _wrapper(wrapped, tag):
+    return {'type': 'wrapper', 'wrapped': wrapped, 'data': {NOTE_TAG: tag}}
+
+
+class ItemReference:
+    """The runtime's item property, type, additional-type-entry and mastery lookups."""
+
+    def __init__(self, base_data):
+        self.properties, self.types, self.additional, self.masteries = {}, {}, {}, {}
+        for entry in base_data.get('itemProperty') or []:
+            self._add_property(entry)
+        for entry in self._merged_types(base_data.get('itemType') or []):
+            self._add_type(entry)
+        for entry in base_data.get('itemTypeAdditionalEntries') or []:
+            abbreviation, source = _unpack_type(entry['appliesTo'], lower=True)
+            self.additional.setdefault(f'{abbreviation}|{source}', copy.deepcopy(entry['entries']))
+        for entry in base_data.get('itemMastery') or []:
+            self.masteries.setdefault((entry['source'].lower(), entry['name'].lower()), entry)
+
+    @staticmethod
+    def _merged_types(types):
+        """The internal ``_copy`` merge of ``itemType`` (items-base.json ``_meta.internalCopies``).
+
+        Item types are copied by abbreviation and source. Only plain copies occur in the pinned
+        data (copyApplier.getCopy without ``_mod``); anything else fails closed.
+        """
+        from .scrying_glass_fivetools_resolution import PRESERVE_BASE
+        key = lambda e: ((e.get('abbreviation') or '').lower(), (e.get('source') or '').lower())
+        merged = []
+        for entry in types:
+            meta = entry.get('_copy') if type(entry) is dict else None
+            if meta is not None:
+                if type(meta) is not dict or set(meta) - {'abbreviation', 'source', '_preserve'}:
+                    raise ItemVariantError('unsupported_type_copy')
+                parents = [e for e in types if type(e) is dict and key(e) == key(meta)]  # the whole list
+                if len(parents) != 1 or '_copy' in parents[0]:
+                    raise ItemVariantError('unsupported_type_copy')
+                preserve = meta.get('_preserve') or {}
+                entry = {k: v for k, v in entry.items() if k != '_copy'}
+                for k, v in parents[0].items():
+                    if k in entry and entry[k] is None:
+                        del entry[k]
+                    elif k not in entry and (k not in PRESERVE_BASE or preserve.get(k) or preserve.get('*')):
+                        entry[k] = copy.deepcopy(v)
+                entry['_isCopy'] = True
+            merged.append(entry)
+        return merged
+
+    @staticmethod
+    def _key(entry):
+        return (entry.get('source') or 'PHB').lower(), (entry.get('abbreviation') or 'UNK').lower()
+
+    def _add_property(self, entry):
+        source, abbreviation = self._key(entry)
+        if (source, abbreviation) in self.properties:
+            return
+        item = copy.deepcopy(entry)
+        item['name'] = entry.get('name') or ((entry.get('entries') or entry.get('entriesTemplate'))[0].get('name')) or 'Unknown'
+        self.properties[(source, abbreviation)] = item
+        self.properties.setdefault(('phb', abbreviation), item)  # the runtime's sourceless alias
+
+    def _add_type(self, entry):
+        source, abbreviation = self._key(entry)
+        existing = self.types.get((source, abbreviation))
+        if existing is not None and (existing.get('entries') or existing.get('entriesTemplate')):
+            return
+        item = existing if existing is not None else copy.deepcopy(entry)
+        if not item.get('name'):
+            item['name'] = (item.get('entries') or item.get('entriesTemplate'))[0].get('name') or 'Unknown'
+        if existing is not None:
+            for key, value in entry.items():
+                if item.get(key) is None:
+                    item[key] = copy.deepcopy(value)
+        self.types[(source, abbreviation)] = item
+        self.types.setdefault(('phb', abbreviation), item)
+
+    def type(self, uid):
+        abbreviation, source = _unpack_type(uid or '', lower=True)
+        return self.types.get((source, abbreviation)) or self.types.get(('phb', abbreviation))
+
+    def property(self, uid):
+        abbreviation, source = _unpack_type(uid or '', lower=True)
+        return self.properties.get((source, abbreviation)) or self.properties.get(('phb', abbreviation))
+
+    def mastery(self, uid):
+        parts = [p.strip() for p in uid.lower().split('|')]
+        if len(parts) < 2 or not parts[1]:
+            raise ItemVariantError('unsupported_mastery_reference')  # Parser.getTagSource default not ported
+        found = self.masteries.get((parts[1], parts[0]))
+        if found is None:
+            raise ItemVariantError('unknown_mastery')  # the runtime throws as well
+        return found
+
+
+def _entries_of(definition):
+    if definition.get('entriesTemplate'):
+        raise ItemVariantError('unsupported_entries_template')  # unused in the pinned data
+    return copy.deepcopy(definition.get('entries'))
+
+
+def _full_additional_entries(item):
+    if '_fullAdditionalEntries' not in item or not truthy(item['_fullAdditionalEntries']):
+        item['_fullAdditionalEntries'] = copy.deepcopy(item['additionalEntries']) if truthy(item.get('additionalEntries')) else []
+    return item['_fullAdditionalEntries']
+
+
+def enhance_item(item, reference):
+    """Renderer.item.enhanceItem (style "one"), limited to the chosen parts; mutates ``item``."""
+    if truthy(item.get('_isEnhanced')):
+        return item
+    item['_isEnhanced'] = True
+    kind = _unpack_type(item['type'])[0] if truthy(item.get('type')) else None
+    if truthy(item.get('noDisplay')):
+        return item
+    if kind == 'GV':
+        item['_category'] = 'Generic Variant'
+    if item.get('_category') is None:
+        item['_category'] = 'Other'
+    if item.get('entries') is None:
+        item['entries'] = []
+    found_type = reference.type(item['type']) if truthy(item.get('type')) else None
+    if found_type and (found_type.get('entries') or found_type.get('entriesTemplate')):
+        entries = _full_entries(item)
+        entries.extend(_wrapper(e, 'type') for e in _entries_of(found_type))
+    for prop in item.get('property') or []:
+        found = reference.property(_uid(prop))
+        if not found or not (found.get('entries') or found.get('entriesTemplate')):
+            continue
+        entries = _full_entries(item)
+        entries.extend(_wrapper(e, 'property') for e in _entries_of(found))
+    if kind in ('LA', 'MA', 'HA'):
+        if truthy(item.get('stealth')):
+            _full_entries(item).append(_wrapper(STYLE_ONE_TEXT['stealth'], 'type'))
+        if kind == 'HA' and truthy(item.get('strength')):
+            _full_entries(item).append(_wrapper(
+                f"If the wearer has a Strength score lower than {_str(item['strength'])}, their speed is reduced by 10 feet.", 'type'))
+    if kind == 'SCF':
+        for focus in ('arcane', 'druid', 'holy'):
+            if item.get('scfType') != focus:
+                continue
+            if focus == 'arcane' and item.get('_isItemGroup') and item.get('source') == 'ERLW':
+                continue
+            _full_entries(item).append(_wrapper(STYLE_ONE_TEXT[focus], 'type.SCF'))
+    for info in item.get('mastery') or []:
+        mastery = reference.mastery(_uid(info))
+        if not (mastery.get('entries') or mastery.get('entriesTemplate')):
+            continue
+        wrapped = {'type': 'entries', 'name': f"Mastery: {mastery['name']}"}
+        for key in ('source', 'page'):
+            if key in mastery:
+                wrapped[key] = mastery[key]
+        wrapped['entries'] = _entries_of(mastery)
+        _full_entries(item).append(_wrapper(wrapped, 'mastery'))
+    if item.get('type') in TOOL_TYPES:
+        additional = _full_additional_entries(item)
+        additional.append(_wrapper({'type': 'hr'}, 'type'))
+        additional.append(_wrapper('{@note See the {@variantrule Tool Proficiencies|XGE} entry for more information.}', 'type'))
+    if truthy(item.get('type')):
+        abbreviation, source = _unpack_type(item['type'], lower=True)
+        extra = reference.additional.get(f'{abbreviation}|{source}')
+        if extra:
+            _full_additional_entries(item).append(_wrapper({'type': 'entries', 'entries': copy.deepcopy(extra)}, 'type'))
+    return item

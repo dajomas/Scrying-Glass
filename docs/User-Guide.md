@@ -160,6 +160,12 @@ that version as its original source.
 Magic items that 5e.tools generates, such as *+1 Longsword* or *Plate Barding*, now appear
 in a statblock's item references with their rarity and text, like any other item.
 
+Item references also show the text 5e.tools adds from the item's type and properties: for
+example the Versatile or Heavy property text, a weapon's mastery (such as *Mastery: Sap*),
+heavy armor's Stealth and Strength lines, a spellcasting focus's note and a tool's note. If
+that text cannot be built, the item shows its own text only and the statblock is marked
+partial.
+
 **Automatic loading.** While a statblock viewer is open, monsters in battle that were
 added from a source and have no statblock yet get one from that source.
 

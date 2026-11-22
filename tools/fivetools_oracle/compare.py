@@ -175,6 +175,51 @@ def compare_items(root, oracle_path):
             failures.append(('item copy', key, diff))
         else:
             stats['item_copies'][0] += 1
+    # SG-TODO-034: every item enhanced, in the site's order, against the runtime.
+    from python.scrying_glass_fivetools_items import ItemReference, enhance_item
+    base_data = data('items-base.json')
+    reference = ItemReference(base_data)
+    items_data = data('items.json')
+    resolved = []
+    for record in items_data['item']:
+        if '_copy' in record:
+            record = OrderedResolver(loader, limits=Limits()).resolve(
+                Identity('5etools', 'item', record['source'], record['name']), deadline=time.monotonic() + 30).record()
+        resolved.append(record)
+    groups = [dict(g, _isItemGroup=True) for g in items_data['itemGroup']]
+    bases = [dict(b, _isBaseItem=True, _category='Basic', entries=b.get('entries') if b.get('entries') is not None else [])
+             for b in base_data['baseitem']]
+    every = resolved + groups + bases + [json.loads(json.dumps(g)) for g in generics] + [json.loads(json.dumps(v)) for v in specifics]
+    from python.scrying_glass_fivetools_items import _entity_source
+    inscope = lambda rows: None if rows is None else [r for r in rows if not (
+        type(r) is dict and r.get('type') == 'wrapper' and (r.get('data') or {}).get('item__mergedEntryTag') == 'magicvariant')]
+    # The site builds _fullEntries for item groups and generic variants only to add their item
+    # lists (out of scope, filtered above); filtered, that equals their own entries. The port
+    # leaves _fullEntries out there, and a reader falls back to entries, so absent counts as
+    # the record's own entries on both sides.
+    got_map = {}
+    for item in every:
+        own = json.loads(json.dumps(item.get('entries') or []))
+        enhance_item(item, reference)
+        full = inscope(item.get('_fullEntries'))
+        got_map.setdefault(f"{item['name']}|{_entity_source(item)}", []).append(
+            {'fullEntries': own if full is None else full, 'fullAdditionalEntries': inscope(item.get('_fullAdditionalEntries')),
+             '_own': own})
+    expected_map = oracle.get('enhanced', {})
+    match = 0
+    for key, expected in expected_map.items():
+        got = json.loads(json.dumps(got_map.get(key)))
+        if got is not None and len(got) == len(expected):
+            expected = [dict(e, fullEntries=g['_own'] if e['fullEntries'] is None else e['fullEntries'])
+                        for e, g in zip(expected, got)]
+        for g in got or []:
+            g.pop('_own', None)
+        diff = same(expected, got)
+        if diff:
+            failures.append(('enhanced', key, diff))
+        else:
+            match += 1
+    stats['enhanced'] = [match, len(expected_map), len(got_map)]
     return stats, failures
 
 

@@ -38,7 +38,7 @@ INDEXED = {'monster': ('bestiary/index.json', 'bestiary', 'monster'), 'spell': (
 INHERITING = frozenset(('monster', 'monsterTemplate', 'legendaryGroup', 'item'))
 SCAN_KEYS = {
     'spell': ('entries', 'entriesHigherLevel', 'components', 'time'),
-    'item': ('entries', 'additionalEntries', '_fullEntries'),
+    'item': ('entries', 'additionalEntries', '_fullEntries', '_fullAdditionalEntries'),
     'legendaryGroup': ('lairActions', 'regionalEffects', 'mythicEncounter'),
 }
 MONSTER_SKIP = frozenset(('name', 'source', 'page', '_copy_templates', '_versions', 'legendaryGroup',
@@ -47,7 +47,7 @@ SELECTED_SKIP = MONSTER_SKIP | frozenset(('ac', 'hp', 'initiative'))
 PARTIAL_CODES = frozenset(('reference_unavailable', 'reference_ambiguous', 'reference_depth_limit',
                            'supporting_definitions_limit', 'supporting_reference_bytes_limit',
                            'reference_resolution_failed', 'legendary_group_unavailable',
-                           'dataset_file_limit'))
+                           'dataset_file_limit', 'item_text_unavailable'))
 
 
 @dataclass(frozen=True)
@@ -80,6 +80,7 @@ class FiveToolsData:
         self._response_bytes, self._max_files = response_bytes, dataset_files
         self._files, self._indexed, self._records = {}, set(), {}
         self._base_items, self._generated = None, False
+        self._item_reference = None
         self.fetched_bytes = 0
 
     def _file(self, path):
@@ -110,6 +111,8 @@ class FiveToolsData:
         for record in data.get(prop) or []:
             self._check()
             if type(record) is dict and type(record.get('name')) is str and type(record.get('source')) is str:
+                if prop == 'itemGroup':
+                    record = dict(record, _isItemGroup=True)  # as the runtime marks groups (SG-TODO-034)
                 encoded = json.dumps(record, ensure_ascii=False, separators=(',', ':')).encode()
                 self._records.setdefault(key_of(kind, record['name'], record['source']), []).append(encoded)
         self._indexed.add(marker)
@@ -153,6 +156,13 @@ class FiveToolsData:
                 encoded = json.dumps(record, ensure_ascii=False, separators=(',', ':')).encode()
                 self._records.setdefault(key_of('item', name, source), []).append(encoded)
         variants.pop('magicvariant', None)
+
+    def item_reference(self):
+        """SG-TODO-034: item types, properties and masteries from items-base.json, built once."""
+        from .scrying_glass_fivetools_items import ItemReference
+        if self._item_reference is None:
+            self._item_reference = ItemReference(self._file('items-base.json'))
+        return self._item_reference
 
     def records(self, kind, source):
         """Every indexed record of ``kind`` from the file(s) holding ``source`` (encoded JSON)."""
@@ -202,11 +212,29 @@ class Collector:
             result = self.resolver.resolve(identity, deadline=self.deadline, cancelled=self.cancelled)
             record = result.record()
             record.pop('_isCopy', None)
+            if kind == 'item':
+                self._enhance_item(record)
             return record, result.provenance
         matches = self.data.load(identity)
         if len(matches) != 1:
             raise LookupError('reference_unavailable' if not matches else 'reference_ambiguous')
         return json.loads(matches[0]), ()
+
+    def _enhance_item(self, record):
+        """SG-TODO-034: add the type, property and mastery text the site shows with an item."""
+        from .scrying_glass_fivetools_items import ItemVariantError, enhance_item
+        reference = getattr(self.data, 'item_reference', None)
+        if reference is None:
+            return
+        before = dict(record)
+        try:
+            enhance_item(record, reference())
+        except (ItemVariantError, ValueError) as exc:
+            record.clear()
+            record.update(before)  # all or nothing: the item as stored, without the added text
+            self.warn('item_text_unavailable',
+                      f"The type and property text of {record.get('name')} ({record.get('source')}) is unavailable "
+                      f"({exc.args[0] if exc.args else 'error'}).")
 
     def resolve_selected(self, name, source, version_of=None):
         """The selected creature: a monster, or a version of one (SG-TODO-033).

@@ -28,9 +28,26 @@ const clean = ent => {
   return JSON.parse(JSON.stringify(c));
 };
 // items.json internal copies, merged by DataUtil.loadJSON (checks the item preserve rule).
+// Loaded once: a second loadJSON of the same file returns it without the copies merged.
+const itemData = await DataUtil.loadJSON(`${Renderer.get().baseUrl}data/items.json`);
 const itemCopies = {};
-for (const it of (await DataUtil.loadJSON(`${Renderer.get().baseUrl}data/items.json`)).item) {
+for (const it of itemData.item) {
   if (it._isCopy) itemCopies[`${it.name}|${it.source}`] = clean(it);
 }
-fs.writeFileSync(outPath, JSON.stringify({generic: genericVariants.map(clean), specific: specificVariants.map(clean), itemCopies}));
+const pre = {generic: genericVariants.map(clean), specific: specificVariants.map(clean)};
+// SG-TODO-034: enhance every item as the site does, then keep the parts in scope: the
+// enhanced entries and additional entries without the "magicvariant" wrappers (base item
+// and item group lists, not in scope).
+globalThis.JqueryUtil = {doToast: () => {}};
+itemData.itemGroup.forEach(it => it._isItemGroup = true);
+const allItems = [...itemData.item, ...itemData.itemGroup, ...baseItems, ...genericVariants, ...specificVariants];
+Renderer.item._enhanceItems(allItems);
+const inScope = list => list == null ? null : JSON.parse(JSON.stringify(list.filter(
+  e => !(e?.type === "wrapper" && e.data?.[VeCt.ENTDATA_ITEM_MERGED_ENTRY_TAG] === "magicvariant"))));
+const enhanced = {};
+for (const it of allItems) {
+  (enhanced[`${it.name}|${SourceUtil.getEntitySource(it)}`] ||= []).push(
+    {fullEntries: inScope(it._fullEntries), fullAdditionalEntries: inScope(it._fullAdditionalEntries)});
+}
+fs.writeFileSync(outPath, JSON.stringify({...pre, itemCopies, enhanced}));
 console.log(genericVariants.length, "generic,", specificVariants.length, "specific");
