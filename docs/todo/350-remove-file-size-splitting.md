@@ -8,7 +8,8 @@ SG-TODO-035 - proposed 2026-11-22 by the user: "get rid of all the file splittin
 files due to the 20k file size limit … roll all file splitting back." The limit was imposed
 for the Perplexity git connector, which could not read larger files. Inventory made
 2026-11-22 (below). Decided and delivered 2026-11-22 in one commit
-([handover 760](../handover/760-remove-file-size-splitting.md)); closure follows CI and e2e.
+([handover 760](../handover/760-remove-file-size-splitting.md)), dad62d4. Completed and closed
+2026-11-22: CI 45048291349 green (2,372 tests; connection audit 259 modules, 0 failed); e2e 20261122T171600Z on dad62d4 and 20261122T183509Z on cbef741 (its results commit, same code): 137 passed, 0 failed each (Chromium and Firefox).
 
 ## Origin of the limit
 

@@ -56,3 +56,8 @@ historical handover texts that mention the old runner or the fragments.
   as before.
 - `compileall` of the server, `python/`, `web_html/`, `tests/` and `tools/` passes; shell
   scripts pass `bash -n`.
+
+## Close-out - 2026-11-22
+
+Delivered in dad62d4. Closed: CI 45048291349 green (2,372 tests; connection audit 259 modules, 0 failed); e2e 20261122T171600Z on dad62d4 and 20261122T183509Z on cbef741 (its results commit, same code): 137 passed, 0 failed each (Chromium and Firefox). CI ran the tests without the split runner for the
+first time; e2e confirms the Admin page with `admin.js` served as a plain static file.
