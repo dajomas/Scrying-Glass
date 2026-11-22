@@ -26,4 +26,12 @@ Implementation group 5 on `features/claude`, 2026-11-22, after group 4 closed (C
 - Normalized-AST scan of all `test_*` bodies: no identical bodies.
 - Full unittest suite here: 2,155 tests (from 2,157), no new failures; connection check clean
   for the three changed modules; pytest and Node unchanged.
-- CI pending. No runner or workflow change; no speed-up claimed.
+- CI 45001741568 green on 98c0a2d (both jobs): 2,369 unittest tests in CI, from 2,371 in CI
+  44964454668; connection audit 260 modules, 0 failed. No runner or workflow change; no
+  speed-up claimed.
+
+## Close-out
+
+SG-TODO-023 completed and closed 2026-11-22. With it all five groups of the implementation
+order agreed on 2026-11-21 are completed (TODO.md). No e2e run was needed: only unittest
+modules changed.

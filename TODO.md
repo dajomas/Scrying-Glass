@@ -46,7 +46,7 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
    - [022.02 accepted persistence delivery and retained operational guidance](docs/todo/222-statblock-persistence.md) - completed/closed, including both implementation stages and preparatory fixtures; covering activation CI verified and user acceptance recorded. Earlier in-progress/CI-pending notes are historical and superseded.
    - [022.03 lifecycle integration](docs/todo/223-statblock-lifecycle.md) - completed, accepted and closed, including whole Stages 1-3; no new lifecycle acceptance request.
    - [022.04 ordered inheritance and reference resolution](docs/todo/224-fivetools-statblock-resolution.md#stage-a-delivery---2026-11-17) - bounded 04b accepted/closed earlier; 04a, 04c-04f delivered in Stage A 2026-11-17 (validation pending CI/acceptance); 04e.2 generated magic-item variants open. Overall 04 not closed.
-30. [Test-suite necessity and execution review](docs/todo/230-test-suite-necessity-review.md) - SG-TODO-023, first half delivered 2026-11-21 (parallel CI audit job, [680](docs/handover/680-ci-parallel-audit.md)); second half delivered 2026-11-22, CI pending ([740](docs/handover/740-test-consolidation.md); requested 2026-11-16). Investigate duplicate CI execution, overlapping statblock service scenarios and brittle source assertions; preserve unique coverage and measure before changing the suite. Follow-up to closed SG-TODO-020, not a reopening or a change to the agreed SG-TODO-022 delivery order.
+30. [Test-suite necessity and execution review](docs/todo/230-test-suite-necessity-review.md) - SG-TODO-023, first half delivered 2026-11-21 (parallel CI audit job, [680](docs/handover/680-ci-parallel-audit.md)); second half delivered 2026-11-22 ([740](docs/handover/740-test-consolidation.md)); completed and closed 2026-11-22 (requested 2026-11-16). Investigate duplicate CI execution, overlapping statblock service scenarios and brittle source assertions; preserve unique coverage and measure before changing the suite. Follow-up to closed SG-TODO-020, not a reopening or a change to the agreed SG-TODO-022 delivery order.
 31. [Optional character HP tracking](docs/todo/240-character-hp-tracking-option.md) - SG-TODO-024, completed and closed 2026-11-21 ([690](docs/handover/690-character-hp-tracking.md); requested 2026-11-20). When disabled, damage and healing do not change a character's HP; the player manages it. Scope, default and 0-HP behaviour to agree.
 32. [Maximum HP increase during battle](docs/todo/250-max-hp-increase.md) - SG-TODO-025, completed and closed 2026-11-21 ([700](docs/handover/700-max-hp-increase.md); requested 2026-11-20). Raise maximum HP in battle as well as lowering it; monsters, and characters only when HP tracking (SG-TODO-024) is enabled.
 33. [Current HP follows a maximum HP increase](docs/todo/260-current-hp-follows-max-increase.md) - SG-TODO-026, completed and closed 2026-11-21 ([700](docs/handover/700-max-hp-increase.md); requested 2026-11-20). Any increase in maximum HP raises current HP by the same amount; open question on restoring reductions, which 5e does not treat this way.
@@ -59,10 +59,12 @@ This file is the task index. Detailed tasks live in numbered Markdown sections u
 40. [5e.tools monster versions and generated magic-item variants](docs/todo/330-fivetools-variants.md) - SG-TODO-033, completed and closed 2026-11-22 (monster versions [720](docs/handover/720-fivetools-monster-versions.md), magic-item variants [730](docs/handover/730-fivetools-magic-item-variants.md); CI 44964454668, e2e 20261122T073821Z 137 passed); split off from SG-TODO-022 by the user 2026-11-20.
 41. [5e.tools item type and property text](docs/todo/340-fivetools-item-enhancement.md) - SG-TODO-034, proposed 2026-11-22 (split off from SG-TODO-033 part 2 by the user). The runtime's `enhanceItem` text for all item definitions.
 
-## Implementation order - agreed 2026-11-21
+## Implementation order - agreed 2026-11-21, completed 2026-11-22
 
 Agreed by the user on 2026-11-21 (branch `features/claude`). Each group is delivered,
-CI-checked and shown to the user before the next one starts.
+CI-checked and shown to the user before the next one starts. All five groups were
+completed and closed on 2026-11-22 at the user's request. Still open afterwards:
+SG-TODO-034 (item type/property text, decisions pending).
 
 1. **Quick wins:** SG-TODO-028 (End battle hides combatants), SG-TODO-029 (distinct default
    monster color), SG-TODO-030 (HP help folded), SG-TODO-031 (Refresh from source above
@@ -71,6 +73,7 @@ CI-checked and shown to the user before the next one starts.
    ([handover 670](docs/handover/670-group-1-quick-wins.md)).
 2. **SG-TODO-023 first half:** measure the test runs and decide on the duplicate CI pass.
    Decided 2026-11-21: two parallel CI jobs ([handover 680](docs/handover/680-ci-parallel-audit.md)).
+   Completed 2026-11-21 (CI 44926301833: 7.5 instead of 13.5 minutes).
 3. **HP rules:** decide SG-TODO-024 to 027 together, then deliver 024, then 025 + 026, then
    027; one e2e run at the end of the group. Decisions recorded 2026-11-21 in the four
    task files; three of them are assumptions where the user left the question open.
@@ -83,7 +86,8 @@ CI-checked and shown to the user before the next one starts.
    2026-11-22 (CI 44964454668, e2e 20261122T073821Z: 137 passed, 0 failed).
 5. **SG-TODO-023 second half:** test consolidation, after the feature work.
    Delivered 2026-11-22: one Save As test consolidated, one text ban removed, the rest kept
-   ([740](docs/handover/740-test-consolidation.md)).
+   ([740](docs/handover/740-test-consolidation.md)). Completed and closed 2026-11-22
+   (CI 45001741568 green: 2,369 unittest tests, from 2,371; audit 260 modules, 0 failed).
 
 Note: `features/claude` contains `monsters_examples/` again (returned by the user
 2026-11-21), but not `external_sourcefiles/` or `sizetest/`; the tests that use those

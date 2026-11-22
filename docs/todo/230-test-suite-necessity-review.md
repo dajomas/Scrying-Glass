@@ -5,8 +5,8 @@
 ## Task and status
 
 SG-TODO-023 - first half (items 1 and 2) delivered 2026-11-21; second half (items 3 to 7)
-delivered 2026-11-22 on `features/claude` ([handover 740](../handover/740-test-consolidation.md)),
-CI pending. See below.
+delivered 2026-11-22 on `features/claude` ([handover 740](../handover/740-test-consolidation.md));
+completed and closed 2026-11-22 after CI 45001741568. See below.
 Requested 2026-11-16. Record and investigate the
 initial test-review suggestions; this task is not an instruction to delete tests
 or change CI immediately. No owner, deadline, deletion target or speedup target is
