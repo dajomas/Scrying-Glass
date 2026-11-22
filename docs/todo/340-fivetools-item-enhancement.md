@@ -6,8 +6,8 @@
 
 SG-TODO-034 - proposed 2026-11-22, split off from SG-TODO-033 part 2 by the user's decision
 (scope "generate variants now"). Started 2026-11-22 on `features/claude` at the user's
-request ("continue with the final two items"). Delivered 2026-11-22; closure follows CI and
-the user's e2e run.
+request ("continue with the final two items"). Delivered 2026-11-22 (12fa87e). Completed and
+closed 2026-11-22 at the user's request: CI 45018908380 green; e2e 20261122T160750Z: 136 passed, 0 failed, 1 not run (`test_global_success_clears_after_five_seconds[firefox]`: its server did not start because the e2e setup gave two listeners the same port, fixed in f5dc0d6).
 
 ## Scope
 

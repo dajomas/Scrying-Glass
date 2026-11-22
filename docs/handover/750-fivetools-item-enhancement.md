@@ -53,3 +53,8 @@ value (details in task 340).
 
 - Statblocks prepared earlier keep their old item text until they are prepared again
   (Refresh from source); the adapter version is unchanged, as for SG-TODO-033.
+
+## Close-out - 2026-11-22
+
+Delivered in 12fa87e (with the separate run_e2e.sh push fix 60d5d40). Closed at the user's
+request: CI 45018908380 green; e2e 20261122T160750Z: 136 passed, 0 failed, 1 not run (`test_global_success_clears_after_five_seconds[firefox]`: its server did not start because the e2e setup gave two listeners the same port, fixed in f5dc0d6). The run tested b22ce69, the CI publish commit on top of 12fa87e.
