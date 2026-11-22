@@ -82,7 +82,9 @@ scope/history; earlier README detail is preserved in the
 The Playwright end-to-end suite in `e2e/` (login and access, campaigns and setups, rosters and
 initiative, combat, Client Display, feedback and connection handling, screen widths, dialog focus, axe accessibility scans and keeping the Admin view after a reload) runs against a real local server in Chromium and Firefox and is not part of CI ([SG-TODO-021](docs/todo/210-playwright-end-to-end-suite.md)).
 `tools/run_e2e.sh` runs it and commits only the latest `e2e-results/<timestamp>/` folder with
-`[skip ci]` to `features/perplexity-021`. On dnf-based systems (Rocky, AlmaLinux, RHEL, Fedora) it first checks the
+`[skip ci]` to `features/perplexity-021` (or `E2E_BRANCH`). If a commit reached that branch during the run, such as a
+CI results commit, it rebases the results commit onto it and pushes again (up to three tries; it stops if the new
+commits touch `e2e-results/`, keeping the results commit locally). On dnf-based systems (Rocky, AlmaLinux, RHEL, Fedora) it first checks the
 required rpm packages and prints the `dnf install` command if any are missing. It checks
 that both browsers start, then prints
 `Now running test ###/###: <description> [browser] ... SUCCESS|FAILED|XFAIL (known finding)` per test; `tools/run_e2e.sh --no-push` only runs it.

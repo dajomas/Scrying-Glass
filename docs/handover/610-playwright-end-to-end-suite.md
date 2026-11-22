@@ -215,3 +215,11 @@ User instruction: "Mark SG-TODO-021 Stages 3-4 as accepted and close the docs en
 Stages 3-4 are accepted: the combat, Client Display, feedback/connection, width, dialog-focus and axe tests. The acceptance is based on the user's run `180b15c8` (tested `325c685f`: 121 tests, 119 passed, 2 expected failures for the known focus finding, 0 failed). SG-TODO-021 is completed and closed. Stage 2 (run `29ff6123`, 61 of 61) had no separate acceptance statement and is closed with the task. Later changes on the branch (`ac9c4ed5`, the Admin view restore and its `e2e/test_view_restore.py`) are not covered by run `180b15c8`; see [630](630-admin-view-restore.md). The Stage 4 findings above (focus return, restart sign-out, axe baseline, header overflow at narrow widths) and the cosmetic summary grouping are not fixed and are left for a possible follow-up. No CI runs on `features/perplexity-021`.
 
 Update 2026-11-14: the four Stage 4 findings are fixed in [640](640-e2e-findings-fixes.md) (acceptance pending); the axe baseline and the focus-return xfail are removed from `e2e/test_layout_accessibility.py`. The cosmetic summary grouping is unchanged.
+
+Update 2026-11-22 (`features/claude`): if the push of the results commit is refused because
+the branch moved meanwhile (typically a CI publish commit), `tools/run_e2e.sh` fetches the
+branch, rebases the results commit onto it and pushes again, up to three tries. It stops
+without rebasing, and keeps the results commit locally, when the new commits touch
+`e2e-results/` or the rebase fails. `tests/test_run_e2e_push.py` runs the script's push loop
+against temporary repositories (no change, rebase onto a CI commit, conflicting results);
+the previous plain push fails the rebase case.
