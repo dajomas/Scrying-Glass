@@ -43,8 +43,9 @@ class AdminAssetWiringTests(unittest.TestCase):
             with self.subTest(path=str(path.relative_to(ROOT))):
                 self.assertLessEqual(path.stat().st_size, LIMIT)
 
-    def test_review_asset_has_no_untyped_pane_calls(self):
-        self.assertNotIn('paneNotification(', (ROOT / 'static/monster-refresh-review.js').read_text(encoding='utf-8'))
+    # Typed refresh-review feedback is checked by behaviour in
+    # test_monster_refresh_review_browser.py; a text ban on paneNotification( was removed
+    # (SG-TODO-023, handover 740: all three untyped variants fail those tests).
 
 
 if __name__ == '__main__':

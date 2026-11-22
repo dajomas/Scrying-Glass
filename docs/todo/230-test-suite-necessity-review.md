@@ -4,7 +4,9 @@
 
 ## Task and status
 
-SG-TODO-023 - first half (items 1 and 2) delivered 2026-11-21, see below; second half open.
+SG-TODO-023 - first half (items 1 and 2) delivered 2026-11-21; second half (items 3 to 7)
+delivered 2026-11-22 on `features/claude` ([handover 740](../handover/740-test-consolidation.md)),
+CI pending. See below.
 Requested 2026-11-16. Record and investigate the
 initial test-review suggestions; this task is not an instruction to delete tests
 or change CI immediately. No owner, deadline, deletion target or speedup target is
@@ -103,6 +105,28 @@ standalone step skips the audit script. Expected wall time is about 7.5 instead 
 minutes, for about one extra minute of runner setup; to be confirmed by the first run.
 
 The second half (items 3 to 7: consolidation) stays open and follows the feature work.
+
+## Second half: dispositions (2026-11-22)
+
+Implementation group 5 on `features/claude` ([handover 740](../handover/740-test-consolidation.md)).
+Before: 2,157 unittest tests (local run of c725ae5); after: 2,155 (two removed, none added);
+pytest modules and Node files unchanged. A normalized-AST scan of every `test_*` body
+(docstrings dropped, one-liners ignored) found no identical test bodies, so the previous
+cleanup's removals have not returned (item 7).
+
+| Item | Path / test | Disposition | Rationale and surviving assertions |
+| --- | --- | --- | --- |
+| 3 | `test_statblock_stage2_contracts` `test_save_as_uses_unsaved_live_content_without_replacing_source` | **Consolidated** into `test_statblock_setup_saving` `test_new_save_as_uses_live_content_and_refreshes_destination_metadata`, then removed | Every assertion now lives in the surviving test: live private content and revision 1 in the new setup, source private content unchanged, live state equals the saved content; the one it lacked (the source setup's tracker rows keep HP 12, the new setup has the live HP) was added. A mutant whose Save As also overwrote the source rows passes the old surviving test and fails the new one (`1 != 12`). |
+| 3 | `test_statblock_stage2_contracts` `test_save_as_preserves_content_in_the_new_setup` | Keep | Only test that unedited content with its reference graph, digest and supporting definitions is copied intact, with the exact result payload and the source unchanged after a reload. |
+| 3 | other `test_statblock_setup_saving` tests (ordinary save, existing destination, omission, rollback after roster/live refresh) | Keep | Distinct scenarios: owner history and stale metadata, destination revision history, omission refusal, rollback. |
+| 4 | route/HTTP tests vs service tests (for example `test_statblock_setup_saving_http`) | Keep | Different layers: registration and model validation, authorization, origin and post-lock rechecks are not covered by service tests. |
+| 5 | `test_admin_asset_wiring` `test_review_asset_has_no_untyped_pane_calls` | **Removed** | A text ban on `paneNotification(` in `monster-refresh-review.js`. Behaviour already covers it: switching the review-load error, the apply error or the success message to `paneNotification` each fails `test_monster_refresh_review_browser`/`test_monster_refresh_startup_browser` (2 failures + 1 error, 1 error, 1 failure). |
+| 5 | other `test_admin_asset_wiring` tests (asset existence, uniqueness, size limits) | Keep | Current contracts, as the task says. |
+| 6 | `test_death_save_validation_2ba6607` (pytest) | Keep | `test_counter_contract` (18 cases) is type/range per field; `test_invalid_counters_rejected_without_side_effects` (8 cases) mostly pairs a valid with an invalid counter and checks state and database stay unchanged; plus valid transitions and validation before target access. Merging would save about two cases and blur precedence coverage. |
+| 6 | `test_slug_truncation_82860c4` (pytest) | Keep | The only check that a truncated slug stays canonical at the 80-character boundary for both slug kinds, plus loadability; `test_bughunt_round3` covers unique suffixes only. |
+
+Not done, by design: no broad per-module audit beyond the named paths, no runner change
+(the CI layout was decided in the first half), no speed-up claimed (two fast service tests).
 
 ## Acceptance and validation requirements
 

@@ -41,6 +41,10 @@ class SetupSavingIntegrationTests(unittest.TestCase):
         self.assertEqual(self.c.STATE._statblocks,saved)
         self.assertEqual(restore_bindings(self.c.STORAGE,source),bindings)
         self.assertEqual(self.stored(),before)
+        # The tracker rows too: the source setup keeps its roster, the new one has the live edit.
+        campaign = self.c.active_campaign()
+        self.assertEqual(self.c.STORAGE.load_setup(campaign,'default')['monsters'][0]['hp'],12)
+        self.assertEqual(self.c.STORAGE.load_setup(campaign,'saved-as')['monsters'][0]['hp'],1)
         self.assertEqual(self.c.active_setup_reference()['name'],'saved-as')
         self.assertEqual(self.c.read_campaigns()['campaigns'][self.c.active_campaign()]['last_setup'],'saved-as')
         self.c.load_state(); self.assertEqual(self.c.STATE._statblocks,saved)
