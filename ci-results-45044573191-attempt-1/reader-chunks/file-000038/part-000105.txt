@@ -1,0 +1,26 @@
+rdered_candidates
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3850205Z     found = fetch()
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3851214Z   File "/tmp/scrying-tests-ms62o7yf/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3852381Z     lambda: fivetools_candidates(species, display),
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3853310Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3854419Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3855376Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3855956Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3857009Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3858024Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3858678Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3859793Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3860785Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3861471Z python.scrying_glass_monster_selection.ProviderError: secret
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3862403Z ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3863440Z test_tokens (test_monster_candidate_selection.CandidateTests.test_tokens) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3865288Z test_unconfigured_entry_source_is_not_offered (test_monster_candidate_selection.CandidateTests.test_unconfigured_entry_source_is_not_offered) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3867388Z test_unusable_duplicates_and_image (test_monster_candidate_selection.CandidateTests.test_unusable_duplicates_and_image) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3886801Z test_a_selected_source_starts_statblock_collection (test_monster_candidate_selection.CreationTests.test_a_selected_source_starts_statblock_collection) ... Statblock collection for added monsters was not started
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3888655Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3889922Z   File "/tmp/scrying-tests-ms62o7yf/repo/python/scrying_glass_statblock_collecting.py", line 229, in collect_after_add
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3891544Z     return service.collect_new_monsters([m['id'] for m in created], file_bytes=file_bytes, filename=filename)
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3892783Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3894265Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3895303Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:04.3895897Z            

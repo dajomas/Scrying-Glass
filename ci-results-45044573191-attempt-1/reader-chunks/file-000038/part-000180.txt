@@ -1,0 +1,49 @@
+ests	2026-11-22T16:40:37.9114032Z ok 23 - subscription and unsubscription expose current state without later callbacks
+tests	JavaScript tests	2026-11-22T16:40:37.9114875Z   ---
+tests	JavaScript tests	2026-11-22T16:40:37.9115273Z   duration_ms: 0.217457
+tests	JavaScript tests	2026-11-22T16:40:37.9115726Z   type: 'test'
+tests	JavaScript tests	2026-11-22T16:40:37.9116077Z   ...
+tests	JavaScript tests	2026-11-22T16:40:37.9116832Z # Subtest: reentrant mutation does not send an older snapshot after a newer one
+tests	JavaScript tests	2026-11-22T16:40:37.9117963Z ok 24 - reentrant mutation does not send an older snapshot after a newer one
+tests	JavaScript tests	2026-11-22T16:40:37.9118883Z   ---
+tests	JavaScript tests	2026-11-22T16:40:37.9119253Z   duration_ms: 0.181941
+tests	JavaScript tests	2026-11-22T16:40:37.9119704Z   type: 'test'
+tests	JavaScript tests	2026-11-22T16:40:37.9120113Z   ...
+tests	JavaScript tests	2026-11-22T16:40:37.9120930Z # Subtest: dispose clears timers and views, and stale timer callbacks are harmless
+tests	JavaScript tests	2026-11-22T16:40:37.9122170Z ok 25 - dispose clears timers and views, and stale timer callbacks are harmless
+tests	JavaScript tests	2026-11-22T16:40:37.9122801Z   ---
+tests	JavaScript tests	2026-11-22T16:40:37.9123287Z   duration_ms: 0.27246
+tests	JavaScript tests	2026-11-22T16:40:37.9123541Z   type: 'test'
+tests	JavaScript tests	2026-11-22T16:40:37.9123744Z   ...
+tests	JavaScript tests	2026-11-22T16:40:37.9124229Z # Subtest: warning persists without a timer and is replaced or resolved by its own identity
+tests	JavaScript tests	2026-11-22T16:40:37.9124936Z ok 26 - warning persists without a timer and is replaced or resolved by its own identity
+tests	JavaScript tests	2026-11-22T16:40:37.9125391Z   ---
+tests	JavaScript tests	2026-11-22T16:40:37.9125601Z   duration_ms: 0.315591
+tests	JavaScript tests	2026-11-22T16:40:37.9125846Z   type: 'test'
+tests	JavaScript tests	2026-11-22T16:40:37.9126051Z   ...
+tests	JavaScript tests	2026-11-22T16:40:37.9126518Z # Subtest: an explicit field selector is carried on the ticket and record; omitted otherwise
+tests	JavaScript tests	2026-11-22T16:40:37.9127220Z ok 27 - an explicit field selector is carried on the ticket and record; omitted otherwise
+tests	JavaScript tests	2026-11-22T16:40:37.9127643Z   ---
+tests	JavaScript tests	2026-11-22T16:40:37.9127847Z   duration_ms: 0.194925
+tests	JavaScript tests	2026-11-22T16:40:37.9128080Z   type: 'test'
+tests	JavaScript tests	2026-11-22T16:40:37.9128524Z   ...
+tests	JavaScript tests	2026-11-22T16:40:37.9191897Z 1..27
+tests	JavaScript tests	2026-11-22T16:40:37.9192537Z # tests 27
+tests	JavaScript tests	2026-11-22T16:40:37.9192901Z # suites 0
+tests	JavaScript tests	2026-11-22T16:40:37.9193675Z # pass 27
+tests	JavaScript tests	2026-11-22T16:40:37.9194150Z # fail 0
+tests	JavaScript tests	2026-11-22T16:40:37.9194703Z # cancelled 0
+tests	JavaScript tests	2026-11-22T16:40:37.9195275Z # skipped 0
+tests	JavaScript tests	2026-11-22T16:40:37.9195765Z # todo 0
+tests	JavaScript tests	2026-11-22T16:40:37.9196385Z # duration_ms 80.424806
+tests	JavaScript tests	2026-11-22T16:40:37.9774927Z ##[endgroup]
+tests	JavaScript tests	2026-11-22T16:40:37.9775458Z ##[group]tests/admin-feedback-encounter-context.test.cjs
+tests	JavaScript tests	2026-11-22T16:40:38.3699995Z TAP version 13
+tests	JavaScript tests	2026-11-22T16:40:38.4205889Z # Subtest: encounter context starts with the existing uninitialized scope
+tests	JavaScript tests	2026-11-22T16:40:38.4211004Z ok 1 - encounter context starts with the existing uninitialized scope
+tests	JavaScript tests	2026-11-22T16:40:38.4211983Z   ---
+tests	JavaScript tests	2026-11-22T16:40:38.4212512Z   duration_ms: 2.541974
+tests	JavaScript tests	2026-11-22T16:40:38.4213266Z   type: 'test'
+tests	JavaScript tests	2026-11-22T16:40:38.4213719Z   ...
+tests	JavaScript tests	2026-11-22T16:40:38.4224418Z # Subtest: context is a fresh immutable snapshot and cannot mutate feedback scope
+tests	JavaScript tests	2026-11-

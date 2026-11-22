@@ -1,0 +1,30 @@
+026-11-22T16:40:06.4155912Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:06.4156537Z Ran 4 tests in 0.631s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:06.4156707Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:06.4156817Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:06.4174862Z test_statblock_add_preview.py: connections opened: 8; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:06.4738425Z Connection audit: test_statblock_autoload.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:07.5982568Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:07.5983055Z Ran 5 tests in 1.010s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:07.5983183Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:07.5983272Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:07.6004787Z test_statblock_autoload.py: connections opened: 10; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:07.6587623Z Connection audit: test_statblock_bundles.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:08.4845192Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:08.4845687Z Ran 8 tests in 0.729s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:08.4845821Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:08.4845902Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:08.4846262Z test_statblock_bundles.py: connections opened: 8; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:08.5422149Z Connection audit: test_statblock_clone_kernel.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:08.7641271Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:08.7641673Z Ran 4 tests in 0.141s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:08.7641803Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:08.7641878Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:08.7642264Z test_statblock_clone_kernel.py: connections opened: 4; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:08.7793532Z Connection audit: test_statblock_collection.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:09.1097579Z Statblock collection for added monsters was not started
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:09.1098081Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:09.1098621Z   File "/tmp/scrying-tests-z5vn4n3a/repo/python/scrying_glass_statblock_collecting.py", line 229, in collect_after_add
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:09.1099296Z     return service.collect_new_monsters([m['id'] for m in created], file_bytes=file_bytes, filename=filename)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:40:09.1099795Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:4

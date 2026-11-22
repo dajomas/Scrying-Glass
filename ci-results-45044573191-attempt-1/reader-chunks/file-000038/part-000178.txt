@@ -1,0 +1,49 @@
+13Z ok 7 - beginning retry preserves old error until a relevant outcome
+tests	JavaScript tests	2026-11-22T16:40:37.9039076Z   ---
+tests	JavaScript tests	2026-11-22T16:40:37.9039602Z   duration_ms: 0.910557
+tests	JavaScript tests	2026-11-22T16:40:37.9040200Z   type: 'test'
+tests	JavaScript tests	2026-11-22T16:40:37.9040720Z   ...
+tests	JavaScript tests	2026-11-22T16:40:37.9041517Z # Subtest: unrelated success does not remove error in same pane
+tests	JavaScript tests	2026-11-22T16:40:37.9042605Z ok 8 - unrelated success does not remove error in same pane
+tests	JavaScript tests	2026-11-22T16:40:37.9043643Z   ---
+tests	JavaScript tests	2026-11-22T16:40:37.9044443Z   duration_ms: 0.260598
+tests	JavaScript tests	2026-11-22T16:40:37.9045214Z   type: 'test'
+tests	JavaScript tests	2026-11-22T16:40:37.9045810Z   ...
+tests	JavaScript tests	2026-11-22T16:40:37.9046770Z # Subtest: targets and operations remain distinct even for identical text
+tests	JavaScript tests	2026-11-22T16:40:37.9048103Z ok 9 - targets and operations remain distinct even for identical text
+tests	JavaScript tests	2026-11-22T16:40:37.9049062Z   ---
+tests	JavaScript tests	2026-11-22T16:40:37.9049668Z   duration_ms: 0.516318
+tests	JavaScript tests	2026-11-22T16:40:37.9050328Z   type: 'test'
+tests	JavaScript tests	2026-11-22T16:40:37.9050909Z   ...
+tests	JavaScript tests	2026-11-22T16:40:37.9051832Z # Subtest: silent successful retry resolves only its related error
+tests	JavaScript tests	2026-11-22T16:40:37.9053451Z ok 10 - silent successful retry resolves only its related error
+tests	JavaScript tests	2026-11-22T16:40:37.9054370Z   ---
+tests	JavaScript tests	2026-11-22T16:40:37.9054977Z   duration_ms: 0.461054
+tests	JavaScript tests	2026-11-22T16:40:37.9055648Z   type: 'test'
+tests	JavaScript tests	2026-11-22T16:40:37.9056247Z   ...
+tests	JavaScript tests	2026-11-22T16:40:37.9057127Z # Subtest: new failed retry replaces only the related old result
+tests	JavaScript tests	2026-11-22T16:40:37.9058285Z ok 11 - new failed retry replaces only the related old result
+tests	JavaScript tests	2026-11-22T16:40:37.9059204Z   ---
+tests	JavaScript tests	2026-11-22T16:40:37.9059800Z   duration_ms: 0.258264
+tests	JavaScript tests	2026-11-22T16:40:37.9060441Z   type: 'test'
+tests	JavaScript tests	2026-11-22T16:40:37.9061019Z   ...
+tests	JavaScript tests	2026-11-22T16:40:37.9061945Z # Subtest: older response cannot overwrite a newer attempt
+tests	JavaScript tests	2026-11-22T16:40:37.9062797Z ok 12 - older response cannot overwrite a newer attempt
+tests	JavaScript tests	2026-11-22T16:40:37.9063535Z   ---
+tests	JavaScript tests	2026-11-22T16:40:37.9063935Z   duration_ms: 0.152486
+tests	JavaScript tests	2026-11-22T16:40:37.9064396Z   type: 'test'
+tests	JavaScript tests	2026-11-22T16:40:37.9064789Z   ...
+tests	JavaScript tests	2026-11-22T16:40:37.9065620Z # Subtest: terminal tickets cannot publish twice or later resolve newer feedback
+tests	JavaScript tests	2026-11-22T16:40:37.9066847Z ok 13 - terminal tickets cannot publish twice or later resolve newer feedback
+tests	JavaScript tests	2026-11-22T16:40:37.9067937Z   ---
+tests	JavaScript tests	2026-11-22T16:40:37.9068340Z   duration_ms: 0.133471
+tests	JavaScript tests	2026-11-22T16:40:37.9068784Z   type: 'test'
+tests	JavaScript tests	2026-11-22T16:40:37.9069177Z   ...
+tests	JavaScript tests	2026-11-22T16:40:37.9069909Z # Subtest: cancelled old timer callback cannot clear replacement error
+tests	JavaScript tests	2026-11-22T16:40:37.9071010Z ok 14 - cancelled old timer callback cannot clear replacement error
+tests	JavaScript tests	2026-11-22T16:40:37.9071706Z   ---
+tests	JavaScript tests	2026-11-22T16:40:37.9072099Z   duration_ms: 0.163737
+tests	JavaScript tests	2026-11-22T16:40:37.9072542Z   type: 'test'
+tests	JavaScript tests	2026-11-22T16:40:37.9072931Z   ...
+tests	JavaScript tests	2026-11-22T16:40:37.9073823Z # Subtest: scope change invalidates old timers and old responses
+tests	JavaScript tests	2026-11-22T16:40:37.9075164Z ok 15 - scope change

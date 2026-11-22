@@ -1,0 +1,29 @@
+n audit: test_fivetools_resolution_bounds.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.1251034Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.1252428Z test_fivetools_resolution_bounds.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.1252962Z Ran 11 tests in 0.007s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.1253148Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.1253255Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.1407374Z Connection audit: test_fivetools_resolution_cache.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.2333872Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.2334774Z test_fivetools_resolution_cache.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.2335146Z Ran 12 tests in 0.006s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.2335273Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.2335352Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.2484497Z Connection audit: test_fivetools_source_configuration.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.3634315Z 5e.tools candidate lookup failed
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.3634904Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.3635596Z   File "python/scrying_glass_monster_selection.py", line 199, in fivetools_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.3636271Z     index = _fivetools_index(root)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.3636854Z   File "python/scrying_glass_monster_selection.py", line 167, in _fivetools_index
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.3637401Z     index = ft.load_json(root + "/index.json")
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.3638159Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.3638829Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.3639218Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.3639939Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.3640671Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.3641107Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.3641871Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.3642520Z     raise effect
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.3642826Z OSError: private detail
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:29.3643204Z 5e.tools candidate looku

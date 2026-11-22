@@ -1,0 +1,23 @@
+resh_sources.py", line 157, in resolve_selected_sources
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:52.6794394Z     candidate = _fetch_exact(context, monster, identity)
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:52.6795687Z   File "/tmp/scrying-tests-ms62o7yf/repo/python/scrying_glass_monster_refresh_sources.py", line 83, in _fetch_exact
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:52.6797035Z     html = context.dnd_monster_detail_html(urlsplit(identity[URL]).path)
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:52.6798311Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:52.6799405Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:52.6800012Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:52.6801070Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:52.6802184Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:52.6802838Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:52.6804328Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:52.6805323Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:52.6805705Z OSError: secret
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:52.6806071Z ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:52.6807961Z test_sole_invalid_expired_wrong_species_or_identityless_token_cannot_resolve (test_monster_refresh_sources.MonsterRefreshSourceTests.test_sole_invalid_expired_wrong_species_or_identityless_token_cannot_resolve) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:53.2470327Z test_unready_states_do_not_prune_selection_or_dispatch_requests (test_monster_refresh_startup_browser.RefreshStartupBrowserTests.test_unready_states_do_not_prune_selection_or_dispatch_requests) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:53.2473450Z test_automatic_uses_one_die_per_monster_and_final_totals (test_monster_roll_order.MonsterRollOrderTests.test_automatic_uses_one_die_per_monster_and_final_totals) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:53.2476181Z test_duplicate_or_detached_targets_are_rejected_before_dice (test_monster_roll_order.MonsterRollOrderTests.test_duplicate_or_detached_targets_are_rejected_before_dice) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:53.2478597Z test_empty_shared_selection_uses_no_die (test_monster_roll_order.MonsterRollOrderTests.test_empty_shared_selection_uses_no_die) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:53.2481185Z test_final_ties_retain_original_order_not_intermediate_sort_order (test_monster_roll_order.MonsterRollOrderTests.test_final_ties_retain_original_order_not_intermediate_sort_order) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:53.2484344Z test_invalid_bonus_is_rejected_before_any_die (test_monster_roll_order.MonsterRollOrderTests.test_invalid_bonus_is_rejected_before_any_die) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:38:53.2487723Z test_invalid_generated_die_cannot_clear_or_corrupt_initiative (test_monster_roll_order.MonsterRollOrderTests.test_invalid_generated_die_cannot_clear_or_corrupt_initiative) ... ok
+tests	Pyth

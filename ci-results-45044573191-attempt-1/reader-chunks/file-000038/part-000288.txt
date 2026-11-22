@@ -1,0 +1,30 @@
+ection-audit	Connection audit of isolated unittest modules	﻿2026-11-22T16:34:42.0152367Z ##[group]Run python tools/run_split_tests.py -- python tests/audit_connection_lifetime.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:42.0152903Z ^[[36;1mpython tools/run_split_tests.py -- python tests/audit_connection_lifetime.py^[[0m
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:42.0183394Z shell: /usr/bin/bash -e {0}
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:42.0183619Z env:
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:42.0184129Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:42.0184617Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:42.0184962Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:42.0185296Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:42.0185610Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:42.0185916Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:42.0186218Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:42.0186483Z ##[endgroup]
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:42.6164188Z Connection audit: test_accounts.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:44.6630239Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:44.6630755Z Ran 13 tests in 1.959s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:44.6630921Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:44.6631000Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:44.6631360Z test_accounts.py: connections opened: 18; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:44.7377926Z Connection audit: test_activity_life_states.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:45.1947311Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:45.1947884Z Ran 8 tests in 0.325s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:45.1948076Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:45.1948192Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:45.1948772Z test_activity_life_states.py: connections opened: 3; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:45.2596865Z Connection audit: test_activity_log_clear.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:45.7322641Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:45.7323051Z Ran 2 tests in 0.202s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:45.7323225Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:34:45.7323314Z OK
+connection-audit	Connection audit of isolated unittest m

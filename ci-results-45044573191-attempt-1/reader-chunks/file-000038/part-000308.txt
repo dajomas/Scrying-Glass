@@ -1,0 +1,27 @@
+tion audit of isolated unittest modules	2026-11-22T16:37:13.7211026Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:13.7211556Z test_combined_monster_lookup.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:13.7346271Z Connection audit: test_combined_monster_lookup_application.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5001476Z D&D Beyond candidate lookup failed
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5002094Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5002905Z   File "/tmp/scrying-tests-z5vn4n3a/repo/python/scrying_glass_monster_selection.py", line 60, in dnd_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5003467Z     hits = context.dnd_monster_candidates(species)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5004167Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5004603Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5004871Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5005324Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5005759Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5006037Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5006508Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5006908Z     raise effect
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5007143Z TimeoutError: secret D&D endpoint
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5007505Z Combined monster lookup: D&D Beyond did not respond (secret D&D endpoint)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5052767Z 5e.tools candidate lookup failed
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5053107Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5053638Z   File "/tmp/scrying-tests-z5vn4n3a/repo/python/scrying_glass_monster_selection.py", line 199, in fivetools_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5054308Z     index = _fivetools_index(root)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5054789Z   File "/tmp/scrying-tests-z5vn4n3a/repo/python/scrying_glass_monster_selection.py", line 167, in _fivetools_index
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5055250Z     index = ft.load_json(root + "/index.json")
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5055710Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5056137Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T16:37:14.5056388Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection au

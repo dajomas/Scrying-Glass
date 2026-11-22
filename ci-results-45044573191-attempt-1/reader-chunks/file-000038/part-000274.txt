@@ -1,0 +1,39 @@
+ts	JavaScript tests	2026-11-22T16:41:27.9270546Z 1..1
+tests	JavaScript tests	2026-11-22T16:41:27.9270916Z # tests 1
+tests	JavaScript tests	2026-11-22T16:41:27.9272874Z # suites 0
+tests	JavaScript tests	2026-11-22T16:41:27.9274110Z # pass 1
+tests	JavaScript tests	2026-11-22T16:41:27.9276041Z # fail 0
+tests	JavaScript tests	2026-11-22T16:41:27.9276686Z # cancelled 0
+tests	JavaScript tests	2026-11-22T16:41:27.9277177Z # skipped 0
+tests	JavaScript tests	2026-11-22T16:41:27.9277622Z # todo 0
+tests	JavaScript tests	2026-11-22T16:41:27.9278665Z # duration_ms 3057.392911
+tests	JavaScript tests	2026-11-22T16:41:27.9872671Z ##[endgroup]
+tests	Standalone Python browser checks	﻿2026-11-22T16:41:27.9923397Z ##[group]Run status=0
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9923739Z ^[[36;1mstatus=0^[[0m
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9924002Z ^[[36;1mwhile IFS= read -r -d '' test; do^[[0m
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9924314Z ^[[36;1m  echo "::group::$test"^[[0m
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9924572Z ^[[36;1m  args=()^[[0m
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9924856Z ^[[36;1m  if [[ "$test" == tests/audit_log_clear.py ]]; then^[[0m
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9925187Z ^[[36;1m    args=(patched)^[[0m
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9925423Z ^[[36;1m  fi^[[0m
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9925775Z ^[[36;1m  python tools/run_split_tests.py -- python "$test" "${args[@]}" || status=1^[[0m
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9926198Z ^[[36;1m  echo "::endgroup::"^[[0m
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9926626Z ^[[36;1mdone < <(find tests -type f -name '*.py' ! -name 'test_*.py' ! -name '__init__.py' \^[[0m
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9927183Z ^[[36;1m  ! -name 'audit_connection_lifetime.py' -print0 | sort -z)^[[0m
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9927554Z ^[[36;1mexit "$status"^[[0m
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9960328Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9960926Z env:
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9961405Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9962021Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9962455Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9962894Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9963611Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9964028Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9964431Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+tests	Standalone Python browser checks	2026-11-22T16:41:27.9964762Z ##[endgroup]
+tests	Standalone Python browser checks	2026-11-22T16:41:28.0073923Z ##[group]tests/feedback_browser_fixture.py
+tests	Standalone Python browser checks	2026-11-22T16:41:28.4447162Z ##[endgroup]
+tests	Standalone Python browser checks	2026-11-22T16:41:28.4448122Z ##[group]tests/storage_migration_fixtures.py
+tests	Standalone Python browser checks	2026-11-22T16:41:28.9376296Z ##[endgroup]
+tests	Post Run actions/setup-node@v4	﻿2026-11-22T16:41:28.9460840Z Post job cleanup.
+tests	Post Run actions/setup-node@v4	2026-11-22T16:41:29.0759099Z (node:22582) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alte

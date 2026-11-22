@@ -1,0 +1,22 @@
+imum_and_current_hp) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:38.1505220Z test_increases_and_reductions_combine (test_max_hp_increase.IncreaseRuleTests.test_increases_and_reductions_combine) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:38.1508392Z test_refused_for_dead_untracked_and_over_the_limit (test_max_hp_increase.IncreaseRuleTests.test_refused_for_dead_untracked_and_over_the_limit) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:38.1511063Z test_restore_removes_both_and_only_caps_current_hp (test_max_hp_increase.IncreaseRuleTests.test_restore_removes_both_and_only_caps_current_hp) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:39.3863252Z test_battle_actions_row_sends_an_increase (test_max_hp_increase.MaxHpIncreaseAdminTests.test_battle_actions_row_sends_an_increase) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:39.4649378Z test_refresh_of_hp_and_max_hp_sets_both (test_max_hp_increase.RefreshIncreaseTests.test_refresh_of_hp_and_max_hp_sets_both) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:39.5120955Z test_refresh_of_max_hp_only_counts_as_an_increase (test_max_hp_increase.RefreshIncreaseTests.test_refresh_of_max_hp_only_counts_as_an_increase) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:40.1324807Z test_image_rejection_and_refresh_failure (test_monster_bonus_edit_ui.MonsterBonusEditUITests.test_image_rejection_and_refresh_failure) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:41.8251956Z test_native_edit_render_submission_and_character_isolation (test_monster_bonus_edit_ui.MonsterBonusEditUITests.test_native_edit_render_submission_and_character_isolation) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:41.8299888Z test_script_is_loaded_after_admin (test_monster_bonus_edit_ui.MonsterBonusEditUITests.test_script_is_loaded_after_admin) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:41.8359880Z test_import_hands_the_file_to_statblock_collection (test_monster_bonus_import.ImportedConstructionTests.test_import_hands_the_file_to_statblock_collection) ... Statblock collection for added monsters was not started
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:41.8361815Z Traceback (most recent call last):
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:41.8363268Z   File "/tmp/scrying-tests-ms62o7yf/repo/python/scrying_glass_statblock_collecting.py", line 229, in collect_after_add
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:41.8364554Z     return service.collect_new_monsters([m['id'] for m in created], file_bytes=file_bytes, filename=filename)
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:41.8365802Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:41.8367096Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:41.8368127Z     return self._mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:41.8368721Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:41.8369848Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:41.8371295Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-22T16:37:41.8371970Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fix
