@@ -94,7 +94,7 @@ Now running test 093/137: A Max HP reduction lowers maximum HP; restoring it doe
 Now running test 094/137: Encounter tools preview damage, absorb it with temporary HP first and update HP [firefox] ... SUCCESS
 Now running test 095/137: Ending a battle asks first and keeps combatant HP and roster state [firefox] ... SUCCESS
 Now running test 096/137: A pane success message clears after about 3 seconds [firefox] ... SUCCESS
-Now running test 097/137: A global success message clears after about 5 seconds [firefox] ... ERROR
+Now running test 097/137: A global success message clears after about 5 seconds [firefox] ... SUCCESS
 Now running test 098/137: Errors stay past the success timeouts until dismissed [firefox] ... SUCCESS
 Now running test 099/137: A field-linked error marks its field invalid until the error is dismissed [firefox] ... SUCCESS
 Now running test 100/137: A lost connection shows a lasting warning; reconnecting shows recovery [firefox] ... SUCCESS
@@ -136,40 +136,5 @@ Now running test 135/137: During a battle a reload keeps the Live tab and reopen
 Now running test 136/137: Opening the Admin page again (not a reload) starts with the default view [firefox] ... SUCCESS
 Now running test 137/137: Unauthenticated API requests are rejected on both portals ... SUCCESS
 
-==================================== ERRORS ====================================
-___ ERROR at setup of test_global_success_clears_after_five_seconds[firefox] ___
-
-request = <SubRequest 'server' for <Function test_global_success_clears_after_five_seconds[firefox]>>
-
-    @pytest.fixture
-    def server(request):
-        with tempfile.TemporaryDirectory(prefix="scrying-e2e-") as directory:
->           instance = Server(directory).start()
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^
-
-e2e/conftest.py:105: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <conftest.Server object at 0x7d19ddcf6b40>, timeout = 30
-
-    def start(self, timeout=30):
-        log = self.log_path.open("ab")
-        self.process = subprocess.Popen(
-            [sys.executable, str(ROOT / "scrying_glass_server.py"), "--config", str(self.config)],
-            cwd=self.directory, stdout=log, stderr=subprocess.STDOUT)
-        log.close()
-        deadline = time.monotonic() + timeout
-        for port in (self.admin_port, self.client_port, self.statblock_port):
-            while True:
-                if self.process.poll() is not None:
->                   raise RuntimeError("Server exited early:\n" + self.log())
-E                   RuntimeError: Server exited early:
-E                   Scrying Glass cannot start on 127.0.0.1:
-E                     - port 48403 (Statblocks) is configured for more than one listener (Client Display and Statblocks)
-E                   Give each listener its own port with --admin-port, --client-port and --statblock-port or network.admin_port/client_port/statblock_port in the config file.
-
-e2e/conftest.py:78: RuntimeError
-- Generated html report: file:///mnt/d/git/Scrying-Glass/e2e-results/20261122T160750Z/report.html -
-=========================== short test summary info ============================
- e2e/test_feedback.py::test_global_success_clears_after_five_seconds[firefox]
-136 passed, 1 error in 1046.94s (0:17:26)
+- Generated html report: file:///mnt/d/git/Scrying-Glass/e2e-results/20261122T171600Z/report.html -
+137 passed in 1063.82s (0:17:43)
