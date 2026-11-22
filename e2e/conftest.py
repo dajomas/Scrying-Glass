@@ -37,10 +37,19 @@ def pytest_generate_tests(metafunc):
         metafunc.parametrize("browser_name", names, scope="session")
 
 
-def _free_port():
-    with socket.socket() as sock:
-        sock.bind(("127.0.0.1", 0))
-        return sock.getsockname()[1]
+def _free_ports(count):
+    """Distinct free local ports: every socket stays bound until all are chosen, so the
+    operating system cannot hand out the same port twice (seen on Windows, e2e 20261122T160750Z)."""
+    sockets = []
+    try:
+        for _ in range(count):
+            sock = socket.socket()
+            sockets.append(sock)
+            sock.bind(("127.0.0.1", 0))
+        return [sock.getsockname()[1] for sock in sockets]
+    finally:
+        for sock in sockets:
+            sock.close()
 
 
 class Server:
@@ -48,7 +57,7 @@ class Server:
 
     def __init__(self, directory):
         self.directory = Path(directory)
-        self.admin_port, self.client_port, self.statblock_port = _free_port(), _free_port(), _free_port()
+        self.admin_port, self.client_port, self.statblock_port = _free_ports(3)
         self.admin = f"http://127.0.0.1:{self.admin_port}"
         self.client = f"http://127.0.0.1:{self.client_port}"
         self.statblocks = f"http://127.0.0.1:{self.statblock_port}"
