@@ -37,9 +37,10 @@
         const notice = text => { $('battleTurnNotice').textContent = text; };
         const updateActor = () => {
             const item = actor();
-            $('battleTurnCombatant').textContent = item
-                ? `${item.name}: HP ${item.hp}/${item.max_hp} · Temporary HP ${item.temp_hp || 0}`
-                : 'No current combatant.';
+            const tracked = !window.scryingTracksHp || window.scryingTracksHp(item);  // SG-TODO-024
+            $('battleTurnCombatant').textContent = !item ? 'No current combatant.'
+                : tracked ? `${item.name}: HP ${item.hp}/${item.max_hp} · Temporary HP ${item.temp_hp || 0}`
+                : `${item.name}: HP not tracked`;
         };
         const options = {childList: true, subtree: true};
         const rowObserver = new MutationObserver(() => {

@@ -1,7 +1,7 @@
 # 332. Monster Edit dialog initiative bonus
 
 [API integration](331-monster-initiative-edit-integration.md) |
-[Task SG-TODO-018](../todo/180-monster-initiative-bonus.md)
+[Task SG-TODO-018](../history/180-monster-initiative-bonus.md)
 
 Updated: 2026-11-07. Task remains in progress on features/perplexity-018.
 No merge or write-back authorized.

@@ -127,6 +127,14 @@ class NodeBuilder:
         kind = value.get('type', 'entries')
         if kind in SILENT_TYPES:
             return
+        if kind == 'wrapper' and ('wrapped' in value or 'wrappeds' in value):
+            # Rendered in place, as the runtime does (Renderer._recursiveRender); SG-TODO-034
+            # item text arrives this way.
+            if 'wrappeds' in value:
+                self.entries(parent, owner, value['wrappeds'], f'{path}/wrappeds')
+            else:
+                self.entry(parent, owner, value['wrapped'], f'{path}/wrapped')
+            return
         if kind == 'inlineItems':
             node = self.add('paragraph', parent, owner)
             self.inline(node, owner, value.get('items') or [])

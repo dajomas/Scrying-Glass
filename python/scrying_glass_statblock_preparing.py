@@ -117,10 +117,12 @@ class PreparingMixin:
                         if exc.code in ('deadline', 'cancelled'):
                             raise WorkerError(exc.code) from None
                         raise FetchError(exc.code) from None
+                base = identity.get('version_of')  # SG-TODO-033: a version of that monster
                 return prepare_isolated(identity['name'], identity['source'], fetch=path_fetch, deadline=job.deadline,
                                         limits=self.limits.preparation(), cancelled=job.cancelled,
                                         worker_memory_bytes=self.limits.worker_memory_bytes, data_root=root,
-                                        site='https://5e.tools')
+                                        site='https://5e.tools',
+                                        version_of=(base['name'], base['source']) if base else None)
             kind = {OPEN5E: 'open5e', DNDBEYOND: 'dndbeyond', FILE: 'file'}[provider]
             request = ({'key': identity['key'], 'base_url': identity['base_url']} if provider == OPEN5E else
                        {'path': identity['path']} if provider == DNDBEYOND else {'filename': identity.get('filename')})

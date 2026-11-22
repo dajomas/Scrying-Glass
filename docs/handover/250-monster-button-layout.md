@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated: 2026-11-03. Task: [SG-TODO-007](../todo/070-monster-button-layout.md),
+Updated: 2026-11-03. Task: [SG-TODO-007](../history/070-monster-button-layout.md),
 completed at the user's request after covering CI verification.
 Initial delivery: da8e7352fee0b504628aeed94aae6687341e2c35.
 Name correction: 49aed0cbf074d63930ce29a8d64ef2d9cc970226.

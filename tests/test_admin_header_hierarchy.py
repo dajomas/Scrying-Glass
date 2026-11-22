@@ -16,8 +16,6 @@ class HeaderHierarchySourceTests(unittest.TestCase):
         self.assertEqual(end.count('/static/admin-header-hierarchy.js?v=1'), 1)
         self.assertLess(end.index('/static/admin-notification-layout.js'), end.index('/static/admin-header-hierarchy.js'))
         self.assertIn('<script src="/static/admin-header-hierarchy.js?v=1" defer></script>', end)
-        for name in ('admin-header-hierarchy.js', 'admin-header-hierarchy.css'):
-            self.assertLessEqual((ROOT / 'static' / name).stat().st_size, 20000)
 
 
 class HeaderHierarchyBrowserTests(unittest.TestCase):

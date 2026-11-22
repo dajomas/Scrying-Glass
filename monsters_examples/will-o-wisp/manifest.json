@@ -1,0 +1,91 @@
+{
+  "created_utc": "2026-11-17T12:58:23.916005+00:00",
+  "species": "Will-o’-Wisp",
+  "probe": "sizetest/monster_source_probe.py",
+  "requests": [
+    {
+      "url": "https://api.open5e.com/v2/creatures/?name__iexact=Will-o%E2%80%99-Wisp&limit=100&format=json",
+      "label": "open5e-list-0",
+      "started_utc": "2026-11-17T12:58:16.696011+00:00",
+      "status": 200,
+      "final_url": "https://api.open5e.com/v2/creatures/?name__iexact=Will-o%E2%80%99-Wisp&limit=100&format=json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 52,
+      "sha256": "0595424161ea863805d9b92c0e52d7aa1e3c46ec58cd8f0d6933759006a5fb74",
+      "truncated": false,
+      "file": "raw/001-open5e-list-0.json",
+      "elapsed_seconds": 1.842
+    },
+    {
+      "url": "https://www.dndbeyond.com/monsters?filter-search=Will-o%E2%80%99-Wisp",
+      "label": "dndbeyond-search",
+      "started_utc": "2026-11-17T12:58:19.538622+00:00",
+      "status": 200,
+      "final_url": "https://www.dndbeyond.com/monsters?filter-search=Will-o%E2%80%99-Wisp",
+      "content_type": "text/html; charset=utf-8",
+      "content_encoding": null,
+      "bytes": 379117,
+      "sha256": "dcc6386a74db4e301ba121a1f876aa59ae46c1c0da860cb9faa372755811480d",
+      "truncated": false,
+      "file": "raw/002-dndbeyond-search.html",
+      "elapsed_seconds": 0.895
+    },
+    {
+      "url": "https://www.dndbeyond.com/monsters/5195270-will-o-wisp",
+      "label": "dndbeyond-detail-0",
+      "started_utc": "2026-11-17T12:58:21.434147+00:00",
+      "status": 200,
+      "final_url": "https://www.dndbeyond.com/monsters/5195270-will-o-wisp",
+      "content_type": "text/html; charset=utf-8",
+      "content_encoding": null,
+      "bytes": 303865,
+      "sha256": "0e47c5b00882513f915ff543a72a6c93ab17ccf16c1cfefcb0584413fea631a5",
+      "truncated": false,
+      "file": "raw/003-dndbeyond-detail-0.html",
+      "elapsed_seconds": 0.78
+    },
+    {
+      "url": "https://www.dndbeyond.com/monsters/17060-will-o-wisp",
+      "label": "dndbeyond-detail-1",
+      "started_utc": "2026-11-17T12:58:23.214675+00:00",
+      "status": 200,
+      "final_url": "https://www.dndbeyond.com/monsters/17060-will-o-wisp",
+      "content_type": "text/html; charset=utf-8",
+      "content_encoding": null,
+      "bytes": 366736,
+      "sha256": "6216c6b4e65f7eb3901f3d738f81dd1bb171567af41736b4e506080bde7fcd79",
+      "truncated": false,
+      "file": "raw/004-dndbeyond-detail-1.html",
+      "elapsed_seconds": 0.683
+    }
+  ],
+  "records": [
+    {
+      "provider": "dndbeyond",
+      "identity": {
+        "href": "/monsters/5195270-will-o-wisp",
+        "block": 0
+      },
+      "file": "001-dndbeyond.json",
+      "bytes": 6905,
+      "note": "DOM text segments, not a normalized statblock"
+    },
+    {
+      "provider": "dndbeyond",
+      "identity": {
+        "href": "/monsters/17060-will-o-wisp",
+        "block": 0
+      },
+      "file": "002-dndbeyond.json",
+      "bytes": 6307,
+      "note": "DOM text segments, not a normalized statblock"
+    }
+  ],
+  "issues": [
+    {
+      "provider": "open5e",
+      "error": "No exact-name records discovered"
+    }
+  ]
+}

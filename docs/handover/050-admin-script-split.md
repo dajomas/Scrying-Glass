@@ -2,7 +2,11 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Last updated: 2026-11-03. Task: [SG-TODO-008](../todo/080-source-size-refactors.md).
+Last updated: 2026-11-03. Task: [SG-TODO-008](../history/080-source-size-refactors.md).
+
+**Reversed 2026-11-22** by SG-TODO-035 ([handover 760](760-remove-file-size-splitting.md)):
+`static/admin.js` is one file again, served as a plain static file; the fragments, the
+adapter and `tools/run_split_tests.py` are gone. This page is history.
 
 ## Activation history and compatibility
 
@@ -39,7 +43,7 @@ was verified completed/success from ci-results-41622079200-attempt-1/run.json at
 21f5de181659458c763672b2b871a21fd2baebb9. Configured test/check steps all report
 success. SG-TODO-006 is closed at the user's request on 2026-11-03; no unreported
 live-provider/authenticated-browser checks are inferred. See
-[label handover](230-fivetools-sources.md) and [task](../todo/060-fivetools-source-configuration.md).
+[label handover](230-fivetools-sources.md) and [task](../history/060-fivetools-source-configuration.md).
 This feature close-out does not itself close the separate Admin-split SG-TODO-008.
 
 ## Validation and deployment

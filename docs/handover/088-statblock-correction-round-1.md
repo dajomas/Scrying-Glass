@@ -1,6 +1,6 @@
 # 088 - SG-TODO-022.15 correction round 1: statblock search, Edit dialog and viewer layout
 
-[Back to handover index](../../HANDOVER.md) · [Stage E](087-statblock-stage-e-import-ui.md) · [TODO 220](../todo/220-admin-statblock-viewer.md)
+[Back to handover index](../../HANDOVER.md) · [Stage E](087-statblock-stage-e-import-ui.md) · [TODO 220](../history/220-admin-statblock-viewer.md)
 
 Date: 2026-11-20. Baseline: `307e9efd622bef756a8ce01f758e0022ce53027e` on
 `features/claude-statblock`. Delivered by push (`CLAUDE_INSTRUCTIONS.md`, delivery

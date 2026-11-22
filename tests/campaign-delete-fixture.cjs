@@ -1,6 +1,7 @@
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const {adminRange} = require('./admin-source.cjs');
 const {createController}=require('../static/admin-feedback-controller.js');
-const source=fs.readFileSync(path.join(__dirname,'../static/admin/050-source.js'),'utf8');
+const source=adminRange("// Stage 1 Step 1D: owned validation/request/success and guarded appli", "async function applyBackground(background) {");
 const deletion=source.slice(0,source.indexOf('// Setup transfer (#openCampaignSetup'));
 const deferred=()=>{let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b;});return {promise,resolve,reject};};
 const flush=async()=>{for(let i=0;i<8;i++)await Promise.resolve();};

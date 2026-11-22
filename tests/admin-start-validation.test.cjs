@@ -7,7 +7,7 @@ const {test} = require('node:test');
 const {createController} = require('../static/admin-feedback-controller.js');
 const read = file => fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
 const asset = read('static/admin-start-validation.js');
-const core = read('static/admin/070-source.js');
+const core = read('static/admin.js');
 const from = core.indexOf('function characterPermanentlyDead(');
 const to = core.indexOf('async function startBattle(', from);
 assert.ok(from >= 0 && to > from, 'Cannot isolate production ordering/validation helpers');

@@ -2,8 +2,8 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-[009.7 task/contract](../todo/097-feedback-delivery-plan.md) ·
-[Parent 009 checklist](../todo/090-admin-usability-redesign.md) ·
+[009.7 task/contract](../history/097-feedback-delivery-plan.md) ·
+[Parent 009 checklist](../history/090-admin-usability-redesign.md) ·
 [Deliverable 2 close-out](560-connection-field-feedback.md)
 
 ## Acceptance and outcome - 2026-11-12

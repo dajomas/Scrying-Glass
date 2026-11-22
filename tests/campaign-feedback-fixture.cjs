@@ -1,9 +1,10 @@
 // Complete 080 with production controller; DOM, transport, context and legacy owners are mocked.
 const test = require('node:test'), assert = require('node:assert/strict');
+const {adminRange} = require('./admin-source.cjs');
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const {createController} = require(path.join(root, 'static/admin-feedback-controller.js'));
-const source = fs.readFileSync(path.join(root, 'static/admin/080-source.js'), 'utf8');
+const source = adminRange("// Stage 1 Steps 1A/1B: campaign creation and metadata editing feedbac", null);
 const deferred = () => {let resolve, reject; const promise = new Promise((a,b) => {resolve=a;reject=b;}); return {promise,resolve,reject};};
 const flush = async () => {for(let i=0;i<6;i++) await Promise.resolve();};
 function harness() {

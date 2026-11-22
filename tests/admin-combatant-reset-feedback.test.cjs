@@ -8,7 +8,7 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const read = p => fs.readFileSync(path.join(root, p), 'utf8');
 const {createController} = require(path.join(root, 'static/admin-feedback-controller.js'));
-const core = read('static/admin/070-source.js');
+const core = read('static/admin.js');
 const start = core.indexOf('async function resetCombatantWithFeedback(');
 const end = core.indexOf("document.addEventListener('change'", start);
 assert.ok(start >= 0 && end > start);

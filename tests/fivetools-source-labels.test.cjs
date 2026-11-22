@@ -6,7 +6,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 const {createController} = require('../static/admin-feedback-controller.js');
 const bootstrap = fs.readFileSync(path.join(__dirname,'../static/admin-feedback-admin.js'),'utf8');
-const prefix = fs.readFileSync(path.join(__dirname,'../static/admin/010-source.js'),'utf8').split('function setColorPreview')[0];
+const prefix = fs.readFileSync(path.join(__dirname,'../static/admin.js'),'utf8').split('function setColorPreview')[0];
 const names = {MM:'Monster Manuals 2014',XMM:'Monster Manuals 2024',PHB:'Player Handbook 2014',XPHB:'Player Handbook 2024',DMG:'Dungeon Master Guide 2014',XDMG:'Dungeon Master Guide 2024'};
 function fixture() {
     const fields = {monsterSpecies:{value:'Goblin'},monsterAc:{value:''},monsterHpRangeStart:{value:''},monsterHpRangeEnd:{value:''},monsterSpeciesLookupOverwrite:{checked:false},monsterAddNotification:{textContent:''}};

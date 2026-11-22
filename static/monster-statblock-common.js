@@ -96,14 +96,40 @@
         return api('/api/statblocks/jobs/' + encodeURIComponent(jobId), {method: 'DELETE'}).catch(() => null);
     }
 
-    function candidateLabel(candidate) {
+    function candidateLabel(candidate, {grouped = false} = {}) {
         const parts = [candidate.label, candidate.provider, candidate.source, candidate.document, candidate.game_system]
             .filter((value, index, all) => value && all.indexOf(value) === index);
         let text = parts.join(' · ');
+        // SG-TODO-033: a 5e.tools version names its base unless it is listed under it.
+        const base = candidate.version_of;
+        if (base && !grouped) text += ` — version of ${base.label || base.name} (${base.source})`;
         if (candidate.legacy) text += ' (legacy)';
         if (candidate.original) text += ' — original source';
         if (candidate.disabled) text += ' (provider disabled)';
         return text;
+    }
+
+    // SG-TODO-033: [{candidate, versions}] in discovery order; a version joins its base when
+    // the base is listed too, otherwise it stays an entry of its own.
+    function groupCandidates(candidates) {
+        const key = (provider, name, source) => [provider, String(name).toLowerCase(), String(source).toLowerCase()].join('|');
+        const groups = [], bases = new Map();
+        for (const candidate of candidates) {
+            if (!candidate.version_of) {
+                const group = {candidate, versions: []};
+                groups.push(group);
+                bases.set(key(candidate.provider, candidate.name || candidate.label, candidate.source), group);
+            }
+        }
+        for (const candidate of candidates) {
+            const base = candidate.version_of;
+            if (!base) continue;
+            const group = bases.get(key(candidate.provider, base.name, base.source));
+            if (group) group.versions.push(candidate);
+            else groups.splice(groups.findIndex(g => candidates.indexOf(g.candidate) > candidates.indexOf(candidate)) >>> 0, 0,
+                {candidate, versions: []});
+        }
+        return groups;
     }
 
     function providerNotes(row) {
@@ -114,7 +140,7 @@
             else if (provider.status === 'cooldown') {
                 notes.push(`${provider.provider}: failed recently; retry after ${time(provider.retry_at)}.`);
             }
-            if (provider.omitted_versions) notes.push(`${provider.provider}: ${provider.omitted_versions} variant version(s) not offered.`);
+            if (provider.omitted_versions) notes.push(`${provider.provider}: ${provider.omitted_versions} version(s) not offered.`);
             if (provider.omitted_unavailable) {
                 notes.push(`${provider.provider}: ${provider.omitted_unavailable} result(s) without a public statblock not offered.`);
             }
@@ -170,5 +196,5 @@
         Array.from(crypto.getRandomValues(new Uint8Array(16)), b => b.toString(16).padStart(2, '0')).join(''));
 
     window.scryingStatblockImport = {StatblockError, api, json, state, discover, prepareCandidate, prepareFile, cancel,
-        candidateLabel, providerNotes, statusText, preview, element, operationId, time};
+        candidateLabel, groupCandidates, providerNotes, statusText, preview, element, operationId, time};
 })();

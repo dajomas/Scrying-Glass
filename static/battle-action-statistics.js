@@ -54,7 +54,9 @@
                 const node = summaryFor(select);
                 const item = sameScope && select.value
                     ? combatants.find(entry => entry && String(entry.id) === select.value) : null;
-                const text = item ? fields.filter(([key]) => typeof item[key] === 'number' && Number.isFinite(item[key]))
+                const untracked = window.scryingTracksHp && !window.scryingTracksHp(item);  // SG-TODO-024
+                const text = item ? fields.filter(([key]) => !(untracked && key !== 'ac'))
+                    .filter(([key]) => typeof item[key] === 'number' && Number.isFinite(item[key]))
                     .map(([key, label]) => label + ' ' + item[key]).join(' · ') : '';
                 if (node.textContent !== text) node.textContent = text;
                 node.hidden = !text;

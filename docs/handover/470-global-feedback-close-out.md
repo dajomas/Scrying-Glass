@@ -95,4 +95,4 @@ changes no runtime/test/pin/markup/workflow and dispatches no workflow. It does 
 invent a new run outcome. README and TODO root remain accurate and unchanged.
 The existing 460/465/467 records are retained as dated evidence/history;
 [pre-close-out task record](https://github.com/dajomas/Scrying-Glass/blob/6c77d9fe069fffc34dd3335294e20ea90e8097f9/docs/todo/097-feedback-delivery-plan.md)
-preserves their then-open gates. [Current task](../todo/097-feedback-delivery-plan.md#4a13-global-reconciliation---2026-11-11).
+preserves their then-open gates. [Current task](../history/097-feedback-delivery-plan.md#4a13-global-reconciliation---2026-11-11).

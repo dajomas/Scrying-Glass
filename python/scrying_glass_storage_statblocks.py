@@ -6,10 +6,9 @@ Setup copies use the trusted clone kernel; clear/restore remain separate contrac
 import copy
 import time
 import uuid
-from .scrying_glass_storage_operations import StorageOperationsMixin
 
 
-class StatblockOperationsMixin(StorageOperationsMixin):
+class StatblockOperationsMixin:
     """Wrap public save boundaries, leaving the plain encounter callback nonrecursive."""
 
     def _save_preserving_statblocks(self, encounter, state, *, runtime=False):

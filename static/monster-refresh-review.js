@@ -9,7 +9,7 @@
     const option = document.createElement('option');
     option.value = 'refresh-source-review';
     option.textContent = 'Refresh from source';
-    bulk.append(option);
+    bulk.insertBefore(option, bulk.querySelector('option[value="remove"]'));  // SG-TODO-031: Remove stays last
     let opened = false;
     let reviewFeedbackRoot = null;
     function rosterReady() {

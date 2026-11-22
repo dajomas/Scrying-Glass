@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated: 2026-11-06. Task: [SG-TODO-011](../todo/110-monster-image-previews.md). Status: completed at the user's request after verified covering corrective local/CI validation and user visual/workflow acceptance. Initial implementation: f8e2018f7c08b3e44011e6d2fcdecd26ab99a6bf. Accepted corrective source: d2c20b9b6ac5dd73218f072b4b07a80ac116ea04. Delivery follows the [agreed sequence](../todo/115-admin-delivery-sequence.md), before 009.4; it does not reopen accepted 009.3 or implement other backlog tasks.
+Updated: 2026-11-06. Task: [SG-TODO-011](../history/110-monster-image-previews.md). Status: completed at the user's request after verified covering corrective local/CI validation and user visual/workflow acceptance. Initial implementation: f8e2018f7c08b3e44011e6d2fcdecd26ab99a6bf. Accepted corrective source: d2c20b9b6ac5dd73218f072b4b07a80ac116ea04. Delivery follows the [agreed sequence](../history/115-admin-delivery-sequence.md), before 009.4; it does not reopen accepted 009.3 or implement other backlog tasks.
 
 ## User workflow
 

@@ -1,8 +1,9 @@
 /* Complete 040 plus production controller; controlled DOM/transport and scope adapter. */
 const {test}=require('node:test'), a=require('node:assert/strict');
+const {adminRange} = require('./admin-source.cjs');
 const fs=require('node:fs'), path=require('node:path'), vm=require('node:vm');
 const {createController}=require('../static/admin-feedback-controller.js');
-const source=fs.readFileSync(path.join(__dirname,'../static/admin/040-source.js'),'utf8');
+const source=adminRange("let csvImportSession = null;", "// Stage 1 Step 1D: owned validation/request/success and guarded appli");
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
 function hold(){let resolve,reject;const promise=new Promise((yes,no)=>{resolve=yes;reject=no;});return{promise,resolve,reject};}
 function fixture(){

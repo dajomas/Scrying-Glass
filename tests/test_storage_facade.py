@@ -1,4 +1,4 @@
-"""SQLiteStorage facade: records, schema upgrades, operations and file-backed runtime.
+"""SQLiteStorage: records, schema upgrades, operations and file-backed runtime.
 
 Runs against the production class with real SQLite; there is no frozen reference copy.
 """
@@ -12,13 +12,9 @@ from contextlib import closing
 from inspect import getattr_static
 from pathlib import Path
 from unittest.mock import patch
-from python import scrying_glass_storage as facade
-from python import scrying_glass_storage_fields as fields
-from python.scrying_glass_storage import SQLiteStorage
-from python.scrying_glass_storage_operations import StorageOperationsMixin
+from python.scrying_glass_storage import SQLiteStorage, SQLiteStorageBase
 
 ROOT = Path(__file__).resolve().parents[1]
-FIELD_NAMES = ('TEXT_FIELDS', 'INT_FIELDS', 'BOOL_FIELDS', 'ENTITY_FIELDS', 'LOG_FIELDS', 'LIST_FIELDS', 'STATE_FIELDS')
 
 
 def base_storage(test):
@@ -31,17 +27,6 @@ def base_storage(test):
     value.connection.execute('PRAGMA user_version=3')
     value.migration_backup = Path('fixture.backup')
     return value
-
-
-class StorageFieldTests(unittest.TestCase):
-    def test_facade_reexports_shared_field_sets(self):
-        for name in FIELD_NAMES:
-            self.assertIs(getattr(facade, name), getattr(fields, name))
-        fields.STATE_FIELDS.add('__probe__')
-        try:
-            self.assertIn('__probe__', facade.STATE_FIELDS)
-        finally:
-            fields.STATE_FIELDS.discard('__probe__')
 
 
 class StorageRecordTests(unittest.TestCase):
@@ -263,7 +248,7 @@ class StorageOperationTests(unittest.TestCase):
         state = {'monsters':[{'id':'monster','effects':[external,dict(external,concentration=True),internal]}]}
         before = copy.deepcopy(state)
         with patch.object(s,'load_setup',return_value=copy.deepcopy(state)) as load, patch.object(s,'save_setup') as save:
-            name = StorageOperationsMixin.transfer_setup(s,a,b,'saved','copy')
+            name = SQLiteStorageBase.transfer_setup(s,a,b,'saved','copy')
         result = save.call_args.args[2]
         self.assertIsNone(result['active_setup'])
         self.assertEqual(result['monsters'][0]['effects'],[dict(external,source_id=None,anchor_id=None,timing='manual',turns=None),internal])
@@ -289,22 +274,20 @@ class StorageOperationTests(unittest.TestCase):
 
 
 class StorageRuntimeTests(unittest.TestCase):
-    def test_dispatch_modules_and_file_limits(self):
+    def test_dispatch_and_no_dynamic_code(self):
         self.assertEqual(SQLiteStorage.SCHEMA_VERSION, 9)
         self.assertIsInstance(getattr_static(SQLiteStorage, 'convert_campaign_references'), staticmethod)
         self.assertIsInstance(getattr_static(SQLiteStorage, '_typed'), staticmethod)
         self.assertEqual(SQLiteStorage.__module__, 'python.scrying_glass_storage')
-        self.assertEqual(SQLiteStorage._upgrade.__module__, 'python.scrying_glass_storage_schema')
-        self.assertEqual(SQLiteStorage._save_entities.__module__, 'python.scrying_glass_storage_records')
+        self.assertIs(SQLiteStorage._upgrade, SQLiteStorageBase._upgrade)
+        self.assertIs(SQLiteStorage._save_entities, SQLiteStorageBase._save_entities)
         from python.scrying_glass_storage_statblocks import StatblockOperationsMixin
         self.assertEqual(SQLiteStorage.save_setup.__module__, 'python.scrying_glass_storage_statblocks')
         self.assertIs(SQLiteStorage.save_setup, StatblockOperationsMixin.save_setup)
         self.assertIs(SQLiteStorage.transfer_setup, StatblockOperationsMixin.transfer_setup)
         self.assertIs(SQLiteStorage.set_value, StatblockOperationsMixin.set_value)
-        for suffix in ('', '_fields', '_schema', '_records', '_operations', '_statblocks'):
-            data = (ROOT/f'python/scrying_glass_storage{suffix}.py').read_bytes()
-            self.assertLessEqual(len(data), 20000)
-            tree = ast.parse(data.decode())
+        for suffix in ('', '_statblocks'):
+            tree = ast.parse((ROOT/f'python/scrying_glass_storage{suffix}.py').read_text(encoding='utf-8'))
             self.assertFalse(any(isinstance(n, ast.Call) and isinstance(n.func, ast.Name) and n.func.id in ('exec','eval','compile') for n in ast.walk(tree)))
 
     def test_save_setup_dispatches_through_real_private_preservation_hook(self):

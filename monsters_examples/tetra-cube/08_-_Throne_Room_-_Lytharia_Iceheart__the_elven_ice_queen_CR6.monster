@@ -1,0 +1,214 @@
+{
+    "name": "Ice Queen",
+    "size": "medium",
+    "type": "humanoid",
+    "tag": "Lytharia",
+    "alignment": "lawful evil",
+    "hitDice": "0",
+    "armorName": "other",
+    "shieldBonus": 0,
+    "natArmorBonus": 5,
+    "otherArmorDesc": "16 Ice bound robes (reinforced by magical ward)",
+    "speed": "30",
+    "burrowSpeed": "0",
+    "climbSpeed": "0",
+    "flySpeed": "0",
+    "hover": false,
+    "swimSpeed": "0",
+    "customHP": true,
+    "customSpeed": false,
+    "hpText": "120 (16d8+48)",
+    "speedDesc": "30 ft.",
+    "strPoints": "10",
+    "dexPoints": "14",
+    "conPoints": "16",
+    "intPoints": "18",
+    "wisPoints": "15",
+    "chaPoints": "20",
+    "blindsight": "0",
+    "blind": false,
+    "darkvision": "60",
+    "tremorsense": "0",
+    "truesight": "0",
+    "telepathy": 0,
+    "cr": "6",
+    "customCr": "6 (2300 XP)",
+    "customProf": 3,
+    "isLegendary": true,
+    "legendariesDescription": "Lytharia can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. Lytharia regains spent legendary actions at the start of her turn.",
+    "isLair": true,
+    "lairDescription": "When fighting inside her throne room, Lytharia can invoke the ambient ice magic to take lair actions. On initiative count 20 (losing initiative ties), Lytharia can take one lair action to cause one of the following effects:",
+    "lairDescriptionEnd": "Lytharia can't repeat an effect until all three have been used, and she can't use the same effect two rounds in a row.",
+    "isMythic": false,
+    "mythicDescription": "",
+    "isRegional": false,
+    "regionalDescription": "",
+    "regionalDescriptionEnd": "",
+    "properties": [
+        {
+            "name": "Legendary Resistance (3/Day)",
+            "desc": "If Lytharia fails a saving throw, she can choose to succeed instead."
+        },
+        {
+            "name": "Ice Walk",
+            "desc": "Lytharia can move across and climb icy surfaces without needing to make an ability check. Additionally, difficult terrain composed of ice or snow doesn't cost her extra movement."
+        },
+        {
+            "name": "Chilling Aura",
+            "desc": "At the start of each of Lytharia's turns, each creature within 10 feet of her takes [1d10] cold damage. A creature that touches Lytharia or hits her with a melee attack while within 5 feet of her takes [1d10] cold damage."
+        }
+    ],
+    "abilities": [
+        {
+            "name": "Legendary Resistance (3/Day)",
+            "desc": "If Lytharia fails a saving throw, she can choose to succeed instead."
+        },
+        {
+            "name": "Ice Walk",
+            "desc": "Lytharia can move across and climb icy surfaces without needing to make an ability check. Additionally, difficult terrain composed of ice or snow doesn't cost her extra movement."
+        },
+        {
+            "name": "Chilling Aura",
+            "desc": "At the start of each of Lytharia's turns, each creature within 10 feet of her takes [1d10] cold damage. A creature that touches Lytharia or hits her with a melee attack while within 5 feet of her takes [1d10] cold damage."
+        },
+        {
+            "name": "Spellcasting",
+            "desc": "Lytharia is a 9th-level spellcaster. Her spellcasting ability is Charisma (spell save DC [CHA SAVE], [CHA ATK] to hit with spell attacks). She has the following sorcerer spells prepared:\n\nCantrips (at will): ray of frost, mage hand, prestidigitation, shocking grasp\n1st level (4 slots): mage armor, shield, ice knife\n2nd level (3 slots): hold person, misty step\n3rd level (3 slots): counterspell, sleet storm\n4th level (3 slots): ice storm, wall of ice\n5th level (1 slot): cone of cold"
+        }
+    ],
+    "actions": [
+        {
+            "name": "Multiattack",
+            "desc": "Lytharia makes two Frozen Touch attacks or uses her Frostbolt twice."
+        },
+        {
+            "name": "Frozen Touch",
+            "desc": "Melee Spell Attack: [CHA ATK] to hit, reach 5 ft., one target. Hit: [2d6+3] cold damage, and the target must succeed on a DC [CHA SAVE] Constitution saving throw or have its speed reduced by 10 feet until the end of its next turn."
+        },
+        {
+            "name": "Frostbolt",
+            "desc": "Ranged Spell Attack: [CHA ATK] to hit, range 120 ft., one target. Hit: [3d6+4] cold damage."
+        },
+        {
+            "name": "Crown of Frost (Recharge 5-6)",
+            "desc": "Lytharia creates a burst of freezing energy. Each creature within 15 feet of her must make a DC [CHA SAVE] Constitution saving throw, taking [8d6] cold damage on a failed save, or half as much damage on a successful one."
+        }
+    ],
+    "bonusActions": [
+        {
+            "name": "Icy Escape",
+            "desc": "Lytharia teleports, along with any equipment she is wearing or carrying, up to 30 feet to an unoccupied space she can see. She leaves behind a cloud of freezing mist that lasts until the start of her next turn. The mist is heavily obscured, and any creature that enters it for the first time on a turn or starts its turn there takes [1d10] cold damage."
+        }
+    ],
+    "reactions": [
+        {
+            "name": "Ice Shield",
+            "desc": "When hit by an attack, Lytharia can create a wall of ice to deflect the blow. She adds 3 to her AC against that attack, potentially causing it to miss. If the attack misses, the attacker takes [1d10] cold damage from the shattering ice."
+        }
+    ],
+    "legendaries": [
+        {
+            "name": "Frostbolt",
+            "desc": "Lytharia makes one Frostbolt attack."
+        },
+        {
+            "name": "Ice Sculpture (Costs 2 Actions)",
+            "desc": "Lytharia targets one creature she can see within 30 feet. The target must succeed on a DC [CHA SAVE] Constitution saving throw or be restrained by ice until the end of Lytharia's next turn. The target or another creature within 5 feet can use an action to break the ice (DC [STR SAVE] Strength check)."
+        },
+        {
+            "name": "Glacial Step (Costs 2 Actions)",
+            "desc": "Lytharia uses Icy Escape."
+        },
+        {
+            "name": "Spell (Costs 3 Actions)",
+            "desc": "Lytharia casts a spell from her list of prepared spells, expending a spell slot as normal."
+        }
+    ],
+    "mythics": [
+    ],
+    "lairs": [
+        {
+            "name": "Ice Spike Eruption",
+            "desc": "**Ice Spike Eruption.** Sharp spikes of ice erupt from the floor in a 20-foot-radius circle centered on a point Lytharia can see within 60 feet. Each creature in that area must make a DC [DEX SAVE] Dexterity saving throw, taking [3d6] piercing damage on a failed save, or half as much on a successful one. The area becomes difficult terrain until the ice melts or is cleared."
+        },
+        {
+            "name": "Freezing Wind",
+            "desc": "**Freezing Wind.** A bitter wind sweeps through the throne room. Each creature in the room must succeed on a DC [CON SAVE] Constitution saving throw or take [2d6] cold damage and have disadvantage on ranged attack rolls until initiative count 20 on the next round."
+        },
+        {
+            "name": "Slippery Ice",
+            "desc": "**Slippery Ice.** The floor in a 30-foot-square area that Lytharia can see becomes coated in slick ice. The area is difficult terrain, and any creature that enters the area or starts its turn there must succeed on a DC [DEX SAVE] Dexterity saving throw or fall prone."
+        }
+    ],
+    "regionals": [
+    ],
+    "sthrows": [
+        {
+            "name": "str",
+            "order": 0
+        },
+        {
+            "name": "con",
+            "order": 2
+        }
+    ],
+    "skills": [
+        {
+            "name": "arcana",
+            "stat": "int"
+        },
+        {
+            "name": "deception",
+            "stat": "cha"
+        },
+        {
+            "name": "intimidation",
+            "stat": "cha"
+        },
+        {
+            "name": "perception",
+            "stat": "wis"
+        }
+    ],
+    "damagetypes": [
+        {
+            "name": "cold",
+            "type": "i"
+        },
+        {
+            "name": "poison",
+            "type": "r"
+        }
+    ],
+    "specialdamage": [
+    ],
+    "conditions": [
+        {
+            "name": "charmed"
+        },
+        {
+            "name": "frightened"
+        }
+    ],
+    "languages": [
+        {
+            "name": "Common",
+            "speaks": true
+        },
+        {
+            "name": "Giant",
+            "speaks": true
+        },
+        {
+            "name": "Primordial",
+            "speaks": true
+        }
+    ],
+    "understandsBut": "",
+    "shortName": "",
+    "pluralName": "",
+    "doubleColumns": true,
+    "separationPoint": 0,
+    "damage": [
+    ]
+}

@@ -81,7 +81,7 @@ necessary corrections/migrations and explicit bounded acceptance remain pending.
 No application/core/pin/markup/shared-fixture changes, archive/Patch/, merge or
 deployment. README/TODO root reviewed and unchanged; indexes/task detail updated.
 Deliverables 1/2, Deliverable 2 near-field/connection work and phase 009.7 remain
-open under preserved criteria. [Task](../todo/097-feedback-delivery-plan.md#4a13-global-reconciliation---2026-11-11).
+open under preserved criteria. [Task](../history/097-feedback-delivery-plan.md#4a13-global-reconciliation---2026-11-11).
 
 ## Checkpoint CI and template-loaded source inventory - 2026-11-11
 

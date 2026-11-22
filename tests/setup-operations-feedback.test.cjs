@@ -6,7 +6,7 @@ const root = path.resolve(__dirname, '..');
 const {createController} = require(path.join(root, 'static/admin-feedback-controller.js'));
 const source = fs.readFileSync(path.join(root, 'static/setup-switch.js'), 'utf8');
 const announceSource = (() => {
-    const core = fs.readFileSync(path.join(root, 'static/admin/020-source.js'), 'utf8');
+    const core = fs.readFileSync(path.join(root, 'static/admin.js'), 'utf8');
     const from = core.indexOf('function campaignListNotice('), to = core.indexOf('async function setups()', from);
     if (from < 0 || to <= from) throw new Error('Cannot isolate the typed campaign-list notice helpers');
     return core.slice(from, to);

@@ -1,8 +1,9 @@
 // Real 040 switch helpers + 080 owner and real controller; mocked DOM, transport and context.
 const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+const {adminRange} = require('./admin-source.cjs');
 const {harness,flush}=require('./campaign-feedback-fixture.cjs');
-const legacy=fs.readFileSync(path.join(__dirname,'../static/admin/040-source.js'),'utf8');
-const source=fs.readFileSync(path.join(__dirname,'../static/admin/080-source.js'),'utf8');
+const legacy=adminRange("let csvImportSession = null;", "// Stage 1 Step 1D: owned validation/request/success and guarded appli");
+const source=adminRange("// Stage 1 Steps 1A/1B: campaign creation and metadata editing feedbac", null);
 const setup=legacy.slice(legacy.indexOf('async function applyOpenedSetup('),legacy.indexOf('const REPLACE_WARNING'));
 const start=legacy.indexOf('async function switchCampaign()');
 const oldSwitch=legacy.slice(start,legacy.indexOf('// The delete dialog',start));

@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Task record: [097](../todo/097-feedback-delivery-plan.md).
+Task record: [097](../history/097-feedback-delivery-plan.md).
 Previous stage: [530 Stage 1 close-out](530-setup-operation-feedback.md#stage-1-accepted-close-out---2026-11-12).
 
 ## Status - 2026-11-12
@@ -46,7 +46,7 @@ is invented before publication; no merge/deployment or blanket future write appr
 Stage 4 integration/responsive/accessibility hardening and approved compatibility
 retirement is next. Whole Deliverable 1 acceptance, Deliverable 2 connection/recovery/
 polling/field association and final 009.7/009 acceptance remain open under
-[097](../todo/097-feedback-delivery-plan.md#remaining-scope-and-gates). No optional
+[097](../history/097-feedback-delivery-plan.md#remaining-scope-and-gates). No optional
 scope or new acceptance gates; test-suite cleanup stays deferred until after 009.
 
 ## Scope delivered

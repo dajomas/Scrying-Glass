@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated: 2026-11-09. Task: [SG-TODO-009.5](../todo/095-admin-workflow-navigation.md). Status: completed and closed at the user's explicit sign-off/request. Overall 009 remains in progress. Next scheduled work is [SG-TODO-015](../todo/150-battle-actions-combatant-statistics.md), with live inspection started but no application delivery in this close-out.
+Updated: 2026-11-09. Task: [SG-TODO-009.5](../history/095-admin-workflow-navigation.md). Status: completed and closed at the user's explicit sign-off/request. Overall 009 remains in progress. Next scheduled work is [SG-TODO-015](../history/150-battle-actions-combatant-statistics.md), with live inspection started but no application delivery in this close-out.
 
 ## Delivered workflow
 

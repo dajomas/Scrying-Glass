@@ -1,6 +1,6 @@
 # 089 - Statblock preparation workers on Windows (Job Object limits)
 
-[Back to handover index](../../HANDOVER.md) · [Correction round 1](088-statblock-correction-round-1.md) · [TODO 220](../todo/220-admin-statblock-viewer.md)
+[Back to handover index](../../HANDOVER.md) · [Correction round 1](088-statblock-correction-round-1.md) · [TODO 220](../history/220-admin-statblock-viewer.md)
 
 Date: 2026-11-20. Baseline `c055cf1` on `features/claude-statblock`. Requested by the user
 after the open-items review: preparation needed Linux `prlimit`, so on Windows every

@@ -27,7 +27,7 @@ Covering configured CI subsequently passed. This close-out claims no new local
 execution, individual-test log/assertion review, authenticated live-server or
 manual test, and no exhaustive browser/rendering/accessibility validation. Pending
 CI/acceptance wording in the historical delivery section below is superseded by
-this record. See the [completed task](../todo/097-feedback-delivery-plan.md#4a6-reset-all-feedback---2026-11-10).
+this record. See the [completed task](../history/097-feedback-delivery-plan.md#4a6-reset-all-feedback---2026-11-10).
 
 4A.2-4A.5 stay closed; 4A.1's formal status, SG-TODO-019 and agreed delivery order
 are unchanged. Deliverable 1, Deliverable 2 and SG-TODO-009.7 remain open. 4A.7
@@ -51,7 +51,7 @@ by the bounded close-out above, not a claim of new local executions.
 
 At the user's request, prepare and deliver the bounded Reset All feedback migration
 on features/perplexity-009.7. Baseline: accepted 4A.5 close-out
-beb0f9431671d64993b489916b9e353bf55850ae. The [4A.6 task](../todo/097-feedback-delivery-plan.md#4a6-reset-all-feedback---2026-11-10)
+beb0f9431671d64993b489916b9e353bf55850ae. The [4A.6 task](../history/097-feedback-delivery-plan.md#4a6-reset-all-feedback---2026-11-10)
 remains in progress pending covering CI/full-Admin validation and bounded acceptance.
 No new implementation SHA or passing CI run is invented before delivery/evidence.
 

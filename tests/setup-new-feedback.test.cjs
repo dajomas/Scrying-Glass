@@ -1,12 +1,13 @@
 // SG-TODO-009.7 Stage 1 Step 2A: complete 060 with the production controller.
 // DOM, transport, encounter context and legacy owners are mocked; not live-server evidence.
 const test = require('node:test'), assert = require('node:assert/strict');
+const {adminRange} = require('./admin-source.cjs');
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const {createController} = require(path.join(root, 'static/admin-feedback-controller.js'));
-const source = fs.readFileSync(path.join(root, 'static/admin/060-source.js'), 'utf8');
+const source = adminRange("async function applyBackground(background) {", "document.querySelector('#addBattleActionTarget').onclick = () => {");
 const announceSource = (() => {
-    const core = fs.readFileSync(path.join(root, 'static/admin/020-source.js'), 'utf8');
+    const core = adminRange("function monsterRow(monster) {", "function sortedMonstersForAdmin() {");
     const from = core.indexOf('function campaignListNotice('), to = core.indexOf('async function setups()', from);
     if (from < 0 || to <= from) throw new Error('Cannot isolate the typed campaign-list notice helpers');
     return core.slice(from, to);

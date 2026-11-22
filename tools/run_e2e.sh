@@ -165,6 +165,23 @@ Playwright end-to-end suite run against $SHA.
 
 Co-authored-by: Perplexity <noreply@perplexity.ai>
 MSG
-git push --quiet "$REMOTE" "HEAD:refs/heads/$BRANCH"
+# Push. A commit can reach the branch while the suite runs (CI publishes its results with
+# a [skip ci] commit), so a refused push fetches, checks that the new remote commits leave
+# e2e-results/ alone, rebases the results commit onto them and tries again.
+attempt=1
+until git push --quiet "$REMOTE" "HEAD:refs/heads/$BRANCH"
+do
+    (( attempt < 3 )) || fail "push refused $attempt times; the results commit $(git rev-parse --short HEAD) is kept locally"
+    git fetch --quiet "$REMOTE" "$BRANCH"
+    incoming="$(git diff --name-only "HEAD~1...$REMOTE/$BRANCH" -- e2e-results/)"
+    [[ -z "$incoming" ]] || fail "$REMOTE/$BRANCH changed e2e-results/ meanwhile; resolve by hand (results commit kept locally)"
+    if ! git rebase --quiet "$REMOTE/$BRANCH"
+    then
+        git rebase --abort || true
+        fail "could not rebase the results commit onto $REMOTE/$BRANCH; it is kept locally"
+    fi
+    echo "Rebased the results commit onto $(git rev-parse --short "$REMOTE/$BRANCH"); pushing again."
+    attempt=$((attempt + 1))
+done
 echo "Pushed $(git rev-parse HEAD) to $REMOTE/$BRANCH."
 exit "$STATUS"

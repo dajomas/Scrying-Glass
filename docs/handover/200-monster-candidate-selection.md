@@ -7,8 +7,8 @@
 SG-TODO-001 is completed for the agreed public-provider candidate-selection scope.
 Verified green regression CI and the user's manual acceptance support close-out.
 Unimplemented account authentication and entitlement requirements are preserved
-as [SG-TODO-004](../todo/040-dndbeyond-account-access.md), blocked/deferred, not
-marked delivered. See [completed task](../todo/010-monster-lookup.md).
+as [SG-TODO-004](../history/040-dndbeyond-account-access.md), blocked/deferred, not
+marked delivered. See [completed task](../history/010-monster-lookup.md).
 
 Successful Branch tests run: 41509918102, attempt 1, against
 1474cde5c4d270c540d7009e5c08770058b40ac5. Inspected evidence is under
@@ -33,7 +33,7 @@ Fixture repair: 1474cde5c4d270c540d7009e5c08770058b40ac5.
 ## Scope and implementation
 
 This is the agreed public-provider candidate increment, not account-backed access.
-See [SG-TODO-001](../todo/010-monster-lookup.md). No credentials, account storage,
+See [SG-TODO-001](../history/010-monster-lookup.md). No credentials, account storage,
 database migration or entitlement checks are added.
 
 GET /api/monsters/lookup uses existing admin authentication and threaded remote

@@ -147,6 +147,7 @@ def candidate_summary(provider, identity, label, **extra):
     summary = {'provider': provider, 'label': label}
     if provider == FIVETOOLS:
         summary['source'] = identity['source']
+        summary['name'] = identity['name']  # exact 5e.tools name: versions group under it (SG-TODO-033)
     summary.update({key: value for key, value in extra.items() if value is not None})
     return summary
 
@@ -186,6 +187,7 @@ class Discovery:
 
     def _fivetools(self, species):
         from .scrying_glass_fivetools_fetch import allowed_dataset_path
+        from .scrying_glass_fivetools_versions import VersionError, version_names
         root = self.config.fivetools_root
         if root is None:
             return {'status': 'error', 'code': 'invalid_configuration', 'candidates': []}
@@ -213,14 +215,30 @@ class Discovery:
             for record in (data.get('monster') if type(data) is dict else None) or []:
                 if type(record) is not dict or type(record.get('name')) is not str or type(record.get('source')) is not str:
                     continue
-                if name_key(record['name']) != wanted:
+                base_match = name_key(record['name']) == wanted
+                try:
+                    names = version_names(record)  # SG-TODO-033: base name -> all, own name -> that one
+                except VersionError:
+                    names = []
+                    versions += 1 if base_match else 0
+                matching = [(n, s) for n, s in names if base_match or name_key(n) == wanted]
+                if not base_match and not matching:
                     continue
-                versions += len(record['_versions']) if type(record.get('_versions')) is list else 0
-                identity = {'root': root, 'name': record['name'], 'source': record['source']}
-                if len(out) < CANDIDATES_PER_PROVIDER and identity_key(FIVETOOLS, identity) not in {
-                        identity_key(FIVETOOLS, i) for i, _ in out}:
-                    out.append((identity, candidate_summary(FIVETOOLS, identity, record['name'],
-                                                            legacy=record['source'] == 'MM' or None)))
+                base = {'root': root, 'name': record['name'], 'source': record['source']}
+                legacy = record['source'] == 'MM' or None
+                rows = [(base, candidate_summary(FIVETOOLS, base, record['name'], legacy=legacy))] if base_match else []
+                for name, source_code in matching:
+                    of = {'name': record['name'], 'source': record['source']}
+                    identity = {'root': root, 'name': name, 'source': source_code, 'version_of': of}
+                    rows.append((identity, candidate_summary(FIVETOOLS, identity, name, legacy=legacy,
+                                                             version_of={**of, 'label': record['name']})))
+                for identity, summary in rows:
+                    if identity_key(FIVETOOLS, identity) in {identity_key(FIVETOOLS, i) for i, _ in out}:
+                        continue
+                    if len(out) >= CANDIDATES_PER_PROVIDER:
+                        versions += 1 if 'version_of' in identity else 0
+                        continue
+                    out.append((identity, summary))
         result = {'status': 'partial' if failures else 'complete', 'candidates': out}
         if failures:
             result['code'] = failures[0]

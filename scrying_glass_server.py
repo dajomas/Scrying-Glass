@@ -34,7 +34,6 @@ from datetime import datetime, timezone
 from python.scrying_glass_api_admin import AdminAPI
 from python.scrying_glass_api_client import ClientAPI
 from python.scrying_glass_asset_cache import AssetCacheBustingMiddleware
-from python.scrying_glass_admin_static import AdminScriptStaticFiles
 
 # ============================================================================
 # Constants and default configuration
@@ -234,12 +233,12 @@ if __name__ == '__main__':
     if imported["campaigns"]:
         print(f"Imported legacy storage into SQLite: {imported}")
 
-    admin.mount("/static", AdminScriptStaticFiles(directory=str(STATIC_DIR)), name="admin-static")
+    admin.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="admin-static")
     admin.mount('/media', StaticFiles(directory=str(UPLOAD_DIR)), name='admin-media')
-    client.mount("/static", AdminScriptStaticFiles(directory=str(STATIC_DIR)), name="client-static")
+    client.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="client-static")
     client.mount('/media', StaticFiles(directory=str(UPLOAD_DIR)), name='client-media')
     # Statblock listener: public static assets only (login/page styles); no media or private files.
-    statblock_app.mount("/static", AdminScriptStaticFiles(directory=str(STATIC_DIR)), name="statblock-static")
+    statblock_app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="statblock-static")
 
     # The statblock service exists from start-up, so Add Monster can collect statblocks (022.15).
     from python.scrying_glass_statblock_service import statblock_service

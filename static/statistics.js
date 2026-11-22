@@ -7,7 +7,10 @@
     const notice=text=>{$('statisticsNotice').textContent=text;};
     const reduction=(item,stat)=>(item.effects||[]).filter(e=>e.mechanical?.version===1&&e.mechanical.stat===stat)
         .reduce((sum,e)=>sum+e.mechanical.amount,0);
-    const affected=item=>stats.filter(([stat])=>reduction(item,stat)>0);
+    // SG-TODO-025: Max HP increases are restored together with Max HP reductions.
+    const increase=item=>reduction(item,'max_hp_increase');
+    const affected=item=>stats.filter(([stat])=>reduction(item,stat)>0||(stat==='max_hp'&&increase(item)>0));
+    const change=(item,stat)=>String(reduction(item,stat))+(stat==='max_hp'&&increase(item)?` (increase +${increase(item)})`:'');
     const currentItem=()=>snapshot&&[...snapshot.characters,...snapshot.monsters].find(x=>x.id===target);
     async function api(url,body) {
         const options=body===undefined?{cache:'no-store'}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)};
@@ -36,14 +39,14 @@
         $('statisticsTitle').textContent=(editingBases?'Original/base statistics: ':'Restore statistics: ')+item.name;
         $('statisticsHelp').textContent=editingBases
             ?'Enter known original/base scores. Blank ability scores mean unknown. Saving does not heal; active reductions remain in place.'
-            :'Only statistics with active reductions are shown. Restoring removes reductions; it never heals current HP or revives a combatant.';
+            :'Only statistics with active reductions or Max HP increases are shown. Restoring removes them; it never heals current HP or revives a combatant.';
         $('statisticsSaveBases').hidden=!editingBases;
         $('statisticsRestoreControls').hidden=editingBases;
         $('statisticsEditBases').hidden=editingBases;
         $('statisticsBack').hidden=!editingBases;
         $('statisticsFields').replaceChildren();
         if(!visible.length) {
-            const empty=textCell('p','No statistic reductions to restore.');empty.className='statistics-empty';
+            const empty=textCell('p','No statistic reductions or increases to restore.');empty.className='statistics-empty';
             $('statisticsFields').append(empty);
         } else {
             const table=document.createElement('table'), head=document.createElement('thead'), header=document.createElement('tr'), body=document.createElement('tbody');
@@ -60,7 +63,7 @@
                     input.setAttribute('aria-label',label+' original/base value');
                     if(stat==='max_hp')input.required=true;original.append(input);
                 } else original.textContent=base??'Unknown';
-                row.append(name,original,textCell('td',String(reduction(item,stat))),textCell('td',item[stat]??'Unknown'));body.append(row);
+                row.append(name,original,textCell('td',change(item,stat)),textCell('td',item[stat]??'Unknown'));body.append(row);
             });
             table.append(body);$('statisticsFields').append(table);
         }

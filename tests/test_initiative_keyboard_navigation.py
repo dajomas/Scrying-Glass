@@ -138,11 +138,10 @@ class InitiativeNavigationAdminTests(unittest.TestCase):
     def tearDownClass(cls):
         cls.rows.tearDownClass.__func__(cls)
 
-    def test_asset_and_size_contract(self):
+    def test_asset_contract(self):
         end=(ROOT/'templates/admin/190_document_end.html').read_text()
         self.assertEqual(end.count('/static/initiative-keyboard-navigation.js?v=1'),1)
         self.assertLess(end.index('/static/character-hp-display.js'),end.index('/static/initiative-keyboard-navigation.js'))
-        self.assertLessEqual(SCRIPT.stat().st_size,20000)
         source=SCRIPT.read_text()
         for forbidden in ('fetch(', 'localStorage', 'subtree: true'):
             self.assertNotIn(forbidden,source)

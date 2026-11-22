@@ -97,7 +97,7 @@ test('owner guard can decline state load before transport starts', async () => {
 });
 test('obsolete successful state response cannot observe scope or render', async () => {
     const {api,context} = harness(); let release, current = true, rendered = 0;
-    const requestSource = fs.readFileSync(path.join(root,'static/admin/010-source.js'),'utf8');
+    const requestSource = fs.readFileSync(path.join(root,'static/admin.js'),'utf8');
     vm.runInContext(requestSource.slice(requestSource.indexOf('async function request('),requestSource.indexOf('function esc(')),context);
     context.fetch = () => new Promise(resolve => { release = resolve; });
     const before = api.encounterContext();
@@ -112,7 +112,7 @@ test('obsolete transport rejection neither publishes global error nor rethrows',
 });
 test('current guarded state request preserves transport options and accepted rendering', async () => {
     const {api,context} = harness(); let rendered = 0, sent;
-    const requestSource=fs.readFileSync(path.join(root,'static/admin/010-source.js'),'utf8');
+    const requestSource=fs.readFileSync(path.join(root,'static/admin.js'),'utf8');
     vm.runInContext(requestSource.slice(requestSource.indexOf('async function request('),requestSource.indexOf('function esc(')),context);
     context.fetch=async(url,options)=>{sent={url,options};return {ok:true,json:async()=>({active_campaign_id:'new',active_setup:null})};};
     await api.loadState(()=>context.request('/api/state',{},()=>true),()=>rendered++,true,()=>true);

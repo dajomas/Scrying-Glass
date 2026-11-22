@@ -46,7 +46,7 @@ historical and superseded for campaign Step 1 only.
 The user's bounded sign-off closes campaign Step 1 on the stated automated/
 fixture evidence. It does not fabricate authenticated live-server, human visual/
 manual workflow, screen-reader or exhaustive accessibility checks. No additional
-campaign gate is invented after acceptance. [Task close-out](../todo/096-campaign-operation-feedback.md).
+campaign gate is invented after acceptance. [Task close-out](../history/096-campaign-operation-feedback.md).
 
 Remaining Stage 1 setup/background work, Stages 3-4, both whole feedback deliverables,
 009.7 and overall 009 remain open. Accepted Stage 2, 4A.1-4A.13 and 009.1-009.6 stay

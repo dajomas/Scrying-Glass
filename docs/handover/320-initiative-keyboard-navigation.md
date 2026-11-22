@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated: 2026-11-06. Task: [SG-TODO-013](../todo/130-initiative-keyboard-navigation.md).
+Updated: 2026-11-06. Task: [SG-TODO-013](../history/130-initiative-keyboard-navigation.md).
 Status: completed; user-directed feature acceptance retained and corrective test
 revision 3709341013dcef483a11975b5c6a5dd3f1c2603c has covering successful local/CI
 suite and audit evidence. The former validation exception is resolved. This does

@@ -37,8 +37,9 @@ async def edit_statistics(features, ident, body):
     stats_before = statistics_snapshot(target)
     target.update(candidate)
     if not target.get('alive'):
+        from .scrying_glass_feature_rules import reveal_if_down
         features.clear_concentration(ident)
-        target['visible'] = True
+        reveal_if_down(target)
     c.clean_order()
     features.log('statistics-' + operation, target, note=statistics_note(target, stats_before, prefix=note))
     await features.persist()

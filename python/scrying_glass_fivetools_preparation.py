@@ -123,10 +123,17 @@ def _credits(record, kind):
 
 
 def prepare_statblock(name, source, *, fetch, deadline, cancelled=lambda: False, limits=None,
-                      data_root='https://5e.tools/data', site='https://5e.tools', clock=time.monotonic):
-    """Return Prepared or raise PreparationError. fetch(path) -> bytes for allowlisted paths."""
+                      data_root='https://5e.tools/data', site='https://5e.tools', clock=time.monotonic,
+                      version_of=None):
+    """Return Prepared or raise PreparationError. fetch(path) -> bytes for allowlisted paths.
+
+    ``version_of`` (base name, base source) selects a version of that monster (SG-TODO-033).
+    """
     limits = PreparationLimits() if limits is None else limits
     if not isinstance(limits, PreparationLimits) or type(name) is not str or type(source) is not str or not name.strip() or not source.strip():
+        raise PreparationError('invalid_request')
+    if version_of is not None and (type(version_of) not in (tuple, list) or len(version_of) != 2
+                                   or any(type(v) is not str or not v.strip() for v in version_of)):
         raise PreparationError('invalid_request')
     def check():
         if cancelled():
@@ -139,7 +146,7 @@ def prepare_statblock(name, source, *, fetch, deadline, cancelled=lambda: False,
                           deadline=deadline, cancelled=cancelled, clock=clock)
     try:
         selected = Identity(DATASET, 'monster', source, name)
-        record, provenance = collector.resolve('monster', name, source)
+        record, provenance = collector.resolve_selected(name, source, tuple(version_of) if version_of else None)
         group, group_provenance = collector.legendary_group(record)
         collector.collect(record, [('legendaryGroup', group)] if group else [])
         snapshot = _assemble(record, group, group_provenance, provenance, collector, limits, data_root, site, check)
@@ -236,6 +243,10 @@ def _assemble(record, group, group_provenance, provenance, collector, limits, da
         for key, label, text in definition_facts(definition.kind, entity):
             fact(definition.local_id, key, label, text)
         for prop, label in ENTRY_KEYS.get(definition.kind, (('entries', None),)):
+            if definition.kind == 'item' and prop == 'entries' and entity.get('_fullEntries'):
+                prop = '_fullEntries'  # a generated variant's text, as the runtime renders it (SG-TODO-033)
+            elif definition.kind == 'item' and prop == 'additionalEntries' and entity.get('_fullAdditionalEntries'):
+                prop = '_fullAdditionalEntries'  # with the type notes the runtime adds (SG-TODO-034)
             if not entity.get(prop):
                 continue
             parent = builder.add('section', None, definition.local_id, label=label) if label else None

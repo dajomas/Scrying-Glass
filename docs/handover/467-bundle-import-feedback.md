@@ -59,7 +59,7 @@ visual, screen-reader, authenticated live-server or exhaustive accessibility pas
 
 This mixed runtime/test/docs commit uses normal CI, without [skip ci]; no workflow
 change/dispatch, merge, deployment or future blanket write approval. README and
-TODO root remain accurate and unchanged. [Task](../todo/097-feedback-delivery-plan.md#4a13-global-reconciliation---2026-11-11).
+TODO root remain accurate and unchanged. [Task](../history/097-feedback-delivery-plan.md#4a13-global-reconciliation---2026-11-11).
 The [460 census](460-global-feedback-reconciliation.md) remains a dated pre-migration
 source snapshot, not a current claim that the two alerts remain unmigrated.
 

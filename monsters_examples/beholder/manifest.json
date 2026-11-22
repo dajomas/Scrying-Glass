@@ -1,0 +1,78 @@
+{
+  "created_utc": "2026-11-17T12:56:31.052147+00:00",
+  "species": "Beholder",
+  "probe": "sizetest/monster_source_probe.py",
+  "requests": [
+    {
+      "url": "https://api.open5e.com/v2/creatures/?name__iexact=Beholder&limit=100&format=json",
+      "label": "open5e-list-0",
+      "started_utc": "2026-11-17T12:56:23.714020+00:00",
+      "status": 200,
+      "final_url": "https://api.open5e.com/v2/creatures/?name__iexact=Beholder&limit=100&format=json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 52,
+      "sha256": "0595424161ea863805d9b92c0e52d7aa1e3c46ec58cd8f0d6933759006a5fb74",
+      "truncated": false,
+      "file": "raw/001-open5e-list-0.json",
+      "elapsed_seconds": 0.528
+    },
+    {
+      "url": "https://www.dndbeyond.com/monsters?filter-search=Beholder",
+      "label": "dndbeyond-search",
+      "started_utc": "2026-11-17T12:56:25.242270+00:00",
+      "status": 200,
+      "final_url": "https://www.dndbeyond.com/monsters?filter-search=Beholder",
+      "content_type": "text/html; charset=utf-8",
+      "content_encoding": null,
+      "bytes": 381881,
+      "sha256": "9207639911880833e7938001c6621fb2774502b79166aa84fbe76379f8ddf0cc",
+      "truncated": false,
+      "file": "raw/002-dndbeyond-search.html",
+      "elapsed_seconds": 0.544
+    },
+    {
+      "url": "https://www.dndbeyond.com/monsters/5194923-beholder",
+      "label": "dndbeyond-detail-0",
+      "started_utc": "2026-11-17T12:56:26.786934+00:00",
+      "status": 200,
+      "final_url": "https://marketplace.dndbeyond.com/category/3711000",
+      "content_type": "text/html; charset=utf-8",
+      "content_encoding": null,
+      "bytes": 1019778,
+      "sha256": "062136701a8ee5e9235c501e872da11e27126a0fb8e61a370f5a4205392ea321",
+      "truncated": false,
+      "file": "raw/003-dndbeyond-detail-0.html",
+      "elapsed_seconds": 1.001
+    },
+    {
+      "url": "https://www.dndbeyond.com/monsters/17099-beholder",
+      "label": "dndbeyond-detail-1",
+      "started_utc": "2026-11-17T12:56:28.788630+00:00",
+      "status": 200,
+      "final_url": "https://marketplace.dndbeyond.com/category/monster-manual",
+      "content_type": "text/html; charset=utf-8",
+      "content_encoding": null,
+      "bytes": 1074497,
+      "sha256": "61632dc0305ca2bc40ef04ae12b075bd79f60656e8a989eb80a40cc456cd072e",
+      "truncated": false,
+      "file": "raw/004-dndbeyond-detail-1.html",
+      "elapsed_seconds": 2.249
+    }
+  ],
+  "records": [],
+  "issues": [
+    {
+      "provider": "open5e",
+      "error": "No exact-name records discovered"
+    },
+    {
+      "provider": "dndbeyond",
+      "error": "/monsters/5194923-beholder: no statblock root (access gate, changed markup or absent content); raw page saved"
+    },
+    {
+      "provider": "dndbeyond",
+      "error": "/monsters/17099-beholder: no statblock root (access gate, changed markup or absent content); raw page saved"
+    }
+  ]
+}

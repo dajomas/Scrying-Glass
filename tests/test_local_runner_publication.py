@@ -35,7 +35,7 @@ class LocalRunnerPublicationTests(unittest.TestCase):
         self.git('config', 'user.email', 'runner-fixture@example.invalid')
         (self.repo / 'tools').mkdir()
         shutil.copyfile(ROOT / 'tools/runlocaltests.sh', self.repo / 'tools/runlocaltests.sh')
-        (self.repo / 'tools/run_split_tests.py').write_text('', encoding='utf-8')
+        (self.repo / 'scrying_glass_server.py').write_text('', encoding='utf-8')
         (self.repo / 'tests').mkdir()
         (self.repo / 'tests/fixture.txt').write_text('fixture', encoding='utf-8')
         self.git('add', '.')

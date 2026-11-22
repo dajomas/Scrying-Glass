@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated: 2026-11-06. Task: [SG-TODO-009.2](../todo/090-admin-usability-redesign.md). Status: closed (completed) at the user's request after verified corrective local/CI validation and user visual/workflow acceptance. 009.1 remains closed; 009.3-009.7 remain proposed and are not implemented.
+Updated: 2026-11-06. Task: [SG-TODO-009.2](../history/090-admin-usability-redesign.md). Status: closed (completed) at the user's request after verified corrective local/CI validation and user visual/workflow acceptance. 009.1 remains closed; 009.3-009.7 remain proposed and are not implemented.
 
 ## User workflow
 

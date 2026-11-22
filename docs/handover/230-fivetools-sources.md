@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated 2026-11-03. Task: [SG-TODO-006](../todo/060-fivetools-source-configuration.md), completed at the user's request.
+Updated 2026-11-03. Task: [SG-TODO-006](../history/060-fivetools-source-configuration.md), completed at the user's request.
 Close-out preparation base: 21f5de181659458c763672b2b871a21fd2baebb9.
 
 ## Close-out and verified combined CI

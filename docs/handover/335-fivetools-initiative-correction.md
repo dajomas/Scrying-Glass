@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-2026-11-08. [SG-TODO-018 A.1](../todo/185-monster-correction-plan.md).
+2026-11-08. [SG-TODO-018 A.1](../history/185-monster-correction-plan.md).
 Branch features/perplexity-018; baseline 3486eaee2303d1caa3f031bf0867e4fb3710b3b3.
 A.1 accepted; A.2 commit 1 CI succeeded; commit 2 fixture readiness included with new CI pending. Active lookup unchanged; no overall close-out or merge/write-back.
 

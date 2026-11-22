@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated: 2026-11-09. Task: [SG-TODO-015](../todo/150-battle-actions-combatant-statistics.md). Status: completed and closed after covering CI, explicit user sign-off and the user's request to commit the TODO close-out.
+Updated: 2026-11-09. Task: [SG-TODO-015](../history/150-battle-actions-combatant-statistics.md). Status: completed and closed after covering CI, explicit user sign-off and the user's request to commit the TODO close-out.
 
 ## User workflow
 

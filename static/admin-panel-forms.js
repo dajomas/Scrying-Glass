@@ -34,6 +34,15 @@
         details.append(text('summary', title), body);
         body.append(...nodes);
     }
+    // SG-TODO-030: the HP help is a closed disclosure at the end of Combat statistics.
+    function hpHelp(fieldset, help) {
+        if (!fieldset || !help) return;
+        const details = document.createElement('details');
+        details.id = 'monsterHpRangeHelpDisclosure';
+        details.className = 'sg-form-disclosure sg-field-help-disclosure';
+        details.append(text('summary', 'How to enter HP'), help);
+        fieldset.append(details);
+    }
     function install() {
         if (document.body.dataset.panelForms === 'ready') return;
         const specs = [
@@ -76,9 +85,10 @@
             }
         }
         group(byId('characterForm'), 'Character details', ['characterName', 'characterColor']);
-        group(byId('characterForm'), 'Starting statistics', ['characterHp', 'characterInitiative']);
+        group(byId('characterForm'), 'Starting statistics', ['characterTrackHp', 'characterHp', 'characterInitiative']);
         group(byId('monsterForm'), 'Monster identity', ['monsterName', 'monsterSpecies']);
         group(byId('monsterForm'), 'Combat statistics', ['monsterAc', 'monsterHpRangeStart', 'monsterHpRangeEnd', 'monsterInitiativeBonus', 'monsterQuantity']);
+        hpHelp(byId('monsterHpRangeStart')?.closest('fieldset.sg-field-group'), byId('monsterHpRangeHelp'));
         group(byId('monsterForm'), 'Appearance', ['monsterColor', 'monsterImage']);
         group(byId('monsterUpload'), 'Import options', ['monsterFile', 'monsterFileQuantity', 'monsterFileColor', 'monsterFileImage']);
         const monsterName = byId('monsterName');

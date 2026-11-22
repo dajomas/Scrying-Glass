@@ -33,7 +33,7 @@ handler execution, full suite, covering CI and acceptance remain pending. Existi
 CI discovers the .cjs and test_*.py files; this mixed commit uses normal CI, without
 a skip marker, workflow edit or separate dispatch. No commit/run outcome is invented.
 
-[Task status and remaining gates](../todo/099-monster-raw-roll-feedback.md). Stage 2,
+[Task status and remaining gates](../history/099-monster-raw-roll-feedback.md). Stage 2,
 Stage 1, both feedback deliverables and 009.7 remain open. Monster Edit, roll-all,
 select-dead, bulk Join pane success and compatibility retirement are not included.
 No phase close-out, merge or deployment.
@@ -149,4 +149,4 @@ workflow-run outcome.
 
 Select-dead, bulk Join pane success, final Stage 2 reconciliation/acceptance and
 all work outside this bounded handler remain separate. No phase close-out or merge.
-[Task status](../todo/099-monster-raw-roll-feedback.md#roll-all---2026-11-12).
+[Task status](../history/099-monster-raw-roll-feedback.md#roll-all---2026-11-12).

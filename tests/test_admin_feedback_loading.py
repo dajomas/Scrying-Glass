@@ -3,6 +3,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 import unittest
 from playwright.sync_api import sync_playwright
+from admin_source import admin_range
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -45,7 +46,7 @@ class FeedbackLoadingTests(unittest.TestCase):
             if path == '/':
                 r.fulfill(content_type='text/html', body=html)
             elif path == '/static/admin.js':
-                r.fulfill(content_type='text/javascript', body=(ROOT/'static/admin/010-source.js').read_text())
+                r.fulfill(content_type='text/javascript', body=admin_range('function monsterSourceLabel(candidate, popup = false) {', 'function monsterRow(monster) {'))
             elif path.startswith('/static/'):
                 file = ROOT/path.lstrip('/')
                 r.fulfill(content_type='text/css' if file.suffix == '.css' else 'text/javascript', body=file.read_text())

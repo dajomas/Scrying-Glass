@@ -77,6 +77,8 @@ Clients with no grants see an access message; one campaign opens automatically; 
 
 Characters belong to the campaign, not setup snapshots. Add/edit name, color, HP, maximum HP and initiative. CSV imports append to the roster. Removing a character changes the roster across that campaign's setups. In the roster, HP is read-only; use Edit to change Current HP and Max HP. Initiative remains editable inline.
 
+Track HP (on by default) can be switched off per character in Add character and in Edit, or for several characters with the Bulk actions Track HP and Do not track HP. Use it for players who keep their own HP. For an untracked character the Admin shows "Not tracked" instead of HP and asks for none; damage and healing are still recorded in the activity log, but current, maximum and temporary HP never change. Set its life state and death saves yourself in Encounter tools or with the Alive button; nothing changes automatically from HP. A Max HP reduction and temporary HP are refused for it. The stored HP is kept, so switching Track HP back on continues from it.
+
 | Setup action | Result |
 |---|---|
 | New | Clears monsters/order/log; retains campaign characters |
@@ -97,6 +99,8 @@ Has lair, below setup name and above imports, exposes the lair pane/toggle subje
 ## Monster creation and imports
 
 Manual entry supports name, species, AC, color, quantity 1–50 and optional image. HP Range Start accepts fixed 24, range start 18 with end 30, or dice 3d8+9 with empty end. Each copy rolls independently. Uploaded images take precedence over optional best-effort D&D Beyond lookup. Enter stats manually when lookup fails.
+
+The color starts at the first of 12 palette colors that no monster in the battle setup uses yet (the least used one when all 12 are taken); characters do not count. With a quantity above 1, each copy gets the next free color; a color you pick yourself is used for every copy and stays until the form is reset. CSV rows without a color get the next free color the same way. The HP entry help is folded under "How to enter HP" at the end of Combat statistics.
 
 .monster imports are compatible UTF-8 JSON statblocks with usable name/type/AC/HP, not arbitrary archives.
 
@@ -146,6 +150,22 @@ not saved in time.
 dropdown: each row keeps its current statblock unless you pick a source result or a
 `.monster` file; Apply statblocks saves the ready rows.
 
+**5e.tools versions.** Some 5e.tools creatures have versions, such as *Battle Familiar
+(Flyer)* or *Animal Lord; Forager*. Searching for the creature's name lists its versions
+under it: in Edit Monster in a closed "versions of …" block below the creature, in Load
+statblocks in a "Versions of …" option group. Searching for a version's own name finds that
+version, labelled "version of …". A monster added from a 5e.tools link to a version uses
+that version as its original source.
+
+Magic items that 5e.tools generates, such as *+1 Longsword* or *Plate Barding*, now appear
+in a statblock's item references with their rarity and text, like any other item.
+
+Item references also show the text 5e.tools adds from the item's type and properties: for
+example the Versatile or Heavy property text, a weapon's mastery (such as *Mastery: Sap*),
+heavy armor's Stealth and Strength lines, a spellcasting focus's note and a tool's note. If
+that text cannot be built, the item shows its own text only and the statblock is marked
+partial.
+
 **Automatic loading.** While a statblock viewer is open, monsters in battle that were
 added from a source and have no statblock yet get one from that source.
 
@@ -181,13 +201,13 @@ typed there while the preceding save completes is retained without replaying an
 already emitted save. Escape, moving focus elsewhere or changing campaign/setup
 cancels restoration. Initiative values and combat ordering are unchanged.
 
-Select all selects the list; Unselect all clears. Select dead replaces selection: characters match explicit death/three failures, monsters also match alive=False. Selection does not mutate. Reset restores baselines/runtime flags; Remove permanently deletes.
+Select all selects the list and Clear selection, right next to it, clears it; Unselect all in the Bulk list clears too. Select dead replaces selection: characters match explicit death/three failures, monsters also match alive=False. Selection does not mutate. Reset restores baselines/runtime flags; Remove permanently deletes.
 
 Start battle resolves ties. Characters default ahead of monsters within ties; changing a position swaps within that group. Roll shared initiative (d20) gives selected monsters one roll, not a shared turn or running-order reorder.
 
 Next advances eligible participants. Down/stable characters retain turns for manual death saves; dead characters and non-standing monsters do not receive future turns. A dead current participant may retain unresolved ownership until Next.
 
-Round starts at 1, increments on wrap and clears on End, Reset All or no eligible participants. Eligible runtime turn/round survive restart; loading saved setups does not revive old turns. End does not fully reset combatants.
+Round starts at 1, increments on wrap and clears on End, Reset All or no eligible participants. Eligible runtime turn/round survive restart; loading saved setups does not revive old turns. End does not fully reset combatants. End battle hides every monster, character and lair on the Client Display. Dead or downed creatures stay hidden too, until you show them yourself or the next battle starts; after that, a creature that drops is shown again as before.
 
 Viewer A−/A+ changes strip text 2 px at a time, default 16, bounds 12–40. Runtime persists it; setup Save captures display settings.
 
@@ -231,6 +251,8 @@ Start-of-turn damage/heal targets the current creature, damage first, ignores em
 States: standing, down, stable, dead. Explicit recovery raises HP to at least 1 and clears counters. Healing can recover down/stable but not explicit death.
 
 Temporary HP is a separate nonnegative pool: Set replaces, not stacks. Damage consumes it first unless bypass selected. Healing caps at max HP and does not replenish temporary HP. Absolute HP corrections bypass attack logic.
+
+To grant temporary HP during a battle, choose Temporary HP (keep higher) or Temporary HP (replace) as the Action of a target row in Battle actions. As in the 5e rules temporary HP never stack: keep higher takes the new amount only when it is higher than what the target has; replace always takes it, also when it is lower. Granting is not healing, so a creature at 0 HP keeps its life state and death saves. Temporary HP last until damage uses them up, you change them in Encounter tools or you use Reset; End battle leaves them. Reactions, dead creatures and characters whose HP is not tracked cannot get them. The activity log shows, for example, `Goblin: Temporary HP 6 → 6 (kept higher); source: Cleric`.
 
 For character damage events:
 - Clamp HP at zero; do not accumulate negative HP.
@@ -406,6 +428,20 @@ Special consequences of zero abilities, saves, mitigation and monster-specific
 rules stay GM-resolved. Derived AC, initiative and attack modifiers are not
 recalculated automatically.
 
+### Max HP increase
+
+Next to Add statistics reduction, Add Max HP increase raises a target's maximum HP,
+for example for *Aid*. Current HP rises by the same amount. A downed character whose
+HP rises above 0 is standing again; dead creatures and characters whose HP is not
+tracked cannot be chosen. Increases and reductions add up; the increase lasts until
+you remove it with Restore statistics, which lowers the maximum again and only caps
+current HP.
+
+Current HP also follows a higher maximum in the Edit dialog when you change only Max
+HP (if you type a new current HP as well, your values are used), and when Refresh
+from source raises a monster's maximum without its HP: damage already taken stays
+taken. Ending a Max HP reduction does not give back HP, as in the 5e rules.
+
 ### Restore statistics: affected values only
 
 Restore statistics is next to Reset in each character row and also available for
@@ -415,7 +451,8 @@ monsters. It now opens a table with separate columns:
 |---|---|---|---|
 | Max HP | 1 | 9 | 0 |
 
-Only statistics with active mechanical reductions appear. A zero effective value
+Only statistics with active mechanical reductions appear, and Max HP while it has an
+increase (shown next to the reduction, for example "0 (increase +5)"). A zero effective value
 still appears while its reduction exists. Unknown/unaffected abilities do not
 appear, and the table's original values are read-only. Reduction is the full
 stacked amount, not a value clipped to the base. The restore selector contains
@@ -423,11 +460,12 @@ only affected statistics; All affected statistics is offered when more than one
 statistic is reduced.
 
 Choose the statistic(s), click Restore selected statistics and confirm. Restoration
-removes their reductions and restores effective values to the originals. It never
+removes their reductions (and, for Max HP, its increases) and restores effective values
+to the originals. It never
 heals current HP or resurrects and does not reset initiative, temporary HP, battle
 membership or unrelated conditions. Cancelling makes no change. Restored rows
 and options disappear after refresh. With nothing left, the dialog says No statistic
-reductions to restore and disables the restore selector and button.
+reductions or increases to restore and disables the restore selector and button.
 
 ### Separate original/base editor
 

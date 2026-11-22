@@ -1,7 +1,8 @@
 const test = require('node:test'), assert = require('node:assert/strict');
+const {adminRange} = require('./admin-source.cjs');
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(root, 'static/admin/040-source.js'), 'utf8');
+const source = adminRange("let csvImportSession = null;", "// Stage 1 Step 1D: owned validation/request/success and guarded appli");
 const {createController} = require(path.join(root, 'static/admin-feedback-controller.js'));
 function deferred() {
     let resolve, reject;

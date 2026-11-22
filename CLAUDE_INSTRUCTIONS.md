@@ -16,12 +16,19 @@ here, dated.
   decide which TODO items are open and ready.
 - Follow `PERPLEXITY_INSTRUCTIONS.md`, except where this file says otherwise.
 
+## Branch - 2026-11-21
+
+Until the user says otherwise, Claude works on and pushes to the branch
+`features/claude` (created by the user from the merged `features/claude-statblock`
+work). The rest of the 2026-11-20 delivery instructions below is unchanged.
+
 ## Delivery - 2026-11-20
 
 This replaces the 2026-11-17 delivery instructions below:
 
 - Claude delivers by pushing to GitHub.
-- For now, Claude pushes to the branch `features/claude-statblock`.
+- For now, Claude pushes to the branch `features/claude-statblock` (superseded
+  by the branch instruction of 2026-11-21: `features/claude`).
 - When Claude pushes to GitHub, no zip archive and no `Patch/` folder are
   provided.
 - The approval workflow in section 8 of `PERPLEXITY_INSTRUCTIONS.md` stays in

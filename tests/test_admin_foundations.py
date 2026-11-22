@@ -26,7 +26,6 @@ class FoundationSourceTests(unittest.TestCase):
     def test_scoped_rules_and_compatibility_boundaries(self):
         import re
         css = (ROOT / 'static/admin-foundations.css').read_text(encoding='utf-8')
-        self.assertLessEqual(len(css.encode('utf-8')), 20000)
         plain = re.sub(r'/\*.*?\*/', '', css, flags=re.S)
         for rule in plain.split('}'):
             if not rule.strip():

@@ -1,6 +1,6 @@
 # 085 - SG-TODO-022 Stage C2: protected statblock listener and read transport (022.09)
 
-[Back to handover index](../../HANDOVER.md) · [Stage C1](084-statblock-stage-c1-import-apis.md) · [TODO 220](../todo/220-admin-statblock-viewer.md)
+[Back to handover index](../../HANDOVER.md) · [Stage C1](084-statblock-stage-c1-import-apis.md) · [TODO 220](../history/220-admin-statblock-viewer.md)
 
 Date: 2026-11-17. Baseline: `ace9a5176e7bce2f9e90a9523e513c503d4c0930` (Stage C1) on
 `features/claude-statblock`. Delivered as a zip archive; commit SHA not yet known.

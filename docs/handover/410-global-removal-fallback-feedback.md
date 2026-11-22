@@ -7,7 +7,7 @@
 Delivered as 7996f81994c989c66e7e34d28791930ea41b65eb on
 features/perplexity-009.7, prepared against baseline
 b36ed511e33980448ed0162802d1baee48371007 at the user's finish/push request.
-[4A.8](../todo/097-feedback-delivery-plan.md#4a8-global-removal-fallback-feedback---2026-11-10)
+[4A.8](../history/097-feedback-delivery-plan.md#4a8-global-removal-fallback-feedback---2026-11-10)
 is now completed/closed for its bounded scope; see the acceptance below.
 Preparation-time pending notes are historical, superseded by the covering CI
 and explicit user-requested close-out, not evidence of new manual validation.

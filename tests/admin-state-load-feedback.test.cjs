@@ -1,13 +1,14 @@
 // Production request/load slices with real feedback control; not a full Admin browser.
 const test = require('node:test');
+const {adminRange} = require('./admin-source.cjs');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const ROOT = path.resolve(__dirname, '..');
 const read = p => fs.readFileSync(path.join(ROOT, p), 'utf8');
-const requestSource = read('static/admin/010-source.js').split('async function request(')[1].split('\nfunction esc(')[0];
-const core = read('static/admin/030-source.js').split('\nconst hideablePanes =')[0];
+const requestSource = adminRange("function monsterSourceLabel(candidate, popup = false) {", "function monsterRow(monster) {").split('async function request(')[1].split('\nfunction esc(')[0];
+const core = adminRange("function sortedMonstersForAdmin() {", "let csvImportSession = null;").split('\nconst hideablePanes =')[0];
 const {createController} = require(path.join(ROOT, 'static/admin-feedback-controller.js'));
 function state(campaign = 'a', battle = false) {
     return {active_campaign_id: campaign, active_setup: {campaign_id: campaign, name: 'setup'},
