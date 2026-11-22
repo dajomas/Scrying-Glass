@@ -1,0 +1,30 @@
+checkout@v4	2026-11-22T11:46:04.5884340Z Deleting the contents of '/home/runner/work/Scrying-Glass/Scrying-Glass'
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.5887795Z ##[group]Initializing the repository
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.5892677Z [command]/usr/bin/git init /home/runner/work/Scrying-Glass/Scrying-Glass
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6026870Z hint: Using 'master' as the name for the initial branch. This default branch name
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6027531Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6028234Z hint: to use in all of your new repositories, which will suppress this warning,
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6028693Z hint: call:
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6028945Z hint:
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6029303Z hint: 	git config --global init.defaultBranch <name>
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6029712Z hint:
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6030240Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6030771Z hint: 'development'. The just-created branch can be renamed via this command:
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6031164Z hint:
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6031444Z hint: 	git branch -m <name>
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6031764Z hint:
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6032285Z hint: Disable this message with "git config set advice.defaultBranchName false"
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6050022Z Initialized empty Git repository in /home/runner/work/Scrying-Glass/Scrying-Glass/.git/
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6057244Z [command]/usr/bin/git remote add origin https://github.com/dajomas/Scrying-Glass
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6117804Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6118357Z ##[group]Disabling automatic garbage collection
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6120250Z [command]/usr/bin/git config --local gc.auto 0
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6142306Z ##[endgroup]
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6142780Z ##[group]Setting up auth
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6146399Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.6169314Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.8819500Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.8844761Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.9037531Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.9064523Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+connection-audit	Run actions/checkout@v4	2026-11-22T11:46:04.9241114Z [command]/usr/bin/git config --local http.

@@ -1,0 +1,27 @@
+9:33.9202571Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9203209Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9203798Z     raise result
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9204041Z OSError: secret
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9204432Z Combined monster lookup: D&D Beyond did not respond (secret)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9204856Z 5e.tools candidate lookup failed
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9205199Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9205861Z   File "/tmp/scrying-tests-j_bhoqa6/repo/python/scrying_glass_monster_selection.py", line 202, in fivetools_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9206565Z     for monster in _fivetools_source_data(root, index, source):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9207069Z                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9207831Z   File "/tmp/scrying-tests-j_bhoqa6/repo/python/scrying_glass_monster_selection.py", line 154, in _fivetools_source_data
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9208670Z     raise ValueError("Configured source is missing from the provider index")
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9209519Z ValueError: Configured source is missing from the provider index
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9210203Z Combined monster lookup failed for 5e.tools
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9210603Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9211303Z   File "/tmp/scrying-tests-j_bhoqa6/repo/python/scrying_glass_monster_selection.py", line 202, in fivetools_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9211992Z     for monster in _fivetools_source_data(root, index, source):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9212444Z                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9213163Z   File "/tmp/scrying-tests-j_bhoqa6/repo/python/scrying_glass_monster_selection.py", line 154, in _fivetools_source_data
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9214071Z     raise ValueError("Configured source is missing from the provider index")
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9214673Z ValueError: Configured source is missing from the provider index
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9214981Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9215280Z The above exception was the direct cause of the following exception:
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9215598Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9215768Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9216437Z   File "/tmp/scrying-tests-j_bhoqa6/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+connection-audit	Connection audit of iso

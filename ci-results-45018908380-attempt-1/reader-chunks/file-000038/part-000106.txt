@@ -1,0 +1,22 @@
+, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7270402Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7270779Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7271151Z     return self._execute_mock_call(*args, **kwargs)
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7271443Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7271847Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7272198Z     raise effect
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7272432Z RuntimeError: collection failed
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7272746Z ok
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7273351Z test_selection_and_manual_never_relookup (test_monster_candidate_selection.CreationTests.test_selection_and_manual_never_relookup) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7597271Z test_csv_rows_without_a_color_get_distinct_defaults (test_monster_default_color.CsvDefaultColorTests.test_csv_rows_without_a_color_get_distinct_defaults) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7599469Z test_browser_copy_uses_the_same_palette (test_monster_default_color.PaletteRuleTests.test_browser_copy_uses_the_same_palette) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7600902Z test_copies_each_get_the_next_color_only_with_the_computed_default (test_monster_default_color.PaletteRuleTests.test_copies_each_get_the_next_color_only_with_the_computed_default) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7602285Z test_empty_setup_starts_with_the_first_color (test_monster_default_color.PaletteRuleTests.test_empty_setup_starts_with_the_first_color) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7603545Z test_first_unused_color_and_case_insensitive_matching (test_monster_default_color.PaletteRuleTests.test_first_unused_color_and_case_insensitive_matching) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7604810Z test_least_used_when_the_palette_is_full (test_monster_default_color.PaletteRuleTests.test_least_used_when_the_palette_is_full) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7606385Z test_palette_is_twelve_distinct_colors_readable_with_white_text (test_monster_default_color.PaletteRuleTests.test_palette_is_twelve_distinct_colors_readable_with_white_text) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7607798Z test_rows_without_a_color_each_get_the_next_default (test_monster_default_color.PaletteRuleTests.test_rows_without_a_color_each_get_the_next_default) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7617053Z test_add_monster_copies_get_distinct_colors_with_the_default (test_monster_default_color.QuantityColorTests.test_add_monster_copies_get_distinct_colors_with_the_default) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7631109Z test_add_monster_hand_picked_color_stays_on_every_copy (test_monster_default_color.QuantityColorTests.test_add_monster_hand_picked_color_stays_on_every_copy) ... ok
+tests	Python test suite (including browser fixtures)	2026-11-22T11:49:00.7658708Z test_import_monster_copies_get_distinct_colors_with_the_default (test_monster_default_color.QuantityColorTests.test_import_monster_copies_get_distinct_colors_with_the_default) ... ok
+tests

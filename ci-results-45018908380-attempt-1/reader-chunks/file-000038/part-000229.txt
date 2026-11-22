@@ -1,0 +1,49 @@
+ 1
+tests	JavaScript tests	2026-11-22T11:51:01.3896155Z # suites 0
+tests	JavaScript tests	2026-11-22T11:51:01.3896313Z # pass 1
+tests	JavaScript tests	2026-11-22T11:51:01.3896460Z # fail 0
+tests	JavaScript tests	2026-11-22T11:51:01.3896607Z # cancelled 0
+tests	JavaScript tests	2026-11-22T11:51:01.3896770Z # skipped 0
+tests	JavaScript tests	2026-11-22T11:51:01.3896918Z # todo 0
+tests	JavaScript tests	2026-11-22T11:51:01.3897074Z # duration_ms 31.11744
+tests	JavaScript tests	2026-11-22T11:51:01.4097468Z ##[endgroup]
+tests	JavaScript tests	2026-11-22T11:51:01.4097827Z ##[group]tests/campaign-switch-refresh-feedback.test.cjs
+tests	JavaScript tests	2026-11-22T11:51:01.5497477Z TAP version 13
+tests	JavaScript tests	2026-11-22T11:51:01.5875983Z # Subtest: success precedes refresh and expires after exactly three seconds
+tests	JavaScript tests	2026-11-22T11:51:01.5896808Z ok 1 - success precedes refresh and expires after exactly three seconds
+tests	JavaScript tests	2026-11-22T11:51:01.5908822Z   ---
+tests	JavaScript tests	2026-11-22T11:51:01.5909128Z   duration_ms: 3.372836
+tests	JavaScript tests	2026-11-22T11:51:01.5909394Z   type: 'test'
+tests	JavaScript tests	2026-11-22T11:51:01.5909599Z   ...
+tests	JavaScript tests	2026-11-22T11:51:01.5910098Z # Subtest: refresh failure stays actionable after success expires and does not replay activation
+tests	JavaScript tests	2026-11-22T11:51:01.5910867Z ok 2 - refresh failure stays actionable after success expires and does not replay activation
+tests	JavaScript tests	2026-11-22T11:51:01.5911311Z   ---
+tests	JavaScript tests	2026-11-22T11:51:01.5911524Z   duration_ms: 1.069355
+tests	JavaScript tests	2026-11-22T11:51:01.5911769Z   type: 'test'
+tests	JavaScript tests	2026-11-22T11:51:01.5912332Z   ...
+tests	JavaScript tests	2026-11-22T11:51:01.5912814Z # Subtest: new selection, leave-return and registry suppress late refresh errors and UI work
+tests	JavaScript tests	2026-11-22T11:51:01.5913519Z ok 3 - new selection, leave-return and registry suppress late refresh errors and UI work
+tests	JavaScript tests	2026-11-22T11:51:01.5913945Z   ---
+tests	JavaScript tests	2026-11-22T11:51:01.5914166Z   duration_ms: 2.455384
+tests	JavaScript tests	2026-11-22T11:51:01.5914402Z   type: 'test'
+tests	JavaScript tests	2026-11-22T11:51:01.5914602Z   ...
+tests	JavaScript tests	2026-11-22T11:51:01.5914982Z # Subtest: empty setup branch does not render after a superseding selection
+tests	JavaScript tests	2026-11-22T11:51:01.5915525Z ok 4 - empty setup branch does not render after a superseding selection
+tests	JavaScript tests	2026-11-22T11:51:01.5916094Z   ---
+tests	JavaScript tests	2026-11-22T11:51:01.5916270Z   duration_ms: 1.351564
+tests	JavaScript tests	2026-11-22T11:51:01.5916470Z   type: 'test'
+tests	JavaScript tests	2026-11-22T11:51:01.5916657Z   ...
+tests	JavaScript tests	2026-11-22T11:51:01.5916978Z # Subtest: newer refresh ticket survives an older completion
+tests	JavaScript tests	2026-11-22T11:51:01.5917396Z ok 5 - newer refresh ticket survives an older completion
+tests	JavaScript tests	2026-11-22T11:51:01.5917705Z   ---
+tests	JavaScript tests	2026-11-22T11:51:01.5917912Z   duration_ms: 0.676925
+tests	JavaScript tests	2026-11-22T11:51:01.5918150Z   type: 'test'
+tests	JavaScript tests	2026-11-22T11:51:01.5918364Z   ...
+tests	JavaScript tests	2026-11-22T11:51:01.5918810Z # Subtest: successful refresh resolves only its matching campaign refresh failure
+tests	JavaScript tests	2026-11-22T11:51:01.5919476Z ok 6 - successful refresh resolves only its matching campaign refresh failure
+tests	JavaScript tests	2026-11-22T11:51:01.5919875Z   ---
+tests	JavaScript tests	2026-11-22T11:51:01.5920105Z   duration_ms: 1.25317
+tests	JavaScript tests	2026-11-22T11:51:01.5920335Z   type: 'test'
+tests	JavaScript tests	2026-11-22T11:51:01.5920540Z   ...
+tests	JavaScript tests	2026-11-22T11:51:01.5920886Z # Subtest: stale success timer cannot remove newer matching error
+tests	JavaScript tests	2026-11-22T11:51:01.5921400Z ok 7 - stale

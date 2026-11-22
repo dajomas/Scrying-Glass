@@ -1,0 +1,26 @@
+lated unittest modules	2026-11-22T11:49:33.9217024Z     found = fetch()
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9217592Z   File "/tmp/scrying-tests-j_bhoqa6/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9218219Z     lambda: fivetools_candidates(species, display),
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9218628Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9219308Z   File "/tmp/scrying-tests-j_bhoqa6/repo/python/scrying_glass_monster_selection.py", line 222, in fivetools_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9220329Z     raise ProviderError("5e.tools lookup failed; enter stats manually or retry.") from exc
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9221133Z python.scrying_glass_monster_selection.ProviderError: 5e.tools lookup failed; enter stats manually or retry.
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9221805Z Combined monster lookup failed for 5e.tools
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9222179Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9222832Z   File "/tmp/scrying-tests-j_bhoqa6/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9223397Z     found = fetch()
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9223954Z   File "/tmp/scrying-tests-j_bhoqa6/repo/python/scrying_glass_monster_selection.py", line 267, in <lambda>
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9224560Z     lambda: fivetools_candidates(species, display),
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9224938Z             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9225555Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9226118Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9226446Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9227020Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9227599Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9227981Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9228625Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9229184Z     raise effect
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9229616Z python.scrying_glass_monster_selection.ProviderError: secret
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9232631Z Statblock collection for added monsters was not started
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:33.9233093Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:49:

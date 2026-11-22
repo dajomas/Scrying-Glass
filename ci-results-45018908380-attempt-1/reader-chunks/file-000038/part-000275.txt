@@ -1,0 +1,35 @@
+st Run actions/checkout@v4	2026-11-22T11:51:20.3264370Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+tests	Post Run actions/checkout@v4	2026-11-22T11:51:20.3288818Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+tests	Post Run actions/checkout@v4	2026-11-22T11:51:20.3468739Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+tests	Post Run actions/checkout@v4	2026-11-22T11:51:20.3483534Z http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-22T11:51:20.3490984Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+tests	Post Run actions/checkout@v4	2026-11-22T11:51:20.3512729Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+tests	Post Run actions/checkout@v4	2026-11-22T11:51:20.3698748Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+tests	Post Run actions/checkout@v4	2026-11-22T11:51:20.3719940Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+tests	Complete job	﻿2026-11-22T11:51:20.3985206Z Cleaning up orphan processes
+tests	Complete job	2026-11-22T11:51:20.4235986Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+connection-audit	Set up job	﻿2026-11-22T11:45:58.4938234Z Current runner version: '2.338.2'
+connection-audit	Set up job	2026-11-22T11:45:58.4965734Z ##[group]Runner Image Provisioner
+connection-audit	Set up job	2026-11-22T11:45:58.4966926Z Hosted Compute Agent
+connection-audit	Set up job	2026-11-22T11:45:58.4967613Z Version: 20261111.635
+connection-audit	Set up job	2026-11-22T11:45:58.4968273Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+connection-audit	Set up job	2026-11-22T11:45:58.4969150Z Build Date: 2026-11-11T01:49:01Z
+connection-audit	Set up job	2026-11-22T11:45:58.4969846Z Worker ID: {0d2514fb-9d88-4484-ba7c-01d0451209d4}
+connection-audit	Set up job	2026-11-22T11:45:58.4970894Z Region: us-east-1
+connection-audit	Set up job	2026-11-22T11:45:58.4971502Z Cloud: AWS
+connection-audit	Set up job	2026-11-22T11:45:58.4972053Z ##[endgroup]
+connection-audit	Set up job	2026-11-22T11:45:58.4973655Z ##[group]Operating System
+connection-audit	Set up job	2026-11-22T11:45:58.4974324Z Ubuntu
+connection-audit	Set up job	2026-11-22T11:45:58.4974863Z 26.04.1
+connection-audit	Set up job	2026-11-22T11:45:58.4975398Z LTS
+connection-audit	Set up job	2026-11-22T11:45:58.4975974Z ##[endgroup]
+connection-audit	Set up job	2026-11-22T11:45:58.4976533Z ##[group]Runner Image
+connection-audit	Set up job	2026-11-22T11:45:58.4977196Z Image: ubuntu-26.04
+connection-audit	Set up job	2026-11-22T11:45:58.4977778Z Version: 20261116.88.1
+connection-audit	Set up job	2026-11-22T11:45:58.4978940Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261116.88/images/ubuntu/Ubuntu2604-Readme.md
+connection-audit	Set up job	2026-11-22T11:45:58.4981001Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261116.88
+connection-audit	Set up job	2026-11-22T11:45:58.4981927Z ##[endgroup]
+connection-audit	Set up job	2026-11-22T11:45:58.4983061Z ##[group]GITHUB_TOKEN Permissions
+connection-audit	Set up job	2026-11-22T11:45:58.4985501Z Contents: read
+connection-audit	Set up job	2026-11-22T11:45:58.4986164Z Metadata: read
+connection-audit	Set up job	2026-11-22T

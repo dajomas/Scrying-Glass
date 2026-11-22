@@ -1,0 +1,29 @@
+11-22T11:46:10.9078782Z ##[group]Environment details
+connection-audit	Run actions/setup-node@v4	2026-11-22T11:46:15.2920157Z node: v22.23.5
+connection-audit	Run actions/setup-node@v4	2026-11-22T11:46:15.2920724Z npm: 10.9.9
+connection-audit	Run actions/setup-node@v4	2026-11-22T11:46:15.2921363Z yarn: 1.22.22
+connection-audit	Run actions/setup-node@v4	2026-11-22T11:46:15.2922040Z ##[endgroup]
+connection-audit	Install Python test dependencies	﻿2026-11-22T11:46:15.3016916Z ##[group]Run python -m pip install --upgrade pip
+connection-audit	Install Python test dependencies	2026-11-22T11:46:15.3017363Z ^[[36;1mpython -m pip install --upgrade pip^[[0m
+connection-audit	Install Python test dependencies	2026-11-22T11:46:15.3017897Z ^[[36;1mpython -m pip install -r requirements-test.txt^[[0m
+connection-audit	Install Python test dependencies	2026-11-22T11:46:15.3047336Z shell: /usr/bin/bash -e {0}
+connection-audit	Install Python test dependencies	2026-11-22T11:46:15.3047664Z env:
+connection-audit	Install Python test dependencies	2026-11-22T11:46:15.3048122Z   PYTHONPATH: /home/runner/work/Scrying-Glass/Scrying-Glass:/home/runner/work/Scrying-Glass/Scrying-Glass/tests
+connection-audit	Install Python test dependencies	2026-11-22T11:46:15.3048661Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+connection-audit	Install Python test dependencies	2026-11-22T11:46:15.3049034Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+connection-audit	Install Python test dependencies	2026-11-22T11:46:15.3049437Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+connection-audit	Install Python test dependencies	2026-11-22T11:46:15.3049804Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+connection-audit	Install Python test dependencies	2026-11-22T11:46:15.3050360Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+connection-audit	Install Python test dependencies	2026-11-22T11:46:15.3050718Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+connection-audit	Install Python test dependencies	2026-11-22T11:46:15.3051010Z ##[endgroup]
+connection-audit	Install Python test dependencies	2026-11-22T11:46:16.9302986Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/site-packages (26.3)
+connection-audit	Install Python test dependencies	2026-11-22T11:46:18.1440562Z Collecting fastapi>=0.115 (from -r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 3))
+connection-audit	Install Python test dependencies	2026-11-22T11:46:18.1451216Z   Using cached fastapi-0.165.0-py3-none-any.whl.metadata (27 kB)
+connection-audit	Install Python test dependencies	2026-11-22T11:46:18.1644168Z Collecting uvicorn>=0.30 (from uvicorn[standard]>=0.30->-r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 4))
+connection-audit	Install Python test dependencies	2026-11-22T11:46:18.1653094Z   Using cached uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+connection-audit	Install Python test dependencies	2026-11-22T11:46:18.1877849Z Collecting PyYAML>=6.0 (from -r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 5))
+connection-audit	Install Python test dependencies	2026-11-22T11:46:18.1885219Z   Using cached pyyaml-6.0.4-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.3 kB)
+connection-audit	Install Python test dependencies	2026-11-22T11:46:18.1960305Z Collecting python-multipart (from -r /home/runner/work/Scrying-Glass/Scrying-Glass/requirements.txt (line 6))
+connection-audit	Install Python test dependencies	2026-11-22T11:46:18.1966756Z   Using cached python_multipart-0.0.34-py3-none-any.whl.metadata (6.3 kB)
+connection-audit	Install Python test dependencies	2026-11-22T11:46:18.2036176Z Collecting httpx2>=2.0.0 (from -r requirements-test.txt (line 4))
+connection-audit	Install Python test dependencies	2026-11-22T11:46:18.2044277Z   Using cached httpx2-2.16.2-py3-none-any.whl.metad

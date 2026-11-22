@@ -1,0 +1,29 @@
+anch_allowlists.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.1033432Z Connection audit: test_client_campaign.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.1947146Z ----------------------------------------------------------------------
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.1948437Z test_client_campaign.py: connections opened: 0; without explicit close: 0
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.1949304Z Ran 6 tests in 0.029s
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.1949606Z 
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.1949807Z OK
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2079832Z Connection audit: test_combined_monster_lookup.py
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2731250Z Combined monster lookup failed for D&D Beyond
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2735344Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2736097Z   File "/tmp/scrying-tests-j_bhoqa6/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2736745Z     found = fetch()
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2737226Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2737963Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2738329Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2738824Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2739389Z     return self._execute_mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2739724Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2740431Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2740898Z     raise effect
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2741153Z RuntimeError: secret one
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2741474Z Combined monster lookup failed for 5e.tools
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2741870Z Traceback (most recent call last):
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2742374Z   File "/tmp/scrying-tests-j_bhoqa6/repo/python/scrying_glass_combined_lookup.py", line 46, in ordered_candidates
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2742836Z     found = fetch()
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2743323Z   File "/opt/hostedtoolcache/Python/3.14.10/x64/lib/python3.14/unittest/mock.py", line 1176, in __call__
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2743759Z     return self._mock_call(*args, **kwargs)
+connection-audit	Connection audit of isolated unittest modules	2026-11-22T11:48:34.2744091Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+co
