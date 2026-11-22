@@ -145,19 +145,9 @@ class StatblockStage2ContractTests(unittest.TestCase):
         self.assertEqual(private_map(self.c.STATE), copied)
         self.assertEqual(self.stored()['m'], before)
 
-    def test_save_as_uses_unsaved_live_content_without_replacing_source(self):
-        before = self.seed(); campaign = self.c.active_campaign()
-        self.item()['hp'] = 3
-        private_map(self.c.STATE)['m'].pop('content_digest', None)
-        private_map(self.c.STATE)['m']['source_label'] = 'Unsaved live content'
-        self.save_as('live-save-as')
-        copied = self.stored(campaign, 'live-save-as')
-        self.assertEqual(copied['m']['source_label'], 'Unsaved live content')
-        self.assertEqual(copied['m']['revision'], 1)
-        self.assertEqual(self.stored()['m'], before)
-        self.assertEqual(self.c.STORAGE.load_setup(campaign, 'default')['monsters'][0]['hp'], 12)
-        self.assertEqual(self.c.STORAGE.load_setup(campaign, 'live-save-as')['monsters'][0]['hp'], 3)
-        self.assertEqual(private_map(self.c.STATE), copied)
+    # Save As with unsaved live content (and the source setup's tracker rows staying as they
+    # were) is covered by test_statblock_setup_saving.test_new_save_as_uses_live_content_...
+    # (SG-TODO-023 consolidation, handover 740).
 
     def test_raw_tracker_save_does_not_gain_private_write_authority(self):
         before = self.seed(); campaign = self.c.active_campaign()

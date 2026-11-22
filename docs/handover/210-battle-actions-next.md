@@ -17,17 +17,17 @@ live/player-display checks were not separately reported in this request and must
 not be described as executed/passed. The prior acceptance checklist's manual
 requirement is superseded for this user-requested CI-based close-out, not relabelled
 as evidence. Fixture boundaries and same-browser concurrency limitations below
-remain explicit. See [completed SG-TODO-003](../todo/030-battle-actions-next.md).
+remain explicit. See [completed SG-TODO-003](../history/030-battle-actions-next.md).
 
-The same user request places [SG-TODO-004](../todo/040-dndbeyond-account-access.md)
+The same user request places [SG-TODO-004](../history/040-dndbeyond-account-access.md)
 on hold until further notice. Requirements and the underlying integration blocker
 remain; do not resume that work without the user lifting the hold.
 
 Three requested tasks are now indexed, not implemented:
 
-- [SG-TODO-005](../todo/050-admin-initial-visibility.md): initial campaign/setup section visibility.
-- [SG-TODO-006](../todo/060-fivetools-source-configuration.md): six configurable default sources and descriptive book/year names; preserve and resolve the literal XPBH versus X-prefix XPHB discrepancy before coding.
-- [SG-TODO-007](../todo/070-monster-button-layout.md): single-line monster controls, retaining operations/accessibility and documenting responsive behavior.
+- [SG-TODO-005](../history/050-admin-initial-visibility.md): initial campaign/setup section visibility.
+- [SG-TODO-006](../history/060-fivetools-source-configuration.md): six configurable default sources and descriptive book/year names; preserve and resolve the literal XPBH versus X-prefix XPHB discrepancy before coding.
+- [SG-TODO-007](../history/070-monster-button-layout.md): single-line monster controls, retaining operations/accessibility and documenting responsive behavior.
 
 This commit is documentation only: no runtime, config, test or workflow change.
 No skip request was given for this update, so the proposed commit permits normal

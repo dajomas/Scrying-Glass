@@ -103,7 +103,7 @@ Preparation executed those seven exact helper/guard definitions in isolation wit
 
 ## Verified local/CI success and SG-TODO-010 close-out - 2026-11-06
 
-The user requested completion after review of both successful evidence sets. [SG-TODO-010](../todo/100-httpx2-test-migration.md) is completed for the delivered HTTPX2 test migration and setup scope. Migration commit: 11835d414d701f0fc6a3a701def29594cab287a3. Exact validated corrective source: df16cc0ee798a07b5c219c3db06de54c913cb84f.
+The user requested completion after review of both successful evidence sets. [SG-TODO-010](../history/100-httpx2-test-migration.md) is completed for the delivered HTTPX2 test migration and setup scope. Migration commit: 11835d414d701f0fc6a3a701def29594cab287a3. Exact validated corrective source: df16cc0ee798a07b5c219c3db06de54c913cb84f.
 
 Local evidence commit f584f4394cf155e37d7f8214f7da0afc78d89542 contains local-tests-df16cc0/run-20261106T105201Z-HwuKfD. Every command in summary.tsv returns zero and exit-code.txt is 0. The connection audit reports 1,029 tests, OK, 673 opened connections and zero without explicit close. The reviewed local summary covers syntax/import, unittest, pytest, 37 JavaScript scripts and six standalone checks. Expected mocked provider exception tracebacks appear in the successful audit output; they are not failed tests.
 
@@ -137,7 +137,7 @@ This policy update changes only the root instructions and existing CI/maintenanc
 
 ## 022.03 HTTP/WebSocket privacy preparation - 2026-11-15
 
-[Lifecycle task](../todo/223-statblock-lifecycle.md). Service-loading baseline:
+[Lifecycle task](../history/223-statblock-lifecycle.md). Service-loading baseline:
 737bd81b2400cef6d172429a88feaeffd24f22e4. Seven new tests in
 test_statblock_transport_privacy.py drive FastAPI ASGI request/WS handling with
 real auth sessions/ACLs/SQLite and production state, socket and broadcast code.

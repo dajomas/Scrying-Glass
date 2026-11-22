@@ -30,6 +30,10 @@ PRESERVE_BASE = frozenset(('page otherSources referenceSources srd srd52 basicRu
     'tokenCustom foundryTokenScale altArt _versions').split())
 PRESERVE_MONSTER = frozenset(('legendaryGroup environment soundClip altArt variant '
     'dragonCastingColor familiar').split())
+# DataUtil.<prop>._MERGE_REQUIRES_PRESERVE per kind (js/utils.js); items and magic
+# variants keep loot tables and tiers only when preserved (SG-TODO-033).
+PRESERVE_KINDS = {'monster': PRESERVE_MONSTER, 'item': frozenset(('lootTables', 'tier')),
+                  'magicvariant': frozenset(('lootTables', 'tier'))}
 
 @dataclass(frozen=True)
 class Identity:
@@ -258,7 +262,14 @@ class Resolver:
             if type(meta) is not dict:
                 fail('malformed_identity', '$/_copy')
             try:
-                return Identity(owner.dataset, kind, meta['source'], meta['name'], meta.get('discriminator'), meta.get('edition'))
+                source = meta['source']
+            except KeyError:
+                # SourceUtil.getEntitySource: items and magic variants may carry it in inherits.
+                if kind not in ('item', 'magicvariant') or type(meta.get('inherits')) is not dict:
+                    fail('malformed_identity', '$/_copy')
+                source = meta['inherits'].get('source')
+            try:
+                return Identity(owner.dataset, kind, source, meta['name'], meta.get('discriminator'), meta.get('edition'))
             except (ValueError, KeyError, TypeError):
                 fail('malformed_identity', '$/_copy')
         def instructions(mods, origin=None):
@@ -341,7 +352,7 @@ class Resolver:
                             values.append(entry)
                     original_keys = frozenset(obj)
                     mods = instructions(meta.get('_mod', {}))
-                    gated = PRESERVE_BASE | (PRESERVE_MONSTER if ident.kind == 'monster' else frozenset())
+                    gated = PRESERVE_BASE | PRESERVE_KINDS.get(ident.kind, frozenset())
                     for k, v in base.record().items():
                         check()
                         if k in obj and obj[k] is None:

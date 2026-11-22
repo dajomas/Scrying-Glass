@@ -1,10 +1,11 @@
 // Production helper/open functions with real feedback/bootstrap; mocked UI and transport.
 'use strict';
 const test = require('node:test'), assert = require('node:assert/strict');
+const {adminRange} = require('./admin-source.cjs');
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
 const {installFeedback} = require('./battle-action-feedback-fixture.cjs');
 const root = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(root, 'static/admin/060-source.js'), 'utf8');
+const source = adminRange("async function applyBackground(background) {", "document.querySelector('#addBattleActionTarget').onclick = () => {");
 const helperStart = source.indexOf('function battleActionFeedback(');
 const helperEnd = source.indexOf('function closeBattleActions()', helperStart);
 const openStart = source.indexOf('function openBattleActions(');

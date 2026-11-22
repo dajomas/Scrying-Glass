@@ -97,7 +97,7 @@ class AdminCharactersMixin:
 
     async def create_character(self, character: CharacterCreate):
         """Create character."""
-        c = {'id': self.context.uuid.uuid4().hex, **character.model_dump(), 'max_hp': character.hp, 'original_hp': character.hp, 'original_initiative': character.initiative, 'active': False, 'alive': character.hp > 0, 'visible': False, 'in_turn': False}
+        c = {'id': self.context.uuid.uuid4().hex, **character.model_dump(), 'max_hp': character.hp, 'original_hp': character.hp, 'original_initiative': character.initiative, 'active': False, 'alive': character.hp > 0 or not character.track_hp, 'visible': False, 'in_turn': False}
         self.context.STATE["characters"].append(c)
         self.context.save_active_campaign_characters()
         await self.context.combatants_changed(monsters=False, characters=True)
@@ -145,9 +145,10 @@ class AdminCharactersMixin:
             if key != "in_turn":
                 candidate[key] = value
 
-        from .scrying_glass_statistics import legacy_max_edit
+        from .scrying_glass_statistics import legacy_max_edit, follow_max_increase
         try: legacy_max_edit(candidate, values)
         except ValueError as exc: raise self.context.HTTPException(422, str(exc)) from exc
+        follow_max_increase(character, candidate, "hp" in values and values["hp"] != character.get("hp"))  # SG-TODO-026
         hp_result = None
         if hp_delta is not None:
             from .scrying_glass_feature_rules import apply_hp
@@ -166,12 +167,15 @@ class AdminCharactersMixin:
                 # Explicit recovery must not retain terminal death-save history.
                 candidate["death_successes"] = 0
                 candidate["death_failures"] = 0
-            candidate['life_state'] = ('standing' if candidate['hp']>0 else 'down') if values['alive'] else 'dead'
-        if hp_changed or 'alive' in values or 'max_hp' in values:
+            standing = candidate['hp'] > 0 or candidate.get('track_hp') is False
+            candidate['life_state'] = ('standing' if standing else 'down') if values['alive'] else 'dead'
+        if hp_changed or 'alive' in values or 'max_hp' in values or 'track_hp' in values:
             sync_health(candidate)
 
-        if not candidate.get("alive"):
-            candidate["visible"] = True
+        from python.scrying_glass_feature_rules import release_battle_end_hiding, reveal_if_down
+        if "visible" in values:
+            release_battle_end_hiding(candidate)
+        reveal_if_down(candidate)
         if not candidate.get("active"):
             candidate["in_turn"] = False
 
@@ -188,6 +192,8 @@ class AdminCharactersMixin:
             self.context.log_hp_change(candidate, hp_delta, hp_result, snapshot(character))
 
         character.update(candidate)
+        if "hidden_at_battle_end" not in candidate:
+            character.pop("hidden_at_battle_end", None)  # update() keeps keys the candidate dropped
         self.context.set_turn(character, requested_turn)
 
         if can_take_turn(character):
@@ -204,7 +210,7 @@ class AdminCharactersMixin:
 
     async def bulk_characters(self, body: BulkCombatantAction) -> dict[str, int]:
         """Apply one validated bulk action to selected campaign characters."""
-        allowed = {"join-battle", "leave-battle", "reset", "remove"}
+        allowed = {"join-battle", "leave-battle", "reset", "remove", "track-hp", "untrack-hp"}
 
         if body.action not in allowed:
             raise self.context.HTTPException(400, "Unsupported bulk character action")
@@ -231,6 +237,13 @@ class AdminCharactersMixin:
             for character in targets:
                 self.context.reset_entity(character)
 
+            self.context.clean_order()
+
+        elif body.action in ("track-hp", "untrack-hp"):  # SG-TODO-024
+            from python.scrying_glass_feature_rules import sync_health
+            for character in targets:
+                character["track_hp"] = body.action == "track-hp"
+                sync_health(character)
             self.context.clean_order()
 
         else:  # remove

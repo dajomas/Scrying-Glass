@@ -1,6 +1,6 @@
 # 086 - SG-TODO-022 Stage D: statblock viewer, keyboard and live synchronization (022.10-022.12)
 
-[Back to handover index](../../HANDOVER.md) · [Stage C2](085-statblock-stage-c2-listener.md) · [TODO 220](../todo/220-admin-statblock-viewer.md)
+[Back to handover index](../../HANDOVER.md) · [Stage C2](085-statblock-stage-c2-listener.md) · [TODO 220](../history/220-admin-statblock-viewer.md)
 
 Date: 2026-11-17. Baseline: `f81a6ffad87142fc97bc7d0b688f34a406581782` (Stage C2) on
 `features/claude-statblock`. Delivered as a zip archive; commit SHA not yet known.

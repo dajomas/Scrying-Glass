@@ -7,7 +7,7 @@ with SQLite persistence and WebSocket updates.
 
 [Deployment](DEPLOYMENT.md) · [User Guide](docs/User-Guide.md) ·
 [Technical Documentation](docs/Technical-Documentation.md) ·
-[Systemd Deployment](docs/Systemd-Deployment.md) · [TODO](TODO.md) · [Handover](HANDOVER.md)
+[Systemd Deployment](docs/Systemd-Deployment.md) · [TODO](TODO.md) · [History](HISTORY.md) · [Handover](HANDOVER.md)
 
 ## Source layout and deployment
 
@@ -16,16 +16,11 @@ complete `static/` tree together. Preserve package `__init__.py` files. Admin HT
 is assembled from ordered `templates/admin/` fragments, not Jinja templates.
 Restart after imported HTML/Python changes and reload browsers for changed assets.
 
-Admin source lives in eight ordered UTF-8 files under `static/admin/`, each at
-most 20,000 bytes. The static adapter assembles them without separators and serves
-one classic deferred script at `/static/admin.js` on both interfaces. The tracked
-`static/admin.js` is a failure marker, not application source: do not overwrite it,
-deploy it alone or load fragments independently. The accepted pre-009.7 core was
-114,814 bytes, SHA-256
-`40fca092f989bcd85eaf7f06dc02b962b662a28827864df68c998919cdf87b46`.
-That is a historical baseline, not the final 009.7 source identity.
-The service account needs a writable temporary directory for the generated bundle.
-See [Admin split details](docs/handover/050-admin-script-split.md).
+The Admin script is `static/admin.js`, one classic deferred script served as a plain
+static file on both interfaces. From 2026-11-03 to 2026-11-22 it was kept as eight
+fragments under `static/admin/` and assembled by the server, because of a 20,000-byte file
+limit; that splitting was removed in SG-TODO-035
+([task 350](docs/history/350-remove-file-size-splitting.md)).
 
 ### Accepted 009.7 and overall 009 - 2026-11-12
 
@@ -49,9 +44,9 @@ not certification that every possible accessibility or deployment scenario was t
 Deploy admin-feedback-controller.js?v=2, admin-feedback-view.js?v=2,
 admin-feedback.css?v=2, admin-feedback-admin.js?v=6, initiative-join-gate.js?v=2,
 features.js?v=6, monster-initiative-edit.js?v=3, monster-initiative-roll.js?v=3 and
-setup-switch.js?v=4 with all eight fragments and templates. Retain non-superseded
+setup-switch.js?v=4 with admin.js and the templates. Retain non-superseded
 Stage 4 assets including admin-dialog-accessibility.js?v=1 (plus admin-view-restore.js?v=1); deploy the complete tree.
-The final core bundle is 131,939 bytes and the Admin script inventory is 44.
+At 009.7 close-out the core Admin script was 131,939 bytes and the Admin script inventory 44.
 Existing endpoints, payloads, permissions, combat/initiative/server gates, drafts
 and selections remain. [Deliverable 2 scope and limits](docs/handover/560-connection-field-feedback.md)
 include unchanged Client Display reconnect behavior and no guessed server-detail
@@ -74,35 +69,35 @@ following final user acceptance 2026-11-13 at 09:04 CET; implementation
 evidence 5b1a0a6270adea9e67ca9ffd1def534b875f1317. [580 evidence limits](docs/handover/580-activity-log-result-details.md#sg-todo-019-accepted-close-out---2026-11-13)
 remain. No new authenticated live-server, human visual or screen-reader review is
 claimed by these close-outs. Closure does not authorize merge, deployment or a
-release operation. The [009.7 plan](docs/todo/097-feedback-delivery-plan.md) and
-[parent checklist](docs/todo/090-admin-usability-redesign.md) retain their accepted
+release operation. The [009.7 plan](docs/history/097-feedback-delivery-plan.md) and
+[parent checklist](docs/history/090-admin-usability-redesign.md) retain their accepted
 scope/history; earlier README detail is preserved in the
 [pre-016-close-out README](https://github.com/dajomas/Scrying-Glass/blob/49822ee7cacfd3bc4e2bd520b98917aef036db2c/README.md).
 
 The Playwright end-to-end suite in `e2e/` (login and access, campaigns and setups, rosters and
-initiative, combat, Client Display, feedback and connection handling, screen widths, dialog focus, axe accessibility scans and keeping the Admin view after a reload) runs against a real local server in Chromium and Firefox and is not part of CI ([SG-TODO-021](docs/todo/210-playwright-end-to-end-suite.md)).
+initiative, combat, Client Display, feedback and connection handling, screen widths, dialog focus, axe accessibility scans and keeping the Admin view after a reload) runs against a real local server in Chromium and Firefox and is not part of CI ([SG-TODO-021](docs/history/210-playwright-end-to-end-suite.md)).
 `tools/run_e2e.sh` runs it and commits only the latest `e2e-results/<timestamp>/` folder with
-`[skip ci]` to `features/perplexity-021`. On dnf-based systems (Rocky, AlmaLinux, RHEL, Fedora) it first checks the
+`[skip ci]` to `features/perplexity-021` (or `E2E_BRANCH`). If a commit reached that branch during the run, such as a
+CI results commit, it rebases the results commit onto it and pushes again (up to three tries; it stops if the new
+commits touch `e2e-results/`, keeping the results commit locally). On dnf-based systems (Rocky, AlmaLinux, RHEL, Fedora) it first checks the
 required rpm packages and prints the `dnf install` command if any are missing. It checks
 that both browsers start, then prints
 `Now running test ###/###: <description> [browser] ... SUCCESS|FAILED|XFAIL (known finding)` per test; `tools/run_e2e.sh --no-push` only runs it.
 The axe scans require zero violations; the earlier Stage 4 findings are fixed ([640](docs/handover/640-e2e-findings-fixes.md)).
 
-Legacy source-reading tests use a disposable assembled checkout:
+Run the tests from the repository root with the root and `tests/` on `PYTHONPATH`:
 
 ```bash
-python tools/run_split_tests.py -- python -m unittest discover -s tests -p 'test_*.py' -v
-python tools/run_split_tests.py -- node --test tests/battle-action-apply.test.cjs
-python tools/run_split_tests.py -- python -m unittest tests/test_browser_smoke.py
+export PYTHONPATH="$PWD:$PWD/tests"
+python -m unittest discover -s tests -p 'test_*.py' -v
+node --test tests/battle-action-apply.test.cjs
+python -m unittest tests/test_browser_smoke.py
 ```
 
-The real checkout and marker remain untouched. Normal CI uses this runner for
-Python, pytest, Node and standalone browser/audit fixtures. Fixture results and
-workflow metadata are not authenticated/live-server verification.
+CI runs the Python, pytest, Node and standalone browser/audit fixtures the same way.
+Fixture results and workflow metadata are not authenticated/live-server verification.
 
-Technical Documentation is now an index with three topic files under
-`docs/technical/`; retain that directory with the documentation. Existing technical
-section anchors remain as links to the moved sections. The historical package
+[Technical Documentation](docs/Technical-Documentation.md) is one file. The historical package
 manifest is retired from active verification. `deployment/check.py` performs
 runtime preflight only, with or without `--runtime`; it does not verify hashes,
 package completeness or provenance and does not require a manifest. A legacy

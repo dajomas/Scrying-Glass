@@ -38,7 +38,7 @@ INDEXED = {'monster': ('bestiary/index.json', 'bestiary', 'monster'), 'spell': (
 INHERITING = frozenset(('monster', 'monsterTemplate', 'legendaryGroup', 'item'))
 SCAN_KEYS = {
     'spell': ('entries', 'entriesHigherLevel', 'components', 'time'),
-    'item': ('entries', 'additionalEntries'),
+    'item': ('entries', 'additionalEntries', '_fullEntries', '_fullAdditionalEntries'),
     'legendaryGroup': ('lairActions', 'regionalEffects', 'mythicEncounter'),
 }
 MONSTER_SKIP = frozenset(('name', 'source', 'page', '_copy_templates', '_versions', 'legendaryGroup',
@@ -47,7 +47,7 @@ SELECTED_SKIP = MONSTER_SKIP | frozenset(('ac', 'hp', 'initiative'))
 PARTIAL_CODES = frozenset(('reference_unavailable', 'reference_ambiguous', 'reference_depth_limit',
                            'supporting_definitions_limit', 'supporting_reference_bytes_limit',
                            'reference_resolution_failed', 'legendary_group_unavailable',
-                           'dataset_file_limit'))
+                           'dataset_file_limit', 'item_text_unavailable'))
 
 
 @dataclass(frozen=True)
@@ -79,6 +79,8 @@ class FiveToolsData:
         self._fetch, self._check = fetch, check
         self._response_bytes, self._max_files = response_bytes, dataset_files
         self._files, self._indexed, self._records = {}, set(), {}
+        self._base_items, self._generated = None, False
+        self._item_reference = None
         self.fetched_bytes = 0
 
     def _file(self, path):
@@ -104,9 +106,13 @@ class FiveToolsData:
         if marker in self._indexed:
             return
         data = self._file(path)
+        if prop == 'baseitem':
+            self._base_items = list(data.get(prop) or [])  # in file order, for generated variants
         for record in data.get(prop) or []:
             self._check()
             if type(record) is dict and type(record.get('name')) is str and type(record.get('source')) is str:
+                if prop == 'itemGroup':
+                    record = dict(record, _isItemGroup=True)  # as the runtime marks groups (SG-TODO-034)
                 encoded = json.dumps(record, ensure_ascii=False, separators=(',', ':')).encode()
                 self._records.setdefault(key_of(kind, record['name'], record['source']), []).append(encoded)
         self._indexed.add(marker)
@@ -129,7 +135,42 @@ class FiveToolsData:
         """ExactLoader: every record matching the runtime's entity hash."""
         for path, prop in self._paths(identity.kind, identity.source):
             self._index(path, prop, identity.kind)
-        return tuple(self._records.get(key_of(identity.kind, identity.name, identity.source), ()))
+        key = key_of(identity.kind, identity.name, identity.source)
+        if identity.kind == 'item' and key not in self._records and not self._generated:
+            self._generate_items()
+        return tuple(self._records.get(key, ()))
+
+    def _generate_items(self):
+        """SG-TODO-033: index the runtime's generic and specific magic-item variants."""
+        from .scrying_glass_fivetools_items import ItemVariantError, _entity_source, generate_variants
+        self._generated = True
+        variants = self._file('magicvariants.json')
+        try:
+            generics, specifics = generate_variants({'baseitem': self._base_items or []}, variants)
+        except (ItemVariantError, ValueError):
+            return  # references stay unavailable, as before
+        for record in generics + specifics:
+            self._check()
+            name, source = record.get('name'), _entity_source(record)
+            if type(name) is str and type(source) is str:
+                encoded = json.dumps(record, ensure_ascii=False, separators=(',', ':')).encode()
+                self._records.setdefault(key_of('item', name, source), []).append(encoded)
+        variants.pop('magicvariant', None)
+
+    def item_reference(self):
+        """SG-TODO-034: item types, properties and masteries from items-base.json, built once."""
+        from .scrying_glass_fivetools_items import ItemReference
+        if self._item_reference is None:
+            self._item_reference = ItemReference(self._file('items-base.json'))
+        return self._item_reference
+
+    def records(self, kind, source):
+        """Every indexed record of ``kind`` from the file(s) holding ``source`` (encoded JSON)."""
+        paths = self._paths(kind, source)
+        for path, prop in paths:
+            self._index(path, prop, kind)
+        files = {key for key in self._records if key[0] == kind} if paths else set()
+        return [raw for key in sorted(files) for raw in self._records[key]]
 
 
 @dataclass
@@ -171,11 +212,61 @@ class Collector:
             result = self.resolver.resolve(identity, deadline=self.deadline, cancelled=self.cancelled)
             record = result.record()
             record.pop('_isCopy', None)
+            if kind == 'item':
+                self._enhance_item(record)
             return record, result.provenance
         matches = self.data.load(identity)
         if len(matches) != 1:
             raise LookupError('reference_unavailable' if not matches else 'reference_ambiguous')
         return json.loads(matches[0]), ()
+
+    def _enhance_item(self, record):
+        """SG-TODO-034: add the type, property and mastery text the site shows with an item."""
+        from .scrying_glass_fivetools_items import ItemVariantError, enhance_item
+        reference = getattr(self.data, 'item_reference', None)
+        if reference is None:
+            return
+        before = dict(record)
+        try:
+            enhance_item(record, reference())
+        except (ItemVariantError, ValueError) as exc:
+            record.clear()
+            record.update(before)  # all or nothing: the item as stored, without the added text
+            self.warn('item_text_unavailable',
+                      f"The type and property text of {record.get('name')} ({record.get('source')}) is unavailable "
+                      f"({exc.args[0] if exc.args else 'error'}).")
+
+    def resolve_selected(self, name, source, version_of=None):
+        """The selected creature: a monster, or a version of one (SG-TODO-033).
+
+        Without ``version_of`` an exact monster wins; otherwise the version's base is
+        searched among the monsters stored with the version's source.
+        """
+        from .scrying_glass_fivetools_versions import resolve_version
+        if version_of is None:
+            if self.data.load(Identity(DATASET, 'monster', source, name)):
+                return self.resolve('monster', name, source)
+            version_of = self._version_base(name, source)
+        parent, _ = self.resolve('monster', *version_of)
+        record, provenance = resolve_version(self.data, parent, name, source, limits=self.resolver.limits,
+                                             deadline=self.deadline, cancelled=self.cancelled, clock=self.clock,
+                                             dataset=DATASET)
+        record.pop('_isCopy', None)
+        return record, provenance
+
+    def _version_base(self, name, source):
+        from .scrying_glass_fivetools_versions import version_names
+        wanted = (name.lower(), source.lower())
+        for raw in self.data.records('monster', source):
+            self._check()
+            record = json.loads(raw)
+            if not (record.get('_versions') or record.get('variant') or record.get('_copy')):
+                continue
+            if '_copy' in record:
+                record, _ = self.resolve('monster', record['name'], record['source'])
+            if any((n.lower(), s.lower()) == wanted for n, s in version_names(record)):
+                return record['name'], record['source']
+        raise LookupError('selected_unavailable')
 
     def legendary_group(self, record):
         meta = record.get('legendaryGroup')

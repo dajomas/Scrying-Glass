@@ -5,7 +5,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
-const source = fs.readFileSync(path.join(__dirname, '../static/admin/010-source.js'), 'utf8');
+const source = fs.readFileSync(path.join(__dirname, '../static/admin.js'), 'utf8');
 const label = source.slice(0, source.indexOf('\nlet latest;'));
 const context = vm.createContext({});
 vm.runInContext(label, context);

@@ -2,6 +2,11 @@
 from .scrying_glass_turn_rules import permanently_dead,can_take_turn,is_character
 from .scrying_glass_health_limits import MAX_STORED_HP, HpStorageRangeError
 STATES={'standing','down','stable','dead'}
+TRACK_HP='track_hp'
+
+def tracks_hp(item):
+    """SG-TODO-024: monsters always; characters unless their HP tracking is switched off."""
+    return not is_character(item) or item.get(TRACK_HP, True) is not False
 
 def validate_effects(effects):
     if not isinstance(effects,list) or len(effects)>100: raise ValueError('At most 100 effects are allowed')
@@ -46,16 +51,25 @@ def normalize_features(item):
     # Historical negatives are normalized, not reinterpreted as damage events.
     item['hp']=max(0,item.get('hp',0));item['max_hp']=max(0,item.get('max_hp',0))
     if 'original_hp' in item: item['original_hp']=max(0,item['original_hp'])
+    if TRACK_HP in item and type(item[TRACK_HP]) is not bool: raise ValueError('track_hp must be boolean')
+    tracked=tracks_hp(item)
     item.setdefault('effects', []); validate_effects(item['effects'])
     from .scrying_glass_statistics import normalize_statistics
     normalize_statistics(item)
-    if 'life_state' not in item: item['life_state']='standing' if item['hp']>0 and item.get('alive',True) else ('dead' if item['hp']>0 else 'down')
+    if 'life_state' not in item:
+        if tracked: item['life_state']='standing' if item['hp']>0 and item.get('alive',True) else ('dead' if item['hp']>0 else 'down')
+        else: item['life_state']='standing' if item.get('alive',True) else 'down'
     state=item['life_state']
     if not isinstance(state,str) or state not in STATES: raise ValueError('Invalid life state')
     for k,limit in (('temp_hp',99999),('death_successes',3),('death_failures',3)):
         item.setdefault(k,0)
         if type(item[k]) is not int or not 0<=item[k]<=limit: raise ValueError('Invalid '+k)
-    if permanently_dead(item): item['life_state']='dead';item['hp']=0
+    if permanently_dead(item):
+        item['life_state']='dead'
+        if tracked: item['hp']=0
+    elif not tracked:
+        # The DM sets life state and death saves by hand; stored HP stays as it was.
+        if state=='standing': item['death_successes']=item['death_failures']=0
     elif item['hp']>0:
         item['life_state']='standing';item['death_successes']=item['death_failures']=0
     elif state=='standing': item['life_state']='down'
@@ -68,9 +82,31 @@ def normalize_features(item):
     if not item.get('active'): item['in_turn']=False
     return item
 
+HIDDEN_AT_BATTLE_END = 'hidden_at_battle_end'
+
+
+def reveal_if_down(item):
+    """Show a creature that is not alive, unless End battle hid it (SG-TODO-028).
+
+    The End battle mark stays until the GM changes the creature's visibility, resets it
+    or the next battle starts.
+    """
+    if not item.get('alive') and not item.get(HIDDEN_AT_BATTLE_END):
+        item['visible'] = True
+
+
+def hide_at_battle_end(item):
+    item['visible'] = False
+    item[HIDDEN_AT_BATTLE_END] = True
+
+
+def release_battle_end_hiding(item):
+    item.pop(HIDDEN_AT_BATTLE_END, None)
+
+
 def sync_health(item):
     normalize_features(item)
-    if not item['alive']: item['visible']=True
+    reveal_if_down(item)
 
 def apply_hp(item,delta,*,absorb=True,critical=False):
     """Apply damage or healing, capping healing at maximum HP."""
@@ -78,6 +114,9 @@ def apply_hp(item,delta,*,absorb=True,critical=False):
     normalize_features(item)
     before=item['hp'];temporary=item['temp_hp'];old_failures=item['death_failures']
     result={'damage':0,'excess':0,'instant_death':False,'failed_saves':0,'temp_consumed':0}
+    if not tracks_hp(item):
+        result['untracked']=True  # the amount is logged by the caller; HP stays as it is
+        return result
     if permanently_dead(item): return result
     if delta>=0:
         if delta:
@@ -106,6 +145,19 @@ def apply_hp(item,delta,*,absorb=True,critical=False):
     elif item['hp']==0: item['life_state']='dead'
     sync_health(item)
     return result
+
+def grant_temp_hp(item,amount,*,replace=False):
+    """SG-TODO-027, 5e: temporary HP never stack. Keep the higher value unless the DM replaces.
+
+    Not healing: current HP, life state and death saves stay as they are, also at 0 HP.
+    Returns (before, after).
+    """
+    if type(amount) is not int or not 1<=amount<=99999 or type(replace) is not bool: raise ValueError('Invalid temporary HP')
+    normalize_features(item)
+    if not tracks_hp(item): raise ValueError(f"HP is not tracked for {item.get('name')}")
+    if permanently_dead(item): raise ValueError(f"{item.get('name')} is dead; explicitly recover before granting temporary HP")
+    before=item['temp_hp'];item['temp_hp']=amount if replace else max(before,amount)
+    return before,item['temp_hp']
 
 def public_features(item):
     return {'life_state':item.get('life_state','standing' if item.get('alive',True) else 'down'),'effects':[{'name':e['name']} for e in item.get('effects',[]) if e.get('public')]}

@@ -39,7 +39,7 @@ Final combined producer-specific Admin validation remains outstanding at Deliver
 This later explicit acceptance supersedes earlier formal-open/pending-acceptance
 statements in the [historical continuity record](380-feedback-delivery-plan.md)
 and dated neighboring close-outs. Those describe status at their own delivery;
-failed earlier runs remain failed and are not relabelled. The current [task record](../todo/097-feedback-delivery-plan.md#4a1-implementation-checkpoint---2026-11-10)
+failed earlier runs remain failed and are not relabelled. The current [task record](../history/097-feedback-delivery-plan.md#4a1-implementation-checkpoint---2026-11-10)
 is reconciled, including the completed table row and references in other entries.
 4A.2-4A.6 stay closed; 4A.7 onward stays proposed. SG-TODO-019, priorities, owners,
 deadlines and agreed delivery order are unchanged. Deliverable 1, Deliverable 2

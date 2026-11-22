@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated: 2026-11-08. [SG-TODO-018](../todo/180-monster-initiative-bonus.md) is completed and closed at the user's explicit request after covering CI, staged acceptance and reconciliation. Branch features/perplexity-018; no merge/write-back included. The previous foundation-only pending descriptions are historical, not missing current implementation.
+Updated: 2026-11-08. [SG-TODO-018](../history/180-monster-initiative-bonus.md) is completed and closed at the user's explicit request after covering CI, staged acceptance and reconciliation. Branch features/perplexity-018; no merge/write-back included. The previous foundation-only pending descriptions are historical, not missing current implementation.
 
 ## History and covering evidence
 

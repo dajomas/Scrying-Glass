@@ -4,7 +4,7 @@
 
 ## Current close-out - 2026-11-03
 
-[SG-TODO-005](../todo/050-admin-initial-visibility.md) is completed at the user's
+[SG-TODO-005](../history/050-admin-initial-visibility.md) is completed at the user's
 explicit request. The dependent-button correction was delivered in
 e7b3d96ce428ce4022bb3930a8c660f02f12b765. CSS blob
 d89a094bfd42b2f0e126038e4aebb75f41c31670 is identical at tested commit

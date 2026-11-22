@@ -1,14 +1,15 @@
 // Full 080 + production controls helper; real controller, scoped test adapter, mocked DOM/network.
 'use strict';
 const test=require('node:test'), assert=require('node:assert/strict');
+const {adminRange} = require('./admin-source.cjs');
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const root=path.resolve(__dirname,'..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const {createController}=require(path.join(root,'static/admin-feedback-controller.js'));
-const core=read('static/admin/070-source.js');
+const core=adminRange("document.querySelector('#addBattleActionTarget').onclick = () => {", "// Stage 1 Steps 1A/1B: campaign creation and metadata editing feedbac");
 const offset=core.indexOf('function updateBattleOrderFontControls(fontSize) {');
 assert.ok(offset>=0);
-const helper=core.slice(offset), source=read('static/admin/080-source.js');
+const helper=core.slice(offset), source=adminRange("// Stage 1 Steps 1A/1B: campaign creation and metadata editing feedbac", null);
 const spec={region:'global',operation:'display.battle-order-font',target:'battle-order',label:'Change viewer font size'};
 function deferred(){let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b;});return {promise,resolve,reject};}
 function fixture(size=16){

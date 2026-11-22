@@ -70,7 +70,7 @@
         return Boolean(file?.files && file.files.length);
     }
     function chooseImage(candidate, candidates, kept) {
-        // Image picker lives in monster-image-choice.js (fragment size limit).
+        // Image picker lives in monster-image-choice.js.
         const picker = window.scryingMonsterImageChoice;
         if (!picker) return Promise.resolve(candidate);
         const open = picker.open(candidate, candidates, other => monsterSourceLabel(other, true), kept);

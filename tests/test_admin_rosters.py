@@ -13,14 +13,12 @@ class RosterSourceTests(unittest.TestCase):
         end = (ROOT / 'templates/admin/190_document_end.html').read_text()
         self.assertEqual(head.count('/static/admin-rosters.css?v=1'), 1)
         self.assertLess(head.index('/static/admin-panel-forms.css'), head.index('/static/admin-rosters.css'))
-        self.assertEqual(end.count('/static/admin-rosters.js?v=1'), 1)
+        self.assertEqual(end.count('/static/admin-rosters.js?v=2'), 1)
         self.assertLess(end.index('/static/monster-image-previews.js'), end.index('/static/admin-rosters.js'))
         source = (ROOT / 'static/admin-rosters.js').read_text()
         for forbidden in ('fetch(', 'innerHTML', 'replaceChildren', 'data-chp', 'data-cmaxhp', 'keydown', 'localStorage'):
             self.assertNotIn(forbidden, source)
         self.assertIn('setAllSelected(kind, false)', source)
-        for name in ('admin-rosters.js', 'admin-rosters.css'):
-            self.assertLessEqual((ROOT / 'static' / name).stat().st_size, 20000)
 
 
 class RosterBrowserTests(unittest.TestCase):

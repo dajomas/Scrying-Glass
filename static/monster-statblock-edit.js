@@ -222,10 +222,20 @@
             const list = sb.element('div', {role: 'group', 'aria-label': 'Statblock sources', className: 'monster-statblock-candidates'});
             let done = false;
             const finish = value => { if (done) return; done = true; view.close(); resolve(value); };
-            for (const candidate of candidates) {
-                const button = sb.element('button', {type: 'button', text: sb.candidateLabel(candidate)});
+            const option = (candidate, grouped) => {
+                const button = sb.element('button', {type: 'button', text: sb.candidateLabel(candidate, {grouped})});
                 button.addEventListener('click', () => finish(candidate));
-                list.append(button);
+                return button;
+            };
+            for (const {candidate, versions} of sb.groupCandidates(candidates)) {
+                list.append(option(candidate, false));
+                if (!versions.length) continue;
+                // SG-TODO-033: a base creature's 5e.tools versions, in a sub-list under it.
+                const group = sb.element('details', {className: 'monster-statblock-versions'});
+                group.append(sb.element('summary', {text: `${versions.length} version(s) of ${candidate.name || candidate.label}`}),
+                    sb.element('div', {role: 'group', 'aria-label': `Versions of ${candidate.name || candidate.label}`},
+                        versions.map(version => option(version, true))));
+                list.append(group);
             }
             const cancel = sb.element('button', {type: 'button', text: 'Cancel'});
             cancel.addEventListener('click', () => finish(null));

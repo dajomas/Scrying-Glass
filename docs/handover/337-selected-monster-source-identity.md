@@ -1,7 +1,7 @@
 # 337. Signed selected monster source identity
 
 [Automatic/shared order](336-monster-automatic-shared-order.md) |
-[Task SG-TODO-018](../todo/180-monster-initiative-bonus.md)
+[Task SG-TODO-018](../history/180-monster-initiative-bonus.md)
 
 Prepared 2026-11-07 for features/perplexity-018. Task remains incomplete.
 No merge or write-back authorized.

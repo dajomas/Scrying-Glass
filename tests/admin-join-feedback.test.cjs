@@ -7,7 +7,7 @@ const test = require('node:test');
 const vm = require('node:vm');
 const {createController} = require('../static/admin-feedback-controller.js');
 const gate = fs.readFileSync(path.join(__dirname, '../static/initiative-join-gate.js'), 'utf8');
-const core = fs.readFileSync(path.join(__dirname, '../static/admin/010-source.js'), 'utf8');
+const core = fs.readFileSync(path.join(__dirname, '../static/admin.js'), 'utf8');
 function slice(start, end) {
     const first = core.indexOf(start), last = core.indexOf(end, first);
     assert(first >= 0 && last > first, 'production function boundaries');

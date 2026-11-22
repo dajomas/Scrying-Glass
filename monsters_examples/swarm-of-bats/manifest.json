@@ -1,0 +1,200 @@
+{
+  "created_utc": "2026-11-17T12:57:35.977339+00:00",
+  "species": "Swarm of Bats",
+  "probe": "sizetest/monster_source_probe.py",
+  "requests": [
+    {
+      "url": "https://api.open5e.com/v2/creatures/?name__iexact=Swarm+of+Bats&limit=100&format=json",
+      "label": "open5e-list-0",
+      "started_utc": "2026-11-17T12:57:23.406730+00:00",
+      "status": 200,
+      "final_url": "https://api.open5e.com/v2/creatures/?name__iexact=Swarm+of+Bats&limit=100&format=json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 10783,
+      "sha256": "7f67a506ab10f9429d1b3d1d556eb5258c7ded901466336d3b85656e83fe1a2f",
+      "truncated": false,
+      "file": "raw/001-open5e-list-0.json",
+      "elapsed_seconds": 1.791
+    },
+    {
+      "url": "https://api.open5e.com/v2/creatures/a5e-mm_swarm-of-bats/?format=json",
+      "label": "open5e-detail-1",
+      "started_utc": "2026-11-17T12:57:26.197989+00:00",
+      "status": 200,
+      "final_url": "https://api.open5e.com/v2/creatures/a5e-mm_swarm-of-bats/?format=json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 3711,
+      "sha256": "10189d4b4dfacbbb2ac771916700bba6cce3d859974450f5718c2fde0f257f26",
+      "truncated": false,
+      "file": "raw/002-open5e-detail-1.json",
+      "elapsed_seconds": 1.595
+    },
+    {
+      "url": "https://api.open5e.com/v2/creatures/srd-2024_swarm-of-bats/?format=json",
+      "label": "open5e-detail-2",
+      "started_utc": "2026-11-17T12:57:28.793201+00:00",
+      "status": 200,
+      "final_url": "https://api.open5e.com/v2/creatures/srd-2024_swarm-of-bats/?format=json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 3024,
+      "sha256": "869b2473910b5966bbff21a9b661584b59aa74d4959b223aae2f968250c1cd2f",
+      "truncated": false,
+      "file": "raw/003-open5e-detail-2.json",
+      "elapsed_seconds": 0.573
+    },
+    {
+      "url": "https://api.open5e.com/v2/creatures/srd_swarm-of-bats/?format=json",
+      "label": "open5e-detail-3",
+      "started_utc": "2026-11-17T12:57:30.366848+00:00",
+      "status": 200,
+      "final_url": "https://api.open5e.com/v2/creatures/srd_swarm-of-bats/?format=json",
+      "content_type": "application/json",
+      "content_encoding": null,
+      "bytes": 3994,
+      "sha256": "579cc4d7a552f9ce6190e03c2fb9bf7c0924542e72ba809af4ba69d51d92722b",
+      "truncated": false,
+      "file": "raw/004-open5e-detail-3.json",
+      "elapsed_seconds": 0.895
+    },
+    {
+      "url": "https://www.dndbeyond.com/monsters?filter-search=Swarm+of+Bats",
+      "label": "dndbeyond-search",
+      "started_utc": "2026-11-17T12:57:32.262501+00:00",
+      "status": 200,
+      "final_url": "https://www.dndbeyond.com/monsters?filter-search=Swarm+of+Bats",
+      "content_type": "text/html; charset=utf-8",
+      "content_encoding": null,
+      "bytes": 377763,
+      "sha256": "ba2cf0eabff9bffd9731a125c82bb7d57b9a485f6bc5d4959bb7486c6bc9549d",
+      "truncated": false,
+      "file": "raw/005-dndbeyond-search.html",
+      "elapsed_seconds": 0.592
+    },
+    {
+      "url": "https://www.dndbeyond.com/monsters/5195222-swarm-of-bats",
+      "label": "dndbeyond-detail-0",
+      "started_utc": "2026-11-17T12:57:33.854669+00:00",
+      "status": 200,
+      "final_url": "https://www.dndbeyond.com/monsters/5195222-swarm-of-bats",
+      "content_type": "text/html; charset=utf-8",
+      "content_encoding": null,
+      "bytes": 261033,
+      "sha256": "8eef6ab2df4ed8ec60001bb6ccb287197f5725d29236a9b279bb9edd5b6fda4d",
+      "truncated": false,
+      "file": "raw/006-dndbeyond-detail-0.html",
+      "elapsed_seconds": 0.461
+    },
+    {
+      "url": "https://www.dndbeyond.com/monsters/17028-swarm-of-bats",
+      "label": "dndbeyond-detail-1",
+      "started_utc": "2026-11-17T12:57:35.316315+00:00",
+      "status": 200,
+      "final_url": "https://www.dndbeyond.com/monsters/17028-swarm-of-bats",
+      "content_type": "text/html; charset=utf-8",
+      "content_encoding": null,
+      "bytes": 327127,
+      "sha256": "f2153df23ead9bb0dd2cd52066c7fd40fb9f8271ffe4bfbd525dfe52d881c8e3",
+      "truncated": false,
+      "file": "raw/007-dndbeyond-detail-1.html",
+      "elapsed_seconds": 0.645
+    }
+  ],
+  "records": [
+    {
+      "provider": "open5e",
+      "identity": {
+        "key": "a5e-mm_swarm-of-bats",
+        "document": {
+          "name": "Monstrous Menagerie",
+          "key": "a5e-mm",
+          "type": "SOURCE",
+          "display_name": "Monstrous Menagerie",
+          "publisher": {
+            "name": "EN Publishing",
+            "key": "en-publishing"
+          },
+          "gamesystem": {
+            "name": "Advanced 5th Edition",
+            "key": "a5e"
+          },
+          "permalink": "https://enpublishingrpg.com/collections/level-up-advanced-5th-edition-a5e/products/level-up-monstrous-menagerie-a5e"
+        }
+      },
+      "file": "001-open5e.json",
+      "bytes": 3711,
+      "note": "Open5e v2 creature detail"
+    },
+    {
+      "provider": "open5e",
+      "identity": {
+        "key": "srd-2024_swarm-of-bats",
+        "document": {
+          "name": "System Reference Document 5.2",
+          "key": "srd-2024",
+          "type": "SOURCE",
+          "display_name": "5e 2024 Rules",
+          "publisher": {
+            "name": "Wizards of the Coast",
+            "key": "wizards-of-the-coast"
+          },
+          "gamesystem": {
+            "name": "5th Edition 2024",
+            "key": "5e-2024"
+          },
+          "permalink": "https://dnd.wizards.com/resources/systems-reference-document"
+        }
+      },
+      "file": "002-open5e.json",
+      "bytes": 3024,
+      "note": "Open5e v2 creature detail"
+    },
+    {
+      "provider": "open5e",
+      "identity": {
+        "key": "srd_swarm-of-bats",
+        "document": {
+          "name": "System Reference Document 5.1",
+          "key": "srd-2014",
+          "type": "SOURCE",
+          "display_name": "5e 2014 Rules",
+          "publisher": {
+            "name": "Wizards of the Coast",
+            "key": "wizards-of-the-coast"
+          },
+          "gamesystem": {
+            "name": "5th Edition 2014",
+            "key": "5e-2014"
+          },
+          "permalink": "https://dnd.wizards.com/resources/systems-reference-document"
+        }
+      },
+      "file": "003-open5e.json",
+      "bytes": 3994,
+      "note": "Open5e v2 creature detail"
+    },
+    {
+      "provider": "dndbeyond",
+      "identity": {
+        "href": "/monsters/5195222-swarm-of-bats",
+        "block": 0
+      },
+      "file": "004-dndbeyond.json",
+      "bytes": 5406,
+      "note": "DOM text segments, not a normalized statblock"
+    },
+    {
+      "provider": "dndbeyond",
+      "identity": {
+        "href": "/monsters/17028-swarm-of-bats",
+        "block": 0
+      },
+      "file": "005-dndbeyond.json",
+      "bytes": 5680,
+      "note": "DOM text segments, not a normalized statblock"
+    }
+  ],
+  "issues": []
+}

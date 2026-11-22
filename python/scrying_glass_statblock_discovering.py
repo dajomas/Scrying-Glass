@@ -107,6 +107,10 @@ class DiscoveringMixin:
                 summary = candidate_summary(provider, identity, monster.get('monster_source_name') or species or
                                             identity.get('name') or identity.get('key') or identity.get('path'),
                                             original=True)
+                # SG-TODO-033: an original that is a discovered 5e.tools version keeps its base.
+                for found, found_summary in results.get((provider, species), {}).get('candidates', ()):
+                    if 'version_of' in found and identity_key(provider, found) == identity_key(provider, identity):
+                        identity, summary = found, {**found_summary, 'original': True}
                 if not config.enabled.get(provider):
                     summary['disabled'] = True
                 candidates.append(self._issue(scope, provider, identity, summary))

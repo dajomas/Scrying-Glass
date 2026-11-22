@@ -4,8 +4,8 @@
 
 ## Implementation preparation - 2026-11-11
 
-Scope: character Edit only, under [SG-TODO-009.7](../todo/097-feedback-delivery-plan.md).
-The [bounded task record](../todo/098-character-edit-feedback.md) tracks remaining gates.
+Scope: character Edit only, under [SG-TODO-009.7](../history/097-feedback-delivery-plan.md).
+The [bounded task record](../history/098-character-edit-feedback.md) tracks remaining gates.
 This is not completion of Stage 2, Stage 1, either deliverable or phase 009.7.
 4A.1-4A.13 retain their accepted closed scopes. No merge or deployment.
 

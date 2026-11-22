@@ -103,8 +103,7 @@ class GlobalFeedbackCompositionTests(unittest.TestCase):
         page.route('**/*', route)
         page.goto('http://fixture.test/', wait_until='load')
         page.wait_for_function("typeof latest!=='undefined' && latest?.characters?.some(x=>x.id==='c') && document.querySelector('#characters [data-ca]')")
-        self.assertGreater(len((ROOT/'static/admin.js').read_bytes()), 100000,
-                           'Run through tools/run_split_tests.py to assemble production Admin')
+        self.assertGreater(len((ROOT/'static/admin.js').read_bytes()), 100000)
         scripts = page.locator('script[src]').evaluate_all(
             "nodes => nodes.map(node => node.getAttribute('src'))")
         assert_script_inventory(self, scripts)

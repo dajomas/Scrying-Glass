@@ -55,7 +55,7 @@ Inspect normal push-triggered CI. Require the connection audit to report zero co
 
 Continue verifying clean unittest, pytest and JavaScript stages. No passing full workflow or repaired audit connection total is predicted. If further failures appear, investigate rather than suppressing assertions or the audit.
 
-[SG-TODO-001](../todo/010-monster-lookup.md) and [SG-TODO-002](../todo/020-monster-damage-effects.md) remain proposed and unrelated. The broader source split remains unfinished and inactive. Use normal CI, no skip marker and no extra workflow dispatch.
+[SG-TODO-001](../history/010-monster-lookup.md) and [SG-TODO-002](../history/020-monster-damage-effects.md) remain proposed and unrelated. The broader source split remains unfinished and inactive. Use normal CI, no skip marker and no extra workflow dispatch.
 
 ## Stage 2 modal-import integration - 2026-11-11
 
@@ -98,11 +98,11 @@ Normal push-triggered CI applies without a skip marker or separate dispatch.
 Complete approval/delivery, covering results/corrections and bounded acceptance
 remain pending. README and root indexes retain accurate links/open scopes and are
 unchanged. Stage 2 and both deliverables remain open; no merge/deployment or
-unobserved CI/commit identity is claimed. [Current tasks](../todo/098-character-edit-feedback.md).
+unobserved CI/commit identity is claimed. [Current tasks](../history/098-character-edit-feedback.md).
 
 ## Statblock startup activation - 2026-11-15
 
-[Current task and gates](../todo/222-statblock-persistence.md) · [Storage foundation](240-sqlite-storage-split.md#statblock-storage-foundation---2026-11-15).
+[Current task and gates](../history/222-statblock-persistence.md) · [Storage foundation](240-sqlite-storage-split.md#statblock-storage-foundation---2026-11-15).
 This record supersedes earlier dated SG-TODO-022 notes saying startup remains
 schema 8 or activation is not wired. Other task history above is not reopened.
 
@@ -157,7 +157,7 @@ indexed task 222 carries the current operational/status details.
 The user explicitly signed off on 022.02 and requested closure/documentation
 on 2026-11-15 at 13:48 CET. 022.02, including 022.02a model/validation and
 022.02b typed persistence/migration/startup activation, is completed and closed
-for its agreed bounded scope. This entry and the [accepted task record](../todo/222-statblock-persistence.md)
+for its agreed bounded scope. This entry and the [accepted task record](../history/222-statblock-persistence.md)
 supersede only the earlier 022.02 pending/ready/in-progress notes in the parent,
 indexes and dated handovers, including the activation-pending paragraphs above.
 Their original evidence and limitations remain historical, not reopened gates.

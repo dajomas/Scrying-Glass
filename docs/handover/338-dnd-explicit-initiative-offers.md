@@ -1,7 +1,7 @@
 # 338. Explicit D&D Beyond initiative candidate offers
 
 [Selected-source identity](337-selected-monster-source-identity.md) |
-[Task SG-TODO-018](../todo/180-monster-initiative-bonus.md)
+[Task SG-TODO-018](../history/180-monster-initiative-bonus.md)
 
 Prepared 2026-11-07 for features/perplexity-018. Task remains incomplete.
 No merge or write-back authorized.

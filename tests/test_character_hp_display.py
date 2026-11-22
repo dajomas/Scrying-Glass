@@ -20,10 +20,9 @@ class CharacterHpDisplayTests(unittest.TestCase):
 
     def test_asset_contract(self):
         end = (ROOT / 'templates/admin/190_document_end.html').read_text()
-        self.assertEqual(end.count('/static/character-hp-display.js?v=1'), 1)
+        self.assertEqual(end.count('/static/character-hp-display.js?v=2'), 1)
         self.assertLess(end.index('/static/admin-rosters.js'), end.index('/static/character-hp-display.js'))
         source = (ROOT / 'static/character-hp-display.js').read_text()
-        self.assertLessEqual(len(source.encode()), 20000)
         for forbidden in ('fetch(', 'innerHTML', 'keydown', 'localStorage', 'subtree: true'):
             self.assertNotIn(forbidden, source)
 

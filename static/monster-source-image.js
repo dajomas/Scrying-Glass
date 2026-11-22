@@ -197,7 +197,7 @@
     const option = document.createElement('option');
     option.value = BULK_ACTION;
     option.textContent = 'Select image from sources';
-    bulk.insertBefore(option, bulk.querySelector('option[value="remove"]') || null);
+    bulk.insertBefore(option, bulk.querySelector('option[value="refresh-source-review"], option[value="remove"]') || null);
     let open = false;
     const originalBulk = runBulkAction;
     runBulkAction = async function(kind, action, ...rest) {

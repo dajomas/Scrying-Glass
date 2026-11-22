@@ -18,9 +18,6 @@ class PreviewSourceTests(unittest.TestCase):
         self.assertEqual(end.count('/static/monster-image-previews.js?v=2'), 1)
         self.assertLess(end.index('/static/admin-panel-forms.js'), end.index('/static/monster-image-previews.js'))
         self.assertIn('<script src="/static/monster-image-previews.js?v=2" defer></script>', end)
-        for name in ('monster-image-previews.js', 'monster-image-previews.css', 'monster-candidate-selection.js',
-                     'monster-image-choice.js'):
-            self.assertLessEqual((ROOT / 'static' / name).stat().st_size, 20000)
 
 
 class ProviderPreviewTests(unittest.TestCase):

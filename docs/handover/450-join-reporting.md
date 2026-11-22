@@ -67,7 +67,7 @@ README and TODO root remain accurate and unchanged; numbered handover/index and
 task status are updated. 4A.11 remains closed; 4A.13, both feedback deliverables,
 009.7 and wider gates remain open. No archive/Patch/, merge or deployment.
 
-[Task and acceptance](../todo/097-feedback-delivery-plan.md#4a12-join-reporting---2026-11-11).
+[Task and acceptance](../history/097-feedback-delivery-plan.md#4a12-join-reporting---2026-11-11).
 
 ## 4A.12 bounded close-out - 2026-11-11
 

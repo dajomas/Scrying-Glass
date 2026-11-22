@@ -1,6 +1,6 @@
 # 083 - SG-TODO-022 Stage B: Open5e, D&D Beyond and .monster adapters (022.05-022.07)
 
-[Back to handover index](../../HANDOVER.md) · [Stage A](082-fivetools-statblock-stage-a.md) · [TODO 220](../todo/220-admin-statblock-viewer.md)
+[Back to handover index](../../HANDOVER.md) · [Stage A](082-fivetools-statblock-stage-a.md) · [TODO 220](../history/220-admin-statblock-viewer.md)
 
 Date: 2026-11-17. Baseline: `2f2bc4a01612b3f6b8245fcfd4049dc3c935a9b6` on
 `features/claude-statblock`. Delivered as a zip archive; commit SHA not yet

@@ -34,7 +34,8 @@ def _limits_payload(limits):
 
 
 def prepare_isolated(name, source, *, fetch, deadline, limits=None, cancelled=lambda: False,
-                     worker_memory_bytes=268435456, data_root='https://5e.tools/data', site='https://5e.tools'):
+                     worker_memory_bytes=268435456, data_root='https://5e.tools/data', site='https://5e.tools',
+                     version_of=None):
     """Return (snapshot, measurements) or raise PreparationError/WorkerError.
 
     fetch(path, deadline=...) -> bytes runs in this (parent) process.
@@ -42,6 +43,9 @@ def prepare_isolated(name, source, *, fetch, deadline, limits=None, cancelled=la
     from .scrying_glass_fivetools_preparation import PreparationError, PreparationLimits
     limits = PreparationLimits() if limits is None else limits
     if not isinstance(limits, PreparationLimits) or type(name) is not str or type(source) is not str:
+        raise ValueError('invalid_worker_input')
+    if version_of is not None and (type(version_of) not in (tuple, list) or len(version_of) != 2
+                                   or any(type(v) is not str for v in version_of)):
         raise ValueError('invalid_worker_input')
     if type(worker_memory_bytes) is not int or not 0 < worker_memory_bytes <= 2**63 - 1:
         raise ValueError('invalid_worker_memory_bytes')
@@ -108,6 +112,8 @@ def prepare_isolated(name, source, *, fetch, deadline, limits=None, cancelled=la
                     buffer.extend(rest)
         head = {'name': name, 'source': source, 'limits': _limits_payload(limits), 'deadline': deadline,
                 'data_root': data_root, 'site': site}
+        if version_of is not None:
+            head['version_of'] = list(version_of)  # SG-TODO-033
         send(json.dumps(head).encode() + b'\n')
         while True:
             line = read_line()
@@ -244,7 +250,8 @@ def _child():
             return data
         try:
             prepared = prepare_statblock(head['name'], head['source'], fetch=fetch, deadline=head['deadline'],
-                                         limits=limits, data_root=head['data_root'], site=head['site'])
+                                         limits=limits, data_root=head['data_root'], site=head['site'],
+                                         version_of=head.get('version_of'))
         except PreparationError as exc:
             emit({'error': {'code': exc.code, 'detail': exc.detail if type(exc.detail) is str else None}})
             return

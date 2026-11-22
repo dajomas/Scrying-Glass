@@ -68,6 +68,7 @@ class CharacterCreate(_Utf8Model):
     color: str = Field(min_length=1, max_length=40)
     hp: int = Field(default=1, ge=0, le=99999)
     initiative: int | None = Field(default=None, ge=-100, le=100)
+    track_hp: bool = True  # SG-TODO-024
 
 class CharacterUpdate(_Utf8Model):
     """Characterupdate."""
@@ -82,6 +83,7 @@ class CharacterUpdate(_Utf8Model):
     hp_delta: int | None = Field(default=None, ge=-99999, le=99999)
     critical_hit: bool = False
     in_turn: bool | None = None
+    track_hp: bool | None = None  # SG-TODO-024
 
     @model_validator(mode="after")
     def _critical_hit_requires_damage(self):
@@ -133,7 +135,7 @@ class BattleActionRow(_Utf8Model):
     stat: Literal['max_hp','strength','dexterity','constitution','intelligence','wisdom','charisma'] | None = None
     source_id: str | None = Field(default=None, min_length=1, max_length=100)
     target_id: str = Field(min_length=1, max_length=100)
-    action: Literal["damage", "heal", "buff", "debuff", "reduce-stat"]
+    action: Literal["damage", "heal", "buff", "debuff", "reduce-stat", "increase-max-hp", "temp-hp", "temp-hp-replace"]
     amount: int | None = Field(default=None, ge=1, le=99999)
     critical_hit: bool = False
 

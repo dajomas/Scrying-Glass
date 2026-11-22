@@ -1,7 +1,7 @@
 /* SG-TODO-009.7 Stage 1 Steps 2B-2E: save, load/switch, rename and delete battle setups;
- * Step 3: setup copy/move between campaigns (replaces the 050 modal handlers) and the View screen
- * background controls (formerly rebound by every 030 load()). Installed after the core Admin
- * bundle. New-setup creation (2A) lives in static/admin/060-source.js. */
+ * Step 3: setup copy/move between campaigns (replaces the earlier modal handlers in admin.js) and the View screen
+ * background controls (formerly rebound by every load() in admin.js). Installed after the core Admin
+ * bundle. New-setup creation (2A) lives in static/admin.js. */
 (() => {
     'use strict';
     const $ = id => document.getElementById(id);

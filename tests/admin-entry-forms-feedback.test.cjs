@@ -1,10 +1,11 @@
 const test = require('node:test');
+const {adminRange} = require('./admin-source.cjs');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(root, 'static/admin/060-source.js'), 'utf8');
+const source = adminRange("async function applyBackground(background) {", "document.querySelector('#addBattleActionTarget').onclick = () => {");
 const {createController} = require(path.join(root, 'static/admin-feedback-controller.js'));
 const deferred = () => {
     let resolve, reject;

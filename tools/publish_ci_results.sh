@@ -5,7 +5,6 @@ umask 077
 : "${GH_TOKEN:?}" "${GH_REPO:?}" "${RUN_ID:?}" "${RUN_ATTEMPT:?}" "${BRANCH:?}" "${EXPECTED_SHA:?}" "${RUNNER_TEMP:?}"
 [[ "$RUN_ID" =~ ^[0-9]+$ && "$RUN_ATTEMPT" =~ ^[0-9]+$ ]]
 case "$BRANCH" in features/perplexity|features/perplexity-statblock|features/claude|features/claude-statblock) ;; *) exit 1 ;; esac
-HELPER="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/chunk_ci_evidence.py"
 PUBLICATION="$(cd "${1:?publication checkout required}" && pwd)"
 WORK="$RUNNER_TEMP/ci-publication"
 mkdir -p "$WORK"
@@ -43,10 +42,8 @@ else
 fi
 (cd "$OUT" && find artifacts -type f -print | LC_ALL=C sort) > "$OUT/artifact-files.txt"
 [[ -s "$OUT/artifact-files.txt" ]] || echo 'WARNING: No artifact files collected.' >> "$OUT/collection.txt"
-# Downloaded evidence is never executed. Reject links before copying or chunking.
+# Downloaded evidence is never executed. Reject links before copying.
 [[ -z "$(find "$OUT" -type l -print -quit)" ]]
-python3 "$HELPER" "$OUT"
-python3 "$HELPER" --verify "$OUT"
 cd "$PUBLICATION"
 git config user.name 'github-actions[bot]'
 git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

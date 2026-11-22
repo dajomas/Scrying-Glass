@@ -11,7 +11,7 @@ from .scrying_glass_monster_refresh_sources import resolve_selected_sources
 from .scrying_glass_monster_source_snapshot import FIELDS
 from .scrying_glass_monster_initiative import initiative_patch
 from .scrying_glass_monster_initiative_order import order_for_monster_change
-from .scrying_glass_statistics import legacy_max_edit
+from .scrying_glass_statistics import legacy_max_edit, follow_max_increase
 from .scrying_glass_feature_rules import sync_health
 from .scrying_glass_health_limits import MAX_STORED_HP
 
@@ -159,11 +159,14 @@ def install_monster_refresh(context, app):
                 bonus = values.pop('initiative_bonus', None)
                 item.update(values)
                 legacy_max_edit(item, values)
+                # SG-TODO-026: a refresh that raises max HP counts as an increase.
+                follow_max_increase(before, item, 'hp' in values)
+                followed_hp = item['hp']
                 if bonus is not None:
                     item.update(initiative_patch(item, bonus=bonus, origin='source'))
                 if 'hp' in values or 'max_hp' in values:
                     sync_health(item)
-                    expected_hp = values.get('hp', before['hp'])
+                    expected_hp = values.get('hp', followed_hp)
                     if item['hp'] != expected_hp:
                         raise ValueError('Health reconciliation would alter unchecked or requested HP')
                 for field in FIELDS:

@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated: 2026-11-06. Task: [SG-TODO-009.3](../todo/090-admin-usability-redesign.md#sg-todo-0093---consistent-panels-and-forms). Status: closed (completed) after verified covering local/CI validation and the user's explicit visual/workflow acceptance. Implementation: 588831fb1ece198fefee3a2422410123a8f1f175. This does not implement 009.4-009.7.
+Updated: 2026-11-06. Task: [SG-TODO-009.3](../history/090-admin-usability-redesign.md#sg-todo-0093---consistent-panels-and-forms). Status: closed (completed) after verified covering local/CI validation and the user's explicit visual/workflow acceptance. Implementation: 588831fb1ece198fefee3a2422410123a8f1f175. This does not implement 009.4-009.7.
 
 ## User-facing behaviour
 

@@ -1,7 +1,7 @@
 # 331. Monster initiative edit API integration
 
 [Foundation handover](330-monster-initiative-foundations.md) |
-[Task SG-TODO-018](../todo/180-monster-initiative-bonus.md)
+[Task SG-TODO-018](../history/180-monster-initiative-bonus.md)
 
 Updated: 2026-11-07. Status: incremental integration; SG-TODO-018 incomplete.
 Branch: features/perplexity-018. No merge or write-back authorized.

@@ -34,7 +34,7 @@ not full Admin bootstrap/view, native-browser or live-server acceptance.
 Only bulk-select-all.js's template reference advances from v=1 to v=2; script
 count/order and core fragments/pins/failure marker are unchanged. Existing loaded
 Admin composition assertions remain applicable. The index links this section;
-[task status](../todo/098-character-edit-feedback.md#select-dead---2026-11-12)
+[task status](../history/098-character-edit-feedback.md#select-dead---2026-11-12)
 tracks the bounded work. README and root TODO need no unrelated edits.
 Per the user's Stage 2 staging instruction this mixed commit uses [skip ci],
 without workflow edits or separate dispatch. Combined covering/browser validation

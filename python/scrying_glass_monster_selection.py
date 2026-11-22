@@ -303,7 +303,7 @@ class CandidateMonstersMixin(AdminMonstersMixin):
                              image: UploadFile | None = File(None), selection_token: str = Form(''),
                              initiative_bonus: str = Form(''),
                              initiative_bonus_offer_token: str = Form(''),
-                             image_selection_token: str = Form('')):
+                             image_selection_token: str = Form(''), color_auto: str = Form('')):
         from fastapi.params import Form as FormParameter
         from .scrying_glass_initiative_input import creation_bonus_fields
         from .scrying_glass_source_bonus_offer import read_bonus_offer
@@ -363,6 +363,8 @@ class CandidateMonstersMixin(AdminMonstersMixin):
             raise self.context.HTTPException(409, "The encounter changed while this request was running. Retry.")
         fields.update(source_fields)
         created = [self.context.make_monster({**fields, "name": item, "hp": next_hp()}, color, None, image_url) for item in names]
+        from python.scrying_glass_monster_palette import spread_copy_colors
+        spread_copy_colors(created, working_state["monsters"], color_auto)  # SG-TODO-029
         working_state["monsters"].extend(created)
         await self.context.combatants_changed(monsters=True, characters=False)
         if source_fields:

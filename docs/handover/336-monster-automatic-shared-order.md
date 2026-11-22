@@ -1,7 +1,7 @@
 # 336. Automatic and shared monster roll active-order updates
 
 [Raw-roll integration](335-monster-raw-roll-integration.md) |
-[Task SG-TODO-018](../todo/180-monster-initiative-bonus.md)
+[Task SG-TODO-018](../history/180-monster-initiative-bonus.md)
 
 Prepared 2026-11-07 for features/perplexity-018. Task remains incomplete.
 No merge or write-back authorized.

@@ -74,7 +74,7 @@
     }
     function draw(force=false) {
         const item=target();if(!item){$('featureHealth').textContent='No combatants';$('featureEffects').replaceChildren();return;}
-        $('featureHealth').textContent=`${item.name}: ${item.life_state||'standing'} · HP ${item.hp}/${item.max_hp} · Temporary HP ${item.temp_hp||0} · Death saves ${item.death_successes||0}/${item.death_failures||0}${item.concentrating?' · Concentrating':''}`;
+        $('featureHealth').textContent=window.scryingTracksHp&&!window.scryingTracksHp(item)?`${item.name}: ${item.life_state||'standing'} · HP not tracked`:`${item.name}: ${item.life_state||'standing'} · HP ${item.hp}/${item.max_hp} · Temporary HP ${item.temp_hp||0} · Death saves ${item.death_successes||0}/${item.death_failures||0}${item.concentrating?' · Concentrating':''}`;
         const values={featureTempHp:item.temp_hp||0,featureLifeState:item.life_state||'standing',deathSuccesses:item.death_successes||0,deathFailures:item.death_failures||0};
         for(const [id,value]of Object.entries(values))if(force||($(id)!==document.activeElement&&!$(id).dataset.dirty))$(id).value=value;
         $('featureEffects').replaceChildren(...(item.effects||[]).filter(e=>!e.mechanical).map(e=>{

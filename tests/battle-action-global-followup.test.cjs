@@ -1,5 +1,5 @@
 // SG-TODO-009.7 / 4A.11 follow-up. Real feedback controller/bootstrap;
-// mocked DOM and transport. Run through tools/run_split_tests.py in CI.
+// mocked DOM and transport.
 'use strict';
 const assert = require('node:assert/strict');
 const test = require('node:test');
@@ -8,7 +8,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 const {installFeedback} = require('./battle-action-feedback-fixture.cjs');
 const read = file => fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
-const admin = read('static/admin/060-source.js') + read('static/admin/070-source.js');
+const admin = read('static/admin.js') + read('static/admin.js');
 const block = admin.slice(admin.indexOf('function activeBattleTargets()'),
     admin.indexOf('async function resetCombatantWithFeedback('));
 const turn = read('static/battle-turn-actions.js');

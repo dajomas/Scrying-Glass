@@ -219,6 +219,22 @@ class DiscoveryTests(ImportFixture, unittest.TestCase):
         self.assertEqual(self.transport.calls.count('https://5e.tools/data/bestiary/index.json'), 1)
         self.assertNotIn('Hobgoblin', json.dumps(result))
 
+    def test_original_version_keeps_its_base_and_prepares_it(self):
+        """SG-TODO-033: a 5e.tools link naming a version is that version's original source."""
+        self.transport.responses['https://5e.tools/data/bestiary/bestiary-xmm.json'] = json.dumps({'monster': [
+            {'name': 'Goblin', 'source': 'XMM', '_versions': [{'name': 'Goblin (Sneaky)', 'source': 'XMM'}]}]}).encode()
+        self.item('m').update(monster_source_url='https://5e.tools/bestiary.html#goblin%20(sneaky)_xmm',
+                              monster_source_name='Goblin (Sneaky)', monster_source_book='XMM')
+        rows = self.discover(('m',))['monsters'][0]['candidates']
+        self.assertEqual([(c['provider'], c.get('name'), c.get('original', False), (c.get('version_of') or {}).get('name'))
+                          for c in rows], [
+            ('5e.tools', 'Goblin (Sneaky)', True, 'Goblin'), ('5e.tools', 'Goblin', False, None),
+            ('5e.tools', 'Goblin', False, None), ('Open5e', None, False, None)])
+        self.assertNotIn('omitted_versions', json.dumps(rows))
+        self.prepare(candidate=rows[0]['candidate_id'])
+        self.assertEqual(self.runs[-1], ('5e.tools', {'root': 'https://5e.tools/data', 'name': 'Goblin (Sneaky)',
+                                                      'source': 'XMM', 'version_of': {'name': 'Goblin', 'source': 'XMM'}}))
+
     def test_failures_are_not_zero_match_results(self):
         self.transport.responses['https://5e.tools/data/bestiary/bestiary-xmm.json'] = SourceError('provider_unavailable')
         self.transport.responses['https://api.open5e.com/v2/creatures/?name__iexact=Goblin&limit=100&format=json'] = \

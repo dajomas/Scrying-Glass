@@ -64,7 +64,7 @@ Inspected facade blob: b67d5d8b360311d1eaa71f49e76422a0d3d8a400; clone kernel:
 
 This intermediate correction uses [skip ci], without workflow edits or manual
 dispatch. README, existing indexes and backup/runtime guidance remain applicable.
-[Series status and remaining gates](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).
+[Series status and remaining gates](../history/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).
 
 ## Facade dispatch guard correction - 2026-11-16
 
@@ -95,7 +95,7 @@ mixin blob: a6d7b16fa0bebfd550ebc7a02d4aa305f7413f21.
 
 This intermediate commit uses [skip ci]; no workflow edit or separate dispatch.
 Corrections 8-9 and broader acceptance gates remain open. README/runtime guidance
-and root index links remain unchanged. [Series status](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).
+and root index links remain unchanged. [Series status](../history/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).
 
 ## Save As contract entry-point correction - 2026-11-16
 
@@ -134,7 +134,7 @@ Only the contract tests and existing documentation change. This intermediate
 commit uses [skip ci], with no workflow edit or dispatch. Correction 9 still
 requires private setup-import implementation; broader 2C.3c/2D, bundle, Stage 3
 and acceptance gates remain open. README and root index links remain applicable.
-[Current status](../todo/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).
+[Current status](../history/223-statblock-lifecycle.md#ci-correction-series---2026-11-16).
 
 ## Private setup-import correction - 2026-11-16
 
@@ -174,4 +174,4 @@ retains immutable historical links and every unfinished gate. 2D implementation 
 supplied, not accepted. Continue 2B, 2C/2C.3c, 2D reconciliation, actual Stage 3
 bundles and final criteria. 022.02 stays closed; Stage 1/2/022.03/022 stay unaccepted.
 README/indexes and other reviewed handovers need no cosmetic change. No deployment.
-[Current status and remaining gates](../todo/223-statblock-lifecycle.md).
+[Current status and remaining gates](../history/223-statblock-lifecycle.md).

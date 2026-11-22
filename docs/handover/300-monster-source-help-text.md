@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated: 2026-11-06. Task: [SG-TODO-014](../todo/140-monster-source-help-text.md). Status: completed at the user's request after verified covering CI and wording acceptance. Implementation: 7b7096d2032be36f4b01159521db9bf667c86729.
+Updated: 2026-11-06. Task: [SG-TODO-014](../history/140-monster-source-help-text.md). Status: completed at the user's request after verified covering CI and wording acceptance. Implementation: 7b7096d2032be36f4b01159521db9bf667c86729.
 
 ## User-facing wording
 

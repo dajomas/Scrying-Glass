@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Task record: [097](../todo/097-feedback-delivery-plan.md).
+Task record: [097](../history/097-feedback-delivery-plan.md).
 Accepted campaign Step 1 history: [520](520-campaign-operation-feedback.md).
 
 ## Stage 1 accepted close-out - 2026-11-12
@@ -50,7 +50,7 @@ workflow changes, merge, deployment or blanket future write approval.
 Stage 3 local-feature/lair/selected-campaign viewer feedback integration is next.
 Stage 4 integration/responsive/accessibility hardening and approved compatibility
 retirement, Deliverable 1 acceptance, Deliverable 2 connection/recovery/polling/
-field association, and final 009.7/009 acceptance remain open under [097](../todo/097-feedback-delivery-plan.md#remaining-scope-and-gates).
+field association, and final 009.7/009 acceptance remain open under [097](../history/097-feedback-delivery-plan.md#remaining-scope-and-gates).
 No optional requirements or new acceptance gates are added. Test-suite cleanup
 stays deferred until after 009; source-selection/Open5e are not prerequisites.
 

@@ -60,7 +60,7 @@ maintenance commits. No application runtime or storage behavior is changed.
 
 After a user-requested integration-options review, the user concluded that none
 of the investigated approaches were viable for this project and explicitly
-requested cancellation. [SG-TODO-004](../todo/040-dndbeyond-account-access.md) is
+requested cancellation. [SG-TODO-004](../history/040-dndbeyond-account-access.md) is
 cancelled, not completed; older hold/deferred references are historical and
 superseded by that decision. Its archived requirements and unfulfilled acceptance
 criteria are preserved. No account-backed implementation or live account
@@ -79,7 +79,7 @@ cancelled task, with none active or on hold.
 022.02 model/storage/startup remains accepted and closed: activation
 28d75d08febf5b595afe8145b4097410eb987986, reviewed Branch tests 43713643326
 attempt 1 and the user's 2026-11-15 13:48 CET sign-off.
-[Accepted record](../todo/222-statblock-persistence.md). The approved display,
+[Accepted record](../history/222-statblock-persistence.md). The approved display,
 model, ownership, limits and backup contracts remain binding. Historical model-only
 schema-8/unwired wording is superseded, not a reason to reopen accepted 022.02.
 
@@ -87,7 +87,7 @@ schema-8/unwired wording is superseded, not a reason to reopen accepted 022.02.
 and [complete pre-2C.3b lifecycle TODO](https://github.com/dajomas/Scrying-Glass/blob/13cc61b95fa3e62ec9e1f2a6a85ec0dcff981e5d/docs/todo/223-statblock-lifecycle.md)
 retain every dated delivery, test count, limitation and unfinished requirement.
 The headings below preserve existing anchors while current contracts/gates are
-summarized in the [lifecycle task](../todo/223-statblock-lifecycle.md). Consolidation
+summarized in the [lifecycle task](../history/223-statblock-lifecycle.md). Consolidation
 promotes no result and removes no requirement. Prior intermediate [skip ci]/final-
 Stage-3-only validation descriptions are historical for the current CI-enabled
 2C.3b delivery; final covering validation remains mandatory.
@@ -246,7 +246,7 @@ an observed trigger, completion or pass. Review user-published run/log evidence
 against the actual pushed commit and attempt; correct failures with fresh approval.
 Final Stage 3 covering validation remains required; docs-only commits still skip CI.
 
-[Current contracts, test counts, pending work and acceptance gates](../todo/223-statblock-lifecycle.md#2c3b-save-handler-integration---2026-11-16).
+[Current contracts, test counts, pending work and acceptance gates](../history/223-statblock-lifecycle.md#2c3b-save-handler-integration---2026-11-16).
 Implementation delivery is not acceptance: 2C.3c, earlier execution/corrections,
 2D/bundles and Stage 1/2/022.03 remain open. README/root indexes were reviewed and
 remain accurate/unchanged. Schema stays 9; deploy matching complete code/data only
@@ -261,7 +261,7 @@ merge/deployment/release or whole-feature closure is implied.
 - [Technical documentation index](../Technical-Documentation.md)
 - [User guide](../User-Guide.md)
 - [Systemd deployment](../Systemd-Deployment.md)
-- [Refactor task and acceptance](../todo/080-source-size-refactors.md)
+- [Refactor task and acceptance](../history/080-source-size-refactors.md)
 
 Use live branch files as authoritative; older attachments may describe an earlier
 architecture or Python requirement.

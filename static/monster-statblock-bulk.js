@@ -19,7 +19,7 @@
     const BATCH = 50;
     const PARALLEL = 2;
     const option = sb.element('option', {value: ACTION, text: 'Load statblocks'});
-    bulk.insertBefore(option, bulk.querySelector('option[value="remove"]') || null);
+    bulk.insertBefore(option, bulk.querySelector('option[value="refresh-source-review"], option[value="remove"]') || null);
     let open = false;
 
     const original = runBulkAction;
@@ -285,10 +285,16 @@
                 const summary = state.monsters.find(entry => entry.monster_id === row.monster.id);
                 row.revision = summary ? summary.statblock_revision : 0;
                 row.notes = sb.providerNotes(found);
-                for (const candidate of found.candidates) {
+                const option = (candidate, grouped) => {
                     row.candidates.set(candidate.candidate_id, candidate);
-                    row.select.append(sb.element('option', {value: candidate.candidate_id, text: sb.candidateLabel(candidate),
-                        disabled: Boolean(candidate.disabled)}));
+                    return sb.element('option', {value: candidate.candidate_id, text: sb.candidateLabel(candidate, {grouped}),
+                        disabled: Boolean(candidate.disabled)});
+                };
+                for (const {candidate, versions} of sb.groupCandidates(found.candidates)) {
+                    row.select.append(option(candidate, false));
+                    // SG-TODO-033: a base creature's 5e.tools versions as an option group under it.
+                    if (versions.length) row.select.append(sb.element('optgroup',
+                        {label: `Versions of ${candidate.name || candidate.label}`}, versions.map(version => option(version, true))));
                 }
                 row.select.append(sb.element('option', {value: 'file', text: 'Upload a .monster file…'}));
                 row.select.disabled = false;

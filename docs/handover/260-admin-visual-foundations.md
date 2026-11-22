@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Updated: 2026-11-06. Task: [SG-TODO-009.1](../todo/090-admin-usability-redesign.md).
+Updated: 2026-11-06. Task: [SG-TODO-009.1](../history/090-admin-usability-redesign.md).
 Status: closed (completed) at the user's request after verified corrective local/CI results and user-confirmed notification behaviour and foundation consistency on the correct server. Stages 009.2-009.7 remain proposed and are not implemented.
 
 ## Scope and decisions

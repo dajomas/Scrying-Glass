@@ -24,7 +24,7 @@ class AdminMonstersMixin:
         await self.context.combatants_changed(monsters=True, characters=False)
         return {'count': len(self.context.STATE['monsters'])}
 
-    async def create_monster(self, name: str=Form(...), monster_species: str=Form(...), ac: int=Form(...), hprangestart: str=Form(...), hprangeend: str=Form(''), color: str=Form(...), quantity: int=Form(1, ge=1, le=50), image: UploadFile | None=File(None)) -> list[dict[str, Any]]:
+    async def create_monster(self, name: str=Form(...), monster_species: str=Form(...), ac: int=Form(...), hprangestart: str=Form(...), hprangeend: str=Form(''), color: str=Form(...), quantity: int=Form(1, ge=1, le=50), image: UploadFile | None=File(None), color_auto: str=Form('')) -> list[dict[str, Any]]:
         """Create monster."""
         next_hp = self.context.hp_value_factory(hprangestart, hprangeend)
 
@@ -76,6 +76,8 @@ class AdminMonstersMixin:
                 )
             )
 
+        from python.scrying_glass_monster_palette import spread_copy_colors
+        spread_copy_colors(created, self.context.STATE["monsters"], color_auto)
         self.context.STATE["monsters"].extend(created)
         await self.context.combatants_changed(monsters=True, characters=False)
         return created
@@ -86,6 +88,7 @@ class AdminMonstersMixin:
         color: str = Form(...),
         quantity: int = Form(1, ge=1, le=50),
         image: UploadFile | None = File(None),
+        color_auto: str = Form(""),
     ):
         """Import monsters only into the encounter where the request started."""
         working_state = self.context.STATE
@@ -123,6 +126,8 @@ class AdminMonstersMixin:
                 "The encounter changed while this request was running. Retry.",
             )
 
+        from python.scrying_glass_monster_palette import spread_copy_colors
+        spread_copy_colors(created, working_state["monsters"], color_auto)  # SG-TODO-029
         working_state["monsters"].extend(created)
 
         await self.context.combatants_changed(
@@ -165,6 +170,9 @@ class AdminMonstersMixin:
                 409,
                 "The encounter changed while this request was running. Retry.",
             )
+
+        from python.scrying_glass_monster_palette import fill_missing_colors
+        fill_missing_colors(imported, working_state["monsters"])
 
         ids = [monster["id"] for monster in imported]
 
@@ -304,9 +312,11 @@ class AdminMonstersMixin:
             except ValueError as exc:
                 raise self.context.HTTPException(422, str(exc)) from exc
 
-        from .scrying_glass_statistics import legacy_max_edit
-        try: legacy_max_edit(candidate, validated.model_dump(exclude_unset=True))
+        from .scrying_glass_statistics import legacy_max_edit, follow_max_increase
+        values = validated.model_dump(exclude_unset=True)
+        try: legacy_max_edit(candidate, values)
         except ValueError as exc: raise self.context.HTTPException(422, str(exc)) from exc
+        follow_max_increase(monster, candidate, "hp" in values and values["hp"] != monster.get("hp"))  # SG-TODO-026
         from .scrying_glass_feature_rules import sync_health
         sync_health(candidate)
 
@@ -378,20 +388,23 @@ class AdminMonstersMixin:
             except ValueError as exc:
                 raise self.context.HTTPException(422, str(exc)) from exc
 
-        from .scrying_glass_statistics import legacy_max_edit
+        from .scrying_glass_statistics import legacy_max_edit, follow_max_increase
         try: legacy_max_edit(candidate, values)
         except ValueError as exc: raise self.context.HTTPException(422, str(exc)) from exc
+        follow_max_increase(monster, candidate, "hp" in values and values["hp"] != monster.get("hp"))  # SG-TODO-026
         hp_result = None
         if hp_delta is not None:
             from .scrying_glass_feature_rules import apply_hp
             hp_result = apply_hp(candidate,hp_delta,critical=critical_hit)
             hp_result["critical_hit"] = critical_hit
 
-        from .scrying_glass_feature_rules import sync_health
+        from .scrying_glass_feature_rules import release_battle_end_hiding, reveal_if_down, sync_health
+        if "visible" in values:
+            release_battle_end_hiding(candidate)
         sync_health(candidate)
 
         if not candidate["alive"]:
-            candidate["visible"] = True
+            reveal_if_down(candidate)
             candidate["in_turn"] = False
 
         if not candidate.get("active"):
@@ -413,6 +426,8 @@ class AdminMonstersMixin:
             self.context.log_hp_change(candidate, hp_delta, hp_result, snapshot(monster))
 
         monster.update(candidate)
+        if "hidden_at_battle_end" not in candidate:
+            monster.pop("hidden_at_battle_end", None)  # update() keeps keys the candidate dropped
         self.context.set_turn(monster, requested_turn)
 
         if monster.get("active") and monster.get("alive"):

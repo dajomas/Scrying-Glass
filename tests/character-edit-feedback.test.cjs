@@ -154,7 +154,7 @@ test('native validity and non-character delegation remain; installation is idemp
 });
 test('document-end loads character owner once before monster wrapper', () => {
     const html = fs.readFileSync(path.join(root, 'templates/admin/190_document_end.html'), 'utf8');
-    assert.equal((html.match(/src="\/static\/character-edit-feedback\.js\?v=1"/g) || []).length, 1);
+    assert.equal((html.match(/src="\/static\/character-edit-feedback\.js\?v=2"/g) || []).length, 1);
     assert.ok(html.indexOf('/static/admin.js') < html.indexOf('/static/character-edit-feedback.js'));
     assert.ok(html.indexOf('/static/character-edit-feedback.js') < html.indexOf('/static/monster-initiative-edit.js'));
 });

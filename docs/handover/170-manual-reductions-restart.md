@@ -2,7 +2,7 @@
 
 [Back to handover index](../../HANDOVER.md)
 
-Recorded: 2026-11-01. Related task: [SG-TODO-002](../todo/020-monster-damage-effects.md).
+Recorded: 2026-11-01. Related task: [SG-TODO-002](../history/020-monster-damage-effects.md).
 
 ## Superseding attack-window implementation
 

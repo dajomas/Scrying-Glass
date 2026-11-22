@@ -13,14 +13,12 @@ REACTION_TARGET = '#battleActionRows .battle-reaction-row [data-action-target]'
 class ActionStatisticsSourceTests(unittest.TestCase):
     def test_assets_order_sizes_and_read_only_contract(self):
         end = (ROOT / 'templates/admin/190_document_end.html').read_text(encoding='utf-8')
-        self.assertEqual(end.count('/static/battle-action-statistics.js?v=1'), 1)
+        self.assertEqual(end.count('/static/battle-action-statistics.js?v=2'), 1)
         self.assertEqual(end.count('/static/battle-action-statistics.css?v=1'), 1)
         self.assertLess(end.index('/static/admin-workflow-navigation.js'), end.index('/static/battle-action-statistics.js'))
         source = (ROOT / 'static/battle-action-statistics.js').read_text(encoding='utf-8')
         for forbidden in ('fetch(', 'innerHTML', 'cloneNode', '.value =', '.disabled =', 'setInterval', 'localStorage'):
             self.assertNotIn(forbidden, source)
-        for name in ('battle-action-statistics.js', 'battle-action-statistics.css'):
-            self.assertLessEqual((ROOT / 'static' / name).stat().st_size, 20000)
 
 
 class ActionStatisticsBrowserTests(unittest.TestCase):

@@ -46,10 +46,11 @@ class CapturedProviderWorkerTests(ImportFixture, unittest.TestCase):
     """Open5e and D&D Beyond through the real worker, shared fetcher and captured responses."""
 
     def setUp(self):
-        super().setUp()
         directory = ROOT / 'monsters_examples' / 'goblin'
         if not (directory / 'manifest.json').is_file():
+            # Skip before the fixture opens its database: a skip in setUp skips tearDown.
             self.skipTest('captured monsters_examples evidence not present')
+        super().setUp()
         manifest = json.loads((directory / 'manifest.json').read_text())
         responses = {row['url']: (directory / row['file']).read_bytes() for row in manifest['requests']
                      if row.get('status') == 200 and row.get('file')}

@@ -21,7 +21,7 @@ from urllib.request import HTTPRedirectHandler, HTTPSHandler, Request, build_ope
 FIXED_PATHS = frozenset((
     'bestiary/index.json', 'bestiary/template.json', 'bestiary/legendarygroups.json',
     'spells/index.json', 'conditionsdiseases.json', 'items.json', 'items-base.json',
-    'skills.json', 'senses.json', 'actions.json', 'variantrules.json',
+    'skills.json', 'senses.json', 'actions.json', 'variantrules.json', 'magicvariants.json',
     'generated/gendata-variantrules.json',
 ))
 _INDEXED = re.compile(r'(?:bestiary/bestiary|spells/spells)-[a-z0-9][a-z0-9-]{0,63}\.json\Z')

@@ -17,11 +17,13 @@
         const prior = pending.get(target);
         if (prior && (feedback.isCurrent(prior.refresh) || prior.session === session)) return;
         if (!form.reportValidity()) return;
+        // SG-TODO-024: untracked HP is neither sent nor changed.
+        const track = form.elements.track_hp ? form.elements.track_hp.checked : true;
         const data = {
             name: form.elements.name.value.trim(),
             color: form.elements.color.value,
-            hp: numberValue(form, 'hp', 0),
-            max_hp: numberValue(form, 'max_hp', 0),
+            ...(track ? {hp: numberValue(form, 'hp', 0), max_hp: numberValue(form, 'max_hp', 0)} : {}),
+            ...(form.elements.track_hp ? {track_hp: track} : {}),
             initiative: form.elements.initiative.value === ''
                 ? null : +form.elements.initiative.value,
         };

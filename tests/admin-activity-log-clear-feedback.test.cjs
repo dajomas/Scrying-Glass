@@ -5,7 +5,7 @@ const fs = require('node:fs'), path = require('node:path'), vm = require('node:v
 const root = path.resolve(__dirname, '..');
 const read = p => fs.readFileSync(path.join(root,p),'utf8');
 const {createController} = require(path.join(root,'static/admin-feedback-controller.js'));
-const core = read('static/admin/040-source.js');
+const core = read('static/admin.js');
 const start = core.indexOf("document.querySelector('#exportActivityLogCsv').onclick");
 const end = core.indexOf("csvImportModal.addEventListener('click'",start);
 assert.ok(start>=0 && end>start);

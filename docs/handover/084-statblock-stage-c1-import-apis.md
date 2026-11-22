@@ -1,6 +1,6 @@
 # 084 - SG-TODO-022 Stage C1: discovery, preparation and apply APIs (022.08)
 
-[Back to handover index](../../HANDOVER.md) · [Stage B](083-statblock-stage-b-sources.md) · [TODO 220](../todo/220-admin-statblock-viewer.md)
+[Back to handover index](../../HANDOVER.md) · [Stage B](083-statblock-stage-b-sources.md) · [TODO 220](../history/220-admin-statblock-viewer.md)
 
 Date: 2026-11-17. Baseline: `9c2845ea363a33f54f5a2bb6abb426b36ba95c70` on
 `features/claude-statblock`. Delivered as a zip archive; commit SHA not yet known.
@@ -24,7 +24,7 @@ bulk import 022.14) and no viewer renders statblocks (022.10-022.12).
   `POST /api/statblocks/discover`, `POST /api/statblocks/prepare` (JSON candidate
   or multipart `.monster`, 202 with a job), `GET`/`DELETE /api/statblocks/jobs/{id}`,
   `POST /api/statblocks/apply`. Summary in
-  [technical 020](../technical/020-apis-workflows-validation.md#statblock-import-sg-todo-02208-admin-app).
+  [technical documentation](../Technical-Documentation.md#statblock-import-sg-todo-02208-admin-app).
 - `scrying_glass_statblock_service.py` (authorization, encounter token, reads) with
   mixins `..._discovering.py`, `..._preparing.py` (jobs, isolated runners) and
   `..._applying.py` (atomic apply, Edit Monster staging); shared envelope and

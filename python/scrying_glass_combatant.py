@@ -20,7 +20,8 @@ def update_alive_state(combatant: dict[str, Any]) -> None:
     combatant["alive"] = combatant.get("hp", 0) > 0
 
     if not combatant["alive"]:
-        combatant["visible"] = True
+        from .scrying_glass_feature_rules import reveal_if_down
+        reveal_if_down(combatant)
         combatant["in_turn"] = False
 
 def reset_entity(x: dict[str, Any]) -> None:
@@ -31,6 +32,7 @@ def reset_entity(x: dict[str, Any]) -> None:
     x["active"] = False
     x["visible"] = False
     x["in_turn"] = False
+    x.pop("hidden_at_battle_end", None)
     x.update(initiative)
 
     if "monster_species" in x:
