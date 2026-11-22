@@ -14,8 +14,7 @@ Git identity when you need source/package integrity.
 Historical overlay instructions and validation reports belong to their original
 Git revisions/packages. Do not assume old Patch/ paths exist in this checkout or
 that their recorded results validate today's code. The technical reference is
-an [index](docs/Technical-Documentation.md) with required topic files under
-`docs/technical/`; keep those files together when copying documentation.
+[one file](docs/Technical-Documentation.md).
 
 ## Requirements and layout
 
@@ -33,9 +32,9 @@ preparation fails explicitly and the rest of the tracker keeps working. The stat
 port (default 3200) is GM-only: restrict it like the Admin port.
 
 Deploy `scrying_glass_server.py`, `python/`, `web_html/`, `templates/` and the
-complete `static/` tree together. Keep package __init__.py files. Do not deploy the
-tracked static/admin.js marker alone: the matching adapter assembles eight source
-fragments at runtime. The service account needs a writable temporary directory.
+complete `static/` tree together. Keep package __init__.py files. `static/admin.js` is
+the Admin script itself; deployments from before SG-TODO-035 (2026-11-22) also had
+`static/admin/` fragments and two adapter modules, which can be removed.
 Restart after imported Python/HTML changes and reload browsers for matching assets.
 
 ## Fresh installation with an explicit environment

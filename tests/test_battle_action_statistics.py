@@ -19,8 +19,6 @@ class ActionStatisticsSourceTests(unittest.TestCase):
         source = (ROOT / 'static/battle-action-statistics.js').read_text(encoding='utf-8')
         for forbidden in ('fetch(', 'innerHTML', 'cloneNode', '.value =', '.disabled =', 'setInterval', 'localStorage'):
             self.assertNotIn(forbidden, source)
-        for name in ('battle-action-statistics.js', 'battle-action-statistics.css'):
-            self.assertLessEqual((ROOT / 'static' / name).stat().st_size, 20000)
 
 
 class ActionStatisticsBrowserTests(unittest.TestCase):

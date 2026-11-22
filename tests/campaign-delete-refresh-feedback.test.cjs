@@ -1,6 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const {adminRange} = require('./admin-source.cjs');
 const {fixture,seed,deferred,flush}=require('./campaign-delete-fixture.cjs');
-const source=fs.readFileSync(require('node:path').join(__dirname,'../static/admin/040-source.js'),'utf8');
+const source=adminRange("let csvImportSession = null;", "// Stage 1 Step 1D: owned validation/request/success and guarded appli");
 const helper=source.slice(source.indexOf('async function applyOpenedSetup('),source.indexOf('const REPLACE_WARNING'));
 function realHelper(h){h.context.renderCampaigns=()=>{};h.context.syncActiveBattleSetupControls=()=>{};
  h.context.renderActiveBattleSetup=()=>{};vm.runInContext(helper,h.context);}

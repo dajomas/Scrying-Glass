@@ -1,4 +1,4 @@
-"""Template asset wiring and the 20,000-byte limit for static files and template fragments.
+"""Template asset wiring for the Admin and users pages.
 
 Pages get a fresh cache-busting token per render (python/scrying_glass_asset_cache.py),
 so manual ?v=N suffixes are not pinned here.
@@ -8,8 +8,6 @@ import re
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-LIMIT = 20000
-ASSEMBLED = {ROOT / 'static/admin.js'}  # assembled from static/admin/*.js by the test runner
 
 
 def local_assets(text):
@@ -34,14 +32,6 @@ class AdminAssetWiringTests(unittest.TestCase):
         end = (ROOT / 'templates/admin/190_document_end.html').read_text(encoding='utf-8')
         self.assertLess(end.index('/static/admin.js'), end.index('/static/monster-candidate-selection.js'))
         self.assertLess(end.index('/static/monster-refresh-selection.js'), end.index('/static/monster-refresh-review.js'))
-
-    def test_static_files_and_template_fragments_are_bounded(self):
-        files = [p for p in (ROOT / 'static').rglob('*') if p.is_file() and p not in ASSEMBLED]
-        files += list((ROOT / 'templates').rglob('*.html'))
-        self.assertTrue(files)
-        for path in files:
-            with self.subTest(path=str(path.relative_to(ROOT))):
-                self.assertLessEqual(path.stat().st_size, LIMIT)
 
     # Typed refresh-review feedback is checked by behaviour in
     # test_monster_refresh_review_browser.py; a text ban on paneNotification( was removed

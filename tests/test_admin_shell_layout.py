@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 from feedback_browser_fixture import install_feedback
+from admin_source import admin_range
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -36,7 +37,7 @@ class AdminShellLayoutTests(unittest.TestCase):
         self.page = self.browser.new_page(viewport={'width': 1440, 'height': 900})
         self.page.set_content(self.html)
         install_feedback(self.page)
-        self.page.add_script_tag(content=(ROOT / 'static/admin/010-source.js').read_text(encoding='utf-8'))
+        self.page.add_script_tag(content=admin_range('function monsterSourceLabel(candidate, popup = false) {', 'function monsterRow(monster) {'))
         self.page.add_script_tag(content=(ROOT / 'static/admin-notification-layout.js').read_text(encoding='utf-8'))
 
     def tearDown(self):

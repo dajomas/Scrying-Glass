@@ -8,8 +8,7 @@ from python.scrying_glass_combatant import reset_entity, reset_imported_monster,
 from python.scrying_glass_monster_initiative import (
     initiative_patch, normalize_initiative, reset_initiative_patch,
 )
-from python.scrying_glass_storage_fields import ENTITY_FIELDS, TEXT_FIELDS
-from python.scrying_glass_storage_records import StorageRecordsMixin
+from python.scrying_glass_storage import ENTITY_FIELDS, TEXT_FIELDS, SQLiteStorageBase
 
 
 def monster(**changes):
@@ -114,7 +113,7 @@ class InitiativeResetTests(unittest.TestCase):
                 self.assertIsNone(result["initiative_roll"])
 
 
-class EntityRecordsFixture(StorageRecordsMixin):
+class EntityRecordsFixture(SQLiteStorageBase):
     def __init__(self, path):
         self.connection = sqlite3.connect(path)
         self.connection.row_factory = sqlite3.Row

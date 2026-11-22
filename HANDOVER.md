@@ -55,9 +55,6 @@ This is the index; substantive handover lives in numbered docs/handover sections
 37. [Battle Actions combatant statistics](docs/handover/360-battle-actions-combatant-statistics.md)
 38. [Focused live encounter workspace](docs/handover/370-live-encounter-workspace.md)
 39. [Feedback delivery plan and continuity](docs/handover/380-feedback-delivery-plan.md)
-   - [Feedback foundations and CI history](docs/handover/381-feedback-foundations-and-ci-history.md)
-   - [Start feedback history](docs/handover/382-start-feedback-history.md)
-   - [Next and End feedback history](docs/handover/383-next-and-end-feedback-history.md)
    - [State-load feedback](docs/handover/385-state-load-feedback.md)
 40. [Reset-all feedback](docs/handover/390-reset-all-feedback.md)
 41. [Individual combatant reset feedback](docs/handover/400-individual-reset-feedback.md)
@@ -100,6 +97,7 @@ This is the index; substantive handover lives in numbered docs/handover sections
 74. [5e.tools magic-item variants](docs/handover/730-fivetools-magic-item-variants.md) - SG-TODO-033 part 2, 2026-11-22 on `features/claude`: generic and specific variants built like the pinned runtime (oracle: 230 + 3,513 identical; 90 item copies identical after the item preserve fix); real monsters partial 55 → 1 (the 1 is a missing legendary group). Item type/property text became SG-TODO-034. Completed and closed 2026-11-22 (CI 44964454668, e2e 20261122T073821Z: 137 passed).
 75. [Test consolidation](docs/handover/740-test-consolidation.md) - SG-TODO-023 second half, 2026-11-22 on `features/claude`: per-test dispositions for the named paths; one Save As test folded into its overlap (with mutant evidence), one text ban removed (behaviour tests kill all variants), pytest modules kept; CI 45001741568 green (2,371 → 2,369 tests). Completed and closed 2026-11-22; with it the five planned groups are done.
 76. [5e.tools item type and property text](docs/handover/750-fivetools-item-enhancement.md) - SG-TODO-034, 2026-11-22 on `features/claude`: item definitions show the property, type and mastery text 5e.tools adds (oracle: 6,706 of 6,706 enhanced items identical); wrappers render in place; real monsters unchanged in completeness, 38 gain the linked tool definitions (largest snapshot 1.03 MB). Completed and closed 2026-11-22 (CI 45018908380, e2e 20261122T160750Z).
+77. [Remove the 20,000-byte file splitting](docs/handover/760-remove-file-size-splitting.md) - SG-TODO-035, 2026-11-22 on `features/claude`: `static/admin.js` and `scrying_glass_storage.py` are single files again, Technical Documentation and handover 380 rejoined, the split test runner, CI evidence chunks and size checks removed. Delivered; closure follows CI and e2e.
 
 <a id="current-state---2026-11-11"></a>
 <a id="current-state---2026-11-12"></a>

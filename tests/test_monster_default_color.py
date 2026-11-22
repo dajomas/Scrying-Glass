@@ -61,7 +61,7 @@ class PaletteRuleTests(unittest.TestCase):
         end = (ROOT / 'templates/admin/190_document_end.html').read_text(encoding='utf-8')
         self.assertEqual(end.count('/static/monster-default-color.js?v=2'), 1)
         self.assertIn('window.scryingMonsterColorState?.(latest);',
-                      (ROOT / 'static/admin/030-source.js').read_text(encoding='utf-8'))
+                      (ROOT / 'static/admin.js').read_text(encoding='utf-8'))
 
 
 def fake_fastapi():

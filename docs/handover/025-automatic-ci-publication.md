@@ -19,8 +19,10 @@ As verified on 2026-11-15, .github/workflows/publish-ci-results.yml listens for
 completed Branch tests push runs on features/perplexity and
 features/perplexity-statblock, including failed and cancelled runs. Earlier
 dated branch lists below are historical. tools/publish_ci_results.sh collects exact-attempt metadata,
-jobs and logs, plus run-scoped artifacts, and builds/verifies lossless reading
-copies with tools/chunk_ci_evidence.py. Artifacts are not guaranteed to belong
+jobs and logs, plus run-scoped artifacts. (Until SG-TODO-035, 2026-11-22, it also built
+4,000-byte reading copies with tools/chunk_ci_evidence.py; that tool is removed, and the
+copies stop once `main` has the change, because the workflow runs the collector from
+`main`.) Artifacts are not guaranteed to belong
 to the selected attempt; inspect provenance and collection warnings.
 
 Evidence is committed to the tested branch in ci-results-RUN_ID-attempt-ATTEMPT.

@@ -24,7 +24,7 @@ bulk import 022.14) and no viewer renders statblocks (022.10-022.12).
   `POST /api/statblocks/discover`, `POST /api/statblocks/prepare` (JSON candidate
   or multipart `.monster`, 202 with a job), `GET`/`DELETE /api/statblocks/jobs/{id}`,
   `POST /api/statblocks/apply`. Summary in
-  [technical 020](../technical/020-apis-workflows-validation.md#statblock-import-sg-todo-02208-admin-app).
+  [technical documentation](../Technical-Documentation.md#statblock-import-sg-todo-02208-admin-app).
 - `scrying_glass_statblock_service.py` (authorization, encounter token, reads) with
   mixins `..._discovering.py`, `..._preparing.py` (jobs, isolated runners) and
   `..._applying.py` (atomic apply, Edit Monster staging); shared envelope and

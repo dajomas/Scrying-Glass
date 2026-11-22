@@ -9,8 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class GlobalFeedbackCoreInventoryTests(unittest.TestCase):
     def test_core_has_no_untyped_message_or_pane_notification_calls(self):
         # Stage 4: the superseded 070 handlers were removed and untyped delivery is retired.
-        parts = sorted((ROOT / "static/admin").glob("*-source.js"))
-        self.assertEqual(len(parts), 8)
+        parts = [ROOT / "static/admin.js"]
         calls, pane = {}, {}
         for part in parts:
             text = part.read_text(encoding="utf-8")

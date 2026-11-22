@@ -121,7 +121,7 @@ class WorkflowPrerequisiteTests(unittest.TestCase):
         setup = [step for step in audit['steps'] if 'uses' in step]
         self.assertEqual(setup, [step for step in self.steps if 'uses' in step and 'upload-artifact' not in step['uses']])
         step = steps['Connection audit of isolated unittest modules']
-        self.assertEqual(step['run'], 'python tools/run_split_tests.py -- python tests/audit_connection_lifetime.py')
+        self.assertEqual(step['run'], 'python tests/audit_connection_lifetime.py')
         self.assertIn("steps.chromium.conclusion == 'success'", step['if'])
         self.assertNotIn('continue-on-error', step)
         self.assertIn("-p 'test_*.py'", self.by_name['Python test suite (including browser fixtures)']['run'])

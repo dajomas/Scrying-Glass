@@ -1,14 +1,15 @@
 // Stage 4: the superseded 030 setup-import handlers were removed; this check now
 // drives the 040 owner (openSetupImport/submitSetupImport) that the Admin binds.
 const assert=require('node:assert/strict');
+const {adminRange} = require('./admin-source.cjs');
 const fs=require('node:fs');
 const vm=require('node:vm');
 const path=require('node:path');
-const source=fs.readFileSync(path.join(__dirname,'../static/admin/040-source.js'),'utf8');
+const source=adminRange("let csvImportSession = null;", "// Stage 1 Step 1D: owned validation/request/success and guarded appli");
 const start=source.indexOf('async function openSetupImport()');
 const end=source.indexOf("document.querySelector('#exportActivityLogCsv').onclick",start);
 assert.ok(start>=0&&end>start,'Cannot isolate the setup-import owner');
-assert.ok(!fs.readFileSync(path.join(__dirname,'../static/admin/030-source.js'),'utf8').includes("querySelector('#importForm').onsubmit ="),
+assert.ok(!adminRange("function sortedMonstersForAdmin() {", "let csvImportSession = null;").includes("querySelector('#importForm').onsubmit ="),
     'The superseded 030 setup-import submit handler must not return');
 const html=fs.readFileSync(path.join(__dirname,'../templates/admin/120_setup_import_modal.html'),'utf8');
 assert.match(html,/<option value="alive" selected>Alive<\/option>/);

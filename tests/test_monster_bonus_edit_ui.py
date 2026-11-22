@@ -3,6 +3,7 @@ import unittest
 from pathlib import Path
 from feedback_browser_fixture import install_feedback
 from python.scrying_glass_asset_cache import cache_bust_html
+from admin_source import admin_range
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -45,7 +46,7 @@ class MonsterBonusEditUITests(unittest.TestCase):
                         function paneNotification(kind,text) { notices.push({kind,text}); }
                         document.querySelector('#editForm').onsubmit=async event=>{event.preventDefault();characterSaves++;};
                     """)
-                    page.add_script_tag(content=(ROOT / 'static/admin/020-source.js').read_text(encoding='utf-8'))
+                    page.add_script_tag(content=admin_range('function monsterRow(monster) {', 'function sortedMonstersForAdmin() {'))
                     page.add_script_tag(content=(ROOT / 'static/monster-initiative-edit.js').read_text(encoding='utf-8'))
                     page.evaluate("openEdit('monsters','m')")
                     bonus = page.locator('[name="initiative_bonus"]')

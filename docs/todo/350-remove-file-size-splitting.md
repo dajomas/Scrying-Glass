@@ -7,7 +7,8 @@
 SG-TODO-035 - proposed 2026-11-22 by the user: "get rid of all the file splitting and split
 files due to the 20k file size limit … roll all file splitting back." The limit was imposed
 for the Perplexity git connector, which could not read larger files. Inventory made
-2026-11-22 (below); no rollback done yet. Scope decisions are open (see the end).
+2026-11-22 (below). Decided and delivered 2026-11-22 in one commit
+([handover 760](../handover/760-remove-file-size-splitting.md)); closure follows CI and e2e.
 
 ## Origin of the limit
 
@@ -90,14 +91,18 @@ size limit"), and the statblock service mixins `scrying_glass_statblock_discover
 boundaries also follow features, so a size-only reason cannot be shown from the record.
 Today 4 tracked code files are above 25,000 bytes, 18 between 18,000 and 25,000.
 
-## Decisions needed
+## Decisions (user, 2026-11-22)
 
-1. Categories A–E are mechanical; roll all back? (A: one `static/admin.js`, served as a
-   plain static file, tests read it directly, `run_split_tests.py` removed. B: one
-   `scrying_glass_storage.py`. C: rejoin both documents. D: stop chunking; earlier publish
-   commits stay as history. E: remove the size assertions.)
-2. Category F: leave as is (modules with feature boundaries), or merge named cases
-   (monster-image-choice.js, statblock service mixins)?
-3. Drop the size policy in task 080 and the README text, and record that the limit is gone.
-4. Order: one commit per category, each with CI (A last or first, it touches the most
-   tests), and an e2e run after A.
+1. Roll back categories A-E: one `static/admin.js` served as a plain static file and read
+   directly by the tests (`run_split_tests.py` removed); one `scrying_glass_storage.py`;
+   both documents rejoined; no more CI evidence chunks (earlier publish commits stay as
+   history); the size assertions removed.
+2. Category F stays as it is: `monster-image-choice.js` and the statblock service mixins
+   keep their feature boundaries; only the size policy goes.
+3. Delivery: all in one commit, one CI run, then an e2e run.
+
+## Delivered
+
+See [handover 760](../handover/760-remove-file-size-splitting.md). The size policy in
+[080](080-source-size-refactors.md) is withdrawn. The CI evidence chunks stop once `main`
+has this change: the publish workflow runs the collector scripts from `main`.

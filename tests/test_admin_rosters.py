@@ -19,8 +19,6 @@ class RosterSourceTests(unittest.TestCase):
         for forbidden in ('fetch(', 'innerHTML', 'replaceChildren', 'data-chp', 'data-cmaxhp', 'keydown', 'localStorage'):
             self.assertNotIn(forbidden, source)
         self.assertIn('setAllSelected(kind, false)', source)
-        for name in ('admin-rosters.js', 'admin-rosters.css'):
-            self.assertLessEqual((ROOT / 'static' / name).stat().st_size, 20000)
 
 
 class RosterBrowserTests(unittest.TestCase):

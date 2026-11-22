@@ -3,6 +3,10 @@
 [Back to handover index](../../HANDOVER.md)
 
 Updated 2026-11-03. Task: [SG-TODO-008](../todo/080-source-size-refactors.md).
+
+**Reversed 2026-11-22** by SG-TODO-035 ([handover 760](760-remove-file-size-splitting.md)):
+fields, schema, records and operations are back in `scrying_glass_storage.py`. This page is
+history.
 Corrective preparation base: 2e5d1d4ecedc3e88fa5bd3a565e49fbaa11660fb, features/perplexity.
 
 ## Delivery and architecture

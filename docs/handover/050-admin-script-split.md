@@ -4,6 +4,10 @@
 
 Last updated: 2026-11-03. Task: [SG-TODO-008](../todo/080-source-size-refactors.md).
 
+**Reversed 2026-11-22** by SG-TODO-035 ([handover 760](760-remove-file-size-splitting.md)):
+`static/admin.js` is one file again, served as a plain static file; the fragments, the
+adapter and `tools/run_split_tests.py` are gone. This page is history.
+
 ## Activation history and compatibility
 
 Activation: 9f1b14ae99d3b297f4557f05f7f72485ab674d56.

@@ -135,7 +135,7 @@ WORK=$(mktemp -d "${SG_LOCAL_TEST_TMPDIR:-/tmp}/scrying-local-tests-XXXXXX")
     [[ "$(git -C "$WORK/repo" rev-parse HEAD)" == "$HASH" ]]
 } > "$RUN/workspace-prepare.log" 2>&1
 cd -- "$WORK/repo"
-[[ -f tools/run_split_tests.py && -d tests ]] || {
+[[ -f scrying_glass_server.py && -d tests ]] || {
     echo 'Committed HEAD lacks Scrying Glass test sources' >&2; exit 2;
 }
 mkdir -p -- "$WORK/tmp"
@@ -171,11 +171,11 @@ run_group() {
                 scrying_glass_server.py python web_html tests tools || failed=1
             run_command syntax server-import "$PY" -c 'import scrying_glass_server' || failed=1 ;;
         python)
-            run_command python unittest "$PY" tools/run_split_tests.py -- "$PY" \
+            run_command python unittest "$PY" \
                 -m unittest discover -s tests -p 'test_*.py' -v || failed=1 ;;
         pytest)
             mkdir -p -- "$RUN/suites/pytest"
-            run_command pytest regressions "$PY" tools/run_split_tests.py -- "$PY" -m pytest -q \
+            run_command pytest regressions "$PY" -m pytest -q \
                 tests/test_death_save_validation_2ba6607.py \
                 tests/test_slug_truncation_82860c4.py \
                 --junitxml="$RUN/suites/pytest/results.xml" || failed=1 ;;
@@ -198,11 +198,11 @@ PY
                 n=$((n + 1))
                 printf '%s\t%s\n' "$n" "$test" >> "$RUN/$group-inventory.tsv"
                 if [[ "$group" == javascript ]]; then
-                    run_command "$group" "script-$n" "$PY" tools/run_split_tests.py -- node --test "$test" || failed=1
+                    run_command "$group" "script-$n" node --test "$test" || failed=1
                 else
                     args=()
                     [[ "$test" != tests/audit_log_clear.py ]] || args=(patched)
-                    run_command "$group" "script-$n" "$PY" tools/run_split_tests.py -- "$PY" "$test" "${args[@]}" || failed=1
+                    run_command "$group" "script-$n" "$PY" "$test" "${args[@]}" || failed=1
                 fi
             done ;;
     esac

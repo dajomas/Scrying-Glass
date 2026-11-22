@@ -2,7 +2,6 @@
 from pathlib import Path
 import unittest
 from playwright.sync_api import sync_playwright
-from python.scrying_glass_admin_source import read_admin_script
 
 ROOT=Path(__file__).resolve().parents[1]
 PAIRS=[('toggleCampaignPane','campaignInputPane'),('toggleCharacterPane','characterInputPane'),
@@ -20,7 +19,7 @@ class DependentControlTests(unittest.TestCase):
         panes=''.join(f'<section id="{n}" class="pane">Input</section>' for _,n in PAIRS)
         self.page.set_content('<body class="admin-shell"><header id="adminHeader"><div id="adminButtonBar">'+buttons+'</div></header><main id="adminScroll">'+panes+'</main></body>')
         self.page.add_style_tag(path=str(ROOT/'static/admin-shell.css'))
-        source=read_admin_script(ROOT/'static').decode('utf-8')
+        source=(ROOT/'static/admin.js').read_text(encoding='utf-8')
         start=source.index('const hideablePanes =')
         end=source.index("document.querySelector('#editForm').onsubmit",start)
         self.page.add_script_tag(content="let latest={battle_order:[]};window.scryingLairsRender=()=>{};\n"+source[start:end])

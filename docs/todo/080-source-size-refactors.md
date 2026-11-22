@@ -33,6 +33,10 @@ prepared/undelivered-fix and final-acceptance checklist entries are superseded.
 
 ### Size policy and final code audit
 
+**Withdrawn 2026-11-22 (SG-TODO-035, [task 350](350-remove-file-size-splitting.md)):** there is
+no file size limit any more; the Admin script and the storage module are single files again.
+The text below is the historical policy.
+
 New code files: maximum 20,000 bytes. Existing code files: tolerated up to 25,000
 bytes; the 5,000-byte margin is tolerance, not a target. The native Admin reader
 still requires at most 20,000 bytes per fragment.

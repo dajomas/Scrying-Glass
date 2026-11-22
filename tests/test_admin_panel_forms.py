@@ -18,8 +18,6 @@ class PanelFormsSourceTests(unittest.TestCase):
         source = (ROOT / 'static/admin-panel-forms.js').read_text(encoding='utf-8')
         for forbidden in ('fetch(', 'innerHTML', 'cloneNode', '.reset(', '.onsubmit =', 'localStorage'):
             self.assertNotIn(forbidden, source)
-        for name in ('admin-panel-forms.js', 'admin-panel-forms.css'):
-            self.assertLessEqual((ROOT / 'static' / name).stat().st_size, 20000)
 
 
 class PanelFormsBrowserTests(unittest.TestCase):
