@@ -127,6 +127,69 @@ class MenuBrowserTests(unittest.TestCase):
         finally:
             page.close()
 
+    GEOMETRY = """() => {
+        const list = [...document.querySelectorAll('.sg-menu-list')].find(n => !n.hidden);
+        const t = document.querySelector(`[aria-controls="${list.id}"]`).getBoundingClientRect();
+        const b = list.getBoundingClientRect();
+        const item = list.querySelector('[role=option]').getBoundingClientRect();
+        const hit = document.elementFromPoint(item.left + item.width / 2, item.top + item.height / 2);
+        return {top: b.top, bottom: b.bottom, height: innerHeight, below: b.top - t.bottom,
+                above: t.top - b.bottom, onTop: list.contains(hit), up: list.classList.contains('sg-menu-up')};
+    }"""
+
+    def test_list_stays_visible_at_the_modal_edge_and_while_scrolling(self):
+        page, errors, mutations = self.open_page()
+        try:
+            page.set_viewport_size({'width': 1440, 'height': 640})
+            page.evaluate("""() => {  // enough combatants that the list cannot fit below the last row
+                const base = latest.monsters[0];
+                for (let i = 1; i <= 10; i++) latest.monsters.push({...base, id: `extra-${i}`, name: `Extra ${i}`});
+            }""")
+            for _ in range(6):
+                page.locator('#addBattleReaction').click()
+            dialog = page.locator('#battleActionModal > div')
+            self.assertTrue(dialog.evaluate('n => n.scrollHeight > n.clientHeight'))  # the modal scrolls
+            dialog.evaluate('n => { n.scrollTop = n.scrollHeight; }')
+            last = page.locator('.battle-reaction-row').last.locator('.sg-menu-trigger').first
+            last.click()
+            listbox = page.locator('.battle-reaction-row').last.locator('[role="listbox"]').first
+            g = page.evaluate(self.GEOMETRY)
+            self.assertTrue(g['bottom'] <= g['height'] and g['top'] >= 0, g)  # not cut off by the modal or the window
+            self.assertTrue(g['onTop'], g)                                       # not hidden behind the modal's edge
+            self.assertTrue(g['up'] and 0 <= g['above'] <= 4, g)                 # no room below: opens upwards
+            # Scrolling the modal keeps the list open and attached to its menu.
+            dialog.evaluate('n => { n.scrollTop -= 40; }')
+            page.wait_for_timeout(50)
+            self.assertTrue(listbox.is_visible())
+            g = page.evaluate(self.GEOMETRY)
+            self.assertTrue(0 <= g['above'] <= 4 or 0 <= g['below'] <= 4, g)
+            # A press on the modal's scrollbar does not close it. Playwright's headless Chromium
+            # hides scrollbars, so dispatch the press in the strip right of the modal's content
+            # box, where a browser draws the vertical scrollbar.
+            pressed = dialog.evaluate("""n => {
+                const b = n.getBoundingClientRect(), right = b.left + n.clientLeft + n.clientWidth;
+                if (b.right - right < 1) return false;
+                n.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true,
+                    clientX: (right + b.right) / 2, clientY: b.top + b.height / 2}));
+                return true;
+            }""")
+            self.assertTrue(pressed)
+            self.assertTrue(listbox.is_visible())
+            box = dialog.bounding_box()
+            # A press elsewhere in the modal does close it.
+            page.mouse.click(box['x'] + 10, box['y'] + 10)
+            self.assertTrue(listbox.is_hidden())
+            last.click()
+            self.assertTrue(listbox.is_visible())
+            # Scrolled out of the modal's view, it closes.
+            dialog.evaluate('n => { n.scrollTop = 0; }')
+            page.wait_for_timeout(50)
+            self.assertTrue(listbox.is_hidden())
+            self.assertEqual(errors, [])
+            self.assertEqual(mutations, [])
+        finally:
+            page.close()
+
     def test_unanswered_menu_is_marked_instead_of_a_hidden_bubble(self):
         page, errors, mutations = self.open_page()
         try:

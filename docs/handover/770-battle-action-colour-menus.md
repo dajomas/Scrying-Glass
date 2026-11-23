@@ -42,3 +42,22 @@ menu and in every entry, since a native menu cannot show it per entry.
   counts as before.
 - Screenshot check of the modal with a menu open (dark theme): dots in the closed menus and
   the list, the highlighted entry readable.
+
+## Correction - 2026-11-23
+
+Reported by the user after 4d45f0a (CI 45213572798 green): the list disappeared below the
+edge of the Battle Actions modal, and scrolling the modal with its scrollbar closed it.
+
+- The list is now fixed to the viewport, so the modal's scrolling box no longer cuts it
+  off. It opens below the menu, or above it when there is more room there; its height is
+  limited to the room available (at least 80 px, at most 16rem).
+- It follows its menu while the modal (or the page) scrolls or the window resizes, and
+  closes when the menu scrolls out of the modal's view. Scrolling inside the list itself
+  is left alone.
+- A press on a scrollbar no longer counts as a click outside the menu.
+- `test_list_stays_visible_at_the_modal_edge_and_while_scrolling`: a short window with ten
+  extra combatants; the list of the last row opens upwards, lies fully in the window and on
+  top; it stays attached while the modal scrolls; a scrollbar press keeps it open (the press
+  is dispatched in the scrollbar strip, because Playwright's headless Chromium hides
+  scrollbars), a press elsewhere closes it, and scrolling the menu out of view closes it.
+  Both faults (no scrollbar check; the list positioned inside the modal) fail this test.

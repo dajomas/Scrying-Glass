@@ -129,6 +129,7 @@
         });
         list.replaceChildren(...items);
         if (menu.active >= items.length) menu.active = items.length - 1;
+        place(menu);
         highlight(menu);
     }
 
@@ -144,6 +145,40 @@
         }
     }
 
+    // The list is fixed to the viewport, so the modal's scrolling box cannot cut it off. It
+    // opens below the menu, or above when there is more room there, and follows the menu
+    // while the modal scrolls; it closes when the menu scrolls out of the modal's view.
+    const MARGIN = 8;
+    function visibleIn(trigger) {
+        const box = trigger.getBoundingClientRect();
+        for (let node = trigger.parentElement; node && node !== document.body; node = node.parentElement) {
+            const style = getComputedStyle(node);
+            if (!/(auto|scroll|hidden)/.test(style.overflowY + style.overflowX)) continue;
+            const view = node.getBoundingClientRect();
+            if (box.bottom <= view.top || box.top >= view.bottom || box.right <= view.left || box.left >= view.right) {
+                return false;
+            }
+        }
+        return box.bottom > 0 && box.top < window.innerHeight;
+    }
+
+    function place(menu) {
+        const {trigger, list} = menu;
+        if (list.hidden) return;
+        if (!visibleIn(trigger)) { close(menu); return; }
+        const box = trigger.getBoundingClientRect();
+        const below = window.innerHeight - box.bottom - MARGIN;
+        const above = box.top - MARGIN;
+        const wanted = Math.min(list.scrollHeight + 2, 16 * parseFloat(getComputedStyle(document.documentElement).fontSize));
+        const up = below < wanted && above > below;
+        const room = Math.max(80, Math.min(wanted, up ? above : below));
+        list.style.left = `${Math.max(MARGIN, box.left)}px`;
+        list.style.width = `${box.width}px`;
+        list.style.maxHeight = `${room}px`;
+        list.style.top = up ? `${Math.max(MARGIN, box.top - room - 2)}px` : `${box.bottom + 2}px`;
+        list.classList.toggle('sg-menu-up', up);
+    }
+
     function open(menu) {
         if (menu.select.disabled) return;
         for (const other of menus.values()) if (other !== menu) close(other);
@@ -152,6 +187,8 @@
         menu.list.hidden = false;
         menu.trigger.setAttribute('aria-expanded', 'true');
         fill(menu);
+        place(menu);
+        highlight(menu);
     }
 
     function close(menu) {
@@ -250,11 +287,28 @@
     }
 
     new MutationObserver(scan).observe(rows, {childList: true, subtree: true});
+    // A press on a scrollbar (for example the modal's) scrolls; it is not a click outside.
+    function onScrollbar(event) {
+        const node = event.target;
+        if (!(node instanceof Element) || node === document.documentElement) return false;
+        const box = node.getBoundingClientRect();
+        const right = box.left + node.clientLeft + node.clientWidth;
+        const bottom = box.top + node.clientTop + node.clientHeight;
+        return (node.scrollHeight > node.clientHeight && event.clientX >= right && event.clientX <= box.right) ||
+            (node.scrollWidth > node.clientWidth && event.clientY >= bottom && event.clientY <= box.bottom);
+    }
     document.addEventListener('pointerdown', event => {
+        if (onScrollbar(event)) return;
         for (const menu of menus.values()) {
             if (!menu.list.hidden && !menu.trigger.contains(event.target) && !menu.list.contains(event.target)) close(menu);
         }
     });
+    const follow = event => {
+        if (event?.target instanceof Element && event.target.closest('.sg-menu-list')) return;  // scrolling the list itself
+        for (const menu of menus.values()) if (!menu.list.hidden) place(menu);
+    };
+    document.addEventListener('scroll', follow, true);  // any scrolling ancestor, the modal included
+    window.addEventListener('resize', follow);
     // Colours and names can change with every state refresh.
     const previous = window.scryingLairsRender;
     window.scryingLairsRender = function () {
