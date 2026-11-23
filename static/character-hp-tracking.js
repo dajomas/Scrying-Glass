@@ -51,7 +51,7 @@
             checkbox.type = 'checkbox';
             checkbox.name = 'track_hp';
             checkbox.checked = window.scryingTracksHp(item);
-            label.append(checkbox, document.createTextNode(' Track HP'));
+            label.append(checkbox, document.createTextNode('Track HP'));
             hp.closest('label').before(label);
             toggle(checkbox, () => [editForm.elements.hp, editForm.elements.max_hp].filter(Boolean));
             return result;

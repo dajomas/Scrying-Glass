@@ -71,6 +71,32 @@ class CharacterHpTrackingAdminTests(unittest.TestCase):
         self.assertNotIn('max_hp', body)
         self.assertEqual(errors, [])
 
+    def test_edit_track_hp_checkbox_sits_beside_its_text(self):
+        for untracked in (True, False):
+            with self.subTest(untracked=untracked):
+                page, errors = self.open_page(untracked=untracked)
+                page.locator(f'#characters button[data-edit="{self.character["id"]}"]').click()
+                layout = page.locator('#editForm label.sg-track-hp-field').evaluate('''label => {
+                    const box = label.querySelector('input').getBoundingClientRect();
+                    const range = document.createRange(); range.selectNodeContents(label);
+                    const text = [...range.getClientRects()].pop();
+                    const mid = r => r.top + r.height / 2;
+                    // the control in the other column of the same grid row
+                    const row = label.getBoundingClientRect();
+                    const peer = [...label.parentElement.querySelectorAll('label > input:not([type=checkbox])')]
+                        .map(n => n.getBoundingClientRect())
+                        .find(r => r.height && Math.abs(r.bottom - row.bottom) < 40 && r.left > row.right);
+                    return {beside: text.left >= box.right, level: Math.abs(mid(text) - mid(box)),
+                            text: label.textContent.trim(), peer: peer ? Math.abs(mid(peer) - mid(box)) : null};
+                }''')
+                self.assertTrue(layout['beside'], layout)          # checkbox, then its text, on one line
+                self.assertLessEqual(layout['level'], 3, layout)
+                self.assertEqual(layout['text'], 'Track HP')
+                if layout['peer'] is not None:
+                    self.assertLessEqual(layout['peer'], 3, layout)  # level with the input beside it
+                self.assertEqual(errors, [])
+                page.close()
+
     def test_tracked_character_edit_still_sends_hp(self):
         page, errors = self.open_page()
         ident = self.character['id']

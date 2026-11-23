@@ -1,0 +1,109 @@
+/* Battle Actions source and target menus with colour markers (battle-action-menus.js). */
+#battleActionModal .sg-menu-host {
+    position: relative;
+}
+#battleActionModal .sg-menu-native {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 1px;
+    height: 1px;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+#battleActionModal .battle-action-row > label > .sg-menu-trigger {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: .1rem;
+    height: 2.5rem;
+    min-height: 2.5rem;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+    padding: 0 2rem 0 var(--admin-space-2, .55rem);
+    border: 1px solid var(--admin-border, var(--border));
+    border-radius: var(--admin-control-radius, 6px);
+    background: var(--admin-control, #fff);
+    color: var(--admin-text, inherit);
+    font: inherit;
+    text-align: left;
+    position: relative;
+}
+#battleActionModal .sg-menu-trigger::after {
+    content: "";
+    position: absolute;
+    right: .8rem;
+    top: 50%;
+    width: .45rem;
+    height: .45rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-70%) rotate(45deg);
+    opacity: .75;
+}
+#battleActionModal .sg-menu-trigger:disabled {
+    cursor: default;
+    opacity: .6;
+}
+#battleActionModal .sg-menu-trigger.sg-menu-placeholder .sg-menu-text {
+    opacity: .7;
+}
+#battleActionModal .sg-menu-trigger.sg-menu-invalid {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 1px #ef4444;
+}
+#battleActionModal .sg-menu-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#battleActionModal .sg-menu-dot {
+    flex: none;
+}
+#battleActionModal .sg-menu-dot-empty {
+    background: transparent;
+    border-style: dashed;
+    box-shadow: none;
+}
+#battleActionModal .sg-menu-list {
+    /* Placed in viewport coordinates by battle-action-menus.js. */
+    position: fixed;
+    z-index: 1000;
+    box-sizing: border-box;
+    max-height: 16rem;
+    overflow-y: auto;
+    margin: 0;
+    padding: .25rem 0;
+    list-style: none;
+    border: 1px solid var(--admin-border, var(--border));
+    border-radius: var(--admin-control-radius, 6px);
+    background: var(--admin-control, #fff);
+    color: var(--admin-text, inherit);
+    box-shadow: 0 8px 20px #0008;
+}
+#battleActionModal .sg-menu-list[hidden] {
+    display: none;
+}
+#battleActionModal .sg-menu-list [role="option"] {
+    display: flex;
+    align-items: center;
+    gap: .1rem;
+    padding: .4rem .6rem;
+    cursor: pointer;
+    white-space: nowrap;
+}
+#battleActionModal .sg-menu-list [role="option"][aria-selected="true"] {
+    font-weight: 600;
+}
+#battleActionModal .sg-menu-list [role="option"].sg-menu-active,
+#battleActionModal .sg-menu-list [role="option"]:hover {
+    background: #ffffff24;
+    outline: 1px solid #ffffff40;
+    outline-offset: -1px;
+}

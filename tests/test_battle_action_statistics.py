@@ -153,7 +153,9 @@ class ActionStatisticsBrowserTests(unittest.TestCase):
                 for selector in (TARGET, SOURCE, REACTION_TARGET):
                     field = page.locator(selector)
                     self.assertTrue(field.evaluate("""n => {
-                        const s=n.nextElementSibling,b=n.getBoundingClientRect(),r=s.getBoundingClientRect(),p=n.parentElement.getBoundingClientRect();
+                        // The visible control is the colour-marker menu in front of the select.
+                        const c=n.parentElement.querySelector('.sg-menu-trigger')||n;
+                        const s=n.nextElementSibling,b=c.getBoundingClientRect(),r=s.getBoundingClientRect(),p=n.parentElement.getBoundingClientRect();
                         return r.top>=b.bottom-1 && r.left>=p.left-1 && r.right<=p.right+1 && r.height>0;
                     }"""))
                     ident = field.evaluate('n => n.nextElementSibling.id')
