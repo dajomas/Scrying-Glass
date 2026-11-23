@@ -12,17 +12,16 @@
         actionAmountRequired = action => action === 'increase-max-hp' || previous(action);
     }
 
-    const tracked = item => !window.scryingTracksHp || window.scryingTracksHp(item);
     const dead = item => item.life_state === 'dead' || (!('monster_species' in item) && (item.death_failures || 0) >= 3);
 
     function addRow() {
         if (typeof battleActionsApplying !== 'undefined' && battleActionsApplying) return;
         const targets = (typeof activeBattleTargets === 'function' ? activeBattleTargets() : [])
-            .filter(item => !dead(item) && tracked(item));
+            .filter(item => !dead(item));  // untracked characters too: logged, HP unchanged
         const feedback = typeof battleActionFeedback === 'function' ? battleActionFeedback : null;
         if (!targets.length) {
             feedback?.('targets', 'increase', 'Max HP increase targets',
-                {severity: 'error', text: 'There are no active targets whose HP is tracked.'});
+                {severity: 'error', text: 'There are no active targets that are not dead.'});
             return;
         }
         feedback?.('targets', 'increase', 'Max HP increase targets');

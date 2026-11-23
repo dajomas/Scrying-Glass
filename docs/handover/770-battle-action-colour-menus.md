@@ -61,3 +61,25 @@ edge of the Battle Actions modal, and scrolling the modal with its scrollbar clo
   is dispatched in the scrollbar strip, because Playwright's headless Chromium hides
   scrollbars), a press elsewhere closes it, and scrolling the menu out of view closes it.
   Both faults (no scrollbar check; the list positioned inside the modal) fail this test.
+
+## Second correction - 2026-11-23
+
+Reported by the user after f344ae4 (CI 45217164288 green):
+
+- **Increase Max HP listed only monsters.** It left out characters whose HP is not tracked,
+  as decided for SG-TODO-025. User decision: every target and source list shows both
+  characters and monsters; an untracked character stays selectable "for logging purpose",
+  and whether HP changes depends on tracking. So the Max HP row lists every active
+  combatant that is not dead. In `apply_battle_actions`, for an untracked character a Max
+  HP increase, a Max HP reduction and temporary HP (keep higher or replace) are validated
+  as rows, logged with the note `<name>: HP not tracked; source: <source>` and change
+  nothing, as damage and healing already did. Elsewhere (Encounter tools, the low-level
+  `increase_max_hp`, `reduce_stat` and `grant_temp_hp`) they are still refused.
+- **Track HP checkbox misaligned in Edit character** (user screenshot): the label was a
+  one-column grid, so the checkbox stood alone above its text. It is now a row (checkbox,
+  then "Track HP") with the inputs' box metrics, level with the input in the other column.
+- Tests: `test_max_hp_increase` and `test_temp_hp_grant` now expect the untracked rows to be
+  logged and to change nothing (a mixed batch with a tracked character applies);
+  `test_character_hp_tracking_admin.test_edit_track_hp_checkbox_sits_beside_its_text`
+  checks the checkbox beside its text and level with the neighbouring input, with tracking
+  on and off. User Guide updated.
