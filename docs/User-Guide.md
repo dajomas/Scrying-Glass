@@ -217,6 +217,10 @@ Click the highlighted turn owner. Ordinary actions require a standing actor and 
 
 Damage/healing amounts must be positive. Enter damage after adjudicating mitigation/critical dice. Critical hit affects failed saves at zero HP, not entered damage.
 
+The Target and Reaction source menus show each combatant's colour dot, in the closed
+menu and in every entry of the list. Use the mouse, or the arrow keys, Home, End and
+Enter (Escape closes only the menu); typing a name's first letters jumps to it.
+
 Add reaction chooses an independent active source/target. Damage/healing reactions allow down/dead sources/targets for manually adjudicated death bursts. Healing does not resurrect explicit death. Rows validate together and apply top-to-bottom, each attributed to its source.
 
 Apply submits only pending action and reaction rows and keeps the modal open.
@@ -430,7 +434,7 @@ recalculated automatically.
 
 ### Max HP increase
 
-Next to Add statistics reduction, Add Max HP increase raises a target's maximum HP,
+Next to Add statistics reduction, Increase Max HP raises a target's maximum HP,
 for example for *Aid*. Current HP rises by the same amount. A downed character whose
 HP rises above 0 is standing again; dead creatures and characters whose HP is not
 tracked cannot be chosen. Increases and reductions add up; the increase lasts until

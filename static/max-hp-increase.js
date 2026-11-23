@@ -1,4 +1,4 @@
-/* SG-TODO-025: "Add Max HP increase" in Battle Actions, next to the statistics reduction.
+/* SG-TODO-025: "Increase Max HP" in Battle Actions, next to the statistics reduction.
  * Current HP rises by the same amount (SG-TODO-026); the server stays authoritative. */
 (() => {
     'use strict';
@@ -37,7 +37,6 @@
         <label class="amount-field">Max HP increase
           <input data-action-amount type="number" required min="1" max="99999" step="1" value="1">
         </label>
-        <p class="field-help">Current HP rises by the same amount. Remove it again with Restore statistics.</p>
         <button data-remove-action-row type="button" class="danger">Remove</button>`;
         row.querySelector('[data-remove-action-row]').addEventListener('click', () => row.remove());
         rows.appendChild(row);
@@ -46,7 +45,7 @@
     const button = document.createElement('button');
     button.type = 'button';
     button.id = 'addMaxHpIncrease';
-    button.textContent = 'Add Max HP increase';
+    button.textContent = 'Increase Max HP';
     button.addEventListener('click', addRow);
     reduction.after(button);
 })();

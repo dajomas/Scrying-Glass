@@ -21,7 +21,8 @@ class ActionAlignmentTests(unittest.TestCase):
             const visible = n => n.getClientRects().length > 0;
             const rect = n => n.getBoundingClientRect();
             const labels = [...row.children].filter(n => n.tagName === 'LABEL' && visible(n));
-            const controls = labels.map(n => n.querySelector('select,input:not([type=hidden])'));
+            // A colour-marker menu (.sg-menu-trigger) is the visible control in front of its select.
+            const controls = labels.map(n => n.querySelector('.sg-menu-trigger,select,input:not([type=hidden])'));
             controls.push(row.querySelector('[data-remove-action-row]'));
             const boxes = controls.filter(n => n && visible(n)).map(rect);
             const critical = row.querySelector(':scope > .critical-option');
@@ -31,7 +32,7 @@ class ActionAlignmentTests(unittest.TestCase):
                 critical: !critical || !visible(critical) ||
                     Math.abs(rect(critical).top + rect(critical).height/2 - boxes[0].top - boxes[0].height/2) <= 1,
                 summaries: [...row.querySelectorAll('.sg-action-stats')].filter(visible).every(n => {
-                    const b=rect(n), s=rect(n.previousElementSibling), p=rect(n.parentElement);
+                    const b=rect(n), s=rect(n.parentElement.querySelector('.sg-menu-trigger')||n.previousElementSibling), p=rect(n.parentElement);
                     return b.top >= s.bottom-1 && b.left >= p.left-1 && b.right <= p.right+1;
                 })
             };
@@ -83,7 +84,7 @@ class ActionAlignmentTests(unittest.TestCase):
                         const b=n.getBoundingClientRect(), next=labels[i+1]?.getBoundingClientRect();
                         return !next || b.bottom<=next.top+1;
                     }) && [...row.querySelectorAll('.sg-action-stats')].every(n => {
-                        const b=n.getBoundingClientRect(), s=n.previousElementSibling.getBoundingClientRect();
+                        const b=n.getBoundingClientRect(), s=(n.parentElement.querySelector('.sg-menu-trigger')||n.previousElementSibling).getBoundingClientRect();
                         return b.top>=s.bottom-1 && Math.abs(b.left-s.left)<=1 && b.right<=s.right+1;
                     });
                 }"""))

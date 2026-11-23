@@ -211,7 +211,8 @@ class MaxHpIncreaseAdminTests(unittest.TestCase):
         row = page.locator('.max-hp-increase-row')
         row.locator('select[data-action-target]').select_option(monster['id'])
         row.locator('[data-action-amount]').fill('6')
-        self.assertIn('Current HP rises by the same amount', row.text_content())
+        self.assertEqual(page.locator('#addMaxHpIncrease').text_content(), 'Increase Max HP')
+        self.assertEqual(row.locator('.field-help').count(), 0)  # no Current HP note in the row
         page.locator('#battleActionForm button[type="submit"]').click()
         page.wait_for_timeout(300)
         actions = bodies[0]['actions']
