@@ -62,12 +62,27 @@
     // Source dropdown picks (monster-source-picker.js) run as a one-candidate lookup.
     window.scryingMonsterSelection = {
         preset(species, candidate) {
-            reuseLookup = {species, candidates: [candidate], at: Date.now()};
+            reuseLookup = {species, candidates: [candidate], at: Date.now(), picked: true};
         },
     };
     function uploadChosen() {
         const file = document.querySelector('#monsterImage');
         return Boolean(file?.files && file.files.length);
+    }
+    // A monster picked from a source dropdown keeps its own stats, but its image may come from
+    // any enabled source: search them all by name for images to choose from.
+    async function imageCandidates(species, candidate) {
+        if (typeof fetch !== 'function') return [candidate];
+        try {
+            // Plain fetch: a failed image search must not raise Admin notifications.
+            const response = await fetch(`/api/monsters/lookup?species=${encodeURIComponent(species)}`,
+                {credentials: 'same-origin'});
+            const result = response.ok ? await response.json() : null;
+            const found = result?.status === 'ok' && Array.isArray(result.candidates) ? result.candidates : [];
+            return [candidate, ...found.filter(other => other && typeof other === 'object')];
+        } catch {
+            return [candidate];
+        }
     }
     function chooseImage(candidate, candidates, kept) {
         // Image picker lives in monster-image-choice.js.
@@ -328,8 +343,13 @@
                 if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
             }
             // Offer images from the other found monsters unless an upload already overrides them.
-            const imageOwner = candidates.length > 1 && !uploadChosen()
-                ? await chooseImage(candidate, candidates, kept) : candidate;
+            let imageOptions = candidates;
+            if (reuse?.picked && !uploadChosen()) {
+                imageOptions = await imageCandidates(species, candidate);
+                if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
+            }
+            const imageOwner = imageOptions.length > 1 && !uploadChosen()
+                ? await chooseImage(candidate, imageOptions, kept) : candidate;
             if (!isCurrent()) return {found: false, reason: 'Lookup superseded.'};
             selected = candidate;
             imageChoice = imageOwner && imageOwner !== candidate ? imageOwner : null;
