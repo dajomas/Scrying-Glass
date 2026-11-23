@@ -117,21 +117,25 @@ class IncreaseEndpointTests(tracking.EndpointTests):
         self.assertEqual((entry['action'], entry['amount']), ('max-hp-increased', 5))
         self.assertEqual(entry['note'], 'Goblin: Max HP 12 → 17; HP 12 → 17; source: Cleric')
 
-    def test_battle_actions_raise_a_downed_character_and_refuse_untracked(self):
+    def test_battle_actions_raise_a_downed_character_and_only_log_untracked(self):
         self.call('edit_features', 'c', {'hp_delta': -20})  # Cleric is down at 0
         self.c.STATE['characters'].append(normalize_features(
             {'id': 'p', 'name': 'Bard', 'hp': 8, 'max_hp': 8, 'active': True, 'track_hp': False}))
         self.item('c')['in_turn'], self.item('m')['in_turn'] = False, True  # the Goblin acts
         battle = self.handler('python.scrying_glass_admin_battle', 'AdminBattleMixin')
-        act = lambda *rows: self.run_handler(battle.apply_battle_actions, BattleActions(actor_id='m', actions=list(rows)))
-        with self.assertRaises(tracking.feature_tests.HTTPError) as caught:
-            act(BattleActionRow(target_id='c', action='increase-max-hp', amount=3),
-                BattleActionRow(target_id='p', action='increase-max-hp', amount=3))
-        self.assertEqual(caught.exception.status_code, 422)
-        self.assertEqual(self.item('c')['hp'], 0)  # nothing applied from the refused batch
-        act(BattleActionRow(target_id='c', action='increase-max-hp', amount=3))
+        from python.scrying_glass_statistics import statistics_token
+        act = lambda *rows: self.run_handler(battle.apply_battle_actions, BattleActions(
+            actor_id='m', actions=list(rows), statistics_token=statistics_token(self.c)))
+        act(BattleActionRow(target_id='c', action='increase-max-hp', amount=3),
+            BattleActionRow(target_id='p', action='increase-max-hp', amount=3),
+            BattleActionRow(target_id='p', action='reduce-stat', stat='max_hp', amount=2))
         self.assertEqual((self.item('c')['hp'], self.item('c')['max_hp'], self.item('c')['life_state']),
                          (3, 23, 'standing'))
+        bard = self.item('p')  # HP not tracked: logged for the record, nothing changed
+        self.assertEqual((bard['hp'], bard['max_hp'], bard.get('effects', [])), (8, 8, []))
+        logged = [(e['action'], e['amount'], e['note']) for e in self.c.STATE['activity_log'][-2:]]
+        self.assertEqual(logged, [('max-hp-increased', 3, 'Bard: HP not tracked; source: Goblin'),
+                                  ('statistic-reduced', 2, 'Bard: HP not tracked; source: Goblin')])
 
     def test_edit_dialogs_raise_current_hp_when_only_the_maximum_rises(self):
         characters = self.characters()
@@ -211,7 +215,8 @@ class MaxHpIncreaseAdminTests(unittest.TestCase):
         row = page.locator('.max-hp-increase-row')
         row.locator('select[data-action-target]').select_option(monster['id'])
         row.locator('[data-action-amount]').fill('6')
-        self.assertIn('Current HP rises by the same amount', row.text_content())
+        self.assertEqual(page.locator('#addMaxHpIncrease').text_content(), 'Increase Max HP')
+        self.assertEqual(row.locator('.field-help').count(), 0)  # no Current HP note in the row
         page.locator('#battleActionForm button[type="submit"]').click()
         page.wait_for_timeout(300)
         actions = bodies[0]['actions']

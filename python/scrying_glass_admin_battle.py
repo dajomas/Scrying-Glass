@@ -99,12 +99,18 @@ class AdminBattleMixin:
 
         import copy
         from python.scrying_glass_statistics import reduce_stat, statistics_token, increase_max_hp
-        from python.scrying_glass_feature_rules import grant_temp_hp
+        from python.scrying_glass_feature_rules import grant_temp_hp, tracks_hp
         if any(row.action == 'reduce-stat' for row in payload.actions):
             if getattr(payload, 'statistics_token', None) != statistics_token(self.context):
                 raise self.context.HTTPException(409, 'Encounter changed; reopen Battle actions before applying reductions')
         valid_actions = {"damage", "heal", "buff", "debuff", "reduce-stat", "increase-max-hp", "temp-hp", "temp-hp-replace"}
         temp_actions = {"temp-hp", "temp-hp-replace"}  # SG-TODO-027
+
+        def logged_only(target, action, stat):
+            # A character whose HP is not tracked (SG-TODO-024) can still be chosen for HP rows,
+            # as for damage and healing: the row is logged, the HP values stay unchanged.
+            return not tracks_hp(target) and (action in temp_actions or action == 'increase-max-hp'
+                                              or (action == 'reduce-stat' and stat == 'max_hp'))
         prepared = []
 
         # Validate all rows before changing state, so a malformed row cannot leave
@@ -148,13 +154,14 @@ class AdminBattleMixin:
             stat = getattr(row, 'stat', None)
             if row.action != 'reduce-stat' and stat is not None:
                 raise self.context.HTTPException(422, 'A statistic is only valid on a reduction row')
-            if row.action == 'reduce-stat':
+            only_logged = logged_only(target, row.action, stat)
+            if row.action == 'reduce-stat' and not only_logged:
                 try: reduce_stat(copy.deepcopy(target), stat, row.amount, source['id'])
                 except ValueError as exc: raise self.context.HTTPException(422, str(exc)) from exc
-            if row.action == 'increase-max-hp':  # SG-TODO-025: a downed target may be raised too
+            if row.action == 'increase-max-hp' and not only_logged:  # SG-TODO-025: a downed target may be raised too
                 try: increase_max_hp(copy.deepcopy(target), row.amount, source['id'])
                 except (ValueError, TypeError) as exc: raise self.context.HTTPException(422, str(exc)) from exc
-            if row.action in temp_actions and row.amount is not None:  # allowed at 0 HP; no life-state change
+            if row.action in temp_actions and row.amount is not None and not only_logged:  # allowed at 0 HP; no life-state change
                 try: grant_temp_hp(copy.deepcopy(target), row.amount, replace=row.action == 'temp-hp-replace')
                 except ValueError as exc: raise self.context.HTTPException(422, str(exc)) from exc
             if row.action in {"damage", "heal", "reduce-stat", "increase-max-hp", *temp_actions}:
@@ -183,6 +190,11 @@ class AdminBattleMixin:
         from python.scrying_glass_activity_details import snapshot, statistics_snapshot, statistics_note, death_failure_note
         for source, target, action, amount, critical, stat in prepared:
             before = snapshot(target)
+            if logged_only(target, action, stat):
+                kind = {'reduce-stat': 'statistic-reduced', 'increase-max-hp': 'max-hp-increased'}.get(action, 'temp-hp')
+                self.context.features.log(kind, target, amount,
+                    note=f"{target['name']}: HP not tracked; source: {source['name']}")
+                continue
             if action == 'reduce-stat':
                 stats_before = statistics_snapshot(target)
                 try: reduce_stat(target, stat, amount, source['id'])

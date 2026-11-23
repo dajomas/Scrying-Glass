@@ -69,18 +69,18 @@ class GrantEndpointTests(tracking.EndpointTests):
                                  'Goblin: Temporary HP 6 → 6 (kept higher); source: Cleric',
                                  'Goblin: Temporary HP 6 → 2 (replaced); source: Cleric'])
 
-    def test_downed_target_keeps_its_state_and_refused_rows_apply_nothing(self):
+    def test_downed_target_keeps_its_state_and_untracked_is_only_logged(self):
         self.call('edit_features', 'c', {'hp_delta': -20})  # Cleric is down at 0
         self.c.STATE['characters'].append(normalize_features(
             {'id': 'p', 'name': 'Bard', 'hp': 8, 'max_hp': 8, 'active': True, 'track_hp': False}))
         self.item('c')['in_turn'], self.item('m')['in_turn'] = False, True
-        with self.assertRaises(tracking.feature_tests.HTTPError) as caught:
-            self.act(BattleActionRow(target_id='c', action='temp-hp', amount=5),
-                     BattleActionRow(target_id='p', action='temp-hp', amount=5), actor='m')
-        self.assertEqual(caught.exception.status_code, 422)
-        self.assertEqual(self.item('c')['temp_hp'], 0)
-        self.act(BattleActionRow(target_id='c', action='temp-hp', amount=5), actor='m')
+        self.act(BattleActionRow(target_id='c', action='temp-hp', amount=5),
+                 BattleActionRow(target_id='p', action='temp-hp-replace', amount=5), actor='m')
         self.assertEqual((self.item('c')['temp_hp'], self.item('c')['hp'], self.item('c')['life_state']), (5, 0, 'down'))
+        self.assertEqual((self.item('p')['temp_hp'], self.item('p')['hp']), (0, 8))  # HP not tracked: unchanged
+        entry = self.c.STATE['activity_log'][-1]
+        self.assertEqual((entry['action'], entry['amount'], entry['note']),
+                         ('temp-hp', 5, 'Bard: HP not tracked; source: Goblin'))
         with self.assertRaises(tracking.feature_tests.HTTPError) as caught:
             self.act(BattleActionRow(target_id='c', action='temp-hp', amount=None), actor='m')
         self.assertEqual(caught.exception.status_code, 400)  # an amount is required

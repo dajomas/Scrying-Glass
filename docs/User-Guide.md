@@ -77,7 +77,7 @@ Clients with no grants see an access message; one campaign opens automatically; 
 
 Characters belong to the campaign, not setup snapshots. Add/edit name, color, HP, maximum HP and initiative. CSV imports append to the roster. Removing a character changes the roster across that campaign's setups. In the roster, HP is read-only; use Edit to change Current HP and Max HP. Initiative remains editable inline.
 
-Track HP (on by default) can be switched off per character in Add character and in Edit, or for several characters with the Bulk actions Track HP and Do not track HP. Use it for players who keep their own HP. For an untracked character the Admin shows "Not tracked" instead of HP and asks for none; damage and healing are still recorded in the activity log, but current, maximum and temporary HP never change. Set its life state and death saves yourself in Encounter tools or with the Alive button; nothing changes automatically from HP. A Max HP reduction and temporary HP are refused for it. The stored HP is kept, so switching Track HP back on continues from it.
+Track HP (on by default) can be switched off per character in Add character and in Edit, or for several characters with the Bulk actions Track HP and Do not track HP. Use it for players who keep their own HP. For an untracked character the Admin shows "Not tracked" instead of HP and asks for none; damage and healing are still recorded in the activity log, but current, maximum and temporary HP never change. Set its life state and death saves yourself in Encounter tools or with the Alive button; nothing changes automatically from HP. In Battle actions it can still be chosen for a Max HP increase or reduction and for temporary HP: these are recorded in the activity log ("HP not tracked"), and nothing changes. Encounter tools refuse temporary HP for it. The stored HP is kept, so switching Track HP back on continues from it.
 
 | Setup action | Result |
 |---|---|
@@ -217,6 +217,10 @@ Click the highlighted turn owner. Ordinary actions require a standing actor and 
 
 Damage/healing amounts must be positive. Enter damage after adjudicating mitigation/critical dice. Critical hit affects failed saves at zero HP, not entered damage.
 
+The Target and Reaction source menus show each combatant's colour dot, in the closed
+menu and in every entry of the list. Use the mouse, or the arrow keys, Home, End and
+Enter (Escape closes only the menu); typing a name's first letters jumps to it.
+
 Add reaction chooses an independent active source/target. Damage/healing reactions allow down/dead sources/targets for manually adjudicated death bursts. Healing does not resurrect explicit death. Rows validate together and apply top-to-bottom, each attributed to its source.
 
 Apply submits only pending action and reaction rows and keeps the modal open.
@@ -252,7 +256,7 @@ States: standing, down, stable, dead. Explicit recovery raises HP to at least 1 
 
 Temporary HP is a separate nonnegative pool: Set replaces, not stacks. Damage consumes it first unless bypass selected. Healing caps at max HP and does not replenish temporary HP. Absolute HP corrections bypass attack logic.
 
-To grant temporary HP during a battle, choose Temporary HP (keep higher) or Temporary HP (replace) as the Action of a target row in Battle actions. As in the 5e rules temporary HP never stack: keep higher takes the new amount only when it is higher than what the target has; replace always takes it, also when it is lower. Granting is not healing, so a creature at 0 HP keeps its life state and death saves. Temporary HP last until damage uses them up, you change them in Encounter tools or you use Reset; End battle leaves them. Reactions, dead creatures and characters whose HP is not tracked cannot get them. The activity log shows, for example, `Goblin: Temporary HP 6 → 6 (kept higher); source: Cleric`.
+To grant temporary HP during a battle, choose Temporary HP (keep higher) or Temporary HP (replace) as the Action of a target row in Battle actions. As in the 5e rules temporary HP never stack: keep higher takes the new amount only when it is higher than what the target has; replace always takes it, also when it is lower. Granting is not healing, so a creature at 0 HP keeps its life state and death saves. Temporary HP last until damage uses them up, you change them in Encounter tools or you use Reset; End battle leaves them. Reactions and dead creatures cannot get them; for a character whose HP is not tracked the grant is only recorded in the activity log. The activity log shows, for example, `Goblin: Temporary HP 6 → 6 (kept higher); source: Cleric`.
 
 For character damage events:
 - Clamp HP at zero; do not accumulate negative HP.
@@ -430,10 +434,10 @@ recalculated automatically.
 
 ### Max HP increase
 
-Next to Add statistics reduction, Add Max HP increase raises a target's maximum HP,
+Next to Add statistics reduction, Increase Max HP raises a target's maximum HP,
 for example for *Aid*. Current HP rises by the same amount. A downed character whose
-HP rises above 0 is standing again; dead creatures and characters whose HP is not
-tracked cannot be chosen. Increases and reductions add up; the increase lasts until
+HP rises above 0 is standing again; dead creatures cannot be chosen. A character whose
+HP is not tracked can be, and the increase is then only recorded in the activity log. Increases and reductions add up; the increase lasts until
 you remove it with Restore statistics, which lowers the maximum again and only caps
 current HP.
 
