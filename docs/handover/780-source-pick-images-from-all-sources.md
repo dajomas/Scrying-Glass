@@ -30,3 +30,6 @@ image could not take another.
 
 - `test_monster_source_picker_browser` and `test_monster_candidate_browser`: 18 tests pass;
   all `test_monster*` modules show no failures beyond the known FastAPI baseline.
+- Delivered in b4d69c9; CI 45248015006 green (tests and connection audit). e2e
+  20261123T193746Z on 11121d2 (the CI publish commit on top of b4d69c9, same code):
+  137 passed, 0 failed (Chromium and Firefox).
