@@ -83,3 +83,9 @@ Reported by the user after f344ae4 (CI 45217164288 green):
   `test_character_hp_tracking_admin.test_edit_track_hp_checkbox_sits_beside_its_text`
   checks the checkbox beside its text and level with the neighbouring input, with tracking
   on and off. User Guide updated.
+
+## Verification - 2026-11-23
+
+Commits 4d45f0a (menus; CI 45213572798), f344ae4 (modal edge and scrolling; CI 45217164288)
+and f6cdca6 (untracked HP rows, Track HP alignment; CI 45221454081), all green. e2e
+20261123T165915Z on f6cdca6: 137 passed, 0 failed (Chromium and Firefox).
